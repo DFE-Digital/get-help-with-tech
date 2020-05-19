@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read(".ruby-version").chomp
 
-gem 'govuk_design_system_formbuilder', path: "~/projects/DFE-Digital/govuk_design_system_formbuilder"
+gem 'govuk_design_system_formbuilder'
 gem 'haml'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -47,6 +47,8 @@ group :development, :test do
   gem "capybara", "~> 3.32"
 
   gem "dotenv-rails"
+
+  gem "travis"
 end
 
 group :development do

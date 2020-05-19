@@ -2,25 +2,28 @@ language: ruby
 cache:
   bundler: true
   directories:
-    - node_modules
+  - node_modules
   yarn: true
 addons:
-  postgresql: "9.6"
+  postgresql: '9.6'
 install:
-  - bundle install
-  - nvm install 12.13.1
-  - node -v
-  - npm i -g yarn
-  - yarn
+- bundle instal
+- nvm install 12.13.1
+- node -v
+- npm i -g yarn
+- yarn
 before_script:
-  - bundle exec rake db:create db:migrate RAILS_ENV=test
+- bundle exec rake db:create db:migrate RAILS_ENV=test
 script:
-  - bundle exec rails webpacker:compile
-  - bundle exec rake
+- bundle exec rails webpacker:compile
+- bundle exec rake
 deploy:
-  provider: heroku
-  api_key:
-    secure: ADDYDfOGlYQOr7trnmq1xbShIuGvDCJ1jscMbm4VoXgQ9LUPb3powuFrsMBSoNU7PaC0Mgxzf2UaTJT5+JBwz4yjVs7YgQV602CmWP367PBw0nXZHK9JYwsIWpJntDK/UnBxhYa4ewQESZc4LI6NK9qwOcITrzUoL8JDNPeAFo2+WTAFjPo9VigAIju4EMOnFagHt0Ay6Vt40kAGEpyeWfVj60ARYX8HHTnNF2oFIVDD9ZDa9QbeL/J6JqTUR/+qk4ivtNjnWjq9OiPfSeMR6pYaH4BNEC4qTq6ZtmadvGgWO7VgwGiQ0sz+v6rOKlrszQipYESZTmiwjByWK9iOrxul1DP9rWgqoY8WM9aTc3cZqZkUXH4hyFCki2go6/Cb2c0/+du8eMmDjp+J2Xi3B1H6DW+g0KdDqWqu/qni3Ndm2GNeJRZNdLgGNM23izWiPu/AlT2Bk/vMuEtVw2qgpwt3P6YSn95jqq88aTuS4hOU/Aq3mUm+w+TNpmglxkWtXUstghiNCHNw/cm3us/nuuq0OZPFMLt1Hg6R7FWFygnw7q1dfdt9hnw+oPEriIsJcNK0Kz1ISSsvefZfKfdyX6khgSCFdqZ5P8pCFHdIUKDUykdAcl27Phc2o4iCvo1Hn2AYzbQzv/1ONRcSd9D6qqnXVkufBpZ6CG/Q/AoILpc=
-  app: govuk-rails-boilerplate
+  provider: cloudfoundry
+  api: https://api.london.cloud.service.gov.uk
+  username: alistair.davidson@digital.education.gov.uk
+  password:
+    secure: jc7+82O3xpXf8HHL9y18gjbRAfqhzdliDDnsXZ7QN+Vbz0Pe+oql0TtHZY6+58nI2kiItHIXSNz2jXI2+o11zR2RVM6fBd0uqjhPfCLCz0z1JDeCACIjSLAERetYOF15SeHKD/NVWpKO/34XWMUzwZ0vU+hcWs1+4pRIK6/JKw3fYSlBgDJUTLIdq08YAUlIerpzNornO7Ew4uvx7ffTjHFO/SB23rbINW+20ylsmNBuR4R0WS1et+n01oE/ontfdz1PBu4c71KF0gVr6vWDLwIhvb5GY0Oaw/dIcsX1EoA97auIVHEZEpcLqxd/O2kbFudWpOD8idYE56OWfPFCZvNxpYh0gOb0S6nqOo0fyRrIZbF8eHdS0Zx6YlvCzklvlUeBZEsZJiXif1mEU7ZeSHcFL8sRPLPe5g3kE2Gp02tEx1wH3DvD5DED/CE9P5PsBcFY92TuNB8fVMvS1FaEOoMd8+0lkJgcK1PMq11HOx0T/NFl3PSkNvnA4ARU/Urg+m2VBblg+0AhmbPzw6kKiGJJQA1XHjlQrWQ7phIjkEidq//adeK3G5hMpJkVXEJ9gv4LM3sBs6WIDQogKjTCZA2HztQKsvq6uvVtiyzguxGnbJ2bI8djOoMyyd7LfIPzJirQdlSlS3Hyl7V0fyywm9H9x+TFoKTiWpTUSKy9gfc=
+  organization: dfe-digital
+  space: teacher-services
   on:
-    repo: DFE-Digital/govuk-rails-boilerplate
+    repo: DFE-Digital/data-allowances-prototype
