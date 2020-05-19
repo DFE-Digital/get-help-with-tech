@@ -1,6 +1,5 @@
 ---
 applications:
 - name: data-allowances-prototype
-  buildpacks:
-    - https://github.com/cloudfoundry/ruby-buildpack.git
-    - https://github.com/cloudfoundry/nodejs-buildpack
+  services:
+    - data-allowances-prototype-db
