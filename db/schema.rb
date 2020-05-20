@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_19_085807) do
+ActiveRecord::Schema.define(version: 2020_05_20_105208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "allocation_requests", force: :cascade do |t|
+    t.integer "number_eligible"
+    t.integer "number_eligible_with_hotspot_access"
+    t.bigint "created_by_user"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "recipients", force: :cascade do |t|
     t.string "full_name"

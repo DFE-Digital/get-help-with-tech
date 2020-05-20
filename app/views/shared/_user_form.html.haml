@@ -1,0 +1,4 @@
+= form.govuk_fieldset legend: { text: 'About you' } do
+  = form.govuk_text_field :user_name, required: true, label: { text: 'Your full name' }
+  = form.govuk_email_field :user_email, required: true, label: { text: 'Your email address' }
+  = form.govuk_text_field :user_organisation, required: true, label: { text: 'Name of the organisation you work for' }
