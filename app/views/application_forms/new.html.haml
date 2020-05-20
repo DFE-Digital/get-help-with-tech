@@ -1,16 +1,13 @@
 %h1.govuk-heading-xl
   Tell us about an eligible young person
-  
+
 %p.govuk-body-l
   Please complete all the fields you can.
 
 = form_for @application_form do |f|
   = f.govuk_error_summary
 
-  = f.govuk_fieldset legend: { text: 'About you' } do
-    = f.govuk_text_field :user_name, required: true, label: { text: 'Your full name' }
-    = f.govuk_email_field :user_email, required: true, label: { text: 'Your email address' }
-    = f.govuk_text_field :user_organisation, required: true, label: { text: 'Name of the organisation you work for' }
+  = render partial: 'shared/user_form', locals: { form: f }
 
   = f.govuk_fieldset legend: { text: 'About the recipient' } do
     = f.govuk_text_field :full_name, required: true, label: { text: 'Name of the eligible child or young person' }

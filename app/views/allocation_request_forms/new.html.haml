@@ -1,0 +1,17 @@
+%h1.govuk-heading-xl
+  Tell us how many eligible young people you know about
+
+%p.govuk-body-l
+  Please complete all the fields you can.
+
+= form_for @allocation_request_form do |f|
+  = f.govuk_error_summary
+
+  = render partial: 'shared/user_form', locals: { form: f }
+
+  = f.govuk_fieldset legend: { text: 'About the eligible young people' } do
+    = f.govuk_number_field :number_eligible, required: true, width: 'one-quarter', label: { text: 'Total number of children eligible for increased internet access' }
+    = f.govuk_number_field :number_eligible_with_hotspot_access, required: true,  width: 'one-quarter',
+                          label: { text: 'Total number of eligible children who can access a BT hotspot' },
+                          hint_text: 'See our guidance on <a href="#todo">how to check access to hotspots</a>'.html_safe
+  = f.govuk_submit

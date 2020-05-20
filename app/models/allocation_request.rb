@@ -1,0 +1,2 @@
+class AllocationRequest < ApplicationRecord
+end
