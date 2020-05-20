@@ -2,9 +2,15 @@ class ApplicationForm
   include ActiveModel::Model
 
   attr_accessor :user_id, :user_name, :user_email, :user_organisation
-  attr_accessor :full_name, :address, :postcode, :can_access_hotspot,
-                :is_account_holder, :account_holder_name, :device_phone_number,
-                :phone_network_name, :privacy_statement_sent_to_family,
+  attr_accessor :full_name,
+                :address,
+                :postcode,
+                :can_access_hotspot,
+                :is_account_holder,
+                :account_holder_name,
+                :device_phone_number,
+                :phone_network_name,
+                :privacy_statement_sent_to_family,
                 :understands_how_pii_will_be_used
 
   validates_presence_of :user_name, :user_email, :user_organisation
