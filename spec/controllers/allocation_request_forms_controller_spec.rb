@@ -68,5 +68,31 @@ describe AllocationRequestFormsController, type: :controller do
         end
       end
     end
+
+    context 'with invalid params' do
+      let(:invalid_params) {
+        {
+          user: {
+            full_name: '',
+            email_address: 'nobody',
+            organisation: '',
+          },
+          allocation_request: {
+            number_eligible: -2,
+          },
+        }
+      }
+      let(:params) { { allocation_request_form: invalid_params } }
+      let(:the_request) { post :create, params: params }
+
+      it 'does not create an AllocationRequest' do
+        expect{ the_request }.not_to change(AllocationRequest, :count)
+      end
+
+      it 'responds with a 400 status code' do
+        the_request
+        expect(response.status).to eq(400)
+      end
+    end
   end
 end
