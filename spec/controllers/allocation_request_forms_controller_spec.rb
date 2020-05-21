@@ -31,7 +31,6 @@ describe AllocationRequestFormsController, type: :controller do
         end
 
         describe 'the created user' do
-
           it 'has the right attributes' do
             the_request
             expect(created_user).to have_attributes(
@@ -61,6 +60,11 @@ describe AllocationRequestFormsController, type: :controller do
             number_eligible: 20,
             number_eligible_with_hotspot_access: 14
           )
+        end
+
+        it 'is associated with the sessions user' do
+          the_request
+          expect(created_allocation_request.user_id).to eq(session[:user_id])
         end
       end
     end
