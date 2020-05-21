@@ -12,6 +12,10 @@ gem 'rails', '~> 6.0.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
+# Pry console is more resilient to readline issues that can stop
+# the arrow keys etc working
+gem 'pry-rails'
+
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 

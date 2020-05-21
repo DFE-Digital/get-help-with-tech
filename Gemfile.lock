@@ -150,6 +150,8 @@ GEM
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     public_suffix (4.0.5)
     puma (4.3.3)
       nio4r (~> 2.0)
@@ -192,6 +194,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     regexp_parser (1.7.0)
     rexml (3.2.4)
     rspec-core (3.9.2)
@@ -312,8 +315,10 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.3)
   pg (>= 0.18, < 2.0)
   pry-byebug
+  pry-rails
   puma (~> 4.3)
   rails (~> 6.0.3)
+  rb-readline
   rspec-rails (~> 4.0.1)
   rubocop-govuk
   scss_lint-govuk

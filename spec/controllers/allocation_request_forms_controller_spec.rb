@@ -64,7 +64,7 @@ describe AllocationRequestFormsController, type: :controller do
 
         it 'is associated with the sessions user' do
           the_request
-          expect(created_allocation_request.user_id).to eq(session[:user_id])
+          expect(created_allocation_request.created_by_user_id).to eq(session[:user_id])
         end
       end
     end

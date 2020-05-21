@@ -4,7 +4,7 @@ class CreateAllocationRequests < ActiveRecord::Migration[6.0]
       t.integer :number_eligible
       t.integer :number_eligible_with_hotspot_access
 
-      t.bigint  :created_by_user
+      t.references  :created_by_user
       t.timestamps
     end
   end
