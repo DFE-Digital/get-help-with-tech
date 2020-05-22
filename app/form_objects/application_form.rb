@@ -1,7 +1,9 @@
+require 'form_object_fragments/inline_user'
+
 class ApplicationForm
   include ActiveModel::Model
+  include Concerns::InlineUser
 
-  attr_accessor :user_id, :user_name, :user_email, :user_organisation
   attr_accessor :full_name,
                 :address,
                 :postcode,
@@ -11,11 +13,9 @@ class ApplicationForm
                 :device_phone_number,
                 :phone_network_name,
                 :privacy_statement_sent_to_family,
-                :understands_how_pii_will_be_used
-
-  validates :user_name, presence: { message: 'Please tell us your full name, for example Jane Doe' }
-  validates :user_email, presence: { message: 'Please tell us your email address, for example j.doe@example.com' }
-  validates :user_organisation, presence: { message: 'Please tell us the organisation you work for, for example Lambeth Council' }
+                :understands_how_pii_will_be_used,
+                :recipient,
+                :user
 
   validates :full_name, presence: { message: "Tell us the recipient's full name, like John Smith" }
   validates :address, presence: { message: "Tell us the recipient's address, not including the postcode"}
@@ -50,9 +50,6 @@ class ApplicationForm
   end
 
 private
-  def construct_user
-    User.new(full_name: @user_name, email_address: @user_email, organisation: @user_organisation)
-  end
 
   def construct_recipient
     Recipient.new(
@@ -73,13 +70,6 @@ private
     params.each do |key, value|
       self.send("#{key}=", value)
     end
-  end
-
-  def populate_from_user!
-    @user_id = @user.id
-    @user_name = @user.full_name
-    @user_email = @user.email_address
-    @user_organisation = @user.organisation
   end
 
   def populate_from_recipient!

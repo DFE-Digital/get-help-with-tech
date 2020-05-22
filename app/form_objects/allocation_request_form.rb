@@ -3,7 +3,6 @@ class AllocationRequestForm
 
   attr_accessor :user, :allocation_request
 
-  validates_associated :user, :allocation_request
   validate :user_is_valid
   validate :allocation_request_is_valid
 

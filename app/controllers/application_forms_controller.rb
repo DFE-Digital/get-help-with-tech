@@ -4,13 +4,20 @@ class ApplicationFormsController < ApplicationController
   end
 
   def create
-    @application_form = ApplicationForm.new(params: application_form_params)
+    @application_form = ApplicationForm.new(user: @user, params: application_form_params)
+    byebug
     begin
       @application_form.save!
-      redirect_to application_form_success_path(@application_form)
+      redirect_to application_form_success_path(@application_form.recipient.id)
     rescue ActiveModel::ValidationError => e
       render :new
     end
+  end
+
+  def success
+    # NOTE: restful route expects :application_form_id, we're actually using it
+    # to retrieve the recipient. Not good, need to refactor
+    @application_form = ApplicationForm.new(user: @user, recipient: Recipient.find(params[:application_form_id]))
   end
 
 private

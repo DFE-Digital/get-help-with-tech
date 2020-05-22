@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get '/pages/:page', to: 'pages#show'
 
   resources :application_forms do
-    get 'success', to: 'application_forms#success'
+    get 'success/:application_form_id', to: 'application_forms#success', as: :success
   end
   resources :allocation_request_forms do
     get 'success', to: 'allocation_request_forms#success'
