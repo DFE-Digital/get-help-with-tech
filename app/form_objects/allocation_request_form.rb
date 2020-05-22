@@ -3,6 +3,7 @@ class AllocationRequestForm
 
   attr_accessor :user, :allocation_request
 
+  validates_associated :user, :allocation_request
   validate :user_is_valid
   validate :allocation_request_is_valid
 
@@ -13,6 +14,7 @@ class AllocationRequestForm
 
   def save!
     @user.save!
+
     @allocation_request.created_by_user = @user
     @allocation_request.save!
   end

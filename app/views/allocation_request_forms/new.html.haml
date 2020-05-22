@@ -8,7 +8,7 @@
   = f.govuk_error_summary
 
   = f.fields_for :user do |user_form|
-    = render partial: 'shared/user_form', locals: { form: user_form }
+    = render partial: 'shared/user_form', locals: { form: user_form, parent_form: f }
 
   = f.fields_for :allocation_request do |allocation_request_form|
     = allocation_request_form.govuk_fieldset legend: { text: 'About the eligible young people' } do

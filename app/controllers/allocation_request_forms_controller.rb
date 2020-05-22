@@ -13,11 +13,14 @@ class AllocationRequestFormsController < ApplicationController
     )
     begin
       @allocation_request_form.save!
-      redirect_to allocation_request_form_path(@allocation_request_form.allocation_request.id)
+      redirect_to allocation_request_form_success_path(@allocation_request_form.allocation_request.id)
     rescue ActiveRecord::RecordInvalid => e
+      byebug
       render :new, status: :bad_request
     end
   end
+
+  def success;  end
 
 private
 
