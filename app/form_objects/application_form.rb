@@ -1,5 +1,3 @@
-require 'form_object_fragments/inline_user'
-
 class ApplicationForm
   include ActiveModel::Model
   include Concerns::InlineUser
@@ -67,9 +65,13 @@ private
   end
 
   def populate_from_params!(params={})
+    @user ||= User.new
     params.each do |key, value|
       self.send("#{key}=", value)
     end
+    @user.full_name = params[:user_name]
+    @user.email_address = params[:user_email]
+    @user.organisation = params[:user_organisation]
   end
 
   def populate_from_recipient!

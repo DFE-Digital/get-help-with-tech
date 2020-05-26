@@ -5,9 +5,9 @@ class ApplicationFormsController < ApplicationController
 
   def create
     @application_form = ApplicationForm.new(user: @user, params: application_form_params)
-    byebug
     begin
       @application_form.save!
+      save_user_to_session! unless session[:user_id] == @user.id
       redirect_to application_form_success_path(@application_form.recipient.id)
     rescue ActiveModel::ValidationError => e
       render :new

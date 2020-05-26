@@ -11,3 +11,6 @@
   We will contact you on the email address you provided (
   #{@application_form.user.email_address}
   ) soon.
+
+%p.govuk-body
+  = link_to 'Tell us about another child or young person', new_application_form_path

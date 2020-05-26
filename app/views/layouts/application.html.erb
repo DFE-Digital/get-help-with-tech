@@ -51,6 +51,17 @@
               <li class="govuk-header__navigation-item govuk-header__navigation-item<%= request.path == new_application_form_path ? "--active" : "" %>">
                 <%= link_to "Tell us about an eligible young person", new_application_form_path, class: "govuk-header__link" %>
               </li>
+
+              <%- if session[:user_id].present? %>
+                <li class="govuk-header__navigation-item govuk-header__navigation-item">
+                  <%= @user.email_address %>
+                  <%= link_to "Sign out", session_path(id: session.id), method: :delete, class: "govuk-header__link" %>
+                </li>
+              <%- else %>
+                <li class="govuk-header__navigation-item govuk-header__navigation-item">
+                  <%= link_to "Sign in with DFE Sign In", new_session_path, class: "govuk-header__link" %>
+                </li>
+              <%- end %>
             </ul>
           </nav>
         </div>
