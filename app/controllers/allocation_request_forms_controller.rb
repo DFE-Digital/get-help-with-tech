@@ -4,36 +4,31 @@ class AllocationRequestFormsController < ApplicationController
   end
 
   def create
-    @user ||= User.new(allocation_request_form_params[:user])
-    @allocation_request_form = AllocationRequestForm.new(
-      user: @user,
-      allocation_request: AllocationRequest.new(
-        allocation_request_form_params[:allocation_request]
-      )
-    )
+    @allocation_request_form = AllocationRequestForm.new(user: @user, params: allocation_request_form_params)
     begin
       @allocation_request_form.save!
+      save_user_to_session! unless session[:user_id] == @user.id
       redirect_to allocation_request_form_success_path(@allocation_request_form.allocation_request.id)
-    rescue ActiveRecord::RecordInvalid => e
-      render :new, status: :bad_request
+    rescue ActiveModel::ValidationError => e
+      render :new
     end
   end
 
-  def success;  end
+  def success
+    # NOTE: restful route expects :application_form_id, we're actually using it
+    # to retrieve the recipient. Not good, need to refactor
+    @allocation_request_form = AllocationRequestForm.new(user: @user, allocation_request: AllocationRequest.find(params[:allocation_request_form_id]))
+  end
 
 private
 
   def allocation_request_form_params
     params.require(:allocation_request_form).permit(
-      allocation_request: [
-        :number_eligible,
-        :number_eligible_with_hotspot_access
-      ],
-      user: [
-        :full_name,
-        :email_address,
-        :organisation
-      ]
+      :user_name,
+      :user_email,
+      :user_organisation,
+      :number_eligible,
+      :number_eligible_with_hotspot_access,
     )
   end
 

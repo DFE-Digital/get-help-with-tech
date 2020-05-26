@@ -1,6 +1,6 @@
 class ApplicationForm
   include ActiveModel::Model
-  include Concerns::InlineUser
+  include InlineUser
 
   attr_accessor :full_name,
                 :address,
@@ -72,6 +72,17 @@ private
     @user.full_name = params[:user_name]
     @user.email_address = params[:user_email]
     @user.organisation = params[:user_organisation]
+
+    @recipient.full_name = params[:full_name]
+    @recipient.address = params[:address]
+    @recipient.postcode = params[:postcode]
+    @recipient.can_access_hotspot = params[:can_access_hotspot]
+    @recipient.is_account_holder = params[:is_account_holder]
+    @recipient.account_holder_name = params[:account_holder_name]
+    @recipient.device_phone_number = params[:device_phone_number]
+    @recipient.phone_network_name = params[:phone_network_name]
+    @recipient.privacy_statement_sent_to_family = params[:privacy_statement_sent_to_family]
+    @recipient.understands_how_pii_will_be_used = params[:understands_how_pii_will_be_used]
   end
 
   def populate_from_recipient!
