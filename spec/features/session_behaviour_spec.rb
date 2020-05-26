@@ -17,6 +17,15 @@ RSpec.feature 'Session behaviour', type: :feature do
     expect(page).to have_text('Sign out')
   end
 
+  scenario 'user session is preserved across requests' do
+    visit new_application_form_path
+    fill_in_valid_application_form
+    click_on 'Continue'
+    click_on 'Tell us about another child or young person'
+    expect(page).to have_text('Sign out')
+  end
+
+
   scenario 'clicking "Sign out" signs the user out' do
     visit new_application_form_path
     fill_in_valid_application_form
