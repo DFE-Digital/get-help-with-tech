@@ -70,11 +70,11 @@ describe AllocationRequestFormsController, type: :controller do
       let(:the_request) { post :create, params: params }
 
       it 'does not create an AllocationRequest when params are invalid' do
-        expect { post :create, params: invalid_params }.not_to change(AllocationRequest, :count)
+        expect { post :create, params: params }.not_to change(AllocationRequest, :count)
       end
 
       it 'responds with a 400 status code when params are invalid' do
-        post :create, params: invalid_params
+        post :create, params: params
         expect(response.status).to eq(400)
       end
     end
