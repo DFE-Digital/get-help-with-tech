@@ -1,0 +1,16 @@
+.govuk-panel.govuk-panel--confirmation
+  %h1.govuk-panel__title
+    Thank you
+  .govuk-panel__body
+    Your information has been received successfully
+
+%h2.govuk-heading-m
+  What happens next
+
+%p.govuk-body
+  We will contact you on the email address you provided (
+  #{@application_form.user.email_address}
+  ) soon.
+
+%p.govuk-body
+  = link_to 'Tell us about another child or young person', new_application_form_path

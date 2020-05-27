@@ -1,0 +1,13 @@
+.govuk-accordion#debug{data: {module: "govuk-accordion"}}
+  .govuk-accordion__section
+    .govuk-accordion__section-header
+      %h2.govuk-accordion__section-heading
+        %span.govuk-accordion__section-button#debug-heading-1
+          Session
+    #debug-content-1.govuk-accordion__section-content{aria: { labelledby: "debug-heading-1" }}
+      %dl
+        - session.each do |key, value|
+          %dt
+            =key.to_s
+            %dd
+              =value.inspect

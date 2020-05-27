@@ -18,9 +18,10 @@ ActiveRecord::Schema.define(version: 2020_05_20_105208) do
   create_table "allocation_requests", force: :cascade do |t|
     t.integer "number_eligible"
     t.integer "number_eligible_with_hotspot_access"
-    t.bigint "created_by_user"
+    t.bigint "created_by_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_user_id"], name: "index_allocation_requests_on_created_by_user_id"
   end
 
   create_table "recipients", force: :cascade do |t|
