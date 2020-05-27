@@ -1,12 +1,10 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
   before_action :populate_user_from_session!
-  #after_action :save_user_to_session!
 
 private
 
   def populate_user_from_session!
-    logger.info "\min populate_user_from_session!, session[:user_id] = #{session[:user_id]}, session.id = #{session.id}\n"
     @user = User.find(session[:user_id]) if session[:user_id].present?
     @user ||= User.new
   end
@@ -16,6 +14,6 @@ private
   end
 
   def build_user(user_params)
-    User.new( user_params )
+    User.new(user_params)
   end
 end

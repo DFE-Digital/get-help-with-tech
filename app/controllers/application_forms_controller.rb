@@ -9,8 +9,8 @@ class ApplicationFormsController < ApplicationController
       @application_form.save!
       save_user_to_session! unless session[:user_id] == @user.id
       redirect_to application_form_success_path(@application_form.recipient.id)
-    rescue ActiveModel::ValidationError => e
-      render :new, status: 400
+    rescue ActiveModel::ValidationError
+      render :new, status: :bad_request
     end
   end
 

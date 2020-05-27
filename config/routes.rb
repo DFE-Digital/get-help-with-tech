@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'success', to: 'allocation_request_forms#success'
   end
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: %i[new create destroy]
 
   get '/404', to: 'errors#not_found', via: :all
   get '/422', to: 'errors#unprocessable_entity', via: :all

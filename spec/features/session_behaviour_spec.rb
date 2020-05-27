@@ -8,7 +8,7 @@ RSpec.feature 'Session behaviour', type: :feature do
     expect(page).to have_text('Sign in')
   end
 
-  # TODO: need to think about how verification should work
+  # TODO: need to think about how verification should work
   scenario 'submitting a valid form signs the user in' do
     visit new_application_form_path
     fill_in_valid_application_form
@@ -24,7 +24,6 @@ RSpec.feature 'Session behaviour', type: :feature do
     click_on 'Tell us about another child or young person'
     expect(page).to have_text('Sign out')
   end
-
 
   scenario 'clicking "Sign out" signs the user out' do
     visit new_application_form_path

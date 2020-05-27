@@ -16,16 +16,15 @@ class ApplicationForm
                 :user
 
   validates :full_name, presence: { message: "Tell us the recipient's full name, like John Smith" }
-  validates :address, presence: { message: "Tell us the recipient's address, not including the postcode"}
-  validates :postcode, presence: { message: "Enter a postcode, like AA1 1AA" }
-  validates :can_access_hotspot, presence: { message: "Tell us whether this young person can access a BT hotspot"}
-  validates :is_account_holder, presence: { message: "Tell us whether this young person is the account holder for the mobile device" }
-  validates :account_holder_name, presence: { message: "Tell us the full name of the account holder for the mobile device" }, if: :not_account_holder?
-  validates :device_phone_number, presence: { message: "Tell us the phone number of the mobile device"}
-  validates :phone_network_name, presence: { message: "Tell us the name of the recipients mobile network, for example BT or O2"}
-  validates :privacy_statement_sent_to_family, presence: { message: "Please confirm whether this family have received the privacy statement"}
-  validates :understands_how_pii_will_be_used, presence: { message: "Please confirm whether this family understand how their personally-identifying information will be used"}
-
+  validates :address, presence: { message: "Tell us the recipient's address, not including the postcode" }
+  validates :postcode, presence: { message: 'Enter a postcode, like AA1 1AA' }
+  validates :can_access_hotspot, presence: { message: 'Tell us whether this young person can access a BT hotspot' }
+  validates :is_account_holder, presence: { message: 'Tell us whether this young person is the account holder for the mobile device' }
+  validates :account_holder_name, presence: { message: 'Tell us the full name of the account holder for the mobile device' }, if: :not_account_holder?
+  validates :device_phone_number, presence: { message: 'Tell us the phone number of the mobile device' }
+  validates :phone_network_name, presence: { message: 'Tell us the name of the recipients mobile network, for example BT or O2' }
+  validates :privacy_statement_sent_to_family, presence: { message: 'Please confirm whether this family have received the privacy statement' }
+  validates :understands_how_pii_will_be_used, presence: { message: 'Please confirm whether this family understand how their personally-identifying information will be used' }
 
   def initialize(user: nil, recipient: nil, params: {})
     @user = user
@@ -65,10 +64,10 @@ private
     )
   end
 
-  def populate_from_params!(params={})
+  def populate_from_params!(params = {})
     @user ||= User.new
     params.each do |key, value|
-      self.send("#{key}=", value)
+      send("#{key}=", value)
     end
     @user.full_name = params[:user_name]
     @user.email_address = params[:user_email]

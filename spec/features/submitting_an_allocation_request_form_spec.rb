@@ -4,7 +4,7 @@ RSpec.feature 'Submitting an allocation_request_form', type: :feature do
   scenario 'Navigating to the form' do
     visit '/'
     click_on('Tell us how many eligible young people you know about')
-    expect(current_path).to eq(new_allocation_request_form_path)
+    expect(page).to have_current_path(new_allocation_request_form_path)
   end
 
   scenario 'submitting the form with invalid params' do

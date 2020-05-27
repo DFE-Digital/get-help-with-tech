@@ -9,8 +9,8 @@ class AllocationRequestFormsController < ApplicationController
       @allocation_request_form.save!
       save_user_to_session! unless session[:user_id] == @user.id
       redirect_to allocation_request_form_success_path(@allocation_request_form.allocation_request.id)
-    rescue ActiveModel::ValidationError => e
-      render :new, status: 400
+    rescue ActiveModel::ValidationError
+      render :new, status: :bad_request
     end
   end
 
@@ -31,5 +31,4 @@ private
       :number_eligible_with_hotspot_access,
     )
   end
-
 end

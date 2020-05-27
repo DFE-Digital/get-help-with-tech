@@ -10,14 +10,14 @@ class AllocationRequestForm
                 :allocation_request,
                 :user
 
-  validates :number_eligible, numericality: { only_integer: true, minimum: 0, maximum: 10000, message: 'Please tell us how many young people are eligible, for example 27' }
-  validates :number_eligible_with_hotspot_access, numericality: { only_integer: true, minimum: 0, maximum: 10000, message: 'Please tell us how many eligible young people can access a BT hotspot, for example 12' }
+  validates :number_eligible, numericality: { only_integer: true, minimum: 0, maximum: 10_000, message: 'Please tell us how many young people are eligible, for example 27' }
+  validates :number_eligible_with_hotspot_access, numericality: { only_integer: true, minimum: 0, maximum: 10_000, message: 'Please tell us how many eligible young people can access a BT hotspot, for example 12' }
   validate  :number_eligible_with_hotspot_access_is_not_more_than_number_eligible
 
   def initialize(user: nil, allocation_request: nil, params: {})
     @user = user
     @allocation_request = allocation_request
-    
+
     populate_from_user! if user
     populate_from_allocation_request! if allocation_request
     populate_from_params!(params) unless params.empty?
@@ -48,10 +48,10 @@ private
     )
   end
 
-  def populate_from_params!(params={})
+  def populate_from_params!(params = {})
     @user ||= User.new
     params.each do |key, value|
-      self.send("#{key}=", value)
+      send("#{key}=", value)
     end
     @user.full_name = params[:user_name]
     @user.email_address = params[:user_email]

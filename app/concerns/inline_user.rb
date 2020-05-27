@@ -7,7 +7,7 @@ module InlineUser
     validates :user_email, presence: { message: 'Please tell us your email address, for example j.doe@example.com' }
     validates :user_organisation, presence: { message: 'Please tell us the organisation you work for, for example Lambeth Council' }
 
-    private
+  private
 
     def construct_user
       User.new(full_name: @user_name, email_address: @user_email, organisation: @user_organisation)
