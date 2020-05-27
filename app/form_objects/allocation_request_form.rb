@@ -17,6 +17,7 @@ class AllocationRequestForm
   def initialize(user: nil, allocation_request: nil, params: {})
     @user = user
     @allocation_request = allocation_request
+    
     populate_from_user! if user
     populate_from_allocation_request! if allocation_request
     populate_from_params!(params) unless params.empty?
@@ -33,7 +34,7 @@ class AllocationRequestForm
 private
 
   def number_eligible_with_hotspot_access_is_not_more_than_number_eligible
-    if number_eligible < number_eligible_with_hotspot_access
+    if number_eligible.to_i < number_eligible_with_hotspot_access.to_i
       message = 'The number of eligible young people who can access a BT hotspot cannot be more than the total number of eligible young people'
       errors.add(:number_eligible_with_hotspot_access, message)
     end
@@ -41,6 +42,7 @@ private
 
   def construct_allocation_request
     AllocationRequest.new(
+      created_by_user: @user,
       number_eligible: @number_eligible,
       number_eligible_with_hotspot_access: @number_eligible_with_hotspot_access,
     )

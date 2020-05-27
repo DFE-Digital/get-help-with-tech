@@ -51,6 +51,7 @@ private
 
   def construct_recipient
     Recipient.new(
+      created_by_user: @user,
       full_name: @full_name,
       address: @address,
       postcode: @postcode,
@@ -73,16 +74,16 @@ private
     @user.email_address = params[:user_email]
     @user.organisation = params[:user_organisation]
 
-    @recipient.full_name = params[:full_name]
-    @recipient.address = params[:address]
-    @recipient.postcode = params[:postcode]
-    @recipient.can_access_hotspot = params[:can_access_hotspot]
-    @recipient.is_account_holder = params[:is_account_holder]
-    @recipient.account_holder_name = params[:account_holder_name]
-    @recipient.device_phone_number = params[:device_phone_number]
-    @recipient.phone_network_name = params[:phone_network_name]
-    @recipient.privacy_statement_sent_to_family = params[:privacy_statement_sent_to_family]
-    @recipient.understands_how_pii_will_be_used = params[:understands_how_pii_will_be_used]
+    @full_name = params[:full_name]
+    @address = params[:address]
+    @postcode = params[:postcode]
+    @can_access_hotspot = params[:can_access_hotspot]
+    @is_account_holder = params[:is_account_holder]
+    @account_holder_name = params[:account_holder_name]
+    @device_phone_number = params[:device_phone_number]
+    @phone_network_name = params[:phone_network_name]
+    @privacy_statement_sent_to_family = params[:privacy_statement_sent_to_family]
+    @understands_how_pii_will_be_used = params[:understands_how_pii_will_be_used]
   end
 
   def populate_from_recipient!

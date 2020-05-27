@@ -5,15 +5,11 @@ describe AllocationRequestFormsController, type: :controller do
     context 'with valid params' do
       let(:valid_params) {
         {
-          user: {
-            full_name: 'John Smith',
-            email_address: 'john.smith@somelocalauthority.gov.uk',
-            organisation: 'some local authority',
-          },
-          allocation_request: {
-            number_eligible: 20,
-            number_eligible_with_hotspot_access: 14
-          },
+          user_name: 'John Smith',
+          user_email: 'john.smith@somelocalauthority.gov.uk',
+          user_organisation: 'some local authority',
+          number_eligible: 20,
+          number_eligible_with_hotspot_access: 14,
         }
       }
       let(:params) { { allocation_request_form: valid_params } }
@@ -72,14 +68,10 @@ describe AllocationRequestFormsController, type: :controller do
     context 'with invalid params' do
       let(:invalid_params) {
         {
-          user: {
-            full_name: '',
-            email_address: 'nobody',
-            organisation: '',
-          },
-          allocation_request: {
-            number_eligible: -2,
-          },
+          user_name: '',
+          user_email: 'nobody',
+          user_organisation: '',
+          number_eligible: -2,
         }
       }
       let(:params) { { allocation_request_form: invalid_params } }

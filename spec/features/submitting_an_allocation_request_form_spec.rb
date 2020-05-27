@@ -13,7 +13,7 @@ RSpec.feature 'Submitting an allocation_request_form', type: :feature do
     fill_in 'Your email address', with: 'no-one@anywhere'
     click_on 'Continue'
     expect(page.status_code).not_to eq(200)
-    expect(page).to have_text('error')
+    expect(page).to have_text('There is a problem')
   end
 
   scenario 'submitting the form with valid params' do
