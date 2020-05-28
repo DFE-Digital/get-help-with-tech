@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unprocessable_entity', via: :all
   get '/500', to: 'errors#internal_server_error', via: :all
 
-  get '/', to: redirect('allocation_request_forms/new')
+  get '/', to: redirect('pages/guidance')
 end
