@@ -1,6 +1,7 @@
 class ApplicationFormsController < ApplicationController
   def new
     @application_form = ApplicationForm.new(user: @user)
+    @mobile_networks = MobileNetwork.order('LOWER(brand)')
   end
 
   def create
@@ -10,6 +11,7 @@ class ApplicationFormsController < ApplicationController
       save_user_to_session! unless session[:user_id] == @user.id
       redirect_to application_form_success_path(@application_form.recipient.id)
     rescue ActiveModel::ValidationError
+      @mobile_networks = MobileNetwork.order('LOWER(brand)')
       render :new, status: :bad_request
     end
   end
@@ -34,7 +36,7 @@ private
       :is_account_holder,
       :account_holder_name,
       :device_phone_number,
-      :phone_network_name,
+      :mobile_network_id,
       :privacy_statement_sent_to_family,
       :understands_how_pii_will_be_used,
     )
