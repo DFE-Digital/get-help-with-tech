@@ -9,6 +9,7 @@ class ApplicationForm
                 :is_account_holder,
                 :account_holder_name,
                 :device_phone_number,
+                :mobile_network_id,
                 :phone_network_name,
                 :privacy_statement_sent_to_family,
                 :understands_how_pii_will_be_used,
@@ -22,7 +23,7 @@ class ApplicationForm
   validates :is_account_holder, presence: { message: 'Tell us whether this young person is the account holder for the mobile device' }
   validates :account_holder_name, presence: { message: 'Tell us the full name of the account holder for the mobile device' }, if: :not_account_holder?
   validates :device_phone_number, presence: { message: 'Tell us the phone number of the mobile device' }
-  validates :phone_network_name, presence: { message: 'Tell us the name of the recipients mobile network, for example BT or O2' }
+  validate  :mobile_network_exists
   validates :privacy_statement_sent_to_family, presence: { message: 'Please confirm whether this family have received the privacy statement' }
   validates :understands_how_pii_will_be_used, presence: { message: 'Please confirm whether this family understand how their personally-identifying information will be used' }
 
@@ -48,6 +49,10 @@ class ApplicationForm
 
 private
 
+  def mobile_network_exists
+    errors.add(:mobile_network_id, 'Please select a mobile network') unless MobileNetwork.where(id: @mobile_network_id).exists?
+  end
+
   def construct_recipient
     Recipient.new(
       created_by_user: @user,
@@ -59,6 +64,7 @@ private
       account_holder_name: @account_holder_name,
       device_phone_number: @device_phone_number,
       phone_network_name: @phone_network_name,
+      mobile_network_id: @mobile_network_id,
       privacy_statement_sent_to_family: @privacy_statement_sent_to_family,
       understands_how_pii_will_be_used: @understands_how_pii_will_be_used,
     )
@@ -80,6 +86,7 @@ private
     @is_account_holder = params[:is_account_holder]
     @account_holder_name = params[:account_holder_name]
     @device_phone_number = params[:device_phone_number]
+    @mobile_network_id = params[:mobile_network_id]
     @phone_network_name = params[:phone_network_name]
     @privacy_statement_sent_to_family = params[:privacy_statement_sent_to_family]
     @understands_how_pii_will_be_used = params[:understands_how_pii_will_be_used]
@@ -93,6 +100,7 @@ private
     @is_account_holder = @recipient.is_account_holder
     @account_holder_name = @recipient.account_holder_name
     @device_phone_number = @recipient.device_phone_number
+    @mobile_network_id = @recipient.mobile_network_id
     @phone_network_name = @recipient.phone_network_name
     @privacy_statement_sent_to_family = @recipient.privacy_statement_sent_to_family
     @understands_how_pii_will_be_used = @recipient.understands_how_pii_will_be_used

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_105208) do
+ActiveRecord::Schema.define(version: 2020_06_08_084941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2020_05_20_105208) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_by_user_id"], name: "index_allocation_requests_on_created_by_user_id"
+  end
+
+  create_table "mobile_networks", force: :cascade do |t|
+    t.string "brand"
+    t.string "host_network"
+    t.boolean "participating_in_scheme"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["brand"], name: "index_mobile_networks_on_brand", unique: true
+    t.index ["host_network", "brand"], name: "index_mobile_networks_on_host_network_and_brand", unique: true
   end
 
   create_table "recipients", force: :cascade do |t|
@@ -38,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_05_20_105208) do
     t.bigint "created_by_user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "mobile_network_id"
   end
 
   create_table "users", force: :cascade do |t|

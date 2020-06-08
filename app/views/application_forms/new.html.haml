@@ -28,7 +28,12 @@
           label: { text: 'Please give the name of the account holder ' }
 
     = f.govuk_phone_field :device_phone_number, required: true, label: { text: 'Phone number of device' }
-    = f.govuk_text_field :phone_network_name, required: true, width: 'one-quarter', hint_text: 'for example, O2 or BT', label: { text: 'Name of phone network' }
+
+    = f.govuk_collection_select :mobile_network_id,
+                                @mobile_networks,
+                                :id,
+                                :brand,
+                                label: { text: 'Name of phone network' }
 
     = f.govuk_collection_radio_buttons :privacy_statement_sent_to_family,
                                       yes_no_options,
