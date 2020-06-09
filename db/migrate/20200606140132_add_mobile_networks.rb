@@ -8,6 +8,6 @@ class AddMobileNetworks < ActiveRecord::Migration[6.0]
     end
 
     add_index :mobile_networks, :brand, unique: true
-    add_index :mobile_networks, [:host_network, :brand], unique: true
+    add_index :mobile_networks, %i[host_network brand], unique: true
   end
 end

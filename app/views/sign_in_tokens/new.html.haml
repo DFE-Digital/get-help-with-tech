@@ -1,0 +1,8 @@
+%h1.govuk-heading-xl
+  Sign in
+
+= form_for @sign_in_token_form, url: sign_in_tokens_path, method: :POST do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_email_field :email_address, required: true, label: { text: 'Please enter your email address' }
+  = f.govuk_submit
