@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   get '/token/validate/:token/:identifier', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   get '/token/manual', to: 'sign_in_tokens#manual', as: :validate_manually_entered_sign_in_token
 
+
+  resources :mobile_networks do
+    resources :recipients, only: %i[index show edit update]
+  end
+  
   get '/sign_in', to: 'sign_in_tokens#new', as: :sign_in
 
   get '/404', to: 'errors#not_found', via: :all

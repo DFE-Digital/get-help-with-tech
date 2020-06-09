@@ -7,7 +7,8 @@ class SignInTokensController < ApplicationController
     @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
     save_user_to_session!
     flash.notice = "Welcome, #{@user.full_name}"
-    redirect_to '/'
+    redirect_to root_url_for(@user)
+
   rescue ArgumentError
     @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
     render :token_not_recognised, status: :bad_request
@@ -41,5 +42,15 @@ private
       :token,
       :identifier,
     )
+  end
+
+  def root_url_for(user)
+    if user.is_mno_user?
+      mobile_network_recipients_path(user.mobile_network_id)
+    elsif user.is_dfe?
+      admin_path
+    else
+      '/'
+    end
   end
 end
