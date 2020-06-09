@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
+require 'shared/users'
 
 RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
@@ -41,6 +42,41 @@ RSpec.feature 'Session behaviour', type: :feature do
 
       click_on 'Sign out'
       expect(page).to have_text('Sign in')
+    end
+  end
+
+  context 'with a valid user' do
+    before do
+      create_valid_user
+    end
+    after do
+      destroy_valid_user
+    end
+
+    scenario 'Signing in as a recognised user sends a magic link email' do
+      visit '/'
+      click_on 'Sign in'
+      expect(page).to have_text('Please enter your email address')
+
+      fill_in 'Please enter your email address', with: 'jane.doe@somelocalauthority.gov.uk'
+      click_on 'Continue'
+
+      expect(page).to have_text("If we've recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.")
+    end
+
+    scenario 'Visiting a valid sign_in_token link signs the user in' do
+      
+    end
+
+    scenario 'Entering an unrecognised email address is silently ignored' do
+      visit '/'
+      click_on 'Sign in'
+      expect(page).to have_text('Please enter your email address')
+
+      fill_in 'Please enter your email address', with: 'unrecognised@example.com'
+      click_on 'Continue'
+
+      expect(page).to have_text("If we've recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.")
     end
   end
 end

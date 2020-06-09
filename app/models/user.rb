@@ -4,4 +4,6 @@ class User < ApplicationRecord
   validates :full_name, presence: true, length: { minimum: 2, maximum: 1024 }
   validates :email_address, presence: true, length: { minimum: 2, maximum: 1024 }
   validates :organisation, presence: true, length: { minimum: 2, maximum: 1024 }
+
+  include SignInWithToken
 end

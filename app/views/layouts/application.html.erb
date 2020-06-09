@@ -61,8 +61,8 @@
                   <%= link_to "Sign out", session_path(id: session.id), method: :delete, class: "govuk-header__link" %>
                 </li>
               <%- else %>
-                <li class="govuk-header__navigation-item govuk-header__navigation-item">
-                  <%= link_to "Sign in with DFE Sign In", new_session_path, class: "govuk-header__link" %>
+                <li class="govuk-header__navigation-item govuk-header__navigation-item<%= request.path == sign_in_path ? "--active" : "" %>">
+                  <%= link_to "Sign in", sign_in_path, class: "govuk-header__link" %>
                 </li>
               <%- end %>
             </ul>

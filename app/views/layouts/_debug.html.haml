@@ -11,3 +11,16 @@
             =key.to_s
             %dd
               =value.inspect
+  - if @debug_info.present?
+    .govuk-accordion__section
+      .govuk-accordion__section-header
+        %h2.govuk-accordion__section-heading
+          %span.govuk-accordion__section-button#debug-heading-2
+            Debug info
+      #debug-content-2.govuk-accordion__section-content{aria: { labelledby: "debug-heading-1" }}
+        %dl
+          - @debug_info.each do |key, value|
+            %dt
+              =key.to_s
+              %dd
+                =value.inspect
