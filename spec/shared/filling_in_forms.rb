@@ -1,14 +1,3 @@
-def create_participating_mobile_network
-  MobileNetwork.create!(
-    brand: 'Participating mobile network',
-    host_network: 'AA',
-    participating_in_scheme: true
-  )
-end
-
-def destroy_participating_mobile_network
-  MobileNetwork.where(brand: 'Participating mobile network').destroy_all
-end
 
 def fill_in_valid_application_form
   fill_in 'Your full name', with: 'Bob Boberts'

@@ -1,6 +1,5 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
-require 'shared/users'
 
 RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
@@ -10,12 +9,8 @@ RSpec.feature 'Session behaviour', type: :feature do
   end
 
   context 'with a participating mobile network' do
-    before do
-      create_participating_mobile_network
-    end
-
-    after do
-      destroy_participating_mobile_network
+    let!(:participating_mobile_network) do
+      create(:participating_mobile_network)
     end
 
     # TODO: need to think about how verification should work
@@ -46,26 +41,21 @@ RSpec.feature 'Session behaviour', type: :feature do
   end
 
   context 'with a valid user' do
-    before do
-      create_valid_user
-    end
-    after do
-      destroy_valid_user
-    end
+    let(:valid_user) { create(:local_authority_user) }
 
     scenario 'Signing in as a recognised user sends a magic link email' do
       visit '/'
       click_on 'Sign in'
       expect(page).to have_text('Please enter your email address')
 
-      fill_in 'Please enter your email address', with: 'jane.doe@somelocalauthority.gov.uk'
+      fill_in 'Please enter your email address', with: valid_user.email_address
       click_on 'Continue'
 
       expect(page).to have_text("If we've recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.")
     end
 
     scenario 'Visiting a valid sign_in_token link signs the user in' do
-      
+
     end
 
     scenario 'Entering an unrecognised email address is silently ignored' do

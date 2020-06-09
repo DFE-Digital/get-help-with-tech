@@ -7,7 +7,7 @@ class SignInTokensController < ApplicationController
     begin
       @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
       save_user_to_session!
-      flash.notice = "Welcome, #{@user.full_name}'
+      flash.notice = "Welcome, #{@user.full_name}"
       redirect_to '/'
     rescue ArgumentError => e
       @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
