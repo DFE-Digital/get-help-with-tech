@@ -1,4 +1,3 @@
-# TODO: refactor this to have a Token Controller (more RESTful)
 class SessionsController < ApplicationController
   def destroy
     reset_session
