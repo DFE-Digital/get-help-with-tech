@@ -1,5 +1,4 @@
-
-def fill_in_valid_application_form
+def fill_in_valid_application_form(mobile_network_name: 'Participating mobile network')
   fill_in 'Your full name', with: 'Bob Boberts'
   fill_in 'Your email address', with: 'validmail@localauthority.gov.uk'
   fill_in 'Name of the organisation you work for', with: 'A Local Authority'
@@ -12,7 +11,7 @@ def fill_in_valid_application_form
   find('#application-form-is-account-holder-yes-field').choose
   fill_in 'Phone number of device', with: '0123456789'
 
-  select 'Participating mobile network', from: 'Name of phone network'
+  select mobile_network_name, from: 'Name of phone network'
   find('#application-form-privacy-statement-sent-to-family-yes-field').choose
   find('#application-form-understands-how-pii-will-be-used-yes-field').choose
 end
