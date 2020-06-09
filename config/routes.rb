@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[create destroy]
 
   resources :sign_in_tokens, only: %i[new create]
-  get '/token/:token/:identifier/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
+  get '/token/validate/:token/:identifier', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   get '/token/manual', to: 'sign_in_tokens#manual', as: :validate_manually_entered_sign_in_token
 
   get '/sign_in', to: 'sign_in_tokens#new', as: :sign_in
