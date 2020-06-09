@@ -90,7 +90,7 @@
       <div class="govuk-width-container ">
         <div class="govuk-footer__meta">
           <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            <%- if Rails.env.development? %>
+            <%- if ENV['SHOW_DEBUG_INFO'] %>
               <%= render partial: 'layouts/debug' %>
             <%- end %>
 
