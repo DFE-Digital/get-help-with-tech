@@ -13,6 +13,11 @@ RSpec.feature 'Session behaviour', type: :feature do
       create(:participating_mobile_network)
     end
 
+    # this seems overly-verbose compared to let!, but this is what rubocop wants
+    before do
+      participating_mobile_network
+    end
+
     # TODO: need to think about how verification should work
     scenario 'submitting a valid form signs the user in' do
       visit new_application_form_path
