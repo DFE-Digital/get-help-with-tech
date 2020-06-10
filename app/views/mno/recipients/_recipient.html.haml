@@ -6,9 +6,13 @@
   %td.govuk-table__cell
     = recipient.full_name
   %td.govuk-table__cell
-    = recipient.account_holder_name
+    - if recipient.is_account_holder?
+      %em
+        (recipient)
+    - else
+      = recipient.account_holder_name
   %td.govuk-table__cell
-    = l(recipient.created_at)
+    = l(recipient.created_at, format: :short)
   %td.govuk-table__cell
     -
   %td.govuk-table__cell
