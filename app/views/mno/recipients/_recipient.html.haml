@@ -2,14 +2,16 @@
   %td.govuk-table__cell.govuk-table__cell--numeric
     = link_to recipient.id, edit_mno_recipient_path(recipient)
   %td.govuk-table__cell.govuk-table__cell--numeric
-    = recipient.phone_number
+    = recipient.device_phone_number
   %td.govuk-table__cell
-    = recipient.name
+    = recipient.full_name
   %td.govuk-table__cell
     = recipient.account_holder_name
   %td.govuk-table__cell
-    = recipient.created_at.iso8601
+    = l(recipient.created_at)
   %td.govuk-table__cell
     -
   %td.govuk-table__cell
-    = form.govuk_check_box :id, checked: (params[:select] == 'all')
+    %input#ids{ type: "checkbox", value: recipient.id, name: "ids[]", checked: (params[:select] == 'all') }
+  %td.govuk-table__cell
+    = link_to 'Report a problem', mno_recipient_report_problem_path(recipient)

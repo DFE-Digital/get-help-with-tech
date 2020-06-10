@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   namespace :mno do
     resources :recipients, only: %i[index show edit update] do
       put 'bulk_update', to: 'recipients#bulk_update', on: :collection
+      get 'report_problem', to: 'recipients#report_problem', as: :report_problem
     end
   end
 
