@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
 
   namespace :mno do
-    resources :recipients, only: %i[index show edit update]
+    resources :recipients, only: %i[index show edit update] do
+      put 'bulk_update', to: 'recipients#bulk_update', on: :collection
+    end
   end
 
   get '/sign_in', to: 'sign_in_tokens#new', as: :sign_in

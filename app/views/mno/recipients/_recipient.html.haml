@@ -1,0 +1,15 @@
+%tr.govuk-table__row
+  %td.govuk-table__cell.govuk-table__cell--numeric
+    = link_to recipient.id, edit_mno_recipient_path(recipient)
+  %td.govuk-table__cell.govuk-table__cell--numeric
+    = recipient.phone_number
+  %td.govuk-table__cell
+    = recipient.name
+  %td.govuk-table__cell
+    = recipient.account_holder_name
+  %td.govuk-table__cell
+    = recipient.created_at.iso8601
+  %td.govuk-table__cell
+    -
+  %td.govuk-table__cell
+    = form.govuk_check_box :id, checked: (params[:select] == 'all')
