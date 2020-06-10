@@ -22,6 +22,8 @@ class SignInTokensController < ApplicationController
 
     if @sign_in_token_form.valid? && @sign_in_token_form.email_is_user?
       token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
+      # NOTE: this is purely to allow us to display the link in the footer
+      # REMOVE when we have emails actually being sent
       identifier = User.where(sign_in_token: token).first.try(:sign_in_identifier, token)
       @debug_info = {
         sign_in_token: token,

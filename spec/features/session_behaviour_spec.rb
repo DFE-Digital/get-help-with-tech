@@ -66,10 +66,6 @@ RSpec.feature 'Session behaviour', type: :feature do
       expect(page).to have_text("If we've recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.")
     end
 
-    scenario 'Visiting a valid sign_in_token link signs the user in' do
-      # pending
-    end
-
     scenario 'Entering an unrecognised email address is silently ignored' do
       visit '/'
       click_on 'Sign in'
