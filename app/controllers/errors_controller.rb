@@ -22,4 +22,10 @@ class ErrorsController < ApplicationController
       format.json { render json: { error: 'Unprocessable entity' }, status: :unprocessable_entity }
     end
   end
+
+  def forbidden
+    format.html { render status: :not_authorized }
+    format.json { render json: { error: 'Not Authorized' }, status: :not_authorized }
+    format.all { render status: :not_authorized, body: nil }
+  end
 end

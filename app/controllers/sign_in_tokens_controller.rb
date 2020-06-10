@@ -46,7 +46,7 @@ private
 
   def root_url_for(user)
     if user.is_mno_user?
-      mobile_network_recipients_path(user.mobile_network_id)
+      mno_recipients_path(user.mobile_network_id)
     elsif user.is_dfe?
       admin_path
     else

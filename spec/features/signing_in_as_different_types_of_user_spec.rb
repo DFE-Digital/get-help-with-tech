@@ -24,7 +24,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
     scenario 'it redirects to Your Requests' do
       visit(validate_token_url)
-      expect(response).to redirect_to(mobile_network_recipients_path(user.mobile_network))
+      expect(current_path).to eq(mno_recipients_path(user.mobile_network))
       expect(page).to have_text 'Your requests'
     end
   end
