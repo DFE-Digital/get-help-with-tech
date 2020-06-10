@@ -10,7 +10,12 @@ module InlineUser
   private
 
     def construct_user
-      User.new(full_name: @user_name, email_address: @user_email, organisation: @user_organisation)
+      User.where(email_address: @user_email).first ||
+        User.new(full_name: @user_name, email_address: @user_email, organisation: @user_organisation)
+    end
+
+    def retrieve_user_by_email(email)
+      User.where(email_address: email).first
     end
 
     def populate_from_user!

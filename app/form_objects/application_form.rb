@@ -36,7 +36,9 @@ class ApplicationForm
   end
 
   def save!
-    @user ||= construct_user
+    unless @user.try(:persisted?)
+      @user = retrieve_user_by_email(@user.email_address) || construct_user
+    end
     @recipient ||= construct_recipient
     validate!
     @user.save!

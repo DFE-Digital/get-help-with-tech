@@ -43,6 +43,13 @@ RSpec.feature 'Session behaviour', type: :feature do
       click_on 'Sign out'
       expect(page).to have_text('Sign in')
     end
+
+    scenario 'submitting a valid form with an existing user email address does not create a duplicate user' do
+      user = create(:local_authority_user)
+      visit new_application_form_path
+      fill_in_valid_application_form(user_email: user.email_address, mobile_network_name: participating_mobile_network.brand)
+      expect { click_on 'Continue' }.not_to change(User, :count)
+    end
   end
 
   context 'with a valid user' do

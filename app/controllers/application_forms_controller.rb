@@ -8,7 +8,8 @@ class ApplicationFormsController < ApplicationController
     @application_form = ApplicationForm.new(user: @user, params: application_form_params)
     begin
       @application_form.save!
-      save_user_to_session! unless session[:user_id] == @user.id
+      @user = @application_form.user
+      save_user_to_session!
       redirect_to application_form_success_path(@application_form.recipient.id)
     rescue ActiveModel::ValidationError
       @mobile_networks = MobileNetwork.order('LOWER(brand)')
