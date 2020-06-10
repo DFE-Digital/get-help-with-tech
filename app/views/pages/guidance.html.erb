@@ -3,7 +3,7 @@
 </h1>
 
 <p class="govuk-body-l">
-  We know internet access supports remote education, as well as virtual meetings between children and their social workers. That’s why we’re providing laptops, tablets and 4G wireless routers to disadvantaged families. (There’s more about this on #{link_to 'GOV.UK.', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19'})
+  We know internet access supports remote education, as well as virtual meetings between children and their social workers. That’s why we’re providing laptops, tablets and 4G wireless routers to disadvantaged families. (There’s more about this on <%= link_to 'GOV.UK.', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %>)
 </p>
 <p class="govuk-body-l">
   We also know some children don’t have reliable internet access. That’s why we’re now acting to change this.
@@ -14,11 +14,13 @@
 <p class="govuk-body">
   The Department for Education has teamed up with BT and mobile network operators to improve children’s internet access in two different ways:
 </p>
-<ul class="govuk-list.govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet">
   <li>
     We’re giving them free access to BT wifi hotspots. BT will create a set of profiles that young people can activate through name/password combinations.
-  <li
+  </li>
+  <li>
     For anyone who can’t connect to a BT hotspot, we plan to boost data allowances on their mobile devices so they can access the internet without incurring data charges.
+  </li>
 </ul>
 <h2 class="govuk-heading-l">
   Who can get help
@@ -28,7 +30,7 @@
 </p>
 <ul class="govuk-list govuk-list--bullet">
   <li>
-    don’t have access to a #{link_to 'fixed broadband connection', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics'}
+    don’t have access to a <%= link_to 'fixed broadband connection', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics' %>
   </li>
   <li>
     cannot afford the additional data needed to access educational resources or social care services
