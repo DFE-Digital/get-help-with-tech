@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get '/token/manual', to: 'sign_in_tokens#manual', as: :validate_manually_entered_sign_in_token
 
 
-  resources :mobile_networks do
+  namespace :mno do
     resources :recipients, only: %i[index show edit update]
   end
 
