@@ -14,6 +14,6 @@ class User < ApplicationRecord
   end
 
   def is_dfe?
-    email_address.match?(/[\.@]education.gov.uk$/)
+    email_address.present? && email_address.match?(/[\.@]education.gov.uk$/)
   end
 end

@@ -10,4 +10,16 @@ module ApplicationHelper
       OpenStruct.new(id: 'no', name: 'No'),
     ]
   end
+
+  def nav_item( title: nil, url: nil, content: nil )
+    class_name = "govuk-header__navigation-item"
+    class_name = "#{class_name} govuk-header__navigation-item--active" if request.path == url
+
+html = <<-HTML
+    <li class="#{class_name}">
+      #{title.present? ? link_to(title, url, class: 'govuk-header__link') : content}
+    </li>
+HTML
+    html.html_safe
+  end
 end
