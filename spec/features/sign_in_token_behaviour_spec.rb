@@ -31,7 +31,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
       visit broken_token_url
       expect(page).not_to have_text('Sign out')
       expect(page).to have_http_status(:bad_request)
-      expect(page).to have_text('We didn\'t recognise that link')
+      expect(page).to have_text('We didn’t recognise that link')
     end
 
     scenario 'Visiting an invalid token link allows the user to enter them manually' do
