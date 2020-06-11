@@ -6,11 +6,15 @@
     Your information has been received successfully
   </div>
 </div>
-<h2 class="govuk-heading-m">
-  What happens next
-</h2>
-<p class="govuk-body">
-  We will contact you on the email address you provided (
-  <%= @allocation_request_form.user.email_address %>
-  ) soon.
-</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">
+      What happens next
+    </h2>
+    <p class="govuk-body">
+      We will contact you on the email address you provided (
+      <%= @allocation_request_form.user.email_address %>
+      ) soon.
+    </p>
+  </div>
+</div>

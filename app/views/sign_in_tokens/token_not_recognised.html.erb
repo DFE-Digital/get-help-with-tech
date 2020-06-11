@@ -1,17 +1,21 @@
-<h1 class="govuk-heading-xl">
-  Sorry, that didn't work
-</h1>
-<p class="govuk-body-l">
-  We didn't recognise that link.
-</p>
-<p class="govuk-body">
-  If you clicked on the link from an email, you could try copying the two special values from your email into here:
-</p>
-<%= form_for @sign_in_token_form, url: validate_manually_entered_sign_in_token_path, method: :get do |f| %>
-  <%= f.govuk_text_field :token %>
-  <%= f.govuk_text_field :identifier %>
-  <%= f.govuk_submit %>
-<% end %>
-<p class="govuk-body">
-  Or <%= link_to 'send a new email', new_sign_in_token_path %>
-</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Sorry, that didn't work
+    </h1>
+    <p class="govuk-body-l">
+      We didn't recognise that link.
+    </p>
+    <p class="govuk-body">
+      If you clicked on the link from an email, you could try copying the two special values from your email into here:
+    </p>
+    <%= form_for @sign_in_token_form, url: validate_manually_entered_sign_in_token_path, method: :get do |f| %>
+      <%= f.govuk_text_field :token %>
+      <%= f.govuk_text_field :identifier %>
+      <%= f.govuk_submit %>
+    <% end %>
+    <p class="govuk-body">
+      Or <%= link_to 'send a new email', new_sign_in_token_path %>
+    </p>
+  </div>
+</div>
