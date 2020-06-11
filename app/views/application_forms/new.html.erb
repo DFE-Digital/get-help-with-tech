@@ -1,68 +1,74 @@
-<h1 class="govuk-heading-xl">
-  Tell us about an eligible young person
-</h1>
+<% content_for :title, title_with_error_prefix(t('page_titles.eligible_person'), @application_form.errors.any?) %>
 
-<p class="govuk-body-l">
-  Please complete all the fields you can.
-</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.eligible_person') %>
+    </h1>
 
-<%= form_for @application_form do |f| %>
-  <%= f.govuk_error_summary %>
+    <p class="govuk-body-l">
+      Please complete all the fields you can.
+    </p>
 
-  <%= render partial: 'shared/user_form', locals: { form: f } %>
+    <%= form_for @application_form do |f| %>
+      <%= f.govuk_error_summary %>
 
-  <%= f.govuk_fieldset legend: { text: 'About the recipient' } do %>
-    <%= f.govuk_text_field :full_name, required: true, label: { text: 'Name of the eligible child or young person' } %>
-    <%= f.govuk_text_area  :address, required: true, rows: 3, label: { text: 'Address of the child or young person' } %>
-    <%= f.govuk_text_field :postcode, required: true, width: 'one-quarter', label: { text: 'Postcode of the child or young person' } %>
-    <%= f.govuk_collection_radio_buttons :can_access_hotspot,
-                                      yes_no_options,
-                                      :id,
-                                      :name,
-                                      inline: true,
-                                      hint_text: 'There\'s guidance available on <a href="https://www.btwifi.com/find/ ">how to check access to hotspots</a>'.html_safe,
-                                      legend: { text: 'Can the child or young person access a BT hotspot?' }  %>
+      <%= render partial: 'shared/user_form', locals: { form: f } %>
 
-    <%= f.govuk_radio_buttons_fieldset :is_account_holder, legend: { text: 'Who is the account holder for the mobile device?' } do %>
-      <%= f.govuk_radio_button :is_account_holder, 'yes', label: { text: 'Child/young person' } %>
-      <%= f.govuk_radio_button :is_account_holder, 'no', label: { text: 'Parent/guardian' } do %>
-        <%= f.govuk_text_field :account_holder_name, label: { text: 'Please give the name of the account holder ' } %>
+      <%= f.govuk_fieldset legend: { text: 'About the recipient' } do %>
+        <%= f.govuk_text_field :full_name, required: true, label: { text: 'Name of the eligible child or young person' } %>
+        <%= f.govuk_text_area  :address, required: true, rows: 3, label: { text: 'Address of the child or young person' } %>
+        <%= f.govuk_text_field :postcode, required: true, width: 'one-quarter', label: { text: 'Postcode of the child or young person' } %>
+        <%= f.govuk_collection_radio_buttons :can_access_hotspot,
+                                          yes_no_options,
+                                          :id,
+                                          :name,
+                                          inline: true,
+                                          hint_text: 'There’s guidance available on <a class="govuk-link" href="https://www.btwifi.com/find/ ">how to check access to hotspots</a>'.html_safe,
+                                          legend: { text: 'Can the child or young person access a BT hotspot?' }  %>
+
+        <%= f.govuk_radio_buttons_fieldset :is_account_holder, legend: { text: 'Who is the account holder for the mobile device?' } do %>
+          <%= f.govuk_radio_button :is_account_holder, 'yes', label: { text: 'Child/young person' } %>
+          <%= f.govuk_radio_button :is_account_holder, 'no', label: { text: 'Parent/guardian' } do %>
+            <%= f.govuk_text_field :account_holder_name, label: { text: 'Please give the name of the account holder ' } %>
+          <%- end %>
+        <%- end %>
+        <%= f.govuk_phone_field :device_phone_number, required: true, label: { text: 'Phone number of device' } %>
+
+        <%= f.govuk_collection_select :mobile_network_id,
+                                    @mobile_networks,
+                                    :id,
+                                    :brand,
+                                    label: { text: 'Name of phone network' }  %>
+
+        <%= f.govuk_collection_radio_buttons :privacy_statement_sent_to_family,
+                                          yes_no_options,
+                                          :id,
+                                          :name,
+                                          inline: true,
+                                          legend: { text: 'Has the privacy statement been sent to the family?' } %>
+
+
+        <%= f.govuk_collection_radio_buttons :understands_how_pii_will_be_used,
+                                          yes_no_options,
+                                          :id,
+                                          :name,
+                                          inline: true,
+                                          legend: { text: 'Does the child/family understand how their personal information will be used?' } %>
       <%- end %>
-    <%- end %>
-    <%= f.govuk_phone_field :device_phone_number, required: true, label: { text: 'Phone number of device' } %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">
+          !
+        </span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">
+            Warning
+          </span>
+          Once you submit this form, we’ll pass on the information to mobile network operators.
+        </strong>
+      </div>
 
-    <%= f.govuk_collection_select :mobile_network_id,
-                                @mobile_networks,
-                                :id,
-                                :brand,
-                                label: { text: 'Name of phone network' }  %>
-
-    <%= f.govuk_collection_radio_buttons :privacy_statement_sent_to_family,
-                                      yes_no_options,
-                                      :id,
-                                      :name,
-                                      inline: true,
-                                      legend: { text: 'Has the privacy statement been sent to the family?' } %>
-
-
-    <%= f.govuk_collection_radio_buttons :understands_how_pii_will_be_used,
-                                      yes_no_options,
-                                      :id,
-                                      :name,
-                                      inline: true,
-                                      legend: { text: 'Does the child/family understand how their personal information will be used?' } %>
-  <%- end %>
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">
-      !
-    </span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive">
-        Warning
-      </span>
-      Once you submit this form, we’ll pass on the information to mobile network operators.
-    </strong>
+      <%= f.govuk_submit %>
+    <% end %>
   </div>
-
-  <%= f.govuk_submit %>
-<% end %>
+</div>

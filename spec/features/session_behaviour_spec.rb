@@ -63,7 +63,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       fill_in 'Please enter your email address', with: valid_user.email_address
       click_on 'Continue'
 
-      expect(page).to have_text("If we've recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.")
+      expect(page).to have_text('If we’ve recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.')
     end
 
     scenario 'Entering an unrecognised email address is silently ignored' do
@@ -74,7 +74,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       fill_in 'Please enter your email address', with: 'unrecognised@example.com'
       click_on 'Continue'
 
-      expect(page).to have_text("If we've recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.")
+      expect(page).to have_text('If we’ve recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.')
     end
   end
 end
