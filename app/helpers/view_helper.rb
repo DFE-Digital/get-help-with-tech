@@ -13,6 +13,10 @@ module ViewHelper
     link_to(body, url, role: 'button', class: html_options[:class], 'data-module': 'govuk-button', draggable: false)
   end
 
+  def title_with_error_prefix(title, error)
+    "#{t('page_titles.error_prefix') if error}#{title}"
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

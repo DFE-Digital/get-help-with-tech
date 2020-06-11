@@ -1,7 +1,9 @@
+<% content_for :title, title_with_error_prefix(t('page_titles.eligible_people'), @allocation_request_form.errors.any?) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Tell us how many eligible young people you know about
+      <%= t('page_titles.eligible_people') %>
     </h1>
     <p class="govuk-body-l">
       Please complete all the fields you can.

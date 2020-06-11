@@ -1,7 +1,9 @@
+<% content_for :title, t('page_titles.sign_in') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Sign in
+      <%= t('page_titles.sign_in') %>
     </h1>
     <%= form_for @sign_in_token_form, url: sign_in_tokens_path, method: :POST do |f| %>
       <%= f.govuk_error_summary %>

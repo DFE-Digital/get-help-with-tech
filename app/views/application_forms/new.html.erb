@@ -1,7 +1,9 @@
+<% content_for :title, title_with_error_prefix(t('page_titles.eligible_person'), @application_form.errors.any?) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Tell us about an eligible young person
+      <%= t('page_titles.eligible_person') %>
     </h1>
 
     <p class="govuk-body-l">
