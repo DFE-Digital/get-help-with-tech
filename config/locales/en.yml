@@ -10,3 +10,12 @@ en:
   errors:
     format:
       "'%{attribute}' %{message}"
+  activerecord:
+    attributes:
+      recipient:
+        statuses:
+          requested: Requested
+          in_progress: In Progress
+          queried: Queried
+          complete: Complete
+          cancelled: Cancelled

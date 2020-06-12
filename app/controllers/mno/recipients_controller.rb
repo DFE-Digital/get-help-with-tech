@@ -5,7 +5,7 @@ class Mno::RecipientsController < Mno::BaseController
         recipients: @recipients,
         recipient_ids: selected_recipient_ids(@recipients, params)
     )
-    @statusses = ['Complete', 'In progress']
+    @statuses = Recipient.translated_enum_values( :statuses )
   end
 
   def report_problem

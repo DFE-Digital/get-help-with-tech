@@ -47,10 +47,13 @@
       <tfoot class="govuk-table__footer">
         <td class="govuk-table__footer" colspan="4"></td>
         <td class="govuk-table__footer govuk-table__cell--numeric" colspan="2">
-          <div class="govuk-form-group">Set selected to</div>
+          <div class="govuk-form-group">
+            <label for="mno-recipients-form-status-field" class="govuk-label">Set selected to</label>
+          </div>
         </td>
         <td class="govuk-table__footer">
-          <%= f.govuk_collection_select :action, @statusses, :to_s, :to_s, label: {text: ''} %>
+          <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
+
         </td>
         <td class="govuk-table__footer">
           <%= f.govuk_submit 'Update' %>

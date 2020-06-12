@@ -1,4 +1,4 @@
-<tr class="govuk-table__row">
+<tr class="govuk-table__row" id="recipient-<%= recipient.id %>">
   <td class="govuk-table__cell govuk-table__cell--numeric">
     <%= link_to recipient.id, edit_mno_recipient_path(recipient) %>
   </td>
@@ -20,7 +20,9 @@
   <td class="govuk-table__cell">
     <%= l(recipient.created_at, format: :short) %>
   </td>
-  <td class="govuk-table__cell"></td>
+  <td class="govuk-table__cell" class="recipient-status">
+    <%= recipient.status %>
+  </td>
   <td class="govuk-table__cell">
     <div class="govuk-form-group">
       <%= form.govuk_collection_check_boxes :recipient_ids,

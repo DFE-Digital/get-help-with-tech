@@ -1,7 +1,7 @@
 class Mno::RecipientsForm
   include ActiveModel::Model
 
-  attr_accessor :recipients, :recipient_ids, :action
+  attr_accessor :recipients, :recipient_ids, :status
 
   def recipients_for_collection_select
     @recipients.map do |r|
