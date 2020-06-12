@@ -2,10 +2,10 @@ class Recipient < ApplicationRecord
   belongs_to :mobile_network
 
   enum status: {
-    requested:   'requested',
+    requested: 'requested',
     in_progress: 'in_progress',
-    queried:     'queried',
-    complete:    'complete',
-    cancelled:   'cancelled',
-  } 
+    queried: 'queried',
+    complete: 'complete',
+    cancelled: 'cancelled',
+  }
 end

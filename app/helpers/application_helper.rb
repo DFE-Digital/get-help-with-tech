@@ -11,15 +11,11 @@ module ApplicationHelper
     ]
   end
 
-  def nav_item( title: nil, url: nil, content: nil )
-    class_name = "govuk-header__navigation-item"
-    class_name = "#{class_name} govuk-header__navigation-item--active" if request.path == url
+  def nav_item(title: nil, url: nil, content: nil)
+    class_name = 'govuk-header__navigation-item'
+    class_name = [class_name, 'govuk-header__navigation-item--active'].join(' ') if request.path == url
 
-html = <<-HTML
-    <li class="#{class_name}">
-      #{title.present? ? link_to(title, url, class: 'govuk-header__link') : content}
-    </li>
-HTML
-    html.html_safe
+    inner_html = (title.present? ? link_to(title, url, class: 'govuk-header__link') : content)
+    content_tag(:li, inner_html, class: class_name)
   end
 end

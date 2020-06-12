@@ -71,6 +71,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'bundle-audit'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'simplecov'
 end
 

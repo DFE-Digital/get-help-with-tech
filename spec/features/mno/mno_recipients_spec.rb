@@ -36,8 +36,6 @@ RSpec.feature 'MNO Requests view', type: :feature do
         expect(e.checked?).to eq(false)
       end
     end
-
-
   end
 
   context 'with several recipients shown' do
@@ -48,18 +46,11 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     scenario 'updating selected recipients to a status applies that status' do
-      all('input[name="mno_recipients_form[recipient_ids][]"]').first(3).each do |e|
-        e.check
-      end
+      all('input[name="mno_recipients_form[recipient_ids][]"]').first(3).each(&:check)
       select('In progress', from: 'Set selected to')
       click_on('Update')
-      all('.recipient-status').first(3).each do |e|
-        expect(e).to have_content('In progress')
-      end
-      all('.recipient-status').last(2).each do |e|
-        expect(e).not_to have_content('In progress')
-      end
-
+      expect(all('.recipient-status').first(3)).to all(have_content('In progress'))
+      expect(all('.recipient-status').last(2)).to all(have_no_content('In progress'))
     end
   end
 end

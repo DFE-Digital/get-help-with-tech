@@ -8,7 +8,6 @@ class User < ApplicationRecord
 
   include SignInWithToken
 
-
   def is_mno_user?
     mobile_network.present?
   end

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 private
 
   def populate_user_from_session!
-    @user = User.find(session[:user_id]) if session[:user_id].present?
+    @user = User.find(session[:user_id]) if is_signed_in?
     @user ||= User.new
   end
 
@@ -13,15 +13,19 @@ private
     session[:user_id] ||= user.id if user.present?
   end
 
+  def is_signed_in?
+    session[:user_id].present?
+  end
+
   def require_sign_in!
-    unless session[:user_id].present?
+    unless is_signed_in?
       redirect_to_sign_in
     end
   end
 
   def redirect_to_sign_in
     session[:return_url] = request.url
-    flash[:error] = "You must sign in to access that page"
+    flash[:error] = 'You must sign in to access that page'
     redirect_to new_sign_in_token_path
   end
 end

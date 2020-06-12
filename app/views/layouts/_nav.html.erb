@@ -12,7 +12,7 @@
   <%- if session[:user_id].present? %>
     <%- sign_out_link = link_to("Sign out", session_path(id: session.id), method: :delete, class: 'govuk-header__link' ) %>
     <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
-    <%= nav_item(url: session_path(id: session.id), content: content) %>
+    <%= nav_item(url: session_path(id: session.id), content: content.html_safe) %>
   <%- else %>
       <%= nav_item( title: "Sign in", url: sign_in_path )  %>
   <%- end %>

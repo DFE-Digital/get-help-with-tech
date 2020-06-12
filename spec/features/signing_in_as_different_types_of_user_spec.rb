@@ -10,7 +10,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
     scenario 'it redirects to the guidance page' do
       visit(validate_token_url)
-      expect(current_path).to eq('/pages/guidance')
+      expect(page).to have_current_path('/pages/guidance')
       expect(page).to have_text 'Improving children’s internet access'
     end
   end
@@ -24,7 +24,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
     scenario 'it redirects to Your Requests' do
       visit(validate_token_url)
-      expect(current_path).to eq(mno_recipients_path(user.mobile_network))
+      expect(page).to have_current_path(mno_recipients_path(user.mobile_network))
       expect(page).to have_text 'Your requests'
     end
   end
