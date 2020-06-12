@@ -1,12 +1,7 @@
 class Mno::RecipientsForm
   include ActiveModel::Model
 
-  attr_accessor :recipients, :recipient_ids
-
-  def initialize(params = {})
-    @recipients = params[:recipients]
-    @recipient_ids = params[:recipient_ids]
-  end
+  attr_accessor :recipients, :recipient_ids, :action
 
   def recipients_for_collection_select
     @recipients.map do |r|

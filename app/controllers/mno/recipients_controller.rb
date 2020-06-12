@@ -5,6 +5,7 @@ class Mno::RecipientsController < Mno::BaseController
         recipients: @recipients,
         recipient_ids: selected_recipient_ids(@recipients, params)
     )
+    @statusses = ['Complete', 'In progress']
   end
 
   def report_problem
