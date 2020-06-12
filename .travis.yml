@@ -17,6 +17,9 @@ before_script:
 script:
 - bundle exec rails webpacker:compile
 - bundle exec rake
+- bundle exec rubocop
+- bundle exec brakeman -z
+- bundle-audit
 deploy:
   provider: cloudfoundry
   api: https://api.london.cloud.service.gov.uk

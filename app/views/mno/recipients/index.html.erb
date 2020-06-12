@@ -1,0 +1,52 @@
+<h1 class="govuk-heading-l">
+  Your requests
+</h1>
+<% if @recipients.empty? %>
+  <p class="govuk-body">
+    (There are no matching requests at the moment)
+  </p>
+<% else %>
+  <%= form_for @recipients_form, url: bulk_update_mno_recipients_path, method: :put do |f| %>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption">
+        Requests for data-cap-raises for <%= @mobile_network.brand %> customers
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-table__header--numeric">
+            ID
+          </th>
+          <th class="govuk-table__header govuk-table__header--numeric">
+            Mobile number
+          </th>
+          <th class="govuk-table__header">
+            Recipient name
+          </th>
+          <th class="govuk-table__header">
+            Account holder
+          </th>
+          <th class="govuk-table__header">
+            Requested
+          </th>
+          <th class="govuk-table__header">
+            Status
+          </th>
+          <th class="govuk-table__header">
+            Select
+            <br />
+            <%= link_to 'all', {select: 'all'} %>
+            |
+            <%= link_to 'none', {select: 'none'} %>
+          </th>
+          <th class="govuk-table__header"></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%= render partial: 'recipient', collection: @recipients, locals: {form: f} %>
+      </tbody>
+      <tfoot class="govuk-table__footer">
+      </tfoot>
+
+    </table>
+  <% end %>
+<% end %>

@@ -1,0 +1,36 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    <%= link_to recipient.id, edit_mno_recipient_path(recipient) %>
+  </td>
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    <%= recipient.device_phone_number %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= recipient.full_name %>
+  </td>
+  <td class="govuk-table__cell">
+    <% if recipient.is_account_holder? %>
+      <em>
+        (recipient)
+      </em>
+    <% else %>
+      <%= recipient.account_holder_name %>
+    <% end %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= l(recipient.created_at, format: :short) %>
+  </td>
+  <td class="govuk-table__cell"></td>
+  <td class="govuk-table__cell">
+    <div class="govuk-form-group">
+      <%= form.govuk_collection_check_boxes :recipient_ids,
+                                            [OpenStruct.new(id: recipient.id, label: '')],
+                                            :id,
+                                            :label,
+                                            small: true %>
+    </div>
+  </td>
+  <td class="govuk-table__cell">
+    <%= link_to 'Report a problem', mno_recipient_report_problem_path(recipient) %>
+  </td>
+</tr>
