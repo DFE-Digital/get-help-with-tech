@@ -15,7 +15,7 @@ en:
       recipient:
         statuses:
           requested: Requested
-          in_progress: In Progress
+          in_progress: In progress
           queried: Queried
           complete: Complete
           cancelled: Cancelled

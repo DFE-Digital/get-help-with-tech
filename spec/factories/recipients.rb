@@ -10,5 +10,6 @@ FactoryBot.define do
     privacy_statement_sent_to_family  { true }
     understands_how_pii_will_be_used  { true }
     association :mobile_network
+    status                            { :requested }
   end
 end
