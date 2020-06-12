@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Sign-in token behaviour', type: :feature do
+RSpec.feature 'Signing-in as different types of user', type: :feature do
   let(:token) { user.generate_token! }
   let(:identifier) { user.sign_in_identifier(token) }
   let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
