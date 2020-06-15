@@ -17,7 +17,7 @@ module ViewHelper
     "#{t('page_titles.error_prefix') if error}#{title}"
   end
 
-  def sortable_table_header(title, value=title, opts=params)
+  def sortable_table_header(title, value = title, opts = params)
     if opts[:sort] == value.to_s
       if opts[:dir] == 'd'
         suffix = '▲'
@@ -26,9 +26,9 @@ module ViewHelper
         suffix = '▼'
         dir = 'd'
       end
-      "#{ link_to( title, sort: value, dir: dir ) } #{suffix}".html_safe
+      safe_join([link_to(title, sort: value, dir: dir), suffix], ' ')
     else
-      link_to( title, sort: value )
+      link_to(title, sort: value)
     end
   end
 

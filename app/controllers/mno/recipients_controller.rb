@@ -3,7 +3,6 @@ class Mno::RecipientsController < Mno::BaseController
     @pagination, @recipients = pagy(
       Recipient.where(mobile_network_id: @mobile_network.id)
                .order(safe_order),
-
     )
     @recipients_form = Mno::RecipientsForm.new(
       recipients: @recipients,
@@ -48,7 +47,7 @@ private
   def safe_order(opts = params)
     order = db_order_field(opts[:sort])
     if order
-      {order => db_dir(opts[:dir])}
+      { order => db_dir(opts[:dir]) }
     end
   end
 
