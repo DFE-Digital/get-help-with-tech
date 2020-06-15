@@ -39,10 +39,34 @@ RSpec.feature 'MNO Requests view', type: :feature do
   end
 
   context 'with several recipients shown' do
+    # NOTE: a function, not a let, so that it re-runs each time
+    def rendered_ids
+      all('tbody tr').map { |e| e[:id].split('-').last.to_i }
+    end
+    let(:mno_recipients) do
+      Recipient.where(mobile_network_id: mno_user.mobile_network_id)
+    end
+
     before do
       create_list(:recipient, 5, status: 'requested', mobile_network: mno_user.mobile_network)
       sign_in_as mno_user
       click_on 'Your requests'
+    end
+
+    scenario 'clicking on a header sorts by that column' do
+      click_on 'ID'
+      expect(rendered_ids).to eq(mno_recipients.order(:id).pluck(:id))
+
+      click_on 'Requested'
+      expect(rendered_ids).to eq(mno_recipients.order(:created_at).pluck(:id))
+    end
+
+    scenario 'clicking on a header twice sorts by that column in reverse order' do
+      click_on 'Recipient name'
+      expect(rendered_ids).to eq(mno_recipients.order(:full_name).pluck(:id))
+
+      click_on 'Recipient name'
+      expect(rendered_ids).to eq(mno_recipients.order(full_name: :desc).pluck(:id))
     end
 
     scenario 'updating selected recipients to a status applies that status' do

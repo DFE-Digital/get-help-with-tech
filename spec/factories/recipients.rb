@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :recipient, class: 'Recipient' do
-    full_name                         { 'John Johnson' }
+    full_name                         { Faker::Name.name }
     address                           { '22 Acacia Avenue\r\nSometown' }
     postcode                          { 'SOM3 T0WN' }
     can_access_hotspot                { true }

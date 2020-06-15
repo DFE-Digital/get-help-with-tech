@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
   before_action :populate_user_from_session!
 
+  include Pagy::Backend
+  
 private
 
   def populate_user_from_session!

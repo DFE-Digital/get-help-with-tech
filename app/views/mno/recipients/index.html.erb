@@ -7,6 +7,12 @@
   </p>
 <% else %>
   <%= form_for @recipients_form, url: bulk_update_mno_recipients_path, method: :put do |f| %>
+    <div class="pagination govuk-body">
+      <%= pagy_info(@pagination).html_safe %><br />
+      <%- if @pagination.pages > 1 %>
+        <%= pagy_nav(@pagination).html_safe %>
+      <%- end %>
+    </div>
     <table class="govuk-table">
       <caption class="govuk-table__caption">
         Requests for data-cap-raises for <%= @mobile_network.brand %> customers
@@ -14,22 +20,22 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-table__header--numeric">
-            ID
+            <%= sortable_table_header( 'ID', :id ) %>
           </th>
           <th class="govuk-table__header govuk-table__header--numeric">
-            Mobile number
+            <%= sortable_table_header( 'Mobile number', :mobile_number ) %>
           </th>
           <th class="govuk-table__header">
-            Recipient name
+            <%= sortable_table_header( 'Recipient name', :full_name ) %>
           </th>
           <th class="govuk-table__header">
             Account holder
           </th>
           <th class="govuk-table__header">
-            Requested
+            <%= sortable_table_header( 'Requested', :requested ) %>
           </th>
           <th class="govuk-table__header">
-            Status
+            <%= sortable_table_header( 'Status', :status ) %>
           </th>
           <th class="govuk-table__header">
             Select

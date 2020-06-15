@@ -14,6 +14,9 @@ gem 'foreman'
 gem 'govuk_design_system_formbuilder'
 gem 'haml'
 
+# pagination
+gem 'pagy'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
