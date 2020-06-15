@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+/coverage
 
 # Ignore uploaded files in development
 /storage/*
