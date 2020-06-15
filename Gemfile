@@ -9,6 +9,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Canonical meta tag
 gem 'canonical-rails'
 gem 'dotenv-rails'
+# Having Faker here rather than in dev/test lets us still create
+# fake data in the deployed Docker container
+gem 'faker'
 # Manage multiple processes i.e. web server and webpack
 gem 'foreman'
 gem 'govuk_design_system_formbuilder'
@@ -74,7 +77,6 @@ group :development, :test do
   gem 'brakeman'
   gem 'bundle-audit'
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'simplecov'
 end
 
