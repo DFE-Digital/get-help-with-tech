@@ -1,6 +1,6 @@
 class FakeDataService
   def self.generate!(recipients: 10, mobile_network_id:)
-    recipients.times do |i|
+    recipients.times do
       name = Faker::Name.name
       r = Recipient.create!(
         full_name: name,
@@ -11,7 +11,7 @@ class FakeDataService
         is_account_holder: true,
         privacy_statement_sent_to_family: true,
         understands_how_pii_will_be_used: true,
-        mobile_network_id: mobile_network_id
+        mobile_network_id: mobile_network_id,
       )
       puts "created #{r.id} - #{r.full_name}"
     end
