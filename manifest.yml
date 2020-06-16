@@ -1,5 +1,0 @@
----
-applications:
-- name: data-allowances-prototype
-  services:
-    - data-allowances-prototype-db

@@ -1,6 +1,6 @@
 FROM ministryofjustice/ruby:2.6.3
 
-ARG APPNAME=data-allowances-prototype
+ARG APPNAME=get-help-with-tech
 
 # https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
