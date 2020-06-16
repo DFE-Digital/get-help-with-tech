@@ -67,7 +67,7 @@ private
     {
       'id' => :id,
       'mobile_number' => :device_phone_number,
-      'full_name' => :full_name,
+      'account_holder_name' => :account_holder_name,
       'requested' => :created_at,
       'status' => :status,
     }[order_param]

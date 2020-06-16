@@ -87,6 +87,9 @@ private
     @can_access_hotspot = params[:can_access_hotspot]
     @is_account_holder = params[:is_account_holder]
     @account_holder_name = params[:account_holder_name]
+    if @account_holder_name.blank? && @is_account_holder
+      @account_holder_name = @full_name
+    end
     @device_phone_number = params[:device_phone_number]
     @mobile_network_id = params[:mobile_network_id]
     @phone_network_name = params[:phone_network_name]
@@ -101,6 +104,9 @@ private
     @can_access_hotspot = @recipient.can_access_hotspot
     @is_account_holder = @recipient.is_account_holder
     @account_holder_name = @recipient.account_holder_name
+    if @account_holder_name.blank? && @recipient.is_account_holder?
+      @account_holder_name = @recipient.full_name
+    end
     @device_phone_number = @recipient.device_phone_number
     @mobile_network_id = @recipient.mobile_network_id
     @phone_network_name = @recipient.phone_network_name

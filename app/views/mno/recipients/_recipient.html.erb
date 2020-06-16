@@ -6,22 +6,15 @@
     <%= recipient.device_phone_number %>
   </td>
   <td class="govuk-table__cell">
-    <%= recipient.full_name %>
-  </td>
-  <td class="govuk-table__cell">
-    <% if recipient.is_account_holder? %>
-      <em>
-        (recipient)
-      </em>
-    <% else %>
-      <%= recipient.account_holder_name %>
-    <% end %>
+    <%= recipient.account_holder_name %>
   </td>
   <td class="govuk-table__cell">
     <%= l(recipient.created_at, format: :short) %>
   </td>
   <td class="govuk-table__cell" class="recipient-status">
-    <%= recipient.translated_enum_value(:status) %>
+    <span class="recipient-status-<%= recipient.status %>">
+      <%= recipient.translated_enum_value(:status) %>
+    </span>
   </td>
   <td class="govuk-table__cell">
     <div class="govuk-form-group">
