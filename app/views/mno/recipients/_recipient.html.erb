@@ -12,7 +12,9 @@
     <%= l(recipient.created_at, format: :short) %>
   </td>
   <td class="govuk-table__cell" class="recipient-status">
-    <%= recipient.translated_enum_value(:status) %>
+    <span class="recipient-status-<%= recipient.status %>">
+      <%= recipient.translated_enum_value(:status) %>
+    </span>
   </td>
   <td class="govuk-table__cell">
     <div class="govuk-form-group">
