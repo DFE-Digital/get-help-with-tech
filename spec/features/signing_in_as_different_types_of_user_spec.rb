@@ -24,7 +24,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it redirects to Your Requests' do
       visit(validate_token_url)
-      expect(page).to have_current_path(mno_recipients_path(user.mobile_network))
+      expect(page).to have_current_path(mno_recipients_path)
       expect(page).to have_text 'Your requests'
     end
   end

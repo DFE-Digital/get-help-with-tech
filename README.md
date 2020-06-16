@@ -1,13 +1,15 @@
-[![Build Status](https://travis-ci.org/DFE-Digital/govuk-rails-boilerplate.svg?branch=master)](https://travis-ci.com/DFE-Digital/govuk-rails-boilerplate)
+[![Build Status](https://travis-ci.org/DFE-Digital/get-help-with-tech.svg?branch=master)](https://travis-ci.com/DFE-Digital/get-help-with-tech)
 
-# GOV.UK Rails Boilerplate
+# Get Help With Tech
+
+An app to host content and forms for the "Get Help With Tech" COVID-19 response initiative.
 
 ## Prerequisites
 
 - Ruby 2.6.3
 - PostgreSQL
-- NodeJS 12.13.x
-- Yarn 1.12.x
+- NodeJS >= 12.13.x
+- Yarn >= 1.12.x
 
 ## Setting up the app in development
 
@@ -17,18 +19,6 @@
 4. Run `bundle exec rails server` to launch the app on http://localhost:3000
 5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
-## Whats included in this boilerplate?
-
-- Rails 6.0 with Webpacker
-- [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend)
-- RSpec
-- Dotenv (managing environment variables)
-- Travis with Heroku deployment
-
-## Running specs, linter(without auto correct) and annotate models and serializers
-```
-bundle exec rake
-```
 
 ## Running specs
 ```
@@ -46,6 +36,13 @@ or
 
 bundle exec scss-lint app/webpacker/styles
 ```
+## Static analysis for security issues
+
+```bash
+bundle exec brakeman
+```
+
+ All the above are run automatically on Travis CI when pushing a PR
 
 ## Deploying on GOV.UK PaaS
 
@@ -58,11 +55,7 @@ bundle exec scss-lint app/webpacker/styles
 ### Deploy
 
 1. Run `cf login -a api.london.cloud.service.gov.uk -u USERNAME`, `USERNAME` is your personal GOV.UK PaaS account email address
-2. Run `bundle package --all` to vendor ruby dependencies
-3. Run `yarn` to vendor node dependencies
-4. Run `bundle exec rails webpacker:compile` to compile assets
-5. Run `cf push` to push the app to Cloud Foundry Application Runtime
+2. Run `docker login` to log in to Docker Hub
+3. Run `make (dev|staging|prod) build push deploy` to build, push and deploy the Docker image to Gov.uk PaaS
 
-Check the file `manifest.yml` for customisation of name (you may need to change it as there could be a conflict on that name), buildpacks and eventual services (PostgreSQL needs to be [set up](https://docs.cloud.service.gov.uk/deploying_services/postgresql/)).
-
-The app should be available at https://govuk-rails-boilerplate.london.cloudapps.digital
+The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
