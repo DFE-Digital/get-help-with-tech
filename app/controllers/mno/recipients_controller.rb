@@ -1,14 +1,22 @@
 class Mno::RecipientsController < Mno::BaseController
   def index
-    @pagination, @recipients = pagy(
-      Recipient.where(mobile_network_id: @mobile_network.id)
-               .order(safe_order),
-    )
-    @recipients_form = Mno::RecipientsForm.new(
-      recipients: @recipients,
-      recipient_ids: selected_recipient_ids(@recipients, params),
-    )
-    @statuses = Recipient.translated_enum_values(:statuses)
+    @recipients = Recipient.where(mobile_network_id: @mobile_network.id)
+                           .order(safe_order)
+
+    respond_to do |format|
+      format.csv do
+        render csv: @recipients, filename: "requests-mno-#{@mobile_network.id}-#{Time.now.iso8601}.csv"
+      end
+      # capybara sends through NullType sometimes
+      format.any do
+        @pagination, @recipients = pagy(@recipients)
+        @recipients_form = Mno::RecipientsForm.new(
+          recipients: @recipients,
+          recipient_ids: selected_recipient_ids(@recipients, params),
+        )
+        @statuses = Recipient.translated_enum_values(:statuses)
+      end
+    end
   end
 
   def report_problem; end

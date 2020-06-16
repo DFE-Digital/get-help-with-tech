@@ -8,4 +8,6 @@ class Recipient < ApplicationRecord
     complete: 'complete',
     cancelled: 'cancelled',
   }
+
+  include ExportableAsCsv
 end
