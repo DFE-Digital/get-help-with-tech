@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'support/sign_in_as'
+require 'shared/expect_download'
 
 RSpec.feature 'MNO Requests view', type: :feature do
   let(:mno_user) { create(:mno_user) }
@@ -75,6 +76,11 @@ RSpec.feature 'MNO Requests view', type: :feature do
       click_on('Update')
       expect(all('.recipient-status').first(3)).to all(have_content('In progress'))
       expect(all('.recipient-status').last(2)).to all(have_no_content('In progress'))
+    end
+
+    scenario 'clicking Download as CSV downloads a CSV file' do
+      click_on 'Download this list as CSV'
+      expect_download(content_type: 'text/csv')
     end
   end
 end

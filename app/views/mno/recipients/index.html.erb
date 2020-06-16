@@ -51,7 +51,9 @@
         <%= render partial: 'recipient', collection: @recipients, locals: {form: f} %>
       </tbody>
       <tfoot class="govuk-table__footer">
-        <td class="govuk-table__footer" colspan="4"></td>
+        <td class="govuk-table__footer" colspan="4">
+          <%= govuk_button_link_to 'Download this list as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
+        </td>
         <td class="govuk-table__footer govuk-table__cell--numeric" colspan="2">
           <div class="govuk-form-group">
             <label for="mno-recipients-form-status-field" class="govuk-label">Set selected to</label>
@@ -65,7 +67,6 @@
           <%= f.govuk_submit 'Update' %>
         </td>
       </tfoot>
-
     </table>
   <% end %>
 <% end %>
