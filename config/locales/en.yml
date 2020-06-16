@@ -1,0 +1,21 @@
+en:
+  service_name: Increasing children’s internet access
+  page_titles:
+    sign_in: Sign in
+    check_your_email: Check your email
+    eligible_people: Tell us how many eligible young people you know about
+    eligible_person: Tell us about an eligible young person
+    thank_you: Thank you
+    error_prefix: "Error: "
+  errors:
+    format:
+      "'%{attribute}' %{message}"
+  activerecord:
+    attributes:
+      recipient:
+        statuses:
+          requested: Requested
+          in_progress: In progress
+          queried: Queried
+          complete: Complete
+          cancelled: Cancelled

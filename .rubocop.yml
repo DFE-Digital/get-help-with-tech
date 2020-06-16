@@ -1,0 +1,135 @@
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+    - config/rails.yml
+
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'Rakefile'
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'config/application.rb'
+    - 'config/boot.rb'
+    - 'config/puma.rb'
+    - 'config/environments/*'
+    - 'config/initializers/nationalities.rb'
+    - 'config/initializers/canonical_rails.rb'
+    - 'config/spring.rb'
+    - 'lib/tasks/cucumber.rake'
+    - 'lib/tasks/govuk_lint.rake'
+    - 'features/support/env.rb'
+    - 'spec/spec_helper.rb'
+    - 'vendor/**/*'
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+# we have a property called "subject" in some factories
+RSpec/EmptyLineAfterSubject:
+  Exclude:
+    - 'spec/factories.rb'
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - e
+    - to
+
+Capybara/FeatureMethods:
+  EnabledMethods:
+    - feature
+    - scenario
+
+# It's better to be explicit about the class that's being tested
+RSpec/DescribedClass:
+  Enabled: false
+
+# This cop wants us to use `expect().to change(Candidate, :count)` instead
+# of `expect().to change { Candidate.count }`, which doesn't seem better.
+RSpec/ExpectChange:
+  Enabled: false
+
+RSpec/LeadingSubject:
+  Enabled: false
+
+# In acceptance tests it's often handy to user instance variables to keep track of state
+RSpec/InstanceVariable:
+  Enabled: false
+
+RSpec/PredicateMatcher:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/support/slack_notifications.rb'
+    - 'spec/system/support_interface/daily_report_spec.rb'
+    - 'spec/requests/vendor_api/api_authentication_spec.rb'
+
+# We don't want to subclass from ApplicationController. This enables separation
+# between the namespaces, and allows subclassing from ActionController::API in
+# the Vendor API.
+Rails/ApplicationController:
+  Enabled: false
+
+# We don't use ApplicationRecord
+Rails/ApplicationRecord:
+  Enabled: false
+
+# Rails doesn't actually allow "dynamic find_by", so this cop yields false positives
+# like `VendorApiToken.find_by_unhashed_token` (which we implement ourselves)
+Rails/DynamicFindBy:
+  Enabled: false
+
+# Not all rake tasks need :environment
+Rails/RakeEnvironment:
+  Enabled: false
+
+# This cop demands a default value for not-null columns, which isn't possible
+# when dealing with references
+Rails/NotNullColumn:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+# Pending cops
+# These will be enabled by default at Rubocop 1.0
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Rake/Desc:
+  Exclude:
+    - 'lib/tasks/reset_qa.rake'

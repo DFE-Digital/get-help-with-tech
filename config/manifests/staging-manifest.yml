@@ -1,0 +1,5 @@
+---
+applications:
+- name: get-help-with-tech-staging
+  services:
+    - get-help-with-tech-staging-db

@@ -1,0 +1,5 @@
+---
+applications:
+- name: get-help-with-tech-dev
+  services:
+    - get-help-with-tech-dev-db

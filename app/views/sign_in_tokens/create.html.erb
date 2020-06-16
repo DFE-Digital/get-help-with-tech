@@ -1,0 +1,25 @@
+<% content_for :title, t('page_titles.check_your_email') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.check_your_email') %>
+    </h1>
+    <p class="govuk-body">
+      If we’ve recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.
+    </p>
+    <div class="govuk-inset-text">
+      <p>
+        If this email hasn’t arrived within 5 minutes:
+      </p>
+      <ul class="govuk-list-bullet">
+        <li>
+          Check your spam/junk folder
+        </li>
+        <li>
+          <%= govuk_link_to 'Try again', new_sign_in_token_path %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

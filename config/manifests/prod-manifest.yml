@@ -1,0 +1,5 @@
+---
+applications:
+- name: get-help-with-tech-prod
+  services:
+    - get-help-with-tech-prod-db

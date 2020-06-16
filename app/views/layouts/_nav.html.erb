@@ -1,0 +1,19 @@
+<ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+  <%- if @user && @user.is_dfe? %>
+
+  <%- elsif @user && @user.is_mno_user? %>
+    <%= nav_item( title: "Your requests", url: mno_recipients_path )  %>
+  <%- else %>
+    <%= nav_item( title: "Guidance", url: '/pages/guidance' )  %>
+      <%= nav_item( title: "Tell us how many eligible young people you know about", url: new_allocation_request_form_path )  %>
+      <%= nav_item( title: "Tell us about an eligible young person", url: new_application_form_path )  %>
+  <%- end %>
+
+  <%- if session[:user_id].present? %>
+    <%- sign_out_link = link_to("Sign out", session_path(id: session.id), method: :delete, class: 'govuk-header__link' ) %>
+    <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
+    <%= nav_item(url: session_path(id: session.id), content: content.html_safe) %>
+  <%- else %>
+      <%= nav_item( title: "Sign in", url: sign_in_path )  %>
+  <%- end %>
+</ul>

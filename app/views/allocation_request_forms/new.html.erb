@@ -1,0 +1,36 @@
+<% content_for :title, title_with_error_prefix(t('page_titles.eligible_people'), @allocation_request_form.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.eligible_people') %>
+    </h1>
+    <p class="govuk-body-l">
+      Please complete all the fields you can.
+    </p>
+    <%= form_for @allocation_request_form do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= f.fields_for :user do |user_form| %>
+        <%= render partial: 'shared/user_form', locals: { form: f } %>
+      <% end %>
+      <%= f.govuk_fieldset legend: { text: 'About the eligible young people' } do %>
+        <%= f.govuk_number_field :number_eligible,
+                                  required: true,
+                                  width: 'one-quarter',
+                                  label: { text: 'Total number of children and young people eligible for increased internet access' },
+                                  min: 0,
+                                  max: 10000,
+                                  step: 1 %>
+        <%= f.govuk_number_field :number_eligible_with_hotspot_access,
+                                  required: true,
+                                  width: 'one-quarter',
+                                  label: { text: 'Total number of eligible children and young people who can access a BT hotspot' },
+                                  hint_text: 'There’s guidance available on <a class="govuk-link" href="https://www.btwifi.com/find/ ">how to check access to hotspots</a>'.html_safe,
+                                  min: 0,
+                                  max: 10000,
+                                  step: 1 %>
+      <% end %>
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
