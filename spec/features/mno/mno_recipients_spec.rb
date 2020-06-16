@@ -17,8 +17,8 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
     scenario 'shows only requests from my MNO' do
       expect(page).to have_content("Requests for data-cap-raises for #{mno_user.mobile_network.brand} customers")
-      expect(page).to have_content(recipient_for_mno.full_name)
-      expect(page).not_to have_content(recipient_for_other_mno.full_name)
+      expect(page).to have_content(recipient_for_mno.account_holder_name)
+      expect(page).not_to have_content(recipient_for_other_mno.account_holder_name)
     end
 
     scenario 'clicking Select All selects all checkboxes' do
@@ -63,11 +63,11 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     scenario 'clicking on a header twice sorts by that column in reverse order' do
-      click_on 'Recipient name'
-      expect(rendered_ids).to eq(mno_recipients.order(:full_name).pluck(:id))
+      click_on 'Account holder'
+      expect(rendered_ids).to eq(mno_recipients.order(:account_holder_name).pluck(:id))
 
-      click_on 'Recipient name'
-      expect(rendered_ids).to eq(mno_recipients.order(full_name: :desc).pluck(:id))
+      click_on 'Account holder'
+      expect(rendered_ids).to eq(mno_recipients.order(account_holder_name: :desc).pluck(:id))
     end
 
     scenario 'updating selected recipients to a status applies that status' do
