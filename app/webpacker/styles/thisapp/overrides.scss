@@ -1,0 +1,16 @@
+.govuk-form-group.inline {
+  .govuk-form-group {
+    display: inline-block;
+  }
+}
+
+td {
+  .govuk-form-group {
+    margin-bottom: 0;
+  }
+}
+
+// Elements with this class will be shown by JS on document.ready
+.js-only {
+  display: none;
+}

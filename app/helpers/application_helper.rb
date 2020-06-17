@@ -20,4 +20,14 @@ module ApplicationHelper
     inner_html = (title.present? ? link_to(title, url, class: 'govuk-header__link') : content)
     content_tag(:li, inner_html, class: class_name)
   end
+
+  def recipient_status_class(status)
+    {
+      requested: 'govuk-tag--blue',
+      in_progress: 'govuk-tag--yellow',
+      complete: 'govuk-tag--green',
+      queried: 'govuk-tag--red',
+      cancelled: 'govuk-tag--grey',
+    }[status.to_sym]
+  end
 end

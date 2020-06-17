@@ -1,69 +1,81 @@
 <h1 class="govuk-heading-l">
-  Your requests
+  Requests for extra mobile data
+  <span class="govuk-caption-xl"><%= @mobile_network.brand %> customers</span>
 </h1>
 <% if @recipients.empty? %>
   <p class="govuk-body">
     (There are no matching requests at the moment)
   </p>
 <% else %>
-  <%= form_for @recipients_form, url: bulk_update_mno_recipients_path, method: :put do |f| %>
-    <div class="pagination govuk-body">
-      <%= pagy_info(@pagination).html_safe %><br />
+  <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
+
+  <div class="govuk-body govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <span class="count">
+        <%= pagy_info(@pagination, "requests").html_safe %>
+      </span>
       <%- if @pagination.pages > 1 %>
         <%= pagy_nav(@pagination).html_safe %>
       <%- end %>
     </div>
-    <table class="govuk-table">
-      <caption class="govuk-table__caption">
-        Requests for data-cap-raises for <%= @mobile_network.brand %> customers
-      </caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-table__header--numeric">
-            <%= sortable_table_header( 'ID', :id ) %>
-          </th>
-          <th class="govuk-table__header govuk-table__header--numeric">
-            <%= sortable_table_header( 'Mobile number', :mobile_number ) %>
-          </th>
-          <th class="govuk-table__header">
-            <%= sortable_table_header( 'Account holder', :account_holder_name ) %>
-          </th>
-          <th class="govuk-table__header">
-            <%= sortable_table_header( 'Requested', :requested ) %>
-          </th>
-          <th class="govuk-table__header">
-            <%= sortable_table_header( 'Status', :status ) %>
-          </th>
-          <th class="govuk-table__header">
-            Select
-            <br />
-            <%= link_to 'all', {select: 'all'} %>
-            |
-            <%= link_to 'none', {select: 'none'} %>
-          </th>
-          <th class="govuk-table__header"></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <%= render partial: 'recipient', collection: @recipients, locals: {form: f} %>
-      </tbody>
-      <tfoot class="govuk-table__footer">
-        <td class="govuk-table__footer" colspan="4">
-          <%= govuk_button_link_to 'Download this list as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
-        </td>
-        <td class="govuk-table__footer govuk-table__cell--numeric" colspan="2">
-          <div class="govuk-form-group">
-            <label for="mno-recipients-form-status-field" class="govuk-label">Set selected to</label>
-          </div>
-        </td>
-        <td class="govuk-table__footer">
-          <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= form_for @recipients_form, url: bulk_update_mno_recipients_path, method: :put do |f| %>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">
+                <div id="all-none-links" class="non-js-only">
+                  Select
+                  <br />
+                  <%= link_to 'all', {select: 'all'} %>
+                  |
+                  <%= link_to 'none', {select: 'none'} %>
+                </div>
+                <div id="all-none-checkbox" class="js-only govuk-checkboxes__item" data-controls="all-none-item">
+                  <input class="govuk-checkboxes__input" id="all-rows" name="all-rows" type="checkbox" value="all-rows">
+                  <label class="govuk-label govuk-label--s govuk-checkboxes__label" for="all-rows"></label>
+                </div>
+              </th>
+              <th class="govuk-table__header govuk-table__header--numeric">
+                <%= sortable_table_header( 'ID', :id ) %>
+              </th>
+              <th class="govuk-table__header govuk-table__header--numeric">
+                <%= sortable_table_header( 'Mobile number', :mobile_number ) %>
+              </th>
+              <th class="govuk-table__header">
+                <%= sortable_table_header( 'Account holder', :account_holder_name ) %>
+              </th>
+              <th class="govuk-table__header">
+                <%= sortable_table_header( 'Requested', :requested ) %>
+              </th>
+              <th class="govuk-table__header">
+                <%= sortable_table_header( 'Status', :status ) %>
+              </th>
+              <th class="govuk-table__header">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <%= render partial: 'recipient', collection: @recipients, locals: {form: f} %>
+          </tbody>
+          <tfoot class="govuk-table__footer">
+            <td class="govuk-table__footer govuk-table__cell--numeric" colspan="2">
+            </td>
+            <td class="govuk-table__footer">
 
-        </td>
-        <td class="govuk-table__footer">
+            </td>
+            <td class="govuk-table__footer" colspan="4">
+
+            </td>
+          </tfoot>
+        </table>
+        <div class="govuk-form-group inline">
+          <label for="mno-recipients-form-status-field" class="govuk-label">Set status of selected to</label>
+          <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
           <%= f.govuk_submit 'Update' %>
-        </td>
-      </tfoot>
-    </table>
-  <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

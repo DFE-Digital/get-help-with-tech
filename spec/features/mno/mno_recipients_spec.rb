@@ -79,7 +79,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     scenario 'clicking Download as CSV downloads a CSV file' do
-      click_on 'Download this list as CSV'
+      click_on 'Download requests as CSV'
       expect_download(content_type: 'text/csv')
     end
   end
