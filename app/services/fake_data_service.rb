@@ -15,7 +15,7 @@ class FakeDataService
         mobile_network_id: mobile_network_id,
         status: Recipient.statuses.values.sample,
       )
-      r.update(created_at: Time.now.utc - rand(500000).seconds)
+      r.update(created_at: Time.now.utc - rand(500_000).seconds)
       puts "created #{r.id} - #{r.full_name}"
     end
   end

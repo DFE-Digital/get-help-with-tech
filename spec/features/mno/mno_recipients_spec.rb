@@ -16,7 +16,8 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     scenario 'shows only requests from my MNO' do
-      expect(page).to have_content("Requests for data-cap-raises for #{mno_user.mobile_network.brand} customers")
+      expect(page).to have_content('Requests for extra mobile data')
+      expect(page).to have_content("#{mno_user.mobile_network.brand} customers")
       expect(page).to have_content(recipient_for_mno.account_holder_name)
       expect(page).not_to have_content(recipient_for_other_mno.account_holder_name)
     end
@@ -72,7 +73,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
     scenario 'updating selected recipients to a status applies that status' do
       all('input[name="mno_recipients_form[recipient_ids][]"]').first(3).each(&:check)
-      select('In progress', from: 'Set selected to')
+      select('In progress', from: 'Set status of selected to')
       click_on('Update')
       expect(all('.recipient-status').first(3)).to all(have_content('In progress'))
       expect(all('.recipient-status').last(2)).to all(have_no_content('In progress'))
