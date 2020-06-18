@@ -84,4 +84,21 @@ RSpec.feature 'MNO Requests view', type: :feature do
       expect_download(content_type: 'text/csv')
     end
   end
+
+  context 'with multiple pages of recipients' do
+    before do
+      create_list(:recipient, 25, status: 'requested', mobile_network: mno_user.mobile_network)
+      sign_in_as mno_user
+      click_on 'Your requests'
+    end
+
+    it 'shows pagination' do
+      expect(page).to have_link('Next')
+    end
+
+    it 'shows all/none checkbox when on subsequent pages' do
+      click_on('Next')
+      expect { page.find('input#all-rows') }.not_to raise_error(Capybara::ElementNotFound)
+    end
+  end
 end
