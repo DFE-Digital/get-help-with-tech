@@ -26,6 +26,7 @@ push: require_env_stub ## push the Docker image to Docker Hub
 	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
 
 deploy: require_env_stub ## Deploy the docker image to gov.uk PaaS
+	ls -l ./manifest.yml && rm ./manifest.yml
 	ln -s ./config/manifests/$(env_stub)-manifest.yml ./manifest.yml
 	cf push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
 	rm ./manifest.yml
