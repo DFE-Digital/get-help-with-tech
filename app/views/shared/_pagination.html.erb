@@ -1,0 +1,6 @@
+<nav class="pub-c-pagination" role="navigation" aria-label="Pagination">
+  <ul class="pub-c-pagination__list">
+    <%= render partial: 'shared/prev_page', locals: {pagination: local_assigns[:pagination], remote: local_assigns[:remote]} if pagination.prev.present? %>
+    <%= render partial: 'shared/next_page', locals: {pagination: local_assigns[:pagination], remote: local_assigns[:remote]} if pagination.next.present? %>
+  </ul>
+</nav>
