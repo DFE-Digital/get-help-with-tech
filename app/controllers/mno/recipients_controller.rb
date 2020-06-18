@@ -14,7 +14,7 @@ class Mno::RecipientsController < Mno::BaseController
           recipients: @recipients,
           recipient_ids: selected_recipient_ids(@recipients, params),
         )
-        @statuses = Recipient.translated_enum_values(:statuses)
+        @statuses = Recipient.translated_enum_values(:statuses).reject { |status| status.value == 'queried' }
       end
     end
   end

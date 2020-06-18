@@ -1,31 +1,29 @@
 <tr class="govuk-table__row" id="recipient-<%= recipient.id %>">
-  <td class="govuk-table__cell govuk-table__cell--numeric">
-    <%= link_to recipient.id, edit_mno_recipient_path(recipient) %>
+  <td class="govuk-table__cell">
+    <div class="govuk-form-group govuk-!-margin-bottom-0">
+      <%= form.govuk_collection_check_boxes :recipient_ids,
+      [OpenStruct.new(id: recipient.id, label: '')],
+      :id,
+      :label,
+      small: false,
+      classes: 'all-none-item' %>
+    </div>
+  </td>
+  <td class="govuk-table__cell">
+    <%= recipient.account_holder_name %>
   </td>
   <td class="govuk-table__cell govuk-table__cell--numeric">
     <%= recipient.device_phone_number %>
   </td>
   <td class="govuk-table__cell">
-    <%= recipient.account_holder_name %>
-  </td>
-  <td class="govuk-table__cell">
     <%= l(recipient.created_at, format: :short) %>
   </td>
   <td class="govuk-table__cell" class="recipient-status">
-    <span class="recipient-status-<%= recipient.status %>">
+    <span class="govuk-tag <%= recipient_status_class(recipient.status) %> recipient-status-<%= recipient.status %>">
       <%= recipient.translated_enum_value(:status) %>
     </span>
   </td>
   <td class="govuk-table__cell">
-    <div class="govuk-form-group">
-      <%= form.govuk_collection_check_boxes :recipient_ids,
-                                            [OpenStruct.new(id: recipient.id, label: '')],
-                                            :id,
-                                            :label,
-                                            small: true %>
-    </div>
-  </td>
-  <td class="govuk-table__cell">
-    <%= link_to 'Report a problem', mno_recipient_report_problem_path(recipient) %>
+    <%= govuk_link_to 'Report a problem', mno_recipient_report_problem_path(recipient) %>
   </td>
 </tr>

@@ -11,4 +11,5 @@ $govuk-image-url-function: frontend-image-url;
 
 @import "~govuk-frontend/govuk/all";
 
-@import "thisapp/pagination.scss";
+@import "pagination.scss";
+@import "overrides.scss";

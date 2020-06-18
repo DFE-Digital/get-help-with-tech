@@ -8,3 +8,6 @@ import { initAll } from 'govuk-frontend';
 Rails.start();
 Turbolinks.start();
 initAll();
+
+require('jquery')
+require('./mno/recipients');

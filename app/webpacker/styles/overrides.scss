@@ -1,0 +1,16 @@
+// Ideally this should not be needed -
+// we should be setting the class govuk-!-display-inline-block
+// on the .govuk-form-group elements. But they get rendered by
+// the govuk_collection_select helper, which seems to be dropping
+// any html_options: {class: '...'} param somewhere in the chain.
+// This is a temporary workaround
+.govuk-form-group.display-child-forms-inline {
+  .govuk-form-group {
+    display: inline-block;
+  }
+}
+
+// Elements with this class will be shown by JS on document.ready
+.js-only {
+  display: none;
+}
