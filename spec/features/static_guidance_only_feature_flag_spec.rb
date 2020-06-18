@@ -17,6 +17,11 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
       expect(page).to have_http_status(:not_found)
       expect(page).to have_selector 'h1', text: 'The page you were looking for doesn\'t exist'
     end
+
+    scenario 'Other nav links are not shown' do
+      visit guidance_page_path
+      expect(page).not_to have_text 'Sign in'
+    end
   end
 
   context 'with the static_guidance_only feature flag NOT set' do
@@ -34,6 +39,11 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
       visit sign_in_path
       expect(page).to have_http_status(:ok)
       expect(page).to have_selector 'h1', text: 'Sign in'
+    end
+
+    scenario 'Other nav links are shown' do
+      visit guidance_page_path
+      expect(page).to have_text 'Sign in'
     end
   end
 end
