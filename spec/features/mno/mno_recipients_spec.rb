@@ -17,7 +17,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
     scenario 'shows only requests from my MNO' do
       expect(page).to have_content('Requests for extra mobile data')
-      expect(page).to have_content("#{mno_user.mobile_network.brand} customers")
+      expect(page).to have_content(mno_user.mobile_network.brand)
       expect(page).to have_content(recipient_for_mno.account_holder_name)
       expect(page).not_to have_content(recipient_for_other_mno.account_holder_name)
     end
