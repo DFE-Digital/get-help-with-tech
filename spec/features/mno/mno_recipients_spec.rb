@@ -56,8 +56,8 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     scenario 'clicking on a header sorts by that column' do
-      click_on 'ID'
-      expect(rendered_ids).to eq(mno_recipients.order(:id).pluck(:id))
+      click_on 'Account holder'
+      expect(rendered_ids).to eq(mno_recipients.order(:account_holder_name).pluck(:id))
 
       click_on 'Requested'
       expect(rendered_ids).to eq(mno_recipients.order(:created_at).pluck(:id))

@@ -11,7 +11,7 @@
 
   <div class="govuk-body govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <span class="count">
+      <span class="pagination-item-count">
         <%= pagy_info(@pagination, "requests").html_safe %>
       </span>
       <%- if @pagination.pages > 1 %>
@@ -29,23 +29,20 @@
                 <div id="all-none-links" class="non-js-only">
                   Select
                   <br />
-                  <%= link_to 'all', {select: 'all'} %>
+                  <%= govuk_link_to 'all', {select: 'all'} %>
                   |
-                  <%= link_to 'none', {select: 'none'} %>
+                  <%= govuk_link_to 'none', {select: 'none'} %>
                 </div>
                 <div id="all-none-checkbox" class="js-only govuk-checkboxes__item" data-controls="all-none-item">
                   <input class="govuk-checkboxes__input" id="all-rows" name="all-rows" type="checkbox" value="all-rows">
                   <label class="govuk-label govuk-label--s govuk-checkboxes__label" for="all-rows"></label>
                 </div>
               </th>
-              <th class="govuk-table__header govuk-table__header--numeric">
-                <%= sortable_table_header( 'ID', :id ) %>
+              <th class="govuk-table__header">
+                <%= sortable_table_header( 'Account holder', :account_holder_name ) %>
               </th>
               <th class="govuk-table__header govuk-table__header--numeric">
                 <%= sortable_table_header( 'Mobile number', :mobile_number ) %>
-              </th>
-              <th class="govuk-table__header">
-                <%= sortable_table_header( 'Account holder', :account_holder_name ) %>
               </th>
               <th class="govuk-table__header">
                 <%= sortable_table_header( 'Requested', :requested ) %>
@@ -70,9 +67,14 @@
             </td>
           </tfoot>
         </table>
-        <div class="govuk-form-group inline">
+        <div class="govuk-form-group">
           <label for="mno-recipients-form-status-field" class="govuk-label">Set status of selected to</label>
-          <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
+          <%= f.govuk_collection_select :status,
+                                        @statuses,
+                                        :value,
+                                        :label,
+                                        label: {text: ''},
+                                        html_options: {class: 'govuk-!-display-inline-block'} %>
           <%= f.govuk_submit 'Update' %>
         </div>
       <% end %>
