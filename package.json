@@ -9,8 +9,7 @@
     "jquery": "3.5.1",
     "rails-ujs": ">=5.2.4",
     "serialize-javascript": ">=3.0.0",
-    "set-value": ">=3.0.2",
-    "turbolinks": ">=5.2.0"
+    "set-value": ">=3.0.2"
   },
   "devDependencies": {
     "webpack-dev-server": ">=3.11.0"
