@@ -98,7 +98,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
     it 'shows all/none checkbox when on subsequent pages' do
       click_on('Next')
-      expect { page.find('input#all-rows') }.not_to raise_error(Capybara::ElementNotFound)
+      expect { page.find('input#all-rows') }.not_to raise_error
     end
   end
 end

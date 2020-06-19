@@ -9,16 +9,6 @@
 <% else %>
   <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
 
-  <div class="govuk-body govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <span class="pagination-item-count">
-        <%= pagy_info(@pagination, "requests").html_safe %>
-      </span>
-      <%- if @pagination.pages > 1 %>
-        <%= pagy_nav(@pagination).html_safe %>
-      <%- end %>
-    </div>
-  </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= form_for @recipients_form, url: bulk_update_mno_recipients_path, method: :put do |f| %>
@@ -67,6 +57,11 @@
           <%= f.govuk_submit 'Update' %>
         </div>
       <% end %>
+    </div>
+  </div>
+  <div class="govuk-body govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>
     </div>
   </div>
 <% end %>
