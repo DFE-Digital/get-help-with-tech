@@ -27,6 +27,10 @@
 yarn-debug.log*
 .yarn-integrity
 
+# ./manifest.yml is now a temp symlink to an env-specific file in
+# config/manifests, created on-demand by the deploy Makefile target
+manifest.yml
+
 .env
 *.env
 *.log
