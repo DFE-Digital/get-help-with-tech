@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
-  before_action :populate_user_from_session!, :check_static_guidance_only_feature_flag!
+
+  http_basic_authenticate_with  name: ENV['HTTP_BASIC_AUTH_USERNAME'],
+                                password: ENV['HTTP_BASIC_AUTH_PASSWORD'],
+                                if: -> { FeatureFlag.active?(:http_basic_auth) }
+
+  before_action :populate_user_from_session!,
+                :check_static_guidance_only_feature_flag!
 
   include Pagy::Backend
 

@@ -1,10 +1,10 @@
 class FeatureFlag
   PERMANENT_SETTINGS = %i[
-    static_guidance_only
+    http_basic_auth
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
-
+    static_guidance_only
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
