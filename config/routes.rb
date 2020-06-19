@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/pages/:guidance', to: 'pages#guidance'
+  get '/pages/guidance', to: 'pages#guidance', as: :guidance_page
 
   resources :application_forms do
     get 'success/:application_form_id', to: 'application_forms#success', as: :success
