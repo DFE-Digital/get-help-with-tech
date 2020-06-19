@@ -54,7 +54,7 @@ bundle exec brakeman
 
 ### Deploy
 
-1. Run `cf login -a api.london.cloud.service.gov.uk -u USERNAME`, `USERNAME` is your personal GOV.UK PaaS account email address
+1. Run `cf login -u USERNAME [--sso]`, `USERNAME` is your personal GOV.UK PaaS account email address and the optional `--sso` allows you to use a Single Sign On provider like Google.
 2. Run `docker login` to log in to Docker Hub
 3. Run `make (dev|staging|prod) build push deploy` to build, push and deploy the Docker image to Gov.uk PaaS
 
