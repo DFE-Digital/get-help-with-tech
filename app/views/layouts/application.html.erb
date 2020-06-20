@@ -69,7 +69,7 @@
       <div class="govuk-width-container ">
         <div class="govuk-footer__meta">
           <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            <%- if ENV['SHOW_DEBUG_INFO'] %>
+            <%- if FeatureFlag.active?(:show_debug_info) %>
               <%= render partial: 'layouts/debug' %>
             <%- end %>
 
