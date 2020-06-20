@@ -14,7 +14,7 @@ class SessionService
 
   def self.validate_token!(token:, identifier:)
     user = User.where(sign_in_token: token).first
-    if user && user.sign_in_identifier(token) == identifier
+    if user && user.token_is_valid?(token: token, identifier: identifier)
       user.clear_token!
       user
     else

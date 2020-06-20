@@ -59,3 +59,13 @@ bundle exec brakeman
 3. Run `make (dev|staging|prod) build push deploy` to build, push and deploy the Docker image to Gov.uk PaaS
 
 The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
+
+## Environment variables
+
+Some values are configurable with environment variables:
+
+Name|Description|Default
+----|-----------|-------
+SIGN_IN_TOKEN_TTL_SECONDS|Sign-in tokens will expire after this many seconds|600
+HTTP_BASIC_AUTH_USERNAME|Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
+HTTP_BASIC_AUTH_PASSWORD|Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
