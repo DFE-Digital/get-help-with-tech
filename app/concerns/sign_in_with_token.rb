@@ -5,7 +5,7 @@ module SignInWithToken
     validates :sign_in_token, uniqueness: true, allow_nil: true
 
     def generate_token!(ttl: nil)
-      ttl ||= (ENV['SIGN_IN_TOKEN_TTL_SECONDS'] || 600)
+      ttl ||= (ENV['SIGN_IN_TOKEN_TTL_SECONDS'] || 1800)
 
       update!(
         sign_in_token: SecureRandom.uuid,
