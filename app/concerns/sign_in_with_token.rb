@@ -2,16 +2,22 @@ module SignInWithToken
   extend ActiveSupport::Concern
 
   included do
+    DEFAULT_SIGN_IN_TOKEN_TTL = 1800
+
     validates :sign_in_token, uniqueness: true, allow_nil: true
 
     def generate_token!(ttl: nil)
-      ttl ||= (ENV['SIGN_IN_TOKEN_TTL_SECONDS'] || 1800)
+      expiry_time = Time.now.utc + effective_ttl(ttl).seconds
 
       update!(
         sign_in_token: SecureRandom.uuid,
-        sign_in_token_expires_at: Time.now.utc + ttl.seconds,
+        sign_in_token_expires_at: expiry_time,
       )
       sign_in_token
+    end
+
+    def effective_ttl(given_ttl)
+      given_ttl || (ENV['SIGN_IN_TOKEN_TTL_SECONDS'] || DEFAULT_SIGN_IN_TOKEN_TTL)
     end
 
     def token_is_valid?(token:, identifier:)
