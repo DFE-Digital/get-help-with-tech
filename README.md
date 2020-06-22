@@ -69,3 +69,31 @@ Name|Description|Default
 SIGN_IN_TOKEN_TTL_SECONDS|Sign-in tokens will expire after this many seconds|600
 HTTP_BASIC_AUTH_USERNAME|Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
 HTTP_BASIC_AUTH_PASSWORD|Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
+
+### Feature Flags
+
+Certain aspects of app behaviour are governed by a minimal implementation of Feature Flags.
+These are activated by having an environment variable FEATURES_(flag name) set to 'active', for example:
+
+```
+# start the rails server with debug info rendered into the footer
+FEATURES_show_debug_info=active bundle exec rails s
+```
+
+The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
+
+To set / unset environment variables on Gov.uk PaaS, use the commands:
+
+```
+# set an env var
+cf set-env (app name) (environment variable name) (value)
+
+# For example:
+cf set-env get-help-with-tech-prod FEATURES_show_debug_info active
+
+# To unset the var:
+cf unset-env (app name) (environment variable name)
+
+# For example:
+cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
+```
