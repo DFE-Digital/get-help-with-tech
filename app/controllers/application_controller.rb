@@ -13,22 +13,20 @@ class ApplicationController < ActionController::Base
 private
 
   def populate_user_from_session!
-    @user = User.find(session[:user_id]) if is_signed_in?
+    if SessionService.is_signed_in?(session)
+      @user = User.find(session[:user_id])
+      SessionService.update_session!(session[:session_id])
+    end
     @user ||= User.new
   end
 
   def save_user_to_session!(user = @user)
-    session[:user_id] ||= user.id if user.present?
-  end
-
-  def is_signed_in?
-    session[:user_id].present?
+    session[:user_id] ||= user.id
+    SessionService.create_session!(session[:session_id])
   end
 
   def require_sign_in!
-    unless is_signed_in?
-      redirect_to_sign_in
-    end
+    redirect_to_sign_in unless SessionService.is_signed_in?(session)
   end
 
   def redirect_to_sign_in

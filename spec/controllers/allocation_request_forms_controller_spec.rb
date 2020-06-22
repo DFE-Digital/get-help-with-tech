@@ -27,6 +27,8 @@ describe AllocationRequestFormsController, type: :controller do
     context 'with valid params and no existing user in session' do
       before do
         session.delete(:user)
+        # TestSession doesn't create this automatically like a real session
+        session[:session_id] = SecureRandom.uuid
       end
 
       it 'creates a user' do

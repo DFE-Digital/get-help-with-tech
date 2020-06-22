@@ -35,6 +35,22 @@ RSpec.feature 'Session behaviour', type: :feature do
       expect(page).to have_text('Sign out')
     end
 
+    context 'when the session expires between requests' do
+      before do
+        ENV['SESSION_TTL_SECONDS'] = '1'
+      end
+
+      scenario 'visiting with a valid but expired session logs the user out' do
+        visit new_application_form_path
+        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
+        click_on 'Continue'
+
+        sleep(2)
+        click_on 'Tell us about another child or young person'
+        expect(page).to have_text('Sign in')
+      end
+    end
+
     scenario 'clicking "Sign out" signs the user out' do
       visit new_application_form_path
       fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)

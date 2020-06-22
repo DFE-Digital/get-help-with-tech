@@ -30,4 +30,25 @@ class SessionService
   def self.find_user_by_email(email_address)
     User.where(email_address: email_address).first
   end
+
+  def self.is_signed_in?(session)
+    session[:user_id].present? && validate_session!(session[:session_id])
+  end
+
+  def self.validate_session!(session_id)
+    db_session = Session.where(id: session_id).first
+    db_session && !db_session.expired?
+  end
+
+  def self.create_session!(session_id)
+    Session.create!(id: session_id)
+  end
+
+  def self.update_session!(session_id)
+    Session.where(id: session_id).update_all(updated_at: Time.now.utc)
+  end
+
+  def self.destroy_session!(session_id)
+    Session.where(id: session_id).destroy_all
+  end
 end
