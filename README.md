@@ -59,3 +59,31 @@ bundle exec brakeman
 3. Run `make (dev|staging|prod) build push deploy` to build, push and deploy the Docker image to Gov.uk PaaS
 
 The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
+
+## Feature Flags
+
+Certain aspects of app behaviour are governed by a minimal implementation of Feature Flags.
+These are activated by having an environment variable FEATURES_(flag name) set to 'active', for example:
+
+```
+# start the rails server with debug info rendered into the footer
+FEATURES_show_debug_info=active bundle exec rails s
+```
+
+The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
+
+To set / unset environment variables on Gov.uk PaaS, use the commands:
+
+```
+# set an env var
+cf set-env (app name) (environment variable name) (value)
+
+# For example:
+cf set-env get-help-with-tech-prod FEATURES_show_debug_info active
+
+# To unset the var:
+cf unset-env (app name) (environment variable name)
+
+# For example:
+cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
+```
