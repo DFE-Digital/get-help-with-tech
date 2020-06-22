@@ -60,7 +60,17 @@ bundle exec brakeman
 
 The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
 
-## Feature Flags
+## Environment variables
+
+Some values are configurable with environment variables:
+
+Name|Description|Default
+----|-----------|-------
+SIGN_IN_TOKEN_TTL_SECONDS|Sign-in tokens will expire after this many seconds|600
+HTTP_BASIC_AUTH_USERNAME|Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
+HTTP_BASIC_AUTH_PASSWORD|Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
+
+### Feature Flags
 
 Certain aspects of app behaviour are governed by a minimal implementation of Feature Flags.
 These are activated by having an environment variable FEATURES_(flag name) set to 'active', for example:
