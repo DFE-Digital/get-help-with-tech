@@ -19,16 +19,28 @@ class SignInTokensController < ApplicationController
 
   def create
     @sign_in_token_form = SignInTokenForm.new(sign_in_token_form_params)
+    redirect_to new_user_path and return if @sign_in_token_form.already_have_account == 'no'
 
-    if @sign_in_token_form.valid? && @sign_in_token_form.email_is_user?
-      token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
-      # NOTE: this is purely to allow us to display the link in the footer
-      # REMOVE when we have emails actually being sent
-      identifier = User.where(sign_in_token: token).first.try(:sign_in_identifier, token)
+    if @sign_in_token_form.valid?
+      token = (@sign_in_token_form.email_is_user? ? \
+               SessionService.send_magic_link_email!(@sign_in_token_form.email_address) : \
+               SecureRandom.uuid)
+      redirect_to sent_token_path(token: token) and return
+    else
+      render :new
+    end
+  end
+
+  def sent
+    @user = User.where(sign_in_token: params[:token]).first
+    # NOTE: this is purely to allow us to display the link in the footer
+    # REMOVE when we have emails actually being sent
+    if @user
+      identifier = @user.sign_in_identifier(@user.sign_in_token)
       @debug_info = {
-        sign_in_token: token,
+        sign_in_token: @user.sign_in_token,
         sign_in_identifier: identifier,
-        sign_in_link: validate_sign_in_token_url(token: token, identifier: identifier),
+        sign_in_link: validate_sign_in_token_url(token: @user.sign_in_token, identifier: identifier),
       }
     end
   end
@@ -37,6 +49,7 @@ private
 
   def sign_in_token_form_params
     params.require(:sign_in_token_form).permit(
+      :already_have_account,
       :email_address,
       :token,
       :identifier,
