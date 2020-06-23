@@ -1,15 +1,24 @@
 <% content_for :title, t('page_titles.requests_for_extra_mobile_data') %>
 
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= @mobile_network.brand %></span>
-  <%= t('page_titles.requests_for_extra_mobile_data') %>
-</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @mobile_network.brand %></span>
+      Requests for extra mobile&nbsp;data
+    </h1>
+  </div>
+</div>
+
 <% if @recipients.empty? %>
   <p class="govuk-body">
     (There are no matching requests at the moment)
   </p>
 <% else %>
   <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
+
+  <h2 class="govuk-heading-l govuk-!-margin-top-4">
+    <%= pagy_info(@pagination, "requests").capitalize.html_safe %>
+  </h2>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

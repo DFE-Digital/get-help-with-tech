@@ -11,6 +11,11 @@ en:
   errors:
     format:
       "'%{attribute}' %{message}"
+  pagy:
+    info:
+      no_items: "No %{item_name} found"
+      single_page: "%{count} %{item_name}"
+      multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
   activerecord:
     attributes:
       recipient:
