@@ -16,8 +16,6 @@ private
     if SessionService.is_signed_in?(session)
       @user = User.find(session[:user_id])
       SessionService.update_session!(session[:session_id])
-    else
-      byebug
     end
     @user ||= User.new
   end
