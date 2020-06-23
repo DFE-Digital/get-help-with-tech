@@ -27,5 +27,6 @@ RSpec.feature 'Submitting an allocation_request_form', type: :feature do
 
     expect(page.status_code).to eq(200)
     expect(page).to have_text('Thank you')
+    expect(page).to have_text('Sign out')
   end
 end

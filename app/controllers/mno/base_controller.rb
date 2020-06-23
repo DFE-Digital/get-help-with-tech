@@ -4,7 +4,7 @@ class Mno::BaseController < ApplicationController
 private
 
   def require_mno_user!
-    if is_signed_in?
+    if SessionService.is_signed_in?(session)
       render 'errors/forbidden', status: :forbidden unless @user.is_mno_user?
     else
       redirect_to_sign_in

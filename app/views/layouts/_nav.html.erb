@@ -12,8 +12,8 @@
       <%= nav_item( title: "Tell us about an eligible young person", url: new_application_form_path )  %>
     <%- end %>
 
-    <%- if session[:user_id].present? %>
-      <%- sign_out_link = link_to("Sign out", session_path(id: session.id), method: :delete, class: 'govuk-header__link' ) %>
+    <%- if SessionService.is_signed_in?(session) %>
+      <%- sign_out_link = link_to("Sign out", session_path(id: session[:session_id]), method: :delete, class: 'govuk-header__link' ) %>
       <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
       <%= nav_item(url: session_path(id: session.id), content: content.html_safe) %>
     <%- else %>
