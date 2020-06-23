@@ -14,7 +14,7 @@ RSpec.feature 'HTTP Basic Auth feature flag', type: :feature do
     scenario 'visiting the root url requires basic auth' do
       visit '/'
       expect(page).to have_http_status(:unauthorized)
-      expect(page).not_to have_selector 'h1', text: 'Increasing children’s internet access'
+      expect(page).not_to have_selector 'h1', text: 'Increasing internet access for vulnerable and disadvantaged children'
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.feature 'HTTP Basic Auth feature flag', type: :feature do
     scenario 'visiting the root url does not require basic auth' do
       visit '/'
       expect(page).to have_http_status(:ok)
-      expect(page).to have_selector 'h1', text: 'Increasing children’s internet access'
+      expect(page).to have_selector 'h1', text: 'Increasing internet access for vulnerable and disadvantaged children'
     end
   end
 end
