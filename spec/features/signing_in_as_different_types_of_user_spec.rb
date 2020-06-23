@@ -11,7 +11,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     scenario 'it redirects to the guidance page' do
       visit(validate_token_url)
       expect(page).to have_current_path('/pages/guidance')
-      expect(page).to have_text 'Increasing children’s internet access'
+      expect(page).to have_text 'Increasing internet access for vulnerable and disadvantaged children'
     end
   end
 
