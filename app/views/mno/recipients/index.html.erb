@@ -1,6 +1,8 @@
+<% content_for :title, t('page_titles.requests_for_extra_mobile_data') %>
+
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl"><%= @mobile_network.brand %></span>
-  Requests for extra mobile data
+  <%= t('page_titles.requests_for_extra_mobile_data') %>
 </h1>
 <% if @recipients.empty? %>
   <p class="govuk-body">
