@@ -15,7 +15,7 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
     scenario 'visiting any other page returns a 404' do
       visit sign_in_path
       expect(page).to have_http_status(:not_found)
-      expect(page).to have_selector 'h1', text: 'The page you were looking for doesn\'t exist'
+      expect(page).to have_selector 'h1', text: 'Page not found'
     end
 
     scenario 'Other nav links are not shown' do
