@@ -37,7 +37,16 @@ class SessionService
 
   def self.validate_session!(session_id)
     db_session = Session.where(id: session_id).first
-    db_session && !db_session.expired?
+    if db_session
+      if db_session.expired?
+        destroy_session!(session_id)
+        false
+      else
+        true
+      end
+    else
+      false
+    end
   end
 
   def self.create_session!(session_id)
