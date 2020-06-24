@@ -6,10 +6,13 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
       FeatureFlag.activate(:static_guidance_only)
     end
 
-    scenario 'visiting the guidance page works' do
+    scenario 'visiting the static guidance pages works' do
       visit guidance_page_path
       expect(page).to have_http_status(:ok)
       expect(page).to have_selector 'h1', text: 'Increasing internet access for vulnerable and disadvantaged children'
+
+      visit '/bt-wifi/privacy-notice'
+      expect(page).to have_http_status(:ok)
     end
 
     scenario 'visiting any other page returns a 404' do
