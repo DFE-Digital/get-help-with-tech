@@ -1,13 +1,13 @@
 <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
   <%- if FeatureFlag.active?(:static_guidance_only) %>
-    <%= nav_item( title: "Guidance", url: '/pages/guidance' )  %>
+    <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
   <%- else %>
     <%- if @user && @user.is_dfe? %>
 
     <%- elsif @user && @user.is_mno_user? %>
       <%= nav_item( title: "Your requests", url: mno_recipients_path )  %>
     <%- else %>
-      <%= nav_item( title: "Guidance", url: '/pages/guidance' )  %>
+      <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
       <%= nav_item( title: "Tell us how many eligible young people you know about", url: new_allocation_request_form_path )  %>
       <%= nav_item( title: "Tell us about an eligible young person", url: new_application_form_path )  %>
     <%- end %>
