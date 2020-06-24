@@ -11,10 +11,13 @@ Rails.application.routes.draw do
   end
 
   resources :sessions, only: %i[create destroy]
+  resources :users, only: %i[new create]
 
   resources :sign_in_tokens, only: %i[new create]
+
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   get '/token/validate-manual', to: 'sign_in_tokens#validate_manual', as: :validate_manually_entered_sign_in_token
+  get '/token/sent/:token', to: 'sign_in_tokens#sent', as: :sent_token
 
   namespace :mno do
     resources :recipients, only: %i[index show edit update] do

@@ -1,11 +1,12 @@
 en:
   service_name: Increasing internet access for vulnerable and disadvantaged children
   page_titles:
-    sign_in: Sign in
+    sign_in: Create an account or sign in
     check_your_email: Check your email
     eligible_people: Tell us how many eligible young people you know about
     eligible_person: Tell us about an eligible young person
-    enter_token_manually: Enter special sign-in values manually
+    new_user: Create an account
+    thank_you: Thank you
     error_prefix: "Error: "
     requests_for_extra_mobile_data: Requests for extra mobile data
     thank_you: Thank you
