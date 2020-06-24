@@ -1,4 +1,5 @@
 class Recipient < ApplicationRecord
+  belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
 
   enum status: {

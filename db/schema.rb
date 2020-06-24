@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_153248) do
+ActiveRecord::Schema.define(version: 2020_06_24_224602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_153248) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "mobile_network_id"
     t.string "status"
+    t.integer "created_by_user_id"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_recipients_on_mobile_network_id_and_status_and_created_at"
     t.index ["status"], name: "index_recipients_on_status"
   end

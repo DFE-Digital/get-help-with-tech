@@ -18,7 +18,7 @@ class AllocationRequestFormsController < ApplicationController
   def success
     # NOTE: restful route expects :application_form_id, we're actually using it
     # to retrieve the recipient. Not good, need to refactor
-    @allocation_request_form = AllocationRequestForm.new(user: @user, allocation_request: AllocationRequest.find(params[:allocation_request_form_id]))
+    @allocation_request_form = AllocationRequestForm.new(allocation_request: AllocationRequest.find(params[:allocation_request_form_id]))
   end
 
 private

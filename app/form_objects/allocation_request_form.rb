@@ -13,8 +13,6 @@ class AllocationRequestForm
     @allocation_request = opts[:allocation_request] || AllocationRequest.new(opts)
     @number_eligible = opts[:number_eligible] || @allocation_request.number_eligible
     @number_eligible_with_hotspot_access = opts[:number_eligible_with_hotspot_access] || @allocation_request.number_eligible_with_hotspot_access
-
-    populate_from_allocation_request! if allocation_request
   end
 
   def save!
@@ -34,15 +32,8 @@ private
 
   def construct_allocation_request
     AllocationRequest.new(
-      created_by_user: @created_by_user,
       number_eligible: @number_eligible,
       number_eligible_with_hotspot_access: @number_eligible_with_hotspot_access,
     )
-  end
-
-  def populate_from_allocation_request!
-    @created_by_user = @allocation_request.created_by_user
-    @number_eligible = @allocation_request.number_eligible
-    @number_eligible_with_hotspot_access = @allocation_request.number_eligible_with_hotspot_access
   end
 end
