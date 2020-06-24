@@ -26,3 +26,7 @@ en:
           queried: Queried
           complete: Complete
           cancelled: Cancelled
+  time:
+    formats:
+      time_only: "%l:%M%P"
+      time_only_with_zone: "%l:%M%P %Z"

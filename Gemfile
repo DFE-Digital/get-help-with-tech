@@ -17,6 +17,9 @@ gem 'foreman'
 gem 'govuk_design_system_formbuilder'
 gem 'haml'
 
+# GovUK Notify
+gem 'mail-notify'
+
 # pagination
 gem 'pagy'
 
