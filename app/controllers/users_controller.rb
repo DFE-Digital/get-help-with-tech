@@ -28,7 +28,7 @@ private
     opts.require(:user).permit(
       :full_name,
       :email_address,
-      :organisation
+      :organisation,
     )
   end
 end
