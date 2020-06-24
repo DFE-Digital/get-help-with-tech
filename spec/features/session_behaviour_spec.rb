@@ -79,7 +79,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
       clear_emails
       expect(current_email).to be_nil
-      fill_in 'Please enter your email address', with: valid_user.email_address
+      fill_in 'Email address', with: valid_user.email_address
       click_on 'Continue'
       open_email(valid_user.email_address)
 
