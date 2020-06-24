@@ -5,9 +5,10 @@ en:
     check_your_email: Check your email
     eligible_people: Tell us how many eligible young people you know about
     eligible_person: Tell us about an eligible young person
-    thank_you: Thank you
+    enter_token_manually: Enter special sign-in values manually
     error_prefix: "Error: "
     requests_for_extra_mobile_data: Requests for extra mobile data
+    thank_you: Thank you
   errors:
     format:
       "'%{attribute}' %{message}"

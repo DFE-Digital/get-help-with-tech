@@ -63,5 +63,11 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
       expect(page).to have_text(user.email_address)
       expect(page).to have_text('Sign out')
     end
+
+    scenario 'Going directly to the manual token entry page allows the user to enter them manually' do
+      visit manually_enter_sign_in_token_url
+      expect(page).to have_field('Token')
+      expect(page).to have_field('Identifier')
+    end
   end
 end

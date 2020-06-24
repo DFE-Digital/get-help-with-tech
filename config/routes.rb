@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[create destroy]
 
   resources :sign_in_tokens, only: %i[new create]
-  get '/token/validate/:token/:identifier', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
-  get '/token/manual', to: 'sign_in_tokens#manual', as: :validate_manually_entered_sign_in_token
+  get '/token/enter-manually', to: 'sign_in_tokens#enter_manually', as: :manually_enter_sign_in_token
+  get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
+  get '/token/validate-manual', to: 'sign_in_tokens#validate_manual', as: :validate_manually_entered_sign_in_token
 
   namespace :mno do
     resources :recipients, only: %i[index show edit update] do

@@ -13,7 +13,11 @@ class SignInTokensController < ApplicationController
     render :token_not_recognised, status: :bad_request
   end
 
-  def manual
+  def enter_manually
+    @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
+  end
+
+  def validate_manual
     redirect_to validate_sign_in_token_path(token: sign_in_token_form_params[:token], identifier: sign_in_token_form_params[:identifier])
   end
 
