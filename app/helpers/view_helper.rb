@@ -26,9 +26,9 @@ module ViewHelper
         suffix = '▼'
         dir = 'd'
       end
-      safe_join([link_to(title, sort: value, dir: dir), suffix], ' ')
+      safe_join([govuk_link_to(title, sort: value, dir: dir), suffix], ' ')
     else
-      link_to(title, sort: value)
+      govuk_link_to(title, sort: value)
     end
   end
 

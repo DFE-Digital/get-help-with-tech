@@ -1,13 +1,24 @@
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl"><%= @mobile_network.brand %></span>
-  Requests for extra mobile data
-</h1>
+<% content_for :title, t('page_titles.requests_for_extra_mobile_data') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @mobile_network.brand %></span>
+      Requests for extra mobile&nbsp;data
+    </h1>
+  </div>
+</div>
+
 <% if @recipients.empty? %>
   <p class="govuk-body">
     (There are no matching requests at the moment)
   </p>
 <% else %>
   <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
+
+  <h2 class="govuk-heading-l govuk-!-margin-top-4">
+    <%= pagy_info(@pagination, "requests").capitalize.html_safe %>
+  </h2>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -51,17 +62,19 @@
             </td>
           </tfoot>
         </table>
-        <div class="govuk-form-group display-child-forms-inline">
-          <label for="mno-recipients-form-status-field" class="govuk-label">Set status of selected to</label>
-          <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
-          <%= f.govuk_submit 'Update' %>
+        <div class="govuk-body govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group govuk-!-margin-bottom-0 display-child-forms-inline">
+              <label for="mno-recipients-form-status-field" class="govuk-label">Set status of selected to</label>
+              <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
+              <%= f.govuk_submit 'Update' %>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>
+          </div>
         </div>
       <% end %>
-    </div>
-  </div>
-  <div class="govuk-body govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>
     </div>
   </div>
 <% end %>

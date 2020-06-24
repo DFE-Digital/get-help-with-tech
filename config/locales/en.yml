@@ -7,9 +7,15 @@ en:
     eligible_person: Tell us about an eligible young person
     thank_you: Thank you
     error_prefix: "Error: "
+    requests_for_extra_mobile_data: Requests for extra mobile data
   errors:
     format:
       "'%{attribute}' %{message}"
+  pagy:
+    info:
+      no_items: "No %{item_name} found"
+      single_page: "%{count} %{item_name}"
+      multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
   activerecord:
     attributes:
       recipient:
