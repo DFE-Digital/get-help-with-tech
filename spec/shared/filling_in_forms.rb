@@ -1,8 +1,4 @@
-def fill_in_valid_application_form(user_email: 'validmail@localauthority.gov.uk', mobile_network_name: 'Participating mobile network')
-  fill_in 'Your full name', with: 'Bob Boberts'
-  fill_in 'Your email address', with: user_email
-  fill_in 'Name of the organisation you work for', with: 'A Local Authority'
-
+def fill_in_valid_application_form(mobile_network_name: 'Participating mobile network')
   fill_in 'Name of the eligible child or young person', with: 'young person'
   fill_in 'Address of the child or young person', with: '1 some street\nsome town'
   fill_in 'Postcode of the child or young person', with: 'AB128TH'

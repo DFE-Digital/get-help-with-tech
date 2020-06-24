@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 describe AllocationRequestFormsController, type: :controller do
+  def sign_in_as(user)
+    # TestSession doesn't do this automatically like a real session
+    session[:session_id] = SecureRandom.uuid
+    controller.send(:save_user_to_session!, user)
+  end
+
   describe '#create' do
     let(:invalid_params) do
       {
-        user_name: '',
-        user_email: 'nobody',
-        user_organisation: '',
         number_eligible: -2,
       }
     end
     let(:valid_params) do
       {
-        user_name: 'John Smith',
-        user_email: 'john.smith@somelocalauthority.gov.uk',
-        user_organisation: 'some local authority',
         number_eligible: 20,
         number_eligible_with_hotspot_access: 14,
       }
@@ -22,7 +22,6 @@ describe AllocationRequestFormsController, type: :controller do
     let(:params) { { allocation_request_form: valid_params } }
     let(:created_allocation_request) { AllocationRequest.last }
     let(:the_request) { post :create, params: params }
-    let(:created_user) { User.last }
 
     context 'with valid params and no existing user in session' do
       before do
@@ -31,26 +30,25 @@ describe AllocationRequestFormsController, type: :controller do
         session[:session_id] = SecureRandom.uuid
       end
 
-      it 'creates a user' do
-        expect { the_request }.to change(User, :count).by(1)
-      end
-
-      it 'creates a user with the right attributes' do
+      it 'redirects to sign_in' do
         the_request
-        expect(created_user).to have_attributes(
-          full_name: 'John Smith',
-          email_address: 'john.smith@somelocalauthority.gov.uk',
-          organisation: 'some local authority',
-        )
+        expect(response).to redirect_to(sign_in_path)
       end
 
-      it 'sets the user_id in session' do
-        expect { the_request }.to(change { session[:user_id] })
-        expect(session[:user_id]).to eq(created_user.id)
+      it 'does not change the user_id in session' do
+        expect { the_request }.not_to(change { session[:user_id] })
+        expect(session[:user_id]).to be_nil
       end
 
-      it 'creates an AllocationRequest' do
-        expect { the_request }.to change(AllocationRequest, :count).by(1)
+      it 'does not create an AllocationRequest' do
+        expect { the_request }.not_to change(AllocationRequest, :count)
+      end
+    end
+
+    context 'with valid params and an existing user in session' do
+      let(:user) { create(:local_authority_user) }
+      before do
+        sign_in_as user
       end
 
       it 'creates an AllocationRequest with the right numbers' do
@@ -67,15 +65,19 @@ describe AllocationRequestFormsController, type: :controller do
       end
     end
 
-    context 'with invalid params' do
+    context 'with invalid params and an existing user in session' do
+      let(:user) { create(:local_authority_user) }
       let(:params) { { allocation_request_form: invalid_params } }
       let(:the_request) { post :create, params: params }
+      before do
+        sign_in_as user
+      end
 
-      it 'does not create an AllocationRequest when params are invalid' do
+      it 'does not create an AllocationRequest' do
         expect { post :create, params: params }.not_to change(AllocationRequest, :count)
       end
 
-      it 'responds with a 400 status code when params are invalid' do
+      it 'responds with a 400 status code' do
         post :create, params: params
         expect(response.status).to eq(400)
       end

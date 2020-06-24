@@ -14,9 +14,8 @@
       What happens next
     </h2>
     <p class="govuk-body">
-      We will contact you on the email address you provided (
-      <%= @allocation_request_form.user.email_address %>
-      ) soon.
+      We will contact you by email soon, on
+      <%= @allocation_request_form.allocation_request.created_by_user.email_address %>
     </p>
   </div>
 </div>

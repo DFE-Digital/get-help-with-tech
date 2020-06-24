@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
+require 'support/sign_in_as'
 
 RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
@@ -9,6 +10,7 @@ RSpec.feature 'Session behaviour', type: :feature do
   end
 
   context 'with a participating mobile network' do
+    let(:user) { create(:local_authority_user) }
     let(:participating_mobile_network) do
       create(:mobile_network, participating_in_scheme: true)
     end
@@ -19,24 +21,40 @@ RSpec.feature 'Session behaviour', type: :feature do
     end
 
     # TODO: need to think about how verification should work
-    scenario 'submitting a valid form signs the user in' do
-      visit new_application_form_path
-      fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-      click_on 'Continue'
+    context 'when signed in' do
+      before do
+        sign_in_as user
+      end
 
-      expect(page).to have_text('Sign out')
-    end
+      scenario 'the user can submit a valid form' do
+        visit new_application_form_path
+        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
+        click_on 'Continue'
 
-    scenario 'user session is preserved across requests' do
-      visit new_application_form_path
-      fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-      click_on 'Continue'
-      click_on 'Tell us about another child or young person'
-      expect(page).to have_text('Sign out')
+        expect(page).to have_text('Thank you')
+      end
+
+      scenario 'user session is preserved across requests' do
+        visit new_application_form_path
+        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
+        click_on 'Continue'
+        click_on 'Tell us about another child or young person'
+        expect(page).to have_text('Sign out')
+      end
+
+      scenario 'clicking "Sign out" signs the user out' do
+        visit new_application_form_path
+        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
+        click_on 'Continue'
+
+        click_on 'Sign out'
+        expect(page).to have_text('Sign in')
+      end
     end
 
     context 'when the session expires between requests' do
       before do
+        sign_in_as user
         ENV['SESSION_TTL_SECONDS'] = '1'
       end
 
@@ -49,22 +67,6 @@ RSpec.feature 'Session behaviour', type: :feature do
         click_on 'Tell us about another child or young person'
         expect(page).to have_text('Sign in')
       end
-    end
-
-    scenario 'clicking "Sign out" signs the user out' do
-      visit new_application_form_path
-      fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-      click_on 'Continue'
-
-      click_on 'Sign out'
-      expect(page).to have_text('Sign in')
-    end
-
-    scenario 'submitting a valid form with an existing user email address does not create a duplicate user' do
-      user = create(:local_authority_user)
-      visit new_application_form_path
-      fill_in_valid_application_form(user_email: user.email_address, mobile_network_name: participating_mobile_network.brand)
-      expect { click_on 'Continue' }.not_to change(User, :count)
     end
   end
 

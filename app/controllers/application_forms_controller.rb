@@ -1,4 +1,6 @@
 class ApplicationFormsController < ApplicationController
+  before_action :require_sign_in!
+  
   def new
     @application_form = ApplicationForm.new(user: @user)
     @mobile_networks = MobileNetwork.order('LOWER(brand)')

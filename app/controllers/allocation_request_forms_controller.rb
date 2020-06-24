@@ -1,14 +1,14 @@
 class AllocationRequestFormsController < ApplicationController
+  before_action :require_sign_in!
+
   def new
-    @allocation_request_form = AllocationRequestForm.new(user: @user)
+    @allocation_request_form = AllocationRequestForm.new
   end
 
   def create
-    @allocation_request_form = AllocationRequestForm.new(user: @user, params: allocation_request_form_params)
+    @allocation_request_form = AllocationRequestForm.new(allocation_request_form_params.merge(created_by_user: @user))
     begin
       @allocation_request_form.save!
-      @user = @allocation_request_form.user
-      save_user_to_session! unless SessionService.is_signed_in?(session)
       redirect_to allocation_request_form_success_path(@allocation_request_form.allocation_request.id)
     rescue ActiveModel::ValidationError
       render :new, status: :bad_request
@@ -25,9 +25,6 @@ private
 
   def allocation_request_form_params
     params.require(:allocation_request_form).permit(
-      :user_name,
-      :user_email,
-      :user_organisation,
       :number_eligible,
       :number_eligible_with_hotspot_access,
     )

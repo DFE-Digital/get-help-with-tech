@@ -10,9 +10,6 @@
     </p>
     <%= form_for @allocation_request_form do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.fields_for :user do |user_form| %>
-        <%= render partial: 'shared/user_form', locals: { form: f } %>
-      <% end %>
       <%= f.govuk_fieldset legend: { text: 'About the eligible young people' } do %>
         <%= f.govuk_number_field :number_eligible,
                                   required: true,
