@@ -9,7 +9,7 @@ class ApplicationFormsController < ApplicationController
     begin
       @application_form.save!
       @user = @application_form.user
-      save_user_to_session!
+      save_user_to_session! unless SessionService.is_signed_in?(session)
       redirect_to application_form_success_path(@application_form.recipient.id)
     rescue ActiveModel::ValidationError
       @mobile_networks = MobileNetwork.order('LOWER(brand)')

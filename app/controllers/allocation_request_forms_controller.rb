@@ -8,7 +8,7 @@ class AllocationRequestFormsController < ApplicationController
     begin
       @allocation_request_form.save!
       @user = @allocation_request_form.user
-      save_user_to_session!
+      save_user_to_session! unless SessionService.is_signed_in?(session)
       redirect_to allocation_request_form_success_path(@allocation_request_form.allocation_request.id)
     rescue ActiveModel::ValidationError
       render :new, status: :bad_request
