@@ -76,9 +76,13 @@ RSpec.feature 'Session behaviour', type: :feature do
       click_on 'Sign in'
       expect(page).to have_text('Please enter your email address')
 
+      clear_emails
+      expect(current_email).to be_nil
       fill_in 'Please enter your email address', with: valid_user.email_address
       click_on 'Continue'
+      open_email(valid_user.email_address)
 
+      expect(current_email).not_to be_nil
       expect(page).to have_text('If we’ve recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.')
     end
 
