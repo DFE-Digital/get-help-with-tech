@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get '/pages/guidance', to: 'pages#guidance', as: :guidance_page
+  get '/about-bt-wifi', to: 'pages#guidance', as: :guidance_page
+  get '/pages/guidance', to: redirect('/about-bt-wifi')
 
   resources :application_forms do
     get 'success/:application_form_id', to: 'application_forms#success', as: :success
@@ -28,5 +29,5 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unprocessable_entity', via: :all
   get '/500', to: 'errors#internal_server_error', via: :all
 
-  get '/', to: redirect('pages/guidance')
+  get '/', to: redirect('/about-bt-wifi')
 end
