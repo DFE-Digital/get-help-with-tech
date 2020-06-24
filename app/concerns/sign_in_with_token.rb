@@ -8,7 +8,6 @@ module SignInWithToken
 
     def generate_token!(ttl: nil)
       expiry_time = Time.now.utc + effective_ttl(ttl).seconds
-
       update!(
         sign_in_token: SecureRandom.uuid,
         sign_in_token_expires_at: expiry_time,

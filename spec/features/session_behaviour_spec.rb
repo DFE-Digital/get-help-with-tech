@@ -74,23 +74,25 @@ RSpec.feature 'Session behaviour', type: :feature do
     scenario 'Signing in as a recognised user sends a magic link email' do
       visit '/'
       click_on 'Sign in'
-      expect(page).to have_text('Please enter your email address')
+      find('#sign-in-token-form-already-have-account-yes-field').choose
+      expect(page).to have_text('Email address')
 
-      fill_in 'Please enter your email address', with: valid_user.email_address
+      fill_in 'Email address', with: valid_user.email_address
       click_on 'Continue'
 
-      expect(page).to have_text('If we’ve recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.')
+      expect(page).to have_text('Check your email')
     end
 
     scenario 'Entering an unrecognised email address is silently ignored' do
       visit '/'
       click_on 'Sign in'
-      expect(page).to have_text('Please enter your email address')
+      find('#sign-in-token-form-already-have-account-yes-field').choose
+      expect(page).to have_text('Email address')
 
-      fill_in 'Please enter your email address', with: 'unrecognised@example.com'
+      fill_in 'Email address', with: 'unrecognised@example.com'
       click_on 'Continue'
 
-      expect(page).to have_text('If we’ve recognised the email address you entered, you should receive an email soon containing a link you can click on to sign in.')
+      expect(page).to have_text('Check your email')
     end
   end
 end
