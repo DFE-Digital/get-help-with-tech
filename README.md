@@ -55,12 +55,20 @@ bundle exec brakeman
 - Your department, agency or team has a GOV.UK PaaS account
 - You have a personal account granted by your organisation manager
 - You have downloaded and installed the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads) for your platform
+- You have downloaded and installed [Docker Desktop](https://docs.docker.com/desktop/)
 
-### Deploy
+### The deployment process
 
-1. Run `cf login -u USERNAME [--sso]`, `USERNAME` is your personal GOV.UK PaaS account email address and the optional `--sso` allows you to use a Single Sign On provider like Google.
+1. [Sign in to Cloud Foundry](https://docs.cloud.service.gov.uk/get_started.html#sign-in-to-cloud-foundry) (using either your GOV.UK PaaS account or single sign-on, once you've enabled it for your account)
 2. Run `docker login` to log in to Docker Hub
-3. Run `make (dev|staging|prod) build push deploy` to build, push and deploy the Docker image to Gov.uk PaaS
+3. Run `make dev build push deploy` to build, push and deploy the Docker image to GOV.UK PaaS development instance
+4. Test on https://get-help-with-tech-dev.london.cloudapps.digital
+5. Run `docker tag dfedigital/get-help-with-tech-dev:latest get-help-with-tech-staging` to promote the Docker image to staging
+6. Run `make staging push deploy` to deploy to staging
+7. Test on https://get-help-with-tech-staging.london.cloudapps.digital
+8. Run `docker tag dfedigital/get-help-with-tech-dev:latest get-help-with-tech-prod` to promote the Docker image to prod
+9. Run `make prod push deploy` to deploy to production
+10. Test on https://get-help-with-tech-prod.london.cloudapps.digital
 
 The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
 

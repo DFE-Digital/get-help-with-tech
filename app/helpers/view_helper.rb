@@ -7,13 +7,13 @@ module ViewHelper
     link_to(body, url, html_options)
   end
 
-  def ghwt_contact_mailto(subject: 'Increasing%20internet%20access')
+  def ghwt_contact_mailto(subject: 'Increasing%20internet%20access', label: 'COVID.TECHNOLOGY@education.gov.uk')
     mail_to_url = [
       'mailto:COVID.TECHNOLOGY@education.gov.uk',
       (subject.present? ? "subject=#{subject}" : nil),
     ].compact.join('?')
 
-    govuk_link_to 'COVID.TECHNOLOGY@education.gov.uk', mail_to_url
+    govuk_link_to label, mail_to_url
   end
 
   def govuk_button_link_to(body, url, html_options = {})
