@@ -7,6 +7,12 @@ module ViewHelper
     link_to(body, url, html_options)
   end
 
+  def ghwt_contact_mailto(subject: 'Increasing%20internet%20access')
+    govuk_link_to 'COVID.TECHNOLOGY@education.gov.uk',
+      'mailto:COVID.TECHNOLOGY@education.gov.uk' +
+      (subject.present? ? "?subject=#{subject}" : '')
+  end
+
   def govuk_button_link_to(body, url, html_options = {})
     html_options[:class] = prepend_css_class('govuk-button', html_options[:class])
 
