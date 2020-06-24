@@ -17,6 +17,9 @@ gem 'foreman'
 gem 'govuk_design_system_formbuilder'
 gem 'haml'
 
+# GovUK Notify
+gem 'mail-notify'
+
 # pagination
 gem 'pagy'
 
@@ -69,6 +72,7 @@ group :development do
 end
 
 group :test do
+  gem 'capybara-email'
   gem 'database_cleaner-active_record'
   gem 'webdrivers', '~> 4.3'
 end

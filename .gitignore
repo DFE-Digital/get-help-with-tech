@@ -32,5 +32,6 @@ yarn-debug.log*
 manifest.yml
 
 .env
+.env.*
 *.env
 *.log

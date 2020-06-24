@@ -9,6 +9,7 @@ en:
     thank_you: Thank you
     error_prefix: "Error: "
     requests_for_extra_mobile_data: Requests for extra mobile data
+    thank_you: Thank you
   errors:
     format:
       "'%{attribute}' %{message}"
@@ -26,3 +27,7 @@ en:
           queried: Queried
           complete: Complete
           cancelled: Cancelled
+  time:
+    formats:
+      time_only: "%l:%M%P"
+      time_only_with_zone: "%l:%M%P %Z"

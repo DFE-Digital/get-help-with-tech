@@ -77,9 +77,13 @@ RSpec.feature 'Session behaviour', type: :feature do
       find('#sign-in-token-form-already-have-account-yes-field').choose
       expect(page).to have_text('Email address')
 
+      clear_emails
+      expect(current_email).to be_nil
       fill_in 'Email address', with: valid_user.email_address
       click_on 'Continue'
+      open_email(valid_user.email_address)
 
+      expect(current_email).not_to be_nil
       expect(page).to have_text('Check your email')
     end
 

@@ -44,6 +44,10 @@ bundle exec brakeman
 
  All the above are run automatically on Travis CI when pushing a PR
 
+## Integrations
+
+[Gov.uk Notify](https://www.notifications.service.gov.uk/) for sending emails
+
 ## Deploying on GOV.UK PaaS
 
 ### Prerequisites
@@ -77,6 +81,9 @@ Name|Description|Default
 SIGN_IN_TOKEN_TTL_SECONDS|Sign-in tokens will expire after this many seconds|600
 HTTP_BASIC_AUTH_USERNAME|Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
 HTTP_BASIC_AUTH_PASSWORD|Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
+GOVUK_NOTIFY_API_KEY|API key for the Gov.uk Notify service, used for sending emails|REQUIRED
+HOSTNAME_FOR_URLS|Hostname used for generating URLs in emails|http://localhost:3000/
+SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID|ID of the template in Gov.uk Notify used for mailing sign-in tokens|'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
 
 ### Feature Flags
 

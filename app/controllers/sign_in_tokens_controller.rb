@@ -13,7 +13,7 @@ class SignInTokensController < ApplicationController
     render :token_not_recognised, status: :bad_request
   end
 
-  def manual
+  def validate_manual
     redirect_to validate_sign_in_token_path(token: sign_in_token_form_params[:token], identifier: sign_in_token_form_params[:identifier])
   end
 
