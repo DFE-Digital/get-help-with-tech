@@ -7,8 +7,8 @@ module ViewHelper
     link_to(body, url, html_options)
   end
 
-  def ghwt_contact_mailto(subject: 'Increasing%20internet%20access')
-    govuk_link_to 'COVID.TECHNOLOGY@education.gov.uk',
+  def ghwt_contact_mailto(subject: 'Increasing%20internet%20access', label: 'COVID.TECHNOLOGY@education.gov.uk')
+    govuk_link_to label,
       'mailto:COVID.TECHNOLOGY@education.gov.uk' +
       (subject.present? ? "?subject=#{subject}" : '')
   end
