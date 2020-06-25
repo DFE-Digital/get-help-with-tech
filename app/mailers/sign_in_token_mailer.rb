@@ -8,7 +8,6 @@ class SignInTokenMailer < ApplicationMailer
     personalisation = {
       to: @user.email_address,
       token_url: url(:validate_sign_in_token_url, token: @user.sign_in_token, identifier: identifier),
-      token_expires_at: I18n.l(@user.sign_in_token_expires_at, format: :time_only),
       sign_in_link: url(:sign_in_url),
     }
 

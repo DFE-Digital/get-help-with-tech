@@ -3,6 +3,7 @@ FactoryBot.define do
     full_name     { 'Jane Doe' }
     email_address { 'jane.doe@somelocalauthority.gov.uk' }
     organisation  { 'Some Local Authority' }
+    approved_at   { Time.now.utc - 3.days }
   end
 
   factory :mno_user, class: 'User' do
@@ -10,5 +11,11 @@ FactoryBot.define do
     email_address { 'mike.mobile-network@somemno.co.uk' }
     organisation  { 'Participating Mobile Network' }
     association   :mobile_network
+  end
+
+  factory :dfe_user, class: 'User' do
+    full_name     { 'Jane Doe' }
+    email_address { 'jane.doe@digital.education.gov.uk' }
+    organisation  { 'DfE' }
   end
 end

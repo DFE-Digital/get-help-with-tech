@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe AllocationRequestFormsController, type: :controller do
+describe ApplicationFormsController, type: :controller do
   def sign_in_as(user)
     # TestSession doesn't do this automatically like a real session
     session[:session_id] = SecureRandom.uuid
@@ -8,19 +8,24 @@ describe AllocationRequestFormsController, type: :controller do
   end
 
   describe '#create' do
+    let(:mobile_network) { create(:mobile_network) }
     let(:invalid_params) do
       {
-        number_eligible: -2,
+        account_holder_name: '.',
       }
     end
     let(:valid_params) do
       {
-        number_eligible: 20,
-        number_eligible_with_hotspot_access: 14,
+        account_holder_name: 'Anne Account-Holder',
+        device_phone_number: '01234 567890',
+        mobile_network_id: mobile_network.id,
+        can_access_hotspot: true,
+        privacy_statement_sent_to_family: true,
+        understands_how_pii_will_be_used: true,
       }
     end
-    let(:params) { { allocation_request_form: valid_params } }
-    let(:created_allocation_request) { AllocationRequest.last }
+    let(:params) { { application_form: valid_params } }
+    let(:created_recipient) { Recipient.last }
     let(:the_request) { post :create, params: params }
 
     context 'with valid params and no existing user in session' do
@@ -40,8 +45,8 @@ describe AllocationRequestFormsController, type: :controller do
         expect(session[:user_id]).to be_nil
       end
 
-      it 'does not create an AllocationRequest' do
-        expect { the_request }.not_to change(AllocationRequest, :count)
+      it 'does not create a Recipient' do
+        expect { the_request }.not_to change(Recipient, :count)
       end
     end
 
@@ -52,31 +57,33 @@ describe AllocationRequestFormsController, type: :controller do
         sign_in_as user
       end
 
-      it 'creates an AllocationRequest with the right numbers' do
+      it 'creates a Recipient with the right attributes' do
         the_request
-        expect(created_allocation_request).to have_attributes(
-          number_eligible: 20,
-          number_eligible_with_hotspot_access: 14,
+        expect(created_recipient).to have_attributes(
+          account_holder_name: 'Anne Account-Holder',
+          device_phone_number: '01234 567890',
+          mobile_network_id: mobile_network.id,
+          status: Recipient.statuses[:requested],
         )
       end
 
-      it 'creates an AllocationRequest associated with the sessions user' do
+      it 'creates a Recipient associated with the sessions user' do
         the_request
-        expect(created_allocation_request.created_by_user_id).to eq(session[:user_id])
+        expect(created_recipient.created_by_user_id).to eq(session[:user_id])
       end
     end
 
     context 'with invalid params and an existing user in session' do
       let(:user) { create(:local_authority_user) }
-      let(:params) { { allocation_request_form: invalid_params } }
+      let(:params) { { application_form: invalid_params } }
       let(:the_request) { post :create, params: params }
 
       before do
         sign_in_as user
       end
 
-      it 'does not create an AllocationRequest' do
-        expect { post :create, params: params }.not_to change(AllocationRequest, :count)
+      it 'does not create a Recipient' do
+        expect { post :create, params: params }.not_to change(Recipient, :count)
       end
 
       it 'responds with a 400 status code' do

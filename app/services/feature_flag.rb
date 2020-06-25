@@ -2,6 +2,7 @@ class FeatureFlag
   PERMANENT_SETTINGS = %i[
     http_basic_auth
     show_debug_info
+    dfe_admin_ui
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[

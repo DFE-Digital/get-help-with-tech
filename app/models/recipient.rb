@@ -1,4 +1,5 @@
 class Recipient < ApplicationRecord
+  belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
 
   enum status: {
@@ -21,5 +22,9 @@ class Recipient < ApplicationRecord
       mobile_network_id: 'Mobile network ID',
       status: 'Status',
     }
+  end
+
+  def self.from_approved_users
+    joins(:created_by_user).where.not(users: { approved_at: nil })
   end
 end

@@ -1,6 +1,7 @@
 class Mno::RecipientsController < Mno::BaseController
   def index
-    @recipients = Recipient.where(mobile_network_id: @mobile_network.id)
+    @recipients = Recipient.from_approved_users
+                           .where(mobile_network_id: @mobile_network.id)
                            .order(safe_order)
 
     respond_to do |format|

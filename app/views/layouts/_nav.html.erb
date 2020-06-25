@@ -8,8 +8,10 @@
       <%= nav_item( title: "Your requests", url: mno_recipients_path )  %>
     <%- else %>
       <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
-      <%= nav_item( title: "Tell us how many eligible young people you know about", url: new_allocation_request_form_path )  %>
-      <%= nav_item( title: "Tell us about an eligible young person", url: new_application_form_path )  %>
+      <%- if SessionService.is_signed_in?(session) %>
+        <%= nav_item( title: "Tell us how many young people are eligible", url: new_allocation_request_form_path )  %>
+        <%= nav_item( title: "Tell us who needs more data", url: new_application_form_path )  %>
+      <%- end %>
     <%- end %>
 
     <%- if SessionService.is_signed_in?(session) %>

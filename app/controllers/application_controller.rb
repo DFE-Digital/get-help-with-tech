@@ -32,12 +32,12 @@ private
   def redirect_to_sign_in
     session[:return_url] = request.url
     flash[:error] = 'You must sign in to access that page'
-    redirect_to new_sign_in_token_path
+    redirect_to sign_in_path
   end
 
   def check_static_guidance_only_feature_flag!
     if FeatureFlag.active?(:static_guidance_only)
-      render 'errors/not_found', status: :not_found unless controller_name == "pages"
+      render 'errors/not_found', status: :not_found unless controller_name == 'pages'
     end
   end
 end
