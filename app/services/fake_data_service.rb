@@ -3,10 +3,7 @@ class FakeDataService
     recipients.times do
       name = Faker::Name.name
       r = Recipient.create!(
-        full_name: name,
         device_phone_number: Faker::PhoneNumber.cell_phone,
-        address: [Faker::Address.street_address, Faker::Address.city].join("\n"),
-        postcode: Faker::Address.postcode,
         can_access_hotspot: true,
         is_account_holder: true,
         account_holder_name: name,
