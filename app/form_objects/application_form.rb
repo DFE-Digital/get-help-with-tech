@@ -30,6 +30,7 @@ class ApplicationForm
   def save!
     @recipient ||= construct_recipient
     validate!
+    @recipient.status ||= Recipient.statuses[:requested]
     @recipient.save!
   end
 

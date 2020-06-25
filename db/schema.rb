@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_224602) do
+ActiveRecord::Schema.define(version: 2020_06_24_233926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,9 +35,6 @@ ActiveRecord::Schema.define(version: 2020_06_24_224602) do
   end
 
   create_table "recipients", force: :cascade do |t|
-    t.string "full_name"
-    t.string "address"
-    t.string "postcode"
     t.boolean "can_access_hotspot"
     t.boolean "is_account_holder"
     t.string "account_holder_name"
@@ -70,6 +67,8 @@ ActiveRecord::Schema.define(version: 2020_06_24_224602) do
     t.string "sign_in_token"
     t.integer "mobile_network_id"
     t.datetime "sign_in_token_expires_at"
+    t.datetime "approved_at"
+    t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["dfe_sign_in_id"], name: "index_users_on_dfe_sign_in_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"

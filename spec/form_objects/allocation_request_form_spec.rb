@@ -42,7 +42,6 @@ describe AllocationRequestForm do
       end
     end
 
-
     context 'with valid params' do
       let(:params) do
         {
@@ -50,7 +49,6 @@ describe AllocationRequestForm do
           number_eligible_with_hotspot_access: 12,
         }
       end
-
       let(:form) { AllocationRequestForm.new(params) }
 
       it 'is valid' do
@@ -63,7 +61,7 @@ describe AllocationRequestForm do
     end
 
     context 'with number_eligible < number_eligible_with_hotspot_access' do
-      let(:form) { AllocationRequestForm.new( number_eligible: 12, number_eligible_with_hotspot_access: 20 ) }
+      let(:form) { AllocationRequestForm.new(number_eligible: 12, number_eligible_with_hotspot_access: 20) }
 
       it 'is not valid' do
         expect(form).not_to be_valid

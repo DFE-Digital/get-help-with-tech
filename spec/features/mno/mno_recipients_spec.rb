@@ -3,11 +3,14 @@ require 'support/sign_in_as'
 require 'shared/expect_download'
 
 RSpec.feature 'MNO Requests view', type: :feature do
+  let(:local_authority_user) { create(:local_authority_user) }
+  let(:unapproved_user) { create(:local_authority_user, email_address: 'dubious@example.com', approved_at: nil) }
   let(:mno_user) { create(:mno_user) }
   let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }
   let(:user_from_other_mno) { create(:mno_user, name: 'Other MNO-User', organisation: 'Other MNO', mobile_network: other_mno) }
-  let!(:recipient_for_mno) { create(:recipient, full_name: 'mno recipient', mobile_network: mno_user.mobile_network) }
-  let!(:recipient_for_other_mno) { create(:recipient, full_name: 'other mno recipient', mobile_network: other_mno) }
+  let!(:recipient_for_mno) { create(:recipient, account_holder_name: 'mno recipient', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
+  let!(:recipient_for_other_mno) { create(:recipient, account_holder_name: 'other mno recipient', mobile_network: other_mno, created_by_user: local_authority_user) }
+  let!(:recipient_from_unapproved_user) { create(:recipient, account_holder_name: 'mno recipient from unapproved user', mobile_network: mno_user.mobile_network, created_by_user: unapproved_user) }
 
   context 'visiting Your requests signed in as an mno user' do
     before do
@@ -20,6 +23,11 @@ RSpec.feature 'MNO Requests view', type: :feature do
       expect(page).to have_content(mno_user.mobile_network.brand)
       expect(page).to have_content(recipient_for_mno.account_holder_name)
       expect(page).not_to have_content(recipient_for_other_mno.account_holder_name)
+    end
+
+    scenario 'does not show requests from users who are not approved' do
+      expect(page).to have_content(recipient_for_mno.account_holder_name)
+      expect(page).not_to have_content(recipient_from_unapproved_user.account_holder_name)
     end
 
     scenario 'clicking Select All selects all checkboxes' do
@@ -46,11 +54,11 @@ RSpec.feature 'MNO Requests view', type: :feature do
       all('tbody tr').map { |e| e[:id].split('-').last.to_i }
     end
     let(:mno_recipients) do
-      Recipient.where(mobile_network_id: mno_user.mobile_network_id)
+      Recipient.from_approved_users.where(mobile_network_id: mno_user.mobile_network_id)
     end
 
     before do
-      create_list(:recipient, 5, status: 'requested', mobile_network: mno_user.mobile_network)
+      create_list(:recipient, 5, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
       sign_in_as mno_user
       click_on 'Your requests'
     end
@@ -87,7 +95,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
   context 'with multiple pages of recipients' do
     before do
-      create_list(:recipient, 25, status: 'requested', mobile_network: mno_user.mobile_network)
+      create_list(:recipient, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
       sign_in_as mno_user
       click_on 'Your requests'
     end

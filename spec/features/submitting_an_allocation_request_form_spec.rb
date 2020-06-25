@@ -10,7 +10,7 @@ RSpec.feature 'Submitting an allocation_request_form', type: :feature do
 
     scenario 'visiting the form directly should redirect to sign_in' do
       visit new_allocation_request_form_path
-      expect(current_path).to eq(sign_in_path)
+      expect(page).to have_current_path(sign_in_path)
     end
   end
 

@@ -47,6 +47,7 @@ describe AllocationRequestFormsController, type: :controller do
 
     context 'with valid params and an existing user in session' do
       let(:user) { create(:local_authority_user) }
+
       before do
         sign_in_as user
       end
@@ -69,6 +70,7 @@ describe AllocationRequestFormsController, type: :controller do
       let(:user) { create(:local_authority_user) }
       let(:params) { { allocation_request_form: invalid_params } }
       let(:the_request) { post :create, params: params }
+
       before do
         sign_in_as user
       end

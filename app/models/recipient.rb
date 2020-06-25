@@ -23,4 +23,8 @@ class Recipient < ApplicationRecord
       status: 'Status',
     }
   end
+
+  def self.from_approved_users
+    joins(:created_by_user).where.not(users: { approved_at: nil })
+  end
 end

@@ -11,7 +11,7 @@ RSpec.feature 'Submitting an application_form', type: :feature do
 
     scenario 'visiting the form directly should redirect to sign_in' do
       visit new_application_form_path
-      expect(current_path).to eq(sign_in_path)
+      expect(page).to have_current_path(sign_in_path)
     end
   end
 

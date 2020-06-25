@@ -13,7 +13,6 @@
     <%= form_for @application_form do |f| %>
       <%= f.govuk_error_summary %>
 
-      <%= f.govuk_fieldset legend: { text: 'About the recipient' } do %>
       <%= f.govuk_text_field :account_holder_name, label: { size: 'm', text: 'Account holder name' }, hint_text: 'An account holder must be over 16. Do not enter a child\'s name.' %>
       <%= f.govuk_phone_field :device_phone_number, required: true, label: { size: 'm', text: 'Mobile phone number' }, hint_text: 'All UK mobile phone numbers start with 07' %>
       <%= f.govuk_collection_radio_buttons :can_access_hotspot,
@@ -24,28 +23,27 @@
                                           hint_text: 'There’s guidance available on <a class="govuk-link" href="https://www.btwifi.com/find/ ">how to check access to hotspots</a>'.html_safe,
                                           legend: { text: 'Can the child or young person access a BT hotspot?' }  %>
 
+      <%= f.govuk_collection_select :mobile_network_id,
+                                  @mobile_networks,
+                                  :id,
+                                  :brand,
+                                  label: { size: 'm', text: 'Mobile network' }  %>
 
-        <%= f.govuk_collection_select :mobile_network_id,
-                                    @mobile_networks,
-                                    :id,
-                                    :brand,
-                                    label: { size: 'm', text: 'Mobile network' }  %>
-
-        <%= f.govuk_collection_radio_buttons :privacy_statement_sent_to_family,
-                                          yes_no_options,
-                                          :id,
-                                          :name,
-                                          inline: true,
-                                          legend: { text: 'Has the privacy statement been sent to the family?' } %>
+      <%= f.govuk_collection_radio_buttons :privacy_statement_sent_to_family,
+                                        yes_no_options,
+                                        :id,
+                                        :name,
+                                        inline: true,
+                                        legend: { text: 'Has the privacy statement been sent to the family?' } %>
 
 
-        <%= f.govuk_collection_radio_buttons :understands_how_pii_will_be_used,
-                                          yes_no_options,
-                                          :id,
-                                          :name,
-                                          inline: true,
-                                          legend: { text: 'Does the child/family understand how their personal information will be used?' } %>
-      <%- end %>
+      <%= f.govuk_collection_radio_buttons :understands_how_pii_will_be_used,
+                                        yes_no_options,
+                                        :id,
+                                        :name,
+                                        inline: true,
+                                        legend: { text: 'Does the child/family understand how their personal information will be used?' } %>
+
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">
           !

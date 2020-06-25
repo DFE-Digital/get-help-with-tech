@@ -52,6 +52,7 @@ describe ApplicationFormsController, type: :controller do
 
     context 'with valid params and an existing user in session' do
       let(:user) { create(:local_authority_user) }
+
       before do
         sign_in_as user
       end
@@ -62,6 +63,7 @@ describe ApplicationFormsController, type: :controller do
           account_holder_name: 'Anne Account-Holder',
           device_phone_number: '01234 567890',
           mobile_network_id: mobile_network.id,
+          status: Recipient.statuses[:requested],
         )
       end
 
@@ -75,6 +77,7 @@ describe ApplicationFormsController, type: :controller do
       let(:user) { create(:local_authority_user) }
       let(:params) { { application_form: invalid_params } }
       let(:the_request) { post :create, params: params }
+
       before do
         sign_in_as user
       end
