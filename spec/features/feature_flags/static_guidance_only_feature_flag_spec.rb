@@ -9,7 +9,7 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
     scenario 'visiting the static guidance pages works' do
       visit guidance_page_path
       expect(page).to have_http_status(:ok)
-      expect(page).to have_selector 'h1', text: 'Increasing internet access for vulnerable and disadvantaged children'
+      expect(page).to have_selector 'h1', text: I18n.t('service_name')
 
       visit '/bt-wifi/privacy-notice'
       expect(page).to have_http_status(:ok)
@@ -35,7 +35,7 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
     scenario 'visiting the guidance page works' do
       visit guidance_page_path
       expect(page).to have_http_status(:ok)
-      expect(page).to have_selector 'h1', text: 'Increasing internet access for vulnerable and disadvantaged children'
+      expect(page).to have_selector 'h1', text: I18n.t('service_name')
     end
 
     scenario 'visiting any other page works' do
