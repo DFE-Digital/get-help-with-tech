@@ -30,7 +30,27 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   end
 
   context 'as a dfe user' do
-    pending
+    let(:user) { create(:dfe_user) }
+
+    context 'with the FeatureFlag active' do
+      before do
+        FeatureFlag.activate(:dfe_admin_ui)
+      end
+
+      pending
+    end
+
+    context 'with the FeatureFlag inactive' do
+      before do
+        FeatureFlag.deactivate(:dfe_admin_ui)
+      end
+
+      it 'redirects to the guidance page' do
+        visit(validate_token_url)
+        expect(page).to have_current_path('/about-bt-wifi')
+        expect(page).to have_text 'Increasing internet access for vulnerable and disadvantaged children'
+      end
+    end
   end
 
   context 'as a mobile network operator' do

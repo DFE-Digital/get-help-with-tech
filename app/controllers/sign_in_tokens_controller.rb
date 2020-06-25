@@ -61,7 +61,7 @@ private
   def root_url_for(user)
     if user.is_mno_user?
       mno_recipients_path
-    elsif user.is_dfe?
+    elsif user.is_dfe? && FeatureFlag.active?(:dfe_admin_ui)
       admin_path
     else
       '/'

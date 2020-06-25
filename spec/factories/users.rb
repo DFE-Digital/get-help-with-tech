@@ -12,4 +12,10 @@ FactoryBot.define do
     organisation  { 'Participating Mobile Network' }
     association   :mobile_network
   end
+
+  factory :dfe_user, class: 'User' do
+    full_name     { 'Jane Doe' }
+    email_address { 'jane.doe@digital.education.gov.uk' }
+    organisation  { 'DfE' }
+  end
 end
