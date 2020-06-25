@@ -47,5 +47,21 @@ RSpec.feature 'Submitting an application_form', type: :feature do
       expect(page).to have_text('Thank you')
       expect(page).to have_text('Sign out')
     end
+
+    scenario 'submitting multiple forms in the same sesssion works' do
+      visit new_application_form_path
+      fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
+      click_on 'Continue'
+
+      expect(page.status_code).to eq(200)
+      expect(page).to have_text('Thank you')
+
+      click_on 'Tell us about another child or young person'
+      fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
+      click_on 'Continue'
+
+      expect(page.status_code).to eq(200)
+      expect(page).to have_text('Thank you')
+    end
   end
 end

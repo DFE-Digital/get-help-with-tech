@@ -13,7 +13,7 @@ class FakeDataService
         status: Recipient.statuses.values.sample,
       )
       r.update(created_at: Time.now.utc - rand(500_000).seconds)
-      puts "created #{r.id} - #{r.full_name}"
+      puts "created #{r.id} - #{r.account_holder_name}"
     end
   end
 end
