@@ -13,3 +13,16 @@ $govuk-image-url-function: frontend-image-url;
 
 @import "pagination.scss";
 @import "overrides.scss";
+
+.app-email-template {
+  border: $govuk-border-width solid $govuk-border-colour;
+  padding: govuk-spacing(4);
+  margin-bottom: govuk-spacing(8);
+}
+
+.app-email-template__subject {
+  padding-bottom: govuk-spacing(4);
+  margin-top: 0;
+  margin-bottom: govuk-spacing(4);
+  border-bottom: 1px solid $govuk-border-colour;
+}
