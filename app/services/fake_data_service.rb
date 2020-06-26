@@ -1,5 +1,5 @@
 class FakeDataService
-  def self.generate!(recipients: 10, mobile_network_id:)
+  def self.generate!(recipients: 10, mobile_network_id:, created_by_user_id: nil)
     recipients.times do
       name = Faker::Name.name
       r = Recipient.create!(
@@ -11,6 +11,7 @@ class FakeDataService
         understands_how_pii_will_be_used: true,
         mobile_network_id: mobile_network_id,
         status: Recipient.statuses.values.sample,
+        created_by_user_id: created_by_user_id,
       )
       r.update(created_at: Time.now.utc - rand(500_000).seconds)
       puts "created #{r.id} - #{r.account_holder_name}"
