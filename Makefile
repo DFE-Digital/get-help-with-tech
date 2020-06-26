@@ -25,7 +25,7 @@ require_env_stub:
 	test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
 
 get_git_status:
-	$(eval export git_commit_sha=$(shell git rev-parse HEAD))
+	$(eval export git_commit_sha=$(shell git rev-parse --short HEAD))
 	$(eval export git_branch=$(shell git rev-parse --abbrev-ref HEAD))
 	@true
 
