@@ -19,9 +19,15 @@ prod:
 	$(eval export db_plan=small-ha-11)
 	@true
 
-.PHONY: require_env_stub build push deploy setup_paas_env
+.PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app
+
 require_env_stub:
 	test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
+
+get_git_status:
+	$(eval export git_commit_sha=$(shell git rev-parse --short HEAD))
+	$(eval export git_branch=$(shell git rev-parse --abbrev-ref HEAD))
+	@true
 
 setup_paas_db: set_cf_target
 	cf create-service postgres $(db_plan) $(APP_NAME)-$(env_stub)-db
@@ -38,8 +44,8 @@ setup_paas_env: set_cf_target
 	bin/rails secret | xargs cf set-env $(APP_NAME)-$(env_stub) SECRET_KEY_BASE
 	cf restage $(APP_NAME)-$(env_stub)
 
-build: require_env_stub ## Create & tag a new docker image
-	docker build -t $(APP_NAME)-$(env_stub) .
+build: require_env_stub get_git_status ## Create & tag a new docker image
+	docker build -t $(APP_NAME)-$(env_stub) --build-arg GIT_COMMIT_SHA=$(git_commit_sha) --build-arg GIT_BRANCH=$(git_branch) .
 
 push: require_env_stub ## push the Docker image to Docker Hub
 	docker tag $(APP_NAME)-$(env_stub) $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
