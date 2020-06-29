@@ -63,11 +63,9 @@ bundle exec brakeman
 2. Run `docker login` to log in to Docker Hub
 3. Run `make dev build push deploy` to build, push and deploy the Docker image to GOV.UK PaaS development instance
 4. Test on https://get-help-with-tech-dev.london.cloudapps.digital
-5. Run `docker tag dfedigital/get-help-with-tech-dev:latest get-help-with-tech-staging` to promote the Docker image to staging
-6. Run `make staging push deploy` to deploy to staging
+5. Run `make staging promote FROM=dev` to deploy the -dev image to staging
 7. Test on https://get-help-with-tech-staging.london.cloudapps.digital
-8. Run `docker tag dfedigital/get-help-with-tech-dev:latest get-help-with-tech-prod` to promote the Docker image to prod
-9. Run `make prod push deploy` to deploy to production
+8. Run `make prod promote FROM=staging` to deploy to production
 10. Test on https://get-help-with-tech-prod.london.cloudapps.digital
 
 The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
