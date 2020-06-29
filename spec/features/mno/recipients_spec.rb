@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/sign_in_as'
 require 'shared/expect_download'
 
 RSpec.feature 'MNO Requests view', type: :feature do
