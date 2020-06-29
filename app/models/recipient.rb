@@ -28,7 +28,7 @@ class Recipient < ApplicationRecord
     joins(:created_by_user).where.not(users: { approved_at: nil })
   end
 
-  def self.visible_to_user(user)
-    from_approved_users.where(mobile_network_id: user.mobile_network_id)
+  def self.on_mobile_network(mobile_network_id)
+    where(mobile_network_id: mobile_network_id)
   end
 end

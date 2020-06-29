@@ -1,6 +1,7 @@
 class Mno::RecipientsController < Mno::BaseController
   def index
-    @recipients = Recipient.visible_to_user(@user)
+    @recipients = Recipient.from_approved_users
+                           .on_mobile_network(@user.mobile_network_id)
                            .order(safe_order)
 
     respond_to do |format|
@@ -23,7 +24,8 @@ class Mno::RecipientsController < Mno::BaseController
 
   def bulk_update
     Recipient.transaction do
-      Recipient.visible_to_user(@user)
+      Recipient.from_approved_users
+               .on_mobile_network(@user.mobile_network_id)
                .where('recipients.id IN (?)', bulk_update_params[:recipient_ids].reject(&:empty?))
                .update_all(status: bulk_update_params[:status])
       redirect_to mno_recipients_path
