@@ -1,7 +1,6 @@
 class Mno::RecipientsController < Mno::BaseController
   def index
-    @recipients = Recipient.from_approved_users
-                           .where(mobile_network_id: @mobile_network.id)
+    @recipients = Recipient.visible_to_user(@user)
                            .order(safe_order)
 
     respond_to do |format|
@@ -24,12 +23,14 @@ class Mno::RecipientsController < Mno::BaseController
 
   def bulk_update
     Recipient.transaction do
-      Recipient.where('id IN (?)', bulk_update_params[:recipient_ids].reject(&:empty?))
+      Recipient.visible_to_user(@user)
+               .where('recipients.id IN (?)', bulk_update_params[:recipient_ids].reject(&:empty?))
                .update_all(status: bulk_update_params[:status])
-
       redirect_to mno_recipients_path
-    rescue ActiveRecord::StatementInvalid
+    rescue ActiveRecord::StatementInvalid, ArgumentError => e
+      logger.error e
       flash[:error] = "I couldn't apply that update"
+      render :index, status: :unprocessable_entity
       raise ActiveRecord::Rollback
     end
   end

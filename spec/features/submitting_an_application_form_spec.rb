@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/sign_in_as'
 require 'shared/filling_in_forms'
 
 RSpec.feature 'Submitting an application_form', type: :feature do

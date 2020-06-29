@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/sign_in_as'
 
 RSpec.feature 'Submitting an allocation_request_form', type: :feature do
   context 'not signed in' do
