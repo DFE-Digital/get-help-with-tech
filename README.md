@@ -46,7 +46,7 @@ bundle exec brakeman
 
 ## Integrations
 
-[Gov.uk Notify](https://www.notifications.service.gov.uk/) for sending emails
+[GOV.UK Notify](https://www.notifications.service.gov.uk/) for sending emails
 
 ## Deploying on GOV.UK PaaS
 
@@ -79,9 +79,9 @@ Name|Description|Default
 SIGN_IN_TOKEN_TTL_SECONDS|Sign-in tokens will expire after this many seconds|600
 HTTP_BASIC_AUTH_USERNAME|Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
 HTTP_BASIC_AUTH_PASSWORD|Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
-GOVUK_NOTIFY_API_KEY|API key for the Gov.uk Notify service, used for sending emails|REQUIRED
+GOVUK_NOTIFY_API_KEY|API key for the GOV.UK Notify service, used for sending emails|REQUIRED
 HOSTNAME_FOR_URLS|Hostname used for generating URLs in emails|http://localhost:3000/
-SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID|ID of the template in Gov.uk Notify used for mailing sign-in tokens|'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
+SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID|ID of the template in GOV.UK Notify used for mailing sign-in tokens|'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
 
 ### Feature Flags
 
@@ -95,7 +95,7 @@ FEATURES_show_debug_info=active bundle exec rails s
 
 The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
 
-To set / unset environment variables on Gov.uk PaaS, use the commands:
+To set / unset environment variables on GOV.UK PaaS, use the commands:
 
 ```
 # set an env var
