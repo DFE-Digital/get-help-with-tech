@@ -1,6 +1,5 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
-require 'support/sign_in_as'
 
 RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
