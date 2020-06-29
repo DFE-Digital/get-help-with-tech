@@ -19,7 +19,7 @@ prod:
 	$(eval export db_plan=small-ha-11)
 	@true
 
-.PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app
+.PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote
 
 require_env_stub:
 	test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
@@ -60,3 +60,9 @@ deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
 
 release: require_env_stub
 	make ${env_stub} build push deploy
+
+promote:
+	test ${FROM} || (echo ">> FROM is not set (${FROM})- please use make promote FROM=(dev|staging|prod)"; exit 1)
+	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM)
+	docker tag $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM) $(APP_NAME)-$(env_stub)
+	make $(env_stub) push deploy
