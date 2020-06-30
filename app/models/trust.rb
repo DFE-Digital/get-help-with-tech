@@ -1,0 +1,2 @@
+class Trust < ResponsibleBody
+end
