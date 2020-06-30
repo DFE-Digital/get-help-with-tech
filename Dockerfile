@@ -48,6 +48,9 @@ ENV GIT_COMMIT_SHA=${GIT_COMMIT_SHA}
 ENV GIT_BRANCH=${GIT_BRANCH}
 RUN echo "[{'commit_sha': '${GIT_COMMIT_SHA}', 'branch': '${GIT_BRANCH}'}]" > ./.gitinfo.json
 
+# symlink the scripts from scripts/ into the users' path
+RUN find ${RAILS_ROOT}/scripts -type f | xargs -I {} ln -s {} ~/
+
 # run the rails server
 ARG RAILS_ENV=production
 CMD bundle exec rake db:migrate && bundle exec rake db:migrate && bundle exec rails s -e ${RAILS_ENV} -p ${APP_PORT} --binding=0.0.0.0

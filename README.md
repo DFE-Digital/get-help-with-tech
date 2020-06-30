@@ -110,3 +110,20 @@ cf unset-env (app name) (environment variable name)
 # For example:
 cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
 ```
+
+## Running the Rails console
+
+Log on to the container with:
+```
+make (env) ssh
+```
+
+Once you have a prompt on the container, you'll need to run this command - this will launch a subshell with the correct environment variables and in the app's root directory:
+```
+./setup_env_for_rails_app
+```
+
+In this subshell, you can then launch the console in the normal way:
+```
+bundle exec rails c
+```
