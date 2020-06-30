@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+envof() {
+  sed 's/\x0/\n/g' /proc/${1}/environ
+}
+
+pidfile=${RAILS_ROOT}/tmp/pids/server.pid
+pid=$(cat ${pidfile})
+
+envof ${pid} > export
+
+export <. $(envof ${pid} | grep ^PATH= )

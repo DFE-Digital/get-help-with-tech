@@ -1,0 +1,3 @@
+#!/bin/bash
+
+path_of_rails_process && cd ${RAILS_ROOT}
