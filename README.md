@@ -111,7 +111,12 @@ cf unset-env (app name) (environment variable name)
 cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
 ```
 
-## Running the Rails console
+
+## Operations
+
+Some service steps can only be carried out using the Rails console. To get to the console on GOV.UK PaaS:
+
+### Running the Rails console
 
 Log on to the container with:
 ```
@@ -124,6 +129,5 @@ Once you have a prompt on the container, you'll need to run this command - this 
 ```
 
 In this subshell, you can then launch the console in the normal way:
-```
-bundle exec rails c
+```bundle exec rails c
 ```
