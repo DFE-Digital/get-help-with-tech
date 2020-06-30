@@ -10,7 +10,7 @@ class ApplicationFormsController < ApplicationController
     @application_form = ApplicationForm.new(application_form_params.merge(created_by_user: @user))
     begin
       @application_form.save!
-      redirect_to application_form_success_path(@application_form.recipient.id)
+      redirect_to success_application_forms_path(recipient_id: @application_form.recipient.id)
     rescue ActiveModel::ValidationError
       @mobile_networks = MobileNetwork.order('LOWER(brand)')
       render :new, status: :bad_request
@@ -18,9 +18,12 @@ class ApplicationFormsController < ApplicationController
   end
 
   def success
-    # NOTE: restful route expects :application_form_id, we're actually using it
-    # to retrieve the recipient. Not good, need to refactor
-    @application_form = ApplicationForm.new(recipient: Recipient.find(params[:application_form_id]))
+    @recipient = Recipient.where(id: params[:recipient_id], created_by_user_id: @user.id).first
+    if @recipient
+      @application_form = ApplicationForm.new(recipient: @recipient)
+    else
+      render template: 'errors/not_found', status: :not_found
+    end
   end
 
 private

@@ -79,4 +79,31 @@ describe AllocationRequestFormsController, type: :controller do
       end
     end
   end
+
+  describe 'success' do
+    let(:user) { create(:local_authority_user) }
+    let(:other_user) { create(:local_authority_user, email_address: 'other user') }
+
+    before do
+      sign_in_as user
+    end
+
+    context 'given the id of an allocation_request created_by the current user' do
+      let(:allocation_request) { create(:allocation_request, created_by_user: user) }
+
+      it 'responds with 200' do
+        get :success, params: { allocation_request_id: allocation_request.id }
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'given the id of an allocation_request not created_by the current user' do
+      let(:allocation_request) { create(:allocation_request, created_by_user: other_user) }
+
+      it 'responds with 404' do
+        get :success, params: { allocation_request_id: allocation_request.id }
+        expect(response.status).to eq(404)
+      end
+    end
+  end
 end

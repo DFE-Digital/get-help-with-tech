@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   get '/pages/guidance', to: redirect('/about-bt-wifi')
 
   resources :application_forms do
-    get 'success/:application_form_id', to: 'application_forms#success', as: :success
+    get 'success/:recipient_id', on: :collection, to: 'application_forms#success', as: :success
   end
   resources :allocation_request_forms do
-    get 'success', to: 'allocation_request_forms#success'
+    get 'success/:allocation_request_id', on: :collection, to: 'allocation_request_forms#success', as: :success
   end
 
   resources :sessions, only: %i[create destroy]
