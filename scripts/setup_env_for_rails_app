@@ -1,3 +1,3 @@
 #!/bin/bash
 
-~/set_path_from_rails_process && cd ${RAILS_ROOT}
+source ~/set_path_from_rails_process && cd ${RAILS_ROOT} && $SHELL
