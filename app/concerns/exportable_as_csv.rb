@@ -17,9 +17,16 @@ module ExportableAsCsv
         csv << exportable_attributes.values
 
         all.each do |item|
-          csv << exportable_attributes.keys.map { |attr| item.send(attr) }
+          csv << exportable_attributes.keys.map do |attr|
+            safe_value = prevent_csv_code_injection(item.send(attr))
+            safe_value
+          end
         end
       end
+    end
+
+    def self.prevent_csv_code_injection(value)
+      value.to_s.starts_with?(/[\-+=@]/) ? value.gsub(/^([\-+=@].*)/, '.\1') : value
     end
   end
 end
