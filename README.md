@@ -129,5 +129,6 @@ Once you have a prompt on the container, you'll need to run this command - this 
 ```
 
 In this subshell, you can then launch the console in the normal way:
-```bundle exec rails c
+```
+bundle exec rails c
 ```
