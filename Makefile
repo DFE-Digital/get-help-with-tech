@@ -66,3 +66,6 @@ promote:
 	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM)
 	docker tag $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM) $(APP_NAME)-$(env_stub)
 	make $(env_stub) push deploy
+
+ssh: require_env_stub
+	cf ssh $(APP_NAME)-$(env_stub)

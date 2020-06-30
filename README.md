@@ -115,7 +115,7 @@ cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
 
 Log on to the container with:
 ```
-cf ssh get-help-with-tech-(dev|staging|prod)
+make (env) ssh
 ```
 
 Once you have a prompt on the container, you'll need to run this command - this will launch a subshell with the correct environment variables and in the app's root directory:
