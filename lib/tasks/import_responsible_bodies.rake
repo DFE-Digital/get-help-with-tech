@@ -11,4 +11,19 @@ namespace :import do
         )
     end
   end
+
+  desc 'Import single and multi-academy trusts'
+  task trusts: :environment do
+    GetInformationAboutSchools.trusts_entries.each do |entry|
+      Trust
+        .where(companies_house_number: entry['Companies House Number'])
+        .first_or_create!(
+          name: entry['Group Name'],
+          organisation_type: entry['Group Type'],
+        )
+    end
+  end
+
+  desc 'Populate the responsible body reference data table'
+  task responsible_bodies: %i[local_authorities_in_england trusts]
 end
