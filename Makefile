@@ -19,7 +19,7 @@ prod:
 	$(eval export db_plan=small-ha-11)
 	@true
 
-.PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote
+.PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh
 
 require_env_stub:
 	test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
@@ -67,5 +67,6 @@ promote:
 	docker tag $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM) $(APP_NAME)-$(env_stub)
 	make $(env_stub) push deploy
 
-ssh: require_env_stub
-	cf ssh $(APP_NAME)-$(env_stub)
+ssh: set_cf_target
+	echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
+		cf ssh $(APP_NAME)-$(env_stub)
