@@ -5,6 +5,8 @@ class User < ApplicationRecord
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
 
+  scope :approved, -> { where.not(approved_at: nil) }
+
   validates :full_name,
             presence: { message: 'Enter your full name' },
             length: { minimum: 2, maximum: 1024 }

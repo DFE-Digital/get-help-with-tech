@@ -1,6 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Recipient, type: :model do
+  describe '.from_approved_users' do
+    let(:approved_user) { create(:local_authority_user, :approved) }
+    let(:not_approved_user) { create(:local_authority_user, :not_approved) }
+
+    it 'includes entries from approved users only' do
+      recipient_from_approved_user = create(:recipient, created_by_user: approved_user)
+      create(:recipient, created_by_user: not_approved_user)
+
+      expect(Recipient.from_approved_users).to eq([recipient_from_approved_user])
+    end
+  end
+
   describe 'to_csv' do
     let(:recipients) { Recipient.all }
 
