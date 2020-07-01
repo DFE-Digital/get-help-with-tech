@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 2020_07_06_143616) do
     t.index ["responsible_body_id"], name: "index_allocation_requests_on_responsible_body_id"
   end
 
+  create_table "bt_wifi_voucher_allocations", force: :cascade do |t|
+    t.integer "responsible_body_id", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "bt_wifi_vouchers", force: :cascade do |t|
     t.string "username", null: false
     t.string "password", null: false
@@ -95,5 +102,6 @@ ActiveRecord::Schema.define(version: 2020_07_06_143616) do
     t.index ["sign_in_token"], name: "index_users_on_sign_in_token", unique: true
   end
 
+  add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
 end
