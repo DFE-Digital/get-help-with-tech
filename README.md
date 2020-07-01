@@ -83,11 +83,6 @@ GOVUK_NOTIFY_API_KEY|API key for the GOV.UK Notify service, used for sending ema
 HOSTNAME_FOR_URLS|Hostname used for generating URLs in emails|http://localhost:3000/
 SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID|ID of the template in GOV.UK Notify used for mailing sign-in tokens|'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
 STATIC_FILE_CACHE_TTL|how long CDNs and browsers should cache static assets for in production, in seconds.|(nil)
-GHWT_MAX_[GET|POST|PATCHE|PUT|DELETE]S_PER_SECOND|Max number of [GET|POST|PATCH|PUT|DELETE] requests allowed per-ip per-second - only has an effect if the `rate_limiting` FeatureFlag is set|4
-GHWT_MAX_TOKEN_GETS_PER_SECOND|Max number of GET requests to token validation URLs allowed per-ip per-second - only has an effect if the `rate_limiting` FeatureFlag is set|1
-
-
-
 
 ### Feature Flags
 
