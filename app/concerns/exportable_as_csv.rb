@@ -26,7 +26,7 @@ module ExportableAsCsv
     end
 
     def self.prevent_csv_code_injection(value)
-      value.to_s.starts_with?(/[\-+=@]/) ? value.gsub(/^([\-+=@].*)/, '.\1') : value
+      value.to_s.starts_with?(/[\-+=@]/) ? ".#{value}" : value
     end
   end
 end
