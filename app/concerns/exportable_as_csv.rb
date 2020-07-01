@@ -18,8 +18,7 @@ module ExportableAsCsv
 
         all.each do |item|
           csv << exportable_attributes.keys.map do |attr|
-            safe_value = prevent_csv_code_injection(item.send(attr))
-            safe_value
+            prevent_csv_code_injection(item.send(attr))
           end
         end
       end
