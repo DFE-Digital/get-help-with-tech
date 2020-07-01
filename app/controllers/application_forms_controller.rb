@@ -18,12 +18,10 @@ class ApplicationFormsController < ApplicationController
   end
 
   def success
-    @recipient = Recipient.where(id: params[:recipient_id], created_by_user_id: @user.id).first
-    if @recipient
-      @application_form = ApplicationForm.new(recipient: @recipient)
-    else
-      render template: 'errors/not_found', status: :not_found
-    end
+    @recipient = @user.recipients.find(params[:recipient_id])
+    @application_form = ApplicationForm.new(recipient: @recipient)
+  rescue ActiveRecord::RecordNotFound
+    render template: 'errors/not_found', status: :not_found
   end
 
 private

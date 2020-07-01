@@ -16,12 +16,10 @@ class AllocationRequestFormsController < ApplicationController
   end
 
   def success
-    @allocation_request = AllocationRequest.where(id: params[:allocation_request_id], created_by_user_id: @user.id).first
-    if @allocation_request
-      @allocation_request_form = AllocationRequestForm.new(allocation_request: @allocation_request)
-    else
-      render template: 'errors/not_found', status: :not_found
-    end
+    @allocation_request = @user.allocation_requests.find(params[:allocation_request_id])
+    @allocation_request_form = AllocationRequestForm.new(allocation_request: @allocation_request)
+  rescue ActiveRecord::RecordNotFound
+    render template: 'errors/not_found', status: :not_found
   end
 
 private
