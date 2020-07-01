@@ -7,8 +7,8 @@ RSpec.feature 'HTTP Basic Auth feature flag', type: :feature do
 
     before do
       FeatureFlag.activate(:http_basic_auth)
-      ENV['HTTP_BASIC_AUTH_USERNAME'] = basic_auth_user
-      ENV['HTTP_BASIC_AUTH_PASSWORD'] = basic_auth_password
+      Settings.http_basic_auth.username = basic_auth_user
+      Settings.http_basic_auth.password = basic_auth_password
     end
 
     scenario 'visiting the root url requires basic auth' do

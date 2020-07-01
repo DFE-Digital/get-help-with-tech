@@ -2,5 +2,13 @@ govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
   api_key:
 
+http_basic_auth:
+  # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
+  username:
+  # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
+  password:
+
 session_ttl_seconds: 3600
+
+# Sign-in tokens will expire after this many seconds
 sign_in_token_ttl_seconds: 1800
