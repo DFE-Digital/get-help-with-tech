@@ -84,5 +84,28 @@ describe Mno::RecipientsController, type: :controller do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
+
+    context 'when the given status is nil' do
+      let(:recipients) { [recipient_1_for_mno, recipient_2_for_mno] }
+      let(:params_with_invalid_status) do
+        {
+          mno_recipients_form: {
+            recipient_ids: recipients.pluck('id'),
+            status: nil,
+          },
+        }
+      end
+
+      it 'does not update the statusses' do
+        put :bulk_update, params: params_with_invalid_status
+        expect(recipient_1_for_mno.reload.status).not_to be_nil
+        expect(recipient_2_for_mno.reload.status).not_to be_nil
+      end
+
+      it 'responds with :unprocessable_entity' do
+        put :bulk_update, params: params_with_invalid_status
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 end
