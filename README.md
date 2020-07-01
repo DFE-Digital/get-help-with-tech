@@ -133,3 +133,18 @@ In this subshell, you can then launch the console in the normal way:
 ```
 bundle exec rails c
 ```
+
+### Viewing Logs
+
+Tail the logs for a given env:
+
+```sh
+make (env) logs
+```
+
+View recent logs for a given env:
+
+```sh
+make (env) logs-recent
+```
+
