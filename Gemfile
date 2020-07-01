@@ -48,6 +48,9 @@ gem 'webpacker'
 # Formalise config settings with support for env vars
 gem 'config'
 
+# Semantic Logger makes logs pretty, also needed for logit integration
+gem 'rails_semantic_logger'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -69,6 +72,9 @@ group :development, :test do
   gem 'scss_lint-govuk'
 
   gem 'travis'
+
+  # Allow testing logging to logstash in development
+  gem 'logstash-logger', '~> 0.26.1'
 end
 
 group :development do
