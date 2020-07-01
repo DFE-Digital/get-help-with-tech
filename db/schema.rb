@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_132302) do
+ActiveRecord::Schema.define(version: 2020_07_01_132841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,9 +78,11 @@ ActiveRecord::Schema.define(version: 2020_07_01_132302) do
     t.integer "mobile_network_id"
     t.datetime "sign_in_token_expires_at"
     t.datetime "approved_at"
+    t.bigint "responsible_body_id"
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
+    t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
     t.index ["sign_in_token"], name: "index_users_on_sign_in_token", unique: true
   end
 
