@@ -7,22 +7,25 @@ PAAS_SPACE=get-help-with-tech
 dev:
 	$(eval export env_stub=dev)
 	$(eval export db_plan=tiny-unencrypted-11)
+	@make set_cf_target
 	@true
 
 staging:
 	$(eval export env_stub=staging)
 	$(eval export db_plan=tiny-unencrypted-11)
+	@make set_cf_target
 	@true
 
 prod:
 	$(eval export env_stub=prod)
 	$(eval export db_plan=small-ha-11)
+	@make set_cf_target
 	@true
 
 .PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh
 
 require_env_stub:
-	test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
+	@test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
 
 get_git_status:
 	$(eval export git_commit_sha=$(shell git rev-parse --short HEAD))
@@ -58,15 +61,15 @@ deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
 	cf push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
 	rm ./manifest.yml
 
-release: require_env_stub
+release: require_env_stub ## Shorthand for 'build push deploy'
 	make ${env_stub} build push deploy
 
-promote:
-	test ${FROM} || (echo ">> FROM is not set (${FROM})- please use make promote FROM=(dev|staging|prod)"; exit 1)
+promote: require_env_stub ## Promote a deployed image FROM another env
+	@test ${FROM} || (echo ">> FROM is not set (${FROM})- please use make promote FROM=(dev|staging|prod)"; exit 1)
 	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM)
 	docker tag $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM) $(APP_NAME)-$(env_stub)
 	make $(env_stub) push deploy
 
 ssh: set_cf_target
-	echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
+	@echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
 		cf ssh $(APP_NAME)-$(env_stub)
