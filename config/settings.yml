@@ -1,0 +1,2 @@
+session_ttl_seconds: 3600
+sign_in_token_ttl_seconds: 1800

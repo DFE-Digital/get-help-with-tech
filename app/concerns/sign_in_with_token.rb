@@ -2,8 +2,6 @@ module SignInWithToken
   extend ActiveSupport::Concern
 
   included do
-    DEFAULT_SIGN_IN_TOKEN_TTL = 1800
-
     validates :sign_in_token, uniqueness: true, allow_nil: true
 
     def generate_token!(ttl: nil)
@@ -16,7 +14,7 @@ module SignInWithToken
     end
 
     def effective_ttl(given_ttl)
-      given_ttl || (ENV['SIGN_IN_TOKEN_TTL_SECONDS'] || DEFAULT_SIGN_IN_TOKEN_TTL)
+      given_ttl || Settings.sign_in_token_ttl_seconds
     end
 
     def token_is_valid?(token:, identifier:)
