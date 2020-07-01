@@ -1,0 +1,2 @@
+class ResponsibleBody < ApplicationRecord
+end

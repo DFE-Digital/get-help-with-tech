@@ -54,6 +54,10 @@ group :development, :test do
 
   # Testing framework
   gem 'rspec-rails', '~> 4.0.1'
+
+  # Stubbing web requests
+  gem 'webmock'
+
   # GOV.UK interpretation of rubocop for linting Ruby
   gem 'rubocop-govuk'
   gem 'scss_lint-govuk'
