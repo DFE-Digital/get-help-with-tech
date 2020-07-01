@@ -84,6 +84,8 @@ GHWT__HOSTNAME_FOR_URLS                          |Hostname used for generating U
 GHWT__GOVUK_NOTIFY__TEMPLATES__SIGN_IN_TOKEN_MAIL|ID of the template in GOV.UK Notify used for mailing sign-in tokens                                                                         |'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
 GHWT__STATIC_FILE_CACHE_TTL                      |how long CDNs and browsers should cache static assets for in production, in seconds.                                                        |(nil)
 GHWT__THROTTLE__*                                |Request throttling limits, see [settings.yaml](config/settings.yml) for more info                                                           |_(see settings)_
+GHWT__LOGSTASH__HOST                             | Hostname for where logstash should send logs                                                           | (nil)
+GHWT__LOGSTASH__PORT                             | Port for where logstash should send logs                                                               | (nil)
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.
 
@@ -150,3 +152,14 @@ View recent logs for a given env:
 make (env) logs-recent
 ```
 
+### Log Aggregration
+
+[Semantic Logger](https://logger.rocketjob.io/rails.html) is used to generate
+single-line logs. In production environments, when `RAILS_LOG_TO_STDOUT` is
+enabled, this is configured to output JSON logs. These logs are then sent to the
+log aggregator.
+
+#### Development
+
+You can configure logstash to send logs to your log aggregator by setting the
+[logstash host and port environment variables](#environment-variables).
