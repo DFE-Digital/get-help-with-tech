@@ -86,6 +86,8 @@ GHWT__STATIC_FILE_CACHE_TTL                      |how long CDNs and browsers sho
 GHWT_MAX_[GET|POST|PATCHE|PUT|DELETE]S_PER_SECOND|Max number of [GET|POST|PATCH|PUT|DELETE] requests allowed per-ip per-second - only has an effect if the `rate_limiting` FeatureFlag is set |4
 GHWT_MAX_TOKEN_GETS_PER_SECOND                   |Max number of GET requests to token validation URLs allowed per-ip per-second - only has an effect if the `rate_limiting` FeatureFlag is set|1
 
+See the [settings.yaml file](config/settings.yml) for full details on configurable options.
+
 ### Feature Flags
 
 Certain aspects of app behaviour are governed by a minimal implementation of Feature Flags.

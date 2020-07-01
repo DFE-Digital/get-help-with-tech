@@ -1,3 +1,12 @@
+# Configuration options in this file can be over-ridden by enviroment-specific
+# YAML files in the setting sub-folder.
+#
+# An example of how to override a setting in this file with an environment variable:
+#
+#   GHWT__GOVUK_NOTIFY__API_KEY=abcd1234
+#
+# See the file initializers/config.rb for more info on how this is configured.
+
 govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
   api_key:
