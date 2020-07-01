@@ -33,6 +33,9 @@ gem 'pry-rails'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 
+# Rate-limiting
+gem 'rack-throttle'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.0.3.1'
 
