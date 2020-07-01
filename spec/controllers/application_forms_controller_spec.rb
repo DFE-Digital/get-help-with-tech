@@ -71,6 +71,11 @@ describe ApplicationFormsController, type: :controller do
         the_request
         expect(created_recipient.created_by_user_id).to eq(session[:user_id])
       end
+
+      it 'redirects to :success' do
+        the_request
+        expect(response).to redirect_to(success_application_forms_path(created_recipient.id))
+      end
     end
 
     context 'with invalid params and an existing user in session' do
@@ -89,6 +94,33 @@ describe ApplicationFormsController, type: :controller do
       it 'responds with a 400 status code' do
         post :create, params: params
         expect(response.status).to eq(400)
+      end
+    end
+  end
+
+  describe 'success' do
+    let(:user) { create(:local_authority_user) }
+    let(:other_user) { create(:local_authority_user, email_address: 'other user') }
+
+    before do
+      sign_in_as user
+    end
+
+    context 'given the id of a recipient created_by the current user' do
+      let(:recipient) { create(:recipient, created_by_user: user) }
+
+      it 'responds with 200' do
+        get :success, params: { recipient_id: recipient.id }
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'given the id of a recipient not created_by the current user' do
+      let(:recipient) { create(:recipient, created_by_user: other_user) }
+
+      it 'responds with 404' do
+        get :success, params: { recipient_id: recipient.id }
+        expect(response.status).to eq(404)
       end
     end
   end

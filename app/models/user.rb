@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_many :allocation_requests, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
+  has_many :recipients, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
+
   belongs_to :mobile_network, optional: true
 
   validates :full_name,

@@ -9,16 +9,17 @@ class AllocationRequestFormsController < ApplicationController
     @allocation_request_form = AllocationRequestForm.new(allocation_request_form_params.merge(created_by_user: @user))
     begin
       @allocation_request_form.save!
-      redirect_to allocation_request_form_success_path(@allocation_request_form.allocation_request.id)
+      redirect_to success_allocation_request_forms_path(@allocation_request_form.allocation_request.id)
     rescue ActiveModel::ValidationError
       render :new, status: :bad_request
     end
   end
 
   def success
-    # NOTE: restful route expects :application_form_id, we're actually using it
-    # to retrieve the recipient. Not good, need to refactor
-    @allocation_request_form = AllocationRequestForm.new(allocation_request: AllocationRequest.find(params[:allocation_request_form_id]))
+    @allocation_request = @user.allocation_requests.find(params[:allocation_request_id])
+    @allocation_request_form = AllocationRequestForm.new(allocation_request: @allocation_request)
+  rescue ActiveRecord::RecordNotFound
+    render template: 'errors/not_found', status: :not_found
   end
 
 private
