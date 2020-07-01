@@ -1,2 +1,6 @@
+govuk_notify:
+  # API key for the GOV.UK Notify service, used for sending emails
+  api_key:
+
 session_ttl_seconds: 3600
 sign_in_token_ttl_seconds: 1800

@@ -79,7 +79,7 @@ Name                                             |Description                   
 GHWT__SIGN_IN_TOKEN_TTL_SECONDS                  |Sign-in tokens will expire after this many seconds                                                                                          |600
 HTTP_BASIC_AUTH_USERNAME                         |Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set                                     |(nil)
 HTTP_BASIC_AUTH_PASSWORD                         |Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set                                     |(nil)
-GOVUK_NOTIFY_API_KEY                             |API key for the GOV.UK Notify service, used for sending emails                                                                              |REQUIRED
+GHWT__GOVUK_NOTIFY__API_KEY                      |API key for the GOV.UK Notify service, used for sending emails                                                                              |REQUIRED
 HOSTNAME_FOR_URLS                                |Hostname used for generating URLs in emails                                                                                                 |http://localhost:3000/
 SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID            |ID of the template in GOV.UK Notify used for mailing sign-in tokens                                                                         |'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
 STATIC_FILE_CACHE_TTL                            |how long CDNs and browsers should cache static assets for in production, in seconds.                                                        |(nil)
