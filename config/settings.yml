@@ -2,6 +2,10 @@ govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
   api_key:
 
+  templates:
+    # ID of the template in GOV.UK Notify used for mailing sign-in tokens
+    sign_in_token_mail: '89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
+
 http_basic_auth:
   # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
   username:
