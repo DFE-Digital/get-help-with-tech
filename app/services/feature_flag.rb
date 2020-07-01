@@ -3,6 +3,7 @@ class FeatureFlag
     http_basic_auth
     show_debug_info
     dfe_admin_ui
+    rate_limiting
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
