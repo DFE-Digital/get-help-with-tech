@@ -8,6 +8,9 @@ http_basic_auth:
   # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
   password:
 
+# Hostname used for generating URLs in emails
+hostname_for_urls: http://localhost:3000
+
 session_ttl_seconds: 3600
 
 # Sign-in tokens will expire after this many seconds

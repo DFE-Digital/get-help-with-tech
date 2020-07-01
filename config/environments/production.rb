@@ -64,7 +64,7 @@ Rails.application.configure do
     api_key: Settings.govuk_notify.api_key,
   }
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('HOSTNAME_FOR_URLS', 'http://localhost:3000'),
+    host: Settings.hostname_for_urls,
     protocol: 'https'
   }
 
