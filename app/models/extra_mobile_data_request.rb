@@ -17,7 +17,7 @@ class ExtraMobileDataRequest < ApplicationRecord
     cancelled: 'cancelled',
   }
 
-  include ExportableAsCsv
+  include ExportableAsCSV
 
   def self.exportable_attributes
     {

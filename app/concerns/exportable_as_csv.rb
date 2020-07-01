@@ -1,4 +1,4 @@
-module ExportableAsCsv
+module ExportableAsCSV
   extend ActiveSupport::Concern
 
   included do
