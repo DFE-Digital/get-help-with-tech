@@ -22,7 +22,7 @@
       <dl class="govuk-summary-list govuk-summary-list--wide-terms">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Eligible young people
+            <%= t('.number_eligible') %>
           </dt>
           <dd class="govuk-summary-list__value">
             <%= @allocation_request.number_eligible %>
@@ -31,10 +31,10 @@
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Number who can see a BT hotspot
+            <%= t('.number_eligible_with_hotspot_access') %>
           </dt>
           <dd class="govuk-summary-list__value">
-            150
+            <%= @allocation_request.number_eligible_with_hotspot_access %>
           </dd>
         </div>
       </dl>

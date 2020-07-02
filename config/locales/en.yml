@@ -46,3 +46,8 @@ en:
     formats:
       time_only: "%l:%M%P"
       time_only_with_zone: "%l:%M%P %Z"
+  responsible_body:
+    home:
+      show:
+        number_eligible: Eligible young people
+        number_eligible_with_hotspot_access: Number who can see a BT hotspot

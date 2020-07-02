@@ -76,6 +76,7 @@ RSpec.feature ResponsibleBody do
         visit responsible_body_home_path
 
         expect(responsible_body_home_page.elligible_young_people.text).to eq '10'
+        expect(responsible_body_home_page.number_who_can_see_a_bt_hotspot.text).to eq '8'
       end
     end
   end
