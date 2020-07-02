@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_140641) do
+ActiveRecord::Schema.define(version: 2020_07_02_202923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,17 +24,7 @@ ActiveRecord::Schema.define(version: 2020_07_01_140641) do
     t.index ["created_by_user_id"], name: "index_allocation_requests_on_created_by_user_id"
   end
 
-  create_table "mobile_networks", force: :cascade do |t|
-    t.string "brand"
-    t.string "host_network"
-    t.boolean "participating_in_scheme"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["brand"], name: "index_mobile_networks_on_brand", unique: true
-    t.index ["host_network", "brand"], name: "index_mobile_networks_on_host_network_and_brand", unique: true
-  end
-
-  create_table "recipients", force: :cascade do |t|
+  create_table "extra_mobile_data_requests", force: :cascade do |t|
     t.boolean "can_access_hotspot"
     t.boolean "is_account_holder"
     t.string "account_holder_name"
@@ -48,8 +38,18 @@ ActiveRecord::Schema.define(version: 2020_07_01_140641) do
     t.integer "mobile_network_id"
     t.string "status", null: false
     t.integer "created_by_user_id"
-    t.index ["mobile_network_id", "status", "created_at"], name: "index_recipients_on_mobile_network_id_and_status_and_created_at"
-    t.index ["status"], name: "index_recipients_on_status"
+    t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
+    t.index ["status"], name: "index_extra_mobile_data_requests_on_status"
+  end
+
+  create_table "mobile_networks", force: :cascade do |t|
+    t.string "brand"
+    t.string "host_network"
+    t.boolean "participating_in_scheme"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["brand"], name: "index_mobile_networks_on_brand", unique: true
+    t.index ["host_network", "brand"], name: "index_mobile_networks_on_host_network_and_brand", unique: true
   end
 
   create_table "responsible_bodies", force: :cascade do |t|
