@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :responsible_body, only: :show
+
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 
   get '/sign_in', to: 'sign_in_tokens#new', as: :sign_in
