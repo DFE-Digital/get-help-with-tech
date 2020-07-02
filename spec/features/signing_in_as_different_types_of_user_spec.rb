@@ -8,15 +8,34 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
   scenario 'clicking sign in shows option to sign in' do
     visit sign_in_path
-    expect(page).to have_content('Do you already have an account?')
+    expect(page).to have_content('Sign in')
   end
 
-  scenario 'supplying a valid email sends a token' do
-    visit sign_in_path
-    find('#sign-in-token-form-already-have-account-yes-field').choose
-    fill_in('Email address', with: user.email_address)
-    click_on 'Continue'
-    expect(page).to have_content 'Check your email'
+  context 'with the public_account_creation FeatureFlag active' do
+    before do
+      FeatureFlag.activate(:public_account_creation)
+    end
+
+    scenario 'supplying a valid email sends a token' do
+      visit sign_in_path
+      find('#sign-in-token-form-already-have-account-yes-field').choose
+      fill_in('Email address', with: user.email_address)
+      click_on 'Continue'
+      expect(page).to have_content 'Check your email'
+    end
+  end
+
+  context 'with the public_account_creation FeatureFlag inactive' do
+    before do
+      FeatureFlag.deactivate(:public_account_creation)
+    end
+
+    scenario 'supplying a valid email sends a token' do
+      visit sign_in_path
+      fill_in('Email address', with: user.email_address)
+      click_on 'Continue'
+      expect(page).to have_content 'Check your email'
+    end
   end
 
   context 'as a user who is not dfe or mno' do

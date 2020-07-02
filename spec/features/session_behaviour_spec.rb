@@ -72,32 +72,70 @@ RSpec.feature 'Session behaviour', type: :feature do
   context 'with a valid user' do
     let(:valid_user) { create(:local_authority_user) }
 
-    scenario 'Signing in as a recognised user sends a magic link email' do
-      visit '/'
-      click_on 'Sign in'
-      find('#sign-in-token-form-already-have-account-yes-field').choose
-      expect(page).to have_text('Email address')
+    context 'with the public_account_creation FeatureFlag active' do
+      before do
+        FeatureFlag.activate(:public_account_creation)
+      end
 
-      clear_emails
-      expect(current_email).to be_nil
-      fill_in 'Email address', with: valid_user.email_address
-      click_on 'Continue'
-      open_email(valid_user.email_address)
+      scenario 'Signing in as a recognised user sends a magic link email' do
+        visit '/'
+        click_on 'Sign in'
+        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
+        expect(page).to have_text('Email address')
 
-      expect(current_email).not_to be_nil
-      expect(page).to have_text('Check your email')
+        clear_emails
+        expect(current_email).to be_nil
+        fill_in 'Email address', with: valid_user.email_address
+        click_on 'Continue'
+        open_email(valid_user.email_address)
+
+        expect(current_email).not_to be_nil
+        expect(page).to have_text('Check your email')
+      end
+
+      scenario 'Entering an unrecognised email address is silently ignored' do
+        visit '/'
+        click_on 'Sign in'
+        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
+        expect(page).to have_text('Email address')
+
+        fill_in 'Email address', with: 'unrecognised@example.com'
+        click_on 'Continue'
+
+        expect(page).to have_text('Check your email')
+      end
     end
 
-    scenario 'Entering an unrecognised email address is silently ignored' do
-      visit '/'
-      click_on 'Sign in'
-      find('#sign-in-token-form-already-have-account-yes-field').choose
-      expect(page).to have_text('Email address')
+    context 'with the public_account_creation FeatureFlag inactive' do
+      before do
+        FeatureFlag.deactivate(:public_account_creation)
+      end
 
-      fill_in 'Email address', with: 'unrecognised@example.com'
-      click_on 'Continue'
+      scenario 'Signing in as a recognised user sends a magic link email' do
+        visit '/'
+        click_on 'Sign in'
+        expect(page).to have_text('Email address')
 
-      expect(page).to have_text('Check your email')
+        clear_emails
+        expect(current_email).to be_nil
+        fill_in 'Email address', with: valid_user.email_address
+        click_on 'Continue'
+        open_email(valid_user.email_address)
+
+        expect(current_email).not_to be_nil
+        expect(page).to have_text('Check your email')
+      end
+
+      scenario 'Entering an unrecognised email address is silently ignored' do
+        visit '/'
+        click_on 'Sign in'
+        expect(page).to have_text('Email address')
+
+        fill_in 'Email address', with: 'unrecognised@example.com'
+        click_on 'Continue'
+
+        expect(page).to have_text('Check your email')
+      end
     end
   end
 end
