@@ -15,6 +15,7 @@ en:
     requests_for_extra_mobile_data: Requests for extra mobile data
     thank_you: Thank you
     suggested_email_to_schools: A suggested email for you to send to schools
+    request_extra_mobile_data: Request extra mobile data
   errors:
     format:
       "'%{attribute}' %{message}"
