@@ -163,3 +163,9 @@ log aggregator.
 
 You can configure logstash to send logs to your log aggregator by setting the
 [logstash host and port environment variables](#environment-variables).
+
+#### Logstash Configuration
+
+A copy of the [logstash filter](etc/logstash-filter.conf) we use exists in the
+repo. This has to be installed manually in the log aggregator to be used.
+
