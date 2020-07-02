@@ -15,6 +15,11 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
       expect(page).to have_http_status(:ok)
     end
 
+    scenario 'visiting the healthcheck works' do
+      visit '/healthcheck.json'
+      expect(page).to have_http_status(:ok)
+    end
+
     scenario 'visiting any other page returns a 404' do
       visit sign_in_path
       expect(page).to have_http_status(:not_found)
