@@ -25,7 +25,7 @@ Rails.application.configure do
   # tell CDNs (and browsers) to cache static assets for 1hr by default
   if ENV['STATIC_FILE_CACHE_TTL'].present?
     config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=' + Setting.static_file_cache_ttl
+      'Cache-Control' => 'public, max-age=' + Settings.static_file_cache_ttl
     }
   end
   # Compress CSS using a preprocessor.
