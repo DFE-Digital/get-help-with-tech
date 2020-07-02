@@ -25,7 +25,7 @@ Rails.application.configure do
   # tell CDNs (and browsers) to cache static assets for 1hr by default
   if ENV['STATIC_FILE_CACHE_TTL'].present?
     config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=' + Setting.static_file_cache_ttl
+      'Cache-Control' => 'public, max-age=' + Settings.static_file_cache_ttl
     }
   end
   # Compress CSS using a preprocessor.
@@ -83,9 +83,9 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    STDOUT.sync = true
+    config.rails_semantic_logger.add_file_appender = false
+    config.semantic_logger.add_appender(io: STDOUT, level: config.log_level, formatter: :json) # config.rails_semantic_logger.format)
   end
 
   # Do not dump schema after migrations.

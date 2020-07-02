@@ -46,3 +46,7 @@ throttling:
       get: 1
     /sign_in_tokens:
       get: 1
+
+logstash:
+  host: # Fill in with logstash host, leave blank to disable
+  port: # Fill in with logstash port, leave blank to disable
