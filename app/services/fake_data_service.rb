@@ -1,6 +1,6 @@
 class FakeDataService
-  def self.generate!(recipients: 10, mobile_network_id:, created_by_user_id: nil)
-    recipients.times do
+  def self.generate!(extra_mobile_data_requests: 10, mobile_network_id:, created_by_user_id: nil)
+    extra_mobile_data_requests.times do
       name = Faker::Name.name
       r = ExtraMobileDataRequest.create!(
         device_phone_number: Faker::PhoneNumber.cell_phone,

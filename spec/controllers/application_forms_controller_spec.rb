@@ -106,20 +106,20 @@ describe ApplicationFormsController, type: :controller do
       sign_in_as user
     end
 
-    context 'given the id of a recipient created_by the current user' do
-      let(:recipient) { create(:recipient, created_by_user: user) }
+    context 'given the id of a extra mobile data request created_by the current user' do
+      let(:extra_mobile_data_request) { create(:extra_mobile_data_request, created_by_user: user) }
 
       it 'responds with 200' do
-        get :success, params: { recipient_id: recipient.id }
+        get :success, params: { extra_mobile_data_request_id: extra_mobile_data_request.id }
         expect(response.status).to eq(200)
       end
     end
 
     context 'given the id of a recipient not created_by the current user' do
-      let(:recipient) { create(:recipient, created_by_user: other_user) }
+      let(:extra_mobile_data_request) { create(:extra_mobile_data_request, created_by_user: other_user) }
 
       it 'responds with 404' do
-        get :success, params: { recipient_id: recipient.id }
+        get :success, params: { extra_mobile_data_request_id: extra_mobile_data_request.id }
         expect(response.status).to eq(404)
       end
     end

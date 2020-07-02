@@ -15,7 +15,7 @@
     </h2>
     <p class="govuk-body">
       We will contact you by email soon, on
-      <%= @application_form.recipient.created_by_user.email_address %>
+      <%= @application_form.request.created_by_user.email_address %>
     </p>
     <p class="govuk-body">
       <%= govuk_link_to 'Tell us about another child or young person', new_application_form_path %>

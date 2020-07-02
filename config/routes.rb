@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/pages/guidance', to: redirect('/')
 
   resources :application_forms do
-    get 'success/:recipient_id', on: :collection, to: 'application_forms#success', as: :success
+    get 'success/:extra_mobile_data_request_id', on: :collection, to: 'application_forms#success', as: :success
   end
   resources :allocation_request_forms do
     get 'success/:allocation_request_id', on: :collection, to: 'allocation_request_forms#success', as: :success
@@ -22,9 +22,9 @@ Rails.application.routes.draw do
   get '/token/sent/:token', to: 'sign_in_tokens#sent', as: :sent_token
 
   namespace :mno do
-    resources :recipients, only: %i[index show edit update] do
-      put 'bulk_update', to: 'recipients#bulk_update', on: :collection
-      get 'report_problem', to: 'recipients#report_problem', as: :report_problem
+    resources :extra_mobile_data_requests, only: %i[index show edit update] do
+      put 'bulk_update', to: 'extra_mobile_data_requests#bulk_update', on: :collection
+      get 'report_problem', to: 'extra_mobile_data_requests#report_problem', as: :report_problem
     end
   end
 

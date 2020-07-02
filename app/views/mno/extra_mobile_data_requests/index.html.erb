@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<% if @recipients.empty? %>
+<% if @extra_mobile_data_requests.empty? %>
   <p class="govuk-body">
     (There are no matching requests at the moment)
   </p>
@@ -22,7 +22,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <%= form_for @recipients_form, url: bulk_update_mno_recipients_path, method: :put do |f| %>
+      <%= form_for @extra_mobile_data_requests_form, url: bulk_update_mno_extra_mobile_requests_path, method: :put do |f| %>
         <table class="govuk-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -55,7 +55,7 @@
             </tr>
           </thead>
           <tbody class="govuk-table__body">
-            <%= render partial: 'recipient', collection: @recipients, locals: {form: f} %>
+            <%= render partial: 'extra_mobile_data_request', collection: @extra_mobile_data_requests, locals: {form: f} %>
           </tbody>
           <tfoot class="govuk-table__footer">
             <td class="govuk-table__footer" colspan="7">
@@ -65,7 +65,7 @@
         <div class="govuk-body govuk-grid-row">
           <div class="govuk-grid-column-one-half">
             <div class="govuk-form-group govuk-!-margin-bottom-0 display-child-forms-inline">
-              <label for="mno-recipients-form-status-field" class="govuk-label">Set status of selected to</label>
+              <label for="mno-extra-mobile-data-requests-form-status-field" class="govuk-label">Set status of selected to</label>
               <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
               <%= f.govuk_submit 'Update' %>
             </div>

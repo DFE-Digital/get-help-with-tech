@@ -1,10 +1,10 @@
 class Mno::ExtraMobileDataRequestsForm
   include ActiveModel::Model
 
-  attr_accessor :recipients, :recipient_ids, :status
+  attr_accessor :extra_mobile_data_requests, :extra_mobile_data_request_ids, :status
 
-  def recipients_for_collection_select
-    @recipients.map do |r|
+  def extra_mobile_data_requests_for_collection_select
+    @extra_mobile_data_requests.map do |r|
       OpenStruct.new(id: r.id, label: '')
     end
   end
