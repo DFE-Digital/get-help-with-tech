@@ -1,4 +1,6 @@
 require 'rack/throttle'
+# This line is a little odd, but prevents a deprecation warning on startup
+# about autoloading constants during initialization
 require_relative '../../app/services/feature_flag'
 
 class RackThrottleConfig
