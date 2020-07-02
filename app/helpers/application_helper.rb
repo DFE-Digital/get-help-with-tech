@@ -20,7 +20,7 @@ module ApplicationHelper
     class_name = [class_name, 'govuk-header__navigation-item--active'].join(' ') if request.path == url
 
     inner_html = (title.present? ? link_to(title, url, class: 'govuk-header__link') : content)
-    content_tag(:li, inner_html, class: class_name)
+    tag.li(inner_html, class: class_name)
   end
 
   def recipient_status_class(status)
