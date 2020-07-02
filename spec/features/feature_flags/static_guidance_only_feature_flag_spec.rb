@@ -46,7 +46,6 @@ RSpec.feature 'Static Guidance Only feature flag', type: :feature do
     scenario 'visiting any other page works' do
       visit sign_in_path
       expect(page).to have_http_status(:ok)
-      expect(page).to have_selector 'h1', text: 'Create an account or sign in'
     end
 
     scenario 'Other nav links are shown' do

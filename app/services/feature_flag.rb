@@ -4,6 +4,7 @@ class FeatureFlag
     show_debug_info
     dfe_admin_ui
     rate_limiting
+    public_account_creation
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
@@ -28,5 +29,9 @@ class FeatureFlag
     raise unless feature_name.in?(FEATURES)
 
     ENV["FEATURES_#{feature_name}"] == 'active'
+  end
+
+  def self.inactive?(feature_name)
+    !active?(feature_name)
   end
 end
