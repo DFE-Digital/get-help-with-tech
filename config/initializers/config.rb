@@ -16,8 +16,7 @@ Config.setup do |config|
   # config.overwrite_arrays = true
 
   # Load environment variables from the `ENV` object and override any settings defined in files.
-  #
-  # config.use_env = false
+  config.use_env = true
 
   # Define ENV variable prefix deciding which variables to load into config.
   #
@@ -25,14 +24,12 @@ Config.setup do |config|
   # prefixed in the same way.
   #
   # When not set it defaults to `config.const_name`.
-  #
   config.env_prefix = 'GHWT'
 
   # What string to use as level separator for settings loaded from ENV variables. Default value of '.' works well
   # with Heroku, but you might want to change it for example for '__' to easy override settings from command line, where
   # using dots in variable names might not be allowed (eg. Bash).
-  #
-  # config.env_separator = '.'
+  config.env_separator = '__'
 
   # Ability to process variables names:
   #   * nil  - no change
@@ -42,7 +39,7 @@ Config.setup do |config|
 
   # Parse numeric values as integers instead of strings.
   #
-  # config.env_parse_values = true
+  config.env_parse_values = true
 
   # Validate presence and type of specific config values. Check https://github.com/dry-rb/dry-validation for details.
   #
@@ -51,5 +48,4 @@ Config.setup do |config|
   #   required(:age).maybe(:int?)
   #   required(:email).filled(format?: EMAIL_REGEX)
   # end
-
 end
