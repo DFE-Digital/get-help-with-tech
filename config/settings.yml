@@ -31,3 +31,18 @@ sign_in_token_ttl_seconds: 1800
 
 # how long CDNs and browsers should cache static assets for in production, in seconds.
 static_file_cache_ttl:
+
+# Configure rack-throttle
+throttling:
+  # Limits are all number of requests per second
+  default_limit: 4
+  limits:
+    delete: 4
+    get: 4
+    patch: 4
+    post: 4
+    put: 4
+    /token:
+      get: 1
+    /sign_in_tokens:
+      get: 1
