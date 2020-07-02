@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get '/about-bt-wifi', to: 'pages#about_bt_wifi', as: :guidance_page
+  get '/about-bt-wifi', to: 'pages#about_bt_wifi'
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
   get '/bt-wifi/suggested-email-to-schools', to: 'pages#suggested_email_to_schools'
-  get '/pages/guidance', to: redirect('/about-bt-wifi')
+  get '/pages/guidance', to: redirect('/')
 
   resources :application_forms do
     get 'success/:recipient_id', on: :collection, to: 'application_forms#success', as: :success
@@ -37,5 +37,5 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unprocessable_entity', via: :all
   get '/500', to: 'errors#internal_server_error', via: :all
 
-  get '/', to: 'pages#index'
+  get '/', to: 'pages#index', as: :guidance_page
 end
