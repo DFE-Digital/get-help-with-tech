@@ -6,6 +6,15 @@ RSpec.feature ResponsibleBody do
 
   let(:rb_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
+  let(:responsible_body) { rb_user.responsible_body }
+
+  let(:allocation_request) do
+    create :allocation_request,
+           responsible_body: responsible_body,
+           number_eligible: 10,
+           number_eligible_with_hotspot_access: 8,
+           created_by_user: rb_user
+  end
 
   context 'not signed-in' do
     scenario 'visiting the page redirects to sign-in' do
@@ -55,6 +64,18 @@ RSpec.feature ResponsibleBody do
       scenario 'the "Request extra mobile data" task shows as In progrss' do
         visit responsible_body_home_path
         expect(page).to have_text("Request extra mobile data\nIn progress")
+      end
+    end
+
+    context 'when the user has a bt wifi hotspot request' do
+      before do
+        allocation_request
+      end
+
+      scenario 'the eligible numbers are displayed' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page.elligible_young_people.text).to eq '10'
       end
     end
   end

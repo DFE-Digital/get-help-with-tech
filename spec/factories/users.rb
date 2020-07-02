@@ -15,6 +15,14 @@ FactoryBot.define do
     approved
   end
 
+  factory :trust_user, class: 'User' do
+    full_name                { 'Jane Doe' }
+    sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
+    organisation             { 'Some Trust' }
+    association              :responsible_body, factory: :trust
+    approved
+  end
+
   factory :mno_user, class: 'User' do
     full_name     { 'Mike Mobile-Network' }
     email_address { 'mike.mobile-network@somemno.co.uk' }

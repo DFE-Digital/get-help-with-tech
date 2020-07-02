@@ -4,7 +4,7 @@ FactoryBot.define do
     name                          { [Faker::Address.county, organisation_type].join(' ') }
     local_authority_official_name { [organisation_type, name].join(' of ') }
     local_authority_eng           { name.first(3).upcase }
-    companies_house_number        { nil }
+    companies_house_number        { rand(99_999).to_s }
   end
 
   factory :trust do
@@ -13,5 +13,13 @@ FactoryBot.define do
     local_authority_official_name { nil }
     local_authority_eng           { nil }
     companies_house_number        { Faker::Number.leading_zero_number(digits: 8) }
+
+    trait :single_academy_trust do
+      organisation_type           { :single_academy_trust }
+    end
+
+    trait :multi_academy_trust do
+      organisation_type           { :multi_academy_trust }
+    end
   end
 end
