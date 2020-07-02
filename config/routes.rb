@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :responsible_body, only: :show
+  namespace :responsible_body do
+    resources :extra_mobile_data_requests, only: %i[index new create]
+  end
 
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 

@@ -26,6 +26,10 @@ class User < ApplicationRecord
     mobile_network.present?
   end
 
+  def is_rb_user?
+    responsible_body.present?
+  end
+
   def is_dfe?
     email_address.present? && email_address.match?(/[\.@]education.gov.uk$/)
   end
