@@ -14,7 +14,7 @@ class FakeDataService
         created_by_user_id: created_by_user_id,
       )
       r.update(created_at: Time.now.utc - rand(500_000).seconds)
-      puts "created #{r.id} - #{r.account_holder_name}"
+      Rails.logger.info "created #{r.id} - #{r.account_holder_name}"
     end
   end
 end

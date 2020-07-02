@@ -2,7 +2,7 @@ class Recipient < ApplicationRecord
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
   validates :status, presence: true
-  
+
   enum status: {
     requested: 'requested',
     in_progress: 'in_progress',

@@ -1,4 +1,5 @@
 require 'rack/throttle'
+require_relative '../../app/services/feature_flag'
 
 class RackThrottleConfig
   RULES = [
@@ -13,13 +14,10 @@ class RackThrottleConfig
   DEFAULT = 4
 end
 
-# the 'to_prepare' block prevents deprecation warnings about autoloading in
-# an initializer - see https://www.danott.co/today-i-learned/2019-10-16/
-Rails.configuration.to_prepare do
-  # only do this if enabled, so that we don't throttle features specs, for instance
-  if FeatureFlag.active?(:rate_limiting)
-    Rails.application.config.middleware.use Rack::Throttle::Rules,
-                                            rules: RackThrottleConfig::RULES,
-                                            default: RackThrottleConfig::DEFAULT
-  end
+# only do this if enabled, so that we don't throttle features specs, for instance
+if FeatureFlag.active?(:rate_limiting)
+  Rails.application.config.middleware.use Rack::Throttle::Rules,
+                                          rules: RackThrottleConfig::RULES,
+                                          default: RackThrottleConfig::DEFAULT,
+                                          code: 429
 end
