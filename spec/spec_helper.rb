@@ -14,6 +14,10 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require "capybara"
+require "capybara/rspec"
+require "site_prism"
+
 SimpleCov.start
 
 require 'webmock/rspec'

@@ -75,6 +75,9 @@ group :development, :test do
 
   # Allow testing logging to logstash in development
   gem 'logstash-logger', '~> 0.26.1'
+
+  # PageObjects for tests
+  gem 'site_prism'
 end
 
 group :development do
