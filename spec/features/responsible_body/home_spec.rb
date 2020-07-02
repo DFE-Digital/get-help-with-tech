@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature ResponsibleBody do
+  let(:sign_in_page) { PageObjects::SignInPage.new }
+  let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
+
   let(:rb_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
 
@@ -8,7 +11,7 @@ RSpec.feature ResponsibleBody do
     scenario 'visiting the page redirects to sign-in' do
       visit responsible_body_home_path
 
-      expect(page).to have_current_path(sign_in_path)
+      expect(sign_in_page).to be_displayed
     end
   end
 
@@ -33,6 +36,7 @@ RSpec.feature ResponsibleBody do
     scenario 'visiting the page' do
       visit responsible_body_home_path
 
+      expect(responsible_body_home_page).to be_displayed
       expect(page.status_code).to eq 200
     end
 
