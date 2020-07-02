@@ -7,7 +7,7 @@ class CSVSpreadsheetWithBTWifiVouchers
 
   def to_csv
     CSV.generate do |csv|
-      csv << ["Username", "Password"]
+      csv << %w[Username Password]
       @vouchers.each do |voucher|
         csv << [voucher.username, voucher.password]
       end

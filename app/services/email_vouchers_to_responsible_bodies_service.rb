@@ -23,7 +23,7 @@ private
       email_vouchers_to_user(
         user.email_address,
         link_to_file: link_to_file,
-        number_of_allocations: number_of_allocations
+        number_of_allocations: number_of_allocations,
       )
     end
   end
@@ -35,7 +35,7 @@ private
       personalisation: {
         number_of_allocations: number_of_allocations,
         link_to_voucher_spreadsheet: link_to_file,
-      }
+      },
     )
   end
 
