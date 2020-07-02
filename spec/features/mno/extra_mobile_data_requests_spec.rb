@@ -53,7 +53,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
       all('tbody tr').map { |e| e[:id].split('-').last.to_i }
     end
     let(:mno_recipients) do
-      Recipient.from_approved_users.where(mobile_network_id: mno_user.mobile_network_id)
+      ExtraMobileDataRequest.from_approved_users.where(mobile_network_id: mno_user.mobile_network_id)
     end
 
     before do

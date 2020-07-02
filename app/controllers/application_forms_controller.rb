@@ -18,7 +18,7 @@ class ApplicationFormsController < ApplicationController
   end
 
   def success
-    @recipient = @user.recipients.find(params[:recipient_id])
+    @recipient = @user.extra_mobile_data_requests.find(params[:recipient_id])
     @application_form = ApplicationForm.new(recipient: @recipient)
   rescue ActiveRecord::RecordNotFound
     render template: 'errors/not_found', status: :not_found

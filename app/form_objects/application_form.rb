@@ -17,7 +17,7 @@ class ApplicationForm
   validates :understands_how_pii_will_be_used, presence: { message: 'Please confirm whether this family understand how their personally-identifying information will be used' }
 
   def initialize(opts = {})
-    @recipient = opts[:recipient] || Recipient.new(opts)
+    @recipient = opts[:recipient] || ExtraMobileDataRequest.new(opts)
 
     @can_access_hotspot = opts[:can_access_hotspot] || @recipient.can_access_hotspot
     @account_holder_name = opts[:account_holder_name] || @recipient.account_holder_name
@@ -30,7 +30,7 @@ class ApplicationForm
   def save!
     @recipient ||= construct_recipient
     validate!
-    @recipient.status ||= Recipient.statuses[:requested]
+    @recipient.status ||= ExtraMobileDataRequest.statuses[:requested]
     @recipient.save!
   end
 
@@ -41,7 +41,7 @@ private
   end
 
   def construct_recipient
-    Recipient.new(
+    ExtraMobileDataRequest.new(
       can_access_hotspot: @can_access_hotspot,
       is_account_holder: @is_account_holder,
       account_holder_name: @account_holder_name,

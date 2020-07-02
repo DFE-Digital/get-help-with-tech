@@ -11,11 +11,11 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
       # capybara sends through NullType sometimes
       format.any do
         @pagination, @recipients = pagy(@recipients)
-        @recipients_form = Mno::RecipientsForm.new(
+        @recipients_form = Mno::ExtraMobileDataRequestsForm.new(
           recipients: @recipients,
           recipient_ids: selected_recipient_ids(@recipients, params),
         )
-        @statuses = Recipient.translated_enum_values(:statuses).reject { |status| status.value == 'queried' }
+        @statuses = ExtraMobileDataRequest.translated_enum_values(:statuses).reject { |status| status.value == 'queried' }
       end
     end
   end
@@ -23,8 +23,8 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   def report_problem; end
 
   def bulk_update
-    Recipient.transaction do
-      Recipient.from_approved_users
+    ExtraMobileDataRequest.transaction do
+      ExtraMobileDataRequest.from_approved_users
                .on_mobile_network(@user.mobile_network_id)
                .where('recipients.id IN (?)', bulk_update_params[:recipient_ids].reject(&:empty?))
                .update_all(status: bulk_update_params[:status])

@@ -38,7 +38,7 @@ class HealthcheckService
   end
 
   def self.db_status
-    Recipient.maximum(:created_at)
+    ExtraMobileDataRequest.maximum(:created_at)
     'UP'
   end
 end
