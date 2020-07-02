@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/about-bt-wifi', to: 'pages#guidance', as: :guidance_page
+  get '/about-bt-wifi', to: 'pages#about_bt_wifi', as: :guidance_page
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
   get '/bt-wifi/suggested-email-to-schools', to: 'pages#suggested_email_to_schools'
   get '/pages/guidance', to: redirect('/about-bt-wifi')
