@@ -37,5 +37,5 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unprocessable_entity', via: :all
   get '/500', to: 'errors#internal_server_error', via: :all
 
-  get '/', to: redirect('/about-bt-wifi')
+  get '/', to: 'pages#index'
 end
