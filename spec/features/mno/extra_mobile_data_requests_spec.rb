@@ -7,9 +7,9 @@ RSpec.feature 'MNO Requests view', type: :feature do
   let(:mno_user) { create(:mno_user) }
   let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }
   let(:user_from_other_mno) { create(:mno_user, name: 'Other MNO-User', organisation: 'Other MNO', mobile_network: other_mno) }
-  let!(:recipient_for_mno) { create(:recipient, account_holder_name: 'mno recipient', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
-  let!(:recipient_for_other_mno) { create(:recipient, account_holder_name: 'other mno recipient', mobile_network: other_mno, created_by_user: local_authority_user) }
-  let!(:recipient_from_unapproved_user) { create(:recipient, account_holder_name: 'mno recipient from unapproved user', mobile_network: mno_user.mobile_network, created_by_user: unapproved_user) }
+  let!(:extra_mobile_data_request_for_mno) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
+  let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
+  let!(:extra_mobile_data_request_from_unapproved_user) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request from unapproved user', mobile_network: mno_user.mobile_network, created_by_user: unapproved_user) }
 
   context 'visiting Your requests signed in as an mno user' do
     before do
@@ -20,70 +20,70 @@ RSpec.feature 'MNO Requests view', type: :feature do
     scenario 'shows only requests from my MNO' do
       expect(page).to have_content('Requests for extra mobile data')
       expect(page).to have_content(mno_user.mobile_network.brand)
-      expect(page).to have_content(recipient_for_mno.account_holder_name)
-      expect(page).not_to have_content(recipient_for_other_mno.account_holder_name)
+      expect(page).to have_content(extra_mobile_data_request_for_mno.account_holder_name)
+      expect(page).not_to have_content(extra_mobile_data_request_for_other_mno.account_holder_name)
     end
 
     scenario 'does not show requests from users who are not approved' do
-      expect(page).to have_content(recipient_for_mno.account_holder_name)
-      expect(page).not_to have_content(recipient_from_unapproved_user.account_holder_name)
+      expect(page).to have_content(extra_mobile_data_request_for_mno.account_holder_name)
+      expect(page).not_to have_content(extra_mobile_data_request_from_unapproved_user.account_holder_name)
     end
 
     scenario 'clicking Select All selects all checkboxes' do
       click_on 'all'
 
-      all('input[name="mno_recipients_form[recipient_ids][]"]').each do |e|
+      all('input[name="mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]"]').each do |e|
         expect(e.checked?).to eq(true)
       end
     end
 
     scenario 'clicking Select None de-selects all checkboxes' do
-      check('mno_recipients_form[recipient_ids][]')
+      check('mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]')
       click_on 'none'
 
-      all('input[name="mno_recipients_form[recipient_ids][]"]').each do |e|
+      all('input[name="mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]"]').each do |e|
         expect(e.checked?).to eq(false)
       end
     end
   end
 
-  context 'with several recipients shown' do
+  context 'with several extra_mobile_data_requests shown' do
     # NOTE: a function, not a let, so that it re-runs each time
     def rendered_ids
       all('tbody tr').map { |e| e[:id].split('-').last.to_i }
     end
-    let(:mno_recipients) do
+    let(:mno_extra_mobile_data_requests) do
       ExtraMobileDataRequest.from_approved_users.where(mobile_network_id: mno_user.mobile_network_id)
     end
 
     before do
-      create_list(:recipient, 5, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+      create_list(:extra_mobile_data_request, 5, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
       sign_in_as mno_user
       click_on 'Your requests'
     end
 
     scenario 'clicking on a header sorts by that column' do
       click_on 'Account holder'
-      expect(rendered_ids).to eq(mno_recipients.order(:account_holder_name).pluck(:id))
+      expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(:account_holder_name).pluck(:id))
 
       click_on 'Requested'
-      expect(rendered_ids).to eq(mno_recipients.order(:created_at).pluck(:id))
+      expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(:created_at).pluck(:id))
     end
 
     scenario 'clicking on a header twice sorts by that column in reverse order' do
       click_on 'Account holder'
-      expect(rendered_ids).to eq(mno_recipients.order(:account_holder_name).pluck(:id))
+      expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(:account_holder_name).pluck(:id))
 
       click_on 'Account holder'
-      expect(rendered_ids).to eq(mno_recipients.order(account_holder_name: :desc).pluck(:id))
+      expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(account_holder_name: :desc).pluck(:id))
     end
 
-    scenario 'updating selected recipients to a status applies that status' do
-      all('input[name="mno_recipients_form[recipient_ids][]"]').first(3).each(&:check)
+    scenario 'updating selected extra_mobile_data_requests to a status applies that status' do
+      all('input[name="mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]"]').first(3).each(&:check)
       select('In progress', from: 'Set status of selected to')
       click_on('Update')
-      expect(all('.recipient-status').first(3)).to all(have_content('In progress'))
-      expect(all('.recipient-status').last(2)).to all(have_no_content('In progress'))
+      expect(all('.extra_mobile_data_request-status').first(3)).to all(have_content('In progress'))
+      expect(all('.extra_mobile_data_request-status').last(2)).to all(have_no_content('In progress'))
     end
 
     scenario 'clicking Download as CSV downloads a CSV file' do
@@ -92,9 +92,9 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
   end
 
-  context 'with multiple pages of recipients' do
+  context 'with multiple pages of extra_mobile_data_requests' do
     before do
-      create_list(:recipient, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+      create_list(:extra_mobile_data_request, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
       sign_in_as mno_user
       click_on 'Your requests'
     end

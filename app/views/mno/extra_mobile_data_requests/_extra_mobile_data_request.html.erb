@@ -1,8 +1,8 @@
-<tr class="govuk-table__row" id="request-<%= request.id %>">
+<tr class="govuk-table__row" id="request-<%= extra_mobile_data_request.id %>">
   <td class="govuk-table__cell">
     <div class="govuk-form-group govuk-!-margin-bottom-0">
-      <%= form.govuk_collection_check_boxes :request_ids,
-      [OpenStruct.new(id: request.id, label: '')],
+      <%= form.govuk_collection_check_boxes :extra_mobile_data_request_ids,
+      [OpenStruct.new(id: extra_mobile_data_request.id, label: '')],
       :id,
       :label,
       small: false,
@@ -10,20 +10,20 @@
     </div>
   </td>
   <td class="govuk-table__cell">
-    <%= request.account_holder_name %>
+    <%= extra_mobile_data_request.account_holder_name %>
   </td>
   <td class="govuk-table__cell govuk-table__cell--numeric">
-    <%= request.device_phone_number %>
+    <%= extra_mobile_data_request.device_phone_number %>
   </td>
   <td class="govuk-table__cell">
-    <%= l(request.created_at, format: :short) %>
+    <%= l(extra_mobile_data_request.created_at, format: :short) %>
   </td>
   <td class="govuk-table__cell" class="request-status">
-    <span class="govuk-tag <%= extra_mobile_data_request_status_class(request.status) %> request-status-<%= request.status %>">
-      <%= request.translated_enum_value(:status) %>
+    <span class="govuk-tag <%= extra_mobile_data_request_status_class(extra_mobile_data_request.status) %> request-status-<%= extra_mobile_data_request.status %>">
+      <%= extra_mobile_data_request.translated_enum_value(:status) %>
     </span>
   </td>
   <td class="govuk-table__cell">
-    <%= govuk_link_to 'Report a problem', mno_extra_mobile_data_requests_report_problem_path(request) %>
+    <%= govuk_link_to 'Report a problem', mno_extra_mobile_data_request_report_problem_path(extra_mobile_data_request) %>
   </td>
 </tr>
