@@ -54,7 +54,6 @@ RSpec.feature 'Session behaviour', type: :feature do
     context 'when the session expires between requests' do
       before do
         sign_in_as user
-        ENV['SESSION_TTL_SECONDS'] = '1'
       end
 
       scenario 'visiting with a valid but expired session logs the user out' do

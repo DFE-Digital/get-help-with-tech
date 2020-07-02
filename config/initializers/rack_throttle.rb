@@ -5,15 +5,15 @@ require_relative '../../app/services/feature_flag'
 
 class RackThrottleConfig
   RULES = [
-    { method: 'POST', limit: Integer(ENV.fetch('GHWT_MAX_POSTS_PER_SECOND', 4)) },
-    { method: 'PUT', limit: Integer(ENV.fetch('GHWT_MAX_PUTS_PER_SECOND', 4)) },
-    { method: 'PATCH', limit: Integer(ENV.fetch('GHWT_MAX_PATCHES_PER_SECOND', 4)) },
-    { method: 'DELETE', limit: Integer(ENV.fetch('GHWT_MAX_DELETES_PER_SECOND', 4)) },
-    { method: 'GET', limit: Integer(ENV.fetch('GHWT_MAX_GETS_PER_SECOND', 4)) },
-    { method: 'GET', path: '/token/.*', limit: Integer(ENV.fetch('GHWT_MAX_TOKEN_GETS_PER_SECOND', 1)) },
-    { method: 'GET', path: '/sign_in_tokens/.*', limit: Integer(ENV.fetch('GHWT_MAX_TOKEN_GETS_PER_SECOND', 1)) },
+    { method: 'POST', limit: Integer(Settings.throttling.limits.post) },
+    { method: 'PUT', limit: Integer(Settings.throttling.limits.put) },
+    { method: 'PATCH', limit: Integer(Settings.throttling.limits.patch) },
+    { method: 'DELETE', limit: Integer(Settings.throttling.limits.delete) },
+    { method: 'GET', limit: Integer(Settings.throttling.limits.get) },
+    { method: 'GET', path: '/token/.*', limit: Integer(Settings.throttling.limits['/token'].get) },
+    { method: 'GET', path: '/sign_in_tokens/.*', limit: Integer(Settings.throttling.limits['/sign_in_tokens'].get) },
   ].freeze
-  DEFAULT = 4
+  DEFAULT = Settings.throttling.default_limit
 end
 
 # only do this if enabled, so that we don't throttle features specs, for instance

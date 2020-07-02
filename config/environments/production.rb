@@ -25,7 +25,7 @@ Rails.application.configure do
   # tell CDNs (and browsers) to cache static assets for 1hr by default
   if ENV['STATIC_FILE_CACHE_TTL'].present?
     config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=' + ENV['STATIC_FILE_CACHE_TTL']
+      'Cache-Control' => 'public, max-age=' + Setting.static_file_cache_ttl
     }
   end
   # Compress CSS using a preprocessor.
@@ -61,10 +61,10 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = {
-    api_key: ENV.fetch('GOVUK_NOTIFY_API_KEY', nil)
+    api_key: Settings.govuk_notify.api_key,
   }
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('HOSTNAME_FOR_URLS', 'http://localhost:3000'),
+    host: Settings.hostname_for_urls,
     protocol: 'https'
   }
 

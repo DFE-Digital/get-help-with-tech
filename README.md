@@ -74,20 +74,18 @@ The app should be available at https://get-help-with-tech-(dev|staging|prod).lon
 
 Some values are configurable with environment variables:
 
-Name|Description|Default
-----|-----------|-------
-SIGN_IN_TOKEN_TTL_SECONDS|Sign-in tokens will expire after this many seconds|600
-HTTP_BASIC_AUTH_USERNAME|Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
-HTTP_BASIC_AUTH_PASSWORD|Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set|(nil)
-GOVUK_NOTIFY_API_KEY|API key for the GOV.UK Notify service, used for sending emails|REQUIRED
-HOSTNAME_FOR_URLS|Hostname used for generating URLs in emails|http://localhost:3000/
-SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID|ID of the template in GOV.UK Notify used for mailing sign-in tokens|'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
-STATIC_FILE_CACHE_TTL|how long CDNs and browsers should cache static assets for in production, in seconds.|(nil)
-GHWT_MAX_[GET|POST|PATCHE|PUT|DELETE]S_PER_SECOND|Max number of [GET|POST|PATCH|PUT|DELETE] requests allowed per-ip per-second - only has an effect if the `rate_limiting` FeatureFlag is set|4
-GHWT_MAX_TOKEN_GETS_PER_SECOND|Max number of GET requests to token validation URLs allowed per-ip per-second - only has an effect if the `rate_limiting` FeatureFlag is set|1
+Name                                             |Description                                                                                                                                 |Default
+-------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-------
+GHWT__SIGN_IN_TOKEN_TTL_SECONDS                  |Sign-in tokens will expire after this many seconds                                                                                          |600
+GHWT__HTTP_BASIC_AUTH__USERNAME                  |Username for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set                                     |(nil)
+GHWT__HTTP_BASIC_AUTH__PASSWORD                  |Password for HTTP Basic authentication - only has an effect if the `http_basic_auth` FeatureFlag is set                                     |(nil)
+GHWT__GOVUK_NOTIFY__API_KEY                      |API key for the GOV.UK Notify service, used for sending emails                                                                              |REQUIRED
+GHWT__HOSTNAME_FOR_URLS                          |Hostname used for generating URLs in emails                                                                                                 |http://localhost:3000/
+GHWT__GOVUK_NOTIFY__TEMPLATES__SIGN_IN_TOKEN_MAIL|ID of the template in GOV.UK Notify used for mailing sign-in tokens                                                                         |'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
+GHWT__STATIC_FILE_CACHE_TTL                      |how long CDNs and browsers should cache static assets for in production, in seconds.                                                        |(nil)
+GHWT__THROTTLE__*                                |Request throttling limits, see [settings.yaml](config/settings.yml) for more info                                                           |_(see settings)_
 
-
-
+See the [settings.yaml file](config/settings.yml) for full details on configurable options.
 
 ### Feature Flags
 
@@ -116,7 +114,6 @@ cf unset-env (app name) (environment variable name)
 # For example:
 cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
 ```
-
 
 ## Operations
 

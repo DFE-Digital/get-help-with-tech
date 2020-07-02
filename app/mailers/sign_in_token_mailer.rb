@@ -21,6 +21,6 @@ class SignInTokenMailer < ApplicationMailer
 private
 
   def notify_template_id
-    ENV.fetch('SIGN_IN_TOKEN_MAIL_NOTIFY_TEMPLATE_ID', DEFAULT_NOTIFY_TEMPLATE_ID)
+    Settings.govuk_notify.templates.sign_in_token_mail
   end
 end

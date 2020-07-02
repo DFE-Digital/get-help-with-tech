@@ -1,0 +1,48 @@
+# Configuration options in this file can be over-ridden by enviroment-specific
+# YAML files in the setting sub-folder.
+#
+# An example of how to override a setting in this file with an environment variable:
+#
+#   GHWT__GOVUK_NOTIFY__API_KEY=abcd1234
+#
+# See the file initializers/config.rb for more info on how this is configured.
+
+govuk_notify:
+  # API key for the GOV.UK Notify service, used for sending emails
+  api_key:
+
+  templates:
+    # ID of the template in GOV.UK Notify used for mailing sign-in tokens
+    sign_in_token_mail: '89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
+
+http_basic_auth:
+  # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
+  username:
+  # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
+  password:
+
+# Hostname used for generating URLs in emails
+hostname_for_urls: http://localhost:3000
+
+session_ttl_seconds: 3600
+
+# Sign-in tokens will expire after this many seconds
+sign_in_token_ttl_seconds: 1800
+
+# how long CDNs and browsers should cache static assets for in production, in seconds.
+static_file_cache_ttl:
+
+# Configure rack-throttle
+throttling:
+  # Limits are all number of requests per second
+  default_limit: 4
+  limits:
+    delete: 4
+    get: 4
+    patch: 4
+    post: 4
+    put: 4
+    /token:
+      get: 1
+    /sign_in_tokens:
+      get: 1
