@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Recipient, type: :model do
+RSpec.describe ExtraMobileDataRequest, type: :model do
   describe '.from_approved_users' do
     let(:approved_user) { create(:local_authority_user, :approved) }
     let(:not_approved_user) { create(:local_authority_user, :not_approved) }

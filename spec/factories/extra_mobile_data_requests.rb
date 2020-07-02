@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :recipient, class: 'Recipient' do
+  factory :recipient, class: 'ExtraMobileDataRequest' do
     can_access_hotspot                { true }
     is_account_holder                 { true }
     account_holder_name               { Faker::Name.name }

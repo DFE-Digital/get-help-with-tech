@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mno::RecipientsController, type: :controller do
+describe Mno::ExtraMobileDataRequestsController, type: :controller do
   let(:local_authority_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
   let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }

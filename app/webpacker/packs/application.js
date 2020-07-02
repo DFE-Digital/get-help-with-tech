@@ -8,4 +8,4 @@ Rails.start();
 initAll();
 
 require('jquery')
-require('./mno/recipients');
+require('./mno/extra-mobile-data-requests.js');

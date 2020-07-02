@@ -1,4 +1,4 @@
-class Mno::RecipientsForm
+class Mno::ExtraMobileDataRequestsForm
   include ActiveModel::Model
 
   attr_accessor :recipients, :recipient_ids, :status

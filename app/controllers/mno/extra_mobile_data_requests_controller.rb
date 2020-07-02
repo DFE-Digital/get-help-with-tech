@@ -1,8 +1,8 @@
-class Mno::RecipientsController < Mno::BaseController
+class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   def index
-    @recipients = Recipient.from_approved_users
-                           .on_mobile_network(@user.mobile_network_id)
-                           .order(safe_order)
+    @recipients = ExtraMobileDataRequest.from_approved_users
+                                        .on_mobile_network(@user.mobile_network_id)
+                                        .order(safe_order)
 
     respond_to do |format|
       format.csv do
