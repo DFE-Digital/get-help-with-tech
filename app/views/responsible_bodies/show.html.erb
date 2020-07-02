@@ -4,26 +4,15 @@
       <%= t('page_titles.who_needs_internet_access') %>
     </h1>
 
-    <p class="govuk-body">
-      Increased internet access is available to children from early years up to 16, and care leavers up to 25 if they:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        don’t have access to a <a class="govuk-link" href="https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics">fixed broadband connection</a>
-      </li>
-      <li>
-        cannot afford the additional data needed to access educational resources or social care services
-      </li>
-    </ul>
+    <%= render partial: 'pages/eligibility' %>
 
     <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-4">
       <span class="govuk-caption-m">Step 1</span>
 
       How many young people are eligible?
-
     </h2>
-    <div class="govuk-!-margin-bottom-4">
 
+    <div class="govuk-!-margin-bottom-4">
       <strong class="govuk-tag">
         Completed
       </strong>
