@@ -24,7 +24,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it redirects to the guidance page' do
       visit(validate_token_url)
-      expect(page).to have_current_path('/about-bt-wifi')
+      expect(page).to have_current_path(guidance_page_path)
       expect(page).to have_text I18n.t('service_name')
     end
   end
@@ -47,7 +47,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
       it 'redirects to the guidance page' do
         visit(validate_token_url)
-        expect(page).to have_current_path('/about-bt-wifi')
+        expect(page).to have_current_path(guidance_page_path)
         expect(page).to have_text I18n.t('service_name')
       end
     end
