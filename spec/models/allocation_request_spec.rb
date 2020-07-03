@@ -34,10 +34,12 @@ RSpec.describe AllocationRequest, type: :model do
 
     context 'creating without user or responsible body' do
       it 'raises an error' do
-        AllocationRequest.create(
-          number_eligible: 10,
-          number_eligible_with_hotspot_access: 4,
-        )
+        expect {
+          AllocationRequest.create!(
+            number_eligible: 10,
+            number_eligible_with_hotspot_access: 4,
+          )
+        }.to raise_error ActiveRecord::RecordInvalid
       end
     end
   end

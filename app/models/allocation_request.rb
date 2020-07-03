@@ -6,6 +6,7 @@ class AllocationRequest < ApplicationRecord
 
   validates :number_eligible, numericality: { only_integer: true, greater_than: -1, less_than: 10_000 }
   validates :number_eligible_with_hotspot_access, numericality: { only_integer: true, greater_than: -1, less_than: 10_000 }
+  validates :responsible_body_id, presence: true
 
 private
 
