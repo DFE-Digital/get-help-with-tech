@@ -48,6 +48,15 @@ module ViewHelper
     ].join('. ')
   end
 
+  def mobile_network_options(mobile_networks)
+    mobile_networks.map do |network|
+      OpenStruct.new(
+        id: network.id,
+        label: network.brand,
+        description: participation_description(network)
+      )
+    end
+  end
 private
 
   def prepend_css_class(css_class, current_class)
