@@ -3,8 +3,13 @@ Rails.application.routes.draw do
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
   get '/bt-wifi/suggested-email-to-schools', to: 'pages#suggested_email_to_schools'
-  get '/guide-to-collecting-mobile-information', to: 'pages#guide_to_collecting_mobile_information'
   get '/pages/guidance', to: redirect('/')
+
+  get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index'
+  get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: 'guide_to_collecting_mobile_information#asking_for_account_holder'
+  get '/guide-to-collecting-mobile-information/asking-for-network', to: 'guide_to_collecting_mobile_information#asking_for_network'
+  get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
+  get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
   resources :application_forms do
     get 'success/:extra_mobile_data_request_id', on: :collection, to: 'application_forms#success', as: :success
