@@ -18,25 +18,27 @@
       </strong>
     </div>
 
-    <dl class="govuk-summary-list govuk-summary-list--wide-terms">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Eligible young people
-        </dt>
-        <dd class="govuk-summary-list__value">
-          300
-        </dd>
-      </div>
+    <% if @allocation_request.present? %>
+      <dl class="govuk-summary-list govuk-summary-list--wide-terms">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t('.number_eligible') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @allocation_request.number_eligible %>
+          </dd>
+        </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Number who can see a BT hotspot
-        </dt>
-        <dd class="govuk-summary-list__value">
-          150
-        </dd>
-      </div>
-    </dl>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t('.number_eligible_with_hotspot_access') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @allocation_request.number_eligible_with_hotspot_access %>
+          </dd>
+        </div>
+      </dl>
+    <% end %>
 
     <hr class="govuk-section-break govuk-section-break--m">
 

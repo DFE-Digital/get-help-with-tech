@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_07_02_202923) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,7 +20,9 @@ ActiveRecord::Schema.define(version: 2020_07_02_202923) do
     t.bigint "created_by_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "responsible_body_id", null: false
     t.index ["created_by_user_id"], name: "index_allocation_requests_on_created_by_user_id"
+    t.index ["responsible_body_id"], name: "index_allocation_requests_on_responsible_body_id"
   end
 
   create_table "extra_mobile_data_requests", force: :cascade do |t|

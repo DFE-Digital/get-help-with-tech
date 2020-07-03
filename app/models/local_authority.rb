@@ -13,4 +13,6 @@ class LocalAuthority < ResponsibleBody
     strategic_regional_authority: 'SRA',
     unitary_authority: 'UA',
   }
+
+  validates :organisation_type, presence: true
 end

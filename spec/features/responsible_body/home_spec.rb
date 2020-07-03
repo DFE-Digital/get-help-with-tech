@@ -1,14 +1,26 @@
 require 'rails_helper'
 
 RSpec.feature ResponsibleBody do
+  let(:sign_in_page) { PageObjects::SignInPage.new }
+  let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
+
   let(:rb_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
+  let(:responsible_body) { rb_user.responsible_body }
+
+  let(:allocation_request) do
+    create :allocation_request,
+           responsible_body: responsible_body,
+           number_eligible: 10,
+           number_eligible_with_hotspot_access: 8,
+           created_by_user: rb_user
+  end
 
   context 'not signed-in' do
     scenario 'visiting the page redirects to sign-in' do
       visit responsible_body_home_path
 
-      expect(page).to have_current_path(sign_in_path)
+      expect(sign_in_page).to be_displayed
     end
   end
 
@@ -33,6 +45,7 @@ RSpec.feature ResponsibleBody do
     scenario 'visiting the page' do
       visit responsible_body_home_path
 
+      expect(responsible_body_home_page).to be_displayed
       expect(page.status_code).to eq 200
     end
 
@@ -51,6 +64,19 @@ RSpec.feature ResponsibleBody do
       scenario 'the "Request extra mobile data" task shows as In progrss' do
         visit responsible_body_home_path
         expect(page).to have_text("Request extra mobile data\nIn progress")
+      end
+    end
+
+    context 'when the user has a bt wifi hotspot request' do
+      before do
+        allocation_request
+      end
+
+      scenario 'the eligible numbers are displayed' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page.elligible_young_people.text).to eq '10'
+        expect(responsible_body_home_page.number_who_can_see_a_bt_hotspot.text).to eq '8'
       end
     end
   end
