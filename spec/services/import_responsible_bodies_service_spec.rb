@@ -41,7 +41,7 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     expect(LocalAuthority.count).to eq(2)
 
     local_authorities = LocalAuthority.all.order('local_authority_eng asc')
-    
+
     expect(local_authorities.first.organisation_type).to eq('MD')
     expect(local_authorities.first.local_authority_official_name).to eq('City of Bradford Metropolitan District Council')
     expect(local_authorities.first.local_authority_eng).to eq('BRD')

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :local_authority do
-    organisation_type             { LocalAuthority.organisation_types.values.sample }
+    organisation_type             { LocalAuthority::ORGANISATION_TYPES.keys.sample }
     name                          { [Faker::Address.county, organisation_type].join(' ') }
     local_authority_official_name { [organisation_type, name].join(' of ') }
     local_authority_eng           { name.first(3).upcase }
