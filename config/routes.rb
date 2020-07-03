@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resources :extra_mobile_data_requests, only: %i[index new create]
   end
 
+  get '/responsible-body', to: 'responsible_bodies#show', as: :responsible_body
+
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 
   get '/sign_in', to: 'sign_in_tokens#new', as: :sign_in
