@@ -17,6 +17,9 @@
 <% end %>
 
 <% if @prev_page %>
+  <% if @next_page %>
+    <hr class="govuk-section-break govuk-section-break--m">
+  <% end %>
   <%= link_to @prev_page[:path], class: 'app-guide-next-prev-link' do %>
     <strong class="govuk-heading-m govuk-!-margin-bottom-1">
       <svg class="app-guide-next-prev-icon guide-next-prev-icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="17" viewBox="0 0 17 13">
