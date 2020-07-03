@@ -1,3 +1,6 @@
 class Trust < ResponsibleBody
-  ORGANISATION_TYPES = ['Single academy trust', 'Multi-academy trust'].freeze
+  enum organisation_type: {
+    multi_academy_trust: 'Multi-academy trust',
+    single_academy_trust: 'Single academy trust',
+  }
 end
