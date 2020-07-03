@@ -10,6 +10,6 @@ class MobileNetwork < ApplicationRecord
   }
 
   def self.participating_in_pilot
-    where.not(participation_in_pilot: [nil, MobileNetwork.participation_in_pilots.key('maybe')])
+    where.not(participation_in_pilot: [nil, MobileNetwork.participation_in_pilots.key('no')])
   end
 end
