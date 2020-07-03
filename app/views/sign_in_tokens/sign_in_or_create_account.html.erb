@@ -5,7 +5,7 @@
     <h1 class="govuk-heading-xl">
       <%= t('page_titles.sign_in_or_create_account') %>
     </h1>
-    <%= form_for @sign_in_token_form, url: sign_in_tokens_path, method: :POST do |f| %>
+    <%= form_for @sign_in_token_form, url: sign_in_path, method: :POST do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_radio_buttons_fieldset(:already_have_account, legend: {size: 'm', text: 'Do you already have an account?'}) do %>

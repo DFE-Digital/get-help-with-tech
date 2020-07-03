@@ -22,8 +22,6 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[create destroy]
   resources :users, only: %i[new create]
 
-  resources :sign_in_tokens, only: %i[new create]
-
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   get '/token/validate-manual', to: 'sign_in_tokens#validate_manual', as: :validate_manually_entered_sign_in_token
   get '/token/sent/:token', to: 'sign_in_tokens#sent', as: :sent_token
@@ -43,6 +41,7 @@ Rails.application.routes.draw do
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 
   get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in
+  post '/sign-in', to: 'sign_in_tokens#create'
 
   get '/403', to: 'errors#forbidden', via: :all
   get '/404', to: 'errors#not_found', via: :all
