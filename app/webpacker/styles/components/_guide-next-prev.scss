@@ -1,0 +1,65 @@
+.app-guide-next-prev-link {
+  display: block;
+  text-decoration: none;
+
+  &:link strong,
+  &:link p {
+    color: $govuk-link-colour;
+  }
+
+  &:visited strong,
+  &:visited p {
+    color: $govuk-link-visited-colour;
+  }
+
+  &:hover strong,
+  &:hover p {
+    color: $govuk-link-hover-colour;
+  }
+
+  &:active strong,
+  &:active p {
+    color: $govuk-link-active-colour;
+  }
+
+  &:focus {
+    outline: 3px solid transparent;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+
+    strong,
+    p {
+      color: $govuk-focus-text-colour;
+    }
+  }
+}
+
+.app-guide-next-prev-icon {
+  position: relative;
+  top: -2px;
+  margin-right: govuk-spacing(1);
+
+  .app-guide-next-prev-link:link & {
+    fill: $govuk-link-colour;
+  }
+
+  .app-guide-next-prev-link:focus & {
+    fill: $govuk-focus-text-colour;
+  }
+
+  .app-guide-next-prev-link:visited & {
+    fill: $govuk-link-visited-colour;
+  }
+
+  .app-guide-next-prev-link:active & {
+    fill: $govuk-link-active-colour;
+  }
+
+  .app-guide-next-prev-link:hover & {
+    fill: $govuk-link-hover-colour;
+  }
+}
+
+.app-guide-next-prev-description {
+  text-decoration: underline;
+}

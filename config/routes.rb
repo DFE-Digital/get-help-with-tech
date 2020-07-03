@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   get '/guide-to-collecting-mobile-information', to: 'pages#guide_to_collecting_mobile_information'
   get '/pages/guidance', to: redirect('/')
 
+  get '/collecting-mobile-info-guide', to: 'collecting_mobile_info_guide#index'
+  get '/collecting-mobile-info-guide/asking-for-account-holder', to: 'collecting_mobile_info_guide#asking_for_account_holder'
+  get '/collecting-mobile-info-guide/asking-for-network', to: 'collecting_mobile_info_guide#asking_for_network'
+  get '/collecting-mobile-info-guide/telling-about-offer', to: 'collecting_mobile_info_guide#telling_about_offer'
+  get '/collecting-mobile-info-guide/privacy', to: 'collecting_mobile_info_guide#privacy'
+
   resources :application_forms do
     get 'success/:extra_mobile_data_request_id', on: :collection, to: 'application_forms#success', as: :success
   end

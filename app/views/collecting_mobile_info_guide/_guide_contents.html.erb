@@ -1,0 +1,23 @@
+<% content_for :browser_title, "#{@title} – #{t('page_titles.collecting_mobile_info_guide')}" %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl">Increasing children’s internet access</span>
+  <%= t('page_titles.collecting_mobile_info_guide') %>
+</h1>
+
+<h2 class="govuk-heading-s">Contents</h2>
+<ol class="govuk-list govuk-list--bullet">
+  <% @contents.each do |item| %>
+    <li>
+      <% if item[:active] %>
+        <%= item[:text] %>
+      <% else %>
+        <%= govuk_link_to item[:text], item[:path] %>
+      <% end %>
+    </li>
+  <% end %>
+</ol>
+
+<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+<h2 class="govuk-heading-l"><%= @title %></h2>

@@ -11,8 +11,9 @@ $govuk-image-url-function: frontend-image-url;
 
 @import "~govuk-frontend/govuk/all";
 
-@import "pagination.scss";
-@import "overrides.scss";
+@import "pagination";
+@import "overrides";
+@import "components/guide-next-prev";
 
 .app-email-template {
   border: $govuk-border-width solid $govuk-border-colour;
