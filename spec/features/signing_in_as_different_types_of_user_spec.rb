@@ -38,13 +38,13 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a user who is not dfe or mno' do
+  context 'as a user who belongs_to a responsible_body' do
     let(:user) { create(:local_authority_user) }
 
-    scenario 'it redirects to the guidance page' do
+    scenario 'it redirects to the responsible_body_home page' do
       visit(validate_token_url)
-      expect(page).to have_current_path(guidance_page_path)
-      expect(page).to have_text I18n.t('service_name')
+      expect(page).to have_current_path(responsible_body_home_path)
+      expect(page).to have_text 'Tell us who needs internet access'
     end
   end
 

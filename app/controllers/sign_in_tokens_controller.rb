@@ -71,6 +71,8 @@ private
       mno_extra_mobile_data_requests_path
     elsif user.is_dfe? && FeatureFlag.active?(:dfe_admin_ui)
       admin_path
+    elsif user.is_rb_user?
+      responsible_body_home_path
     else
       '/'
     end
