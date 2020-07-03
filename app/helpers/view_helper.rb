@@ -44,7 +44,8 @@ module ViewHelper
   def participation_description(mobile_network)
     [
       mobile_network.participation_in_pilot,
-      #mobile_network.supports_payg? ? '' : 'Does not support Pay as you go customers.'
+      # TODO: uncomment this when we've added the supports_payg field
+      # mobile_network.supports_payg? ? '' : 'Does not support Pay as you go customers.'
     ].join('. ')
   end
 
@@ -53,10 +54,11 @@ module ViewHelper
       OpenStruct.new(
         id: network.id,
         label: network.brand,
-        description: participation_description(network)
+        description: participation_description(network),
       )
     end
   end
+
 private
 
   def prepend_css_class(css_class, current_class)

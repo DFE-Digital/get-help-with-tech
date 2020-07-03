@@ -16,7 +16,7 @@ class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::Base
       extra_mobile_data_request_params.merge(
         created_by_user: @user,
         status: ExtraMobileDataRequest.statuses[:requested],
-      )
+      ),
     )
 
     if @extra_mobile_data_request.valid?
@@ -48,14 +48,12 @@ private
   end
 
   def extra_mobile_data_request_params
-    params.require(:extra_mobile_data_request).permit(
-      [
-        :account_holder_name,
-        :agrees_with_privacy_statement,
-        :device_phone_number,
-        :mobile_network_id,
-        :confirm
-      ]
-    )
+    params.require(:extra_mobile_data_request).permit(%i[
+      account_holder_name
+      agrees_with_privacy_statement
+      device_phone_number
+      mobile_network_id
+      confirm
+    ])
   end
 end
