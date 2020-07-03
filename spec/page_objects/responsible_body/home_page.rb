@@ -5,7 +5,7 @@ module PageObjects
 
       elements :allocation_request_rows, '.govuk-summary-list__row'
 
-      def elligible_young_people
+      def eligible_young_people
         matching_row = allocation_request_rows.select { |row|
           row.has_text? I18n.t('responsible_body.home.show.number_eligible')
         }.first
