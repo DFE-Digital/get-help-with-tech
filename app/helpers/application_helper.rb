@@ -23,7 +23,7 @@ module ApplicationHelper
     tag.li(inner_html, class: class_name)
   end
 
-  def recipient_status_class(status)
+  def extra_mobile_data_request_status_class(status)
     {
       requested: 'govuk-tag--blue',
       in_progress: 'govuk-tag--yellow',

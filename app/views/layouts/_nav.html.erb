@@ -5,7 +5,7 @@
     <%- if @user && @user.is_dfe? %>
 
     <%- elsif @user && @user.is_mno_user? %>
-      <%= nav_item( title: "Your requests", url: mno_recipients_path )  %>
+      <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
     <%- else %>
       <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
       <%- if SessionService.is_signed_in?(session) %>

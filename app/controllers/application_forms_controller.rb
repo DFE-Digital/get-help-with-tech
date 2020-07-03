@@ -10,7 +10,7 @@ class ApplicationFormsController < ApplicationController
     @application_form = ApplicationForm.new(application_form_params.merge(created_by_user: @user))
     begin
       @application_form.save!
-      redirect_to success_application_forms_path(recipient_id: @application_form.recipient.id)
+      redirect_to success_application_forms_path(extra_mobile_data_request_id: @application_form.request.id)
     rescue ActiveModel::ValidationError
       @mobile_networks = MobileNetwork.order('LOWER(brand)')
       render :new, status: :bad_request
@@ -18,8 +18,8 @@ class ApplicationFormsController < ApplicationController
   end
 
   def success
-    @recipient = @user.recipients.find(params[:recipient_id])
-    @application_form = ApplicationForm.new(recipient: @recipient)
+    @extra_mobile_data_request = @user.extra_mobile_data_requests.find(params[:extra_mobile_data_request_id])
+    @application_form = ApplicationForm.new(extra_mobile_data_request: @extra_mobile_data_request)
   rescue ActiveRecord::RecordNotFound
     render template: 'errors/not_found', status: :not_found
   end

@@ -7,7 +7,7 @@ class ApplicationForm
                 :mobile_network_id,
                 :privacy_statement_sent_to_family,
                 :understands_how_pii_will_be_used,
-                :recipient
+                :request
 
   validates :can_access_hotspot, presence: { message: 'Tell us whether this young person can access a BT hotspot' }
   validates :account_holder_name, presence: { message: 'Tell us the full name of the account holder for the mobile device' }
@@ -17,21 +17,21 @@ class ApplicationForm
   validates :understands_how_pii_will_be_used, presence: { message: 'Please confirm whether this family understand how their personally-identifying information will be used' }
 
   def initialize(opts = {})
-    @recipient = opts[:recipient] || Recipient.new(opts)
+    @request = opts[:extra_mobile_data_request] || ExtraMobileDataRequest.new(opts)
 
-    @can_access_hotspot = opts[:can_access_hotspot] || @recipient.can_access_hotspot
-    @account_holder_name = opts[:account_holder_name] || @recipient.account_holder_name
-    @device_phone_number = opts[:device_phone_number] || @recipient.device_phone_number
-    @mobile_network_id = opts[:mobile_network_id] || @recipient.mobile_network_id
-    @privacy_statement_sent_to_family = opts[:privacy_statement_sent_to_family] || @recipient.privacy_statement_sent_to_family
-    @understands_how_pii_will_be_used = opts[:understands_how_pii_will_be_used] || @recipient.understands_how_pii_will_be_used
+    @can_access_hotspot = opts[:can_access_hotspot] || @request.can_access_hotspot
+    @account_holder_name = opts[:account_holder_name] || @request.account_holder_name
+    @device_phone_number = opts[:device_phone_number] || @request.device_phone_number
+    @mobile_network_id = opts[:mobile_network_id] || @request.mobile_network_id
+    @privacy_statement_sent_to_family = opts[:privacy_statement_sent_to_family] || @request.privacy_statement_sent_to_family
+    @understands_how_pii_will_be_used = opts[:understands_how_pii_will_be_used] || @request.understands_how_pii_will_be_used
   end
 
   def save!
-    @recipient ||= construct_recipient
+    @request ||= construct_request
     validate!
-    @recipient.status ||= Recipient.statuses[:requested]
-    @recipient.save!
+    @request.status ||= ExtraMobileDataRequest.statuses[:requested]
+    @request.save!
   end
 
 private
@@ -40,8 +40,8 @@ private
     errors.add(:mobile_network_id, 'Please select a mobile network') unless MobileNetwork.where(id: @mobile_network_id).exists?
   end
 
-  def construct_recipient
-    Recipient.new(
+  def construct_request
+    ExtraMobileDataRequest.new(
       can_access_hotspot: @can_access_hotspot,
       is_account_holder: @is_account_holder,
       account_holder_name: @account_holder_name,

@@ -1,8 +1,8 @@
 class FakeDataService
-  def self.generate!(recipients: 10, mobile_network_id:, created_by_user_id: nil)
-    recipients.times do
+  def self.generate!(extra_mobile_data_requests: 10, mobile_network_id:, created_by_user_id: nil)
+    extra_mobile_data_requests.times do
       name = Faker::Name.name
-      r = Recipient.create!(
+      r = ExtraMobileDataRequest.create!(
         device_phone_number: Faker::PhoneNumber.cell_phone,
         can_access_hotspot: true,
         is_account_holder: true,
@@ -10,7 +10,7 @@ class FakeDataService
         privacy_statement_sent_to_family: true,
         understands_how_pii_will_be_used: true,
         mobile_network_id: mobile_network_id,
-        status: Recipient.statuses.values.sample,
+        status: ExtraMobileDataRequest.statuses.values.sample,
         created_by_user_id: created_by_user_id,
       )
       r.update(created_at: Time.now.utc - rand(500_000).seconds)

@@ -25,7 +25,7 @@ describe ApplicationFormsController, type: :controller do
       }
     end
     let(:params) { { application_form: valid_params } }
-    let(:created_recipient) { Recipient.last }
+    let(:created_recipient) { ExtraMobileDataRequest.last }
     let(:the_request) { post :create, params: params }
 
     context 'with valid params and no existing user in session' do
@@ -45,8 +45,8 @@ describe ApplicationFormsController, type: :controller do
         expect(session[:user_id]).to be_nil
       end
 
-      it 'does not create a Recipient' do
-        expect { the_request }.not_to change(Recipient, :count)
+      it 'does not create a ExtraMobileDataRequest' do
+        expect { the_request }.not_to change(ExtraMobileDataRequest, :count)
       end
     end
 
@@ -57,17 +57,17 @@ describe ApplicationFormsController, type: :controller do
         sign_in_as user
       end
 
-      it 'creates a Recipient with the right attributes' do
+      it 'creates a ExtraMobileDataRequest with the right attributes' do
         the_request
         expect(created_recipient).to have_attributes(
           account_holder_name: 'Anne Account-Holder',
           device_phone_number: '01234 567890',
           mobile_network_id: mobile_network.id,
-          status: Recipient.statuses[:requested],
+          status: ExtraMobileDataRequest.statuses[:requested],
         )
       end
 
-      it 'creates a Recipient associated with the sessions user' do
+      it 'creates a ExtraMobileDataRequest associated with the sessions user' do
         the_request
         expect(created_recipient.created_by_user_id).to eq(session[:user_id])
       end
@@ -87,8 +87,8 @@ describe ApplicationFormsController, type: :controller do
         sign_in_as user
       end
 
-      it 'does not create a Recipient' do
-        expect { post :create, params: params }.not_to change(Recipient, :count)
+      it 'does not create a ExtraMobileDataRequest' do
+        expect { post :create, params: params }.not_to change(ExtraMobileDataRequest, :count)
       end
 
       it 'responds with a 400 status code' do
@@ -106,20 +106,20 @@ describe ApplicationFormsController, type: :controller do
       sign_in_as user
     end
 
-    context 'given the id of a recipient created_by the current user' do
-      let(:recipient) { create(:recipient, created_by_user: user) }
+    context 'given the id of a extra mobile data request created_by the current user' do
+      let(:extra_mobile_data_request) { create(:extra_mobile_data_request, created_by_user: user) }
 
       it 'responds with 200' do
-        get :success, params: { recipient_id: recipient.id }
+        get :success, params: { extra_mobile_data_request_id: extra_mobile_data_request.id }
         expect(response.status).to eq(200)
       end
     end
 
     context 'given the id of a recipient not created_by the current user' do
-      let(:recipient) { create(:recipient, created_by_user: other_user) }
+      let(:extra_mobile_data_request) { create(:extra_mobile_data_request, created_by_user: other_user) }
 
       it 'responds with 404' do
-        get :success, params: { recipient_id: recipient.id }
+        get :success, params: { extra_mobile_data_request_id: extra_mobile_data_request.id }
         expect(response.status).to eq(404)
       end
     end

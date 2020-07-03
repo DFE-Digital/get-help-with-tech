@@ -3,7 +3,7 @@ class ResponsibleBodiesController < ApplicationController
 
   def show; end
 
-  private
+private
 
   def build_reponsible_body
     # @responsible_body = ResponsibleBody.find(@user.responsible_body_id)
