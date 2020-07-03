@@ -74,11 +74,11 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     trusts = Trust.all.order('name asc')
     expect(trusts.first.name).to eq('AA TRUST')
     expect(trusts.first.companies_house_number).to eq('67890')
-    expect(trusts.first.organisation_type).to eq("single_academy_trust")
+    expect(trusts.first.organisation_type).to eq('single_academy_trust')
 
     expect(trusts.second.name).to eq('ABC MAT')
     expect(trusts.second.companies_house_number).to eq('13579')
-    expect(trusts.second.organisation_type).to eq("multi_academy_trust")
+    expect(trusts.second.organisation_type).to eq('multi_academy_trust')
 
     # re-run import again to check idempotence
     ImportResponsibleBodiesService.new.import_trusts
