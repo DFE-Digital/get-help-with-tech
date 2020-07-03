@@ -11,6 +11,7 @@ FactoryBot.define do
     full_name                { 'Jane Doe' }
     sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
     organisation             { 'Some Local Authority' }
+    association              :responsible_body, factory: :local_authority
     approved
   end
 
