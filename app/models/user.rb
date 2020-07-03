@@ -26,7 +26,7 @@ class User < ApplicationRecord
     mobile_network.present?
   end
 
-  def is_rb_user?
+  def is_responsible_body_user?
     responsible_body.present?
   end
 

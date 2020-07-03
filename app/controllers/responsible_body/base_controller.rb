@@ -5,7 +5,7 @@ private
 
   def require_rb_user!
     if SessionService.is_signed_in?(session)
-      render 'errors/forbidden', status: :forbidden unless @user.is_rb_user?
+      render 'errors/forbidden', status: :forbidden unless @user.is_responsible_body_user?
     else
       redirect_to_sign_in
     end
