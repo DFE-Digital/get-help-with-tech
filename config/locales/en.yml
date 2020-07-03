@@ -16,8 +16,8 @@ en:
     thank_you: Thank you
     suggested_email_to_schools: A suggested email for you to send to schools
     request_extra_mobile_data: Request extra mobile data
-    collecting_mobile_info_guide: Guide to collecting mobile information
-  collecting_mobile_info_guide:
+    guide_to_collecting_mobile_information: Guide to collecting mobile information
+  guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking for mobile network, contracts and Pay as you go (PAYG)
     asking_for_account_holder: Asking for account holder name and mobile number
