@@ -3,7 +3,11 @@ class PagesController < ApplicationController
 
   def bt_wifi_privacy_notice; end
 
-  def increasing_mobile_data_privacy_notice; end
+  def increasing_mobile_data_privacy_notice
+    if FeatureFlag.active?(:static_guidance_only)
+      render 'errors/not_found', status: :not_found
+    end
+  end
 
   def suggested_email_to_schools; end
 
