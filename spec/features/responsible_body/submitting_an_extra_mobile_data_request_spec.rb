@@ -47,17 +47,23 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
       expect(page).to have_text('Sign out')
     end
 
-    scenario 'submitting multiple forms in the same sesssion works' do
+    scenario 'confirming a form works' do
       visit new_responsible_body_extra_mobile_data_request_path
       fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
+      fill_in 'Account holder name', with: 'My new account holder name'
       click_on 'Continue'
 
       expect(page.status_code).to eq(200)
       expect(page).to have_text('Check your answers')
 
-      click_on 'Confirm request'
+      within('#account-holder-name') do
+        click_link 'Change'
+      end
+      expect(find_field('Account holder name').value).to eq('My new account holder name')
+    end
 
-      click_on 'Request data for someone'
+    scenario 'clicking Change on the confirmation page populates the form again' do
+      visit new_responsible_body_extra_mobile_data_request_path
       fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
       click_on 'Continue'
 
