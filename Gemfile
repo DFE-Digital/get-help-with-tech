@@ -88,6 +88,10 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+
+  # Gives a better error view with a web console
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
