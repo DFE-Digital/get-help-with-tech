@@ -5,14 +5,12 @@
     <h1 class="govuk-heading-xl">
       <%= t('page_titles.check_your_email') %>
     </h1>
-    <p class="govuk-body">
+    <p class="govuk-body-l">
       We’ve sent you an email. Click on the link to confirm your address and return to this service.
     </p>
-    <div class="govuk-inset-text">
-      <p>
-        If our email doesn’t arrive within 5 minutes, check your spam and trash folder, or
-        <%= govuk_link_to 'Try again', new_sign_in_token_path %>
-      </p>
-    </div>
+    <p class="govuk-body">
+      If our email doesn’t arrive within 5 minutes, check your spam and trash folder, or
+      <%= govuk_link_to 'try again', new_sign_in_token_path %>
+    </p>
   </div>
 </div>
