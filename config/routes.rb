@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
   get '/bt-wifi/suggested-email-to-schools', to: 'pages#suggested_email_to_schools'
+  get '/increasing-mobile-data/privacy-notice', to: 'pages#increasing_mobile_data_privacy_notice'
   get '/pages/guidance', to: redirect('/')
 
   get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index'
