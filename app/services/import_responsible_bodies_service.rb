@@ -17,7 +17,7 @@ class ImportResponsibleBodiesService
         .where(companies_house_number: entry['Companies House Number'])
         .first_or_create!(
           name: entry['Group Name'],
-          organisation_type: entry['Group Type'],
+          organisation_type: Trust.organisation_types.key(entry['Group Type']),
         )
     end
   end

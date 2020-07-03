@@ -41,6 +41,7 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     expect(LocalAuthority.count).to eq(2)
 
     local_authorities = LocalAuthority.all.order('local_authority_eng asc')
+    
     expect(local_authorities.first.organisation_type).to eq('MD')
     expect(local_authorities.first.local_authority_official_name).to eq('City of Bradford Metropolitan District Council')
     expect(local_authorities.first.local_authority_eng).to eq('BRD')
@@ -74,11 +75,11 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     trusts = Trust.all.order('name asc')
     expect(trusts.first.name).to eq('AA TRUST')
     expect(trusts.first.companies_house_number).to eq('67890')
-    expect(trusts.first.organisation_type).to eq('Single-academy trust')
+    expect(trusts.first.organisation_type).to eq('single_academy_trust')
 
     expect(trusts.second.name).to eq('ABC MAT')
     expect(trusts.second.companies_house_number).to eq('13579')
-    expect(trusts.second.organisation_type).to eq('Multi-academy trust')
+    expect(trusts.second.organisation_type).to eq('multi_academy_trust')
 
     # re-run import again to check idempotence
     ImportResponsibleBodiesService.new.import_trusts
