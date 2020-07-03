@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 
-  get '/sign_in', to: 'sign_in_tokens#new', as: :sign_in
+  get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in
 
   get '/403', to: 'errors#forbidden', via: :all
   get '/404', to: 'errors#not_found', via: :all
