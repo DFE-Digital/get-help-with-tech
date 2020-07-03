@@ -3,6 +3,8 @@ class PagesController < ApplicationController
 
   def bt_wifi_privacy_notice; end
 
+  def increasing_mobile_data_privacy_notice; end
+
   def suggested_email_to_schools; end
 
   def about_increasing_mobile_data
