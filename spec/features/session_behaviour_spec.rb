@@ -11,7 +11,7 @@ RSpec.feature 'Session behaviour', type: :feature do
   context 'with a participating mobile network' do
     let(:user) { create(:local_authority_user) }
     let(:participating_mobile_network) do
-      create(:mobile_network, participating_in_scheme: true)
+      create(:mobile_network, participation_in_pilot: :yes)
     end
 
     # this seems overly-verbose compared to let!, but this is what rubocop wants

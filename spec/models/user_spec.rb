@@ -47,7 +47,7 @@ RSpec.describe User, type: :model do
 
   describe 'is_mno_user?' do
     context 'when the user has a participating mobile_network' do
-      let(:participating_mobile_network) { build(:mobile_network, participating_in_scheme: true) }
+      let(:participating_mobile_network) { build(:mobile_network, participating_in_pilot: :yes) }
 
       before do
         user.mobile_network = participating_mobile_network
@@ -59,7 +59,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when the user has a non-participating mobile_network' do
-      let(:participating_mobile_network) { build(:mobile_network, participating_in_scheme: false) }
+      let(:participating_mobile_network) { build(:mobile_network, participating_in_pilot: :yes) }
 
       before do
         user.mobile_network = participating_mobile_network

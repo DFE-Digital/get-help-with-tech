@@ -41,6 +41,13 @@ module ViewHelper
     end
   end
 
+  def participation_description(mobile_network)
+    [
+      mobile_network.participation_in_pilot,
+      #mobile_network.supports_payg? ? '' : 'Does not support Pay as you go customers.'
+    ].join('. ')
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/increasing-mobile-data/privacy-notice', to: 'pages#increasing_mobile_data_privacy_notice'
   get '/pages/guidance', to: redirect('/')
 
-  get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index'
+  get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index', as: :guide
   get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: 'guide_to_collecting_mobile_information#asking_for_account_holder'
   get '/guide-to-collecting-mobile-information/asking-for-network', to: 'guide_to_collecting_mobile_information#asking_for_network'
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'

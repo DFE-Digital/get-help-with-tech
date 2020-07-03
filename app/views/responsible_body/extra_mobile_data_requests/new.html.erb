@@ -1,0 +1,43 @@
+<%- content_for :back_link, govuk_link_to('Back', responsible_body_extra_mobile_data_requests_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.who_needs_the_data') %>
+    </h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @extra_mobile_data_request, url: responsible_body_extra_mobile_data_requests_path do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_text_field :account_holder_name, label: {size: 'm', text: 'Account holder name'}, hint_text: 'The account holder for a pay monthly contract must be over 18' %>
+      <%= f.govuk_text_field :account_holder_name, label: {size: 'm', text: 'Mobile phone number'}, hint_text: 'All UK mobile phone numbers start with 07' %>
+
+      <%= f.govuk_radio_buttons_fieldset(:mobile_network_id, legend: {size: 'm', text: 'Mobile network'}, hint_text: 'Only networks participating in the service are listed') do %>
+        <%- for mobile_network in @participating_mobile_networks do %>
+          <%= f.govuk_radio_button :mobile_network_id,
+                                   mobile_network.id,
+                                   label: { text: mobile_network.brand },
+                                   hint_text: participation_description(mobile_network),
+                                   link_errors: true %>
+        <%- end %>
+      <%- end %>
+      <%= f.govuk_submit %>
+
+    <%- end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <aside class="app-related" role="complementary">
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2" id="-title">Guidance</h2>
+      <div class="app-related__body">
+        <%= govuk_link_to 'Read our guide on collecting mobile information', guide_page_path %>
+      </div>
+      <nav role="navigation" aria-labelledby="-title">
+        <ul class="app-related__list">
+        </ul>
+    </nav>
+    </aside>
+  </div>
+</div>

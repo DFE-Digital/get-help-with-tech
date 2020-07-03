@@ -25,6 +25,7 @@ en:
     asking_for_account_holder: Asking for account holder name and mobile number
     telling_about_offer: Telling them about their offer
     privacy: Explaining how personal information will be used
+    who_needs_the_data: Who needs the extra mobile data?
   errors:
     format:
       "'%{attribute}' %{message}"

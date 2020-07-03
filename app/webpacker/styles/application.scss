@@ -27,3 +27,8 @@ $govuk-image-url-function: frontend-image-url;
   margin-bottom: govuk-spacing(4);
   border-bottom: 1px solid $govuk-border-colour;
 }
+
+.app-related {
+    border-top: 2px solid #1d70b8;
+    padding-top: 15px;
+}
