@@ -3,7 +3,7 @@ require 'shared/filling_in_forms'
 
 RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
-    visit new_application_form_path
+    visit '/'
 
     expect(page).to have_text('Sign in')
   end
@@ -11,7 +11,7 @@ RSpec.feature 'Session behaviour', type: :feature do
   context 'with a participating mobile network' do
     let(:user) { create(:local_authority_user) }
     let(:participating_mobile_network) do
-      create(:mobile_network, participation_in_pilot: :yes)
+      create(:mobile_network)
     end
 
     # this seems overly-verbose compared to let!, but this is what rubocop wants
@@ -26,23 +26,22 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'the user can submit a valid form' do
-        visit new_application_form_path
+        visit new_responsible_body_extra_mobile_data_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
-        expect(page).to have_text('Thank you')
+        expect(page).to have_text('Check your answers')
       end
 
       scenario 'user session is preserved across requests' do
-        visit new_application_form_path
+        visit new_responsible_body_extra_mobile_data_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
-        click_on 'Tell us about another child or young person'
         expect(page).to have_text('Sign out')
       end
 
       scenario 'clicking "Sign out" signs the user out' do
-        visit new_application_form_path
+        visit new_responsible_body_extra_mobile_data_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
@@ -57,12 +56,12 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'visiting with a valid but expired session logs the user out' do
-        visit new_application_form_path
+        visit new_responsible_body_extra_mobile_data_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
         sleep(2)
-        click_on 'Tell us about another child or young person'
+        click_on 'Back'
         expect(page).to have_text('Sign in')
       end
     end
