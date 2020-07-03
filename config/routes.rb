@@ -30,10 +30,9 @@ Rails.application.routes.draw do
   end
 
   namespace :responsible_body do
+    get '/', to: 'home#show', as: :home
     resources :extra_mobile_data_requests, only: %i[index new create]
   end
-
-  get '/responsible-body', to: 'responsible_bodies#show', as: :responsible_body
 
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 

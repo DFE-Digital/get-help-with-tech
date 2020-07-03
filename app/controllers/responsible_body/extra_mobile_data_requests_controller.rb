@@ -3,6 +3,5 @@ class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::Base
     @extra_mobile_data_requests = @user.extra_mobile_data_requests
   end
 
-  def new
-  end
+  def new; end
 end

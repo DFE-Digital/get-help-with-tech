@@ -23,6 +23,7 @@ RSpec.feature 'RB ExtraMobileDataRequests view', type: :feature do
 
     context 'when the user has submitted requests' do
       let(:requests) { create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: rb_user) }
+
       before do
         requests
       end
