@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_123805) do
+ActiveRecord::Schema.define(version: 2020_07_03_131700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_07_03_123805) do
     t.integer "mobile_network_id"
     t.string "status", null: false
     t.integer "created_by_user_id"
+    t.boolean "agrees_with_privacy_statement"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
     t.index ["status"], name: "index_extra_mobile_data_requests_on_status"
   end
