@@ -19,3 +19,23 @@
       <%= govuk_button_link_to 'Request data for someone', new_responsible_body_extra_mobile_data_request_path, class: 'govuk-!-margin-top-5' %>
     </p>
   </div>
+</div>
+<h2 class="govuk-heading-l govuk-!-margin-top-6">Your requests</h2>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">Account holder</th>
+      <th class="govuk-table__header">Mobile number</th>
+      <th class="govuk-table__header">Mobile Network</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <%- for emd_request in @extra_mobile_data_requests do %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= emd_request.account_holder_name %></td>
+        <td class="govuk-table__cell"><%= emd_request.device_phone_number %></td>
+        <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
+      </tr>
+    <%- end %>
+  </tbody>
+</table>
