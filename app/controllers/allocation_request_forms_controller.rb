@@ -6,7 +6,10 @@ class AllocationRequestFormsController < ApplicationController
   end
 
   def create
-    @allocation_request_form = AllocationRequestForm.new(allocation_request_form_params.merge(created_by_user: @user))
+    params_for_create = allocation_request_form_params.merge(
+      created_by_user: @user,
+    )
+    @allocation_request_form = AllocationRequestForm.new(params_for_create)
     begin
       @allocation_request_form.save!
       redirect_to success_allocation_request_forms_path(@allocation_request_form.allocation_request.id)
