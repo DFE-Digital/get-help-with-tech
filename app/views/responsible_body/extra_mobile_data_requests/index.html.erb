@@ -5,15 +5,7 @@
     <h1 class="govuk-heading-xl">
       <%= t('page_titles.request_extra_mobile_data') %>
     </h1>
-    <p class="govuk-body">
-      This pilot is open to children from early years up to 16, and care leavers up to 25 if they:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>don’t have access to a fixed broadband connection</li>
-      <li>cannot afford the additional data needed to access educational resources or social care services</li>
-      <li>cannot access a BT hotspot</li>
-      <li>are an existing customer of a participating mobile network operator</li>
-    </ul>
+    <%= render partial: 'pages/pilot_mno_offer_eligibility' %>
     <p class="govuk-body">
       <%= govuk_link_to 'Read our guide on collecting mobile information', '/guide-to-collecting-mobile-information' %>
     </p>
