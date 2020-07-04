@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_131700) do
+ActiveRecord::Schema.define(version: 2020_07_04_071047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,13 +27,8 @@ ActiveRecord::Schema.define(version: 2020_07_03_131700) do
   end
 
   create_table "extra_mobile_data_requests", force: :cascade do |t|
-    t.boolean "can_access_hotspot"
-    t.boolean "is_account_holder"
     t.string "account_holder_name"
     t.string "device_phone_number"
-    t.string "phone_network_name"
-    t.boolean "privacy_statement_sent_to_family"
-    t.boolean "understands_how_pii_will_be_used"
     t.bigint "created_by_user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
