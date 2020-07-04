@@ -33,4 +33,28 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
   end
+
+  describe 'validating device_phone_number' do
+    context 'a phone number that starts with 07' do
+      before do
+        subject.device_phone_number = '07  125 92368'
+      end
+
+      it 'is valid' do
+        subject.valid?
+        expect(subject.errors).to_not(have_key(:device_phone_number))
+      end
+    end
+
+    context 'a phone number that does not start with 07' do
+      before do
+        subject.device_phone_number = '=07  125 92368'
+      end
+
+      it 'is not valid' do
+        subject.valid?
+        expect(subject.errors).to(have_key(:device_phone_number))
+      end
+    end
+  end
 end
