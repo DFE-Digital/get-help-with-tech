@@ -44,6 +44,11 @@ en:
           queried: Queried
           complete: Complete
           cancelled: Cancelled
+      mobile_network:
+        participation_in_pilots:
+          participating: 'Offers data now'
+          not_participating: 'Not participating'
+          maybe_participating: 'May offer data when the service launches'
     errors:
       models:
         extra_mobile_data_request:
