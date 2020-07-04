@@ -11,6 +11,12 @@ class PagesController < ApplicationController
 
   def suggested_email_to_schools; end
 
+  def start
+    if FeatureFlag.active?(:static_guidance_only)
+      render 'errors/not_found', status: :not_found
+    end
+  end
+
   def about_increasing_mobile_data
     if FeatureFlag.active?(:static_guidance_only)
       render 'errors/not_found', status: :not_found
