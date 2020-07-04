@@ -44,7 +44,6 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
 
       expect(page.status_code).to eq(200)
       expect(page).to have_text('Check your answers')
-      expect(page).to have_text('Sign out')
     end
 
     scenario 'clicking Change on the confirmation page populates the form again' do
