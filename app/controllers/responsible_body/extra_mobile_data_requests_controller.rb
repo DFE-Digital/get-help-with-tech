@@ -15,7 +15,7 @@ class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::Base
     @extra_mobile_data_request = ExtraMobileDataRequest.new(
       extra_mobile_data_request_params.merge(
         created_by_user: @user,
-        status: ExtraMobileDataRequest.statuses[:requested],
+        status: :requested,
       ),
     )
 
