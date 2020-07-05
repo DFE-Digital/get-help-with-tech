@@ -60,6 +60,7 @@ en:
           attributes:
             number_eligible:
               not_a_number: The number of young people who are eligible must be a number between 0 and 10,000
+              number_eligible_must_be_bigger_or_equal_to_bt_hotspot_number: Number of young people who are eligible cannot be less than the number of those who can access a BT hotspot
             number_eligible_with_hotspot_access:
               not_a_number: The number of those who can access a BT hotspot must be a number between 0 and 10,000
   time:
