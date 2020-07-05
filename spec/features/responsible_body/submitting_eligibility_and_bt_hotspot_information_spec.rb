@@ -16,7 +16,10 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
       then_step_1_is_shown_as_not_started_yet
 
       when_i_click_through_to_the_step_1_form
-      and_i_fill_out_the_step_1_form_with_valid_data
+      and_i_submit_the_form
+      then_i_see_an_error_summary
+
+      when_i_correct_the_step_1_form_with_valid_data
       and_i_submit_the_form
       then_i_can_see_my_valid_data_and_am_prompted_to_check_my_answers
 
@@ -72,13 +75,19 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
     expect(allocation_request_form_page.heading.text).to eq('How many young people are eligible?')
   end
 
-  def and_i_fill_out_the_step_1_form_with_valid_data
-    allocation_request_form_page.number_eligible.set '10'
-    allocation_request_form_page.number_eligible_with_hotspot_access.set '5'
+  def when_i_correct_the_step_1_form_with_valid_data
+    allocation_request_form_page.number_eligible_with_error.set '10'
+    allocation_request_form_page.number_eligible_with_hotspot_access_with_error.set '5'
   end
 
   def and_i_submit_the_form
     allocation_request_form_page.continue_button.click
+  end
+
+  def then_i_see_an_error_summary
+    expect(allocation_request_form_page.error_summary).to be_visible
+    expect(allocation_request_form_page.error_summary.text).to include('The number of young people who are eligible must be a number between 0 and 10,000')
+    expect(allocation_request_form_page.error_summary.text).to include('The number of those who can access a BT hotspot must be a number between 0 and 10,000')
   end
 
   def then_i_can_see_my_valid_data_and_am_prompted_to_check_my_answers

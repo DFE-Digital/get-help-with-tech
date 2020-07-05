@@ -4,7 +4,15 @@ class ResponsibleBody::AllocationRequestsController < ResponsibleBody::BaseContr
   end
 
   def check_your_answers
-    @allocation_request = AllocationRequest.new(allocation_request_params)
+    @allocation_request = AllocationRequest.new(
+      allocation_request_params.merge(
+        responsible_body: @user.responsible_body,
+        created_by_user: @user,
+      ),
+    )
+    if @allocation_request.invalid?
+      render :new_or_edit, status: :bad_request
+    end
   end
 
   def create_or_update

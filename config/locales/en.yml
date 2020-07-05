@@ -56,7 +56,12 @@ en:
           attributes:
             mobile_network_id:
               blank: "Select which mobile network the device is on"
-
+        allocation_request:
+          attributes:
+            number_eligible:
+              not_a_number: The number of young people who are eligible must be a number between 0 and 10,000
+            number_eligible_with_hotspot_access:
+              not_a_number: The number of those who can access a BT hotspot must be a number between 0 and 10,000
   time:
     formats:
       time_only: "%l:%M%P"
