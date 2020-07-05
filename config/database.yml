@@ -60,7 +60,7 @@ test:
   host: <%= ENV['POSTGRES_HOST'] %>
   port: <%= ENV['POSTGRES_PORT'] %>
   database: get-help-with-tech_test
-  username: <%= ENV['POSTGRES_USERNAME'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
