@@ -85,5 +85,17 @@ jobs:
         env:
           RAILS_ENV: test
 
-      - name: Run tests
-        run: bundle exec rake
+      - name: Compile assets
+        run: bundle exec rails webpacker:compile
+      - name: Run rspec
+        run: bundle exec rspec
+      - name: Run rubocop
+        run: bundle exec rubocop app config db lib spec Gemfile --format clang
+      - name: Lint scss
+        run: bundle exec scss-lint app/webpacker/styles
+      - name: Run brakeman
+        run: bundle exec brakeman -z
+      - name: Audit gems
+        run: |
+          bundle audit update
+          bundle audit
