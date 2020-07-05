@@ -9,13 +9,25 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
 
   context 'for the first time' do
     scenario 'takes the user through the form, confirmation and back to the homepage' do
+      expect(user.responsible_body.allocation_request).to be_nil
+
       visit responsible_body_home_path
       expect(page).to have_http_status(:ok)
       expect(page).to have_css('#step-1-status', text: 'Not started yet')
 
       click_on 'How many young people are eligible?'
 
-      # TODO: rest of the spec will be added here
+      expect(page).to have_css('h1', text: 'How many young people are eligible?')
+      click_on 'Continue'
+
+      expect(page).to have_css('h1', text: 'Check your answers')
+      click_on 'Submit'
+
+      # back on the responsible body home page
+      expect(page).to have_css('h1', text: 'Tell us who needs internet access')
+      expect(page).to have_css('#step-1-status', text: 'Completed')
+
+      expect(user.responsible_body.reload.allocation_request).to be_present
     end
   end
 
