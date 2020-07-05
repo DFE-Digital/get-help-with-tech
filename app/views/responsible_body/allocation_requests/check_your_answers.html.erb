@@ -14,6 +14,11 @@
         <dd class="govuk-summary-list__value">
           <%= @allocation_request.number_eligible %>
         </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', responsible_body_allocation_request_path(anchor: 'allocation-request-number-eligible-field')) do %>
+            Change<span class="govuk-visually-hidden"> number eligible</span>
+          <%- end %>
+        </dd>
       </div>
 
       <div class="govuk-summary-list__row" id="number-eligible-with-hotspot-access">
@@ -22,6 +27,12 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <%= @allocation_request.number_eligible_with_hotspot_access %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', responsible_body_allocation_request_path(anchor: 'allocation-request-number-eligible-with-hotspot-access-fiel
+        d')) do %>
+            Change<span class="govuk-visually-hidden"> number who can access a BT hotspot</span>
+          <%- end %>
         </dd>
       </div>
     </dl>
