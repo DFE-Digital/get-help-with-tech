@@ -24,15 +24,19 @@ class ResponsibleBody::AllocationRequestsController < ResponsibleBody::BaseContr
   end
 
   def create_or_update
-    allocation_request = @user.responsible_body.allocation_request || AllocationRequest.new
-    allocation_request.assign_attributes(
+    @allocation_request = @user.responsible_body.allocation_request || AllocationRequest.new
+    @allocation_request.assign_attributes(
       allocation_request_params.merge(
         responsible_body: @user.responsible_body,
         created_by_user: @user,
       ),
     )
-    allocation_request.save!
-    redirect_to responsible_body_home_path
+    if @allocation_request.valid?
+      @allocation_request.save!
+      redirect_to responsible_body_home_path
+    else
+      render :new_or_edit, status: :bad_request
+    end
   end
 
 private
