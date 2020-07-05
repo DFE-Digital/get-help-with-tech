@@ -9,7 +9,7 @@ RSpec.describe ResponsibleBody::AllocationRequestsController, type: :controller 
         allocation_request: {
           number_eligible: '5',
           number_eligible_with_hotspot_access: '3',
-        }
+        },
       }
 
       expect(response).to have_http_status(:redirect)
@@ -27,7 +27,7 @@ RSpec.describe ResponsibleBody::AllocationRequestsController, type: :controller 
         allocation_request: {
           number_eligible: 'x',
           number_eligible_with_bt_hotspots: 'y',
-        }
+        },
       }
 
       expect(response).to have_http_status(:bad_request)

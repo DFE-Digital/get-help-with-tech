@@ -157,21 +157,21 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
 
   def given_the_responsible_body_has_submitted_eligibility_and_bt_hotspot_information
     create(:allocation_request,
-      created_by_user: user,
-      responsible_body: user.responsible_body,
-      number_eligible: 13,
-      number_eligible_with_hotspot_access: 10)
+           created_by_user: user,
+           responsible_body: user.responsible_body,
+           number_eligible: 13,
+           number_eligible_with_hotspot_access: 10)
     expect(user.responsible_body.allocation_request).to be_present
   end
 
   def then_i_see_the_existing_data_in_the_form_fields
-    expect(allocation_request_form_page.number_eligible.value).to eq("13")
-    expect(allocation_request_form_page.number_eligible_with_hotspot_access.value).to eq("10")
+    expect(allocation_request_form_page.number_eligible.value).to eq('13')
+    expect(allocation_request_form_page.number_eligible_with_hotspot_access.value).to eq('10')
   end
 
   def then_i_see_the_updated_data_in_the_form_fields
-    expect(allocation_request_form_page.number_eligible.value).to eq("10")
-    expect(allocation_request_form_page.number_eligible_with_hotspot_access.value).to eq("5")
+    expect(allocation_request_form_page.number_eligible.value).to eq('10')
+    expect(allocation_request_form_page.number_eligible_with_hotspot_access.value).to eq('5')
   end
 
   def when_i_update_eligibility_yet_again

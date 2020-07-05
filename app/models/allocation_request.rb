@@ -17,7 +17,7 @@ private
 
   def number_eligible_greater_than_or_equal_to_number_eligible_with_hotspot_access
     if number_eligible.present? && number_eligible_with_hotspot_access.present? && \
-      number_eligible.to_i < number_eligible_with_hotspot_access.to_i
+        number_eligible.to_i < number_eligible_with_hotspot_access.to_i
       errors.add(:number_eligible, :number_eligible_must_be_bigger_or_equal_to_bt_hotspot_number)
     end
   end
