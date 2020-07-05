@@ -20,12 +20,6 @@ RSpec.feature 'Submitting an allocation_request_form', type: :feature do
       sign_in_as user
     end
 
-    scenario 'Navigating to the form' do
-      visit '/'
-      click_on('Tell us how many young people are eligible')
-      expect(page).to have_text('Total number of children and young people eligible for increased internet access')
-    end
-
     scenario 'submitting the form with invalid params shows errors' do
       visit new_allocation_request_form_path
       fill_in 'Total number of children and young people eligible for increased internet access', with: '-1'

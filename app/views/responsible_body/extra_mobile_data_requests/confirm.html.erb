@@ -1,0 +1,77 @@
+<%- content_for :back_link, govuk_link_to('Back', new_responsible_body_extra_mobile_data_request_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.confirm') %>
+    </h1>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row" id="account-holder-name">
+        <dt class="govuk-summary-list__key">
+          Account holder name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.account_holder_name %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', new_responsible_body_extra_mobile_data_request_path( anchor: 'extra-mobile-data-request-account-holder-name-field') ) do %>
+            Change<span class="govuk-visually-hidden"> Account holder name</span>
+          <%- end %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="mobile-phone-number">
+        <dt class="govuk-summary-list__key">
+          Mobile phone number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.device_phone_number %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', new_responsible_body_extra_mobile_data_request_path( anchor: 'extra-mobile-data-request-device-phone-number-field') ) do %>
+            Change<span class="govuk-visually-hidden"> Mobile phone number</span>
+          <%- end %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="mobile-network">
+        <dt class="govuk-summary-list__key">
+          Mobile network
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.mobile_network.brand %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', new_responsible_body_extra_mobile_data_request_path(anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) do %>
+            Change<span class="govuk-visually-hidden"> Mobile network</span>
+          <%- end %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="agrees-with-privacy-statement">
+        <dt class="govuk-summary-list__key">
+          Agrees with privacy statement
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.agrees_with_privacy_statement ? 'Yes' : 'No' %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', new_responsible_body_extra_mobile_data_request_path( anchor: 'extra-mobile-data-request-agrees-with-privacy-statement-true-field') ) do %>
+            Change<span class="govuk-visually-hidden"> Agrees with privacy statement</span>
+          <%- end %>
+        </dd>
+      </div>
+    </dl>
+    <p class="govuk-body">These details will be passed to <%= @extra_mobile_data_request.mobile_network.brand %></p>
+
+    <%= form_for @extra_mobile_data_request, url: responsible_body_extra_mobile_data_requests_path do |f| %>
+      <%= f.hidden_field :account_holder_name %>
+      <%= f.hidden_field :device_phone_number %>
+      <%= f.hidden_field :mobile_network_id %>
+      <%= f.hidden_field :agrees_with_privacy_statement %>
+      <%= hidden_field_tag(:confirm, true) %>
+
+      <%= f.govuk_submit 'Confirm request' %>
+    <%- end %>
+  </div>
+</div>

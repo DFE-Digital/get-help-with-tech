@@ -8,6 +8,7 @@ en:
     sign_in_or_create_account: Create an account or sign in
     sign_in: Sign in
     check_your_email: Check your email
+    confirm: Check your answers before confirming
     eligible_people: Tell us how many eligible young people you know about
     eligible_person: Tell us about an eligible young person
     new_user: Create an account
@@ -26,6 +27,7 @@ en:
     asking_for_account_holder: Asking for account holder name and mobile number
     telling_about_offer: Telling them about their offer
     privacy: Explaining how personal information will be used
+    who_needs_the_data: Who needs the extra mobile data?
   errors:
     format:
       "'%{attribute}' %{message}"
@@ -43,6 +45,18 @@ en:
           queried: Queried
           complete: Complete
           cancelled: Cancelled
+      mobile_network:
+        participation_in_pilots:
+          participating: 'Offers data now'
+          not_participating: 'Not participating'
+          maybe_participating: 'May offer data when the service launches'
+    errors:
+      models:
+        extra_mobile_data_request:
+          attributes:
+            mobile_network_id:
+              blank: "Select which mobile network the device is on"
+
   time:
     formats:
       time_only: "%l:%M%P"

@@ -13,9 +13,6 @@ Rails.application.routes.draw do
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
-  resources :application_forms do
-    get 'success/:extra_mobile_data_request_id', on: :collection, to: 'application_forms#success', as: :success
-  end
   resources :allocation_request_forms do
     get 'success/:allocation_request_id', on: :collection, to: 'allocation_request_forms#success', as: :success
   end

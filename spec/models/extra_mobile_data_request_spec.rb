@@ -32,21 +32,28 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
         expect(requests.to_csv).not_to include('.Ben Benson')
       end
     end
+  end
 
-    context 'when device_phone_number starts with a =' do
-      before { create(:extra_mobile_data_request, device_phone_number: '=(1+2)') }
+  describe 'validating device_phone_number' do
+    context 'a phone number that starts with 07' do
+      before do
+        subject.device_phone_number = '07  125 92368'
+      end
 
-      it 'prepends the = with a .' do
-        expect(requests.to_csv).to include('.=(1+2)')
+      it 'is valid' do
+        subject.valid?
+        expect(subject.errors).to_not(have_key(:device_phone_number))
       end
     end
 
-    context 'when device_phone_number does not start with a =' do
-      before { create(:extra_mobile_data_request, account_holder_name: '07123456789') }
+    context 'a phone number that does not start with 07' do
+      before do
+        subject.device_phone_number = '=07  125 92368'
+      end
 
-      it 'does not prepend the device_phone_number with a .' do
-        expect(requests.to_csv).to include('07123456789')
-        expect(requests.to_csv).not_to include('.07123456789')
+      it 'is not valid' do
+        subject.valid?
+        expect(subject.errors).to(have_key(:device_phone_number))
       end
     end
   end
