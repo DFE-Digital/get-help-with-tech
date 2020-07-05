@@ -28,7 +28,9 @@ $govuk-image-url-function: frontend-image-url;
   border-bottom: 1px solid $govuk-border-colour;
 }
 
+$related-color: #1d70b8;
+
 .app-related {
-    border-top: 2px solid #1d70b8;
-    padding-top: 15px;
+  border-top: 2px solid $related-color;
+  padding-top: 15px;
 }
