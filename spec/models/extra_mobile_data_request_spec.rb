@@ -39,7 +39,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       let(:request) { subject }
 
       before do
-        request.device_phone_number = '07  125 92368'
+        request.device_phone_number = '077  125 92368'
       end
 
       it 'is valid' do
@@ -52,7 +52,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       let(:request) { subject }
 
       before do
-        request.device_phone_number = '=07  125 92368'
+        request.device_phone_number = '=077  125 92368'
       end
 
       it 'is not valid' do
