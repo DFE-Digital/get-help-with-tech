@@ -97,5 +97,5 @@ jobs:
         run: bundle exec brakeman -z
       - name: Audit gems
         run: |
-          bundle audit update
-          bundle audit
+          bundle exec bundle-audit update
+          bundle exec bundle-audit
