@@ -14,7 +14,7 @@ class ResponsibleBody::AllocationRequestsController < ResponsibleBody::BaseContr
         created_by_user: @user,
       ),
     )
-    allocation_request.save!(validate: false)
+    allocation_request.save!
     redirect_to responsible_body_home_path
   end
 
@@ -23,6 +23,7 @@ private
   def allocation_request_params
     params.require(:allocation_request).permit(
       :number_eligible,
+      :number_eligible_with_hotspot_access,
     )
   end
 end

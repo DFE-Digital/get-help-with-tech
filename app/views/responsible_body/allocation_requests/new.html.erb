@@ -13,6 +13,14 @@
                                 min: 0,
                                 max: 10000,
                                 step: 1 %>
+      <%= f.govuk_number_field :number_eligible_with_hotspot_access,
+                                required: true,
+                                width: 4,
+                                label: { text: 'Number of those who can access a BT hotspot', size: 'm' },
+                                hint_text: 'There’s guidance available on <a class="govuk-link" href="https://www.btwifi.com/find/ ">how to check access to hotspots</a>'.html_safe,
+                                min: 0,
+                                max: 10000,
+                                step: 1 %>
       <%= f.govuk_submit %>
     <% end %>
   </div>

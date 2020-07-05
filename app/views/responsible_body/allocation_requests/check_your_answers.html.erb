@@ -15,10 +15,20 @@
           <%= @allocation_request.number_eligible %>
         </dd>
       </div>
+
+      <div class="govuk-summary-list__row" id="number-eligible-with-hotspot-access">
+        <dt class="govuk-summary-list__key">
+          Number who can access a BT hotspot
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @allocation_request.number_eligible_with_hotspot_access %>
+        </dd>
+      </div>
     </dl>
 
     <%= form_with model: @allocation_request, local: true, url: responsible_body_allocation_request_path do |f| %>
       <%= f.hidden_field :number_eligible %>
+      <%= f.hidden_field :number_eligible_with_hotspot_access %>
       <%= f.govuk_submit 'Submit' %>
     <%- end %>
   </div>
