@@ -29,9 +29,10 @@ Rails.application.routes.draw do
 
   namespace :responsible_body do
     get '/', to: 'home#show', as: :home
-    get 'eligibility-and-hotspots', to: 'allocation_requests#new', as: :allocation_request
+    get 'eligibility-and-hotspots', to: 'allocation_requests#new_or_edit', as: :allocation_request
     post 'eligibility-and-hotspots/check-answers', to: 'allocation_requests#check_your_answers', as: :check_your_allocation_request
-    post 'eligibility-and-hotspots', to: 'allocation_requests#create'
+    patch 'eligibility-and-hotspots/check-answers', to: 'allocation_requests#check_your_answers'
+    post 'eligibility-and-hotspots', to: 'allocation_requests#create_or_update'
     resources :extra_mobile_data_requests, only: %i[index new create]
   end
 
