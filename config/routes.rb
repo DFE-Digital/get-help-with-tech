@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
   namespace :responsible_body do
     get '/', to: 'home#show', as: :home
+    get 'eligibility-and-hotspots', to: 'allocation_requests#new', as: :allocation_request
     resources :extra_mobile_data_requests, only: %i[index new create]
   end
 
