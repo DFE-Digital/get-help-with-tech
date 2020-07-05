@@ -6,8 +6,19 @@
       <%= t('page_titles.confirm') %>
     </h1>
 
-    <%= form_with model: @allocation_request, local: true, url: responsible_body_allocation_request_path do |f| %>
+    <dl class="govuk-summary-list govuk-summary-list--wide-terms">
+      <div class="govuk-summary-list__row" id="number-eligible">
+        <dt class="govuk-summary-list__key">
+          Number eligible
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @allocation_request.number_eligible %>
+        </dd>
+      </div>
+    </dl>
 
+    <%= form_with model: @allocation_request, local: true, url: responsible_body_allocation_request_path do |f| %>
+      <%= f.hidden_field :number_eligible %>
       <%= f.govuk_submit 'Submit' %>
     <%- end %>
   </div>

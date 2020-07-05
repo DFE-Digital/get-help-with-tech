@@ -6,6 +6,13 @@
       <%= t('page_titles.eligible_people') %>
     </h1>
     <%= form_with model: @allocation_request, local: true, url: responsible_body_check_your_allocation_request_path do |f| %>
+      <%= f.govuk_number_field :number_eligible,
+                                required: true,
+                                width: 4,
+                                label: { text: 'Number of young people who are eligible', size: 'm' },
+                                min: 0,
+                                max: 10000,
+                                step: 1 %>
       <%= f.govuk_submit %>
     <% end %>
   </div>
