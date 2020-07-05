@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Submitting eligibility and BT hotspot information', type: :feature do
   let(:user) { create(:local_authority_user) }
+  let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
 
   before do
     sign_in_as user
@@ -13,7 +14,7 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
 
       visit responsible_body_home_path
       expect(page).to have_http_status(:ok)
-      expect(page).to have_css('#step-1-status', text: 'Not started yet')
+      expect(responsible_body_home_page.step_1_status.text).to eq('Not started yet')
 
       click_on 'How many young people are eligible?'
 
@@ -23,9 +24,8 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
       expect(page).to have_css('h1', text: 'Check your answers')
       click_on 'Submit'
 
-      # back on the responsible body home page
-      expect(page).to have_css('h1', text: 'Tell us who needs internet access')
-      expect(page).to have_css('#step-1-status', text: 'Completed')
+      expect(responsible_body_home_page).to be_displayed
+      expect(responsible_body_home_page.step_1_status.text).to eq('Completed')
 
       expect(user.responsible_body.reload.allocation_request).to be_present
     end
@@ -37,8 +37,10 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
     end
 
     scenario 'updates the info for the responsible body' do
+      expect(user.responsible_body.allocation_request).to be_present
+
       visit responsible_body_home_path
-      expect(page).to have_css('#step-1-status', text: 'Completed')
+      expect(responsible_body_home_page.step_1_status.text).to eq('Completed')
 
       click_on 'How many young people are eligible?'
 
