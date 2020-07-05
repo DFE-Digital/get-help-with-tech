@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Submitting eligibility and BT hotspot information', type: :feature do
   let(:user) { create(:local_authority_user) }
   let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
+  let(:allocation_request_form_page) { PageObjects::ResponsibleBody::AllocationRequestFormPage.new }
 
   before do
     sign_in_as user
@@ -17,11 +18,12 @@ RSpec.feature 'Submitting eligibility and BT hotspot information', type: :featur
       expect(responsible_body_home_page.step_1_status.text).to eq('Not started yet')
 
       click_on 'How many young people are eligible?'
+      expect(allocation_request_form_page).to be_displayed
+      expect(allocation_request_form_page.heading.text).to eq('How many young people are eligible?')
 
-      expect(page).to have_css('h1', text: 'How many young people are eligible?')
-      fill_in('Number of young people who are eligible', with: '10')
-      fill_in('Number of those who can access a BT hotspot', with: '5')
-      click_on 'Continue'
+      allocation_request_form_page.number_eligible.set '10'
+      allocation_request_form_page.number_eligible_with_hotspot_access.set '5'
+      allocation_request_form_page.continue_button.click
 
       expect(page).to have_css('h1', text: 'Check your answers')
       expect(page).to have_text('10')
