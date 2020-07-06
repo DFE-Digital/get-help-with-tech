@@ -7,7 +7,7 @@
       <span class="govuk-caption-xl">
         <%= @extra_mobile_data_request.account_holder_name %> - <%= @extra_mobile_data_request.device_phone_number %>
       </span>
-      Report a problem
+      <%= t('page_titles.report_a_problem') %>
     </h1>
     <%= form_for @extra_mobile_data_request, url: mno_extra_mobile_data_request_path(@extra_mobile_data_request) do |f| %>
       <%= f.govuk_error_summary %>
