@@ -20,7 +20,13 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
     end
   end
 
-  def report_problem; end
+  def report_problem
+    @extra_mobile_data_request = @user.extra_mobile_data_requests.find(params[:id])
+  end
+
+  def update
+    
+  end
 
   def bulk_update
     ExtraMobileDataRequest.transaction do
