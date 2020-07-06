@@ -13,10 +13,6 @@ Rails.application.routes.draw do
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
-  resources :allocation_request_forms do
-    get 'success/:allocation_request_id', on: :collection, to: 'allocation_request_forms#success', as: :success
-  end
-
   resources :sessions, only: %i[create destroy]
   resources :users, only: %i[new create]
 
@@ -33,6 +29,10 @@ Rails.application.routes.draw do
 
   namespace :responsible_body do
     get '/', to: 'home#show', as: :home
+    get 'eligibility-and-hotspots', to: 'allocation_requests#new_or_edit', as: :allocation_request
+    post 'eligibility-and-hotspots/check-answers', to: 'allocation_requests#check_your_answers', as: :check_your_allocation_request
+    patch 'eligibility-and-hotspots/check-answers', to: 'allocation_requests#check_your_answers'
+    post 'eligibility-and-hotspots', to: 'allocation_requests#create_or_update'
     resources :extra_mobile_data_requests, only: %i[index new create]
   end
 

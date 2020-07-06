@@ -4,6 +4,7 @@ module PageObjects
       set_url '/responsible_body'
 
       elements :allocation_request_rows, '.govuk-summary-list__row'
+      element :step_1_status, '#step-1-status'
 
       def eligible_young_people
         matching_row = allocation_request_rows.select { |row|

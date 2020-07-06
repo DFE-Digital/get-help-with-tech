@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe AllocationRequest, type: :model do
+  it 'validates that the number_eligible is equal or greater than the number_who_can_see_a_bt_hotspot' do
+    allocation_request = build(:allocation_request,
+                               number_eligible: 4,
+                               number_eligible_with_hotspot_access: 10,
+                               responsible_body: create(:trust))
+
+    expect(allocation_request).not_to be_valid
+    expect(allocation_request.errors[:number_eligible]).not_to be_empty
+  end
+
   describe 'responsible_body_id' do
     let(:trust) { create :trust }
     let(:user) { create :trust_user, responsible_body: trust }
