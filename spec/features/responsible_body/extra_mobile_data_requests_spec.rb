@@ -15,17 +15,17 @@ RSpec.feature 'RB ExtraMobileDataRequests view', type: :feature do
       expect(page).to have_http_status(:ok)
     end
 
-    scenario 'the index page shows the users requests' do
-      visit responsible_body_extra_mobile_data_requests_path
-
-      expect(page).to have_css('h2', text: 'Your requests')
-    end
-
     context 'when the user has submitted requests' do
       let(:requests) { create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: rb_user) }
 
       before do
         requests
+      end
+
+      scenario 'the index page shows the users requests' do
+        visit responsible_body_extra_mobile_data_requests_path
+
+        expect(page).to have_css('h2', text: 'Your requests')
       end
 
       scenario 'the index page shows those requests' do

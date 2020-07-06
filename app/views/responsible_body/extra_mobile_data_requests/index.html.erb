@@ -14,6 +14,8 @@
     </p>
   </div>
 </div>
+
+<% if @extra_mobile_data_requests.any? %>
 <h2 class="govuk-heading-l govuk-!-margin-top-6">Your requests</h2>
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -33,3 +35,4 @@
     <%- end %>
   </tbody>
 </table>
+<% end %>
