@@ -64,7 +64,7 @@ en:
             mobile_network_id:
               blank: Select which mobile network the device is on
             agrees_with_privacy_statement:
-              inclusion: The account holder must agree to the privacy statement
+              inclusion: The privacy statement must be shared with the account holder
         allocation_request:
           attributes:
             number_eligible:
