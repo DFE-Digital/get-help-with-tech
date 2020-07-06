@@ -1,4 +1,15 @@
-<%- content_for :back_link, govuk_link_to('Back', responsible_body_home_path, class: 'govuk-back-link') %>
+<%- content_for :before_content do %>
+  <div class="govuk-breadcrumbs ">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to t('page_titles.who_needs_internet_access'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= t('page_titles.request_extra_mobile_data') %>
+    </li>
+  </ol>
+  </div>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -14,6 +25,8 @@
     </p>
   </div>
 </div>
+
+<% if @extra_mobile_data_requests.any? %>
 <h2 class="govuk-heading-l govuk-!-margin-top-6">Your requests</h2>
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -33,3 +46,4 @@
     <%- end %>
   </tbody>
 </table>
+<% end %>
