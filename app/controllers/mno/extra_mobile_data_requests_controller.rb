@@ -28,17 +28,19 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
     @extra_mobile_data_request = @mobile_network.extra_mobile_data_requests.find(params[:id])
     @extra_mobile_data_request.update!(extra_mobile_data_request_params.merge(status: :queried))
     redirect_to mno_extra_mobile_data_requests_path
-
-  rescue ActiveModel::ValidationError
+  rescue ActiveModel::ValidationError, ActionController::ParameterMissing
     render :report_problem, status: :unprocessable_entity
   end
 
   def bulk_update
     ExtraMobileDataRequest.transaction do
+      new_attributes = { status: bulk_update_params[:status] }
+      new_attributes[:problem] = nil unless bulk_update_params[:status] == 'queried'
+
       ExtraMobileDataRequest.from_approved_users
                .on_mobile_network(@user.mobile_network_id)
                .where('extra_mobile_data_requests.id IN (?)', bulk_update_params[:extra_mobile_data_request_ids].reject(&:empty?))
-               .update_all(status: bulk_update_params[:status])
+               .update_all(new_attributes)
       redirect_to mno_extra_mobile_data_requests_path
     rescue ActiveRecord::StatementInvalid, ArgumentError => e
       logger.error e
@@ -90,7 +92,7 @@ private
 
   def extra_mobile_data_request_params(opts = params)
     opts.require(:extra_mobile_data_request).permit(
-      :problem
+      :problem,
     )
   end
 end

@@ -28,7 +28,7 @@ class ExtraMobileDataRequest < ApplicationRecord
     no_match_for_number: '002',
     no_match_for_account_name: '003',
     not_eligible: '006',
-    no_longer_on_network: '007'
+    no_longer_on_network: '007',
   }
 
   include ExportableAsCsv

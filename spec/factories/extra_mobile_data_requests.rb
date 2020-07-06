@@ -4,7 +4,13 @@ FactoryBot.define do
     device_phone_number               { '07123 456789' }
     agrees_with_privacy_statement     { true }
     status                            { :requested }
+    problem                           { nil }
     association :mobile_network
     association :created_by_user, factory: :local_authority_user
+
+    trait :with_problem do
+      status  { :queried }
+      problem { ExtraMobileDataRequest.problems.keys.sample }
+    end
   end
 end

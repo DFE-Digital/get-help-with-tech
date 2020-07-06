@@ -7,6 +7,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
   let(:user_from_other_mno) { create(:mno_user, name: 'Other MNO-User', organisation: 'Other MNO', mobile_network: other_mno) }
   let!(:extra_mobile_data_request_1_for_mno) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
   let!(:extra_mobile_data_request_2_for_mno) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
+
   let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
 
   describe 'PUT /bulk_update' do
@@ -105,6 +106,34 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       it 'responds with :unprocessable_entity' do
         put :bulk_update, params: params_with_invalid_status
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'when an existing request had a problem and the new status is not :queried' do
+      let!(:request_with_problem) { create(:extra_mobile_data_request, :with_problem, mobile_network: mno_user.mobile_network) }
+      let(:extra_mobile_data_requests) { [request_with_problem] }
+
+      it 'clears out the problem field' do
+        put :bulk_update, params: valid_params
+        expect(request_with_problem.reload.problem).to be_nil
+      end
+    end
+
+    context 'when an existing request had a problem and the new status is also :queried' do
+      let!(:request_with_problem) { create(:extra_mobile_data_request, :with_problem, mobile_network: mno_user.mobile_network) }
+      let(:extra_mobile_data_requests) { [request_with_problem] }
+      let(:valid_params) do
+        {
+          mno_extra_mobile_data_requests_form: {
+            extra_mobile_data_request_ids: extra_mobile_data_requests.pluck('id'),
+            status: 'queried',
+          },
+        }
+      end
+
+      it 'does not clear out the problem field' do
+        put :bulk_update, params: valid_params
+        expect(request_with_problem.reload.problem).not_to be_nil
       end
     end
   end
