@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/DFE-Digital/get-help-with-tech.svg?branch=master)](https://travis-ci.com/DFE-Digital/get-help-with-tech)
-
 # Get Help With Tech
 
 An app to host content and forms for the "Get Help With Tech" COVID-19 response initiative.
@@ -42,7 +40,7 @@ bundle exec scss-lint app/webpacker/styles
 bundle exec brakeman
 ```
 
- All the above are run automatically on Travis CI when pushing a PR
+All the above are run automatically on GitHub Actions when pushing a PR.
 
 ## Integrations
 
@@ -168,4 +166,3 @@ You can configure logstash to send logs to your log aggregator by setting the
 
 A copy of the [logstash filter](etc/logstash-filter.conf) we use exists in the
 repo. This has to be installed manually in the log aggregator to be used.
-
