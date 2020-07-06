@@ -23,7 +23,7 @@ prod:
 				logs logs-recent
 
 require_env_stub:
-	test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
+	@test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
 
 get_git_status:
 	$(eval export git_commit_sha=$(shell git rev-parse --short HEAD))
@@ -63,13 +63,13 @@ release: require_env_stub
 	make ${env_stub} build push deploy
 
 promote:
-	test ${FROM} || (echo ">> FROM is not set (${FROM})- please use make promote FROM=(dev|staging|prod)"; exit 1)
+	@test ${FROM} || (echo ">> FROM is not set (${FROM})- please use make promote FROM=(dev|staging|prod)"; exit 1)
 	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM)
 	docker tag $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM) $(APP_NAME)-$(env_stub)
 	make $(env_stub) push deploy
 
 ssh: set_cf_target
-	echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
+	@echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
 		cf ssh $(APP_NAME)-$(env_stub)
 
 logs: set_cf_target
