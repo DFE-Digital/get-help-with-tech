@@ -55,7 +55,16 @@ en:
         extra_mobile_data_request:
           attributes:
             mobile_network_id:
-              blank: "Select which mobile network the device is on"
+              blank: Select which mobile network the device is on
+            account_holder_name:
+              blank: Enter the full name of the account holder for the mobile device
+            device_phone_number:
+              blank: Enter the phone number of the mobile device in the correct format
+              invalid: Enter the phone number of the mobile device in the correct format
+            mobile_network_id:
+              blank: Select which mobile network the device is on
+            agrees_with_privacy_statement:
+              inclusion: The account holder must agree to the privacy statement
         allocation_request:
           attributes:
             number_eligible:
