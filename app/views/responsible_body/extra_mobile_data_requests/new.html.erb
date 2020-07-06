@@ -24,18 +24,13 @@
         <%- end %>
       <%- end %>
 
-      <%= f.govuk_check_boxes_fieldset :agrees_with_privacy_statement, legend: { text: 'Has the account holder agreed with the privacy statement?' } do %>
+      <%= f.govuk_check_boxes_fieldset :agrees_with_privacy_statement, legend: { text: 'Has someone shared the privacy statement with the account holder?', tag: 'h2' } do %>
         <%= f.hidden_field :agrees_with_privacy_statement, value: false %>
-        <span class="govuk-hint">
-          <p class="govuk-hint">Account holders must allow us to:</p>
-          <ul class="govuk-hint govuk-list govuk-list--bullet">
-            <li>store their data</li>
-            <li>share their data with their mobile network provider</li>
-          </ul>
-          <p class="govuk-hint"><a href="#">View privacy statement</a></p>
-        </span>
+        <%= f.govuk_check_box :agrees_with_privacy_statement, true, multiple: false, link_errors: true, label: { text: 'Yes, the privacy statement has been shared' } %>
 
-        <%= f.govuk_check_box :agrees_with_privacy_statement, true, multiple: false, link_errors: true, label: { text: 'Yes, they agree with the privacy statement' } %>
+        <p class="govuk-hint" style="margin-top: -20px">
+          <%= govuk_link_to 'Guidance for sharing the privacy statement', guide_to_collecting_mobile_information_privacy_path %>
+        </p>
       <%- end %>
       <%= f.govuk_submit %>
 
