@@ -37,7 +37,6 @@ ENV APP_PORT 3000
 EXPOSE $APP_PORT
 
 # precompile assets
-RUN mkdir -p ~/.cache/yarn
 RUN yarn
 ARG RAILS_ENV=production
 RUN RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rake secret) bundle exec rails webpacker:compile
