@@ -21,11 +21,16 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   end
 
   def report_problem
-    @extra_mobile_data_request = @user.extra_mobile_data_requests.find(params[:id])
+    @extra_mobile_data_request = @mobile_network.extra_mobile_data_requests.find(params[:extra_mobile_data_request_id])
   end
 
   def update
-    
+    @extra_mobile_data_request = @mobile_network.extra_mobile_data_requests.find(params[:id])
+    @extra_mobile_data_request.update!(extra_mobile_data_request_params.merge(status: :queried))
+    redirect_to mno_extra_mobile_data_requests_path
+
+  rescue ActiveModel::ValidationError
+    render :report_problem, status: :unprocessable_entity
   end
 
   def bulk_update
@@ -81,5 +86,11 @@ private
       'requested' => :created_at,
       'status' => :status,
     }[order_param]
+  end
+
+  def extra_mobile_data_request_params(opts = params)
+    opts.require(:extra_mobile_data_request).permit(
+      :problem
+    )
   end
 end

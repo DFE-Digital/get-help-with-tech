@@ -17,6 +17,20 @@ class ExtraMobileDataRequest < ApplicationRecord
     cancelled: 'cancelled',
   }
 
+  # These codes were worked out by the NHSx team & the MNOs,
+  # during their previous work to support NHS workers.
+  # For ease / speed of rollout, we're using the same codes.
+  # The discontinuity from 003-006 is because codes 004 & 005
+  # are about mismatches on address / postcode, which we're not
+  # supplying
+  enum problem: {
+    incorrect_phone_number: '001',
+    no_match_for_number: '002',
+    no_match_for_account_name: '003',
+    not_eligible: '006',
+    no_longer_on_network: '007'
+  }
+
   include ExportableAsCsv
 
   def self.exportable_attributes

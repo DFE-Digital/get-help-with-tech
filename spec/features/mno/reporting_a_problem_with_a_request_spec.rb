@@ -15,12 +15,23 @@ RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :featu
     end
 
     scenario 'clicking "Report a problem" shows the "Report a problem" form' do
-      
+
       within("#request-#{requests.first.id}") do
         click_on('Report a problem')
       end
 
       expect(page).to have_content('Report a problem')
+    end
+
+    scenario 'submitting the form without choosing a problem shows an error' do
+      within("#request-#{requests.first.id}") do
+        click_on('Report a problem')
+      end
+
+      click_on 'Report problem'
+
+      expect(page).to have_content('There was a problem')
+      expect(page).to have_http_status(:unprocessable_entity)
     end
 
     scenario 'choosing a problem and submitting the form updates the status of the request' do

@@ -8,9 +8,16 @@
       </span>
       Report a problem
     </h1>
+    <%= form_for @extra_mobile_data_request, url: mno_extra_mobile_data_request_path(@extra_mobile_data_request) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_collection_radio_buttons :problem,
+      ExtraMobileDataRequest.translated_enum_values(:problems),
+      :value,
+      :label %>
+
+      <%= f.govuk_submit 'Report problem' %>
+    <%- end %>
   </div>
 
-  <%= form_for @extra_mobile_data_request do |f| %>
-    
-  <%- end %>
 </div>
