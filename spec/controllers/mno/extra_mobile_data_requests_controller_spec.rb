@@ -9,7 +9,6 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
   let!(:extra_mobile_data_request_2_for_mno) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
   let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
 
-
   describe 'PUT /bulk_update' do
     before do
       sign_in_as mno_user
@@ -118,36 +117,28 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       end
 
       # Pentest issue: Host Header Poisoning vulnerability
-      context 'with a Host header that is Settings.hostname_for_urls' do
-        it 'redirects to the host' do
-          request.headers['HOST'] = Settings.hostname_for_urls
-          get :index
-          expect(response.headers['Location']).to include(Settings.hostname_for_urls)
-        end
+      it 'redirects to the host when Host header is Settings.hostname_for_urls' do
+        request.headers['HOST'] = Settings.hostname_for_urls
+        get :index
+        expect(response.headers['Location']).to include(Settings.hostname_for_urls)
       end
 
-      context 'with a Host header that is not Settings.hostname_for_urls' do
-        it 'does not redirect to the malicious host' do
-          request.headers['HOST'] = 'malicious.example.com'
-          get :index
-          expect(response.headers['Location']).not_to include('malicious.example.com')
-        end
+      it 'does not redirect to the malicious host when the Host header is not Settings.hostname_for_urls' do
+        request.headers['HOST'] = 'malicious.example.com'
+        get :index
+        expect(response.headers['Location']).not_to include('malicious.example.com')
       end
 
-      context 'with a X-Forwarded-Host header that is Settings.hostname_for_urls' do
-        it 'redirects to the X-Forwarded-Host' do
-          request.headers['X-Forwarded-Host'] = Settings.hostname_for_urls
-          get :index
-          expect(response.headers['Location']).to include(Settings.hostname_for_urls)
-        end
+      it 'redirects to the X-Forwarded-Host when X-Forwarded-Host header is Settings.hostname_for_urls' do
+        request.headers['X-Forwarded-Host'] = Settings.hostname_for_urls
+        get :index
+        expect(response.headers['Location']).to include(Settings.hostname_for_urls)
       end
 
-      context 'with a X-Forwarded-Host header that is not Settings.hostname_for_urls' do
-        it 'does not redirect to the malicious X-Forwarded-Host' do
-          request.headers['X-Forwarded-Host'] = 'malicious.example.com'
-          get :index
-          expect(response.headers['Location']).not_to include('malicious.example.com')
-        end
+      it 'does not redirect to the malicious X-Forwarded-Host when X-Forwarded-Host header is not Settings.hostname_for_urls' do
+        request.headers['X-Forwarded-Host'] = 'malicious.example.com'
+        get :index
+        expect(response.headers['Location']).not_to include('malicious.example.com')
       end
     end
   end

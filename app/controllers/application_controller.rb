@@ -46,7 +46,7 @@ private
   def protect_against_host_header_poisoning
     %w[HTTP_HOST HTTP_X_FORWARDED_HOST].each do |header|
       if request.env[header] && \
-        (request.env[header] != Settings.hostname_for_urls)
+          (request.env[header] != Settings.hostname_for_urls)
         request.env.delete(header)
       end
     end
