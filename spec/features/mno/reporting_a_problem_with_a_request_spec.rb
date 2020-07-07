@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :feature do
   let(:mno_user) { create(:mno_user) }
-  
+
   before do
     sign_in_as mno_user
   end
