@@ -14,6 +14,7 @@ $govuk-image-url-function: frontend-image-url;
 @import "pagination";
 @import "overrides";
 @import "components/guide-next-prev";
+@import "banner";
 
 .app-email-template {
   border: $govuk-border-width solid $govuk-border-colour;
