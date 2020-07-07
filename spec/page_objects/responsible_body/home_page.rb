@@ -1,7 +1,7 @@
 module PageObjects
   module ResponsibleBody
     class HomePage < PageObjects::BasePage
-      set_url '/responsible_body'
+      set_url '/responsible-body'
 
       elements :allocation_request_rows, '.govuk-summary-list__row'
       element :step_1_status, '#step-1-status'

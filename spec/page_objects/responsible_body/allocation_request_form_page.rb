@@ -1,7 +1,7 @@
 module PageObjects
   module ResponsibleBody
     class AllocationRequestFormPage < PageObjects::BasePage
-      set_url '/responsible_body/eligibility-and-hotspots'
+      set_url '/responsible-body/eligibility-and-hotspots'
 
       element :heading, 'h1'
 
