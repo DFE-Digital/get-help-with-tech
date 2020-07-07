@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
                                 if: -> { FeatureFlag.active?(:http_basic_auth) }
 
   before_action :populate_user_from_session!,
-                :check_static_guidance_only_feature_flag!
+                :check_static_guidance_only_feature_flag!,
+                :protect_against_host_header_poisoning
 
   include Pagy::Backend
 
@@ -38,6 +39,16 @@ private
   def check_static_guidance_only_feature_flag!
     if FeatureFlag.active?(:static_guidance_only)
       render 'errors/not_found', status: :not_found unless %w[pages monitoring].include?(controller_name)
+    end
+  end
+
+  # Pentest issue: Host Header Poisoning vulnerability
+  def protect_against_host_header_poisoning
+    %w[HTTP_HOST HTTP_X_FORWARDED_HOST].each do |header|
+      if request.env[header] && \
+        (request.env[header] != Settings.hostname_for_urls)
+        request.env.delete(header)
+      end
     end
   end
 end
