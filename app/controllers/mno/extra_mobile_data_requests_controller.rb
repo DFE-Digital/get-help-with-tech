@@ -1,8 +1,6 @@
 class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   def index
-    @extra_mobile_data_requests = ExtraMobileDataRequest.from_approved_users
-                                        .on_mobile_network(@user.mobile_network_id)
-                                        .order(safe_order)
+    @extra_mobile_data_requests = extra_mobile_data_request_scope.order(safe_order)
 
     respond_to do |format|
       format.csv do
@@ -21,11 +19,11 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   end
 
   def report_problem
-    @extra_mobile_data_request = @mobile_network.extra_mobile_data_requests.find(params[:extra_mobile_data_request_id])
+    load_extra_mobile_data_request(params[:extra_mobile_data_request_id])
   end
 
   def update
-    @extra_mobile_data_request = @mobile_network.extra_mobile_data_requests.find(params[:id])
+    load_extra_mobile_data_request(params[:id])
     @extra_mobile_data_request.update!(extra_mobile_data_request_params.merge(status: :queried))
     redirect_to mno_extra_mobile_data_requests_path
   rescue ActiveModel::ValidationError, ActionController::ParameterMissing
@@ -36,10 +34,9 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
     ExtraMobileDataRequest.transaction do
       new_attributes = { status: bulk_update_params[:status] }
       new_attributes[:problem] = nil unless bulk_update_params[:status] == 'queried'
-
-      ExtraMobileDataRequest.from_approved_users
-               .on_mobile_network(@user.mobile_network_id)
-               .where('extra_mobile_data_requests.id IN (?)', bulk_update_params[:extra_mobile_data_request_ids].reject(&:empty?))
+      ids = bulk_update_params[:extra_mobile_data_request_ids].reject(&:empty?)
+      extra_mobile_data_request_scope
+               .where('extra_mobile_data_requests.id IN (?)', ids)
                .update_all(new_attributes)
       redirect_to mno_extra_mobile_data_requests_path
     rescue ActiveRecord::StatementInvalid, ArgumentError => e
@@ -51,6 +48,14 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   end
 
 private
+
+  def extra_mobile_data_request_scope
+    @mobile_network.extra_mobile_data_requests.from_approved_users
+  end
+
+  def load_extra_mobile_data_request(emdr_id)
+    @extra_mobile_data_request = extra_mobile_data_request_scope.find(emdr_id)
+  end
 
   def selected_extra_mobile_data_request_ids(extra_mobile_data_requests, opts = params)
     if opts[:select] == 'all'
