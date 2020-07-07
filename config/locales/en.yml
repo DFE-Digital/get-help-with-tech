@@ -42,8 +42,8 @@ en:
       extra_mobile_data_request:
         problems:
           incorrect_phone_number: This is not a valid mobile number
-          no_match_for_number: We couldn't find an account with this number
-          no_match_for_account_name: We couldn't find an account with this name
+          no_match_for_number: We couldn’t find an account with this number
+          no_match_for_account_name: We couldn’t find an account with this name
           not_eligible: This account is not eligible
           no_longer_on_network: This account is no longer on our network
         statuses:
