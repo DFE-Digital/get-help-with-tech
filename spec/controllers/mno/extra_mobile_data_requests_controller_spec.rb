@@ -108,38 +108,4 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       end
     end
   end
-
-  context 'not signed in' do
-    describe 'GET #index' do
-      it 'redirects to sign_in' do
-        get :index
-        expect(response).to redirect_to(sign_in_path)
-      end
-
-      # Pentest issue: Host Header Poisoning vulnerability
-      it 'redirects to the host when Host header is Settings.hostname_for_urls' do
-        request.headers['HOST'] = Settings.hostname_for_urls
-        get :index
-        expect(response.headers['Location']).to include(Settings.hostname_for_urls)
-      end
-
-      it 'does not redirect to the malicious host when the Host header is not Settings.hostname_for_urls' do
-        request.headers['HOST'] = 'malicious.example.com'
-        get :index
-        expect(response.headers['Location']).not_to include('malicious.example.com')
-      end
-
-      it 'redirects to the X-Forwarded-Host when X-Forwarded-Host header is Settings.hostname_for_urls' do
-        request.headers['X-Forwarded-Host'] = Settings.hostname_for_urls
-        get :index
-        expect(response.headers['Location']).to include(Settings.hostname_for_urls)
-      end
-
-      it 'does not redirect to the malicious X-Forwarded-Host when X-Forwarded-Host header is not Settings.hostname_for_urls' do
-        request.headers['X-Forwarded-Host'] = 'malicious.example.com'
-        get :index
-        expect(response.headers['Location']).not_to include('malicious.example.com')
-      end
-    end
-  end
 end
