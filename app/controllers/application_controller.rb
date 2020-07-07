@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
 
   include Pagy::Backend
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
 private
 
   def populate_user_from_session!
@@ -39,5 +41,9 @@ private
     if FeatureFlag.active?(:static_guidance_only)
       render 'errors/not_found', status: :not_found unless %w[pages monitoring].include?(controller_name)
     end
+  end
+
+  def not_found
+    render 'errors/not_found', status: :not_found and return
   end
 end
