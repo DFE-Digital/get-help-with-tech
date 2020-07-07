@@ -73,6 +73,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
 
       click_on 'Confirm request'
 
+      expect(page).to have_text('Your request has been received')
       expect(page).to have_text('My confirmed account holder name')
     end
   end

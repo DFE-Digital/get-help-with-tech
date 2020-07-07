@@ -24,6 +24,7 @@ class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::Base
         # clear the stashed params once the user has confirmed them
         session.delete(:extra_mobile_data_request_params)
         @extra_mobile_data_request.save!
+        flash[:success] = I18n.t('responsible_body.extra_mobile_data_requests.create.success')
         redirect_to responsible_body_extra_mobile_data_requests_path
       else
         # store given params in session,so that we don't have to pass them back in the URL

@@ -81,3 +81,6 @@ en:
       show:
         number_eligible: Eligible young people
         number_eligible_with_hotspot_access: Number who can see a BT hotspot
+    extra_mobile_data_requests:
+      create:
+        success: Your request has been received
