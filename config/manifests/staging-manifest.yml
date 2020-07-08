@@ -1,5 +1,6 @@
 ---
 applications:
 - name: get-help-with-tech-staging
+  disk_quota: 2G
   services:
     - get-help-with-tech-staging-db

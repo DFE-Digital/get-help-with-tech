@@ -53,11 +53,8 @@ push: require_env_stub ## push the Docker image to Docker Hub
 	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
 
 deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
-	(ls -l ./manifest.yml && rm ./manifest.yml) || true
-	ln -s ./config/manifests/$(env_stub)-manifest.yml ./manifest.yml
-	cf target -o $(PAAS_ORGANISATION) -s $(PAAS_SPACE)-$(env_stub)
-	cf push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
-	rm ./manifest.yml
+	cf v3-apply-manifest -f ./config/manifests/$(env_stub)-manifest.yml
+	cf v3-zdt-push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --wait-for-deploy-complete
 
 release: require_env_stub
 	make ${env_stub} build push deploy
@@ -70,7 +67,7 @@ promote:
 
 ssh: set_cf_target
 	@echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
-		cf ssh $(APP_NAME)-$(env_stub)
+		cf v3-ssh $(APP_NAME)-$(env_stub)
 
 logs: set_cf_target
 	cf logs $(APP_NAME)-$(env_stub)

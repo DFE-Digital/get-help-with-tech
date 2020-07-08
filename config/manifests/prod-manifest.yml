@@ -1,5 +1,7 @@
 ---
 applications:
 - name: get-help-with-tech-prod
+  disk_quota: 2G
+  instances: 2
   services:
     - get-help-with-tech-prod-db
