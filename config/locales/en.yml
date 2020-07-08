@@ -3,7 +3,7 @@ en:
   page_titles:
     about_bt_wifi: Increasing children’s internet access through free BT hotspots
     bt_wifi_privacy_notice: How we look after personal data for the BT wifi hotspot scheme
-    about_increasing_mobile_data: Increasing data allowances on children’s mobile devices
+    about_increasing_mobile_data: Increasing data allowances on mobile devices to support disadvantaged children
     increasing_mobile_data_privacy_notice: How we look after personal information for the Increasing Children’s Mobile Data scheme
     sign_in_or_create_account: Create an account or sign in
     sign_in: Sign in
@@ -25,10 +25,10 @@ en:
     report_a_problem: Report a problem
   guide_to_collecting_mobile_information:
     overview: Overview
-    asking_for_network: Asking for mobile network, contracts and Pay as you go (PAYG)
+    asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
     asking_for_account_holder: Asking for account holder name and mobile number
     telling_about_offer: Telling them about their offer
-    privacy: Explaining how personal information will be used
+    privacy: Explaining our privacy policy
   errors:
     format:
       "'%{attribute}' %{message}"
