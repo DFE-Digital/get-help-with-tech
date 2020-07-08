@@ -1,5 +1,6 @@
 ---
 applications:
 - name: get-help-with-tech-dev
+  disk_quota: 2G
   services:
     - get-help-with-tech-dev-db
