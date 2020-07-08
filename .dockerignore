@@ -1,4 +1,7 @@
 .env
 *.env
 .env.*
-
+./tmp/*
+./log/*
+./coverage
+./public/packs
