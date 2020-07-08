@@ -2,5 +2,8 @@
 applications:
 - name: get-help-with-tech-dev
   disk_quota: 2G
+  health-check-http-endpoint: /healthcheck.json
+  health-check-type: http
+  health-check-invocation-timeout: 10
   services:
     - get-help-with-tech-dev-db
