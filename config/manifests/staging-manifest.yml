@@ -1,5 +1,8 @@
 ---
 applications:
 - name: get-help-with-tech-staging
+  health-check-http-endpoint: /healthcheck.json
+  health-check-type: http
+  health-check-invocation-timeout: 10
   services:
     - get-help-with-tech-staging-db
