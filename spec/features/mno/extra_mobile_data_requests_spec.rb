@@ -108,4 +108,32 @@ RSpec.feature 'MNO Requests view', type: :feature do
       expect { page.find('input#all-rows') }.not_to raise_error
     end
   end
+
+  context 'when the requests are complete or cancelled' do
+    let!(:complete_request) do
+      create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user, status: 'complete')
+    end
+    let!(:cancelled_request) do
+      create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user, status: 'cancelled')
+    end
+
+    before do
+      extra_mobile_data_request_for_mno.update(status: 'complete')
+      sign_in_as mno_user
+      click_on 'Your requests'
+    end
+
+    it 'shows the status' do
+      within("#request-#{complete_request.id}") do
+        expect(page).to have_text('Complete')
+      end
+      within("#request-#{cancelled_request.id}") do
+        expect(page).to have_text('Cancelled')
+      end
+    end
+
+    it 'does not show a link to Report a problem' do
+      expect(page).not_to have_link('Report a problem')
+    end
+  end
 end

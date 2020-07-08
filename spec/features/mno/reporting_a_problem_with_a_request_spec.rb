@@ -42,7 +42,8 @@ RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :featu
       click_on 'Report problem'
 
       within("#request-#{requests.first.id}") do
-        expect(page).to have_content('Queried')
+        expect(page).to have_content('Not on network')
+        expect(page).to have_link('Change problem')
       end
     end
   end

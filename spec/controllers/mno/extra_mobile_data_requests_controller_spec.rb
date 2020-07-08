@@ -18,7 +18,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       {
         id: extra_mobile_data_request_1_for_mno.id,
         extra_mobile_data_request: {
-          problem: '002',
+          problem: 'no_match_for_number',
         },
       }
     end

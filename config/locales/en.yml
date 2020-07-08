@@ -46,6 +46,12 @@ en:
           no_match_for_account_name: We couldn’t find an account with this name
           not_eligible: This account is not eligible
           no_longer_on_network: This account is no longer on our network
+        problem_tags:
+          incorrect_phone_number: Invalid number
+          no_match_for_number: Unknown number
+          no_match_for_account_name: Unknown name
+          not_eligible: Not eligible
+          no_longer_on_network: Not on network
         statuses:
           requested: Requested
           in_progress: In progress
