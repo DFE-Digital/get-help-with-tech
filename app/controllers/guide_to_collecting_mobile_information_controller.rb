@@ -39,12 +39,12 @@ private
         path: guide_to_collecting_mobile_information_telling_about_offer_path,
       },
       {
-        text: t('guide_to_collecting_mobile_information.asking_for_account_holder'),
-        path: guide_to_collecting_mobile_information_asking_for_account_holder_path,
-      },
-      {
         text: t('guide_to_collecting_mobile_information.privacy'),
         path: guide_to_collecting_mobile_information_privacy_path,
+      },
+      {
+        text: t('guide_to_collecting_mobile_information.asking_for_account_holder'),
+        path: guide_to_collecting_mobile_information_asking_for_account_holder_path,
       },
     ]
   end
