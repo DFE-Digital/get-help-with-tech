@@ -6,7 +6,7 @@
       <%= t('page_titles.token_is_valid_but_expired') %>
     </h1>
     <p class="govuk-body-l">
-      Sign-in links only work for <%= ActiveSupport::Duration.build(Settings.sign_in_token_ttl_seconds).inspect %>,
+      Sign-in links only work for <%= humanized_token_lifetime %>,
       so you need to request a new one. We'll send this by email.
     </p>
     <p class="govuk-body">
