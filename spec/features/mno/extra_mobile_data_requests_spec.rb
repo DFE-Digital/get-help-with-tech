@@ -11,8 +11,9 @@ RSpec.feature 'MNO Requests view', type: :feature do
   let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
   let!(:extra_mobile_data_request_from_unapproved_user) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request from unapproved user', mobile_network: mno_user.mobile_network, created_by_user: unapproved_user) }
 
-  context 'visiting Your requests signed in as an mno user' do
+  context 'visiting Your requests signed in as an mno user with extra_mobile_data_offer FeatureFlag active' do
     before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
       sign_in_as mno_user
       click_on 'Your requests'
     end
@@ -47,7 +48,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
   end
 
-  context 'with several extra_mobile_data_requests shown' do
+  context 'with extra_mobile_data_offer FeatureFlag active and several extra_mobile_data_requests shown' do
     # NOTE: a function, not a let, so that it re-runs each time
     def rendered_ids
       all('tbody tr').map { |e| e[:id].split('-').last.to_i }
@@ -57,6 +58,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
       create_list(:extra_mobile_data_request, 5, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
       sign_in_as mno_user
       click_on 'Your requests'
@@ -92,8 +94,9 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
   end
 
-  context 'with multiple pages of extra_mobile_data_requests' do
+  context 'with extra_mobile_data_offer FeatureFlag active and multiple pages of extra_mobile_data_requests' do
     before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
       create_list(:extra_mobile_data_request, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
       sign_in_as mno_user
       click_on 'Your requests'
@@ -109,7 +112,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
   end
 
-  context 'when the requests are complete or cancelled' do
+  context 'when the extra_mobile_data_offer FeatureFlag is active and the requests are complete or cancelled' do
     let!(:complete_request) do
       create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user, status: 'complete')
     end
@@ -118,6 +121,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
       extra_mobile_data_request_for_mno.update(status: 'complete')
       sign_in_as mno_user
       click_on 'Your requests'
@@ -134,6 +138,19 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
     it 'does not show a link to Report a problem' do
       expect(page).not_to have_link('Report a problem')
+    end
+  end
+
+  context 'visiting Your requests signed in as an mno user with extra_mobile_data_offer FeatureFlag inactive' do
+    before do
+      FeatureFlag.deactivate(:extra_mobile_data_offer)
+      sign_in_as mno_user
+    end
+
+    it 'returns a 404' do
+      visit mno_extra_mobile_data_requests_path
+      expect(page).to have_http_status(:not_found)
+      expect(page).to have_text('Page not found')
     end
   end
 end

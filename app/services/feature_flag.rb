@@ -9,6 +9,7 @@ class FeatureFlag
 
   TEMPORARY_FEATURE_FLAGS = %i[
     static_guidance_only
+    extra_mobile_data_offer
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze

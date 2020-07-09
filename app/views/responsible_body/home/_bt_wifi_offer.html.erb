@@ -1,0 +1,41 @@
+<h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-4">
+  <%- if FeatureFlag.active?(:extra_mobile_data_offer) %>
+    <span class="govuk-caption-m">Step 1</span>
+  <%- end %>
+
+  <%= govuk_link_to 'How many young people are eligible?', responsible_body_allocation_request_path %>
+</h2>
+
+<div class="govuk-!-margin-bottom-4">
+  <%- if @allocation_request.nil? %>
+    <strong id="step-1-status" class="govuk-tag govuk-tag--grey">
+      Not started yet
+    </strong>
+  <%- else %>
+    <strong id="step-1-status" class="govuk-tag">
+      Completed
+    </strong>
+  <%- end %>
+</div>
+
+<% if @allocation_request.present? %>
+  <dl class="govuk-summary-list govuk-summary-list--wide-terms">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= t('.number_eligible') %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @allocation_request.number_eligible %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= t('.number_eligible_with_hotspot_access') %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @allocation_request.number_eligible_with_hotspot_access %>
+      </dd>
+    </div>
+  </dl>
+<% end %>

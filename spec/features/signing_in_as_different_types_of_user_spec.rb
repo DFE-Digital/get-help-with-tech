@@ -75,10 +75,28 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a mobile network operator' do
     let(:user) { create(:mno_user) }
 
-    scenario 'it redirects to Your Requests' do
-      visit(validate_token_url)
-      expect(page).to have_current_path(mno_extra_mobile_data_requests_path)
-      expect(page).to have_text 'Your requests'
+    context 'with the extra_mobile_data_offer FeatureFlag active' do
+      before do
+        FeatureFlag.activate(:extra_mobile_data_offer)
+      end
+
+      scenario 'it redirects to Your Requests' do
+        visit(validate_token_url)
+        expect(page).to have_current_path(mno_extra_mobile_data_requests_path)
+        expect(page).to have_text 'Your requests'
+      end
+    end
+
+    context 'with the extra_mobile_data_offerFeatureFlag inactive' do
+      before do
+        FeatureFlag.deactivate(:extra_mobile_data_offer)
+      end
+
+      it 'redirects to the guidance page' do
+        visit(validate_token_url)
+        expect(page).to have_current_path(guidance_page_path)
+        expect(page).to have_text I18n.t('service_name')
+      end
     end
   end
 end
