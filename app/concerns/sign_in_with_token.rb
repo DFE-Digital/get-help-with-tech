@@ -26,11 +26,9 @@ module SignInWithToken
     end
 
     def token_is_valid_but_expired?(token:, identifier:)
-      [
-        token == sign_in_token,
-        identifier == sign_in_identifier(token),
-        (sign_in_token_expires_at.present? && sign_in_token_expires_at < Time.now.utc),
-      ].all?
+      token == sign_in_token &&
+        identifier == sign_in_identifier(token) &&
+        sign_in_token_expires_at&.past?
     end
 
     def clear_token!
