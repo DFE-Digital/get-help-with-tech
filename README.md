@@ -84,6 +84,7 @@ GHWT__STATIC_FILE_CACHE_TTL                      |how long CDNs and browsers sho
 GHWT__THROTTLE__*                                |Request throttling limits, see [settings.yaml](config/settings.yml) for more info                                                           |_(see settings)_
 GHWT__LOGSTASH__HOST                             | Hostname for where logstash should send logs                                                           | (nil)
 GHWT__LOGSTASH__PORT                             | Port for where logstash should send logs                                                               | (nil)
+GHWT__SENTRY__DSN                                | DSN (Client key) for Sentry.io error reporting | (nil)
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.
 

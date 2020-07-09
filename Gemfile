@@ -39,6 +39,9 @@ gem 'rack-throttle'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.0.3.1'
 
+# Error emails via Sentry
+gem 'sentry-raven'
+
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
 
