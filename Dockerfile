@@ -53,4 +53,4 @@ RUN find ${RAILS_ROOT}/scripts -type f | xargs -I {} ln -s {} ~/
 
 # run the rails server
 ARG RAILS_ENV=production
-CMD bundle exec rake db:migrate && bundle exec rake db:migrate && bundle exec rails s -e ${RAILS_ENV} -p ${APP_PORT} --binding=0.0.0.0
+CMD bundle exec rake db:migrate && bundle exec rails s -e ${RAILS_ENV} -p ${APP_PORT} --binding=0.0.0.0
