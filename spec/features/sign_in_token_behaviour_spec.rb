@@ -36,6 +36,12 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         expect(page).to have_http_status(:bad_request)
         expect(page).not_to have_text('Sign out')
       end
+
+      scenario 'Visiting a valid but expired token tells the user it has expired' do
+        visit validate_token_url
+        expect(page).to have_text('The link you clicked has expired')
+        expect(page).to have_link('Request a new sign-in link')
+      end
     end
   end
 

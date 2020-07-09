@@ -8,6 +8,7 @@ en:
     sign_in_or_create_account: Create an account or sign in
     sign_in: Sign in
     check_your_email: Check your email
+    token_is_valid_but_expired: The link you clicked has expired
     confirm: Check your answers before confirming
     eligible_people: How many young people are eligible?
     eligible_person: Tell us about an eligible young person

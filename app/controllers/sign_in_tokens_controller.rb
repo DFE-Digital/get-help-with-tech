@@ -14,8 +14,13 @@ class SignInTokensController < ApplicationController
     flash.notice = "Welcome, #{@user.full_name}"
     redirect_to root_url_for(@user)
   rescue ArgumentError
-    @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
-    render :token_not_recognised, status: :bad_request
+    user = User.find_by(sign_in_token: params[:token])
+    if user&.token_is_valid_but_expired?(token: params[:token], identifier: params[:identifier])
+      render :token_is_valid_but_expired, status: :bad_request
+    else
+      @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
+      render :token_not_recognised, status: :bad_request
+    end
   end
 
   def validate_manual

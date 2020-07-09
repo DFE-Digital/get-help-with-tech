@@ -59,6 +59,14 @@ module ViewHelper
     end
   end
 
+  def humanized_seconds(seconds)
+    ActiveSupport::Duration.build(seconds).inspect
+  end
+
+  def humanized_token_lifetime
+    humanized_seconds(Settings.sign_in_token_ttl_seconds)
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)
