@@ -15,7 +15,7 @@ class SignInTokensController < ApplicationController
     redirect_to root_url_for(@user)
   rescue ArgumentError
     user = User.find_by(sign_in_token: params[:token])
-    if user && user.token_is_valid_but_expired?(token: params[:token], identifier: params[:identifier])
+    if user&.token_is_valid_but_expired?(token: params[:token], identifier: params[:identifier])
       render :token_is_valid_but_expired, status: :bad_request
     else
       @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
