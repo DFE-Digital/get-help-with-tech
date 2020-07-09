@@ -1,4 +1,9 @@
 .env
 *.env
 .env.*
-
+./tmp/*
+./log/*
+./coverage
+./public/packs
+.byebug_history
+.git
