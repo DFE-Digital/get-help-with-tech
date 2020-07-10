@@ -27,8 +27,6 @@ class SignInTokensController < ApplicationController
     redirect_to validate_sign_in_token_path(token: sign_in_token_form_params[:token], identifier: sign_in_token_form_params[:identifier])
   end
 
-  def email_not_recognised; end
-
   def create
     @sign_in_token_form = SignInTokenForm.new(sign_in_token_form_params)
     if FeatureFlag.active?(:public_account_creation) && \
@@ -36,15 +34,15 @@ class SignInTokensController < ApplicationController
       redirect_to new_user_path and return
     end
 
-    if @sign_in_token_form.valid?
-      if @sign_in_token_form.email_is_user?
-        token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
-        redirect_to sent_token_path(token: token) and return
-      else
-        redirect_to email_not_recognised_path and return
-      end
+    if !@sign_in_token_form.valid?
+      render :new and return
+    end
+
+    if @sign_in_token_form.email_is_user?
+      token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
+      redirect_to sent_token_path(token: token)
     else
-      render :new
+      redirect_to email_not_recognised_path
     end
   end
 
