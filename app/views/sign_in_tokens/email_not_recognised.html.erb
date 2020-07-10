@@ -7,24 +7,19 @@
     </h1>
     <p class="govuk-body-l">
       We didn’t recognise the email address you entered.
-    </p>
-    <p class="govuk-body">
       You may have mistyped it, or you may not have access.
-      <%= govuk_button_link_to 'Try again', sign_in_path %>
     </p>
     <p class="govuk-body">
-      If you think you should have already been given access with this email address,
-      please email our support team:
+      <%= govuk_button_link_to 'Go back and try again', sign_in_path %>
     </p>
-    <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
+    <p class="govuk-body">
+      If you think your email address is correct and you should have access,
+      you can email our support team:
+    </p>
+    <ul class="govuk-list">
       <li>Email: <%= ghwt_contact_mailto(subject: nil) %></li>
       <li>Monday to Friday (except public holidays)</li>
       <li>We aim to respond within 5 working days, or one working day for more urgent&nbsp;queries</li>
     </ul>
-
-    <p class="govuk-body">
-      Or <%= govuk_link_to 'send a new email', sign_in_path %>
-    </p>
   </div>
 </div>
-x
