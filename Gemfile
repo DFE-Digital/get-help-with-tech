@@ -39,6 +39,9 @@ gem 'rack-throttle'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.0.3.1'
 
+# Used for markdown rendering of guidance pages
+gem 'redcarpet'
+
 # Error emails via Sentry
 gem 'sentry-raven'
 
