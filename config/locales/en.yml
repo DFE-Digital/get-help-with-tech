@@ -9,7 +9,7 @@ en:
     sign_in: Sign in
     check_your_email: Check your email
     token_is_valid_but_expired: The link you clicked has expired
-    token_not_recognised: We didn't recognise that link
+    token_not_recognised: We didn’t recognise that link
     confirm: Check your answers before confirming
     eligible_people: How many young people are eligible?
     eligible_person: Tell us about an eligible young person
