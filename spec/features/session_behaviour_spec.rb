@@ -22,6 +22,7 @@ RSpec.feature 'Session behaviour', type: :feature do
     # TODO: need to think about how verification should work
     context 'when signed in' do
       before do
+        FeatureFlag.activate(:extra_mobile_data_offer)
         sign_in_as user
       end
 
@@ -91,7 +92,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         expect(page).to have_text('Check your email')
       end
 
-      scenario 'Entering an unrecognised email address is silently ignored' do
+      scenario 'Entering an unrecognised email address shows an informative message' do
         visit '/'
         click_on 'Sign in'
         find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
@@ -100,7 +101,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         fill_in 'Email address', with: 'unrecognised@example.com'
         click_on 'Continue'
 
-        expect(page).to have_text('Check your email')
+        expect(page).to have_text('We did\'nt recognise that email address')
       end
     end
 
