@@ -34,9 +34,7 @@ class SignInTokensController < ApplicationController
       redirect_to new_user_path and return
     end
 
-    if !@sign_in_token_form.valid?
-      render :new and return
-    end
+    render :new and return unless @sign_in_token_form.valid?
 
     if @sign_in_token_form.email_is_user?
       token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
