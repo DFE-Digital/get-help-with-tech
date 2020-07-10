@@ -24,6 +24,9 @@ http_basic_auth:
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000
 
+sentry:
+  dsn:
+    
 session_ttl_seconds: 3600
 
 # Sign-in tokens will expire after this many seconds
