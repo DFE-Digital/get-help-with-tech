@@ -27,7 +27,7 @@ class SignInTokensController < ApplicationController
     redirect_to validate_sign_in_token_path(token: sign_in_token_form_params[:token], identifier: sign_in_token_form_params[:identifier])
   end
 
-  def email_not_recognised;end
+  def email_not_recognised; end
 
   def create
     @sign_in_token_form = SignInTokenForm.new(sign_in_token_form_params)

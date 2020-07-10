@@ -101,7 +101,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         fill_in 'Email address', with: 'unrecognised@example.com'
         click_on 'Continue'
 
-        expect(page).to have_text('We did\'nt recognise that email address')
+        expect(page).to have_text('We didn\'t recognise that email address')
       end
     end
 
@@ -125,15 +125,16 @@ RSpec.feature 'Session behaviour', type: :feature do
         expect(page).to have_text('Check your email')
       end
 
-      scenario 'Entering an unrecognised email address is silently ignored' do
+      scenario 'Entering an unrecognised email address shows an informative message' do
         visit '/'
         click_on 'Sign in'
+        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
         expect(page).to have_text('Email address')
 
         fill_in 'Email address', with: 'unrecognised@example.com'
         click_on 'Continue'
 
-        expect(page).to have_text('Check your email')
+        expect(page).to have_text('We didn\'t recognise that email address')
       end
     end
   end
