@@ -1,21 +1,15 @@
+<%- content_for :title, t('page_titles.token_not_recognised') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Sorry, that didn’t work
+      <%= t('page_titles.token_not_recognised') %>
     </h1>
     <p class="govuk-body-l">
-      We didn’t recognise that link.
+      Sign-in links only work once - so if you’ve signed in with this link before, you need to request a new one.
     </p>
     <p class="govuk-body">
-      If you clicked on the link from an email, you could try copying the two special values from your email into here:
-    </p>
-    <%= form_for @sign_in_token_form, url: validate_manually_entered_sign_in_token_path, method: :get do |f| %>
-      <%= f.govuk_text_field :token %>
-      <%= f.govuk_text_field :identifier %>
-      <%= f.govuk_submit %>
-    <% end %>
-    <p class="govuk-body">
-      Or <%= govuk_link_to 'send a new email', sign_in_path %>
+      <%= govuk_button_link_to 'Request a new sign-in link', sign_in_path %>
     </p>
   </div>
 </div>

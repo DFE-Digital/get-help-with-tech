@@ -55,19 +55,9 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
       expect(page).to have_text('We didn’t recognise that link')
     end
 
-    scenario 'Visiting an invalid token link allows the user to enter them manually' do
+    scenario 'Visiting an invalid token link allows the user to request a new link' do
       visit broken_token_url
-      expect(page).to have_field('Token')
-      expect(page).to have_field('Identifier')
-    end
-
-    scenario 'Filling in the correct token + identifier manually signs the user in' do
-      visit broken_token_url
-      fill_in('Token', with: token)
-      fill_in('Identifier', with: identifier)
-      click_on 'Continue'
-      expect(page).to have_text(user.email_address)
-      expect(page).to have_text('Sign out')
+      expect(page).to have_link('Request a new sign-in link', href: sign_in_path)
     end
   end
 end
