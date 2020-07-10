@@ -37,8 +37,9 @@ RSpec.feature ResponsibleBody do
     end
   end
 
-  context 'signed in as an RB user' do
+  context 'signed in as an RB user with the extra_mobile_data_offer FeatureFlag active' do
     before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
       sign_in_as rb_user
     end
 

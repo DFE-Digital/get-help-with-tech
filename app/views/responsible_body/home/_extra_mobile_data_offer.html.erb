@@ -1,0 +1,17 @@
+<h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-4">
+  <span class="govuk-caption-m">Step 2</span>
+  <%= govuk_link_to 'Request extra mobile data', responsible_body_extra_mobile_data_requests_path %>
+</h2>
+<div class="govuk-!-margin-bottom-4">
+  <%- if @requests.empty? %>
+    <strong class="govuk-tag govuk-tag--grey">
+      Not started yet
+    </strong>
+  <%- else %>
+    <strong class="govuk-tag govuk-tag--blue">
+      In progress
+    </strong>
+  <%- end %>
+</div>
+
+<p class="govuk-body">Give us mobile numbers and network details and we’ll request extra data for these devices. How much data someone gets will depend on their network.</p>

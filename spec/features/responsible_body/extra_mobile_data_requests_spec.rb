@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.feature 'RB ExtraMobileDataRequests view', type: :feature do
   let(:rb_user) { create(:local_authority_user) }
 
-  describe 'logged in as an RB user' do
+  describe 'logged in as an RB user with the extra_mobile_data_offer FeatureFlag active' do
     before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
       sign_in_as rb_user
     end
 

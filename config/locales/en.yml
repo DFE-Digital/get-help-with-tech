@@ -92,7 +92,7 @@ en:
       time_only_with_zone: "%l:%M%P %Z"
   responsible_body:
     home:
-      show:
+      bt_wifi_offer:
         number_eligible: Eligible young people
         number_eligible_with_hotspot_access: Number who can see a BT hotspot
     extra_mobile_data_requests:

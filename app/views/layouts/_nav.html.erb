@@ -2,10 +2,12 @@
   <%- if FeatureFlag.active?(:static_guidance_only) %>
     <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
   <%- else %>
-    <%- if @user && @user.is_dfe? %>
+    <%- if @user&.is_dfe? %>
 
-    <%- elsif @user && @user.is_mno_user? %>
-      <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
+    <%- elsif @user&.is_mno_user? %>
+      <%- if FeatureFlag.active?(:extra_mobile_data_offer) %>
+        <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
+      <%- end %>
     <%- else %>
       <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
       <%- if SessionService.is_signed_in?(session) && @user.is_responsible_body_user? %>

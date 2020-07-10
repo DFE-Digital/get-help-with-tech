@@ -1,4 +1,6 @@
 class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::BaseController
+  before_action { render_404_if_feature_flag_inactive(:extra_mobile_data_offer) }
+
   def index
     @extra_mobile_data_requests = @user.extra_mobile_data_requests
   end

@@ -43,6 +43,12 @@ private
     end
   end
 
+  def render_404_if_feature_flag_inactive(feature_flag)
+    if FeatureFlag.inactive?(feature_flag)
+      render 'errors/not_found', status: :not_found and return
+    end
+  end
+
   def not_found
     render 'errors/not_found', status: :not_found and return
   end
