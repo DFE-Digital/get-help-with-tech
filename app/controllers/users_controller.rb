@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :check_public_account_creation_feature_flag!
+  before_action { render_404_if_feature_flag_inactive(:public_account_creation) }
 
   def new
     @user = User.new
@@ -32,11 +32,5 @@ private
       :email_address,
       :organisation,
     )
-  end
-
-  def check_public_account_creation_feature_flag!
-    if FeatureFlag.inactive?(:public_account_creation)
-      render 'errors/not_found', status: :not_found
-    end
   end
 end

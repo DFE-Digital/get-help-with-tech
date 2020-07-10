@@ -1,5 +1,5 @@
 class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::BaseController
-  before_action :check_extra_mobile_data_offer_feature_flag!
+  before_action { render_404_if_feature_flag_inactive(:extra_mobile_data_offer) }
 
   def index
     @extra_mobile_data_requests = @user.extra_mobile_data_requests
@@ -58,11 +58,5 @@ private
       mobile_network_id
       confirm
     ])
-  end
-
-  def check_extra_mobile_data_offer_feature_flag!
-    if FeatureFlag.inactive?(:extra_mobile_data_offer)
-      render 'errors/not_found', status: :not_found
-    end
   end
 end

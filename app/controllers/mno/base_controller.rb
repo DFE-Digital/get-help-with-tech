@@ -1,15 +1,9 @@
 class Mno::BaseController < ApplicationController
-  before_action :check_extra_mobile_data_offer_feature_flag!,
-                :require_mno_user!,
+  before_action { render_404_if_feature_flag_inactive(:extra_mobile_data_offer) }
+  before_action :require_mno_user!,
                 :set_mobile_network
 
 private
-
-  def check_extra_mobile_data_offer_feature_flag!
-    if FeatureFlag.inactive?(:extra_mobile_data_offer)
-      render 'errors/not_found', status: :not_found
-    end
-  end
 
   def require_mno_user!
     if SessionService.is_signed_in?(session)
