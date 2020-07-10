@@ -57,7 +57,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
     scenario 'Visiting an invalid token link allows the user to request a new link' do
       visit broken_token_url
-      expect(page).to have_link('Request a new sign-in link')
+      expect(page).to have_link('Request a new sign-in link', href: sign_in_path)
     end
   end
 end
