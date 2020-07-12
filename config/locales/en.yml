@@ -33,6 +33,9 @@ en:
     choosing_devices:
       title: Choosing devices
       description: See which devices are available to support vulnerable and disadvantaged children and young people, and how they will be allocated.
+    ordering_devices:
+      title: Ordering devices
+      description: Information for local authorities, trusts and other responsible.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
