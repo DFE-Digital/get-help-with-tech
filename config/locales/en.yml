@@ -36,6 +36,9 @@ en:
     ordering_devices:
       title: Ordering devices
       description: Information for local authorities, trusts and other responsible.
+    receiving_devices:
+      title: Receiving devices
+      description: Find out when and where devices will be delivered. Also includes information on what to do if devices are faulty or missing from your order.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
