@@ -45,6 +45,9 @@ en:
     preparing_chromebooks:
       title: Preparing Chromebooks
       description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering and set up instructions for local authorities, trusts and schools.
+    preparing_4g_wireless_routers:
+      title: Preparing 4G routers
+      description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
