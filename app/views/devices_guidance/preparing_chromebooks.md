@@ -49,7 +49,7 @@ If you decide not to use Cisco Umbrella, we strongly recommend that you enable a
 
 You can report access to any inappropriate content that should not be allowed by Cisco Umbrella through the XMA Service Desk.  
 
-Find out [how to access support](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/device-support-and-maintenance) to report Cisco Umbrella issues.
+Find out [how to access support](/devices/support-and-maintenance) to report Cisco Umbrella issues.
 
 ## User guidance for young people and their carers
 

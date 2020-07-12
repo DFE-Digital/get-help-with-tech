@@ -39,4 +39,4 @@ Local authorities, academy trusts and schools could consider using loan agreemen
 
 Laptops, tablets and 4G wireless routers will not be tagged or labelled when they are delivered. LAs and trusts are responsible for implementing their own security and tracking methods.  
 
-See the [guidance on preparing devices](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks) for information on setting up mobile device management (MDM) and keeping records of devices.
+See the [guidance on preparing devices](/devices/preparing-chromebooks) for information on setting up mobile device management (MDM) and keeping records of devices.

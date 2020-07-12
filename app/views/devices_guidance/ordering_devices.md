@@ -12,7 +12,7 @@ You can set up a LA Google domain for pre-school children, care leavers and any 
 
 You’ll be asked to enter a Google domain and ‘Recovery Off- Domain email’ for the Google domain. If you need assistance please speak to your technical contact who should be able to assist with this. Please do not order before exhausting all efforts to find this information from the school / local authority. As a last resort please type “UNKNOWN” however Google Education licences cannot be provided to you. We will report this action to the DfE as it is a security risk.
 
-For safe use, children and young people need their Chromebooks to be linked to a Google domain before they can use them. You can find out more about [how to enrol Google Chromebooks](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks).
+For safe use, children and young people need their Chromebooks to be linked to a Google domain before they can use them. You can find out more about [how to enrol Google Chromebooks](/devices/preparing-chromebooks).
 
 ## How to order
 
