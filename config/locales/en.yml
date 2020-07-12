@@ -48,6 +48,9 @@ en:
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
+    distributing_devices:
+      title: Distributing devices
+      description: Advice on how to get devices to young people via schools, social workers and deliveries to their homes. Information on insuring devices, asset management and loan agreements.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
