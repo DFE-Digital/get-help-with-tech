@@ -6,6 +6,11 @@ class DevicesGuidance
     @pages = pages_metadata.map do |page_id, page_metadata|
       page_from(page_id, page_metadata)
     end
+    interlink_pages
+  end
+
+  def all_pages
+    @pages
   end
 
   def find_by_slug(page_slug)
@@ -32,5 +37,12 @@ private
 
   def path_given(page_id)
     devices_guidance_subpage_path(subpage_slug: page_id.to_s.dasherize)
+  end
+
+  def interlink_pages
+    @pages.each_cons(2) do |p1, p2|
+      p1.next = p2
+      p2.previous = p1
+    end
   end
 end
