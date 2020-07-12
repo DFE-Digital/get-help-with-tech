@@ -11,5 +11,6 @@ RSpec.feature 'Devices guidance pages', type: :feature do
     visit '/devices/get-help-with-technology-devices'
 
     expect(page).to have_selector 'h1', text: I18n.t!('devices_guidance.get_help_with_technology_devices.title')
+    expect(page).to have_selector 'a', text: I18n.t!('page_titles.devices_guidance_index')
   end
 end
