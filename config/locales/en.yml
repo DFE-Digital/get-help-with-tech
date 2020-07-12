@@ -42,6 +42,9 @@ en:
     preparing_microsoft_windows_laptops_and_tablets:
       title: Preparing Microsoft Windows laptops and tablets
       description: Learn how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
+    preparing_chromebooks:
+      title: Preparing Chromebooks
+      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering and set up instructions for local authorities, trusts and schools.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
