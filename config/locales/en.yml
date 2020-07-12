@@ -26,6 +26,10 @@ en:
     start: Tell us who needs internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
+  devices_guidance:
+    get_help_with_technology_devices:
+      title: "Get help with technology: devices"
+      description: Find out about the Get help with technology offer from the Department for Education. See who is eligible for devices and why we're providing them.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
