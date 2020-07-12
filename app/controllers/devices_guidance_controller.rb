@@ -1,4 +1,8 @@
 class DevicesGuidanceController < ApplicationController
+  def index
+    @pages = devices_guidance.all_pages
+  end
+
   def subpage
     if valid_subpage_slug?
       @page = devices_guidance.find_by_slug(params[:subpage_slug])

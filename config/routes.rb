@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
+  get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   resources :sessions, only: %i[create destroy]
