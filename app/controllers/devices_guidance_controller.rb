@@ -1,10 +1,11 @@
 class DevicesGuidanceController < ApplicationController
   def subpage
-    not_found and return unless valid_subpage_slug?
-
-    @page = devices_guidance.find_by_slug(params[:subpage_slug])
-
-    render :rendered_markdown_template
+    if valid_subpage_slug?
+      @page = devices_guidance.find_by_slug(params[:subpage_slug])
+      render :rendered_markdown_template
+    else
+      not_found
+    end
   end
 
 private
