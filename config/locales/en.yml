@@ -51,6 +51,9 @@ en:
     distributing_devices:
       title: Distributing devices
       description: Advice on how to get devices to young people via schools, social workers and deliveries to their homes. Information on insuring devices, asset management and loan agreements.
+    support_and_maintenance:
+      title: Support and maintenance
+      description: Find out how to support your users, access additional support and deal with a faulty device.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
