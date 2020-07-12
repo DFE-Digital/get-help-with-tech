@@ -39,6 +39,9 @@ en:
     receiving_devices:
       title: Receiving devices
       description: Find out when and where devices will be delivered. Also includes information on what to do if devices are faulty or missing from your order.
+    preparing_microsoft_windows_laptops_and_tablets:
+      title: Preparing Microsoft Windows laptops and tablets
+      description: Learn how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
