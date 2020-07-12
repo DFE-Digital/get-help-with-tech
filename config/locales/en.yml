@@ -54,6 +54,9 @@ en:
     support_and_maintenance:
       title: Support and maintenance
       description: Find out how to support your users, access additional support and deal with a faulty device.
+    safeguarding_for_device_users:
+      title: Safeguarding for device users
+      description: Information on content filtering, privacy policies and mobile device management to ensure devices are used appropriately by young people and families.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay as you go (PAYG)
