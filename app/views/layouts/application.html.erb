@@ -40,13 +40,19 @@
             </span>
           <% end %>
         </div>
-        <div class="govuk-header__content">
-          <%= link_to t('service_name'), "/", class: "govuk-header__link govuk-header__link--service-name" %>
-          <button type="button" role="button" data-module="govuk-button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
-          <nav>
-            <%= render partial: 'layouts/nav' %>
-          </nav>
-        </div>
+        <% if content_for(:devices_service) %>
+          <div class="govuk-header__content">
+            <%= link_to t('page_titles.devices_guidance_index'), "/devices", class: "govuk-header__link govuk-header__link--service-name" %>
+          </div>
+        <% else %>
+          <div class="govuk-header__content">
+            <%= link_to t('service_name'), "/", class: "govuk-header__link govuk-header__link--service-name" %>
+            <button type="button" role="button" data-module="govuk-button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+            <nav>
+              <%= render partial: 'layouts/nav' %>
+            </nav>
+          </div>
+        <% end %>
       </div>
     </header>
     <div class="govuk-width-container">

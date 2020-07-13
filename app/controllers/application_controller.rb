@@ -39,7 +39,7 @@ private
 
   def check_static_guidance_only_feature_flag!
     if FeatureFlag.active?(:static_guidance_only)
-      render 'errors/not_found', status: :not_found unless %w[pages monitoring].include?(controller_name)
+      render 'errors/not_found', status: :not_found unless %w[pages devices_guidance monitoring].include?(controller_name)
     end
   end
 
