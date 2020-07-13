@@ -1,5 +1,3 @@
-## About the offer
-
 The Department for Education (DfE) is providing [laptops, tablets and connectivity packages](https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19) for disadvantaged and vulnerable families, children and young people to access social care and education.
 
 These digital devices will:

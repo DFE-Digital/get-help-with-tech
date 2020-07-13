@@ -26,11 +26,11 @@ en:
     start: Tell us who needs internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_index: Supporting remote education and social care
+    devices_guidance_index: "Get help with technology: devices"
   devices_guidance:
-    get_help_with_technology_devices:
-      title: "Get help with technology: devices"
-      description: Find out about the Get help with technology offer from the Department for Education. See who is eligible for devices and why we're providing them.
+    about_the_offer:
+      title: About the offer
+      description: See who is eligible for devices and why we’re providing them.
     choosing_devices:
       title: Choosing devices
       description: See which devices are available to support vulnerable and disadvantaged children and young people, and how they will be allocated.

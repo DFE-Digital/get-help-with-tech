@@ -5,7 +5,7 @@ RSpec.describe DevicesGuidance, type: :model do
 
   describe '#page_exists?' do
     it 'does a slug lookup for existing pages' do
-      expect(guidance.page_exists?('get-help-with-technology-devices')).to be_truthy
+      expect(guidance.page_exists?('about-the-offer')).to be_truthy
     end
 
     it 'returns false for non-existent pages' do
@@ -15,10 +15,10 @@ RSpec.describe DevicesGuidance, type: :model do
 
   describe '#find_by_slug' do
     it 'fetches the page' do
-      found_page = guidance.find_by_slug('get-help-with-technology-devices')
+      found_page = guidance.find_by_slug('about-the-offer')
 
       expect(found_page).not_to be_nil
-      expect(found_page.page_id).to eq(:get_help_with_technology_devices)
+      expect(found_page.page_id).to eq(:about_the_offer)
     end
   end
 
