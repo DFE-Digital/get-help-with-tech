@@ -12,10 +12,10 @@ Microsoft Windows laptops and tablets come with the Windows 10 Pro Education ope
 
 Microsoft Windows devices feature Bitlocker disk encryption to protect the privacy of data with TPM 2.0 and include the following security and antivirus software:
 
-*   Windows Information Protection
-*   Windows Defender Credential/System Guard
-*   Windows Defender Exploit Guard
-*   Windows Defender Antivirus
+* Windows Information Protection
+* Windows Defender Credential/System Guard
+* Windows Defender Exploit Guard
+* Windows Defender Antivirus
 
 ### Education software
 
@@ -51,9 +51,9 @@ When you loan the devices out, it’s important to underline that parents and gu
 
 See government advice on:  
 
-*   [safeguarding](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers), which signposts parents to trusted providers and includes detailed advice on keeping children safe online (this includes information on home filters, age appropriate parental controls, the risks of platforms and apps, and how to have age appropriate conversations with children about online safety)
-*   [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
-*   [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
+* [safeguarding](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers), which signposts parents to trusted providers and includes detailed advice on keeping children safe online (this includes information on home filters, age appropriate parental controls, the risks of platforms and apps, and how to have age appropriate conversations with children about online safety)
+* [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
+* [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
 
 ## Installing your own software and settings
 

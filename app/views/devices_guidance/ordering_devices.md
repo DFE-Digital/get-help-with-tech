@@ -28,10 +28,10 @@ If you have not received any of the emails needed to complete the steps above, p
 
 If you make a mistake in your order, it may be possible to stop or correct it. Email [dfeordererror@computacenter.com](mailto:dfeordererror@computacenter.com) immediately and tell us:
 
-*   whether you want to stop the order or correct it
-*   your order number
-*   your local authority or academy trust name
-*   a contact name and telephone number
+* whether you want to stop the order or correct it
+* your order number
+* your local authority or academy trust name
+* a contact name and telephone number
 
 The DfE considered all allocation queries raised by local authorities and academy trusts, and reviewed the submitted evidence against the initial allocation. The department then compared those queries to similar requests it received nationwide, and balanced it against the total number of devices available.
 

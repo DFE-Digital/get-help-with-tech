@@ -2,9 +2,9 @@
 
 You can choose between:
 
-*   Microsoft Windows laptops
-*   Google Chromebooks
-*   tablets
+* Microsoft Windows laptops
+* Google Chromebooks
+* tablets
 
 Here are the minimum specifications for each device:
 
@@ -147,8 +147,8 @@ There are a limited number of devices to distribute as part of the 'Get help wit
 
 The number of devices you have been allocated is based on the number of eligible children and young people that:
 
-*   you’re responsible for
-*   the Department for Education (DfE) has estimated do not already have access to a device provided through other means (such as through their school or family)
+* you’re responsible for
+* the Department for Education (DfE) has estimated do not already have access to a device provided through other means (such as through their school or family)
 
 The DfE considered all allocation queries raised by local authorities and academy trusts, and reviewed the submitted evidence against the initial allocation. The department then compared those queries to similar requests it received nationwide, and balanced it against the total number of devices available. More devices have been provided where there was an evidenced need to support eligible children.
 

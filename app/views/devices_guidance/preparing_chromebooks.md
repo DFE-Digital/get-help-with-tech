@@ -8,8 +8,8 @@ You can choose to enrol your Chromebooks and add Cisco Umbrella content filterin
 
 Find out how to enrol Chromebooks with:
 
-*   [user login required](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/enrol-user-logins) – suitable for users linked to schools
-*   [no user login required](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/enrol-no-user-logins) – suitable for users linked to local authorities, where a login will not be required
+* [user login required](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/enrol-user-logins) – suitable for users linked to schools
+* [no user login required](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/enrol-no-user-logins) – suitable for users linked to local authorities, where a login will not be required
 
 ## Getting a Google domain
 
@@ -23,17 +23,17 @@ For Chromebooks for children linked to schools, local authorities should use the
 
 Chromebooks come with Chrome OS. This manages:
 
-*   encryption
-*   anti-malware
-*   anti-virus
+* encryption
+* anti-malware
+* anti-virus
 
 Chromebooks have the H1 Secure Microcontroller, which is Google’s version of TPM (Microsoft’s encrypted processor). This allows patching and OS updates to be installed more quickly, so it’s easier to keep devices up to date.
 
 Children and young people can also use:
 
-*   Google Docs
-*   Google Sheets
-*   Google Slides
+* Google Docs
+* Google Sheets
+* Google Slides
 
 ## Content filtering
 
@@ -55,4 +55,4 @@ Find out [how to access support](/devices/support-and-maintenance) to report Cis
 
 User guides on setting up Chromebooks are available to download. You can share these with young people and their parents, guardians and carers. Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
 
-*   [Google Chromebook: User guidance](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/user-guidance)
+* [Google Chromebook: User guidance](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/user-guidance)

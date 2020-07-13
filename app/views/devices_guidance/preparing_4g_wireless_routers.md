@@ -30,9 +30,9 @@ Parents and guardians of the young people making use of these devices should be 
 
 You may have particular resources or sites you would choose to signpost them to, or alternatively material can be found here:
 
-*   [What parents and carers need to know during school closures](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers) which includes detailed advice on keeping children safe online. It includes how to have age appropriate conversations with children about online safety, home filters, age appropriate parental controls and risks of platforms and apps
-*   [Support for parents and carers to keep children safe from online harms](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) outlines resources to help keep children safe from different risks online and where to go to receive support and advice
-*   [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) includes information on security and privacy settings
+* [What parents and carers need to know during school closures](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers) which includes detailed advice on keeping children safe online. It includes how to have age appropriate conversations with children about online safety, home filters, age appropriate parental controls and risks of platforms and apps
+* [Support for parents and carers to keep children safe from online harms](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) outlines resources to help keep children safe from different risks online and where to go to receive support and advice
+* [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) includes information on security and privacy settings
 
 ## User guidance for young people and their carers
 
@@ -40,13 +40,13 @@ Your wireless routers will come with 4G SIM cards in them. Your SIMs will be act
 
 Along with set-up instructions in the box, you can give the users this [user guide](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-4g-wireless-routers/4g-user-guidance) that covers:
 
-*   how to set up a 4G wireless router
-*   tips on staying safe online
-*   what to do if something goes wrong
+* how to set up a 4G wireless router
+* tips on staying safe online
+* what to do if something goes wrong
 
 You should give young people and their carers a copy of this document. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.  
 
-*   [4G wireless routers: User guidance](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-4g-wireless-routers/4g-user-guidance)
+* [4G wireless routers: User guidance](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-4g-wireless-routers/4g-user-guidance)
 
 ## Get support
 

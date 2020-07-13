@@ -2,17 +2,17 @@
 
 Devices are being provided to help children and young people access social care and receive remote education, as well as support for their safety and wellbeing. In particular they are being provided to:  
 
-*   enable social workers to provide virtual safeguarding and support to children and families with a social worker (e.g. via video-conference);
-*   help families and care leavers avoid social isolation and access the services they need online to protect their wellbeing;
-*   enable children and young people to access remote learning, including year 10 pupils who have GCSE exams next year.
+* enable social workers to provide virtual safeguarding and support to children and families with a social worker (e.g. via video-conference);
+* help families and care leavers avoid social isolation and access the services they need online to protect their wellbeing;
+* enable children and young people to access remote learning, including year 10 pupils who have GCSE exams next year.
 
 Local authorities (LAs) and academy trusts own the devices, so they should consider including an acceptable use policy in loan agreements. See our [guidance on loaning devices](/devices/distributing-devices) for more information.
 
 Parents and guardians should provide age-appropriate supervision for the internet use of the children and young people in their care (but LAs should be alert to cases where parents of children with a social worker may not be in a position to do this). They may find the following information helpful:
 
-*   [What parents and carers need to know during school closures](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers) which includes detailed advice on keeping children safe online. It includes information on home filters, age appropriate parental controls, and how to have age appropriate conversations with children about online safety.
-*   [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
-*   [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
+* [What parents and carers need to know during school closures](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers) which includes detailed advice on keeping children safe online. It includes information on home filters, age appropriate parental controls, and how to have age appropriate conversations with children about online safety.
+* [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
+* [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
 
 ## Content filtering
 
@@ -43,10 +43,10 @@ Google Chromebooks will arrive with Chrome OS, which includes virus protection.
 
 Microsoft laptops and tablets will arrive with Windows 10 and the following antivirus and security software installed:
 
-*   Windows Information Protection
-*   Windows Defender Credential/System Guard
-*   Windows Defender Exploit Guard
-*   Windows Defender Antivirus
+* Windows Information Protection
+* Windows Defender Credential/System Guard
+* Windows Defender Exploit Guard
+* Windows Defender Antivirus
 
 ## DfE privacy notice: mobile device management for the Department for Education’s ‘Get Help with Technology’ programme
 
@@ -56,8 +56,8 @@ The Get Help with Technology programme is run by the Department for Education (D
 
 As part of the Get Help with Technology programme we need to be able to:
 
-*   keep children safe whilst they are online
-*   locate, disable and delete data from the laptop that is on loan, if it is lost
+* keep children safe whilst they are online
+* locate, disable and delete data from the laptop that is on loan, if it is lost
 
 We’ve installed mobile device management software on the laptop to do this. The mobile device management solution will collect some personal information when it is implemented on your laptop or tablet.
 
@@ -65,9 +65,9 @@ The DfE is the data controller for the personal information collected when using
 
 The personal information collected will be:
 
-*   a device number for the laptop loaned to you
-*   your Internet Protool (IP) address, which is a number linked to a device connected to a computer network
-*   addresses of websites visited when using the device
+* a device number for the laptop loaned to you
+* your Internet Protool (IP) address, which is a number linked to a device connected to a computer network
+* addresses of websites visited when using the device
 
 For these purposes, the personal information above is securely shared between the DfE and the mobile device management software providers (including their contracted partners), under agreements with the DfE.
 

@@ -4,9 +4,9 @@ Local authorities (LAs) and academy trusts will own the devices (and the license
 
 LAs and academy trusts can choose to:
 
-*   loan devices directly to families, children and young people
-*   transfer ownership to schools
-*   gift devices to care leavers
+* loan devices directly to families, children and young people
+* transfer ownership to schools
+* gift devices to care leavers
 
 [Guidance on safe internet use](https://www.saferinternet.org.uk/) should be provided when devices are loaned or gifted.
 
@@ -18,10 +18,10 @@ Laptops, tablets and 4G wireless routers will be delivered directly to the schoo
 
 Organisations are responsible for deciding how they deliver devices. For example, they can:
 
-*   arrange for them to be collected by families from school with a social worker present (where relevant)
-*   organise for them to be delivered to the homes of children and care leavers
-*   arrange for schools to deliver them
-*   use local organisations, such as those supporting care leavers
+* arrange for them to be collected by families from school with a social worker present (where relevant)
+* organise for them to be delivered to the homes of children and care leavers
+* arrange for schools to deliver them
+* use local organisations, such as those supporting care leavers
 
 Distribution should be arranged in accordance with [social distancing guidelines](https://www.gov.uk/government/publications/staying-alert-and-safe-social-distancing).
 
