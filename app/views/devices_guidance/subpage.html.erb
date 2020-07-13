@@ -20,11 +20,13 @@
 
     <p class="govuk-body-l"><%= @page.description %></p>
 
-    <h2 class="govuk-heading-s">Contents</h2>
+    <% if @page.rendered_table_of_contents.present? %>
+      <h2 class="govuk-heading-s">Contents</h2>
 
-    <div class="app-styled-content">
-      <%= @page.rendered_table_of_contents %>
-    </div>
+      <div class="app-styled-content">
+        <%= @page.rendered_table_of_contents %>
+      </div>
+    <% end %>
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
