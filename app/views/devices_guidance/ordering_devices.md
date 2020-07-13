@@ -1,4 +1,4 @@
-Local authorities (LAs) and academy trusts will receive an email from Computacenter inviting them to join the TechSource portal, shortly before ordering opens.  
+Local authorities (LAs) and academy trusts will receive an email from Computacenter inviting them to join the TechSource portal, shortly before ordering opens.
 
 LAs should order devices for children and young people with a social worker, including Year 10s, preschool children and care leavers. LAs should inform LA maintained schools and academy trusts that the LA will be supplying their devices.
 
@@ -6,9 +6,9 @@ For year 10 pupils without a social worker, the LA orders for pupils in maintain
 
 ## For Chromebook orders
 
-If you're ordering Chromebooks for school children with social care needs, talk to the child's school to ensure the Chromebook will be enrolled on that school's Google domain, if they have one. This is so the child will be able to access their school’s services and remote education. To do this, create a separate order for each school domain including the number of Google devices needed.  
+If you're ordering Chromebooks for school children with social care needs, talk to the child's school to ensure the Chromebook will be enrolled on that school's Google domain, if they have one. This is so the child will be able to access their school’s services and remote education. To do this, create a separate order for each school domain including the number of Google devices needed.
 
-You can set up a LA Google domain for pre-school children, care leavers and any other young people with social care needs who are not linked to a school. [Find out how to set up a Google domain for care leavers and children with a social worker](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-chromebooks/google-domain-for-care-leavers-children-with-social-worker) .  
+You can set up a LA Google domain for pre-school children, care leavers and any other young people with social care needs who are not linked to a school. [Find out how to set up a Google domain for care leavers and children with a social worker](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/google-domain-for-care-leavers-children-with-social-worker).
 
 You’ll be asked to enter a Google domain and ‘Recovery Off- Domain email’ for the Google domain. If you need assistance please speak to your technical contact who should be able to assist with this. Please do not order before exhausting all efforts to find this information from the school / local authority. As a last resort please type “UNKNOWN” however Google Education licences cannot be provided to you. We will report this action to the DfE as it is a security risk.
 

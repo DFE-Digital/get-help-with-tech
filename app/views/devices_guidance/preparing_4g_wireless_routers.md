@@ -38,7 +38,7 @@ You may have particular resources or sites you would choose to signpost them to,
 
 Your wireless routers will come with 4G SIM cards in them. Your SIMs will be activated the day after you receive your 4G wireless routers. They are then ready to loan to families, children and young people.  
 
-Along with set-up instructions in the box, you can give the users this [user guide](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-4g-wireless-routers/4g-user-guidance) that covers:
+Along with set-up instructions in the box, you can give the users this [user guide](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/preparing-4g-wireless-routers/4g-user-guidance) that covers:
 
 * how to set up a 4G wireless router
 * tips on staying safe online
@@ -46,7 +46,7 @@ Along with set-up instructions in the box, you can give the users this [user gui
 
 You should give young people and their carers a copy of this document. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.  
 
-* [4G wireless routers: User guidance](https://www.computacenter.com/uk/supporting-online-learning-and-safeguarding-technical-guides/preparing-4g-wireless-routers/4g-user-guidance)
+* [4G wireless routers: User guidance](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/preparing-4g-wireless-routers/4g-user-guidance)
 
 ## Get support
 
