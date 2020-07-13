@@ -56,6 +56,9 @@ en:
     safeguarding_for_device_users:
       title: Safeguarding for device users
       description: Information on content filtering, privacy policies and mobile device management to ensure devices are used appropriately by young people and families.
+    getting_started_with_your_google_chromebook:
+      title: Getting started with your Google Chromebook
+      description: User guidance for Google Chromebooks to supply to children, young people and their carers.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
