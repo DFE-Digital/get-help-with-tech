@@ -37,4 +37,19 @@ RSpec.describe ImportBTWifiVouchersService, type: :model do
     expect(trust.bt_wifi_vouchers.order('username asc').pluck(:username)).to eq(%w[eee ggg])
     expect(trust.bt_wifi_vouchers.order('username asc').pluck(:password)).to eq(%w[fff hhh])
   end
+
+  context 'when the CSV has stray spaces in it' do
+    let(:import_data_csv) do
+      [
+        'Username,Password,Assigned to responsible body name',
+        ' ccc , ddd ,Brent ',
+      ].join("\n")
+    end
+
+    it 'strips the spaces out' do
+      expect(local_authority.bt_wifi_vouchers.count).to eq(1)
+      expect(local_authority.bt_wifi_vouchers.first.username).to eq('ccc')
+      expect(local_authority.bt_wifi_vouchers.first.password).to eq('ddd')
+    end
+  end
 end
