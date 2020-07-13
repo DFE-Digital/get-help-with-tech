@@ -12,7 +12,7 @@
     <p class="govuk-body">The DfE has contracted Computacenter to supply local authorities and academy trusts with <%= govuk_link_to 'laptops, tablets and connectivity packages', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %> for children and young people to access and social care and education during coronavirus (COVID-19) pandemic.</p>
 
     <% @pages.each do |page| %>
-      <h2 class="govuk-heading-m govuk-!-font-size-27"><%= govuk_link_to page.title, page.path %></h2>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24"><%= govuk_link_to page.title, page.path %></h2>
 
       <p class="govuk-body"><%= page.description %></p>
     <% end %>
