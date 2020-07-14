@@ -18,7 +18,7 @@ private
 
     @contents[current_index][:active] = true
     @next_page = contents[current_index + 1] || false
-    @prev_page = contents[current_index - 1] || false
+    @prev_page = current_index.positive? ? contents[current_index - 1] : false
     @title = contents[current_index][:text]
   end
 
