@@ -40,24 +40,7 @@ RSpec.feature ResponsibleBody do
 
       expect(responsible_body_home_page).to be_displayed
       expect(page.status_code).to eq 200
-    end
-
-    context 'when the user has no requests' do
-      scenario 'the "Request extra mobile data" task shows as not started yet' do
-        visit responsible_body_home_path
-        expect(page).to have_text("Request extra mobile data\nNot started yet")
-      end
-    end
-
-    context 'when the user has at least one request' do
-      before do
-        create(:extra_mobile_data_request, created_by_user: rb_user)
-      end
-
-      scenario 'the "Request extra mobile data" task shows as In progrss' do
-        visit responsible_body_home_path
-        expect(page).to have_text("Request extra mobile data\nIn progress")
-      end
+      expect(page).to have_text('Request extra data for mobile devices')
     end
   end
 end
