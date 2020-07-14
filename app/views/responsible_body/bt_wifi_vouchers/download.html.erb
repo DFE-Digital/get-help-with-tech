@@ -16,15 +16,46 @@
     <h1 class="govuk-heading-xl">
       <%= t('page_titles.download_bt_hotspots') %>
     </h1>
+  </div>
+</div>
 
-    <p class="govuk-body-l">You’ve been allocated <%= @responsible_body.bt_wifi_vouchers.count %> log-ins to pass on to schools and families.</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l">Your allocation</h2>
 
-    <p class="govuk-body">A log-in is a username and password. BT calls these ‘vouchers’.</p>
+    <p class="govuk-body">You’ve been allocated <%= @responsible_body.bt_wifi_vouchers.count %> log-ins to pass on to schools and families. A log-in is a username and password. BT calls these ‘vouchers’.</p>
 
     <p class="govuk-body">Your allocation was calculated based on school census data and free school meal (FSM) data. The Department for Education has a total of <%= number_with_delimiter(BTWifiVoucher::INITIAL_TOTAL_ALLOCATION) %> BT log-ins to distribute across England.</p>
 
-    <p class="govuk-body">Log-ins will be downloaded as a spreadsheet (CSV file).</p>
+    <h2 class="govuk-heading-l">Distributing log-ins</h2>
+
+    <p class="govuk-body">Not everyone in need will be able to access a BT hotspot, so schools should find out who the vouchers will work for before giving them out.</p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to "Read our guide for distributing vouchers to families", guide_for_distributing_bt_vouchers_who_to_give_vouchers_to_path %>
+    </p>
+
+    <h2 class="govuk-heading-l">Download</h2>
 
     <%= govuk_link_to 'Download log-ins', responsible_body_bt_wifi_vouchers_path(format: 'csv'), class: 'govuk-button' %>
+
+    <p class="govuk-body">Log-ins will be downloaded as a spreadsheet (CSV file).</p>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <aside class="app-related" role="complementary">
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2" id="-title">Guidance</h2>
+
+      <nav role="navigation" aria-labelledby="-title">
+        <ul class="app-related__list">
+          <li class="app-related__list-item">
+            <%= govuk_link_to 'Guide to distributing vouchers', guide_for_distributing_bt_vouchers_path %>
+          </li>
+
+          <li class="app-related__list-item">
+            <%= govuk_link_to 'More about free access to BT wifi hotspotss', about_bt_wifi_path %>
+          </li>
+        </ul>
+      </nav>
+    </aside>
   </div>
 </div>
