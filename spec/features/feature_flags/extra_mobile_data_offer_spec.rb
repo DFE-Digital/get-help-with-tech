@@ -41,11 +41,6 @@ describe 'extra_mobile_data_offer FeatureFlag' do
         expect(page).to have_link('Request extra mobile data')
       end
 
-      it 'mentions Steps 1 and 2' do
-        expect(page).to have_text('Step 1')
-        expect(page).to have_text('Step 2')
-      end
-
       it 'allows the user to request extra mobile data' do
         click_on 'Request extra mobile data'
         expect(page).to have_link('Request data for someone')

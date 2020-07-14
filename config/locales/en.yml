@@ -12,14 +12,10 @@ en:
     token_is_valid_but_expired: The link you clicked has expired
     token_not_recognised: We didn’t recognise that link
     confirm: Check your answers before confirming
-    eligible_people: How many young people are eligible?
-    eligible_person: Tell us about an eligible young person
     new_user: Create an account
-    thank_you: Thank you
     error_prefix: "Error: "
     who_needs_internet_access: Tell us who needs internet access
     requests_for_extra_mobile_data: Requests for extra mobile data
-    thank_you: Thank you
     suggested_email_to_schools: A suggested email for you to send to schools
     request_extra_mobile_data: Request extra mobile data
     guide_to_collecting_mobile_information: Guide to collecting mobile information
@@ -119,13 +115,6 @@ en:
               blank: Select which mobile network the device is on
             agrees_with_privacy_statement:
               inclusion: The privacy statement must be shared with the account holder
-        allocation_request:
-          attributes:
-            number_eligible:
-              not_a_number: The number of young people who are eligible must be a number between 0 and 10,000
-              number_eligible_must_be_bigger_or_equal_to_bt_hotspot_number: Number of young people who are eligible cannot be less than the number of those who can access a BT hotspot
-            number_eligible_with_hotspot_access:
-              not_a_number: The number of those who can access a BT hotspot must be a number between 0 and 10,000
   time:
     formats:
       time_only: "%l:%M%P"
