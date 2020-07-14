@@ -1,14 +1,16 @@
-<%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs ">
-  <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
-    </li>
-    <li class="govuk-breadcrumbs__list-item">
-      <%= t('page_titles.download_bt_hotspots') %>
-    </li>
-  </ol>
-  </div>
+<% if FeatureFlag.active?(:extra_mobile_data_offer) %>
+  <%- content_for :before_content do %>
+    <div class="govuk-breadcrumbs ">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <%= t('page_titles.download_bt_hotspots') %>
+      </li>
+    </ol>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="govuk-grid-row">
