@@ -2,8 +2,7 @@
   This pilot is open to children from early years up to 16, and care leavers up to 25 if they:
 </p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>don’t have access to a <%= govuk_link_to 'fixed broadband connection', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics' %></li>
-  <li>cannot afford the additional data needed to access educational resources or social care services</li>
+  <%= render partial: 'shared/eligibility_points_across_bt_wifi_and_mno_offers' %>
   <li><%= govuk_link_to 'cannot access a BT hotspot', about_bt_wifi_path %></li>
   <li>are an existing customer of a participating mobile network operator</li>
 </ul>
