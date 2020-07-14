@@ -6,19 +6,7 @@
 
     <h3 class="govuk-heading-m" id="who-can-get-help">Who can get help</h3>
 
-    <p class="govuk-body">Vouchers are available to families with children from early years up to 16, and care leavers up to 25 if they:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        don’t have access to a <%= govuk_link_to 'fixed broadband connection', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics' %>
-      </li>
-      <li>
-        cannot afford the additional data needed to access educational resources or social care services
-      </li>
-      <li>
-        have access to a BT hotspot (coverage varies depending on where you live)
-      </li>
-    </ul>
+    <%= render partial: 'shared/pilot_bt_offer_eligibility' %>
 
     <h3 class="govuk-heading-m" id="how-the-scheme-works">How the scheme works</h3>
 

@@ -8,9 +8,7 @@
 
     <h3 class="govuk-heading-m">How to check hotspot coverage</h3>
 
-    <p class="govuk-body">Families can check hotspot coverage by turning on a device’s wifi while at home and seeing whether BT wifi is an available network. This will appear as ‘BTWi-fi’. If they don’t see ‘BTWi-fi’ initially, they should try again in different rooms, as coverage can vary within the same building.</p>
-
-    <p class="govuk-body">It’s also possible to check coverage by entering an address on <%= govuk_link_to 'https://www.btwifi.com/find/', 'https://www.btwifi.com/find/' %>. The results you get from this aren’t always accurate, so we recommend using the first method.</p>
+    <%= render partial: 'shared/how_to_check_hotspot_coverage' %>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
