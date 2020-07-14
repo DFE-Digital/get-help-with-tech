@@ -3,9 +3,25 @@ require 'shared/expect_download'
 
 RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
   let(:user) { create(:local_authority_user) }
+  let(:responsible_body_vouchers_download_page) { PageObjects::ResponsibleBody::VouchersDownloadPage.new }
 
   before do
     given_i_am_signed_in_as_a_responsible_body_user
+  end
+
+  context 'when the MNO offer is disabled' do
+    before do
+      FeatureFlag.deactivate(:extra_mobile_data_offer)
+    end
+
+    scenario 'sends the user a CSV file with their vouchers' do
+      given_the_responsible_body_has_some_bt_wifi_vouchers
+      and_i_visit_the_responsible_body_homepage
+      then_i_am_on_the_download_vouchers_page
+
+      and_i_download_logins
+      then_i_get_a_csv_file_with_the_voucher_usernames_and_passwords
+    end
   end
 
   context 'when the MNO offer is enabled' do
@@ -50,5 +66,9 @@ RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
     @bt_wifi_vouchers.each do |voucher|
       expect(page.body).to include("#{voucher.username},#{voucher.password}")
     end
+  end
+
+  def then_i_am_on_the_download_vouchers_page
+    expect(responsible_body_vouchers_download_page).to be_displayed
   end
 end
