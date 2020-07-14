@@ -10,21 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_143616) do
+ActiveRecord::Schema.define(version: 2020_07_14_161403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "allocation_requests", force: :cascade do |t|
-    t.integer "number_eligible"
-    t.integer "number_eligible_with_hotspot_access"
-    t.bigint "created_by_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "responsible_body_id", null: false
-    t.index ["created_by_user_id"], name: "index_allocation_requests_on_created_by_user_id"
-    t.index ["responsible_body_id"], name: "index_allocation_requests_on_responsible_body_id"
-  end
 
   create_table "bt_wifi_voucher_allocations", force: :cascade do |t|
     t.integer "responsible_body_id", null: false
