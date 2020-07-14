@@ -1,0 +1,5 @@
+<p class="govuk-body">
+  We’ve allocated <%= @responsible_body.bt_wifi_vouchers.count %> BT hotspot log-ins for you to pass on to schools and families. A log-in is a username and password. BT calls these ‘vouchers’.
+</p>
+
+<%= govuk_link_to t('page_titles.download_bt_hotspots'), download_responsible_body_bt_wifi_vouchers_path %>
