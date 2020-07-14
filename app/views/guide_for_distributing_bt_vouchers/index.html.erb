@@ -1,0 +1,41 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'guide_contents' %>
+
+    <p class="govuk-body">The Department for Education has teamed up with BT to give children and young people free access to BT wifi hotspots. BT has created 10,000 hotspot log-ins that can be activated through name/password combinations. It calls these combinations ‘vouchers’. The vouchers will work until the end of December 2020.</p>
+
+    <h3 class="govuk-heading-m" id="who-can-get-help">Who can get help</h3>
+
+    <p class="govuk-body">Vouchers are available to families with children from early years up to 16, and care leavers up to 25 if they:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        don’t have access to a <%= govuk_link_to 'fixed broadband connection', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics' %>
+      </li>
+      <li>
+        cannot afford the additional data needed to access educational resources or social care services
+      </li>
+      <li>
+        have access to a BT hotspot (coverage varies depending on where you live)
+      </li>
+    </ul>
+
+    <h3 class="govuk-heading-m" id="how-the-scheme-works">How the scheme works</h3>
+
+    <p class="govuk-body">We’ve allocated batches of vouchers to certain local authorities and academy trusts and asked them to distribute these to schools. Our allocations are based on school census data and free school meals data.</p>
+
+    <p class="govuk-body">Every voucher comes with content filtering, and one voucher can be used on up to three devices at once.</p>
+
+    <h3 class="govuk-heading-m" id="for-young-people-who-cant-connect-to-bt-hotspots">For young people who can’t connect to BT hotspots</h3>
+
+    <p class="govuk-body">We know there will be children and young people who can’t connect to a BT hotspot because of where they live. We have separate plans for supporting them, which we  hope to share in due course. </p>
+
+    <h2 class="govuk-heading-m" id="if-you-have-questions">If you have questions</h2>
+
+    <p class="govuk-body">
+      If you have any questions, email <%= ghwt_contact_mailto %> using the subject line ‘Increasing internet access’. We’ll get back to you as soon as we can.
+    </p>
+
+    <%= render partial: 'shared/guide_navigation' %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'guide_contents' %>
+
+    <p class="govuk-body">Once you know how many vouchers you’re getting, you need to decide who to give them to.</p>
+
+    <p class="govuk-body">Not everyone in need will be able to access a BT hotspot, so you should find out who the vouchers will work for before giving them out.</p>
+
+    <h3 class="govuk-heading-m">How to check hotspot coverage</h3>
+
+    <p class="govuk-body">Families can check hotspot coverage by turning on a device’s wifi while at home and seeing whether BT wifi is an available network. This will appear as ‘BTWi-fi’. If they don’t see ‘BTWi-fi’ initially, they should try again in different rooms, as coverage can vary within the same building.</p>
+
+    <p class="govuk-body">It’s also possible to check coverage by entering an address on <%= govuk_link_to 'https://www.btwifi.com/find/', 'https://www.btwifi.com/find/' %>. The results you get from this aren’t always accurate, so we recommend using the first method.</p>
+
+    <%= render partial: 'shared/guide_navigation' %>
+  </div>
+</div>
