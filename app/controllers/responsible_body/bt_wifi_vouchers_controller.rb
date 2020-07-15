@@ -4,6 +4,9 @@ class ResponsibleBody::BTWifiVouchersController < ResponsibleBody::BaseControlle
     respond_to do |format|
       format.csv do
         render csv: vouchers, filename: "bt-wifi-vouchers-#{Time.now.iso8601}"
+        vouchers
+          .where(distributed_at: nil)
+          .touch_all(:distributed_at)
       end
     end
   end
