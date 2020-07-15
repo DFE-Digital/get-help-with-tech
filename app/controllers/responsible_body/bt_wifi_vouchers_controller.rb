@@ -5,6 +5,8 @@ class ResponsibleBody::BTWifiVouchersController < ResponsibleBody::BaseControlle
       format.csv do
         render csv: vouchers, filename: "bt-wifi-vouchers-#{Time.now.iso8601}"
       end
+
+      vouchers.touch_all
     end
   end
 

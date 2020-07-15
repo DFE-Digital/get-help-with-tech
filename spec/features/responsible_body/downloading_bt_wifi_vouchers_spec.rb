@@ -21,6 +21,7 @@ RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
 
       and_i_download_logins
       then_i_get_a_csv_file_with_the_voucher_usernames_and_passwords
+      and_the_voucher_timestamps_are_updated
     end
   end
 
@@ -36,6 +37,7 @@ RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
       when_i_visit_the_download_vouchers_link
       and_i_download_logins
       then_i_get_a_csv_file_with_the_voucher_usernames_and_passwords
+      and_the_voucher_timestamps_are_updated
     end
   end
 
@@ -44,7 +46,8 @@ RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
   end
 
   def given_the_responsible_body_has_some_bt_wifi_vouchers
-    @bt_wifi_vouchers = create_list(:bt_wifi_voucher, 4, responsible_body: user.responsible_body)
+    yesterday = DateTime.now - 1
+    @bt_wifi_vouchers = create_list(:bt_wifi_voucher, 4, responsible_body: user.responsible_body, created_at: yesterday, updated_at: yesterday)
   end
 
   def and_i_visit_the_responsible_body_homepage
@@ -65,6 +68,13 @@ RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
     expect(page.body).to include('Username,Password')
     @bt_wifi_vouchers.each do |voucher|
       expect(page.body).to include("#{voucher.username},#{voucher.password}")
+    end
+  end
+
+  def and_the_voucher_timestamps_are_updated
+    @bt_wifi_vouchers.each do |voucher|
+      voucher.reload
+      expect(voucher.updated_at).to be > voucher.created_at
     end
   end
 
