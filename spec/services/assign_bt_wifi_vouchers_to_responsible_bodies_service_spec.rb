@@ -11,8 +11,10 @@ RSpec.describe AssignBTWifiVouchersToResponsibleBodiesService, type: :model do
   it 'assigns vouchers to responsible bodies that have fewer vouchers than allocations' do
     create(:bt_wifi_voucher_allocation, amount: 2, responsible_body: local_authority)
 
+    # another local authority that already has 1 voucher but has 2 allocated to it
     create(:bt_wifi_voucher_allocation, amount: 2, responsible_body: another_local_authority)
     create(:bt_wifi_voucher, responsible_body: another_local_authority)
+    expect(another_local_authority.bt_wifi_vouchers.count).to eq(1)
 
     AssignBTWifiVouchersToResponsibleBodiesService.new.call
 
