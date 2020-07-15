@@ -372,6 +372,7 @@ GEM
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timecop (0.9.1)
     travis (1.8.13)
       backports
       faraday (~> 0.9)
@@ -453,6 +454,7 @@ DEPENDENCIES
   site_prism
   spring
   spring-watcher-listen (~> 2.0.0)
+  timecop
   travis
   tzinfo-data
   web-console (>= 3.3.0)
