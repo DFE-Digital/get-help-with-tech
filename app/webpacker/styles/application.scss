@@ -16,6 +16,7 @@ $govuk-image-url-function: frontend-image-url;
 @import "components/guide-next-prev";
 @import "banner";
 @import "styled-content";
+@import "related";
 
 .app-email-template {
   border: $govuk-border-width solid $govuk-border-colour;
@@ -28,11 +29,4 @@ $govuk-image-url-function: frontend-image-url;
   margin-top: 0;
   margin-bottom: govuk-spacing(4);
   border-bottom: 1px solid $govuk-border-colour;
-}
-
-$related-color: #1d70b8;
-
-.app-related {
-  border-top: 2px solid $related-color;
-  padding-top: 15px;
 }
