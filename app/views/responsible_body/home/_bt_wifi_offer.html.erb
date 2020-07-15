@@ -1,7 +1,7 @@
 <h2 class="govuk-heading-l">Give free access to wifi hotspots</h2>
 
 <p class="govuk-body">
-  We’ve allocated <%= @responsible_body.bt_wifi_vouchers.count %> BT hotspot log-ins for you to pass on to schools and families. A log-in is a username and password. BT calls these ‘vouchers’.
+  We’ve allocated <%= number_with_delimiter(@responsible_body.bt_wifi_vouchers.count) %> BT hotspot log-ins for you to pass on to schools and families. A log-in is a username and password. BT calls these ‘vouchers’.
 </p>
 
 <h2 class="govuk-heading-m govuk-!-margin-bottom-4">

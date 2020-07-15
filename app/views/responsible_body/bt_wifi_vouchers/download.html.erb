@@ -25,7 +25,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l">Your allocation</h2>
 
-    <p class="govuk-body">You’ve been allocated <%= @responsible_body.bt_wifi_vouchers.count %> log-ins to pass on to schools and families. A log-in is a username and password. BT calls these ‘vouchers’.</p>
+    <p class="govuk-body">You’ve been allocated <%= number_with_delimiter(@responsible_body.bt_wifi_vouchers.count) %> log-ins to pass on to schools and families. A log-in is a username and password. BT calls these ‘vouchers’.</p>
 
     <p class="govuk-body">Your allocation was calculated based on school census data and free school meal (FSM) data. The Department for Education has a total of <%= number_with_delimiter(BTWifiVoucher::INITIAL_TOTAL_ALLOCATION) %> BT log-ins to distribute across England.</p>
 
