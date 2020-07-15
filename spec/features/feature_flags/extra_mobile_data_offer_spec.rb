@@ -38,11 +38,11 @@ describe 'extra_mobile_data_offer FeatureFlag' do
       end
 
       it 'shows the option to request extra mobile data' do
-        expect(page).to have_link('Request extra mobile data')
+        expect(page).to have_link('Request extra data for mobile devices')
       end
 
       it 'allows the user to request extra mobile data' do
-        click_on 'Request extra mobile data'
+        click_on 'Request extra data for mobile devices'
         expect(page).to have_link('Request data for someone')
 
         click_on 'Request data for someone'
@@ -84,12 +84,7 @@ describe 'extra_mobile_data_offer FeatureFlag' do
       end
 
       it 'does not show the option to request extra mobile data' do
-        expect(page).not_to have_link('Request extra mobile data')
-      end
-
-      it 'does not mention Step 1 or 2' do
-        expect(page).not_to have_text('Step 1')
-        expect(page).not_to have_text('Step 2')
+        expect(page).not_to have_link('Request extra data for mobile devices')
       end
 
       it 'does not allow the user to request extra mobile data' do

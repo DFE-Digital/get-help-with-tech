@@ -41,10 +41,14 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a user who belongs_to a responsible_body' do
     let(:user) { create(:local_authority_user) }
 
+    before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
+    end
+
     scenario 'it redirects to the responsible_body_home page' do
       visit(validate_token_url)
       expect(page).to have_current_path(responsible_body_home_path)
-      expect(page).to have_text 'Tell us who needs internet access'
+      expect(page).to have_text 'Increase children’s internet access'
     end
   end
 
