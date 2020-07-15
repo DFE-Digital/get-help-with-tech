@@ -6,18 +6,13 @@
       <%= t('page_titles.start') %>
     </h1>
 
-    <%= render partial: 'shared/eligibility_across_bt_wifi_and_mno_offers' %>
-
-    <h2 class="govuk-heading-l">What to tell us</h2>
-
     <p class="govuk-body">
-      Tell us:
+      Use this service to:
     </p>
 
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-      <li>how many eligible young people you know about</li>
-      <li>how many of them can access a BT hotspot</li>
-      <li>who needs additional mobile data</li>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+      <li>download log-ins for BT wifi hotspots so you can give them out</li>
+      <li>request extra data for mobile devices</li>
     </ul>
 
     <%= link_to sign_in_path, { role: 'button', draggable: 'false', class: 'govuk-button govuk-button--start', data: { module: 'govuk-button' } } do %>
