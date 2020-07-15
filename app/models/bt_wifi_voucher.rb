@@ -13,4 +13,10 @@ class BTWifiVoucher < ApplicationRecord
       password: 'Password',
     }
   end
+
+  def self.assign(number, to:)
+    unassigned
+      .take(number)
+      .map { |bt_wifi_voucher| bt_wifi_voucher.update(responsible_body: to) }
+  end
 end
