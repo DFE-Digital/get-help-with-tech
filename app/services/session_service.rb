@@ -31,7 +31,7 @@ class SessionService
 
   # Will expand to cover MNO / MVNO and DfE users too
   def self.find_user_by_email(email_address)
-    User.where(email_address: email_address).first
+    User.where('lower(email_address) = ?', email_address.downcase).first
   end
 
   def self.is_signed_in?(session)
