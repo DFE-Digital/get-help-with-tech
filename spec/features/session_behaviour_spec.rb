@@ -93,6 +93,24 @@ RSpec.feature 'Session behaviour', type: :feature do
         expect(page).to have_text('Check your email')
       end
 
+      scenario "Signing in as a recognised user still works even when the email address case doesn't exactly match" do
+        valid_user.update(email_address: 'Jane.Smith@example.com')
+
+        visit '/'
+        click_on 'Sign in'
+        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
+        expect(page).to have_text('Email address')
+
+        clear_emails
+        expect(current_email).to be_nil
+        fill_in 'Email address', with: 'jane.smith@example.com'
+        click_on 'Continue'
+        open_email(valid_user.email_address)
+
+        expect(current_email).not_to be_nil
+        expect(page).to have_text('Check your email')
+      end
+
       scenario 'Entering an unrecognised email address shows an informative message' do
         visit '/'
         click_on 'Sign in'
