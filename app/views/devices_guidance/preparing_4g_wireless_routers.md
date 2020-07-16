@@ -26,7 +26,7 @@ It would be helpful if you remind families, young people and care leavers that:
 
 ## How the routers are secured
 
-The router will only operate with the SIM card that is already installed. Attempting to use the SIM card with any other device will either not give a data connection or will cause the SIM card to become barred.  
+The router will only operate with the SIM card that is already installed. Attempting to use the SIM card with any other device will either not give a data connection or will cause the SIM card to become barred.
 
 The device will connect to the mobile network with the strongest signal available. Regardless of which network it uses, all traffic will pass through a private, secure connection to a filtered service.  
 
