@@ -1,26 +1,22 @@
 <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-  <%- if FeatureFlag.active?(:static_guidance_only) %>
-    <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
+  <%- if @user&.is_dfe? %>
+
+  <%- elsif @user&.is_mno_user? %>
+    <%- if FeatureFlag.active?(:extra_mobile_data_offer) %>
+      <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
+    <%- end %>
   <%- else %>
-    <%- if @user&.is_dfe? %>
-
-    <%- elsif @user&.is_mno_user? %>
-      <%- if FeatureFlag.active?(:extra_mobile_data_offer) %>
-        <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
-      <%- end %>
-    <%- else %>
-      <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
-      <%- if SessionService.is_signed_in?(session) && @user.is_responsible_body_user? %>
-        <%= nav_item( title: "Tell us who needs more data", url: responsible_body_extra_mobile_data_requests_path )  %>
-      <%- end %>
+    <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
+    <%- if SessionService.is_signed_in?(session) && @user.is_responsible_body_user? %>
+      <%= nav_item( title: "Tell us who needs more data", url: responsible_body_extra_mobile_data_requests_path )  %>
     <%- end %>
+  <%- end %>
 
-    <%- if SessionService.is_signed_in?(session) %>
-      <%- sign_out_link = link_to("Sign out", session_path(id: session[:session_id]), method: :delete, class: 'govuk-header__link' ) %>
-      <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
-      <%= nav_item(url: session_path(id: session.id), content: content.html_safe) %>
-    <%- else %>
-        <%= nav_item( title: "Sign in", url: sign_in_path )  %>
-    <%- end %>
+  <%- if SessionService.is_signed_in?(session) %>
+    <%- sign_out_link = link_to("Sign out", session_path(id: session[:session_id]), method: :delete, class: 'govuk-header__link' ) %>
+    <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
+    <%= nav_item(url: session_path(id: session.id), content: content.html_safe) %>
+  <%- else %>
+      <%= nav_item( title: "Sign in", url: sign_in_path )  %>
   <%- end %>
 </ul>

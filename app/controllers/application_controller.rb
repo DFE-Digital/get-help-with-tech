@@ -5,8 +5,7 @@ class ApplicationController < ActionController::Base
                                 password: Settings.http_basic_auth.password,
                                 if: -> { FeatureFlag.active?(:http_basic_auth) }
 
-  before_action :populate_user_from_session!,
-                :check_static_guidance_only_feature_flag!
+  before_action :populate_user_from_session!
 
   include Pagy::Backend
 
@@ -35,12 +34,6 @@ private
     session[:return_url] = request.url
     flash[:error] = 'You must sign in to access that page'
     redirect_to sign_in_path
-  end
-
-  def check_static_guidance_only_feature_flag!
-    if FeatureFlag.active?(:static_guidance_only)
-      render 'errors/not_found', status: :not_found unless %w[pages devices_guidance monitoring].include?(controller_name)
-    end
   end
 
   def render_404_if_feature_flag_inactive(feature_flag)

@@ -8,7 +8,6 @@ class FeatureFlag
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
-    static_guidance_only
     extra_mobile_data_offer
   ].freeze
 
