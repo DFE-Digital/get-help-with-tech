@@ -41,7 +41,9 @@ ActiveRecord::Schema.define(version: 2020_07_17_224849) do
     t.integer "created_by_user_id"
     t.boolean "agrees_with_privacy_statement"
     t.string "problem"
+    t.bigint "responsible_body_id"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
+    t.index ["responsible_body_id"], name: "index_extra_mobile_data_requests_on_responsible_body_id"
     t.index ["status"], name: "index_extra_mobile_data_requests_on_status"
   end
 
@@ -93,4 +95,5 @@ ActiveRecord::Schema.define(version: 2020_07_17_224849) do
 
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
+  add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
 end
