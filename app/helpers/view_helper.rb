@@ -45,7 +45,7 @@ module ViewHelper
     [
       mobile_network.translated_enum_value(:participation_in_pilot),
       # TODO: uncomment this when we've added the supports_payg field
-      # mobile_network.supports_payg? ? '' : 'Does not support Pay as you go customers.'
+      # mobile_network.supports_payg? ? '' : 'Does not support Pay-as-you-go customers.'
     ].join('. ')
   end
 
