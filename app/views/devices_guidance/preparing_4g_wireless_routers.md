@@ -48,6 +48,7 @@ Along with set-up instructions in the box, you can give the users this [user gui
 
 * how to set up a 4G wireless router
 * tips on staying safe online
+* using data only for education and social care
 * what to do if something goes wrong
 
 You should give young people and their carers a copy of this document. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.  
