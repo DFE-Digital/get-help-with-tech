@@ -19,9 +19,9 @@
   </head>
 
   <body class="govuk-template__body ">
-    <script>
+    <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    </script>
+    <% end -%>
 
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
