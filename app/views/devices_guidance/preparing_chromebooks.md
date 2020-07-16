@@ -43,7 +43,7 @@ This blocks a range of illegal and inappropriate content and limits searching to
 
 The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users from pre-school children up to care leavers.
 
-We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella unless the LA or trust instructs us to enable this feature. Those logs would not be available to the LA or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
+We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella. Those logs would not be available to the LA or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
 
 If you decide not to use Cisco Umbrella, we strongly recommend that you enable alternative security settings before you distribute the devices. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to.
 
