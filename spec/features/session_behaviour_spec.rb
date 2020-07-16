@@ -61,9 +61,10 @@ RSpec.feature 'Session behaviour', type: :feature do
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
-        sleep(2)
-        click_on 'Back'
-        expect(page).to have_text('Sign in')
+        Timecop.travel(Time.zone.now + Settings.session_ttl_seconds + 1) do
+          click_on 'Back'
+          expect(page).to have_text('Sign in')
+        end
       end
     end
   end
