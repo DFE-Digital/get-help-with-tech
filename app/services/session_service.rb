@@ -52,8 +52,9 @@ class SessionService
     end
   end
 
-  def self.create_session!(session_id)
+  def self.create_session!(session_id:, user:)
     Session.create!(id: session_id)
+    user.update_sign_in_count_and_timestamp!
   end
 
   def self.update_session!(session_id)

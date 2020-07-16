@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Sign-in token behaviour', type: :feature do
-  let(:user) { create(:local_authority_user) }
+  let(:user) { create(:local_authority_user, :never_signed_in) }
   let(:ttl) { nil }
   let(:token) { user.generate_token!(ttl: ttl) }
   let(:identifier) { user.sign_in_identifier(token) }
@@ -16,6 +16,16 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         visit validate_token_url
         expect(page).to have_text(user.email_address)
         expect(page).to have_text('Sign out')
+      end
+
+      scenario 'Visiting the valid sign_in_token link increments sign-in count and timestamp' do
+        timestamp = Date.new(2020, 6, 1)
+        Timecop.freeze(timestamp) do
+          visit validate_token_url
+        end
+
+        expect(user.reload.sign_in_count).to eq(1)
+        expect(user.reload.last_signed_in_at).to eq(timestamp)
       end
 
       scenario 'Visiting a sign_in_token link twice does not work the second time' do

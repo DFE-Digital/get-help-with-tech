@@ -24,7 +24,7 @@ private
 
   def save_user_to_session!(user = @user)
     session[:user_id] ||= user.id
-    SessionService.create_session!(session[:session_id])
+    SessionService.create_session!(session_id: session[:session_id], user: user)
   end
 
   def require_sign_in!

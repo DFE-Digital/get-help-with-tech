@@ -7,6 +7,11 @@ FactoryBot.define do
     approved_at   { nil }
   end
 
+  trait :never_signed_in do
+    sign_in_count     { 0 }
+    last_signed_in_at { nil }
+  end
+
   factory :local_authority_user, class: 'User' do
     full_name                { 'Jane Doe' }
     sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
