@@ -29,7 +29,7 @@ Computacenter will send all Microsoft Windows laptops and tablets to you with se
 
 These mobile device management (MDM) settings safeguard children and young people from inappropriate content and prevent them from making changes to files or settings that might stop the device from working. It is not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the DfE MDM is updated every 2 hours.
 
-We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella unless the LA or trust instructs us to enable this feature. Those logs would not be available to the LA or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
+We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella. Those logs would not be available to the LA or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
 
 You can loan the devices out to users straight away as the MDM will be in place until 31 March 2021. After this, the MDM will expire. The devices will continue to work with the last settings provided by DfE but they will no longer be managed or updated.
 
