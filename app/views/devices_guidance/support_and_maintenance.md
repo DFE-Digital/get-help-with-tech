@@ -39,10 +39,10 @@ Tickets will be assigned a priority depending on how urgent they are and the imp
 
 What to do if you:
 
-* **receive a dead on arrival (DOA) device –** if a Microsoft Windows device is received that does not turn on, contact Computacenter within 3 days of delivery, email [DepartmentforEducation@computacenter.com](mailto:DepartmentforEducation@computacenter.com) with your order tracking number and serial number for a fix or a replacement. After this 3 day period, devices are covered by the manufacturer of the device. Manufacturers’ warranties are in the box.
-* **need to return a faulty device –** if a device is received that does turn on but is faulty, contact the manufacturer for a return merchandise authorisation (RMA) if you need a replacement or repair for your device. Manufacturers warranties are in the box.
-* **receive a replacement for a return merchandise authorisation (RMA) device –** you’ll need to enrol your device if you receive a replacement or wiped Microsoft Windows device from the manufacturer. Contact the XMA Service Desk (0115 846 4535 or [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)) to get Microsoft Intune and Cisco Umbrella set on your device.
-* **receive a replacement for a DOA device –** your replacement device will have been identically built as per the original automatically enrolled by Computacenter. You can contact the XMA Service Desk (0115 846 4535 or [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)) if you have any issues with your device.
+* **receive a device that does not work on arrival –** if you receive a Microsoft Windows device that does not turn on, log in to the [Computacenter support portal](https://computacenterprod.service-now.com/dfe) using the access details sent to the key contact(s) nominated when devices were ordered. Find out [how to return faulty devices](/devices/receiving-devices#replacing).
+* **have a device that develops a fault –** if a fault is discovered by you or someone you loan it to before 19 December 2020, we’ll arrange to fix or replace it. Find out [how to return faulty devices](/devices/receiving-devices#replacing) and the costs associated with doing so. If you discover a fault with the device after that date, it may still be covered by the manufacturer’s warranty. Please contact the manufacturer by following the returns information included with the device.
+* **receive a replacement from Computacenter –** your replacement will be built identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software. You can contact the XMA Service Desk (0115 846 4535 or [DFE.Support@xma.co.uk](DFE.Support@xma.co.uk)) if you have any issues.
+* **receive a replacement from the manufacturer –** as Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, contact the XMA Service Desk (0115 846 4535 or [DFE.Support@xma.co.uk](DFE.Support@xma.co.uk)) to get your device enrolled before distributing it.
 * **want to remove Microsoft Intune to install your own mobile device management (MDM) –** find out [how to reset your device to factory settings](/devices/preparing-microsoft-windows-laptops-and-tablets) to set up your own MDM.
 
 The XMA Service Desk support is limited to the provision of local admin passwords to remove Microsoft Intune and to manage global MDM and Cisco Umbrella settings for every device enrolled.
@@ -53,8 +53,9 @@ Do not reset the device until you are ready to apply your own MDM. Once the Micr
 
 Find out what to do if you:
 
-* **receive a device which doesn’t work** – if a Google device is received that does not turn on, contact Computacenter within 3 days of delivery, email [DepartmentforEducation@computacenter.com](mailto:DepartmentforEducation@computacenter.com "mailto:departmentforeducation@computacenter.com") with your order tracking number and serial number for a fix or a replacement. After this 3 day period, devices are covered by the manufacturer of the device. Manufacturers’ warranties are in the box.
-* **need to return a faulty device –** contact the manufacturer for a return merchandise authorisation (RMA) if you need a replacement or repair for your device. Manufacturers’ warranties are in the box.
+* **receive a device that does not work on arrival –** if you receive a Google device that does not turn on, log in to the [Computacenter support portal](https://computacenterprod.service-now.com/dfe) using the access details sent to the key contact(s) nominated when devices were ordered. Find out [how to return faulty devices](/devices/receiving-devices#replacing).
+* **have a device that develops a fault –** if a fault is discovered by you or someone you loan it to before 19 December 2020, we’ll arrange to fix or replace it. Find out [how to return faulty devices](/devices/receiving-devices#replacing) and the costs associated with doing so. If you discover a fault with the device after that date, it may still be covered by the manufacturer’s warranty. Please contact the manufacturer by following the returns information included with the device.
+
 
 ## 4G wireless routers: how to get support
 
