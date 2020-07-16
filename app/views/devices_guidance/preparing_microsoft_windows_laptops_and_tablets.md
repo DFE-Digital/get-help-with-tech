@@ -117,7 +117,7 @@ You’ll need to do this for each device individually.
         5.  If the above sequence doesn’t work then you should be able to enter recovery mode using the relevant key combination for the device manufacturer at boot:
             * HP: press F9 key
             * ASUS: press F9 key “continuously”
-            * Lenovo: press FN+F11 keys at the same time
+            * Lenovo: press FN+F11 keys at the same time 
             * Dynabook (Toshiba): press and hold 0 (zero) key
 
     5.  The device should reboot into “Reset this PC”
