@@ -44,9 +44,9 @@ When returning a device, you should be aware that:
 
 * if a device is returned with a fault that’s not covered by the manufacturer’s warranty, you’ll be charged £220 for the repair. A list of faults that are not covered is available in the support portal within the ‘How to request a warranty replacement’ article, along with information on ‘How to triage hardware issues’
 * if you return a device and no fault is found, or return a device that was not provided as part of this offer, you’ll be charged £108 per device for handling plus:
-** £208.29 for a replacement Windows laptop device
-** £154.40 for a replacement Windows tablet device
-** £235.62 for a replacement Chromebook 
+   * £208.29 for a replacement Windows laptop device
+   * £154.40 for a replacement Windows tablet device
+   * £235.62 for a replacement Chromebook 
 * if you fail to include the original power charger along with your returned device you’ll be charged up to £35 per replacement
 * if you fail to meet the courier collecting your faulty device(s) within 30 minutes of the agreed time, you’ll incur a charge of £81 per visit
 
