@@ -146,7 +146,7 @@ Bitlocker encryption has not been enabled on the devices to make it easier for y
 
 ## User guidance for young people and their carers
 
-User guides on setting up Microsoft devices are available for download. You can share these with young people and their parents, guardians and carers.
+User guides on setting up Microsoft devices are available for download. You can share these with young people and their parents, guardians and carers. 
 
 Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
 
