@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_195229) do
+ActiveRecord::Schema.define(version: 2020_07_16_171034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_195229) do
   create_table "extra_mobile_data_requests", force: :cascade do |t|
     t.string "account_holder_name"
     t.string "device_phone_number"
-    t.bigint "created_by_user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "mobile_network_id"
