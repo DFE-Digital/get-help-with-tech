@@ -15,7 +15,6 @@ FactoryBot.define do
   factory :local_authority_user, class: 'User' do
     full_name                { 'Jane Doe' }
     sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
-    organisation             { 'Some Local Authority' }
     association              :responsible_body, factory: :local_authority
     approved
   end
@@ -23,7 +22,6 @@ FactoryBot.define do
   factory :trust_user, class: 'User' do
     full_name                { 'Jane Doe' }
     sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
-    organisation             { 'Some Trust' }
     association              :responsible_body, factory: :trust
     approved
   end
@@ -31,13 +29,11 @@ FactoryBot.define do
   factory :mno_user, class: 'User' do
     full_name     { 'Mike Mobile-Network' }
     email_address { 'mike.mobile-network@somemno.co.uk' }
-    organisation  { 'Participating Mobile Network' }
     association   :mobile_network
   end
 
   factory :dfe_user, class: 'User' do
     full_name     { 'Jane Doe' }
     email_address { 'jane.doe@digital.education.gov.uk' }
-    organisation  { 'DfE' }
   end
 end

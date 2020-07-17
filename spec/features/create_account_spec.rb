@@ -24,7 +24,6 @@ RSpec.feature 'Creating an account', type: :feature do
 
       fill_in('Email address', with: new_user.email_address)
       fill_in('Your full name', with: new_user.full_name)
-      fill_in('Organisation you work for', with: new_user.organisation)
       click_on 'Create account'
       expect(page).to have_content 'Check your email'
     end

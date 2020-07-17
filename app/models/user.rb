@@ -15,10 +15,6 @@ class User < ApplicationRecord
             uniqueness: { message: 'Email address has already been used' },
             length: { minimum: 2, maximum: 1024 }
 
-  validates :organisation,
-            presence: { message: 'Enter the name of the organisation you work for' },
-            length: { minimum: 2, maximum: 1024 }
-
   include SignInWithToken
 
   def is_mno_user?
