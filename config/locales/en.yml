@@ -116,6 +116,13 @@ en:
               blank: Select which mobile network the device is on
             agrees_with_privacy_statement:
               inclusion: The privacy statement must be shared with the account holder
+        user:
+          attributes:
+            full_name:
+              blank: Enter your full name
+            email_address:
+              blank: Enter an email address in the correct format, like name@example.com
+              taken: Email address has already been used
   time:
     formats:
       time_only: "%l:%M%P"
