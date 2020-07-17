@@ -15,18 +15,12 @@ govuk_notify:
     # ID of the template in GOV.UK Notify used for mailing sign-in tokens
     sign_in_token_mail: '89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
 
-http_basic_auth:
-  # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
-  username:
-  # Username to use for HTTP basic auth if the feature http_basic_auth is enabled
-  password:
-
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000
 
 sentry:
   dsn:
-    
+
 session_ttl_seconds: 3600
 
 # Sign-in tokens will expire after this many seconds
