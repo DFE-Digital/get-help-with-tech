@@ -31,7 +31,6 @@ private
       title: metadata[:title],
       description: metadata[:description],
       path: path_given(page_id),
-      content_filename: "app/views/devices_guidance/#{page_id}.md",
     )
   end
 

@@ -8,6 +8,7 @@ class DevicesGuidanceController < ApplicationController
       @page = devices_guidance.find_by_slug(params[:subpage_slug])
       @next_page = { text: @page.next.title, path: @page.next.path } if @page.next.present?
       @prev_page = { text: @page.previous.title, path: @page.previous.path } if @page.previous.present?
+      render @page.page_id, layout: 'multipage_guide'
     else
       not_found
     end
