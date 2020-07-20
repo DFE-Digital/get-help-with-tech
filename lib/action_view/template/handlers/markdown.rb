@@ -5,9 +5,9 @@ module ActionView
         @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(with_toc_data: true))
         "
         content_for :html_list_of_headings_links do
-          #{rendered_table_of_contents_for(source).inspect}.html_safe
+          #{wrap_in_a_div(rendered_table_of_contents_for(source)).inspect}.html_safe
         end
-        #{@markdown.render(source).inspect}.html_safe
+        #{wrap_in_a_div(@markdown.render(source)).inspect}.html_safe
         "
       end
 
@@ -18,6 +18,11 @@ module ActionView
         @table_of_contents
           .render(source)
           .html_safe
+      end
+
+      # this makes it easier to target the generated code with CSS
+      def wrap_in_a_div(source)
+        "<div class=\"app-styled-content\">#{source}</div>"
       end
     end
   end
