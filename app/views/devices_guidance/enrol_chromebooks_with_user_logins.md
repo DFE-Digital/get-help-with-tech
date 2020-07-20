@@ -39,25 +39,25 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
 
 1. Log into [https://admin.google.com](https://protect-eu.mimecast.com/s/sYqZCy97nS2Qg4yh0jila?domain=admin.google.com).
 
-    ![userlogins1](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins1.png?sfvrsn=2)
+    ![Google Admin Console](/devices/userlogins1.png)
 
 2. Select **Device Management**.
 
-    ![userlogins2-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins2-.png?sfvrsn=2)
+    ![Device Management](/devices/userlogins2.png)
 
 3. In the menu on the left-hand side of the Device Management window, select **Chrome Management**.
 
-    ![userlogins3](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins3.png?sfvrsn=2)
+    ![Select ‘Chrome Management’](/devices/userlogins3.png)
 
 4. In the Chrome Management window, select **Apps & Extensions**.
 
-    ![userlogins4](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins4.png?sfvrsn=2)
+    ![Select ‘Apps and Extensions’](/devices/userlogins4.png)
 
 5. Click ‘Users and Browsers’ and if applicable, select the relevant OU from the left hand side.
 6. Click the yellow + icon (bottom right hand corner) and choose ‘Add the Chrome App or Extension by ID’ option to search for the ID of the Cisco Umbrella Chromebook client extension **jcdhmojfecjfmbdpchihbeilohgnbdci** (Searching by name will not work.)
 
-    ![userlogins5-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins5-.png?sfvrsn=2)
-    ![userlogins6-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins6-.png?sfvrsn=2)
+    ![Yellow icon for ‘Add the Chrome App or Extension by ID’](/devices/userlogins5.png)
+    ![Add the extension by ID](/devices/userlogins6.png)
 
 7.  Select **Force Install**. This ensures that Chromebook users in the selected Organization Unit cannot remove or disable the extension.
 8.  Select **Save** (top right) if necessary. You have finished installing the Cisco Umbrella Chromebook client extension. Next, proceed with the next section to install the Cisco Umbrella Chromebook client application.
@@ -66,8 +66,8 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
 
 1. Repeat the process of adding an app or extension by ID
 
-    ![userlogins7](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins7.png?sfvrsn=2)
-    ![userlogins8-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins8-.png?sfvrsn=2)
+    ![Screenshot showing locally added App](/devices/userlogins7.png)
+    ![Yellow icon for ‘Add the Chrome App or Extension by ID’](/devices/userlogins5.png)
 
 2. Search for the ID of the Cisco Umbrella Chromebook client application **cpnjigmgeapagmdimmoenaghmhilodfg** (Searching by name will not work.)
 3. Select **Force Install**. This ensures that Chromebook users in the selected Organization Unit cannot remove or disable the application.
@@ -91,7 +91,7 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
           }
         }
 
-    ![userlogins9--](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins9--.png?sfvrsn=2)
+    ![Screenshot showing locally added App](/devices/userlogins9.png)
 
 5.  Select Save (top right). You have finished installing the Cisco Umbrella Chromebook client application.
 
@@ -110,13 +110,13 @@ Follow these instructions to deploy the Cisco Umbrella Root CA to your Chrome de
 3. On the left, click **Networks**.
 4. Click Certificates > **Create Certificate**.
 
-    ![userlogins10-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins10-.png?sfvrsn=2)
+    ![Click ‘Create Certificate’](/devices/userlogins10.png)
 
 5. Give the certificate a name
 6. Choose the certificate file to upload and click **Upload**.
 7. In the **‘Certificate authority’** section click **‘Chromebook’**
 
-    ![userlogins11-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins11-.png?sfvrsn=2)
+    ![Select ‘Chromebook’](/devices/userlogins11.png)
 
 8. Click Add to confirm.
 9. After installing the browser extension and Application for the first time, test it by going to [internetbadguys.com](internetbadguys.com) on the Chromebook. A Cisco Umbrella filtering page should appear. It may take a number of minutes after installing the browser extension and app before the blocking comes into effect.
@@ -130,4 +130,4 @@ Should you wish to remove Umbrella from the Chrome devices, please follow the in
 1. Follow steps 1 - 5 from Part 1 of this guide
 2. Click on both the app and extension and click the bin icon in the right hand sidebar.
 
-    ![userlogins12-](https://www.computacenter.com/images/librariesprovider8/department-for-education-(dfe)/no-user-logins/userlogins12-.png?sfvrsn=2)
+    ![Screenshot showing Force Install](/devices/userlogins12.png)
