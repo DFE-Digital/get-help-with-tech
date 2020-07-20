@@ -10,14 +10,7 @@
         <%= t('page_titles.who_needs_the_data') %>
       </h1>
 
-      <div class="govuk-inset-text govuk-!-margin-bottom-8">
-        <p class="govuk-body">
-          Use the guide to tell people what’s available and collect the information you&nbsp;need:
-        </p>
-        <p class="govuk-body">
-          <%= govuk_link_to 'Guide to collecting mobile information', guide_to_collecting_mobile_information_path %>
-        </p>
-      </div>
+      <%= render partial: 'shared/use_the_mobile_guide' %>
 
       <%= f.govuk_text_field :account_holder_name, label: {size: 'm', text: 'Account holder name'}, hint_text: 'The account holder for a pay monthly contract must be over 18' %>
       <%= f.govuk_text_field :device_phone_number, label: {size: 'm', text: 'Mobile phone number'}, hint_text: 'All UK mobile phone numbers start with 07' %>
