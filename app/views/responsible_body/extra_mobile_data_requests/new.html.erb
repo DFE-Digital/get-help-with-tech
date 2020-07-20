@@ -28,7 +28,7 @@
         <%= f.hidden_field :agrees_with_privacy_statement, value: false %>
         <%= f.govuk_check_box :agrees_with_privacy_statement, true, multiple: false, link_errors: true, label: { text: 'Yes, the privacy statement has been shared' } %>
 
-        <p class="govuk-hint" style="margin-top: -20px">
+        <p class="govuk-hint">
           <%= govuk_link_to 'Guidance for sharing the privacy statement', guide_to_collecting_mobile_information_privacy_path %>
         </p>
       <%- end %>
