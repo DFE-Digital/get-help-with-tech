@@ -16,12 +16,13 @@
     <h1 class="govuk-heading-xl">
       <%= t('page_titles.request_extra_mobile_data') %>
     </h1>
-    <%= render partial: 'shared/pilot_mno_offer_eligibility' %>
+
+    <% unless @extra_mobile_data_requests.any? %>
+      <%= render partial: 'shared/use_the_mobile_guide' %>
+    <% end %>
+
     <p class="govuk-body">
-      <%= govuk_link_to 'Read our guide on collecting mobile information', '/guide-to-collecting-mobile-information' %>
-    </p>
-    <p class="govuk-body">
-      <%= govuk_button_link_to 'Request data for someone', new_responsible_body_extra_mobile_data_request_path, class: 'govuk-!-margin-top-5' %>
+      <%= govuk_button_link_to 'Request data for someone', new_responsible_body_extra_mobile_data_request_path %>
     </p>
   </div>
 </div>

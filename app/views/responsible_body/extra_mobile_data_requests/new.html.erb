@@ -1,16 +1,16 @@
-<%- content_for :before_content, govuk_link_to('Back', responsible_body_extra_mobile_data_requests_path, class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_link_to('Back', responsible_body_extra_mobile_data_requests_path, class: 'govuk-back-link') %>
+<% content_for :title, title_with_error_prefix(t('page_titles.who_needs_the_data'), @extra_mobile_data_request.errors.any?) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <%= t('page_titles.who_needs_the_data') %>
-    </h1>
-  </div>
-</div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @extra_mobile_data_request, url: responsible_body_extra_mobile_data_requests_path do |f| %>
       <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-xl">
+        <%= t('page_titles.who_needs_the_data') %>
+      </h1>
+
+      <%= render partial: 'shared/use_the_mobile_guide' %>
 
       <%= f.govuk_text_field :account_holder_name, label: {size: 'm', text: 'Account holder name'}, hint_text: 'The account holder for a pay monthly contract must be over 18' %>
       <%= f.govuk_text_field :device_phone_number, label: {size: 'm', text: 'Mobile phone number'}, hint_text: 'All UK mobile phone numbers start with 07' %>
@@ -28,24 +28,12 @@
         <%= f.hidden_field :agrees_with_privacy_statement, value: false %>
         <%= f.govuk_check_box :agrees_with_privacy_statement, true, multiple: false, link_errors: true, label: { text: 'Yes, the privacy statement has been shared' } %>
 
-        <p class="govuk-hint" style="margin-top: -20px">
+        <p class="govuk-hint">
           <%= govuk_link_to 'Guidance for sharing the privacy statement', guide_to_collecting_mobile_information_privacy_path %>
         </p>
       <%- end %>
       <%= f.govuk_submit %>
 
     <%- end %>
-  </div>
-  <div class="govuk-grid-column-one-third">
-    <aside class="app-related" role="complementary">
-      <h2 class="govuk-heading-s govuk-!-margin-bottom-2" id="-title">Guidance</h2>
-      <div class="app-related__body">
-        <%= govuk_link_to 'Read our guide on collecting mobile information', guide_to_collecting_mobile_information_path %>
-      </div>
-      <nav role="navigation" aria-labelledby="-title">
-        <ul class="app-related__list">
-        </ul>
-    </nav>
-    </aside>
   </div>
 </div>
