@@ -13,7 +13,7 @@
   <%- end %>
 
   <%- if SessionService.is_signed_in?(session) %>
-    <%- sign_out_link = button_to("Sign out", session_path(id: session[:session_id]), method: :delete, class: 'nav-button-as-link govuk-link govuk-header__link' ) %>
+    <%- sign_out_link = button_to("Sign out", session_path(id: session[:session_id]), method: :delete, class: 'nav-button-as-link govuk-link govuk-header__link', form_class: 'form-inline' ) %>
     <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
     <%= nav_item(url: sessions_path(id: session.id), content: content.html_safe) %>
   <%- else %>
