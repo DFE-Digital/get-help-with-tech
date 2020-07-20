@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
-  resources :sessions, only: %i[create destroy]
+  resources :sessions, only: %i[create] do
+    get '/sign-out', to: 'sessions#destroy', as: :sign_out
+  end
   resources :users, only: %i[new create]
 
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
