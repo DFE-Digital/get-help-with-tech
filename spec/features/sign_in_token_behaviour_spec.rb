@@ -15,7 +15,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
       scenario 'Visiting a valid sign_in_token link signs the user in' do
         visit validate_token_url
         expect(page).to have_text(user.email_address)
-        expect(page).to have_text('Sign out')
+        expect(page).to have_button('Sign out')
       end
 
       scenario 'Visiting the valid sign_in_token link increments sign-in count and timestamp' do
