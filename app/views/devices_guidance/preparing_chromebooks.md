@@ -55,4 +55,4 @@ Find out [how to access support](/devices/support-and-maintenance) to report Cis
 
 User guides on setting up Chromebooks are available to download. You can share these with young people and their parents, guardians and carers. Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
 
-* [Google Chromebook: User guidance](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/user-guidance)
+* [Google Chromebook: User guidance](/devices/getting-started-with-your-google-chromebook)
