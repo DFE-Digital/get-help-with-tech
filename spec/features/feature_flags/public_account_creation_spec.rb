@@ -24,7 +24,6 @@ RSpec.feature 'Public account creation feature flag', type: :feature do
       it 'allows you to create an account' do
         fill_in 'Your full name', with: 'A Name'
         fill_in 'Email address', with: 'an.address@example.com'
-        fill_in 'Organisation you work for', with: 'Some LA'
         click_on 'Create account'
         expect(page).to have_content 'Check your email'
       end
