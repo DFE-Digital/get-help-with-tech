@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  http_basic_authenticate_with  name: Settings.http_basic_auth.username,
-                                password: Settings.http_basic_auth.password,
-                                if: -> { FeatureFlag.active?(:http_basic_auth) }
-
   before_action :populate_user_from_session!
 
   include Pagy::Backend

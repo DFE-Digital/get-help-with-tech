@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_195229) do
+ActiveRecord::Schema.define(version: 2020_07_17_224849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_195229) do
   create_table "extra_mobile_data_requests", force: :cascade do |t|
     t.string "account_holder_name"
     t.string "device_phone_number"
-    t.bigint "created_by_user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "mobile_network_id"
@@ -42,7 +41,9 @@ ActiveRecord::Schema.define(version: 2020_07_15_195229) do
     t.integer "created_by_user_id"
     t.boolean "agrees_with_privacy_statement"
     t.string "problem"
+    t.bigint "responsible_body_id"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
+    t.index ["responsible_body_id"], name: "index_extra_mobile_data_requests_on_responsible_body_id"
     t.index ["status"], name: "index_extra_mobile_data_requests_on_status"
   end
 
@@ -76,7 +77,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_195229) do
   create_table "users", force: :cascade do |t|
     t.string "full_name"
     t.string "email_address"
-    t.string "organisation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "sign_in_token"
@@ -95,4 +95,5 @@ ActiveRecord::Schema.define(version: 2020_07_15_195229) do
 
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
+  add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
 end
