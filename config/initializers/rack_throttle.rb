@@ -21,5 +21,7 @@ if FeatureFlag.active?(:rate_limiting)
   Rails.application.config.middleware.use Rack::Throttle::Rules,
                                           rules: RackThrottleConfig::RULES,
                                           default: RackThrottleConfig::DEFAULT,
-                                          code: 429
+                                          code: 429,
+                                          message: File.read(File.join(Rails.root, 'public', '429.html')),
+                                          type: 'text/html; charset=utf-8'
 end
