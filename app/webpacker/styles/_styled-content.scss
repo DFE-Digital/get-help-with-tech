@@ -46,4 +46,14 @@
     @extend %govuk-section-break--visible;
     @extend %govuk-section-break--xl;
   }
+
+  .govuk-grid-column-two-thirds & img {
+    max-width: 100%;
+    border: 2px solid $govuk-border-colour;
+
+    // Cover both columns in a two-thirds/one-third layout
+    @include govuk-media-query($from: tablet) {
+      max-width: 150%;
+    }
+  }
 }
