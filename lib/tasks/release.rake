@@ -6,7 +6,7 @@ namespace :release do
       http_host: Settings.hostname_for_urls,
     )
     content = renderer.render(template: 'errors/too_many_requests')
-    path = File.join(Rails.root, 'public', '429.html')
+    path = Rails.root.join('public/429.html')
     File.open(path, 'w+') do |f|
       f << content
     end
