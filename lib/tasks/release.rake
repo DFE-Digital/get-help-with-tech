@@ -10,6 +10,6 @@ namespace :release do
     File.open(path, 'w+') do |f|
       f << content
     end
-    puts ['Rendered ', content.length, 'bytes to ', path].join(' ')
+    puts "Rendered #{content.length} bytes to #{path}"
   end
 end
