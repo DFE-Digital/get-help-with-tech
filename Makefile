@@ -7,8 +7,10 @@ PAAS_SPACE=get-help-with-tech
 $(eval export cf_major_version=$(shell cf version | grep -o -E '[0-9]+' | head -n 1))
 ifeq "$(cf_major_version)" "6"
 	CF_V3_PREFIX:=v3-
+	CF_PUSH_TASK:=cf-6-push
 else
 	CF_V3_PREFIX:=
+	CF_PUSH_TASK:=cf-7-push
 endif
 
 .PHONY: dev staging prod
@@ -64,7 +66,13 @@ push: require_env_stub ## push the Docker image to Docker Hub
 
 deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
 	cf $(CF_V3_PREFIX)apply-manifest -f ./config/manifests/$(env_stub)-manifest.yml
+	make $(CF_PUSH_TASK)
+
+cf-6-push:
 	cf $(CF_V3_PREFIX)zdt-push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --wait-for-deploy-complete
+
+cf-7-push:
+	cf push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --strategy rolling
 
 release: require_env_stub
 	make ${env_stub} build push deploy
