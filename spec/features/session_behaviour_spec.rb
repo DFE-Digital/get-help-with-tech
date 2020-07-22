@@ -74,18 +74,18 @@ RSpec.feature 'Session behaviour', type: :feature do
     let(:validate_token_url) { validate_token_url_for(user) }
 
     before do
-      FeatureFlag.deactivate(:extra_mobile_data_offer)
+      FeatureFlag.activate(:extra_mobile_data_offer)
       visit validate_token_url
     end
 
     scenario 're-using the same magic-link redirects to the home page for user' do
       visit validate_token_url
-      expect(page).to have_current_path(download_responsible_body_bt_wifi_vouchers_path)
+      expect(page).to have_current_path(responsible_body_home_path)
     end
 
     scenario 'using a new magic link redirects to the home page for user' do
       sign_in_as(user)
-      expect(page).to have_current_path(download_responsible_body_bt_wifi_vouchers_path)
+      expect(page).to have_current_path(responsible_body_home_path)
     end
   end
 
