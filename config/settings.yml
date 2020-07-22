@@ -40,9 +40,9 @@ throttling:
     post: 4
     put: 4
     /token:
-      get: 1
+      get: 4
     /sign_in_tokens:
-      get: 1
+      get: 4
 
 logstash:
   host: # Fill in with logstash host, leave blank to disable
