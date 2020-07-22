@@ -1,11 +1,34 @@
 require 'rails_helper'
 
-RSpec.describe DevicesGuidance, type: :model do
-  subject(:guidance) { DevicesGuidance.new }
+RSpec.describe MultipartGuidance, type: :model do
+  subject(:guidance) { described_class.new(metadata) }
+
+  let(:metadata) do
+    [
+      {
+        page_id: :overview,
+        path: '/guide/overview',
+        title: 'Overview',
+        description: 'The overview of the guide',
+      },
+      {
+        page_id: :second_page,
+        path: '/guide/second-page',
+        title: 'Another page',
+        description: 'More details',
+      },
+      {
+        page_id: :third_page,
+        path: '/guide/third-page',
+        title: 'Last page',
+        description: 'Finally',
+      },
+    ]
+  end
 
   describe '#page_exists?' do
     it 'does a slug lookup for existing pages' do
-      expect(guidance.page_exists?('about-the-offer')).to be_truthy
+      expect(guidance.page_exists?('second-page')).to be_truthy
     end
 
     it 'returns false for non-existent pages' do
@@ -15,10 +38,10 @@ RSpec.describe DevicesGuidance, type: :model do
 
   describe '#find_by_slug' do
     it 'fetches the page' do
-      found_page = guidance.find_by_slug('about-the-offer')
+      found_page = guidance.find_by_slug('third-page')
 
       expect(found_page).not_to be_nil
-      expect(found_page.page_id).to eq(:about_the_offer)
+      expect(found_page.page_id).to eq(:third_page)
     end
   end
 
@@ -36,7 +59,7 @@ RSpec.describe DevicesGuidance, type: :model do
         current_page = current_page.next
       end
 
-      expected_titles_in_order = I18n.t!('devices_guidance').values.map { |attributes| attributes[:title] }
+      expected_titles_in_order = ['Overview', 'Another page', 'Last page']
       expect(actual_titles).to eq(expected_titles_in_order)
     end
 
@@ -49,12 +72,8 @@ RSpec.describe DevicesGuidance, type: :model do
         current_page = current_page.previous
       end
 
-      expected_titles_in_order = I18n
-        .t!('devices_guidance')
-        .values
-        .map { |attributes| attributes[:title] }
-        .reverse
-      expect(actual_titles).to eq(expected_titles_in_order)
+      expected_titles_in_reverse_order = ['Last page', 'Another page', 'Overview']
+      expect(actual_titles).to eq(expected_titles_in_reverse_order)
     end
   end
 end

@@ -69,7 +69,7 @@
       <%= content_for(:before_content) %>
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <%= render partial: 'shared/flash_message' %>
-        <%= yield %>
+        <%= content_for?(:content) ? yield(:content) : yield %>
       </main>
     </div>
 
