@@ -69,6 +69,26 @@ RSpec.feature 'Session behaviour', type: :feature do
     end
   end
 
+  context 'when an active session already exists' do
+    let(:user) { create(:local_authority_user) }
+    let(:validate_token_url) { validate_token_url_for(user) }
+
+    before do
+      FeatureFlag.activate(:extra_mobile_data_offer)
+      visit validate_token_url
+    end
+
+    scenario 're-using the same magic-link redirects to the home page for user' do
+      visit validate_token_url
+      expect(page).to have_current_path(responsible_body_home_path)
+    end
+
+    scenario 'using a new magic link redirects to the home page for user' do
+      sign_in_as(user)
+      expect(page).to have_current_path(responsible_body_home_path)
+    end
+  end
+
   context 'with a valid user' do
     let(:valid_user) { create(:local_authority_user) }
 
