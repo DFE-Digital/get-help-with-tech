@@ -3,7 +3,16 @@ REMOTE_DOCKER_IMAGE_NAME=dfedigital/get-help-with-tech
 PAAS_ORGANISATION=dfe-teacher-services
 PAAS_SPACE=get-help-with-tech
 
+# support CF CLI 6 as well as 7, until we're confident that everyone can run v7
+$(eval export cf_major_version=$(shell cf version | grep -o -E '[0-9]+' | head -n 1))
+ifeq "$(cf_major_version)" "6"
+	cf_v3_prefix:=v3-
+else
+	cf_v3_prefix:=
+endif
+
 .PHONY: dev staging prod
+
 dev:
 	$(eval export env_stub=dev)
 	$(eval export db_plan=tiny-unencrypted-11)
@@ -21,6 +30,7 @@ prod:
 
 .PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh \
 				logs logs-recent
+
 
 require_env_stub:
 	@test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
@@ -53,8 +63,8 @@ push: require_env_stub ## push the Docker image to Docker Hub
 	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
 
 deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
-	cf v3-apply-manifest -f ./config/manifests/$(env_stub)-manifest.yml
-	cf v3-zdt-push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --wait-for-deploy-complete
+	cf $(cf_v3_prefix)apply-manifest -f ./config/manifests/$(env_stub)-manifest.yml
+	cf $(cf_v3_prefix)zdt-push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --wait-for-deploy-complete
 
 release: require_env_stub
 	make ${env_stub} build push deploy
@@ -67,7 +77,7 @@ promote:
 
 ssh: set_cf_target
 	@echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
-		cf v3-ssh $(APP_NAME)-$(env_stub)
+		cf $(cf_v3_prefix)ssh $(APP_NAME)-$(env_stub)
 
 logs: set_cf_target
 	cf logs $(APP_NAME)-$(env_stub)
