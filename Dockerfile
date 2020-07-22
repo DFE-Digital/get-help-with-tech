@@ -26,8 +26,10 @@ USER 1001
 
 # install all gems
 COPY --chown=deploy:deploy Gemfile Gemfile.lock .ruby-version ./
-ARG BUNDLE_FLAGS="--jobs 2 --no-cache --without development test"
-RUN bundle install ${BUNDLE_FLAGS}
+ARG BUNDLE_FLAGS="--jobs 2"
+RUN bundle config set no-cache 'true'
+RUN bundle config set without 'development test'
+RUN bundle install
 RUN bundle package --all
 
 COPY --chown=deploy:deploy . .
@@ -40,6 +42,9 @@ EXPOSE $APP_PORT
 RUN yarn
 ARG RAILS_ENV=production
 RUN RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rake secret) bundle exec rails webpacker:compile
+
+# Render the 'too many requests' error page
+RUN RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rake secret) bundle exec rake release:render_429_to_file
 
 # Cache the git commit sha & branch
 ARG GIT_COMMIT_SHA=""

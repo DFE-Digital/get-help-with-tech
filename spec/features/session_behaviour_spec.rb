@@ -38,7 +38,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         visit new_responsible_body_extra_mobile_data_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
-        expect(page).to have_text('Sign out')
+        expect(page).to have_button('Sign out')
       end
 
       scenario 'clicking "Sign out" signs the user out' do
