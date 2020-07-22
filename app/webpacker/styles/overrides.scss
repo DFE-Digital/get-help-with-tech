@@ -14,3 +14,34 @@
 .js-only {
   display: none;
 }
+
+// Rails' link_to method requires Javscript (Rails UJS) when given
+// `method: :delete` as parameter, which we did in the sign-out link.
+// This CSS allows the "sign out" link to be rendered as if it were a regular
+// link, while actually being a form with method="DELETE".
+// That way we can:
+// * remove the last reliance on Rails UJS
+// * keep the routes RESTful
+// * avoid exposing an "unsafe" action as a GET
+// * still have a DELETE route that works without Javscript enabled.
+.govuk-header__navigation-item {
+  .form-inline {
+    display: inline-block;
+
+    .nav-button-as-link {
+      background-color: transparent;
+      border: none;
+      color: govuk-colour("white");
+      display: inline;
+      @include govuk-font(16);
+      font-weight: bold;
+
+      &:focus,
+      &:active {
+        background-color: govuk-colour("yellow");
+        color: govuk-colour("black");
+        outline: 0;
+      }
+    }
+  }
+}
