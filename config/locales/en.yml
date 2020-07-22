@@ -63,6 +63,9 @@ en:
     enrol_chromebooks_with_user_logins:
       title: Enrol Chromebooks and add Cisco Umbrella with user logins
       description: Find out how to enrol Google Chromebooks so you can remotely manage them and how to add Cisco Umbrella to make them secure for families and children who are associated with a school.
+    enrol_chromebooks_without_user_logins:
+      title: Enrol Chromebooks and add Cisco Umbrella with no user logins
+      description: Find out how to enrol Google Chromebooks so you can remotely manage them and how to add Cisco Umbrella to make them secure for families of preschool aged children with a social worker and care leavers who aren’t associated with a school.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
