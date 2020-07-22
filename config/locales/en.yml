@@ -116,8 +116,8 @@ en:
             account_holder_name:
               blank: Enter the full name of the account holder for the mobile device
             device_phone_number:
-              blank: Enter the phone number of the mobile device in the correct format
-              invalid: Enter the phone number of the mobile device in the correct format
+              blank: Enter a UK mobile number, like 07700 900999
+              invalid: Enter a UK mobile number, like 07700 900999
             mobile_network_id:
               blank: Select which mobile network the device is on
             agrees_with_privacy_statement:
