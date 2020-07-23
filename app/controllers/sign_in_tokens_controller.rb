@@ -18,7 +18,6 @@ class SignInTokensController < ApplicationController
   rescue SessionService::TokenValidButExpired
     render :token_is_valid_but_expired, status: :bad_request
   rescue SessionService::TokenNotRecognised, SessionService::InvalidTokenAndIdentifierCombination
-    @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
     render :token_not_recognised, status: :bad_request
   end
 
