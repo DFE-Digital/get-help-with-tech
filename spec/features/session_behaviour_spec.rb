@@ -80,6 +80,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 're-using the same magic-link redirects to the home page for user' do
       visit validate_token_url
+      click_on 'Continue'
       expect(page).to have_current_path(responsible_body_home_path)
     end
 

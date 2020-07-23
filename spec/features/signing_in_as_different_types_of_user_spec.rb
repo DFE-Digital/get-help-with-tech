@@ -46,7 +46,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
 
     scenario 'it redirects to the responsible_body_home page' do
-      visit(validate_token_url)
+      sign_in_as user
       expect(page).to have_current_path(responsible_body_home_path)
       expect(page).to have_text 'Increase children’s internet access'
     end
@@ -69,7 +69,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       end
 
       it 'redirects to the guidance page' do
-        visit(validate_token_url)
+        sign_in_as user
         expect(page).to have_current_path(guidance_page_path)
         expect(page).to have_text I18n.t('service_name')
       end
@@ -85,7 +85,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       end
 
       scenario 'it redirects to Your Requests' do
-        visit(validate_token_url)
+        sign_in_as user
         expect(page).to have_current_path(mno_extra_mobile_data_requests_path)
         expect(page).to have_text 'Your requests'
       end
@@ -97,7 +97,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       end
 
       it 'redirects to the guidance page' do
-        visit(validate_token_url)
+        sign_in_as user
         expect(page).to have_current_path(guidance_page_path)
         expect(page).to have_text I18n.t('service_name')
       end

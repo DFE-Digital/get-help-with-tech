@@ -25,6 +25,7 @@ en:
     report_a_problem: Report a problem
     devices_guidance_index: "Get help with technology: devices"
     download_bt_hotspots: Download your BT hotspot log-ins
+    you_are_signed_in: You’re signed in
   devices_guidance:
     about_the_offer:
       title: About the offer

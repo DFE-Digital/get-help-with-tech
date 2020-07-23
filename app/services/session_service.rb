@@ -1,4 +1,8 @@
 class SessionService
+  class TokenValidButExpired < StandardError; end
+  class TokenNotRecognised < StandardError; end
+  class InvalidTokenAndIdentifierCombination < StandardError; end
+
   def self.send_magic_link_email!(email_address)
     if (user = find_user_by_email(email_address))
       user.generate_token!
@@ -16,12 +20,15 @@ class SessionService
   end
 
   def self.validate_token!(token:, identifier:)
-    user = User.where(sign_in_token: token).first
-    if user && user.token_is_valid?(token: token, identifier: identifier)
-      user.clear_token!
+    user = User.find_by(sign_in_token: token)
+    raise TokenNotRecognised if user.blank?
+
+    if user.token_is_valid?(token: token, identifier: identifier)
       user
+    elsif user.token_is_valid_but_expired?(token: token, identifier: identifier)
+      raise TokenValidButExpired
     else
-      raise ArgumentError, 'token & id combination not recognised'
+      raise InvalidTokenAndIdentifierCombination
     end
   end
 
