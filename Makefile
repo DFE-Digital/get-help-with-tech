@@ -48,6 +48,10 @@ setup_paas_db: set_cf_target
 setup_paas_app: set_cf_target
 	cf scale $(APP_NAME)-$(env_stub) -k 2G
 
+setup_cdn_route: set_cf_target
+	# tell it to forward all headers from Cloudfront, otherwise we only get Host
+	cf update-service $(APP_NAME)-$(env_stub)-cdn-route -c '{"headers": ["*"]}'
+
 set_cf_target: require_env_stub
 	cf target -o $(PAAS_ORGANISATION) -s $(PAAS_SPACE)-$(env_stub)
 
