@@ -15,14 +15,11 @@ class SignInTokensController < ApplicationController
       flash.notice = "Welcome, #{@user.full_name}"
     end
     redirect_to root_url_for(@user)
-  rescue ArgumentError
-    user = User.find_by(sign_in_token: params[:token])
-    if user&.token_is_valid_but_expired?(token: params[:token], identifier: params[:identifier])
-      render :token_is_valid_but_expired, status: :bad_request
-    else
-      @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
-      render :token_not_recognised, status: :bad_request
-    end
+  rescue SessionService::TokenValidButExpired
+    render :token_is_valid_but_expired, status: :bad_request
+  rescue SessionService::TokenNotRecognised, SessionService::InvalidTokenAndIdentifierCombination
+    @sign_in_token_form = SignInTokenForm.new(token: params[:token], identifier: params[:identifier])
+    render :token_not_recognised, status: :bad_request
   end
 
   def validate_manual
