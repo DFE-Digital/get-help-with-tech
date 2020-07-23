@@ -6,6 +6,14 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
   let(:token) { user.generate_token!(ttl: ttl) }
   let(:identifier) { user.sign_in_identifier(token) }
 
+  before do
+    FeatureFlag.activate(:extra_mobile_data_offer)
+  end
+
+  after do
+    FeatureFlag.deactivate(:extra_mobile_data_offer)
+  end
+
   context 'with a valid sign_in_token link' do
     let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
 
@@ -28,13 +36,25 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         expect(user.reload.last_signed_in_at).to eq(timestamp)
       end
 
-      scenario 'Visiting a sign_in_token link twice does not work the second time' do
+      scenario 'Visiting a sign_in_token link twice does not work the second time if the user continued through the interstitial page' do
         visit validate_token_url
+        click_on 'Continue'
         click_on 'Sign out'
 
         visit validate_token_url
         expect(page).to have_http_status(:bad_request)
         expect(page).not_to have_text('Sign out')
+      end
+
+      scenario 'Visiting a sign_in_token link twice does not work the second time if the user did not continue through the interstitial page' do
+        visit validate_token_url
+        click_on 'Sign out'
+
+        visit validate_token_url
+        expect(page).to have_http_status(:ok)
+        expect(page).to have_text(I18n.t('page_titles.you_are_signed_in'))
+        click_on 'Continue'
+        expect(page).to have_selector('h1', text: I18n.t('page_titles.responsible_body_home'))
       end
     end
 
