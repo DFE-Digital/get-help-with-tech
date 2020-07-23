@@ -24,7 +24,6 @@ class SessionService
     raise TokenNotRecognised if user.blank?
 
     if user.token_is_valid?(token: token, identifier: identifier)
-      user.clear_token!
       user
     elsif user.token_is_valid_but_expired?(token: token, identifier: identifier)
       raise TokenValidButExpired

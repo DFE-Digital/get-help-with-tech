@@ -1,4 +1,6 @@
 class SignInTokensController < ApplicationController
+  before_action :require_sign_in!, only: :destroy
+
   def new
     @sign_in_token_form ||= SignInTokenForm.new
     if FeatureFlag.active?(:public_account_creation)
@@ -13,11 +15,16 @@ class SignInTokensController < ApplicationController
       @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
       save_user_to_session!
     end
-    redirect_to root_url_for(@user)
+    render :you_are_signed_in
   rescue SessionService::TokenValidButExpired
     render :token_is_valid_but_expired, status: :bad_request
   rescue SessionService::TokenNotRecognised, SessionService::InvalidTokenAndIdentifierCombination
     render :token_not_recognised, status: :bad_request
+  end
+
+  def destroy
+    @user.clear_token!
+    redirect_to root_url_for(@user)
   end
 
   def validate_manual
