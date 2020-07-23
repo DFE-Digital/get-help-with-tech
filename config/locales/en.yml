@@ -72,6 +72,9 @@ en:
     getting_started_with_your_microsoft_windows_device:
       title: Getting started with your Microsoft Windows device
       description: User guidance for Microsoft Windows laptops and devices included in the device boxes.
+    4g_user_guidance:
+      title: 4G user guidance
+      description: Guide for local authorities and trusts on getting ready to distribute 4G wireless routers.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
