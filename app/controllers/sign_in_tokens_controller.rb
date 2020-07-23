@@ -12,7 +12,6 @@ class SignInTokensController < ApplicationController
     unless SessionService.is_signed_in?(session)
       @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
       save_user_to_session!
-      flash.notice = "Welcome, #{@user.full_name}"
     end
     redirect_to root_url_for(@user)
   rescue SessionService::TokenValidButExpired
