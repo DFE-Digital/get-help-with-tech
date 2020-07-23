@@ -20,7 +20,7 @@ Each of your 4G wireless routers will have a monthly data cap of 8GB. This means
 
 It would be helpful if you remind families, young people and care leavers that:
 
-* their router has a monthly data cap 
+* their router has a monthly data cap
 * they should only use the data connection for education and social care services
 
 
@@ -44,16 +44,16 @@ You may have particular resources or sites you would choose to signpost them to,
 
 Your wireless routers will come with 4G SIM cards in them. Your SIMs will be activated the day after you receive your 4G wireless routers. They are then ready to loan to families, children and young people.  
 
-Along with set-up instructions in the box, you can give the users this [user guide](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/preparing-4g-wireless-routers/4g-user-guidance) that covers:
+Along with set-up instructions in the box, you can give the users this [user guide](/devices/4g-user-guidance) that covers:
 
 * how to set up a 4G wireless router
 * tips on staying safe online
 * using data only for education and social care
 * what to do if something goes wrong
 
-You should give young people and their carers a copy of this document. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.  
+You should give young people and their carers a copy of this document. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.
 
-* [4G wireless routers: User guidance](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/preparing-4g-wireless-routers/4g-user-guidance)
+* [4G wireless routers: User guidance](/devices/4g-user-guidance)
 
 ## Get support
 

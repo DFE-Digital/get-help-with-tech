@@ -117,7 +117,7 @@ You’ll need to do this for each device individually.
         5.  If the above sequence doesn’t work then you should be able to enter recovery mode using the relevant key combination for the device manufacturer at boot:
             * HP: press F9 key
             * ASUS: press F9 key “continuously”
-            * Lenovo: press FN+F11 keys at the same time 
+            * Lenovo: press FN+F11 keys at the same time
             * Dynabook (Toshiba): press and hold 0 (zero) key
 
     5.  The device should reboot into “Reset this PC”
@@ -146,8 +146,8 @@ Bitlocker encryption has not been enabled on the devices to make it easier for y
 
 ## User guidance for young people and their carers
 
-User guides on setting up Microsoft devices are available for download. You can share these with young people and their parents, guardians and carers. 
+User guides on setting up Microsoft devices are available for download. You can share these with young people and their parents, guardians and carers.
 
 Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
 
-* [Microsoft devices: User guidance](https://www.computacenter.com/uk/supporting-remote-education-and-social-care/microsoft-windows-user-guidance)
+* [Microsoft devices: User guidance](/devices/getting-started-with-your-microsoft-windows-device)
