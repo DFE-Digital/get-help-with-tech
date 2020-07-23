@@ -69,6 +69,9 @@ en:
     google_domain_for_care_leavers_and_children_with_social_worker:
       title: Set up a Google domain for care leavers
       description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
+    getting_started_with_your_microsoft_windows_device:
+      title: Getting started with your Microsoft Windows device
+      description: User guidance for Microsoft Windows laptops and devices included in the device boxes.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
