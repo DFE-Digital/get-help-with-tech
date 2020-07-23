@@ -12,6 +12,11 @@ FactoryBot.define do
     last_signed_in_at { nil }
   end
 
+  trait :who_has_requested_a_magic_link do
+    sign_in_token            { SecureRandom.uuid }
+    sign_in_token_expires_at { 30.minutes.from_now }
+  end
+
   factory :local_authority_user, class: 'User' do
     full_name                { 'Jane Doe' }
     sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
