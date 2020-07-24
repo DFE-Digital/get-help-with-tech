@@ -68,4 +68,4 @@ If you’re worried that your child is accessing harmful content on any device, 
 
 If a child is worried or needs support, they can call Childline (0800 1111), download their ‘For Me’ app or visit the website: [https://www.childline.org.uk/](https://www.childline.org.uk/).
 
-[If your child has a social worker, you should contact your local authority if you have any concerns about your child’s safety or wellbeing.](https://www.childline.org.uk/)
+If your child has a social worker, you should contact your local authority if you have any concerns about your child’s safety or wellbeing.

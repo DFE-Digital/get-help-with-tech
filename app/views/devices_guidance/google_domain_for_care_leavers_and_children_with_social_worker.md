@@ -10,7 +10,7 @@ You need to:
 
 ## Sign up for G Suite for Education
 
-_Video Tutorials_: [Domain Registration](https://www.youtube.com/watch?v=5aqNmtHs8Ko&list=PLP7Bvyb3ap45rPc0a79jBt4EH1YvHs9Sb&index=2&t=0s), [Domain Verification](https://www.youtube.com/watch?v=jGmpa59fvBI&list=PLP7Bvyb3ap45rPc0a79jBt4EH1YvHs9Sb&index=3&t=0s)
+Video Tutorials: [Domain Registration](https://www.youtube.com/watch?v=5aqNmtHs8Ko&list=PLP7Bvyb3ap45rPc0a79jBt4EH1YvHs9Sb&index=2&t=0s), [Domain Verification](https://www.youtube.com/watch?v=jGmpa59fvBI&list=PLP7Bvyb3ap45rPc0a79jBt4EH1YvHs9Sb&index=3&t=0s)
 
 Sign up for [G Suite for Education](https://edu.google.com/products/gsuite-for-education/?modal_active=none)
 
