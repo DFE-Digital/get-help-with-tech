@@ -3,9 +3,8 @@ require 'rails_helper'
 RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :feature do
   let(:mno_user) { create(:mno_user) }
 
-  context 'signed in as an MNO user, with extra_mobile_data_offer FeatureFlag active' do
+  context 'signed in as an MNO user' do
     before do
-      FeatureFlag.activate(:extra_mobile_data_offer)
       sign_in_as mno_user
     end
 
@@ -47,23 +46,6 @@ RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :featu
           expect(page).to have_content('Not on network')
           expect(page).to have_link('Change problem')
         end
-      end
-    end
-  end
-
-  context 'signed in as an MNO user, with extra_mobile_data_offer FeatureFlag inactive' do
-    let(:extra_mobile_data_request) { create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network) }
-
-    before do
-      FeatureFlag.deactivate(:extra_mobile_data_offer)
-      sign_in_as mno_user
-    end
-
-    describe 'visiting the report a problem page' do
-      it 'returns a 404' do
-        visit mno_extra_mobile_data_request_report_problem_path(extra_mobile_data_request)
-        expect(page).to have_http_status(:not_found)
-        expect(page).to have_text('Page not found')
       end
     end
   end

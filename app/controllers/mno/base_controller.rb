@@ -1,5 +1,4 @@
 class Mno::BaseController < ApplicationController
-  before_action { render_404_if_feature_flag_inactive(:extra_mobile_data_offer) }
   before_action :require_mno_user!,
                 :set_mobile_network
 

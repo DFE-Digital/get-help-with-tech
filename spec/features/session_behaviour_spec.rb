@@ -22,7 +22,6 @@ RSpec.feature 'Session behaviour', type: :feature do
     # TODO: need to think about how verification should work
     context 'when signed in' do
       before do
-        FeatureFlag.activate(:extra_mobile_data_offer)
         sign_in_as user
       end
 
@@ -74,7 +73,6 @@ RSpec.feature 'Session behaviour', type: :feature do
     let(:validate_token_url) { validate_token_url_for(user) }
 
     before do
-      FeatureFlag.activate(:extra_mobile_data_offer)
       visit validate_token_url
     end
 

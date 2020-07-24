@@ -6,14 +6,6 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
   let(:token) { user.generate_token!(ttl: ttl) }
   let(:identifier) { user.sign_in_identifier(token) }
 
-  before do
-    FeatureFlag.activate(:extra_mobile_data_offer)
-  end
-
-  after do
-    FeatureFlag.deactivate(:extra_mobile_data_offer)
-  end
-
   context 'with a valid sign_in_token link' do
     let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
 

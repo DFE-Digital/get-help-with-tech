@@ -13,10 +13,8 @@
 
     <%= render partial: 'bt_wifi_offer' %>
 
-    <%- if FeatureFlag.active?(:extra_mobile_data_offer) %>
-      <hr class="govuk-section-break govuk-section-break--l">
+    <hr class="govuk-section-break govuk-section-break--l">
 
-      <%= render partial: 'extra_mobile_data_offer' %>
-    <%- end %>
+    <%= render partial: 'extra_mobile_data_offer' %>
   </div>
 </div>
