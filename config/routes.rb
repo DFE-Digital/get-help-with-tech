@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :users, only: %i[new create]
 
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
-  post '/token/validate', to: 'sign_in_tokens#destroy', as: :destroy_sign_in_token
+  delete '/token/validate', to: 'sign_in_tokens#destroy', as: :destroy_sign_in_token
   get '/token/validate-manual', to: 'sign_in_tokens#validate_manual', as: :validate_manually_entered_sign_in_token
   get '/token/sent/:token', to: 'sign_in_tokens#sent', as: :sent_token
   get '/token/email-not-recognised', to: 'sign_in_tokens#email_not_recognised', as: :email_not_recognised

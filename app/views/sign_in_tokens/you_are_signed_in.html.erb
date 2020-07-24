@@ -6,7 +6,7 @@
       <%= t('page_titles.you_are_signed_in') %>
     </h1>
     <p class="govuk-body">
-      <%= form_with url: destroy_sign_in_token_path, method: 'post' do |f| %>
+      <%= form_with url: destroy_sign_in_token_path, method: 'delete' do |f| %>
         <%= f.govuk_submit 'Continue' %>
       <% end %>
     </p>
