@@ -14,6 +14,9 @@ govuk_notify:
   templates:
     # ID of the template in GOV.UK Notify used for mailing sign-in tokens
     sign_in_token_mail: '89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
+    extra_mobile_data_requests:
+      mno_in_scheme_sms: 'a3610e88-4852-4acc-b22c-767899d2d4c7'
+      mno_not_in_scheme_sms: '401aed7e-83ac-4e90-abac-3e2f9bc45a95'
 
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000

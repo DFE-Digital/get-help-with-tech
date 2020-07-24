@@ -437,6 +437,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.3)
   logstash-logger (~> 0.26.1)
   mail-notify
+  notifications-ruby-client
   pagy
   pg (>= 0.18, < 2.0)
   pry-byebug
