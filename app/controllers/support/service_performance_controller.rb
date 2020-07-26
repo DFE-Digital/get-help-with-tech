@@ -1,5 +1,5 @@
 class Support::ServicePerformanceController < Support::BaseController
   def index
-    @service_performance = ServicePerformance.new
+    @stats = ServicePerformance.new
   end
 end

@@ -3,7 +3,7 @@
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
     <div class="app-card app-card--blue">
-      <span class="app-card__count"><%= @service_performance.total_extra_mobile_data_requests %></span>
+      <span class="app-card__count"><%= @stats.total_extra_mobile_data_requests %></span>
       requests
     </div>
   </div>
@@ -13,7 +13,7 @@
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card">
       <span class="app-card__secondary-count">
-        <%= @service_performance.extra_mobile_data_requests_by_status['requested'] || 0 %>
+        <%= @stats.extra_mobile_data_requests_by_status['requested'] || 0 %>
       </span>
       requested
     </div>
@@ -21,7 +21,7 @@
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card">
       <span class="app-card__secondary-count">
-        <%= @service_performance.extra_mobile_data_requests_by_status['in_progress'] || 0 %>
+        <%= @stats.extra_mobile_data_requests_by_status['in_progress'] || 0 %>
       </span>
       in progress
     </div>
@@ -29,7 +29,7 @@
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card app-card--red">
       <span class="app-card__secondary-count">
-        <%= @service_performance.extra_mobile_data_requests_by_status['queried'] || 0 %>
+        <%= @stats.extra_mobile_data_requests_by_status['queried'] || 0 %>
       </span>
       not valid
     </div>
@@ -37,7 +37,7 @@
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card app-card--green">
       <span class="app-card__secondary-count">
-        <%= @service_performance.extra_mobile_data_requests_by_status['complete'] || 0 %>
+        <%= @stats.extra_mobile_data_requests_by_status['complete'] || 0 %>
       </span>
       completed
     </div>
@@ -55,7 +55,7 @@
       </thead>
 
       <tbody class="govuk-table__body">
-        <% @service_performance.extra_mobile_data_requests_by_mobile_network_brand.each do |mno_name, count| %>
+        <% @stats.extra_mobile_data_requests_by_mobile_network_brand.each do |mno_name, count| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= mno_name %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= count %></td>
