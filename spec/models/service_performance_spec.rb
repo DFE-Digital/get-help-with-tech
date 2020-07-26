@@ -58,4 +58,30 @@ RSpec.describe ServicePerformance, type: :model do
       expect(stats.number_of_different_responsible_bodies_signed_in).to eq(2)
     end
   end
+
+  describe '#number_of_distributed_bt_wifi_vouchers' do
+    it 'counts only the vouchers that have been downloaded by responsible bodies' do
+      # these will count
+      create_list(:bt_wifi_voucher, 3, responsible_body: create(:local_authority), distributed_at: 3.days.ago)
+      create_list(:bt_wifi_voucher, 4, responsible_body: create(:trust), distributed_at: 5.days.ago)
+
+      # these won't count
+      create_list(:bt_wifi_voucher, 2, responsible_body: create(:trust), distributed_at: nil)
+
+      expect(stats.number_of_distributed_bt_wifi_vouchers).to eq(7)
+    end
+  end
+
+  describe '#number_of_responsible_bodies_with_distributed_bt_wifi_vouchers' do
+    it 'counts the number of unique responsible bodies that downloaded BT wifi vouchers' do
+      # these will count
+      create_list(:bt_wifi_voucher, 3, responsible_body: create(:local_authority), distributed_at: 3.days.ago)
+      create_list(:bt_wifi_voucher, 4, responsible_body: create(:trust), distributed_at: 5.days.ago)
+
+      # these won't count
+      create_list(:bt_wifi_voucher, 2, responsible_body: create(:trust), distributed_at: nil)
+
+      expect(stats.number_of_responsible_bodies_with_distributed_bt_wifi_vouchers).to eq(2)
+    end
+  end
 end

@@ -24,4 +24,16 @@ class ServicePerformance
       .pluck(:mobile_network_id)
       .size
   end
+
+  def number_of_distributed_bt_wifi_vouchers
+    BTWifiVoucher.distributed.count
+  end
+
+  def number_of_responsible_bodies_with_distributed_bt_wifi_vouchers
+    BTWifiVoucher
+      .distributed
+      .distinct
+      .pluck(:responsible_body_id)
+      .size
+  end
 end
