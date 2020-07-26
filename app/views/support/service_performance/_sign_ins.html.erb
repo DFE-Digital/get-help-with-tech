@@ -1,0 +1,23 @@
+<h2 class="govuk-heading-l">Sign-ins</h2>
+
+<div class="govuk-!-margin-bottom-4">
+  <div class="app-card app-card--blue">
+    <span class="app-card__count"><%= @service_performance.total_signed_in_users %></span>
+    users have signed in
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <div class="app-card">
+      <span class="app-card__count"><%= @service_performance.number_of_different_responsible_bodies_signed_in %></span>
+      different responsible bodies
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <div class="app-card">
+      <span class="app-card__count"><%= @service_performance.number_of_different_mnos_signed_in %></span>
+      different mobile network operators
+    </div>
+  </div>
+</div>
