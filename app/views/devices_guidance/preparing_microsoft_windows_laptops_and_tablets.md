@@ -174,7 +174,7 @@ We’ve identified a fix for this bug. The end users – young people, children 
 
 If a user has set a password for “.\localuser” that they’ve forgotten, you’ll need to sign in to the “.\localadmin” account and reset their password using the "User Accounts" settings in the Control Panel.
 
-We’ve illustrated these steps in our user guidance, which you can share with anyone using your Microsoft devices.
+We’ve illustrated these steps in our [user guidance](/devices/getting-started-with-your-microsoft-windows-device), which you can share with anyone using your Microsoft devices.
 
 ## User guidance for young people and their carers
 
