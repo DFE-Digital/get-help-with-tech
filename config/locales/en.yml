@@ -40,24 +40,21 @@ en:
     receiving_devices:
       title: Receiving devices
       description: Find out when and where devices will be delivered. Also includes information on what to do if devices are faulty or missing from your order.
-    preparing_microsoft_windows_laptops_and_tablets:
-      title: Preparing Microsoft Windows laptops and tablets
-      description: Learn how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
-    preparing_chromebooks:
-      title: Preparing Chromebooks
-      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering and set up instructions for local authorities, trusts and schools.
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
-    distributing_devices:
-      title: Distributing devices
-      description: Advice on how to get devices to young people via schools, social workers and deliveries to their homes. Information on insuring devices, asset management and loan agreements.
-    support_and_maintenance:
-      title: Support and maintenance
-      description: Find out how to support your users, access additional support and deal with a faulty device.
-    safeguarding_for_device_users:
-      title: Safeguarding for device users
-      description: Information on content filtering, privacy policies and mobile device management to ensure devices are used appropriately by young people and families.
+    4g_user_guidance:
+      title: 4G user guidance
+      description: Guide for local authorities and trusts on getting ready to distribute 4G wireless routers.
+    preparing_microsoft_windows_laptops_and_tablets:
+      title: Preparing Microsoft Windows laptops and tablets
+      description: Learn how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
+    getting_started_with_your_microsoft_windows_device:
+      title: Getting started with your Microsoft Windows device
+      description: User guidance for Microsoft Windows laptops and devices included in the device boxes.
+    preparing_chromebooks:
+      title: Preparing Chromebooks
+      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering and set up instructions for local authorities, trusts and schools.
     getting_started_with_your_google_chromebook:
       title: Getting started with your Google Chromebook
       description: User guidance for Google Chromebooks to supply to children, young people and their carers.
@@ -70,12 +67,15 @@ en:
     google_domain_for_care_leavers_and_children_with_social_worker:
       title: Set up a Google domain for care leavers
       description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
-    getting_started_with_your_microsoft_windows_device:
-      title: Getting started with your Microsoft Windows device
-      description: User guidance for Microsoft Windows laptops and devices included in the device boxes.
-    4g_user_guidance:
-      title: 4G user guidance
-      description: Guide for local authorities and trusts on getting ready to distribute 4G wireless routers.
+    distributing_devices:
+      title: Distributing devices
+      description: Advice on how to get devices to young people via schools, social workers and deliveries to their homes. Information on insuring devices, asset management and loan agreements.
+    support_and_maintenance:
+      title: Support and maintenance
+      description: Find out how to support your users, access additional support and deal with a faulty device.
+    safeguarding_for_device_users:
+      title: Safeguarding for device users
+      description: Information on content filtering, privacy policies and mobile device management to ensure devices are used appropriately by young people and families.
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
