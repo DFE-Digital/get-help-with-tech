@@ -20,6 +20,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
 
     before do
       mobile_network
+      stub_notify_sms
       sign_in_as user
     end
 
