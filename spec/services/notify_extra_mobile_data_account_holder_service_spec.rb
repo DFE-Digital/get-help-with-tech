@@ -4,7 +4,7 @@ RSpec.describe NotifyExtraMobileDataAccountHolderService, type: :model do
   context 'for a mno that is providing extra data' do
     let(:request) { create(:extra_mobile_data_request) }
     let(:sms_client) { instance_double('Notifications::Client') }
-    let(:service) { described_class.new(request) }
+    let(:service) { described_class.new }
 
     before do
       allow(service).to receive(:sms_client) { sms_client }
@@ -12,7 +12,7 @@ RSpec.describe NotifyExtraMobileDataAccountHolderService, type: :model do
     end
 
     it 'sends the extra data offer sms message' do
-      service.call
+      service.deliver!(request)
       expect(sms_client).to have_received(:send_sms).with(
         {
           phone_number: request.device_phone_number,
@@ -27,7 +27,7 @@ RSpec.describe NotifyExtraMobileDataAccountHolderService, type: :model do
 
   context 'for a mno that has not signed up' do
     let(:request) { create(:extra_mobile_data_request, :mno_not_participating) }
-    let(:service) { described_class.new(request) }
+    let(:service) { described_class.new }
     let(:sms_client) { instance_double('Notifications::Client') }
 
     before do
@@ -36,7 +36,7 @@ RSpec.describe NotifyExtraMobileDataAccountHolderService, type: :model do
     end
 
     it 'sends the mno not providing data sms message' do
-      service.call
+      service.deliver!(request)
       expect(sms_client).to have_received(:send_sms).with(
         {
           phone_number: request.device_phone_number,
@@ -51,7 +51,7 @@ RSpec.describe NotifyExtraMobileDataAccountHolderService, type: :model do
 
   context 'when the Notify client raises an error' do
     let(:request) { create(:extra_mobile_data_request) }
-    let(:service) { described_class.new(request) }
+    let(:service) { described_class.new }
     let(:sms_client) { instance_double('Notifications::Client') }
 
     before do
@@ -64,7 +64,7 @@ RSpec.describe NotifyExtraMobileDataAccountHolderService, type: :model do
     end
 
     it 'catches the error and raises a NotifySmsError' do
-      expect { service.call }.to raise_error(NotifyExtraMobileDataAccountHolderService::NotifySmsError)
+      expect { service.deliver!(request) }.to raise_error(NotifyExtraMobileDataAccountHolderService::NotifySmsError)
     end
   end
 end

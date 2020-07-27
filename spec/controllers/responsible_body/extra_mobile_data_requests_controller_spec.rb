@@ -11,20 +11,19 @@ RSpec.describe ResponsibleBody::ExtraMobileDataRequestsController, type: :contro
     end
 
     describe 'create' do
-      let(:sms_client) { mock_notify_sms_client }
+      let(:sms_client) { instance_double('Notifications::Client') }
       let(:mno) { create(:mobile_network) }
       let(:form_attrs) { attributes_for(:extra_mobile_data_request, mobile_network_id: mno.id) }
+      let(:request_data) { { extra_mobile_data_request: form_attrs, confirm: 'confirm' } }
+      let(:service) { NotifyExtraMobileDataAccountHolderService.new }
 
       before do
         allow(sms_client).to receive(:send_sms)
+        allow(service).to receive(:sms_client) { sms_client }
+        controller.send(:instance_variable_set, '@sms_service', service)
       end
 
       it 'sends an sms to the account holder of the request' do
-        request_data = {
-          extra_mobile_data_request: form_attrs,
-          confirm: 'confirm',
-        }
-
         post :create, params: request_data
 
         expect(sms_client).to have_received(:send_sms).with(

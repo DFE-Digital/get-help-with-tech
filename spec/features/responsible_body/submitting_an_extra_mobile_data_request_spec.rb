@@ -20,7 +20,6 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
 
     before do
       mobile_network
-      stub_notify_sms
       sign_in_as user
     end
 
@@ -72,10 +71,13 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
       expect(page.status_code).to eq(200)
       expect(page).to have_text('Check your answers')
 
-      click_on 'Confirm request'
+      stub_notify_request
 
+      click_on 'Confirm request'
       expect(page).to have_text('Your request has been received')
       expect(page).to have_text('My confirmed account holder name')
+
+      WebMock.reset!
     end
   end
 end

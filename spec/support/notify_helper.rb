@@ -1,13 +1,13 @@
 module NotifyHelper
-  def mock_notify_sms_client
-    sms_client = instance_double('Notifications::Client')
-    allow_any_instance_of(NotifyExtraMobileDataAccountHolderService).to receive(:sms_client).and_return(sms_client)
-    sms_client
+  def stub_notify_request
+    WebMock.stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms').to_return(
+      status: 201,
+      body: success_response_body,
+      headers: { content_type: 'application/json' },
+    )
   end
 
-  def stub_notify_sms
-    sms_client = mock_notify_sms_client
-    allow(sms_client).to receive(:send_sms)
-    sms_client
+  def success_response_body
+    File.new(Rails.root.join('spec/support/data/notify_success_body.json'))
   end
 end
