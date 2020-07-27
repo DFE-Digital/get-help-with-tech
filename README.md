@@ -165,3 +165,19 @@ You can configure logstash to send logs to your log aggregator by setting the
 
 A copy of the [logstash filter](etc/logstash-filter.conf) we use exists in the
 repo. This has to be installed manually in the log aggregator to be used.
+
+## Amending the devices guidance
+
+If you need to amend the [Get help with technology: devices](https://get-help-with-tech.education.gov.uk/devices) guidance:
+
+1. [Create a new branch on this repository](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository)
+2. Make your amends:
+
+    * the page titles and descriptions are in [the internationalisation file](config/locales/en.yml#L30)
+    * the content itself is in Markdown files [here](app/views/devices_guidance)
+
+3. [Create a pull request from the branch](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
+4. Get a colleague to [review your pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/reviewing-changes-in-pull-requests) – the change cannot be merged without this step
+5. [Merge the pull request with a merge commit](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-a-pull-request)
+
+Once the pull request is merged, it will be released the next time the service is released.
