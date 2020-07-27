@@ -144,10 +144,44 @@ Bitlocker encryption has not been enabled on the devices to make it easier for y
 
 **If you remove the pre-installed settings provided by DfE, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**
 
+## How to help anyone experiencing problems logging in to Windows devices
+
+Some users with Windows devices may experience a bug that makes it harder for them to log in to their laptops and tablets. 
+
+Users may find that the login is defaulting to the ‘.\localadmin' account and asking for a password, which they do not have. 
+
+We’ve identified a fix for this bug. The end users – young people, children or their families – will need to:
+
+* [follow the steps](#if-no-local-user-password-has-been-set) follow the steps below to apply the .\localuser workaround and log in to the device
+* connect the device to the internet so it can receive the fix update – this can take a few hours
+* restart the device – they may need to follow the steps below again until the device successfully downloads and applies the fix. This will happen automatically once the device has been connected to the internet.
+
+### If no local user password has been set
+
+* Click "OK"
+* Change the username in the upper box from “.\localadmin” to “.\localuser” (it’s important to include the “.” dot and “\” backslash)
+* Do not enter a password
+* Press return
+* This should log you in as the local user
+
+### If a local user password has been set
+
+* Click "OK"
+* Change the username in the upper box from “.\localadmin” to “.\localuser” (it’s important to include the “.” dot and “\” backslash)
+* Enter the password you have set
+* Press return
+* This should log you in as the local user
+
+If a user has set a password for “.\localuser” that they’ve forgotten, you’ll need to sign in to the “.\localadmin” account and reset their password using the "User Accounts" settings in the Control Panel.
+
+We’ve illustrated these steps in our user guidance, which you can share with anyone using your Microsoft devices.
+
 ## User guidance for young people and their carers
 
 User guides on setting up Microsoft devices are available for download. You can share these with young people and their parents, guardians and carers.
 
 Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
+
+If users find that the login is defaulting to the “.\localadmin” account and asking for a password, please [see the advice](#How-to-help-anyone-experiencing-problems-logging-in-to-Windows-devices) above.
 
 * [Microsoft devices: User guidance](/devices/getting-started-with-your-microsoft-windows-device)
