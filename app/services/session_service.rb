@@ -41,6 +41,14 @@ class SessionService
     User.where('lower(email_address) = ?', email_address.downcase).first
   end
 
+  def self.identify_user!(session)
+    if is_signed_in?(session)
+      @user = User.find(session[:user_id])
+      update_session!(session[:session_id])
+      @user
+    end
+  end
+
   def self.is_signed_in?(session)
     session[:user_id].present? && validate_session!(session[:session_id])
   end

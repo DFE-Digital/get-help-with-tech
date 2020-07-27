@@ -42,8 +42,15 @@ gem 'rails', '>= 6.0.3.1'
 # Used for markdown rendering of guidance pages
 gem 'redcarpet'
 
+# Used for the job q
+gem 'redis-namespace'
+
 # Error emails via Sentry
 gem 'sentry-raven'
+
+# Job queue
+gem 'sidekiq'
+gem 'sinatra', require: false
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
