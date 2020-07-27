@@ -45,6 +45,10 @@ Rails.application.routes.draw do
     resources :extra_mobile_data_requests, only: %i[index new create], path: '/extra-mobile-data-requests'
   end
 
+  namespace :support do
+    get '/', to: 'service_performance#index', as: :service_performance
+  end
+
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 
   get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in

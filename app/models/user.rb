@@ -5,6 +5,9 @@ class User < ApplicationRecord
   belongs_to :responsible_body, optional: true
 
   scope :approved, -> { where.not(approved_at: nil) }
+  scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
+  scope :responsible_body_users, -> { where.not(responsible_body: nil) }
+  scope :mno_users, -> { where.not(mobile_network: nil) }
 
   validates :full_name,
             presence: true,

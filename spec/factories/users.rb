@@ -1,44 +1,49 @@
 FactoryBot.define do
-  trait :approved do
-    approved_at   { Time.now.utc - 3.days }
-  end
+  factory :user do
+    full_name { Faker::Name.unique.name }
+    email_address { Faker::Internet.unique.email }
 
-  trait :not_approved do
-    approved_at   { nil }
-  end
+    trait :approved do
+      approved_at { Time.now.utc - 3.days }
+    end
 
-  trait :never_signed_in do
-    sign_in_count     { 0 }
-    last_signed_in_at { nil }
-  end
+    trait :not_approved do
+      approved_at { nil }
+    end
 
-  trait :who_has_requested_a_magic_link do
-    sign_in_token            { SecureRandom.uuid }
-    sign_in_token_expires_at { 30.minutes.from_now }
-  end
+    trait :never_signed_in do
+      sign_in_count     { 0 }
+      last_signed_in_at { nil }
+    end
 
-  factory :local_authority_user, class: 'User' do
-    full_name                { 'Jane Doe' }
-    sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
-    association              :responsible_body, factory: :local_authority
-    approved
-  end
+    trait :signed_in_before do
+      sign_in_count     { 3 }
+      last_signed_in_at { 2.days.ago }
+    end
 
-  factory :trust_user, class: 'User' do
-    full_name                { 'Jane Doe' }
-    sequence(:email_address) { |n| "jane.doe#{n}@somelocalauthority.gov.uk" }
-    association              :responsible_body, factory: :trust
-    approved
-  end
+    trait :who_has_requested_a_magic_link do
+      sign_in_token            { SecureRandom.uuid }
+      sign_in_token_expires_at { 30.minutes.from_now }
+    end
 
-  factory :mno_user, class: 'User' do
-    full_name     { 'Mike Mobile-Network' }
-    email_address { 'mike.mobile-network@somemno.co.uk' }
-    association   :mobile_network
-  end
+    factory :local_authority_user do
+      association :responsible_body, factory: :local_authority
+      approved
+    end
 
-  factory :dfe_user, class: 'User' do
-    full_name     { 'Jane Doe' }
-    email_address { 'jane.doe@digital.education.gov.uk' }
+    factory :trust_user do
+      association :responsible_body, factory: :trust
+      approved
+    end
+
+    factory :mno_user do
+      association   :mobile_network
+    end
+
+    factory :dfe_user do
+      email_address do
+        full_name.downcase.gsub(' ', '.') + ['@digital.education.gov.uk', '@education.gov.uk'].sample
+      end
+    end
   end
 end

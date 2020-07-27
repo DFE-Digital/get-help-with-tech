@@ -76,8 +76,8 @@ private
   def root_url_for(user)
     if user.is_mno_user? && FeatureFlag.active?(:extra_mobile_data_offer)
       mno_extra_mobile_data_requests_path
-    elsif user.is_dfe? && FeatureFlag.active?(:dfe_admin_ui)
-      admin_path
+    elsif user.is_dfe?
+      support_service_performance_path
     elsif user.is_responsible_body_user?
       responsible_body_home_path
     else

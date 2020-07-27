@@ -52,27 +52,13 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a dfe user' do
+  context 'as a DfE user' do
     let(:user) { create(:dfe_user) }
 
-    context 'with the FeatureFlag active' do
-      before do
-        FeatureFlag.activate(:dfe_admin_ui)
-      end
-
-      pending
-    end
-
-    context 'with the FeatureFlag inactive' do
-      before do
-        FeatureFlag.deactivate(:dfe_admin_ui)
-      end
-
-      it 'redirects to the guidance page' do
-        sign_in_as user
-        expect(page).to have_current_path(guidance_page_path)
-        expect(page).to have_text I18n.t('service_name')
-      end
+    scenario 'it redirects to Service performance' do
+      sign_in_as user
+      expect(page).to have_current_path(support_service_performance_path)
+      expect(page).to have_text 'Service performance'
     end
   end
 

@@ -1,7 +1,6 @@
 class FeatureFlag
   PERMANENT_SETTINGS = %i[
     show_debug_info
-    dfe_admin_ui
     rate_limiting
     public_account_creation
   ].freeze
