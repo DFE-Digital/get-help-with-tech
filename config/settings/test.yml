@@ -1,0 +1,4 @@
+govuk_notify:
+  # API key for the GOV.UK Notify service, used for sending emails
+  api_key: 'test-key'
+
