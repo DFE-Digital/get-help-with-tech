@@ -52,6 +52,13 @@ setup_cdn_route: set_cf_target
 	# tell it to forward all headers from Cloudfront, otherwise we only get Host
 	cf update-service $(APP_NAME)-$(env_stub)-cdn-route -c '{"headers": ["*"]}'
 
+setup_logit: set_cf_target
+	@test ${LOGIT_ENDPOINT} || (echo ">> LOGIT_ENDPOINT is not set (${LOGIT_ENDPOINT})- please use make setup_logit LOGIT_ENDPOINT=(Logit Logstash endpoint) LOGIT_PORT=(Logit TCP-SSL port)\n\nYou can get these values from the Logit stack settings"; exit 1)
+	@test ${LOGIT_PORT} || (echo ">> LOGIT_PORT is not set (${LOGIT_PORT})- please use make setup_logit LOGIT_ENDPOINT=(Logit Logstash endpoint) LOGIT_PORT=(Logit TCP-SSL port)\n\nYou can get these values from the Logit stack settings"; exit 1)
+	cf create-user-provided-service logit-ssl-drain -l syslog-tls://${LOGIT_ENDPOINT}:${LOGIT_PORT}
+	cf bind-service $(APP_NAME)-$(env_stub) logit-ssl-drain
+	cf restage $(APP_NAME)-$(env_stub)
+
 set_cf_target: require_env_stub
 	cf target -o $(PAAS_ORGANISATION) -s $(PAAS_SPACE)-$(env_stub)
 
