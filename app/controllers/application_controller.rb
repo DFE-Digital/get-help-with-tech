@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  
+
 private
 
   def populate_user_from_session!
