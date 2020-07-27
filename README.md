@@ -174,7 +174,7 @@ If you need to amend the [Get help with technology: devices](https://get-help-wi
 2. Make your amends:
 
     * the page titles and descriptions are in [the internationalisation file](config/locales/en.yml#L30)
-    * the content itself is in Markdown files [here](app/views/devices_guidance)
+    * the content itself [is in Markdown files](app/views/devices_guidance)
 
 3. [Create a pull request from the branch](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
 4. Get a colleague to [review your pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/reviewing-changes-in-pull-requests) – the change cannot be merged without this step
