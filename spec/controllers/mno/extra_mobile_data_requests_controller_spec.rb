@@ -10,7 +10,6 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
   let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
 
   before do
-    FeatureFlag.activate(:extra_mobile_data_offer)
     sign_in_as mno_user
   end
 

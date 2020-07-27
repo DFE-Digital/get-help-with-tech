@@ -5,9 +5,7 @@ class FeatureFlag
     public_account_creation
   ].freeze
 
-  TEMPORARY_FEATURE_FLAGS = %i[
-    extra_mobile_data_offer
-  ].freeze
+  TEMPORARY_FEATURE_FLAGS = %i[].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
 

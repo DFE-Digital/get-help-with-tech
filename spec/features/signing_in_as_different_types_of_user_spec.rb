@@ -41,10 +41,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a user who belongs_to a responsible_body' do
     let(:user) { create(:local_authority_user) }
 
-    before do
-      FeatureFlag.activate(:extra_mobile_data_offer)
-    end
-
     scenario 'it redirects to the responsible_body_home page' do
       sign_in_as user
       expect(page).to have_current_path(responsible_body_home_path)
@@ -65,28 +61,10 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a mobile network operator' do
     let(:user) { create(:mno_user) }
 
-    context 'with the extra_mobile_data_offer FeatureFlag active' do
-      before do
-        FeatureFlag.activate(:extra_mobile_data_offer)
-      end
-
-      scenario 'it redirects to Your Requests' do
-        sign_in_as user
-        expect(page).to have_current_path(mno_extra_mobile_data_requests_path)
-        expect(page).to have_text 'Your requests'
-      end
-    end
-
-    context 'with the extra_mobile_data_offerFeatureFlag inactive' do
-      before do
-        FeatureFlag.deactivate(:extra_mobile_data_offer)
-      end
-
-      it 'redirects to the guidance page' do
-        sign_in_as user
-        expect(page).to have_current_path(guidance_page_path)
-        expect(page).to have_text I18n.t('service_name')
-      end
+    scenario 'it redirects to Your Requests' do
+      sign_in_as user
+      expect(page).to have_current_path(mno_extra_mobile_data_requests_path)
+      expect(page).to have_text 'Your requests'
     end
   end
 end

@@ -74,7 +74,7 @@ private
   end
 
   def root_url_for(user)
-    if user.is_mno_user? && FeatureFlag.active?(:extra_mobile_data_offer)
+    if user.is_mno_user?
       mno_extra_mobile_data_requests_path
     elsif user.is_dfe?
       support_service_performance_path
