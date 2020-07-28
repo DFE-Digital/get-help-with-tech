@@ -11,7 +11,7 @@ applications:
   - type: sidekiq
     disk_quota: 2G
     health-check-type: process
-    instances: 0
+    instances: 1
     command: bundle exec sidekiq -C config/sidekiq.yml
   services:
     - get-help-with-tech-dev-db

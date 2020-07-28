@@ -10,12 +10,13 @@ elsif ENV['VCAP_SERVICES'].present?
 else
   'redis://127.0.0.1:6379/'
 end
-# Sidekiq.configure_server do |c|
-#   c.redis = {
-#     url: ENV['REDIS_URL'] || redis_url,
-#     db: 1
-#   }
-# end
+
+Sidekiq.configure_server do |c|
+  c.redis = {
+    url: ENV['REDIS_URL'] || redis_url,
+    db: 1
+  }
+end
 Sidekiq.configure_client do |c|
   c.redis = {
     url: redis_url,
