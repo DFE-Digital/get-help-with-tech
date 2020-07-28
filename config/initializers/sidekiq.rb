@@ -1,4 +1,4 @@
-Rails.application.config.active_job.queue_adapter = :sidekiq
+ActiveJob::Base.queue_adapter = Rails.application.config.active_job.queue_adapter
 
 redis_url = if ENV['REDIS_URL'].present?
   ENV['REDIS_URL']
