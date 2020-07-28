@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  layout 'single_page', only: :accessibility
+
   def guidance; end
 
   def bt_wifi_privacy_notice; end
@@ -10,4 +12,6 @@ class PagesController < ApplicationController
   def start; end
 
   def about_increasing_mobile_data; end
+
+  def accessibility; end
 end

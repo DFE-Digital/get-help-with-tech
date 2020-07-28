@@ -1,0 +1,14 @@
+<% page_title = I18n.t!("page_titles.#{action_name}") %>
+<%= content_for :title, page_title %>
+
+<% content_for :content do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"><%= page_title %></h1>
+
+      <%= yield %>
+    </div>
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>
