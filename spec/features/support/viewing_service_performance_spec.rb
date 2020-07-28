@@ -25,18 +25,27 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   def and_some_extra_mobile_data_requests_have_been_made
+    ee = create(:mobile_network, brand: 'EE')
+    three = create(:mobile_network, brand: 'Three')
+    virgin = create(:mobile_network, brand: 'Virgin')
+    requester = create(:user, responsible_body: local_authority)
+
+    create_list(:extra_mobile_data_request, 1,
+                status: :requested,
+                mobile_network: virgin,
+                created_by_user: requester)
     create_list(:extra_mobile_data_request, 3,
                 status: :in_progress,
-                mobile_network: create(:mobile_network, brand: 'EE'),
-                created_by_user: create(:user, responsible_body: local_authority))
+                mobile_network: ee,
+                created_by_user: requester)
     create_list(:extra_mobile_data_request, 5,
                 status: :complete,
-                mobile_network: create(:mobile_network, brand: 'Three'),
+                mobile_network: three,
                 created_by_user: create(:user, responsible_body: local_authority))
     create_list(:extra_mobile_data_request, 1,
                 status: :cancelled,
-                mobile_network: create(:mobile_network, brand: 'Virgin'),
-                created_by_user: create(:user, responsible_body: local_authority))
+                mobile_network: virgin,
+                created_by_user: requester)
   end
 
   def when_i_sign_in_as_a_dfe_user
@@ -54,12 +63,13 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   def and_i_see_stats_about_extra_mobile_data_requests
-    expect(page).to have_text('9 requests')
+    expect(page).to have_text('10 requests')
+    expect(page).to have_text('1 new')
     expect(page).to have_text('3 in progress')
     expect(page).to have_text('1 not valid or cancelled')
     expect(page).to have_text('5 completed')
     expect(page).to have_text('EE 3')
     expect(page).to have_text('Three 5')
-    expect(page).to have_text('Virgin 1')
+    expect(page).to have_text('Virgin 2')
   end
 end
