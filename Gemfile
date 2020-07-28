@@ -107,6 +107,7 @@ end
 group :test do
   gem 'capybara-email'
   gem 'database_cleaner-active_record'
+  gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'
   gem 'webdrivers', '~> 4.3'
 end

@@ -133,7 +133,3 @@ Style/HashTransformValues:
 Rake/Desc:
   Exclude:
     - 'lib/tasks/reset_qa.rake'
-
-GlobalVars:
-  AllowedVariables:
-    - $redis
