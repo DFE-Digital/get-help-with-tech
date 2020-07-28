@@ -11,4 +11,3 @@ RSpec.feature 'Display the mobile data privacy notice page', type: :feature do
     expect(page).to have_selector 'h1', text: I18n.t('page_titles.increasing_mobile_data_privacy_notice')
   end
 end
-
