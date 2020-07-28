@@ -18,16 +18,19 @@ endif
 dev:
 	$(eval export env_stub=dev)
 	$(eval export db_plan=tiny-unencrypted-11)
+	$(eval export redis_plan=tiny-5.x)
 	@true
 
 staging:
 	$(eval export env_stub=staging)
 	$(eval export db_plan=tiny-unencrypted-11)
+	$(eval export redis_plan=tiny-ha-5.x)
 	@true
 
 prod:
 	$(eval export env_stub=prod)
 	$(eval export db_plan=small-ha-11)
+	$(eval export redis_plan=tiny-ha-5.x)
 	@true
 
 .PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh \
@@ -51,6 +54,9 @@ setup_paas_app: set_cf_target
 setup_cdn_route: set_cf_target
 	# tell it to forward all headers from Cloudfront, otherwise we only get Host
 	cf update-service $(APP_NAME)-$(env_stub)-cdn-route -c '{"headers": ["*"]}'
+
+setup_paas_redis: set_cf_target
+	cf create-service redis $(redis_plan) $(APP_NAME)-$(env_stub)-redis
 
 setup_logit: set_cf_target
 	@test ${LOGIT_ENDPOINT} || (echo ">> LOGIT_ENDPOINT is not set (${LOGIT_ENDPOINT})- please use make setup_logit LOGIT_ENDPOINT=(Logit Logstash endpoint) LOGIT_PORT=(Logit TCP-SSL port)\n\nYou can get these values from the Logit stack settings"; exit 1)

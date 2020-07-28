@@ -7,3 +7,4 @@ applications:
   health-check-invocation-timeout: 10
   services:
     - get-help-with-tech-staging-db
+    - get-help-with-tech-staging-redis

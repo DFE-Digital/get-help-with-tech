@@ -1,6 +1,20 @@
 Rails.application.config.active_job.queue_adapter = :sidekiq
 
-Sidekiq.configure_server { |c| c.redis = { url: ENV['REDIS_URL'] } }
+if $redis_config[:password]
+  redis_url = "redis://:#{$redis_config[:password]}@#{$redis_config[:host]}:#{$redis_config[:port]}/0"
+else
+  redis_url = "redis://#{$redis_config[:host]}:#{$redis_config[:port]}/0"
+end
+
+Rails.logger.info "Configuring sidekiq with redis_url: #{redis_url}"
+Sidekiq.configure_server do |c|
+  c.redis = {
+    url: ENV['REDIS_URL'] || redis_url,
+    namespace: 'sidekiq'
+  }
+end
+
+Rails.logger.info "Sidekiq configured OK"
 
 # Make Sidekiq admin panel share the same session as the Rails  app
 require 'sidekiq/web'

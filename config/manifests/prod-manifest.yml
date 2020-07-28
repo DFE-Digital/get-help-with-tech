@@ -8,3 +8,4 @@ applications:
   instances: 2
   services:
     - get-help-with-tech-prod-db
+    - get-help-with-tech-prod-redis
