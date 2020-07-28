@@ -57,6 +57,9 @@ gem 'config'
 # Semantic Logger makes logs pretty, also needed for logit integration
 gem 'rails_semantic_logger'
 
+# GOV.UK Notify client
+gem 'notifications-ruby-client'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
