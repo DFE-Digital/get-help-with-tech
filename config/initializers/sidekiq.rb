@@ -13,6 +13,12 @@ Sidekiq.configure_server do |c|
     namespace: 'sidekiq'
   }
 end
+Sidekiq.configure_client do |c|
+  c.redis = {
+    url: ENV['REDIS_URL'] || redis_url,
+    namespace: 'sidekiq'
+  }
+end
 
 Rails.logger.info "Sidekiq configured OK"
 
