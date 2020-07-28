@@ -1,14 +1,6 @@
 class NotifyExtraMobileDataAccountHolderService
   class NotifySmsError < StandardError; end
 
-  # def self.call(extra_mobile_data_request)
-  #   new(extra_mobile_data_request).call
-  # end
-
-  # def initialize(extra_mobile_data_request)
-  #   @extra_mobile_data_request = extra_mobile_data_request
-  # end
-
   def deliver!(extra_mobile_data_request)
     @extra_mobile_data_request = extra_mobile_data_request
 
