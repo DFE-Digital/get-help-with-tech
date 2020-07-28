@@ -47,7 +47,6 @@ gem 'sentry-raven'
 
 # Job queue
 gem 'sidekiq'
-gem 'sinatra', require: false
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
