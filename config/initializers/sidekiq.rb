@@ -1,19 +1,19 @@
 ActiveJob::Base.queue_adapter = Rails.application.config.active_job.queue_adapter
 
+
 redis_url = if ENV['REDIS_URL'].present?
-  ENV['REDIS_URL']
-elsif ENV['VCAP_SERVICES'].present?
-  vcap_services ||= JSON.parse(ENV['VCAP_SERVICES'])
-  redis_service_name = vcap_services.keys.find { |svc| svc =~ /redis/i }
-  redis_service = vcap_services[redis_service_name].first
-  redis_service['credentials']['uri']
-else
-  'redis://127.0.0.1:6379/'
-end
+              ENV['REDIS_URL']
+            elsif ENV['VCAP_SERVICES'].present?
+              require 'vcap_services_config'
+              redis_config = VCapServicesConfig.new.first_service_matching('redis')
+              redis_config['credentials']['uri']
+            else
+              'redis://127.0.0.1:6379/'
+            end
 
 Sidekiq.configure_server do |c|
   c.redis = {
-    url: ENV['REDIS_URL'] || redis_url,
+    url: redis_url,
     db: 1
   }
 end

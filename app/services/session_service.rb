@@ -7,8 +7,7 @@ class SessionService
     if (user = find_user_by_email(email_address))
       user.generate_token!
       logger.info "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
-      job = SendTokenEmailViaNotifyJob.perform_later(user.id)
-      logger.info
+      SendTokenEmailViaNotifyJob.perform_later(user.id)
       user.sign_in_token
     else
       # silently ignore an incorrect email, to avoid inadvertently
