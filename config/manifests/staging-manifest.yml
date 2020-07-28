@@ -1,10 +1,18 @@
 ---
 applications:
 - name: get-help-with-tech-staging
-  disk_quota: 2G
-  health-check-http-endpoint: /healthcheck.json
-  health-check-type: http
-  health-check-invocation-timeout: 10
+  processes:
+  - type: web
+    disk_quota: 2G
+    health-check-http-endpoint: /healthcheck.json
+    health-check-type: http
+    health-check-invocation-timeout: 10
+    instances: 1
+  - type: sidekiq
+    disk_quota: 2G
+    health-check-type: process
+    instances: 1
+    command: bundle exec sidekiq -C config/sidekiq.yml
   services:
     - get-help-with-tech-staging-db
     - get-help-with-tech-staging-redis

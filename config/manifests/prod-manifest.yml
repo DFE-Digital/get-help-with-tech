@@ -1,11 +1,18 @@
 ---
 applications:
 - name: get-help-with-tech-prod
-  disk_quota: 2G
-  health-check-http-endpoint: /healthcheck.json
-  health-check-type: http
-  health-check-invocation-timeout: 10
-  instances: 2
+  processes:
+  - type: web
+    disk_quota: 2G
+    health-check-http-endpoint: /healthcheck.json
+    health-check-type: http
+    health-check-invocation-timeout: 10
+    instances: 2
+  - type: sidekiq
+    disk_quota: 2G
+    health-check-type: process
+    instances: 2
+    command: bundle exec sidekiq -C config/sidekiq.yml
   services:
     - get-help-with-tech-prod-db
     - get-help-with-tech-prod-redis
