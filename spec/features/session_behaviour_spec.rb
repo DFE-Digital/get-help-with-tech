@@ -2,8 +2,6 @@ require 'rails_helper'
 require 'shared/filling_in_forms'
 
 RSpec.feature 'Session behaviour', type: :feature do
-  let(:last_email) { ActionMailer::Base.deliveries.last }
-
   scenario 'new visitor has sign in link' do
     visit '/'
 
@@ -105,14 +103,13 @@ RSpec.feature 'Session behaviour', type: :feature do
         expect(page).to have_text('Email address')
 
         clear_emails
-        expect(last_email).to be_nil
+        expect(current_email).to be_nil
         fill_in 'Email address', with: valid_user.email_address
+        click_on 'Continue'
 
-        perform_enqueued_jobs do
-          click_on 'Continue'
-        end
-        expect(last_email).not_to be_nil
-        expect(last_email.to[0]).to eq(valid_user.email_address)
+        open_email(valid_user.email_address)
+        expect(current_email).not_to be_nil
+        expect(current_email.to[0]).to eq(valid_user.email_address)
         expect(page).to have_text('Check your email')
       end
 
