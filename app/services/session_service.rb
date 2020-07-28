@@ -6,8 +6,9 @@ class SessionService
   def self.send_magic_link_email!(email_address)
     if (user = find_user_by_email(email_address))
       user.generate_token!
-      logger.debug "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
-      SendTokenEmailViaNotifyJob.perform_later(user.id)
+      logger.info "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
+      job = SendTokenEmailViaNotifyJob.perform_later(user.id)
+      logger.info
       user.sign_in_token
     else
       # silently ignore an incorrect email, to avoid inadvertently
