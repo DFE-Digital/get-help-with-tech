@@ -1,5 +1,5 @@
 Rails.application.config.active_job.queue_adapter = :sidekiq
-redis_protocol == $redis_config[:ssl] ? 'rediss' : 'redis'
+redis_protocol = $redis_config[:ssl] ? 'rediss' : 'redis'
 if $redis_config[:password]
   redis_url = "#{redis_protocol}://:#{$redis_config[:password]}@#{$redis_config[:host]}:#{$redis_config[:port]}/0"
 else
