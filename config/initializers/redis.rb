@@ -8,16 +8,15 @@ if ENV['VCAP_SERVICES']
     host: redis_service['credentials']['host'],
     port: redis_service['credentials']['port'],
     password: redis_service['credentials']['password'],
-    ssl: redis_service['credentials']['tls_enabled']
+    ssl: redis_service['credentials']['tls_enabled'],
+    db: 1
   }
 else
   $redis_config = {
     host: '127.0.0.1',
-    port: 6379
+    port: 6379,
+    db: 1
   }
 end
 
-Rails.logger.info "Creating redis connection with config: #{$redis_config.inspect}"
 $redis = Redis.new($redis_config)
-
-Rails.logger.info "$redis = #{$redis.inspect}"

@@ -1,27 +1,29 @@
 Rails.application.config.active_job.queue_adapter = :sidekiq
-redis_protocol = $redis_config[:ssl] ? 'rediss' : 'redis'
-if $redis_config[:password]
-  redis_url = "#{redis_protocol}://:#{$redis_config[:password]}@#{$redis_config[:host]}:#{$redis_config[:port]}/0"
-else
-  redis_url = "#{redis_protocol}://#{$redis_config[:host]}:#{$redis_config[:port]}/0"
-end
 
-Rails.logger.info "Configuring sidekiq with redis_url: #{redis_url}"
-Sidekiq.configure_server do |c|
-  c.redis = {
-    url: ENV['REDIS_URL'] || redis_url,
-    namespace: 'sidekiq'
-  }
+redis_url = if ENV['REDIS_URL'].present?
+  ENV['REDIS_URL']
+elsif ENV['VCAP_SERVICES'].present?
+  vcap_services ||= JSON.parse(ENV['VCAP_SERVICES'])
+  redis_service_name = vcap_services.keys.find { |svc| svc =~ /redis/i }
+  redis_service = vcap_services[redis_service_name].first
+  redis_service['credentials']['uri']
+else
+  'redis://127.0.0.1:6379/'
 end
+# Sidekiq.configure_server do |c|
+#   c.redis = {
+#     url: ENV['REDIS_URL'] || redis_url,
+#     db: 1
+#   }
+# end
 Sidekiq.configure_client do |c|
   c.redis = {
-    url: ENV['REDIS_URL'] || redis_url,
-    namespace: 'sidekiq'
+    url: redis_url,
+    db: 1
   }
 end
-
-Rails.logger.info "Sidekiq configured OK"
 
 # Make Sidekiq admin panel share the same session as the Rails  app
 require 'sidekiq/web'
+Sidekiq::Web.set :sessions, Rails.application.config.session_options
 Sidekiq::Web.set :session_secret, Rails.application.credentials[:secret_key_base]
