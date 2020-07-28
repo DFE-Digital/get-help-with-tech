@@ -33,6 +33,10 @@ RSpec.feature 'Viewing service performance', type: :feature do
                 status: :complete,
                 mobile_network: create(:mobile_network, brand: 'Three'),
                 created_by_user: create(:user, responsible_body: local_authority))
+    create_list(:extra_mobile_data_request, 1,
+                status: :cancelled,
+                mobile_network: create(:mobile_network, brand: 'Virgin'),
+                created_by_user: create(:user, responsible_body: local_authority))
   end
 
   def when_i_sign_in_as_a_dfe_user
@@ -50,10 +54,12 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   def and_i_see_stats_about_extra_mobile_data_requests
-    expect(page).to have_text('8 requests')
+    expect(page).to have_text('9 requests')
     expect(page).to have_text('3 in progress')
+    expect(page).to have_text('1 not valid or cancelled')
     expect(page).to have_text('5 completed')
     expect(page).to have_text('EE 3')
     expect(page).to have_text('Three 5')
+    expect(page).to have_text('Virgin 1')
   end
 end
