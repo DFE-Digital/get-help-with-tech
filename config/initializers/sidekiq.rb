@@ -6,7 +6,7 @@ ActiveJob::Base.queue_adapter = Rails.application.config.active_job.queue_adapte
 redis_url = if ENV['REDIS_URL'].present?
               ENV['REDIS_URL']
             elsif ENV['VCAP_SERVICES'].present?
-              require 'vcap_services_config'
+              require 'v_cap_services_config'
               redis_config = VCapServicesConfig.new.first_service_matching('redis')
               redis_config['credentials']['uri']
             else
