@@ -12,5 +12,9 @@ FactoryBot.define do
       status  { :queried }
       problem { ExtraMobileDataRequest.problems.keys.sample }
     end
+
+    trait :mno_not_participating do
+      association :mobile_network, factory: %i[mobile_network maybe_participating_in_pilot]
+    end
   end
 end
