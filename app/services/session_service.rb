@@ -7,9 +7,7 @@ class SessionService
     if (user = find_user_by_email(email_address))
       user.generate_token!
       logger.debug "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
-      mail = SignInTokenMailer.with(user: user).sign_in_token_email
-      mail.deliver!
-
+      SignInTokenMailer.with(user: user).sign_in_token_email.deliver_later
       user.sign_in_token
     else
       # silently ignore an incorrect email, to avoid inadvertently
@@ -39,6 +37,14 @@ class SessionService
   # Will expand to cover MNO / MVNO and DfE users too
   def self.find_user_by_email(email_address)
     User.where('lower(email_address) = ?', email_address.downcase).first
+  end
+
+  def self.identify_user!(session)
+    if is_signed_in?(session)
+      @user = User.find(session[:user_id])
+      update_session!(session[:session_id])
+      @user
+    end
   end
 
   def self.is_signed_in?(session)

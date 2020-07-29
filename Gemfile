@@ -45,6 +45,9 @@ gem 'redcarpet'
 # Error emails via Sentry
 gem 'sentry-raven'
 
+# Job queue
+gem 'sidekiq'
+
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
 
@@ -106,6 +109,7 @@ end
 group :test do
   gem 'capybara-email'
   gem 'database_cleaner-active_record'
+  gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'
   gem 'webdrivers', '~> 4.3'
 end

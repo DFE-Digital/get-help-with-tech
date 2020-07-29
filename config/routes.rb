@@ -1,3 +1,5 @@
+require Rails.root.join('lib/constraints/require_dfe_user_constraint')
+
 Rails.application.routes.draw do
   get '/start', to: 'pages#start'
   get '/about-bt-wifi', to: 'pages#about_bt_wifi'
@@ -49,6 +51,8 @@ Rails.application.routes.draw do
 
   namespace :support do
     get '/', to: 'service_performance#index', as: :service_performance
+
+    mount Sidekiq::Web => '/sidekiq', constraints: RequireDFEUserConstraint.new, as: :sidekiq_admin
   end
 
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck

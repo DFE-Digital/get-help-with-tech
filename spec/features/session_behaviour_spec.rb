@@ -106,9 +106,10 @@ RSpec.feature 'Session behaviour', type: :feature do
         expect(current_email).to be_nil
         fill_in 'Email address', with: valid_user.email_address
         click_on 'Continue'
-        open_email(valid_user.email_address)
 
+        open_email(valid_user.email_address)
         expect(current_email).not_to be_nil
+        expect(current_email.to[0]).to eq(valid_user.email_address)
         expect(page).to have_text('Check your email')
       end
 

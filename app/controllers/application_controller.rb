@@ -10,11 +10,7 @@ class ApplicationController < ActionController::Base
 private
 
   def populate_user_from_session!
-    if SessionService.is_signed_in?(session)
-      @user = User.find(session[:user_id])
-      SessionService.update_session!(session[:session_id])
-    end
-    @user ||= User.new
+    @user ||= (SessionService.identify_user!(session) || User.new)
   end
 
   def save_user_to_session!(user = @user)

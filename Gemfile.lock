@@ -160,6 +160,8 @@ GEM
       railties (>= 5.0.0)
     faker (2.13.0)
       i18n (>= 1.6, < 2)
+    fakeredis (0.8.0)
+      redis (~> 4.1)
     faraday (0.17.3)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.14.0)
@@ -214,6 +216,8 @@ GEM
     msgpack (1.3.3)
     multi_json (1.14.1)
     multipart-post (2.1.1)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     net-http-persistent (4.0.0)
       connection_pool (~> 2.2)
     net-http-pipeline (1.0.1)
@@ -242,6 +246,8 @@ GEM
       json
       websocket (~> 1.0)
     rack (2.2.3)
+    rack-protection (2.0.8.1)
+      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -285,6 +291,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.0)
+    redis (4.2.1)
     regexp_parser (1.7.1)
     rexml (3.2.4)
     rspec-core (3.9.2)
@@ -329,6 +336,7 @@ GEM
     rubocop-rspec (1.39.0)
       rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
+    ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
     safe_yaml (1.0.5)
     sass (3.7.4)
@@ -348,10 +356,19 @@ GEM
     semantic_range (2.3.0)
     sentry-raven (2.13.0)
       faraday (>= 0.7.6, < 1.0)
+    sidekiq (6.1.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     simplecov (0.18.5)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.2)
+    sinatra (2.0.8.1)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.8.1)
+      tilt (~> 2.0)
     site_prism (3.4.2)
       addressable (~> 2.5)
       capybara (~> 3.3)
@@ -431,6 +448,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  fakeredis
   foreman
   govuk_design_system_formbuilder
   haml
@@ -451,7 +469,9 @@ DEPENDENCIES
   rubocop-govuk
   scss_lint-govuk
   sentry-raven
+  sidekiq
   simplecov
+  sinatra
   site_prism
   spring
   spring-watcher-listen (~> 2.0.0)

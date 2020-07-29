@@ -16,11 +16,11 @@ module ApplicationHelper
     ]
   end
 
-  def nav_item(title: nil, url: nil, content: nil)
+  def nav_item(title: nil, url: nil, content: nil, html_options: {})
     class_name = 'govuk-header__navigation-item'
     class_name = [class_name, 'govuk-header__navigation-item--active'].join(' ') if request.path == url
 
-    inner_html = (title.present? ? link_to(title, url, class: 'govuk-header__link') : content)
+    inner_html = (title.present? ? link_to(title, url, { class: 'govuk-header__link' }.merge(html_options)) : content)
     tag.li(inner_html, class: class_name)
   end
 
