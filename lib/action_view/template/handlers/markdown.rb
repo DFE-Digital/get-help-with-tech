@@ -1,3 +1,5 @@
+require 'govuk/markdown_renderer'
+
 module ActionView
   module Template::Handlers
     class Markdown
@@ -6,17 +8,15 @@ module ActionView
 
         <<~CODE
           content_for :html_list_of_headings_links do
-            ('<div class="app-styled-content">' +
+            ('<div class="app-table-of-contents">' +
               #{rendered_table_of_contents_for(compiled_source).inspect} +
             '</div>').html_safe
           end
-          '<div class="app-styled-content">' +
             Redcarpet::Markdown.new(
-              Redcarpet::Render::HTML.new(with_toc_data: true)
+              Govuk::MarkdownRenderer.new(with_toc_data: true)
             ).render(
               begin;#{compiled_source};end
-            ).html_safe +
-          '</div>'
+            ).html_safe
         CODE
       end
 
