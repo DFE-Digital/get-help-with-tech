@@ -48,6 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push-container
     steps:
+      - name: checkout
+        # Put this back in when PR merged
+        # if: github.event.pull_request.merged
+        uses: actions/checkout@v2
       - name: Install CloudFoundry CLI
         shell: bash
         run: |
