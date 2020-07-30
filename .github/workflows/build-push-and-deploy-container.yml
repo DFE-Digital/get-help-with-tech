@@ -44,10 +44,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
- deploy-to-paas:
-   runs-on: ubuntu-latest
-   needs: build-and-push-container
-   steps:
+  deploy-to-paas:
+    runs-on: ubuntu-latest
+    needs: build-and-push-container
+    steps:
       - name: Install CloudFoundry CLI
         shell: bash
         run: |
