@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: checkout
         if: github.event.pull_request.merged
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
