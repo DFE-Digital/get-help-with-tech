@@ -54,6 +54,9 @@ jobs:
           # curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.47.2&source=github" | tar -zx
           # ...move it to /usr/local/bin or a location you know is in your $PATH
           # mv cf ~
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
           sudo apt-get install cf-cli
           echo "$(cf --version)"
       - name: Deploy to Gov.uk PaaS
