@@ -34,7 +34,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
-          build_args: GIT_COMMIT_SHA=${steps.vars.outputs.sha_short},GIT_BRANCH=${steps.vars.outputs.sha_short}
+          build_args: GIT_COMMIT_SHA=${{ steps.vars.outputs.sha_short }},GIT_BRANCH=${{ steps.vars.outputs.sha_short }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
