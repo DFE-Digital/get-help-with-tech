@@ -24,10 +24,17 @@ jobs:
         # Put this back in when PR merged
         # if: github.event.pull_request.merged
         uses: actions/checkout@v2
+      - name: Declare some variables
+        id: vars
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
-          build_args: GIT_COMMIT_SHA=$(git rev-parse --short "$GITHUB_SHA"),GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          build_args: GIT_COMMIT_SHA=${steps.vars.outputs.sha_short},GIT_BRANCH=${steps.vars.outputs.sha_short}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
