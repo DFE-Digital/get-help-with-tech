@@ -39,3 +39,19 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
+      - name: Install CloudFoundry CLI
+        shell: bash
+        run: |
+          # Install Cloud Foundry CLI
+          # ...or Linux 64-bit binary
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.47.2&source=github" | tar -zx
+          # ...move it to /usr/local/bin or a location you know is in your $PATH
+          mv cf /usr/local/bin
+          echo "$(cf --version)"
+      - name: Deploy to Gov.uk PaaS
+        id: deploy-to-paas
+        shell: bash
+        run: |
+          cf api https://api.london.cloud.service.gov.uk
+          cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
+          make dev deploy
