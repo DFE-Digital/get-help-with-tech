@@ -21,7 +21,8 @@ jobs:
 
     steps:
       - name: checkout
-        if: github.event.pull_request.merged
+        # Put this back in when PR merged
+        # if: github.event.pull_request.merged
         uses: actions/checkout@v2
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
