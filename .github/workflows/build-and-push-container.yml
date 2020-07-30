@@ -1,0 +1,37 @@
+---
+name: Build & push container
+
+on:
+  # Temp hack - run this whenever we push to this branch
+  # Remove this trigger when the job is tested OK
+  push:
+    branches:
+      - add-build-and-push-on-merge-workflow
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+# Only run this when the PR has been merged -
+# put this back in when we've tested the job
+# if: github.event.pull_request.merged
+
+    steps:
+      - name: checkout
+        if: github.event.pull_request.merged
+        uses: actions/checkout@v1
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          build_args: GIT_COMMIT_SHA=${{ github.sha }},GIT_BRANCH=${{ github.ref }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: dfedigital/get-help-with-tech-dev
+          tags: latest
+with:
+ref: master
+
+# - <YOUR DEPLOY LOGIC HERE>
