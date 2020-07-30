@@ -29,13 +29,13 @@ jobs:
         id: vars
         shell: bash
         run: |
-          echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
+          echo "##[set-output name=branch;]$(git rev-parse --abbrev-ref HEAD)"
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       # We can't use the `make build push` task for this,
       # due to limitations in the way docker login works (or not) in non-TTY
       # Github actions. Helpfully, there's an off-the-shelf 'official' docker
-      # action that does it for us:
+      # action that does it for us
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
