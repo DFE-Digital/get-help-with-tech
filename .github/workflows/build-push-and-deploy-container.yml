@@ -2,11 +2,6 @@
 name: Build, push and deploy container
 
 on:
-  # Temp hack - run this whenever we push to this branch
-  # Remove this trigger when the job is tested OK
-  push:
-    branches:
-      - add-build-and-push-on-merge-workflow
   pull_request:
     types: [closed]
     branches:
@@ -15,14 +10,10 @@ on:
 jobs:
   build-and-push-container:
     runs-on: ubuntu-latest
-# Only run this when the PR has been merged -
-# put this back in when we've tested the job
-# if: github.event.pull_request.merged
-
+    # Only run this when the PR has been merged -(i.e. not just closed)
+    if: github.event.pull_request.merged
     steps:
       - name: checkout
-        # Put this back in when PR merged
-        # if: github.event.pull_request.merged
         uses: actions/checkout@v2
 
       - name: Declare some variables
@@ -47,10 +38,10 @@ jobs:
   deploy-to-paas:
     runs-on: ubuntu-latest
     needs: build-and-push-container
+    # Only run this when the PR has been merged -(i.e. not just closed)
+    if: github.event.pull_request.merged
     steps:
       - name: checkout
-        # Put this back in when PR merged
-        # if: github.event.pull_request.merged
         uses: actions/checkout@v2
       - name: Install CloudFoundry CLI
         shell: bash
