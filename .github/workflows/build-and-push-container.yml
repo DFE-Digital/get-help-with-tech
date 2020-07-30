@@ -46,7 +46,7 @@ jobs:
           # ...or Linux 64-bit binary
           curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.47.2&source=github" | tar -zx
           # ...move it to /usr/local/bin or a location you know is in your $PATH
-          mv cf /usr/local/bin
+          mv cf ~
           echo "$(cf --version)"
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
