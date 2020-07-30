@@ -9,7 +9,6 @@ require 'rspec/rails'
 require 'support/factory_bot'
 require 'support/controller_helper'
 require 'support/capybara_helper'
-require 'support/notify_helper'
 require 'capybara/email/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -113,6 +112,5 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace('gem name')
 
   config.include CapybaraHelper, type: :feature
-  config.include NotifyHelper
   config.include ControllerHelper, type: :controller
 end

@@ -1,0 +1,32 @@
+<% content_for :before_content, govuk_link_to('Back', responsible_body_mobile_extra_data_requests_type_path, class: 'govuk-back-link') %>
+<% content_for :title, title_with_error_prefix(t('page_titles.upload_a_spreadsheet_of_extra_data_requests'), @upload_form.errors.any?) %>
+<div class="govuk-grid-row">
+  <%= form_for @upload_form,
+    url: responsible_body_mobile_bulk_requests_path,
+    html: {
+      class: 'govuk-grid-column-two-thirds',
+      multipart: true
+    } do |f| %>
+    <%= f.govuk_error_summary %>
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.upload_a_spreadsheet_of_extra_data_requests') %>
+    </h1>
+
+    <p class="govuk-body">You must upload a spreadsheet based on <%= govuk_link_to('the template we provided', "https://drive.google.com/file/d/15bOT-wNAM_GunPNbuXxDD3sz0a-ej75r/view") %>.</p>
+
+    <p class="govuk-body">It will have columns for:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+      <li>account holder name</li>
+      <li>mobile phone number</li>
+      <li>network</li>
+      <li>pay as you go or contract</li>
+      <li>confirming the account holder has read the privacy statement</li>
+    </ul>
+
+    <%= f.govuk_file_field :upload,
+      label: { text: 'Pick a spreadsheet file', size: 'm' },
+      accept: Mime::Type.lookup_by_extension(:xlsx)
+    %>
+    <%= f.govuk_submit 'Upload requests' %>
+  <%- end %>
+</div>

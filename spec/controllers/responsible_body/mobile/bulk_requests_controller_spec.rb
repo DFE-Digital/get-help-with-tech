@@ -1,0 +1,34 @@
+require 'rails_helper'
+
+RSpec.describe ResponsibleBody::Mobile::BulkRequestsController, type: :controller do
+  let(:local_authority_user) { create(:local_authority_user) }
+
+  context 'when authenticated' do
+    before do
+      sign_in_as local_authority_user
+    end
+
+    describe 'create' do
+      let(:upload) { Rack::Test::UploadedFile.new(file_fixture('bulk_mobile_data_request.xlsx'), Mime[:xlsx]) }
+      let(:request_data) { { bulk_upload_form: { upload: upload } } }
+
+      before do
+        ActiveJob::Base.queue_adapter = :test
+        ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
+          create(:mobile_network, brand: brand)
+        end
+      end
+
+      after do
+        ActiveJob::Base.queue_adapter = :inline
+      end
+
+      it 'sends an sms to the account holder of each valid request in the spreadsheet' do
+        # file has 4 valid requests, 1 invalid
+        expect {
+          post :create, params: request_data
+        }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(4).times
+      end
+    end
+  end
+end

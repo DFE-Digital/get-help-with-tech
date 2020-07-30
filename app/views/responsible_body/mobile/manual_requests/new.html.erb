@@ -1,9 +1,9 @@
-<% content_for :before_content, govuk_link_to('Back', responsible_body_extra_mobile_data_requests_path, class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_link_to('Back', responsible_body_mobile_extra_data_requests_type_path, class: 'govuk-back-link') %>
 <% content_for :title, title_with_error_prefix(t('page_titles.who_needs_the_data'), @extra_mobile_data_request.errors.any?) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @extra_mobile_data_request, url: responsible_body_extra_mobile_data_requests_path do |f| %>
+    <%= form_for @extra_mobile_data_request, url: responsible_body_mobile_manual_requests_path do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-xl">

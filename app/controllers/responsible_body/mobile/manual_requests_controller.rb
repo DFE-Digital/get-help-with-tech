@@ -1,4 +1,4 @@
-class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::BaseController
+class ResponsibleBody::Mobile::ManualRequestsController < ResponsibleBody::BaseController
   def index
     @extra_mobile_data_requests = @user.extra_mobile_data_requests
   end
@@ -25,11 +25,10 @@ class ResponsibleBody::ExtraMobileDataRequestsController < ResponsibleBody::Base
         session.delete(:extra_mobile_data_request_params)
         @extra_mobile_data_request.save!
 
-        sms_service.deliver!(@extra_mobile_data_request)
-        # NotifyExtraMobileDataAccountHolderService.call(@extra_mobile_data_request)
+        @extra_mobile_data_request.notify_account_holder_later
 
         flash[:success] = I18n.t('responsible_body.extra_mobile_data_requests.create.success')
-        redirect_to responsible_body_extra_mobile_data_requests_path
+        redirect_to responsible_body_mobile_extra_data_requests_path
       else
         # store given params in session,so that we don't have to pass them back in the URL
         # if the user clicks 'Change' on the confirmation page
@@ -60,9 +59,5 @@ private
       mobile_network_id
       confirm
     ])
-  end
-
-  def sms_service
-    @sms_service ||= NotifyExtraMobileDataAccountHolderService.new
   end
 end
