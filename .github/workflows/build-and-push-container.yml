@@ -31,7 +31,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
-with:
-ref: master
 
-# - <YOUR DEPLOY LOGIC HERE>
