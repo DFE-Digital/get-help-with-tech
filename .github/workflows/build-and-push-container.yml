@@ -40,7 +40,7 @@ jobs:
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
   make-deploy:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         # Put this back in when PR merged
