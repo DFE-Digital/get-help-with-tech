@@ -14,7 +14,7 @@ jobs:
   build-and-push-container:
     runs-on: ubuntu-latest
     # Only run this when the PR has been merged -(i.e. not just closed)
-    if: github.event.pull_request.merged
+    # if: github.event.pull_request.merged
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push-container
     # Only run this when the PR has been merged -(i.e. not just closed)
-    if: github.event.pull_request.merged
+    # if: github.event.pull_request.merged
     steps:
       - name: checkout
         uses: actions/checkout@v2
