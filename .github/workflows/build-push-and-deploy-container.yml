@@ -67,7 +67,7 @@ jobs:
         shell: bash
         run: |
           docker pull dfedigital/get-help-with-tech-dev
-          echo "::set-output name=docker_image_id::$(docker image -q dfedigital/get-help-with-tech-dev)"
+          echo "::set-output name=docker_image_id::$(docker images -q dfedigital/get-help-with-tech-dev:latest)"
 
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
