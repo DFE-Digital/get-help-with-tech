@@ -2,6 +2,9 @@
 name: Build, push and deploy container
 
 on:
+  push:
+    branches:
+      - 215-add-docker-image-id-to-the-healthcheck-endpoint
   pull_request:
     types: [closed]
     branches:
