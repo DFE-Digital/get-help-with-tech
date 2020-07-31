@@ -25,7 +25,6 @@ jobs:
         run: |
           echo "##[set-output name=branch;]$(git rev-parse --abbrev-ref HEAD)"
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-          echo "::set-output name=docker_image_id::$(docker pull dfedigital/get-help-with-tech-dev && docker image -q dfedigital/get-help-with-tech-dev)"
 
       # We can't use the `make build push` task for this,
       # due to limitations in the way docker login works (or not) in non-TTY
@@ -39,6 +38,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
+
+
   deploy-to-paas:
     runs-on: ubuntu-latest
     needs: build-and-push-container
@@ -60,10 +61,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install cf-cli
           echo "$(cf --version)"
+
+      - name: Get new docker image id
+        id: get_docker_image_id
+        shell: bash
+        run: |
+          echo "::set-output name=docker_image_id::$(docker pull dfedigital/get-help-with-tech-dev && docker image -q dfedigital/get-help-with-tech-dev)"
+
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
         shell: bash
         run: |
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
-          make dev deploy
+          DOCKER_IMAGE_ID=${{ steps.get_docker_image_id.outputs.docker_image_id }} make dev deploy
