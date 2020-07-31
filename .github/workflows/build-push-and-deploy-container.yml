@@ -25,6 +25,7 @@ jobs:
         run: |
           echo "##[set-output name=branch;]$(git rev-parse --abbrev-ref HEAD)"
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+          echo "::set-output name=docker_image_id::$(docker pull dfedigital/get-help-with-tech-dev && docker image -q dfedigital/get-help-with-tech-dev)"
 
       # We can't use the `make build push` task for this,
       # due to limitations in the way docker login works (or not) in non-TTY
