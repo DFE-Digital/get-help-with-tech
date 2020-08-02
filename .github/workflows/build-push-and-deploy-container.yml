@@ -63,4 +63,4 @@ jobs:
         run: |
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
-          DOCKER_IMAGE_ID=${{ jobs.build-and-push-container.outputs.get_docker_image_id.outputs.docker_image_id }} make dev deploy
+          DOCKER_IMAGE_ID=${{ needs.build-and-push-container.outputs.get_docker_image_id.outputs.docker_image_id }} make dev deploy
