@@ -12,6 +12,8 @@ on:
 
 jobs:
   build-and-push-container:
+    outputs:
+      docker_image_id: ${{ steps.get_docker_image_id.outputs.docker_image_id }}
     runs-on: ubuntu-latest
     # Only run this when the PR has been merged -(i.e. not just closed)
     # if: github.event.pull_request.merged
@@ -38,6 +40,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
+      - name: Get new docker image id
+        id: get_docker_image_id
+        shell: bash
+        run: |
+          docker pull dfedigital/get-help-with-tech-dev
+          echo "::set-output name=docker_image_id::$(docker images -q dfedigital/get-help-with-tech-dev:latest)"
 
 
   deploy-to-paas:
@@ -48,26 +56,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      # - name: Install CloudFoundry CLI
-      #   shell: bash
-      #   run: |
-      #     # Install Cloud Foundry CLI
-      #     # ...or Linux 64-bit binary
-      #     # curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.47.2&source=github" | tar -zx
-      #     # ...move it to /usr/local/bin or a location you know is in your $PATH
-      #     # mv cf ~
-      #     wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-      #     echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-      #     sudo apt-get update
-      #     sudo apt-get install cf-cli
-      #     echo "$(cf --version)"
-
-      - name: Get new docker image id
-        id: get_docker_image_id
-        shell: bash
-        run: |
-          docker pull dfedigital/get-help-with-tech-dev
-          echo "::set-output name=docker_image_id::$(docker images -q dfedigital/get-help-with-tech-dev:latest)"
 
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
@@ -76,4 +64,4 @@ jobs:
         run: |
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
-          DOCKER_IMAGE_ID=${{ steps.get_docker_image_id.outputs.docker_image_id }} make dev deploy
+          DOCKER_IMAGE_ID=${{ jobs.build-and-push-container.outputs.get_docker_image_id.outputs.docker_image_id }} make dev deploy
