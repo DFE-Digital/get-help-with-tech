@@ -46,9 +46,9 @@ get_git_status:
 	@true
 
 get_docker_image_id: require_env_stub
-	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
-	$(eval export DOCKER_IMAGE_ID=$(shell docker images ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest -q))
-	echo "Docker image id = ${DOCKER_IMAGE_ID}"
+	@docker pull -q $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
+	@$(eval export docker_image_id=$(shell docker images -q $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest))
+	@echo "${docker_image_id}"
 	@true
 
 setup_paas_db: set_cf_target
@@ -92,10 +92,12 @@ deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
 	make $(CF_PUSH_TASK) set_docker_image_id
 
 set_docker_image_id: require_env_stub
-	test ${DOCKER_IMAGE_ID} || (docker pull ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest && eval export docker_image_id=$(shell (docker images ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest -q)))
-	echo "Docker image id = $(docker_image_id)"
-	# we only want to update the env var *after* a successful push
-	cf set-env $(APP_NAME)-$(env_stub) DOCKER_IMAGE_ID $(DOCKER_IMAGE_ID)
+	# The Github action will pass in DOCKER_IMAGE_ID from a previous step
+	# So we take that value if given, otherwise pull the latest image and get it
+	# from that
+	$(eval DOCKER_IMAGE_ID ?= $(shell (docker pull ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest > /dev/null) && docker images ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest -q) )
+	cf set-env $(APP_NAME)-$(env_stub) DOCKER_IMAGE_ID ${DOCKER_IMAGE_ID}	
+	# we only update the env var *after* a successful push (not before)
 	# ...which means we then have to restage for the app to pick it up
 	cf restage $(APP_NAME)-$(env_stub)
 
