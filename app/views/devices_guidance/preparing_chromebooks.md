@@ -1,6 +1,6 @@
 ## Enrolling Chromebooks
 
-When your Google Chromebooks arrive, you’ll need to enrol them using your Google Admin console. This is so that you can remotely manage device settings, such as security and software updates. You must enrol the devices in a Google domain before you issue them to young people and families.  
+When your Google Chromebooks arrive, you’ll need to enrol them using your Google Admin console. This will allow you to remotely manage device settings, such as security and software updates. You must enrol the devices in a Google domain before you issue them to young people and families.
 
 ### How to enrol Chromebooks and add Cisco Umbrella
 
@@ -37,22 +37,24 @@ Children and young people can also use:
 
 ## Content filtering
 
-You should ensure that enrolled devices have appropriate security settings in place to keep users safe online. A web-filtering solution called Cisco Umbrella is included free of charge until 31 March 2021, if you wish to use it. Instructions on how to install Cisco Umbrella are included in how to enrol your Chromebooks.
+You should ensure that enrolled devices have appropriate security settings in place to keep users safe online. A web-filtering solution called Cisco Umbrella is included free of charge until mid May 2021, if you wish to use it. Instructions on how to install Cisco Umbrella are included in our [guidance on how to enrol your Chromebooks](/devices/enrol-chromebooks-with-user-logins).
 
-This blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines.
+Cisco Umbrella blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines.
 
-The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users from pre-school children up to care leavers.
+The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users, from pre-school children up to care leavers.
 
-We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella. Those logs would not be available to the LA or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
+We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella. Those logs would not be available to the local authority or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
 
 If you decide not to use Cisco Umbrella, we strongly recommend that you enable alternative security settings before you distribute the devices. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to.
 
-You can report access to any inappropriate content that should not be allowed by Cisco Umbrella through the XMA Service Desk.  
+You can report access to any inappropriate content that should not be allowed by Cisco Umbrella through the XMA Service Desk.
 
 Find out [how to access support](/devices/support-and-maintenance) to report Cisco Umbrella issues.
 
 ## User guidance for young people and their carers
 
-User guides on setting up Chromebooks are available to download. You can share these with young people and their parents, guardians and carers. Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
+You can share this user guide on setting up Chromebooks with young people and their parents, guardians and carers. 
+
+You may want to add contact information to this guidance for the person or team offering IT support to device users.
 
 * [Google Chromebook: User guidance](/devices/getting-started-with-your-google-chromebook)
