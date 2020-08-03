@@ -39,23 +39,9 @@ jobs:
           repository: dfedigital/get-help-with-tech-dev
           tags: latest
 
-  get-latest-docker-image-id:
-    outputs:
-      docker_image_id: ${{ steps.get_docker_image_id.outputs.docker_image_id }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: Get latest docker image id
-        id: get_docker_image_id
-        shell: bash
-        run: |
-          docker pull dfedigital/get-help-with-tech-dev
-          echo "::set-output name=docker_image_id::$(docker images -q dfedigital/get-help-with-tech-dev:latest)"
-
   deploy-to-paas:
-    needs: get-latest-docker-image-id
+    # Put this back once testing complete
+    # needs: build-and-push-container
     runs-on: ubuntu-latest
     # Only run this when the PR has been merged -(i.e. not just closed)
     # if: github.event.pull_request.merged
@@ -74,7 +60,6 @@ jobs:
         id: deploy-to-paas
         shell: bash
         run: |
-          echo "DOCKER_IMAGE_ID=${{ needs.get-latest-docker-image-id.get_docker_image_id.outputs.docker_image_id }}"
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
-          DOCKER_IMAGE_ID=${{ needs.get-latest-docker-image-id.get_docker_image_id.outputs.docker_image_id }} make dev deploy
+          make dev deploy
