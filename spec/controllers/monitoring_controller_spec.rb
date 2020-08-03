@@ -76,5 +76,29 @@ RSpec.describe MonitoringController, type: :controller do
         expect(json['info']['git']['commit_sha']).to eq(nil)
       end
     end
+
+    context 'when DOCKER_IMAGE_ID is present in the ENV' do
+      before do
+        ENV['DOCKER_IMAGE_ID'] = 'abc123'
+      end
+
+      it 'reports DOCKER_IMAGE_ID in the info/docker/image_id key' do
+        get :healthcheck, format: :json
+
+        expect(json['info']['docker']['image_id']).to eq('abc123')
+      end
+    end
+
+    context 'when DOCKER_IMAGE_ID is not present in the ENV' do
+      before do
+        ENV['DOCKER_IMAGE_ID'] = nil
+      end
+
+      it 'reports null in the info/docker/image_id key' do
+        get :healthcheck, format: :json
+
+        expect(json['info']['docker']['image_id']).to eq(nil)
+      end
+    end
   end
 end
