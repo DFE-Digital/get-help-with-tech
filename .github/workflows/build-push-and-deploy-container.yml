@@ -51,8 +51,9 @@ jobs:
         id: get_docker_image_id
         shell: bash
         run: |
-          docker pull dfedigital/get-help-with-tech-dev
-          echo "::set-output name=docker_image_id::$(docker images -q dfedigital/get-help-with-tech-dev:latest)"
+          # docker pull dfedigital/get-help-with-tech-dev
+          # echo "::set-output name=docker_image_id::$(docker images -q dfedigital/get-help-with-tech-dev:latest)"
+          echo "::set-output name=docker_image_id::abc123"
 
   deploy-to-paas:
     needs: get-latest-docker-image-id
@@ -60,8 +61,8 @@ jobs:
     # Only run this when the PR has been merged -(i.e. not just closed)
     # if: github.event.pull_request.merged
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
+      # - name: checkout
+      #   uses: actions/checkout@v2
 
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
