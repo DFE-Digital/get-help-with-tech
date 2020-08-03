@@ -2,13 +2,13 @@
 
 You don’t need to do anything to set up the devices before you give them to users. You should, however, keep records of all routers you receive and who you loan them to.
 
-The person specified as technical contact at the local authority or school will be responsible for distributing the 4G wireless routers.
+The person specified as technical contact (the person nominated as your technical contact when you ordered) at the local authority or school will be responsible for distributing the 4G wireless routers.
 
 When your 4G wireless routers are dispatched, we’ll send the technical contact a form that includes a unique Device IMEI Number and SIM ICC ID Number for each device. Store this information securely for future reference – it will not be available elsewhere.
 
 You must keep track of who has each router. Keep a note of the name of the user, with the IMEI and SIM number for each device. This is so that requests can be made about specific routers. For example, if you want to deactivate a particular SIM because a child has reported it as stolen.
-
 Your technical contact must also keep accurate records of who has each device, as this will be required in the event of a Regulation of Investigatory Powers Act (RIPA) request.
+
 
 ## Contract length
 
