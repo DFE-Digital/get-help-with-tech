@@ -8,14 +8,14 @@ class HealthcheckService
       services: all_services_status,
       info: {
         git: git_info,
-        docker: docker_info
+        docker: docker_info,
       },
     }
   end
 
   def self.docker_info
     {
-      image_id: ENV['DOCKER_IMAGE_ID']
+      image_id: ENV['DOCKER_IMAGE_ID'],
     }
   end
 
