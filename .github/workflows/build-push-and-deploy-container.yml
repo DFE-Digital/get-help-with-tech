@@ -2,9 +2,6 @@
 name: Build, push and deploy container
 
 on:
-  push:
-    branches:
-      - 215-add-docker-image-id-to-the-healthcheck-endpoint
   pull_request:
     types: [closed]
     branches:
@@ -40,11 +37,10 @@ jobs:
           tags: latest
 
   deploy-to-paas:
-    # Put this back once testing complete
-    # needs: build-and-push-container
+    needs: build-and-push-container
     runs-on: ubuntu-latest
     # Only run this when the PR has been merged -(i.e. not just closed)
-    # if: github.event.pull_request.merged
+    if: github.event.pull_request.merged
     steps:
       - name: checkout
         uses: actions/checkout@v2
