@@ -10,7 +10,7 @@ Microsoft Windows laptops and tablets come with the Windows 10 Pro Education ope
 
 ### Security and antivirus
 
-Microsoft Windows devices feature Bitlocker disk encryption to protect the privacy of data with TPM 2.0 and include the following security and antivirus software:
+Microsoft Windows devices include the following security and antivirus software:
 
 * Windows Information Protection
 * Windows Defender Credential/System Guard
@@ -19,29 +19,30 @@ Microsoft Windows devices feature Bitlocker disk encryption to protect the priva
 
 ### Education software
 
-Microsoft Windows devices do not have Office 365 applications installed, but school-aged children will be able to use Office 365 online, if you or their school have an active subscription. A child or young person not in school (such as a care leaver) can make use of their own preferred online system.
+Microsoft Windows devices do not have Office 365 applications installed, but school-aged children will be able to use Office 365 online if you or their school have an active subscription. A child or young person not in school (such as a care leaver) can make use of their own preferred online system.
 
 Schools can [apply to get set up on Office 365 Education](https://covid19.thekeysupport.com/remote-learning/) for free. Office 365 Education includes Microsoft Word, Excel and Powerpoint as well as many mobile device management features.
 
 ## Mobile device management
 
-Computacenter will send all Microsoft Windows laptops and tablets to you with security settings already configured and managed by the Department for Education (DfE) using Microsoft Intune.
+Microsoft Windows laptops and tablets are delivered to you with security settings already configured and managed by the Department for Education (DfE) using Microsoft Intune.
 
-These mobile device management (MDM) settings safeguard children and young people from inappropriate content and prevent them from making changes to files or settings that might stop the device from working. It is not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the DfE MDM is updated every 2 hours.
+These mobile device management (MDM) settings prevent children and young people from making changes to files or settings that might stop the device from working. It is not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the DfE MDM is updated every 2 hours.
 
-We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella. Those logs would not be available to the LA or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
+DfE will not actively monitor users' activity  through the mobile device management solution. Websites users visit on their devices will be logged by Cisco Umbrella, but we will not monitor these logs and they will not be available to the local authority or trust. DfE will turn logging on when we need to check that ongoing filtering is effective, for example by letting us test whether the filtering is effective after adjusting filtering rules.
 
 You can loan the devices out to users straight away as the MDM will be in place until 31 March 2021. After this, the MDM will expire. The devices will continue to work with the last settings provided by DfE but they will no longer be managed or updated.
 
+You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
+
 **If you remove the MDM provided by DfE or continue using the devices after 31 March 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**
 
-You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
 ## Content filtering
 
 Microsoft Windows devices come with a web-filtering service called Cisco Umbrella installed. This blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines.
 
-The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users from pre-school children up to care leavers.
+The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users, from pre-school children up to care leavers.
 
 This filtering should not prevent legitimate use of the devices. Your technical contact will have [access to support](/devices/support-and-maintenance) to report any incident.
 
@@ -49,7 +50,7 @@ The first time the device connects to a new network, there will be a short delay
 
 When you loan the devices out, it’s important to underline that parents and guardians should supervise the internet use of children and young people in their care. Local authorities should be alert to cases where parents or guardians of children with a social worker may not be in a position to do this.
 
-See government advice on:  
+See government advice on:
 
 * [safeguarding](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers), which signposts parents to trusted providers and includes detailed advice on keeping children safe online (this includes information on home filters, age appropriate parental controls, the risks of platforms and apps, and how to have age appropriate conversations with children about online safety)
 * [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
@@ -61,7 +62,7 @@ To install your own software or replace the mobile device management you will ne
 
 You will need to do this for each device individually.
 
-You can technically install software on the devices without resetting them, but the DfE mobile device management may remove it from the device within 2 hours.
+It is possible to install software on the devices without resetting them, but the DfE mobile device management may remove it from the device when it updates within 2 hours.
 
 Find out [how to access support](/devices/support-and-maintenance) if you need help setting up your own mobile device management.
 
@@ -71,7 +72,7 @@ Local admin passwords are needed to reset devices and install new software. An e
 
 For security, only someone nominated as a technical contact for the device order can request this information. The local authority or trust is responsible for keeping this information secure when sharing it with colleagues who are preparing devices for children and young people.
 
-Please see the ‘Request your local admin passwords and BIOS program’ section below to find out how to make a request.
+Please see step 1 in the  section below to find out how to make a request.
 
 If you’re unsure who your technical contact is, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the local authority or trust that ordered the devices.
 
@@ -81,13 +82,13 @@ To install your own software or replace Cisco Umbrella and Microsoft Intune you�
 
 You’ll need to do this for each device individually.
 
-1.  Request your local admin passwords and BIOS program
+1.  Request your local admin passwords and BIOS program.
 
-    Your technical contact must request these from the XMA support desk before you can reset your devices. For security, schools cannot request these themselves unless they’re a single academy trust that ordered devices directly from Computacenter.
+    A nominated technical contact must request these from the XMA support desk before you can reset your devices. For security, schools cannot request these themselves, unless they’re a single academy trust that ordered devices directly, or had a member of staff nominated as a technical content when the order was placed by their local authority or academy trust.
+    
+    Your technical contact should email [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) and provide the serial numbers for any devices you want to reset. Serial numbers will be provided with the email Computacenter sends to technical contacts when they dispatch your devices.
 
-    Your technical contact should email DFE.Support@xma.co.uk and provide the serial numbers for any devices you want to reset. Serial numbers will be provided with the email Computacenter sends to technical contacts when they dispatch your devices.
-
-2.  Restore your device’s factory settings
+2.  Restore your device’s factory settings.
 
     **You must ensure the device is connected to power throughout this process.**
 
@@ -138,7 +139,7 @@ The DfE’s pre-installed settings will be in place until 31 March 2021. After t
 
 It‘s not possible to tailor the pre-installed settings to meet local needs. You may find you can make changes, such as installing additional software, but these changes may be overwritten by Intune when it next updates the device.
 
-The only way you can add your own long-term settings to the device is by restoring it to its original state, removing Microsoft Intune and Cisco Umbrella.
+The only way you can add your own long-term settings to the device is by [restoring it to its original state](#How-to-reset-Microsoft-devices-so-you-can-add-your-own-software-and-settings), removing Microsoft Intune and Cisco Umbrella.
 
 Bitlocker encryption has not been enabled on the devices to make it easier for you to reimage them. We recommend adding these settings when you reset devices to protect the data that users store on devices.
 
@@ -178,9 +179,9 @@ We’ve illustrated these steps in our [user guidance](/devices/getting-started-
 
 ## User guidance for young people and their carers
 
-User guides on setting up Microsoft devices are available for download. You can share these with young people and their parents, guardians and carers.
+You can share this [user guide](/devices/getting-started-with-your-microsoft-windows-device) on setting up Microsoft Windows laptops and tablets with young people and their parents, guardians and carers. 
 
-Each user guide includes space for you to enter contact information for the person or team offering IT support to device users.
+You may want to add contact information to this guidance for the person or team offering IT support to device users.
 
 If users find that the login is defaulting to the “.\localadmin” account and asking for a password, please [see the advice](#How-to-help-anyone-experiencing-problems-logging-in-to-Windows-devices) above.
 
