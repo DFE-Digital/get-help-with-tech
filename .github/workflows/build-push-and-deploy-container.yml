@@ -57,18 +57,24 @@ jobs:
 
   deploy-to-paas:
     needs: get-latest-docker-image-id
-    runs-on: governmentpaas/cf-cli
+    runs-on: ubuntu-latest
     # Only run this when the PR has been merged -(i.e. not just closed)
     # if: github.event.pull_request.merged
     steps:
-      # - name: checkout
-      #   uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: install cf-cli
+        shell: bash
+        id: install-cf-cli
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
+          # ...move it to /usr/local/bin or a location you know is in your $PATH
+          mv cf /usr/local/bin
 
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
         shell: bash
         run: |
-          echo DOCKER_IMAGE_ID=${{ needs.get-latest-docker-image-id.get_docker_image_id.outputs.docker_image_id }}
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
           DOCKER_IMAGE_ID=${{ needs.get-latest-docker-image-id.get_docker_image_id.outputs.docker_image_id }} make dev deploy
