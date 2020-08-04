@@ -10,18 +10,21 @@ RSpec.describe MultipartGuidance, type: :model do
         path: '/guide/overview',
         title: 'Overview',
         description: 'The overview of the guide',
+        audience: 'usergroup_1',
       },
       {
         page_id: :second_page,
         path: '/guide/second-page',
         title: 'Another page',
         description: 'More details',
+        audience: 'usergroup_1',
       },
       {
         page_id: :third_page,
         path: '/guide/third-page',
         title: 'Last page',
         description: 'Finally',
+        audience: 'usergroup_2',
       },
     ]
   end
@@ -74,6 +77,14 @@ RSpec.describe MultipartGuidance, type: :model do
 
       expected_titles_in_reverse_order = ['Last page', 'Another page', 'Overview']
       expect(actual_titles).to eq(expected_titles_in_reverse_order)
+    end
+  end
+
+  describe '#pages_for' do
+    it 'filters the pages by audience' do
+      expect(guidance.pages_for(audience: :usergroup_1).map(&:page_id)).to eq(%i[overview second_page])
+
+      expect(guidance.pages_for(audience: :usergroup_2).map(&:page_id)).to eq(%i[third_page])
     end
   end
 end

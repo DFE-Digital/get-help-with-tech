@@ -10,6 +10,10 @@ class MultipartGuidance
     @pages
   end
 
+  def pages_for(audience:)
+    all_pages.select { |page| page.audience.to_sym == audience.to_sym }
+  end
+
   def find_by_slug(page_slug)
     page_id = page_slug.to_s.underscore.to_sym
     @pages.detect { |page| page.page_id == page_id }
