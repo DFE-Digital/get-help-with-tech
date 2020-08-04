@@ -11,13 +11,18 @@ class SignInTokensController < ApplicationController
   end
 
   def validate
-    unless SessionService.is_signed_in?(session)
-      @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
-      save_user_to_session!
-    end
+    @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
+    save_user_to_session!
     render :you_are_signed_in
   rescue SessionService::TokenValidButExpired
-    render :token_is_valid_but_expired, status: :bad_request
+    # If it's the same user who already has a valid session, and they've just
+    # re-clicked a link with a token that's expired, but a session that _hasn't_
+    if SessionService.is_signed_in?(session) && @user.id == session[:user_id]
+      # - that's ok, we'll allow it
+      render :you_are_signed_in
+    else
+      render :token_is_valid_but_expired, status: :bad_request
+    end
   rescue SessionService::TokenNotRecognised, SessionService::InvalidTokenAndIdentifierCombination
     render :token_not_recognised, status: :bad_request
   end
