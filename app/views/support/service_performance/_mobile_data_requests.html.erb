@@ -15,7 +15,7 @@
       <span class="app-card__secondary-count">
         <%= @stats.extra_mobile_data_requests_by_status['requested'] || 0 %>
       </span>
-      requested
+      new
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
@@ -29,9 +29,9 @@
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card app-card--red">
       <span class="app-card__secondary-count">
-        <%= @stats.extra_mobile_data_requests_by_status['queried'] || 0 %>
+        <%= (@stats.extra_mobile_data_requests_by_status['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status['cancelled'] || 0) %>
       </span>
-      not valid
+      not valid or cancelled
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
