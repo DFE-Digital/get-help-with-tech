@@ -1,0 +1,1 @@
+class DfE < ResponsibleBody; end

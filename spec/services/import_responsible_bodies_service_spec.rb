@@ -84,4 +84,14 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     ImportResponsibleBodiesService.new.import_trusts
     expect(Trust.count).to eq(2)
   end
+
+  it 'imports DfE only once' do
+    expect {
+      ImportResponsibleBodiesService.new.import_dfe
+    }.to change { DfE.count }.from(0).to(1)
+
+    expect {
+      ImportResponsibleBodiesService.new.import_dfe
+    }.not_to change { DfE.count }.from(1)
+  end
 end

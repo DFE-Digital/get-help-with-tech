@@ -9,6 +9,11 @@ namespace :import do
     ImportResponsibleBodiesService.new.import_trusts
   end
 
+  desc 'Import DfE as a responsible body for direct connectivity distribution'
+  task dfe_as_a_responsible_body: :environment do
+    ImportResponsibleBodiesService.new.import_dfe
+  end
+
   desc 'Populate the responsible body reference data table'
-  task responsible_bodies: %i[local_authorities_in_england trusts]
+  task responsible_bodies: %i[local_authorities_in_england trusts dfe_as_a_responsible_body]
 end

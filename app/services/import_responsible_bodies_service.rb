@@ -21,4 +21,11 @@ class ImportResponsibleBodiesService
         )
     end
   end
+
+  def import_dfe
+    DfE.first_or_create!(
+      name: 'Department for Education',
+      organisation_type: 'government_department',
+    )
+  end
 end
