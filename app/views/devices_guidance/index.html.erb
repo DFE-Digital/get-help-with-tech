@@ -10,10 +10,10 @@
 
     <p class="govuk-body">The DfE has contracted Computacenter to supply local authorities and academy trusts with <%= govuk_link_to 'laptops, tablets and connectivity packages', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %> for children and young people to access and social care and education during coronavirus (COVID-19) pandemic.</p>
 
-    <% @pages.each do |page| %>
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24"><%= govuk_link_to page.title, page.path %></h2>
+    <%= render partial: 'page_link_and_description', collection: @responsible_body_pages, as: :page %>
 
-      <p class="govuk-body"><%= page.description %></p>
-    <% end %>
+    <h2 class="govuk-heading-l">Guidance to be shared with the children, families and young people using the devices</h2>
+
+    <%= render partial: 'page_link_and_description', collection: @device_user_pages, as: :page %>
   </div>
 </div>
