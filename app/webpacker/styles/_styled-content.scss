@@ -1,59 +1,14 @@
-.app-styled-content {
-  h2 {
-    @extend %govuk-heading-l;
-  }
+.govuk-grid-column-two-thirds img {
+  max-width: 100%;
+  border: 2px solid $govuk-border-colour;
 
-  h3 {
-    @extend %govuk-heading-m;
+  // Cover both columns in a two-thirds/one-third layout
+  @include govuk-media-query($from: tablet) {
+    max-width: 150%;
   }
+}
 
-  h4 {
-    @extend %govuk-heading-s;
-  }
-
-  h5 {
-    @extend %govuk-heading-s;
-    font-size: 0.99em;
-  }
-
-  p,
-  dl {
-    @extend %govuk-body-m;
-  }
-
-  ol {
-    @extend %govuk-list;
-    @extend %govuk-list--number;
-  }
-
-  ul {
-    @extend %govuk-list;
-    @extend %govuk-list--bullet;
-  }
-
-  strong,
-  b,
-  dt {
-    @include govuk-typography-weight-bold;
-  }
-
-  a {
-    @extend %govuk-link;
-  }
-
-  hr {
-    @extend %govuk-section-break;
-    @extend %govuk-section-break--visible;
-    @extend %govuk-section-break--xl;
-  }
-
-  .govuk-grid-column-two-thirds & img {
-    max-width: 100%;
-    border: 2px solid $govuk-border-colour;
-
-    // Cover both columns in a two-thirds/one-third layout
-    @include govuk-media-query($from: tablet) {
-      max-width: 150%;
-    }
-  }
+.app-table-of-contents ul {
+  @extend %govuk-list;
+  @extend %govuk-list--bullet;
 }
