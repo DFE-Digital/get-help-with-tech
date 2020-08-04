@@ -45,6 +45,12 @@ get_git_status:
 	$(eval export git_branch=$(shell git rev-parse --abbrev-ref HEAD))
 	@true
 
+get_docker_image_id: require_env_stub
+	@docker pull -q $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
+	@$(eval export docker_image_id=$(shell docker images -q $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest))
+	@echo "${docker_image_id}"
+	@true
+
 setup_paas_db: set_cf_target
 	cf create-service postgres $(db_plan) $(APP_NAME)-$(env_stub)-db
 
@@ -83,7 +89,17 @@ push: require_env_stub ## push the Docker image to Docker Hub
 
 deploy: set_cf_target ## Deploy the docker image to gov.uk PaaS
 	cf $(CF_V3_PREFIX)apply-manifest -f ./config/manifests/$(env_stub)-manifest.yml
-	make $(CF_PUSH_TASK)
+	make $(CF_PUSH_TASK) set_docker_image_id
+
+set_docker_image_id: require_env_stub
+	# The Github action will pass in DOCKER_IMAGE_ID from a previous step
+	# So we take that value if given, otherwise pull the latest image and get it
+	# from that
+	$(eval DOCKER_IMAGE_ID ?= $(shell (docker pull ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest > /dev/null) && docker images ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest -q) )
+	cf set-env $(APP_NAME)-$(env_stub) DOCKER_IMAGE_ID ${DOCKER_IMAGE_ID}	
+	# we only update the env var *after* a successful push (not before)
+	# ...which means we then have to restage for the app to pick it up
+	cf restage $(APP_NAME)-$(env_stub)
 
 cf-6-push:
 	cf $(CF_V3_PREFIX)zdt-push $(APP_NAME)-$(env_stub) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --wait-for-deploy-complete
