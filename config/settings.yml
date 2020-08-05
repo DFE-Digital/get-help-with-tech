@@ -7,6 +7,10 @@
 #
 # See the file initializers/config.rb for more info on how this is configured.
 
+google:
+  analytics:
+    tracking_id:
+
 govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
   api_key:
