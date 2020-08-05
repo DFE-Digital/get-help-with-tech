@@ -1,9 +1,9 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=<%= Settings.google.analytics.tracking_id %>"></script>
-<script>
+<%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=#{Settings.google.analytics.tracking_id}", async: true, nonce: true %>
+<%= javascript_tag nonce: true  do %>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '<%= Settings.google.analytics.tracking_id %>');
-</script>
+  gtag('config', "#{Settings.google.analytics.tracking_id}");
+<% end %>

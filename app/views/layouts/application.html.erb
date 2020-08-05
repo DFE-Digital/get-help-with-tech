@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template ">
   <head>
+    <%= csp_meta_tag %>
     <%= render partial: 'layouts/google_analytics' if Settings.google.analytics.tracking_id.present? %>
     <title><%= try(:browser_title) %></title>
     <%= csrf_meta_tags %>
