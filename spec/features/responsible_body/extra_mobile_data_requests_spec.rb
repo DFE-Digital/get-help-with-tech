@@ -7,12 +7,28 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     sign_in_as rb_user
   end
 
-  scenario 'the user can access the request form from the responsible body home page' do
+  scenario 'the user can navigate to the manual request form from the responsible body home page' do
     click_on 'Request extra data for mobile devices'
 
     expect(page).to have_css('h1', text: 'Request extra mobile data')
     expect(page).to have_http_status(:ok)
-    expect(page).to have_link('Request data for someone')
+    click_on 'New request'
+    expect(page).to have_css('h1', text: 'How would you like to submit information?')
+    choose 'Manually (entering details one at a time)'
+    click_on 'Continue'
+    expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
+  end
+
+  scenario 'the user can navigate to the bulk upload form from the responsible body home page' do
+    click_on 'Request extra data for mobile devices'
+
+    expect(page).to have_css('h1', text: 'Request extra mobile data')
+    expect(page).to have_http_status(:ok)
+    click_on 'New request'
+    expect(page).to have_css('h1', text: 'How would you like to submit information?')
+    choose 'Using a spreadsheet'
+    click_on 'Continue'
+    expect(page).to have_css('h1', text: 'Upload a spreadsheet of extra data requests')
   end
 
   context 'when the user has already submitted requests' do
@@ -21,7 +37,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     end
 
     scenario 'the user can see their previous requests' do
-      visit responsible_body_extra_mobile_data_requests_path
+      visit responsible_body_mobile_extra_data_requests_path
 
       expect(page).to have_css('h2', text: 'Your requests')
 

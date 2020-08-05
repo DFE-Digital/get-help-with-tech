@@ -7,7 +7,7 @@
   <%- else %>
     <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
     <%- if @user&.is_responsible_body_user? %>
-      <%= nav_item( title: "Tell us who needs more data", url: responsible_body_extra_mobile_data_requests_path )  %>
+      <%= nav_item( title: "Tell us who needs more data", url: responsible_body_mobile_extra_data_requests_path )  %>
     <%- end %>
   <%- end %>
 

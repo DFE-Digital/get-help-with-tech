@@ -46,7 +46,12 @@ Rails.application.routes.draw do
     resources :bt_wifi_vouchers, only: %i[index], path: '/bt-wifi-vouchers' do
       get 'download', to: 'bt_wifi_vouchers#download', on: :collection
     end
-    resources :extra_mobile_data_requests, only: %i[index new create], path: '/extra-mobile-data-requests'
+    namespace :mobile, path: '/mobile' do
+      get '/', to: 'extra_data_requests#index', as: :extra_data_requests
+      get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
+      resources :manual_requests, only: %i[new create], path: '/manual'
+      resources :bulk_requests, only: %i[new create], path: '/bulk'
+    end
   end
 
   namespace :support do

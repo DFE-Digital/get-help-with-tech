@@ -65,4 +65,18 @@ class ExtraMobileDataRequest < ApplicationRecord
   def self.on_mobile_network(mobile_network_id)
     where(mobile_network_id: mobile_network_id)
   end
+
+  def notify_account_holder_now
+    notification.deliver_now
+  end
+
+  def notify_account_holder_later
+    notification.deliver_later
+  end
+
+private
+
+  def notification
+    @notification ||= ExtraMobileDataRequestAccountHolderNotification.new(self)
+  end
 end

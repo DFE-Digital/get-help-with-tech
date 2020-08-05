@@ -14,4 +14,6 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'BT' # British Telecom
   inflect.acronym 'DfE' # Department for Education
+  inflect.irregular 'was', 'were'
+  inflect.irregular 'contains', 'contain'
 end

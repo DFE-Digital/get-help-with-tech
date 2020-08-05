@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
+require 'support/sidekiq'
 
 RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
@@ -26,7 +27,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'the user can submit a valid form' do
-        visit new_responsible_body_extra_mobile_data_request_path
+        visit new_responsible_body_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
@@ -34,14 +35,14 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'user session is preserved across requests' do
-        visit new_responsible_body_extra_mobile_data_request_path
+        visit new_responsible_body_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
         expect(page).to have_button('Sign out')
       end
 
       scenario 'clicking "Sign out" signs the user out' do
-        visit new_responsible_body_extra_mobile_data_request_path
+        visit new_responsible_body_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
@@ -56,7 +57,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'visiting with a valid but expired session logs the user out' do
-        visit new_responsible_body_extra_mobile_data_request_path
+        visit new_responsible_body_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 

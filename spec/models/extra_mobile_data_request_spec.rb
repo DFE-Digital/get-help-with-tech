@@ -61,4 +61,39 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
   end
+
+  describe '#notify_account_holder_later' do
+    let(:request) { create(:extra_mobile_data_request) }
+
+    before do
+      ActiveJob::Base.queue_adapter = :test
+    end
+
+    after do
+      ActiveJob::Base.queue_adapter = :inline
+    end
+
+    it 'enqueues a job to send the message' do
+      expect {
+        request.notify_account_holder_later
+      }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob)
+    end
+  end
+
+  describe '#notify_account_holder_now' do
+    context 'for a mno that is providing extra data' do
+      let(:request) { create(:extra_mobile_data_request) }
+      let(:notification) { instance_double('ExtraMobileDataRequestAccountHolderNotification') }
+
+      before do
+        request.send(:instance_variable_set, :@notification, notification)
+        allow(notification).to receive(:deliver_now)
+      end
+
+      it 'sends the extra data offer sms message' do
+        request.notify_account_holder_now
+        expect(notification).to have_received(:deliver_now).once
+      end
+    end
+  end
 end
