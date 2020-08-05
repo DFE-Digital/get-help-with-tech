@@ -1,0 +1,30 @@
+.app-cookie-banner {
+  @include govuk-responsive-padding(3, 'top');
+  @include govuk-responsive-padding(2, 'bottom');
+  background-color: govuk-colour('light-grey');
+}
+
+.app-cookie-banner--hidden {
+  // Put this back in when we're ready to have the JS integrated
+  // display: none;
+}
+
+.app-cookie-banner__line-message {
+  line-height: 2;
+  padding-left: govuk-spacing(0);
+
+  @include govuk-media-query($from: tablet) {
+    padding-left: govuk-spacing(2);
+  }
+}
+
+.app-cookie-banner__link {
+  // To match links styling in the footer
+  color: govuk-colour('black') !important;
+}
+
+@include govuk-media-query($media-type: print) {
+  .app-cookie-banner {
+    display: none !important;
+  }
+}

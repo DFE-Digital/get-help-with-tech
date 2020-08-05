@@ -1,0 +1,18 @@
+<div class="app-cookie-banner app-cookie-banner--hidden" aria-label="Cookie banner" role="region" data-qa="cookie-banner">
+  <div class="govuk-width-container">
+    <p class="govuk-body">
+      We use cookies to <%= link_to("collect information", cookie_preferences_path,
+                                    { class: "govuk-link app-cookie-banner__link",
+                                      data: {qa: "cookie-banner__info-link"}}) %>
+      about how you use this service.
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-0">
+      <%= button_to 'Accept all cookies', create_cookie_preferences_path, method: :post, params: {cookie_consent: true}, class: "govuk-button govuk-!-margin-bottom-2" %>
+      <span class="app-cookie-banner__line-message">
+        or <%= link_to("set your cookie preferences", cookie_preferences_path,
+                       { class: "govuk-link app-cookie-banner__link",
+                         data: {qa: "cookie-banner__preference-link"}}) %>
+      </span>
+    </p>
+  </div>
+</div>

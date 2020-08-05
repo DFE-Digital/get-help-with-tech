@@ -8,6 +8,7 @@ en:
     sign_in_or_create_account: Create an account or sign in
     sign_in: Sign in
     check_your_email: Check your email
+    cookie_preferences: Cookies
     email_not_recognised: We didn’t recognise that email address
     token_is_valid_but_expired: The link you clicked has expired
     token_not_recognised: We didn’t recognise that link
