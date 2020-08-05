@@ -11,6 +11,7 @@
       <th scope="col" class="govuk-table__header">Type</th>
       <th scope="col" class="govuk-table__header">Name</th>
       <th scope="col" class="govuk-table__header">User count</th>
+      <th scope="col" class="govuk-table__header">Users signed in at least once</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -19,6 +20,9 @@
         <td class="govuk-table__cell"><%= responsible_body.type.underscore.humanize %></td>
         <td class="govuk-table__cell"><%= responsible_body.name %></td>
         <td class="govuk-table__cell"><%= pluralize(responsible_body.users.size, "user") %></td>
+        <td class="govuk-table__cell">
+          <%= pluralize(responsible_body.users.select { |u| u.sign_in_count > 0 }.size, "user") %> signed in
+        </td>
       </tr>
     <% end %>
   </tbody>
