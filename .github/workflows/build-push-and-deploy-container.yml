@@ -2,16 +2,13 @@
 name: Build, push and deploy container
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
 jobs:
   build-and-push-container:
     runs-on: ubuntu-latest
-    # Only run this when the PR has been merged -(i.e. not just closed)
-    if: github.event.pull_request.merged
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -39,8 +36,6 @@ jobs:
   deploy-to-paas:
     runs-on: ubuntu-latest
     needs: build-and-push-container
-    # Only run this when the PR has been merged -(i.e. not just closed)
-    if: github.event.pull_request.merged
     steps:
       - name: checkout
         uses: actions/checkout@v2
