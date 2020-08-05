@@ -9,12 +9,14 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">User count</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
     <% @responsible_bodies.each do |responsible_body| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= responsible_body.name %></td>
+        <td class="govuk-table__cell"><%= pluralize(responsible_body.users.size, "user") %></td>
       </tr>
     <% end %>
   </tbody>

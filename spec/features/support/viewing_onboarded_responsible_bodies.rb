@@ -38,7 +38,10 @@ RSpec.feature 'Viewing on-boarded responsible bodies in the support area', type:
   def then_i_can_see_the_responsible_bodies_with_users
     expect(responsible_bodies_page.responsible_body_rows.size).to eq(2)
     expect(responsible_bodies_page.responsible_body_rows[0]).to have_text('AWESOME TRUST')
+    expect(responsible_bodies_page.responsible_body_rows[0]).to have_text('1 user')
+
     expect(responsible_bodies_page.responsible_body_rows[1]).to have_text('Coventry')
+    expect(responsible_bodies_page.responsible_body_rows[1]).to have_text('2 users')
   end
 
   def and_i_cannot_see_the_responsible_bodies_without_users
