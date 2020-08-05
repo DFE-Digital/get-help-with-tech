@@ -72,6 +72,9 @@ RSpec.feature 'Session behaviour', type: :feature do
     let(:user) { create(:local_authority_user) }
     let(:validate_token_url) { validate_token_url_for(user) }
 
+    let(:other_user) { create(:mno_user) }
+    let(:other_user_magic_link) { validate_token_url_for(other_user) }
+
     before do
       visit validate_token_url
     end
@@ -85,6 +88,11 @@ RSpec.feature 'Session behaviour', type: :feature do
     scenario 'using a new magic link redirects to the home page for user' do
       sign_in_as(user)
       expect(page).to have_current_path(responsible_body_home_path)
+    end
+
+    scenario 'using a magic link from a different user signs in as the different user' do
+      visit other_user_magic_link
+      expect(page).to have_content(other_user.email_address)
     end
   end
 
