@@ -13,6 +13,7 @@
       <th scope="col" class="govuk-table__header">User count</th>
       <th scope="col" class="govuk-table__header">Users signed in at least once</th>
       <th scope="col" class="govuk-table__header">BT hotspot allocations</th>
+      <th scope="col" class="govuk-table__header">Downloaded vouchers?</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -25,6 +26,9 @@
           <%= pluralize(responsible_body.users.select { |u| u.sign_in_count > 0 }.size, "user") %> signed in
         </td>
         <td class="govuk-table__cell"><%= responsible_body&.bt_wifi_voucher_allocation&.amount %></td>
+        <td class="govuk-table__cell">
+          <%= responsible_body.bt_wifi_vouchers.map(&:distributed_at).compact.present? ? 'Yes' : 'No' %>
+        </td>
       </tr>
     <% end %>
   </tbody>

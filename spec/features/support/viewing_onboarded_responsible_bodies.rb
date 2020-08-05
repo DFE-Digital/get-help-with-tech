@@ -19,10 +19,12 @@ RSpec.feature 'Viewing on-boarded responsible bodies in the support area', type:
     create(:user, responsible_body: la, sign_in_count: 0)
     create(:user, responsible_body: la, sign_in_count: 2)
     create(:bt_wifi_voucher_allocation, amount: 123, responsible_body: la)
+    create_list(:bt_wifi_voucher, 123, :downloaded, responsible_body: la)
 
     trust = create(:trust, name: 'AWESOME TRUST')
     create(:user, responsible_body: trust, sign_in_count: 0)
     create(:bt_wifi_voucher_allocation, amount: 456, responsible_body: trust)
+    create_list(:bt_wifi_voucher, 456, responsible_body: trust)
   end
 
   def and_given_there_are_responsible_bodies_that_do_not_have_any_users
@@ -47,6 +49,7 @@ RSpec.feature 'Viewing on-boarded responsible bodies in the support area', type:
     expect(first_row).to have_text('1 user signed in')
     expect(first_row).to have_text('Local authority')
     expect(first_row).to have_text('123')
+    expect(first_row).to have_text('Yes') # hotspots downloaded?
 
     second_row = responsible_bodies_page.responsible_body_rows[1]
     expect(second_row).to have_text('AWESOME TRUST')
@@ -54,6 +57,7 @@ RSpec.feature 'Viewing on-boarded responsible bodies in the support area', type:
     expect(second_row).to have_text('0 users signed in')
     expect(second_row).to have_text('Trust')
     expect(second_row).to have_text('456')
+    expect(second_row).to have_text('No') # hotspots downloaded?
   end
 
   def and_i_cannot_see_the_responsible_bodies_without_users
