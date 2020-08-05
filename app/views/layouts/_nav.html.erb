@@ -1,6 +1,7 @@
 <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
   <%- if @user&.is_dfe? %>
     <%= nav_item( title: "Service performance", url: support_service_performance_path )  %>
+    <%= nav_item( title: "Responsible bodies", url: support_responsible_bodies_path )  %>
     <%= nav_item( title: "Background jobs", url: support_sidekiq_admin_path, html_options: {target: '_blank'} )  %>
   <%- elsif @user&.is_mno_user? %>
     <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
