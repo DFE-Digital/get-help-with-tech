@@ -137,6 +137,7 @@ en:
           queried: Queried
           complete: Complete
           cancelled: Cancelled
+          unavailable: Unavailable
       mobile_network:
         participation_in_pilots:
           participating: 'Offers data now'
@@ -179,3 +180,7 @@ en:
         bulk_submission: Using a spreadsheet
       create:
         success: Your request has been received
+        success_saved: Your request has been saved
+      mobile_network_not_on_service_yet: "%{mno} (not on service yet)"
+      details_passed_to_provider: "These details will be passed to %{mno}"
+      details_passed_to_provider_only_if_they_join: "These details will be passed to %{mno} only if they join the service"

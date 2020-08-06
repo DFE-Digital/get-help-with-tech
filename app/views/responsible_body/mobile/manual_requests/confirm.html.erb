@@ -39,7 +39,7 @@
           Mobile network
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @extra_mobile_data_request.mobile_network.brand %>
+          <%= @extra_mobile_data_request.network_name_with_participation_status %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path(anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) do %>
@@ -62,7 +62,7 @@
         </dd>
       </div>
     </dl>
-    <p class="govuk-body">These details will be passed to <%= @extra_mobile_data_request.mobile_network.brand %></p>
+    <p class="govuk-body"><%= @extra_mobile_data_request.passing_data_to_provider_message %></p>
 
     <%= form_for @extra_mobile_data_request, url: responsible_body_mobile_manual_requests_path do |f| %>
       <%= f.hidden_field :account_holder_name %>
