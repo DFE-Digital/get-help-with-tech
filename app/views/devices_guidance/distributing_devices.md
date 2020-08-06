@@ -18,7 +18,7 @@ Laptops, tablets and 4G wireless routers will be delivered directly to the schoo
 
 Organisations are responsible for deciding how they deliver devices. For example, they can:
 
-* arrange for them to be collected by families from school with a social worker present (where relevant)
+* arrange for them to be collected by families from school
 * organise for them to be delivered to the homes of children and care leavers
 * arrange for schools to deliver them
 * use local organisations, such as those supporting care leavers
