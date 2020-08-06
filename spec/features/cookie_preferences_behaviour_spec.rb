@@ -19,7 +19,7 @@ RSpec.feature 'Cookie preferences', type: :feature do
         expect(page).not_to have_link('set your cookie preferences', href: cookie_preferences_path)
       end
     end
-  
+
     context 'when a preference has been set to no' do
       before do
         set_cookie('consented-to-cookies', 'no')
