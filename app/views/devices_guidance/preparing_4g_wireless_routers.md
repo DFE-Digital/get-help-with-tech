@@ -2,13 +2,13 @@
 
 You don’t need to do anything to set up the devices before you give them to users. You should, however, keep records of all routers you receive and who you loan them to.
 
-The person specified as technical contact at the local authority or school will be responsible for distributing the 4G wireless routers.
+The person specified as technical contact (the person nominated as your technical contact when you ordered) at the local authority or school will be responsible for distributing the 4G wireless routers.
 
 When your 4G wireless routers are dispatched, we’ll send the technical contact a form that includes a unique Device IMEI Number and SIM ICC ID Number for each device. Store this information securely for future reference – it will not be available elsewhere.
 
 You must keep track of who has each router. Keep a note of the name of the user, with the IMEI and SIM number for each device. This is so that requests can be made about specific routers. For example, if you want to deactivate a particular SIM because a child has reported it as stolen.
-
 Your technical contact must also keep accurate records of who has each device, as this will be required in the event of a Regulation of Investigatory Powers Act (RIPA) request.
+
 
 ## Contract length
 
@@ -51,7 +51,7 @@ Along with set-up instructions in the box, you can give the users this [user gui
 * using data only for education and social care
 * what to do if something goes wrong
 
-You should give young people and their carers a copy of this document. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.
+You should give young people and their carers a copy of this content. You can edit it to include contact details for a person or team that can provide technical support if, for example, the device is faulty or runs out of data. You can also add details to the safeguarding section to make it more relevant to your organisation.
 
 * [4G wireless routers: User guidance](/devices/4g-user-guidance)
 

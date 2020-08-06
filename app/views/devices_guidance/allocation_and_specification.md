@@ -1,8 +1,8 @@
-## Types of devices you can order
+## Types of devices that have been provided
 
 You can choose between:
 
-* Microsoft Windows laptops
+* Windows laptops
 * Google Chromebooks
 * tablets
 
@@ -12,7 +12,7 @@ Here are the minimum specifications for each device:
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header"></th>
-      <th scope="col" class="govuk-table__header">Microsoft laptop</th>
+      <th scope="col" class="govuk-table__header">Windows laptop</th>
       <th scope="col" class="govuk-table__header">Google Chromebook</th>
       <th scope="col" class="govuk-table__header">Microsoft Tablet</th>
     </tr>
@@ -141,17 +141,13 @@ Here are the minimum specifications for each device:
   </tbody>
 </table>
 
-## How devices are allocated
+## How devices were allocated
 
-There are a limited number of devices to distribute as part of the 'Get help with technology' programme. The most disadvantaged and vulnerable young people and children are being prioritised to make sure they can access social care and remote education.
+There were a limited number of devices to distribute as part of the Get help with technology programme. The most disadvantaged and vulnerable young people and children were prioritised to make sure they can access social care and remote education.
 
-The number of devices you have been allocated is based on the number of eligible children and young people that:
+As a local authority or school, the number of devices you’ve been allocated is based on the number of eligible children and young people that:
 
 * you’re responsible for
 * the Department for Education (DfE) has estimated do not already have access to a device provided through other means (such as through their school or family)
 
-The DfE considered all allocation queries raised by local authorities and academy trusts, and reviewed the submitted evidence against the initial allocation. The department then compared those queries to similar requests it received nationwide, and balanced it against the total number of devices available. More devices have been provided where there was an evidenced need to support eligible children.
-
-## What happens next
-
-You will receive an email inviting you to the TechSource portal where you will be able to order your devices. We will be inviting local authorities and academy trusts to join TechSource shortly before ordering opens.
+The DfE considered all allocation queries raised by local authorities and academy trusts, and reviewed the submitted evidence against the initial allocation. The department then compared those queries to similar requests it received nationwide, and balanced it against the total number of devices available. More devices have been provided where there was an evidenced need to support eligible children.

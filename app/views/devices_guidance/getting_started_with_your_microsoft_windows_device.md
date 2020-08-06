@@ -1,13 +1,11 @@
-User guidance included in device box:
+## When you get your laptop or tablet
 
-## Getting started with your Microsoft Windows device
+### How to turn it on
 
-### Turn it on
+1.   Plug in your device to the mains, using the power supply and charger in the box.
+2.   Press the ‘On’ button.
 
-*   Plug in your device to the mains, using the power supply and charger in the box.
-*   Press the ‘On’ button.
-
-#### Log In
+#### Log in
 
 You should see a screen that says “localuser”, and your desktop screen will automatically open.  
 
@@ -30,20 +28,20 @@ If you have set a password that you’ve forgotten, you’ll need to ask your te
 
 ### Connect to Wi-Fi
 
-Your device needs to access a Wi-Fi network before you can use the internet.
+Your laptop or tablet needs to access a Wi-Fi network before you can use the internet.
 
 ![Screenshot showing the Network icon on the taskbar](/devices/getting-started-with-your-microsoft-windows-device4.jpg)
 
-1. Click the Network icon on the taskbar. If you don’t see one of these network icons, click the **^** symbol and you should see it there.
-2. Choose your Wi-Fi network, then select **Connect**.
-3. Type your network password, and then select **Next**.
-4. You should choose **No** when asked if you want your device to be discoverable on the Wi-Fi network.
+1. Click the Network icon on the taskbar. If you don’t see one of these network icons, click the **"^"** symbol and you should see it there.
+2. Choose your Wi-Fi network, then select **"Connect"**.
+3. Type your network password, and then select **"Next"**.
+4. You should choose **"No"** when asked if you want your device to be discoverable on the Wi-Fi network.
 
 **Note:** If you’ve been given a 4G router, look in its box to find the name of the network and the password you’ll need. If you’re using your own Wi-Fi then connect using the same network and password as you would with other devices, such as a mobile phone.
 
 ## You’re ready to get online
 
-You can start using your device once you’re connected to a Wi-Fi network. Your school and/or Local Authority will let you know which resources you should use.
+You can start using your laptop or tablet once you’re connected to a Wi-Fi network. Your school and/or local authority will let you know which resources you should use.
 
 ## Logging back into the operating system
 
@@ -53,8 +51,10 @@ The devices have no passwords set up. If you’ve logged out of the operating sy
 
 All Microsoft Windows devices registered to the DfE have safeguarding settings applied to keep you safe online.
 
-This means you won’t be able to use this device to access any inappropriate content.
-If you’re blocked from viewing something you think you need for your work or wellbeing, get in touch with your school or local authority contact.
+This means you will not be able to use the laptop or tablet to access any inappropriate content.
+
+If you’re blocked from viewing something you think you need for your education, work or wellbeing, please get in touch with your school or local authority contact to let them know.
+
 
 If you’re worried that your child is accessing harmful content on any device, you can [find support and advice at GOV.UK](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19).
 
@@ -62,7 +62,7 @@ If your child is worried or needs support, they can call [Childline](https://www
 
 If your child has a social worker, you should contact your local authority if you have any concerns about your child’s safety or wellbeing.
 
-## Privacy notice: protective software for the Department for Education’s ‘Get Help with Technology’ programme
+## Privacy notice: protective software for the Department for Education’s Get help with technology programme
 
 ### How we use your personal information
 

@@ -1,6 +1,7 @@
 class DevicesGuidanceController < ApplicationController
   def index
-    @pages = devices_guidance.all_pages
+    @responsible_body_pages = devices_guidance.pages_for(audience: :responsible_body_users)
+    @device_user_pages = devices_guidance.pages_for(audience: :device_users)
   end
 
   def subpage
@@ -27,6 +28,7 @@ private
         path: devices_guidance_subpage_path(subpage_slug: page_id.to_s.dasherize),
         title: page_metadata[:title],
         description: page_metadata[:description],
+        audience: page_metadata[:audience],
       }
     end
   end

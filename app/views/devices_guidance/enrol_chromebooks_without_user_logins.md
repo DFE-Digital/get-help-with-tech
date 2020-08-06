@@ -1,21 +1,22 @@
-You need to:  
+To do this you need to:
 
-* Ensure you have a role account for your devices
-* Configure Chrome management policies if they don’t already exist
-* Enrol your Chromebooks
-* Deploy and configure Cisco filtering extension
+* ensure you have a role account for your devices
+* configure Chrome management policies if they do not already exist
+* enrol your Chromebooks
+* deploy and configure Cisco filtering extension
+
 
 [Watch a video that explains how to set up your Google Admin console](https://www.youtube.com/watch?v=XP6Y_iIi8Dg&feature=youtu.be)
 
 ## Create a role account
 
-In your Google Admin Console complete the following:  
+Complete the following steps in your Google Admin Console:
 
 1. Create an organisation unit called ‘DfE Devices’
 2. Create a user to enrol the Chromebooks
 
 *  The user should be in the ‘DfE devices’ domain (the same one you’re adding the devices to)
-*  Make the password something fairly simple as you are going to be using this many times to enroll the Chrome devices
+*  Make the password something fairly simple as you are going to be using this many times to enrol the Chrome devices
 
 ## Configure Chrome management policies
 
@@ -146,13 +147,13 @@ You’ll then need to go into each section and configure the following policies:
   </tbody>
 </table>
 
-#### Apps and Extensions
+#### Apps and extensions
 
-A top level set of web apps and Chrome extensions can be force installed for all devices at the top level. These can also be customised and different apps deployed at different organisation unit levels. If you have any web apps that you need to deploy, choose ‘Managed guest sessions’ and you can add apps or pin websites to the taskbar using the plus button.
+A top-level set of web apps and Chrome extensions can be force installed for all devices at the top level. These can also be customised and different apps deployed at different organisation unit levels. If you have any web apps that you need to deploy, choose ‘Managed guest sessions’ and you can add apps or pin websites to the taskbar using the ‘+’ button.
 
 ## Enrolling Chromebooks
 
-Before you enrol your devices, please ensure that you have the correct number of Chrome licenses available in your domain by going to ‘Devices’ > ‘Chrome devices’ and click the ‘Upgrades’ button in the top right. If you don’t have enough licenses for the number of devices you need to enrol and manage, please contact [dfepcs@computacenter.com](mailto:dfepcs@computacenter.com).
+Before you enrol your devices, please ensure that you have the correct number of Chrome licenses available in your domain by going to ‘Devices’ > ‘Chrome devices’ and click the ‘Upgrades’ button in the top right. If you do not have enough licenses for the number of devices you need to enrol and manage, please contact [COVID.technology@education.gov.uk](mailto:COVID.technology@education.gov.uk).
 
 Follow these instructions to enrol your devices:
 
@@ -177,35 +178,37 @@ There are three parts to this installation:
 * Installing the Cisco Umbrella Chromebook client application on your Chromebooks
 * \[Optional\] Installing Cisco Umbrella Root CA
 
-You can also find instructions for removing Umbrella Chromebook software in the last section of this guide.
+You need to email [COVID.technology@education.gov.uk](mailto:COVID.technology@education.gov.uk) to request the JSON configuration needed to install the Cisco Umbrella Chromebook client application.
+
+You can also find instructions for removing Umbrella Chromebook software in the [last section of this guide](#Removing-the-Umbrella-clients-from-the-Chrome-Devices).
 
 #### Prerequisites
 
 The Cisco Umbrella Chromebook client uses the ports below. Please make sure that:
 
-* Port 53 (UDP) is accessible to [208.67.220.220](https://protect-eu.mimecast.com/s/hoy2Cv8RkfLPGlys0FtmR?domain=208.67.220.220) and [208.67.222.222](https://protect-eu.mimecast.com/s/-_QaCwK2liV47NRhg7CKN?domain=208.67.222.222) on your firewall
-* [https://registration.polaris.qq.opendns.com](https://protect-eu.mimecast.com/s/AMEeCx28mHRgyXQsPeuWK?domain=registration.polaris.qq.opendns.com) is accessible from your device
+* Port 53 (UDP) is accessible to [208.67.220.220](https://208.67.220.220) and [208.67.222.222](https://208.67.222.222) on your firewall
+* [https://registration.polaris.qq.opendns.com](https://registration.polaris.qq.opendns.com) is accessible from your device
 
 #### Part 1: Install the Cisco Umbrella Chromebook Client Extension
 
-1. Log into [https://admin.google.com](https://protect-eu.mimecast.com/s/sYqZCy97nS2Qg4yh0jila?domain=admin.google.com).
+1. Log into [https://admin.google.com](https://admin.google.com).
 
     ![Google Admin Console](/devices/nouserlogins1.png)
 
-2. Select **Device Management**.
+2. Select **Devices**.
 
     ![Device Management](/devices/nouserlogins2.png)
 
-3. In the menu on the left-hand side of the Device Management window, select **Chrome Management**.
+3. In the menu on the left-hand side of the Device Management window, select **Chrome management**.
 
     ![Select ‘Chrome Management’](/devices/nouserlogins3.png)
 
-4. In the Chrome Management window, select **Apps & Extensions**.
+4. In the Chrome Management window, select **Apps & extensions**.
 
     ![Select ‘Apps & Extensions’](/devices/nouserlogins4.png)
 
 5. Click ‘Managed Guest Sessions’ and if applicable, select the relevant OU from the left hand side.
-6. Click the yellow + icon (bottom right hand corner) and choose ‘Add the Chrome App or Extension by ID’ option to search for the ID of the Cisco Umbrella Chromebook client extension **jcdhmojfecjfmbdpchihbeilohgnbdci** (Searching by name will not work.)
+6. Click the yellow + icon (bottom right hand corner) and choose ‘Add the Chrome app or extension by ID’ option to search for the ID of the Cisco Umbrella Chromebook client extension **jcdhmojfecjfmbdpchihbeilohgnbdci** (Searching by name will not work.)
 
     ![Yellow icon for ‘Add the Chrome App or Extension by ID’](/devices/nouserlogins5.png)
 
@@ -224,25 +227,7 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
 
 2. Search for the ID of the Cisco Umbrella Chromebook client application **cpnjigmgeapagmdimmoenaghmhilodfg** (Searching by name will not work.)
 3. Select **Force Install**. This ensures that Chromebook users in the selected Organization Unit cannot remove or disable the application.
-4. Copy the JSON configuration below into the ‘Policy for extensions’ on the right hand side.  
-
-        {
-          "googleDirectoryService": {
-            "Value": false
-          },
-          "organizationInfo": {
-            "Value": {
-              "organizationId": 3478346,
-              "regToken": "fCq5QoEewxSHcMhdaPSaV9QidrFRELvN"
-            }
-          },
-          "publicSession": {
-            "Value": true
-          },
-          "vaIPs": {
-            "Value": []
-          }
-        }
+4. Email [COVID.technology@education.gov.uk])[mailto:COVID.technology@education.gov.uk] to request the JSON configuration and copy it into the ‘Policy for extension' box on the right-hand side.
 
     ![Screenshot showing locally added App](/devices/nouserlogins9.png)
 
@@ -252,16 +237,16 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
 
 Cisco Umbrella highly recommends the following:
 
-* In order to avoid certificate errors when accessing the block page, you must install the Cisco Umbrella root certificate on your Chromebooks. For more information on how to deploy certificates, see [Google's documentation](https://protect-eu.mimecast.com/s/NuEWCz7QoTwy3rmHY5Hyk?domain=support.google.com) and use the attached Root CA to be uploaded.
+* In order to avoid certificate errors when accessing the block page, you must install the Cisco Umbrella root certificate on your Chromebooks. For more information on how to deploy certificates, see [Google's documentation](https://support.google.com) and use the attached Root CA to be uploaded.
 
 The Umbrella root certificate to link your device to the DfE Block page can be downloaded from [https://bit.ly/2zr2gM8](https://protect-eu.mimecast.com/s/AfZ9CAMWxflPgR1c4DrQR?domain=bit.ly)
 
 Follow these instructions to deploy the Cisco Umbrella Root CA to your Chrome devices:
 
-1. Head to [https://admin.google.com](https://protect-eu.mimecast.com/s/sYqZCy97nS2Qg4yh0jila?domain=admin.google.com).
+1. Head to [https://admin.google.com](https://admin.google.com).
 2. Click **Devices**.
 3. On the left, click **Networks**.
-4. Click Certificates > **Create Certificate**.
+4. Click Certificates > **Create certificate**.
 
     ![Click ‘Create Certificate’](/devices/nouserlogins10.png)
 
@@ -272,13 +257,15 @@ Follow these instructions to deploy the Cisco Umbrella Root CA to your Chrome de
     ![Select ‘Chromebook’](/devices/nouserlogins11.png)
 
 8. Click Add to confirm.
-9. After installing the browser extension and Application for the first time, test it by going to [internetbadguys.com](internetbadguys.com) on the Chromebook. A Cisco Umbrella filtering page should appear. It may take a number of minutes after installing the browser extension and app before the blocking comes into effect.
+9. After installing the browser extension and application for the first time, test it by going to [internetbadguys.com](https://internetbadguys.com) on the Chromebook. A Cisco Umbrella filtering page should appear. It may take a number of minutes after installing the browser extension and app before the blocking comes into effect.
 
 #### Removing the Umbrella clients from the Chrome Devices
 
-Should you wish to remove Umbrella from the Chrome devices, please follow the instructions below.
+If you remove Cisco Umbrella, you are responsible for providing alternative safety software.
 
-1. Follow steps 1 - 5 from Part 1 of this guide
-2. Click on both the app and extension and click the bin icon in the right hand sidebar.
+To remove Cisco Umbrella from your Chrome devices, please follow the instructions below:
+
+1. Follow steps 1 - 5 from [Part 1](#Part-1:-Install-the-Cisco-Umbrella-Chromebook-Client-Extension-of-this-guide)
+2. Click on both the app and extension and click the bin icon in the right-hand sidebar.
 
     ![Screenshot showing Force Install](/devices/nouserlogins12.png)
