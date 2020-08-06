@@ -1,4 +1,8 @@
-The Department for Education (DfE) provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19) to local authorities and academy trusts between May and July 2020. 
+More laptops and tablets have been made available for disadvantaged children in certain year groups who are affected by disruption to face to face education at their school, or have been advised to [shield because they are clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19).
+
+[This guidance](https://www.gov.uk/guidance/get-laptops-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) provides information for schools and trusts about who is eligible and how to apply. More information will be added soon.
+
+The Department for Education (DfE) has already provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19) to local authorities and academy trusts between May and July 2020. 
 
 These are being distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
 
@@ -7,13 +11,13 @@ These digital devices will help:
 * social workers to provide virtual safeguarding and support to the children and families they work with via video conferences, for example 
 * children, young people, families and care leavers to access the online services they need to protect their wellbeing
 * families and care leavers to avoid social isolation
-* children and young people to access remote learning, including year 10 pupils with upcoming GCSE exams
+* children and young people to access remote learning, including year 10  pupils in the 2019 to 2020 academic year 
 
-## Who was eligible for the scheme
+## Who is eligible for the scheme
 
-Devices were provided to local authorities and academy trusts between May and July 2020. 
+[Find out who is currently eligible for laptops and tablets here](https://www.gov.uk/guidance/get-laptops-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19).
 
-These are being distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
+Devices provided to local authorities and academy trusts between May and July 2020 are being distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
 
 Laptops and tablets have been provided for:
 
