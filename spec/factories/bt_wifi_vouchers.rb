@@ -6,5 +6,9 @@ FactoryBot.define do
     trait :unassigned do
       responsible_body { nil }
     end
+
+    trait :downloaded do
+      distributed_at { Time.now.utc - rand(500_000).seconds }
+    end
   end
 end
