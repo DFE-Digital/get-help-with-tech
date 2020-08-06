@@ -2,7 +2,7 @@
 <html lang="en" class="govuk-template ">
   <head>
     <%= csp_meta_tag %>
-    <%- if Settings.google.analytics.tracking_id.present? && cookies['consented-to-cookies'] %>
+    <%- if Settings.google.analytics.tracking_id.present? && cookies['consented-to-cookies'].to_s == 'yes' %>
       <%= render partial: 'layouts/google_analytics' %>
     <%- end %>
     <title><%= try(:browser_title) %></title>
