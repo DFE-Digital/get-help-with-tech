@@ -39,7 +39,7 @@ private
       account_holder_name: row[0]&.value,
       device_phone_number: row[1]&.value,
       mobile_network_id: lookup_network_id(row[2]&.value),
-      agrees_with_privacy_statement: row[3]&.value,
+      agrees_with_privacy_statement: row[4]&.value,
     }
     return attrs unless attrs.values.all?(&:nil?)
   end

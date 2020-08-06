@@ -9,7 +9,7 @@ RSpec.describe ResponsibleBody::Mobile::BulkRequestsController, type: :controlle
     end
 
     describe 'create' do
-      let(:upload) { Rack::Test::UploadedFile.new(file_fixture('bulk_mobile_data_request.xlsx'), Mime[:xlsx]) }
+      let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), Mime[:xlsx]) }
       let(:request_data) { { bulk_upload_form: { upload: upload } } }
 
       before do

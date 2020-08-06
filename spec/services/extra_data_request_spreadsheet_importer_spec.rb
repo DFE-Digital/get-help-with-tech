@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
   let(:user) { create(:local_authority_user) }
-  let(:file) { file_fixture('bulk_mobile_data_request.xlsx') }
+  let(:file) { file_fixture('extra-mobile-data-requests.xlsx') }
   let(:importer) { described_class.new }
 
   before do
