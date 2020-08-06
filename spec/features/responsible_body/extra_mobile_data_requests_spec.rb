@@ -34,6 +34,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
   context 'when the user has already submitted requests' do
     before do
       @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: rb_user)
+      @requests.last.unavailable!
     end
 
     scenario 'the user can see their previous requests' do
@@ -45,6 +46,8 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
         expect(page).to have_content(request.device_phone_number)
         expect(page).to have_content(request.account_holder_name)
       end
+      expect(page).to have_text('Requested').exactly(4).times
+      expect(page).to have_text('Unavailable').once
     end
   end
 end

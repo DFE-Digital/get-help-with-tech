@@ -6,7 +6,8 @@ class ExtraMobileDataRequestPresenter < SimpleDelegator
   def network_name_with_participation_status
     name = network_name
     return name if mobile_network.participating?
-    I18n.t(:mobile_network_not_on_service_yet, scope: i18n_scope, mno: name) 
+
+    I18n.t(:mobile_network_not_on_service_yet, scope: i18n_scope, mno: name)
   end
 
   def passing_data_to_provider_message
