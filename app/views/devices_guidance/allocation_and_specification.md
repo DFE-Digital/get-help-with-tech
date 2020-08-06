@@ -1,6 +1,6 @@
 ## Types of devices that have been provided
 
-You can choose between:
+Local authorities and academy trusts chose between:
 
 * Windows laptops
 * Google Chromebooks
