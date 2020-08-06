@@ -19,7 +19,6 @@ These digital devices will help:
 
 Devices provided to local authorities and academy trusts between May and July 2020 are being distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
 
-Laptops and tablets have been provided for:
 
 ### Laptops and tablets
 
