@@ -34,7 +34,7 @@
         </tr>
         </tbody>
       </table>
-
+    <% if Settings.google.analytics.tracking_id.present? %>
       <h3 class="govuk-heading-m">Measuring website usage (Google Analytics)</h3>
 
       <p class="govuk-body">Google Analytics sets the following cookies:</p>
@@ -70,6 +70,7 @@
           </tr>
         </tbody>
       </table>
+    <% end %>
     </div>
   </div>
 </div>

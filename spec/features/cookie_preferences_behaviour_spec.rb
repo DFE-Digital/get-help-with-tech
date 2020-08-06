@@ -52,13 +52,14 @@ RSpec.feature 'Cookie preferences', type: :feature do
 
       describe 'clicking on the Accept cookies button' do
         let(:initial_page) { guide_to_collecting_mobile_information_path }
+
         before do
           visit initial_page
           click_on 'Accept all cookies'
         end
 
         it 'redirects back to the initial page' do
-          expect(page.current_path).to eq(initial_page)
+          expect(page).to have_current_path(initial_page)
         end
 
         it 'tells me my preferences have been saved' do
@@ -73,6 +74,7 @@ RSpec.feature 'Cookie preferences', type: :feature do
 
       describe 'clicking on the set preferences link' do
         let(:initial_page) { '/' }
+
         before do
           visit initial_page
           click_on 'set your cookie preferences'
@@ -88,7 +90,7 @@ RSpec.feature 'Cookie preferences', type: :feature do
           end
 
           it 'shows an error ' do
-            expect(page.current_path).to eq(cookie_preferences_path)
+            expect(page).to have_current_path(cookie_preferences_path)
             expect(page).to have_http_status(:unprocessable_entity)
             expect(page).to have_content('Choose whether you consent to analytics cookies')
           end
@@ -101,7 +103,7 @@ RSpec.feature 'Cookie preferences', type: :feature do
           end
 
           it 'redirects back to the home page' do
-            expect(page.current_path).to eq('/')
+            expect(page).to have_current_path('/')
           end
 
           it 'tells me my preferences have been saved' do

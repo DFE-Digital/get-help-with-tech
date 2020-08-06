@@ -28,8 +28,8 @@ Rails.application.routes.draw do
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
-  get "/cookie-preferences", to: "cookie_preferences#new", as: "cookie_preferences"
-  post "/cookie-preferences", to: "cookie_preferences#create", as: "create_cookie_preferences"
+  get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
+  post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
 
   resources :sessions, only: %i[create destroy]
   resources :users, only: %i[new create]
