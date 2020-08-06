@@ -33,6 +33,8 @@ en:
     service_performance: Service performance
     accessibility: Accessibility statement
     support_responsible_bodies: On-boarded responsible bodies
+  cookie_preferences:
+    success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
       title: About the offer
