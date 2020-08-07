@@ -8,6 +8,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   # we have to validate on _id so that the govuk_error_summary component renders & links the error to the field correctly
   validates :mobile_network_id, presence: true
   validates :agrees_with_privacy_statement, inclusion: { in: [true] }
+  validates :contract_type, presence: true, on: :create
 
   enum status: {
     requested: 'requested',
@@ -45,6 +46,11 @@ class ExtraMobileDataRequest < ApplicationRecord
     no_longer_on_network: 'no_longer_on_network',
   }
 
+  enum contract_type: {
+    pay_as_you_go: 'pay_as_you_go',
+    pay_monthly: 'pay_monthly',
+  }
+
   include ExportableAsCsv
 
   def self.exportable_attributes
@@ -56,6 +62,7 @@ class ExtraMobileDataRequest < ApplicationRecord
       updated_at: 'Last updated',
       mobile_network_id: 'Mobile network ID',
       status: 'Status',
+      contract_type: 'Contract type',
     }
   end
 

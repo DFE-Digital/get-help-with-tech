@@ -7,9 +7,12 @@ class ExtraDataRequestSpreadsheetImporter
 
   def import!(spreadsheet_path, user)
     workbook = RubyXL::Parser.parse(spreadsheet_path)
-    worksheet = workbook['Extra mobile data requests']
+    @worksheet = workbook['Extra mobile data requests']
 
-    worksheet.each_with_index do |row, n|
+    navigate_worksheet do |row|
+
+    end
+    @worksheet.each_with_index do |row, n|
       next if n.zero? || row.nil? # skip the header row
 
       request_attrs = fetch_request_attrs(row)
@@ -33,6 +36,26 @@ class ExtraDataRequestSpreadsheetImporter
   end
 
 private
+
+  def navigate_worksheet(&block)
+  end
+
+  def headers
+    @headers ||= capture_headers
+  end
+
+  def capture_headers
+    headers = {}
+    row = @worksheet.sheet_data.rows[0]
+    row.cols.each_with_index do |c, i|
+      headers[make_sym(c.value)] = i if c&.value
+    end
+    headers
+  end
+
+  def make_sym(val)
+    val.to_s.parameterize(separator: '_').to_sym
+  end
 
   def fetch_request_attrs(row)
     attrs = {
