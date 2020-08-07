@@ -8,6 +8,7 @@ en:
     sign_in_or_create_account: Create an account or sign in
     sign_in: Sign in
     check_your_email: Check your email
+    cookie_preferences: Cookies
     email_not_recognised: We didn’t recognise that email address
     token_is_valid_but_expired: The link you clicked has expired
     token_not_recognised: We didn’t recognise that link
@@ -32,6 +33,8 @@ en:
     service_performance: Service performance
     accessibility: Accessibility statement
     support_responsible_bodies: On-boarded responsible bodies
+  cookie_preferences:
+    success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
       title: About the offer
