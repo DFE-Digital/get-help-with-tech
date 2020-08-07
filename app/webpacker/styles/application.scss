@@ -18,6 +18,7 @@ $govuk-image-url-function: frontend-image-url;
 @import "styled-content";
 @import "related";
 @import "card";
+@import "components/cookie-banner";
 
 .app-email-template {
   border: $govuk-border-width solid $govuk-border-colour;
