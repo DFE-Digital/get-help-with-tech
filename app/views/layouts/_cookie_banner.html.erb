@@ -6,13 +6,13 @@
                                       data: {qa: "cookie-banner__info-link"}}) %>
       about how you use this service.
     </p>
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      <%= button_to 'Accept all cookies', create_cookie_preferences_path, method: :post, params: {cookie_preferences_form: {cookie_consent: 'yes' }, return_url: request.original_fullpath}, class: "govuk-button govuk-!-margin-bottom-2" %>
-      <span class="app-cookie-banner__line-message">
+    <div class="app-cookie-banner-actions">
+      <%= button_to 'Accept all cookies', create_cookie_preferences_path, method: :post, params: {cookie_preferences_form: {cookie_consent: 'yes' }, return_url: request.original_fullpath}, class: "govuk-button govuk-!-margin-bottom-2", form_class: 'govuk-form-group' %>
+      <p class="app-cookie-banner__line-message govuk-body">
         or <%= link_to("set your cookie preferences", cookie_preferences_path,
                        { class: "govuk-link app-cookie-banner__link",
                          data: {qa: "cookie-banner__preference-link"}}) %>
-      </span>
-    </p>
+      </p>
+    </div>
   </div>
 </div>
