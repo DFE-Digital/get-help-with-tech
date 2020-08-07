@@ -143,7 +143,7 @@ Here are the minimum specifications for each device:
 
 ## How devices are allocated
 
-Find out about the [additional laptops and tablets available in the 2020 to 2021 academic year](https://www.gov.uk/guidance/get-laptops-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) for disadvantaged children in certain year groups who are affected by disruption to face to face education at their school, or have been advised to shield because they are clinically extremely vulnerable.
+Find out about the [additional laptops and tablets available in the 2020 to 2021 academic year](https://www.gov.uk/guidance/get-laptops-and-tablets-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) for disadvantaged children in certain year groups who are affected by disruption to face to face education at their school, or have been advised to shield because they are clinically extremely vulnerable.
 
 There were a limited number of devices to distribute as part of the first phase of the Get help with technology programme. The most disadvantaged and vulnerable young people and children were prioritised to make sure they can access social care and remote education.
 
