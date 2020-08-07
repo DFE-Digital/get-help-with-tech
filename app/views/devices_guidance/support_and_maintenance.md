@@ -10,13 +10,6 @@ LAs and academy trusts need to provide support for end users – schools, childr
 
 Those providing support in LAs and academy trusts should be able to solve general IT problems (such as password resets) so that the end user can continue with their day as soon as possible.
 
-## Support for schools, young people and families
-
-LAs and academy trusts need to provide support for end users – schools, children, young people and families.
-
-Those providing support in LAs and academy trusts should be able to solve general IT problems (such as password resets) so that the end user can continue using their device as soon as possible.
-
-
 ## Support for local authorities and academy trusts
 
 XMA will support LAs and academy trusts. Their technical service desk can:
