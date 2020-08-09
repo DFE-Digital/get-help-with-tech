@@ -22,7 +22,7 @@ class ExtraDataRequestSpreadsheetImporter
         if request_already_exists?(extra_mobile_data_request)
           summary.add_existing_record(extra_mobile_data_request)
         else
-          save_and_notify!(extra_mobile_data_request)
+          extra_mobile_data_request.save_and_notify_account_holder!
           summary.add_successful_record(extra_mobile_data_request)
         end
       else
@@ -60,10 +60,5 @@ private
       device_phone_number: request.device_phone_number,
       mobile_network_id: request.mobile_network_id,
     )
-  end
-
-  def save_and_notify!(request)
-    request.save!
-    request.notify_account_holder_later
   end
 end

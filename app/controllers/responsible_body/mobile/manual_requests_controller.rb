@@ -20,9 +20,7 @@ class ResponsibleBody::Mobile::ManualRequestsController < ResponsibleBody::BaseC
       if params[:confirm]
         # clear the stashed params once the user has confirmed them
         session.delete(:extra_mobile_data_request_params)
-        @extra_mobile_data_request.save!
-
-        @extra_mobile_data_request.notify_account_holder_later
+        @extra_mobile_data_request.save_and_notify_account_holder!
 
         flash[:success] = I18n.t('responsible_body.extra_mobile_data_requests.create.success')
         redirect_to responsible_body_mobile_extra_data_requests_path

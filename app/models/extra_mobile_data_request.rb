@@ -72,7 +72,8 @@ class ExtraMobileDataRequest < ApplicationRecord
     notification.deliver_now
   end
 
-  def notify_account_holder_later
+  def save_and_notify_account_holder!
+    save!
     notification.deliver_later
   end
 
