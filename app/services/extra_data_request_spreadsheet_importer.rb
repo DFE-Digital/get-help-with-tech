@@ -19,7 +19,7 @@ class ExtraDataRequestSpreadsheetImporter
       extra_mobile_data_request = create_request(request_attrs, user)
 
       if extra_mobile_data_request.valid?
-        if request_already_exists?(extra_mobile_data_request)
+        if extra_mobile_data_request.has_already_been_made?
           summary.add_existing_record(extra_mobile_data_request)
         else
           extra_mobile_data_request.save_and_notify_account_holder!
@@ -51,14 +51,6 @@ private
   def create_request(request_attrs, user)
     ExtraMobileDataRequest.new(
       request_attrs.merge(created_by_user: user),
-    )
-  end
-
-  def request_already_exists?(request)
-    ExtraMobileDataRequest.exists?(
-      account_holder_name: request.account_holder_name,
-      device_phone_number: request.device_phone_number,
-      mobile_network_id: request.mobile_network_id,
     )
   end
 end

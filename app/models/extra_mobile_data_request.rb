@@ -77,6 +77,14 @@ class ExtraMobileDataRequest < ApplicationRecord
     notification.deliver_later
   end
 
+  def has_already_been_made?
+    self.class.exists?(
+      account_holder_name: account_holder_name,
+      device_phone_number: device_phone_number,
+      mobile_network_id: mobile_network_id,
+    )
+  end
+
 private
 
   def notification
