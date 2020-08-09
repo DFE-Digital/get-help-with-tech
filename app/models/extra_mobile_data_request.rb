@@ -1,4 +1,6 @@
 class ExtraMobileDataRequest < ApplicationRecord
+  after_initialize :set_defaults
+
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
 
@@ -78,5 +80,9 @@ private
 
   def notification
     @notification ||= ExtraMobileDataRequestAccountHolderNotification.new(self)
+  end
+
+  def set_defaults
+    self.status ||= :requested if new_record?
   end
 end

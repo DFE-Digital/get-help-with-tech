@@ -13,10 +13,7 @@ class ResponsibleBody::Mobile::ManualRequestsController < ResponsibleBody::BaseC
 
   def create
     @extra_mobile_data_request = ExtraMobileDataRequest.new(
-      extra_mobile_data_request_params.merge(
-        created_by_user: @user,
-        status: :requested,
-      ),
+      extra_mobile_data_request_params.merge(created_by_user: @user),
     )
 
     if @extra_mobile_data_request.valid?

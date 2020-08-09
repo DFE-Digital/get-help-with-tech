@@ -50,10 +50,7 @@ private
 
   def create_request(request_attrs, user)
     ExtraMobileDataRequest.new(
-      request_attrs.merge({
-        created_by_user: user,
-        status: :requested,
-      }),
+      request_attrs.merge(created_by_user: user),
     )
   end
 
