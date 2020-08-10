@@ -1,5 +1,5 @@
 class SendSlackMessageJob < ApplicationJob
-  queue_as :default
+  queue_as :slack_messages
 
   def perform(args = {})
     msg = SlackMessage.new(args)
