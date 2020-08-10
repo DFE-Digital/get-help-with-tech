@@ -3,6 +3,7 @@ class FeatureFlag
     show_debug_info
     rate_limiting
     public_account_creation
+    sign_in_slack_notifications
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[].freeze

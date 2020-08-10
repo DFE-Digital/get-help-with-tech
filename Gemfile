@@ -16,6 +16,7 @@ gem 'faker'
 gem 'foreman'
 gem 'govuk_design_system_formbuilder'
 gem 'haml'
+gem 'http'
 
 # GovUK Notify
 gem 'mail-notify'
