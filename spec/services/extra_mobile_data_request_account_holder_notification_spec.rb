@@ -45,14 +45,6 @@ RSpec.describe ExtraMobileDataRequestAccountHolderNotification, type: :model do
   end
 
   describe '#deliver_later' do
-    before do
-      ActiveJob::Base.queue_adapter = :test
-    end
-
-    after do
-      ActiveJob::Base.queue_adapter = :inline
-    end
-
     it 'enqueues a job to deliver the message in the background' do
       expect {
         service.deliver_later

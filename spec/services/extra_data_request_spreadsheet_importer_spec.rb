@@ -6,14 +6,9 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
   let(:importer) { described_class.new }
 
   before do
-    ActiveJob::Base.queue_adapter = :test
     ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
       create(:mobile_network, brand: brand)
     end
-  end
-
-  after do
-    ActiveJob::Base.queue_adapter = :inline
   end
 
   it 'imports valid requests from a spreadsheet' do
