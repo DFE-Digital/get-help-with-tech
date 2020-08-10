@@ -31,6 +31,7 @@ module ApplicationHelper
       complete: 'govuk-tag--green',
       queried: 'govuk-tag--red',
       cancelled: 'govuk-tag--grey',
+      unavailable: 'govuk-tag--grey',
     }[status.to_sym]
   end
 end

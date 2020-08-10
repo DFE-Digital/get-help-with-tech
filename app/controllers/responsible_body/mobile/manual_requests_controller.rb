@@ -23,16 +23,16 @@ class ResponsibleBody::Mobile::ManualRequestsController < ResponsibleBody::BaseC
       if params[:confirm]
         # clear the stashed params once the user has confirmed them
         session.delete(:extra_mobile_data_request_params)
-        @extra_mobile_data_request.save!
 
-        @extra_mobile_data_request.notify_account_holder_later
+        @extra_mobile_data_request.save_and_notify_account_holder!
 
-        flash[:success] = I18n.t('responsible_body.extra_mobile_data_requests.create.success')
+        flash[:success] = build_success_message(@extra_mobile_data_request.mobile_network.participating?)
         redirect_to responsible_body_mobile_extra_data_requests_path
       else
         # store given params in session,so that we don't have to pass them back in the URL
         # if the user clicks 'Change' on the confirmation page
         session[:extra_mobile_data_request_params] = extra_mobile_data_request_params
+        @extra_mobile_data_request = presenter(@extra_mobile_data_request)
         render :confirm
       end
     else
@@ -59,5 +59,17 @@ private
       mobile_network_id
       confirm
     ])
+  end
+
+  def build_success_message(mno_is_participating)
+    if mno_is_participating
+      I18n.t('responsible_body.extra_mobile_data_requests.create.success.participating_mno')
+    else
+      I18n.t('responsible_body.extra_mobile_data_requests.create.success.non_participating_mno')
+    end
+  end
+
+  def presenter(extra_mobile_data_request)
+    ExtraMobileDataRequestPresenter.new(extra_mobile_data_request)
   end
 end

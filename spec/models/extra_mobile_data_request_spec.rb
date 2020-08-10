@@ -88,4 +88,49 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
   end
+
+  describe '#save_and_notify_account_holder!' do
+    context 'when mno is participating' do
+      let(:request) { create(:extra_mobile_data_request) }
+
+      it 'saves the request' do
+        expect {
+          request.save_and_notify_account_holder!
+        }.to change { ExtraMobileDataRequest.count }.by(1)
+      end
+
+      it 'does not change the status from requested' do
+        request.save_and_notify_account_holder!
+        expect(request.requested?).to be true
+      end
+
+      it 'enqueues a job to message the account holder' do
+        expect {
+          request.save_and_notify_account_holder!
+        }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob)
+      end
+    end
+
+    context 'when mno is not participating' do
+      let(:network) { create(:mobile_network, :maybe_participating_in_pilot) }
+      let(:request) { create(:extra_mobile_data_request, mobile_network_id: network.id) }
+
+      it 'saves the request' do
+        expect {
+          request.save_and_notify_account_holder!
+        }.to change { ExtraMobileDataRequest.count }.by(1)
+      end
+
+      it 'changes the status to unavailable' do
+        request.save_and_notify_account_holder!
+        expect(request.unavailable?).to be true
+      end
+
+      it 'enqueues a job to message the account holder' do
+        expect {
+          request.save_and_notify_account_holder!
+        }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob)
+      end
+    end
+  end
 end

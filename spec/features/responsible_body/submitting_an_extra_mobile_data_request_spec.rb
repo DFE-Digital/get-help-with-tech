@@ -43,13 +43,31 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
       expect(page).to have_text('There is a problem')
     end
 
-    scenario 'submitting the form with valid params goes to confirmation page' do
-      visit new_responsible_body_mobile_manual_request_path
-      fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
-      click_on 'Continue'
+    context 'when the mno is participating' do
+      scenario 'submitting the form with valid params goes to confirmation page' do
+        visit new_responsible_body_mobile_manual_request_path
+        fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
+        click_on 'Continue'
 
-      expect(page.status_code).to eq(200)
-      expect(page).to have_text('Check your answers')
+        expect(page.status_code).to eq(200)
+        expect(page).to have_text('Check your answers')
+        expect(page).to have_text("These details will be passed to #{mobile_network.brand}")
+      end
+    end
+
+    context 'when the mno is not particpating' do
+      let(:mobile_network) { create(:mobile_network, :maybe_participating_in_pilot) }
+
+      scenario 'submitting the form with valid params goes to confirmation page with extra messaging' do
+        visit new_responsible_body_mobile_manual_request_path
+        fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
+        click_on 'Continue'
+
+        expect(page.status_code).to eq(200)
+        expect(page).to have_text('Check your answers')
+        expect(page).to have_text("#{mobile_network.brand} (not on service yet)")
+        expect(page).to have_text("These details will be passed to #{mobile_network.brand} only if they join the service")
+      end
     end
 
     scenario 'clicking Change on the confirmation page populates the form again' do
