@@ -15,6 +15,7 @@ class ExtraMobileDataRequest < ApplicationRecord
     queried: 'queried',
     complete: 'complete',
     cancelled: 'cancelled',
+    unavailable: 'unavailable',
   }
 
   # These codes were worked out by the NHSx team & the MNOs,
@@ -74,7 +75,23 @@ class ExtraMobileDataRequest < ApplicationRecord
     notification.deliver_later
   end
 
+  def save_and_notify_account_holder!
+    update_status_from_mobile_network_participation
+    save!
+    notify_account_holder_later
+  end
+
 private
+
+  def update_status_from_mobile_network_participation
+    participating = mobile_network.participating?
+
+    if requested? && !participating
+      self.status = 'unavailable'
+    elsif unavailable? && participating
+      self.status = 'requested'
+    end
+  end
 
   def notification
     @notification ||= ExtraMobileDataRequestAccountHolderNotification.new(self)
