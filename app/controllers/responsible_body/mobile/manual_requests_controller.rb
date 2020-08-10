@@ -63,9 +63,9 @@ private
 
   def build_success_message(mno_is_participating)
     if mno_is_participating
-      I18n.t('responsible_body.extra_mobile_data_requests.create.success')
+      I18n.t('responsible_body.extra_mobile_data_requests.create.success.participating_mno')
     else
-      I18n.t('responsible_body.extra_mobile_data_requests.create.success_saved')
+      I18n.t('responsible_body.extra_mobile_data_requests.create.success.non_participating_mno')
     end
   end
 
