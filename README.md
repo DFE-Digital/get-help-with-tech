@@ -45,6 +45,7 @@ All the above are run automatically on GitHub Actions when pushing a PR.
 ## Integrations
 
 [GOV.UK Notify](https://www.notifications.service.gov.uk/) for sending emails
+[Slack](https://api.slack.com/apps/A018NEABVNY/) for notifications of various significant events
 
 ## Deploying on GOV.UK PaaS
 
@@ -83,6 +84,11 @@ GHWT__THROTTLE__*                                |Request throttling limits, see
 GHWT__LOGSTASH__HOST                             | Hostname for where logstash should send logs                                                           | (nil)
 GHWT__LOGSTASH__PORT                             | Port for where logstash should send logs                                                               | (nil)
 GHWT__SENTRY__DSN                                | DSN (Client key) for Sentry.io error reporting | (nil)
+GHWT__SLACK__EVENT_NOTIFICATIONS__CHANNEL        | Slack channel to which notifications will be sent | get-help-with-tech-test
+GHWT__SLACK__EVENT_NOTIFICATIONS__USERNAME       | Username Slack messages will be posted as | dfe-ghwt-slack-bot
+GHWT__SLACK__EVENT_NOTIFICATIONS__WEBHOOK_URL    | URL for the incoming webhook which the Slack app will use for receiving messages from this application | (nil)
+
+
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.
 
