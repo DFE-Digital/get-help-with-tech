@@ -178,6 +178,8 @@ en:
       new:
         manual_submission: Manually (entering details one at a time)
         bulk_submission: Using a spreadsheet
+        pay_monthly_contract: 'Pay monthly'
+        pay_as_you_go_contract: 'Pay as you go (PAYG)'
       create:
         success:
           participating_mno: Your request has been received
