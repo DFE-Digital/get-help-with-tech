@@ -13,14 +13,9 @@ RSpec.describe ResponsibleBody::Mobile::BulkRequestsController, type: :controlle
       let(:request_data) { { bulk_upload_form: { upload: upload } } }
 
       before do
-        ActiveJob::Base.queue_adapter = :test
         ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
           create(:mobile_network, brand: brand)
         end
-      end
-
-      after do
-        ActiveJob::Base.queue_adapter = :inline
       end
 
       it 'sends an sms to the account holder of each valid request in the spreadsheet' do

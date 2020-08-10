@@ -65,14 +65,6 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   describe '#notify_account_holder_later' do
     let(:request) { create(:extra_mobile_data_request) }
 
-    before do
-      ActiveJob::Base.queue_adapter = :test
-    end
-
-    after do
-      ActiveJob::Base.queue_adapter = :inline
-    end
-
     it 'enqueues a job to send the message' do
       expect {
         request.notify_account_holder_later
