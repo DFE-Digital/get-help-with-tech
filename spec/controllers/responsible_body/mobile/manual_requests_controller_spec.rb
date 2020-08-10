@@ -13,15 +13,7 @@ RSpec.describe ResponsibleBody::Mobile::ManualRequestsController, type: :control
       let(:form_attrs) { attributes_for(:extra_mobile_data_request, mobile_network_id: mno.id) }
       let(:request_data) { { extra_mobile_data_request: form_attrs, confirm: 'confirm' } }
 
-      before do
-        ActiveJob::Base.queue_adapter = :test
-      end
-
-      after do
-        ActiveJob::Base.queue_adapter = :inline
-      end
-
-      it 'sends an sms to the account holder of the request' do
+      it 'sends an SMS to the account holder of the request' do
         expect {
           post :create, params: request_data
         }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).once
