@@ -181,7 +181,7 @@ en:
       create:
         success:
           participating_mno: Your request has been received
-          non_particpating_mno: Your request has been saved
+          non_participating_mno: Your request has been saved
       mobile_network_not_on_service_yet: "%{mno} (not on service yet)"
       details_passed_to_provider: "These details will be passed to %{mno}"
       details_passed_to_provider_only_if_they_join: "These details will be passed to %{mno} only if they join the service"
