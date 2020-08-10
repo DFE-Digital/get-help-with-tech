@@ -22,11 +22,8 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       mobile_network
       sign_in_as user
       # prevent api call to Notify
-      ActiveJob::Base.queue_adapter = :test
-    end
-
-    after do
-      ActiveJob::Base.queue_adapter = :inline
+      stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
+        .to_return(status: 201, body: '{}')
     end
 
     scenario 'Navigating to the form' do

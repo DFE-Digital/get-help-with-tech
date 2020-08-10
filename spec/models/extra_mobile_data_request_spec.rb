@@ -90,14 +90,6 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   describe '#save_and_notify_account_holder!' do
-    before do
-      ActiveJob::Base.queue_adapter = :test
-    end
-
-    after do
-      ActiveJob::Base.queue_adapter = :inline
-    end
-
     context 'when mno is participating' do
       let(:request) { create(:extra_mobile_data_request) }
 
