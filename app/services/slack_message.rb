@@ -1,19 +1,18 @@
 require 'http'
 
 class SlackMessage
-  attr_accessor :channel, :icon_emoji, :mrkdwn, :text, :username, :webhook_url
+  attr_accessor :channel, :mrkdwn, :text, :username, :webhook_url
 
   def initialize(params = {})
     self.text = params[:text]
     self.channel = params[:channel] || Settings.slack.event_notifications.channel
     self.mrkdwn = params[:mrkdwn] || true
-    self.icon_emoji = params[:icon_emoji]
     self.username = params[:username] || Settings.slack.event_notifications.username
     self.webhook_url = params[:webhook_url] || Settings.slack.event_notifications.webhook_url
   end
 
   def send_now!
-    response = HTTP.post(self.webhook_url, body: payload.to_json)
+    response = HTTP.post(webhook_url, body: payload.to_json)
 
     unless response.status.success?
       raise SlackMessageError, "Slack error: #{response.body}"
@@ -21,23 +20,15 @@ class SlackMessage
   end
 
   def send_later
-    SlackMessageWorker.perform_async(
-      self.channel,
-      self.text,
-      self.icon_emoji,
-      self.mrkdwn,
-      self.username,
-      self.webhook_url,
-    )
+    SendSlackMessageJob.perform_later(payload)
   end
 
   def payload
     {
-      username: self.username,
-      icon_emoji: self.icon_emoji,
-      channel: self.channel,
-      text: self.text,
-      mrkdwn: self.mrkdwn,
+      username: username,
+      channel: channel,
+      text: text,
+      mrkdwn: mrkdwn,
     }
   end
 
