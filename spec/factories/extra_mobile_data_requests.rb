@@ -5,6 +5,7 @@ FactoryBot.define do
     agrees_with_privacy_statement     { true }
     status                            { :requested }
     problem                           { nil }
+    contract_type                     { :pay_as_you_go }
     association :mobile_network
     association :created_by_user, factory: :local_authority_user
 

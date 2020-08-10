@@ -63,12 +63,13 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   describe '#notify_account_holder_later' do
-    let(:request) { create(:extra_mobile_data_request) }
+    let(:request) { build(:extra_mobile_data_request, mobile_network: create(:mobile_network)) }
 
     it 'enqueues a job to send the message' do
       expect {
-        request.notify_account_holder_later
+        request.save_and_notify_account_holder!
       }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob)
+      expect(request).to be_persisted
     end
   end
 

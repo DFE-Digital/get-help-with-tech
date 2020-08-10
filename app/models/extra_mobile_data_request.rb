@@ -1,4 +1,6 @@
 class ExtraMobileDataRequest < ApplicationRecord
+  after_initialize :set_defaults
+
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
 
@@ -47,8 +49,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   }
 
   enum contract_type: {
-    pay_as_you_go: 'pay_as_you_go',
-    pay_monthly: 'pay_monthly',
+    pay_as_you_go: 'pay-as-you-go-payg',
+    pay_monthly: 'pay-monthly',
   }
 
   include ExportableAsCsv
@@ -78,14 +80,18 @@ class ExtraMobileDataRequest < ApplicationRecord
     notification.deliver_now
   end
 
-  def notify_account_holder_later
-    notification.deliver_later
-  end
-
   def save_and_notify_account_holder!
     update_status_from_mobile_network_participation
     save!
-    notify_account_holder_later
+    notification.deliver_later
+  end
+
+  def has_already_been_made?
+    self.class.exists?(
+      account_holder_name: account_holder_name,
+      device_phone_number: device_phone_number,
+      mobile_network_id: mobile_network_id,
+    )
   end
 
 private
@@ -102,5 +108,9 @@ private
 
   def notification
     @notification ||= ExtraMobileDataRequestAccountHolderNotification.new(self)
+  end
+
+  def set_defaults
+    self.status ||= :requested if new_record?
   end
 end

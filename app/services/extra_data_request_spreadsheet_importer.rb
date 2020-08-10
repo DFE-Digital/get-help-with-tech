@@ -6,30 +6,18 @@ class ExtraDataRequestSpreadsheetImporter
   end
 
   def import!(spreadsheet_path, user)
-    workbook = RubyXL::Parser.parse(spreadsheet_path)
-    @worksheet = workbook['Extra mobile data requests']
+    spreadsheet = ExtraMobileDataRequestSpreadsheet.new(spreadsheet_path)
 
-    navigate_worksheet do |row|
+    spreadsheet.requests.each do |extra_mobile_data_request|
+      extra_mobile_data_request.created_by_user = user
 
-    end
-    @worksheet.each_with_index do |row, n|
-      next if n.zero? || row.nil? # skip the header row
-
-      request_attrs = fetch_request_attrs(row)
-
-      next unless request_attrs
-
-      extra_mobile_data_request = build_request(request_attrs, user)
-
-      if extra_mobile_data_request.valid?
-        if request_already_exists?(extra_mobile_data_request)
-          summary.add_existing_record(extra_mobile_data_request)
-        else
-          extra_mobile_data_request.save_and_notify_account_holder!
-          summary.add_successful_record(extra_mobile_data_request)
-        end
-      else
+      if extra_mobile_data_request.invalid?
         summary.add_error_record(extra_mobile_data_request)
+      elsif extra_mobile_data_request.has_already_been_made?
+        summary.add_existing_record(extra_mobile_data_request)
+      else
+        extra_mobile_data_request.save_and_notify_account_holder!
+        summary.add_successful_record(extra_mobile_data_request)
       end
     end
     summary
