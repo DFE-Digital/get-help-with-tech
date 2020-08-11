@@ -7,16 +7,13 @@ class ResponsibleBody::Mobile::ManualRequestsController < ResponsibleBody::BaseC
     # If the user clicks 'Change' on the confirmation page, we don't want to
     # pass all the params back on the URL, so we retrieve them from the session
     # if they're present
-    @extra_mobile_data_request = ExtraMobileDataRequest.new(session[:extra_mobile_data_request_params] || {})
+    @extra_mobile_data_request = presenter(ExtraMobileDataRequest.new(session[:extra_mobile_data_request_params] || {}))
     get_participating_mobile_networks
   end
 
   def create
     @extra_mobile_data_request = ExtraMobileDataRequest.new(
-      extra_mobile_data_request_params.merge(
-        created_by_user: @user,
-        status: :requested,
-      ),
+      extra_mobile_data_request_params.merge(created_by_user: @user),
     )
 
     if @extra_mobile_data_request.valid?
@@ -40,6 +37,7 @@ class ResponsibleBody::Mobile::ManualRequestsController < ResponsibleBody::BaseC
       # default message in the error_summary that doesn't link to the right field
       # - it's ok, we have a better message in the validation on mobile_network_id
       @extra_mobile_data_request.errors.messages.delete(:mobile_network)
+      @extra_mobile_data_request = presenter(@extra_mobile_data_request)
       get_participating_mobile_networks
       render :new, status: :unprocessable_entity
     end
@@ -57,6 +55,7 @@ private
       agrees_with_privacy_statement
       device_phone_number
       mobile_network_id
+      contract_type
       confirm
     ])
   end

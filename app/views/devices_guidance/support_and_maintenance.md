@@ -19,7 +19,7 @@ XMA will support LAs and academy trusts. Their technical service desk can:
 
 The key contact (the person that completed your device forecast) or technical contact (nominated when the order was placed) can request this support by raising a ticket with the XMA Service Desk.
 
-Log an issue by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)
+Log an issue by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk).
 
 To help us verify you for security, please make sure you email us from that address that:
 
@@ -43,12 +43,12 @@ If you discover a fault with the devices after 19 December 2020, it may still be
 
 ### Receiving a replacement device from Computacenter
 
-Your replacement will be built identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)) if you have any issues.
+Your replacement will be built identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) if you have any issues.
 
 
 ### Receiving a replacement device from the manufacturer
 
-As Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email the XMA Service Desk at [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)) to get your device enrolled before distributing it.
+As Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email the XMA Service Desk at [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) to get your device enrolled before distributing it.
 
 ## If you want to remove Microsoft Intune to install your own mobile device management (MDM)
 
@@ -72,11 +72,11 @@ If you discover a fault with the device after 19 December 2020, it may still be 
 
 ### Receiving a replacement device from Computacenter
 
-Your replacement will be built identically to the original device, and will automatically be enrolled in the relevant Google domain for the school or local authority, and have the relevant Google Education licence applied. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)) if you have any issues.
+Your replacement will be built identically to the original device, and will automatically be enrolled in the relevant Google domain for the school or local authority, and have the relevant Google Education licence applied. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) if you have any issues.
 
 ### Receiving a replacement device from Computacenter
 
-As Computacenter will not have been involved in the replacement process, the device will arrive without any settings installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk)) to get your device enrolled before distributing it.
+As Computacenter will not have been involved in the replacement process, the device will arrive without any settings installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) to get your device enrolled before distributing it.
 
 ## 4G wireless routers: how to get support
 
@@ -87,11 +87,11 @@ If you receive a 4G wireless router that will not start, please check that it is
 ### If you have technical issues with 4G wireless routers 
 
 If your 4G wireless router has powered-up but you are experiencing technical issues, for example if you need to:
-
-    * deactivate a SIM
-    * un-bar a SIM
-    * request a replacement device
-    * reconfigure an existing device
+ 
+* deactivate a SIM
+* un-bar a SIM
+* request a replacement device
+* reconfigure an existing device
 
 Please raise a ticket via the dedicated [Computacenter support portal](https://computacenterprod.service-now.com/dfe). If you do not have log in details, please contact the key contact for the device. This will be the person at the local authority or academy trust who completed the device forecast.
 

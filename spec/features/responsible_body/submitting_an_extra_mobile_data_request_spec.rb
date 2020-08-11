@@ -50,6 +50,10 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
         click_on 'Continue'
 
         expect(page.status_code).to eq(200)
+        expect(page).to have_text('Anne Account-Holder')
+        expect(page).to have_text('07123456789')
+        expect(page).to have_text(mobile_network.brand)
+        expect(page).to have_text('Pay as you go (PAYG)')
         expect(page).to have_text('Check your answers')
         expect(page).to have_text("These details will be passed to #{mobile_network.brand}")
       end
@@ -77,12 +81,16 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
       click_on 'Continue'
 
       expect(page.status_code).to eq(200)
-      expect(page).to have_text('Check your answers')
 
       within('#account-holder-name') do
         click_link 'Change'
       end
+
       expect(find_field('Account holder name').value).to eq('My new account holder name')
+      expect(find_field('Mobile phone number').value).to eq('07123456789')
+      expect(page).to have_checked_field(mobile_network.brand)
+      expect(page).to have_checked_field('Pay as you go (PAYG)')
+      expect(page).to have_checked_field('Yes, the privacy statement has been shared')
     end
 
     scenario 'confirming a form works' do
