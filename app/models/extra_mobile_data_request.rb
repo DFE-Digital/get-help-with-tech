@@ -9,8 +9,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   validates :device_phone_number, presence: true, format: { with: /\A07(\s*\d){9}\s*\z/ }
   # we have to validate on _id so that the govuk_error_summary component renders & links the error to the field correctly
   validates :mobile_network_id, presence: true
-  validates :agrees_with_privacy_statement, inclusion: { in: [true] }
   validates :contract_type, presence: true, on: :create
+  validates :agrees_with_privacy_statement, inclusion: { in: [true] }
 
   enum status: {
     requested: 'requested',
