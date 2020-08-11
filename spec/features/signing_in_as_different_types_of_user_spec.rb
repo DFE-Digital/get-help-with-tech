@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Signing-in as different types of user', type: :feature do
+RSpec.feature 'Signing-in as different types of user', type: :feature, sidekiq: false do
   let(:user) { create(:local_authority_user) }
   let(:token) { user.generate_token! }
   let(:identifier) { user.sign_in_identifier(token) }
