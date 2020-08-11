@@ -156,6 +156,8 @@ en:
               invalid: Enter a UK mobile number, like 07700 900999
             mobile_network_id:
               blank: Select which mobile network the device is on
+            contract_type:
+              blank: Select whether the contract is pay monthly or pay as you go (PAYG)
             agrees_with_privacy_statement:
               inclusion: The privacy statement must be shared with the account holder
         user:
@@ -178,8 +180,8 @@ en:
       new:
         manual_submission: Manually (entering details one at a time)
         bulk_submission: Using a spreadsheet
-        pay_monthly_contract: 'Pay monthly'
-        pay_as_you_go_contract: 'Pay as you go (PAYG)'
+        pay_monthly: 'Pay monthly'
+        pay_as_you_go_payg: 'Pay as you go (PAYG)'
       create:
         success:
           participating_mno: Your request has been received

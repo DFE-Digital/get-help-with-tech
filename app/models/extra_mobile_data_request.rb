@@ -49,8 +49,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   }
 
   enum contract_type: {
-    pay_as_you_go: 'pay-as-you-go-payg',
-    pay_monthly: 'pay-monthly',
+    pay_as_you_go_payg: 'pay_as_you_go_payg',
+    pay_monthly: 'pay_monthly',
   }
 
   include ExportableAsCsv

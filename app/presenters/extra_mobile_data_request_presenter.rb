@@ -47,6 +47,7 @@ class ExtraMobileDataRequestPresenter < SimpleDelegator
       OpenStruct.new(value: ct, label: I18n.t(ct, scope: i18n_scope))
     end
   end
+
 private
 
   def extra_mobile_data_request
