@@ -93,6 +93,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 'using a magic link from a different user signs in as the different user' do
       visit other_user_magic_link
+      click_on 'Continue'
       expect(page).to have_content(other_user.email_address)
     end
   end

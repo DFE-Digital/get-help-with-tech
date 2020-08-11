@@ -26,6 +26,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       fill_in('Email address', with: user.email_address)
       click_on 'Continue'
       expect(page).to have_content 'Check your email'
+      expect(page).not_to have_content('Sign out')
     end
   end
 
@@ -39,6 +40,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       fill_in('Email address', with: user.email_address)
       click_on 'Continue'
       expect(page).to have_content 'Check your email'
+      expect(page).not_to have_content('Sign out')
     end
   end
 
