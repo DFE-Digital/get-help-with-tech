@@ -1,6 +1,15 @@
 <% content_for :title, "#{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', support_responsible_bodies_path, class: 'govuk-back-link') %>
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <%= link_to t('page_titles.support_responsible_bodies'), support_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <%= @responsible_body.name %>
+      </li>
+    </ol>
+  </div>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -16,7 +25,7 @@
           <th scope="col" class="govuk-table__header">Email address</th>
           <th scope="col" class="govuk-table__header">Full name</th>
           <th scope="col" class="govuk-table__header">Sign-in count</th>
-          <th scope="col" class="govuk-table__header">Last signed in on</th>
+          <th scope="col" class="govuk-table__header">Last sign in</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -25,10 +34,12 @@
             <td class="govuk-table__cell"><%= user.email_address %></td>
             <td class="govuk-table__cell"><%= user.full_name %></td>
             <td class="govuk-table__cell"><%= user.sign_in_count %></td>
-            <td class="govuk-table__cell"><%= user.last_signed_in_at.to_date.to_s(:govuk) %></td>
+            <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+
+    <%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body) %>
   </div>
 </div>
