@@ -62,13 +62,40 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
   end
 
+  describe 'validating contract_type' do
+    context 'when a new record' do
+      let(:request) { subject }
+
+      it 'is valid with a contract_type' do
+        request.contract_type = :pay_as_you_go_payg
+        request.valid?
+        expect(request.errors).not_to have_key(:contract_type)
+      end
+
+      it 'is not valid without a contract_type' do
+        request.valid?
+        expect(request.errors).to have_key(:contract_type)
+      end
+    end
+
+    context 'when an existing record' do
+      let(:request) { create(:extra_mobile_data_request) }
+
+      it 'is valid without a contract_type' do
+        request.contract_type = nil
+        expect(request.valid?).to be true
+      end
+    end
+  end
+
   describe '#notify_account_holder_later' do
-    let(:request) { create(:extra_mobile_data_request) }
+    let(:request) { build(:extra_mobile_data_request, mobile_network: create(:mobile_network)) }
 
     it 'enqueues a job to send the message' do
       expect {
-        request.notify_account_holder_later
+        request.save_and_notify_account_holder!
       }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob)
+      expect(request).to be_persisted
     end
   end
 

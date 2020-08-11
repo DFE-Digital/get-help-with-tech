@@ -24,6 +24,12 @@
         <%- end %>
       <%- end %>
 
+      <%= f.govuk_collection_radio_buttons :contract_type,
+        @extra_mobile_data_request.contract_type_options,
+        :value,
+        :label,
+        legend: {size: 'm', text: 'Pay monthly or pay as you go (PAYG)?'} %>
+
       <%= f.govuk_check_boxes_fieldset :agrees_with_privacy_statement, legend: { text: 'Has someone shared the privacy statement with the account holder?', tag: 'h2' } do %>
         <%= f.hidden_field :agrees_with_privacy_statement, value: false %>
         <%= f.govuk_check_box :agrees_with_privacy_statement, true, multiple: false, link_errors: true, label: { text: 'Yes, the privacy statement has been shared' } %>

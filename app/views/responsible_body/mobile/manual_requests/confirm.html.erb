@@ -48,6 +48,21 @@
         </dd>
       </div>
 
+      <div class="govuk-summary-list__row" id="contract-type">
+        <dt class="govuk-summary-list__key">
+          Pay monthly or pay as you go
+        </dt>
+        <dd class="govuk-summary-list__value">
+        <%= t(@extra_mobile_data_request.contract_type,
+              scope: 'responsible_body.extra_mobile_data_requests.new') %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path(anchor: "extra-mobile-data-request-contract_type-#{@extra_mobile_data_request.contract_type}-field") ) do %>
+            Change<span class="govuk-visually-hidden"> pay monthly or pay as you go</span>
+          <%- end %>
+        </dd>
+      </div>
+
       <div class="govuk-summary-list__row" id="agrees-with-privacy-statement">
         <dt class="govuk-summary-list__key">
           Agrees with privacy statement
@@ -68,6 +83,7 @@
       <%= f.hidden_field :account_holder_name %>
       <%= f.hidden_field :device_phone_number %>
       <%= f.hidden_field :mobile_network_id %>
+      <%= f.hidden_field :contract_type %>
       <%= f.hidden_field :agrees_with_privacy_statement %>
       <%= hidden_field_tag(:confirm, true) %>
 

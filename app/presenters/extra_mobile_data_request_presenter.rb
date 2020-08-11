@@ -41,6 +41,13 @@ class ExtraMobileDataRequestPresenter < SimpleDelegator
     msgs.join('<br/>').html_safe
   end
 
+  def contract_type_options
+    i18n_scope = 'responsible_body.extra_mobile_data_requests.new'
+    ExtraMobileDataRequest.contract_types.values.reverse.map do |ct|
+      OpenStruct.new(value: ct, label: I18n.t(ct, scope: i18n_scope))
+    end
+  end
+
 private
 
   def extra_mobile_data_request
