@@ -6,4 +6,9 @@ class Support::ResponsibleBodiesController < Support::BaseController
       .distinct
       .order('type asc, name asc')
   end
+
+  def show
+    @responsible_body = ResponsibleBody.find(params[:id])
+    @users = @responsible_body.users.order('last_signed_in_at desc nulls last')
+  end
 end

@@ -20,7 +20,7 @@
     <% @responsible_bodies.each do |responsible_body| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= responsible_body.type.underscore.humanize %></td>
-        <td class="govuk-table__cell"><%= responsible_body.name %></td>
+        <td class="govuk-table__cell"><%= govuk_link_to responsible_body.name, support_responsible_body_path(responsible_body) %></td>
         <td class="govuk-table__cell"><%= pluralize(responsible_body.users.size, "user") %></td>
         <td class="govuk-table__cell">
           <%= pluralize(responsible_body.users.select { |u| u.sign_in_count > 0 }.size, "user") %> signed in

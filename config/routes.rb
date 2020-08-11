@@ -62,7 +62,7 @@ Rails.application.routes.draw do
 
   namespace :support do
     get '/', to: 'service_performance#index', as: :service_performance
-    resources :responsible_bodies, only: %i[index], path: '/responsible-bodies'
+    resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
 
     mount Sidekiq::Web => '/sidekiq', constraints: RequireDFEUserConstraint.new, as: :sidekiq_admin
   end
