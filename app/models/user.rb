@@ -32,6 +32,10 @@ class User < ApplicationRecord
     email_address.present? && email_address.match?(/[\.@]education.gov.uk$/)
   end
 
+  def is_computacenter?
+    email_address.present? && email_address.match?(/@computacenter.com$/)
+  end
+
   def update_sign_in_count_and_timestamp!
     update(sign_in_count: sign_in_count + 1, last_signed_in_at: Time.zone.now)
   end
