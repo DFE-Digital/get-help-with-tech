@@ -1,7 +1,7 @@
 class AddSchoolDeviceAllocation < ActiveRecord::Migration[6.0]
   def change
     create_table :school_device_allocations do |t|
-      t.references  :schools, foreign_key: true
+      t.references  :school, foreign_key: true
       t.string      :device_type, null: false
       t.integer     :allocation, default: 0
       t.integer     :devices_ordered, default: 0

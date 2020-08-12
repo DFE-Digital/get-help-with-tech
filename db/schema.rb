@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_155338) do
   end
 
   create_table "school_device_allocations", force: :cascade do |t|
-    t.bigint "schools_id"
+    t.bigint "school_id"
     t.string "device_type", null: false
     t.integer "allocation", default: 0
     t.integer "devices_ordered", default: 0
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_155338) do
     t.bigint "last_updated_by_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["schools_id"], name: "index_school_device_allocations_on_schools_id"
+    t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -121,6 +121,6 @@ ActiveRecord::Schema.define(version: 2020_08_12_155338) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
-  add_foreign_key "school_device_allocations", "schools", column: "schools_id"
+  add_foreign_key "school_device_allocations", "schools"
   add_foreign_key "schools", "responsible_bodies"
 end
