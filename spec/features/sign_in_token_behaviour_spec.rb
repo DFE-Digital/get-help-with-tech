@@ -14,8 +14,10 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
       scenario 'Visiting a valid sign_in_token link signs the user in' do
         visit validate_token_url
-        expect(page).to have_text(user.email_address)
-        expect(page).to have_button('Sign out')
+        expect(page).not_to have_text(user.email_address)
+        expect(page).not_to have_button('Sign out')
+        expect(page).to have_text('You’re signed in')
+        expect(page).to have_button('Continue')
       end
 
       scenario 'Visiting the valid sign_in_token link increments sign-in count and timestamp' do
@@ -40,7 +42,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
       scenario 'Visiting a sign_in_token link twice does not work the second time if the user did not continue through the interstitial page' do
         visit validate_token_url
-        click_on 'Sign out'
+        expect(page).to have_text(I18n.t('page_titles.you_are_signed_in'))
 
         visit validate_token_url
         expect(page).to have_http_status(:ok)
