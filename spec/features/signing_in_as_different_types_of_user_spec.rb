@@ -6,6 +6,10 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   let(:identifier) { user.sign_in_identifier(token) }
   let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
 
+  before do
+    stub_request(:post, Settings.slack.event_notifications.webhook_url).to_return(status: 200, body: '')
+  end
+
   scenario 'clicking sign in shows option to sign in' do
     visit sign_in_path
     expect(page).to have_content('Sign in')

@@ -19,4 +19,27 @@ RSpec.describe SignInTokensController, type: :controller do
       expect(response).to redirect_to(sign_in_path)
     end
   end
+
+  describe 'GET #validate' do
+    context 'with a valid token' do
+      let(:params) { { token: user.sign_in_token, identifier: user.sign_in_identifier(user.sign_in_token) } }
+      let(:mock_event) { instance_double(SignInEvent, notifiable?: false) }
+
+      before do
+        allow(controller).to receive(:save_user_to_session!)
+        allow(SignInEvent).to receive(:new).with(user: user).and_return(mock_event)
+        allow(EventNotificationsService).to receive(:broadcast)
+      end
+
+      it 'saves the user to session' do
+        get :validate, params: params
+        expect(controller).to have_received(:save_user_to_session!)
+      end
+
+      it 'broadcasts a SignInEvent for the user' do
+        get :validate, params: params
+        expect(EventNotificationsService).to have_received(:broadcast).with(mock_event)
+      end
+    end
+  end
 end

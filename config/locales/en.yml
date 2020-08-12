@@ -189,3 +189,6 @@ en:
       mobile_network_not_on_service_yet: "%{mno} (not on service yet)"
       details_passed_to_provider: "These details will be passed to %{mno}"
       details_passed_to_provider_only_if_they_join: "These details will be passed to %{mno} only if they join the service"
+  events:
+    default: An event just happened
+    sign_in_event: A user from %{organisation} just signed in

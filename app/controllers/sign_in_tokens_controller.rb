@@ -13,6 +13,7 @@ class SignInTokensController < ApplicationController
   def validate
     @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
     save_user_to_session!
+    EventNotificationsService.broadcast(SignInEvent.new(user: @user))
     render :you_are_signed_in
   rescue SessionService::TokenValidButExpired
     # If it's the same user who already has a valid session, and they've just
