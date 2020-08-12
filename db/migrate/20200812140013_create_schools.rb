@@ -4,7 +4,7 @@ class CreateSchools < ActiveRecord::Migration[6.0]
       t.integer :urn, null: false
       t.string :name, null: false
       t.string :computacenter_reference
-      t.references :responsible_body, foreign_key: true 
+      t.references :responsible_body, foreign_key: true
       t.timestamps
     end
 
