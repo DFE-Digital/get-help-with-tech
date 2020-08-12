@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_111518) do
+ActiveRecord::Schema.define(version: 2020_08_12_140013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2020_08_07_111518) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "schools", force: :cascade do |t|
+    t.integer "urn", null: false
+    t.string "name", null: false
+    t.string "computacenter_reference"
+    t.bigint "responsible_body_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_schools_on_name"
+    t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
+    t.index ["urn"], name: "index_schools_on_urn", unique: true
+  end
+
   create_table "sessions", id: :string, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -97,4 +109,5 @@ ActiveRecord::Schema.define(version: 2020_08_07_111518) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
+  add_foreign_key "schools", "responsible_bodies"
 end
