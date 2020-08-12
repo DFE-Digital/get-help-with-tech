@@ -1,0 +1,23 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">
+    <%= api_token.name %>
+  </td>
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    <%= api_token.token %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= api_token.created_at.iso8601 %>
+  </td>
+  <td class="govuk-table__cell">
+    <span class="govuk-tag <%= api_token_status_class(api_token.status) %> request-status-<%= api_token.status %>">
+      <%= api_token.translated_enum_value(:status) %>
+    </span>
+  </td>
+  <td class="govuk-table__cell">
+    <%- if api_token.active? %>
+      <%= button_to computacenter_api_tokens_path, method: :patch, params: { id: api_token.id, api_token: { status: 'revoked' } } %>
+    <%- else %>
+      <%= button_to computacenter_api_tokens_path, method: :patch, params: { id: api_token.id, api_token: { status: 'active' } } %>
+    <%- end %>
+  </td>
+</tr>

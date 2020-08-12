@@ -69,6 +69,7 @@ Rails.application.routes.draw do
 
   namespace :computacenter do
     get '/', to: 'home#show', as: :home
+    resources :api_tokens, path: '/api-tokens'
     resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
       put '/', to: 'school_device_allocations#bulk_update', on: :collection
     end
