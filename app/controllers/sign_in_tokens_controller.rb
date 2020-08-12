@@ -90,6 +90,8 @@ private
       support_service_performance_path
     elsif user.is_responsible_body_user?
       responsible_body_home_path
+    elsif user.is_computacenter?
+      computacenter_home_path
     else
       '/'
     end

@@ -67,6 +67,13 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq', constraints: RequireDFEUserConstraint.new, as: :sidekiq_admin
   end
 
+  namespace :computacenter do
+    get '/', to: 'home#show', as: :home
+    resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
+      put '/', to: 'school_device_allocations#bulk_update', on: :collection
+    end
+  end
+
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck
 
   get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in
