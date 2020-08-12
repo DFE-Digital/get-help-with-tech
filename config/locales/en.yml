@@ -143,6 +143,10 @@ en:
           participating: 'Offers data now'
           not_participating: 'Not participating'
           maybe_participating: 'May offer data when the service launches'
+      school_device_allocation:
+        device_type:
+          std_device: 'Standard device (laptop etc)'
+          coms_device: 'Communication device (router etc)'
     errors:
       models:
         extra_mobile_data_request:

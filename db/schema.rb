@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_140013) do
+ActiveRecord::Schema.define(version: 2020_08_12_155338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2020_08_12_140013) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "school_device_allocations", force: :cascade do |t|
+    t.bigint "schools_id"
+    t.string "device_type", null: false
+    t.integer "allocation", default: 0
+    t.integer "devices_ordered", default: 0
+    t.bigint "created_by_user_id"
+    t.bigint "last_updated_by_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["schools_id"], name: "index_school_device_allocations_on_schools_id"
+  end
+
   create_table "schools", force: :cascade do |t|
     t.integer "urn", null: false
     t.string "name", null: false
@@ -109,5 +121,6 @@ ActiveRecord::Schema.define(version: 2020_08_12_140013) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
+  add_foreign_key "school_device_allocations", "schools", column: "schools_id"
   add_foreign_key "schools", "responsible_bodies"
 end
