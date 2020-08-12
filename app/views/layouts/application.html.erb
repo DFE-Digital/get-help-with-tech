@@ -55,7 +55,8 @@
         <% else %>
           <div class="govuk-header__content">
             <%= link_to t('service_name'), "/", class: "govuk-header__link govuk-header__link--service-name" %>
-            <% unless hide_nav_menu? %>
+
+            <% unless controller.hide_nav_menu? %>
               <button type="button" role="button" data-module="govuk-button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
               <nav>
                 <%= render partial: 'layouts/nav' %>

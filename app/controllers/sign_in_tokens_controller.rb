@@ -68,6 +68,10 @@ class SignInTokensController < ApplicationController
     end
   end
 
+  def hide_nav_menu?
+    action_name == 'validate' || action_name == 'sent'
+  end
+
 private
 
   def sign_in_token_form_params

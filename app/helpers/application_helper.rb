@@ -16,10 +16,6 @@ module ApplicationHelper
     ]
   end
 
-  def hide_nav_menu?
-    controller_name == 'sign_in_tokens' && (%w[validate sent].include? action_name)
-  end
-
   def nav_item(title: nil, url: nil, content: nil, html_options: {})
     class_name = 'govuk-header__navigation-item'
     class_name = [class_name, 'govuk-header__navigation-item--active'].join(' ') if request.path == url

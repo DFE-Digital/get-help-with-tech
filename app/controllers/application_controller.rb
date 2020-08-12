@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
+  def hide_nav_menu?
+    false
+  end
+
 private
 
   def populate_user_from_session!
