@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  before_action :create_session_from_api_token!, :populate_user_from_session!
+  before_action :populate_user_from_session_or_api_token!
 
   include Pagy::Backend
 
@@ -15,20 +15,8 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def populate_user_from_session!
-    @user ||= (SessionService.identify_user!(session) || User.new)
-  end
-
-  def create_session_from_api_token!
-    given_token = request.headers['Authorization'].to_s.gsub(/Bearer (.*)/, '\1')
-    if given_token
-      matched_token = APIToken.active.where(token: given_token).first
-      if matched_token
-        @user = matched_token.user
-        session[:user_id] = @user.id
-        save_user_to_session!
-      end
-    end
+  def populate_user_from_session_or_api_token!
+    @user ||= (SessionService.identify_user!(session) || APIAuthenticationService.identify_user(request) || User.new)
   end
 
   def save_user_to_session!(user = @user)

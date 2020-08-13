@@ -14,8 +14,8 @@ private
 
   # overriden method tailored for XML responses
   def require_cc_user!
-    if @user
-      raise APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @user.is_computacenter?
+    if APIAuthenticationService.authorization_given?(request)
+      raise APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @user&.is_computacenter?
     else
       raise APIError.new(status: :unauthorized, message: 'You must provide an Authorization header with a valid Bearer token')
     end
