@@ -156,11 +156,14 @@ en:
     errors:
       models:
         api_token:
-          token:
-            blank: Token must not be blank
-          name:
-            blank: Please give your token a name of between 2 and 64 characters
-            uniqueness: Name has already been used
+          attributes:
+            token:
+              blank: Token must not be blank
+            name:
+              blank: Please give your token a name of between 2 and 64 characters
+              too_short: Please give your token a name of between 2 and 64 characters
+              too_long: Please give your token a name of between 2 and 64 characters
+              taken: You already have an API token with that name
         extra_mobile_data_request:
           attributes:
             mobile_network_id:

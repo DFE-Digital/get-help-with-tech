@@ -2,12 +2,12 @@ class APIToken < ApplicationRecord
   belongs_to :user
 
   validates :user, presence: true
-  validates :token, presence: { message: I18n.t('activerecord.errors.models.api_token.token.blank') },
+  validates :token, presence: true,
                     uniqueness: { scope: :user_id },
                     length: { minimum: 36, maximum: 36 }
-  validates :name,  presence: { message: I18n.t('activerecord.errors.models.api_token.name.blank') },
+  validates :name,  presence: true,
                     length: { minimum: 2, maximum: 64 },
-                    uniqueness: { scope: :user_id, message: I18n.t('activerecord.errors.models.api_token.name.uniqueness') }
+                    uniqueness: { scope: :user_id }
 
   before_validation :fill_in_defaults!
 
