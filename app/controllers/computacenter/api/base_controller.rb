@@ -13,7 +13,7 @@ class Computacenter::API::BaseController < ApplicationController
 private
 
   def identify_user!
-    @user = APIAuthenticationService.identify_user(bearer_token)
+    @user = APIToken.active.find_by(token: bearer_token)&.user
   end
 
   def bearer_token
