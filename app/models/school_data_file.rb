@@ -1,6 +1,21 @@
 require 'csv'
 
 class SchoolDataFile
+    EXCLUDED_TYPES = [
+      'British schools overseas',
+      'Further education',
+      'Higher education institutions',
+      'Institution funded by other government department',
+      'Miscellaneous',
+      'Offshore schools',
+      'Other independent school',
+      'Other independent special school',
+      'Secure units',
+      'Sixth form centres',
+      'Special post 16 institution',
+      'Welsh establishment',
+    ].freeze
+
   def initialize(csv_path)
     @csv_path = csv_path
   end
@@ -34,10 +49,8 @@ private
   def skip_school?(row)
     row['EstablishmentStatus (name)'] != 'Open' ||
       row['LA (name)'] == 'Does not apply' ||
-      row['LA (name)'] =~ /Overseas Establishments$/ ||
       row['LA (name)'] == 'Vale of Glamorgan' ||
       row['LA (name)'] == 'Isles Of Scilly' ||
-      row['TypeOfEstablishment (name)'] == 'Offshore schools' ||
-      row['EstablishmentTypeGroup (name)'] == 'Welsh schools'
+      EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
   end
 end

@@ -17,6 +17,8 @@ class ImportSchoolsService
         school.name = school_data[:name]
         school.responsible_body_id = responsible_body_id(school_data[:responsible_body])
       end
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error(e.message)
     end
   end
 
@@ -25,10 +27,9 @@ private
   def responsible_body_id(name)
     rb_id = ResponsibleBody.find_by(name: rb_name(name))&.id
 
-    Rails.logger.info "Did not find responsible body: #{name}" unless rb_id
+    Rails.logger.error("Did not find responsible body: #{name}") unless rb_id
 
     rb_id
-    end
   end
 
   def rb_name(name)
