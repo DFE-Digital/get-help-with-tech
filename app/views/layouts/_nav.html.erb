@@ -20,6 +20,6 @@
     <%- content = [ @user.email_address, sign_out_link].join(' | ') %>
     <%= nav_item(url: sessions_path(id: session.id), content: content.html_safe) %>
   <%- else %>
-      <%= nav_item( title: "Sign in", url: sign_in_path )  %>
+    <%= nav_item( title: "Sign in", url: sign_in_path )  %>
   <%- end %>
 </ul>
