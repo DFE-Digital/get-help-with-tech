@@ -34,4 +34,11 @@ module ApplicationHelper
       unavailable: 'govuk-tag--grey',
     }[status.to_sym]
   end
+
+  def api_token_status_class(status)
+    {
+      active: 'govuk-tag--green',
+      revoked: 'govuk-tag--grey',
+    }[status.to_sym]
+  end
 end

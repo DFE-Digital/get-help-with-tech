@@ -73,4 +73,14 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       expect(page).to have_text 'Your requests'
     end
   end
+
+  context 'as a computacenter operator' do
+    let(:user) { create(:computacenter_user) }
+
+    scenario 'it redirects to the computacenter home page' do
+      sign_in_as user
+      expect(page).to have_current_path(computacenter_home_path)
+      expect(page).to have_text 'TechSource'
+    end
+  end
 end

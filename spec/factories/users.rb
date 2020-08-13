@@ -45,5 +45,11 @@ FactoryBot.define do
         full_name.downcase.gsub(' ', '.') + ['@digital.education.gov.uk', '@education.gov.uk'].sample
       end
     end
+
+    factory :computacenter_user do
+      email_address do
+        full_name.downcase.gsub(' ', '.') + '@computacenter.com'
+      end
+    end
   end
 end

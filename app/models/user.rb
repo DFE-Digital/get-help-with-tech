@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :extra_mobile_data_requests, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
+  has_many :api_tokens, dependent: :destroy
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
@@ -30,6 +31,10 @@ class User < ApplicationRecord
 
   def is_dfe?
     email_address.present? && email_address.match?(/[\.@]education.gov.uk$/)
+  end
+
+  def is_computacenter?
+    email_address.present? && email_address.match?(/@computacenter.com$/)
   end
 
   def update_sign_in_count_and_timestamp!
