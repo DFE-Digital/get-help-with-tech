@@ -39,6 +39,6 @@ module ApplicationHelper
     {
       active: 'govuk-tag--green',
       revoked: 'govuk-tag--grey',
-    }
+    }[status.to_sym]
   end
 end

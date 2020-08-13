@@ -1,4 +1,4 @@
-<% content_for :title, t('page_titles.api_tokens') %>
+<%- content_for :title, t('page_titles.api_tokens') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -9,39 +9,44 @@
   </div>
 </div>
 
-<% if @api_tokens.empty? %>
+<%- if @api_tokens.empty? %>
   <p class="govuk-body">
     (You don't have any API tokens at the moment)
   </p>
-<% else %>
+<%- else %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <table class="govuk-table">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header">
-                <%= sortable_table_header( 'Name', :name ) %>
-              </th>
-              <th class="govuk-table__header govuk-table__header--numeric">
-                <%= sortable_table_header( 'Token', :token ) %>
-              </th>
-              <th class="govuk-table__header">
-                <%= sortable_table_header( 'Created', :created_at ) %>
-              </th>
-              <th class="govuk-table__header">
-                <%= sortable_table_header( 'Status', :status ) %>
-              </th>
-              <th class="govuk-table__header">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-            <%= render partial: 'api_token', collection: @api_tokens %>
-          </tbody>
-          <tfoot class="govuk-table__footer">
-            <td class="govuk-table__footer" colspan="7">
-            </td>
-          </tfoot>
-        </table>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header">
+              <%= sortable_table_header( 'Name', :name ) %>
+            </th>
+            <th class="govuk-table__header govuk-table__header--numeric">
+              <%= sortable_table_header( 'Token', :token ) %>
+            </th>
+            <th class="govuk-table__header">
+              <%= sortable_table_header( 'Created', :created_at ) %>
+            </th>
+            <th class="govuk-table__header">
+              <%= sortable_table_header( 'Status', :status ) %>
+            </th>
+            <th class="govuk-table__header">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <%= render partial: 'api_token', collection: @api_tokens %>
+        </tbody>
+      </table>
     </div>
   </div>
-<% end %>
+<%- end %>
+
+<div class="govuk-grid-row govuk-form-group govuk-!-margin-bottom-0 display-child-forms-inline">
+  <h2 class="govuk-heading-l"><%= t('.form_header') %>.</h2>
+  <%= form_for @api_token, url: computacenter_api_tokens_path do |f| %>
+    <%= f.govuk_error_summary %>
+    <%= f.govuk_text_field :name, label: { size: 'm', text: t('.name') }, hint_text: t('.name_hint') %>
+    <%= f.govuk_submit t('.create') %>
+  <%- end %>
+</div>

@@ -9,6 +9,12 @@ RSpec.feature 'Managing API tokens' do
       sign_in_as user
     end
 
+    scenario 'it shows me a form to generate a new token' do
+      visit computacenter_api_tokens_path
+      expect(page).to have_text 'Generate a new API token'
+      expect(page).to have_input 'Name'
+    end
+
     context 'when I have existing API tokens' do
       let!(:api_token_1) { create(:api_token, user: user) }
       let!(:api_token_2) { create(:api_token, user: user) }
