@@ -17,7 +17,7 @@ private
   end
 
   def bearer_token
-    request.headers['Authorization'].to_s.gsub(/Bearer\s+([^\s]*)$/, '\1')
+    request.headers['Authorization']&.gsub(/Bearer\s+([^\s]*)$/, '\1')
   end
 
   # overriden method tailored for XML responses
