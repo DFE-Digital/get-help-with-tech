@@ -52,7 +52,6 @@ class SessionService
   end
 
   def self.validate_session!(session_id)
-    byebug
     db_session = Session.where(id: session_id).first
     if db_session
       if db_session.expired?
