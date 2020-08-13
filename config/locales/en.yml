@@ -186,6 +186,7 @@ en:
             email_address:
               blank: Enter an email address in the correct format, like name@example.com
               taken: Email address has already been used
+              too_short: Enter an email address that is at least %{count} characters
   time:
     formats:
       time_only: "%l:%M%P"
