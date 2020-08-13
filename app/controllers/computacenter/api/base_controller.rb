@@ -12,9 +12,17 @@ class Computacenter::API::BaseController < ApplicationController
 
 private
 
+  def identify_user!
+    @user = APIAuthenticationService.identify_user(bearer_token)
+  end
+
+  def bearer_token
+    request.headers['Authorization'].to_s.gsub(/Bearer\s+([^\s]*)$/, '\1')
+  end
+
   # overriden method tailored for XML responses
   def require_cc_user!
-    if APIAuthenticationService.authorization_given?(request)
+    if bearer_token.present?
       raise APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @user&.is_computacenter?
     else
       raise APIError.new(status: :unauthorized, message: 'You must provide an Authorization header with a valid Bearer token')

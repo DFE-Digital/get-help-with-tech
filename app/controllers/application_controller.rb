@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  before_action :populate_user_from_session_or_api_token!
+  before_action :identify_user!
 
   include Pagy::Backend
 
@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def populate_user_from_session_or_api_token!
-    @user ||= (SessionService.identify_user!(session) || APIAuthenticationService.identify_user(request) || User.new)
+  def identify_user!
+    @user ||= (SessionService.identify_user!(session) || User.new)
   end
 
   def save_user_to_session!(user = @user)
