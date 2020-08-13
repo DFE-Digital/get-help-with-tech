@@ -1,6 +1,6 @@
 class APIAuthenticationService
   def self.identify_user(request)
-    if token = given_token(request)
+    if (token = given_token(request))
       matched_token = APIToken.active.where(token: token).first
       matched_token&.user
     end

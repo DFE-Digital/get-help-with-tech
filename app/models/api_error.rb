@@ -9,11 +9,11 @@ class APIError < StandardError
   def to_h
     {
       status: status,
-      message: message
+      message: message,
     }
   end
 
   def to_xml(options = {})
-    to_h.to_xml({ root: "error", skip_types: true }.merge!(options))
+    to_h.to_xml({ root: 'error', skip_types: true }.merge!(options))
   end
 end

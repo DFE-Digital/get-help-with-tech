@@ -1,6 +1,6 @@
 # We're designing our API endpoint to fit the client's specification.
 # We'd normally do it the other way round, but due to the urgency of the
-# need and the fact that it's probably faster for to iterate our system
+# need and the fact that it's probably faster for to iterate our system
 # than theirs, this is the most pragmatic solution.
 # The client's specification here is XML-based, and not strictly RESTful -
 # all XML packets will be sent as a POST, regardless of the action.
