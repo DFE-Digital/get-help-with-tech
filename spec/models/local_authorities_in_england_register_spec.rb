@@ -52,4 +52,27 @@ RSpec.describe LocalAuthoritiesInEnglandRegister, type: :model do
       'name' => 'Teignbridge',
     })
   end
+
+  it 'filters out closed local authorities (those with an end-date)' do
+    stub_request(:get, LocalAuthoritiesInEnglandRegister::URL)
+      .to_return(body: '
+        {
+          "BKM": {
+            "index-entry-number": "392",
+            "entry-number": "392",
+            "entry-timestamp": "2020-02-29T11:57:30Z",
+            "key": "BKM",
+            "item": [{
+              "end-date": "2020-03-31",
+              "local-authority-type": "CTY",
+              "official-name": "Buckinghamshire County Council",
+              "local-authority-eng": "BKM",
+              "name": "Buckinghamshire",
+              "start-date": "1905-06-19"
+            }]
+          }
+        }')
+
+    expect(LocalAuthoritiesInEnglandRegister.entries).to be_empty
+  end
 end
