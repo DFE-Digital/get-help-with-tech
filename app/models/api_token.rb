@@ -26,7 +26,6 @@ class APIToken < ApplicationRecord
   end
 
   def self.generate!(user)
-    token = create(user: user)
-    token
+    create(user: user)
   end
 end
