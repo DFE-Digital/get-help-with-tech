@@ -160,6 +160,7 @@ en:
             blank: Token must not be blank
           name:
             blank: Please give your token a name of between 2 and 64 characters
+            uniqueness: Name has already been used
         extra_mobile_data_request:
           attributes:
             mobile_network_id:

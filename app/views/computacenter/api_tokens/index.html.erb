@@ -42,7 +42,7 @@
   </div>
 <%- end %>
 
-<div class="govuk-grid-row govuk-form-group govuk-!-margin-bottom-0 display-child-forms-inline">
+<div class="govuk-grid-row">
   <h2 class="govuk-heading-l"><%= t('.form_header') %>.</h2>
   <%= form_for @api_token, url: computacenter_api_tokens_path do |f| %>
     <%= f.govuk_error_summary %>

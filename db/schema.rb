@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2020_08_12_224858) do
     t.string "token", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "name"], name: "index_api_tokens_on_user_id_and_name", unique: true
+    t.index ["user_id", "token"], name: "index_api_tokens_on_user_id_and_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 

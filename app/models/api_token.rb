@@ -6,13 +6,14 @@ class APIToken < ApplicationRecord
                     uniqueness: { scope: :user_id },
                     length: { minimum: 36, maximum: 36 }
   validates :name,  presence: { message: I18n.t('activerecord.errors.models.api_token.name.blank') },
-                    length: { minimum: 2, maximum: 64 }
+                    length: { minimum: 2, maximum: 64 },
+                    uniqueness: { scope: :user_id, message: I18n.t('activerecord.errors.models.api_token.name.uniqueness') }
 
   before_validation :fill_in_defaults!
 
   enum status: {
     active: 'active',
-    revoked: 'revoked'
+    revoked: 'revoked',
   }
 
   def generate_token!
@@ -20,17 +21,12 @@ class APIToken < ApplicationRecord
   end
 
   def fill_in_defaults!
-    generate_token! unless token.present?
+    generate_token! if token.blank?
     self.status ||= APIToken.statuses[:active]
   end
 
   def self.generate!(user)
-    token = new(
-      status: 'active',
-      user:    user
-    )
-    token.generate_token!
-    token.save!
+    token = create(user: user)
     token
   end
 end
