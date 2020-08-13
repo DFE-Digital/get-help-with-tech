@@ -7,7 +7,7 @@
     "core-js": ">=3",
     "govuk-frontend": ">=3.6.0",
     "jquery": "3.5.1",
-    "serialize-javascript": ">=3.0.0",
+    "serialize-javascript": ">=3.1.0",
     "set-value": ">=3.0.2"
   },
   "devDependencies": {
