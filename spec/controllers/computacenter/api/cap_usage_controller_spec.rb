@@ -33,7 +33,7 @@ RSpec.describe Computacenter::API::CapUsageController do
   describe 'Authentication' do
     context 'with no Authorization header' do
       it 'responds with :unauthorized' do
-        post :bulk_update, body: cap_usage_update_packet
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -48,50 +48,86 @@ RSpec.describe Computacenter::API::CapUsageController do
       end
 
       it 'responds with a :forbidden status' do
-        post :bulk_update, body: cap_usage_update_packet
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:forbidden)
-      end
-    end
-
-    context 'with a valid auth token' do
-      let(:auth_header) { "Bearer #{api_token.token}" }
-
-      before do
-        request.headers['Authorization'] = auth_header
-      end
-
-      it 'responds with a 2XX status' do
-        post :bulk_update, body: cap_usage_update_packet
-        expect(response).to have_http_status(204)
       end
     end
   end
 
-  describe 'POST bulk_update with valid auth' do
+  describe 'POST bulk_update with valid auth but invalid XML' do
     before do
       request.headers['Authorization'] = "Bearer #{api_token.token}"
     end
 
     context 'given invalid XML' do
       it 'responds with a 400 status' do
-        post :bulk_update, body: invalid_xml
+        post :bulk_update, format: :xml, body: invalid_xml
         expect(response).to have_http_status(:bad_request)
       end
     end
 
     context 'given valid XML that does not conform to the schema' do
       it 'responds with a 400 status' do
-        post :bulk_update, body: valid_xml_but_not_valid_for_the_schema
+        post :bulk_update, format: :xml, body: valid_xml_but_not_valid_for_the_schema
         expect(response).to have_http_status(:bad_request)
       end
     end
+  end
 
-    context 'given a semantically-valid CapUsage packet in the body' do
-      let(:body) { cap_usage_update_packet }
+  describe 'POST bulk_update with valid auth and valid XML' do
+    let(:body) { cap_usage_update_packet }
+    let(:batch_status) { 'succeeded' }
+    let(:mock_batch) { instance_double(Computacenter::API::CapUsageUpdateBatch, status: batch_status) }
 
-      it 'responds with a 2XX status' do
-        post :bulk_update, body: cap_usage_update_packet
-        expect(response).to have_http_status(204)
+    before do
+      request.headers['Authorization'] = "Bearer #{api_token.token}"
+      allow(controller).to receive(:create_batch).and_return(mock_batch)
+      allow(mock_batch).to receive(:process!)
+      allow(mock_batch).to receive(:succeeded?).and_return false
+      allow(mock_batch).to receive(:failed?).and_return false
+      allow(mock_batch).to receive(:partially_failed?).and_return false
+    end
+
+    it 'creates a new batch' do
+      expect(controller).to receive(:create_batch).and_return(mock_batch)
+      post :bulk_update, format: :xml, body: cap_usage_update_packet
+    end
+
+    it 'processes the batch' do
+      expect(mock_batch).to receive(:process!)
+      post :bulk_update, format: :xml, body: cap_usage_update_packet
+    end
+
+    context 'when all updates succeed' do
+      before do
+        allow(mock_batch).to receive(:succeeded?).and_return true
+      end
+
+      it 'responds with :ok status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when all updates failed' do
+      before do
+        allow(mock_batch).to receive(:failed?).and_return true
+      end
+
+      it 'responds with :unprocessable_entity status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'when some but not all updates failed' do
+      before do
+        allow(mock_batch).to receive(:partially_failed?).and_return true
+      end
+
+      it 'responds with :multi_status status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+        expect(response).to have_http_status(:multi_status)
       end
     end
   end
