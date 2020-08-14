@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  before_action :populate_user_from_session!
+  before_action :identify_user!
 
   include Pagy::Backend
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
+  protect_from_forgery unless: -> { request.format.json? || request.format.xml? }
 
   def hide_nav_menu?
     false
@@ -13,7 +15,7 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def populate_user_from_session!
+  def identify_user!
     @user ||= (SessionService.identify_user!(session) || User.new)
   end
 
