@@ -9,5 +9,6 @@ class LocalAuthoritiesInEnglandRegister
     local_authorities_register_results
       .values
       .map { |result| result['item'].first }
+      .reject { |result| result['end-date'].present? }
   end
 end
