@@ -39,6 +39,11 @@ class Computacenter::API::CapUsageUpdate
     @status == 'failed'
   end
 
+  def fail!(error)
+    @status = 'failed'
+    @error = error
+  end
+
   def to_hash_for_xml
     { 'capType' => cap_type, 'shipTo' => ship_to, 'capAmount' => cap_amount, 'usedCap' => cap_used, 'status' => status, 'errorDetails' => error}
   end
