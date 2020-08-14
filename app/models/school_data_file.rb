@@ -1,26 +1,26 @@
 require 'csv'
 
 class SchoolDataFile
-    EXCLUDED_TYPES = [
-      'British schools overseas',
-      'Further education',
-      'Higher education institutions',
-      'Institution funded by other government department',
-      'Miscellaneous',
-      'Offshore schools',
-      'Other independent school',
-      'Other independent special school',
-      'Secure units',
-      'Sixth form centres',
-      'Special post 16 institution',
-      'Welsh establishment',
-    ].freeze
+  EXCLUDED_TYPES = [
+    'British schools overseas',
+    'Further education',
+    'Higher education institutions',
+    'Institution funded by other government department',
+    'Miscellaneous',
+    'Offshore schools',
+    'Other independent school',
+    'Other independent special school',
+    'Secure units',
+    'Sixth form centres',
+    'Special post 16 institution',
+    'Welsh establishment',
+  ].freeze
 
   def initialize(csv_path)
     @csv_path = csv_path
   end
 
-  def schools(&block)
+  def schools
     all_schools = []
     CSV.foreach(@csv_path, headers: true, encoding: 'ISO8859-1:utf-8') do |row|
       next if skip_school?(row)
