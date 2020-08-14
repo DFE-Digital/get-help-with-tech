@@ -21,13 +21,13 @@ class Computacenter::API::CapUsageUpdate
 
   def apply!
     school = School.find_by_computacenter_reference!(ship_to)
-    allocation = school.school_device_allocations.find_by_device_type!(CAP_TYPES_MAP[cap_type])
+    allocation = school.device_allocations.find_by_device_type!(CAP_TYPES_MAP[cap_type])
     log_cap_mismatch(allocation) if cap_amount != allocation.allocation
     allocation.update!(devices_ordered: cap_used)
     @status = 'succeeded'
   end
 
-  def log_cap_mismatch
+  def log_cap_mismatch(allocation)
     Rails.logger.warn("CapUsage mismatch: given capAmount: #{cap_amount}, SchoolDeviceAllocation: #{allocation.inspect}")
   end
 
@@ -42,9 +42,5 @@ class Computacenter::API::CapUsageUpdate
   def fail!(error)
     @status = 'failed'
     @error = error
-  end
-
-  def to_hash_for_xml
-    { 'capType' => cap_type, 'shipTo' => ship_to, 'capAmount' => cap_amount, 'usedCap' => cap_used, 'status' => status, 'errorDetails' => error}
   end
 end
