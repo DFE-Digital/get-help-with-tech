@@ -32,4 +32,15 @@ private
   def api_error!(error)
     render xml: error, status: error.status and return
   end
+
+  def validate_xml!(xml, schema_name)
+    errors = ComputacenterAPISchema.new(schema_name).validate(xml)
+    unless errors.empty?
+      raise APIError.new(
+        status: :bad_request,
+        message: "The XML you provided was not valid according to the schema #{schema_name}",
+        detail: errors
+      )
+    end
+  end
 end

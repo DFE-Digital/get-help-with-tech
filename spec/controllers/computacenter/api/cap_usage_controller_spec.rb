@@ -15,8 +15,22 @@ RSpec.describe Computacenter::API::CapUsageController do
       </CapUsage>
     XML
   end
+  let(:invalid_xml) do
+    <<~XML
+      <Broken Tag Structure>
+        <with errors=here>and</here>
+      </Broken>
+    XML
+  end
+  let(:valid_xml_but_not_valid_for_the_schema) do
+    <<~XML
+      <NotACapUsagePacket>
+        <SomethingElse>Entirely</SomethingElse>
+      </NotACapUsagePacket>
+    XML
+  end
 
-  describe 'POST bulk_update' do
+  describe 'Authentication' do
     context 'with no Authorization header' do
       it 'responds with :unauthorized' do
         post :bulk_update, body: cap_usage_update_packet
@@ -45,6 +59,35 @@ RSpec.describe Computacenter::API::CapUsageController do
       before do
         request.headers['Authorization'] = auth_header
       end
+
+      it 'responds with a 2XX status' do
+        post :bulk_update, body: cap_usage_update_packet
+        expect(response).to have_http_status(204)
+      end
+    end
+  end
+
+  describe 'POST bulk_update with valid auth' do
+    before do
+      request.headers['Authorization'] = "Bearer #{api_token.token}"
+    end
+
+    context 'given invalid XML' do
+      it 'responds with a 400 status' do
+        post :bulk_update, body: invalid_xml
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'given valid XML that does not conform to the schema' do
+      it 'responds with a 400 status' do
+        post :bulk_update, body: valid_xml_but_not_valid_for_the_schema
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'given a semantically-valid CapUsage packet in the body' do
+      let(:body) { cap_usage_update_packet }
 
       it 'responds with a 2XX status' do
         post :bulk_update, body: cap_usage_update_packet
