@@ -43,6 +43,12 @@ private
       urn: row['URN'],
       name: row['EstablishmentName'],
       responsible_body: row['LA (name)'],
+      address_1: row['Street'],
+      address_2: row['Locality'],
+      address_3: row['Address3'],
+      town: row['Town'],
+      county: row['County (name)'],
+      postcode: row['Postcode'],
     }
   end
 
