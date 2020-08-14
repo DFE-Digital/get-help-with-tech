@@ -1,4 +1,4 @@
-class APIError < StandardError
+class Computacenter::API::APIError < StandardError
   attr_accessor :status, :detail
 
   def initialize(params = {})

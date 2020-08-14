@@ -7,8 +7,8 @@
 # So we're pulling this out to a dedicated controller in order to keep the
 # rest of the application 'clean' and RESTful.
 class Computacenter::API::BaseController < ApplicationController
-  before_action :require_cc_user!
-  rescue_from APIError, with: :api_error!
+  before_action :require_cc_user!, :read_xml_from_body!
+  rescue_from Computacenter::API::APIError, with: :api_error!
 
 private
 
@@ -23,9 +23,9 @@ private
   # overriden method tailored for XML responses
   def require_cc_user!
     if bearer_token.present?
-      raise APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @user&.is_computacenter?
+      raise Computacenter::API::APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @user&.is_computacenter?
     else
-      raise APIError.new(status: :unauthorized, message: 'You must provide an Authorization header with a valid Bearer token')
+      raise Computacenter::API::APIError.new(status: :unauthorized, message: 'You must provide an Authorization header with a valid Bearer token')
     end
   end
 
@@ -33,10 +33,21 @@ private
     render xml: error, status: error.status and return
   end
 
-  def validate_xml!(xml, schema_name)
-    errors = ComputacenterAPISchema.new(schema_name).validate(xml)
+  def read_xml_from_body!
+    @xml = request.body.read
+    @xml_doc = Nokogiri::XML(@xml)
+    @parsed_xml = Hash.from_xml(@xml)
+  rescue Nokogiri::XML::SyntaxError, RuntimeError
+    raise Computacenter::API::APIError.new(
+      status: :bad_request,
+      message: "The request body you provided was not valid XML"
+    )
+  end
+
+  def validate_xml!(schema_name, xml_doc = @xml_doc)
+    errors = Computacenter::API::Schema.new(schema_name).validate(xml_doc)
     unless errors.empty?
-      raise APIError.new(
+      raise Computacenter::API::APIError.new(
         status: :bad_request,
         message: "The XML you provided was not valid according to the schema #{schema_name}",
         detail: errors

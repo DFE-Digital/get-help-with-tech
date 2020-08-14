@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Record">
+		<xs:complexType>
+			<xs:attribute name="capType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="DfE_RemainThresholdQty|Coms_Device"/>
+						<xs:enumeration value="DfE_RemainThresholdQty|Std_Device"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="shipTo">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="capAmount">
+				<xs:simpleType>
+					<xs:restriction base="xs:positiveInteger"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="usedCap">
+				<xs:simpleType>
+					<xs:restriction base="xs:positiveInteger"/>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CapUsage">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Record" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="payloadID">
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="dateTime">
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime"/>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
