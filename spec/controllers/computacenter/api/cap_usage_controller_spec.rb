@@ -89,13 +89,13 @@ RSpec.describe Computacenter::API::CapUsageController do
     end
 
     it 'creates a new batch' do
-      expect(controller).to receive(:create_batch).and_return(mock_batch)
       post :bulk_update, format: :xml, body: cap_usage_update_packet
+      expect(controller).to have_received(:create_batch)
     end
 
     it 'processes the batch' do
-      expect(mock_batch).to receive(:process!)
       post :bulk_update, format: :xml, body: cap_usage_update_packet
+      expect(mock_batch).to have_received(:process!)
     end
 
     context 'when all updates succeed' do

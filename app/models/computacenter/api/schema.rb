@@ -1,12 +1,9 @@
 class Computacenter::API::Schema
   attr_accessor :schema
+  delegate :validate, to: :schema
 
   def initialize(schema_name)
     @schema = self.class.load_schema(schema_name)
-  end
-
-  def validate(xml_doc)
-    schema.validate(xml_doc)
   end
 
   def self.schema_path(schema_name)

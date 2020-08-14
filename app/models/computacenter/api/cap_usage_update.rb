@@ -7,7 +7,6 @@ class Computacenter::API::CapUsageUpdate
     'DfE_RemainThresholdQty|Coms_Device' => 'coms_device',
   }.freeze
 
-
   # we'll get hashes with string keys from given XML
   # e.g. {"capType"=>"DfE_RemainThresholdQty|Std_Device", "shipTo"=>"81060874", "capAmount"=>"100", "usedCap"=>"20"}
   def initialize(string_keyed_hash = {})

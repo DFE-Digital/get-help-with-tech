@@ -40,7 +40,7 @@ private
   rescue Nokogiri::XML::SyntaxError, RuntimeError
     raise Computacenter::API::APIError.new(
       status: :bad_request,
-      message: "The request body you provided was not valid XML"
+      message: 'The request body you provided was not valid XML',
     )
   end
 
@@ -50,7 +50,7 @@ private
       raise Computacenter::API::APIError.new(
         status: :bad_request,
         message: "The XML you provided was not valid according to the schema #{schema_name}",
-        detail: errors
+        detail: errors,
       )
     end
   end

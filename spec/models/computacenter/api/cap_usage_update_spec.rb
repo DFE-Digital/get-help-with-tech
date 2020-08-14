@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Computacenter::API::CapUsageUpdate do
   let(:args) do
     {
-      'capType'   => 'DfE_RemainThresholdQty|Std_Device',
-      'shipTo'    => '123456',
+      'capType' => 'DfE_RemainThresholdQty|Std_Device',
+      'shipTo' => '123456',
       'capAmount' => 100,
-      'usedCap'   => 20,
+      'usedCap' => 20,
     }
   end
   let(:update) { described_class.new(args) }
@@ -37,26 +37,28 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
     before do
       allow(School).to receive(:find_by_computacenter_reference!).with('123456').and_return(school)
+      allow(school.device_allocations).to receive(:find_by_device_type!).with('std_device').and_return(allocation)
     end
 
     it 'finds a school with computacenter_reference matching the ship_to' do
-      expect(School).to receive(:find_by_computacenter_reference!).with('123456').and_return(school)
       update.apply!
+      expect(School).to have_received(:find_by_computacenter_reference!).with('123456')
     end
 
     it 'finds the device allocation with the corresponding device_type' do
-      expect(school.device_allocations).to receive(:find_by_device_type!).with('std_device').and_return(allocation)
       update.apply!
+      expect(school.device_allocations).to have_received(:find_by_device_type!)
     end
 
     context 'if the given cap_amount does not match the stored allocation' do
       before do
         update.cap_amount += 1
+        allow(update).to receive(:log_cap_mismatch).with(allocation)
       end
 
       it 'logs a cap mismatch' do
-        expect(update).to receive(:log_cap_mismatch).with(allocation)
         update.apply!
+        expect(update).to have_received(:log_cap_mismatch).with(allocation)
       end
     end
 

@@ -11,7 +11,7 @@ class Computacenter::API::APIError < StandardError
     {
       status: status,
       message: message,
-      detail: detail
+      detail: detail,
     }
   end
 

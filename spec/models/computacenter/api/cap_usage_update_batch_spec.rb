@@ -6,27 +6,28 @@ RSpec.describe Computacenter::API::CapUsageUpdateBatch do
 
   describe '#process!' do
     before do
-      batch.updates = ['update1', 'update2', 'update3']
+      batch.updates = %w[update1 update2 update3]
       allow(batch).to receive(:apply_update_and_catch_errors)
     end
 
     it 'calls apply_update_and_catch_errors with each update' do
-      expect(batch).to receive(:apply_update_and_catch_errors).with('update1').ordered
-      expect(batch).to receive(:apply_update_and_catch_errors).with('update2').ordered
-      expect(batch).to receive(:apply_update_and_catch_errors).with('update3').ordered
       batch.process!
+      expect(batch).to have_received(:apply_update_and_catch_errors).with('update1').ordered
+      expect(batch).to have_received(:apply_update_and_catch_errors).with('update2').ordered
+      expect(batch).to have_received(:apply_update_and_catch_errors).with('update3').ordered
     end
   end
 
   describe '#apply_update_and_catch_errors' do
     let(:mock_update) { instance_double(Computacenter::API::CapUsageUpdate) }
+
     before do
       allow(mock_update).to receive(:apply!)
     end
 
     it 'applies the given update' do
-      expect(mock_update).to receive(:apply!)
       batch.apply_update_and_catch_errors(mock_update)
+      expect(mock_update).to have_received(:apply!)
     end
 
     context 'when applying the update raises an ActiveRecord::RecordNotFound error' do
@@ -36,12 +37,12 @@ RSpec.describe Computacenter::API::CapUsageUpdateBatch do
       end
 
       it 'does not allow the exception to bubble out' do
-        expect{ batch.apply_update_and_catch_errors(mock_update) }.not_to raise_error
+        expect { batch.apply_update_and_catch_errors(mock_update) }.not_to raise_error
       end
 
       it 'calls fail! on the update, passing the error message' do
-        expect(mock_update).to receive(:fail!).with 'my message'
         batch.apply_update_and_catch_errors(mock_update)
+        expect(mock_update).to have_received(:fail!).with 'my message'
       end
     end
   end
