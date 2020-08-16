@@ -1,8 +1,21 @@
 # Computacenter API
 
+## Access
+
+The Computacenter API is based at `/computacenter/api/`, and is authenticated-
+only. There is no public access.
+
+## Rate-limiting
+
+Requests are rate-limited to a maximum of 4 per client IP address per second.
+
 ## Authentication
 
-### Generating an API token
+The API uses Bearer tokens, and expects each request to have an `Authorization`
+header, containing a valid Bearer token.
+
+
+### Obtaining an API token
 
 API tokens are managed through the user interface.
 
@@ -17,8 +30,7 @@ if you have a user account setup, we'll email you a 'magic link'
 Next, click on 'API tokens' from the top navigation bar. You'll see any
 API tokens you currently have, and a form to generate a new token.
 
-Give your token a name (this is purely for your own reference) and click
-'Generate'. You should see your new token in the table of 'Your API Tokens'
+Give your token a name (this must be unique, but is purely for your own reference) and click 'Generate'. You should see your new token in the table of 'Your API Tokens'.
 
 Copy the value in the 'Token' column - this will be the Bearer token you supply
 to the API with each request
