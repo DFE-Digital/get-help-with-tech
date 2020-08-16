@@ -3,8 +3,9 @@ class ImportSchoolsService
 
   RB_NAME_MAP = {
     'Bristol, City of' => 'City of Bristol',
-    'Kingston upon Hull, City of' => 'Kingston upon Hull',
+    'Dorset' => 'Dorset Council',
     'Herefordshire, County of' => 'Herefordshire',
+    'Kingston upon Hull, City of' => 'Kingston upon Hull',
   }.freeze
 
   def initialize(school_datasource = GetInformationAboutSchools)
