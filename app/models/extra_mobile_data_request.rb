@@ -3,6 +3,7 @@ class ExtraMobileDataRequest < ApplicationRecord
 
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
+  belongs_to :responsible_body, optional: true
 
   validates :status, presence: true
   validates :account_holder_name, presence: true
@@ -92,6 +93,11 @@ class ExtraMobileDataRequest < ApplicationRecord
       device_phone_number: device_phone_number,
       mobile_network_id: mobile_network_id,
     )
+  end
+
+  def created_by_user=(new_user)
+    super
+    self.responsible_body = new_user.responsible_body if new_user
   end
 
 private
