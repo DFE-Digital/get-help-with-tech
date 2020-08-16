@@ -160,4 +160,16 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
   end
+
+  describe 'setting created_by_user' do
+    let(:request) { build(:extra_mobile_data_request, created_by_user: nil, responsible_body: nil) }
+    let(:user) { create(:trust_user) }
+
+    it 'sets the responsible body at the same time' do
+      request.created_by_user = user
+
+      expect(request.created_by_user).to eq(user)
+      expect(request.responsible_body).to eq(user.responsible_body)
+    end
+  end
 end

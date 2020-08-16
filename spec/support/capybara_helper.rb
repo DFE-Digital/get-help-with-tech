@@ -9,6 +9,10 @@ module CapybaraHelper
     click_on 'Continue'
   end
 
+  def sign_out
+    click_on 'Sign out'
+  end
+
   def validate_token_url_for(user)
     token = user.generate_token!
     identifier = user.sign_in_identifier(token)
