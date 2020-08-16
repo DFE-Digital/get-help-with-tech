@@ -1,5 +1,16 @@
 # Computacenter API
 
+## Table of contents
+
+- [Access](#access)
+- [Rate-limiting](#rate-limiting)
+- [Authentication](#authentication)
+  * [Obtaining an API token](#obtaining-an-api-token)
+  * [Supplying an API token](#supplying-an-api-token)
+- [Available endpoints](#available-endpoints)
+  * [Cap Usage Bulk Update](#cap-usage-bulk-update)
+    + [Responses](#responses)
+
 ## Access
 
 The Computacenter API is based at `/computacenter/api/`, and is authenticated-
@@ -45,7 +56,7 @@ the `Authorization` header. You can do this with `curl` using the `-H` flag:
 # endpoint URL
 curl -H "Authorization: Bearer YOUR_TOKEN_VALUE" API_URL
 ```
-## Available Endpoints
+## Available endpoints
 
 ### Cap Usage Bulk Update
 
