@@ -54,7 +54,7 @@ the `Authorization` header. You can do this with `curl` using the `-H` flag:
 ```bash
 # replace YOUR_TOKEN_VALUE with your token, and API_URL with the actual
 # endpoint URL
-curl -H "Authorization: Bearer YOUR_TOKEN_VALUE" API_URL
+curl -H "Authorization: Bearer YOUR_TOKEN_VALUE" -H "Content-type: text/xml" API_URL
 ```
 ## Available endpoints
 
@@ -65,6 +65,22 @@ curl -H "Authorization: Bearer YOUR_TOKEN_VALUE" API_URL
 This endpoint allows you to POST a batch of cap usage updates.
 It expects a request body which is valid XML, and which is also valid against
 [the schema](../config/computacenter/api/schema/CapUsage.xsd)
+
+If you're using `curl` to test this API, you can do this with the `--data` flag
+as follows:
+
+```bash
+# replace
+#   YOUR_TOKEN_VALUE with your token
+#   API_URL with the actual endpoint URL
+#   XML_DATA with the XML packet being sent
+# (curl assumes a POST method if you provide --data)
+curl  -H "Authorization: Bearer YOUR_TOKEN_VALUE" \
+      -H "Content-type: text/xml" \
+      --data "XML_DATA" \
+      API_URL
+```
+
 
 Example:
 
