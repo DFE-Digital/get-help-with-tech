@@ -58,10 +58,10 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
 
   it 'imports single- and multi-academy trusts only once' do
     data = [
-      'Group Name,Companies House Number,Group Type',
-      'AAA,12345,Federation',
-      'AA TRUST,67890,Single-academy trust',
-      'ABC MAT,13579,Multi-academy trust',
+      'Group Name,Companies House Number,Group Type,Group Status',
+      'AAA,12345,Federation,Open',
+      'AA TRUST,67890,Single-academy trust,Open',
+      'ABC MAT,13579,Multi-academy trust,Open',
     ].join("\n")
 
     stub_request(:get, GetInformationAboutSchools::URL)
