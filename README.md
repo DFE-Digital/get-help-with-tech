@@ -47,6 +47,10 @@ All the above are run automatically on GitHub Actions when pushing a PR.
 [GOV.UK Notify](https://www.notifications.service.gov.uk/) for sending emails
 [Slack](https://api.slack.com/apps/A018NEABVNY/) for notifications of various significant events
 
+### APIs
+
+[Computacenter API](/docs/computacenter_api.md)
+
 ## Deploying on GOV.UK PaaS
 
 ### Prerequisites
