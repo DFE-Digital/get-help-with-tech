@@ -81,7 +81,7 @@ RSpec.describe Computacenter::API::CapUsageController do
 
     before do
       request.headers['Authorization'] = "Bearer #{api_token.token}"
-      allow(controller).to receive(:create_batch).and_return(mock_batch)
+      allow(controller).to receive(:build_batch).and_return(mock_batch)
       allow(mock_batch).to receive(:process!)
       allow(mock_batch).to receive(:succeeded?).and_return false
       allow(mock_batch).to receive(:failed?).and_return false
@@ -90,7 +90,7 @@ RSpec.describe Computacenter::API::CapUsageController do
 
     it 'creates a new batch' do
       post :bulk_update, format: :xml, body: cap_usage_update_packet
-      expect(controller).to have_received(:create_batch)
+      expect(controller).to have_received(:build_batch)
     end
 
     it 'processes the batch' do
