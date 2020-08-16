@@ -1,6 +1,6 @@
 class ResponsibleBody::Mobile::ExtraDataRequestsController < ResponsibleBody::BaseController
   def index
-    @extra_mobile_data_requests = @user.extra_mobile_data_requests
+    @extra_mobile_data_requests = @responsible_body.extra_mobile_data_requests
   end
 
   def new

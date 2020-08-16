@@ -32,6 +32,8 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
   end
 
   context 'when the user has already submitted requests' do
+    let(:another_user_from_the_same_rb) { create(:user, responsible_body: rb_user.responsible_body) }
+
     before do
       @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: rb_user)
       @requests.last.unavailable!
@@ -48,6 +50,18 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
       end
       expect(page).to have_text('Requested').exactly(4).times
       expect(page).to have_text('Unavailable').once
+    end
+
+    scenario 'another user from the same responsible body can also see the raised requests' do
+      sign_out
+      sign_in_as another_user_from_the_same_rb
+
+      visit responsible_body_mobile_extra_data_requests_path
+
+      @requests.each do |request|
+        expect(page).to have_content(request.device_phone_number)
+        expect(page).to have_content(request.account_holder_name)
+      end
     end
   end
 end
