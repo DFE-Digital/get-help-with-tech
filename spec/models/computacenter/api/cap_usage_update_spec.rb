@@ -36,29 +36,22 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     let!(:school) { create(:school, computacenter_reference: '123456') }
     let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device') }
 
-    before do
-      allow(School).to receive(:find_by_computacenter_reference!).with('123456').and_return(school)
-      allow(school.device_allocations).to receive(:find_by_device_type!).with('std_device').and_return(allocation)
-    end
-
-    it 'finds a school with computacenter_reference matching the ship_to' do
-      update.apply!
-      expect(School).to have_received(:find_by_computacenter_reference!).with('123456')
-    end
-
-    it 'finds the device allocation with the corresponding device_type' do
-      update.apply!
-      expect(school.device_allocations).to have_received(:find_by_device_type!)
+    it 'updates the correct allocation with the given usedCap' do
+      expect { update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(20)
     end
 
     context 'if the given cap_amount does not match the stored allocation' do
+      let(:mock_mismatch) { instance_double(Computacenter::API::CapUsageUpdate::CapMismatch) }
+
       before do
         update.cap_amount += 1
+        allow(Computacenter::API::CapUsageUpdate::CapMismatch).to receive(:new).with(school, allocation).and_return(mock_mismatch)
+        allow(mock_mismatch).to receive(:warn)
       end
 
       it 'logs a cap mismatch' do
         update.apply!
-        expect(Rails.logger).to have_received(:warn).with(update.cap_mismatch_message(school, allocation))
+        expect(mock_mismatch).to have_received(:warn).with(101)
       end
     end
 
