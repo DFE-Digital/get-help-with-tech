@@ -44,4 +44,8 @@ class Computacenter::API::CapUsageUpdateBatch
   def partially_failed?
     status == 'partially_failed'
   end
+
+  def failed_updates
+    updates.select(&:failed?)
+  end
 end
