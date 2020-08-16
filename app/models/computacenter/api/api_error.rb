@@ -1,8 +1,9 @@
-class APIError < StandardError
-  attr_accessor :status
+class Computacenter::API::APIError < StandardError
+  attr_accessor :status, :detail
 
   def initialize(params = {})
     @status = params[:status]
+    @detail = params[:detail]
     super(params[:message])
   end
 
@@ -10,6 +11,7 @@ class APIError < StandardError
     {
       status: status,
       message: message,
+      detail: detail,
     }
   end
 
