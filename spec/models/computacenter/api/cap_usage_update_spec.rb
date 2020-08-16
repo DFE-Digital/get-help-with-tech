@@ -9,7 +9,8 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       'usedCap' => 20,
     }
   end
-  let(:update) { described_class.new(args) }
+
+  subject(:update) { described_class.new(args) }
 
   describe '#initialize' do
     context 'given a hash with string keys' do
@@ -53,12 +54,11 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     context 'if the given cap_amount does not match the stored allocation' do
       before do
         update.cap_amount += 1
-        allow(update).to receive(:log_cap_mismatch).with(allocation)
       end
 
       it 'logs a cap mismatch' do
         update.apply!
-        expect(update).to have_received(:log_cap_mismatch).with(allocation)
+        expect(Rails.logger).to have_received(:warn).with(update.cap_mismatch_message(school, allocation))
       end
     end
 
