@@ -1,5 +1,5 @@
 class NotifyComputacenterOfCapUpdateJob < ApplicationJob
-  queue_as :slack_messages
+  queue_as :default
 
   # NOTE: we only pass the allocation_ids, not the amounts to update the caps to.
   # This way, the new caps get read at the time the job is performed rather than
