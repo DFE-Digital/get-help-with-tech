@@ -1,3 +1,7 @@
+computacenter:
+  outgoing_api:
+    endpoint: http://computacenter.example.com/
+
 govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
   api_key: 'dummy_testing-5147bd8e-e622-4ae2-b004-f93ff2f1a109-d0af2215-e1e9-421f-a92a-a4049d614f9e'
