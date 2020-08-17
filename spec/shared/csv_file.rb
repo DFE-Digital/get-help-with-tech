@@ -11,7 +11,7 @@ SCHOOL_ATTRS = {
   county: 'County (name)',
   postcode: 'Postcode',
   status: 'EstablishmentStatus (name)',
-  type: 'TypeOfEstablishment (name)'
+  type: 'TypeOfEstablishment (name)',
 }.freeze
 
 def create_school_csv_file(filename, array_of_hashes)
@@ -19,7 +19,7 @@ def create_school_csv_file(filename, array_of_hashes)
 end
 
 def remove_file(filename)
-  File.delete(filename) if File.exists?(filename)
+  File.delete(filename) if File.exist?(filename)
 end
 
 def create_csv_file(filename, headings, array_of_hashes)
