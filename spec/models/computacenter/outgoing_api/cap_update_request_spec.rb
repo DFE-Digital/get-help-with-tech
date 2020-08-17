@@ -4,8 +4,8 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   let(:response_body) { 'response body' }
   let(:allocation_1) { create(:school_device_allocation) }
   let(:allocation_2) { create(:school_device_allocation) }
-  let(:mock_status) { double(HTTP::Response::Status, code: 200, success?: true) }
-  let(:mock_response) { double(HTTP::Response, status: mock_status, body: response_body) }
+  let(:mock_status) { instance_double(HTTP::Response::Status, code: 200, success?: true) }
+  let(:mock_response) { instance_double(HTTP::Response, status: mock_status, body: response_body) }
 
   before do
     allow(Computacenter::OutgoingAPI::BaseController).to receive(:render).and_return('rendered XML')
@@ -14,7 +14,6 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
 
   describe '#post!' do
     subject(:request) { described_class.new(allocation_ids: [allocation_1.id, allocation_2.id]) }
-    let(:mock_http) { double(HTTP) }
 
     it 'generates a new payload_id' do
       expect { request.post! }.to change(request, :payload_id)
@@ -40,13 +39,16 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
 
     it 'POSTs the body to the endpoint using Basic Auth' do
       allow(Computacenter::OutgoingAPI::BaseController).to receive(:render).and_return('mock body')
-      expect(HTTP).to receive(:basic_auth).with(user: request.username, pass: request.password).and_return(mock_http)
-      expect(mock_http).to receive(:post).with(request.endpoint, body: 'mock body').and_return(mock_response)
+      allow(HTTP).to receive(:basic_auth).and_return(HTTP)
+      allow(HTTP).to receive(:post).and_return(mock_response)
+
       request.post!
+      expect(HTTP).to have_received(:basic_auth).with(user: request.username, pass: request.password)
+      expect(HTTP).to have_received(:post).with(request.endpoint, body: 'mock body')
     end
 
     context 'when the response status is success' do
-      let(:mock_status) { double(HTTP::Response::Status, code: 200, success?: true) }
+      let(:mock_status) { instance_double(HTTP::Response::Status, code: 200, success?: true) }
 
       it 'returns the response ' do
         expect(request.post!).to be_a(HTTP::Response)
@@ -54,11 +56,11 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
     end
 
     context 'when the response status is not a success' do
-      let(:mock_status) { double(HTTP::Response::Status, code: 401, success?: false) }
+      let(:mock_status) { instance_double(HTTP::Response::Status, code: 401, success?: false) }
 
       before do
-        allow(HTTP).to receive(:basic_auth).and_return(mock_http)
-        allow(mock_http).to receive(:post).and_return(mock_response)
+        allow(HTTP).to receive(:basic_auth).and_return(HTTP)
+        allow(HTTP).to receive(:post).and_return(mock_response)
       end
 
       it 'raises an error' do
@@ -66,6 +68,4 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       end
     end
   end
-
-
 end
