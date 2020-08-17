@@ -1,5 +1,5 @@
 class Computacenter::OutgoingAPI::CapUpdateRequest
-  attr_accessor :endpoint_url, :username, :password
+  attr_accessor :endpoint_url, :username, :password, :allocation_ids
   attr_accessor :body, :payload_id, :response, :logger
 
   def initialize(args = {})
@@ -10,13 +10,13 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
     @logger         = args[:logger] || Rails.logger
   end
 
-  def post(allocation_ids = @allocation_ids)
+  def post!
     # Need to regenerate this for every request
     @payload_id = SecureRandom.uuid
     @body = construct_body
 
-    @logger.debug("POSTing to Computacenter, body: \n#{@body}")
-    @response = HTTP.basic_auth(:user => @username, :pass => @password)
+    @logger.debug("POSTing to Computacenter, payload_id: #{@payload_id}, body: \n#{@body}")
+    @response = HTTP.basic_auth(user: @username, pass: @password)
                     .post(@endpoint, body: @body)
     handle_response!
   end
@@ -25,8 +25,12 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
     response_body = @response.body.to_s
     @logger.debug("Response from Computacenter: \n#{response_body}")
     unless @response.status.success?
-      raise(Computacenter::OutgoingAPI::Error.new("Computacenter responded with #{@response.status}, response_body: #{response_body}"))
+      raise(
+        Computacenter::OutgoingAPI::Error,
+        "Computacenter responded with #{@response.status}, response_body: #{response_body}",
+      )
     end
+
     @response
   end
 
@@ -35,7 +39,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
   end
 
   def construct_body
-    allocations = SchoolDeviceAllocation.where( id: @allocation_ids )
+    allocations = SchoolDeviceAllocation.where(id: @allocation_ids)
     renderer.render :cap_update_request, format: :xml, assigns: { allocations: allocations, payload_id: @payload_id }
   end
 

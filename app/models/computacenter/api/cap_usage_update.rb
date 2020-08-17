@@ -1,8 +1,6 @@
 class Computacenter::API::CapUsageUpdate
   attr_accessor :cap_type, :ship_to, :cap_amount, :cap_used, :status, :error
 
-
-
   # we'll get hashes with string keys from given XML
   # e.g. {"capType"=>"DfE_RemainThresholdQty|Std_Device", "shipTo"=>"81060874", "capAmount"=>"100", "usedCap"=>"20"}
   def initialize(string_keyed_hash = {})

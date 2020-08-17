@@ -7,6 +7,7 @@ class NotifyComputacenterOfCapUpdateJob < ApplicationJob
   # matter if the jobs get processed in the right order or not, the last job
   # processed will always set the latest value.
   def perform(school_device_allocation_ids)
-    Computacenter::CapUpdateAPIClient.post_cap_updates_for(school_device_allocation_ids)
+    request = Computacenter::OutgoingAPI::CapUpdateRequest.new(allocation_ids: school_device_allocation_ids)
+    request.post!
   end
 end

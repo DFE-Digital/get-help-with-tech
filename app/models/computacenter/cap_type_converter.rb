@@ -10,6 +10,6 @@ class Computacenter::CapTypeConverter
   end
 
   def self.to_computacenter_type(dfe_type)
-    CAP_TYPES_MAP.select { |cc, dfe| dfe == dfe_type }.keys.first
+    CAP_TYPES_MAP.select { |_, dfe| dfe == dfe_type }.keys.first
   end
 end
