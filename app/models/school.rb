@@ -2,7 +2,7 @@ class School < ApplicationRecord
   belongs_to :responsible_body
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
 
-  validates :urn, presence: true
+  validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
   def allocation_for_type!(device_type)
