@@ -13,6 +13,8 @@ module CSVFileHelper
     postcode: 'Postcode',
     status: 'EstablishmentStatus (name)',
     type: 'TypeOfEstablishment (name)',
+    trusts_flag: 'TrustSchoolFlag (code)',
+    trusts_name: 'Trusts (name)',
   }.freeze
 
   def create_school_csv_file(filename, array_of_hashes)
