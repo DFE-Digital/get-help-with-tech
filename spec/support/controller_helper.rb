@@ -5,3 +5,7 @@ module ControllerHelper
     controller.send(:save_user_to_session!, user)
   end
 end
+
+RSpec.configure do |c|
+  c.include ControllerHelper, type: :controller
+end

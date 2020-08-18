@@ -17,6 +17,12 @@ class ImportSchoolsService
       School.find_or_create_by!(urn: school_data[:urn]) do |school|
         school.name = school_data[:name]
         school.responsible_body_id = responsible_body_id(school_data[:responsible_body])
+        school.address_1 = school_data[:address_1]
+        school.address_2 = school_data[:address_2]
+        school.address_3 = school_data[:address_3]
+        school.town = school_data[:town]
+        school.county = school_data[:county]
+        school.postcode = school_data[:postcode]
       end
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e.message)
