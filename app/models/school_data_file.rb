@@ -42,7 +42,7 @@ private
     {
       urn: row['URN'],
       name: row['EstablishmentName'],
-      responsible_body: row['LA (name)'],
+      responsible_body: find_responsible_body(row),
       address_1: row['Street'],
       address_2: row['Locality'],
       address_3: row['Address3'],
@@ -50,6 +50,16 @@ private
       county: row['County (name)'],
       postcode: row['Postcode'],
     }
+  end
+
+  def find_responsible_body(row)
+    # 3 - Multi-academy trust
+    # 5 - Single-academy trust
+    if row['TrustSchoolFlag (code)'].in? %w[3 5]
+      row['Trusts (name)']
+    else
+      row['LA (name)']
+    end
   end
 
   def skip_school?(row)
