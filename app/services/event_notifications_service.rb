@@ -14,7 +14,7 @@ class EventNotificationsService
     end
 
     def format_message(event)
-      "[#{event.class.name}] #{event.message}\n_timestamp: #{Time.zone.now.iso8601}_"
+      "[#{event.class.name}] #{event.message}"
     end
 
     def log(event)

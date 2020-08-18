@@ -41,10 +41,6 @@ RSpec.describe EventNotificationsService do
       expect(msg).to start_with("[#{event.class.name}]")
     end
 
-    it 'adds a suffix of the current time in iso8601 format, on a new line and italicized' do
-      expect(msg).to end_with("\n_timestamp: #{Time.zone.now.iso8601}_")
-    end
-
     it 'contains the given events message' do
       expect(msg).to include(event.message)
     end
