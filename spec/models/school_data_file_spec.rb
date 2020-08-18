@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared/csv_file'
 
 RSpec.describe SchoolDataFile, type: :model do
   describe '#schools' do
