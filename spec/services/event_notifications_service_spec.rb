@@ -38,7 +38,7 @@ RSpec.describe EventNotificationsService do
     let(:msg) { EventNotificationsService.send(:format_message, event) }
 
     it 'adds a prefix of the class name in square brackets' do
-      expect(msg).to start_with("[#{event.class.name}]")
+      expect(msg).to start_with('[Instance verifying double]')
     end
 
     it 'contains the given events message' do

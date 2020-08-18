@@ -14,7 +14,7 @@ class EventNotificationsService
     end
 
     def format_message(event)
-      "[#{event.class.name}] #{event.message}"
+      "[#{event.class.name.demodulize.underscore.humanize}] #{event.message}"
     end
 
     def log(event)
