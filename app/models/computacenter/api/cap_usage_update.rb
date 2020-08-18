@@ -1,12 +1,6 @@
 class Computacenter::API::CapUsageUpdate
   attr_accessor :cap_type, :ship_to, :cap_amount, :cap_used, :status, :error
 
-  # computacenter cap type => SchoolDeviceAllocation.device_type
-  CAP_TYPES_MAP = {
-    'DfE_RemainThresholdQty|Std_Device' => 'std_device',
-    'DfE_RemainThresholdQty|Coms_Device' => 'coms_device',
-  }.freeze
-
   # we'll get hashes with string keys from given XML
   # e.g. {"capType"=>"DfE_RemainThresholdQty|Std_Device", "shipTo"=>"81060874", "capAmount"=>"100", "usedCap"=>"20"}
   def initialize(string_keyed_hash = {})
@@ -20,7 +14,7 @@ class Computacenter::API::CapUsageUpdate
 
   def apply!
     school = School.find_by_computacenter_reference!(ship_to)
-    allocation = school.device_allocations.find_by_device_type!(CAP_TYPES_MAP[cap_type])
+    allocation = school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
     CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
     allocation.update!(devices_ordered: cap_used)
     @status = 'succeeded'

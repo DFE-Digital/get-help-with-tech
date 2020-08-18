@@ -7,6 +7,12 @@
 #
 # See the file initializers/config.rb for more info on how this is configured.
 
+computacenter:
+  outgoing_api:
+    endpoint:
+    username:
+    password:
+
 cookie_consent:
   expiry_time_months: 6
 
