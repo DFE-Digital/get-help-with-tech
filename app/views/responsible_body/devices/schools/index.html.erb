@@ -1,0 +1,54 @@
+<% content_for :browser_title, t('page_titles.responsible_body_schools_list') %>
+
+<%- content_for :before_content do %>
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        Get devices
+      </li>
+    </ol>
+  </div>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl">Get devices</span>
+  <%= t('page_titles.responsible_body_schools_list') %>
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-2"><%= pluralize(@schools.size, 'school') %></h2>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Is there a school missing from this list?
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>This is a list of all local authority maintained and special schools.</p>
+        <p>Contact support at <%= ghwt_contact_mailto(subject: 'Missing school that will need devices') %>
+          to add a missing school.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<table id="schools" class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" style="width: 50%">School</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @schools.each do |school| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <%= school.name %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

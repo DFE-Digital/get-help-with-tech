@@ -67,6 +67,10 @@ Rails.application.routes.draw do
         resources :bulk_requests, only: %i[new create], path: '/bulk'
       end
     end
+
+    namespace :devices do
+      resources :schools, only: %i[index]
+    end
   end
 
   namespace :support do
