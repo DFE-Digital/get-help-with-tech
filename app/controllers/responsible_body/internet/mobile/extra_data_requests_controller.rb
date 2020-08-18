@@ -1,4 +1,4 @@
-class ResponsibleBody::Mobile::ExtraDataRequestsController < ResponsibleBody::BaseController
+class ResponsibleBody::Internet::Mobile::ExtraDataRequestsController < ResponsibleBody::BaseController
   def index
     @extra_mobile_data_requests = @responsible_body.extra_mobile_data_requests
   end
@@ -9,9 +9,9 @@ class ResponsibleBody::Mobile::ExtraDataRequestsController < ResponsibleBody::Ba
 
       if @submission_type.valid?
         if @submission_type.manual?
-          redirect_to new_responsible_body_mobile_manual_request_path
+          redirect_to new_responsible_body_internet_mobile_manual_request_path
         else
-          redirect_to new_responsible_body_mobile_bulk_request_path
+          redirect_to new_responsible_body_internet_mobile_bulk_request_path
         end
       else
         render :new, status: :unprocessable_entity

@@ -9,7 +9,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'visiting the form directly should redirect to sign_in' do
-      visit new_responsible_body_mobile_manual_request_path
+      visit new_responsible_body_internet_mobile_manual_request_path
       expect(page).to have_current_path(sign_in_path)
     end
   end
@@ -27,7 +27,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'Navigating to the form' do
-      visit responsible_body_mobile_extra_data_requests_path
+      visit responsible_body_internet_mobile_extra_data_requests_path
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
       choose('Manually (entering details one at a time)')
@@ -36,7 +36,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'submitting the form with invalid params shows errors' do
-      visit new_responsible_body_mobile_manual_request_path
+      visit new_responsible_body_internet_mobile_manual_request_path
       fill_in 'Mobile phone number', with: '-1'
       click_on 'Continue'
       expect(page.status_code).not_to eq(200)
@@ -45,7 +45,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
 
     context 'when the mno is participating' do
       scenario 'submitting the form with valid params goes to confirmation page' do
-        visit new_responsible_body_mobile_manual_request_path
+        visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
         click_on 'Continue'
 
@@ -63,7 +63,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
       let(:mobile_network) { create(:mobile_network, :maybe_participating_in_pilot) }
 
       scenario 'submitting the form with valid params goes to confirmation page with extra messaging' do
-        visit new_responsible_body_mobile_manual_request_path
+        visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
         click_on 'Continue'
 
@@ -75,7 +75,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'clicking Change on the confirmation page populates the form again' do
-      visit new_responsible_body_mobile_manual_request_path
+      visit new_responsible_body_internet_mobile_manual_request_path
       fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
       fill_in 'Account holder name', with: 'My new account holder name'
       click_on 'Continue'
@@ -94,7 +94,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'confirming a form works' do
-      visit new_responsible_body_mobile_manual_request_path
+      visit new_responsible_body_internet_mobile_manual_request_path
       fill_in_valid_application_form(mobile_network_name: mobile_network.brand)
       fill_in 'Account holder name', with: 'My confirmed account holder name'
 

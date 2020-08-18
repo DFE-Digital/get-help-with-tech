@@ -1,4 +1,4 @@
-class ResponsibleBody::BTWifiVouchersController < ResponsibleBody::BaseController
+class ResponsibleBody::Internet::BTWifiVouchersController < ResponsibleBody::BaseController
   def index
     vouchers = @responsible_body.bt_wifi_vouchers.order('username asc')
     respond_to do |format|
