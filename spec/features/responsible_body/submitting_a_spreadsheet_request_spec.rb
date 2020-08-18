@@ -9,7 +9,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
 
     scenario 'visiting the form directly should redirect to sign_in' do
-      visit new_responsible_body_mobile_bulk_request_path
+      visit new_responsible_body_internet_mobile_bulk_request_path
       expect(page).to have_current_path(sign_in_path)
     end
   end
@@ -27,7 +27,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
 
     scenario 'Navigating to the form' do
-      visit responsible_body_mobile_extra_data_requests_path
+      visit responsible_body_internet_mobile_extra_data_requests_path
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
       choose('Using a spreadsheet')
@@ -36,14 +36,14 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
 
     scenario 'submitting the form without making a choice shows errors' do
-      visit new_responsible_body_mobile_bulk_request_path
+      visit new_responsible_body_internet_mobile_bulk_request_path
       click_on 'Upload requests'
       expect(page.status_code).not_to eq(200)
       expect(page).to have_text('There is a problem')
     end
 
     scenario 'submitting the form with a valid file shows a summary page' do
-      visit new_responsible_body_mobile_bulk_request_path
+      visit new_responsible_body_internet_mobile_bulk_request_path
       attach_file('Pick a spreadsheet file', file_fixture('extra-mobile-data-requests.xlsx'))
       click_on 'Upload requests'
 
