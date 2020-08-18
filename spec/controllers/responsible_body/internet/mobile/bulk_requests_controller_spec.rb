@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ResponsibleBody::Mobile::BulkRequestsController, type: :controller do
+RSpec.describe ResponsibleBody::Internet::Mobile::BulkRequestsController, type: :controller do
   let(:local_authority_user) { create(:local_authority_user) }
 
   context 'when authenticated' do

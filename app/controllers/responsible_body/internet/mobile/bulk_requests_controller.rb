@@ -1,4 +1,4 @@
-class ResponsibleBody::Mobile::BulkRequestsController < ResponsibleBody::BaseController
+class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBody::BaseController
   def new
     @upload_form = BulkUploadForm.new
   end

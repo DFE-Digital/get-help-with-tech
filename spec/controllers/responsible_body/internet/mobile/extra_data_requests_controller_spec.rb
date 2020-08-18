@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ResponsibleBody::Mobile::ExtraDataRequestsController, type: :controller do
+RSpec.describe ResponsibleBody::Internet::Mobile::ExtraDataRequestsController, type: :controller do
   let(:local_authority_user) { create(:local_authority_user) }
 
   context 'when authenticated' do
@@ -17,7 +17,7 @@ RSpec.describe ResponsibleBody::Mobile::ExtraDataRequestsController, type: :cont
           commit: 'Continue',
         }
         get :new, params: request_data
-        expect(response).to redirect_to(new_responsible_body_mobile_bulk_request_path)
+        expect(response).to redirect_to(new_responsible_body_internet_mobile_bulk_request_path)
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe ResponsibleBody::Mobile::ExtraDataRequestsController, type: :cont
           commit: 'Continue',
         }
         get :new, params: request_data
-        expect(response).to redirect_to(new_responsible_body_mobile_manual_request_path)
+        expect(response).to redirect_to(new_responsible_body_internet_mobile_manual_request_path)
       end
     end
   end
