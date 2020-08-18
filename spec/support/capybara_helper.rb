@@ -1,3 +1,5 @@
+require 'capybara/email/rspec'
+
 module CapybaraHelper
   def basic_auth!(username:, password:)
     encoded_login = ["#{username}:#{password}"].pack('m*')
@@ -41,4 +43,8 @@ module CapybaraHelper
       raise "Don't know how to clear cookies. Weird driver?"
     end
   end
+end
+
+RSpec.configure do |c|
+  c.include CapybaraHelper, type: :feature
 end
