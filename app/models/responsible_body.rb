@@ -3,4 +3,5 @@ class ResponsibleBody < ApplicationRecord
   has_many :bt_wifi_vouchers
   has_many :users
   has_many :extra_mobile_data_requests
+  has_many :schools
 end
