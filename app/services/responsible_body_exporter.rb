@@ -22,7 +22,7 @@ class ResponsibleBodyExporter
         csv << EXPORT_ATTRS.map do |attr|
           if attr == :type && rb.type == 'LocalAuthority'
             'Local Authority'
-          else 
+          else
             rb.send(attr)
           end
         end
