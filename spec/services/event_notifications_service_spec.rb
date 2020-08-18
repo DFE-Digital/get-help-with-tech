@@ -38,11 +38,7 @@ RSpec.describe EventNotificationsService do
     let(:msg) { EventNotificationsService.send(:format_message, event) }
 
     it 'adds a prefix of the class name in square brackets' do
-      expect(msg).to start_with("[#{event.class.name}]")
-    end
-
-    it 'adds a suffix of the current time in iso8601 format, on a new line and italicized' do
-      expect(msg).to end_with("\n_timestamp: #{Time.zone.now.iso8601}_")
+      expect(msg).to start_with('[Instance verifying double]')
     end
 
     it 'contains the given events message' do
