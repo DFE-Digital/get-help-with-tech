@@ -8,7 +8,7 @@
 /.bundle
 
 # Ignore all logfiles and tempfiles.
-/log/*
+*.log
 /tmp/*
 /coverage
 
@@ -35,7 +35,6 @@ manifest.yml
 .env
 .env.*
 *.env
-*.log
 
 config/settings.local.yml
 config/settings/*.local.yml
