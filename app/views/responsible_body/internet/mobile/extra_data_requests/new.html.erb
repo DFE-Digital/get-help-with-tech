@@ -1,9 +1,9 @@
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', responsible_body_mobile_extra_data_requests_path, class: 'govuk-back-link') %>
+  <%= govuk_link_to('Back', responsible_body_internet_mobile_extra_data_requests_path, class: 'govuk-back-link') %>
 <% end %>
 <% content_for :title, title_with_error_prefix(t('page_titles.how_would_you_like_to_submit_information'), @submission_type.errors.any?) %>
 <div class="govuk-grid-row">
-  <%= form_for @submission_type, url: responsible_body_mobile_extra_data_requests_type_path, method: :get, html: { class: 'govuk-grid-column-two-thirds' } do |f| %>
+  <%= form_for @submission_type, url: responsible_body_internet_mobile_extra_data_requests_type_path, method: :get, html: { class: 'govuk-grid-column-two-thirds' } do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_collection_radio_buttons :submission_type,

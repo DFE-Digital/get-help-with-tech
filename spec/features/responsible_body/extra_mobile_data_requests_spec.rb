@@ -40,7 +40,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     end
 
     scenario 'the user can see their previous requests' do
-      visit responsible_body_mobile_extra_data_requests_path
+      visit responsible_body_internet_mobile_extra_data_requests_path
 
       expect(page).to have_css('h2', text: 'Your requests')
 
@@ -56,7 +56,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
       sign_out
       sign_in_as another_user_from_the_same_rb
 
-      visit responsible_body_mobile_extra_data_requests_path
+      visit responsible_body_internet_mobile_extra_data_requests_path
 
       @requests.each do |request|
         expect(page).to have_content(request.device_phone_number)

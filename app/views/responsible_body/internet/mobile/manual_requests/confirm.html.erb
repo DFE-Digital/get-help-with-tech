@@ -1,4 +1,4 @@
-<%- content_for :before_content, govuk_link_to('Back', new_responsible_body_mobile_manual_request_path, class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_link_to('Back', new_responsible_body_internet_mobile_manual_request_path, class: 'govuk-back-link') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -14,7 +14,7 @@
           <%= @extra_mobile_data_request.account_holder_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path( anchor: 'extra-mobile-data-request-account-holder-name-field') ) do %>
+          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-account-holder-name-field') ) do %>
             Change<span class="govuk-visually-hidden"> Account holder name</span>
           <%- end %>
         </dd>
@@ -28,7 +28,7 @@
           <%= @extra_mobile_data_request.device_phone_number %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path( anchor: 'extra-mobile-data-request-device-phone-number-field') ) do %>
+          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-device-phone-number-field') ) do %>
             Change<span class="govuk-visually-hidden"> Mobile phone number</span>
           <%- end %>
         </dd>
@@ -42,7 +42,7 @@
           <%= @extra_mobile_data_request.network_name_with_participation_status %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path(anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) do %>
+          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path(anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) do %>
             Change<span class="govuk-visually-hidden"> Mobile network</span>
           <%- end %>
         </dd>
@@ -57,7 +57,7 @@
               scope: 'responsible_body.extra_mobile_data_requests.new') %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path(anchor: "extra-mobile-data-request-contract_type-#{@extra_mobile_data_request.contract_type}-field") ) do %>
+          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path(anchor: "extra-mobile-data-request-contract_type-#{@extra_mobile_data_request.contract_type}-field") ) do %>
             Change<span class="govuk-visually-hidden"> pay monthly or pay as you go</span>
           <%- end %>
         </dd>
@@ -71,7 +71,7 @@
           <%= @extra_mobile_data_request.agrees_with_privacy_statement ? 'Yes' : 'No' %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_mobile_manual_request_path( anchor: 'extra-mobile-data-request-agrees-with-privacy-statement-true-field') ) do %>
+          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-agrees-with-privacy-statement-true-field') ) do %>
             Change<span class="govuk-visually-hidden"> Agrees with privacy statement</span>
           <%- end %>
         </dd>
@@ -79,7 +79,7 @@
     </dl>
     <p class="govuk-body"><%= @extra_mobile_data_request.passing_data_to_provider_message %></p>
 
-    <%= form_for @extra_mobile_data_request, url: responsible_body_mobile_manual_requests_path do |f| %>
+    <%= form_for @extra_mobile_data_request, url: responsible_body_internet_mobile_manual_requests_path do |f| %>
       <%= f.hidden_field :account_holder_name %>
       <%= f.hidden_field :device_phone_number %>
       <%= f.hidden_field :mobile_network_id %>
