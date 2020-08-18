@@ -64,7 +64,7 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
       'ABC MAT,13579,Multi-academy trust,Open',
     ].join("\n")
 
-    stub_request(:get, GetInformationAboutSchools::URL)
+    stub_request(:get, GetInformationAboutSchools.groups_url)
       .to_return(body: data)
 
     ImportResponsibleBodiesService.new.import_trusts

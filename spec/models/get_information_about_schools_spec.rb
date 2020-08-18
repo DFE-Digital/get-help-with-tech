@@ -10,7 +10,7 @@ RSpec.describe GetInformationAboutSchools, type: :model do
       'ZZZ MAT,14725,Multi-academy trust,Closed',
     ].join("\n")
 
-    stub_request(:get, GetInformationAboutSchools::URL)
+    stub_request(:get, GetInformationAboutSchools.groups_url)
       .to_return(body: data)
 
     entries = GetInformationAboutSchools.trusts_entries

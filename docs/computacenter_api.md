@@ -119,6 +119,9 @@ If all `Record`s are processed successfully:
 ```
 
 ##### Failure
+
+Sometimes records can't be processed - this can happen if it can't find a school for the given `shipTo` value, for example, or if it can't find a device allocation/cap for the given `capType`. In this case, the responses are slightly different depending on whether all or just some of the given records failed.
+
 If all `Record`s fail:
 
 * The response status code will be `422 Unprocessable Entity`
