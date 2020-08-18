@@ -47,6 +47,8 @@ All the above are run automatically on GitHub Actions when pushing a PR.
 [GOV.UK Notify](https://www.notifications.service.gov.uk/) for sending emails
 [Slack](https://api.slack.com/apps/A018NEABVNY/) for notifications of various significant events
 
+Computacenter TechSource - this app will post cap update requests to TechSource when we change the number of devices allocated to a school.
+
 ### APIs
 
 [Computacenter API](/docs/computacenter_api.md)
@@ -91,6 +93,9 @@ GHWT__SENTRY__DSN                                | DSN (Client key) for Sentry.i
 GHWT__SLACK__EVENT_NOTIFICATIONS__CHANNEL        | Slack channel to which notifications will be sent | get-help-with-tech-test
 GHWT__SLACK__EVENT_NOTIFICATIONS__USERNAME       | Username Slack messages will be posted as | dfe-ghwt-slack-bot
 GHWT__SLACK__EVENT_NOTIFICATIONS__WEBHOOK_URL    | URL for the incoming webhook which the Slack app will use for receiving messages from this application | (nil)
+GHWT__COMPUTACENTER__OUTGOING_API__ENDPOINT      | URL of the CapUpdateRequest API at TechSource | (nil)
+GHWT__COMPUTACENTER__OUTGOING_API__USERNAME      | Basic auth username to use for the TechSource CapUpdateRequest API | (nil)
+GHWT__COMPUTACENTER__OUTGOING_API__PASSWORD      | Basic auth password to use for the TechSource CapUpdateRequest API | (nil)
 
 
 
