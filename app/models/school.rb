@@ -5,6 +5,22 @@ class School < ApplicationRecord
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
+  enum phase: {
+    primary: 'primary',
+    secondary: 'secondary',
+    all_through: 'all_through',
+    sixteen_plus: 'sixteen_plus',
+    phase_not_applicable: 'phase_not_applicable',
+  }
+
+  enum establishment_type: {
+    academy: 'academy',
+    free: 'free',
+    local_authority: 'local_authority',
+    special: 'special',
+    other_type: 'other_type',
+  }
+
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
   end
