@@ -203,6 +203,8 @@ GEM
       ffi-compiler (>= 1.0, < 2.0)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
+    i18n-debug (1.2.0)
+      i18n (< 2)
     json (2.3.1)
     jwt (2.2.1)
     launchy (2.5.0)
@@ -464,6 +466,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   haml
   http
+  i18n-debug
   listen (>= 3.0.5, < 3.3)
   logstash-logger (~> 0.26.1)
   mail-notify
