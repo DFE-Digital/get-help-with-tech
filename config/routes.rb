@@ -67,6 +67,7 @@ Rails.application.routes.draw do
         resources :bulk_requests, only: %i[new create], path: '/bulk'
       end
     end
+    resources :users
   end
 
   namespace :support do
