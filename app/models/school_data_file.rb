@@ -3,6 +3,7 @@ require 'csv'
 class SchoolDataFile
   EXCLUDED_TYPES = [
     'British schools overseas',
+    'City technology college',
     'Further education',
     'Higher education institutions',
     'Institution funded by other government department',
@@ -49,6 +50,8 @@ private
       town: row['Town'],
       county: row['County (name)'],
       postcode: row['Postcode'],
+      phase: phase(row),
+      establishment_type: establishment_type(row),
     }
   end
 
@@ -62,11 +65,44 @@ private
     end
   end
 
+  def phase(row)
+    phase_name = row['PhaseOfEducation (name)']
+    case phase_name
+    when 'Primary', 'Middle deemed primary'
+      'primary'
+    when 'Secondary', 'Middle deemed secondary'
+      'secondary'
+    when 'All-through'
+      'all_through'
+    when '16 plus'
+      'sixteen_plus'
+    else
+      'phase_not_applicable'
+    end
+  end
+
+  def establishment_type(row)
+    est_type = row['EstablishmentTypeGroup (name)']
+    case est_type
+    when 'Academies'
+      'academy'
+    when 'Free Schools'
+      'free'
+    when 'Local authority maintained schools'
+      'local_authority'
+    when 'Special schools'
+      'special'
+    else
+      Rails.logger.info("Other establishment type? '#{est_type}' (urn: #{row['URN']}")
+      'other_type'
+    end
+  end
+
   def skip_school?(row)
     row['EstablishmentStatus (name)'] != 'Open' ||
-      row['LA (name)'] == 'Does not apply' ||
       row['LA (name)'] == 'Vale of Glamorgan' ||
       row['LA (name)'] == 'Isles Of Scilly' ||
+      row['PhaseOfEducation (name)'] == 'Nursery' ||
       EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
   end
 end

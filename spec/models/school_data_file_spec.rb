@@ -7,8 +7,8 @@ RSpec.describe SchoolDataFile, type: :model do
     context 'when a school is open and not an excluded type' do
       let(:attrs) do
         {
-          urn: '100001',
-          name: 'Big School',
+          urn: '103001',
+          name: 'Little School',
           responsible_body: 'Camden',
           address_1: '12 High St',
           town: 'London',
@@ -16,6 +16,8 @@ RSpec.describe SchoolDataFile, type: :model do
           status: 'Open',
           type: 'Voluntary aided school',
           trusts_flag: '0',
+          phase: 'Primary',
+          group_type: 'Local authority maintained schools',
         }
       end
 
@@ -30,12 +32,14 @@ RSpec.describe SchoolDataFile, type: :model do
       it 'retrieves the school data' do
         schools = SchoolDataFile.new(filename).schools
         expect(schools[0]).to include(
-          urn: '100001',
-          name: 'Big School',
+          urn: '103001',
+          name: 'Little School',
           responsible_body: 'Camden',
           address_1: '12 High St',
           town: 'London',
           postcode: 'NW1 1AA',
+          phase: 'primary',
+          establishment_type: 'local_authority',
         )
       end
     end
@@ -52,6 +56,8 @@ RSpec.describe SchoolDataFile, type: :model do
           status: 'Closed',
           type: 'Voluntary aided school',
           trusts_flag: '0',
+          phase: 'Secondary',
+          group_type: 'Local authority maintained schools',
         }
       end
 
@@ -81,6 +87,8 @@ RSpec.describe SchoolDataFile, type: :model do
           status: 'Open',
           type: 'Other independent school',
           trusts_flag: '0',
+          phase: 'Secondary',
+          group_type: 'Independent schools',
         }
       end
 
@@ -111,6 +119,8 @@ RSpec.describe SchoolDataFile, type: :model do
           type: 'Academy sponsor led',
           trusts_flag: '3',
           trusts_name: 'The Multi-Trust Academy',
+          phase: 'Secondary',
+          group_type: 'Academies',
         }
       end
 
@@ -131,6 +141,8 @@ RSpec.describe SchoolDataFile, type: :model do
           address_1: '12 High St',
           town: 'London',
           postcode: 'NW1 1AA',
+          phase: 'secondary',
+          establishment_type: 'academy',
         )
       end
     end
@@ -138,8 +150,8 @@ RSpec.describe SchoolDataFile, type: :model do
     context 'when a school is managed by a Single-Academy Trust' do
       let(:attrs) do
         {
-          urn: '100001',
-          name: 'Big School',
+          urn: '100021',
+          name: 'All Phase School',
           responsible_body: 'Camden',
           address_1: '12 High St',
           town: 'London',
@@ -148,6 +160,8 @@ RSpec.describe SchoolDataFile, type: :model do
           type: 'Academy sponsor led',
           trusts_flag: '5',
           trusts_name: 'The Single-Trust Academy',
+          phase: 'All-through',
+          group_type: 'Academies',
         }
       end
 
@@ -162,12 +176,14 @@ RSpec.describe SchoolDataFile, type: :model do
       it 'retrieves the school data' do
         schools = SchoolDataFile.new(filename).schools
         expect(schools[0]).to include(
-          urn: '100001',
-          name: 'Big School',
+          urn: '100021',
+          name: 'All Phase School',
           responsible_body: 'The Single-Trust Academy',
           address_1: '12 High St',
           town: 'London',
           postcode: 'NW1 1AA',
+          phase: 'all_through',
+          establishment_type: 'academy',
         )
       end
     end
