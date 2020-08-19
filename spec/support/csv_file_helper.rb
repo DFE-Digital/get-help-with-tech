@@ -15,6 +15,8 @@ module CSVFileHelper
     type: 'TypeOfEstablishment (name)',
     trusts_flag: 'TrustSchoolFlag (code)',
     trusts_name: 'Trusts (name)',
+    phase: 'PhaseOfEducation (name)',
+    group_type: 'EstablishmentTypeGroup (name)',
   }.freeze
 
   def create_school_csv_file(filename, array_of_hashes)
