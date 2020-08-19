@@ -51,6 +51,9 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     namespace :devices do
       get '/', to: 'home#show'
+      get '/who-will-order', to: 'who_will_order#show'
+      get '/who-will-order/edit', to: 'who_will_order#edit'
+      patch '/who-will-order', to: 'who_will_order#update'
     end
     namespace :internet do
       get '/', to: 'home#show'
