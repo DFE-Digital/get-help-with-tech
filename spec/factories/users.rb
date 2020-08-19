@@ -27,12 +27,12 @@ FactoryBot.define do
     end
 
     factory :local_authority_user do
-      association :responsible_body, factory: :local_authority
+      association :responsible_body, factory: %i[local_authority in_connectivity_pilot]
       approved
     end
 
     factory :trust_user do
-      association :responsible_body, factory: :trust
+      association :responsible_body, factory: %i[trust in_connectivity_pilot]
       approved
     end
 
