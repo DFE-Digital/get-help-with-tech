@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Setting up the devices ordering' do
-  let(:rb_user) { create(:responsible_body_user) }
+  let(:rb_user) { create(:local_authority_user) }
 
   before do
     rb_user.responsible_body.update(in_devices_pilot: true)
@@ -14,4 +14,25 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(page).to have_link 'Continue'
   end
 
+  scenario 'clicking "Continue" asks me who will order the devices' do
+    click_on 'Get devices'
+    click_on 'Continue'
+    expect(page).to have_content 'Who will order a school’s laptops and tablets?'
+    expect(page).to have_field 'Most schools will manage their own orders (recommended)'
+  end
+
+  scenario 'submitting the form without choosing an option shows an error' do
+    visit responsible_body_devices_who_will_order_edit_path
+    click_on 'Continue'
+    expect(page).to have_http_status(:unprocessable_entity)
+    expect(page).to have_content('There is a problem')
+  end
+
+  scenario 'submitting the form after choosing an option shows guidance about that option' do
+    visit responsible_body_devices_who_will_order_edit_path
+    choose 'Most schools will manage their own orders (recommended)'
+    click_on 'Continue'
+    expect(page).to have_http_status(:ok)
+    expect(page).to have_content('Each school will manage their own orders')
+  end
 end

@@ -17,13 +17,12 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Device
   end
 
   def show
-    
+
   end
 
 private
 
   def who_will_order_params(opts = params)
-    opts.require(:responsible_body_devices_who_will_order_form)
-        .permit(:who_will_order)
+    opts.require(:responsible_body_devices_who_will_order_form).permit(:who_will_order)
   end
 end

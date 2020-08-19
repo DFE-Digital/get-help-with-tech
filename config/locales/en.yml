@@ -124,6 +124,13 @@ en:
       no_items: "No %{item_name} found"
       single_page: "%{count} %{item_name}"
       multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
+  activemodel:
+    errors:
+      models:
+        responsible_body/devices/who_will_order_form:
+          attributes:
+            who_will_order:
+              inclusion: Tell us who will order devices and laptops
   activerecord:
     attributes:
       api_token:
