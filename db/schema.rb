@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 2020_08_19_123617) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "in_devices_pilot", default: false
     t.boolean "in_connectivity_pilot", default: false
-    t.string "who_will_order_devices"
   end
 
   create_table "school_device_allocations", force: :cascade do |t|
