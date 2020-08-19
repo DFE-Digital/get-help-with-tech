@@ -32,6 +32,7 @@ RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
   end
 
   def when_i_visit_the_download_vouchers_link
+    click_link 'Get the internet'
     click_link 'Download log-ins for BT wifi hotspots'
   end
 

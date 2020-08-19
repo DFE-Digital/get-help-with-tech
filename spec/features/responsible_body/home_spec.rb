@@ -29,17 +29,66 @@ RSpec.feature ResponsibleBody do
     end
   end
 
-  context 'signed in as an RB user' do
+  context 'visiting the RB home page signed in as an RB user' do
     before do
       sign_in_as rb_user
+      visit responsible_body_home_path
     end
 
-    scenario 'visiting the page' do
-      visit responsible_body_home_path
+    context 'with the in_connectivity_pilot flag set' do
+      before do
+        rb_user.responsible_body.update(in_connectivity_pilot: true)
+      end
 
-      expect(responsible_body_home_page).to be_displayed
-      expect(page.status_code).to eq 200
-      expect(page).to have_text('Request extra data for mobile devices')
+      it 'shows link to get extra data' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page).to be_displayed
+        expect(page.status_code).to eq 200
+        expect(page).to have_link('Get the internet')
+      end
+    end
+
+    context 'with the in_connectivity_pilot flag not set' do
+      before do
+        rb_user.responsible_body.update(in_connectivity_pilot: false)
+      end
+
+      it 'does not show link to get extra data' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page).to be_displayed
+        expect(page.status_code).to eq 200
+        expect(page).not_to have_link('Get the internet')
+      end
+    end
+
+    context 'with the in_devices_pilot flag set' do
+      before do
+        rb_user.responsible_body.update(in_devices_pilot: true)
+      end
+
+      it 'shows link to get devices' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page).to be_displayed
+        expect(page.status_code).to eq 200
+        expect(page).to have_link('Get devices')
+      end
+    end
+
+    context 'with the in_devices_pilot flag not set' do
+      before do
+        rb_user.responsible_body.update(in_devices_pilot: false)
+      end
+
+      it 'does not show link to get devices' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page).to be_displayed
+        expect(page.status_code).to eq 200
+        expect(page).not_to have_link('Get devices')
+      end
     end
   end
 end

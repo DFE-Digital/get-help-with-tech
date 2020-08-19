@@ -49,7 +49,11 @@ Rails.application.routes.draw do
 
   namespace :responsible_body, path: '/responsible-body' do
     get '/', to: 'home#show', as: :home
+    namespace :devices do
+      get '/', to: 'home#show'
+    end
     namespace :internet do
+      get '/', to: 'home#show'
       resources :bt_wifi_vouchers, only: %i[index], path: '/bt-wifi-vouchers' do
         get 'download', to: 'bt_wifi_vouchers#download', on: :collection
       end

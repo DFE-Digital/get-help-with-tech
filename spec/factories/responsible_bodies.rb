@@ -5,6 +5,14 @@ FactoryBot.define do
     local_authority_official_name { [organisation_type, name].join(' of ') }
     local_authority_eng           { name.first(3).upcase }
     companies_house_number        { rand(99_999).to_s }
+
+    trait :in_connectivity_pilot do
+      in_connectivity_pilot       { true }
+    end
+
+    trait :in_devices_pilot do
+      in_devices_pilot            { true }
+    end
   end
 
   factory :trust do
@@ -20,6 +28,14 @@ FactoryBot.define do
 
     trait :multi_academy_trust do
       organisation_type           { :multi_academy_trust }
+    end
+
+    trait :in_connectivity_pilot do
+      in_connectivity_pilot       { true }
+    end
+
+    trait :in_devices_pilot do
+      in_devices_pilot            { true }
     end
   end
 end
