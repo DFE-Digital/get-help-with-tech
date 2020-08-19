@@ -7,7 +7,7 @@
 # So we're pulling this out to a dedicated controller in order to keep the
 # rest of the application 'clean' and RESTful.
 class Computacenter::API::BaseController < ApplicationController
-  before_action :require_cc_user!, :read_xml_from_body!
+  before_action :require_cc_user!, :read_xml_from_body!, :log_request_verbosely
   rescue_from Computacenter::API::APIError, with: :api_error!
 
 private
@@ -42,6 +42,13 @@ private
       status: :bad_request,
       message: 'The request body you provided was not valid XML',
     )
+  end
+
+  def log_request_verbosely
+    logger.info "request.headers = #{request.headers.to_h.reject { |k, _| k.starts_with?('puma.', 'rack.', 'action_') }.inspect}"
+    logger.info "request.format = #{request.format}"
+    logger.info "request.accept = #{request.accept}"
+    logger.info "request.body: \n#{@xml}"
   end
 
   def validate_xml!(schema_name, xml_doc = @xml_doc)
