@@ -1,0 +1,27 @@
+<% content_for :before_content, govuk_link_to('Back', responsible_body_devices_path, class: 'govuk-back-link') %>
+<% content_for :title, title_with_error_prefix(t('page_titles.who_will_order'), @form.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @form, url: responsible_body_devices_who_will_order_path, method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+      <%- # this hidden field prevents ActionController::ParameterMissing errors
+          # if the user clicks submit without selecting anything,
+          # and therefore we don't actually get any params %>
+      <%= f.hidden_field :placeholder, value: '' %>
+
+      <h1 class="govuk-heading-xl">
+        <%= t('page_titles.who_will_order') %>
+      </h1>
+
+      <%= f.govuk_collection_radio_buttons  :who_will_order,
+                                            who_will_order_devices_options,
+                                            :id,
+                                            :label,
+                                            :description %>
+
+      <%= f.govuk_submit %>
+
+    <%- end %>
+  </div>
+</div>

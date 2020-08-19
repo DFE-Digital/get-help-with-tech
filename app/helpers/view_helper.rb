@@ -67,6 +67,21 @@ module ViewHelper
     humanized_seconds(Settings.sign_in_token_ttl_seconds)
   end
 
+  def who_will_order_devices_options
+    [
+      OpenStruct.new(
+        id: 'schools',
+        label: 'Most schools will manage their own orders (recommended)',
+        description: 'We’ll need contact details for each school',
+      ),
+      OpenStruct.new(
+        id: 'responsible_body',
+        label: 'Most orders will be managed centrally',
+        description: 'You’ll need to order devices for all schools and give technical settings for any school that wants to order Chromebooks.',
+      ),
+    ]
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

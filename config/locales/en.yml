@@ -17,6 +17,7 @@ en:
     new_user: Create an account
     error_prefix: "Error: "
     responsible_body_home: Increase children’s internet access
+    responsible_body_devices_home: Tell us who will order a school’s laptops and tablets
     responsible_body_internet_home: Get the internet
     requests_for_extra_mobile_data: Requests for extra mobile data
     suggested_email_to_schools: A suggested email for you to send to schools
@@ -36,6 +37,10 @@ en:
     accessibility: Accessibility statement
     support_responsible_bodies: On-boarded responsible bodies
     computacenter_home: Users with permission to place orders and receive support through Computacenter
+    who_will_order: Who will order a school’s laptops and tablets?
+    who_will_order_show:
+      schools: Each school will manage their own orders
+      responsible_body: All orders will be managed centrally
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -119,6 +124,13 @@ en:
       no_items: "No %{item_name} found"
       single_page: "%{count} %{item_name}"
       multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
+  activemodel:
+    errors:
+      models:
+        responsible_body/devices/who_will_order_form:
+          attributes:
+            who_will_order:
+              inclusion: Tell us who will order devices and laptops
   activerecord:
     attributes:
       api_token:
@@ -200,6 +212,10 @@ en:
       time_only: "%l:%M%P"
       time_only_with_zone: "%l:%M%P %Z"
   responsible_body:
+    devices:
+      who_will_order:
+        update:
+          success: We’ve saved your choice
     home:
       bt_wifi_offer:
         number_eligible: Eligible young people
