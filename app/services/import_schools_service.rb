@@ -14,15 +14,13 @@ class ImportSchoolsService
 
   def import_schools
     datasource.schools do |school_data|
-      School.find_or_create_by!(urn: school_data[:urn]) do |school|
-        school.name = school_data[:name]
-        school.responsible_body_id = responsible_body_id(school_data[:responsible_body])
-        school.address_1 = school_data[:address_1]
-        school.address_2 = school_data[:address_2]
-        school.address_3 = school_data[:address_3]
-        school.town = school_data[:town]
-        school.county = school_data[:county]
-        school.postcode = school_data[:postcode]
+      school = School.find_by(urn: school_data[:urn])
+      attrs = attrs_with_responsible_body_id(school_data)
+
+      if school
+        school.update!(attrs)
+      else
+        School.create!(attrs)
       end
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e.message)
@@ -30,6 +28,11 @@ class ImportSchoolsService
   end
 
 private
+
+  def attrs_with_responsible_body_id(school_data)
+    rb_id = responsible_body_id(school_data[:responsible_body])
+    school_data.merge(responsible_body_id: rb_id).except(:responsible_body)
+  end
 
   def responsible_body_id(name)
     rb_id = ResponsibleBody.find_by(name: rb_name(name))&.id
