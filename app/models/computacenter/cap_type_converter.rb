@@ -10,6 +10,6 @@ class Computacenter::CapTypeConverter
   end
 
   def self.to_computacenter_type(dfe_type)
-    CAP_TYPES_MAP.key(dfe_type).first
+    CAP_TYPES_MAP.key(dfe_type)
   end
 end
