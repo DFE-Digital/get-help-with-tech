@@ -14,6 +14,9 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Device
     else
       render :edit, status: :unprocessable_entity
     end
+  rescue ActionController::ParameterMissing
+    @form = ResponsibleBody::Devices::WhoWillOrderForm.new
+    render :edit, status: :unprocessable_entity
   end
 
   def show
