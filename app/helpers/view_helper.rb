@@ -77,10 +77,11 @@ module ViewHelper
       OpenStruct.new(
         id: 'responsible_body',
         label: 'Most orders will be managed centrally',
-        description: 'You’ll need to order devices for all schools and give technical settings for any school that wants to order Chromebooks.'
+        description: 'You’ll need to order devices for all schools and give technical settings for any school that wants to order Chromebooks.',
       ),
     ]
   end
+
 private
 
   def prepend_css_class(css_class, current_class)

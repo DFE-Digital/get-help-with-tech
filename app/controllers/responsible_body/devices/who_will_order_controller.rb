@@ -1,7 +1,7 @@
 class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Devices::BaseController
   def edit
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(
-      who_will_order: @responsible_body.who_will_order_devices
+      who_will_order: @responsible_body.who_will_order_devices,
     )
   end
 
@@ -19,9 +19,7 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Device
     render :edit, status: :unprocessable_entity
   end
 
-  def show
-
-  end
+  def show; end
 
 private
 
