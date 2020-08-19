@@ -33,6 +33,12 @@ RSpec.feature 'Setting up the devices ordering' do
     choose 'Most schools will manage their own orders (recommended)'
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
-    expect(page).to have_content('Each school will manage their own orders')
+    expect(page).to have_content('We’ve set each school as managing their own orders')
+
+    visit responsible_body_devices_who_will_order_edit_path
+    choose 'Most orders will be managed centrally'
+    click_on 'Continue'
+    expect(page).to have_http_status(:ok)
+    expect(page).to have_content('We’ve set each school as having their orders managed centrally')
   end
 end
