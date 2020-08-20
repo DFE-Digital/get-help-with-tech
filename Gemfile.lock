@@ -241,7 +241,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (5.1.2)
       jwt (>= 1.5, < 3)
-    pagy (3.8.2)
+    pagy (3.8.3)
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
