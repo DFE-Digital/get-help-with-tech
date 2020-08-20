@@ -75,6 +75,8 @@ private
       'all_through'
     when '16 plus'
       'sixteen_plus'
+    when 'Nursery'
+      'nursery'
     else
       'phase_not_applicable'
     end
