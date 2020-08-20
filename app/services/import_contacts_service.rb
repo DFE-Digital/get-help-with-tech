@@ -12,8 +12,6 @@ class ImportContactsService
 
       attrs = user_attrs(contact_data)
 
-      next if attrs[:email_address].blank? || attrs[:full_name].blank?
-
       set_contact_data(school, attrs)
 
     rescue ActiveRecord::RecordInvalid => e
