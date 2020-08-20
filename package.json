@@ -3,7 +3,7 @@
     "node": "12.x"
   },
   "dependencies": {
-    "@rails/webpacker": ">=5.1.1",
+    "@rails/webpacker": ">=5.2.1",
     "core-js": ">=3",
     "govuk-frontend": ">=3.8.1",
     "jquery": "3.5.1",
