@@ -42,6 +42,10 @@ class LocalAuthority < ResponsibleBody
     enriched_data['Local Authority GIAS ID']
   end
 
+  def computacenter_name
+    enriched_data['Local Authority Name']
+  end
+
 private
 
   def enriched_data
