@@ -1,0 +1,43 @@
+<div class="user">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h2>
+  <p class="govuk-body">
+    <%= govuk_link_to 'Edit user', edit_responsible_body_user_path(user) %>
+  </p>
+
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Email address
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= user.email_address %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Telephone
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= user.telephone %>
+      </dd>
+    </div>
+    <%- if @responsible_body.in_devices_pilot? %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Order devices
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= user.can_order_devices? ? 'Yes' : 'No' %>
+        </dd>
+      </div>
+    <%- end %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Last sign in
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= user.last_signed_in_at ? l(user.last_signed_in_at, format: :short) : '-'%>
+      </dd>
+    </div>
+  </dl>
+</div>

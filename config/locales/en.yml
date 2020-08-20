@@ -19,6 +19,8 @@ en:
     responsible_body_home: Increase children’s internet access
     responsible_body_devices_home: Tell us who will order a school’s laptops and tablets
     responsible_body_internet_home: Get the internet
+    responsible_body_users_index: Manage %{rb_type} users
+    new_responsible_body_user: Invite a new user
     requests_for_extra_mobile_data: Requests for extra mobile data
     suggested_email_to_schools: A suggested email for you to send to schools
     request_extra_mobile_data: Request extra mobile data

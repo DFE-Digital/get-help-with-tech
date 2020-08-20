@@ -1,0 +1,30 @@
+<%- title = t('page_titles.new_responsible_body_user') %>
+<%- content_for :before_content do %>
+  <%= govuk_link_to('Back', responsible_body_users_path, class: 'govuk-back-link') %>
+<% end %>
+<%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%= form_for @user, url: responsible_body_users_path do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_text_field  :full_name,
+                              label: { text: 'Name', size: 'm' } %>
+
+      <%= f.govuk_email_field :email_address,
+                              label: { text: 'Email address', size: 'm' },
+                              hint_text: 'They will use this email address to sign in' %>
+
+      <%= f.govuk_text_field  :telephone,
+                              width: 10,
+                              label: { text: 'Telephone number', size: 'm' } %>
+
+      <%= f.govuk_submit 'Send invite' %>
+    <%- end %>
+  </div>
+</div>
