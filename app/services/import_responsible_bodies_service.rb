@@ -18,6 +18,11 @@ class ImportResponsibleBodiesService
         .first_or_create!(
           name: entry['Group Name'],
           organisation_type: entry['Group Type'],
+          address_1: entry['Group Street'],
+          address_2: entry['Group Locality'],
+          address_3: entry['Group Address 3'],
+          town: entry['Group Town'],
+          postcode: entry['Group Postcode'],
         )
     end
   end
