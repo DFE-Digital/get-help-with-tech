@@ -1,0 +1,152 @@
+Local Authority GIAS ID,Local Authority Name,Address Line 1,Address Line 2,Address Line 3,Town/City,Postcode,Local Authority ENG
+201,City of London,"PO Box 270, Guildhall",,,London,EC2P 2EJ,LND
+202,Camden,218 Eversholt Street,,,London,NW1 1PB,CMD
+203,Greenwich,Woolwich Centre,35 Wellington Street,,London,SE18 6HQ,GRE
+204,Hackney,1 Reading Lane,,,London,E8 1GQ,HCK
+205,Hammersmith and Fulham,145-155 King Street,,,Hammersmith,W6 9XY,HMF
+206,Islington,222 Upper Street,,,London,N1 1XR,ISL
+207,Kensington and Chelsea,"Children’s Services Department,",Hammersmith Town Hall,King Street,London,W6 9JU,KEC
+208,Lambeth,"Lambeth Town Hall, 1st floor",Brixton Hill,,Brixton,SW2 1RW,LBH
+209,Lewisham,"1st Floor, Laurence House",1 Catford Road,,London,SE6 4RU,LEW
+210,Southwark,160 Tooley Street,,,London,SE1P 5LX,SWK
+211,Tower Hamlets,Mulberry Place,,,London,E14 2BG,TWH
+212,Wandsworth,The Town Hall,Wandsworth High Street,,London,SW18 2PU,WND
+213,Westminster,"4th Floor, 5 The Strand",,,London,WC2N 5HR,WSM
+301,Barking and Dagenham,Town Hall,,,Barking,IG11 7LU,BDG
+302,Barnet,"Building 4,",North London Business Park,Oakleigh Road South,London,N11 1NP,BNE
+303,Bexley,"Civic Offices, 2 Watling Street",,,Bexleyheath,DA6 7AT,BEX
+304,Brent,Brent Civic Centre,Engineers Way,,Wembley,HA9 0FJ,BEN
+305,Bromley,Bromley Civic Centre,Stockwell Close,,Bromley,BR1 3UH,BRY
+306,Croydon,"9th Floor, Zone B,",Bernard Weatherill House,8 Mint Walk,Croydon,CR0 1EA,CRY
+307,Ealing,Perceval House,14-16 Uxbridge Road,,London,W5 2HL,EAL
+308,Enfield,"PO Box 56, Civic Centre",Silver Street,,Enfield,EN1 3XQ,ENF
+309,Haringey,River Park House,225 High Road,,London,N22 8HQ,HRY
+310,Harrow,Civic Centre,Station Road,,Harrow,HA1 2XF,HRW
+311,Havering,Town Hall,Main Road,,Romford,RM1 3BD,HAV
+312,Hillingdon,Civic Centre,High Street,,Uxbridge,UB8 1UW,HIL
+313,Hounslow,The Civic Centre,Lampton Road,,Hounslow,TW3 4YN,HNS
+314,Kingston upon Thames,42 York Street,,,Twickenham,TW1 3BW,KTT
+315,Merton,Merton Civic Centre,London Road,,Morden,SM4 5DX,MRT
+316,Newham,Newham Dockside,1000 Dockside Road,,London,E16 2QU,NWM
+317,Redbridge,Lynton House,255-259 High Road,,Ilford,IG1 1NN,RDB
+318,Richmond upon Thames,44 York Street,,,Twickenham,TW1 3BZ,RIC
+319,Sutton,Civic Offices,St Nicholas Way,,Sutton,SM1 1EA,STN
+320,Waltham Forest,"Room 206, Town Hall",Forest Road,,London,E17 4JF,WFT
+330,Birmingham,Children & Young People Directorate,PO BOX 17550,,Birmingham,B2 2DP,BIR
+331,Coventry,Civic Centre 1,Little Park Street,,Coventry,CV1 5RS,COV
+332,Dudley,Council House,Priory Road,,Dudley,DY1 1HF,DUD
+333,Sandwell,Sandwell Council House,Freeth Street,,Oldbury,B69 3DE,SAW
+334,Solihull,Council House,PO Box 20,,Solihull,B91 3QU,SOL
+335,Walsall,Council House,Lichfield Street,,Walsall,WS1 1TW,WLL
+336,Wolverhampton,Civic Centre,St Peter’s Square,,Wolverhampton,WV1 1RR,WLV
+340,Knowsley,Municipal Buildings,Archway Road,,Huyton,L36 9YU,KWL
+341,Liverpool,Municipal Buildings,Dale Street,,Liverpool,L2 2DH,LIV
+342,St. Helens,"2nd Floor, Gamble Building",Victoria Square,,St Helens,WA10 1DY,SHN
+343,Sefton,"9th Floor, Merton House",Stanley Road,,Bootle,L20 3JA,SFT
+344,Wirral,Hamilton Building,Conway Street,,Birkenhead,CH41 4FD,WRL
+350,Bolton,Town Hall,,,Bolton,BL1 1RU,BOL
+351,Bury,3 Knowsley Place,Duke Street,,Bury,BL9 0EJ,BUR
+352,Manchester,Town Hall,Albert Square,,Manchester,M60 2LA,MAN
+353,Oldham,Civic Centre,West Street,,Oldham,OL1 1XJ,OLD
+354,Rochdale,"PO Box 70, Municipal Offices",Smith Street,,Rochdale,OL16 1YD,RCH
+355,Salford,"Salford Children’s Services,",Unity House,Chorley Road,Swinton,M27 5AW,SLF
+356,Stockport,"Upper Ground Floor, Stopford House",,,Stockport,SK1 3XE,SKP
+357,Tameside,Hyde Town Hall,Market Street,,Hyde,SK14 1AL,TAM
+358,Trafford,"PO Box 40, Trafford Town Hall",Talbot Rd,,Stretford,M32 OEL,TRF
+359,Wigan,Wigan Town Hall,Library Street,,Wigan,WN1 1YN,WGN
+370,Barnsley,PO Box 609,,,Barnsley,S70 9FH,BNS
+371,Doncaster,The Civic Office,Waterdale,,Doncaster,DN1 3BU,DNC
+372,Rotherham,Riverside House,Main Street,,Rotherham,S60 2NE,ROT
+373,Sheffield,Town Hall,Pinstone Street,,Sheffield,S1 2HH,SHF
+380,Bradford,Margaret McMillan Tower,Princes Way,,Bradford,BD1 1NN,BRD
+381,Calderdale,Town Hall,Crossley Street,,Halifax,HX1 1UJ,CLD
+382,Kirklees,Civic Centre 111,,,Huddersfield,HD1 2EY,KIR
+383,Leeds,Children’s Services,PO BOX 837,,Leeds,LS1 9PZ,LDS
+384,Wakefield,County Hall,Bond Street,,Wakefield,WF1 2QW,WKF
+390,Gateshead,Civic Centre,Regent Street,,Gateshead,NE8 1HH,GAT
+391,Newcastle upon Tyne,Civic Centre,,,Newcastle Upon Tyne,NE1 8QH,NET
+392,North Tyneside,Cobalt Business Park,"Quadrant, The Silverlink North",,North Tyneside,NE27 0BY,NTY
+393,South Tyneside,"Town Hall, Civic Offices",Westoe Road,,South Shields,NE33 2RL,STY
+394,Sunderland,Civic Centre,Burdon Road,,Sunderland,SR2 7DN,SND
+420,Isles Of Scilly,Carn Thomas,St Mary’s,,Isles of Scilly,TR21 OPT,IOS
+800,Bath and NE Somerset,"PO Box 25, Riverside",Temple Street,,"Keynsham, Bristol",BS31 1DN,BAS
+801,"Bristol, City of","PO Box 57, The Council House",College Green,,Bristol,BS99 7EB,BST
+802,North Somerset,Town Hall,Walliscote Grove Road,,Weston-super-Mare,BS23 1UJ,NSM
+803,South Gloucestershire,"PO Box 298,Civic Centre",Dept for Children Adults & Health,High street,Bristol,BS15 0DQ,SGC
+805,Hartlepool,Level 4 Civic Centre,Victoria Road,,Hartlepool,TS24 8AY,HPL
+806,Middlesbrough,"PO Box 69, Vancouver House",Gurney Street,,Middlesbrough,TS1 1EL,MDB
+807,Redcar and Cleveland,Civic Offices PO Box 83,Kirkleatham Street,,Redcar,TS10 1YA,RCC
+808,Stockton-on-Tees,Municipal Buildings,Church Road,,Stockton-on-Tees,TS18 1LD,STT
+810,Kingston upon Hull City,Room 42,Guildhall,,Hull,HU1 2AA,KHL
+811,East Riding of Yorks,County Hall,,,Beverley,HU17 9BA,ERY
+812,North East Lincolnshire,Municipal Offices,,,Grimsby,DN31 1HU,NEL
+813,North Lincolnshire,"PO Box 35, Hewson House",Station Road,,Brigg,DN20 8XJ,NLN
+815,North Yorkshire,County Hall,,,Northallerton,DL7 8AE,NYK
+816,York,West Offices,Station Rise,,York,YO1 6GA,YOR
+821,Luton,111 Stuart Street,,,Luton,LU1 5NP,LUT
+822,Bedford,Borough Hall,Cauldwell Street,,Bedford,MK42 9AP,BDF
+823,Central Bedfordshire,Priory House,Monks Walk,,Shefford,SG17 5TQ,CBF
+825,Buckinghamshire,The Gateway,Gatehouse Road,,Aylesbury,HP19 8FF,BUC
+826,Milton Keynes,Saxon Court,Avebury Boulevard,,Central Milton Keynes,MK9 3HS,MIK
+830,Derbyshire,County Hall,,,Matlock,DE4 3AG,DBY
+831,Derby,Children & Young People Directorate,The Council House,Corporation Street,Derby,DE1 2FS,DER
+838,Dorset,County Hall,,,Dorchester,DT1 1XJ,DST
+839,Bournemouth Chrstchch & Poole,Town Hall,,,Bournemouth,BH2 6DY,BPC
+840,County Durham,County Hall,,,Durham,DH1 5UJ,DUR
+841,Darlington,Town Hall,Feethams,,Darlington,DL1 5QT,DAL
+845,East Sussex,"PO Box 4, County Hall",St Anne’s Crescent,,Lewes,BN7 1SG,ESX
+846,Brighton and Hove,Kings House,Grand Avenue,,Hove,BN3 2SU,BNH
+850,Hampshire,Children’s Services Department,3rd Floor,"Elizabeth II Court North, The Castl",Winchester,SO23 8UG,HAM
+851,Portsmouth,"3rd Floor, Civic Offices",Guildhall Square,,Portsmouth,PO1 2AL,POR
+852,Southampton,Civic Centre,,,Southampton,SO14 7LY,STH
+855,Leicestershire,County Hall,Glenfield,,Leicester,LE3 8RF,LEC
+856,Leicester,"3rd Floor, 115 Charles Street",,,Leicester,LE1 1FZ,LCE
+857,Rutland,Catmose,Oakham,,Rutland,LE15 6HP,RUT
+860,Staffordshire,Staffordshire Place,Tipping Street,,Stafford,ST16 2DH,STS
+861,Stoke-on-Trent,Civic Centre,Glebe Street,,Stoke-On-Trent,ST4 1HH,STE
+865,Wiltshire,County Hall,Bythesea Road,,Trowbridge,BA14 8JN,WIL
+866,Swindon,Swindon Borough Council,"Civic Offices, Euclid Street",,Swindon,SN1 2JH,SWD
+867,Bracknell Forest,Time Square,Market Street,,Bracknell,RG12 1JD,BRC
+868,Windsor and Maidenhead,Town Hall,St Ives Rd,,Maidenhead,SL6 1RF,WNM
+869,West Berkshire,West Street House,West Street,,Newbury,RG14 1BZ,WBK
+870,Reading,"Brighter Futures for Children,",Civic Offices,Bridge Street,Reading,RG1 2LU,RDG
+871,Slough,Town Hall,Bath Rd,,Slough,SL1 3UQ,SLG
+872,Wokingham,Shute End,,,Wokingham,RG40 1BN,WOK
+873,Cambridgeshire,Shire Hall,Castle Hill,,Cambridge,CB3 OAP,CAM
+874,Peterborough,Town Hall,Bridge Street,,Peterborough,PE1 1HF,PTE
+876,Halton,Municipal Building,Kingsway,,Widnes,WA8 7QF,HAL
+877,Warrington,New Town House,Buttermarket Street,,Warrington,WA1 2NH,WRT
+878,Devon,County Hall,Topsham Road,,Exeter,EX2 4QG,DEV
+879,Plymouth,Ballard House,West Hoe Road,,Plymouth,PL1 3BJ,PLY
+880,Torbay,"C/o Townhall, Children’s Services",(Torhill House 1st Floor South),Castle Circus,Torquay,TQ1 3DR,TOB
+881,Essex,Children’s Services,Corporate Directorate,PO Box 11,Chelmsford,CM1 1LX,ESS
+882,Southend-on-Sea,Civic Centre,Victoria Avenue,,Southend on Sea,SS2 6ER,SOS
+883,Thurrock,Civic Offices,New Road Grays,,Thurrock,RM17 6GF,THR
+884,Herefordshire County of,Plough Lane,,,Hereford,HR4 0LE,HEF
+885,Worcestershire,County Hall,Spetchley Road,,Worcester,WR5 2NP,WOR
+886,Kent,Sessions House,,,Maidstone,ME14 1XQ,KEN
+887,Medway,Gun Wharf,Dock Road,,Chatham,ME4 4TR,MDW
+888,Lancashire,PO Box 100,County Hall,,Preston,PR1 0LD,LAN
+889,Blackburn with Darwen,10 Duke Street,,,Blackburn,BB2 1DH,BBD
+890,Blackpool,"Number One, Bickerstaffe Square",,,Blackpool,FY1 3HS,BPL
+891,Nottinghamshire,County Hall,West Bridgford,,Nottingham,NG2 7QP,NTT
+892,Nottingham,Loxley House,Station Street,,Nottingham,NG2 3NG,NGM
+893,Shropshire,Shire Hall,Abbey Foregate,,Shrewsbury,SY2 6ND,SHR
+894,Telford and Wrekin,Addenbrooke House,Ironmasters Way,,Telford,TF3 4NT,TFW
+895,Cheshire East,Westfields,Middlewich Road,,Sandbach,CW11 1HZ,CHE
+896,Cheshire West & Chester,58 Nicholas Street,,,Chester,CH1 2NP,CHW
+908,Cornwall,New County Hall,,,Truro,TR1 3AY,CON
+909,Cumbria,Cumbria House,117 Botchergate,,Carlisle,CA1 1RD,CMA
+916,Gloucestershire,Shire Hall,Westgate Street,,Gloucester,GL1 2TR,GLS
+919,Hertfordshire,County Hall,Peg Lane,,Hertford,SG13 8DF,HRT
+921,Isle of Wight,County Hall,,,Newport,PO30 1UD,IOW
+925,Lincolnshire,County Offices,Newland,,Lincoln,LN1 1YQ,LIN
+926,Norfolk,County Hall,Martineau Lane,,Norwich,NR1 2DH,NFK
+928,Northamptonshire,1 Angel Square,Angel Street,,Northampton,NN1 1ED,NTH
+929,Northumberland,County Hall,,,Morpeth,NE61 2EF,NBL
+931,Oxfordshire,County Hall,New Road,,Oxford,OX1 1ND,OXF
+933,Somerset,The Crescent,,,Taunton,TA1 4DY,SOM
+935,Suffolk,Endeavour House,8 Russell Road,,Ipswich,IP1 2BX,SFK
+936,Surrey,County Hall,,,Kingston upon Thames,KT1 2DN,SRY
+937,Warwickshire,"PO BOX 2, Shire Hall",,,Warwick,CV34 4RR,WAR
+938,West Sussex,County Hall,,,Chichester,PO19 1RQ,WSX
