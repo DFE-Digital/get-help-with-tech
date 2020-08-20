@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_215502) do
+ActiveRecord::Schema.define(version: 2020_08_20_222431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,11 @@ ActiveRecord::Schema.define(version: 2020_08_19_215502) do
     t.boolean "in_devices_pilot", default: false
     t.boolean "in_connectivity_pilot", default: false
     t.string "who_will_order_devices"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "address_3"
+    t.string "town"
+    t.string "postcode"
   end
 
   create_table "school_device_allocations", force: :cascade do |t|
