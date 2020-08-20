@@ -1,8 +1,4 @@
 {
-  "name": "get-help-with-tech",
-  "engines": {
-    "node": "12.18.x"
-  },
   "dependencies": {
     "@rails/webpacker": ">=5.1.1",
     "core-js": ">=3",
