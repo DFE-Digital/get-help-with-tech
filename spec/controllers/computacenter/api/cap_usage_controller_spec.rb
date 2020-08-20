@@ -136,5 +136,27 @@ RSpec.describe Computacenter::API::CapUsageController do
         expect(response).to have_http_status(:multi_status)
       end
     end
+
+    context 'when only a single record is being updated (XML parsing works slightly differently)' do
+      let(:cap_usage_update_packet) do
+        <<~XML
+          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
+          </CapUsage>
+        XML
+      end
+
+      before do
+        @school = create(:school, computacenter_reference: '81060874')
+        create(:school_device_allocation, school: @school, device_type: 'std_device', allocation: 100)
+      end
+
+      it 'responds with :multi_status status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        expect(response).to have_http_status(:ok)
+        expect(@school.reload.allocation_for_type!(:std_device).devices_ordered).to eq(20)
+      end
+    end
   end
 end
