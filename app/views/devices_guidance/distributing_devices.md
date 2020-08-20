@@ -1,6 +1,6 @@
 ## Who owns the devices
 
-Local authorities (LAs) and academy trusts will own the devices (and the licenses) they receive, and will continue to do so after we come out of coronavirus (COVID-19) measures. This means devices can continue to support children and young people’s education and online access to social care services.
+Local authorities (LAs) and academy trusts will own the devices (and the licenses) they receive, and will continue to do so after we come out of coronavirus (COVID-19) measures. This means devices can continue to support children and  young people’s education and online access to social care services.
 
 LAs and academy trusts can choose to:
 
