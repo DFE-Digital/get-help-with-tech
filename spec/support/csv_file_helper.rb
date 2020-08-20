@@ -17,6 +17,14 @@ module CSVFileHelper
     trusts_name: 'Trusts (name)',
     phase: 'PhaseOfEducation (name)',
     group_type: 'EstablishmentTypeGroup (name)',
+    head_first_name: 'HeadFirstName',
+    head_last_name: 'HeadLastName',
+    head_title: 'HeadTitle (name)',
+    head_preferred_title: 'HeadPreferredJobTitle',
+    telephone: 'TelephoneNum',
+    head_email: 'HeadEmail',
+    main_email: 'MainEmail',
+    alt_email: 'AlternativeEmail',
   }.freeze
 
   def create_school_csv_file(filename, array_of_hashes)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_215502) do
+ActiveRecord::Schema.define(version: 2020_08_20_143436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,17 @@ ActiveRecord::Schema.define(version: 2020_08_19_215502) do
     t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
   end
 
+  create_table "school_roles", force: :cascade do |t|
+    t.string "role", default: "headteacher", null: false
+    t.string "title"
+    t.bigint "school_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id", "user_id"], name: "index_school_roles_on_school_id_and_user_id"
+    t.index ["user_id", "school_id"], name: "index_school_roles_on_user_id_and_school_id"
+  end
+
   create_table "schools", force: :cascade do |t|
     t.integer "urn", null: false
     t.string "name", null: false
@@ -114,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_215502) do
     t.string "postcode"
     t.string "phase"
     t.string "establishment_type"
+    t.string "phone_number"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true

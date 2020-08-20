@@ -2,6 +2,9 @@ class School < ApplicationRecord
   belongs_to :responsible_body
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
 
+  has_many :roles, class_name: 'SchoolRole', inverse_of: :school
+  has_many :users, through: :roles
+
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
@@ -21,6 +24,14 @@ class School < ApplicationRecord
     special: 'special',
     other_type: 'other_type',
   }
+
+  def headteacher
+    roles.headteacher.first&.user
+  end
+
+  def headteacher_title
+    roles.headteacher.first&.title || 'Headteacher'
+  end
 
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SchoolDataFile, type: :model do
-  describe '#schools' do
+  describe '#records' do
     let(:filename) { Rails.root.join('tmp/school_test_data.csv') }
 
     context 'when a school is open and not an excluded type' do
@@ -30,7 +30,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'retrieves the school data' do
-        schools = SchoolDataFile.new(filename).schools
+        schools = SchoolDataFile.new(filename).records
         expect(schools[0]).to include(
           urn: '103001',
           name: 'Little School',
@@ -70,7 +70,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'does not retrieve the school data' do
-        schools = SchoolDataFile.new(filename).schools
+        schools = SchoolDataFile.new(filename).records
         expect(schools).to be_empty
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'does not retrieve the school data' do
-        schools = SchoolDataFile.new(filename).schools
+        schools = SchoolDataFile.new(filename).records
         expect(schools).to be_empty
       end
     end
@@ -133,7 +133,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'retrieves the school data' do
-        schools = SchoolDataFile.new(filename).schools
+        schools = SchoolDataFile.new(filename).records
         expect(schools[0]).to include(
           urn: '100001',
           name: 'Big School',
@@ -174,7 +174,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'retrieves the school data' do
-        schools = SchoolDataFile.new(filename).schools
+        schools = SchoolDataFile.new(filename).records
         expect(schools[0]).to include(
           urn: '100021',
           name: 'All Phase School',

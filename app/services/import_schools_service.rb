@@ -13,7 +13,7 @@ class ImportSchoolsService
   end
 
   def import_schools
-    datasource.schools do |school_data|
+    datasource.records do |school_data|
       school = School.find_by(urn: school_data[:urn])
       attrs = attrs_with_responsible_body_id(school_data)
 

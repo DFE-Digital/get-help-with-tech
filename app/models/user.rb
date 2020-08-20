@@ -2,6 +2,9 @@ class User < ApplicationRecord
   has_many :extra_mobile_data_requests, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
   has_many :api_tokens, dependent: :destroy
 
+  has_many :roles, class_name: 'SchoolRole', inverse_of: :user
+  has_many :schools, through: :roles
+
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
 
@@ -35,6 +38,10 @@ class User < ApplicationRecord
 
   def is_computacenter?
     email_address.present? && email_address.match?(/@computacenter.com$/)
+  end
+
+  def is_school_contact?
+    schools.exists?
   end
 
   def update_sign_in_count_and_timestamp!

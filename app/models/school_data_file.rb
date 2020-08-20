@@ -3,6 +3,8 @@ require 'csv'
 class SchoolDataFile
   EXCLUDED_TYPES = [
     'British schools overseas',
+    "Children's centre",
+    "Children's centre linked site",
     'Further education',
     'Higher education institutions',
     'Institution funded by other government department',
@@ -20,25 +22,24 @@ class SchoolDataFile
     @csv_path = csv_path
   end
 
-  def schools
-    all_schools = []
-    CSV.foreach(@csv_path, headers: true, encoding: 'ISO8859-1:utf-8') do |row|
-      next if skip_school?(row)
+  def records
+    all_records = []
 
-      school_data = school_attrs(row)
+    read_file do |row|
+      record = extract_record(row)
 
       if block_given?
-        yield school_data
+        yield record
       else
-        all_schools << school_data
+        all_records << record
       end
     end
-    all_schools unless block_given?
+    all_records unless block_given?
   end
 
-private
+protected
 
-  def school_attrs(row)
+  def extract_record(row)
     {
       urn: row['URN'],
       name: row['EstablishmentName'],
@@ -52,6 +53,16 @@ private
       phase: phase(row),
       establishment_type: establishment_type(row),
     }
+  end
+
+private
+
+  def read_file
+    CSV.foreach(@csv_path, headers: true, encoding: 'ISO8859-1:utf-8') do |row|
+      next if skip_school?(row)
+
+      yield row
+    end
   end
 
   def find_responsible_body(row)
