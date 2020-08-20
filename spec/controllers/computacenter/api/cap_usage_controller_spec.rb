@@ -75,46 +75,49 @@ RSpec.describe Computacenter::API::CapUsageController do
   end
 
   describe 'POST bulk_update with valid auth and valid XML' do
-    let(:body) { cap_usage_update_packet }
-    let(:batch_status) { 'succeeded' }
-    let(:mock_batch) { instance_double(Computacenter::API::CapUsageUpdateBatch, status: batch_status) }
+    let(:cap_usage_update_packet) do
+      <<~XML
+        <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+          <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
+          <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100"/>
+          <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060875" capAmount="300" usedCap="57"/>
+          <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060875" capAmount="400" usedCap="100"/>
+        </CapUsage>
+      XML
+    end
 
     before do
       request.headers['Authorization'] = "Bearer #{api_token.token}"
-      allow(controller).to receive(:build_batch).and_return(mock_batch)
-      allow(mock_batch).to receive(:process!)
-      allow(mock_batch).to receive(:succeeded?).and_return false
-      allow(mock_batch).to receive(:failed?).and_return false
-      allow(mock_batch).to receive(:partially_failed?).and_return false
-    end
-
-    it 'creates a new batch' do
-      post :bulk_update, format: :xml, body: cap_usage_update_packet
-      expect(controller).to have_received(:build_batch)
-    end
-
-    it 'processes the batch' do
-      post :bulk_update, format: :xml, body: cap_usage_update_packet
-      expect(mock_batch).to have_received(:process!)
     end
 
     context 'when all updates succeed' do
       before do
-        allow(mock_batch).to receive(:succeeded?).and_return true
+        @school1 = create(:school, computacenter_reference: '81060874')
+        @school2 = create(:school, computacenter_reference: '81060875')
+
+        create(:school_device_allocation, school: @school1, device_type: 'std_device', allocation: 100)
+        create(:school_device_allocation, school: @school1, device_type: 'coms_device', allocation: 100)
+
+        create(:school_device_allocation, school: @school2, device_type: 'std_device', allocation: 300)
+        create(:school_device_allocation, school: @school2, device_type: 'coms_device', allocation: 400)
       end
 
-      it 'responds with :ok status' do
+      it 'responds with :ok status and updates the records' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
+
         expect(response).to have_http_status(:ok)
+
+        expect(@school1.reload.allocation_for_type!(:std_device).devices_ordered).to eq(20)
+        expect(@school1.reload.allocation_for_type!(:coms_device).devices_ordered).to eq(100)
+
+        expect(@school2.reload.allocation_for_type!(:std_device).devices_ordered).to eq(57)
+        expect(@school2.reload.allocation_for_type!(:coms_device).devices_ordered).to eq(100)
       end
     end
 
     context 'when all updates failed' do
-      before do
-        allow(mock_batch).to receive(:failed?).and_return true
-      end
-
       it 'responds with :unprocessable_entity status' do
+        # no schools are seeded in the DB so there will be a data mismatch for all records
         post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -122,12 +125,37 @@ RSpec.describe Computacenter::API::CapUsageController do
 
     context 'when some but not all updates failed' do
       before do
-        allow(mock_batch).to receive(:partially_failed?).and_return true
+        # only 1 of 2 schools there so partial failure
+        school1 = create(:school, computacenter_reference: '81060874')
+        create(:school_device_allocation, school: school1, device_type: 'std_device', allocation: 100)
+        create(:school_device_allocation, school: school1, device_type: 'coms_device', allocation: 100)
       end
 
       it 'responds with :multi_status status' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:multi_status)
+      end
+    end
+
+    context 'when only a single record is being updated (XML parsing works slightly differently)' do
+      let(:cap_usage_update_packet) do
+        <<~XML
+          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
+          </CapUsage>
+        XML
+      end
+
+      before do
+        @school = create(:school, computacenter_reference: '81060874')
+        create(:school_device_allocation, school: @school, device_type: 'std_device', allocation: 100)
+      end
+
+      it 'responds with :multi_status status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        expect(response).to have_http_status(:ok)
+        expect(@school.reload.allocation_for_type!(:std_device).devices_ordered).to eq(20)
       end
     end
   end
