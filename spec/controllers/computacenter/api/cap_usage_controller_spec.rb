@@ -92,19 +92,26 @@ RSpec.describe Computacenter::API::CapUsageController do
 
     context 'when all updates succeed' do
       before do
-        school1 = create(:school, computacenter_reference: '81060874')
-        school2 = create(:school, computacenter_reference: '81060875')
+        @school1 = create(:school, computacenter_reference: '81060874')
+        @school2 = create(:school, computacenter_reference: '81060875')
 
-        create(:school_device_allocation, school: school1, device_type: 'std_device', allocation: 100)
-        create(:school_device_allocation, school: school1, device_type: 'coms_device', allocation: 100)
+        create(:school_device_allocation, school: @school1, device_type: 'std_device', allocation: 100)
+        create(:school_device_allocation, school: @school1, device_type: 'coms_device', allocation: 100)
 
-        create(:school_device_allocation, school: school2, device_type: 'std_device', allocation: 300)
-        create(:school_device_allocation, school: school2, device_type: 'coms_device', allocation: 400)
+        create(:school_device_allocation, school: @school2, device_type: 'std_device', allocation: 300)
+        create(:school_device_allocation, school: @school2, device_type: 'coms_device', allocation: 400)
       end
 
-      it 'responds with :ok status' do
+      it 'responds with :ok status and updates the records' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
+
         expect(response).to have_http_status(:ok)
+
+        expect(@school1.reload.allocation_for_type!(:std_device).devices_ordered).to eq(20)
+        expect(@school1.reload.allocation_for_type!(:coms_device).devices_ordered).to eq(100)
+
+        expect(@school2.reload.allocation_for_type!(:std_device).devices_ordered).to eq(57)
+        expect(@school2.reload.allocation_for_type!(:coms_device).devices_ordered).to eq(100)
       end
     end
 
