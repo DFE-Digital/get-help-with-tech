@@ -32,20 +32,26 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(page).to have_content('There is a problem')
   end
 
+  scenario 'changing the settings for each school after making the choice about who will order' do
+    given_the_responsible_body_has_decided_to_order_centrally
+    when_i_visit_the_responsible_body_homepage
+    when_i_follow_the_get_devices_link
+    then_i_see_a_list_of_the_schools_i_am_responsible_for
+  end
+
   def when_i_follow_the_get_devices_link
     click_on 'Get devices'
-    expect(page).to have_content 'Schools can now order their own devices'
-    expect(page).to have_link 'Continue'
   end
 
   def and_i_continue_through_the_guidance
+    expect(page).to have_content 'Schools can now order their own devices'
+    expect(page).to have_link 'Continue'
     click_on 'Continue'
     expect(page).to have_content 'Who will order a school’s laptops and tablets?'
     expect(page).to have_field 'Most schools will manage their own orders (recommended)'
   end
 
   def and_i_choose_ordering_through_schools
-    visit responsible_body_devices_who_will_order_edit_path
     choose 'Most schools will manage their own orders (recommended)'
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
@@ -65,5 +71,13 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(page).to have_content('2 schools')
     expect(responsible_body_schools_page.school_rows[0]).to have_content('Aardvark Primary School')
     expect(responsible_body_schools_page.school_rows[1]).to have_content('Zebra Secondary School')
+  end
+
+  def given_the_responsible_body_has_decided_to_order_centrally
+    responsible_body.update(who_will_order_devices: 'schools')
+  end
+
+  def when_i_visit_the_responsible_body_homepage
+    visit responsible_body_home_path
   end
 end
