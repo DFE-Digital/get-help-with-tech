@@ -10,6 +10,7 @@ class School < ApplicationRecord
     secondary: 'secondary',
     all_through: 'all_through',
     sixteen_plus: 'sixteen_plus',
+    nursery: 'nursery',
     phase_not_applicable: 'phase_not_applicable',
   }
 
