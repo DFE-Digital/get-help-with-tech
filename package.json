@@ -1,6 +1,7 @@
 {
+  "name": "get-help-with-tech",
   "engines": {
-    "node": "12.18.3"
+    "node": "> 12.18.1"
   },
   "dependencies": {
     "@rails/webpacker": ">=5.1.1",
