@@ -24,6 +24,11 @@ RSpec.feature 'Managing ResponsibleBody users' do
     expect(rb_users_index_page.user_rows[1]).to have_content(rb_user_2.full_name)
   end
 
+  it 'does not include any users from any other responsible_body' do
+    click_on 'Manage local authority users'
+    expect(page).not_to have_content(user_from_other_rb.full_name)
+  end
+
   context 'when the rbs_can_manage_users feature flag is not active' do
     before do
       FeatureFlag.deactivate(:rbs_can_manage_users)
