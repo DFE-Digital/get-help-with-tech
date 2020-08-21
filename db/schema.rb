@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_161806) do
+ActiveRecord::Schema.define(version: 2020_08_21_202014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,9 @@ ActiveRecord::Schema.define(version: 2020_08_21_161806) do
     t.string "who_will_order_devices", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
+    t.index ["status"], name: "index_preorder_information_on_status"
   end
 
   create_table "responsible_bodies", force: :cascade do |t|
