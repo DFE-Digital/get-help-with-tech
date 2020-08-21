@@ -22,16 +22,6 @@
         <%= user.telephone %>
       </dd>
     </div>
-    <%- if @responsible_body.in_devices_pilot? %>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Order devices
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= user.can_order_devices? ? 'Yes' : 'No' %>
-        </dd>
-      </div>
-    <%- end %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         Last sign in

@@ -81,6 +81,7 @@ RSpec.feature 'Managing ResponsibleBody users' do
 
     context 'clicking "Invite a new user"' do
       before do
+        click_on 'Manage local authority users'
         click_on 'Invite a new user'
       end
 
