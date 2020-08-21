@@ -4,7 +4,7 @@ FactoryBot.define do
     email_address { Faker::Internet.unique.email }
 
     trait :approved do
-      approved_at { Time.now.utc - 3.days }
+      approved_at { Time.zone.now.utc - 3.days }
     end
 
     trait :not_approved do

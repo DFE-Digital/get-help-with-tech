@@ -8,7 +8,7 @@ FactoryBot.define do
     end
 
     trait :downloaded do
-      distributed_at { Time.now.utc - rand(500_000).seconds }
+      distributed_at { Time.zone.now.utc - rand(500_000).seconds }
     end
   end
 end

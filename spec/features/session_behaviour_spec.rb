@@ -124,7 +124,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario "Signing in as a recognised user still works even when the email address case doesn't exactly match" do
-        valid_user.update(email_address: 'Jane.Smith@example.com')
+        valid_user.update!(email_address: 'Jane.Smith@example.com')
 
         visit '/'
         click_on 'Sign in'

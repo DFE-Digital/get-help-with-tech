@@ -11,8 +11,8 @@ class FakeDataService
         status: ExtraMobileDataRequest.statuses.values.sample,
         created_by_user_id: created_by_user_id,
       )
-      r.update(created_at: Time.now.utc - rand(500_000).seconds)
-      r.update(problem: ExtraMobileDataRequest.problems.values.sample) if r.queried?
+      r.update!(created_at: Time.zone.now.utc - rand(500_000).seconds)
+      r.update!(problem: ExtraMobileDataRequest.problems.values.sample) if r.queried?
       Rails.logger.info "created #{r.id} - #{r.account_holder_name}"
     end
   end

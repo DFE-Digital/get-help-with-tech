@@ -120,7 +120,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
       end
 
       before do
-        extra_mobile_data_request_for_mno.update(status: 'complete')
+        extra_mobile_data_request_for_mno.update!(status: 'complete')
         click_on 'Your requests'
       end
 

@@ -21,7 +21,7 @@ RSpec.describe ResponsibleBody::Internet::BTWifiVouchersController, type: :contr
 
       it 'sets the `distributed_at` for vouchers that have not been distributed yet' do
         timestamp = Date.new(2020, 6, 1)
-        @vouchers[0].update(distributed_at: timestamp)
+        @vouchers[0].update!(distributed_at: timestamp)
         expect(@vouchers[1].distributed_at).to be_nil
 
         some_time_later = Date.new(2020, 6, 5)
