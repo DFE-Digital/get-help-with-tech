@@ -34,3 +34,7 @@ $govuk-image-url-function: frontend-image-url;
   margin-bottom: govuk-spacing(4);
   border-bottom: 1px solid $govuk-border-colour;
 }
+
+.app-schools-table__school-column {
+  width: 50%;
+}
