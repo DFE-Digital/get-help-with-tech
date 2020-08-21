@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get '/guide-for-distributing-bt-vouchers/not-offered-vouchers-yet', to: 'guide_for_distributing_bt_vouchers#not_offered_vouchers_yet'
 
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
+  get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
