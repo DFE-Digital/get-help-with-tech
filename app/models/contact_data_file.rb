@@ -26,7 +26,7 @@ private
   end
 
   def title(row)
-    choose_option(row, ['HeadPreferredJobTitle', 'HeadTitle (name)'])
+    choose_option(row, ['HeadPreferredJobTitle', 'HeadTitle (name)']) || 'Headteacher'
   end
 
   def phone_number(row)
@@ -37,5 +37,6 @@ private
     keys.each do |key|
       return row[key] if row[key].present?
     end
+    nil
   end
 end

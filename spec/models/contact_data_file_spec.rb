@@ -149,6 +149,76 @@ RSpec.describe ContactDataFile, type: :model do
       end
     end
 
+    context 'when none of the emails are populated' do
+      let(:attrs) do
+        {
+          urn: '103001',
+          responsible_body: 'Camden',
+          status: 'Open',
+          type: 'Voluntary aided school',
+          group_type: 'Local authority maintained schools',
+          head_first_name: 'Darren',
+          head_last_name: 'Carmichael',
+          head_title: 'Head Teacher',
+          telephone: '0123456789',
+        }
+      end
+
+      before do
+        create_school_csv_file(filename, [attrs])
+      end
+
+      after do
+        remove_file(filename)
+      end
+
+      it 'does not populate the email address' do
+        contacts = described_class.new(filename).contacts
+        expect(contacts.first).to include(
+          urn: '103001',
+          email_address: nil,
+          full_name: 'Darren Carmichael',
+          title: 'Head Teacher',
+          phone_number: '0123456789',
+        )
+      end
+    end
+
+    context 'when none of the title options are populated' do
+      let(:attrs) do
+        {
+          urn: '103001',
+          responsible_body: 'Camden',
+          status: 'Open',
+          type: 'Voluntary aided school',
+          group_type: 'Local authority maintained schools',
+          head_email: 'head@camden-school.org',
+          head_first_name: 'Christine',
+          head_last_name: 'Davis',
+          telephone: '0123456789',
+        }
+      end
+
+      before do
+        create_school_csv_file(filename, [attrs])
+      end
+
+      after do
+        remove_file(filename)
+      end
+
+      it 'defaults to Headteacher as the title' do
+        contacts = described_class.new(filename).contacts
+        expect(contacts.first).to include(
+          urn: '103001',
+          email_address: 'head@camden-school.org',
+          full_name: 'Christine Davis',
+          title: 'Headteacher',
+          phone_number: '0123456789',
+        )
+      end
+    end
+
     context 'when a school is closed' do
       let(:attrs) do
         {
