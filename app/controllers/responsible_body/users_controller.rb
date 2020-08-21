@@ -1,4 +1,6 @@
 class ResponsibleBody::UsersController < ResponsibleBody::BaseController
+  before_action :require_feature_flag!, only: %i[new create edit update]
+
   def index
     @users = @responsible_body.users.order(:full_name)
   end
@@ -44,5 +46,9 @@ private
       :telephone,
       :can_order_devices,
     )
+  end
+
+  def require_feature_flag!
+    render_404_if_feature_flag_inactive(:rbs_can_manage_users) unless %i[index show].include?(params[:action])
   end
 end

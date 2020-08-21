@@ -4,6 +4,7 @@ class FeatureFlag
     rate_limiting
     public_account_creation
     sign_in_slack_notifications
+    rbs_can_manage_users
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[].freeze
