@@ -1,0 +1,17 @@
+<%- title = t('page_titles.edit_responsible_body_user') %>
+<%- content_for :before_content do %>
+  <%= govuk_link_to('Back', responsible_body_users_path, class: 'govuk-back-link') %>
+<% end %>
+<%- content_for :title, title_with_error_prefix(title, @rb_user.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%= form_for @rb_user, url: responsible_body_user_path(@rb_user) do |f| %>
+      <%= render partial: 'form', locals: { submit_text: 'Save changes', form: f } %>
+    <%- end %>
+  </div>
+</div>

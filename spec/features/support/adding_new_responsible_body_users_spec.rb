@@ -57,7 +57,7 @@ RSpec.feature 'Adding new responsible body users in the support area', type: :fe
   end
 
   def then_i_can_see_error_messages
-    expect(page).to have_text('Enter your full name')
+    expect(page).to have_text('Enter the user’s full name')
     expect(page).to have_text('Enter an email address that is at least 2 characters')
   end
 
