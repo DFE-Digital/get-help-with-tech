@@ -20,6 +20,7 @@ RSpec.feature 'Setting up the devices ordering' do
     and_i_continue_through_the_guidance
     and_i_choose_ordering_through_schools
     then_i_see_a_list_of_the_schools_i_am_responsible_for
+    and_each_school_has_a_status
   end
 
   scenario 'devolving device ordering mostly centrally' do
