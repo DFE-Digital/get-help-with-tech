@@ -136,14 +136,12 @@
             </p>
 
             <p class="app-step-nav__paragraph">
-              Email <a href="mailto:COVID.TECHNOLOGY@education.gov.uk" class="govuk-link">COVID.TECHNOLOGY@education.gov.uk</a>
-              if you would like to query this allocation.
+              Email <%= ghwt_contact_mailto(subject: 'Allocations') %> if you would like to query this allocation.
             </p>
 
             <p class="app-step-nav__paragraph">
               If you’re managing the process on behalf of schools, we suggest you contact them with details
-              about the offer, and how they can include devices in their planning for local coronavirus
-              (COVID-19) outbreaks.
+              about the offer, and how they can include devices in their planning for coronavirus restrictions.
             </p>
 
             <p class="app-step-nav__paragraph">
@@ -220,8 +218,8 @@
             </p>
             <div class="govuk-inset-text">
               <p class="app-step-nav__paragraph">
-                Email <a href="mailto:COVID.TECHNOLOGY@education.gov.uk" class="govuk-link">COVID.TECHNOLOGY@education.gov.uk</a>
-                if you need to place an order because the school you’re managing orders for:
+                Email <%= ghwt_contact_mailto(subject: 'Order request') %> if you need to place an order because
+                the school you’re managing orders for:
               </p>
 
               <ul class="govuk-list govuk-list--bullet">
