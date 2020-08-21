@@ -76,8 +76,8 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def then_i_see_a_list_of_the_schools_i_am_responsible_for
     expect(page).to have_content('2 schools')
-    expect(responsible_body_schools_page.school_rows[0]).to have_content('Aardvark Primary School')
-    expect(responsible_body_schools_page.school_rows[1]).to have_content('Zebra Secondary School')
+    expect(responsible_body_schools_page.school_rows[0].title).to have_content('Aardvark Primary School')
+    expect(responsible_body_schools_page.school_rows[1].title).to have_content('Zebra Secondary School')
   end
 
   def and_each_school_has_a_status
