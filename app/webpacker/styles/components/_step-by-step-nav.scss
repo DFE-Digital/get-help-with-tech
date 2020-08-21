@@ -281,6 +281,19 @@ $top-border: solid 2px govuk-colour("mid-grey", $legacy: "grey-3");
   }
 }
 
+
+.app-step-nav__header.app-step-nav__header--non-clickable {
+  .app-step-nav--active & {
+    cursor: default !important;
+  }
+
+  &:hover {
+    .app-step-nav__circle {
+      color: govuk-colour('black');
+    }
+  }
+}
+
 .app-step-nav__title {
   @include govuk-text-colour;
   @include step-nav-font(19, $weight: bold, $line-height: 1.4);
