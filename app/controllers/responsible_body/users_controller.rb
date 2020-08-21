@@ -44,7 +44,6 @@ private
       :full_name,
       :email_address,
       :telephone,
-      :can_order_devices,
     )
   end
 
