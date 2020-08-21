@@ -172,7 +172,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    foreman (0.87.1)
+    foreman (0.87.2)
     gh (0.14.0)
       addressable
       backports
