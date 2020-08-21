@@ -48,6 +48,6 @@ private
   end
 
   def require_feature_flag!
-    render_404_if_feature_flag_inactive(:rbs_can_manage_users) unless %i[index show].include?(params[:action])
+    render_404_if_feature_flag_inactive(:rbs_can_manage_users) unless params[:action].in?(%i[index show])
   end
 end

@@ -198,8 +198,8 @@ en:
         user:
           attributes:
             full_name:
-              blank: Enter the users full name
-              length: Name must be between 2 and 1024 characters
+              blank: Enter the user’s full name
+              length: Enter a name that is between 2 and 1024 characters
             email_address:
               blank: Enter an email address in the correct format, like name@example.com
               taken: Email address has already been used
