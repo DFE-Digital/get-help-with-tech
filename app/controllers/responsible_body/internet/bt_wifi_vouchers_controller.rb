@@ -3,7 +3,7 @@ class ResponsibleBody::Internet::BTWifiVouchersController < ResponsibleBody::Bas
     vouchers = @responsible_body.bt_wifi_vouchers.order('username asc')
     respond_to do |format|
       format.csv do
-        render csv: vouchers, filename: "bt-wifi-vouchers-#{Time.now.iso8601}"
+        render csv: vouchers, filename: "bt-wifi-vouchers-#{Time.zone.now.iso8601}"
         vouchers
           .where(distributed_at: nil)
           .touch_all(:distributed_at)

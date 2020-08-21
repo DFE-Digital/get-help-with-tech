@@ -10,24 +10,24 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     }
   end
 
-  subject(:update) { described_class.new(args) }
+  subject(:cap_usage_update) { described_class.new(args) }
 
   describe '#initialize' do
     context 'given a hash with string keys' do
       it 'sets cap_type to the given capType' do
-        expect(update.cap_type).to eq(args['capType'])
+        expect(cap_usage_update.cap_type).to eq(args['capType'])
       end
 
       it 'sets ship_to to the given shipTo' do
-        expect(update.ship_to).to eq(args['shipTo'])
+        expect(cap_usage_update.ship_to).to eq(args['shipTo'])
       end
 
       it 'sets cap_amount to the given capAmount' do
-        expect(update.cap_amount).to eq(args['capAmount'])
+        expect(cap_usage_update.cap_amount).to eq(args['capAmount'])
       end
 
       it 'sets cap_used to the given usedCap' do
-        expect(update.cap_used).to eq(args['usedCap'])
+        expect(cap_usage_update.cap_used).to eq(args['usedCap'])
       end
     end
   end
@@ -37,28 +37,28 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device') }
 
     it 'updates the correct allocation with the given usedCap' do
-      expect { update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(20)
+      expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(20)
     end
 
     context 'if the given cap_amount does not match the stored allocation' do
       let(:mock_mismatch) { instance_double(Computacenter::API::CapUsageUpdate::CapMismatch) }
 
       before do
-        update.cap_amount += 1
+        cap_usage_update.cap_amount += 1
         allow(Computacenter::API::CapUsageUpdate::CapMismatch).to receive(:new).with(school, allocation).and_return(mock_mismatch)
         allow(mock_mismatch).to receive(:warn)
       end
 
       it 'logs a cap mismatch' do
-        update.apply!
+        cap_usage_update.apply!
         expect(mock_mismatch).to have_received(:warn).with(101)
       end
     end
 
     context 'when no errors are raised' do
       it 'sets the status to "succeeded"' do
-        update.apply!
-        expect(update.status).to eq('succeeded')
+        cap_usage_update.apply!
+        expect(cap_usage_update.status).to eq('succeeded')
       end
     end
   end

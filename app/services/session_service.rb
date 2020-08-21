@@ -71,7 +71,7 @@ class SessionService
   end
 
   def self.update_session!(session_id)
-    Session.where(id: session_id).update_all(updated_at: Time.now.utc)
+    Session.where(id: session_id).update_all(updated_at: Time.zone.now.utc)
   end
 
   def self.destroy_session!(session_id)

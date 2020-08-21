@@ -4,7 +4,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
 
     respond_to do |format|
       format.csv do
-        render csv: @extra_mobile_data_requests, filename: "requests-mno-#{@mobile_network.id}-#{Time.now.iso8601}"
+        render csv: @extra_mobile_data_requests, filename: "requests-mno-#{@mobile_network.id}-#{Time.zone.now.iso8601}"
       end
       # capybara sends through NullType sometimes
       format.any do
