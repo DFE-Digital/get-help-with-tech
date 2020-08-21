@@ -90,5 +90,27 @@ RSpec.feature ResponsibleBody do
         expect(page).not_to have_link('Get laptops and tablets')
       end
     end
+
+    context 'when the RB is a local authority' do
+      it 'shows link to Manage local authority users' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page).to be_displayed
+        expect(page.status_code).to eq 200
+        expect(page).to have_link('Manage local authority users')
+      end
+    end
+
+    context 'when the RB is a trust' do
+      let(:rb_user) { create(:trust_user) }
+
+      it 'shows link to Manage trust users' do
+        visit responsible_body_home_path
+
+        expect(responsible_body_home_page).to be_displayed
+        expect(page.status_code).to eq 200
+        expect(page).to have_link('Manage trust users')
+      end
+    end
   end
 end

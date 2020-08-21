@@ -1,0 +1,117 @@
+require 'rails_helper'
+
+RSpec.feature 'Managing ResponsibleBody users' do
+  let!(:rb_user) { create(:local_authority_user, full_name: 'AAA Smith') }
+  let!(:rb_user_2) { create(:local_authority_user, full_name: 'ZZZ Jones', responsible_body: rb_user.responsible_body) }
+  let(:user_from_other_rb) { create(:trust_user) }
+  let(:rb_users_index_page) { PageObjects::ResponsibleBody::UsersPage.new }
+  let(:new_rb_user_form) { PageObjects::ResponsibleBody::NewUserPage.new }
+
+  before do
+    sign_in_as rb_user
+  end
+
+  it 'shows the list of our users' do
+    click_on 'Manage local authority users'
+    expect(rb_users_index_page).to be_displayed
+    expect(page).to have_content 'Manage local authority users'
+  end
+
+  it 'shows the name and attributes for each user in this RB' do
+    click_on 'Manage local authority users'
+    expect(rb_users_index_page.user_rows.size).to eq(2)
+    expect(rb_users_index_page.user_rows[0]).to have_content(rb_user.full_name)
+    expect(rb_users_index_page.user_rows[1]).to have_content(rb_user_2.full_name)
+  end
+
+  it 'does not include any users from any other responsible_body' do
+    click_on 'Manage local authority users'
+    expect(page).not_to have_content(user_from_other_rb.full_name)
+  end
+
+  context 'when the rbs_can_manage_users feature flag is not active' do
+    before do
+      FeatureFlag.deactivate(:rbs_can_manage_users)
+    end
+
+    it 'does not show a link to Edit user' do
+      click_on 'Manage local authority users'
+      expect(page).not_to have_content 'Edit user'
+    end
+
+    it 'does not show a link to Invite a new user' do
+      click_on 'Manage local authority users'
+      expect(page).not_to have_content 'Invite a new user'
+    end
+  end
+
+  context 'when the rbs_can_manage_users feature flag is active' do
+    before do
+      FeatureFlag.activate(:rbs_can_manage_users)
+    end
+
+    context 'clicking "Edit user"' do
+      before do
+        click_on 'Manage local authority users'
+        within(rb_users_index_page.user_rows[0]) do
+          click_on 'Edit user'
+        end
+      end
+
+      it 'shows the edit user form' do
+        expect(page).to have_content 'Edit user'
+        expect(page).to have_field 'Name'
+        expect(page).to have_field 'Email address'
+        expect(page).to have_field 'Telephone number'
+        expect(page).to have_button 'Save changes'
+      end
+
+      it 'shows an error when I submit the form with missing fields' do
+        fill_in('Name', with: '')
+        click_on('Save changes')
+        expect(page).to have_content('There is a problem')
+        expect(page).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'update the user when I submit the form with all required fields' do
+        fill_in('Name', with: 'ZZZ New RB User')
+        fill_in('Email address', with: 'new.user@rb.example.com')
+        fill_in('Telephone number', with: '01234 567890')
+        click_on('Save changes')
+
+        expect(rb_users_index_page).to be_displayed
+        expect(rb_users_index_page.user_rows[1]).to have_content('ZZZ New RB User')
+      end
+    end
+
+    context 'clicking "Invite a new user"' do
+      before do
+        click_on 'Manage local authority users'
+        click_on 'Invite a new user'
+      end
+
+      it 'shows the new user form' do
+        expect(new_rb_user_form).to be_displayed
+        expect(page).to have_field 'Name'
+        expect(page).to have_field 'Email address'
+        expect(page).to have_field 'Telephone number'
+      end
+
+      it 'shows an error when I submit the form with missing fields' do
+        click_on('Send invite')
+        expect(page).to have_content('There is a problem')
+        expect(page).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'adds the user when I submit the form with all required fields' do
+        fill_in('Name', with: 'ZZZ New RB User')
+        fill_in('Email address', with: 'new.user@rb.example.com')
+        fill_in('Telephone number', with: '01234 567890')
+        click_on('Send invite')
+
+        expect(rb_users_index_page).to be_displayed
+        expect(rb_users_index_page.user_rows[2]).to have_content('ZZZ New RB User')
+      end
+    end
+  end
+end
