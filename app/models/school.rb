@@ -3,6 +3,7 @@ class School < ApplicationRecord
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
 
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
+  has_one :preorder_information
 
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
