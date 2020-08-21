@@ -22,6 +22,12 @@ class SchoolDataFile
     @csv_path = csv_path
   end
 
+  def schools(&block)
+    records(&block)
+  end
+
+protected
+
   def records
     all_records = []
 
@@ -36,8 +42,6 @@ class SchoolDataFile
     end
     all_records unless block_given?
   end
-
-protected
 
   def extract_record(row)
     {

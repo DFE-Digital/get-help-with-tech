@@ -118,6 +118,7 @@ group :test do
   gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'
   gem 'webdrivers', '~> 4.3'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :development, :test do

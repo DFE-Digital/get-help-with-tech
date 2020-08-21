@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_143436) do
+ActiveRecord::Schema.define(version: 2020_08_21_120147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,19 @@ ActiveRecord::Schema.define(version: 2020_08_20_143436) do
     t.string "who_will_order_devices"
   end
 
+  create_table "school_contacts", force: :cascade do |t|
+    t.bigint "school_id", null: false
+    t.string "email_address", null: false
+    t.string "full_name", null: false
+    t.string "role"
+    t.string "title"
+    t.string "phone_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id", "email_address"], name: "index_school_contacts_on_school_id_and_email_address", unique: true
+    t.index ["school_id"], name: "index_school_contacts_on_school_id"
+  end
+
   create_table "school_device_allocations", force: :cascade do |t|
     t.bigint "school_id"
     t.string "device_type", null: false
@@ -97,17 +110,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_143436) do
     t.index ["created_by_user_id"], name: "index_school_device_allocations_on_created_by_user_id"
     t.index ["last_updated_by_user_id"], name: "index_school_device_allocations_on_last_updated_by_user_id"
     t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
-  end
-
-  create_table "school_roles", force: :cascade do |t|
-    t.string "role", default: "headteacher", null: false
-    t.string "title"
-    t.bigint "school_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["school_id", "user_id"], name: "index_school_roles_on_school_id_and_user_id"
-    t.index ["user_id", "school_id"], name: "index_school_roles_on_user_id_and_school_id"
   end
 
   create_table "schools", force: :cascade do |t|

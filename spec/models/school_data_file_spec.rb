@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SchoolDataFile, type: :model do
-  describe '#records' do
+  describe '#schools' do
     let(:filename) { Rails.root.join('tmp/school_test_data.csv') }
 
     context 'when a school is open and not an excluded type' do
@@ -30,8 +30,8 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'retrieves the school data' do
-        schools = SchoolDataFile.new(filename).records
-        expect(schools[0]).to include(
+        schools = SchoolDataFile.new(filename).schools
+        expect(schools.first).to include(
           urn: '103001',
           name: 'Little School',
           responsible_body: 'Camden',
@@ -70,7 +70,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'does not retrieve the school data' do
-        schools = SchoolDataFile.new(filename).records
+        schools = SchoolDataFile.new(filename).schools
         expect(schools).to be_empty
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'does not retrieve the school data' do
-        schools = SchoolDataFile.new(filename).records
+        schools = SchoolDataFile.new(filename).schools
         expect(schools).to be_empty
       end
     end
@@ -133,8 +133,8 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'retrieves the school data' do
-        schools = SchoolDataFile.new(filename).records
-        expect(schools[0]).to include(
+        schools = SchoolDataFile.new(filename).schools
+        expect(schools.first).to include(
           urn: '100001',
           name: 'Big School',
           responsible_body: 'The Multi-Trust Academy',
@@ -174,8 +174,8 @@ RSpec.describe SchoolDataFile, type: :model do
       end
 
       it 'retrieves the school data' do
-        schools = SchoolDataFile.new(filename).records
-        expect(schools[0]).to include(
+        schools = SchoolDataFile.new(filename).schools
+        expect(schools.first).to include(
           urn: '100021',
           name: 'All Phase School',
           responsible_body: 'The Single-Trust Academy',

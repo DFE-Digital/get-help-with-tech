@@ -1,18 +1,18 @@
 class ImportContactsService
   attr_reader :datasource
 
-  def initialize(school_datasource)
+  def initialize(school_datasource = GetInformationAboutSchools)
     @datasource = school_datasource
   end
 
   def import_contacts
-    datasource.records do |contact_data|
+    datasource.contacts do |contact_data|
       school = School.find_by(urn: contact_data[:urn])
       next unless school
 
-      attrs = user_attrs(contact_data)
+      add_contact_to_school(school, contact_data)
 
-      set_contact_data(school, attrs)
+      school.update!(phone_number: contact_data[:phone_number])
 
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e.message)
@@ -21,49 +21,18 @@ class ImportContactsService
 
 private
 
-  def set_contact_data(school, attrs)
-    if attrs[:email_address] && attrs[:full_name]
-      user = create_or_update_user!(attrs[:email_address],
-                                    attrs[:full_name])
+  def add_contact_to_school(school, contact_data)
+    attrs = contact_attrs(contact_data)
+    contact = school.contacts.find_by(email_address: contact_data[:email_address])
 
-      create_or_update_role!(school, user, attrs[:title])
-    end
-
-    school.update!(phone_number: attrs[:phone_number])
-  end
-
-  def create_or_update_user!(email_address, full_name)
-    user = User.find_by(email_address: email_address)
-
-    if user.nil?
-      User.create!(email_address: email_address,
-                   full_name: full_name)
+    if contact.nil?
+      school.contacts.create!(attrs)
     else
-      user.update!(full_name: full_name)
-      user
+      contact.update!(attrs)
     end
   end
 
-  def create_or_update_role!(school, user, title)
-    role = school.roles.headteacher.first
-
-    if role.nil?
-      school.roles.create!(user: user,
-                           title: title,
-                           role: 'headteacher')
-    else
-      role.update!(user_id: user.id,
-                   title: title)
-      role
-    end
-  end
-
-  def user_attrs(contact_data)
-    {
-      email_address: contact_data[:email_address],
-      full_name: contact_data[:full_name],
-      title: contact_data[:title],
-      phone_number: contact_data[:phone_number],
-    }
+  def contact_attrs(contact_data)
+    contact_data.except(:urn).merge(role: 'headteacher')
   end
 end

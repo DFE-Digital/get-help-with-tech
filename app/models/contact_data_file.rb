@@ -1,4 +1,8 @@
 class ContactDataFile < SchoolDataFile
+  def contacts(&block)
+    records(&block)
+  end
+
 protected
 
   def extract_record(row)

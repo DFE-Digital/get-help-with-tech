@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ContactDataFile, type: :model do
-  describe '#records' do
+  describe '#contacts' do
     let(:filename) { Rails.root.join('tmp/contact_test_data.csv') }
 
     context 'when a school is open and not an excluded type' do
@@ -29,7 +29,7 @@ RSpec.describe ContactDataFile, type: :model do
       end
 
       it 'retrieves the contact data' do
-        contacts = described_class.new(filename).records
+        contacts = described_class.new(filename).contacts
         expect(contacts.first).to include(
           urn: '103001',
           email_address: 'Joanne.Smith@myschool.gov.uk',
@@ -66,7 +66,7 @@ RSpec.describe ContactDataFile, type: :model do
       end
 
       it 'retrieves the preferred title' do
-        contacts = described_class.new(filename).records
+        contacts = described_class.new(filename).contacts
         expect(contacts.first).to include(
           urn: '103001',
           email_address: 'Joanne.Smith@myschool.gov.uk',
@@ -102,7 +102,7 @@ RSpec.describe ContactDataFile, type: :model do
       end
 
       it 'uses the main email' do
-        contacts = described_class.new(filename).records
+        contacts = described_class.new(filename).contacts
         expect(contacts.first).to include(
           urn: '103001',
           email_address: 'admin@myschool.gov.uk',
@@ -138,7 +138,7 @@ RSpec.describe ContactDataFile, type: :model do
       end
 
       it 'uses the alternate email' do
-        contacts = described_class.new(filename).records
+        contacts = described_class.new(filename).contacts
         expect(contacts.first).to include(
           urn: '103001',
           email_address: 'c.kelly@bigschool.com',
@@ -173,7 +173,7 @@ RSpec.describe ContactDataFile, type: :model do
       end
 
       it 'does not retrieve the contact data' do
-        contacts = described_class.new(filename).records
+        contacts = described_class.new(filename).contacts
         expect(contacts).to be_empty
       end
     end
@@ -203,7 +203,7 @@ RSpec.describe ContactDataFile, type: :model do
       end
 
       it 'does not retrieve the school data' do
-        contacts = described_class.new(filename).records
+        contacts = described_class.new(filename).contacts
         expect(contacts).to be_empty
       end
     end

@@ -36,26 +36,21 @@ RSpec.describe ImportContactsService, type: :model do
         remove_file(filename)
       end
 
-      it 'creates a new user record' do
+      it 'creates a new contact record' do
         expect {
           @service.import_contacts
-        }.to change { User.count }.by(1)
+        }.to change { school.contacts.count }.by(1)
       end
 
-      it 'sets the correct values on the User record' do
+      it 'sets the correct values on the contact record' do
         @service.import_contacts
-        expect(User.last).to have_attributes(
+        expect(school.contacts.last).to have_attributes(
           email_address: 'Joanne.Smith@myschool.gov.uk',
           full_name: 'Joanne Smith',
+          role: 'headteacher',
+          title: 'Head Teacher',
+          phone_number: '0123456789',
         )
-      end
-
-      it 'creates a role association with the school' do
-        @service.import_contacts
-
-        expect(User.last.schools.first).to eq(school)
-        expect(User.last.roles.first.headteacher?).to be true
-        expect(User.last.roles.first.title).to eq('Head Teacher')
       end
 
       it 'updates the phone_number on the school' do
@@ -64,8 +59,8 @@ RSpec.describe ImportContactsService, type: :model do
       end
     end
 
-    context 'when a User already exists' do
-      let!(:user) { create(:user, email_address: 'barry.island@myschool.gov.uk') }
+    context 'when a contact already exists' do
+      let!(:contact) { create(:school_contact, school: school, email_address: 'head@myschool.gov.uk') }
 
       let(:attrs) do
         {
@@ -82,7 +77,7 @@ RSpec.describe ImportContactsService, type: :model do
           group_type: 'Local authority maintained schools',
           head_first_name: 'Barry',
           head_last_name: 'Island',
-          head_email: 'barry.island@myschool.gov.uk',
+          head_email: 'head@myschool.gov.uk',
           head_title: 'Principal',
           telephone: '07722009944',
         }
@@ -97,17 +92,13 @@ RSpec.describe ImportContactsService, type: :model do
         remove_file(filename)
       end
 
-      it 'updates the existing user record' do
-        expect(user.reload).to have_attributes(
+      it 'updates the existing contact record' do
+        expect(contact.reload).to have_attributes(
           full_name: 'Barry Island',
-          email_address: 'barry.island@myschool.gov.uk',
+          email_address: 'head@myschool.gov.uk',
+          title: 'Principal',
+          phone_number: '07722009944',
         )
-      end
-
-      it 'creates a role association with the school' do
-        expect(user.schools.first).to eq(school)
-        expect(user.roles.first.headteacher?).to be true
-        expect(user.roles.first.title).to eq('Principal')
       end
 
       it 'updates the phone_number on the school' do
