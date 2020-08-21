@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get '/pages/guidance', to: redirect('/')
   get '/devices/choosing-devices', to: redirect('/devices/allocation-and-specification')
 
+  get '/internet-access', to: 'pages#internet_access'
+
   get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index'
   get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: 'guide_to_collecting_mobile_information#asking_for_account_holder'
   get '/guide-to-collecting-mobile-information/asking-for-network', to: 'guide_to_collecting_mobile_information#asking_for_network'
@@ -103,5 +105,5 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unprocessable_entity', via: :all
   get '/500', to: 'errors#internal_server_error', via: :all
 
-  get '/', to: 'pages#index', as: :guidance_page
+  get '/', to: redirect('/internet-access', status: 302), as: :guidance_page
 end
