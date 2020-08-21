@@ -1,4 +1,4 @@
-class PreorderInformation < ActiveRecord::Migration[6.0]
+class AddPreorderInformation < ActiveRecord::Migration[6.0]
   def change
     create_table :preorder_information do |t|
       t.references :school, null: false
