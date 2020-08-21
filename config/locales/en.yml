@@ -172,6 +172,7 @@ en:
           needs_contact: Needs a contact
           needs_info: Needs information
           ready: Ready
+          school_contacted: School contacted
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'

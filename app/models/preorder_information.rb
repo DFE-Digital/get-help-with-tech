@@ -7,6 +7,7 @@ class PreorderInformation < ApplicationRecord
     needs_contact: 'needs_contact',
     needs_info: 'needs_info',
     ready: 'ready',
+    school_contacted: 'school_contacted'
   }
 
   # Update this method as we add more fields (e.g. chromebook info)
