@@ -40,7 +40,8 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header" style="width: 50%">School</th>
-        <th class="govuk-table__header">Status</th>
+      <th class="govuk-table__header">Allocation</th>
+      <th class="govuk-table__header">Status</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -48,6 +49,9 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
           <%= school.name %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= school.std_device_allocation&.allocation.to_i %>
         </td>
         <%- status = school.preorder_status_or_default %>
         <td class="govuk-table__cell">

@@ -12,6 +12,7 @@ RSpec.feature 'Setting up the devices ordering' do
     create(:preorder_information, school: zebra_school, who_will_order_devices: 'school')
     create(:preorder_information, school: aardvark_school, who_will_order_devices: 'responsible_body')
 
+    create(:school_device_allocation, school: aardvark_school, device_type: 'std_device', allocation: 42)
     sign_in_as rb_user
   end
 
@@ -21,6 +22,7 @@ RSpec.feature 'Setting up the devices ordering' do
     and_i_choose_ordering_through_schools
     then_i_see_a_list_of_the_schools_i_am_responsible_for
     and_each_school_has_a_status
+    and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -81,6 +83,11 @@ RSpec.feature 'Setting up the devices ordering' do
   def and_each_school_has_a_status
     expect(responsible_body_schools_page.school_rows[0]).to have_content('Needs information')
     expect(responsible_body_schools_page.school_rows[1]).to have_content('Needs a contact')
+  end
+
+  def and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+    expect(responsible_body_schools_page.school_rows[0]).to have_content('42')
+    expect(responsible_body_schools_page.school_rows[1]).to have_content('0')
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally
