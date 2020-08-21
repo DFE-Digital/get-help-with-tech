@@ -12,3 +12,8 @@
   @extend %govuk-list;
   @extend %govuk-list--bullet;
 }
+
+.app-table-of-contents a {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+}
