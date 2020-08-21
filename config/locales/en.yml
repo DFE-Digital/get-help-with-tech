@@ -191,8 +191,6 @@ en:
             device_phone_number:
               blank: Enter a UK mobile number, like 07700 900999
               invalid: Enter a UK mobile number, like 07700 900999
-            mobile_network_id:
-              blank: Select which mobile network the device is on
             contract_type:
               blank: Select whether the contract is pay monthly or pay as you go (PAYG)
             agrees_with_privacy_statement:
