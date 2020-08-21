@@ -168,7 +168,7 @@ en:
           not_participating: 'Not participating'
           maybe_participating: 'May offer data when the service launches'
       preorder_information:
-        statuses:
+        status:
           needs_contact: Needs a contact
           needs_info: Needs information
           ready: Ready

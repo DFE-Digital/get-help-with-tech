@@ -41,4 +41,13 @@ module ApplicationHelper
       revoked: 'govuk-tag--grey',
     }[status.to_sym]
   end
+
+  def preorder_information_status_class(status)
+    {
+      needs_contact: 'govuk-tag--grey',
+      needs_info: 'govuk-tag--grey',
+      ready: 'govuk-tag--completed',
+      school_contacted: 'govuk-tag--yellow',
+    }[status.to_sym]
+  end
 end
