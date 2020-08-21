@@ -68,12 +68,12 @@ RSpec.feature ResponsibleBody do
         rb_user.responsible_body.update(in_devices_pilot: true)
       end
 
-      it 'shows link to get devices' do
+      it 'shows link to get laptops and tablets' do
         visit responsible_body_home_path
 
         expect(responsible_body_home_page).to be_displayed
         expect(page.status_code).to eq 200
-        expect(page).to have_link('Get devices')
+        expect(page).to have_link('Get laptops and tablets')
       end
     end
 
@@ -82,12 +82,12 @@ RSpec.feature ResponsibleBody do
         rb_user.responsible_body.update(in_devices_pilot: false)
       end
 
-      it 'does not show link to get devices' do
+      it 'does not show link to get laptops and tablets' do
         visit responsible_body_home_path
 
         expect(responsible_body_home_page).to be_displayed
         expect(page.status_code).to eq 200
-        expect(page).not_to have_link('Get devices')
+        expect(page).not_to have_link('Get laptops and tablets')
       end
     end
 

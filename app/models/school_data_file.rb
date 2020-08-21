@@ -3,7 +3,6 @@ require 'csv'
 class SchoolDataFile
   EXCLUDED_TYPES = [
     'British schools overseas',
-    'City technology college',
     'Further education',
     'Higher education institutions',
     'Institution funded by other government department',
@@ -76,6 +75,8 @@ private
       'all_through'
     when '16 plus'
       'sixteen_plus'
+    when 'Nursery'
+      'nursery'
     else
       'phase_not_applicable'
     end
@@ -99,10 +100,12 @@ private
   end
 
   def skip_school?(row)
-    row['EstablishmentStatus (name)'] != 'Open' ||
+    school_not_open?(row) ||
       row['LA (name)'] == 'Vale of Glamorgan' ||
-      row['LA (name)'] == 'Isles Of Scilly' ||
-      row['PhaseOfEducation (name)'] == 'Nursery' ||
       EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
+  end
+
+  def school_not_open?(row)
+    !row['EstablishmentStatus (name)'].in? ['Open', 'Open, but proposed to close']
   end
 end

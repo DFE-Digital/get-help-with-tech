@@ -104,7 +104,7 @@ RSpec.feature 'Cookie preferences', type: :feature do
           end
 
           it 'redirects back to the home page' do
-            expect(page).to have_current_path('/')
+            expect(page).to have_current_path('/internet-access')
           end
 
           it 'tells me my preferences have been saved' do

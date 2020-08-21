@@ -50,7 +50,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     scenario 'it redirects to the responsible_body_home page' do
       sign_in_as user
       expect(page).to have_current_path(responsible_body_home_path)
-      expect(page).to have_text 'Increase children’s internet access'
+      expect(page).to have_text 'Get help with technology'
     end
   end
 

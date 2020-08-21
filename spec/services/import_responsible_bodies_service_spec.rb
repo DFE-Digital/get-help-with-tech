@@ -20,19 +20,18 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
               }
             ]
           },
-          "TEI": {
-            "index-entry-number": "128",
-            "entry-number": "128",
+          "SHF": {
+            "index-entry-number": "64",
+            "entry-number": "64",
             "entry-timestamp": "2016-10-21T16:11:20Z",
-            "key": "TEI",
-            "item": [
-              {
-                "local-authority-type": "NMD",
-                "official-name": "Teignbridge District Council",
-                "local-authority-eng": "TEI",
-                "name": "Teignbridge"
-              }
-            ]
+            "key": "SHF",
+            "item": [{
+              "local-authority-type": "MD",
+              "official-name": "Sheffield City Council",
+              "local-authority-eng": "SHF",
+              "name": "Sheffield",
+              "start-date": "1905-06-08"
+            }]
           }
         }')
 
@@ -46,10 +45,10 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     expect(local_authorities.first.local_authority_eng).to eq('BRD')
     expect(local_authorities.first.name).to eq('Bradford')
 
-    expect(local_authorities.second.organisation_type).to eq('non_metropolitan_district')
-    expect(local_authorities.second.local_authority_official_name).to eq('Teignbridge District Council')
-    expect(local_authorities.second.local_authority_eng).to eq('TEI')
-    expect(local_authorities.second.name).to eq('Teignbridge')
+    expect(local_authorities.second.organisation_type).to eq('metropolitan_district')
+    expect(local_authorities.second.local_authority_official_name).to eq('Sheffield City Council')
+    expect(local_authorities.second.local_authority_eng).to eq('SHF')
+    expect(local_authorities.second.name).to eq('Sheffield')
 
     # re-run import again to check idempotence
     ImportResponsibleBodiesService.new.import_local_authorities

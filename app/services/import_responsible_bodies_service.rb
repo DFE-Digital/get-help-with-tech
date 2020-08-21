@@ -1,6 +1,6 @@
 class ImportResponsibleBodiesService
   def import_local_authorities
-    LocalAuthoritiesInEnglandRegister.entries.each do |entry|
+    LocalAuthoritiesInEnglandRegister.local_authorities_that_maintain_schools.each do |entry|
       LocalAuthority
         .where(local_authority_eng: entry['local-authority-eng'])
         .first_or_create!(

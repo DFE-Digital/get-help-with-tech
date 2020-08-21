@@ -4,7 +4,7 @@ class Computacenter::API::CapUsageUpdateBatch
   def initialize(string_keyed_hash)
     @payload_id = string_keyed_hash['payloadID']
     @timestamp  = string_keyed_hash['dateTime']&.to_datetime
-    @updates    = string_keyed_hash['Record'].to_a.map do |update|
+    @updates    = Array.wrap(string_keyed_hash['Record']).map do |update|
       Computacenter::API::CapUsageUpdate.new(update)
     end
   end
