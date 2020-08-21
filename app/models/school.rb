@@ -2,6 +2,8 @@ class School < ApplicationRecord
   belongs_to :responsible_body
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
 
+  has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
+
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 

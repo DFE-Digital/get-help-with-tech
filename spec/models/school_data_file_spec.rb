@@ -31,7 +31,7 @@ RSpec.describe SchoolDataFile, type: :model do
 
       it 'retrieves the school data' do
         schools = SchoolDataFile.new(filename).schools
-        expect(schools[0]).to include(
+        expect(schools.first).to include(
           urn: '103001',
           name: 'Little School',
           responsible_body: 'Camden',
@@ -134,7 +134,7 @@ RSpec.describe SchoolDataFile, type: :model do
 
       it 'retrieves the school data' do
         schools = SchoolDataFile.new(filename).schools
-        expect(schools[0]).to include(
+        expect(schools.first).to include(
           urn: '100001',
           name: 'Big School',
           responsible_body: 'The Multi-Trust Academy',
@@ -175,7 +175,7 @@ RSpec.describe SchoolDataFile, type: :model do
 
       it 'retrieves the school data' do
         schools = SchoolDataFile.new(filename).schools
-        expect(schools[0]).to include(
+        expect(schools.first).to include(
           urn: '100021',
           name: 'All Phase School',
           responsible_body: 'The Single-Trust Academy',
