@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_120147) do
+ActiveRecord::Schema.define(version: 2020_08_21_161806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(version: 2020_08_21_120147) do
     t.index ["brand"], name: "index_mobile_networks_on_brand", unique: true
     t.index ["host_network", "brand"], name: "index_mobile_networks_on_host_network_and_brand", unique: true
     t.index ["participation_in_pilot", "brand"], name: "index_mobile_networks_on_participation_in_pilot_and_brand"
+  end
+
+  create_table "preorder_information", force: :cascade do |t|
+    t.bigint "school_id", null: false
+    t.string "who_will_order_devices", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_preorder_information_on_school_id"
   end
 
   create_table "responsible_bodies", force: :cascade do |t|
