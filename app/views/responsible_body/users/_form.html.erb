@@ -1,0 +1,14 @@
+<%= form.govuk_error_summary %>
+
+<%= form.govuk_text_field :full_name,
+                          label: { text: 'Name', size: 'm' } %>
+
+<%= form.govuk_email_field  :email_address,
+                            label: { text: 'Email address', size: 'm' },
+                            hint_text: 'They will use this email address to sign in' %>
+
+<%= form.govuk_text_field :telephone,
+                          width: 10,
+                          label: { text: 'Telephone number', size: 'm' } %>
+
+<%= form.govuk_submit submit_text %>

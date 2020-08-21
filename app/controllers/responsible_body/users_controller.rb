@@ -6,19 +6,32 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
   def show; end
 
   def new
-    @user = @responsible_body.users.build
+    @rb_user = @responsible_body.users.build
   end
 
   def create
-    @user = @responsible_body.users.new(
-      user_params.merge(responsible_body_id: @responsible_body.id)
+    @rb_user = @responsible_body.users.new(
+      user_params.merge(responsible_body_id: @responsible_body.id),
     )
-    if @user.valid?
-      @user.save!
+    if @rb_user.valid?
+      @rb_user.save!
       # TODO: schedule job to send invite email here
       redirect_to responsible_body_users_path
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @rb_user = @responsible_body.users.find(params[:id])
+  end
+
+  def update
+    @rb_user = @responsible_body.users.find(params[:id])
+    if @rb_user.update(user_params)
+      redirect_to responsible_body_users_path
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +42,7 @@ private
       :full_name,
       :email_address,
       :telephone,
-      :can_order_devices
+      :can_order_devices,
     )
   end
 end

@@ -1,4 +1,4 @@
-<%- title = t('page_titles.new_responsible_body_user') %>
+<%- title = t('page_titles.edit_responsible_body_user') %>
 <%- content_for :before_content do %>
   <%= govuk_link_to('Back', responsible_body_users_path, class: 'govuk-back-link') %>
 <% end %>
@@ -10,8 +10,8 @@
       <%= title %>
     </h1>
 
-    <%= form_for @rb_user, url: responsible_body_users_path do |f| %>
-      <%= render partial: 'form', locals: { submit_text: 'Send invite', form: f } %>
+    <%= form_for @rb_user, url: responsible_body_user_path(@rb_user) do |f| %>
+      <%= render partial: 'form', locals: { submit_text: 'Save changes', form: f } %>
     <%- end %>
   </div>
 </div>

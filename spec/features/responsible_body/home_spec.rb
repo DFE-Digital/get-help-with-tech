@@ -103,7 +103,7 @@ RSpec.feature ResponsibleBody do
 
     context 'when the RB is a trust' do
       let(:rb_user) { create(:trust_user) }
-      
+
       it 'shows link to Manage trust users' do
         visit responsible_body_home_path
 
