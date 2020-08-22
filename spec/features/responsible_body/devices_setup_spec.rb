@@ -6,8 +6,12 @@ RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
 
   before do
-    create(:school, responsible_body: responsible_body, name: 'Zebra Secondary School')
-    create(:school, responsible_body: responsible_body, name: 'Aardvark Primary School')
+    zebra_school = create(:school, responsible_body: responsible_body, name: 'Zebra Secondary School')
+    aardvark_school = create(:school, responsible_body: responsible_body, name: 'Aardvark Primary School')
+
+    create(:preorder_information, school: zebra_school, who_will_order_devices: 'school')
+    create(:preorder_information, school: aardvark_school, who_will_order_devices: 'responsible_body')
+
     sign_in_as rb_user
   end
 
@@ -16,6 +20,7 @@ RSpec.feature 'Setting up the devices ordering' do
     and_i_continue_through_the_guidance
     and_i_choose_ordering_through_schools
     then_i_see_a_list_of_the_schools_i_am_responsible_for
+    and_each_school_has_a_status
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -71,6 +76,11 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(page).to have_content('2 schools')
     expect(responsible_body_schools_page.school_rows[0]).to have_content('Aardvark Primary School')
     expect(responsible_body_schools_page.school_rows[1]).to have_content('Zebra Secondary School')
+  end
+
+  def and_each_school_has_a_status
+    expect(responsible_body_schools_page.school_rows[0]).to have_content('Needs information')
+    expect(responsible_body_schools_page.school_rows[1]).to have_content('Needs a contact')
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally

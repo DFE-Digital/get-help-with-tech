@@ -40,6 +40,7 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header" style="width: 50%">School</th>
+        <th class="govuk-table__header">Status</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -47,6 +48,12 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
           <%= school.name %>
+        </td>
+        <%- status = school.preorder_status_or_default %>
+        <td class="govuk-table__cell">
+          <span class="govuk-tag <%= preorder_information_status_class(status) %>">
+            <%= t( status, scope: PreorderInformation.enum_i18n_scope(:status) ) %>
+          </span>
         </td>
       </tr>
     <% end %>

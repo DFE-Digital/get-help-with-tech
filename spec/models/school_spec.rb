@@ -92,4 +92,51 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#preorder_status_or_default' do
+    subject(:school) { build(:school) }
+
+    context 'when the school has a preorder_information record with a status' do
+      before do
+        school.preorder_information = PreorderInformation.new(school: school, status: 'ready')
+      end
+
+      it 'returns the status from the preorder_information record' do
+        expect(school.preorder_status_or_default).to eq('ready')
+      end
+    end
+
+    context 'when the school has a preorder_information record without a status' do
+      before do
+        PreorderInformation.new(school: school, status: nil)
+      end
+
+      it 'infers the status' do
+        allow(school.preorder_information).to receive(:infer_status).and_return('inferred_status')
+        expect(school.preorder_status_or_default).to eq('inferred_status')
+      end
+    end
+
+    context 'when the school has no preorder status and the responsible_body is set to manage orders centrally' do
+      before do
+        school.preorder_information = nil
+        school.responsible_body = build(:trust, who_will_order_devices: 'responsible_body')
+      end
+
+      it 'returns "needs_info"' do
+        expect(school.preorder_status_or_default).to eq('needs_info')
+      end
+    end
+
+    context 'when the school has no preorder status and the responsible_body is set to schools managing orders' do
+      before do
+        school.preorder_information = nil
+        school.responsible_body = build(:trust, who_will_order_devices: 'school')
+      end
+
+      it 'returns "needs_contact"' do
+        expect(school.preorder_status_or_default).to eq('needs_contact')
+      end
+    end
+  end
 end
