@@ -59,11 +59,8 @@
         <td class="govuk-table__cell">
           <%= school.preorder_information.who_will_order_devices_label %>
         </td>
-        <%- status = school.preorder_status_or_default %>
         <td class="govuk-table__cell">
-          <span class="govuk-tag <%= preorder_information_status_class(status) %>">
-            <%= t( status, scope: PreorderInformation.enum_i18n_scope(:status) ) %>
-          </span>
+          <%= render partial: 'status', locals: { school: school } %>
         </td>
       </tr>
     <% end %>

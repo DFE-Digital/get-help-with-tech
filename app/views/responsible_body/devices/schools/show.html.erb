@@ -6,5 +6,45 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
       <%= @school.name %>
     </h1>
+
+    <div class="govuk-inset-text govuk-!-padding-top-0">
+      <dl class="govuk-summary-list govuk-!-margin-bottom-0 govuk-!-margin-top-0">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Status
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= render partial: 'status', locals: { school: @school } %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Provisional allocation
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= pluralize(@school.std_device_allocation&.allocation.to_i, 'device') %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Type of school
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @school.type_label %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Who will order?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            The <%= @school.preorder_information.who_will_order_devices_label.downcase %> orders devices
+          </dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </div>

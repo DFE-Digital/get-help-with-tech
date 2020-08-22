@@ -11,8 +11,8 @@ RSpec.feature 'Setting up the devices ordering' do
                            responsible_body: responsible_body,
                            name: 'Zebra Secondary School')
     @aardvark_school = create(:school, :la_maintained, :primary,
-                             responsible_body: responsible_body,
-                             name: 'Aardvark Primary School')
+                              responsible_body: responsible_body,
+                              name: 'Aardvark Primary School')
 
     create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', allocation: 42)
     sign_in_as rb_user
@@ -28,6 +28,8 @@ RSpec.feature 'Setting up the devices ordering' do
     and_each_school_needs_a_contact
 
     when_i_click_on_a_school_name
+    then_i_see_the_details_of_the_school
+    and_that_the_school_orders_devices
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -40,6 +42,8 @@ RSpec.feature 'Setting up the devices ordering' do
     and_each_school_needs_information
 
     when_i_click_on_a_school_name
+    then_i_see_the_details_of_the_school
+    and_that_the_local_authority_orders_devices
   end
 
   scenario 'submitting the form without choosing an option shows an error' do
@@ -130,5 +134,21 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def when_i_click_on_a_school_name
     click_on @aardvark_school.name
+  end
+
+  def then_i_see_the_details_of_the_school
+    expect(responsible_body_school_page).to have_content(@aardvark_school.name)
+    expect(responsible_body_school_page.school_details).to have_content('42 devices')
+    expect(responsible_body_school_page.school_details).to have_content('Primary school')
+  end
+
+  def and_that_the_school_orders_devices
+    expect(responsible_body_school_page.school_details).to have_content('Needs a contact')
+    expect(responsible_body_school_page.school_details).to have_content('The school orders devices')
+  end
+
+  def and_that_the_local_authority_orders_devices
+    expect(responsible_body_school_page.school_details).to have_content('Needs information')
+    expect(responsible_body_school_page.school_details).to have_content('The local authority orders devices')
   end
 end
