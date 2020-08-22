@@ -139,4 +139,32 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#type_label' do
+    subject { school.type_label }
+
+    context 'for a special school' do
+      let(:school) { build(:school, establishment_type: :special) }
+
+      it { is_expected.to eq('Special school') }
+    end
+
+    context 'when the school is not a special school and the phase is primary' do
+      let(:school) { build(:school, establishment_type: :academy, phase: :primary) }
+
+      it { is_expected.to eq('Primary school') }
+    end
+
+    context 'when the school is not a special school and the phase is sixteen_plus' do
+      let(:school) { build(:school, establishment_type: :local_authority, phase: :sixteen_plus) }
+
+      it { is_expected.to eq('Sixteen plus school') }
+    end
+
+    context 'when the school is not a special school and the phase is not set' do
+      let(:school) { build(:school, establishment_type: :academy, phase: :phase_not_applicable) }
+
+      it { is_expected.to be_blank }
+    end
+  end
 end

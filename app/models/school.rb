@@ -24,10 +24,20 @@ class School < ApplicationRecord
     local_authority: 'local_authority',
     special: 'special',
     other_type: 'other_type',
-  }
+  }, _suffix: true
 
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
+  end
+
+  def type_label
+    if special_establishment_type?
+      'Special school'
+    elsif !phase_not_applicable?
+      "#{phase.humanize.upcase_first} school"
+    else
+      ''
+    end
   end
 
   # TODO: update this method as preorder_information gets more fields
