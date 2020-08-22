@@ -13,12 +13,12 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
     case status
     when 'needs_contact', 'needs_info'
       :grey
-    when 'school_contacted'
+    when 'school_contacted', 'school_will_be_contacted'
       :yellow
     when 'ready'
       :green
     else
-      raise "You need to define a colour for the #{status} state"
+      :default
     end
   end
 

@@ -10,6 +10,7 @@ class PreorderInformation < ApplicationRecord
     needs_contact: 'needs_contact',
     needs_info: 'needs_info',
     ready: 'ready',
+    school_will_be_contacted: 'school_will_be_contacted',
     school_contacted: 'school_contacted',
   }
 
@@ -28,7 +29,7 @@ class PreorderInformation < ApplicationRecord
   # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
   def infer_status
     if school_will_order_devices?
-      'needs_contact'
+      school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
     else
       'needs_info'
     end
@@ -41,6 +42,11 @@ class PreorderInformation < ApplicationRecord
     when 'responsible_body'
       school.responsible_body.humanized_type.capitalize
     end
+  end
+
+  def school_contact=(value)
+    super(value)
+    self.status = infer_status
   end
 
 private

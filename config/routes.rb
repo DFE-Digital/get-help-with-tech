@@ -57,6 +57,11 @@ Rails.application.routes.draw do
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
+
+      resources :schools, only: %i[index show update], param: :urn do
+        get '/who-to-contact', to: 'who_to_contact#new'
+        post '/who-to-contact', to: 'who_to_contact#create'
+      end
     end
     namespace :internet do
       get '/', to: 'home#show'
@@ -71,9 +76,6 @@ Rails.application.routes.draw do
       end
     end
     resources :users
-    namespace :devices do
-      resources :schools, only: %i[index show], param: :urn
-    end
   end
 
   namespace :support do

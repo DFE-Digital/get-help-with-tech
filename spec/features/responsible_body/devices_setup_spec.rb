@@ -15,6 +15,19 @@ RSpec.feature 'Setting up the devices ordering' do
                               name: 'Aardvark Primary School')
 
     create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', allocation: 42)
+    create(:school_contact,
+           school: @aardvark_school,
+           role: :headteacher,
+           title: 'Executive Head',
+           full_name: 'Anne Jones',
+           email_address: 'anne.jones@aardvark.sch.uk')
+    create(:school_contact,
+           school: @zebra_school,
+           role: :headteacher,
+           title: 'Headteacher',
+           full_name: 'Jane Smith',
+           email_address: 'jane.smith@zebra.sch.uk')
+
     sign_in_as rb_user
   end
 
@@ -30,9 +43,18 @@ RSpec.feature 'Setting up the devices ordering' do
     when_i_click_on_the_first_school_name
     then_i_see_the_details_of_the_first_school
     and_that_the_school_orders_devices
+    and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
+
+    when_i_select_to_contact_the_headteacher
+    then_i_see_a_confirmation_and_the_headteacher_as_the_contact
+    and_the_status_reflects_that_the_school_will_be_contacted_shortly
 
     when_i_follow_the_link_to_the_next_school
     then_i_see_the_details_of_the_second_school
+
+    when_i_select_to_contact_someone_else_and_save_their_details
+    then_i_see_a_confirmation_and_the_someone_else_as_the_contact
+    and_the_status_reflects_that_the_school_will_be_contacted_shortly
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -161,7 +183,43 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(responsible_body_school_page.school_details).to have_content('The local authority orders devices')
   end
 
+  def and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
+    expect(responsible_body_school_page).to have_content('Who can we contact at the school?')
+  end
+
+  def when_i_select_to_contact_the_headteacher
+    choose 'Executive Head'
+    click_on 'Save'
+  end
+
+  def then_i_see_a_confirmation_and_the_headteacher_as_the_contact
+    expect(page).to have_content('Saved. We will email anne.jones@aardvark.sch.uk shortly')
+    expect(responsible_body_school_page.school_details).to have_content('Executive Head: Anne Jones')
+    expect(responsible_body_school_page.school_details).to have_content('anne.jones@aardvark.sch.uk')
+  end
+
+  def and_the_status_reflects_that_the_school_will_be_contacted_shortly
+    expect(responsible_body_school_page.school_details).to have_content('School to be contacted shortly')
+  end
+
   def when_i_follow_the_link_to_the_next_school
     click_on 'go to the next school'
+  end
+
+  def when_i_select_to_contact_someone_else_and_save_their_details
+    choose 'Someone else'
+
+    fill_in 'Name', with: 'Bob Leigh'
+    fill_in 'Email address', with: 'bob.leigh@sharedservices.co.uk'
+    fill_in 'Telephone number', with: '020 123456'
+
+    click_on 'Save'
+  end
+
+  def then_i_see_a_confirmation_and_the_someone_else_as_the_contact
+    expect(page).to have_content('Saved. We will email bob.leigh@sharedservices.co.uk shortly')
+    expect(responsible_body_school_page.school_details).to have_content('Bob Leigh')
+    expect(responsible_body_school_page.school_details).to have_content('bob.leigh@sharedservices.co.uk')
+    expect(responsible_body_school_page.school_details).to have_content('020 123456')
   end
 end
