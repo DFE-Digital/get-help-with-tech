@@ -1,0 +1,7 @@
+---
+pager: false
+quiet: true
+skip_checks:
+  # This check issues a lot of false positives because it thinks that
+  # our view component 'render' calls use user input.
+  - CheckRender
