@@ -6,8 +6,12 @@ RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
 
   before do
-    _zebra_school = create(:school, responsible_body: responsible_body, name: 'Zebra Secondary School')
-    aardvark_school = create(:school, responsible_body: responsible_body, name: 'Aardvark Primary School')
+    _zebra_school = create(:school, :la_maintained, :secondary,
+                           responsible_body: responsible_body,
+                           name: 'Zebra Secondary School')
+    aardvark_school = create(:school, :la_maintained, :primary,
+                             responsible_body: responsible_body,
+                             name: 'Aardvark Primary School')
 
     create(:school_device_allocation, school: aardvark_school, device_type: 'std_device', allocation: 42)
     sign_in_as rb_user
@@ -77,8 +81,10 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def then_i_see_a_list_of_the_schools_i_am_responsible_for
     expect(page).to have_content('2 schools')
-    expect(responsible_body_schools_page.school_rows[0].title).to have_content('Aardvark Primary School')
-    expect(responsible_body_schools_page.school_rows[1].title).to have_content('Zebra Secondary School')
+    expect(responsible_body_schools_page.school_rows[0].title)
+      .to have_content('Aardvark Primary School Primary school')
+    expect(responsible_body_schools_page.school_rows[1].title)
+      .to have_content('Zebra Secondary School Secondary school')
   end
 
   def and_each_school_needs_a_contact
