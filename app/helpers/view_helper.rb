@@ -82,6 +82,20 @@ module ViewHelper
     ]
   end
 
+  def change_who_will_order_devices_options
+    scope = 'page_titles.change_who_will_order_edit'
+    [
+      OpenStruct.new(
+        id: 'schools',
+        label: t('schools', scope: scope),
+      ),
+      OpenStruct.new(
+        id: 'responsible_body',
+        label: t('responsible_body', scope: scope),
+      ),
+    ]
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

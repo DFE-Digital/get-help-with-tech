@@ -48,6 +48,10 @@ en:
       schools: Each school will manage their own orders
       responsible_body: All orders will be managed centrally
     request_a_change: Contact our support team to request this change
+    change_who_will_order: Who will place orders for laptops and tablets?
+    change_who_will_order_edit:
+      schools: The school will place their own orders
+      responsible_body: Orders will be placed centrally
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

@@ -37,6 +37,12 @@ class PreorderInformation < ApplicationRecord
     end
   end
 
+  def change_who_will_order_devices!(who)
+    self.who_will_order_devices = who
+    self.status = infer_status
+    save!
+  end
+
   def who_will_order_devices_label
     case who_will_order_devices
     when 'school'
