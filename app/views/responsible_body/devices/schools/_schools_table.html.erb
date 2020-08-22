@@ -1,31 +1,47 @@
-<table id="schools" class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header app-schools-table__school-column">School</th>
-      <th class="govuk-table__header">Allocation</th>
-      <th class="govuk-table__header">Who will order?</th>
-      <th class="govuk-table__header">Status</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% schools.each do |school| %>
+<div data-module="filterable-table">
+  <% if schools.length > 10 %>
+    <form class="app-filter-container">
+      <div class="govuk-form-group govuk-!-margin-top-1 govuk-!-margin-bottom-4">
+        <label class="govuk-label govuk-label--s" for="filter">
+          Filter the list of schools
+        </label>
+        <div id="account-number-hint" class="govuk-hint">
+          Try searching for “Secondary” or a status like “Needs a contact”
+        </div>
+        <input class="govuk-input js-filter-table-input" id="filter" name="filter" type="text">
+      </div>
+    </form>
+  <% end %>
+
+  <table id="schools" class="govuk-table">
+    <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">
-          <%= school.name %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= school.std_device_allocation&.allocation.to_i %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= school.preorder_information.who_will_order_devices_label %>
-        </td>
-        <%- status = school.preorder_status_or_default %>
-        <td class="govuk-table__cell">
-          <span class="govuk-tag <%= preorder_information_status_class(status) %>">
-            <%= t( status, scope: PreorderInformation.enum_i18n_scope(:status) ) %>
-          </span>
-        </td>
+        <th class="govuk-table__header app-schools-table__school-column">School</th>
+        <th class="govuk-table__header">Allocation</th>
+        <th class="govuk-table__header">Who will order?</th>
+        <th class="govuk-table__header">Status</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% schools.each do |school| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <%= school.name %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= school.std_device_allocation&.allocation.to_i %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= school.preorder_information.who_will_order_devices_label %>
+          </td>
+          <%- status = school.preorder_status_or_default %>
+          <td class="govuk-table__cell">
+            <span class="govuk-tag <%= preorder_information_status_class(status) %>">
+              <%= t( status, scope: PreorderInformation.enum_i18n_scope(:status) ) %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

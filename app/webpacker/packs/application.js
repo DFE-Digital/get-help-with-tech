@@ -7,3 +7,7 @@ initAll();
 
 require('jquery')
 require('./mno/extra-mobile-data-requests.js');
+require('./modules.js');
+require('./filterable-table.js');
+
+GOVUK.modules.start();
