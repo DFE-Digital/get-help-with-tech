@@ -8,4 +8,8 @@ class ResponsibleBody < ApplicationRecord
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end
+
+  def local_authority?
+    type == 'LocalAuthority'
+  end
 end
