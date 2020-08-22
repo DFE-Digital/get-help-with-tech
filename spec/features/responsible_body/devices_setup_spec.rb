@@ -6,11 +6,8 @@ RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
 
   before do
-    zebra_school = create(:school, responsible_body: responsible_body, name: 'Zebra Secondary School')
+    _zebra_school = create(:school, responsible_body: responsible_body, name: 'Zebra Secondary School')
     aardvark_school = create(:school, responsible_body: responsible_body, name: 'Aardvark Primary School')
-
-    create(:preorder_information, school: zebra_school, who_will_order_devices: 'school')
-    create(:preorder_information, school: aardvark_school, who_will_order_devices: 'responsible_body')
 
     create(:school_device_allocation, school: aardvark_school, device_type: 'std_device', allocation: 42)
     sign_in_as rb_user
@@ -21,8 +18,9 @@ RSpec.feature 'Setting up the devices ordering' do
     and_i_continue_through_the_guidance
     and_i_choose_ordering_through_schools
     then_i_see_a_list_of_the_schools_i_am_responsible_for
-    and_each_school_has_a_status
     and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+    and_the_list_shows_that_schools_will_place_all_orders
+    and_each_school_needs_a_contact
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -30,6 +28,9 @@ RSpec.feature 'Setting up the devices ordering' do
     and_i_continue_through_the_guidance
     and_i_choose_ordering_centrally
     then_i_see_a_list_of_the_schools_i_am_responsible_for
+    and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+    and_the_list_shows_that_the_responsible_body_will_place_all_orders
+    and_each_school_needs_information
   end
 
   scenario 'submitting the form without choosing an option shows an error' do
@@ -76,25 +77,43 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def then_i_see_a_list_of_the_schools_i_am_responsible_for
     expect(page).to have_content('2 schools')
-    expect(responsible_body_schools_page.school_rows[0]).to have_content('Aardvark Primary School')
-    expect(responsible_body_schools_page.school_rows[1]).to have_content('Zebra Secondary School')
+    expect(responsible_body_schools_page.school_rows[0].title).to have_content('Aardvark Primary School')
+    expect(responsible_body_schools_page.school_rows[1].title).to have_content('Zebra Secondary School')
   end
 
-  def and_each_school_has_a_status
-    expect(responsible_body_schools_page.school_rows[0]).to have_content('Needs information')
-    expect(responsible_body_schools_page.school_rows[1]).to have_content('Needs a contact')
+  def and_each_school_needs_a_contact
+    expect(responsible_body_schools_page.school_rows[0].status).to have_content('Needs a contact')
+    expect(responsible_body_schools_page.school_rows[1].status).to have_content('Needs a contact')
+  end
+
+  def and_each_school_needs_information
+    expect(responsible_body_schools_page.school_rows[0].status).to have_content('Needs information')
+    expect(responsible_body_schools_page.school_rows[1].status).to have_content('Needs information')
   end
 
   def and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
-    expect(responsible_body_schools_page.school_rows[0]).to have_content('42')
-    expect(responsible_body_schools_page.school_rows[1]).to have_content('0')
+    expect(responsible_body_schools_page.school_rows[0].allocation).to have_content('42')
+    expect(responsible_body_schools_page.school_rows[1].allocation).to have_content('0')
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally
-    responsible_body.update(who_will_order_devices: 'schools')
+    responsible_body.update!(who_will_order_devices: 'schools')
+    responsible_body.schools.each do |school|
+      school.create_preorder_information!(who_will_order_devices: 'school')
+    end
   end
 
   def when_i_visit_the_responsible_body_homepage
     visit responsible_body_home_path
+  end
+
+  def and_the_list_shows_that_schools_will_place_all_orders
+    expect(responsible_body_schools_page.school_rows[0].who_will_order_devices).to have_content('School')
+    expect(responsible_body_schools_page.school_rows[1].who_will_order_devices).to have_content('School')
+  end
+
+  def and_the_list_shows_that_the_responsible_body_will_place_all_orders
+    expect(responsible_body_schools_page.school_rows[0].who_will_order_devices).to have_content('Local authority')
+    expect(responsible_body_schools_page.school_rows[1].who_will_order_devices).to have_content('Local authority')
   end
 end

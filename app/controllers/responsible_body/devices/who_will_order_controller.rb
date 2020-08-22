@@ -8,7 +8,12 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Device
   def update
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
-      @responsible_body.update!(who_will_order_devices: @form.who_will_order)
+      ResponsibleBody.transaction do
+        @responsible_body.update!(who_will_order_devices: @form.who_will_order)
+        @responsible_body.schools.each do |school|
+          school.create_preorder_information!(who_will_order_devices: @form.who_will_order.singularize)
+        end
+      end
       flash[:notice] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update success])
       redirect_to responsible_body_devices_who_will_order_path
     else
