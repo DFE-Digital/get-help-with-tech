@@ -50,6 +50,8 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
           <%= school.name %>
+          <br>
+          <%= school.type_label %>
         </td>
         <td class="govuk-table__cell">
           <%= school.std_device_allocation&.allocation.to_i %>
