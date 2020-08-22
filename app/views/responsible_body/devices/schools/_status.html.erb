@@ -1,4 +1,0 @@
-<%- status = school.preorder_status_or_default %>
-<span class="govuk-tag <%= preorder_information_status_class(status) %>">
-  <%= t( status, scope: PreorderInformation.enum_i18n_scope(:status) ) %>
-</span>

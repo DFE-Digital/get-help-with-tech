@@ -14,7 +14,7 @@
             Status
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= render partial: 'status', locals: { school: @school } %>
+            <%= render SchoolPreorderStatusTagComponent.new(school: @school) %>
           </dd>
         </div>
 
