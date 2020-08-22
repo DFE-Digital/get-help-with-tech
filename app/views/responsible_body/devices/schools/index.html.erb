@@ -21,49 +21,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-2"><%= pluralize(@schools.size, 'school') %></h2>
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Is there a school missing from this list?
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <p>This is a list of all local authority maintained and special schools.</p>
-        <p>Contact support at <%= ghwt_contact_mailto(subject: 'Missing school that will need devices') %>
-          to add a missing school.</p>
-      </div>
-    </details>
+    <%= render partial: 'missing_school_callout' %>
   </div>
 </div>
 
-<table id="schools" class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header app-schools-table__school-column">School</th>
-      <th class="govuk-table__header">Allocation</th>
-      <th class="govuk-table__header">Who will order?</th>
-      <th class="govuk-table__header">Status</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @schools.each do |school| %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">
-          <%= school.name %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= school.std_device_allocation&.allocation.to_i %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= school.preorder_information.who_will_order_devices_label %>
-        </td>
-        <%- status = school.preorder_status_or_default %>
-        <td class="govuk-table__cell">
-          <span class="govuk-tag <%= preorder_information_status_class(status) %>">
-            <%= t( status, scope: PreorderInformation.enum_i18n_scope(:status) ) %>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render partial: 'schools_table', locals: { schools: @schools } %>
