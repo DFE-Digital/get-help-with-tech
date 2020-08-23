@@ -21,10 +21,12 @@ FactoryBot.define do
 
     trait :academy do
       establishment_type { :academy }
+      association :responsible_body, factory: :trust
     end
 
     trait :la_maintained do
       establishment_type { :local_authority }
+      association :responsible_body, factory: :local_authority
     end
   end
 end
