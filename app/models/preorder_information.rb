@@ -2,6 +2,7 @@ class PreorderInformation < ApplicationRecord
   self.table_name = 'preorder_information'
 
   belongs_to :school
+  belongs_to :school_contact, optional: true
 
   validates :status, presence: true
 
