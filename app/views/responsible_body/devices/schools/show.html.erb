@@ -7,8 +7,6 @@
       <%= @school.name %>
     </h1>
 
-    <div class="govuk-inset-text govuk-!-padding-top-0">
-      <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
-    </div>
+    <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
   </div>
 </div>
