@@ -16,7 +16,7 @@ class PreorderInformation < ApplicationRecord
   enum who_will_order_devices: {
     school: 'school',
     responsible_body: 'responsible_body',
-  }
+  }, _suffix: 'will_order_devices'
 
   def initialize(*args)
     super
@@ -27,7 +27,7 @@ class PreorderInformation < ApplicationRecord
   # with reference to the prototype:
   # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
   def infer_status
-    if who_will_order_devices == 'school'
+    if school_will_order_devices?
       'needs_contact'
     else
       'needs_info'
