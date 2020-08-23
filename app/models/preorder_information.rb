@@ -3,6 +3,8 @@ class PreorderInformation < ApplicationRecord
 
   belongs_to :school
 
+  validates :status, presence: true
+
   enum status: {
     needs_contact: 'needs_contact',
     needs_info: 'needs_info',
