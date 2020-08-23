@@ -107,12 +107,11 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school has a preorder_information record without a status' do
-      before do
-        PreorderInformation.new(school: school, status: nil)
-      end
-
       it 'infers the status' do
+        school.build_preorder_information
+        school.preorder_information.status = nil
         allow(school.preorder_information).to receive(:infer_status).and_return('inferred_status')
+
         expect(school.preorder_status_or_default).to eq('inferred_status')
       end
     end
