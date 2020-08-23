@@ -25,7 +25,7 @@ class SchoolDetailsSummaryListComponent < ViewComponent::Base
       },
       {
         key: 'Who will order?',
-        value: "The #{@school.preorder_information.who_will_order_devices_label.downcase} orders devices",
+        value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
       },
     ] + school_contact_row_if_contact_present
   end

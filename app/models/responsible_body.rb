@@ -15,4 +15,13 @@ class ResponsibleBody < ApplicationRecord
       .order(name: :asc)
       .first
   end
+
+  def who_will_order_devices_label
+    case who_will_order_devices
+    when 'school'
+      'School'
+    when 'responsible_body'
+      humanized_type.capitalize
+    end
+  end
 end
