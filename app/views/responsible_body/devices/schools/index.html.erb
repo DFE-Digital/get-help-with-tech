@@ -49,7 +49,7 @@
     <% @schools.each do |school| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
-          <%= link_to school.name, responsible_body_devices_school_path(school.urn) %>
+          <%= govuk_link_to school.name, responsible_body_devices_school_path(school.urn) %>
           <br>
           <%= school.type_label %>
         </td>
