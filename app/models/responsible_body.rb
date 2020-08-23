@@ -8,4 +8,13 @@ class ResponsibleBody < ApplicationRecord
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end
+
+  def who_will_order_devices_label
+    case who_will_order_devices
+    when 'school'
+      'School'
+    when 'responsible_body'
+      humanized_type.capitalize
+    end
+  end
 end
