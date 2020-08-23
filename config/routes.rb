@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     end
     resources :users
     namespace :devices do
-      resources :schools, only: %i[index]
+      resources :schools, only: %i[index show], param: :urn
     end
   end
 

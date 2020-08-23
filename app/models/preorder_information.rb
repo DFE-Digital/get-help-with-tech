@@ -20,9 +20,9 @@ class PreorderInformation < ApplicationRecord
   # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
   def infer_status
     if who_will_order_devices == 'school'
-      :needs_contact
+      'needs_contact'
     else
-      :needs_info
+      'needs_info'
     end
   end
 

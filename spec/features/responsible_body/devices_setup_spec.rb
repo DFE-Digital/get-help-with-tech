@@ -4,16 +4,17 @@ RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body) { create(:local_authority, in_devices_pilot: true) }
   let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
+  let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
   before do
     _zebra_school = create(:school, :la_maintained, :secondary,
                            responsible_body: responsible_body,
                            name: 'Zebra Secondary School')
-    aardvark_school = create(:school, :la_maintained, :primary,
-                             responsible_body: responsible_body,
-                             name: 'Aardvark Primary School')
+    @aardvark_school = create(:school, :la_maintained, :primary,
+                              responsible_body: responsible_body,
+                              name: 'Aardvark Primary School')
 
-    create(:school_device_allocation, school: aardvark_school, device_type: 'std_device', allocation: 42)
+    create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', allocation: 42)
     sign_in_as rb_user
   end
 
@@ -25,6 +26,10 @@ RSpec.feature 'Setting up the devices ordering' do
     and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
     and_the_list_shows_that_schools_will_place_all_orders
     and_each_school_needs_a_contact
+
+    when_i_click_on_a_school_name
+    then_i_see_the_details_of_the_school
+    and_that_the_school_orders_devices
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -35,6 +40,10 @@ RSpec.feature 'Setting up the devices ordering' do
     and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
     and_the_list_shows_that_the_responsible_body_will_place_all_orders
     and_each_school_needs_information
+
+    when_i_click_on_a_school_name
+    then_i_see_the_details_of_the_school
+    and_that_the_local_authority_orders_devices
   end
 
   scenario 'submitting the form without choosing an option shows an error' do
@@ -121,5 +130,25 @@ RSpec.feature 'Setting up the devices ordering' do
   def and_the_list_shows_that_the_responsible_body_will_place_all_orders
     expect(responsible_body_schools_page.school_rows[0].who_will_order_devices).to have_content('Local authority')
     expect(responsible_body_schools_page.school_rows[1].who_will_order_devices).to have_content('Local authority')
+  end
+
+  def when_i_click_on_a_school_name
+    click_on @aardvark_school.name
+  end
+
+  def then_i_see_the_details_of_the_school
+    expect(responsible_body_school_page).to have_content(@aardvark_school.name)
+    expect(responsible_body_school_page.school_details).to have_content('42 devices')
+    expect(responsible_body_school_page.school_details).to have_content('Primary school')
+  end
+
+  def and_that_the_school_orders_devices
+    expect(responsible_body_school_page.school_details).to have_content('Needs a contact')
+    expect(responsible_body_school_page.school_details).to have_content('The school orders devices')
+  end
+
+  def and_that_the_local_authority_orders_devices
+    expect(responsible_body_school_page.school_details).to have_content('Needs information')
+    expect(responsible_body_school_page.school_details).to have_content('The local authority orders devices')
   end
 end
