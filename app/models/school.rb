@@ -52,4 +52,8 @@ class School < ApplicationRecord
       'needs_contact'
     end
   end
+
+  def next_school_in_responsible_body_when_sorted_by_name_ascending
+    responsible_body.next_school_sorted_ascending_by_name(self)
+  end
 end
