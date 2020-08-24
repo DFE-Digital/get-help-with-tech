@@ -49,9 +49,22 @@ class PreorderInformation < ApplicationRecord
     self.status = infer_status
   end
 
-private
+  def needs_chromebook_information?
+    who_will_order_devices == 'responsible_body'
+  end
+
+  def chromebook_information_complete?
+    if will_need_chromebooks
+      school_or_rb_domain.present? && recovery_email_address.present?
+    else
+      will_need_chromebooks == false
+    end
+  end
+  
+  private
 
   def set_defaults
     self.status ||= infer_status
   end
+
 end

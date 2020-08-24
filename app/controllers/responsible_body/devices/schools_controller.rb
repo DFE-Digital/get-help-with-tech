@@ -8,6 +8,10 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::Devices::Ba
 
   def show
     @school = @responsible_body.schools.find_by!(urn: params[:urn])
-    redirect_to responsible_body_devices_school_who_to_contact_path(@school.urn) if @school.preorder_information.needs_contact?
+    if @school.preorder_information.needs_contact?
+      redirect_to responsible_body_devices_school_who_to_contact_path(@school.urn)
+    elsif @school.preorder_information.needs_chromebook_information?
+      @chromebook_information_form = ResponsibleBody::Devices::ChromebookInformationForm.new
+    end
   end
 end

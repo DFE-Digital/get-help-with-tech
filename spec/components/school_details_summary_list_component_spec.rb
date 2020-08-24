@@ -84,19 +84,4 @@ describe SchoolDetailsSummaryListComponent do
       expect(result.css('dl').text).not_to include('School contact')
     end
   end
-
-  context 'when the school has no PreorderInformation record' do
-    before do
-      school.responsible_body.update(who_will_order_devices: 'responsible_body')
-    end
-
-    it 'does not raise an error' do
-      expect { render_inline(described_class.new(school: school)) }.not_to raise_error
-    end
-
-    it 'gets the default who_will_order_devices value from the responsible_body' do
-      result = render_inline(described_class.new(school: school))
-      expect(result.css('dd')[3].text).to include('The local authority orders devices')
-    end
-  end
 end
