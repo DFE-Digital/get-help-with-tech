@@ -16,6 +16,8 @@
 The Computacenter API is based at `/computacenter/api/`, and is authenticated-
 only. There is no public access.
 
+All requests must have the headers 'Content-type' and 'Accept' set to an XML MIME type - either `text/xml` or `application/xml`
+
 ## Rate-limiting
 
 Requests are rate-limited to a maximum of 4 per client IP address per second.
@@ -44,7 +46,7 @@ API tokens you currently have, and a form to generate a new token.
 Give your token a name (this must be unique, but is purely for your own reference) and click 'Generate'. You should see your new token in the table of 'Your API Tokens'.
 
 Copy the value in the 'Token' column - this will be the Bearer token you supply
-to the API with each request
+to the API with each request.
 
 ### Supplying an API token
 
@@ -54,7 +56,7 @@ the `Authorization` header. You can do this with `curl` using the `-H` flag:
 ```bash
 # replace YOUR_TOKEN_VALUE with your token, and API_URL with the actual
 # endpoint URL
-curl -H "Authorization: Bearer YOUR_TOKEN_VALUE" -H "Content-type: text/xml" API_URL
+curl -H "Authorization: Bearer YOUR_TOKEN_VALUE" -H "Content-type: text/xml" -H "Accept: text/xml" API_URL
 ```
 ## Available endpoints
 
@@ -77,6 +79,7 @@ as follows:
 # (curl assumes a POST method if you provide --data)
 curl  -H "Authorization: Bearer YOUR_TOKEN_VALUE" \
       -H "Content-type: text/xml" \
+      -H "Accept: text/xml" \
       --data "XML_DATA" \
       API_URL
 ```
