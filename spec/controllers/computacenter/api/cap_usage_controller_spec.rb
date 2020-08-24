@@ -15,20 +15,6 @@ RSpec.describe Computacenter::API::CapUsageController do
       </CapUsage>
     XML
   end
-  let(:invalid_xml) do
-    <<~XML
-      <Broken Tag Structure>
-        <with errors=here>and</here>
-      </Broken>
-    XML
-  end
-  let(:valid_xml_but_not_valid_for_the_schema) do
-    <<~XML
-      <NotACapUsagePacket>
-        <SomethingElse>Entirely</SomethingElse>
-      </NotACapUsagePacket>
-    XML
-  end
 
   describe 'Authentication' do
     context 'with no Authorization header' do
@@ -55,6 +41,14 @@ RSpec.describe Computacenter::API::CapUsageController do
   end
 
   describe 'POST bulk_update with valid auth but invalid XML' do
+    let(:invalid_xml) do
+      <<~XML
+        <Broken Tag Structure>
+          <with errors=here>and</here>
+        </Broken>
+      XML
+    end
+
     before do
       request.headers['Authorization'] = "Bearer #{api_token.token}"
     end
@@ -67,6 +61,14 @@ RSpec.describe Computacenter::API::CapUsageController do
     end
 
     context 'given valid XML that does not conform to the schema' do
+      let(:valid_xml_but_not_valid_for_the_schema) do
+        <<~XML
+          <NotACapUsagePacket>
+            <SomethingElse>Entirely</SomethingElse>
+          </NotACapUsagePacket>
+        XML
+      end
+
       it 'responds with a 400 status' do
         post :bulk_update, format: :xml, body: valid_xml_but_not_valid_for_the_schema
         expect(response).to have_http_status(:bad_request)
