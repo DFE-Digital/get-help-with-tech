@@ -30,12 +30,10 @@ class PreorderInformation < ApplicationRecord
   def infer_status
     if school_will_order_devices?
       school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
+    elsif needs_chromebook_information? && chromebook_information_complete?
+      'ready'
     else
-      if needs_chromebook_information? && chromebook_information_complete?
-        'ready'
-      else
-        'needs_info'
-      end
+      'needs_info'
     end
   end
 

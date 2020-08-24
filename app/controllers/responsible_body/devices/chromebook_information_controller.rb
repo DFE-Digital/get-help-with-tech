@@ -6,14 +6,14 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
       school: @school,
       will_need_chromebooks: @school.preorder_information&.will_need_chromebooks,
       school_or_rb_domain: @school.preorder_information&.school_or_rb_domain,
-      recovery_email_address: @school.preorder_information&.recovery_email_address
+      recovery_email_address: @school.preorder_information&.recovery_email_address,
     )
   end
 
   def update
     @preorder_info = @school.preorder_information
     @chromebook_information_form = ResponsibleBody::Devices::ChromebookInformationForm.new(
-      { school: @school }.merge(chromebook_params)
+      { school: @school }.merge(chromebook_params),
     )
     if @chromebook_information_form.valid?
       @preorder_info.update!(chromebook_params.merge(status: @preorder_info.infer_status))
@@ -33,7 +33,7 @@ private
     params.require(:responsible_body_devices_chromebook_information_form).permit(
       :will_need_chromebooks,
       :school_or_rb_domain,
-      :recovery_email_address
+      :recovery_email_address,
     )
   end
 end
