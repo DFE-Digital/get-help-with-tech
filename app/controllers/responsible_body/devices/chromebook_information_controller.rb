@@ -15,8 +15,6 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
     @chromebook_information_form = ResponsibleBody::Devices::ChromebookInformationForm.new(
       { school: @school }.merge(chromebook_params)
     )
-    # TODO: how to handle errors! Should we move this whole method
-    # back into the schools_controller?
     if @chromebook_information_form.valid?
       @preorder_info.update!(chromebook_params.merge(status: @preorder_info.infer_status))
       redirect_to responsible_body_devices_school_path(urn: @school.urn)
