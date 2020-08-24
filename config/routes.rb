@@ -79,8 +79,8 @@ Rails.application.routes.draw do
     resources :users
     namespace :devices do
       resources :schools, only: %i[index show], param: :urn do
-        get '/chromebooks/edit', to: 'preorder_information#edit'
-        patch '/chromebooks', to: 'preorder_information#update'
+        get '/chromebooks/edit', to: 'chromebook_information#edit'
+        patch '/chromebooks', to: 'chromebook_information#update'
       end
     end
   end
