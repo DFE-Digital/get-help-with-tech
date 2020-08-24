@@ -3,6 +3,8 @@ class PreorderInformation < ApplicationRecord
 
   belongs_to :school
 
+  validates :status, presence: true
+
   enum status: {
     needs_contact: 'needs_contact',
     needs_info: 'needs_info',
@@ -14,6 +16,11 @@ class PreorderInformation < ApplicationRecord
     school: 'school',
     responsible_body: 'responsible_body',
   }
+
+  def initialize(*args)
+    super
+    set_defaults
+  end
 
   # Update this method as we add more fields (e.g. chromebook info)
   # with reference to the prototype:
@@ -33,5 +40,11 @@ class PreorderInformation < ApplicationRecord
     when 'responsible_body'
       school.responsible_body.humanized_type.capitalize
     end
+  end
+
+private
+
+  def set_defaults
+    self.status ||= infer_status
   end
 end
