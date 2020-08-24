@@ -117,6 +117,27 @@ RSpec.describe Computacenter::API::CapUsageController do
       end
     end
 
+    context 'when the used cap and cap amount are zero' do
+      let(:cap_usage_update_packet) do
+        <<~XML
+          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="0" usedCap="0"/>
+          </CapUsage>
+        XML
+      end
+
+      before do
+        school = create(:school, computacenter_reference: '81060874')
+        create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 0)
+      end
+
+      it 'is treated a valid payload' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     context 'when all updates failed' do
       it 'responds with :unprocessable_entity status' do
         # no schools are seeded in the DB so there will be a data mismatch for all records
