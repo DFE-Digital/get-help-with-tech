@@ -6,7 +6,7 @@ RSpec.feature 'Setting up the devices ordering' do
   let!(:school) { create(:school, :la_maintained, :with_preorder_information, responsible_body: responsible_body) }
 
   before do
-    school.preorder_information.update(who_will_order_devices: 'responsible_body', status: 'needs_info')
+    school.preorder_information.update!(who_will_order_devices: 'responsible_body', status: 'needs_info')
     sign_in_as rb_user
     visit responsible_body_devices_schools_path
   end

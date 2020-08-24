@@ -51,7 +51,6 @@ class PreorderInformation < ApplicationRecord
     self.status = infer_status
   end
 
-
   def needs_chromebook_information?
     who_will_order_devices == 'responsible_body'
   end
@@ -69,5 +68,4 @@ private
   def set_defaults
     self.status ||= infer_status
   end
-
 end
