@@ -27,6 +27,7 @@ RSpec.feature 'Setting up the devices ordering' do
     it_shows_me_an_error
     when_i_provide_valid_entries_for_both_fields
     it_shows_the_chromebook_information_i_entered
+    and_the_status_has_changed_to_ready
   end
 
   def when_i_click_on_a_school_that_has_no_chromebook_information
@@ -90,5 +91,9 @@ RSpec.feature 'Setting up the devices ordering' do
   def it_shows_the_chromebook_information_i_entered
     expect(page).to have_content 'somedomain.com'
     expect(page).to have_content 'someone@someotherdomain.com'
+  end
+
+  def and_the_status_has_changed_to_ready
+    expect(page).to have_css('.govuk-tag', text: 'Ready')
   end
 end

@@ -3,7 +3,10 @@ class ResponsibleBody::Devices::PreorderInformationController < ResponsibleBody:
 
   def edit
     @chromebook_information_form = ResponsibleBody::Devices::ChromebookInformationForm.new(
-      school: @school
+      school: @school,
+      will_need_chromebooks: @school.preorder_information&.will_need_chromebooks,
+      school_or_rb_domain: @school.preorder_information&.school_or_rb_domain,
+      recovery_email_address: @school.preorder_information&.recovery_email_address
     )
   end
 
@@ -15,7 +18,7 @@ class ResponsibleBody::Devices::PreorderInformationController < ResponsibleBody:
     # TODO: how to handle errors! Should we move this whole method
     # back into the schools_controller?
     if @chromebook_information_form.valid?
-      @preorder_info.update!(chromebook_params)
+      @preorder_info.update!(chromebook_params.merge(status: @preorder_info.infer_status))
       redirect_to responsible_body_devices_school_path(urn: @school.urn)
     else
       render :edit, status: :unprocessable_entity

@@ -31,7 +31,11 @@ class PreorderInformation < ApplicationRecord
     if school_will_order_devices?
       school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
     else
-      'needs_info'
+      if needs_chromebook_information? && chromebook_information_complete?
+        'ready'
+      else
+        'needs_info'
+      end
     end
   end
 
@@ -55,14 +59,14 @@ class PreorderInformation < ApplicationRecord
   end
 
   def chromebook_information_complete?
-    if will_need_chromebooks
+    if will_need_chromebooks == 'yes'
       school_or_rb_domain.present? && recovery_email_address.present?
     else
-      will_need_chromebooks == false
+      will_need_chromebooks == 'no'
     end
   end
 
-  private
+private
 
   def set_defaults
     self.status ||= infer_status
