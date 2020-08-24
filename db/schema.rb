@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 2020_08_23_233442) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
+    t.bigint "school_contact_id"
+    t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"
   end
@@ -171,6 +173,7 @@ ActiveRecord::Schema.define(version: 2020_08_23_233442) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
+  add_foreign_key "preorder_information", "school_contacts"
   add_foreign_key "school_device_allocations", "schools"
   add_foreign_key "schools", "responsible_bodies"
 end
