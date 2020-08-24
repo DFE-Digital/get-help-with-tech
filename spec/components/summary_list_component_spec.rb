@@ -93,4 +93,20 @@ describe SummaryListComponent do
 
     expect(result.to_html).to include('<span class="govuk-summary-list__actions"></span>')
   end
+
+  it 'does render a span if any row has a change_path' do
+    rows = [{ key: 'Job',
+              value: ['Teacher', 'Clearcourt High'] },
+            { key: 'Working pattern',
+              value: "Full-time\n Omnis itaque rerum. Velit in ." },
+            { key: 'Description',
+              value: 'Cumque autem veritatis..' },
+            { key: 'Dates',
+              value: 'May 2003 - November 2019',
+              change_path: '/some/url' }]
+
+    result = render_inline(SummaryListComponent.new(rows: rows))
+
+    expect(result.to_html).to include('<span class="govuk-summary-list__actions"></span>')
+  end
 end
