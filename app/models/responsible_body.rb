@@ -8,4 +8,11 @@ class ResponsibleBody < ApplicationRecord
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end
+
+  def next_school_sorted_ascending_by_name(school)
+    schools
+      .where('name > ?', school.name)
+      .order(name: :asc)
+      .first
+  end
 end

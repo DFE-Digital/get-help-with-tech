@@ -7,8 +7,13 @@
       <%= @school.name %>
     </h1>
 
-    <div class="govuk-inset-text govuk-!-padding-top-0">
-      <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
-    </div>
+    <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
+      <% if @school.next_school_in_responsible_body_when_sorted_by_name_ascending.present? %>
+        or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(@school.next_school_in_responsible_body_when_sorted_by_name_ascending.urn) %>
+      <% end %>
+    </p>
   </div>
 </div>

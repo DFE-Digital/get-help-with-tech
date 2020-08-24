@@ -7,7 +7,7 @@ RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
   before do
-    _zebra_school = create(:school, :la_maintained, :secondary,
+    @zebra_school = create(:school, :la_maintained, :secondary,
                            responsible_body: responsible_body,
                            name: 'Zebra Secondary School')
     @aardvark_school = create(:school, :la_maintained, :primary,
@@ -27,9 +27,12 @@ RSpec.feature 'Setting up the devices ordering' do
     and_the_list_shows_that_schools_will_place_all_orders
     and_each_school_needs_a_contact
 
-    when_i_click_on_a_school_name
-    then_i_see_the_details_of_the_school
+    when_i_click_on_the_first_school_name
+    then_i_see_the_details_of_the_first_school
     and_that_the_school_orders_devices
+
+    when_i_follow_the_link_to_the_next_school
+    then_i_see_the_details_of_the_second_school
   end
 
   scenario 'devolving device ordering mostly centrally' do
@@ -41,8 +44,8 @@ RSpec.feature 'Setting up the devices ordering' do
     and_the_list_shows_that_the_responsible_body_will_place_all_orders
     and_each_school_needs_information
 
-    when_i_click_on_a_school_name
-    then_i_see_the_details_of_the_school
+    when_i_click_on_the_first_school_name
+    then_i_see_the_details_of_the_first_school
     and_that_the_local_authority_orders_devices
   end
 
@@ -132,14 +135,20 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(responsible_body_schools_page.school_rows[1].who_will_order_devices).to have_content('Local authority')
   end
 
-  def when_i_click_on_a_school_name
+  def when_i_click_on_the_first_school_name
     click_on @aardvark_school.name
   end
 
-  def then_i_see_the_details_of_the_school
+  def then_i_see_the_details_of_the_first_school
     expect(responsible_body_school_page).to have_content(@aardvark_school.name)
     expect(responsible_body_school_page.school_details).to have_content('42 devices')
     expect(responsible_body_school_page.school_details).to have_content('Primary school')
+  end
+
+  def then_i_see_the_details_of_the_second_school
+    expect(responsible_body_school_page).to have_content(@zebra_school.name)
+    expect(responsible_body_school_page.school_details).to have_content('0 devices')
+    expect(responsible_body_school_page.school_details).to have_content('Secondary school')
   end
 
   def and_that_the_school_orders_devices
@@ -150,5 +159,9 @@ RSpec.feature 'Setting up the devices ordering' do
   def and_that_the_local_authority_orders_devices
     expect(responsible_body_school_page.school_details).to have_content('Needs information')
     expect(responsible_body_school_page.school_details).to have_content('The local authority orders devices')
+  end
+
+  def when_i_follow_the_link_to_the_next_school
+    click_on 'go to the next school'
   end
 end
