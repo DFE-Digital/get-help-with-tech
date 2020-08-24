@@ -14,4 +14,6 @@ class PagesController < ApplicationController
   def about_increasing_mobile_data; end
 
   def accessibility; end
+
+  def request_a_change; end
 end

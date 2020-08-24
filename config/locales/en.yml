@@ -46,6 +46,7 @@ en:
     who_will_order_show:
       schools: Each school will manage their own orders
       responsible_body: All orders will be managed centrally
+    request_a_change: Contact our support team to request this change
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
