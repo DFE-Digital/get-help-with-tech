@@ -19,12 +19,12 @@
 			</xs:attribute>
 			<xs:attribute name="capAmount">
 				<xs:simpleType>
-					<xs:restriction base="xs:positiveInteger"/>
+					<xs:restriction base="xs:nonNegativeInteger"/>
 				</xs:simpleType>
 			</xs:attribute>
 			<xs:attribute name="usedCap">
 				<xs:simpleType>
-					<xs:restriction base="xs:positiveInteger"/>
+					<xs:restriction base="xs:nonNegativeInteger"/>
 				</xs:simpleType>
 			</xs:attribute>
 		</xs:complexType>
