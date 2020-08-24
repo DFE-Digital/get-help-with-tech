@@ -74,6 +74,36 @@ RSpec.describe Computacenter::API::CapUsageController do
         expect(response).to have_http_status(:bad_request)
       end
     end
+
+    context 'given valid XML but where the usedCap is negative' do
+      let(:cap_usage_update_packet) do
+        <<~XML
+          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="0" usedCap="-1"/>
+          </CapUsage>
+        XML
+      end
+
+      it 'responds with a 400 status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'given valid XML but where the capAmount is negative' do
+      let(:cap_usage_update_packet) do
+        <<~XML
+          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="-1" usedCap="2"/>
+          </CapUsage>
+        XML
+      end
+
+      it 'responds with a 400 status' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
   end
 
   describe 'POST bulk_update with valid auth and valid XML' do
