@@ -61,7 +61,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def when_i_click_on_the_change_link
-    first('a', text: 'Change').click
+    first('a', text: 'Change whether Chromebooks are needed').click
   end
 
   def and_choose_yes_they_will_need_chromebooks

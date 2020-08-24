@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       resources :schools, only: %i[index show update], param: :urn do
         get '/who-to-contact', to: 'who_to_contact#new'
         post '/who-to-contact', to: 'who_to_contact#create'
+        get '/change-who-will-order', to: 'change_who_will_order#edit'
+        patch '/change-who-will-order', to: 'change_who_will_order#update'
       end
     end
     namespace :internet do

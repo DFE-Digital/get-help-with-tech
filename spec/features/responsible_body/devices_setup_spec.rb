@@ -43,6 +43,7 @@ RSpec.feature 'Setting up the devices ordering' do
     when_i_click_on_the_first_school_name
     then_i_see_the_details_of_the_first_school
     and_that_the_school_orders_devices
+    and_i_see_a_link_to_change_who_orders_devices
     and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
 
     when_i_select_to_contact_the_headteacher
@@ -69,6 +70,7 @@ RSpec.feature 'Setting up the devices ordering' do
     when_i_click_on_the_first_school_name
     then_i_see_the_details_of_the_first_school
     and_that_the_local_authority_orders_devices
+    and_i_see_a_link_to_change_who_orders_devices
   end
 
   scenario 'submitting the form without choosing an option shows an error' do
@@ -83,6 +85,26 @@ RSpec.feature 'Setting up the devices ordering' do
     when_i_visit_the_responsible_body_homepage
     when_i_follow_the_get_devices_link
     then_i_see_a_list_of_the_schools_i_am_responsible_for
+
+    when_i_click_on_the_first_school_name
+    then_i_see_the_details_of_the_first_school
+    and_that_the_school_orders_devices
+    and_i_see_a_link_to_change_who_orders_devices
+
+    when_i_follow_the_change_who_will_order_link
+    then_i_am_prompted_to_choose_who_orders_devices_for_the_school
+
+    when_i_select_orders_will_be_placed_centrally
+    then_i_see_the_details_of_the_first_school
+    and_that_the_local_authority_orders_devices
+
+    when_i_follow_the_change_who_will_order_link
+    then_i_am_prompted_to_choose_who_orders_devices_for_the_school
+
+    when_i_select_the_school_to_order_devices
+    then_i_see_the_details_of_the_first_school
+    and_that_the_school_orders_devices
+    and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
   end
 
   def when_i_follow_the_get_devices_link
@@ -221,5 +243,27 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(responsible_body_school_page.school_details).to have_content('Bob Leigh')
     expect(responsible_body_school_page.school_details).to have_content('bob.leigh@sharedservices.co.uk')
     expect(responsible_body_school_page.school_details).to have_content('020 123456')
+  end
+
+  def and_i_see_a_link_to_change_who_orders_devices
+    expect(page).to have_link('Change who will order')
+  end
+
+  def when_i_follow_the_change_who_will_order_link
+    click_on 'Change who will order'
+  end
+
+  def then_i_am_prompted_to_choose_who_orders_devices_for_the_school
+    expect(page).to have_content('Who will place orders for laptops and tablets?')
+  end
+
+  def when_i_select_the_school_to_order_devices
+    choose('The school will place their own orders')
+    click_on 'Continue'
+  end
+
+  def when_i_select_orders_will_be_placed_centrally
+    choose('Orders will be placed centrally')
+    click_on 'Continue'
   end
 end

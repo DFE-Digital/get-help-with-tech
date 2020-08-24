@@ -41,9 +41,9 @@ describe SchoolDetailsSummaryListComponent do
                school_contact: headteacher)
 
         expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[4].text).to include('Headteacher: Davy Jones')
-        expect(result.css('dd')[4].text).to include('davy.jones@school.sch.uk')
-        expect(result.css('dd')[4].text).to include('12345')
+        expect(result.css('dd')[5].text).to include('Headteacher: Davy Jones')
+        expect(result.css('dd')[5].text).to include('davy.jones@school.sch.uk')
+        expect(result.css('dd')[5].text).to include('12345')
       end
     end
 
@@ -59,9 +59,9 @@ describe SchoolDetailsSummaryListComponent do
                school_contact: new_contact)
 
         expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[4].text).to include('Jane Smith')
-        expect(result.css('dd')[4].text).to include('abc@example.com')
-        expect(result.css('dd')[4].text).to include('12345')
+        expect(result.css('dd')[5].text).to include('Jane Smith')
+        expect(result.css('dd')[5].text).to include('abc@example.com')
+        expect(result.css('dd')[5].text).to include('12345')
       end
     end
   end
