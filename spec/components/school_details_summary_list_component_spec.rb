@@ -41,9 +41,7 @@ describe SchoolDetailsSummaryListComponent do
                school_contact: headteacher)
 
         expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[5].text).to include('Headteacher: Davy Jones')
-        expect(result.css('dd')[5].text).to include('davy.jones@school.sch.uk')
-        expect(result.css('dd')[5].text).to include('12345')
+        expect(result.css('dd')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
       end
     end
 
