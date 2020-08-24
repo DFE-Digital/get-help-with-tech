@@ -136,6 +136,19 @@ en:
           attributes:
             who_will_order:
               inclusion: Tell us who will order devices and laptops
+        responsible_body/devices/who_to_contact_form:
+          attributes:
+            who_to_contact:
+              inclusion: Tell us who we can contact at the school
+            full_name:
+              blank: Enter the contact’s full name
+              length: Enter a name that is between 2 and 1024 characters
+            email_address:
+              blank: Enter an email address in the correct format, like name@example.com
+              too_short: Enter an email address that is at least %{count} characters
+              invalid: Enter an email address in the correct format, like name@example.com
+            phone_number:
+              blank: Enter the contact’s telephone
   activerecord:
     attributes:
       api_token:
@@ -173,6 +186,7 @@ en:
           needs_info: Needs information
           ready: Ready
           school_contacted: School contacted
+          school_will_be_contacted: School to be contacted shortly
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'
@@ -226,6 +240,10 @@ en:
       who_will_order:
         update:
           success: We’ve saved your choice
+      schools:
+        who_to_contact:
+          create:
+            success: "Saved. We will email %{email_address} shortly"
     home:
       bt_wifi_offer:
         number_eligible: Eligible young people

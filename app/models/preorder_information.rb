@@ -10,13 +10,14 @@ class PreorderInformation < ApplicationRecord
     needs_contact: 'needs_contact',
     needs_info: 'needs_info',
     ready: 'ready',
+    school_will_be_contacted: 'school_will_be_contacted',
     school_contacted: 'school_contacted',
   }
 
   enum who_will_order_devices: {
     school: 'school',
     responsible_body: 'responsible_body',
-  }
+  }, _suffix: 'will_order_devices'
 
   def initialize(*args)
     super
@@ -27,8 +28,8 @@ class PreorderInformation < ApplicationRecord
   # with reference to the prototype:
   # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
   def infer_status
-    if who_will_order_devices == 'school'
-      'needs_contact'
+    if school_will_order_devices?
+      school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
     else
       'needs_info'
     end
@@ -41,6 +42,11 @@ class PreorderInformation < ApplicationRecord
     when 'responsible_body'
       school.responsible_body.humanized_type.capitalize
     end
+  end
+
+  def school_contact=(value)
+    super(value)
+    self.status = infer_status
   end
 
 private

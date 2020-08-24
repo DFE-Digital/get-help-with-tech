@@ -1,0 +1,19 @@
+<%- content_for :before_content, govuk_link_to('Back', responsible_body_devices_schools_path, class: 'govuk-back-link') %>
+<%- content_for :title, @school.name %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+      <%= @school.name %>
+    </h1>
+
+    <%= render partial: 'who_to_contact_form', locals: { form: @form } %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
+      <% if @school.next_school_in_responsible_body_when_sorted_by_name_ascending.present? %>
+        or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(@school.next_school_in_responsible_body_when_sorted_by_name_ascending.urn) %>
+      <% end %>
+    </p>
+  </div>
+</div>
