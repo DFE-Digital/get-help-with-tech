@@ -38,7 +38,7 @@ private
     if school_will_order_devices? && school_contact.present?
       [{
         key: 'School contact',
-        value: contact_lines.join('<br>'),
+        value: contact_lines.map { |line| h(line) }.join('<br>').html_safe,
       }]
     else
       []
