@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_233442) do
+ActiveRecord::Schema.define(version: 2020_08_24_125255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,7 +77,10 @@ ActiveRecord::Schema.define(version: 2020_08_23_233442) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
+    t.string "school_or_rb_domain"
+    t.string "recovery_email_address"
     t.bigint "school_contact_id"
+    t.string "will_need_chromebooks"
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

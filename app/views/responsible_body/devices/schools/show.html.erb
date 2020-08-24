@@ -7,7 +7,15 @@
       <%= @school.name %>
     </h1>
 
-    <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
+    <div class="govuk-!-margin-bottom-6 govuk-!-padding-top-0">
+      <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
+    </div>
+
+    <%- if @school.preorder_information.needs_chromebook_information? %>
+      <%- unless @school.preorder_information.chromebook_information_complete? %>
+        <%= render partial: 'responsible_body/devices/shared/chromebook_information_form' %>
+      <%- end %>
+    <%- end %>
 
     <p class="govuk-body">
       <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>

@@ -1,0 +1,20 @@
+<%- title = t('page_titles.responsible_body_devices_chromebooks') %>
+<%- content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', responsible_body_devices_school_path(urn: @school.urn), class: 'govuk-back-link') %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <%= render partial: 'responsible_body/devices/shared/chromebook_information_form' %>
+  </div>
+</div>
+
+<p class="govuk-body">
+  <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
+  <% if @school.next_school_in_responsible_body_when_sorted_by_name_ascending.present? %>
+    or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(@school.next_school_in_responsible_body_when_sorted_by_name_ascending.urn) %>
+  <% end %>
+</p>

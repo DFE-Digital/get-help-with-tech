@@ -20,6 +20,7 @@ en:
     responsible_body_devices_home: Tell us who will order a school’s laptops and tablets
     responsible_body_internet_home: Get the internet
     responsible_body_users_index: Manage %{rb_type} users
+    responsible_body_devices_chromebooks: Will the school need Chromebooks?
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Schools that might need devices
@@ -150,6 +151,17 @@ en:
               invalid: Enter an email address in the correct format, like name@example.com
             phone_number:
               blank: Enter the contact’s telephone
+        responsible_body/devices/chromebook_information_form:
+          attributes:
+            will_need_chromebooks:
+              blank: Tell us whether the school will need Chromebooks
+            school_or_rb_domain:
+              blank: Enter a domain in the right format, like myschool.org.uk
+              invalid: Enter a domain in the right format, like myschool.org.uk
+            recovery_email_address:
+              blank: Enter an email address in the correct format, like name@example.com
+              invalid: Enter an email address in the correct format, like name@example.com
+              cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
   activerecord:
     attributes:
       api_token:
@@ -182,6 +194,9 @@ en:
           not_participating: 'Not participating'
           maybe_participating: 'May offer data when the service launches'
       preorder_information:
+        will_need_chromebooks:
+          "yes": Yes, they will need Chromebooks
+          'no': No, they will not need Chromebooks
         status:
           needs_contact: Needs a contact
           needs_info: Needs information

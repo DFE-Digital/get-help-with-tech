@@ -25,9 +25,9 @@ class SchoolDetailsSummaryListComponent < ViewComponent::Base
       },
       {
         key: 'Who will order?',
-        value: "The #{@school.preorder_information.who_will_order_devices_label.downcase} orders devices",
+        value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
       },
-    ] + school_contact_row_if_contact_present
+    ] + school_contact_row_if_contact_present + chromebook_rows_if_needed
   end
 
 private
@@ -53,5 +53,31 @@ private
 
   def preorder_information
     @school.preorder_information
+  end
+
+  def chromebook_rows_if_needed
+    info = @school.preorder_information
+    if info&.needs_chromebook_information?
+      change_path = responsible_body_devices_school_chromebooks_edit_path(school_urn: @school.urn)
+      [
+        info.will_need_chromebooks && {
+          key: 'Ordering Chromebooks?',
+          value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
+          change_path: change_path,
+        },
+        info.school_or_rb_domain && {
+          key: 'Domain',
+          value: info.school_or_rb_domain,
+          change_path: change_path,
+        },
+        info.recovery_email_address && {
+          key: 'Recovery email',
+          value: info.recovery_email_address,
+          change_path: change_path,
+        },
+      ].compact
+    else
+      []
+    end
   end
 end
