@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/increasing-mobile-data/privacy-notice', to: 'pages#increasing_mobile_data_privacy_notice'
   get '/accessibility', to: 'pages#accessibility'
   get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
+  get '/request-a-change', to: 'pages#request_a_change'
 
   # redirects for moved guidance pages
   get '/pages/guidance', to: redirect('/')
