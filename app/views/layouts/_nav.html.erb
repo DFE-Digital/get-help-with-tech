@@ -9,9 +9,6 @@
     <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
   <%- else %>
     <%= nav_item( title: "Guidance", url: guidance_page_path )  %>
-    <%- if @user&.is_responsible_body_user? %>
-      <%= nav_item( title: "Tell us who needs more data", url: responsible_body_internet_mobile_extra_data_requests_path )  %>
-    <%- end %>
   <%- end %>
 
   <%- if SessionService.is_signed_in?(session) && @user %>
