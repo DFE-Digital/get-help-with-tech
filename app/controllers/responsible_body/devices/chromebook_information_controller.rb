@@ -16,7 +16,8 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
       { school: @school }.merge(chromebook_params),
     )
     if @chromebook_information_form.valid?
-      @preorder_info.update!(chromebook_params.merge(status: @preorder_info.infer_status))
+      @preorder_info.update!(chromebook_params)
+      @preorder_info.update!(status: @preorder_info.infer_status)
       redirect_to responsible_body_devices_school_path(urn: @school.urn)
     else
       render :edit, status: :unprocessable_entity
