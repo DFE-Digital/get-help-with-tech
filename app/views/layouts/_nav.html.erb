@@ -4,7 +4,6 @@
     <%= nav_item( title: "Responsible bodies", url: support_responsible_bodies_path )  %>
     <%= nav_item( title: "Background jobs", url: support_sidekiq_admin_path, html_options: {target: '_blank'} )  %>
   <%- elsif @user&.is_computacenter? %>
-    <%= nav_item( title: 'Home', url: '#') %>
     <%= nav_item( title: 'API tokens', url: computacenter_api_tokens_path) %>
   <%- elsif @user&.is_mno_user? %>
     <%= nav_item( title: "Your requests", url: mno_extra_mobile_data_requests_path )  %>
