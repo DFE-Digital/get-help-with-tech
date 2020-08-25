@@ -17,7 +17,7 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
     )
     if @rb_user.valid?
       @rb_user.save!
-      # TODO: schedule job to send invite email here
+      InviteResponsibleBodyUserMailer.with(user: @rb_user).invite_user_email.deliver_later
       redirect_to responsible_body_users_path
     else
       render :new, status: :unprocessable_entity
@@ -48,6 +48,6 @@ private
   end
 
   def require_feature_flag!
-    render_404_if_feature_flag_inactive(:rbs_can_manage_users) #unless params[:action].in?(%i[index show])
+    render_404_if_feature_flag_inactive(:rbs_can_manage_users)
   end
 end
