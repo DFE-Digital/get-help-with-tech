@@ -1,5 +1,5 @@
 class ResponsibleBody::UsersController < ResponsibleBody::BaseController
-  before_action :require_feature_flag!, only: %i[new create edit update]
+  before_action :require_feature_flag!, only: %i[edit update]
 
   def index
     @users = @responsible_body.users.order(:full_name)
@@ -48,6 +48,6 @@ private
   end
 
   def require_feature_flag!
-    render_404_if_feature_flag_inactive(:rbs_can_manage_users) unless params[:action].in?(%i[index show])
+    render_404_if_feature_flag_inactive(:rbs_can_manage_users) #unless params[:action].in?(%i[index show])
   end
 end
