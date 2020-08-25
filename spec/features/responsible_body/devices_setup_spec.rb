@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Setting up the devices ordering' do
-  context "as a local authority user" do
+  let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
+  let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
+
+  context 'as a local authority user' do
     let(:responsible_body) { create(:local_authority, in_devices_pilot: true) }
     let(:local_authority_user) { create(:local_authority_user, responsible_body: responsible_body) }
-    let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
-    let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
     before do
       @zebra_school = create(:school, :la_maintained, :secondary,
@@ -34,8 +35,10 @@ RSpec.feature 'Setting up the devices ordering' do
 
     scenario 'devolving device ordering mostly to schools' do
       when_i_follow_the_get_devices_link
+      then_i_see_guidance_for_a_local_authority
       and_i_continue_through_the_guidance
-      and_i_choose_ordering_through_schools
+      and_i_choose_ordering_through_schools_which_is_recommended
+      and_i_continue_after_choosing_ordering_through_schools
       then_i_see_a_list_of_the_schools_i_am_responsible_for
       and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
       and_the_list_shows_that_schools_will_place_all_orders
@@ -61,6 +64,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
     scenario 'devolving device ordering mostly centrally' do
       when_i_follow_the_get_devices_link
+      then_i_see_guidance_for_a_local_authority
       and_i_continue_through_the_guidance
       and_i_choose_ordering_centrally
       then_i_see_a_list_of_the_schools_i_am_responsible_for
@@ -109,20 +113,68 @@ RSpec.feature 'Setting up the devices ordering' do
     end
   end
 
+  context 'as a trust user' do
+    let(:responsible_body) { create(:trust, in_devices_pilot: true) }
+    let(:trust_user) { create(:trust_user, responsible_body: responsible_body) }
+
+    before do
+      @koala_academy = create(:school, :academy, :secondary,
+                              responsible_body: responsible_body,
+                              name: 'Koala Academy')
+
+      @pangolin_academy = create(:school, :academy, :primary,
+                                 responsible_body: responsible_body,
+                                 name: 'Pangolin Primary Academy')
+
+      sign_in_as trust_user
+    end
+
+    scenario 'devolving device ordering mostly to schools' do
+      when_i_follow_the_get_devices_link
+      then_i_see_guidance_for_a_trust
+      and_i_continue_through_the_guidance
+      and_i_choose_ordering_through_schools_which_is_not_explicitly_recommended
+      and_i_continue_after_choosing_ordering_through_schools
+      then_i_see_a_list_of_the_academies_i_am_responsible_for
+    end
+
+    scenario 'devolving device ordering mostly centrally' do
+      when_i_follow_the_get_devices_link
+      then_i_see_guidance_for_a_trust
+      and_i_continue_through_the_guidance
+      and_i_choose_ordering_centrally
+      then_i_see_a_list_of_the_academies_i_am_responsible_for
+    end
+  end
+
   def when_i_follow_the_get_devices_link
     click_on 'Get laptops and tablets'
   end
 
-  def and_i_continue_through_the_guidance
+  def then_i_see_guidance_for_a_trust
     expect(page).to have_content 'Decide if schools can order their own devices'
-    expect(page).to have_link 'Continue'
-    click_on 'Continue'
-    expect(page).to have_content 'Who will place orders for laptops and tablets?'
-    expect(page).to have_field 'Most schools will place their own orders (recommended)'
+    expect(page).to have_content 'If you let schools place orders you’ll'
   end
 
-  def and_i_choose_ordering_through_schools
+  def then_i_see_guidance_for_a_local_authority
+    expect(page).to have_content 'Decide if schools can order their own devices'
+    expect(page).to have_content 'We recommend letting schools place orders'
+  end
+
+  def and_i_continue_through_the_guidance
+    click_on 'Continue'
+    expect(page).to have_content 'Who will place orders for laptops and tablets?'
+  end
+
+  def and_i_choose_ordering_through_schools_which_is_not_explicitly_recommended
+    choose 'Most schools will place their own orders'
+  end
+
+  def and_i_choose_ordering_through_schools_which_is_recommended
     choose 'Most schools will place their own orders (recommended)'
+  end
+
+  def and_i_continue_after_choosing_ordering_through_schools
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
     expect(page).to have_content('Each school will place their own orders')
@@ -143,6 +195,14 @@ RSpec.feature 'Setting up the devices ordering' do
       .to have_content('Aardvark Primary School Primary school')
     expect(responsible_body_schools_page.school_rows[1].title)
       .to have_content('Zebra Secondary School Secondary school')
+  end
+
+  def then_i_see_a_list_of_the_academies_i_am_responsible_for
+    expect(page).to have_content('2 schools')
+    expect(responsible_body_schools_page.school_rows[0].title)
+      .to have_content('Koala Academy')
+    expect(responsible_body_schools_page.school_rows[1].title)
+      .to have_content('Pangolin Primary Academy')
   end
 
   def and_each_school_needs_a_contact
