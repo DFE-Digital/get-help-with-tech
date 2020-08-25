@@ -21,6 +21,7 @@ RSpec.feature 'Setting up the devices ordering' do
     it_shows_me_that_they_will_not_need_chromebooks
     and_the_status_has_changed_to_ready
     and_shows_me_a_link_to_change_whether_they_need_chromebooks
+    and_it_does_not_show_me_the_domain_and_recovery_email_rows
     when_i_click_on_the_change_link
     and_choose_yes_they_will_need_chromebooks
     it_shows_me_fields_for_domain_and_recovery_email_address
