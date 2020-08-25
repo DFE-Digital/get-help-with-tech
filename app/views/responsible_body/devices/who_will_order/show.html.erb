@@ -7,32 +7,34 @@
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
     <%- if @responsible_body.who_will_order_devices == 'schools' %>
-      <p class="govuk-body">We’ve set each school as managing their own orders. If a school cannot order its own devices, you can change this setting on a school by school basis.</p>
+      <p class="govuk-body">If a school cannot order its own devices, you can change this setting on a school-by-school basis.</p>
 
       <h2 class="govuk-heading-m">What you need to do now</h2>
 
-      <p class="govuk-body">For each school we need you to nominate a contact. Each contact will be able to:</p>
+      <p class="govuk-body">We need you to nominate a contact for each school.</p>
+
+      <p class="govuk-body">They can:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>manage who can order devices for their school</li>
-        <li>order devices for their schools</li>
+        <li>order devices for their school</li>
       </ul>
 
-      <p class="govuk-body">We’ll email everyone you nominate with instructions on how to order devices and what to do during a lockdown.</p>
-
-      <p class="govuk-body">If a school doesn’t respond, we’ll ask you to chase them or give us new contact details.</p>
+      <p class="govuk-body">If a school does not respond, we’ll ask you to chase them or give us different contact details.</p>
     <%- else %>
       <%- content_for :title, t(:responsible_body, scope: %i[page_titles who_will_order_show]) %>
-      <p class="govuk-body">We’ve set each school as having their orders managed centrally. If a school needs to order its own devices, you can change this setting on a school by school basis.</p>
+      <p class="govuk-body">If a school needs to order its own devices, you can change this setting on a school-by-school basis.</p>
 
       <h2 class="govuk-heading-m">What you need to do now</h2>
 
       <p class="govuk-body">For each school you’ll need to:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>find out if they want Chromebooks </li>
+        <li>find out if they want Chromebooks</li>
         <li>give details of the school domain and recovery email address needed to configure them</li>
       </ul>
     <%- end %>
 
-    <%= govuk_button_link_to 'Go to your list of schools', responsible_body_devices_schools_path, classes: 'govuk-!-margin-top-6' %>
+    <div class="govuk-!-margin-top-6">
+      <%= govuk_button_link_to 'Go to your list of schools', responsible_body_devices_schools_path %>
+    </div>
   </div>
 </div>
