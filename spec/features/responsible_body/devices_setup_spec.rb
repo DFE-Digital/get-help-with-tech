@@ -112,26 +112,26 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_i_continue_through_the_guidance
-    expect(page).to have_content 'Schools can now order their own devices'
+    expect(page).to have_content 'Decide if schools can order their own devices'
     expect(page).to have_link 'Continue'
     click_on 'Continue'
-    expect(page).to have_content 'Who will order a school’s laptops and tablets?'
-    expect(page).to have_field 'Most schools will manage their own orders (recommended)'
+    expect(page).to have_content 'Who will place orders for laptops and tablets?'
+    expect(page).to have_field 'Most schools will place their own orders (recommended)'
   end
 
   def and_i_choose_ordering_through_schools
-    choose 'Most schools will manage their own orders (recommended)'
+    choose 'Most schools will place their own orders (recommended)'
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
-    expect(page).to have_content('We’ve set each school as managing their own orders')
+    expect(page).to have_content('Each school will place their own orders')
     click_on 'Go to your list of schools'
   end
 
   def and_i_choose_ordering_centrally
-    choose 'Most orders will be managed centrally'
+    choose 'Most orders will be placed centrally'
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
-    expect(page).to have_content('We’ve set each school as having their orders managed centrally')
+    expect(page).to have_content('Orders will be placed centrally')
     click_on 'Go to your list of schools'
   end
 

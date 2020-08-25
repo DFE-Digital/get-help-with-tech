@@ -15,36 +15,38 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">Get laptops and tablets</span>
       <%= t('page_titles.responsible_body_devices_home') %>
     </h1>
 
-    <h2 class="govuk-heading-m">Schools can now order their own devices</h2>
-    <p class=govuk-body>
-      We recommend you let schools order their own devices. You will need to nominate someone in each school for us to contact.</p>
+    <h2 class="govuk-heading-m">Decide if schools can order their own devices</h2>
+    <p class="govuk-body">You can allow schools to order their own devices. Or you can manage some, or all, orders centrally.</p>
+    <p class="govuk-body">We recommend letting schools place orders because it’s the quickest way to get help to those who need it.</p>
+    <p class="govuk-body">You’ll need to nominate someone in each school for us to contact.</p>
 
-    <p class=govuk-body>Each contact will be able to:</p>
+    <p class="govuk-body">Each contact will be able to:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>manage who can order devices for their school</li>
+      <li>manage who can order devices</li>
       <li>order devices themselves</li>
     </ul>
 
-    <h2 class="govuk-heading-m">Prepare before a lockdown</h2>
+    <h2 class="govuk-heading-m">Help schools prepare for disruption</h2>
 
-    <p class=govuk-body>Give us school details as soon as you can so we can contact them, and they can prepare before a local lockdown.</p>
+    <p class="govuk-body">Give us contact details as soon as you can so we can help schools prepare to deliver remote education if they need to.</p>
 
-    <h2 class="govuk-heading-m">Orders can only be placed during a lockdown</h2>
+    <h2 class="govuk-heading-m">Orders can only be placed when local coronavirus restrictions are confirmed</h2>
 
-    <p class=govuk-body>Schools that are closed or partially closed because of a local lockdown will be notified that they can now place orders for devices.</p>
+    <p class="govuk-body">We’ll contact people as soon as they’re able to place orders.</p>
 
-    <p class=govuk-body>Orders placed before 4pm will be delivered to schools the next working day.</p>
+    <p class="govuk-body">Orders placed before 4pm will normally be delivered to schools the next working day.</p>
 
     <h2 class="govuk-heading-m">Each school has their own allocation</h2>
 
-    <p class=govuk-body>Every school has its own allocation of devices. Allocations are based on free school meals and estimates of the number of devices a school already has.</p>
+    <p class="govuk-body">Every school has its own provisional allocation of laptops and tablets. Allocations are based on free school meal data and estimates of how many devices a school has already received.</p>
 
-    <p class=govuk-body>Numbers will be re-assessed at the time of ordering based on availability and the extent of coronavirus outbreaks.</p>
+    <p class="govuk-body">Numbers will be reassessed at the time of ordering based on availability and the extent of coronavirus restrictions.</p>
 
-    <%= govuk_button_link_to 'Continue', responsible_body_devices_who_will_order_edit_path, classes: 'govuk-!-margin-top-6' %>
+    <div class="govuk-!-margin-top-6">
+      <%= govuk_button_link_to 'Continue', responsible_body_devices_who_will_order_edit_path %>
+    </div>
   </div>
 </div>

@@ -43,10 +43,10 @@ en:
     accessibility: Accessibility statement
     support_responsible_bodies: On-boarded responsible bodies
     computacenter_home: Users with permission to place orders and receive support through Computacenter
-    who_will_order: Who will order a school’s laptops and tablets?
+    who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
-      schools: Each school will manage their own orders
-      responsible_body: All orders will be managed centrally
+      schools: Each school will place their own orders
+      responsible_body: Orders will be placed centrally
     request_a_change: Contact our support team to request this change
     change_who_will_order: Who will place orders for laptops and tablets?
     change_who_will_order_edit:
