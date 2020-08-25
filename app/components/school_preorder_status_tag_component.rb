@@ -16,7 +16,7 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
     when 'school_contacted', 'school_will_be_contacted'
       :yellow
     when 'ready'
-      :green
+      :blue
     else
       :default
     end
