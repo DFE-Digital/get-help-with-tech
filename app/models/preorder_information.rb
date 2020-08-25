@@ -75,6 +75,11 @@ class PreorderInformation < ApplicationRecord
     end
   end
 
+  def update_chromebook_information_and_status!(params)
+    update!(params)
+    update!(status: infer_status)
+  end
+
 private
 
   def set_defaults
