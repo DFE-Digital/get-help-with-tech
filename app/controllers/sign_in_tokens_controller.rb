@@ -86,7 +86,7 @@ private
   def root_url_for(user)
     if user.is_mno_user?
       mno_extra_mobile_data_requests_path
-    elsif user.is_dfe?
+    elsif user.is_support?
       support_service_performance_path
     elsif user.is_responsible_body_user?
       responsible_body_home_path
