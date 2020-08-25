@@ -33,6 +33,7 @@
     display: inline-block;
 
     .nav-button-as-link {
+      cursor: pointer;
       background-color: transparent;
       border: none;
       color: govuk-colour("white");
