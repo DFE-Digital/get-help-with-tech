@@ -37,16 +37,18 @@ FactoryBot.define do
     end
 
     factory :mno_user do
-      association   :mobile_network
+      association :mobile_network
     end
 
     factory :dfe_user do
+      is_support { true }
       email_address do
         full_name.downcase.gsub(' ', '.') + ['@digital.education.gov.uk', '@education.gov.uk'].sample
       end
     end
 
     factory :computacenter_user do
+      is_computacenter { true }
       email_address do
         full_name.downcase.gsub(' ', '.') + '@computacenter.com'
       end
