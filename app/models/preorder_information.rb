@@ -61,7 +61,7 @@ class PreorderInformation < ApplicationRecord
     who_will_order_devices == 'responsible_body'
   end
 
-  # prevent edge case where the built-in syntactic sugar for allows
+  # prevent edge case where the built-in (attribute name)? method allows
   # a value of 'no' to return will_need_chromebooks? as true (as it's not nil)
   def will_need_chromebooks?
     will_need_chromebooks == 'yes'
