@@ -93,7 +93,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[new create]
     end
 
-    mount Sidekiq::Web => '/sidekiq', constraints: RequireDFEUserConstraint.new, as: :sidekiq_admin
+    mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 
   namespace :computacenter do
