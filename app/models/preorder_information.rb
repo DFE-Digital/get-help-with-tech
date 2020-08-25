@@ -61,12 +61,23 @@ class PreorderInformation < ApplicationRecord
     who_will_order_devices == 'responsible_body'
   end
 
+  # prevent edge case where the built-in (attribute name)? method allows
+  # a value of 'no' to return will_need_chromebooks? as true (as it's not nil)
+  def will_need_chromebooks?
+    will_need_chromebooks == 'yes'
+  end
+
   def chromebook_information_complete?
     if will_need_chromebooks == 'yes'
       school_or_rb_domain.present? && recovery_email_address.present?
     else
       will_need_chromebooks == 'no'
     end
+  end
+
+  def update_chromebook_information_and_status!(params)
+    update!(params)
+    update!(status: infer_status)
   end
 
 private

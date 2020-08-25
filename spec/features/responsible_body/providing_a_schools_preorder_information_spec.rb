@@ -19,7 +19,9 @@ RSpec.feature 'Setting up the devices ordering' do
     when_i_choose_no_they_will_not_need_chromebooks
     and_i_click_save
     it_shows_me_that_they_will_not_need_chromebooks
+    and_the_status_has_changed_to_ready
     and_shows_me_a_link_to_change_whether_they_need_chromebooks
+    and_it_does_not_show_me_the_domain_and_recovery_email_rows
     when_i_click_on_the_change_link
     and_choose_yes_they_will_need_chromebooks
     it_shows_me_fields_for_domain_and_recovery_email_address
@@ -27,6 +29,7 @@ RSpec.feature 'Setting up the devices ordering' do
     it_shows_me_an_error
     when_i_provide_valid_entries_for_both_fields
     it_shows_the_chromebook_information_i_entered
+    and_it_shows_me_the_domain_and_recovery_email_rows
     and_the_status_has_changed_to_ready
   end
 
@@ -53,6 +56,20 @@ RSpec.feature 'Setting up the devices ordering' do
   def it_shows_me_that_they_will_not_need_chromebooks
     within('.govuk-summary-list') do
       expect(page).to have_content 'No, they will not need Chromebooks'
+    end
+  end
+
+  def and_it_shows_me_the_domain_and_recovery_email_rows
+    within('.govuk-summary-list') do
+      expect(page).to have_content 'Domain'
+      expect(page).to have_content 'Recovery email'
+    end
+  end
+
+  def and_it_does_not_show_me_the_domain_and_recovery_email_rows
+    within('.govuk-summary-list') do
+      expect(page).not_to have_content 'Domain'
+      expect(page).not_to have_content 'Recovery email'
     end
   end
 
