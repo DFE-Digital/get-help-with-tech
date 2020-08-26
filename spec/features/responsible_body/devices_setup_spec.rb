@@ -113,7 +113,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
     end
 
-    scenario 'when the school has no headteacher_contact (bug #537)' do
+    scenario 'when the school has no headteacher contact (bug #537)' do
       given_there_is_a_school_with_no_headteacher
       when_i_follow_the_get_devices_link
       and_i_continue_through_the_guidance
