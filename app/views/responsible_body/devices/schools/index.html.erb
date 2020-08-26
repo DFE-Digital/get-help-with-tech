@@ -61,7 +61,7 @@
         <td class="govuk-table__cell">
           <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-table__cell--nowrap">
           <%= render SchoolPreorderStatusTagComponent.new(school: school) %>
         </td>
       </tr>
