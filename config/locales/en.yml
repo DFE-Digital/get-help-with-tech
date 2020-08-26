@@ -206,7 +206,7 @@ en:
           needs_info: Needs information
           ready: Ready
           school_contacted: School contacted
-          school_will_be_contacted: School to be contacted shortly
+          school_will_be_contacted: School will be contacted
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'

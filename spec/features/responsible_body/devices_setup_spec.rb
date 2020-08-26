@@ -324,7 +324,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_the_status_reflects_that_the_school_will_be_contacted_shortly
-    expect(responsible_body_school_page.school_details).to have_content('School to be contacted shortly')
+    expect(responsible_body_school_page.school_details).to have_content('School will be contacted')
   end
 
   def when_i_follow_the_link_to_the_next_school
