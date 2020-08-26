@@ -24,8 +24,9 @@
       <%- if FeatureFlag.active?(:rbs_can_manage_users) %>
         <li>add or edit existing users</li>
       <%- else %>
-        <li>view the list of existing users</li>
+        <li>add users</li>
       <%- end %>
+      <li>view the list of existing users</li>
       <li>order devices for centrally managed schools</li>
       <%- if @responsible_body.in_connectivity_pilot? %>
         <li>download BT vouchers</li>
@@ -33,9 +34,7 @@
       <%- end %>
     </ul>
 
-    <%- if FeatureFlag.active?(:rbs_can_manage_users) %>
-      <%= govuk_button_link_to 'Invite a new user', new_responsible_body_user_path %>
-    <%- end %>
+    <%= govuk_button_link_to 'Invite a new user', new_responsible_body_user_path %>
 
     <%- unless @users.empty? %>
       <div id="user-list">
