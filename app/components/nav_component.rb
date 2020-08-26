@@ -36,7 +36,7 @@ class NavComponent < ViewComponent::Base
 
   def computacenter_links
     [
-      NavLinkComponent.new(title: 'Home', url: '#'),
+      NavLinkComponent.new(title: 'Home', url: computacenter_home_path),
       NavLinkComponent.new(title: 'API tokens', url: computacenter_api_tokens_path),
     ]
   end
