@@ -371,7 +371,7 @@ GEM
     semantic_range (2.3.0)
     sentry-raven (2.13.0)
       faraday (>= 0.7.6, < 1.0)
-    shoulda-matchers (4.3.0)
+    shoulda-matchers (4.4.0)
       activesupport (>= 4.2.0)
     sidekiq (6.1.1)
       connection_pool (>= 2.2.2)
@@ -489,7 +489,7 @@ DEPENDENCIES
   rubyXL
   scss_lint-govuk
   sentry-raven
-  shoulda-matchers (~> 4.0)
+  shoulda-matchers (~> 4.4)
   sidekiq
   simplecov
   site_prism
