@@ -18,6 +18,7 @@ class ImportResponsibleBodiesService
         .first_or_create!(
           name: entry['Group Name'],
           organisation_type: entry['Group Type'],
+          gias_group_uid: entry['Group UID'],
         )
     end
   end
@@ -27,5 +28,9 @@ class ImportResponsibleBodiesService
       name: 'Department for Education',
       organisation_type: 'government_department',
     )
+  end
+
+  def import_local_authority_gias_ids
+    ImportLocalAuthorityGiasIDsService.new(Rails.root.join('config/local_authority_data.csv')).import
   end
 end

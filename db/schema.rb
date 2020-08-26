@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_080212) do
+ActiveRecord::Schema.define(version: 2020_08_26_211506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,10 +77,10 @@ ActiveRecord::Schema.define(version: 2020_08_25_080212) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
-    t.bigint "school_contact_id"
-    t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
+    t.bigint "school_contact_id"
+    t.string "will_need_chromebooks"
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"
@@ -98,6 +98,10 @@ ActiveRecord::Schema.define(version: 2020_08_25_080212) do
     t.boolean "in_devices_pilot", default: false
     t.boolean "in_connectivity_pilot", default: false
     t.string "who_will_order_devices"
+    t.string "computacenter_reference"
+    t.string "gias_group_uid"
+    t.string "gias_id"
+    t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
   end
 
   create_table "school_contacts", force: :cascade do |t|

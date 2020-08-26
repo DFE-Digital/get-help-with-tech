@@ -57,10 +57,10 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
 
   it 'imports single- and multi-academy trusts only once' do
     data = [
-      'Group Name,Companies House Number,Group Type,Group Status',
-      'AAA,12345,Federation,Open',
-      'AA TRUST,67890,Single-academy trust,Open',
-      'ABC MAT,13579,Multi-academy trust,Open',
+      'Group UID,Group Name,Companies House Number,Group Type,Group Status',
+      '1111,AAA,12345,Federation,Open',
+      '2222,AA TRUST,67890,Single-academy trust,Open',
+      '3333,ABC MAT,13579,Multi-academy trust,Open',
     ].join("\n")
 
     stub_request(:get, GetInformationAboutSchools.groups_url)
@@ -71,10 +71,12 @@ RSpec.describe ImportResponsibleBodiesService, type: :model do
     expect(Trust.count).to eq(2)
 
     trusts = Trust.all.order('name asc')
+    expect(trusts.first.gias_group_uid).to eq('2222')
     expect(trusts.first.name).to eq('AA TRUST')
     expect(trusts.first.companies_house_number).to eq('67890')
     expect(trusts.first.organisation_type).to eq('single_academy_trust')
 
+    expect(trusts.second.gias_group_uid).to eq('3333')
     expect(trusts.second.name).to eq('ABC MAT')
     expect(trusts.second.companies_house_number).to eq('13579')
     expect(trusts.second.organisation_type).to eq('multi_academy_trust')
