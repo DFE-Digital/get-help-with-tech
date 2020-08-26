@@ -28,7 +28,9 @@
         </span>
       </summary>
       <div class="govuk-details__text">
-        <p>This is a list of all local authority maintained and special schools.</p>
+        <% if @responsible_body.is_a_local_authority? %>
+          <p>This is a list of all local authority maintained and special schools.</p>
+        <% end %>
         <p>Contact support at <%= ghwt_contact_mailto(subject: 'Missing school that will need devices') %>
           to add a missing school.</p>
       </div>
