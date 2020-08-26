@@ -28,5 +28,9 @@ FactoryBot.define do
       establishment_type { :local_authority }
       association :responsible_body, factory: :local_authority
     end
+
+    trait :with_std_device_allocation do
+      association :std_device_allocation, factory: %i[school_device_allocation with_std_allocation]
+    end
   end
 end

@@ -1,6 +1,4 @@
-require 'csv'
-
-class SchoolDataFile
+class SchoolDataFile < CsvDataFile
   EXCLUDED_TYPES = [
     'British schools overseas',
     "Children's centre",
@@ -18,30 +16,11 @@ class SchoolDataFile
     'Welsh establishment',
   ].freeze
 
-  def initialize(csv_path)
-    @csv_path = csv_path
-  end
-
   def schools(&block)
     records(&block)
   end
 
 protected
-
-  def records
-    all_records = []
-
-    read_file do |row|
-      record = extract_record(row)
-
-      if block_given?
-        yield record
-      else
-        all_records << record
-      end
-    end
-    all_records unless block_given?
-  end
 
   def extract_record(row)
     {
@@ -59,15 +38,13 @@ protected
     }
   end
 
-private
-
-  def read_file
-    CSV.foreach(@csv_path, headers: true, encoding: 'ISO8859-1:utf-8') do |row|
-      next if skip_school?(row)
-
-      yield row
-    end
+  def skip?(row)
+    school_not_open?(row) ||
+      row['LA (name)'] == 'Vale of Glamorgan' ||
+      EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
   end
+
+private
 
   def find_responsible_body(row)
     # 3 - Multi-academy trust
@@ -112,12 +89,6 @@ private
       Rails.logger.info("Other establishment type? '#{est_type}' (urn: #{row['URN']}")
       'other_type'
     end
-  end
-
-  def skip_school?(row)
-    school_not_open?(row) ||
-      row['LA (name)'] == 'Vale of Glamorgan' ||
-      EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
   end
 
   def school_not_open?(row)
