@@ -77,10 +77,10 @@ ActiveRecord::Schema.define(version: 2020_08_25_080212) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
-    t.string "school_or_rb_domain"
-    t.string "recovery_email_address"
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
+    t.string "school_or_rb_domain"
+    t.string "recovery_email_address"
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

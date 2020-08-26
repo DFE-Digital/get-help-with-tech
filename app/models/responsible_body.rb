@@ -9,6 +9,14 @@ class ResponsibleBody < ApplicationRecord
     type.demodulize.underscore.humanize.downcase
   end
 
+  def is_a_trust?
+    type == 'Trust'
+  end
+
+  def is_a_local_authority?
+    type == 'LocalAuthority'
+  end
+
   def next_school_sorted_ascending_by_name(school)
     schools
       .where('name > ?', school.name)
