@@ -19,19 +19,30 @@
     </h1>
 
     <h2 class="govuk-heading-m">Decide if schools can order their own devices</h2>
+
     <p class="govuk-body">You can allow schools to order their own devices. Or you can manage some, or all, orders centrally.</p>
-    <p class="govuk-body">We recommend letting schools place orders because it’s the quickest way to get help to those who need it.</p>
-    <p class="govuk-body">You’ll need to nominate someone in each school for us to contact.</p>
 
-    <p class="govuk-body">Each contact will be able to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>manage who can order devices</li>
-      <li>order devices themselves</li>
-    </ul>
+    <% if @responsible_body.is_a_trust? %>
+      <p class="govuk-body">If you let schools place orders you’ll need to nominate someone in each school for us to contact.</p>
+      <p class="govuk-body">Each contact will be able to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>manage who can order devices</li>
+        <li>order devices themselves</li>
+      </ul>
+    <% else %>
+      <p class="govuk-body">We recommend letting schools place orders because it’s the quickest way to get help to those who need it.</p>
+      <p class="govuk-body">You’ll need to nominate someone in each school for us to contact.</p>
 
-    <h2 class="govuk-heading-m">Help schools prepare for disruption</h2>
+      <p class="govuk-body">Each contact will be able to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>manage who can order devices</li>
+        <li>order devices themselves</li>
+      </ul>
 
-    <p class="govuk-body">Give us contact details as soon as you can so we can help schools prepare to deliver remote education if they need to.</p>
+      <h2 class="govuk-heading-m">Help schools prepare for disruption</h2>
+
+      <p class="govuk-body">Give us contact details as soon as you can so we can help schools prepare to deliver remote education if they need to.</p>
+    <% end %>
 
     <h2 class="govuk-heading-m">Orders can only be placed when local coronavirus restrictions are confirmed</h2>
 
