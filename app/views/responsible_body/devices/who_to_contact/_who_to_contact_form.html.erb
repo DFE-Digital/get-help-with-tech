@@ -6,27 +6,15 @@
   </div>
 
   <%= f.govuk_radio_buttons_fieldset(:who_to_contact, legend: { text: "Who can we contact at the school?", size: 'l', tag: 'h2' }) do %>
-    <%= f.govuk_radio_button :who_to_contact, 'headteacher', label: { text: form.headteacher_option_label }, hint_text: form.headteacher_option_hint_text, link_errors: true %>
-    <%= f.govuk_radio_button :who_to_contact, 'someone_else', label: { text: 'Someone else' } do %>
-      <p class="govuk-body">Nominate someone who:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>is planning the response to local coronavirus restrictions</li>
-        <li>understands what devices are needed and who will get them</li>
-        <li>can configure devices or give technical information</li>
-      </ul>
-
-      <%= f.govuk_text_field :full_name,
-          label: { text: 'Name' } %>
-
-      <%= f.govuk_email_field :email_address,
-          label: { text: 'Email address' },
-          hint_text: 'They will use this email address to sign in' %>
-
-      <%= f.govuk_text_field :phone_number,
-          label: { text: 'Telephone number' },
-          width: 10 %>
-    <% end %>
+    <%- if f.object.headteacher_contact.present? %>
+      <%= f.govuk_radio_button :who_to_contact, 'headteacher', label: { text: form.headteacher_option_label }, hint_text: form.headteacher_option_hint_text, link_errors: true %>
+      <%= f.govuk_radio_button :who_to_contact, 'someone_else', label: { text: 'Someone else' } do %>
+        <%= render partial: 'nominate_another_contact', locals: {f: f} %>
+      <% end %>
+    <%- else %>
+      <%= f.hidden_field :who_to_contact, value: 'someone_else' %>
+      <%= render partial: 'nominate_another_contact', locals: {f: f} %>
+    <%- end %>
   <% end %>
 
   <%= f.govuk_submit 'Save' %>

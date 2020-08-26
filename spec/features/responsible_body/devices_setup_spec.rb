@@ -7,6 +7,7 @@ RSpec.feature 'Setting up the devices ordering' do
   context 'as a local authority user' do
     let(:responsible_body) { create(:local_authority, in_devices_pilot: true) }
     let(:local_authority_user) { create(:local_authority_user, responsible_body: responsible_body) }
+    let(:school_with_no_headteacher) { create(:school, :la_maintained, :secondary, responsible_body: responsible_body, name: 'School with no headteacher') }
 
     before do
       @zebra_school = create(:school, :la_maintained, :secondary,
@@ -110,6 +111,20 @@ RSpec.feature 'Setting up the devices ordering' do
       then_i_see_the_details_of_the_first_school
       and_that_the_school_orders_devices
       and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
+    end
+
+    scenario 'when the school has no headteacher contact (bug #537)' do
+      given_there_is_a_school_with_no_headteacher
+      when_i_follow_the_get_devices_link
+      and_i_continue_through_the_guidance
+      and_i_choose_ordering_through_schools_which_is_recommended
+      and_i_continue_after_choosing_ordering_through_schools
+      when_i_click_on_the_name_of_a_school_which_has_no_headteacher
+      then_i_do_not_see_the_options_to_contact_the_headteacher_or_someone_else
+      and_i_see_the_form_to_nominate_someone_to_contact
+      when_i_fill_in_details_of_a_contact_and_save_their_details
+      then_i_see_a_confirmation_and_the_someone_else_as_the_contact
+      and_the_status_reflects_that_the_school_will_be_contacted_shortly
     end
   end
 
@@ -243,6 +258,32 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def when_i_click_on_the_first_school_name
     click_on @aardvark_school.name
+  end
+
+  def given_there_is_a_school_with_no_headteacher
+    school_with_no_headteacher
+  end
+
+  def when_i_click_on_the_name_of_a_school_which_has_no_headteacher
+    click_on school_with_no_headteacher.name
+  end
+
+  def then_i_do_not_see_the_options_to_contact_the_headteacher_or_someone_else
+    expect(responsible_body_school_page).not_to have_field('Someone else')
+  end
+
+  def and_i_see_the_form_to_nominate_someone_to_contact
+    expect(responsible_body_school_page).to have_field('Name')
+    expect(responsible_body_school_page).to have_field('Email address')
+    expect(responsible_body_school_page).to have_field('Telephone number')
+  end
+
+  def when_i_fill_in_details_of_a_contact_and_save_their_details
+    fill_in 'Name', with: 'Bob Leigh'
+    fill_in 'Email address', with: 'bob.leigh@sharedservices.co.uk'
+    fill_in 'Telephone number', with: '020 123456'
+
+    click_on 'Save'
   end
 
   def then_i_see_the_details_of_the_first_school
