@@ -1,7 +1,10 @@
 require Rails.root.join('lib/constraints/require_dfe_user_constraint')
 
 Rails.application.routes.draw do
+  root 'pages#home_page', as: :guidance_page
+
   get '/start', to: 'pages#start'
+
   get '/about-bt-wifi', to: 'pages#about_bt_wifi'
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
@@ -116,6 +119,4 @@ Rails.application.routes.draw do
   get '/404', to: 'errors#not_found', via: :all
   get '/422', to: 'errors#unprocessable_entity', via: :all
   get '/500', to: 'errors#internal_server_error', via: :all
-
-  get '/', to: redirect('/internet-access', status: 302), as: :guidance_page
 end

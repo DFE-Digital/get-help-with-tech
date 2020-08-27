@@ -25,10 +25,25 @@ module CSVFileHelper
     head_email: 'HeadEmail',
     main_email: 'MainEmail',
     alt_email: 'AlternativeEmail',
+    school_name: 'Name',
+    y3_10: 'Y3-Y10',
+    y10: 'Y10 Allocation',
   }.freeze
 
   def create_school_csv_file(filename, array_of_hashes)
     create_csv_file(filename, SCHOOL_ATTRS.values, array_of_hashes)
+  end
+
+  def create_allocations_csv_file(filename, array_of_hashes)
+    head_keys = array_of_hashes.first.keys
+    headings = head_keys.map { |k| SCHOOL_ATTRS[k] }
+
+    CSV.open(filename, 'w') do |csv|
+      csv << headings
+      array_of_hashes.each do |row|
+        csv << head_keys.map { |k| row.fetch(k) }
+      end
+    end
   end
 
   def remove_file(filename)
