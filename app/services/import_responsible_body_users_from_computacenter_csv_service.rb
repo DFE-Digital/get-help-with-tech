@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'csv'
 
+# TODO: find a better name / conceptual structure for this importer and others
 class ImportResponsibleBodyUsersFromComputacenterCsvService
   attr_accessor :csv_uri, :successes, :failures
 
@@ -39,14 +40,13 @@ private
 
   def build_user!(row)
     rb = find_responsible_body!(row)
-    user = User.find_by_email_address(row['Email'] ) || User.new(
+    User.new(
       full_name: [row['Title'], row['First Name'], row['Last Name']].compact.join(' ').strip,
       telephone: row['Telephone'],
       email_address: row['Email'],
       responsible_body: rb,
+      approved_at: Time.zone.now.utc,
     )
-    user.approved_at ||= Time.zone.now.utc
-    user
   end
 
   def find_responsible_body!(row)
