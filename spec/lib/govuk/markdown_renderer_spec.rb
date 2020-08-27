@@ -67,15 +67,13 @@ RSpec.describe Govuk::MarkdownRenderer, type: :model do
 
   it 'renders links without titles with GOV.UK classes' do
     expect(render('[GOV.UK homepage](https://www.gov.uk)')).to eq(
-      '<p class="govuk-body-m"><a href="https://www.gov.uk" class="govuk-link">GOV.UK homepage</a>
-</p>',
+      '<p class="govuk-body-m"><a href="https://www.gov.uk" class="govuk-link">GOV.UK homepage</a></p>',
     )
   end
 
   it 'renders links with titles with GOV.UK classes' do
     expect(render('[GOV.UK homepage](https://www.gov.uk "My title")')).to eq(
-      '<p class="govuk-body-m"><a href="https://www.gov.uk" class="govuk-link" title="My title">GOV.UK homepage</a>
-</p>',
+      '<p class="govuk-body-m"><a href="https://www.gov.uk" class="govuk-link" title="My title">GOV.UK homepage</a></p>',
     )
   end
 
