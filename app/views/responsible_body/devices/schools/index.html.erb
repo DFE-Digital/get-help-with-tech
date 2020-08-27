@@ -24,15 +24,15 @@
     <details class="govuk-details" data-module="govuk-details">
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
-          Is there a school missing from this list?
+          Is this list wrong?
         </span>
       </summary>
       <div class="govuk-details__text">
         <% if @responsible_body.is_a_local_authority? %>
           <p>This is a list of all local authority maintained and special schools.</p>
         <% end %>
-        <p>Contact support at <%= ghwt_contact_mailto(subject: 'Missing school that will need devices') %>
-          to add a missing school.</p>
+        <p>Email <%= ghwt_contact_mailto(subject: 'Problem with list of schools') %>
+          and tell us what to change.</p>
       </div>
     </details>
   </div>
