@@ -60,9 +60,9 @@ en:
       title: About the offer
       description: Find out who is eligible for devices, and why the Department for Education (DfE) is providing them.
       audience: responsible_body_users
-    allocation_and_specification:
-      title: Allocation and specification
-      description: Get the technical specifications of the devices provided to support vulnerable and disadvantaged children and young people. Find out how they have, and will be, allocated.
+    device_allocations:
+      title: Device allocations
+      description: Find out how we estimated device requirements for each school, trust and local authority, and how to query an allocation.
       audience: responsible_body_users
     preparing_microsoft_windows_laptops_and_tablets:
       title: Preparing Microsoft Windows laptops and tablets
