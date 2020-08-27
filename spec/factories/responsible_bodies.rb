@@ -5,6 +5,8 @@ FactoryBot.define do
     local_authority_official_name { [organisation_type, name].join(' of ') }
     local_authority_eng           { name.first(3).upcase }
     companies_house_number        { rand(99_999).to_s }
+    gias_id                       { Faker::Number.number(digits: 3) }
+    computacenter_reference       { Faker::Number.number(digits: 8) }
 
     trait :in_connectivity_pilot do
       in_connectivity_pilot       { true }
@@ -21,6 +23,7 @@ FactoryBot.define do
     local_authority_official_name { nil }
     local_authority_eng           { nil }
     companies_house_number        { Faker::Number.leading_zero_number(digits: 8) }
+    computacenter_reference       { Faker::Number.number(digits: 8) }
 
     trait :single_academy_trust do
       organisation_type           { :single_academy_trust }

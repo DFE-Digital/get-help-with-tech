@@ -4,6 +4,11 @@ namespace :import do
     ImportResponsibleBodiesService.new.import_local_authorities
   end
 
+  desc 'Import local authority GIAS IDs'
+  task local_authority_gias_ids: :environment do
+    ImportResponsibleBodiesService.new.import_local_authority_gias_ids
+  end
+
   desc 'Import single and multi-academy trusts'
   task trusts: :environment do
     ImportResponsibleBodiesService.new.import_trusts
@@ -15,5 +20,5 @@ namespace :import do
   end
 
   desc 'Populate the responsible body reference data table'
-  task responsible_bodies: %i[local_authorities_in_england trusts dfe_as_a_responsible_body]
+  task responsible_bodies: %i[local_authorities_in_england local_authority_gias_ids trusts dfe_as_a_responsible_body]
 end
