@@ -56,6 +56,9 @@ Rails.application.routes.draw do
 
   namespace :responsible_body, path: '/responsible-body' do
     get '/', to: 'home#show', as: :home
+    get '/privacy-notice', to: 'home#privacy_notice', as: :privacy_notice
+    post '/privacy-notice', to: 'home#seen_privacy_notice'
+
     namespace :devices do
       get '/', to: 'home#show'
       get '/who-will-order', to: 'who_will_order#show'

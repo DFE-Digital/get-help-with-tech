@@ -39,4 +39,26 @@ RSpec.describe User, type: :model do
       expect(user.is_responsible_body_user?).to be_falsey
     end
   end
+
+  describe 'privacy notice' do
+    it 'needs to be seen by responsible body users who havent seen it' do
+      user = build(:local_authority_user, privacy_notice_seen_at: nil)
+      expect(user.needs_to_see_privacy_notice?).to be_truthy
+    end
+
+    it 'does not need to be seen by responsible body users who have seen it' do
+      user = build(:local_authority_user, :has_seen_privacy_notice)
+      expect(user.needs_to_see_privacy_notice?).to be_falsey
+    end
+
+    it 'does not need to be seen by support users' do
+      user = build(:dfe_user, privacy_notice_seen_at: nil)
+      expect(user.needs_to_see_privacy_notice?).to be_falsey
+    end
+
+    it 'does not need to be seen by CC users' do
+      user = build(:computacenter_user, privacy_notice_seen_at: nil)
+      expect(user.needs_to_see_privacy_notice?).to be_falsey
+    end
+  end
 end

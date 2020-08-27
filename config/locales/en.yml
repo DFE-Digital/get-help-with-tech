@@ -52,6 +52,7 @@ en:
     change_who_will_order_edit:
       schools: The school will place their own orders
       responsible_body: Orders will be placed centrally
+    privacy_notice: Privacy notice
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

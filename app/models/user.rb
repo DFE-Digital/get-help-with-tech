@@ -32,4 +32,16 @@ class User < ApplicationRecord
   def update_sign_in_count_and_timestamp!
     update(sign_in_count: sign_in_count + 1, last_signed_in_at: Time.zone.now)
   end
+
+  def seen_privacy_notice!
+    update!(privacy_notice_seen_at: Time.zone.now)
+  end
+
+  def needs_to_see_privacy_notice?
+    is_responsible_body_user? && !seen_privacy_notice?
+  end
+
+  def seen_privacy_notice?
+    privacy_notice_seen_at.present?
+  end
 end

@@ -2,6 +2,11 @@ FactoryBot.define do
   factory :user do
     full_name { Faker::Name.unique.name }
     email_address { Faker::Internet.unique.email }
+    has_seen_privacy_notice
+
+    trait :has_seen_privacy_notice do
+      privacy_notice_seen_at { 3.days.ago }
+    end
 
     trait :approved do
       approved_at { Time.zone.now.utc - 3.days }
