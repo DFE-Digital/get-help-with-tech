@@ -44,13 +44,25 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a user who belongs_to a responsible_body' do
-    let(:user) { create(:local_authority_user) }
+  context 'as a user who belongs to a responsible body' do
+    context 'who has already seen the privacy notice' do
+      let(:user) { create(:local_authority_user, :has_seen_privacy_notice) }
 
-    scenario 'it redirects to the responsible body homepage' do
-      sign_in_as user
-      expect(page).to have_current_path(responsible_body_home_path)
-      expect(page).to have_text 'Get help with technology'
+      scenario 'it redirects to the responsible body homepage' do
+        sign_in_as user
+        expect(page).to have_current_path(responsible_body_home_path)
+        expect(page).to have_text 'Get help with technology'
+      end
+    end
+
+    context 'who has not seen the privacy notice' do
+      let(:user) { create(:local_authority_user, privacy_notice_seen_at: nil) }
+
+      scenario 'it redirects to the privacy notice page' do
+        sign_in_as user
+        expect(page).to have_current_path(responsible_body_privacy_notice_path)
+        expect(page).to have_text 'Privacy notice'
+      end
     end
   end
 
