@@ -1,6 +1,6 @@
-Increasing internet access for disadvantaged children is a pilot service from the Department for Education.
+Get help with technology is a service from the Department for Education.
 
-To make this service accessible we designed it using [GOV.UK accessible design principles](https://design-system.service.gov.uk/accessibility/).
+We designed it using [GOV.UK accessible design principles](https://design-system.service.gov.uk/accessibility/).
 
 Throughout most of the service, users should be able to:
 
@@ -32,4 +32,4 @@ This website is compliant with the [Web Content Accessibility Guidelines version
 
 ## We’ll continue to improve accessibility
 
-This statement was prepared on 28 July 2020. We’ll continue to test the accessibility of this pilot service as it develops over the summer.
+This statement was prepared on 27 August 2020. We’ll continue to test the accessibility of this pilot service as it develops over the summer.
