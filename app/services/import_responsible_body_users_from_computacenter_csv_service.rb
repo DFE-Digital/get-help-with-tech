@@ -12,7 +12,7 @@ class ImportResponsibleBodyUsersFromComputacenterCsvService
   end
 
   def import
-    csv = open(@csv_uri).read
+    csv = URI.open(@csv_uri).read
     index = 0
     CSV.parse(csv, headers: true).select do |row|
       index += 1
@@ -21,7 +21,7 @@ class ImportResponsibleBodyUsersFromComputacenterCsvService
       @successes << row
     rescue StandardError => e
       log(e.message)
-      @failures << {row: row, error: e}
+      @failures << { row: row, error: e }
     end
 
     log "Processed #{index} rows, of which #{failures.size} failed"
@@ -30,7 +30,7 @@ class ImportResponsibleBodyUsersFromComputacenterCsvService
 private
 
   def log(msg)
-    puts msg
+    Rails.logger.info msg
   end
 
   def import_row!(row)
@@ -54,10 +54,11 @@ private
     # so let's look for the default one first
     computacenter_reference = row['DefaultSoldto'].strip
     rb = ResponsibleBody.find_by_computacenter_reference(computacenter_reference)
-    unless rb.present?
+    if rb.nil?
       log "> Couldn't find by DefaultSoldto of '#{row['DefaultSoldto']}', trying #{row['SoldTos']}"
       rb = ResponsibleBody.where('computacenter_reference IN (?)', row['SoldTos'].split(',').map(&:strip)).first
-      raise ActiveRecord::RecordNotFound.new("Couldn't find a ResponsibleBody with any of these computacenter references: #{row['SoldTos']}") unless rb.present?
+      raise(ActiveRecord::RecordNotFound, "Couldn't find a ResponsibleBody with any of these computacenter references: #{row['SoldTos']}") if rb.nil?
+
       log "> Found #{rb.computacenter_reference} - #{rb.name}"
     end
     rb

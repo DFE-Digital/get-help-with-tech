@@ -36,9 +36,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
   describe '.find_by_computacenter_urn!' do
     let!(:trust_with_reference) { create(:trust, companies_house_number: '01234567') }
-    let!(:trust_without_reference) { create(:trust, companies_house_number: '98765432') }
     let!(:la_with_reference) { create(:local_authority, gias_id: '123') }
-    let!(:la_without_reference) { create(:trust, gias_id: '987') }
 
     context 'given a string starting with LEA' do
       it 'returns the local authority matched by GIAS id' do
@@ -51,6 +49,5 @@ RSpec.describe ResponsibleBody, type: :model do
         expect(ResponsibleBody.find_by_computacenter_urn!('t01234567')).to eq(trust_with_reference)
       end
     end
-
   end
 end

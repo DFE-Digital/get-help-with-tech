@@ -16,7 +16,6 @@ RSpec.describe ImportResponsibleBodyUsersFromComputacenterCsvService do
   let!(:trust) { create(:trust, computacenter_reference: 'SOLD_TO_1') }
   let!(:local_authority_2) { create(:local_authority, computacenter_reference: 'SOLD_TO_2') }
   let!(:local_authority_3) { create(:local_authority, computacenter_reference: 'SOLD_TO_3') }
-  let!(:local_authority_4) { create(:local_authority, computacenter_reference: 'SOLD_TO_4') }
   let!(:local_authority_5) { create(:local_authority, computacenter_reference: 'SOLD_TO_5') }
   let!(:existing_user) { create(:local_authority_user, responsible_body: local_authority_3, email_address: 'x.istinguser@some.sch.uk') }
 
@@ -32,34 +31,33 @@ RSpec.describe ImportResponsibleBodyUsersFromComputacenterCsvService do
       importer.import
     end
 
+    it 'records any existing users as failures' do
+      expect(importer.failures.map { |f| f[:row]['Email'] }).to include(existing_user.email_address)
+    end
+
     context 'when the DefaultSoldto exists on a ResponsibleBody' do
       it 'creates a User record on the responsible_body for each email address that does not already exist' do
         expect(trust.users.pluck(:email_address)).to eq(['a.person@sometrust.co.uk'])
         expect(local_authority_2.users.pluck(:email_address)).to eq(['b.someone@aschool.sch.uk'])
         expect(local_authority_3.users.pluck(:email_address)).to include('c.mee@anotherschool.org')
       end
-
-      it 'records any existing users as failures' do
-        expect(importer.failures.map { |f| f[:row]['Email'] }).to include('x.istinguser@some.sch.uk')
-      end
     end
 
     context 'when the DefaultSoldto does not exist on a ResponsibleBody' do
       it 'assigns the user to the first entry in their SoldTos that matches an RB' do
-        expect(User.find_by_email_address!('d.barkel@alocalauthority.gov.uk').responsible_body).to eq(local_authority_4)
-      end
-
-      context 'when it cannot match any of the SoldTos to an RB' do
-        it 'does not create the user' do
-          expect { User.find_by_email_address!('e.baigum@nowhere.org') }.to raise_error(ActiveRecord::RecordNotFound)
-        end
-
-        it 'records the row as a failure' do
-          expect(importer.failures.map { |f| f[:row]['Email'] }).to include('e.baigum@nowhere.org')
-        end
+        expect(User.find_by_email_address!('d.barkel@alocalauthority.gov.uk').responsible_body).to eq(local_authority_5)
       end
     end
 
+    context 'when it cannot match any of the SoldTos to an RB' do
+      it 'does not create the user' do
+        expect { User.find_by_email_address!('e.baigum@nowhere.org') }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'records the row as a failure' do
+        expect(importer.failures.map { |f| f[:row]['Email'] }).to include('e.baigum@nowhere.org')
+      end
+    end
 
     it 'stores any failures' do
       expect(importer.failures.size).to eq(2)

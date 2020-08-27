@@ -12,7 +12,7 @@ class ImportComputacenterReferencesService
   end
 
   def import
-    csv = open(@csv_uri).read
+    csv = URI.open(@csv_uri).read
     index = 0
     CSV.parse(csv, headers: true).select do |row|
       index += 1
@@ -21,7 +21,7 @@ class ImportComputacenterReferencesService
       @successes << row
     rescue StandardError => e
       log(e.message)
-      @failures << {row: row, error: e}
+      @failures << { row: row, error: e }
     end
 
     log "Processed #{index} rows, of which #{failures.size} failed"
@@ -41,7 +41,7 @@ class ImportComputacenterReferencesService
 private
 
   def log(msg)
-    puts msg
+    @logger.info msg
   end
 
   def find_school!(cc_urn_and_name)
