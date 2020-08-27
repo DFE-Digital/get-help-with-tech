@@ -4,7 +4,7 @@ namespace :import do
     ImportResponsibleBodiesService.new.import_local_authorities
   end
 
-  desc 'Import local authority GIAS IDs' do
+  desc 'Import local authority GIAS IDs'
   task local_authority_gias_ids: :environment do
     ImportResponsibleBodiesService.new.import_local_authority_gias_ids
   end
