@@ -1,6 +1,6 @@
-Increasing internet access for disadvantaged children is a pilot service from the Department for Education.
+Get help with technology is a service from the Department for Education.
 
-To make this service accessible we designed it using [GOV.UK accessible design principles](https://design-system.service.gov.uk/accessibility/).
+We designed it using [GOV.UK accessible design principles](https://design-system.service.gov.uk/accessibility/).
 
 Throughout most of the service, users should be able to:
 
@@ -12,13 +12,13 @@ Throughout most of the service, users should be able to:
 
 ## What to do if you cannot access parts of this service
 
-If you need information in a different format, such as an accessible PDF, large print, easy read or an audio recording or braille, email <COVID.TECHNOLOGY@education.gov.uk> and we’ll respond to you within 5 days.
+If you need information in a different format, such as an accessible PDF, large print, easy read or an audio recording or braille, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and we’ll respond to you within 5 days.
 
-[AbilityNet](https://mcmw.abilitynet.org.uk/) has advice on making your device easier to use if you have a disability. They also have a free helpline: 0800 048 7642 and you can also email <enquiries@abilitynet.org.uk>.
+[AbilityNet](https://mcmw.abilitynet.org.uk/) has advice on making your device easier to use if you have a disability. They also have a free helpline: 0800 048 7642 and you can also email [enquiries@abilitynet.org.uk](mailto:enquiries@abilitynet.org.uk).
 
 ## Reporting accessibility problems
 
-If you want to tell us about problems you’ve had using this service, or to give us feedback, email  <COVID.TECHNOLOGY@education.gov.uk> and put ‘Accessibility problem’ in your subject line.
+If you want to tell us about problems you’ve had using this service, or to give us feedback, email  [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and put ‘Accessibility problem’ in your subject line.
 
 ## Enforcement procedure
 
@@ -32,4 +32,4 @@ This website is compliant with the [Web Content Accessibility Guidelines version
 
 ## We’ll continue to improve accessibility
 
-This statement was prepared on 28 July 2020. We’ll continue to test the accessibility of this pilot service as it develops over the summer.
+This statement was prepared on 27 August 2020. We’ll continue to test the accessibility of this pilot service as it develops over the summer.

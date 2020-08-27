@@ -40,9 +40,7 @@ module Govuk
 
     def link(link, title, content)
       title_attribute = title.present? ? " title=\"#{title}\"" : ''
-      <<~HTML
-        <a href="#{link}" class="govuk-link"#{title_attribute}>#{content}</a>
-      HTML
+      %(<a href="#{link}" class="govuk-link"#{title_attribute}>#{content}</a>)
     end
 
     def hrule
