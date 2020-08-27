@@ -4,7 +4,8 @@ namespace :import do
     ImportSchoolsService.new.import_schools
   end
 
-  desc 'Import shipTo and sendTo from file at CC_REFERENCES_FILE_URI' do
+  desc 'Import shipTo and sendTo from file at CC_REFERENCES_FILE_URI'
+  task school_and_rb_computacenter_references: :environment do
     ImportComputacenterReferencesService.new(csv_uri: ENV['CC_REFERENCES_FILE_URI']).import
   end
 end

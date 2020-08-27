@@ -29,8 +29,4 @@ class ImportResponsibleBodiesService
       organisation_type: 'government_department',
     )
   end
-
-  def import_local_authority_gias_ids
-    ImportLocalAuthorityGiasIDsService.new(Rails.root.join('config/local_authority_data.csv')).import
-  end
 end
