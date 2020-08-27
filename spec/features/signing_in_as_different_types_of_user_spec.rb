@@ -47,20 +47,30 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a user who belongs_to a responsible_body' do
     let(:user) { create(:local_authority_user) }
 
-    scenario 'it redirects to the responsible_body_home page' do
+    scenario 'it redirects to the responsible body homepage' do
       sign_in_as user
       expect(page).to have_current_path(responsible_body_home_path)
       expect(page).to have_text 'Get help with technology'
     end
   end
 
-  context 'as a DfE user' do
+  context 'as a support user' do
     let(:user) { create(:dfe_user) }
 
     scenario 'it redirects to Service performance' do
       sign_in_as user
       expect(page).to have_current_path(support_service_performance_path)
       expect(page).to have_text 'Service performance'
+    end
+
+    context 'who is also attached to a responsible body (for demo purposes)' do
+      let(:user) { create(:local_authority_user, is_support: true) }
+
+      scenario 'it redirects to the responsible body homepage' do
+        sign_in_as user
+        expect(page).to have_current_path(responsible_body_home_path)
+        expect(page).to have_text 'Get help with technology'
+      end
     end
   end
 
