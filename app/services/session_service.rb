@@ -4,7 +4,7 @@ class SessionService
   class InvalidTokenAndIdentifierCombination < StandardError; end
 
   def self.send_magic_link_email!(email_address)
-    if (user = find_user_by_email(email_address.downcase))
+    if (user = find_user_by_lowercase_email(email_address))
       user.generate_token!
       logger.debug "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
       SignInTokenMailer.with(user: user).sign_in_token_email.deliver_later
@@ -35,7 +35,7 @@ class SessionService
   end
 
   # Will expand to cover MNO / MVNO and DfE users too
-  def self.find_user_by_email(email_address)
+  def self.find_user_by_lowercase_email(email_address)
     User.where('lower(email_address) = ?', email_address.downcase).first
   end
 
