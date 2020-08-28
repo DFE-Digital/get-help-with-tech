@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   validates :email_address,
             presence: true,
-            uniqueness: true,
+            uniqueness: { case_sensitive: false },
             length: { minimum: 2, maximum: 1024 }
 
   include SignInWithToken

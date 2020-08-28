@@ -44,6 +44,14 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
+  scenario 'signing in should not be case-sensitive in matching the email address (bug 555)' do
+    visit sign_in_path
+    fill_in('Email address', with: user.email_address.upcase)
+    click_on 'Continue'
+    expect(page).to have_content 'Check your email'
+    expect(page).not_to have_content('Sign out')
+  end
+
   context 'as a user who belongs to a responsible body' do
     context 'who has already seen the privacy notice' do
       let(:user) { create(:local_authority_user, :has_seen_privacy_notice) }

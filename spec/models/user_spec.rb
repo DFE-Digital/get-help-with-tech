@@ -61,4 +61,17 @@ RSpec.describe User, type: :model do
       expect(user.needs_to_see_privacy_notice?).to be_falsey
     end
   end
+
+  describe 'email address should not be case-sensitive (bug 555)' do
+
+    context 'a user with the same email as an existing user, but different case' do
+      let(:new_user) { build(:local_authority_user, email_address: 'Email.Address@example.com') }
+      let!(:lowercase_user) { create(:local_authority_user, email_address: new_user.email_address.downcase) }
+
+      it 'should not be valid' do
+        expect(new_user.valid?).to be_falsey
+        expect(new_user.errors[:email_address]).not_to be_empty
+      end
+    end
+  end
 end
