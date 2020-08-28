@@ -9,6 +9,6 @@ class SignInTokenForm
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Enter an email address in the correct format, like name@example.com' }
 
   def email_is_user?
-    SessionService.find_user_by_email(email_address).present?
+    SessionService.find_user_by_lowercase_email(email_address).present?
   end
 end

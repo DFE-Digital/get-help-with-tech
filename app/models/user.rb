@@ -16,8 +16,10 @@ class User < ApplicationRecord
 
   validates :email_address,
             presence: true,
-            uniqueness: true,
+            uniqueness: { case_sensitive: false },
             length: { minimum: 2, maximum: 1024 }
+
+  before_validation :force_email_address_to_lowercase!
 
   include SignInWithToken
 
@@ -43,5 +45,9 @@ class User < ApplicationRecord
 
   def seen_privacy_notice?
     privacy_notice_seen_at.present?
+  end
+
+  def force_email_address_to_lowercase!
+    self.email_address = email_address.downcase if email_address.present?
   end
 end
