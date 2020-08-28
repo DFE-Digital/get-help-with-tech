@@ -2,6 +2,7 @@ require 'computacenter/responsible_body_urns'
 
 class ResponsibleBody < ApplicationRecord
   has_one :bt_wifi_voucher_allocation
+  belongs_to :key_contact, class_name: 'User', inverse_of: :key_responsible_bodies, optional: true
   has_many :bt_wifi_vouchers
   has_many :users
   has_many :extra_mobile_data_requests

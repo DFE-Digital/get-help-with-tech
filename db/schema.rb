@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_28_110244) do
+ActiveRecord::Schema.define(version: 2020_08_28_123318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,9 +101,11 @@ ActiveRecord::Schema.define(version: 2020_08_28_110244) do
     t.string "computacenter_reference"
     t.string "gias_group_uid"
     t.string "gias_id"
+    t.bigint "key_contact_id"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
     t.index ["gias_id"], name: "index_responsible_bodies_on_gias_id", unique: true
+    t.index ["key_contact_id"], name: "index_responsible_bodies_on_key_contact_id"
   end
 
   create_table "school_contacts", force: :cascade do |t|
@@ -187,6 +189,7 @@ ActiveRecord::Schema.define(version: 2020_08_28_110244) do
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
   add_foreign_key "preorder_information", "school_contacts"
+  add_foreign_key "responsible_bodies", "users", column: "key_contact_id"
   add_foreign_key "school_device_allocations", "schools"
   add_foreign_key "schools", "responsible_bodies"
 end

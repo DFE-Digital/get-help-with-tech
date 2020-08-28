@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
+  has_many :key_responsible_bodies, class_name: 'ResponsibleBody', foreign_key: :key_contact_id, inverse_of: :key_contact
 
   scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }

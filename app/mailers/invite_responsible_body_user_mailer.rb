@@ -1,14 +1,21 @@
 class InviteResponsibleBodyUserMailer < ApplicationMailer
   def invite_user_email
     @user = params[:user]
-    rb_name = @user.responsible_body.local_authority_official_name || @user.responsible_body.name
-    personalisation = {
-      email_address: @user.email_address,
-      responsible_body_name: rb_name,
-    }
+    @rb = @user.responsible_body
 
     template_mail(
-      notify_template_id,
+      invite_user_template_id,
+      to: @user.email_address,
+      personalisation: personalisation,
+    )
+  end
+
+  def nominate_contacts_email
+    @user = params[:user]
+    @rb = params[:responsible_body]
+
+    template_mail(
+      nominate_contacts_template_id,
       to: @user.email_address,
       personalisation: personalisation,
     )
@@ -16,7 +23,22 @@ class InviteResponsibleBodyUserMailer < ApplicationMailer
 
 private
 
-  def notify_template_id
+  def personalisation
+    {
+      email_address: @user.email_address,
+      responsible_body_name: rb_name,
+    }
+  end
+
+  def rb_name
+    @rb.local_authority_official_name || @rb.name
+  end
+
+  def invite_user_template_id
     Settings.govuk_notify.templates.devices.invite_responsible_body_user
+  end
+
+  def nominate_contacts_template_id
+    Settings.govuk_notify.templates.devices.nominate_contacts
   end
 end
