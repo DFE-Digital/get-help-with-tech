@@ -19,6 +19,8 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false },
             length: { minimum: 2, maximum: 1024 }
 
+  before_validation :force_email_address_to_lowercase!
+
   include SignInWithToken
 
   def is_mno_user?
@@ -43,5 +45,12 @@ class User < ApplicationRecord
 
   def seen_privacy_notice?
     privacy_notice_seen_at.present?
+  end
+
+  def force_email_address_to_lowercase!
+    # the 'self' scope is required, for some reason -
+    # .email_address and @email_address both return nil
+    # - maybe some artefact of the callback flow?
+    self.email_address = self.email_address.downcase if self.email_address.present?
   end
 end
