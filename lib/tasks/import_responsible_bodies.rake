@@ -6,7 +6,7 @@ namespace :import do
 
   desc 'Import local authority GIAS IDs'
   task local_authority_gias_ids: :environment do
-    ImportLocalAuthorityGiasIdsService.new(Rails.root.join('config/local_authority_data.csv')).import
+    ImportLocalAuthorityGiasIdsService.new(csv_uri: Rails.root.join('config/local_authority_data.csv')).import
   end
 
   desc 'Import single and multi-academy trusts'
