@@ -1,31 +1,34 @@
-Local authorities (LAs) and academy trusts will [own these devices](/devices/distributing-devices) and will need to support their users.
+Local authorities (LAs), academy trusts and schools will [own these devices](/devices/distributing-devices) and will need to support their users.
 
 The Department for Education’s delivery partner, XMA, will provide local admin passwords for Windows devices, so that you can reset the devices to add your own settings. 
 
-For support with 4G wireless routers key contacts (the person that completed your device forecast) can access [a support portal](https://computacenterprod.service-now.com/dfe). They can also share access with colleagues.
+For support with 4G wireless routers, key contacts (the person that completed your device forecast), technical contacts can access [a support portal](https://computacenterprod.service-now.com/dfe). If you ordered after August 2020 then anyone with a TechSource account can request this support. They can also share access with colleagues.
 
 ## Support for schools, young people and families
 
-LAs and academy trusts need to provide support for end users – schools, children, young people and families.  
+Where devices are owned by LAs and academy trusts, they will need to provide support for end users – schools, children, young people and families.
 
-Those providing support in LAs and academy trusts should be able to solve general IT problems (such as password resets) so that the end user can continue with their day as soon as possible.
+Where devices are owned by schools, they will need to provide support to the pupils they loan them to.
 
-## Support for local authorities and academy trusts
+Those providing support should be able to solve general IT problems (such as password resets) so that the end user can continue using their device as soon as possible.
 
-XMA will support LAs and academy trusts. Their technical service desk can:
+## Support for local authorities, and academy trusts
 
-* provide local admin passwords to remove Microsoft Intune
-* help you manage Mobile Device Management (MDM) and Cisco Umbrella settings
+XMA will support the LAs, academy trusts and schools that own the devices. Their technical service desk can:
 
-The key contact (the person that completed your device forecast) or technical contact (nominated when the order was placed) can request this support by raising a ticket with the XMA Service Desk.
+* provide local admin passwords and BIOS programs to remove Microsoft Intune
+* help you manage mobile device management (MDM) and Cisco Umbrella settings
+
+The key contact (the person that completed your device forecast) or technical contact (nominated when the order was placed) can request this support by raising a ticket with the XMA Service Desk. If you ordered after August 2020 then anyone with a TechSource account can request support.
 
 Log an issue by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk).
 
 To help us verify you for security, please make sure you email us from that address that:
 
 * you used to complete the device forecast (if you’re a key contact)
+* was entered when the devices were ordered (if you’re a technical contact) 
 
-was entered when the devices were ordered (if you’re a technical contact) Once you have contacted the XMA Service Desk, they will log a ticket and send a confirmation email with a unique reference number.
+Once you have contacted the XMA Service Desk, they will log a ticket and send a confirmation email with a unique reference number.
 
 Tickets will be prioritised depending on how urgent they are, and the impact of the issue. The incident or request will be sent to the relevant support staff to help with your issue.
 
@@ -43,7 +46,7 @@ If you discover a fault with the devices after 19 December 2020, it may still be
 
 ### Receiving a replacement device from Computacenter
 
-Your replacement will be built identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) if you have any issues.
+Your replacement will be provided identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software if you requested that in your original order. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) if you have any issues.
 
 
 ### Receiving a replacement device from the manufacturer
@@ -72,7 +75,7 @@ If you discover a fault with the device after 19 December 2020, it may still be 
 
 ### Receiving a replacement device from Computacenter
 
-Your replacement will be built identically to the original device, and will automatically be enrolled in the relevant Google domain for the school or local authority, and have the relevant Google Education licence applied. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) if you have any issues.
+Your replacement will be built identically to the original device, and will automatically be enrolled in the relevant Google domain for the school or local authority, and have the relevant Google Education licence applied. 
 
 ### Receiving a replacement device from Computacenter
 
@@ -82,7 +85,7 @@ As Computacenter will not have been involved in the replacement process, the dev
 
 ### If you receive a faulty 4G Wireless Router 
 
-If you receive a 4G wireless router that will not start, please check that it is fully charged. If it still won’t power-up, email [DepartmentforEducation@computacenter.com](mailto:DepartmentforEducation@computacenter.com) with the order number and IMEI number on the device.
+If you receive a 4G wireless router that will not start, please check that it is fully charged. If it still won’t power-up, email [covid.technology@education.gov.uk](mailto:covid.technology@education.gov.uk) with the order number and IMEI number on the device.
 
 ### If you have technical issues with 4G wireless routers 
 
@@ -97,9 +100,9 @@ Please raise a ticket via the dedicated [Computacenter support portal](https://c
 
 ## Replacing a faulty device
 
-The [Computacenter support portal](https://computacenterprod.service-now.com/dfe) allows local authorities and academy trusts to request replacement devices and monitor the progress of their orders.
+The [Computacenter support portal](https://computacenterprod.service-now.com/dfe) allows local authorities,  academy trusts and schools to request replacements and monitor the progress of their orders.
 
-If you work within social care or a school, please report faulty devices to your local authority or academy trust so they can manage the process of requesting a replacement.
+If you work within social care or a school that does not own the device, please report faults to your local authority or academy trust so they can manage the process of requesting a replacement.
 
 ### If a device is not working when you receive it
 
@@ -118,7 +121,7 @@ If you find a fault within this initial period, you need to:
 * send the item(s), including any power chargers, following the instructions provided within the support portal
 * make sure you insure the item(s) and write down the postal or courier tracking number before sending
 
-If you have any issues accessing or using the support portal, please email [DepartmentforEducation@computacenter.com](mailto:DepartmentforEducation@computacenter.com) with your order tracking number.
+If you have any issues accessing or using the support portal, please email [covid.technology@education.gov.uk](mailto:covid.technology@education.gov.uk) with your order tracking number.
 
 When returning a device, you should be aware that:
 
@@ -134,7 +137,7 @@ All costs include courier charges but exclude VAT.
 
 ### If a device develops a fault after 19 December 2020
 
-Devices come with a 12-month manufacturer’s warranty that will expire between May and July 2021, depending on when your device was delivered to us. Please note, this will be earlier than the date it was received by you.
+Devices come with a 12-month manufacturer’s warranty that will expire within 12 months of when you received the device.
 
 If you find a fault with the device after the initial warranty support service period ends, please follow the return instructions issued by the manufacturer of the device, which will be included in the box.
 
