@@ -113,4 +113,20 @@ RSpec.feature ResponsibleBody do
       end
     end
   end
+
+  context 'as a first-time RB user' do
+    let(:rb_user) { create(:trust_user, privacy_notice_seen_at: nil) }
+
+    it 'shows the privacy notice for the first time' do
+      sign_in_as rb_user
+      expect(page).to have_content('Get help with technology – How we look after personal data')
+
+      click_on 'Continue'
+      expect(responsible_body_home_page).to be_displayed
+
+      sign_out
+      sign_in_as rb_user
+      expect(responsible_body_home_page).to be_displayed
+    end
+  end
 end

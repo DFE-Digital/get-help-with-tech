@@ -11,6 +11,12 @@
     "set-value": ">=3.0.2"
   },
   "devDependencies": {
-    "webpack-dev-server": ">=3.11.0"
+    "webpack-dev-server": ">=3.11.0",
+    "jest": "^25.2.4"
+  },
+  "jest": {
+    "roots": [
+      "app"
+    ]
   }
 }

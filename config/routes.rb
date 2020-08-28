@@ -16,7 +16,8 @@ Rails.application.routes.draw do
 
   # redirects for moved guidance pages
   get '/pages/guidance', to: redirect('/')
-  get '/devices/choosing-devices', to: redirect('/devices/allocation-and-specification')
+  get '/devices/choosing-devices', to: redirect('/devices/device-allocations')
+  get '/devices/allocation-and-specification', to: redirect('/devices/device-allocations')
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
 
@@ -56,6 +57,9 @@ Rails.application.routes.draw do
 
   namespace :responsible_body, path: '/responsible-body' do
     get '/', to: 'home#show', as: :home
+    get '/privacy-notice', to: 'home#privacy_notice', as: :privacy_notice
+    post '/privacy-notice', to: 'home#seen_privacy_notice'
+
     namespace :devices do
       get '/', to: 'home#show'
       get '/who-will-order', to: 'who_will_order#show'
