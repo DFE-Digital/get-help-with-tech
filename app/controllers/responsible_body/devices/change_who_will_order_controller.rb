@@ -12,7 +12,7 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
     if @form.valid?
       @school.preorder_information.change_who_will_order_devices!(@form.who_will_order.singularize)
 
-      flash[:notice] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update success])
+      flash[:success] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update success])
       redirect_to responsible_body_devices_school_path(@school.urn)
     else
       render :edit, status: :unprocessable_entity

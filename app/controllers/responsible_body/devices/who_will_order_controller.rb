@@ -18,7 +18,7 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Device
 
       event = WhoWillOrderEvent.new(responsible_body: @responsible_body)
       EventNotificationsService.broadcast(event)
-      flash[:notice] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update success])
+      flash[:success] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update])
       redirect_to responsible_body_devices_who_will_order_path
     else
       render :edit, status: :unprocessable_entity
