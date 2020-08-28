@@ -48,8 +48,6 @@ class User < ApplicationRecord
   end
 
   def force_email_address_to_lowercase!
-    # the 'self' scope is required, for some reason -
-    # - maybe some artefact of the callback flow?
     self.email_address = email_address.downcase if email_address.present?
   end
 end
