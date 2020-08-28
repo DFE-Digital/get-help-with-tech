@@ -64,6 +64,10 @@ en:
       title: Device allocations
       description: Find out how we estimated device requirements for each school, trust and local authority, and how to query an allocation.
       audience: responsible_body_users
+    device_specification:
+      title: Device specification
+      description: Get the technical specifications of the devices for vulnerable and disadvantaged children and young people.
+      audience: responsible_body_users   
     preparing_microsoft_windows_laptops_and_tablets:
       title: Preparing Microsoft Windows laptops and tablets
       description: Guidance on how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
@@ -77,7 +81,7 @@ en:
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
       audience: responsible_body_users
     distributing_devices:
-      title: Distributing devices
+      title: Device distribution and ownership
       description: Advice on how to get devices to children and young people via schools, social workers and deliveries to their homes. Information on insuring devices, asset management and loan agreements.
       audience: responsible_body_users
     support_and_maintenance:
