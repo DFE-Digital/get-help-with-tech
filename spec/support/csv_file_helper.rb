@@ -30,6 +30,13 @@ module CSVFileHelper
     y10: 'Y10 Allocation',
   }.freeze
 
+  KEY_CONTACT_ATTRS = {
+    id: 'ID',
+    email_address: 'Email',
+    full_name: 'Name',
+    telephone: 'Telephone',
+  }.freeze
+
   def create_school_csv_file(filename, array_of_hashes)
     create_csv_file(filename, SCHOOL_ATTRS.values, array_of_hashes)
   end
@@ -46,22 +53,26 @@ module CSVFileHelper
     end
   end
 
+  def create_key_contacts_csv_file(filename, array_of_hashes)
+    create_csv_file(filename, KEY_CONTACT_ATTRS.values, array_of_hashes, KEY_CONTACT_ATTRS)
+  end
+
   def remove_file(filename)
     File.delete(filename) if File.exist?(filename)
   end
 
-  def create_csv_file(filename, headings, array_of_hashes)
+  def create_csv_file(filename, headings, array_of_hashes, data_map = SCHOOL_ATTRS)
     CSV.open(filename, 'w') do |csv|
       csv << headings
       array_of_hashes.each do |row|
-        csv << build_row(row)
+        csv << build_row(row, data_map)
       end
     end
   end
 
-  def build_row(data)
-    SCHOOL_ATTRS.keys.map do |k|
-      data.fetch(k, '')
+  def build_row(data, data_map)
+    data_map.keys.map do |k|
+      data.fetch(k, nil)
     end
   end
 end

@@ -9,8 +9,14 @@ protected
     {
       id: row['ID'],
       email_address: row['Email']&.downcase,
-      full_name: row['Name'],
+      full_name: name_or_email(row),
       telephone: row['Telephone'],
     }
+  end
+
+private
+
+  def name_or_email(row)
+    row['Name'] || row['Email']&.downcase
   end
 end

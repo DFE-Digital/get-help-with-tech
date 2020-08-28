@@ -40,15 +40,11 @@ class KeyContactsImporter
 
 private
 
-  def find_or_add_user!(rb, contact_data)
+  def find_or_add_user!(responsible_body, contact_data)
     User.find_or_create_by!(email_address: contact_data[:email_address]) do |u|
-      u.full_name = full_name(contact_data)
+      u.full_name = contact_data[:full_name]
       u.telephone = contact_data[:telephone]
-      u.responsible_body = rb
+      u.responsible_body = responsible_body
     end
-  end
-
-  def full_name(contact_data)
-    contact_data[:full_name] || contact_data[:email_address]
   end
 end
