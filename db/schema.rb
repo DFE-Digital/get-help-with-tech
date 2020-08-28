@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2020_08_27_145044) do
     t.string "telephone"
     t.boolean "is_support", default: false, null: false
     t.boolean "is_computacenter", default: false, null: false
+    t.datetime "privacy_notice_seen_at"
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"

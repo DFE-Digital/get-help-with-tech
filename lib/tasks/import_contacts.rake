@@ -6,6 +6,6 @@ namespace :import do
 
   desc 'Import RB users from computacenter CSV file at RB_USERS_CSV_URL'
   task rb_users_from_cc_csv: :environment do
-    ImportResponsibleBodyUsersFromComputacenterCsvService.new(ENV['RB_USERS_CSV_URL'])
+    ImportResponsibleBodyUsersFromComputacenterCsvService.new(csv_uri: ENV['RB_USERS_CSV_URL'])
   end
 end
