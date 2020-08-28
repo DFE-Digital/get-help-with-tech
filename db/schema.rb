@@ -103,8 +103,6 @@ ActiveRecord::Schema.define(version: 2020_08_27_125505) do
     t.string "gias_group_uid"
     t.string "gias_id"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
-    t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
-    t.index ["gias_id"], name: "index_responsible_bodies_on_gias_id", unique: true
   end
 
   create_table "school_contacts", force: :cascade do |t|
