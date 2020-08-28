@@ -56,6 +56,7 @@ class NavComponent < ViewComponent::Base
 
   def responsible_body_links
     [
+      NavLinkComponent.new(title: 'Home', url: responsible_body_home_path),
       NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
     ]
   end
