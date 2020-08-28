@@ -11,7 +11,7 @@ This allocation can be used as part of preparing to deliver remote education. Ho
 
 ## How to query an allocation
 
-If you think a schools will have unmet needs as a result of this allocation, a request for additional devices can be made by providing the following information to [covid.technology@education.gov.uk](mailto:covid.technology@education.gov.uk).
+If you think a school will have unmet needs as a result of this allocation, a request for additional devices can be made by providing the following information to [covid.technology@education.gov.uk](mailto:covid.technology@education.gov.uk).
 
 ### If you are a local authority or academy trust, you need to tell us:
 
@@ -21,9 +21,9 @@ If you think a schools will have unmet needs as a result of this allocation, a r
 
 ### If you are a school or college, you need to tell us:
 
-* your unique reference number (URN), this is normally 6 digits. If you are a further education college, this will be your 8-digit UKPRN. If you don’t know your URN or UKPRN, you can find these on the [Get Information about Schools](https://get-information-schools.service.gov.uk/) site 
-* the name of your school 
-* the number of additional devices required 
+* your unique reference number (URN), this is normally 6 digits. If you are a further education college, this will be your 8-digit UKPRN. If you don’t know your URN or UKPRN, you can find these on the [Get Information about Schools](https://get-information-schools.service.gov.uk/) site
+* the name of your school
+* the number of additional devices required
 * how many of the devices you’re requesting are for years 10 and 11, as we’ll prioritise them if stocks get low
 
 ### Schools, local authorities and academy trusts will need to provide anonymised evidence of:
@@ -37,7 +37,7 @@ Evidence can be surveys, calls home, awareness of families, demographic data, qu
 
 #### In any response, do not send us any personal information (for example, names of children, dates of birth, etc).
 
-Providing this evidence is not a guarantee that DfE will be able to provide additional devices. We will review your query within 8 working days and respond with a decision. 
+Providing this evidence is not a guarantee that DfE will be able to provide additional devices. We will review your query within 8 working days and respond with a decision.
 
 ## Laptops, tablets and 4G wireless routers provided between May and July 2020
 

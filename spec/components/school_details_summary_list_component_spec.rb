@@ -18,7 +18,7 @@ describe SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(result.css('dd')[3].text).to include('The school orders devices')
+      expect(result.css('dd')[4].text).to include('The school orders devices')
     end
 
     it 'renders the school allocation' do
@@ -26,7 +26,7 @@ describe SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school type' do
-      expect(result.css('dd')[2].text).to include('Primary school')
+      expect(result.css('dd')[3].text).to include('Primary school')
     end
 
     it 'renders the school details' do
@@ -41,7 +41,7 @@ describe SchoolDetailsSummaryListComponent do
                school_contact: headteacher)
 
         expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+        expect(result.css('dd')[6].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
       end
     end
 
@@ -57,9 +57,9 @@ describe SchoolDetailsSummaryListComponent do
                school_contact: new_contact)
 
         expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[5].text).to include('Jane Smith')
-        expect(result.css('dd')[5].text).to include('abc@example.com')
-        expect(result.css('dd')[5].text).to include('12345')
+        expect(result.css('dd')[6].text).to include('Jane Smith')
+        expect(result.css('dd')[6].text).to include('abc@example.com')
+        expect(result.css('dd')[6].text).to include('12345')
       end
     end
   end
@@ -70,7 +70,7 @@ describe SchoolDetailsSummaryListComponent do
     it 'confirms that fact' do
       create(:preorder_information, school: school, who_will_order_devices: :responsible_body)
 
-      expect(result.css('dd')[3].text).to include('The trust orders devices')
+      expect(result.css('dd')[4].text).to include('The trust orders devices')
     end
 
     it 'does not show the school contact even if the school contact is set' do
