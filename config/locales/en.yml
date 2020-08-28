@@ -130,6 +130,23 @@ en:
     who_to_give_vouchers_to: Who to give BT vouchers to
     what_to_do_with_the_vouchers: What to do with the vouchers
     not_offered_vouchers_yet: If you haven’t been offered vouchers yet
+  support:
+    service_performance:
+      mobile_network_operators:
+        one: mobile network operator
+        other: different mobile network operators
+      requests:
+        one: request
+        other: requests
+      responsible_bodies:
+        one: responsible body
+        other: different responsible bodies
+      users_signed_in:
+        one: user has signed in
+        other: users have signed in
+      vouchers:
+        one: voucher
+        other: vouchers
   errors:
     format:
       "'%{attribute}' %{message}"

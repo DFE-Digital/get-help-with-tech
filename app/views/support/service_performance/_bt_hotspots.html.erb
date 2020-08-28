@@ -4,7 +4,9 @@
   <div class="govuk-grid-column-one-half">
     <div class="app-card">
       <span class="app-card__count"><%= number_with_delimiter(@stats.number_of_distributed_bt_wifi_vouchers) %></span>
-      vouchers downloaded by <%= @stats.number_of_responsible_bodies_with_distributed_bt_wifi_vouchers %> responsible bodies
+      <%= t(:vouchers, scope: %i[support service_performance], count: @stats.number_of_distributed_bt_wifi_vouchers) %>
+      downloaded by <%= number_with_delimiter(@stats.number_of_responsible_bodies_with_distributed_bt_wifi_vouchers) %>
+      <%= t(:responsible_bodies, scope: %i[support service_performance], count: @stats.number_of_responsible_bodies_with_distributed_bt_wifi_vouchers) %>
     </div>
   </div>
 </div>
