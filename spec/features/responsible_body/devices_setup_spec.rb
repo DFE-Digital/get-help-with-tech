@@ -193,6 +193,7 @@ RSpec.feature 'Setting up the devices ordering' do
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
     expect(page).to have_content('Each school will place their own orders')
+    expect(page).to have_content('We’ve saved your choice')
     click_on 'Go to your list of schools'
   end
 
@@ -200,6 +201,7 @@ RSpec.feature 'Setting up the devices ordering' do
     choose 'Most orders will be placed centrally'
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
+    expect(page).to have_content('We’ve saved your choice')
     expect(page).to have_content('Orders will be placed centrally')
     click_on 'Go to your list of schools'
   end

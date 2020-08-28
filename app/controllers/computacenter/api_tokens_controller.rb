@@ -28,7 +28,7 @@ class Computacenter::APITokensController < Computacenter::BaseController
   def destroy
     @api_token = @user.api_tokens.find(params[:id])
     @api_token.destroy!
-    flash[:notice] = I18n.t(:success, scope: %i[computacenter api_tokens destroy], name: @api_token.name)
+    flash[:success] = I18n.t(:success, scope: %i[computacenter api_tokens destroy], name: @api_token.name)
     redirect_to computacenter_api_tokens_path
   end
 
