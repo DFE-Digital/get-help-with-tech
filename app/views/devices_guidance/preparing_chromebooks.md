@@ -19,7 +19,7 @@ For Chromebooks for children linked to schools, local authorities should use the
 
 ## Securing your Chromebooks
 
-You should ensure that enrolled devices have appropriate security settings in place to keep users safe online. A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. Instructions on how to install Cisco Umbrella are included in our [guidance on how to enrol your Chromebooks](/devices/preparing-chromebooks/#How-to-enrol-Chromebooks).
+You should ensure that enrolled devices have appropriate security settings in place to keep users safe online. A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. Instructions on how to install Cisco Umbrella are included in our [guidance on how to enrol your Chromebooks](/devices/preparing-chromebooks#how-to-enrol-chromebooks).
 
 Cisco Umbrella blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines.
 
