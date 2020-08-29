@@ -26,6 +26,10 @@ module ViewHelper
     "#{t('page_titles.error_prefix') if error}#{title}"
   end
 
+  def link_to_devices_guidance_subpage(body, slug, html_options = {})
+    govuk_link_to body, devices_guidance_subpage_path(subpage_slug: slug), html_options
+  end
+
   def sortable_table_header(title, value = title, opts = params)
     if opts[:sort] == value.to_s
       if opts[:dir] == 'd'

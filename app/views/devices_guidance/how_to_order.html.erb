@@ -8,7 +8,7 @@
     </h1>
 
     <p class="govuk-body">
-      Prepare to <a href="https://get-help-with-tech.education.gov.uk/start" class="govuk-link">order laptops and tablets</a>
+      Prepare to <%= govuk_link_to 'order laptops and tablets', start_path %>
       for disadvantaged children in certain year groups when schools are  affected by disruption to face to face
       education due to coronavirus (COVID-19).
     </p>
@@ -44,7 +44,7 @@
             <p class="app-step-nav__paragraph">
               This choice can be adapted individually for each school. Additional users from within a local authority
               or academy trust can be invited to provide this information
-              <a href="https://get-help-with-tech.education.gov.uk/start" class="govuk-link">through the service</a>.
+              <%= govuk_link_to 'through the service', start_path %>.
             </p>
           </div>
 
@@ -136,7 +136,7 @@
             </p>
 
             <p class="app-step-nav__paragraph">
-              <a href="https://get-help-with-tech.education.gov.uk/devices/device_allocations" class="govuk-link">Find out about allocations</a> and what information is required if you would like to request additional devices for a school.
+              <%= link_to_devices_guidance_subpage 'Find out about allocations', 'device-allocations' %> and what information is required if you would like to request additional devices for a school.
             </p>
 
             <p class="app-step-nav__paragraph">
@@ -163,7 +163,7 @@
 
             <p class="app-step-nav__paragraph">
               If you’re ordering Chromebooks, you’ll need to add the following to the
-              <a href="https://get-help-with-tech.education.gov.uk/start" class="govuk-link">Get help with technology service</a>
+              <%= govuk_link_to 'Get help with technology service', start_path %>
               before orders can be placed:
             </p>
 
@@ -250,7 +250,7 @@
             </ul>
 
             <p class="app-step-nav__paragraph">
-              View the <a href="https://get-help-with-tech.education.gov.uk/devices/device-specification" class="govuk-link">full specifications</a> of these devices.
+              View the <%= link_to_devices_guidance_subpage 'full specifications', 'device-specification' %> of these devices.
             </p>
 
             <p class="app-step-nav__paragraph">
@@ -262,7 +262,7 @@
             </ul>
 
             <p class="app-step-nav__paragraph">
-              Read more information about <a href="https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets" class="govuk-link">preparing Microsoft devices</a>.
+              Read more information about <%= link_to_devices_guidance_subpage 'preparing Microsoft devices', 'preparing-microsoft-windows-laptops-and-tablets' %>.
             </p>
 
             <p class="app-step-nav__paragraph">
@@ -332,7 +332,7 @@
             </p>
 
             <p class="app-step-nav__paragraph">
-              We are also providing <a href="https://get-help-with-tech.education.gov.uk/internet-access" class="govuk-link">internet connections</a> where they are needed.
+              We are also providing <%= govuk_link_to 'internet connections', connectivity_home_path %> where they are needed.
             </p>
           </div>
 
