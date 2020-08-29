@@ -1,0 +1,31 @@
+<% content_for :before_content, govuk_link_to('Back', support_devices_path, class: 'govuk-back-link') %>
+<% content_for :title, title_with_error_prefix(t('page_titles.upload_a_key_contacts_file'), @upload_form.errors.any?) %>
+<div class="govuk-grid-row">
+  <%= form_for @upload_form,
+    url: support_devices_key_contacts_path,
+    html: {
+      class: 'govuk-grid-column-two-thirds',
+      multipart: true
+    } do |f| %>
+    <%= f.govuk_error_summary %>
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.upload_key_contacts_file') %>
+    </h1>
+
+    <p class="govuk-body">Upload a CSV file containing key contact information.</p>
+
+    <p class="govuk-body">It will have columns for:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+      <li>ID - unique id of responsible body entity</li>
+      <li>Name - full name of key contact</li>
+      <li>Email - email address of key contact</li>
+      <li>Telephone - key contact telephone number</li>
+    </ul>
+
+    <%= f.govuk_file_field :upload,
+      label: { text: 'Pick a CSV file', size: 'm' },
+      accept: 'text/csv'
+    %>
+    <%= f.govuk_submit 'Upload key contacts' %>
+  <%- end %>
+</div>

@@ -42,6 +42,9 @@ en:
     service_performance: Service performance
     accessibility: Accessibility statement
     support_responsible_bodies: On-boarded responsible bodies
+    support_devices: Devices
+    upload_key_contacts_file: Upload a CSV file of key contacts
+    weve_processed_your_file: We’ve processed your file
     computacenter_home: Users with permission to place orders and receive support through Computacenter
     who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
@@ -129,6 +132,9 @@ en:
     bulk_upload_form:
       theres_a_problem_with_that_spreadsheet: There’s a problem with that spreadsheet
       select_a_spreadsheet_file: Select a spreadsheet file
+    key_contact_upload_form:
+      theres_a_problem_with_that_file: There’s a problem with that file
+      select_a_csv_file: Select a CSV file
     extra_mobile_data_submission_form:
       select_how_you_would_like_to_submit_information: Select how you would like to submit information
   pagy:

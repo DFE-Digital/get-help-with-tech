@@ -32,6 +32,7 @@ govuk_notify:
       mno_not_in_scheme_sms: '401aed7e-83ac-4e90-abac-3e2f9bc45a95'
     devices:
       invite_responsible_body_user: '42e5cd7a-deaa-4234-bdea-db63b7c4ad90'
+      nominate_contacts: 'ef964a6f-d984-4f35-a074-6f3cb79bfec7'
 
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000

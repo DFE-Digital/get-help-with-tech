@@ -96,6 +96,10 @@ Rails.application.routes.draw do
 
   namespace :support do
     get '/', to: 'service_performance#index', as: :service_performance
+    namespace :devices do
+      get '/', to: 'key_contacts#index'
+      resources :key_contacts, only: %i[new create]
+    end
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
       resources :users, only: %i[new create]
     end
