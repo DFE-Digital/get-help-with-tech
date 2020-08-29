@@ -10,8 +10,8 @@ class NavComponent < ViewComponent::Base
     item_class
   end
 
-  def nav_item(content:, url: nil)
-    tag.li(content, class: class_name(url))
+  def nav_item(content:, url: nil, extra_classes: '')
+    tag.li(content, class: [class_name(url), extra_classes].join(' '))
   end
 
   # inline param is for testing
@@ -26,10 +26,23 @@ class NavComponent < ViewComponent::Base
     }.join('').html_safe
   end
 
-  def support_links
+  def support_internet_links
     [
-      NavLinkComponent.new(title: 'Service performance', url: support_service_performance_path),
-      NavLinkComponent.new(title: 'Responsible bodies', url: support_responsible_bodies_path),
+      NavLinkComponent.new(title: 'Performance', url: support_internet_service_performance_path),
+      NavLinkComponent.new(title: 'RBs', url: support_internet_responsible_bodies_path),
+    ]
+  end
+
+  def support_devices_links
+    [
+      NavLinkComponent.new(title: 'Performance', url: support_devices_service_performance_path),
+      NavLinkComponent.new(title: 'RBs', url: support_devices_responsible_bodies_path),
+    ]
+  end
+
+
+  def support_general_links
+    [
       NavLinkComponent.new(title: 'Background jobs', url: support_sidekiq_admin_path, html_options: { target: '_blank' }),
     ]
   end

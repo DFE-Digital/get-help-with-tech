@@ -37,4 +37,28 @@ class ResponsibleBody < ApplicationRecord
       humanized_type.capitalize
     end
   end
+
+  def self.in_devices_pilot
+    where(in_devices_pilot: true)
+  end
+
+  def self.in_connectivity_pilot
+    where(in_connectivity_pilot: true)
+  end
+
+  def self.chosen_who_will_order
+    where.not(who_will_order_devices: nil)
+  end
+
+  def self.with_at_least_one_preorder_information_completed
+    where('EXISTS(
+        SELECT  preorder_information.id
+        FROM    preorder_information
+                          INNER JOIN schools
+                                  ON schools.id = preorder_information.school_id
+        WHERE   schools.responsible_body_id = responsible_bodies.id
+          AND   status NOT IN (?)
+      )', ['needs_info', 'needs_contact']
+    )
+  end
 end

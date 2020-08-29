@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Support::ServicePerformanceController, type: :controller do
+RSpec.describe Support::Internet::ServicePerformanceController, type: :controller do
   describe 'index' do
     it 'displays the service performance when authenticated as a DfE user' do
       sign_in_as create(:dfe_user)
