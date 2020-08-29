@@ -1,3 +1,5 @@
+The guidance below applies to devices supplied with software and settings managed by DfE. If the instructions below do not apply to your device and you require assistance, contact the school or local authority who supplied you with the laptop or tablet for support.
+
 ## When you get your laptop or tablet
 
 ### How to turn it on

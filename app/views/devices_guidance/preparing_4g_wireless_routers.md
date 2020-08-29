@@ -16,12 +16,14 @@ The SIM card inside each router will be activated the day after you receive them
 
 ## Data cap
 
-Each of your 4G wireless routers will have a monthly data cap of 20GB. This means the user can only use up to 20GB of data per month before the 4G wireless router will stop connecting to the internet, until the new month starts.
+Each of your 4G wireless routers currently has a monthly data cap of 20GB. This means the user can only use up to 20GB of data per month before the 4G wireless router will stop connecting to the internet, until the new month starts.
 
 It would be helpful if you remind families, young people and care leavers that:
 
 * their router has a monthly data cap
 * they should only use the data connection for education and social care services
+* They can reduce the amount of data they use by choosing 'Standard Definition' SD when watching videos online or making video calls.
+
 
 
 ## How the routers are secured

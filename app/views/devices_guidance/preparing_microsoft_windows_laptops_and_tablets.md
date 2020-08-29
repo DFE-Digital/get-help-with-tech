@@ -1,12 +1,32 @@
+When ordering Microsoft devices, a selection can be made between:
+
+* not having DfE settings installed - these devices can be configured with your preferred safeguarding software and brought into your existing device management framework
+* having DfE settings installed - these devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
+
+## Preparing laptops and tablets ordered without DfE settings installed 
+
+If you order devices after August 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. They will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
+
+This allows devices to be configured to your own standards with your preferred software and settings, and without the limitations imposed by DfE configured devices. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
+
+You will be responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices – such as content filtering, antivirus software and mobile device management – to avoid risks to the children and young people in your care.
+
+## Preparing laptops and tablets ordered with DfE settings installed
+
+The following guidance applies only to devices ordered between May and July 2020, and those ordered after August 2020 where you have selected to have software and settings installed prior to delivery.
+
+DfE-provided settings are a ‘one-size fits all’ solution, designed to block harmful content. These settings are not configurable at a local level.
+
 ## Managing settings and software
 
-Microsoft Windows devices come with an operating system and security and antivirus software installed. They also include content filtering and remote management settings that are ready to use.
+Microsoft Windows devices come with antivirus software, content filtering and remote management settings 
+already so they're ready to use.
 
-Content filtering and remote management will stop working when the licences expire on 31 March 2021. You can replace the DfE settings with your own at any point.
+Content filtering and remote management will stop working when the licences expire on 30 September 2021. You can replace the DfE settings with your own at any point.
 
 ### Operating system
 
-Microsoft Windows laptops and tablets come with the Windows 10 Pro Education operating system.
+Microsoft Windows laptops and tablets come with the Windows 10 Education operating system.
 
 ### Security and antivirus
 
@@ -27,16 +47,11 @@ Schools can [apply to get set up on Office 365 Education](https://covid19.thekey
 
 Microsoft Windows laptops and tablets are delivered to you with security settings already configured and managed by the Department for Education (DfE) using Microsoft Intune.
 
-These mobile device management (MDM) settings prevent children and young people from making changes to files or settings that might stop the device from working. It is not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the DfE MDM is updated every 2 hours.
+These mobile device management (MDM) settings prevent children and young people from making changes to files or settings that might stop the device from working. It is not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the device checks in with the MDM, which happens at regular intervals.
 
-DfE will not actively monitor users' activity  through the mobile device management solution. Websites users visit on their devices will be logged by Cisco Umbrella, but we will not monitor these logs and they will not be available to the local authority or trust. DfE will turn logging on when we need to check that ongoing filtering is effective, for example by letting us test whether the filtering is effective after adjusting filtering rules.
+DfE will not actively monitor users' activity through the mobile device management solution. Websites users visit on their devices will be logged by Cisco Umbrella, but we will not monitor these logs and they will not be available to the school, local authority or trust. DfE will turn logging on when we need to check that ongoing filtering is effective, for example by letting us test whether the filtering is effective after adjusting filtering rules.
 
-You can loan the devices out to users straight away as the MDM will be in place until 31 March 2021. After this, the MDM will expire. The devices will continue to work with the last settings provided by DfE but they will no longer be managed or updated.
-
-You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
-
-**If you remove the MDM provided by DfE or continue using the devices after 31 March 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**
-
+Bitlocker encryption has not been enabled on the devices to make it easier for you to reimage them.
 
 ## Content filtering
 
@@ -44,25 +59,31 @@ Microsoft Windows devices come with a web-filtering service called Cisco Umbrell
 
 The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users, from pre-school children up to care leavers.
 
-This filtering should not prevent legitimate use of the devices. Your technical contact will have [access to support](/devices/support-and-maintenance) to report any incident.
+This filtering should not prevent legitimate use of the devices. You can [access support](/devices/support-and-maintenance) to report instances where legitimate use is blocked.
 
 The first time the device connects to a new network, there will be a short delay before the content filtering starts to work. This usually takes less than 15 seconds but could take up to 2.5 minutes. During this time, users may be able to access any website without restriction while Cisco Umbrella registers the new device and checks network ports. DfE is working with Cisco to reduce this delay. Any updates made to support this will be deployed to the devices automatically.
+
+You can loan the devices out to users straight away as the MDM and content filtering will be in place until 30 September 2021. After this, the MDM will expire. The devices will continue to work with the last settings provided by the MDM but they will no longer be managed or updated, and web content will no longer be filtered.
+
+You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#installing-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
+
+### If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.
 
 When you loan the devices out, it’s important to underline that parents and guardians should supervise the internet use of children and young people in their care. Local authorities should be alert to cases where parents or guardians of children with a social worker may not be in a position to do this.
 
 See government advice on:
 
-* [safeguarding](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers), which signposts parents to trusted providers and includes detailed advice on keeping children safe online (this includes information on home filters, age appropriate parental controls, the risks of platforms and apps, and how to have age appropriate conversations with children about online safety)
+* [safeguarding](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which signposts parents to trusted providers and includes detailed advice on keeping children safe online (this includes information on home filters, age appropriate parental controls, the risks of platforms and apps, and how to have age appropriate conversations with children about online safety)
 * [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
 * [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
 
 ## Installing your own software and settings
 
-To install your own software or replace the mobile device management you will need to restore factory settings on the device. This will remove all of the security and protection features on the device.
+To install your own software or replace the mobile device management you will need to reset the device using the instructions below. This will remove all of the pre-installed configuration and software from the device.
 
 You will need to do this for each device individually.
 
-It is possible to install software on the devices without resetting them, but the DfE mobile device management may remove it from the device when it updates within 2 hours.
+It is possible to install some software on the devices without resetting them, but anything you try to install yourself may be lost when the device checks in with the MDM, which happens at regular intervals.
 
 Find out [how to access support](/devices/support-and-maintenance) if you need help setting up your own mobile device management.
 
@@ -74,7 +95,7 @@ For security, only someone nominated as a technical contact for the device order
 
 Please see step 1 in the  section below to find out how to make a request.
 
-If you’re unsure who your technical contact is, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the local authority or trust that ordered the devices.
+If you’re unsure who your technical contact is, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the school, local authority or trust that ordered the devices.
 
 ### How to reset Microsoft devices so you can add your own software and settings
 
@@ -131,23 +152,9 @@ You’ll need to do this for each device individually.
 
     You can install your own software, settings and MDM once the device has been reset. If you need help setting up your MDM, please contact the XMA service desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk).
 
-## About Cisco Umbrella and Microsoft Intune
-
-Cisco Umbrella is a web-filtering solution pre-installed on devices that prevents users from accessing illegal or inappropriate content. Microsoft Intune is a mobile device management solution installed on devices to prevent users from making changes, such as removing security settings and installing software.
-
-The DfE’s pre-installed settings will be in place until 31 March 2021. After this, the devices will continue to work with the last settings installed by Intune, but will no longer be managed or updated.
-
-It‘s not possible to tailor the pre-installed settings to meet local needs. You may find you can make changes, such as installing additional software, but these changes may be overwritten by Intune when it next updates the device.
-
-The only way you can add your own long-term settings to the device is by [restoring it to its original state](#How-to-reset-Microsoft-devices-so-you-can-add-your-own-software-and-settings), removing Microsoft Intune and Cisco Umbrella.
-
-Bitlocker encryption has not been enabled on the devices to make it easier for you to reimage them. We recommend adding these settings when you reset devices to protect the data that users store on devices.
-
-**If you remove the pre-installed settings provided by DfE, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**
-
 ## How to help anyone experiencing problems logging in to Windows devices
 
-Some users with Windows devices may experience a bug that makes it harder for them to log in to their laptops and tablets. 
+Some users with Windows device, which have been pre-installed with DfE settings, may experience a bug that makes it harder for them to log in to their laptops and tablets. 
 
 Users may find that the login is defaulting to the ‘.\localadmin' account and asking for a password, which they do not have. 
 

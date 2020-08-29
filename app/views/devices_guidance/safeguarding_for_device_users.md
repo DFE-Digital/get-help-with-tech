@@ -7,7 +7,7 @@ Devices are being provided to help children and young people access social care 
 * families and care leavers to avoid social isolation
 * children and young people to access remote learning, including year 10 pupils with upcoming GCSE exams
 
-Local authorities (LAs) and academy trusts own the devices, and should consider including an acceptable use policy in loan agreements. Please see our [guidance on loaning devices](/devices/distributing-devices) for more information.
+Local authorities (LAs), academy trusts and schools own the devices, and should consider including an acceptable use policy in loan agreements. Please see our [guidance on loaning devices](/devices/distributing-devices) for more information.
 
 Parents and guardians should provide age-appropriate supervision for the internet use of the children and young people in their care (but LAs should be alert to cases where parents of children with a social worker may not be in a position to do this). They may find the following information helpful:
 
@@ -17,24 +17,27 @@ Parents and guardians should provide age-appropriate supervision for the interne
 
 ## Content filtering
 
-LAs and academy trusts are responsible for avoiding risks to the online safety of the children and young people they provide devices to.
+LAs, academy trusts and schools are responsible for avoiding risks to the online safety of the children and young people they provide devices to.
 
-The Microsoft Windows devices will come with Cisco Umbrella installed and you can install Cisco Umbrella on Google Chromebooks.
+If you order Microsoft Windows devices after August 2020, you have the option to receive them without Department for Education (DfE) software and settings. They will be delivered with factory settings as supplied by the manufacturer. 
 
-The content filtering has been set up to meet the needs of children and young people of all ages. You can choose to use your own content filtering solution to replace Cisco Umbrella to make it more relevant for your users’ needs.
+You are responsible for setting up management and safeguarding measures before you distribute the devices.
+Cisco Umbrella will be pre-installed on devices ordered between May and July 2020, and those ordered after August 2020 where you have selected to have software and settings installed prior to delivery
+
+Where Cisco Umbrella has been installed, content filtering has been set up to meet the needs of children and young people of all ages. You can choose to use your own content filtering solution to replace Cisco Umbrella to make it more relevant for your users’ needs.
 
 Please see our guidance on content filtering software for [Google Chromebooks](/devices/preparing-chromebooks) and [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
 
 Updating your Microsoft mobile device management
 ------------------------------------------------
 
-You’ll receive Microsoft Windows laptops and tablets with security settings already configured and managed by the Department for Education (DfE) using Microsoft Intune.
+Microsoft Windows laptops and tablets can be supplied with security settings already configured and managed by DfE using Microsoft Intune.
 
-You can loan the devices out to users straight away as the mobile device management (MDM) will be in place. After 31 March 2021, the MDM will expire and the devices will be unprotected.
+You can loan the devices out to users straight away as the mobile device management (MDM) will be in place. After 30 September 2021, the MDM will expire and the devices will be unprotected.
 
 You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
-**If you remove the MDM provided by DfE or continue using the devices after 31 March 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**  
+**If you remove the MDM provided by DfE or continue using the devices after 30 September 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**  
 
 Please see our guidance on management of [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
 
@@ -42,7 +45,7 @@ Please see our guidance on management of [Microsoft laptops and tablets](/device
 
 Google Chromebooks will arrive with Chrome OS, which includes virus protection.  
 
-Microsoft laptops and tablets will arrive with Windows 10 and the following antivirus and security software installed:
+Unless you have selected to order devices without a DfE configuration, Microsoft laptops and tablets will arrive with Windows 10 and the following antivirus and security software installed:
 
 * Windows Information Protection
 * Windows Defender Credential/System Guard
