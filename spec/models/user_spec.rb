@@ -40,6 +40,18 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#is_school_user?' do
+    it 'is true when the user is associated with a school' do
+      user = build(:user, school: build(:school))
+      expect(user.is_school_user?).to be_truthy
+    end
+
+    it 'is false when the user is not associated with a school' do
+      user = build(:user, school: nil)
+      expect(user.is_school_user?).to be_falsey
+    end
+  end
+
   describe 'privacy notice' do
     it 'needs to be seen by responsible body users who havent seen it' do
       user = build(:local_authority_user, privacy_notice_seen_at: nil)

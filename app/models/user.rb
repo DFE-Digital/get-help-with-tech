@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
+  belongs_to :school, optional: true
 
   scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
@@ -29,6 +30,10 @@ class User < ApplicationRecord
 
   def is_responsible_body_user?
     responsible_body.present?
+  end
+
+  def is_school_user?
+    school.present?
   end
 
   def update_sign_in_count_and_timestamp!
