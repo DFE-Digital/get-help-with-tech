@@ -41,6 +41,10 @@ FactoryBot.define do
       approved
     end
 
+    factory :school_user do
+      school
+    end
+
     factory :mno_user do
       association :mobile_network
     end
