@@ -66,6 +66,16 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
+  context 'as a school user' do
+    let(:user) { create(:school_user) }
+
+    scenario 'it redirects to the school homepage' do
+      sign_in_as user
+      expect(page).to have_current_path(school_home_path)
+      expect(page).to have_text 'Get devices for your school'
+    end
+  end
+
   context 'as a support user' do
     let(:user) { create(:dfe_user) }
 

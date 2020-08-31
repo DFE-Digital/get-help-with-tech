@@ -56,6 +56,7 @@ en:
       schools: The school will place their own orders
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
+    school_home: Get devices for your school
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -70,7 +71,7 @@ en:
     device_specification:
       title: Device specification
       description: Get the technical specifications of the devices for vulnerable and disadvantaged children and young people.
-      audience: responsible_body_users   
+      audience: responsible_body_users
     preparing_microsoft_windows_laptops_and_tablets:
       title: Preparing Microsoft Windows laptops and tablets
       description: Guidance on how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
