@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_28_123318) do
+ActiveRecord::Schema.define(version: 2020_08_31_200056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,11 +177,13 @@ ActiveRecord::Schema.define(version: 2020_08_28_123318) do
     t.boolean "is_support", default: false, null: false
     t.boolean "is_computacenter", default: false, null: false
     t.datetime "privacy_notice_seen_at"
+    t.bigint "school_id"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
     t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
+    t.index ["school_id"], name: "index_users_on_school_id"
     t.index ["sign_in_token"], name: "index_users_on_sign_in_token", unique: true
   end
 
@@ -192,4 +194,5 @@ ActiveRecord::Schema.define(version: 2020_08_28_123318) do
   add_foreign_key "responsible_bodies", "users", column: "key_contact_id"
   add_foreign_key "school_device_allocations", "schools"
   add_foreign_key "schools", "responsible_bodies"
+  add_foreign_key "users", "schools"
 end
