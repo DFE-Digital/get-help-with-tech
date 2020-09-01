@@ -21,7 +21,11 @@
 }
 
 .app-card--yellow {
-  background: govuk-colour("yellow");
+  background: govuk-tint(govuk-colour("yellow"), 75);
+}
+
+.app-card--light-blue {
+  background: govuk-tint(govuk-colour("blue"), 80);
 }
 
 .app-card--red {
