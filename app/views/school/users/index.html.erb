@@ -1,0 +1,29 @@
+<%- title = t('page_titles.school_users') -%>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <div class="govuk-breadcrumbs ">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to t('page_titles.school_home'), school_home_path, class: 'govuk-breadcrumbs__link' %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= title %>
+    </li>
+  </ol>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%- unless @users.empty? %>
+      <div id="user-list">
+        <h2 class="govuk-heading-l">Users</h2>
+        <%= render partial: 'user', collection: @users %>
+      </div>
+    <%- end %>
+  </div>
+</div>

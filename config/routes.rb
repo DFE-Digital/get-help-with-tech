@@ -95,6 +95,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :school do
+    get '/', to: 'home#show', as: :home
+    resources :users, only: %i[index]
+  end
+
   namespace :support do
     get '/', to: 'service_performance#index', as: :service_performance
     namespace :devices do

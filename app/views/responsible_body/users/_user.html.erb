@@ -1,34 +1,9 @@
 <div class="user">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h2>
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h3>
   <%- if FeatureFlag.active?(:rbs_can_manage_users) %>
     <p class="govuk-body">
       <%= govuk_link_to 'Edit user', edit_responsible_body_user_path(user) %>
     </p>
   <%- end %>
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Email address
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= user.email_address %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Telephone
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= user.telephone %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        Last sign in
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= user.last_signed_in_at ? l(user.last_signed_in_at, format: :short) : '-'%>
-      </dd>
-    </div>
-  </dl>
+  <%= render UserSummaryListComponent.new(user: user) %>
 </div>

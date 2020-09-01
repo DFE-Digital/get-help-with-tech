@@ -90,6 +90,8 @@ private
       responsible_body_privacy_notice_path
     elsif user.is_responsible_body_user?
       responsible_body_home_path
+    elsif user.is_school_user?
+      school_home_path
     elsif user.is_computacenter?
       computacenter_home_path
     elsif user.is_support?
