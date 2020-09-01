@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/pages/guidance', to: redirect('/')
   get '/devices/choosing-devices', to: redirect('/devices/device-allocations')
   get '/devices/allocation-and-specification', to: redirect('/devices/device-allocations')
+  get '/devices/distributing-devices', to: redirect('/devices/device-distribution-and-ownership')
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
 
