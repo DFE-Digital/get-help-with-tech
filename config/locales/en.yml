@@ -331,5 +331,6 @@ en:
   events:
     default: An event just happened
     sign_in_event: A user from %{organisation} just signed in
+    invite_event: "A user from %{organisation} has invited someone to the service"
     responsible_body_will_order_event: "%{responsible_body} will manage orders centrally"
     schools_will_order_event: "%{responsible_body} has devolved ordering to schools"
