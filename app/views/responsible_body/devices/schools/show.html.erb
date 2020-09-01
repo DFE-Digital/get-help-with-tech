@@ -8,7 +8,7 @@
     </h1>
 
     <div class="govuk-!-margin-bottom-6 govuk-!-padding-top-0">
-      <%= render SchoolDetailsSummaryListComponent.new(school: @school) %>
+      <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @school) %>
     </div>
 
     <%- if @school.preorder_information.needs_chromebook_information? %>
