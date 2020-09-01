@@ -156,6 +156,17 @@ en:
       responsible_bodies_with_at_least_one_preorder_information_completed:
         one: responsible body with at least one preorder information completed
         other: responsible bodies with at least one preorder information completed
+    devices_performance:
+      needs_information:
+        one: needs information
+        other: need information
+      needs_a_contact:
+        one: needs a contact
+        other: need a contact
+      school_contacts:
+        one: school contact
+        other: school contacts
+      ready: ready
   errors:
     format:
       "'%{attribute}' %{message}"

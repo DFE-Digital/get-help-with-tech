@@ -20,6 +20,14 @@
   color: govuk-colour("white");
 }
 
+.app-card--yellow {
+  background: govuk-tint(govuk-colour("yellow"), 75);
+}
+
+.app-card--light-blue {
+  background: govuk-tint(govuk-colour("blue"), 80);
+}
+
 .app-card--red {
   color: govuk-shade(govuk-colour("red"), 30);
   background: govuk-tint(govuk-colour("red"), 80);
