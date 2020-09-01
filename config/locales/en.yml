@@ -301,6 +301,9 @@ en:
         who_to_contact:
           create:
             success: "Saved. We will email %{email_address} shortly"
+    users:
+      create:
+        success: "We’ve sent an invitation to %{email_address}"
     home:
       bt_wifi_offer:
         number_eligible: Eligible young people
