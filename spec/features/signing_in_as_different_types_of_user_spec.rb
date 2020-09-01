@@ -69,9 +69,9 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a support user' do
     let(:user) { create(:dfe_user) }
 
-    scenario 'it redirects to Service performance' do
+    scenario 'it redirects to internet service performance' do
       sign_in_as user
-      expect(page).to have_current_path(support_service_performance_path)
+      expect(page).to have_current_path(support_internet_service_performance_path)
       expect(page).to have_text 'Service performance'
     end
 

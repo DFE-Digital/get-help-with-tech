@@ -3,7 +3,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.support_responsible_bodies'), support_internet_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
+        <%= link_to t('page_titles.support_responsible_bodies'), support_devices_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
       </li>
       <li class="govuk-breadcrumbs__list-item">
         <%= @responsible_body.name %>
@@ -43,6 +43,6 @@
       </tbody>
     </table>
 
-    <%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body, pilot: 'internet') %>
+    <%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body, pilot: 'devices') %>
   </div>
 </div>

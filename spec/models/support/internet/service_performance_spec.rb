@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ServicePerformance, type: :model do
-  subject(:stats) { ServicePerformance.new }
+RSpec.describe Support::Internet::ServicePerformance, type: :model do
+  subject(:stats) { Support::Internet::ServicePerformance.new }
 
   describe '#total_signed_in_users' do
     it 'counts only signed-in responsible body and MNO users' do
@@ -41,11 +41,11 @@ RSpec.describe ServicePerformance, type: :model do
   describe '#number_of_different_responsible_bodies_signed_in' do
     it 'counts only the responsible bodies where at least one user has signed in' do
       # this one should count
-      local_authority = create(:local_authority)
+      local_authority = create(:local_authority, in_connectivity_pilot: true)
       create_list(:local_authority_user, 2, :signed_in_before, responsible_body: local_authority)
 
       # this one should count
-      trust = create(:trust)
+      trust = create(:trust, in_connectivity_pilot: true)
       create(:trust_user, :signed_in_before, responsible_body: trust)
       create(:trust_user, :never_signed_in, responsible_body: trust)
 

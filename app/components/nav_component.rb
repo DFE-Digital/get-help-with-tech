@@ -11,7 +11,7 @@ class NavComponent < ViewComponent::Base
   end
 
   def nav_item(content:, url: nil, extra_classes: '')
-    tag.li(content, class: [class_name(url), extra_classes].join(' '))
+    tag.li(content, class: [class_name(url), extra_classes].join(' ').strip)
   end
 
   # inline param is for testing
@@ -39,7 +39,6 @@ class NavComponent < ViewComponent::Base
       NavLinkComponent.new(title: 'RBs', url: support_devices_responsible_bodies_path),
     ]
   end
-
 
   def support_general_links
     [
