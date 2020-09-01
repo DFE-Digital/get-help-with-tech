@@ -11,6 +11,8 @@
     <%= render_nav_links(mno_links) %>
   <%- elsif @user&.is_responsible_body_user? %>
     <%= render_nav_links(responsible_body_links) %>
+  <%- elsif @user&.is_school_user? %>
+    <%= render_nav_links(school_links) %>
   <%- else %>
     <%= render_nav_links(not_signed_in_links) %>
   <%- end %>
