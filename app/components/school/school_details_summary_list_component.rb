@@ -58,7 +58,6 @@ private
   def chromebook_rows_if_needed
     info = @school.preorder_information
     if info&.needs_chromebook_information?
-      change_path = responsible_body_devices_school_chromebooks_edit_path(school_urn: @school.urn)
       rows = [
         info.will_need_chromebooks && {
           key: 'Will your school need to order Chromebooks?',
