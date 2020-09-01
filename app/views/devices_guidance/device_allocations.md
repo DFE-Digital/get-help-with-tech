@@ -2,7 +2,7 @@
 
 ### Laptops and tablets for schools, academy trusts and local authorities after August 2020
 
-The number of devices available to order through the [Get help with technology service](https://get-help-with-tech.education.gov.uk/start) reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
+The number of devices available to order through the [Get help with technology service](/start) reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
 
 * free school meals data
 * an estimate of the number of devices a school already has

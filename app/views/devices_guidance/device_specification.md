@@ -1,4 +1,4 @@
-When [placing an order](https://get-help-with-tech.education.gov.uk/start), schools, academy trusts and local authorities can choose from:
+When [placing an order](/start), schools, academy trusts and local authorities can choose from:
 
 * Microsoft Windows laptop
 * Microsoft Windows tablet
@@ -11,7 +11,7 @@ For future orders, Microsoft devices can be supplied with factory settings to al
 
 Find out more about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets) that have pre-installed software and settings.
 
-For Google and Apple devices, we need the credentials described in the [order process guidance](https://get-help-with-tech.education.gov.uk/devices/how-to-order) to allow us to set devices up for a school.
+For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set devices up for a school.
 
 If an education platform is not currently in use, schools, local authorities and academy trusts can apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education. More information is available from [The Key for School Leaders](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/digital-education-platform-hub/).
 
