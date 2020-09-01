@@ -62,6 +62,13 @@ en:
     privacy_notice: Privacy notice
     school_home: Get devices for your school
     school_users: Manage who can order devices
+    invite_school_user:
+      title: Invite a new user
+      will_they_order_devices: Will they place orders for devices?
+      will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
+      can_order_devices: Yes, give them access to the TechSource website
+      can_order_devices_hint: This is where they'll place orders.
+      cannot_order_devices: 'No'
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -281,6 +288,9 @@ en:
               blank: Enter an email address in the correct format, like name@example.com
               taken: Email address has already been used
               too_short: Enter an email address that is at least %{count} characters
+            orders_devices:
+              inclusion: Tell us whether the user will order devices
+              user_limit: There are already 3 users that can order devices
         school:
           attributes:
             urn:

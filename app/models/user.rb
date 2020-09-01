@@ -12,6 +12,7 @@ class User < ApplicationRecord
   scope :from_responsible_body_in_devices_pilot, -> { joins(:responsible_body).where('responsible_bodies.in_devices_pilot = ?', true) }
   scope :from_responsible_body_in_connectivity_pilot, -> { joins(:responsible_body).where('responsible_bodies.in_connectivity_pilot = ?', true) }
   scope :mno_users, -> { where.not(mobile_network: nil) }
+  scope :who_can_order_devices, -> { where(orders_devices: true) }
 
   validates :full_name,
             presence: true,
@@ -21,6 +22,12 @@ class User < ApplicationRecord
             presence: true,
             uniqueness: { case_sensitive: false },
             length: { minimum: 2, maximum: 1024 }
+
+  validates :orders_devices,
+            inclusion: { in: [true, false] },
+            if: :is_school_user?
+
+  validate :orders_devices_user_limit, if: :is_school_user?
 
   before_validation :force_email_address_to_lowercase!
 
@@ -56,5 +63,10 @@ class User < ApplicationRecord
 
   def force_email_address_to_lowercase!
     self.email_address = email_address.downcase if email_address.present?
+  end
+
+  def orders_devices_user_limit
+    errors.add(:orders_devices,
+               I18n.t('activerecord.errors.models.user.attributes.orders_devices.user_limit')) if orders_devices? && school.users.who_can_order_devices.count >= 3
   end
 end

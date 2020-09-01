@@ -97,7 +97,7 @@ Rails.application.routes.draw do
 
   namespace :school do
     get '/', to: 'home#show', as: :home
-    resources :users, only: %i[index]
+    resources :users, only: %i[index new create]
   end
 
   namespace :support do

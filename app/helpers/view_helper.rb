@@ -100,6 +100,21 @@ module ViewHelper
     ]
   end
 
+  def can_user_order_devices_options
+    scope = 'page_titles.invite_school_user'
+    [
+      OpenStruct.new(
+        value: '1',
+        label: t('can_order_devices', scope: scope),
+        hint: t('can_order_devices_hint', scope: scope),
+      ),
+      OpenStruct.new(
+        value: '0',
+        label: t('cannot_order_devices', scope: scope),
+      ),
+    ]
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

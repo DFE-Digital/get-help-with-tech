@@ -18,7 +18,12 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
-
+    <p class="govuk-body">Up to 3 users can be added. Everyone with access can:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+      <li>add or edit existing users</li>
+      <li>place orders for devices</li>
+    </ul>
+    <%= govuk_button_link_to 'Invite a new user', new_school_user_path %>
     <%- unless @users.empty? %>
       <div id="user-list">
         <h2 class="govuk-heading-l">Users</h2>

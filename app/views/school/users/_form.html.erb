@@ -1,0 +1,23 @@
+<%= form.govuk_error_summary %>
+
+<%= form.govuk_text_field :full_name,
+                          label: { text: 'Name', size: 'm' } %>
+
+<%= form.govuk_email_field  :email_address,
+                            label: { text: 'Email address', size: 'm' } %>
+
+<%= form.govuk_text_field :telephone,
+                          width: 10,
+                          label: { text: 'Telephone number', size: 'm' } %>
+
+<%= form.govuk_collection_radio_buttons :orders_devices,
+        can_user_order_devices_options,
+        :value,
+        :label,
+        :hint,
+        legend: { text: t('page_titles.invite_school_user.will_they_order_devices'), size: 'm' },
+        hint_text: t('page_titles.invite_school_user.will_they_order_devices_hint'),
+        classes: 'govuk-!-margin-top-3'
+      %>
+
+<%= form.govuk_submit submit_text %>
