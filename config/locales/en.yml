@@ -61,7 +61,7 @@ en:
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
-    school_users: Manage who can order devices
+    school_users: Manage users
     invite_school_user:
       title: Invite a new user
       will_they_order_devices: Will they place orders for devices?

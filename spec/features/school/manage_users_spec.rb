@@ -31,10 +31,10 @@ RSpec.feature 'Manage school users' do
   end
 
   def when_i_follow_the_link_to_manage_who_can_order_devices
-    click_on 'Manage who can order devices'
+    click_on 'Manage users'
 
     expect(school_users_page).to be_displayed
-    expect(page).to have_content 'Manage who can order devices'
+    expect(page).to have_content 'Manage users'
   end
 
   def then_i_see_a_list_of_users_for_my_school
