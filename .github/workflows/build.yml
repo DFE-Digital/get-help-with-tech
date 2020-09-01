@@ -94,6 +94,8 @@ jobs:
         run: bundle exec rspec
       - name: Run rubocop
         run: bundle exec rubocop app config db lib spec Gemfile --format clang
+      - name: Run jest
+        run: bundle exec rake test_js
       - name: Run scss linter
         run: bundle exec scss-lint app/webpacker/styles
       - name: Run brakeman
