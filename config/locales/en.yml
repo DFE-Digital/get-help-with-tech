@@ -67,7 +67,7 @@ en:
       will_they_order_devices: Will they place orders for devices?
       will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
       can_order_devices: Yes, give them access to the TechSource website
-      can_order_devices_hint: This is where they'll place orders.
+      can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
   cookie_preferences:
     success: Your cookie preferences have been saved
