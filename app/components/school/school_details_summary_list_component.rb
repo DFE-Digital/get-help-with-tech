@@ -1,4 +1,4 @@
-class SchoolDetailsSummaryListComponent < ViewComponent::Base
+class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   validates :school, presence: true
 
   delegate :school_will_order_devices?,
@@ -18,8 +18,6 @@ class SchoolDetailsSummaryListComponent < ViewComponent::Base
       {
         key: 'Provisional allocation',
         value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
-        action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-        action: 'Query allocation',
       },
       {
         key: 'Type of school',
@@ -28,8 +26,6 @@ class SchoolDetailsSummaryListComponent < ViewComponent::Base
       {
         key: 'Who will order?',
         value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
-        change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
-        action: 'who will order',
       },
     ] + school_contact_row_if_contact_present + chromebook_rows_if_needed
   end
@@ -65,10 +61,8 @@ private
       change_path = responsible_body_devices_school_chromebooks_edit_path(school_urn: @school.urn)
       rows = [
         info.will_need_chromebooks && {
-          key: 'Ordering Chromebooks?',
+          key: 'Will your school need to order Chromebooks?',
           value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
-          change_path: change_path,
-          action: 'whether Chromebooks are needed',
         },
       ]
       if info.will_need_chromebooks?
@@ -76,14 +70,10 @@ private
           info.school_or_rb_domain && {
             key: 'Domain',
             value: info.school_or_rb_domain,
-            change_path: change_path,
-            action: 'Domain',
           },
           info.recovery_email_address && {
             key: 'Recovery email',
             value: info.recovery_email_address,
-            change_path: change_path,
-            action: 'Recovery email',
           },
         ]
       end
