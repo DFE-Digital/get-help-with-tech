@@ -101,12 +101,16 @@ Rails.application.routes.draw do
   end
 
   namespace :support do
-    get '/', to: 'service_performance#index', as: :service_performance
-    namespace :devices do
-      get '/', to: 'key_contacts#index'
-      resources :key_contacts, only: %i[new create]
+    namespace :internet do
+      get '/performance', to: 'service_performance#index', as: :service_performance
+      resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
     end
-    resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
+    namespace :devices do
+      get '/performance', to: 'service_performance#index', as: :service_performance
+      resources :key_contacts, only: %i[new index create], path: '/key-contacts'
+      resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
+    end
+    resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
       resources :users, only: %i[new create]
     end
 

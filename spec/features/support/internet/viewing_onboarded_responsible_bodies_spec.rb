@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing on-boarded responsible bodies in the support area', type: :feature do
-  let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
+  let(:responsible_bodies_page) { PageObjects::Support::Internet::ResponsibleBodiesPage.new }
 
   scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_are_responsible_bodies_that_have_users

@@ -80,6 +80,10 @@ class PreorderInformation < ApplicationRecord
     update!(status: infer_status)
   end
 
+  def self.for_responsible_bodies_in_devices_pilot
+    joins(school: :responsible_body).merge(ResponsibleBody.in_devices_pilot)
+  end
+
 private
 
   def set_defaults

@@ -1,15 +1,25 @@
-class ServicePerformance
+class Support::Internet::ServicePerformance
   def total_signed_in_users
+    responsible_body_users_signed_in_at_least_once + mno_users_signed_in_at_least_once
+  end
+
+  def responsible_body_users_signed_in_at_least_once
     User
-      .responsible_body_users
-      .or(User.mno_users)
+      .from_responsible_body_in_connectivity_pilot
+      .signed_in_at_least_once
+      .count
+  end
+
+  def mno_users_signed_in_at_least_once
+    User
+      .mno_users
       .signed_in_at_least_once
       .count
   end
 
   def number_of_different_responsible_bodies_signed_in
     User
-      .responsible_body_users
+      .from_responsible_body_in_connectivity_pilot
       .signed_in_at_least_once
       .distinct
       .pluck(:responsible_body_id)

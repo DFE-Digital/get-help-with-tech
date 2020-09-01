@@ -3,7 +3,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.support_responsible_bodies'), support_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
+        <%= link_to t('page_titles.support_responsible_bodies'), support_devices_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
       </li>
       <li class="govuk-breadcrumbs__list-item">
         <%= @responsible_body.name %>
@@ -14,7 +14,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= @responsible_body.name %></h1>
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Internet Pilot</span>
+      <%= @responsible_body.name %>
+    </h1>
 
     <h2 class="govuk-heading-l">Users</h2>
 
@@ -40,6 +43,6 @@
       </tbody>
     </table>
 
-    <%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body) %>
+    <%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body, pilot: 'devices') %>
   </div>
 </div>

@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.feature 'Adding new responsible body users in the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
-  let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
+  let(:responsible_body_page) { PageObjects::Support::Devices::ResponsibleBodyPage.new }
 
   scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_is_a_responsible_body_with_users
 
     when_i_sign_in_as_a_dfe_user
-    and_i_visit_a_support_responsible_body_page
+    and_i_visit_a_support_devices_responsible_body_page
     then_i_can_see_the_responsible_body_with_users
 
     when_try_adding_a_new_user_with_invalid_details
@@ -36,7 +36,7 @@ RSpec.feature 'Adding new responsible body users in the support area', type: :fe
     sign_in_as create(:dfe_user)
   end
 
-  def and_i_visit_a_support_responsible_body_page
+  def and_i_visit_a_support_devices_responsible_body_page
     responsible_body_page.load(id: local_authority.id)
   end
 

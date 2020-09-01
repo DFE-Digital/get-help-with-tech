@@ -39,8 +39,12 @@ en:
     devices_guidance_how_to_order: "How to order laptops and tablets during coronavirus (COVID-19)"
     download_bt_hotspots: Download your BT hotspot log-ins
     you_are_signed_in: You’re signed in
+    devices_service_performance: Devices service performance
+    internet_service_performance: Internet service performance
     service_performance: Service performance
     accessibility: Accessibility statement
+    support_devices_responsible_bodies: Devices pilot on-boarded responsible bodies
+    support_internet_responsible_bodies: Internet pilot on-boarded responsible bodies
     support_responsible_bodies: On-boarded responsible bodies
     support_devices: Devices
     upload_key_contacts_file: Upload a CSV file of key contacts
@@ -132,6 +136,26 @@ en:
     who_to_give_vouchers_to: Who to give BT vouchers to
     what_to_do_with_the_vouchers: What to do with the vouchers
     not_offered_vouchers_yet: If you haven’t been offered vouchers yet
+  support:
+    service_performance:
+      mobile_network_operators:
+        one: mobile network operator
+        other: different mobile network operators
+      requests:
+        one: request
+        other: requests
+      responsible_bodies:
+        one: responsible body
+        other: different responsible bodies
+      users_signed_in:
+        one: user has signed in
+        other: users have signed in
+      vouchers:
+        one: voucher
+        other: vouchers
+      responsible_bodies_with_at_least_one_preorder_information_completed:
+        one: responsible body with at least one preorder information completed
+        other: responsible bodies with at least one preorder information completed
   errors:
     format:
       "'%{attribute}' %{message}"

@@ -1,4 +1,4 @@
-<% content_for :before_content, govuk_link_to('Back', support_devices_path, class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_link_to('Back', support_devices_key_contacts_path, class: 'govuk-back-link') %>
 <% content_for :title, title_with_error_prefix(t('page_titles.upload_a_key_contacts_file'), @upload_form.errors.any?) %>
 <div class="govuk-grid-row">
   <%= form_for @upload_form,

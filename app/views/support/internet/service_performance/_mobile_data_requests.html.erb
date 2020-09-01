@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-full">
     <div class="app-card app-card--blue">
       <span class="app-card__count"><%= @stats.total_extra_mobile_data_requests %></span>
-      requests
+      <%= t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests) %>
     </div>
   </div>
 </div>

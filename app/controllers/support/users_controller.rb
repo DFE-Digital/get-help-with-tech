@@ -10,13 +10,21 @@ class Support::UsersController < Support::BaseController
 
     if @user.valid?
       @user.save!
-      redirect_to support_responsible_body_path(@responsible_body)
+      redirect_to return_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
 private
+
+  def return_path
+    if params[:pilot] == 'devices'
+      support_devices_responsible_body_path(@responsible_body)
+    else
+      support_internet_responsible_body_path(@responsible_body)
+    end
+  end
 
   def user_params
     params.require(:user).permit(

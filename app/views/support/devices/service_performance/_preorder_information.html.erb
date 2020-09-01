@@ -1,0 +1,45 @@
+<h2 class="govuk-heading-l govuk-!-margin-top-8">Preorder information</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <div class="app-card app-card--blue">
+      <span class="app-card__count"><%= @stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed %></span>
+      <%= t(:responsible_bodies_with_at_least_one_preorder_information_completed, scope: %i[support service_performance], count: @stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed) %>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        <%= @stats.preorder_information_counts_by_status['needs_info'] || 0 %>
+      </span>
+      <%= t(:needs_info, scope: %i[activerecord attributes preorder_information status]) %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        <%= @stats.preorder_information_counts_by_status['needs_contact'] || 0 %>
+      </span>
+      <%= t(:needs_contact, scope: %i[activerecord attributes preorder_information status]) %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--red">
+      <span class="app-card__secondary-count">
+        <%= @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0 %>
+      </span>
+      <%= t(:school_will_be_contacted, scope: %i[activerecord attributes preorder_information status]) %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--green">
+      <span class="app-card__secondary-count">
+        <%= @stats.preorder_information_counts_by_status['ready'] || 0 %>
+      </span>
+      <%= t(:ready, scope: %i[activerecord attributes preorder_information status]) %>
+    </div>
+  </div>
+</div>

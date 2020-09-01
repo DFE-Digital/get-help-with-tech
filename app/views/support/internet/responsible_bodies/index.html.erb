@@ -1,6 +1,7 @@
-<% content_for :title, t('page_titles.support_responsible_bodies') %>
+<% content_for :title, t('page_titles.support_internet_responsible_bodies') %>
 
 <h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl">Internet Pilot</span>
   <%= t('page_titles.support_responsible_bodies') %>
 </h1>
 
@@ -20,7 +21,7 @@
     <% @responsible_bodies.each do |responsible_body| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= responsible_body.type.underscore.humanize %></td>
-        <td class="govuk-table__cell"><%= govuk_link_to responsible_body.name, support_responsible_body_path(responsible_body) %></td>
+        <td class="govuk-table__cell"><%= govuk_link_to responsible_body.name, support_internet_responsible_body_path(responsible_body) %></td>
         <td class="govuk-table__cell"><%= pluralize(responsible_body.users.size, "user") %></td>
         <td class="govuk-table__cell">
           <%= pluralize(responsible_body.users.select { |u| u.sign_in_count > 0 }.size, "user") %> signed in

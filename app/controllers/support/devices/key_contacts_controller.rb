@@ -5,7 +5,6 @@ class Support::Devices::KeyContactsController < Support::BaseController
 
   def create
     @upload_form = ResponsibleBody::Devices::KeyContactUploadForm.new(upload_form_params)
-
     if @upload_form.valid?
       # parse file and generate records
       begin

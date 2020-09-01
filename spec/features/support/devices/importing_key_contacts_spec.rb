@@ -38,7 +38,7 @@ RSpec.feature 'Importing key contacts', type: :feature do
     end
 
     scenario 'Navigating to the form' do
-      visit support_devices_path
+      visit support_devices_key_contacts_path
       click_on('Import key contacts')
       expect(page).to have_text('Upload a CSV file of key contacts')
     end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing responsible body users in the support area', type: :feature do
-  let(:local_authority) { create(:local_authority, name: 'Coventry') }
-  let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
-  let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
+  let(:local_authority) { create(:local_authority, name: 'Coventry', in_devices_pilot: true) }
+  let(:responsible_bodies_page) { PageObjects::Support::Devices::ResponsibleBodiesPage.new }
+  let(:responsible_body_page) { PageObjects::Support::Devices::ResponsibleBodyPage.new }
 
   scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_are_responsible_bodies_that_have_users

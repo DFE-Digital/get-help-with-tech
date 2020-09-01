@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing service performance', type: :feature do
-  let(:local_authority) { create(:local_authority) }
+  let(:local_authority) { create(:local_authority, in_connectivity_pilot: true) }
 
   scenario 'DfE users see service stats about user engagement' do
     given_there_have_been_sign_ins_from_responsible_body_and_mno_users
@@ -54,12 +54,12 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def then_i_see_stats_about_user_engagement
     expect(page).to have_text('2 users have signed in')
-    expect(page).to have_text('1 different responsible bodies')
-    expect(page).to have_text('1 different mobile network operators')
+    expect(page).to have_text('1 responsible body')
+    expect(page).to have_text('1 mobile network operator')
   end
 
   def and_i_see_stats_about_bt_wifi_vouchers
-    expect(page).to have_text('12 vouchers downloaded by 1 responsible bodies')
+    expect(page).to have_text('12 vouchers downloaded by 1 responsible body')
   end
 
   def and_i_see_stats_about_extra_mobile_data_requests

@@ -95,7 +95,7 @@ private
     elsif user.is_computacenter?
       computacenter_home_path
     elsif user.is_support?
-      support_service_performance_path
+      support_internet_service_performance_path
     else
       '/'
     end
