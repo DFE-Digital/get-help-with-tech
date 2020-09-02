@@ -46,10 +46,10 @@ class ResponsibleBody::Devices::WhoToContactForm
 private
 
   def headteacher_chosen?
-    who_to_contact.to_sym == :headteacher
+    who_to_contact&.to_sym == :headteacher
   end
 
   def someone_else_chosen?
-    who_to_contact.to_sym == :someone_else
+    who_to_contact&.to_sym == :someone_else
   end
 end
