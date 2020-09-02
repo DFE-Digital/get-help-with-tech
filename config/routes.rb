@@ -63,6 +63,7 @@ Rails.application.routes.draw do
 
     namespace :devices do
       get '/', to: 'home#show'
+      get '/tell-us', to: 'home#tell_us'
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
