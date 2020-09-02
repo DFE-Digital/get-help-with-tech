@@ -1,20 +1,38 @@
-<%- title = t('page_titles.responsible_body_devices_request_devices') %>
-<%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.responsible_body_devices_home'), responsible_body_devices_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= title %>
-      </li>
-    </ol>
-  </div>
-<% end %>
+<% if @user.is_school_user? %>
+  <%- title = t('page_titles.school_request_devices') %>
+  <%- content_for :before_content do %>
+    <div class="govuk-breadcrumbs">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <%= link_to t('page_titles.school_home'), school_home_path, class: 'govuk-breadcrumbs__link' %>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <%= title %>
+        </li>
+      </ol>
+    </div>
+  <% end %>
 
+<% elsif @user.is_responsible_body_user? %>
+
+  <%- title = t('page_titles.responsible_body_devices_request_devices') %>
+  <%- content_for :before_content do %>
+    <div class="govuk-breadcrumbs">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <%= link_to t('page_titles.responsible_body_devices_home'), responsible_body_devices_path, class: 'govuk-breadcrumbs__link' %>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <%= title %>
+        </li>
+      </ol>
+    </div>
+  <% end %>
+
+<% end %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">
@@ -32,12 +50,18 @@
 
     <p class="govuk-body">Tell us:</p>
 
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>which schools need the devices</li>
-      <li>how many devices they need</li>
-      <li>why they need the devices</li>
-    </ul>
+    <% if @user.is_school_user? %>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how many devices you will need</li>
+        <li>why you need them</li>
+      </ul>
+    <% elsif @user.is_responsible_body_user? %>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>which schools need the devices</li>
+        <li>how many devices they need</li>
+        <li>why they need the devices</li>
+      </ul>
+    <% end %>
 
     <p class="govuk-body">For children who are shielding you could be asked to give evidence.</p>
 
