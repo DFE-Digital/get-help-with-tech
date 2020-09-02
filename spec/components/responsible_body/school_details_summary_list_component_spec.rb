@@ -26,11 +26,17 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school type' do
-      expect(result.css('.govuk-summary-list__row')[3].text).to include('Primary school')
+      expect(result.css('.govuk-summary-list__row')[4].text).to include('Primary school')
     end
 
     it 'renders the school details' do
       expect(result.css('.govuk-summary-list__row')[0].text).to include('Needs a contact')
+    end
+
+    context "when the school isn't under lockdown restrictions or has any shielding children" do
+      it 'cannot place orders' do
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('No, no local lockdown restrictions')
+      end
     end
 
     context 'and the headteacher has been set as the school contact' do
@@ -40,8 +46,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                who_will_order_devices: :school,
                school_contact: headteacher)
 
-        expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[6].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+        expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
+        expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
       end
     end
 
@@ -56,10 +62,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                who_will_order_devices: :school,
                school_contact: new_contact)
 
-        expect(result.css('dt')[4].text).to include('School contact')
-        expect(result.css('dd')[6].text).to include('Jane Smith')
-        expect(result.css('dd')[6].text).to include('abc@example.com')
-        expect(result.css('dd')[6].text).to include('12345')
+        expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
+        expect(result.css('.govuk-summary-list__row')[5].text).to include('Jane Smith')
+        expect(result.css('.govuk-summary-list__row')[5].text).to include('abc@example.com')
+        expect(result.css('.govuk-summary-list__row')[5].text).to include('12345')
       end
     end
   end

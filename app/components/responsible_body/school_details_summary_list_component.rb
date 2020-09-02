@@ -1,4 +1,5 @@
 class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
+  include ViewHelper
   validates :school, presence: true
 
   delegate :school_will_order_devices?,
@@ -26,6 +27,10 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
         value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
         action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
         action: 'Query allocation',
+      },
+      {
+        key: 'Can place orders?',
+        value: ['No, no local lockdown restrictions', govuk_link_to('Get devices early for specific circumstances', responsible_body_devices_request_devices_path)].join('<br>').html_safe,
       },
       {
         key: 'Type of school',
