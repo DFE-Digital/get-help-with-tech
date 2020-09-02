@@ -9,42 +9,8 @@
       <span class="govuk-caption-xl"><%= @school.name %></span>
       <%= title %>
     </h1>
-    <p class="govuk-body">
-      If you are going to order Google Chromebooks, we’ll need 2 pieces of information to configure them:
-    </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>the domain a school uses for its Google services</li>
-      <li>the school’s recovery email address</li>
-    </ul>
-    <p class="govuk-body">
-      We need this information so we can secure the devices.
-    </p>
-    <p class="govuk-body">
-      If you need help finding these details, email <%= govuk_link_to('COVID.TECHNOLOGY@education.gov.uk', 'mailto:COVID.TECHNOLOGY@education.gov.uk') %>
-    </p>
-
-    <%= form_for @chromebook_information_form, url: school_chromebooks_path, method: :patch do |f| %>
-      <%= f.govuk_error_summary %>
-
-      <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: { text: nil } ) do %>
-        <%= f.govuk_radio_button  :will_need_chromebooks,
-                                  'yes',
-                                  label: { text: t(:yes, scope: %i[activerecord attributes preorder_information will_need_chromebooks]) } do %>
-          <%= f.govuk_text_field  :school_or_rb_domain,
-                                  label: { text: "School or #{@school.responsible_body.humanized_type} domain", size: 's' },
-                                  hint_text: "For example, ‘school.co.uk’" %>
-          <%= f.govuk_text_field  :recovery_email_address,
-                                  label: { text: "Recovery email address", size: 's' },
-                                  hint_text: "This email address must be on a different domain to the school domain. For example, if the domain is ‘school.com’, then the email must not be ‘recovery@school.com’." %>
-        <%- end %>
-        <%= f.govuk_radio_button  :will_need_chromebooks,
-                                  'no',
-                                  label: { text: t(:no, scope: %i[activerecord attributes preorder_information will_need_chromebooks]) } %>
-
-      <%- end %>
-      <%= f.govuk_submit 'Save' %>
-    <%- end %>
-
+    <%= render partial: 'shared/chromebook_information_intro' %>
+    <%= render partial: 'shared/chromebook_information_form', locals: { url: school_chromebooks_path, form_object: @chromebook_information_form } %>
   </div>
 </div>
