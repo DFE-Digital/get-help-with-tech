@@ -33,7 +33,7 @@ govuk_notify:
     devices:
       invite_responsible_body_user: '42e5cd7a-deaa-4234-bdea-db63b7c4ad90'
       nominate_contacts: 'ef964a6f-d984-4f35-a074-6f3cb79bfec7'
-
+      school_nominated_contact: '61eb33fc-87a0-488c-8121-354dd67093ef'
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000
 

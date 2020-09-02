@@ -61,8 +61,15 @@ en:
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
-    school_users: Manage who can order devices
     school_details: Check your school details
+    school_users: Manage users
+    invite_school_user:
+      title: Invite a new user
+      will_they_order_devices: Will they place orders for devices?
+      will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
+      can_order_devices: Yes, give them access to the TechSource website
+      can_order_devices_hint: This is where they’ll place orders.
+      cannot_order_devices: 'No'
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -162,6 +169,17 @@ en:
       responsible_bodies_with_at_least_one_preorder_information_completed:
         one: responsible body with at least one preorder information completed
         other: responsible bodies with at least one preorder information completed
+    devices_performance:
+      needs_information:
+        one: needs information
+        other: need information
+      needs_a_contact:
+        one: needs a contact
+        other: need a contact
+      school_contacts:
+        one: school contact
+        other: school contacts
+      ready: ready
   errors:
     format:
       "'%{attribute}' %{message}"
@@ -287,6 +305,9 @@ en:
               blank: Enter an email address in the correct format, like name@example.com
               taken: Email address has already been used
               too_short: Enter an email address that is at least %{count} characters
+            orders_devices:
+              inclusion: Tell us whether the user will order devices
+              user_limit: There are already 3 users who can order devices. Change or remove another user.
         school:
           attributes:
             urn:
@@ -307,6 +328,9 @@ en:
         who_to_contact:
           create:
             success: "Saved. We will email %{email_address} shortly"
+    users:
+      create:
+        success: "We’ve sent an invitation to %{email_address}"
     home:
       bt_wifi_offer:
         number_eligible: Eligible young people
