@@ -1,4 +1,6 @@
-<% content_for :browser_title, t('page_titles.responsible_body_schools_list') %>
+<%- title = t('page_titles.responsible_body_schools_list') %>
+<% content_for :title, title %>
+<% content_for :browser_title, title %>
 
 <%- content_for :before_content do %>
   <div class="govuk-breadcrumbs">
@@ -7,7 +9,10 @@
         <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
       </li>
       <li class="govuk-breadcrumbs__list-item">
-        Get laptops and tablets
+        <%= link_to t('page_titles.responsible_body_devices_home'), responsible_body_devices_path, class: 'govuk-breadcrumbs__link' %>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <%= title %>
       </li>
     </ol>
   </div>
@@ -15,7 +20,7 @@
 
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl">Get laptops and tablets</span>
-  <%= t('page_titles.responsible_body_schools_list') %>
+  <%= title %>
 </h1>
 
 <div class="govuk-grid-row">

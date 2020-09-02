@@ -90,6 +90,7 @@ RSpec.feature 'Setting up the devices ordering' do
       given_the_responsible_body_has_decided_to_order_centrally
       when_i_visit_the_responsible_body_homepage
       when_i_follow_the_get_devices_link
+      and_i_choose_to_get_schools_ready
       then_i_see_a_list_of_the_schools_i_am_responsible_for
 
       when_i_click_on_the_first_school_name
@@ -125,6 +126,16 @@ RSpec.feature 'Setting up the devices ordering' do
       when_i_fill_in_details_of_a_contact_and_save_their_details
       then_i_see_a_confirmation_and_the_someone_else_as_the_contact
       and_the_status_reflects_that_the_school_will_be_contacted_shortly
+    end
+
+    scenario 'learning about requesting devices for specific circumstances' do
+      # the page is only visible when the responsible body has completed the 'who will order' wizard
+      responsible_body.update!(who_will_order_devices: :responsible_body)
+
+      click_on 'Get laptops and tablets'
+      click_on 'Request devices for specific circumstances'
+
+      expect(page).to have_content 'Request devices for specific circumstances'
     end
   end
 
@@ -164,6 +175,10 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def when_i_follow_the_get_devices_link
     click_on 'Get laptops and tablets'
+  end
+
+  def and_i_choose_to_get_schools_ready
+    click_on 'Get schools ready'
   end
 
   def then_i_see_guidance_for_a_trust
