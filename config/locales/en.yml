@@ -146,6 +146,8 @@ en:
     what_to_do_with_the_vouchers: What to do with the vouchers
     not_offered_vouchers_yet: If you haven’t been offered vouchers yet
   school:
+    chromebooks:
+      success: We've saved your choices
     details:
       n_devices:
         one: "%{count} device"
