@@ -147,7 +147,7 @@ en:
     not_offered_vouchers_yet: If you haven’t been offered vouchers yet
   school:
     chromebooks:
-      success: We've saved your choices
+      success: We’ve saved your choices
     details:
       n_devices:
         one: "%{count} device"
