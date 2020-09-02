@@ -7,6 +7,7 @@ FactoryBot.define do
     trait :with_std_allocation do
       device_type { 'std_device' }
       allocation { Faker::Number.within(range: 1..100) }
+      cap { 0 }
     end
   end
 end

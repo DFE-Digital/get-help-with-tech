@@ -1,18 +1,21 @@
 class Computacenter::OutgoingAPI::CapUpdateRequest
-  attr_accessor :endpoint, :username, :password, :allocation_ids
+  attr_accessor :endpoint, :username, :password, :allocation_ids, :timestamp
   attr_accessor :body, :payload_id, :response, :logger
 
   def initialize(args = {})
     @endpoint       = args[:endpoint] || setting(:endpoint)
     @username       = args[:username] || setting(:username)
     @password       = args[:password] || setting(:password)
+    @timestamp      = args[:timestamp] || Time.zone.now
+    @payload_id     = args[:payload_id]
     @allocation_ids = args[:allocation_ids]
     @logger         = args[:logger] || Rails.logger
   end
 
   def post!
-    # Need to regenerate this for every request
-    @payload_id = SecureRandom.uuid
+    # Need to regenerate this for every request, but still allow for
+    # overrides when testing
+    @payload_id ||= SecureRandom.uuid
     @body = construct_body
 
     @logger.debug("POSTing to Computacenter, payload_id: #{@payload_id}, body: \n#{@body}")
@@ -40,7 +43,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
 
   def construct_body
     allocations = SchoolDeviceAllocation.where(id: @allocation_ids)
-    renderer.render :cap_update_request, format: :xml, assigns: { allocations: allocations, payload_id: @payload_id }
+    renderer.render :cap_update_request, format: :xml, assigns: { allocations: allocations, payload_id: @payload_id, timestamp: @timestamp }
   end
 
   def renderer
