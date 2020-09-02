@@ -2,13 +2,23 @@ require 'rails_helper'
 
 RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   let(:response_body) { 'response body' }
-  let(:allocation_1) { create(:school_device_allocation) }
-  let(:allocation_2) { create(:school_device_allocation) }
+  let(:school_1) { create(:school, computacenter_reference: '01234567') }
+  let(:school_2) { create(:school, computacenter_reference: '98765432') }
+  let(:allocation_1) { create(:school_device_allocation, school: school_1, device_type: 'std_device', allocation: 11, cap: 1) }
+  let(:allocation_2) { create(:school_device_allocation, school: school_2, device_type: 'coms_device', allocation: 22, cap: 0) }
   let(:mock_status) { instance_double(HTTP::Response::Status, code: 200, success?: true) }
   let(:mock_response) { instance_double(HTTP::Response, status: mock_status, body: response_body) }
+  let(:expected_xml) do
+    <<~XML
+      <?xml version="1.0" encoding="UTF-8"?>
+      <CapAdjustmentRequest payloadID="123456789" dateTime="2020-09-02T15:03:35+02:00">
+        <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="01234567" capAmount="1"/>
+        <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="98765432" capAmount="0"/>
+      </CapAdjustmentRequest>
+    XML
+  end
 
   before do
-    allow(Computacenter::OutgoingAPI::BaseController).to receive(:render).and_return('rendered XML')
     stub_request(:post, Settings.computacenter.outgoing_api.endpoint).to_return(status: 200, body: response_body)
   end
 
@@ -20,11 +30,13 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
     end
 
     it 'renders the cap_update_request XML builder template' do
+      allow(Computacenter::OutgoingAPI::BaseController).to receive(:render).and_return('mock body')
       request.post!
       expect(Computacenter::OutgoingAPI::BaseController).to have_received(:render).with(:cap_update_request, hash_including(format: :xml))
     end
 
     it 'passes allocations and payload_id to the render call' do
+      allow(Computacenter::OutgoingAPI::BaseController).to receive(:render).and_return('mock body')
       request.post!
       expect(Computacenter::OutgoingAPI::BaseController).to have_received(:render).with(
         anything,
@@ -32,6 +44,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
           assigns: {
             allocations: [allocation_1, allocation_2],
             payload_id: request.payload_id,
+            timestamp: anything,
           },
         ),
       )
@@ -45,6 +58,13 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       request.post!
       expect(HTTP).to have_received(:basic_auth).with(user: request.username, pass: request.password)
       expect(HTTP).to have_received(:post).with(request.endpoint, body: 'mock body')
+    end
+
+    it 'generates a correct body' do
+      request.payload_id = '123456789'
+      request.timestamp = Time.new(2020, 9, 2, 15, 3, 35, '+02:00')
+      request.post!
+      expect(a_request(:post, request.endpoint).with(body: expected_xml)).to have_been_made
     end
 
     context 'when the response status is success' do
