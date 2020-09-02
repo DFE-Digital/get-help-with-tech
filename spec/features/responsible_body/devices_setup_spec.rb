@@ -35,7 +35,7 @@ RSpec.feature 'Setting up the devices ordering' do
     end
 
     scenario 'devolving device ordering mostly to schools' do
-      when_i_follow_the_get_devices_link
+      when_i_follow_the_link_to_start_getting_schools_ready
       then_i_see_guidance_for_a_local_authority
       and_i_continue_through_the_guidance
       and_i_choose_ordering_through_schools_which_is_recommended
@@ -64,7 +64,7 @@ RSpec.feature 'Setting up the devices ordering' do
     end
 
     scenario 'devolving device ordering mostly centrally' do
-      when_i_follow_the_get_devices_link
+      when_i_follow_the_link_to_start_getting_schools_ready
       then_i_see_guidance_for_a_local_authority
       and_i_continue_through_the_guidance
       and_i_choose_ordering_centrally
@@ -89,7 +89,7 @@ RSpec.feature 'Setting up the devices ordering' do
     scenario 'changing the settings for each school after making the choice about who will order' do
       given_the_responsible_body_has_decided_to_order_centrally
       when_i_visit_the_responsible_body_homepage
-      when_i_follow_the_get_devices_link
+      when_i_follow_the_link_to_start_getting_schools_ready
       then_i_see_a_list_of_the_schools_i_am_responsible_for
 
       when_i_click_on_the_first_school_name
@@ -115,7 +115,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
     scenario 'when the school has no headteacher contact (bug #537)' do
       given_there_is_a_school_with_no_headteacher
-      when_i_follow_the_get_devices_link
+      when_i_follow_the_link_to_start_getting_schools_ready
       and_i_continue_through_the_guidance
       and_i_choose_ordering_through_schools_which_is_recommended
       and_i_continue_after_choosing_ordering_through_schools
@@ -145,7 +145,7 @@ RSpec.feature 'Setting up the devices ordering' do
     end
 
     scenario 'devolving device ordering mostly to schools' do
-      when_i_follow_the_get_devices_link
+      when_i_follow_the_link_to_start_getting_schools_ready
       then_i_see_guidance_for_a_trust
       and_i_continue_through_the_guidance
       and_i_choose_ordering_through_schools_which_is_not_explicitly_recommended
@@ -154,7 +154,7 @@ RSpec.feature 'Setting up the devices ordering' do
     end
 
     scenario 'devolving device ordering mostly centrally' do
-      when_i_follow_the_get_devices_link
+      when_i_follow_the_link_to_start_getting_schools_ready
       then_i_see_guidance_for_a_trust
       and_i_continue_through_the_guidance
       and_i_choose_ordering_centrally
@@ -162,8 +162,9 @@ RSpec.feature 'Setting up the devices ordering' do
     end
   end
 
-  def when_i_follow_the_get_devices_link
+  def when_i_follow_the_link_to_start_getting_schools_ready
     click_on 'Get laptops and tablets'
+    click_on 'Get schools ready'
   end
 
   def then_i_see_guidance_for_a_trust
