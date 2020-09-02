@@ -1,5 +1,4 @@
 <%- title = t('page_titles.responsible_body_devices_request_devices') %>
-<%- content_for :title, title %>
 <%- content_for :before_content do %>
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
@@ -16,6 +15,8 @@
   </div>
 <% end %>
 
+<%- content_for :title, title %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
@@ -30,6 +31,7 @@
     <h2 class="govuk-heading-m">What to put in your request</h2>
 
     <p class="govuk-body">Tell us:</p>
+
 
     <ul class="govuk-list govuk-list--bullet">
       <li>which schools need the devices</li>
