@@ -62,6 +62,7 @@ en:
     privacy_notice: Privacy notice
     school_home: Get devices for your school
     school_details: Check your school details
+    school_edit_chromebooks: Will your school need to order Chromebooks?
     school_users: Manage users
     invite_school_user:
       title: Invite a new user
@@ -216,7 +217,7 @@ en:
               invalid: Enter an email address in the correct format, like name@example.com
             phone_number:
               blank: Enter the contact’s telephone
-        responsible_body/devices/chromebook_information_form:
+        chromebook_information_form:
           attributes:
             will_need_chromebooks:
               blank: Tell us whether the school will need Chromebooks

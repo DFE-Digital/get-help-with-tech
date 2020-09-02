@@ -98,6 +98,8 @@ Rails.application.routes.draw do
   namespace :school do
     get '/', to: 'home#show', as: :home
     get '/details', to: 'details#show', as: :details
+    get '/chromebooks/edit', to: 'chromebooks#edit', as: :edit_chromebooks_details
+    patch '/chromebooks', to: 'chromebooks#update'
     resources :users, only: %i[index new create]
   end
 

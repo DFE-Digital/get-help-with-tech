@@ -11,7 +11,7 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::Devices::Ba
     if @school.preorder_information.needs_contact?
       redirect_to responsible_body_devices_school_who_to_contact_path(@school.urn)
     elsif @school.preorder_information.needs_chromebook_information?
-      @chromebook_information_form = ResponsibleBody::Devices::ChromebookInformationForm.new
+      @chromebook_information_form = ChromebookInformationForm.new
     end
   end
 end
