@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_31_200056) do
+ActiveRecord::Schema.define(version: 2020_09_01_142852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 2020_08_31_200056) do
     t.boolean "is_computacenter", default: false, null: false
     t.datetime "privacy_notice_seen_at"
     t.bigint "school_id"
+    t.boolean "orders_devices"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
