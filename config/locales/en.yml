@@ -19,6 +19,7 @@ en:
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
     responsible_body_devices_tell_us: Tell us who will order a school’s laptops and tablets
+    responsible_body_devices_request_devices: Request devices for specific circumstances
     responsible_body_internet_home: Get the internet
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_devices_chromebooks: Will the school need Chromebooks?

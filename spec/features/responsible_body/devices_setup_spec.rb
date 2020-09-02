@@ -126,6 +126,13 @@ RSpec.feature 'Setting up the devices ordering' do
       then_i_see_a_confirmation_and_the_someone_else_as_the_contact
       and_the_status_reflects_that_the_school_will_be_contacted_shortly
     end
+
+    scenario 'learning about requesting devices for specific circumstances' do
+      click_on 'Get laptops and tablets'
+      click_on 'Request devices for specific circumstances'
+
+      expect(page).to have_content 'Request devices for specific circumstances'
+    end
   end
 
   context 'as a trust user' do

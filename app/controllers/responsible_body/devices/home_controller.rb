@@ -2,4 +2,6 @@ class ResponsibleBody::Devices::HomeController < ResponsibleBody::Devices::BaseC
   def show; end
 
   def tell_us; end
+
+  def request_devices; end
 end
