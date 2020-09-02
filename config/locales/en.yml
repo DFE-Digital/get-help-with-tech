@@ -77,6 +77,8 @@ en:
     school_user_welcome_wizard:
       welcome:
         title: "You’re signed in as %{school}"
+      privacy:
+        title: Privacy notice
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

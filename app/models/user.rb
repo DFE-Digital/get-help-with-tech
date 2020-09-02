@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :extra_mobile_data_requests, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
   has_many :api_tokens, dependent: :destroy
+  has_one :school_welcome_wizard, dependent: :destroy
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true

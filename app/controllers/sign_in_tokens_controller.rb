@@ -14,7 +14,7 @@ class SignInTokensController < ApplicationController
     @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
     save_user_to_session!
     EventNotificationsService.broadcast(SignInEvent.new(user: @user))
-    render :you_are_signed_in
+    start_user_journey(@user)
   rescue SessionService::TokenValidButExpired
     # If it's the same user who already has a valid session, and they've just
     # re-clicked a link with a token that's expired, but a session that _hasn't_
@@ -81,6 +81,14 @@ private
       :token,
       :identifier,
     )
+  end
+
+  def start_user_journey(user)
+    if user.is_school_user? && !user.school_welcome_wizard&.complete?
+      redirect_to school_welcome_wizard_welcome_path
+    else
+      render :you_are_signed_in
+    end
   end
 
   def root_url_for(user)

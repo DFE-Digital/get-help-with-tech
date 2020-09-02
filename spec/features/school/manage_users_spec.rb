@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Manage school users' do
-  let(:school_user) { create(:school_user, full_name: 'AAA Smith') }
+  let(:school_user) { create(:school_user, :has_completed_wizard, full_name: 'AAA Smith') }
   let(:user_from_same_school) { create(:school_user, full_name: 'ZZZ Jones', school: school_user.school) }
   let(:new_school_user) { build(:school_user, full_name: 'BBB Brown', school: school_user.school) }
   let(:user_from_other_school) { create(:school_user) }

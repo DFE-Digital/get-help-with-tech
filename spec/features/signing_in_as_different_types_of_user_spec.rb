@@ -66,13 +66,23 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a school user' do
-    let(:user) { create(:school_user) }
+  context 'as a school user who has completed the welcome wizard' do
+    let(:user) { create(:school_user, :has_completed_wizard) }
 
     scenario 'it redirects to the school homepage' do
       sign_in_as user
       expect(page).to have_current_path(school_home_path)
       expect(page).to have_text 'Get devices for your school'
+    end
+  end
+
+  context 'as a school user who has not completed the welcome wizard' do
+    let(:user) { create(:school_user) }
+
+    scenario 'it redirects to the school welcome wizard welcome page' do
+      visit validate_token_url_for(user)
+      expect(page).to have_current_path(school_welcome_wizard_welcome_path)
+      expect(page).to have_text "You’re signed in as #{user.school.name}"
     end
   end
 
