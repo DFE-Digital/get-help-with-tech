@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SchoolDetailsSummaryListComponent do
+describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   let(:school) { create(:school, :primary, :la_maintained) }
   let(:headteacher) do
     create(:school_contact, :headteacher,

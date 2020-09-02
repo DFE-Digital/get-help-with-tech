@@ -1,4 +1,4 @@
-class SchoolDetailsSummaryListComponent < ViewComponent::Base
+class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
   validates :school, presence: true
 
   delegate :school_will_order_devices?,

@@ -61,6 +61,7 @@ en:
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
+    school_details: Check your school details
     school_users: Manage users
     invite_school_user:
       title: Invite a new user
@@ -143,6 +144,11 @@ en:
     who_to_give_vouchers_to: Who to give BT vouchers to
     what_to_do_with_the_vouchers: What to do with the vouchers
     not_offered_vouchers_yet: If you haven’t been offered vouchers yet
+  school:
+    details:
+      n_devices:
+        one: "%{count} device"
+        other: "%{count} devices"
   support:
     service_performance:
       mobile_network_operators:

@@ -5,7 +5,18 @@
       <%= t('page_titles.school_home') %>
     </h1>
 
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
+    <h2 class="govuk-heading-l">
+      <%= govuk_link_to t('page_titles.school_details'), school_details_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>review your allocation</li>
+      <!-- change this to 'change' when we do the change functionality -->
+      <li>review your Chromebook settings</li>
+    </ul>
+
+    <h2 class="govuk-heading-l">
       <%= govuk_link_to t('page_titles.school_users'), school_users_path %>
     </h2>
 
