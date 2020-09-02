@@ -1,16 +1,10 @@
 <%- title = t('page_titles.responsible_body_devices_home') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs ">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.responsible_body_home'), responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= title %>
-      </li>
-    </ol>
-  </div>
+  <% breadcrumb([
+    { t('page_titles.responsible_body_home') => responsible_body_home_path },
+    title,
+  ]) %>
 <% end %>
 
 <div class="govuk-grid-row">
