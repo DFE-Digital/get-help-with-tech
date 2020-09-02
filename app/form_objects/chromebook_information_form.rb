@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::ChromebookInformationForm
+class ChromebookInformationForm
   include ActiveModel::Model
 
   attr_accessor :school, :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address

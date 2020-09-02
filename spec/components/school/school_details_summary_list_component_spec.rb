@@ -43,10 +43,11 @@ describe School::SchoolDetailsSummaryListComponent do
       expect(result.css('dl').text).not_to include('School contact')
     end
 
-    it 'shows the chromebook details' do
+    it 'shows the chromebook details with a link to change it' do
       expect(result.css('dd')[2].text).to include('Yes')
-      expect(result.css('dd')[3].text).to include('school.domain.org')
-      expect(result.css('dd')[4].text).to include('admin@school.domain.org')
+      expect(result.css('dd')[3].text).to include('Change')
+      expect(result.css('dd')[4].text).to include('school.domain.org')
+      expect(result.css('dd')[5].text).to include('admin@school.domain.org')
     end
   end
 end

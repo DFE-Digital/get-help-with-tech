@@ -1,6 +1,4 @@
-class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBody::Devices::BaseController
-  before_action :find_school!
-
+class School::ChromebooksController < School::BaseController
   def edit
     @chromebook_information_form = ChromebookInformationForm.new(
       school: @school,
@@ -17,17 +15,14 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
     )
     if @chromebook_information_form.valid?
       @preorder_info.update_chromebook_information_and_status!(chromebook_params)
-      redirect_to responsible_body_devices_school_path(urn: @school.urn)
+      flash[:success] = t(:success, scope: %w[school chromebooks])
+      redirect_to school_details_path
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
 private
-
-  def find_school!
-    @school = @responsible_body.schools.find_by!(urn: params[:school_urn])
-  end
 
   def chromebook_params
     params.require(:chromebook_information_form).permit(

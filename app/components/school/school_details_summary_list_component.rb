@@ -35,6 +35,8 @@ private
         info.will_need_chromebooks && {
           key: 'Will your school need to order Chromebooks?',
           value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
+          change_path: school_chromebooks_edit_path,
+          action: 'whether Chromebooks are needed',
         },
       ]
       if info.will_need_chromebooks?
