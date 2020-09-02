@@ -18,19 +18,19 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(result.css('dd')[4].text).to include('The school orders devices')
+      expect(result.css('.govuk-summary-list__row')[1].text).to include('The school orders devices')
     end
 
     it 'renders the school allocation' do
-      expect(result.css('dd')[1].text).to include('3 devices')
+      expect(result.css('.govuk-summary-list__row')[2].text).to include('3 devices')
     end
 
     it 'renders the school type' do
-      expect(result.css('dd')[3].text).to include('Primary school')
+      expect(result.css('.govuk-summary-list__row')[3].text).to include('Primary school')
     end
 
     it 'renders the school details' do
-      expect(result.css('dd')[0].text).to include('Needs a contact')
+      expect(result.css('.govuk-summary-list__row')[0].text).to include('Needs a contact')
     end
 
     context 'and the headteacher has been set as the school contact' do
@@ -70,7 +70,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     it 'confirms that fact' do
       create(:preorder_information, school: school, who_will_order_devices: :responsible_body)
 
-      expect(result.css('dd')[4].text).to include('The trust orders devices')
+      expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
     end
 
     it 'does not show the school contact even if the school contact is set' do
