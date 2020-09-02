@@ -11,6 +11,12 @@ FactoryBot.define do
       preorder_information
     end
 
+    trait :with_headteacher_contact do
+      after :create do |school|
+        school.contacts << create(:school_contact, :headteacher)
+      end
+    end
+
     trait :primary do
       phase { :primary }
     end
