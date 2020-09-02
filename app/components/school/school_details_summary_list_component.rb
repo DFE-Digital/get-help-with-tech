@@ -12,10 +12,6 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   def rows
     [
       {
-        key: 'Status',
-        value: render(SchoolPreorderStatusTagComponent.new(school: @school)),
-      },
-      {
         key: 'Provisional allocation',
         value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
       },
