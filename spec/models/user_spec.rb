@@ -95,5 +95,19 @@ RSpec.describe User, type: :model do
         expect { new_user.save! }.to change(new_user, :email_address).to('mr.mixed.case@somedomain.org')
       end
     end
+
+    context 'school user' do
+      let(:school) { create(:school) }
+      let(:user) { build(:school_user, :orders_devices, school: school) }
+
+      before do
+        create_list(:school_user, 3, :orders_devices, school: school)
+      end
+
+      it 'validates that only 3 users can order devices for a school' do
+        expect(user.valid?).to be false
+        expect(user.errors.keys).to include(:orders_devices)
+      end
+    end
   end
 end

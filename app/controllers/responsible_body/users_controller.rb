@@ -18,6 +18,7 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
     if @rb_user.valid?
       @rb_user.save!
       InviteResponsibleBodyUserMailer.with(user: @rb_user).invite_user_email.deliver_later
+      flash[:success] = I18n.t(:success, scope: %i[responsible_body users create], email_address: @rb_user.email_address)
       redirect_to responsible_body_users_path
     else
       render :new, status: :unprocessable_entity

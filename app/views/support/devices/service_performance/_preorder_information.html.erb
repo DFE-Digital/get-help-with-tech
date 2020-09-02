@@ -15,7 +15,7 @@
       <span class="app-card__secondary-count">
         <%= @stats.preorder_information_counts_by_status['needs_info'] || 0 %>
       </span>
-      <%= t(:needs_info, scope: %i[activerecord attributes preorder_information status]) %>
+      <%= t(:needs_information, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0) %>
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
@@ -23,23 +23,23 @@
       <span class="app-card__secondary-count">
         <%= @stats.preorder_information_counts_by_status['needs_contact'] || 0 %>
       </span>
-      <%= t(:needs_contact, scope: %i[activerecord attributes preorder_information status]) %>
+      <%= t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_contact'] || 0) %>
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card app-card--red">
+    <div class="app-card app-card--yellow">
       <span class="app-card__secondary-count">
         <%= @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0 %>
       </span>
-      <%= t(:school_will_be_contacted, scope: %i[activerecord attributes preorder_information status]) %>
+      <%= t(:school_contacts, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card app-card--green">
+    <div class="app-card app-card--light-blue">
       <span class="app-card__secondary-count">
         <%= @stats.preorder_information_counts_by_status['ready'] || 0 %>
       </span>
-      <%= t(:ready, scope: %i[activerecord attributes preorder_information status]) %>
+      <%= t(:ready, scope: %i[support devices_performance]) %>
     </div>
   </div>
 </div>

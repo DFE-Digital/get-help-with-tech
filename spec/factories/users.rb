@@ -43,6 +43,11 @@ FactoryBot.define do
 
     factory :school_user do
       school
+      orders_devices { false }
+
+      trait :orders_devices do
+        orders_devices { true }
+      end
     end
 
     factory :mno_user do
