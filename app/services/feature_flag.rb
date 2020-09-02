@@ -5,6 +5,7 @@ class FeatureFlag
     public_account_creation
     sign_in_slack_notifications
     who_will_order_slack_notifications
+    invite_slack_notifications
     rbs_can_manage_users
   ].freeze
 
