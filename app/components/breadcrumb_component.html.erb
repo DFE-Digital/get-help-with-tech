@@ -1,0 +1,13 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <% items.each do |item| %>
+      <li class="govuk-breadcrumbs__list-item">
+        <% if item[:path].present? %>
+          <%= link_to item[:label], item[:path], class: 'govuk-breadcrumbs__link' %>
+        <% else %>
+          <%= item[:label] %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</div>
