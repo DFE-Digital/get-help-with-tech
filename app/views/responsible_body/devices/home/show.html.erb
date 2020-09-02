@@ -17,14 +17,8 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <% if @responsible_body.who_will_order_devices.present? %>
-      <% get_schools_ready_path = responsible_body_devices_schools_path %>
-    <% else %>
-      <% get_schools_ready_path = responsible_body_devices_tell_us_path %>
-    <% end %>
-
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.responsible_body_schools_list'), get_schools_ready_path %>
+      <%= govuk_link_to t('page_titles.responsible_body_schools_list'), responsible_body_devices_schools_path %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>
