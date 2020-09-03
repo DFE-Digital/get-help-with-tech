@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'View school details' do
-  let(:school_user) { create(:school_user, :has_completed_wizard, full_name: 'AAA Smith') }
+  let(:school_user) { create(:school_user, full_name: 'AAA Smith') }
 
   before do
     create(:preorder_information, school: school_user.school, who_will_order_devices: 'responsible_body', will_need_chromebooks: 'yes')

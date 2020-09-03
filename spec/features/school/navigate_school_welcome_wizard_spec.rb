@@ -30,7 +30,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_school_user
-    @user = create(:school_user)
+    @user = create(:school_user, :new_visitor)
   end
 
   def when_i_sign_in_for_the_first_time

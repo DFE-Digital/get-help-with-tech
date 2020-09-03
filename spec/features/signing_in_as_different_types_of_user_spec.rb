@@ -67,7 +67,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   end
 
   context 'as a school user who has completed the welcome wizard' do
-    let(:user) { create(:school_user, :has_completed_wizard) }
+    let(:user) { create(:school_user) }
 
     scenario 'it redirects to the school homepage' do
       sign_in_as user
@@ -77,7 +77,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   end
 
   context 'as a school user who has not completed the welcome wizard' do
-    let(:user) { create(:school_user) }
+    let(:user) { create(:school_user, :new_visitor) }
 
     scenario 'it redirects to the school welcome wizard welcome page' do
       visit validate_token_url_for(user)
