@@ -7,7 +7,7 @@ namespace :import do
   desc 'Import shipTo and sendTo from file at CC_REFERENCES_FILE_URI'
   task school_and_rb_computacenter_references: :environment do
     CsvImportService.import!(
-      Computacenter::ShipToAndSoldToDataFile.new(ENV['CC_REFERENCES_FILE_URI'])
+      Computacenter::ShipToAndSoldToDataFile.new(ENV['CC_REFERENCES_FILE_URI']),
     )
   end
 end

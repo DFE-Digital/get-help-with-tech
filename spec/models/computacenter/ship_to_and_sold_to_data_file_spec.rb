@@ -47,7 +47,7 @@ RSpec.describe Computacenter::ShipToAndSoldToDataFile do
     end
 
     context 'when a matching ResponsibleBody and a school with the given URN exist' do
-      let!(:trust) { create(:trust, companies_house_number: '12345678', computacenter_reference: nil) }
+      before { create(:trust, companies_house_number: '12345678', computacenter_reference: nil) }
       let!(:school) { create(:school, urn: '123456', computacenter_reference: nil) }
 
       it 'updates the school computacenter_reference with the given :school_ship_to' do
