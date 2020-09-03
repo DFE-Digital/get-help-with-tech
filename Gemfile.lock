@@ -242,6 +242,9 @@ GEM
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
     pagy (3.8.3)
+    paper_trail (11.0.0)
+      activerecord (>= 5.2)
+      request_store (~> 1.1)
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
@@ -306,6 +309,8 @@ GEM
     redcarpet (3.5.0)
     redis (4.2.1)
     regexp_parser (1.7.1)
+    request_store (1.5.0)
+      rack (>= 1.4)
     rexml (3.2.4)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
@@ -476,6 +481,7 @@ DEPENDENCIES
   mail-notify
   notifications-ruby-client
   pagy
+  paper_trail
   pg (>= 0.18, < 2.0)
   pry-byebug
   pry-rails

@@ -24,6 +24,9 @@ gem 'mail-notify'
 # pagination
 gem 'pagy'
 
+# auditing of activerecord models
+gem 'paper_trail'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 

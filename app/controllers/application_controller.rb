@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :identify_user!
+  before_action :set_paper_trail_whodunnit
 
   include Pagy::Backend
 
@@ -14,6 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def user_for_paper_trail
+    "#{identify_user!&.class}:#{identify_user!&.id}"
+  end
 
   def identify_user!
     @user ||= (SessionService.identify_user!(session) || User.new)

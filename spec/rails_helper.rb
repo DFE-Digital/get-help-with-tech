@@ -36,6 +36,8 @@ require Rails.root.join('spec/page_objects/base_page.rb')
 Dir[Rails.root.join('spec/page_objects/**/*_section.rb')].sort.each { |f| require f }
 Dir[Rails.root.join('spec/page_objects/**/*_page.rb')].sort.each { |f| require f }
 
+require 'paper_trail/frameworks/rspec'
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
