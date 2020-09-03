@@ -79,6 +79,8 @@ en:
         title: "You’re signed in as %{school}"
       privacy:
         title: Privacy notice
+      allocation:
+        title: "You’ve been allocated %{allocation} laptops and tablets"
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
