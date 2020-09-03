@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'importing Local Authority GIAS IDs from CSV' do
+RSpec.describe LocalAuthorityGiasIdsDataFile do
   let(:row) do
     {
       'Local Authority ENG' => 'BBB',

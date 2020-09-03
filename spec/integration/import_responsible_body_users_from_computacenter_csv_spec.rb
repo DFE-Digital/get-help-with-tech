@@ -18,13 +18,12 @@ RSpec.describe 'importing responsible body users from computacenter CSV' do
   let!(:local_authority_3) { create(:local_authority, computacenter_reference: 'SOLD_TO_3') }
   let!(:local_authority_5) { create(:local_authority, computacenter_reference: 'SOLD_TO_5') }
   let!(:existing_user) { create(:local_authority_user, responsible_body: local_authority_3, email_address: 'x.istinguser@some.sch.uk') }
+  let(:data_file) { Computacenter::ResponsibleBodyUsersDataFile.new(tmp_csv_file.path) }
 
   before do
     tmp_csv_file << csv_content
     tmp_csv_file.flush
   end
-
-  let(:data_file) { Computacenter::ResponsibleBodyUsersDataFile.new(tmp_csv_file.path) }
 
   describe 'import' do
     let!(:results) { CsvImportService.import!(data_file) }

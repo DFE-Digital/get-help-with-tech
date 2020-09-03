@@ -12,6 +12,7 @@ class Computacenter::ResponsibleBodyUsersDataFile < CsvDataFile
   def import_record!(record)
     rb = find_responsible_body!(record)
     raise(ActiveRecord::RecordNotFound, "Couldn't find a ResponsibleBody with any of these computacenter references: #{record['DefaultSoldto']}, #{record['SoldTos']}") if rb.nil?
+
     create_user!(record, rb)
   end
 
@@ -19,15 +20,15 @@ class Computacenter::ResponsibleBodyUsersDataFile < CsvDataFile
     # some people in the spreadsheet have multiple 'SoldTos'
     # so let's look for the default one first
     ResponsibleBody.find_by_computacenter_reference(record[:default_sold_to]) || \
-      ResponsibleBody.where('computacenter_reference IN (?)', record[:sold_tos]).first
+      ResponsibleBody.find_by(computacenter_reference: record[:sold_tos])
   end
 
-  def create_user!(record, rb)
+  def create_user!(record, responsible_body)
     User.create!(
       full_name: record[:full_name],
       telephone: record[:telephone],
       email_address: record[:email_address],
-      responsible_body: rb,
+      responsible_body: responsible_body,
       approved_at: Time.zone.now.utc,
     )
   end

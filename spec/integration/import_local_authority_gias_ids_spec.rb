@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ImportLocalAuthorityGiasIdsService do
+describe 'importing local authority GIAS IDs from CSV' do
   let(:csv_content) do
     <<~CSV
       Local Authority GIAS ID,Local Authority Name,Address Line 1,Address Line 2,Address Line 3,Town/City,Postcode,Local Authority ENG
@@ -12,13 +12,12 @@ describe ImportLocalAuthorityGiasIdsService do
   let(:tmp_csv_file) { Tempfile.new }
   let!(:test_la_1) { create(:local_authority, local_authority_eng: 'TST1') }
   let!(:test_la_2) { create(:local_authority, local_authority_eng: 'TST2') }
+  let(:data_file) { LocalAuthorityGiasIdsDataFile.new(tmp_csv_file.path) }
 
   before do
     tmp_csv_file << csv_content
     tmp_csv_file.flush
   end
-
-  let(:data_file) { LocalAuthorityGiasIdsDataFile.new(tmp_csv_file.path) }
 
   describe '#import' do
     let!(:results) { CsvImportService.import!(data_file) }

@@ -12,7 +12,7 @@ RSpec.describe Computacenter::ResponsibleBodyUsersDataFile do
         'Telephone' => '  01234 567 890 ',
         'Email' => '  aubrey@bracey.org',
         'DefaultSoldto' => '   987654 ',
-        'SoldTos' => ' 111111,222222, 333333  , 444444'
+        'SoldTos' => ' 111111,222222, 333333  , 444444',
       }
     end
     let(:record) { data_file.extract_record(row) }
@@ -80,12 +80,12 @@ RSpec.describe Computacenter::ResponsibleBodyUsersDataFile do
     let(:responsible_body) { create(:trust) }
 
     it 'creates a user with the given attributes' do
-      expect { data_file.create_user!(record, responsible_body) }.to change {User.count }.by(1)
+      expect { data_file.create_user!(record, responsible_body) }.to change { User.count }.by(1)
       expect(User.last).to have_attributes(
         full_name: 'A.A.R. deVark',
         email_address: 'aar@devark.com',
         telephone: '01234 567890',
-        responsible_body_id: responsible_body.id
+        responsible_body_id: responsible_body.id,
       )
     end
   end
@@ -99,17 +99,17 @@ RSpec.describe Computacenter::ResponsibleBodyUsersDataFile do
           email_address: 'aar@devark.com',
           telephone: '01234 567890',
           default_sold_to: responsible_body.computacenter_reference,
-          sold_tos: [responsible_body.computacenter_reference]
+          sold_tos: [responsible_body.computacenter_reference],
         }
       end
 
       it 'creates a user for the responsible body with the right attributes' do
-        expect { data_file.import_record!(record) }.to change {User.count }.by(1)
+        expect { data_file.import_record!(record) }.to change { User.count }.by(1)
         expect(User.last).to have_attributes(
           full_name: 'A.A.R. deVark',
           email_address: 'aar@devark.com',
           telephone: '01234 567890',
-          responsible_body_id: responsible_body.id
+          responsible_body_id: responsible_body.id,
         )
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe Computacenter::ResponsibleBodyUsersDataFile do
           email_address: 'aar@devark.com',
           telephone: '01234 567890',
           default_sold_to: '00000000',
-          sold_tos: %w[00000000]
+          sold_tos: %w[00000000],
         }
       end
 

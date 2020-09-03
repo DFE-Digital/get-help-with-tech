@@ -7,7 +7,7 @@ namespace :import do
   desc 'Import local authority GIAS IDs'
   task local_authority_gias_ids: :environment do
     CsvImportService.import!(
-      LocalAuthorityGiasIdsDataFile.new(Rails.root.join('config/local_authority_data.csv')
+      LocalAuthorityGiasIdsDataFile.new(Rails.root.join('config/local_authority_data.csv')),
     )
   end
 
