@@ -29,6 +29,24 @@ class Support::Devices::ServicePerformance
       .count
   end
 
+  def number_of_schools_with_a_decision_made
+    number_of_schools_devolved_to + number_of_schools_managed_centrally
+  end
+
+  def number_of_schools_devolved_to
+    needs_contact_count = preorder_information_counts_by_status['needs_contact'] || 0
+    has_contact_count = preorder_information_counts_by_status['school_will_be_contacted'] || 0
+
+    needs_contact_count + has_contact_count
+  end
+
+  def number_of_schools_managed_centrally
+    needs_information = preorder_information_counts_by_status['needs_information'] || 0
+    ready = preorder_information_counts_by_status['ready'] || 0
+
+    needs_information + ready
+  end
+
   def preorder_information_counts_by_status
     PreorderInformation
       .for_responsible_bodies_in_devices_pilot

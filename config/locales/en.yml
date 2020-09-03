@@ -173,19 +173,30 @@ en:
         one: voucher
         other: vouchers
       responsible_bodies_with_at_least_one_preorder_information_completed:
-        one: responsible body with at least one preorder information completed
-        other: responsible bodies with at least one preorder information completed
+        one: responsible body has given all the information needed for at least one school
+        other: responsible bodies have given all the information needed for at least one school
     devices_performance:
+      decision_made:
+        one: school has had a decision made about who will place orders
+        other: schools have had a decision made about who will place orders
       needs_information:
         one: needs information
         other: need information
+      information_given:
+        one: has information
+        other: have information
       needs_a_contact:
         one: needs a contact
         other: need a contact
       school_contacts:
-        one: school contact
-        other: school contacts
-      ready: ready
+        one: has a contact
+        other: have contacts
+      schools_managed_centrally:
+        one: school will have orders placed centrally
+        other: schools will have orders placed centrally
+      schools_devolved_to:
+        one: school will place its own orders
+        other: schools will place their own orders
   errors:
     format:
       "'%{attribute}' %{message}"
