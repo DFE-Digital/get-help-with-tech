@@ -9,11 +9,12 @@ class SchoolWelcomeWizard < ApplicationRecord
     complete: 'complete',
   }
 
-  def update_step(_params = {})
+  def update_step!(_params = {})
     case step
     when 'welcome'
       privacy!
     when 'privacy'
+      user.seen_privacy_notice!
       complete!
     else
       raise "Unknown step: #{step}"

@@ -5,7 +5,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     it { is_expected.to validate_presence_of :step }
   end
 
-  describe '#update_step' do
+  describe '#update_step!' do
     let(:school_user) { create(:school_user, :new_visitor) }
 
     subject(:wizard) { school_user.school_welcome_wizard }
@@ -16,7 +16,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
 
       it 'moves to the privacy step' do
-        wizard.update_step
+        wizard.update_step!
         expect(wizard.privacy?).to be true
       end
     end
@@ -27,8 +27,15 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
 
       it 'moves to the completed step' do
-        wizard.update_step
+        wizard.update_step!
         expect(wizard.complete?).to be true
+      end
+
+      it 'records when the privacy notice was seen' do
+        Timecop.freeze(Time.zone.now) do
+          wizard.update_step!
+          expect(school_user.privacy_notice_seen_at).to eq(Time.zone.now)
+        end
       end
     end
   end

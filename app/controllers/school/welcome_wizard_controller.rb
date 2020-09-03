@@ -3,7 +3,7 @@ class School::WelcomeWizardController < School::BaseController
   before_action :resume_wizard, except: :next_step
 
   def next_step
-    if @wizard.update_step(wizard_params)
+    if @wizard.update_step!(wizard_params)
       redirect_to next_step_path
     else
       render @wizard.step
