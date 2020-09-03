@@ -1,8 +1,9 @@
 require 'csv'
+require 'open-uri'
 
 class CsvDataFile
-  def initialize(csv_path)
-    @csv_path = csv_path
+  def initialize(csv_uri)
+    @csv_uri = csv_uri
   end
 
 protected
@@ -35,7 +36,8 @@ protected
 private
 
   def read_file
-    CSV.foreach(@csv_path, headers: true, encoding: 'ISO8859-1:utf-8') do |row|
+    csv = URI.open(@csv_uri).read
+    CSV.parse(csv, headers: true, encoding: 'ISO8859-1:utf-8').select do |row|
       next if skip?(row)
 
       yield row

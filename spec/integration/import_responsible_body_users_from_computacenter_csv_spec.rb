@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ImportResponsibleBodyUsersFromComputacenterCsvService do
+RSpec.describe 'importing responsible body users from computacenter CSV' do
   let(:csv_content) do
     <<~CSV
       UserID,Title,First Name,Last Name,Telephone,Email,SoldTos,DefaultSoldto,Default Language,Active,MobileNumber,Guid,,
@@ -24,15 +24,14 @@ RSpec.describe ImportResponsibleBodyUsersFromComputacenterCsvService do
     tmp_csv_file.flush
   end
 
-  subject(:importer) { ImportResponsibleBodyUsersFromComputacenterCsvService.new(csv_uri: tmp_csv_file.path) }
+  let(:data_file) { Computacenter::ResponsibleBodyUsersDataFile.new(tmp_csv_file.path) }
 
   describe 'import' do
-    before do
-      importer.import
-    end
+    let!(:results) { CsvImportService.import!(data_file) }
 
     it 'records any existing users as failures' do
-      expect(importer.failures.map { |f| f[:row]['Email'] }).to include(existing_user.email_address)
+      expect(results[:failures]).not_to be_empty
+      expect(results[:failures].map { |f| f[:record][:email_address] }).to include(existing_user.email_address)
     end
 
     context 'when the DefaultSoldto exists on a ResponsibleBody' do
@@ -55,12 +54,12 @@ RSpec.describe ImportResponsibleBodyUsersFromComputacenterCsvService do
       end
 
       it 'records the row as a failure' do
-        expect(importer.failures.map { |f| f[:row]['Email'] }).to include('e.baigum@nowhere.org')
+        expect(results[:failures].map { |f| f[:record][:email_address] }).to include('e.baigum@nowhere.org')
       end
     end
 
     it 'stores any failures' do
-      expect(importer.failures.size).to eq(2)
+      expect(results[:failures].size).to eq(2)
     end
   end
 end

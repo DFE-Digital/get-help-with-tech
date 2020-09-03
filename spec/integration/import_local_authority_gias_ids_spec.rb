@@ -18,12 +18,10 @@ describe ImportLocalAuthorityGiasIdsService do
     tmp_csv_file.flush
   end
 
-  subject(:importer) { ImportLocalAuthorityGiasIdsService.new(csv_uri: tmp_csv_file.path) }
+  let(:data_file) { LocalAuthorityGiasIdsDataFile.new(tmp_csv_file.path) }
 
   describe '#import' do
-    before do
-      importer.import
-    end
+    let!(:results) { CsvImportService.import!(data_file) }
 
     it 'updates the GIAS IDs on any LAs with matching ENG' do
       expect(test_la_1.reload.gias_id).to eq('991')
@@ -31,7 +29,7 @@ describe ImportLocalAuthorityGiasIdsService do
     end
 
     it 'stores any failed rows' do
-      expect(importer.failures.size).to eq(1)
+      expect(results[:failures].size).to eq(1)
     end
   end
 end
