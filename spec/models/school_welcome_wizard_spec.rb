@@ -44,6 +44,17 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.allocation!
       end
 
+      it 'moves to the order_your_own step' do
+        wizard.update_step!
+        expect(wizard.order_your_own?).to be true
+      end
+    end
+
+    context 'when the step is order_your_own' do
+      before do
+        wizard.order_your_own!
+      end
+
       it 'moves to the completed step' do
         wizard.update_step!
         expect(wizard.complete?).to be true
