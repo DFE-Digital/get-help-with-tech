@@ -74,6 +74,11 @@ en:
       can_order_devices: Yes, give them access to the TechSource website
       can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
+    school_user_welcome_wizard:
+      welcome:
+        title: "You’re signed in as %{school}"
+      privacy:
+        title: Privacy notice
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

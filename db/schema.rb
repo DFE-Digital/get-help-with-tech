@@ -137,6 +137,14 @@ ActiveRecord::Schema.define(version: 2020_09_02_135234) do
     t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
   end
 
+  create_table "school_welcome_wizards", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "step", default: "welcome", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_school_welcome_wizards_on_user_id"
+  end
+
   create_table "schools", force: :cascade do |t|
     t.integer "urn", null: false
     t.string "name", null: false

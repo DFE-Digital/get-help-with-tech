@@ -44,9 +44,23 @@ FactoryBot.define do
     factory :school_user do
       school
       orders_devices { false }
+      has_completed_wizard
 
       trait :orders_devices do
         orders_devices { true }
+      end
+
+      trait :new_visitor do
+        after(:create) do |user|
+          user.school_welcome_wizard&.destroy!
+          user.school_welcome_wizard = create(:school_welcome_wizard, user: user)
+        end
+      end
+
+      trait :has_completed_wizard do
+        after(:create) do |user|
+          user.school_welcome_wizard ||= create(:school_welcome_wizard, :completed, user: user)
+        end
       end
     end
 
