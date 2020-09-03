@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ImportComputacenterReferencesService do
+describe 'importing Computacenter references from csv' do
   let(:csv_content) do
     <<~CSV
       Responsible Body URN,School URN + School Name,School Name (overflow),Address Line 1,Address Line 2 ,Address Line 3,Town/City,Postcode,Ship To Number,Sold To Number
@@ -16,18 +16,15 @@ describe ImportComputacenterReferencesService do
   let!(:school_2) { create(:school, name: 'Example school 2', responsible_body: local_authority_2, urn: '100006') }
   let!(:trust_3) { create(:trust, companies_house_number: '00090003') }
   let!(:academy_3) { create(:school, :academy, name: 'Example academy', responsible_body: trust_3, urn: '100023') }
+  let(:data_file) { Computacenter::ShipToAndSoldToDataFile.new(tmp_csv_file.path) }
 
   before do
     tmp_csv_file << csv_content
     tmp_csv_file.flush
   end
 
-  subject(:importer) { ImportComputacenterReferencesService.new(csv_uri: tmp_csv_file.path) }
-
   describe 'import' do
-    before do
-      importer.import
-    end
+    let!(:results) { CsvImportService.import!(data_file) }
 
     it 'updates the computacenter_reference on any matched ResponsibleBodies' do
       expect(local_authority_2.reload.computacenter_reference).to eq('SOLD_TO_2')
@@ -40,7 +37,7 @@ describe ImportComputacenterReferencesService do
     end
 
     it 'stores any failures' do
-      expect(importer.failures.size).to eq(3)
+      expect(results[:failures].size).to eq(3)
     end
   end
 end
