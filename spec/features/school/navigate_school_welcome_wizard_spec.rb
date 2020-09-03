@@ -15,6 +15,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_allocation_for_my_school
 
     when_i_click_continue
+    then_i_see_the_order_your_own_page
+
+    when_i_click_continue
     then_i_see_the_school_home_page
   end
 
@@ -57,6 +60,11 @@ RSpec.feature 'Navigate school welcome wizard' do
     expect(page).to have_current_path(school_welcome_wizard_allocation_path)
     heading = I18n.t('page_titles.school_user_welcome_wizard.allocation.title', allocation: device_allocation)
     expect(page).to have_text(heading)
+  end
+
+  def then_i_see_the_order_your_own_page
+    expect(page).to have_current_path(school_welcome_wizard_order_your_own_path)
+    expect(page).to have_text('You can only order your full allocation if local restrictions are confirmed')
   end
 
   def then_i_see_the_school_home_page

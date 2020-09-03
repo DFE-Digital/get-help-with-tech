@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     get '/welcome', to: 'welcome_wizard#welcome', as: :welcome_wizard_welcome
     get '/privacy', to: 'welcome_wizard#privacy', as: :welcome_wizard_privacy
     get '/allocation', to: 'welcome_wizard#allocation', as: :welcome_wizard_allocation
+    get '/order-your-own', to: 'welcome_wizard#order_your_own', as: :welcome_wizard_order_your_own
     patch '/next', to: 'welcome_wizard#next_step', as: :welcome_wizard
     resources :users, only: %i[index new create]
   end

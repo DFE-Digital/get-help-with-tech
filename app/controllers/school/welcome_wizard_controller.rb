@@ -19,6 +19,8 @@ class School::WelcomeWizardController < School::BaseController
     @allocation = @school.std_device_allocation&.allocation || 0
   end
 
+  def order_your_own; end
+
 private
 
   def set_wizard

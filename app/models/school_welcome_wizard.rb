@@ -7,6 +7,7 @@ class SchoolWelcomeWizard < ApplicationRecord
     welcome: 'welcome',
     privacy: 'privacy',
     allocation: 'allocation',
+    order_your_own: 'order_your_own',
     complete: 'complete',
   }
 
@@ -20,6 +21,8 @@ class SchoolWelcomeWizard < ApplicationRecord
       user.seen_privacy_notice!
       allocation!
     when 'allocation'
+      order_your_own!
+    when 'order_your_own'
       complete!
     else
       raise "Unknown step: #{step}"
