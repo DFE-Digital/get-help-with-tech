@@ -6,6 +6,7 @@ class SchoolWelcomeWizard < ApplicationRecord
   enum step: {
     welcome: 'welcome',
     privacy: 'privacy',
+    allocation: 'allocation',
     complete: 'complete',
   }
 
@@ -17,6 +18,8 @@ class SchoolWelcomeWizard < ApplicationRecord
       privacy!
     when 'privacy'
       user.seen_privacy_notice!
+      allocation!
+    when 'allocation'
       complete!
     else
       raise "Unknown step: #{step}"

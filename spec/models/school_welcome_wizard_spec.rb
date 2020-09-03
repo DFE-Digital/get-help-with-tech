@@ -26,9 +26,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.privacy!
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the allocation step' do
         wizard.update_step!
-        expect(wizard.complete?).to be true
+        expect(wizard.allocation?).to be true
       end
 
       it 'records when the privacy notice was seen' do
@@ -36,6 +36,17 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
           wizard.update_step!
           expect(school_user.privacy_notice_seen_at).to eq(Time.zone.now)
         end
+      end
+    end
+
+    context 'when the step is allocation' do
+      before do
+        wizard.allocation!
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!
+        expect(wizard.complete?).to be true
       end
     end
   end

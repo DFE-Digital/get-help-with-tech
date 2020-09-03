@@ -15,6 +15,10 @@ class School::WelcomeWizardController < School::BaseController
 
   def privacy; end
 
+  def allocation
+    @allocation = @school.std_device_allocation&.allocation || 0
+  end
+
 private
 
   def set_wizard

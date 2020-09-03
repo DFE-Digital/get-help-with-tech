@@ -105,6 +105,7 @@ Rails.application.routes.draw do
     patch '/chromebooks', to: 'chromebooks#update'
     get '/welcome', to: 'welcome_wizard#welcome', as: :welcome_wizard_welcome
     get '/privacy', to: 'welcome_wizard#privacy', as: :welcome_wizard_privacy
+    get '/allocation', to: 'welcome_wizard#allocation', as: :welcome_wizard_allocation
     patch '/next', to: 'welcome_wizard#next_step', as: :welcome_wizard
     resources :users, only: %i[index new create]
   end
