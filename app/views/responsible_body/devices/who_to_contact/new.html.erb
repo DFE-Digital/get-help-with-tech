@@ -3,11 +3,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">
       <%= @school.name %>
     </h1>
 
     <%= render partial: 'who_to_contact_form', locals: { form: @form } %>
+
+    <h2 class="govuk-heading-l govuk-!-margin-top-4">School details</h2>
+
+    <div class="govuk-inset-text govuk-!-padding-top-0">
+      <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @form.school) %>
+    </div>
 
     <p class="govuk-body">
       <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>

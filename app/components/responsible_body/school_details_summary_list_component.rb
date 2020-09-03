@@ -1,4 +1,5 @@
 class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
+  include ViewHelper
   validates :school, presence: true
 
   delegate :school_will_order_devices?,
@@ -16,20 +17,24 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
         value: render(SchoolPreorderStatusTagComponent.new(school: @school)),
       },
       {
+        key: 'Who will order?',
+        value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
+        change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
+        action: 'who will order',
+      },
+      {
         key: 'Provisional allocation',
         value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
         action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
         action: 'Query allocation',
       },
       {
-        key: 'Type of school',
-        value: @school.type_label,
+        key: 'Can place orders?',
+        value: ['No, no local lockdown restrictions', govuk_link_to('Get devices early for specific circumstances', responsible_body_devices_request_devices_path)].join('<br>').html_safe,
       },
       {
-        key: 'Who will order?',
-        value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
-        change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
-        action: 'who will order',
+        key: 'Type of school',
+        value: @school.type_label,
       },
     ] + school_contact_row_if_contact_present + chromebook_rows_if_needed
   end

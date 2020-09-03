@@ -1,10 +1,6 @@
 <%= form_for form, url: responsible_body_devices_school_who_to_contact_path(form.school.urn), method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
-  <div class="govuk-inset-text govuk-!-padding-top-0">
-    <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: form.school) %>
-  </div>
-
   <%= f.govuk_radio_buttons_fieldset(:who_to_contact, legend: { text: "Who can we contact at the school?", size: 'l', tag: 'h2' }) do %>
     <%- if f.object.headteacher_contact.present? %>
       <%= f.govuk_radio_button :who_to_contact, 'headteacher', label: { text: form.headteacher_option_label }, hint_text: form.headteacher_option_hint_text, link_errors: true %>
