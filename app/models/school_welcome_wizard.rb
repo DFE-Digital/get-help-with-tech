@@ -10,6 +10,8 @@ class SchoolWelcomeWizard < ApplicationRecord
   }
 
   def update_step!(_params = {})
+    return true if complete?
+
     case step
     when 'welcome'
       privacy!

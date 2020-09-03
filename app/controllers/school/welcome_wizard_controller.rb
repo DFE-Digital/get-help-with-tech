@@ -3,6 +3,7 @@ class School::WelcomeWizardController < School::BaseController
   before_action :resume_wizard, except: :next_step
 
   def next_step
+    clear_user_sign_in_token!
     if @wizard.update_step!(wizard_params)
       redirect_to next_step_path
     else
@@ -34,5 +35,9 @@ private
     return school_home_path if @wizard.complete?
 
     send("school_welcome_wizard_#{@wizard.step}_path")
+  end
+
+  def clear_user_sign_in_token!
+    @wizard.user.clear_token!
   end
 end
