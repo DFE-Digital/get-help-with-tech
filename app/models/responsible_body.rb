@@ -38,6 +38,15 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
+  def computacenter_identifier
+    case type
+    when "LocalAuthority"
+      "LEA#{gias_id}"
+    when "Trust"
+      "t#{companies_house_number.to_i}" # QUESTION: is `to_i` needed? is it to remove padded zeros?
+    end
+  end
+
   def self.in_devices_pilot
     where(in_devices_pilot: true)
   end

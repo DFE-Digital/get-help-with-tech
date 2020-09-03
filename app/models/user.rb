@@ -82,4 +82,12 @@ class User < ApplicationRecord
       (is_computacenter? && 'Computacenter') || \
       (is_support? && 'DfE Support')
   end
+
+  def first_name
+    (full_name || '').strip.split(' ').first
+  end
+
+  def last_name
+    (full_name || '').strip.split(' ').last
+  end
 end

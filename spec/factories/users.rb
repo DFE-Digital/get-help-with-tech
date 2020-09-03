@@ -3,6 +3,7 @@ FactoryBot.define do
     full_name { Faker::Name.unique.name }
     email_address { Faker::Internet.unique.email }
     has_seen_privacy_notice
+    telephone { [Faker::PhoneNumber.phone_number, Faker::PhoneNumber.cell_phone].sample }
 
     trait :has_seen_privacy_notice do
       privacy_notice_seen_at { 3.days.ago }
