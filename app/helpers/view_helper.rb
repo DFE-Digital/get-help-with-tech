@@ -30,7 +30,7 @@ module ViewHelper
     govuk_link_to body, devices_guidance_subpage_path(subpage_slug: slug), html_options
   end
 
-  def breadcrumb(items)
+  def breadcrumbs(items)
     render BreadcrumbComponent.new(items)
   end
 
