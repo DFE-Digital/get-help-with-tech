@@ -1,13 +1,16 @@
-<%- content_for :title, t('page_titles.you_are_signed_in') %>
+<%- title = t('page_titles.click_to_sign_in') %>
+<%- content_for :title, title %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.you_are_signed_in') %>
+      <%= title %>
     </h1>
     <p class="govuk-body">
       <%= form_with url: destroy_sign_in_token_path, method: 'delete' do |f| %>
-        <%= f.govuk_submit 'Continue' %>
+        <%= hidden_field_tag :token, params[:token] %>
+        <%= hidden_field_tag :identifier, params[:identifier] %>
+        <%= f.govuk_submit 'Sign in' %>
       <% end %>
     </p>
   </div>
