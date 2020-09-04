@@ -1,0 +1,18 @@
+<%- title = t('page_titles.school_user_welcome_wizard.techsource_account.title') %>
+<%- content_for :title, title %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @wizard, url: school_welcome_wizard_path do |f| %>
+      <%= f.hidden_field :step %>
+      <h1 class="govuk-heading-xl"><%= title %></h1>
+
+      <p class="govuk-body">You will need to place orders on a website called TechSource, which is run by Computacenter.</p>
+
+      <p class="govuk-body">In the next few days you’ll get an email from Computacenter containing instructions on setting up your account.</p>
+
+      <p class="govuk-body">You’ll be asked to reset your password and choose a new one. Keep this password safe, as you’ll need it in the event of local coronavirus restrictions.</p>
+
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>
