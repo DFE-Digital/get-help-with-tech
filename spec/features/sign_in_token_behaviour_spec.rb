@@ -6,13 +6,12 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
   let(:token) { user.generate_token!(ttl: ttl) }
   let(:identifier) { user.sign_in_identifier(token) }
 
-  context 'with a valid sign_in_token link' do
+  context 'with a valid sign_in_token link that has not expired' do
+    let(:ttl) { 3600 }
     let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
 
-    context 'that has not expired' do
-      let(:ttl) { 3600 }
-
-      scenario 'Visiting a valid sign_in_token link signs the user in' do
+    describe 'Visiting a valid sign_in_token link' do
+      it 'does not sign the user in' do
         visit validate_token_url
         expect(page).not_to have_text(user.email_address)
         expect(page).not_to have_button('Sign out')
@@ -20,17 +19,36 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         expect(page).to have_button('Continue')
       end
 
-      scenario 'Visiting the valid sign_in_token link increments sign-in count and timestamp' do
+      it 'does not increment sign-in count' do
+        expect { visit validate_token_url }.not_to change(user.reload, :sign_in_count)
+      end
+
+      it 'does not change last_signed_in_at' do
+        expect { visit validate_token_url }.not_to change(user.reload, :last_signed_in_at)
+      end
+
+      it 'works multiple times' do
+        3.times do
+          visit validate_token_url
+          expect(page).to have_http_status(:ok)
+          expect(page).to have_text('You’re signed in')
+        end
+      end
+    end
+
+    describe 'clicking the Sign in button' do
+      it 'increments sign-in count and last_signed_in_at' do
         timestamp = Date.new(2020, 6, 1)
         Timecop.freeze(timestamp) do
           visit validate_token_url
+          click_on 'Continue'
         end
 
         expect(user.reload.sign_in_count).to eq(1)
         expect(user.reload.last_signed_in_at).to eq(timestamp)
       end
 
-      scenario 'Visiting a sign_in_token link twice does not work the second time if the user continued through the interstitial page' do
+      it 'does not work a second time' do
         visit validate_token_url
         click_on 'Continue'
         click_on 'Sign out'
@@ -39,33 +57,23 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         expect(page).to have_http_status(:bad_request)
         expect(page).not_to have_text('Sign out')
       end
+    end
+  end
 
-      scenario 'Visiting a sign_in_token link twice does not work the second time if the user did not continue through the interstitial page' do
-        visit validate_token_url
-        expect(page).to have_text(I18n.t('page_titles.you_are_signed_in'))
+  context 'with a valid sign_in_token link that has expired' do
+    let(:ttl) { -1 }
+    let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
 
-        visit validate_token_url
-        expect(page).to have_http_status(:ok)
-        expect(page).to have_text(I18n.t('page_titles.you_are_signed_in'))
-        click_on 'Continue'
-        expect(page).to have_selector('h1', text: I18n.t('page_titles.responsible_body_home'))
-      end
+    it 'does not sign the user in' do
+      visit validate_token_url
+      expect(page).to have_http_status(:bad_request)
+      expect(page).not_to have_text('Sign out')
     end
 
-    context 'that has expired' do
-      let(:ttl) { -1 }
-
-      scenario 'Visiting a valid sign_in_token link after it expires does not sign the user in' do
-        visit validate_token_url
-        expect(page).to have_http_status(:bad_request)
-        expect(page).not_to have_text('Sign out')
-      end
-
-      scenario 'Visiting a valid but expired token tells the user it has expired' do
-        visit validate_token_url
-        expect(page).to have_text('The link you clicked has expired')
-        expect(page).to have_link('Request a new sign-in link')
-      end
+    it 'tells the user it has expired' do
+      visit validate_token_url
+      expect(page).to have_text('The link you clicked has expired')
+      expect(page).to have_link('Request a new sign-in link')
     end
   end
 

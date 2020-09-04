@@ -81,6 +81,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it redirects to the school welcome wizard welcome page' do
       visit validate_token_url_for(user)
+      click_on 'Continue'
       expect(page).to have_current_path(school_welcome_wizard_welcome_path)
       expect(page).to have_text "You’re signed in as #{user.school.name}"
     end

@@ -73,4 +73,13 @@ class User < ApplicationRecord
       errors.add(:orders_devices, I18n.t('activerecord.errors.models.user.attributes.orders_devices.user_limit'))
     end
   end
+
+  def organisation_name
+    mobile_network&.brand || \
+      responsible_body&.local_authority_official_name || \
+      responsible_body&.name || \
+      school&.name || \
+      (is_computacenter? && 'Computacenter') || \
+      (is_support? && 'DfE Support')
+  end
 end
