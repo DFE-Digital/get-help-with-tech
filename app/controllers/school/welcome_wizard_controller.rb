@@ -21,6 +21,8 @@ class School::WelcomeWizardController < School::BaseController
 
   def order_your_own; end
 
+  def will_you_order; end
+
 private
 
   def set_wizard
@@ -34,6 +36,7 @@ private
   def wizard_params
     params.require(:school_welcome_wizard).permit(
       :step,
+      :orders_devices,
     )
   end
 
