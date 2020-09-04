@@ -1,21 +1,15 @@
 <% content_for :title, "#{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.support_responsible_bodies'), support_devices_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= @responsible_body.name %>
-      </li>
-    </ol>
-  </div>
+  <%= breadcrumbs([
+    { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
+    @responsible_body.name,
+  ]) %>
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">Internet pilot</span>
+      <span class="govuk-caption-xl">Devices pilot</span>
       <%= @responsible_body.name %>
     </h1>
 
@@ -44,5 +38,34 @@
     </table>
 
     <%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body, pilot: 'devices') %>
+  </div>
+
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Schools</h2>
+
+    <table id="responsible-body-schools" class="govuk-table">
+      <caption class="govuk-table__caption">Schools managed by <%= @responsible_body.name %></caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Device allocation</th>
+          <th scope="col" class="govuk-table__header">Device cap</th>
+          <th scope="col" class="govuk-table__header">Devices ordered</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @schools.each do |school| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= school.name %><br><%= school.type_label %></td>
+            <td class="govuk-table__cell"><%= render SchoolPreorderStatusTagComponent.new(school: school) %></td>
+            <%- device_allocations_data = school.device_allocations.detect(&:std_device?) %>
+            <td class="govuk-table__cell"><%= device_allocations_data&.allocation || 0 %></td>
+            <td class="govuk-table__cell"><%= device_allocations_data&.cap || 0 %></td>
+            <td class="govuk-table__cell"><%= device_allocations_data&.devices_ordered || 0 %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
