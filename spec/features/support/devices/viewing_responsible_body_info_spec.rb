@@ -35,6 +35,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
   def and_it_has_some_schools
     alpha = create(:school, :primary, :with_std_device_allocation,
+                   urn: 567_890,
                    name: 'Alpha Primary School',
                    responsible_body: local_authority)
     alpha.std_device_allocation.update!(
@@ -44,6 +45,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     )
 
     create(:school, :secondary, :with_std_device_allocation,
+           urn: 123_456,
            name: 'Beta Secondary School',
            responsible_body: local_authority)
   end
@@ -80,7 +82,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     expect(responsible_body_page.school_rows.size).to eq(2)
 
     first_row = responsible_body_page.school_rows[0]
-    expect(first_row).to have_text('Alpha Primary School')
+    expect(first_row).to have_text('Alpha Primary School (567890)')
     expect(first_row).to have_text('Needs a contact')
     expect(first_row).to have_text('5') # allocations
     expect(first_row).to have_text('3') # caps
@@ -88,7 +90,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
     second_row = responsible_body_page.school_rows[1]
     expect(second_row).to have_text('Needs a contact')
-    expect(second_row).to have_text('Beta Secondary School')
+    expect(second_row).to have_text('Beta Secondary School (123456)')
     expect(second_row).to have_text('0') # allocations or caps or device orders
   end
 end

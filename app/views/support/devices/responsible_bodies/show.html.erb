@@ -47,7 +47,7 @@
       <caption class="govuk-table__caption">Schools managed by <%= @responsible_body.name %></caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Name and URN</th>
           <th scope="col" class="govuk-table__header">Status</th>
           <th scope="col" class="govuk-table__header">Device allocation</th>
           <th scope="col" class="govuk-table__header">Device cap</th>
@@ -57,7 +57,7 @@
       <tbody class="govuk-table__body">
         <% @schools.each do |school| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= school.name %><br><%= school.type_label %></td>
+            <td class="govuk-table__cell"><%= school.name %> (<%= school.urn %>)<br><%= school.type_label %></td>
             <td class="govuk-table__cell"><%= render SchoolPreorderStatusTagComponent.new(school: school) %></td>
             <%- device_allocations_data = school.device_allocations.detect(&:std_device?) %>
             <td class="govuk-table__cell"><%= device_allocations_data&.allocation || 0 %></td>
