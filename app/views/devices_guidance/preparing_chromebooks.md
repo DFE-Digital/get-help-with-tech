@@ -29,7 +29,7 @@ We will not actively monitor users' activity on the devices. Websites users visi
 
 If you decide not to use Cisco Umbrella, we strongly recommend that you enable alternative security settings before you distribute the devices. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to.
 
-You can report access to any inappropriate content that should not be allowed by Cisco Umbrella through the XMA Service Desk.
+You can report access to any inappropriate content that should not be allowed by Cisco Umbrella by emailing COVID.TECHNOLOGY@education.gov.uk.
 
 Find out [how to access support](/devices/support-and-maintenance) to report Cisco Umbrella issues.
 
