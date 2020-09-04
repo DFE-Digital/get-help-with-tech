@@ -77,7 +77,7 @@ See government advice on:
 * [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
 * [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
 
-## Installing your own software and settings
+## Requesting local admin and BIOS passwords, and installing your own software and settings
 
 To install your own software or replace the mobile device management you will need to reset the device using the instructions below. This will remove all of the pre-installed configuration and software from the device.
 
@@ -85,17 +85,30 @@ You will need to do this for each device individually.
 
 It is possible to install some software on the devices without resetting them, but anything you try to install yourself may be lost when the device checks in with the MDM, which happens at regular intervals.
 
-Find out [how to access support](/devices/support-and-maintenance) if you need help setting up your own mobile device management.
+### Who can request local admin and BIOS passwords to reset devices
 
-### Who can request passwords and programs to reset devices
+Local admin and BIOS passwords are needed to reset devices to factory default settings and install new software. 
 
-Local admin passwords are needed to reset devices and install new software. An executable program is required to unlock BIOS settings.
+For security, only the following people can view this information:
 
-For security, only someone nominated as a technical contact for the device order can request this information. The local authority or trust is responsible for keeping this information secure when sharing it with colleagues who are preparing devices for children and young people.
+* a key contact (the person that completed your device forecast for devices delivered between May and August) 
+* a technical contact (nominated when the devices were ordered between May and August)
+* a support contact (someone given access to the Support Portal by your key contact)
+* anyone authorised to [order laptops and tablets](https://www.gov.uk/guidance/get-laptops-and-tablets-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) for disadvantaged children requiring access to remote education due to shielding or local coronavirus (COVID-19) restrictions 
+ 
+Your local authority, trust or school is responsible for keeping this information secure when sharing it with colleagues who are preparing devices for children and young people.
 
-Please see step 1 in the  section below to find out how to make a request.
+To log in to the [Support Portal](https://computacenterprod.service-now.com/dfe) for the first time, enter your email address and click ‘forgotten password’. If you’re authorised to access the support portal, you’ll receive an email with instructions on how to set up a password.
 
-If you’re unsure who your technical contact is, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the school, local authority or trust that ordered the devices.
+If you do not have access to the portal but think you should, please email COVID.TECHNOLOGY@education.gov.uk(mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the school, local authority or trust that ordered the devices.
+
+### How to get local admin and BIOS passwords
+
+1. Log in to the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe)
+
+2. Click on the ‘How do I?’ section 
+
+3. Select the ‘Get local admin and BIOS passwords for Microsoft Windows laptops and tablets’ guide and follow the instructions
 
 ### How to reset Microsoft devices so you can add your own software and settings
 
@@ -103,54 +116,13 @@ To install your own software or replace Cisco Umbrella and Microsoft Intune you�
 
 You’ll need to do this for each device individually.
 
-1.  Request your local admin passwords and BIOS program.
+For guidance on how to do this:
 
-    A nominated technical contact must request these from the XMA support desk before you can reset your devices. For security, schools cannot request these themselves, unless they’re a single academy trust that ordered devices directly, or had a member of staff nominated as a technical content when the order was placed by their local authority or academy trust.
-    
-    Your technical contact should email [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) and provide the serial numbers for any devices you want to reset. Serial numbers will be provided with the email Computacenter sends to technical contacts when they dispatch your devices.
+1. Log in to the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe)
 
-2.  Restore your device’s factory settings.
+2. Click on the ‘How do I?’ section 
 
-    **You must ensure the device is connected to power throughout this process.**
-
-    1. Boot the device and login to the local admin account
-        1.  Device boots into localuser
-        2.  Logout of localuser
-        3.  Login as the local admin user: .\\localadmin
-        4.  Enter the local admin password for that device, supplied by the XMA support desk
-
-    2.  Enable the recovery partition
-        1.  Run the cmd application “as administrator”
-        2.  Enable the recovery partition using the command: reagentc /enable
-        3.  The output should say: “Operation Successful”
-        4.  Check the partition status using the command: reagentc /info
-        5.  The partition should now be: “Enabled”
-
-    3.  Unlock the device BIOS
-
-        1.  Follow the instructions provided by XMA which will be correct for your device type. This usually includes running a program “as administrator” which removes password protection from the BIOS and enables network and USB boot options, but please refer to instructions from the XMA support team.
-
-    4.  Logout with “change user” to get to the login screen
-
-        1.  Hold <shift> and click on the power icon and then “restart”
-        2.  The device should enter a “Troubleshoot” menu
-        3.  Select “reset this PC”
-        4.  Select “remove everything”
-        5.  If the above sequence doesn’t work then you should be able to enter recovery mode using the relevant key combination for the device manufacturer at boot:
-            * HP: press F9 key
-            * ASUS: press F9 key “continuously”
-            * Lenovo: press FN+F11 keys at the same time
-            * Dynabook (Toshiba): press and hold 0 (zero) key
-
-    5.  The device should reboot into “Reset this PC”
-
-        1.  Select “No - remove provisioning packages...”
-        2.  Select “Clean the drive fully”
-        3.  Select “reset” to confirm
-
-3.  Install your own software
-
-    You can install your own software, settings and MDM once the device has been reset. If you need help setting up your MDM, please contact the XMA service desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk).
+3. Select ‘How to reset your Microsoft Windows device to default factory settings’ and follow the instructions to use local admin and BIOS passwords to reset your devices
 
 ## How to help anyone experiencing problems logging in to Windows devices
 
