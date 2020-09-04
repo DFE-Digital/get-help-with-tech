@@ -15,7 +15,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         visit validate_token_url
         expect(page).not_to have_text(user.email_address)
         expect(page).not_to have_button('Sign out')
-        expect(page).to have_text('Click the button below to sign in')
+        expect(page).to have_text('You\'re signed in as')
         expect(page).to have_button('Sign in')
       end
 
@@ -31,7 +31,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         3.times do
           visit validate_token_url
           expect(page).to have_http_status(:ok)
-          expect(page).to have_text('Click the button below to sign in')
+          expect(page).to have_text('You\'re signed in as')
         end
       end
     end
@@ -41,7 +41,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         timestamp = Date.new(2020, 6, 1)
         Timecop.freeze(timestamp) do
           visit validate_token_url
-          click_on 'Sign in'
+          click_on 'Continue'
         end
 
         expect(user.reload.sign_in_count).to eq(1)
@@ -50,7 +50,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
       it 'does not work a second time' do
         visit validate_token_url
-        click_on 'Sign in'
+        click_on 'Continue'
         click_on 'Sign out'
 
         visit validate_token_url

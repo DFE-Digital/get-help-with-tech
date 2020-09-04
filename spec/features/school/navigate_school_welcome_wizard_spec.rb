@@ -40,7 +40,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def when_i_sign_in_for_the_first_time
     visit validate_token_url_for(@user)
-    click_on 'Sign in'
+    click_on 'Continue'
   end
 
   def then_i_see_a_welcome_page_for_my_school
@@ -80,7 +80,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def and_then_sign_in_again
     visit validate_token_url_for(@user)
-    click_on 'Sign in'
+    click_on 'Continue'
   end
 
   def device_allocation

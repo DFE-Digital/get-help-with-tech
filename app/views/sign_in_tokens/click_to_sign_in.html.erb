@@ -1,4 +1,4 @@
-<%- title = t('page_titles.click_to_sign_in') %>
+<%- title = t('page_titles.click_to_sign_in', organisation: @user.organisation_name) %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">
@@ -10,7 +10,7 @@
       <%= form_with url: destroy_sign_in_token_path, method: 'delete' do |f| %>
         <%= hidden_field_tag :token, params[:token] %>
         <%= hidden_field_tag :identifier, params[:identifier] %>
-        <%= f.govuk_submit 'Sign in' %>
+        <%= f.govuk_submit 'Continue' %>
       <% end %>
     </p>
   </div>

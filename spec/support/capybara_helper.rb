@@ -8,7 +8,7 @@ module CapybaraHelper
 
   def sign_in_as(user)
     visit validate_token_url_for(user)
-    click_on 'Sign in'
+    click_on 'Continue'
   end
 
   def sign_out

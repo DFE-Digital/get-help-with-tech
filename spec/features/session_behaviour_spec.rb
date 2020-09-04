@@ -82,7 +82,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 're-using the same magic-link redirects to the home page for user' do
       visit validate_token_url
-      click_on 'Sign in'
+      click_on 'Continue'
       expect(page).to have_current_path(responsible_body_home_path)
     end
 
@@ -93,7 +93,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 'using a magic link from a different user signs in as the different user' do
       visit other_user_magic_link
-      click_on 'Sign in'
+      click_on 'Continue'
       expect(page).to have_content(other_user.email_address)
     end
   end

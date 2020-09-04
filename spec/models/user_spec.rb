@@ -110,4 +110,56 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#organisation_name' do
+    let(:user) { build(:user) }
+
+    context 'when the user is from a mobilenetwork' do
+      before { user.mobile_network = build(:mobile_network) }
+
+      it 'returns the mobile networks brand' do
+        expect(user.organisation_name).to eq(user.mobile_network.brand)
+      end
+    end
+
+    context 'when the user is from a trust' do
+      before { user.responsible_body = build(:trust) }
+
+      it 'returns the trusts name' do
+        expect(user.organisation_name).to eq(user.responsible_body.name)
+      end
+    end
+
+    context 'when the user is from a local authority' do
+      before { user.responsible_body = build(:local_authority) }
+
+      it 'returns the local authoritys official name' do
+        expect(user.organisation_name).to eq(user.responsible_body.local_authority_official_name)
+      end
+    end
+
+    context 'when the user is from a school' do
+      before { user.school = build(:school) }
+
+      it 'returns the schools name' do
+        expect(user.organisation_name).to eq(user.school.name)
+      end
+    end
+
+    context 'when the user is from computacenter' do
+      before { user.is_computacenter = true }
+
+      it 'returns Computacenter' do
+        expect(user.organisation_name).to eq('Computacenter')
+      end
+    end
+
+    context 'when the user is a support user' do
+      before { user.is_support = true }
+
+      it 'returns DfE Support' do
+        expect(user.organisation_name).to eq('DfE Support')
+      end
+    end
+  end
 end
