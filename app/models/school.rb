@@ -62,7 +62,7 @@ class School < ApplicationRecord
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
 
-  def can_order_devices?(device_type='std_device')
+  def can_order_devices?(device_type = 'std_device')
     allocation = device_allocations.by_device_type(device_type).first
     allocation&.cap.to_i > allocation&.devices_ordered.to_i
   end

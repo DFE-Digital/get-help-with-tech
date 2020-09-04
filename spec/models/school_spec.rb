@@ -214,6 +214,5 @@ RSpec.describe School, type: :model do
         expect(school.can_order_devices?).to eq(false)
       end
     end
-
   end
 end
