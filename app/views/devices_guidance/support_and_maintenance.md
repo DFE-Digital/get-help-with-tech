@@ -1,8 +1,8 @@
 Local authorities (LAs), academy trusts and schools will [own these devices](/devices/distributing-devices) and will need to support their users.
 
-The Department for Education’s delivery partner, XMA, will provide local admin passwords for Windows devices, so that you can reset the devices to add your own settings. 
+The Department for Education's delivery partner, Computacenter, provides a [Support Portal](https://computacenterprod.service-now.com/dfe). If you're an authorised user, you can use it to access local admin and BIOS passwords if you want to reset Microsoft Windows devices to add your own settings.  
 
-For support with 4G wireless routers, key contacts (the person that completed your device forecast), technical contacts can access [a support portal](https://computacenterprod.service-now.com/dfe). If you ordered after August 2020 then anyone with a TechSource account can request this support. They can also share access with colleagues.
+For support with 4G wireless routers, key contacts (the person that completed your device forecast) and technical contacts can access [a Support Portal](https://computacenterprod.service-now.com/dfe). If you ordered after August 2020 then anyone with a TechSource account can request this support. They can also share access with colleagues.
 
 ## Support for schools, young people and families
 
@@ -12,27 +12,15 @@ Where devices are owned by schools, they will need to provide support to the pup
 
 Those providing support should be able to solve general IT problems (such as password resets) so that the end user can continue using their device as soon as possible.
 
-## Support for local authorities, and academy trusts
+## Support for local authorities, academy trusts and schools
 
-XMA will support the LAs, academy trusts and schools that own the devices. Their technical service desk can:
-
-* provide local admin passwords and BIOS programs to remove Microsoft Intune
-* help you manage mobile device management (MDM) and Cisco Umbrella settings
-
-The key contact (the person that completed your device forecast) or technical contact (nominated when the order was placed) can request this support by raising a ticket with the XMA Service Desk. If you ordered after August 2020 then anyone with a TechSource account can request support.
-
-Log an issue by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk).
-
-To help us verify you for security, please make sure you email us from that address that:
-
-* you used to complete the device forecast (if you’re a key contact)
-* was entered when the devices were ordered (if you’re a technical contact) 
-
-Once you have contacted the XMA Service Desk, they will log a ticket and send a confirmation email with a unique reference number.
-
-Tickets will be prioritised depending on how urgent they are, and the impact of the issue. The incident or request will be sent to the relevant support staff to help with your issue.
+If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, please email COVID.TECHNOLOGY@education.gov.uk. We aim to respond within 3 working days.
 
 ## Microsoft Windows devices: how to get support
+
+### Requesting local admin and BIOS passwords, and installing your own software and settings
+
+Please [see our guidance on preparing Microsoft Windows devices](/devices/preparing-microsoft-windows-laptops-and-tablets) for information.
 
 ### If you receive a device that does not work on arrival 
 
@@ -46,18 +34,16 @@ If you discover a fault with the devices after 19 December 2020, it may still be
 
 ### Receiving a replacement device from Computacenter
 
-Your replacement will be provided identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software if you requested that in your original order. You can contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) if you have any issues.
+Your replacement will be provided identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software if you requested that in your original order. Please contact COVID.TECHNOLOGY@education.gov.uk(mailto:COVID.TECHNOLOGY@education.gov.uk) if you have any issues.
 
 
 ### Receiving a replacement device from the manufacturer
 
-As Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email the XMA Service Desk at [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) to get your device enrolled before distributing it.
+As Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email COVID.TECHNOLOGY@education.gov.uk(mailto:COVID.TECHNOLOGY@education.gov.uk) to get your device enrolled before distributing it.
 
 ## If you want to remove Microsoft Intune to install your own mobile device management (MDM)
 
-Find out [how to reset your device to factory settings to set up your own MDM](#How-to-reset-Microsoft-Windows-devices-so-you-can-add-your-own-software-and-settings).
-
-The XMA Service Desk support is limited to the provision of local admin passwords to remove Microsoft Intune and to manage global MDM and Cisco Umbrella settings for every device enrolled.
+Find out [how to reset your device to factory settings to set up your own MDM](/devices/preparing-microsoft-windows-laptops-and-tablets).
 
 Please do not reset the device until you are ready to apply your own MDM. Once the Microsoft Windows device has been reset to factory default settings, it will no longer have Microsoft Intune or Cisco Umbrella installed.
 
@@ -79,7 +65,7 @@ Your replacement will be built identically to the original device, and will auto
 
 ### Receiving a replacement device from Computacenter
 
-As Computacenter will not have been involved in the replacement process, the device will arrive without any settings installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please contact the XMA Service Desk by emailing [DFE.Support@xma.co.uk](mailto:DFE.Support@xma.co.uk) to get your device enrolled before distributing it.
+As Computacenter will not have been involved in the replacement process, the device will arrive without any settings installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email COVID.TECHNOLOGY@education.gov.uk(mailto:covid.technology@education.gov.uk) to get your device enrolled before distributing it.
 
 ## 4G wireless routers: how to get support
 
