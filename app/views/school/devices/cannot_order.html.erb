@@ -1,0 +1,23 @@
+<%- title = t('page_titles.school_cannot_order_devices') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+    { t('page_titles.school_home') => school_home_path },
+    title,
+  ]) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <p class="govuk-body">You can only place orders when local coronavirus restrictions are confirmed.</p>
+    <p class="govuk-body">We’ll contact you as soon as you’re able to place orders.</p>
+    <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', school_request_devices_path %> who:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>are extremely clinically vulnerable and must continue shielding on&nbsp;official&nbsp;advice</li>
+      <li>cannot attend school – even though theirs is open – because they live in a different area with local coronavirus restrictions</li>
+    </ul>
+  </div>
+</div>

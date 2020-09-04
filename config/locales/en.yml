@@ -66,6 +66,8 @@
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
+    school_cannot_order_devices: You cannot order devices yet
+    school_order_devices: Order devices
     school_request_devices: Request devices for specific circumstances
     school_details: Check your school details
     school_edit_chromebooks: Will your school need to order Chromebooks?

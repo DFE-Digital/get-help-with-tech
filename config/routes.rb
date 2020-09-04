@@ -99,7 +99,8 @@ Rails.application.routes.draw do
 
   namespace :school do
     get '/', to: 'home#show', as: :home
-    get '/request-devices', to: 'home#request_devices'
+    get '/request-devices', to: 'devices#request_devices'
+    get '/order-devices', to: 'devices#order'
     get '/details', to: 'details#show', as: :details
     get '/chromebooks/edit', to: 'chromebooks#edit'
     patch '/chromebooks', to: 'chromebooks#update'

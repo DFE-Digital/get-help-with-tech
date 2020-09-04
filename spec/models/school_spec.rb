@@ -166,4 +166,53 @@ RSpec.describe School, type: :model do
       it { is_expected.to be_blank }
     end
   end
+
+  describe '#can_order_devices?' do
+    let(:school) { create(:school) }
+
+    context 'when there is no allocation of the given type' do
+      it 'is false' do
+        expect(school.can_order_devices?).to eq(false)
+      end
+    end
+
+    context 'when there is an allocation of the given type with cap = devices_ordered' do
+      let(:cap) { 0 }
+      let(:devices_ordered) { 0 }
+
+      before do
+        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', cap: cap, devices_ordered: devices_ordered)
+      end
+
+      it 'is false' do
+        expect(school.can_order_devices?).to eq(false)
+      end
+    end
+
+    context 'when there is an allocation of the given type with cap > devices_ordered' do
+      let(:cap) { 2 }
+      let(:devices_ordered) { 1 }
+
+      before do
+        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', cap: cap, devices_ordered: devices_ordered)
+      end
+
+      it 'is true' do
+        expect(school.can_order_devices?).to eq(true)
+      end
+    end
+
+    context 'when there is an allocation of the given type with cap < devices_ordered' do
+      let(:cap) { 1 }
+      let(:devices_ordered) { 2 }
+
+      before do
+        school.device_allocations << create(:school_device_allocation, school: school, device_type: 'std_device', cap: cap, devices_ordered: devices_ordered)
+      end
+
+      it 'is false' do
+        expect(school.can_order_devices?).to eq(false)
+      end
+    end
+  end
 end
