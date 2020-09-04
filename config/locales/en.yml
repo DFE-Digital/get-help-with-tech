@@ -94,6 +94,8 @@
         no_label: 'No'
         errors:
           choose_option: Tell us whether you will order devices
+      techsource_account:
+        title: You will get an invite to the Computacenter TechSource website
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

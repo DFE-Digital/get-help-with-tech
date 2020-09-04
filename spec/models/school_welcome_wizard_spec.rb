@@ -80,9 +80,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.will_you_order!
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the techsource_account step' do
         wizard.update_step!({ orders_devices: '1' })
-        expect(wizard.complete?).to be true
+        expect(wizard.techsource_account?).to be true
       end
 
       it 'records the choice and updates the user' do
@@ -122,6 +122,17 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       it 'adds an error message' do
         wizard.update_step!({ step: 'will_you_order' })
         expect(wizard.errors.keys).to include(:orders_devices)
+      end
+    end
+
+    context 'when the step is techsource_account' do
+      before do
+        wizard.techsource_account!
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!
+        expect(wizard.complete?).to be true
       end
     end
   end

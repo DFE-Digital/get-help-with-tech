@@ -9,6 +9,7 @@ class SchoolWelcomeWizard < ApplicationRecord
     allocation: 'allocation',
     order_your_own: 'order_your_own',
     will_you_order: 'will_you_order',
+    techsource_account: 'techsource_account',
     complete: 'complete',
   }
 
@@ -31,10 +32,16 @@ class SchoolWelcomeWizard < ApplicationRecord
       end
     when 'will_you_order'
       if update_will_you_order(params)
-        complete!
+        if orders_devices?
+          techsource_account!
+        else
+          complete!
+        end
       else
         false
       end
+    when 'techsource_account'
+      complete!
     else
       raise "Unknown step: #{step}"
     end
