@@ -19,7 +19,11 @@ RSpec.feature 'Navigate school welcome wizard' do
 
     when_i_click_continue
     then_i_see_the_will_you_order_page
+
     when_i_choose_yes_and_click_continue
+    then_i_see_the_techsource_account_page
+
+    when_i_click_continue
     then_i_see_the_school_home_page
   end
 
@@ -101,6 +105,11 @@ RSpec.feature 'Navigate school welcome wizard' do
   def then_i_see_the_will_you_order_page
     expect(page).to have_current_path(school_welcome_wizard_will_you_order_path)
     expect(page).to have_text('Will you be one of the people placing orders for your school?')
+  end
+
+  def then_i_see_the_techsource_account_page
+    expect(page).to have_current_path(school_welcome_wizard_techsource_account_path)
+    expect(page).to have_text('You will get an invite to the Computacenter TechSource website')
   end
 
   def when_i_choose_yes_and_click_continue
