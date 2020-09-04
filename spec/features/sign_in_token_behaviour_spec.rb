@@ -15,8 +15,8 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         visit validate_token_url
         expect(page).not_to have_text(user.email_address)
         expect(page).not_to have_button('Sign out')
-        expect(page).to have_text('You\'re signed in')
-        expect(page).to have_button('Sign in')
+        expect(page).to have_text('You’re signed in')
+        expect(page).to have_button('Continue')
       end
 
       it 'does not increment sign-in count' do
@@ -31,7 +31,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
         3.times do
           visit validate_token_url
           expect(page).to have_http_status(:ok)
-          expect(page).to have_text('You\'re signed in')
+          expect(page).to have_text('You’re signed in')
         end
       end
     end
