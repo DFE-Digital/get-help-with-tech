@@ -2,7 +2,6 @@ class SchoolWelcomeWizard < ApplicationRecord
   belongs_to :user
 
   validates :step, presence: true
-  validates :orders_devices, inclusion: { in: %w[yes no] }, if: :will_you_order?
 
   enum step: {
     welcome: 'welcome',
@@ -12,8 +11,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     will_you_order: 'will_you_order',
     complete: 'complete',
   }
-
-  attr_accessor :orders_devices
 
   def update_step!(params = {})
     return true if complete?
@@ -33,8 +30,7 @@ class SchoolWelcomeWizard < ApplicationRecord
         complete!
       end
     when 'will_you_order'
-      update_will_you_order(params)
-      if valid?
+      if update_will_you_order(params)
         complete!
       else
         false
@@ -47,15 +43,27 @@ class SchoolWelcomeWizard < ApplicationRecord
 private
 
   def update_will_you_order(params)
-    self.orders_devices = params.fetch(:orders_devices, nil)
+    user_orders_devices = params.fetch(:orders_devices, nil)
+
+    if user_orders_devices.nil? || !user_orders_devices.in?(%w[1 0])
+      errors.add(:orders_devices, I18n.t('page_titles.school_user_welcome_wizard.will_you_order.errors.choose_option'))
+      false
+    else
+      SchoolWelcomeWizard.transaction do
+        update!(orders_devices: user_orders_devices)
+        user.update!(orders_devices: user_orders_devices)
+      end
+      true
+    end
   end
 
   def show_will_you_order_section?
-    true
+    @first_school_user.nil? ? set_first_user_flag! : @first_school_user
   end
 
   def set_first_user_flag!
     is_first_user_for_school = user.school.users.count == 1
     update!(first_school_user: is_first_user_for_school)
+    is_first_user_for_school
   end
 end

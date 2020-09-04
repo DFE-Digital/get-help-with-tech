@@ -87,6 +87,8 @@ en:
         title: Will you be one of the people placing orders for your school?
         yes_label: Yes, I will order devices
         no_label: 'No'
+        errors:
+          choose_option: Tell us whether you will order devices
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -345,10 +347,6 @@ en:
               invalid: The URN must be 6 digits
             name:
               blank: Enter the name of the establishment
-        school_welcome_wizard:
-          attributes:
-            orders_devices:
-              inclusion: Tell us whether you will order devices
   time:
     formats:
       time_only: "%l:%M%P"

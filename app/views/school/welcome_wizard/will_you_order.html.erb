@@ -11,12 +11,11 @@
       <h1 class="govuk-heading-xl"><%= title %></h1>
 
       <%= f.govuk_radio_buttons_fieldset(:orders_devices) do %>
-      <!-- , legend: {size: 'xl', text: title }) do %> -->
         <%= f.govuk_radio_button :orders_devices,
-                                 'yes',
+                                 '1',
                                  label: { text: t(:yes_label, scope: scope) } %>
         <%= f.govuk_radio_button :orders_devices,
-                                 'no',
+                                 '0',
                                  label: { text: t(:no_label, scope: scope) } %>
       <%- end %>
 
