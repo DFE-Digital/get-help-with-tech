@@ -102,6 +102,8 @@
         no_label: No, not at the moment
         errors:
           will_other_order: Tell us whether you need to add someone
+      devices_you_can_order:
+        title: You can order a range of laptops and tablets
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

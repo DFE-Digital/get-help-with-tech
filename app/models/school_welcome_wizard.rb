@@ -11,6 +11,7 @@ class SchoolWelcomeWizard < ApplicationRecord
     will_you_order: 'will_you_order',
     techsource_account: 'techsource_account',
     will_other_order: 'will_other_order',
+    devices_you_can_order: 'devices_you_can_order',
     complete: 'complete',
   }
 
@@ -33,7 +34,7 @@ class SchoolWelcomeWizard < ApplicationRecord
       if show_will_you_order_section?
         will_you_order!
       else
-        complete!
+        devices_you_can_order!
       end
     when 'will_you_order'
       if update_will_you_order(params)
@@ -42,7 +43,7 @@ class SchoolWelcomeWizard < ApplicationRecord
         elsif less_than_3_users_can_order?
           will_other_order!
         else
-          complete!
+          devices_you_can_order!
         end
       else
         false
@@ -51,14 +52,16 @@ class SchoolWelcomeWizard < ApplicationRecord
       if less_than_3_users_can_order?
         will_other_order!
       else
-        complete!
+        devices_you_can_order!
       end
     when 'will_other_order'
       if update_will_other_order(params)
-        complete!
+        devices_you_can_order!
       else
         false
       end
+    when 'devices_you_can_order'
+      complete!
     else
       raise "Unknown step: #{step}"
     end
