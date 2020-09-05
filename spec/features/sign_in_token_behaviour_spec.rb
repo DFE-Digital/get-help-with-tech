@@ -38,7 +38,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
     describe 'clicking the Sign in button' do
       it 'increments sign-in count and last_signed_in_at' do
-        timestamp = Date.new(2020, 6, 1)
+        timestamp = Time.zone.parse('2020-06-01')
         Timecop.freeze(timestamp) do
           visit validate_token_url
           click_on 'Continue'

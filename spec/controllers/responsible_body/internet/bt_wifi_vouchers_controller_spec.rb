@@ -20,11 +20,11 @@ RSpec.describe ResponsibleBody::Internet::BTWifiVouchersController, type: :contr
       end
 
       it 'sets the `distributed_at` for vouchers that have not been distributed yet' do
-        timestamp = Date.new(2020, 6, 1)
+        timestamp = Time.zone.parse('2020-06-01')
         @vouchers[0].update!(distributed_at: timestamp)
         expect(@vouchers[1].distributed_at).to be_nil
 
-        some_time_later = Date.new(2020, 6, 5)
+        some_time_later = Time.zone.parse('2020-06-05')
         Timecop.freeze(some_time_later) do
           get :index, format: :csv
         end
