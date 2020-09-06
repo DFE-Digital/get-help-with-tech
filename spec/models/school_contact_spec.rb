@@ -16,5 +16,6 @@ RSpec.describe SchoolContact, type: :model do
     it { is_expected.to validate_uniqueness_of(:email_address).scoped_to(:school_id) }
     it { is_expected.to validate_presence_of(:full_name) }
     it { is_expected.to validate_presence_of(:role) }
+    it { is_expected.not_to allow_value('invalid.email').for(:email_address) }
   end
 end
