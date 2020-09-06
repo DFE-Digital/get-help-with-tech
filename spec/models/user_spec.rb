@@ -74,6 +74,10 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'email address validation' do
+    it { is_expected.not_to allow_value('invalid.email').for(:email_address) }
+  end
+
   describe 'email address should not be case-sensitive (bug 555)' do
     context 'a user with the same email as an existing user, but different case' do
       let(:new_user) { build(:local_authority_user, email_address: 'Email.Address@example.com') }
