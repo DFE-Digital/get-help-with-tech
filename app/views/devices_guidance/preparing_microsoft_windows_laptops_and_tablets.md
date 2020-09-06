@@ -100,7 +100,7 @@ Your local authority, trust or school is responsible for keeping this informatio
 
 To log in to the [Support Portal](https://computacenterprod.service-now.com/dfe) for the first time, enter your email address and click ‘forgotten password’. If you’re authorised to access the support portal, you’ll receive an email with instructions on how to set up a password.
 
-If you do not have access to the portal but think you should, please email COVID.TECHNOLOGY@education.gov.uk(mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the school, local authority or trust that ordered the devices.
+If you do not have access to the portal but think you should, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and include the name of the school, local authority or trust that ordered the devices.
 
 ### How to get local admin and BIOS passwords
 
