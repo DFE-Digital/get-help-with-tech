@@ -14,7 +14,7 @@ Those providing support should be able to solve general IT problems (such as pas
 
 ## Support for local authorities, academy trusts and schools
 
-If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, please email COVID.TECHNOLOGY@education.gov.uk. We aim to respond within 3 working days.
+If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:DFE.COVID.TECHNOLOGY@education.gov.uk). We aim to respond within 3 working days.
 
 ## Microsoft Windows devices: how to get support
 
@@ -34,12 +34,12 @@ If you discover a fault with the devices after 19 December 2020, it may still be
 
 ### Receiving a replacement device from Computacenter
 
-Your replacement will be provided identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software if you requested that in your original order. Please contact COVID.TECHNOLOGY@education.gov.uk(mailto:COVID.TECHNOLOGY@education.gov.uk) if you have any issues.
+Your replacement will be provided identically to the original device, and will automatically be enrolled in mobile device management (MDM) and content filtering software if you requested that in your original order. Please contact [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) if you have any issues.
 
 
 ### Receiving a replacement device from the manufacturer
 
-As Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email COVID.TECHNOLOGY@education.gov.uk(mailto:COVID.TECHNOLOGY@education.gov.uk) to get your device enrolled before distributing it.
+As Computacenter will not have been involved in the replacement process, the device will arrive without Microsoft Intune or Cisco Umbrella installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) to get your device enrolled before distributing it.
 
 ## If you want to remove Microsoft Intune to install your own mobile device management (MDM)
 
@@ -65,7 +65,7 @@ Your replacement will be built identically to the original device, and will auto
 
 ### Receiving a replacement device from Computacenter
 
-As Computacenter will not have been involved in the replacement process, the device will arrive without any settings installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email COVID.TECHNOLOGY@education.gov.uk(mailto:covid.technology@education.gov.uk) to get your device enrolled before distributing it.
+As Computacenter will not have been involved in the replacement process, the device will arrive without any settings installed. To ensure devices are appropriately protected to avoid the risk of young people accessing harmful content, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to get your device enrolled before distributing it.
 
 ## 4G wireless routers: how to get support
 
