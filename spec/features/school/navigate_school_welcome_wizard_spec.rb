@@ -33,6 +33,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_im_asked_whether_my_school_will_order_chromebooks
 
     when_i_choose_yes_and_submit_the_chromebooks_form
+    then_i_see_information_about_what_happens_next
+
+    when_i_click_to_finish_and_go_to_homepage
     then_i_see_the_school_home_page
   end
 
@@ -57,6 +60,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_im_asked_whether_my_school_will_order_chromebooks
 
     when_i_choose_yes_and_submit_the_chromebooks_form
+    then_i_see_information_about_what_happens_next
+
+    when_i_click_to_finish_and_go_to_homepage
     then_i_see_the_school_home_page
   end
 
@@ -93,6 +99,10 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def when_i_click_continue
     click_on 'Continue'
+  end
+
+  def when_i_click_to_finish_and_go_to_homepage
+    click_on 'Finish and go to homepage'
   end
 
   def then_i_see_a_privacy_notice
@@ -160,6 +170,11 @@ RSpec.feature 'Navigate school welcome wizard' do
       fill_in 'Recovery email address', with: 'admin@trust.com'
     end
     click_on 'Continue'
+  end
+
+  def then_i_see_information_about_what_happens_next
+    expect(page).to have_current_path(school_welcome_wizard_what_happens_next_path)
+    expect(page).to have_text('we’ll contact you as soon as you’re able to place orders')
   end
 
   def when_i_choose_yes_and_click_continue

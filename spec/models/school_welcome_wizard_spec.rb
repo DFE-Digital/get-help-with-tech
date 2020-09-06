@@ -235,9 +235,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         school.preorder_information.update!(will_need_chromebooks: 'yes')
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the what_happens_next step' do
         wizard.update_step!
-        expect(wizard.complete?).to be true
+        expect(wizard.what_happens_next?).to be true
       end
     end
 
@@ -255,9 +255,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         expect(school.preorder_information.recovery_email_address).to eq(request[:recovery_email_address])
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the what_happens_next step' do
         wizard.update_step!(request)
-        expect(wizard.complete?).to be true
+        expect(wizard.what_happens_next?).to be true
       end
     end
 
@@ -291,9 +291,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         expect(school.preorder_information.will_need_chromebooks).to eq('no')
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the what_happens_next step' do
         wizard.update_step!(request)
-        expect(wizard.complete?).to be true
+        expect(wizard.what_happens_next?).to be true
       end
     end
 
@@ -309,8 +309,19 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         expect(school.preorder_information.will_need_chromebooks).to be_nil
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the what_happens_next step' do
         wizard.update_step!(request)
+        expect(wizard.what_happens_next?).to be true
+      end
+    end
+
+    context 'when the step is what_happens_next' do
+      before do
+        wizard.what_happens_next!
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!
         expect(wizard.complete?).to be true
       end
     end
