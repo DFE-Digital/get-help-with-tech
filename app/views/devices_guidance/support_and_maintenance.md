@@ -1,6 +1,6 @@
 Local authorities (LAs), academy trusts and schools will [own these devices](/devices/distributing-devices) and will need to support their users.
 
-The Department for Education's delivery partner, Computacenter, provides a [Support Portal](https://computacenterprod.service-now.com/dfe). If you're an authorised user, you can use it to access local admin and BIOS passwords if you want to reset Microsoft Windows devices to add your own settings.  
+The Department for Education’s delivery partner, Computacenter, provides a [Support Portal](https://computacenterprod.service-now.com/dfe). If you’re an authorised user, you can use it to access local admin and BIOS passwords if you want to reset Microsoft Windows devices to add your own settings.
 
 For support with 4G wireless routers, key contacts (the person that completed your device forecast) and technical contacts can access [a Support Portal](https://computacenterprod.service-now.com/dfe). If you ordered after August 2020 then anyone with a TechSource account can request this support. They can also share access with colleagues.
 
