@@ -24,11 +24,11 @@ Please [see our guidance on preparing Microsoft Windows devices](/devices/prepar
 
 ### If you receive a device that does not work on arrival 
 
-If you receive a Microsoft Windows device that does not turn on, log in to the [Computacenter support portal](https://computacenterprod.service-now.com/dfe) using the access details sent to the key contact(s) nominated when devices were ordered. Find out [how to return faulty devices](#Replacing-a-faulty-device).
+If you receive a Microsoft Windows device that does not turn on, log in to the [Computacenter support portal](https://computacenterprod.service-now.com/dfe) using the access details sent to the key contact(s) nominated when devices were ordered. Find out [how to return faulty devices](#replacing-a-faulty-device).
 
 ### If a Windows device develops a fault
 
-If a fault is discovered by you or someone you loan it to before 19 December 2020, we’ll arrange to fix or replace it. Find out [how to return faulty devices](#Replacing-a-faulty-device) and the costs associated with doing so. 
+If a fault is discovered by you or someone you loan it to before 19 December 2020, we’ll arrange to fix or replace it. Find out [how to return faulty devices](#replacing-a-faulty-device) and the costs associated with doing so. 
 
 If you discover a fault with the devices after 19 December 2020, it may still be covered by the manufacturer’s warranty. Please contact the manufacturer by following the returns information included with the device.
 
@@ -51,11 +51,11 @@ Please do not reset the device until you are ready to apply your own MDM. Once t
 
 ### If you receive a device that does not work on arrival
 
-If you receive a Google device that does not turn on, log in to the [Computacenter support portal](https://computacenterprod.service-now.com/dfe) using the access details sent to the key contact(s) nominated when devices were ordered. Find out [how to return faulty devices](#Replacing-a-faulty-device).
+If you receive a Google device that does not turn on, log in to the [Computacenter support portal](https://computacenterprod.service-now.com/dfe) using the access details sent to the key contact(s) nominated when devices were ordered. Find out [how to return faulty devices](#replacing-a-faulty-device).
 
 ### If a Chromebook develops a fault
 
-If a fault is discovered by you or someone you loan it to before 19 December 2020, we’ll arrange to fix or replace it. Find out  [how to return faulty devices](#Replacing-a-faulty-device) and the costs associated with doing so. 
+If a fault is discovered by you or someone you loan it to before 19 December 2020, we’ll arrange to fix or replace it. Find out  [how to return faulty devices](#replacing-a-faulty-device) and the costs associated with doing so. 
 
 If you discover a fault with the device after 19 December 2020, it may still be covered by the manufacturer’s warranty. Please contact the manufacturer by following the returns information included with the device.
 
