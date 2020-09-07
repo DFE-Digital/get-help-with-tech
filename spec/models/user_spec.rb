@@ -166,4 +166,56 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#first_name' do
+    context 'when full_name provided' do
+      subject(:user) { described_class.new(full_name: 'John Doe') }
+
+      it 'returns first_name' do
+        expect(user.first_name).to eql('John')
+      end
+    end
+
+    context 'when full_name is nil' do
+      subject(:user) { described_class.new(full_name: nil) }
+
+      it 'returns empty string' do
+        expect(user.first_name).to eql('')
+      end
+    end
+
+    context 'when full_name is empty string' do
+      subject(:user) { described_class.new(full_name: '') }
+
+      it 'returns empty string' do
+        expect(user.first_name).to eql('')
+      end
+    end
+  end
+
+  describe '#last_name' do
+    context 'when full_name provided' do
+      subject(:user) { described_class.new(full_name: 'John Doe') }
+
+      it 'returns last_name' do
+        expect(user.last_name).to eql('Doe')
+      end
+    end
+
+    context 'when full_name is nil' do
+      subject(:user) { described_class.new(full_name: nil) }
+
+      it 'returns empty string' do
+        expect(user.last_name).to eql('')
+      end
+    end
+
+    context 'when full_name is empty string' do
+      subject(:user) { described_class.new(full_name: '') }
+
+      it 'returns empty string' do
+        expect(user.last_name).to eql('')
+      end
+    end
+  end
 end

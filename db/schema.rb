@@ -43,6 +43,27 @@ ActiveRecord::Schema.define(version: 2020_09_08_104822) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "computacenter_user_changes", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "first_name"
+    t.text "last_name"
+    t.text "email_address"
+    t.text "telephone"
+    t.text "responsible_body"
+    t.text "responsible_body_urn"
+    t.text "cc_sold_to_number"
+    t.text "school"
+    t.text "school_urn"
+    t.text "cc_ship_to_number"
+    t.datetime "updated_at_timestamp"
+    t.integer "type_of_update"
+    t.text "original_email_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["updated_at_timestamp"], name: "index_computacenter_user_changes_on_updated_at_timestamp"
+    t.index ["user_id"], name: "index_computacenter_user_changes_on_user_id"
+  end
+
   create_table "extra_mobile_data_requests", force: :cascade do |t|
     t.string "account_holder_name"
     t.string "device_phone_number"

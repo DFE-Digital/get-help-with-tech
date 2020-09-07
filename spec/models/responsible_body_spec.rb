@@ -50,4 +50,22 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
   end
+
+  describe '#computacenter_identifier' do
+    context 'when local authority' do
+      subject(:responsible_body) { build(:local_authority) }
+
+      it 'generates correct identifier' do
+        expect(responsible_body.computacenter_identifier).to eql("LEA#{responsible_body.gias_id}")
+      end
+    end
+
+    context 'when trust' do
+      subject(:responsible_body) { build(:trust, companies_house_number: '0001') }
+
+      it 'generates correct identifier' do
+        expect(responsible_body.computacenter_identifier).to eql('t1')
+      end
+    end
+  end
 end

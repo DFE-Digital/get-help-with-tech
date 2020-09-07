@@ -29,4 +29,15 @@ module Computacenter::ResponsibleBodyUrns
       end
     end
   end
+
+  module InstanceMethods
+    def computacenter_identifier
+      case type
+      when 'LocalAuthority'
+        "LEA#{gias_id}"
+      when 'Trust'
+        "t#{companies_house_number.to_i}"
+      end
+    end
+  end
 end

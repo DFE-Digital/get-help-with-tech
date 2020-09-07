@@ -9,6 +9,7 @@ class ResponsibleBody < ApplicationRecord
   has_many :schools
 
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
+  include Computacenter::ResponsibleBodyUrns::InstanceMethods
 
   def humanized_type
     type.demodulize.underscore.humanize.downcase
