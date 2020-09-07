@@ -166,7 +166,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   def when_i_choose_yes_and_submit_the_chromebooks_form
     choose 'Yes, we will need Chromebooks'
     within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
-      fill_in 'School or trust domain', with: 'example.com'
+      fill_in "School or #{school.responsible_body.humanized_type} domain", with: 'example.com'
       fill_in 'Recovery email address', with: 'admin@trust.com'
     end
     click_on 'Continue'
