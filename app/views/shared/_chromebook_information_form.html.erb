@@ -1,10 +1,14 @@
+<%-
+  submit_label = local_assigns[:submit_label] || 'Save'
+  scope = local_assigns[:scope] || 'activerecord.attributes.preorder_information.will_need_chromebooks'
+%>
 <%= form_for local_assigns[:form_object], url: local_assigns[:url], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: { text: nil } ) do %>
     <%= f.govuk_radio_button  :will_need_chromebooks,
                               'yes',
-                              label: { text: t(:yes, scope: %i[activerecord attributes preorder_information will_need_chromebooks]) } do %>
+                              label: { text: t(:yes, scope: scope) } do %>
       <%= f.govuk_text_field  :school_or_rb_domain,
                               label: { text: "School or #{local_assigns[:form_object].school.responsible_body.humanized_type} domain", size: 's' },
                               hint_text: "For example, ‘school.co.uk’" %>
@@ -14,8 +18,12 @@
     <%- end %>
     <%= f.govuk_radio_button  :will_need_chromebooks,
                               'no',
-                              label: { text: t(:no, scope: %i[activerecord attributes preorder_information will_need_chromebooks]) } %>
-
+                              label: { text: t(:no, scope: scope) } %>
+    <% if local_assigns[:show_i_dont_know_option] %>
+      <%= f.govuk_radio_button :will_need_chromebooks,
+                              'i_dont_know',
+                              label: { text: t(:i_dont_know, scope: scope) } %>
+    <%- end %>
   <%- end %>
-  <%= f.govuk_submit 'Save' %>
+  <%= f.govuk_submit submit_label %>
 <%- end %>

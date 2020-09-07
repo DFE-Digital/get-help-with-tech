@@ -27,6 +27,8 @@ class School::WelcomeWizardController < School::BaseController
 
   def devices_you_can_order; end
 
+  def chromebooks; end
+
 private
 
   def set_wizard
@@ -46,6 +48,9 @@ private
       :email_address,
       :telephone,
       :orders_devices,
+      :will_need_chromebooks,
+      :school_or_rb_domain,
+      :recovery_email_address,
     )
   end
 

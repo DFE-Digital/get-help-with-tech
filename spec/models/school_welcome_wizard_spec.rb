@@ -6,7 +6,8 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
   end
 
   describe '#update_step!' do
-    let(:school_user) { create(:school_user, :new_visitor) }
+    let(:school) { create(:school, :with_preorder_information) }
+    let(:school_user) { create(:school_user, :new_visitor, school: school) }
 
     subject(:wizard) { school_user.school_welcome_wizard }
 
@@ -216,13 +217,100 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
     end
 
-    context 'when the step is devices_you_can_order' do
+    context 'when the step is devices_you_can_order and will_need_chromebooks has not been answered' do
       before do
         wizard.devices_you_can_order!
+        school.preorder_information.update!(will_need_chromebooks: nil)
       end
 
-      it 'moves to the will_other_order step' do
+      it 'moves to the chromebooks step' do
         wizard.update_step!
+        expect(wizard.chromebooks?).to be true
+      end
+    end
+
+    context 'when the step is devices_you_can_order and will_need_chromebooks has already been answered' do
+      before do
+        wizard.devices_you_can_order!
+        school.preorder_information.update!(will_need_chromebooks: 'yes')
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!
+        expect(wizard.complete?).to be true
+      end
+    end
+
+    context 'when the step is chromebooks and the school needs chromebooks' do
+      let(:request) { attributes_for(:preorder_information, :needs_chromebooks) }
+
+      before do
+        wizard.chromebooks!
+      end
+
+      it 'updates the preorder_information with the form details' do
+        wizard.update_step!(request)
+        expect(school.preorder_information.will_need_chromebooks).to eq(request[:will_need_chromebooks])
+        expect(school.preorder_information.school_or_rb_domain).to eq(request[:school_or_rb_domain])
+        expect(school.preorder_information.recovery_email_address).to eq(request[:recovery_email_address])
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!(request)
+        expect(wizard.complete?).to be true
+      end
+    end
+
+    context 'when the step is chromebooks and the school needs chromebooks but doesnt complete the form' do
+      let(:bad_request) { { will_need_chromebooks: 'yes', school_or_rb_domain: '', recovery_email_address: '' } }
+
+      before do
+        wizard.chromebooks!
+      end
+
+      it 'adds validation errors' do
+        wizard.update_step!(bad_request)
+        expect(wizard.errors.keys).to include(:school_or_rb_domain, :recovery_email_address)
+      end
+
+      it 'does not change step' do
+        wizard.update_step!(bad_request)
+        expect(wizard.chromebooks?).to be true
+      end
+    end
+
+    context 'when the step is chromebooks and the school does not need chromebooks' do
+      let(:request) { attributes_for(:preorder_information, :does_not_need_chromebooks) }
+
+      before do
+        wizard.chromebooks!
+      end
+
+      it 'updates the preorder_information with the form details' do
+        wizard.update_step!(request)
+        expect(school.preorder_information.will_need_chromebooks).to eq('no')
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!(request)
+        expect(wizard.complete?).to be true
+      end
+    end
+
+    context 'when the step is chromebooks and the school does not know if it needs chromebooks' do
+      let(:request) { { will_need_chromebooks: 'i_dont_know' } }
+
+      before do
+        wizard.chromebooks!
+      end
+
+      it 'updates the preorder_information with the form details' do
+        wizard.update_step!(request)
+        expect(school.preorder_information.will_need_chromebooks).to be_nil
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!(request)
         expect(wizard.complete?).to be true
       end
     end

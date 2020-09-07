@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Navigate school welcome wizard' do
-  let(:school) { create(:school, :with_std_device_allocation) }
+  let(:school) { create(:school, :with_preorder_information, :with_std_device_allocation) }
 
   scenario 'step through the wizard as the first user for a school' do
     as_a_new_school_user
@@ -30,6 +30,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_information_about_devices_i_can_order
 
     when_i_click_continue
+    then_im_asked_whether_my_school_will_order_chromebooks
+
+    when_i_choose_yes_and_submit_the_chromebooks_form
     then_i_see_the_school_home_page
   end
 
@@ -51,6 +54,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_information_about_devices_i_can_order
 
     when_i_click_continue
+    then_im_asked_whether_my_school_will_order_chromebooks
+
+    when_i_choose_yes_and_submit_the_chromebooks_form
     then_i_see_the_school_home_page
   end
 
@@ -140,6 +146,20 @@ RSpec.feature 'Navigate school welcome wizard' do
   def then_i_see_information_about_devices_i_can_order
     expect(page).to have_current_path(school_welcome_wizard_devices_you_can_order_path)
     expect(page).to have_text('You can order a range of laptops and tablets')
+  end
+
+  def then_im_asked_whether_my_school_will_order_chromebooks
+    expect(page).to have_current_path(school_welcome_wizard_chromebooks_path)
+    expect(page).to have_text('Will your school’s order include a request for Chromebooks?')
+  end
+
+  def when_i_choose_yes_and_submit_the_chromebooks_form
+    choose 'Yes, we will need Chromebooks'
+    within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
+      fill_in 'School or trust domain', with: 'example.com'
+      fill_in 'Recovery email address', with: 'admin@trust.com'
+    end
+    click_on 'Continue'
   end
 
   def when_i_choose_yes_and_click_continue
