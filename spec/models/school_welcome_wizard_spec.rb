@@ -81,13 +81,13 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
 
       it 'moves to the techsource_account step' do
-        wizard.update_step!({ orders_devices: '1' })
+        wizard.update_step!({ user_orders_devices: '1' })
         expect(wizard.techsource_account?).to be true
       end
 
       it 'records the choice and updates the user' do
-        wizard.update_step!({ orders_devices: '1' })
-        expect(wizard.orders_devices?).to be true
+        wizard.update_step!({ user_orders_devices: '1' })
+        expect(wizard.user_orders_devices?).to be true
         expect(wizard.user.orders_devices?).to be true
       end
     end
@@ -97,14 +97,14 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.will_you_order!
       end
 
-      it 'moves to the completed step' do
-        wizard.update_step!({ orders_devices: '0' })
-        expect(wizard.complete?).to be true
+      it 'moves to the will_other_order step' do
+        wizard.update_step!({ user_orders_devices: '0' })
+        expect(wizard.will_other_order?).to be true
       end
 
       it 'records the choice and updates the user' do
-        wizard.update_step!({ orders_devices: '0' })
-        expect(wizard.orders_devices?).to be false
+        wizard.update_step!({ user_orders_devices: '0' })
+        expect(wizard.user_orders_devices?).to be false
         expect(wizard.user.orders_devices?).to be false
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       it 'adds an error message' do
         wizard.update_step!({ step: 'will_you_order' })
-        expect(wizard.errors.keys).to include(:orders_devices)
+        expect(wizard.errors.keys).to include(:user_orders_devices)
       end
     end
 
@@ -130,9 +130,89 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.techsource_account!
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the will_other_order step' do
         wizard.update_step!
+        expect(wizard.will_other_order?).to be true
+      end
+    end
+
+    context 'when the step is will_other_order and the user chooses not to add a user' do
+      before do
+        wizard.will_other_order!
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!({ invite_user: 'no' })
         expect(wizard.complete?).to be true
+      end
+    end
+
+    context 'when the step is will_other_order and the user chooses to add a user' do
+      let(:new_user_attrs) { attributes_for(:school_user) }
+
+      before do
+        wizard.will_other_order!
+      end
+
+      it 'creates a new user' do
+        expect {
+          wizard.update_step!(new_user_attrs.merge({ invite_user: 'yes' }))
+        }.to change { User.count }.by(1)
+      end
+
+      it 'populates the new user with the correct attributes' do
+        wizard.update_step!(new_user_attrs.merge({ invite_user: 'yes' }))
+        user = User.last
+        expect(user.full_name).to eq(new_user_attrs[:full_name])
+        expect(user.email_address).to eq(new_user_attrs[:email_address])
+        expect(user.telephone).to eq(new_user_attrs[:telephone])
+        expect(user.orders_devices).to eq(new_user_attrs[:orders_devices])
+        expect(user.school).to eq(school_user.school)
+      end
+
+      it 'sends an email to the new user' do
+        expect {
+          wizard.update_step!(new_user_attrs.merge({ invite_user: 'yes' }))
+        }.to have_enqueued_job(ActionMailer::MailDeliveryJob).once
+      end
+
+      it 'moves to the completed step' do
+        wizard.update_step!(new_user_attrs.merge({ invite_user: 'yes' }))
+        expect(wizard.complete?).to be true
+      end
+    end
+
+    context 'when the step is will_other_order and the user enters incomplete user details' do
+      let(:new_user_attrs) { attributes_for(:school_user) }
+
+      before do
+        wizard.will_other_order!
+      end
+
+      it 'adds error messages' do
+        wizard.update_step!(new_user_attrs.slice(:full_name).merge({ invite_user: 'yes' }))
+        expect(wizard.errors.keys).to include(:email_address, :orders_devices)
+      end
+
+      it 'remains on the will_other_order step' do
+        wizard.update_step!(new_user_attrs.slice(:full_name).merge({ invite_user: 'yes' }))
+        expect(wizard.will_other_order?).to be true
+      end
+    end
+
+    context 'when the step is will_other_order and the user does not make a choice' do
+      before do
+        wizard.will_other_order!
+      end
+
+      it 'adds an error message' do
+        wizard.update_step!
+        expect(wizard.errors.keys).to include(:invite_user)
+      end
+
+      it 'remains on the will_other_order step' do
+        wizard.update_step!
+        expect(wizard.will_other_order?).to be true
       end
     end
   end

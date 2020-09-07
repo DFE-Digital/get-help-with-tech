@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_141052) do
+ActiveRecord::Schema.define(version: 2020_09_07_103146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,8 +142,10 @@ ActiveRecord::Schema.define(version: 2020_09_04_141052) do
     t.string "step", default: "welcome", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "orders_devices"
+    t.boolean "user_orders_devices"
     t.boolean "first_school_user"
+    t.bigint "invited_user_id"
+    t.index ["invited_user_id"], name: "index_school_welcome_wizards_on_invited_user_id"
     t.index ["user_id"], name: "index_school_welcome_wizards_on_user_id"
   end
 
@@ -217,6 +219,7 @@ ActiveRecord::Schema.define(version: 2020_09_04_141052) do
   add_foreign_key "preorder_information", "school_contacts"
   add_foreign_key "responsible_bodies", "users", column: "key_contact_id"
   add_foreign_key "school_device_allocations", "schools"
+  add_foreign_key "school_welcome_wizards", "users", column: "invited_user_id"
   add_foreign_key "schools", "responsible_bodies"
   add_foreign_key "users", "schools"
 end

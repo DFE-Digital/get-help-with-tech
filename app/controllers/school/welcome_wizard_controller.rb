@@ -7,7 +7,7 @@ class School::WelcomeWizardController < School::BaseController
     if @wizard.update_step!(wizard_params)
       redirect_to next_step_path
     else
-      render @wizard.step
+      render @wizard.step, status: :unprocessable_entity
     end
   end
 
@@ -23,6 +23,8 @@ class School::WelcomeWizardController < School::BaseController
 
   def will_you_order; end
 
+  def will_other_order; end
+
 private
 
   def set_wizard
@@ -36,6 +38,11 @@ private
   def wizard_params
     params.require(:school_welcome_wizard).permit(
       :step,
+      :user_orders_devices,
+      :invite_user,
+      :full_name,
+      :email_address,
+      :telephone,
       :orders_devices,
     )
   end
