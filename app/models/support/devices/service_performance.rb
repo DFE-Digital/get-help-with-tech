@@ -41,7 +41,7 @@ class Support::Devices::ServicePerformance
   end
 
   def number_of_schools_managed_centrally
-    needs_information = preorder_information_counts_by_status['needs_information'] || 0
+    needs_information = preorder_information_counts_by_status['needs_info'] || 0
     ready = preorder_information_counts_by_status['ready'] || 0
 
     needs_information + ready
