@@ -1,0 +1,33 @@
+<%-
+  scope = 'page_titles.school_user_welcome_wizard.will_other_order'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @wizard, url: school_welcome_wizard_path do |f| %>
+      <%= f.hidden_field :step %>
+      <h1 class="govuk-heading-xl"><%= title %></h1>
+
+      <p class="govuk-body">Invite someone in your school who:</p>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+        <li>understands what devices are needed and who will get them</li>
+        <li>can configure devices or give technical information</li>
+      </ul>
+
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_radio_buttons_fieldset( :invite_user, legend: { text: nil } ) do %>
+      <%= f.govuk_radio_button  :invite_user,
+                                'yes',
+                                label: { text: t(:yes_label, scope: scope) } do %>
+        <%= render partial: 'shared/school_user_form', locals: { form: f, nested: true } %>
+      <%- end %>
+      <%= f.govuk_radio_button  :invite_user,
+                                'no',
+                                label: { text: t(:no_label, scope: scope) } %>
+      <%- end %>
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>

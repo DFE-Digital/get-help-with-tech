@@ -110,6 +110,7 @@ Rails.application.routes.draw do
     get '/order-your-own', to: 'welcome_wizard#order_your_own', as: :welcome_wizard_order_your_own
     get '/will-you-order', to: 'welcome_wizard#will_you_order', as: :welcome_wizard_will_you_order
     get '/techsource-account', to: 'welcome_wizard#techsource_account', as: :welcome_wizard_techsource_account
+    get '/will-other-order', to: 'welcome_wizard#will_other_order', as: :welcome_wizard_will_other_order
     patch '/next', to: 'welcome_wizard#next_step', as: :welcome_wizard
     patch '/prev', to: 'welcome_wizard#previous_step', as: :welcome_wizard_previous
     resources :users, only: %i[index new create]

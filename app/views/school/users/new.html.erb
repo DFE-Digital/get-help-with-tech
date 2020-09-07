@@ -27,7 +27,9 @@
       <li>can configure devices or give technical information</li>
     </ul>
     <%= form_for @user, url: school_users_path do |f| %>
-      <%= render partial: 'form', locals: { submit_text: 'Send invite', form: f } %>
+      <%= f.govuk_error_summary %>
+      <%= render partial: 'shared/school_user_form', locals: { form: f } %>
+      <%= f.govuk_submit 'Send invite' %>
     <%- end %>
   </div>
 </div>

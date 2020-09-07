@@ -96,6 +96,12 @@
           choose_option: Tell us whether you will order devices
       techsource_account:
         title: You will get an invite to the Computacenter TechSource website
+      will_other_order:
+        title: Do you need to give someone else access?
+        yes_label: Yes, I need to add someone
+        no_label: No, not at the moment
+        errors:
+          will_other_order: Tell us whether you need to add someone
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
