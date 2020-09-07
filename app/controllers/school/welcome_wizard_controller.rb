@@ -48,6 +48,9 @@ private
       :email_address,
       :telephone,
       :orders_devices,
+      :will_need_chromebooks,
+      :school_or_rb_domain,
+      :recovery_email_address,
     )
   end
 
