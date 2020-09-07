@@ -101,5 +101,17 @@ RSpec.describe Support::Devices::ServicePerformance, type: :model do
         expect(stats.preorder_information_by_status('ready')).to eq(3)
       end
     end
+
+    it 'calculates the number of schools managed centrally' do
+      expect(stats.number_of_schools_managed_centrally).to eq(8)
+    end
+
+    it 'calculates the number of schools that decisions have been devolved to' do
+      expect(stats.number_of_schools_devolved_to).to eq(4)
+    end
+
+    it 'calculates the total number of schools devolved or managed centrally' do
+      expect(stats.number_of_schools_with_a_decision_made).to eq(12)
+    end
   end
 end
