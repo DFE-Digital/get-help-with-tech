@@ -69,9 +69,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.order_your_own!
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the devices_you_can_order step' do
         wizard.update_step!
-        expect(wizard.complete?).to be true
+        expect(wizard.devices_you_can_order?).to be true
       end
     end
 
@@ -141,9 +141,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.will_other_order!
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the devices_you_can_order step' do
         wizard.update_step!({ invite_user: 'no' })
-        expect(wizard.complete?).to be true
+        expect(wizard.devices_you_can_order?).to be true
       end
     end
 
@@ -176,9 +176,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         }.to have_enqueued_job(ActionMailer::MailDeliveryJob).once
       end
 
-      it 'moves to the completed step' do
+      it 'moves to the devices_you_can_order step' do
         wizard.update_step!(new_user_attrs.merge({ invite_user: 'yes' }))
-        expect(wizard.complete?).to be true
+        expect(wizard.devices_you_can_order?).to be true
       end
     end
 
@@ -213,6 +213,17 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       it 'remains on the will_other_order step' do
         wizard.update_step!
         expect(wizard.will_other_order?).to be true
+      end
+    end
+
+    context 'when the step is devices_you_can_order' do
+      before do
+        wizard.devices_you_can_order!
+      end
+
+      it 'moves to the will_other_order step' do
+        wizard.update_step!
+        expect(wizard.complete?).to be true
       end
     end
   end

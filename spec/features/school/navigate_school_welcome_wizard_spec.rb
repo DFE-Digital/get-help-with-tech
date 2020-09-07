@@ -27,6 +27,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_will_other_order_page
 
     when_i_choose_yes_and_submit_the_form
+    then_i_see_information_about_devices_i_can_order
+
+    when_i_click_continue
     then_i_see_the_school_home_page
   end
 
@@ -43,6 +46,9 @@ RSpec.feature 'Navigate school welcome wizard' do
 
     when_i_click_continue
     then_i_see_the_order_your_own_page
+
+    when_i_click_continue
+    then_i_see_information_about_devices_i_can_order
 
     when_i_click_continue
     then_i_see_the_school_home_page
@@ -129,6 +135,11 @@ RSpec.feature 'Navigate school welcome wizard' do
       choose 'Yes, give them access to the TechSource website'
     end
     click_on 'Continue'
+  end
+
+  def then_i_see_information_about_devices_i_can_order
+    expect(page).to have_current_path(school_welcome_wizard_devices_you_can_order_path)
+    expect(page).to have_text('You can order a range of laptops and tablets')
   end
 
   def when_i_choose_yes_and_click_continue

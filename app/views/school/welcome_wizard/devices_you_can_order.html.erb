@@ -1,0 +1,25 @@
+<%- title = t('page_titles.school_user_welcome_wizard.devices_you_can_order.title') %>
+<%- content_for :title, title %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @wizard, url: school_welcome_wizard_path do |f| %>
+      <%= f.hidden_field :step %>
+      <h1 class="govuk-heading-xl"><%= title %></h1>
+
+      <p class="govuk-body">Your school will own the devices. It’s up to you to decide who will benefit most from them.</p>
+
+      <p class="govuk-body">You can choose from:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Microsoft Windows laptop</li>
+        <li>Microsoft Windows tablet</li>
+        <li>Google Chromebook</li>
+        <li>Apple iPad</li>
+      </ul>
+
+      <p class="govuk-body govuk-!-margin-bottom-6"><%= link_to_devices_guidance_subpage 'Read more about the device specifications', 'device-specification', target: '_blank' %></p>
+
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>
