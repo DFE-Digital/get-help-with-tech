@@ -24,7 +24,8 @@ class User < ApplicationRecord
   validates :email_address,
             presence: true,
             uniqueness: { case_sensitive: false },
-            length: { minimum: 2, maximum: 1024 }
+            length: { minimum: 2, maximum: 1024 },
+            email_address: true
 
   validates :orders_devices,
             inclusion: { in: [true, false] },

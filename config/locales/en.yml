@@ -344,6 +344,7 @@
               blank: Enter an email address in the correct format, like name@example.com
               taken: Email address has already been used
               too_short: Enter an email address that is at least %{count} characters
+              invalid: Enter an email address in the correct format, like name@example.com
             orders_devices:
               inclusion: Tell us whether the user will order devices
               user_limit: There are already 3 users who can order devices. Change or remove another user.

@@ -6,8 +6,11 @@ class SchoolContact < ApplicationRecord
     contact: 'contact',
   }
 
-  validates :email_address, presence: true
-  validates :email_address, uniqueness: { scope: :school_id }
+  validates :email_address,
+            presence: true,
+            uniqueness: { scope: :school_id },
+            email_address: true
+
   validates :full_name, presence: true
   validates :role, presence: true
 end
