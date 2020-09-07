@@ -1,3 +1,4 @@
+<%- submit_label = local_assigns[:submit_label] || 'Save' %>
 <%= form_for local_assigns[:form_object], url: local_assigns[:url], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
@@ -15,7 +16,11 @@
     <%= f.govuk_radio_button  :will_need_chromebooks,
                               'no',
                               label: { text: t(:no, scope: %i[activerecord attributes preorder_information will_need_chromebooks]) } %>
-
+    <% if local_assigns[:show_i_dont_know_option] %>
+      <%= f.govuk_radio_button :will_need_chromebooks,
+                              'i_dont_know',
+                              label: { text: t(:i_dont_know, scope: %i[activerecord attributes preorder_information will_need_chromebooks]) } %>
+    <%- end %>
   <%- end %>
-  <%= f.govuk_submit 'Save' %>
+  <%= f.govuk_submit submit_label %>
 <%- end %>

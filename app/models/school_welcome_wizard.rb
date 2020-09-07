@@ -12,11 +12,13 @@ class SchoolWelcomeWizard < ApplicationRecord
     techsource_account: 'techsource_account',
     will_other_order: 'will_other_order',
     devices_you_can_order: 'devices_you_can_order',
+    chromebooks: 'chromebooks',
     complete: 'complete',
   }
 
+  delegate :school, to: :user
   delegate :full_name, :email_address, :telephone, :orders_devices, to: :invited_user
-
+  delegate :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address, :to: :chrombook_information
   attr_accessor :invite_user
 
   def update_step!(params = {})
@@ -61,6 +63,8 @@ class SchoolWelcomeWizard < ApplicationRecord
         false
       end
     when 'devices_you_can_order'
+      chromebooks!
+    when 'chromebooks'
       complete!
     else
       raise "Unknown step: #{step}"
@@ -69,6 +73,15 @@ class SchoolWelcomeWizard < ApplicationRecord
 
   def invited_user
     @invited_user ||= find_or_build_invited_user
+  end
+
+  def chromebook_information
+    @chromebook_information ||= ChromebookInformationForm.new(
+      school: school,
+      will_need_chromebooks: school.preorder_information&.will_need_chromebooks,
+      school_or_rb_domain: school.preorder_information&.school_or_rb_domain,
+      recovery_email_address: school.preorder_information&.recovery_email_address,
+    )
   end
 
 private

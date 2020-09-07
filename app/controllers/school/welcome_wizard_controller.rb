@@ -27,6 +27,8 @@ class School::WelcomeWizardController < School::BaseController
 
   def devices_you_can_order; end
 
+  def chromebooks; end
+
 private
 
   def set_wizard

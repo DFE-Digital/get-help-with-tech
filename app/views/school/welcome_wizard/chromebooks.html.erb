@@ -1,0 +1,13 @@
+<%-
+  scope = 'page_titles.school_user_welcome_wizard.chromebooks'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <%= render partial: 'shared/chromebook_information_intro' %>
+    <%= render partial: 'shared/chromebook_information_form', locals: { url: school_welcome_wizard_path, form_object: @wizard, show_i_dont_know: true, submit_label: 'Continue' } %>
+  </div>
+</div>
