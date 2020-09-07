@@ -111,6 +111,8 @@
         i_dont_know: I don’t know
         errors:
           choice: Tell us whether your school will need Chromebooks
+      what_happens_next:
+        title: What happens next
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:

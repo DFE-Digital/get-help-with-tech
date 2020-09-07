@@ -29,6 +29,8 @@ class School::WelcomeWizardController < School::BaseController
 
   def chromebooks; end
 
+  def what_happens_next; end
+
 private
 
   def set_wizard

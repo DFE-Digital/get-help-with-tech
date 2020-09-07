@@ -13,6 +13,7 @@ class SchoolWelcomeWizard < ApplicationRecord
     will_other_order: 'will_other_order',
     devices_you_can_order: 'devices_you_can_order',
     chromebooks: 'chromebooks',
+    what_happens_next: 'what_happens_next',
     complete: 'complete',
   }
 
@@ -66,14 +67,16 @@ class SchoolWelcomeWizard < ApplicationRecord
       if will_need_chromebooks.nil?
         chromebooks!
       else
-        complete!
+        what_happens_next!
       end
     when 'chromebooks'
       if update_chromebooks(params)
-        complete!
+        what_happens_next!
       else
         false
       end
+    when 'what_happens_next'
+      complete!
     else
       raise "Unknown step: #{step}"
     end
