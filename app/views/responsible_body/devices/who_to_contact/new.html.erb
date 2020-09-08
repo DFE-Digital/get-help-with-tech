@@ -3,23 +3,23 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">
+    <h1 class="govuk-heading-xl">
       <%= @school.name %>
     </h1>
 
     <%= render partial: 'who_to_contact_form', locals: { form: @form } %>
 
-    <h2 class="govuk-heading-l govuk-!-margin-top-4">School details</h2>
-
-    <div class="govuk-inset-text govuk-!-padding-top-0">
-      <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @form.school) %>
-    </div>
-
-    <p class="govuk-body">
-      <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
-      <% if @school.next_school_in_responsible_body_when_sorted_by_name_ascending.present? %>
-        or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(@school.next_school_in_responsible_body_when_sorted_by_name_ascending.urn) %>
-      <% end %>
-    </p>
+    <h2 class="govuk-heading-l govuk-!-margin-top-6">School details</h2>
   </div>
 </div>
+
+<div class="govuk-!-padding-top-0 govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+  <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @form.school) %>
+</div>
+
+<p class="govuk-body">
+  <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
+  <% if @school.next_school_in_responsible_body_when_sorted_by_name_ascending.present? %>
+    or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(@school.next_school_in_responsible_body_when_sorted_by_name_ascending.urn) %>
+  <% end %>
+</p>
