@@ -22,6 +22,7 @@
     responsible_body_devices_request_devices: Request devices for specific circumstances
     responsible_body_internet_home: Get the internet
     responsible_body_users_index: Manage %{rb_type} users
+    responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user

@@ -1,4 +1,9 @@
-<%- title = t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type) -%>
+<% if @responsible_body.is_a_trust? %>
+  <%- title = t('page_titles.responsible_body_trust_users_index') -%>
+<% else %>
+  <%- title = t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type) -%>
+<% end %>
+
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <div class="govuk-breadcrumbs ">
@@ -33,6 +38,10 @@
         <li>make requests for mobile data</li>
       <%- end %>
     </ul>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">Do not add school contacts here. <%= govuk_link_to 'Use the schools list instead', responsible_body_devices_path %>.</p>
+    </div>
 
     <%= govuk_button_link_to 'Invite a new user', new_responsible_body_user_path %>
 
