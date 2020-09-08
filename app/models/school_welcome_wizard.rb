@@ -26,8 +26,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     return true if complete?
 
     case step
-    when 'welcome'
-      privacy!
     when 'privacy'
       user.seen_privacy_notice!
       allocation!

@@ -11,8 +11,6 @@ class School::WelcomeWizardController < School::BaseController
     end
   end
 
-  def welcome; end
-
   def privacy; end
 
   def allocation
