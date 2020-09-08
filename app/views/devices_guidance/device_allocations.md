@@ -4,7 +4,7 @@
 
 The number of devices available to order through the [Get help with technology service](/start) reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
 
-* the number of children in years 3 to 10
+* the number of children in years 3 to 11
 * free school meals data
 * an estimate of the number of devices a school already has
 
