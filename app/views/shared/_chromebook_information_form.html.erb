@@ -10,7 +10,7 @@
                               'yes',
                               label: { text: t(:yes, scope: scope) } do %>
       <%= f.govuk_text_field  :school_or_rb_domain,
-                              label: { text: "School or #{local_assigns[:form_object].school.responsible_body.humanized_type} domain", size: 's' },
+                              label: { text: "School or #{local_assigns[:form_object].school.responsible_body.humanized_type} domain registered for G Suite for Education", size: 's' },
                               hint_text: "For example, ‘school.co.uk’" %>
       <%= f.govuk_text_field  :recovery_email_address,
                               label: { text: "Recovery email address", size: 's' },
