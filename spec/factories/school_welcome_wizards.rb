@@ -6,5 +6,13 @@ FactoryBot.define do
     trait :completed do
       step { 'complete' }
     end
+
+    trait :first_user do
+      first_school_user { true }
+    end
+
+    trait :subsequent_user do
+      first_school_user { false }
+    end
   end
 end

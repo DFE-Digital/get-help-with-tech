@@ -3,8 +3,10 @@ class School::WelcomeWizardController < School::BaseController
   before_action :resume_wizard, except: :next_step
 
   def next_step
-    clear_user_sign_in_token!
-    if @wizard.update_step!(wizard_params)
+    current_step = params.fetch(:step, @wizard.step)
+
+    # clear_user_sign_in_token!
+    if @wizard.update_step!(wizard_params, current_step)
       redirect_to next_step_path
     else
       render @wizard.step, status: :unprocessable_entity

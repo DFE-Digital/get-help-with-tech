@@ -224,9 +224,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         school.preorder_information.update!(will_need_chromebooks: 'yes')
       end
 
-      it 'moves to the what_happens_next step' do
+      it 'moves to the chromebooks step' do
         wizard.update_step!
-        expect(wizard.what_happens_next?).to be true
+        expect(wizard.chromebooks?).to be true
       end
     end
 

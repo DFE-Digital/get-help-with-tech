@@ -57,9 +57,6 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_information_about_devices_i_can_order
 
     when_i_click_continue
-    then_im_asked_whether_my_school_will_order_chromebooks
-
-    when_i_choose_yes_and_submit_the_chromebooks_form
     then_i_see_information_about_what_happens_next
 
     when_i_click_to_finish_and_go_to_homepage

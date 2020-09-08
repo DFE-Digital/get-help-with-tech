@@ -4,7 +4,6 @@ class SchoolWelcomeWizard < ApplicationRecord
   validates :step, presence: true
 
   enum step: {
-    welcome: 'welcome',
     privacy: 'privacy',
     allocation: 'allocation',
     order_your_own: 'order_your_own',
@@ -22,7 +21,9 @@ class SchoolWelcomeWizard < ApplicationRecord
   delegate :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address, to: :chromebook_information
   attr_accessor :invite_user
 
-  def update_step!(params = {})
+  def update_step!(params = {}, current_step = step)
+    force_current_step(current_step)
+
     return true if complete?
 
     case step
@@ -32,7 +33,7 @@ class SchoolWelcomeWizard < ApplicationRecord
     when 'allocation'
       order_your_own!
     when 'order_your_own'
-      if show_will_you_order_section?
+      if user_is_first_school_user?
         will_you_order!
       else
         devices_you_can_order!
@@ -62,7 +63,7 @@ class SchoolWelcomeWizard < ApplicationRecord
         false
       end
     when 'devices_you_can_order'
-      if will_need_chromebooks.nil?
+      if show_chromebooks_form?
         chromebooks!
       else
         what_happens_next!
@@ -81,7 +82,7 @@ class SchoolWelcomeWizard < ApplicationRecord
   end
 
   def invited_user
-    @invited_user ||= find_or_build_invited_user
+    @invited_user ||= school.users.build
   end
 
   def chromebook_information
@@ -95,12 +96,8 @@ class SchoolWelcomeWizard < ApplicationRecord
 
 private
 
-  def find_or_build_invited_user
-    if invited_user_id
-      User.find(invited_user_id)
-    else
-      school.users.build
-    end
+  def force_current_step(step_name)
+    send("#{step_name}!") if step != step_name && SchoolWelcomeWizard.steps.keys.include?(step_name)
   end
 
   def update_will_you_order(params)
@@ -129,6 +126,8 @@ private
       @invited_user = school.users.build(user_attrs)
       if @invited_user.valid?
         save_and_invite_user!(@invited_user)
+        @invited_user = nil
+        true
       else
         errors.copy!(@invited_user.errors)
         false
@@ -153,8 +152,12 @@ private
     end
   end
 
-  def show_will_you_order_section?
-    @first_school_user.nil? ? set_first_user_flag! : @first_school_user
+  def user_is_first_school_user?
+    first_school_user.nil? ? set_first_user_flag! : first_school_user
+  end
+
+  def show_chromebooks_form?
+    user_is_first_school_user?
   end
 
   def less_than_3_users_can_order?
