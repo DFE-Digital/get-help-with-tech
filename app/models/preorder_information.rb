@@ -86,6 +86,19 @@ class PreorderInformation < ApplicationRecord
     joins(school: :responsible_body).merge(ResponsibleBody.in_devices_pilot)
   end
 
+  def invite_school_contact!
+    new_user = school_contact&.to_user
+
+    if new_user&.valid?
+      transaction do
+        new_user.save!
+        InviteSchoolUserMailer.with(user: new_user).nominated_contact_email.deliver_later
+        update!(school_contacted_at: Time.zone.now)
+        update!(status: infer_status)
+      end
+    end
+  end
+
 private
 
   def set_defaults

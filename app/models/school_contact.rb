@@ -13,4 +13,14 @@ class SchoolContact < ApplicationRecord
 
   validates :full_name, presence: true
   validates :role, presence: true
+
+  def to_user
+    User.new(
+      school: school,
+      full_name: full_name,
+      email_address: email_address,
+      telephone: phone_number,
+      orders_devices: false, # TODO: is this right?
+    )
+  end
 end
