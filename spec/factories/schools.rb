@@ -38,5 +38,9 @@ FactoryBot.define do
     trait :with_std_device_allocation do
       association :std_device_allocation, factory: %i[school_device_allocation with_std_allocation]
     end
+
+    trait :with_coms_device_allocation do
+      association :coms_device_allocation, factory: %i[school_device_allocation with_coms_allocation]
+    end
   end
 end
