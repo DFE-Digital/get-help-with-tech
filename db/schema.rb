@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 2020_09_08_104822) do
     t.text "original_email_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "original_first_name"
+    t.text "original_last_name"
+    t.text "original_telephone"
+    t.text "original_responsible_body"
+    t.text "original_responsible_body_urn"
+    t.text "original_cc_sold_to_number"
+    t.text "original_school"
+    t.text "original_school_urn"
+    t.text "original_cc_ship_to_number"
     t.index ["updated_at_timestamp"], name: "index_computacenter_user_changes_on_updated_at_timestamp"
     t.index ["user_id"], name: "index_computacenter_user_changes_on_user_id"
   end

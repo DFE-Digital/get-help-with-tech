@@ -20,7 +20,16 @@ RSpec.describe Computacenter::Ledger do
         'Time of Update',
         'Timestamp of Update',
         'Type of Update',
+        'Original First Name',
+        'Original Last Name',
         'Original Email',
+        'Original Telephone',
+        'Original Responsible Body',
+        'Original Responsible Body URN',
+        'Original CC Sold To Number',
+        'Original School',
+        'Original School URN',
+        'Original CC Ship To Number',
       ]
     end
 
@@ -52,6 +61,15 @@ RSpec.describe Computacenter::Ledger do
           user.created_at.utc.iso8601,
           'New',
           nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
         ])
       end
     end
@@ -77,6 +95,15 @@ RSpec.describe Computacenter::Ledger do
           user.created_at.utc.strftime('%R'),
           user.created_at.utc.iso8601,
           'New',
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
           nil,
         ])
       end
