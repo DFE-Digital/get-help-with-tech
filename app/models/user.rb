@@ -16,6 +16,7 @@ class User < ApplicationRecord
   scope :from_responsible_body_in_connectivity_pilot, -> { joins(:responsible_body).where('responsible_bodies.in_connectivity_pilot = ?', true) }
   scope :mno_users, -> { where.not(mobile_network: nil) }
   scope :who_can_order_devices, -> { where(orders_devices: true) }
+  scope :who_have_seen_privacy_notice, -> { where.not(privacy_notice_seen_at: nil) }
 
   validates :full_name,
             presence: true,

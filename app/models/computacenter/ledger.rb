@@ -8,7 +8,7 @@ module Computacenter
 
     def to_csv
       CSV.generate do |csv|
-        csv << headers
+        csv << self.class.headers
 
         user_changes.each do |user_change|
           csv << [
@@ -32,6 +32,26 @@ module Computacenter
       end
     end
 
+    def self.headers
+      [
+        'First Name',
+        'Last Name',
+        'Email',
+        'Telephone',
+        'Responsible Body',
+        'Responsible Body URN',
+        'CC Sold To Number',
+        'School',
+        'School URN',
+        'CC Ship To Number',
+        'Date of Update', # "24/08/2020" / "dd/mm/yyyy"
+        'Time of Update', # 24 hour clock
+        'Timestamp of Update', # ISO
+        'Type of Update', # New / Change / Remove
+        'Original Email',
+      ]
+    end
+    
   private
 
     def users
@@ -59,24 +79,5 @@ module Computacenter
       end
     end
 
-    def headers
-      [
-        'First Name',
-        'Last Name',
-        'Email',
-        'Telephone',
-        'Responsible Body',
-        'Responsible Body URN',
-        'CC Sold To Number',
-        'School',
-        'School URN',
-        'CC Ship To Number',
-        'Date of Update', # "24/08/2020" / "dd/mm/yyyy"
-        'Time of Update', # 24 hour clock
-        'Timestamp of Update', # ISO
-        'Type of Update', # New / Change / Remove
-        'Original Email',
-      ]
-    end
   end
 end
