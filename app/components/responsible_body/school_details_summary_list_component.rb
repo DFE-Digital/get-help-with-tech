@@ -68,9 +68,10 @@ private
     info = @school.preorder_information
     return [] if info.nil?
 
+    detail_value = info.will_need_chromebooks.nil? ? 'Not yet known' : t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks])
     detail = {
       key: 'Ordering Chromebooks?',
-      value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
+      value: detail_value,
     }
 
     if info.orders_managed_centrally?
