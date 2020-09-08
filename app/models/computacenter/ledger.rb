@@ -26,7 +26,16 @@ module Computacenter
             user_change.updated_at_timestamp.utc.strftime('%R'),
             user_change.updated_at_timestamp.utc.iso8601,
             user_change.type_of_update,
+            user_change.original_first_name,
+            user_change.original_last_name,
             user_change.original_email_address,
+            user_change.original_telephone,
+            user_change.original_responsible_body,
+            user_change.original_responsible_body_urn,
+            user_change.original_cc_sold_to_number,
+            user_change.original_school,
+            user_change.original_school_urn,
+            user_change.original_cc_ship_to_number,
           ]
         end
       end
@@ -48,7 +57,16 @@ module Computacenter
         'Time of Update', # 24 hour clock
         'Timestamp of Update', # ISO
         'Type of Update', # New / Change / Remove
+        'Original First Name',
+        'Original Last Name',
         'Original Email',
+        'Original Telephone',
+        'Original Responsible Body',
+        'Original Responsible Body URN',
+        'Original CC Sold To Number',
+        'Original School',
+        'Original School URN',
+        'Original CC Ship To Number',
       ]
     end
 
@@ -74,7 +92,16 @@ module Computacenter
           cc_ship_to_number: user.school&.computacenter_reference,
           updated_at_timestamp: user.created_at,
           type_of_update: 'New',
+          original_first_name: nil,
+          original_last_name: nil,
           original_email_address: nil,
+          original_telephone: nil,
+          original_responsible_body: nil,
+          original_responsible_body_urn: nil,
+          original_cc_sold_to_number: nil,
+          original_school: nil,
+          original_school_urn: nil,
+          original_cc_ship_to_number: nil,
         )
       end
     end
