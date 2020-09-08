@@ -11,17 +11,6 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
     subject(:wizard) { school_user.school_welcome_wizard }
 
-    context 'when the step is welcome' do
-      before do
-        wizard.welcome!
-      end
-
-      it 'moves to the privacy step' do
-        wizard.update_step!
-        expect(wizard.privacy?).to be true
-      end
-    end
-
     context 'when the step is privacy' do
       before do
         wizard.privacy!

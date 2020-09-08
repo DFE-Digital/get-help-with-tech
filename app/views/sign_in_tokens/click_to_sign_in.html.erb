@@ -7,6 +7,9 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
+    <%- if @user.is_school_user? %>
+      <%= render partial: 'shared/school_user_welcome_text' %>
+    <%- end %>
     <p class="govuk-body">
       <%= form_with url: destroy_sign_in_token_path, method: 'delete' do |f| %>
         <%= hidden_field_tag :token, params[:token] %>
