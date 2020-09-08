@@ -11,7 +11,7 @@
       <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @school) %>
     </div>
 
-    <%- if @school.preorder_information.needs_chromebook_information? %>
+    <%- if @school.preorder_information.orders_managed_centrally? %>
       <%- unless @school.preorder_information.chromebook_information_complete? %>
       <h2 class="govuk-heading-l">Will the school need Chromebooks?</h2>
       <%= render partial: 'shared/chromebook_information_intro' %>

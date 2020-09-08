@@ -13,7 +13,14 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
   context 'when the school will place device orders' do
     before do
-      create(:preorder_information, school: school, who_will_order_devices: :school)
+      create(:preorder_information,
+             school: school,
+             who_will_order_devices: :school,
+             school_or_rb_domain: 'school.domain.org',
+             recovery_email_address: 'admin@recovery.org',
+             will_need_chromebooks: 'yes',
+             school_contact: headteacher)
+
       create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 3)
     end
 
@@ -30,7 +37,13 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school details' do
-      expect(result.css('.govuk-summary-list__row')[0].text).to include('Needs a contact')
+      expect(result.css('.govuk-summary-list__row')[0].text).to include('School will be contacted')
+    end
+
+    it 'shows the chromebook details without links to change it' do
+      expect(result.css('dd')[8].text).to include('Yes')
+      expect(result.css('dd')[9].text).to include('school.domain.org')
+      expect(result.css('dd')[10].text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
@@ -73,18 +86,32 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   context 'when the responsible body will place device orders' do
     let(:school) { create(:school, :primary, :academy) }
 
+    before do
+      create(:preorder_information,
+             school: school,
+             who_will_order_devices: :responsible_body,
+             school_or_rb_domain: 'school.domain.org',
+             recovery_email_address: 'admin@recovery.org',
+             will_need_chromebooks: 'yes',
+             school_contact: headteacher)
+    end
+
     it 'confirms that fact' do
       create(:preorder_information, school: school, who_will_order_devices: :responsible_body)
 
       expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
     end
 
-    it 'does not show the school contact even if the school contact is set' do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :responsible_body,
-             school_contact: headteacher)
+    it 'shows the chromebook details with links to change it' do
+      expect(result.css('dd')[7].text).to include('Yes')
+      expect(result.css('dd')[8].text).to include('Change')
+      expect(result.css('dd')[9].text).to include('school.domain.org')
+      expect(result.css('dd')[10].text).to include('Change')
+      expect(result.css('dd')[11].text).to include('admin@recovery.org')
+      expect(result.css('dd')[12].text).to include('Change')
+    end
 
+    it 'does not show the school contact even if the school contact is set' do
       expect(result.css('dl').text).not_to include('School contact')
     end
   end
