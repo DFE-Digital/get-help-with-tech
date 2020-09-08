@@ -104,12 +104,12 @@ RSpec.feature ResponsibleBody do
     context 'when the RB is a trust' do
       let(:rb_user) { create(:trust_user) }
 
-      it 'shows link to Manage trust users' do
+      it 'shows link to Manage trust administrators' do
         visit responsible_body_home_path
 
         expect(responsible_body_home_page).to be_displayed
         expect(page.status_code).to eq 200
-        expect(page).to have_link('Manage trust users')
+        expect(page).to have_link('Manage trust administrators')
       end
     end
   end
