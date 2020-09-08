@@ -51,7 +51,7 @@ module Computacenter
         'Original Email',
       ]
     end
-    
+
   private
 
     def users
@@ -78,6 +78,5 @@ module Computacenter
         )
       end
     end
-
   end
 end

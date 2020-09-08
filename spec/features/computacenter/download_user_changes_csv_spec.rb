@@ -18,7 +18,6 @@ RSpec.feature 'Download user changes CSV' do
       let!(:user_who_has_seen_privacy_notice_but_cant_order_devices) { create(:school_user, :has_seen_privacy_notice, orders_devices: false) }
       let!(:user_who_has_not_seen_privacy_notice_but_can_order_devices) { create(:school_user, :orders_devices, privacy_notice_seen_at: nil) }
 
-
       it 'downloads a CSV file' do
         click_on 'Download CSV'
         expect_download(content_type: 'text/csv')
