@@ -7,7 +7,11 @@
     <p class="govuk-body">Use this service to:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>download a CSV file of users who have permission to place orders on TechSource</li>
+      <li>
+        <span class="govuk-!-margin-bottom-4">download a CSV file of users who have permission to place orders on TechSource</span>
+        <br /><br />
+        <%= govuk_button_link_to 'Download CSV', computacenter_user_ledger_path(format: :csv), classes: 'govuk-!-margin-top-4' %>
+      </li>
     </ul>
 
   </div>

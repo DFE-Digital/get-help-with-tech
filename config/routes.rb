@@ -138,6 +138,7 @@ Rails.application.routes.draw do
 
   namespace :computacenter do
     get '/', to: 'home#show', as: :home
+    get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     resources :api_tokens, path: '/api-tokens'
     resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
       put '/', to: 'school_device_allocations#bulk_update', on: :collection
