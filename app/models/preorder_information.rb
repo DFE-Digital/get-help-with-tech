@@ -96,6 +96,9 @@ class PreorderInformation < ApplicationRecord
         update!(school_contacted_at: Time.zone.now)
         update!(status: infer_status)
       end
+      true
+    else
+      false
     end
   end
 

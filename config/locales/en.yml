@@ -237,6 +237,10 @@
       schools_devolved_to:
         one: school will place its own orders
         other: schools will place their own orders
+    schools:
+      invite:
+        success: "%{name} has been invited successfully"
+        failure: "Could not invite %{name}"
   errors:
     format:
       "'%{attribute}' %{message}"

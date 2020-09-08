@@ -69,6 +69,10 @@ class School < ApplicationRecord
   end
 
   def invite_school_contact_if_possible!
-    preorder_information.invite_school_contact! unless preorder_information.nil?
+    if preorder_information.present?
+      preorder_information.invite_school_contact!
+    else
+      false
+    end
   end
 end

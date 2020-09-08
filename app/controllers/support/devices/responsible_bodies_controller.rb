@@ -12,6 +12,9 @@ class Support::Devices::ResponsibleBodiesController < Support::BaseController
   def show
     @responsible_body = ResponsibleBody.find(params[:id])
     @users = @responsible_body.users.order('last_signed_in_at desc nulls last, updated_at desc')
-    @schools = @responsible_body.schools.includes(:device_allocations).order(name: :asc)
+    @schools = @responsible_body
+      .schools
+      .includes(:device_allocations, :preorder_information)
+      .order(name: :asc)
   end
 end
