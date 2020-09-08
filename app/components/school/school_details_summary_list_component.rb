@@ -30,30 +30,44 @@ private
 
   def chromebook_rows_if_needed
     info = @school.preorder_information
-    if info&.needs_chromebook_information?
-      rows = [
-        info.will_need_chromebooks && {
-          key: 'Will your school need to order Chromebooks?',
-          value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
-          change_path: school_chromebooks_edit_path,
-          action: 'whether Chromebooks are needed',
-        },
-      ]
-      if info.will_need_chromebooks?
-        rows += [
-          info.school_or_rb_domain && {
-            key: 'Domain',
-            value: info.school_or_rb_domain,
-          },
-          info.recovery_email_address && {
-            key: 'Recovery email',
-            value: info.recovery_email_address,
-          },
-        ]
-      end
-      rows.compact
-    else
-      []
+    return [] if info.nil?
+
+    detail = {
+      key: 'Will your school need to order Chromebooks?',
+      value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
+    }
+
+    unless info.orders_managed_centrally?
+      detail.merge!({
+        change_path: school_chromebooks_edit_path,
+        action: 'whether Chromebooks are needed',
+      })
     end
+
+    rows = [detail]
+
+    if info.will_need_chromebooks?
+      domain = {
+        key: 'Domain',
+        value: info.school_or_rb_domain,
+      }
+      recovery = {
+        key: 'Recovery email',
+        value: info.recovery_email_address,
+      }
+
+      unless info.orders_managed_centrally?
+        domain.merge!({
+          change_path: school_chromebooks_edit_path,
+          action: 'Domain',
+        })
+        recovery.merge!({
+          change_path: school_chromebooks_edit_path,
+          action: 'Recovery email',
+        })
+      end
+      rows += [domain, recovery]
+    end
+    rows
   end
 end

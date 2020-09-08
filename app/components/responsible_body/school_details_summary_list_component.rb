@@ -66,35 +66,45 @@ private
 
   def chromebook_rows_if_needed
     info = @school.preorder_information
-    if info&.needs_chromebook_information?
+    return [] if info.nil?
+
+    detail = {
+      key: 'Ordering Chromebooks?',
+      value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
+    }
+
+    if info.orders_managed_centrally?
       change_path = responsible_body_devices_school_chromebooks_edit_path(school_urn: @school.urn)
-      rows = [
-        info.will_need_chromebooks && {
-          key: 'Ordering Chromebooks?',
-          value: t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks]),
-          change_path: change_path,
-          action: 'whether Chromebooks are needed',
-        },
-      ]
-      if info.will_need_chromebooks?
-        rows += [
-          info.school_or_rb_domain && {
-            key: 'Domain',
-            value: info.school_or_rb_domain,
-            change_path: change_path,
-            action: 'Domain',
-          },
-          info.recovery_email_address && {
-            key: 'Recovery email',
-            value: info.recovery_email_address,
-            change_path: change_path,
-            action: 'Recovery email',
-          },
-        ]
-      end
-      rows.compact
-    else
-      []
+      detail.merge!({
+        change_path: change_path,
+        action: 'whether Chromebooks are needed',
+      })
     end
+
+    rows = [detail]
+
+    if info.will_need_chromebooks?
+      domain = {
+        key: 'Domain',
+        value: info.school_or_rb_domain,
+      }
+      recovery = {
+        key: 'Recovery email',
+        value: info.recovery_email_address,
+      }
+
+      if info.orders_managed_centrally?
+        domain.merge!({
+          change_path: change_path,
+          action: 'Domain',
+        })
+        recovery.merge!({
+          change_path: change_path,
+          action: 'Recovery email',
+        })
+      end
+      rows += [domain, recovery]
+    end
+    rows
   end
 end

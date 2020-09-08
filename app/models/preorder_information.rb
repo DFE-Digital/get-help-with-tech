@@ -30,7 +30,7 @@ class PreorderInformation < ApplicationRecord
   def infer_status
     if school_will_order_devices?
       school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
-    elsif needs_chromebook_information? && chromebook_information_complete?
+    elsif orders_managed_centrally? && chromebook_information_complete?
       'ready'
     else
       'needs_info'
@@ -57,7 +57,7 @@ class PreorderInformation < ApplicationRecord
     self.status = infer_status
   end
 
-  def needs_chromebook_information?
+  def orders_managed_centrally?
     who_will_order_devices == 'responsible_body'
   end
 

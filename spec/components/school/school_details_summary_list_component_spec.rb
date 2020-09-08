@@ -13,7 +13,14 @@ describe School::SchoolDetailsSummaryListComponent do
 
   context 'when the school will place device orders' do
     before do
-      create(:preorder_information, school: school, who_will_order_devices: :school)
+      create(:preorder_information,
+             school: school,
+             who_will_order_devices: :school,
+             school_or_rb_domain: 'school.domain.org',
+             recovery_email_address: 'admin@recovery.org',
+             will_need_chromebooks: 'yes',
+             school_contact: headteacher)
+
       create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 3)
     end
 
@@ -23,6 +30,15 @@ describe School::SchoolDetailsSummaryListComponent do
 
     it 'renders the school type' do
       expect(result.css('dd')[1].text).to include('Primary school')
+    end
+
+    it 'shows the chromebook details with links to change it' do
+      expect(result.css('dd')[2].text).to include('Yes')
+      expect(result.css('dd')[3].text).to include('Change')
+      expect(result.css('dd')[4].text).to include('school.domain.org')
+      expect(result.css('dd')[5].text).to include('Change')
+      expect(result.css('dd')[6].text).to include('admin@recovery.org')
+      expect(result.css('dd')[7].text).to include('Change')
     end
   end
 
@@ -34,7 +50,7 @@ describe School::SchoolDetailsSummaryListComponent do
              school: school,
              who_will_order_devices: :responsible_body,
              school_or_rb_domain: 'school.domain.org',
-             recovery_email_address: 'admin@school.domain.org',
+             recovery_email_address: 'admin@recovery.org',
              will_need_chromebooks: 'yes',
              school_contact: headteacher)
     end
@@ -43,11 +59,10 @@ describe School::SchoolDetailsSummaryListComponent do
       expect(result.css('dl').text).not_to include('School contact')
     end
 
-    it 'shows the chromebook details with a link to change it' do
+    it 'shows the chromebook details without links to change it' do
       expect(result.css('dd')[2].text).to include('Yes')
-      expect(result.css('dd')[3].text).to include('Change')
-      expect(result.css('dd')[4].text).to include('school.domain.org')
-      expect(result.css('dd')[5].text).to include('admin@school.domain.org')
+      expect(result.css('dd')[3].text).to include('school.domain.org')
+      expect(result.css('dd')[4].text).to include('admin@recovery.org')
     end
   end
 end
