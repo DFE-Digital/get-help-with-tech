@@ -109,7 +109,7 @@ private
     if user.school_welcome_wizard&.complete?
       school_home_path
     else
-      school_welcome_wizard_welcome_path
+      school_welcome_wizard_privacy_path
     end
   end
 end

@@ -62,6 +62,13 @@ FactoryBot.define do
           user.school_welcome_wizard ||= create(:school_welcome_wizard, :completed, user: user)
         end
       end
+
+      trait :has_partially_completed_wizard do
+        after(:create) do |user|
+          user.school_welcome_wizard&.destroy!
+          user.school_welcome_wizard = create(:school_welcome_wizard, user: user, step: 'will_you_order')
+        end
+      end
     end
 
     factory :mno_user do

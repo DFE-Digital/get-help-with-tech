@@ -76,14 +76,30 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a school user who has not completed the welcome wizard' do
+  context 'as a school user who has not done any of the welcome wizard' do
     let(:user) { create(:school_user, :new_visitor) }
 
-    scenario 'it redirects to the school welcome wizard welcome page' do
+    scenario 'it shows the welcome wizard welcome text on the interstitial page' do
+      visit validate_token_url_for(user)
+      expect(page).to have_text "You’re signed in as #{user.school.name}"
+      expect(page).to have_text 'You can use the ‘Get help with technology’ service to:'
+    end
+
+    scenario 'clicking on Sign in shows them the privacy notice' do
+      visit validate_token_url_for(user)
+      expect(page).to have_text "You’re signed in as #{user.school.name}"
+      click_on 'Continue'
+      expect(page).to have_text 'Before you continue, please read the privacy notice.'
+    end
+  end
+
+  context 'as a school user who has not done part of the welcome wizard' do
+    let(:user) { create(:school_user, :has_partially_completed_wizard) }
+
+    scenario 'clicking on Sign in takes them to their next step' do
       visit validate_token_url_for(user)
       click_on 'Continue'
-      expect(page).to have_current_path(school_welcome_wizard_welcome_path)
-      expect(page).to have_text "You’re signed in as #{user.school.name}"
+      expect(page).to have_text 'Will you be one of the people placing orders for your school?'
     end
   end
 
