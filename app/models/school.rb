@@ -31,6 +31,10 @@ class School < ApplicationRecord
     device_allocations.find_by_device_type!(device_type)
   end
 
+  def has_std_device_allocation?
+    std_device_allocation&.allocation.to_i.positive?
+  end
+
   def type_label
     if special_establishment_type?
       'Special school'

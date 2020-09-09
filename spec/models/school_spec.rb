@@ -167,6 +167,46 @@ RSpec.describe School, type: :model do
     end
   end
 
+  describe '#has_std_device_allocation?' do
+    let(:school) { create(:school) }
+
+    context 'when there is no standard device allocation' do
+      it 'is false' do
+        expect(school.has_std_device_allocation?).to eq(false)
+      end
+    end
+
+    context 'when there is a standard device allocation of the given type but the value is 0' do
+      before do
+        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', allocation: 0)
+      end
+
+      it 'is false' do
+        expect(school.has_std_device_allocation?).to eq(false)
+      end
+    end
+
+    context 'when there is a standard device allocation' do
+      before do
+        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', allocation: 1)
+      end
+
+      it 'is true' do
+        expect(school.has_std_device_allocation?).to eq(true)
+      end
+    end
+
+    context 'when there is a comms device allocation' do
+      before do
+        school.device_allocations << build(:school_device_allocation, device_type: 'coms_device', allocation: 1)
+      end
+
+      it 'is false' do
+        expect(school.has_std_device_allocation?).to eq(false)
+      end
+    end
+  end
+
   describe '#can_order_devices?' do
     let(:school) { create(:school) }
 
