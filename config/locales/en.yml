@@ -428,10 +428,6 @@
               invalid: The URN must be 6 digits
             name:
               blank: Enter the name of the establishment
-        preorder_information:
-          attributes:
-            school_or_rb_domain:
-              invalid_domain: 'Enter a GSuite domain'
   time:
     formats:
       time_only: "%l:%M%P"
