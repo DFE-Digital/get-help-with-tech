@@ -20,7 +20,7 @@ class SchoolContact < ApplicationRecord
       full_name: full_name,
       email_address: email_address,
       telephone: phone_number,
-      orders_devices: false, # TODO: is this right?
+      orders_devices: true,
     )
   end
 end
