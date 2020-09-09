@@ -157,7 +157,7 @@ private
   end
 
   def show_chromebooks_form?
-    user_is_first_school_user?
+    show_chromebooks.nil? ? set_show_chromebooks_flag! : show_chromebooks
   end
 
   def less_than_3_users_can_order?
@@ -168,6 +168,12 @@ private
     is_first_user_for_school = school.users.count == 1
     update!(first_school_user: is_first_user_for_school)
     is_first_user_for_school
+  end
+
+  def set_show_chromebooks_flag!
+    show_page = will_need_chromebooks.nil?
+    update!(show_chromebooks: show_page)
+    show_page
   end
 
   def save_and_invite_user!(new_user)

@@ -39,7 +39,32 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_school_home_page
   end
 
-  scenario 'step through wizard as subsequent user' do
+  scenario 'step through wizard as subsequent user when the chromebooks question has been answered yes/no' do
+    as_a_subsequent_school_user
+    when_the_chromebooks_question_has_already_been_answered
+    when_i_sign_in_for_the_first_time
+    then_i_see_a_welcome_page_for_my_school
+
+    when_i_click_continue
+    then_i_see_a_privacy_notice
+
+    when_i_click_continue
+    then_i_see_the_allocation_for_my_school
+
+    when_i_click_continue
+    then_i_see_the_order_your_own_page
+
+    when_i_click_continue
+    then_i_see_information_about_devices_i_can_order
+
+    when_i_click_continue
+    then_i_see_information_about_what_happens_next
+
+    when_i_click_to_finish_and_go_to_homepage
+    then_i_see_the_school_home_page
+  end
+
+  scenario 'step through wizard as subsequent user when the chromebooks question has not been answered yes/no' do
     as_a_subsequent_school_user
     when_i_sign_in_for_the_first_time
     then_i_see_a_welcome_page_for_my_school
@@ -57,6 +82,9 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_information_about_devices_i_can_order
 
     when_i_click_continue
+    then_im_asked_whether_my_school_will_order_chromebooks
+
+    when_i_choose_no_and_submit_the_chromebooks_form
     then_i_see_information_about_what_happens_next
 
     when_i_click_to_finish_and_go_to_homepage
@@ -82,6 +110,10 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def as_a_subsequent_school_user
     @user = create_list(:school_user, 2, :new_visitor, school: school).last
+  end
+
+  def when_the_chromebooks_question_has_already_been_answered
+    school.preorder_information.update!(will_need_chromebooks: 'no')
   end
 
   def when_i_sign_in_for_the_first_time
@@ -164,6 +196,11 @@ RSpec.feature 'Navigate school welcome wizard' do
       fill_in "School or #{school.responsible_body.humanized_type} domain", with: 'example.com'
       fill_in 'Recovery email address', with: 'admin@trust.com'
     end
+    click_on 'Continue'
+  end
+
+  def when_i_choose_no_and_submit_the_chromebooks_form
+    choose 'No, we do not need Chromebooks'
     click_on 'Continue'
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_104822) do
+ActiveRecord::Schema.define(version: 2020_09_09_080651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_104822) do
     t.boolean "user_orders_devices"
     t.boolean "first_school_user"
     t.bigint "invited_user_id"
+    t.boolean "show_chromebooks"
     t.index ["invited_user_id"], name: "index_school_welcome_wizards_on_invited_user_id"
     t.index ["user_id"], name: "index_school_welcome_wizards_on_user_id"
   end
