@@ -185,6 +185,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       before do
         wizard.chromebooks!
+        allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
       end
 
       it 'updates the preorder_information with the form details' do

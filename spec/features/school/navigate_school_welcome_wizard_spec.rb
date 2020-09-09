@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.feature 'Navigate school welcome wizard' do
   let(:school) { create(:school, :with_preorder_information, :with_std_device_allocation) }
 
+  before do
+    allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
+  end
+
   scenario 'step through the wizard as the first user for a school' do
     as_a_new_school_user
     when_i_sign_in_for_the_first_time
