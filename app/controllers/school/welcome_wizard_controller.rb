@@ -21,8 +21,6 @@ class School::WelcomeWizardController < School::BaseController
 
   def order_your_own; end
 
-  def will_you_order; end
-
   def will_other_order; end
 
   def devices_you_can_order; end

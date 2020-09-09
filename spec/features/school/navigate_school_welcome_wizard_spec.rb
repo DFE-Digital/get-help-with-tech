@@ -18,9 +18,6 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_order_your_own_page
 
     when_i_click_continue
-    then_i_see_the_will_you_order_page
-
-    when_i_choose_yes_and_click_continue
     then_i_see_the_techsource_account_page
 
     when_i_click_continue
@@ -152,11 +149,6 @@ RSpec.feature 'Navigate school welcome wizard' do
     expect(page).to have_current_path(school_home_path)
     expect(page).to have_text(school.name)
     expect(page).to have_text('Get devices for your school')
-  end
-
-  def then_i_see_the_will_you_order_page
-    expect(page).to have_current_path(school_welcome_wizard_will_you_order_path)
-    expect(page).to have_text('Will you be one of the people placing orders for your school?')
   end
 
   def then_i_see_the_techsource_account_page

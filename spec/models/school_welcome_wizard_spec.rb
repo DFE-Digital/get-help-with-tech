@@ -45,9 +45,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.order_your_own!
       end
 
-      it 'moves to the will_you_order step' do
+      it 'moves to the techsource_account step' do
         wizard.update_step!
-        expect(wizard.will_you_order?).to be true
+        expect(wizard.techsource_account?).to be true
       end
     end
 
@@ -62,56 +62,6 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       it 'moves to the devices_you_can_order step' do
         wizard.update_step!
         expect(wizard.devices_you_can_order?).to be true
-      end
-    end
-
-    context 'when the step is will_you_order and user chooses to order' do
-      before do
-        wizard.will_you_order!
-      end
-
-      it 'moves to the techsource_account step' do
-        wizard.update_step!({ user_orders_devices: '1' })
-        expect(wizard.techsource_account?).to be true
-      end
-
-      it 'records the choice and updates the user' do
-        wizard.update_step!({ user_orders_devices: '1' })
-        expect(wizard.user_orders_devices?).to be true
-        expect(wizard.user.orders_devices?).to be true
-      end
-    end
-
-    context 'when the step is will_you_order and user chooses not to order' do
-      before do
-        wizard.will_you_order!
-      end
-
-      it 'moves to the will_other_order step' do
-        wizard.update_step!({ user_orders_devices: '0' })
-        expect(wizard.will_other_order?).to be true
-      end
-
-      it 'records the choice and updates the user' do
-        wizard.update_step!({ user_orders_devices: '0' })
-        expect(wizard.user_orders_devices?).to be false
-        expect(wizard.user.orders_devices?).to be false
-      end
-    end
-
-    context 'when the step is will_you_order and user does not make a choice' do
-      before do
-        wizard.will_you_order!
-      end
-
-      it 'remains on the will_you_order step' do
-        wizard.update_step!({ step: 'will_you_order' })
-        expect(wizard.will_you_order?).to be true
-      end
-
-      it 'adds an error message' do
-        wizard.update_step!({ step: 'will_you_order' })
-        expect(wizard.errors.keys).to include(:user_orders_devices)
       end
     end
 

@@ -90,12 +90,6 @@
         title: "You’ve been allocated %{allocation} laptops and tablets"
       order_your_own:
         title: You can only order your full allocation if local restrictions are confirmed
-      will_you_order:
-        title: Will you be one of the people placing orders for your school?
-        yes_label: Yes, I will order devices
-        no_label: 'No'
-        errors:
-          choose_option: Tell us whether you will order devices
       techsource_account:
         title: You will get an invite to the Computacenter TechSource website
       will_other_order:

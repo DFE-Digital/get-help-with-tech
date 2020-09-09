@@ -7,7 +7,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     privacy: 'privacy',
     allocation: 'allocation',
     order_your_own: 'order_your_own',
-    will_you_order: 'will_you_order',
     techsource_account: 'techsource_account',
     will_other_order: 'will_other_order',
     devices_you_can_order: 'devices_you_can_order',
@@ -34,21 +33,9 @@ class SchoolWelcomeWizard < ApplicationRecord
       order_your_own!
     when 'order_your_own'
       if user_is_first_school_user?
-        will_you_order!
+        techsource_account!
       else
         devices_you_can_order!
-      end
-    when 'will_you_order'
-      if update_will_you_order(params)
-        if user_orders_devices?
-          techsource_account!
-        elsif less_than_3_users_can_order?
-          will_other_order!
-        else
-          devices_you_can_order!
-        end
-      else
-        false
       end
     when 'techsource_account'
       if less_than_3_users_can_order?
@@ -98,21 +85,6 @@ private
 
   def force_current_step(step_name)
     send("#{step_name}!") if step != step_name && SchoolWelcomeWizard.steps.keys.include?(step_name)
-  end
-
-  def update_will_you_order(params)
-    user_orders_devices = params.fetch(:user_orders_devices, nil)
-
-    if user_orders_devices.nil? || !user_orders_devices.in?(%w[1 0])
-      errors.add(:user_orders_devices, I18n.t('will_you_order.errors.choose_option', scope: i18n_scope))
-      false
-    else
-      SchoolWelcomeWizard.transaction do
-        update!(user_orders_devices: user_orders_devices)
-        user.update!(orders_devices: user_orders_devices)
-      end
-      true
-    end
   end
 
   def update_will_other_order(params)
