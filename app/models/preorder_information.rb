@@ -12,6 +12,7 @@ class PreorderInformation < ApplicationRecord
     ready: 'ready',
     school_will_be_contacted: 'school_will_be_contacted',
     school_contacted: 'school_contacted',
+    school_ready: 'school_ready',
   }
 
   enum who_will_order_devices: {
@@ -32,6 +33,8 @@ class PreorderInformation < ApplicationRecord
       'school_will_be_contacted'
     elsif school_will_order_devices? && school_contacted_at.present? && !chromebook_information_complete?
       'school_contacted'
+    elsif school_will_order_devices? && school_contacted_at.present? && chromebook_information_complete?
+      'school_ready'
     elsif chromebook_information_complete?
       'ready'
     else

@@ -45,7 +45,7 @@ RSpec.describe PreorderInformation, type: :model do
               school_contacted_at: Time.zone.now).infer_status
       end
 
-      it { is_expected.to eq('ready') }
+      it { is_expected.to eq('school_ready') }
     end
 
     context 'when the school orders devices, it has logged in and plans to order Chromebooks' do
@@ -57,7 +57,7 @@ RSpec.describe PreorderInformation, type: :model do
               school_contacted_at: Time.zone.now).infer_status
       end
 
-      it { is_expected.to eq('ready') }
+      it { is_expected.to eq('school_ready') }
     end
 
     context 'when the orders are placed centrally and the responsible body has not provided Chromebook details' do
