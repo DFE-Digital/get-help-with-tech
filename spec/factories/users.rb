@@ -9,6 +9,10 @@ FactoryBot.define do
       privacy_notice_seen_at { 3.days.ago }
     end
 
+    trait :has_not_seen_privacy_notice do
+      privacy_notice_seen_at { nil }
+    end
+
     trait :approved do
       approved_at { Time.zone.now.utc - 3.days }
     end
@@ -88,6 +92,16 @@ FactoryBot.define do
       email_address do
         full_name.downcase.gsub(' ', '.') + '@computacenter.com'
       end
+    end
+
+    trait :relevant_to_computacenter do
+      has_seen_privacy_notice
+      orders_devices { true }
+    end
+
+    trait :not_relevant_to_computacenter do
+      has_not_seen_privacy_notice
+      orders_devices { false }
     end
   end
 end
