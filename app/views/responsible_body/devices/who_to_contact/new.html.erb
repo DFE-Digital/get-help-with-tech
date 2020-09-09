@@ -7,7 +7,13 @@
       <%= @school.name %>
     </h1>
 
-    <%= render partial: 'who_to_contact_form', locals: { form: @form } %>
+    <%- unless @school.has_std_device_allocation? %>
+      <%= render partial: 'shared/school_without_allocation' %>
+    <%- end %>
+
+    <div class="govuk-!-margin-top-8">
+      <%= render partial: 'who_to_contact_form', locals: { form: @form } %>
+    </div>
 
     <h2 class="govuk-heading-l govuk-!-margin-top-6">School details</h2>
   </div>
