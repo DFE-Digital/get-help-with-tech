@@ -13,13 +13,7 @@
 
       <h2 class="govuk-heading-m">Get devices earlier for specific circumstances</h2>
 
-      <p class="govuk-body">You can request devices at any time for disadvantaged children who:</p>
-
-      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-        <li>are extremely clinically vulnerable and must continue shielding on official advice</li>
-    
-        <li>cannot attend school – even though theirs is open – because they live in a different area with local coronavirus restrictions</li>
-      </ul>
+      <%= render partial: 'shared/devices/who_to_request_for' %>
 
       <%= f.govuk_submit 'Continue' %>
     <%- end %>

@@ -39,12 +39,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <p class="govuk-body">You can request devices at any time for disadvantaged children who:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>are extremely clinically vulnerable and must continue shielding on official advice</li>
-      <li>cannot attend school – even though theirs is open – because they live in a different area with local coronavirus restrictions</li>
-    </ul>
+    <%= render partial: 'shared/devices/who_to_request_for' %>
 
     <h2 class="govuk-heading-m">What to put in your request</h2>
 
@@ -53,17 +48,19 @@
     <% if @user.is_school_user? %>
       <ul class="govuk-list govuk-list--bullet">
         <li>how many devices you will need</li>
+        <li>the year groups of the children who need devices</li>
         <li>why you need them</li>
       </ul>
     <% elsif @user.is_responsible_body_user? %>
       <ul class="govuk-list govuk-list--bullet">
         <li>which schools need the devices</li>
         <li>how many devices they need</li>
+        <li>the year groups of the children who need devices</li>
         <li>why they need the devices</li>
       </ul>
     <% end %>
 
-    <p class="govuk-body">For children who are shielding you could be asked to give evidence.</p>
+    <p class="govuk-body">If shielding is not recommended in your area (see the <%= govuk_link_to 'guidance on local restrictions', 'https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19' %>), you’ll need to show evidence that children have received official advice to continue shielding outside of national guidelines.</p>
 
     <h2 class="govuk-heading-m">Where to send your request</h2>
 
