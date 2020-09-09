@@ -68,7 +68,7 @@ class School < ApplicationRecord
     allocation&.cap.to_i > allocation&.devices_ordered.to_i
   end
 
-  def invite_school_contact_if_possible!
+  def invite_school_contact
     if preorder_information.present?
       preorder_information.invite_school_contact!
     else

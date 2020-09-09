@@ -1,7 +1,7 @@
 class Support::Devices::SchoolsController < Support::BaseController
   def invite
     school = School.find_by!(urn: params[:school_urn])
-    success = school.invite_school_contact_if_possible!
+    success = school.invite_school_contact
     if success
       flash[:success] = I18n.t('support.schools.invite.success', name: school.name)
     else

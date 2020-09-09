@@ -216,7 +216,7 @@ RSpec.describe School, type: :model do
     end
   end
 
-  describe '#invite_school_contact_if_possible!' do
+  describe '#invite_school_contact' do
     context "when the school contact isn't a user on the system" do
       let(:school_contact) do
         create(:school_contact,
@@ -235,7 +235,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'creates a new user from the contact details' do
-        expect { school.invite_school_contact_if_possible! }
+        expect { school.invite_school_contact }
           .to change { User.count }.from(0).to(1)
 
         invited_user = User.last
@@ -247,7 +247,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'sends an invitation email to the school user' do
-        expect { school.invite_school_contact_if_possible! }
+        expect { school.invite_school_contact }
           .to(have_enqueued_job(ActionMailer::MailDeliveryJob)
           .once
           .with do |mailer_name, mailer_action, _, params|
@@ -258,7 +258,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'updates the status' do
-        expect { school.invite_school_contact_if_possible! }
+        expect { school.invite_school_contact }
           .to change { school.preorder_information.status }.from('school_will_be_contacted').to('school_contacted')
       end
     end
@@ -267,7 +267,7 @@ RSpec.describe School, type: :model do
       subject(:school) { build(:school, preorder_information: nil) }
 
       it 'does nothing' do
-        expect { school.invite_school_contact_if_possible! }
+        expect { school.invite_school_contact }
           .not_to change { User.count }.from(0)
       end
     end
@@ -279,7 +279,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'does nothing' do
-        expect { school.invite_school_contact_if_possible! }
+        expect { school.invite_school_contact }
           .not_to change { User.count }.from(0)
       end
     end
@@ -297,7 +297,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'does nothing' do
-        expect { school.invite_school_contact_if_possible! }
+        expect { school.invite_school_contact }
           .not_to change { User.count }.from(1)
       end
     end
