@@ -1,7 +1,7 @@
 class SignInEvent < Event
   def notifiable?
     FeatureFlag.active?(:sign_in_slack_notifications) \
-      && (@params[:user].is_mno_user? || @params[:user].is_responsible_body_user?)
+      && (@params[:user].is_mno_user? || @params[:user].is_responsible_body_user? || @params[:user].is_school_user?)
   end
 
   def message
