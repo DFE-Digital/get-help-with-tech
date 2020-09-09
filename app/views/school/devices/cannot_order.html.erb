@@ -15,9 +15,6 @@
     <p class="govuk-body">We’ll contact you as soon as you’re able to place orders.</p>
     <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', school_request_devices_path %> who:</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>are extremely clinically vulnerable and must continue shielding on&nbsp;official&nbsp;advice</li>
-      <li>cannot attend school – even though theirs is open – because they live in a different area with local coronavirus restrictions</li>
-    </ul>
+    <%= render partial: 'shared/devices/who_to_request_for_list' %>
   </div>
 </div>

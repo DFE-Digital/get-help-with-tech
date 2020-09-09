@@ -53,12 +53,9 @@
 
     <p class="govuk-body">We’ll contact people as soon as they’re able to place orders.</p>
 
-    <p class="govuk-body">Schools can get devices earlier for specific circumstances. They can request devices at any time for disadvantaged children who:</p>
+    <p class="govuk-body">Schools can get devices earlier for specific circumstances. They can request devices at any time for disadvantaged children from any year group who:</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>are extremely clinically vulnerable and must continue shielding on&nbsp;official&nbsp;advice</li>
-      <li>cannot attend school – even though theirs is open – because they live in a different area with local coronavirus restrictions</li>
-    </ul>
+    <%= render partial: 'shared/devices/who_to_request_for_list' %>
 
     <div class="govuk-!-margin-top-6">
       <%= govuk_button_link_to 'Continue', responsible_body_devices_who_will_order_edit_path %>
