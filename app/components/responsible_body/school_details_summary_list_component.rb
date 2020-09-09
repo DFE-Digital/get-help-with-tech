@@ -30,7 +30,9 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
       },
       {
         key: 'Can place orders?',
-        value: ['Not yet because there are no local coronavirus restrictions', govuk_link_to('Get devices early for specific circumstances', responsible_body_devices_request_devices_path)].join('<br>').html_safe,
+        value: 'Not yet because there are no local coronavirus&nbsp;restrictions'.html_safe,
+        action_path: responsible_body_devices_request_devices_path,
+        action: 'Request devices for specific circumstances',
       },
       {
         key: 'Type of school',
@@ -97,11 +99,11 @@ private
       if info.orders_managed_centrally?
         domain.merge!({
           change_path: change_path,
-          action: 'Domain',
+          action: 'domain',
         })
         recovery.merge!({
           change_path: change_path,
-          action: 'Recovery email',
+          action: 'recovery email',
         })
       end
       rows += [domain, recovery]
