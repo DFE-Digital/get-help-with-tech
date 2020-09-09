@@ -67,4 +67,12 @@ class School < ApplicationRecord
     allocation = device_allocations.by_device_type(device_type).first
     allocation&.cap.to_i > allocation&.devices_ordered.to_i
   end
+
+  def invite_school_contact
+    if preorder_information.present?
+      preorder_information.invite_school_contact!
+    else
+      false
+    end
+  end
 end

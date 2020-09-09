@@ -51,6 +51,7 @@
           <th scope="col" class="govuk-table__header">Status</th>
           <th scope="col" class="govuk-table__header">Devices</th>
           <th scope="col" class="govuk-table__header">Dongles</th>
+          <th scope="col" class="govuk-table__header">Actions</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -69,6 +70,13 @@
               <%= dongles_allocations_data&.allocation || 0 %> allocated<br>
               <%= dongles_allocations_data&.cap || 0 %> caps<br>
               <%= dongles_allocations_data&.devices_ordered || 0 %> ordered
+            </td>
+            <td class="govuk-table__cell">
+              <% if school&.preorder_information&.school_will_be_contacted? %>
+                <%= form_with url: support_devices_school_invite_path(school_urn: school.urn), method: 'post' do |f| %>
+                  <%= f.govuk_submit 'Invite' %>
+                <% end %>
+              <% end %>
             </td>
           </tr>
         <% end %>

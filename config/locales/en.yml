@@ -237,6 +237,10 @@
       schools_devolved_to:
         one: school will place its own orders
         other: schools will place their own orders
+    schools:
+      invite:
+        success: "%{name} has been invited successfully"
+        failure: "Could not invite %{name}"
   errors:
     format:
       "'%{attribute}' %{message}"
@@ -325,6 +329,7 @@
           ready: Ready
           school_contacted: School contacted
           school_will_be_contacted: School will be contacted
+          school_ready: School ready
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'

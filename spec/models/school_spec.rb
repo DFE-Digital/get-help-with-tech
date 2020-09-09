@@ -215,4 +215,91 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#invite_school_contact' do
+    context "when the school contact isn't a user on the system" do
+      let(:school_contact) do
+        create(:school_contact,
+               email_address: 'jsmith@school.sch.gov.uk',
+               full_name: 'Jane Smith',
+               school: school)
+      end
+
+      subject(:school) do
+        create(:school, preorder_information: create(:preorder_information,
+                                                     who_will_order_devices: :school))
+      end
+
+      before do
+        school.preorder_information.update(school_contact: school_contact)
+      end
+
+      it 'creates a new user from the contact details' do
+        expect { school.invite_school_contact }
+          .to change { User.count }.from(0).to(1)
+
+        invited_user = User.last
+        expect(invited_user.email_address).to eq('jsmith@school.sch.gov.uk')
+        expect(invited_user.full_name).to eq('Jane Smith')
+        expect(invited_user.orders_devices).to be_falsey
+        expect(invited_user.is_school_user?).to be_truthy
+        expect(invited_user.school).to eq(school)
+      end
+
+      it 'sends an invitation email to the school user' do
+        expect { school.invite_school_contact }
+          .to(have_enqueued_job(ActionMailer::MailDeliveryJob)
+          .once
+          .with do |mailer_name, mailer_action, _, params|
+            expect(mailer_name).to eq('InviteSchoolUserMailer')
+            expect(mailer_action).to eq('nominated_contact_email')
+            expect(params[:params][:user].email_address).to eq('jsmith@school.sch.gov.uk')
+          end)
+      end
+
+      it 'updates the status' do
+        expect { school.invite_school_contact }
+          .to change { school.preorder_information.status }.from('school_will_be_contacted').to('school_contacted')
+      end
+    end
+
+    context 'when the school has no preorder information' do
+      subject(:school) { build(:school, preorder_information: nil) }
+
+      it 'does nothing' do
+        expect { school.invite_school_contact }
+          .not_to change { User.count }.from(0)
+      end
+    end
+
+    context "when there isn't any contact specified yet" do
+      subject(:school) do
+        build(:school,
+              preorder_information: build(:preorder_information, school_contact: nil))
+      end
+
+      it 'does nothing' do
+        expect { school.invite_school_contact }
+          .not_to change { User.count }.from(0)
+      end
+    end
+
+    context 'when the school contact matches an existing user' do
+      let(:school_contact) { build(:school_contact, email_address: 'jsmith@school.sch.gov.uk') }
+
+      subject(:school) do
+        build(:school,
+              preorder_information: build(:preorder_information, school_contact: school_contact))
+      end
+
+      before do
+        create(:user, email_address: 'jsmith@school.sch.gov.uk')
+      end
+
+      it 'does nothing' do
+        expect { school.invite_school_contact }
+          .not_to change { User.count }.from(1)
+      end
+    end
+  end
 end

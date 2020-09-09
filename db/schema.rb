@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_104822) do
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
+    t.datetime "school_contacted_at"
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

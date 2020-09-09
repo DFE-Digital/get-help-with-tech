@@ -12,6 +12,7 @@ class PreorderInformation < ApplicationRecord
     ready: 'ready',
     school_will_be_contacted: 'school_will_be_contacted',
     school_contacted: 'school_contacted',
+    school_ready: 'school_ready',
   }
 
   enum who_will_order_devices: {
@@ -24,13 +25,17 @@ class PreorderInformation < ApplicationRecord
     set_defaults
   end
 
-  # Update this method as we add more fields (e.g. chromebook info)
-  # with reference to the prototype:
-  # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
+  # If this method is added, we may need to update School::SchoolDetailsSummaryListComponent
   def infer_status
-    if school_will_order_devices?
-      school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
-    elsif orders_managed_centrally? && chromebook_information_complete?
+    if school_will_order_devices? && school_contact.nil?
+      'needs_contact'
+    elsif school_will_order_devices? && school_contacted_at.nil?
+      'school_will_be_contacted'
+    elsif school_will_order_devices? && school_contacted_at.present? && !chromebook_information_complete?
+      'school_contacted'
+    elsif school_will_order_devices? && school_contacted_at.present? && chromebook_information_complete?
+      'school_ready'
+    elsif chromebook_information_complete?
       'ready'
     else
       'needs_info'
@@ -82,6 +87,22 @@ class PreorderInformation < ApplicationRecord
 
   def self.for_responsible_bodies_in_devices_pilot
     joins(school: :responsible_body).merge(ResponsibleBody.in_devices_pilot)
+  end
+
+  def invite_school_contact!
+    new_user = school_contact&.to_user
+
+    if new_user&.valid?
+      transaction do
+        new_user.save!
+        InviteSchoolUserMailer.with(user: new_user).nominated_contact_email.deliver_later
+        update!(school_contacted_at: Time.zone.now)
+        update!(status: infer_status)
+      end
+      true
+    else
+      false
+    end
   end
 
 private
