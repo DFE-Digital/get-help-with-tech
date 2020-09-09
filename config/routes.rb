@@ -114,7 +114,7 @@ Rails.application.routes.draw do
     get '/devices-you-can-order', to: 'welcome_wizard#devices_you_can_order', as: :welcome_wizard_devices_you_can_order
     get '/chromebooks', to: 'welcome_wizard#chromebooks', as: :welcome_wizard_chromebooks
     get '/what-happens-next', to: 'welcome_wizard#what_happens_next', as: :welcome_wizard_what_happens_next
-    patch '/next', to: 'welcome_wizard#next_step', as: :welcome_wizard
+    patch '/next(/:step)', to: 'welcome_wizard#next_step', as: :welcome_wizard
     patch '/prev', to: 'welcome_wizard#previous_step', as: :welcome_wizard_previous
     resources :users, only: %i[index new create]
   end
