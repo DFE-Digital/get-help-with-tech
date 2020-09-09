@@ -41,14 +41,14 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('dd')[8].text).to include('Yes')
-      expect(result.css('dd')[9].text).to include('school.domain.org')
-      expect(result.css('dd')[10].text).to include('admin@recovery.org')
+      expect(result.css('dd')[9].text).to include('Yes')
+      expect(result.css('dd')[10].text).to include('school.domain.org')
+      expect(result.css('dd')[11].text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
       it 'cannot place orders' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Not yet because there are no local coronavirus restrictions')
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('Not yet because there are no local coronavirus')
       end
     end
 
@@ -103,12 +103,12 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(result.css('dd')[7].text).to include('Yes')
-      expect(result.css('dd')[8].text).to include('Change')
-      expect(result.css('dd')[9].text).to include('school.domain.org')
-      expect(result.css('dd')[10].text).to include('Change')
-      expect(result.css('dd')[11].text).to include('admin@recovery.org')
-      expect(result.css('dd')[12].text).to include('Change')
+      expect(result.css('dd')[8].text).to include('Yes')
+      expect(result.css('dd')[9].text).to include('Change')
+      expect(result.css('dd')[10].text).to include('school.domain.org')
+      expect(result.css('dd')[11].text).to include('Change')
+      expect(result.css('dd')[12].text).to include('admin@recovery.org')
+      expect(result.css('dd')[13].text).to include('Change')
     end
 
     it 'does not show the school contact even if the school contact is set' do
