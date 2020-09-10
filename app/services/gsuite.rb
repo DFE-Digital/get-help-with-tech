@@ -24,13 +24,7 @@ module Gsuite
     if response.status.success?
       body = response.body.to_s
       logger.debug body if logger
-      if body =~ /Sign in - Google Accounts/
-        true
-      elsif body =~ /Sorry, you've reached a login page for a domain that isn't using G Suite/
-        false
-      else
-        false
-      end
+      body =~ /Sign in - Google Accounts/
     elsif response.status.redirect?
       # the redirects all seem to be to SAML providers for logins
       logger.debug response.body.to_s if logger
