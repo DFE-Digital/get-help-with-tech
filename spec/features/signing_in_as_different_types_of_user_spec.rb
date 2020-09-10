@@ -99,7 +99,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     scenario 'clicking on Sign in takes them to their next step' do
       visit validate_token_url_for(user)
       click_on 'Continue'
-      expect(page).to have_text 'Will you be one of the people placing orders for your school?'
+      expect(page).to have_text 'You will need to place orders on a website called TechSource'
     end
   end
 

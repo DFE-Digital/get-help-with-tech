@@ -108,7 +108,6 @@ Rails.application.routes.draw do
     get '/privacy', to: 'welcome_wizard#privacy', as: :welcome_wizard_privacy
     get '/allocation', to: 'welcome_wizard#allocation', as: :welcome_wizard_allocation
     get '/order-your-own', to: 'welcome_wizard#order_your_own', as: :welcome_wizard_order_your_own
-    get '/will-you-order', to: 'welcome_wizard#will_you_order', as: :welcome_wizard_will_you_order
     get '/techsource-account', to: 'welcome_wizard#techsource_account', as: :welcome_wizard_techsource_account
     get '/will-other-order', to: 'welcome_wizard#will_other_order', as: :welcome_wizard_will_other_order
     get '/devices-you-can-order', to: 'welcome_wizard#devices_you_can_order', as: :welcome_wizard_devices_you_can_order
