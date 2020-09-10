@@ -128,6 +128,27 @@ RSpec.feature 'Setting up the devices ordering' do
       and_the_status_reflects_that_the_school_will_be_contacted_shortly
     end
 
+    scenario 'when the school has no standard device allocation' do
+      given_there_is_a_school_with_no_standard_device_allocation
+      when_i_follow_the_get_devices_link
+      and_i_continue_through_the_guidance
+      and_i_choose_ordering_through_schools_which_is_recommended
+      and_i_continue_after_choosing_ordering_through_schools
+      when_i_click_on_the_name_of_a_school_which_has_no_standard_device_allocation
+      then_i_see_guidance_about_why_there_is_no_allocation
+      and_in_the_allocation_guidance_we_ask_for_information
+      when_i_select_to_contact_someone_else_and_save_their_details
+      then_i_see_the_allocation_guidance_without_the_we_need_information_section
+
+      when_i_follow_the_change_who_will_order_link
+      when_i_select_orders_will_be_placed_centrally
+      then_i_see_guidance_about_why_there_is_no_allocation
+      and_in_the_allocation_guidance_we_ask_for_information
+
+      when_i_choose_no_they_will_not_need_chromebooks
+      then_i_see_the_allocation_guidance_without_the_we_need_information_section
+    end
+
     scenario 'learning about requesting devices for specific circumstances' do
       # the page is only visible when the responsible body has completed the 'who will order' wizard
       responsible_body.update!(who_will_order_devices: :responsible_body)
@@ -385,5 +406,31 @@ RSpec.feature 'Setting up the devices ordering' do
   def when_i_select_orders_will_be_placed_centrally
     choose('Orders will be placed centrally')
     click_on 'Continue'
+  end
+
+  def given_there_is_a_school_with_no_standard_device_allocation
+    expect(@zebra_school.has_std_device_allocation?).to be false
+  end
+
+  def when_i_click_on_the_name_of_a_school_which_has_no_standard_device_allocation
+    click_on @zebra_school.name
+  end
+
+  def then_i_see_guidance_about_why_there_is_no_allocation
+    expect(responsible_body_school_page).to have_content('This school has no allocation')
+  end
+
+  def and_in_the_allocation_guidance_we_ask_for_information
+    expect(responsible_body_school_page).to have_content('We still need some information')
+  end
+
+  def then_i_see_the_allocation_guidance_without_the_we_need_information_section
+    expect(responsible_body_school_page).to have_content('This school has no allocation')
+    expect(responsible_body_school_page).not_to have_content('We still need some information')
+  end
+
+  def when_i_choose_no_they_will_not_need_chromebooks
+    choose 'No, they will not need Chromebooks'
+    click_on 'Save'
   end
 end
