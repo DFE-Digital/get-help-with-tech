@@ -90,7 +90,7 @@ RSpec.describe Computacenter::BackfillLedger do
     end
 
     it 'backfills the ledger with just the given users' do
-      expect {service.call}.to change(Computacenter::UserChange, :count).by(3)
+      expect { service.call }.to change(Computacenter::UserChange, :count).by(3)
       expect(Computacenter::UserChange.pluck(:email_address).sort).to eq(given_users.pluck(:email_address).sort)
     end
   end
