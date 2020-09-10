@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_214548) do
     t.integer "created_by_user_id"
     t.boolean "agrees_with_privacy_statement"
     t.string "problem"
-    t.bigint "responsible_body_id"
+    t.bigint "responsible_body_id", null: false
     t.string "contract_type"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
     t.index ["responsible_body_id"], name: "index_extra_mobile_data_requests_on_responsible_body_id"
