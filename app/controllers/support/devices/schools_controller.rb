@@ -1,4 +1,9 @@
 class Support::Devices::SchoolsController < Support::BaseController
+  def show
+    @school = School.find_by!(urn: params[:urn])
+    @users = @school.users
+  end
+
   def invite
     school = School.find_by!(urn: params[:school_urn])
     success = school.invite_school_contact
