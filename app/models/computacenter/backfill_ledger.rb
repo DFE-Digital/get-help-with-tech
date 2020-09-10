@@ -2,6 +2,12 @@ require 'csv'
 
 module Computacenter
   class BackfillLedger
+    attr_accessor :users
+
+    def initialize(users: nil)
+      self.users = users || default_users
+    end
+
     def call
       users.each do |user|
         next if UserChange.where(user_id: user.id).exists?
@@ -36,7 +42,7 @@ module Computacenter
 
   private
 
-    def users
+    def default_users
       User.who_can_order_devices.where.not(privacy_notice_seen_at: nil)
     end
   end

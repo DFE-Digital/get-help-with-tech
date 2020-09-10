@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Computacenter::BackfillLedger do
   subject(:service) { described_class.new }
 
-  describe '#call' do
+  describe '#call when not initalized with given users' do
     context 'happy path' do
       let!(:user) { create(:local_authority_user, orders_devices: true) }
 
@@ -72,6 +72,26 @@ RSpec.describe Computacenter::BackfillLedger do
       it 'does not backfill user to ledger' do
         expect { service.call }.not_to change(Computacenter::UserChange, :count)
       end
+    end
+  end
+
+  describe '#call when initialized with a set of users' do
+    let(:responsible_body) { create(:local_authority) }
+    let(:given_users) { responsible_body.users }
+
+    subject(:service) { described_class.new(users: given_users) }
+
+    before do
+      create_list(:user, 3, responsible_body: responsible_body)
+      school = create(:school)
+      create_list(:user, 2, school: school, orders_devices: true)
+      other_responsible_body = create(:local_authority)
+      create_list(:user, 5, :has_seen_privacy_notice, orders_devices: true, responsible_body: other_responsible_body)
+    end
+
+    it 'backfills the ledger with just the given users' do
+      expect { service.call }.to change(Computacenter::UserChange, :count).by(3)
+      expect(Computacenter::UserChange.pluck(:email_address).sort).to eq(given_users.pluck(:email_address).sort)
     end
   end
 end
