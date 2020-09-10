@@ -18,4 +18,4 @@
 
 <h3 class="govuk-heading-m">Tell us if this school needs an allocation</h3>
 
-<p class="govuk-body">Send details to <%= ghwt_contact_mailto(subject: 'A school needs an allocation') %></p>
+<p class="govuk-body">Send details to <%= ghwt_contact_mailto(subject: "A school (#{@school.name} #{@school.urn}) needs an allocation") %></p>
