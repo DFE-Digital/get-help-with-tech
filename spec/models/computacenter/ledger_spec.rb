@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Computacenter::Ledger, versioning: true do
+RSpec.describe Computacenter::Ledger do
   subject(:service) { described_class.new }
 
   describe '#to_csv' do
