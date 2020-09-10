@@ -1,8 +1,7 @@
 class Computacenter::UserLedgerController < Computacenter::BaseController
   def index
-    @users = User.who_can_order_devices
-                .who_have_seen_privacy_notice
-    @ledger = Computacenter::Ledger.new(users: @users)
+    @user_changes = Computacenter::UserChange.all.order(:updated_at_timestamp)
+    @ledger = Computacenter::Ledger.new(user_changes: @user_changes)
 
     respond_to do |format|
       format.csv do

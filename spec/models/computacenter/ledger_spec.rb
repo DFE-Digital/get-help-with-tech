@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Computacenter::Ledger do
+RSpec.describe Computacenter::Ledger, versioning: true do
   subject(:service) { described_class.new }
 
   describe '#to_csv' do
@@ -39,26 +39,26 @@ RSpec.describe Computacenter::Ledger do
       expect(rows[0]).to eql(expected_headers)
     end
 
-    context 'when trust user' do
-      let!(:user) { create(:trust_user, orders_devices: true) }
+    context 'a new local authority user' do
+      let!(:user_change) { create(:user_change, :new_local_authority_user) }
 
       it 'has correct data' do
         rows = CSV.parse(service.to_csv)
 
         expect(rows[1]).to eql([
-          user.first_name,
-          user.last_name,
-          user.email_address,
-          user.telephone,
-          user.responsible_body.name,
-          user.responsible_body.computacenter_identifier,
-          user.responsible_body.computacenter_reference,
+          user_change.first_name,
+          user_change.last_name,
+          user_change.email_address,
+          user_change.telephone,
+          user_change.responsible_body,
+          user_change.responsible_body_urn,
+          user_change.cc_sold_to_number,
           nil,
           nil,
           nil,
-          user.created_at.utc.strftime('%d/%m/%Y'),
-          user.created_at.utc.strftime('%R'),
-          user.created_at.utc.iso8601,
+          user_change.updated_at_timestamp.utc.strftime('%d/%m/%Y'),
+          user_change.updated_at_timestamp.utc.strftime('%R'),
+          user_change.updated_at_timestamp.utc.iso8601,
           'New',
           nil,
           nil,
@@ -74,27 +74,60 @@ RSpec.describe Computacenter::Ledger do
       end
     end
 
-    context 'when school user' do
-      let!(:user) { create(:school_user, orders_devices: true) }
+    context 'when a school user changes telephone but not school' do
+      let!(:user_change) { create(:user_change, :school_user, :school_unchanged, :changed_telephone) }
 
       it 'has correct data' do
         rows = CSV.parse(service.to_csv)
-
         expect(rows[1]).to eql([
-          user.first_name,
-          user.last_name,
-          user.email_address,
-          user.telephone,
-          user.school.responsible_body.name,
-          user.school.responsible_body.computacenter_identifier,
-          user.school.responsible_body.computacenter_reference,
-          user.school.name,
-          user.school.urn.to_s,
-          user.school.computacenter_reference,
-          user.created_at.utc.strftime('%d/%m/%Y'),
-          user.created_at.utc.strftime('%R'),
-          user.created_at.utc.iso8601,
-          'New',
+          user_change.first_name,
+          user_change.last_name,
+          user_change.email_address,
+          user_change.telephone,
+          user_change.responsible_body,
+          user_change.responsible_body_urn,
+          user_change.cc_sold_to_number,
+          user_change.school,
+          user_change.school_urn,
+          user_change.cc_ship_to_number,
+          user_change.updated_at_timestamp.utc.strftime('%d/%m/%Y'),
+          user_change.updated_at_timestamp.utc.strftime('%R'),
+          user_change.updated_at_timestamp.utc.iso8601,
+          'Change',
+          nil,
+          nil,
+          nil,
+          user_change.original_telephone,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+        ])
+      end
+    end
+
+    context 'when a school user changes school' do
+      let!(:user_change) { create(:user_change, :school_user, :school_changed) }
+
+      it 'has correct data' do
+        rows = CSV.parse(service.to_csv)
+        expect(rows[1]).to eql([
+          user_change.first_name,
+          user_change.last_name,
+          user_change.email_address,
+          user_change.telephone,
+          user_change.responsible_body,
+          user_change.responsible_body_urn,
+          user_change.cc_sold_to_number,
+          user_change.school,
+          user_change.school_urn,
+          user_change.cc_ship_to_number,
+          user_change.updated_at_timestamp.utc.strftime('%d/%m/%Y'),
+          user_change.updated_at_timestamp.utc.strftime('%R'),
+          user_change.updated_at_timestamp.utc.iso8601,
+          'Change',
           nil,
           nil,
           nil,
@@ -102,9 +135,9 @@ RSpec.describe Computacenter::Ledger do
           nil,
           nil,
           nil,
-          nil,
-          nil,
-          nil,
+          user_change.original_school,
+          user_change.original_school_urn,
+          user_change.original_cc_ship_to_number,
         ])
       end
     end
