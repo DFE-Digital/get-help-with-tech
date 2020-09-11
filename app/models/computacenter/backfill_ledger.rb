@@ -24,7 +24,7 @@ module Computacenter
           school: user.school&.name,
           school_urn: user.school&.urn,
           cc_ship_to_number: user.school&.computacenter_reference,
-          updated_at_timestamp: user.created_at,
+          updated_at_timestamp: Time.zone.now.utc,
           type_of_update: 'New',
           original_first_name: nil,
           original_last_name: nil,
