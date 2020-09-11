@@ -273,7 +273,7 @@ RSpec.describe User, type: :model do
         let!(:user) { create(:user, :not_relevant_to_computacenter) }
 
         def perform_change!
-          user.update(privacy_notice_seen_at: 1.second.ago, orders_devices: true, email_address: 'change@example.com')
+          user.update(privacy_notice_seen_at: 1.second.ago, orders_devices: true)
         end
 
         it 'creates a Computacenter::UserChange of type New' do
@@ -287,7 +287,7 @@ RSpec.describe User, type: :model do
           perform_change!
 
           user_change = Computacenter::UserChange.last
-          expect(user_change.email_address).to eql('change@example.com')
+          expect(user_change.email_address).to eql(user.email_address)
         end
 
         it 'does not set original fields' do

@@ -59,6 +59,8 @@ private
       email_address
       responsible_body_id
       school_id
+      privacy_notice_seen_at
+      orders_devices
     ]
   end
 
