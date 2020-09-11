@@ -46,7 +46,7 @@
 <table id="schools" class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th class="govuk-table__header app-schools-table__school-column">School</th>
+      <th class="govuk-table__header app-schools-table__school-column">School and URN</th>
       <th class="govuk-table__header">Allocation</th>
       <th class="govuk-table__header">Who will order?</th>
       <th class="govuk-table__header">Status</th>
@@ -56,7 +56,7 @@
     <% @schools.each do |school| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
-          <%= govuk_link_to school.name, responsible_body_devices_school_path(school.urn) %>
+          <%= govuk_link_to "#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn) %>
           <br>
           <%= school.type_label %>
         </td>

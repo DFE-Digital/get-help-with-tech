@@ -12,9 +12,11 @@ RSpec.feature 'Setting up the devices ordering' do
     before do
       @zebra_school = create(:school, :la_maintained, :secondary,
                              responsible_body: responsible_body,
+                             urn: '123321',
                              name: 'Zebra Secondary School')
       @aardvark_school = create(:school, :la_maintained, :primary,
                                 responsible_body: responsible_body,
+                                urn: '456654',
                                 name: 'Aardvark Primary School')
 
       create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', allocation: 42)
@@ -245,9 +247,9 @@ RSpec.feature 'Setting up the devices ordering' do
   def then_i_see_a_list_of_the_schools_i_am_responsible_for
     expect(page).to have_content('2 schools')
     expect(responsible_body_schools_page.school_rows[0].title)
-      .to have_content('Aardvark Primary School Primary school')
+      .to have_content('Aardvark Primary School (456654) Primary school')
     expect(responsible_body_schools_page.school_rows[1].title)
-      .to have_content('Zebra Secondary School Secondary school')
+      .to have_content('Zebra Secondary School (123321) Secondary school')
   end
 
   def then_i_see_a_list_of_the_academies_i_am_responsible_for
