@@ -1,13 +1,14 @@
 require 'computacenter/responsible_body_urns'
 
-class ResponsibleBody < ApplicationRecord
+class ResponsibleBody < Organisation
   has_one :bt_wifi_voucher_allocation
   belongs_to :key_contact, class_name: 'User', optional: true
   has_many :bt_wifi_vouchers
-  has_many :users
   has_many :extra_mobile_data_requests
   has_many :schools
-
+  has_many :user_organisations, as: :organisation
+  has_many :users, through: :user_organisations
+  
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 

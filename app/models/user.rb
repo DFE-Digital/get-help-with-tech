@@ -3,11 +3,12 @@ class User < ApplicationRecord
 
   has_many :extra_mobile_data_requests, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
   has_many :api_tokens, dependent: :destroy
+  has_many :user_organisations
+  has_many :schools, through: :user_organisations, source: :organisation, source_type: "School"
+  has_many :responsible_bodies, through: :user_organisations, source: :organisation, source_type: "ResponsibleBody"
   has_one :school_welcome_wizard, dependent: :destroy
 
   belongs_to :mobile_network, optional: true
-  belongs_to :responsible_body, optional: true
-  belongs_to :school, optional: true
 
   scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
@@ -43,11 +44,11 @@ class User < ApplicationRecord
   end
 
   def is_responsible_body_user?
-    responsible_body.present?
+    responsible_bodies.exists?
   end
 
   def is_school_user?
-    school.present?
+    schools.exists?
   end
 
   def update_sign_in_count_and_timestamp!

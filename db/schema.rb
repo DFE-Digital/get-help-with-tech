@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_214548) do
+ActiveRecord::Schema.define(version: 2020_09_10_135754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_214548) do
     t.integer "created_by_user_id"
     t.boolean "agrees_with_privacy_statement"
     t.string "problem"
-    t.bigint "responsible_body_id", null: false
+    t.integer "responsible_body_id", null: false
     t.string "contract_type"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
     t.index ["responsible_body_id"], name: "index_extra_mobile_data_requests_on_responsible_body_id"
@@ -207,6 +207,20 @@ ActiveRecord::Schema.define(version: 2020_09_09_214548) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_organisations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "organisation_type"
+    t.bigint "organisation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_user_organisations_on_created_at"
+    t.index ["organisation_type", "organisation_id", "user_id"], name: "ix_user_orgs_org_type_org_id_user_id", unique: true
+    t.index ["organisation_type", "organisation_id"], name: "ix_user_orgs_org_type_org_id"
+    t.index ["updated_at"], name: "index_user_organisations_on_updated_at"
+    t.index ["user_id", "organisation_type", "organisation_id"], name: "ix_user_orgs_user_id_org_type_org_id", unique: true
+    t.index ["user_id"], name: "index_user_organisations_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "full_name"
     t.string "email_address"
@@ -216,21 +230,17 @@ ActiveRecord::Schema.define(version: 2020_09_09_214548) do
     t.integer "mobile_network_id"
     t.datetime "sign_in_token_expires_at"
     t.datetime "approved_at"
-    t.bigint "responsible_body_id"
     t.integer "sign_in_count", default: 0
     t.datetime "last_signed_in_at"
     t.string "telephone"
     t.boolean "is_support", default: false, null: false
     t.boolean "is_computacenter", default: false, null: false
     t.datetime "privacy_notice_seen_at"
-    t.bigint "school_id"
     t.boolean "orders_devices"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
-    t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
-    t.index ["school_id"], name: "index_users_on_school_id"
     t.index ["sign_in_token"], name: "index_users_on_sign_in_token", unique: true
   end
 
@@ -253,5 +263,4 @@ ActiveRecord::Schema.define(version: 2020_09_09_214548) do
   add_foreign_key "school_device_allocations", "schools"
   add_foreign_key "school_welcome_wizards", "users", column: "invited_user_id"
   add_foreign_key "schools", "responsible_bodies"
-  add_foreign_key "users", "schools"
 end
