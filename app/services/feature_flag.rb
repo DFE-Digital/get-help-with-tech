@@ -9,7 +9,9 @@ class FeatureFlag
     rbs_can_manage_users
   ].freeze
 
-  TEMPORARY_FEATURE_FLAGS = %i[].freeze
+  TEMPORARY_FEATURE_FLAGS = %i[
+    update_computacenter_user_change
+  ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
 

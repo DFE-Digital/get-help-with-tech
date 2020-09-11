@@ -5,7 +5,9 @@ module Computacenter
     enum type_of_update: { New: 0, Change: 1, Remove: 2 }
 
     def self.read_from_version(version)
-      UserChangeGenerator.new(version).call
+      if FeatureFlag.active?(:update_computacenter_user_change)
+        UserChangeGenerator.new(version).call
+      end
     end
   end
 end
