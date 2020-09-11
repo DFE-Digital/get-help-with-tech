@@ -6,13 +6,17 @@ RSpec.describe Computacenter::BackfillLedger do
   describe '#call when not initalized with given users' do
     context 'happy path' do
       let!(:user) { create(:local_authority_user, orders_devices: true) }
+      let(:now) { Time.zone.now.utc }
 
       it 'persists user to ledger' do
         expect { service.call }.to change(Computacenter::UserChange, :count).by(1)
       end
 
       it 'creates change record correctly' do
-        service.call
+        Timecop.freeze(now) do
+          service.call
+        end
+
         user_change = Computacenter::UserChange.last
 
         expect(user_change.user_id).to eql(user.id)
@@ -26,7 +30,7 @@ RSpec.describe Computacenter::BackfillLedger do
         expect(user_change.school).to eql(user.school&.name)
         expect(user_change.school_urn).to eql(user.school&.urn)
         expect(user_change.cc_ship_to_number).to eql(user.school&.computacenter_reference)
-        expect(user_change.updated_at_timestamp).to eql(user.created_at)
+        expect(user_change.updated_at_timestamp).to be_within(1.second).of(now)
         expect(user_change.type_of_update).to eql('New')
         expect(user_change.original_first_name).to be(nil)
         expect(user_change.original_last_name).to be(nil)
