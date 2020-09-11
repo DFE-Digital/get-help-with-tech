@@ -93,5 +93,15 @@ FactoryBot.define do
         full_name.downcase.gsub(' ', '.') + '@computacenter.com'
       end
     end
+
+    trait :relevant_to_computacenter do
+      has_seen_privacy_notice
+      orders_devices { true }
+    end
+
+    trait :not_relevant_to_computacenter do
+      has_not_seen_privacy_notice
+      orders_devices { false }
+    end
   end
 end

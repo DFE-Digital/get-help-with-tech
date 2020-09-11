@@ -133,3 +133,6 @@ Style/HashTransformValues:
 Rake/Desc:
   Exclude:
     - 'lib/tasks/reset_qa.rake'
+
+RSpec/NestedGroups:
+  Max: 5

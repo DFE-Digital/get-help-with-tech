@@ -38,6 +38,14 @@ class User < ApplicationRecord
 
   include SignInWithToken
 
+  after_save do |user|
+    Computacenter::UserChange.read_from_version(user.versions.last)
+  end
+
+  after_destroy do |user|
+    Computacenter::UserChange.read_from_version(user.versions.last)
+  end
+
   def is_mno_user?
     mobile_network.present?
   end

@@ -218,4 +218,260 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'paper_trail', versioning: true do
+    context 'creating user' do
+      context 'computacenter relevant' do
+        it 'creates a Computacenter::UserChange of type new' do
+          expect { create(:user, :has_seen_privacy_notice, orders_devices: true) }.to change(Computacenter::UserChange, :count).by(1)
+        end
+
+        it 'persists correct data' do
+          responsible_body = create(:trust)
+          user = create(:school_user, responsible_body: responsible_body, orders_devices: true)
+          user_change = Computacenter::UserChange.last
+
+          expect(user_change.user_id).to eql(user.id)
+          expect(user_change.first_name).to eql(user.first_name)
+          expect(user_change.last_name).to eql(user.last_name)
+          expect(user_change.email_address).to eql(user.email_address)
+          expect(user_change.telephone).to eql(user.telephone)
+          expect(user_change.responsible_body).to eql(user.effective_responsible_body.name)
+          expect(user_change.responsible_body_urn).to eql(user.effective_responsible_body.computacenter_identifier)
+          expect(user_change.cc_sold_to_number).to eql(user.effective_responsible_body.computacenter_reference)
+          expect(user_change.school).to eql(user.school.name)
+          expect(user_change.school_urn).to eql(user.school.urn.to_s)
+          expect(user_change.cc_ship_to_number).to eql(user.school.computacenter_reference)
+          expect(user_change.updated_at_timestamp).to eql(user.created_at)
+          expect(user_change.type_of_update).to eql('New')
+          expect(user_change.original_email_address).to be_nil
+          expect(user_change.original_first_name).to be_nil
+          expect(user_change.original_last_name).to be_nil
+          expect(user_change.original_telephone).to be_nil
+          expect(user_change.original_responsible_body).to be_nil
+          expect(user_change.original_responsible_body_urn).to be_nil
+          expect(user_change.original_cc_sold_to_number).to be_nil
+          expect(user_change.original_school).to be_nil
+          expect(user_change.original_school_urn).to be_nil
+          expect(user_change.original_cc_ship_to_number).to be_nil
+        end
+      end
+
+      context 'not computacenter relevant' do
+        it 'does not create a Computacenter::UserChange' do
+          expect { create(:user, :has_not_seen_privacy_notice) }.not_to change(Computacenter::UserChange, :count)
+        end
+      end
+    end
+
+    context 'updating user' do
+      context 'now computacenter relevant' do
+        let!(:user) { create(:user, :not_relevant_to_computacenter) }
+
+        def perform_change!
+          user.update(privacy_notice_seen_at: 1.second.ago, orders_devices: true, email_address: 'change@example.com')
+        end
+
+        it 'creates a Computacenter::UserChange of type New' do
+          expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.type_of_update).to eql('New')
+        end
+
+        it 'sets current fields' do
+          perform_change!
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.email_address).to eql('change@example.com')
+        end
+
+        it 'does not set original fields' do
+          perform_change!
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.original_email_address).to be_nil
+        end
+      end
+
+      context 'already computacenter relevant' do
+        let!(:user) { create(:trust_user, :relevant_to_computacenter) }
+
+        context 'single field is changed' do
+          let!(:original_email) { user.email_address }
+          let!(:original_full_name) { user.full_name }
+          let!(:original_telephone) { user.telephone }
+
+          def perform_change!
+            user.update(email_address: 'change@example.com',
+                        full_name: 'John Doe',
+                        telephone: '02012345678')
+          end
+
+          it 'creates a Computacenter::UserChange of type Change' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.type_of_update).to eql('Change')
+          end
+
+          it 'sets current fields' do
+            perform_change!
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.email_address).to eql('change@example.com')
+            expect(user_change.first_name).to eql('John')
+            expect(user_change.last_name).to eql('Doe')
+            expect(user_change.telephone).to eql('02012345678')
+          end
+
+          it 'sets original fields' do
+            perform_change!
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.original_email_address).to eql(original_email)
+            expect(user_change.original_first_name).to eql(original_full_name.split(' ').first)
+            expect(user_change.original_last_name).to eql(original_full_name.split(' ').last)
+            expect(user_change.original_telephone).to eql(original_telephone)
+          end
+        end
+
+        context 'when none computacenter significant field updated' do
+          def perform_change!
+            user.update(sign_in_token: 'abc')
+          end
+
+          it 'does not create a Computacenter::UserChange' do
+            expect { perform_change! }.not_to change(Computacenter::UserChange, :count)
+          end
+        end
+
+        context 'when associations are changed' do
+          let!(:other_responsible_body) { create(:local_authority) }
+          let!(:original_responsible_body) { user.responsible_body }
+          let!(:original_school) { create(:school) }
+          let!(:other_school) { create(:school) }
+          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: original_school) }
+
+          def perform_change!
+            user.update(responsible_body: other_responsible_body, school: other_school)
+          end
+
+          it 'creates a Computacenter::UserChange' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+          end
+
+          it 'stores correct original fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
+
+            expect(user_change.original_responsible_body).to eql(original_responsible_body.name)
+            expect(user_change.original_responsible_body_urn).to eql(original_responsible_body.computacenter_identifier)
+            expect(user_change.original_cc_sold_to_number).to eql(original_responsible_body.computacenter_reference)
+
+            expect(user_change.original_school).to eql(original_school.name)
+            expect(user_change.original_school_urn).to eql(original_school.urn.to_s)
+            expect(user_change.original_cc_ship_to_number).to eql(original_school.computacenter_reference)
+          end
+
+          it 'stores correct current fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
+
+            expect(user_change.responsible_body).to eql(other_responsible_body.name)
+            expect(user_change.responsible_body_urn).to eql(other_responsible_body.computacenter_identifier)
+            expect(user_change.cc_sold_to_number).to eql(other_responsible_body.computacenter_reference)
+
+            expect(user_change.school).to eql(other_school.name)
+            expect(user_change.school_urn).to eql(other_school.urn.to_s)
+            expect(user_change.cc_ship_to_number).to eql(other_school.computacenter_reference)
+          end
+        end
+
+        context 'when associations are added' do
+          let!(:responsible_body) { create(:local_authority) }
+          let!(:school) { create(:school) }
+          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil, responsible_body: nil) }
+
+          def perform_change!
+            user.update(responsible_body: responsible_body, school: school)
+          end
+
+          it 'creates a Computacenter::UserChange' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+          end
+
+          it 'stores correct original fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
+
+            expect(user_change.original_responsible_body).to be_nil
+            expect(user_change.original_responsible_body_urn).to be_nil
+            expect(user_change.original_cc_sold_to_number).to be_nil
+
+            expect(user_change.original_school).to be_nil
+            expect(user_change.original_school_urn).to be_nil
+            expect(user_change.original_cc_ship_to_number).to be_nil
+          end
+
+          it 'stores correct current fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
+
+            expect(user_change.responsible_body).to eql(responsible_body.name)
+            expect(user_change.responsible_body_urn).to eql(responsible_body.computacenter_identifier)
+            expect(user_change.cc_sold_to_number).to eql(responsible_body.computacenter_reference)
+
+            expect(user_change.school).to eql(school.name)
+            expect(user_change.school_urn).to eql(school.urn.to_s)
+            expect(user_change.cc_ship_to_number).to eql(school.computacenter_reference)
+          end
+        end
+      end
+
+      context 'not computacenter relevant' do
+        let!(:user) { create(:user, :not_relevant_to_computacenter) }
+
+        it 'does not create a Computacenter::UserChange' do
+          expect { user.update(email_address: 'change@example.com') }.not_to change(Computacenter::UserChange, :count)
+        end
+      end
+    end
+
+    context 'deleting user' do
+      context 'computacenter relevant' do
+        let!(:user) { create(:user, :relevant_to_computacenter) }
+        let!(:original_user) { user }
+
+        it 'creates a Computacenter::UserChange of type remove' do
+          expect { user.destroy! }.to change(Computacenter::UserChange, :count).by(1)
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.type_of_update).to eql('Remove')
+        end
+
+        it 'sets all current fields to blank' do
+          user.destroy!
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.email_address).to be_nil
+        end
+
+        it 'sets all original fields' do
+          user.destroy!
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.original_email_address).to eql(original_user.email_address)
+        end
+      end
+
+      context 'not computacenter relevant' do
+        let!(:user) { create(:user, :not_relevant_to_computacenter) }
+
+        it 'does not create a Computacenter::UserChange' do
+          expect { user.destroy! }.not_to change(Computacenter::UserChange, :count)
+        end
+      end
+    end
+  end
 end
