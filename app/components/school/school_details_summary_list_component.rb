@@ -14,6 +14,8 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
       {
         key: 'Provisional allocation',
         value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
+        action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
+        action: 'Query allocation',
       },
       {
         key: 'Type of school',
