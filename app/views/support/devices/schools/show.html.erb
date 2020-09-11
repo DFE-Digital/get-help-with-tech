@@ -1,0 +1,45 @@
+<% content_for :title, "#{@school.name} – Support" %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
+    { @school.responsible_body.name => support_devices_responsible_body_path(@school.responsible_body) },
+    @school.name,
+  ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Devices pilot</span>
+      <%= @school.name %>
+    </h1>
+
+    <h2 class="govuk-heading-l">Users</h2>
+
+    <% if @users.present? %>
+      <table id="responsible-body-users" class="govuk-table">
+        <caption class="govuk-table__caption">School users</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Email address</th>
+            <th scope="col" class="govuk-table__header">Full name</th>
+            <th scope="col" class="govuk-table__header">Sign-in count</th>
+            <th scope="col" class="govuk-table__header">Last sign in</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @users.each do |user| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= user.email_address %></td>
+              <td class="govuk-table__cell"><%= user.full_name %></td>
+              <td class="govuk-table__cell"><%= user.sign_in_count %></td>
+              <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="govuk-body">None</p>
+    <% end %>
+  </div>
+</div>

@@ -127,7 +127,7 @@ Rails.application.routes.draw do
       get '/performance', to: 'service_performance#index', as: :service_performance
       resources :key_contacts, only: %i[new index create], path: '/key-contacts'
       resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
-      resources :schools, only: [], param: :urn do
+      resources :schools, only: %i[show], param: :urn do
         post '/invite', to: 'schools#invite'
       end
     end
