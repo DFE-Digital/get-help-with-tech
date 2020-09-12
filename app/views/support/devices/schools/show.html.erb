@@ -14,7 +14,9 @@
       <%= @school.name %>
     </h1>
 
-    <h2 class="govuk-heading-l">Users</h2>
+    <%= render Support::SchoolDetailsSummaryListComponent.new(school: @school) %>
+
+    <h2 class="govuk-heading-l govuk-!-margin-top-8">Users</h2>
 
     <% if @users.present? %>
       <table id="responsible-body-users" class="govuk-table">
