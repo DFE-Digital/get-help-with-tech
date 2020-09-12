@@ -4,6 +4,11 @@ class Support::Devices::SchoolsController < Support::BaseController
     @users = @school.users
   end
 
+  def confirm_invitation
+    @school = School.find_by!(urn: params[:school_urn])
+    @school_contact = @school.preorder_information&.school_contact
+  end
+
   def invite
     school = School.find_by!(urn: params[:school_urn])
     success = school.invite_school_contact

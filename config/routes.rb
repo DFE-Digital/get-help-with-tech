@@ -128,6 +128,7 @@ Rails.application.routes.draw do
       resources :key_contacts, only: %i[new index create], path: '/key-contacts'
       resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
       resources :schools, only: %i[show], param: :urn do
+        get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
         post '/invite', to: 'schools#invite'
       end
     end
