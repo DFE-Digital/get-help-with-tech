@@ -124,4 +124,11 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(result.css('dl').text).not_to include('School contact')
     end
   end
+
+  context 'when the responsible body has not made a decision about who will order' do
+    it 'confirms that fact' do
+      expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
+      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Decide who will order')
+    end
+  end
 end

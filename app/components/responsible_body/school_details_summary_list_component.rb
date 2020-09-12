@@ -4,7 +4,8 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
 
   delegate :school_will_order_devices?,
            :school_contact,
-           to: :preorder_information
+           to: :preorder_information,
+           allow_nil: true
 
   def initialize(school:)
     @school = school
@@ -32,12 +33,23 @@ private
   end
 
   def who_will_order_row
-    {
-      key: 'Who will order?',
-      value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
-      change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
-      action: 'who will order',
-    }
+    who = (@school.preorder_information || @school.responsible_body).who_will_order_devices_label
+
+    if who.present?
+      {
+        key: 'Who will order?',
+        value: "The #{who.downcase} orders devices",
+        change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
+        action: 'who will order',
+      }
+    else
+      {
+        key: 'Who will order?',
+        value: "#{@school.responsible_body.name} hasn’t decided this yet",
+        action_path: responsible_body_devices_who_will_order_edit_path,
+        action: 'Decide who will order',
+      }
+    end
   end
 
   def allocation_row

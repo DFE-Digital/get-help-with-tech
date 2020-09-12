@@ -2,7 +2,7 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
 private
 
   def who_will_order_row
-    super.except(:change_path, :action)
+    super.except(:change_path, :action, :action_path)
   end
 
   def allocation_row
