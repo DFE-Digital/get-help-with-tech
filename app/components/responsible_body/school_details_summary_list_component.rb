@@ -55,6 +55,11 @@ private
         key: 'Can place orders?',
         value: 'Yes, local coronavirus restrictions have been confirmed',
       }
+    elsif @school.can_order_for_specific_circumstances?
+      {
+        key: 'Can place orders?',
+        value: 'Yes, for specific circumstances',
+      }
     else
       {
         key: 'Can place orders?',

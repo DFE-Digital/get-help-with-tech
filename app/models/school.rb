@@ -30,6 +30,7 @@ class School < ApplicationRecord
 
   enum order_state: {
     cannot_order: 'cannot_order',
+    can_order_for_specific_circumstances: 'can_order_for_specific_circumstances',
     can_order: 'can_order',
   }
 

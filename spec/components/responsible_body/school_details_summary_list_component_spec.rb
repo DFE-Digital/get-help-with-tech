@@ -66,6 +66,16 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
     end
 
+    context 'when the school can order devices for specific circumstances' do
+      before do
+        school.can_order_for_specific_circumstances!
+      end
+
+      it 'can place orders' do
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, for specific circumstances')
+      end
+    end
+
     context 'and the headteacher has been set as the school contact' do
       it 'displays the headteacher details' do
         create(:preorder_information,
