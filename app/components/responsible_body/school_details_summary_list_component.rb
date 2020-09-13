@@ -50,12 +50,19 @@ private
   end
 
   def order_status_row
-    {
-      key: 'Can place orders?',
-      value: 'Not yet because there are no local coronavirus&nbsp;restrictions'.html_safe,
-      action_path: responsible_body_devices_request_devices_path,
-      action: 'Request devices for specific circumstances',
-    }
+    if @school.can_order?
+      {
+        key: 'Can place orders?',
+        value: 'Yes, local coronavirus restrictions have been confirmed',
+      }
+    else
+      {
+        key: 'Can place orders?',
+        value: 'Not yet because there are no local coronavirus&nbsp;restrictions'.html_safe,
+        action_path: responsible_body_devices_request_devices_path,
+        action: 'Request devices for specific circumstances',
+      }
+    end
   end
 
   def school_type_row
