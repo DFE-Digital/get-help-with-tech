@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_214548) do
+ActiveRecord::Schema.define(version: 2020_09_13_134728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_214548) do
     t.string "phase"
     t.string "establishment_type"
     t.string "phone_number"
+    t.string "order_state", default: "cannot_order", null: false
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
