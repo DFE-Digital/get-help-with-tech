@@ -182,6 +182,9 @@ GEM
       net-http-pipeline
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    govuk-components (0.3.0)
+      rails (~> 6.0.3, >= 6.0.3)
+      view_component (~> 2.18.1)
     govuk_design_system_formbuilder (1.2.9)
       actionview (>= 5.2)
       activemodel (>= 5.2)
@@ -476,6 +479,7 @@ DEPENDENCIES
   faker
   fakeredis
   foreman
+  govuk-components
   govuk_design_system_formbuilder
   haml
   http
