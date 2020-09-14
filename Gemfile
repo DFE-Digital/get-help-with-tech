@@ -15,6 +15,8 @@ gem 'faker'
 # Manage multiple processes i.e. web server and webpack
 gem 'foreman'
 gem 'govuk_design_system_formbuilder'
+gem 'govuk-components'
+
 gem 'haml'
 gem 'http'
 
