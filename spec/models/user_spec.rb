@@ -201,6 +201,14 @@ RSpec.describe User, type: :model do
         expect(described_class.new(full_name: 'Dr Jane Smith').first_name).to eq('Jane')
       end
     end
+
+    context 'when the full_name is a firstname.lastname@domain email address' do
+      subject(:user) { described_class.new(full_name: 'jane.smith@school.sch.uk') }
+
+      it 'guesses the first name from the local part' do
+        expect(user.first_name).to eql('Jane')
+      end
+    end
   end
 
   describe '#last_name' do
@@ -235,6 +243,14 @@ RSpec.describe User, type: :model do
         expect(described_class.new(full_name: 'Miss Jane Smith').last_name).to eq('Smith')
         expect(described_class.new(full_name: 'Ms Jane Smith').last_name).to eq('Smith')
         expect(described_class.new(full_name: 'Dr Jane Smith').last_name).to eq('Smith')
+      end
+    end
+
+    context 'when the full_name is a firstname.lastname@domain email address' do
+      subject(:user) { described_class.new(full_name: 'jane.smith@school.sch.uk') }
+
+      it 'guesses the last name from the local part' do
+        expect(user.last_name).to eql('Smith')
       end
     end
   end

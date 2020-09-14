@@ -110,6 +110,12 @@ private
   def cleansed_full_name
     (full_name || '')
       .strip
+      .then { |str| str =~ /@/ ? full_name_from_email_address(str) : str }
       .gsub(/^(Mr|Mrs|Ms|Miss|Dr) /, '')
+  end
+
+  def full_name_from_email_address(string)
+    local_part = string.split('@').first
+    local_part.gsub('.', ' ').titleize
   end
 end
