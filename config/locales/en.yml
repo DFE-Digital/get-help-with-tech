@@ -236,6 +236,7 @@
       invite:
         success: "%{name} has been invited successfully"
         failure: "Could not invite %{name}"
+        no_school_contact: "Could not invite %{name} because the school does not have a contact"
   errors:
     format:
       "'%{attribute}' %{message}"
