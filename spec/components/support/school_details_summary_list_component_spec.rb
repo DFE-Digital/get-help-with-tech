@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-describe ResponsibleBody::SchoolDetailsSummaryListComponent do
-  include Rails.application.routes.url_helpers
-
+describe Support::SchoolDetailsSummaryListComponent do
   let(:school) { create(:school, :primary, :la_maintained) }
   let(:headteacher) do
     create(:school_contact, :headteacher,
@@ -43,38 +41,14 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('dd')[9].text).to include('Yes')
-      expect(result.css('dd')[10].text).to include('school.domain.org')
-      expect(result.css('dd')[11].text).to include('admin@recovery.org')
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('Yes, they will need Chromebooks')
+      expect(result.css('.govuk-summary-list__row')[7].text).to include('school.domain.org')
+      expect(result.css('.govuk-summary-list__row')[8].text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
-      before do
-        school.cannot_order!
-      end
-
       it 'cannot place orders' do
         expect(result.css('.govuk-summary-list__row')[3].text).to include('Not yet because there are no local coronavirus')
-      end
-    end
-
-    context 'when the school is under lockdown restrictions' do
-      before do
-        school.can_order!
-      end
-
-      it 'can place orders' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, local coronavirus restrictions have been confirmed')
-      end
-    end
-
-    context 'when the school can order devices for specific circumstances' do
-      before do
-        school.can_order_for_specific_circumstances!
-      end
-
-      it 'can place orders' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, for specific circumstances')
       end
     end
 
@@ -87,6 +61,18 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
         expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
         expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+      end
+    end
+
+    context 'and the headteacher has been set as the school contact, the school is ready to be contacted' do
+      it 'displays an invite link' do
+        create(:preorder_information,
+               school: school,
+               status: :school_will_be_contacted,
+               who_will_order_devices: :school,
+               school_contact: headteacher)
+
+        expect(result.css('.govuk-summary-list__row')[5].text).to include('Invite')
       end
     end
 
@@ -129,12 +115,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(result.css('dd')[8].text).to include('Yes')
-      expect(result.css('dd')[9].text).to include('Change')
-      expect(result.css('dd')[10].text).to include('school.domain.org')
-      expect(result.css('dd')[11].text).to include('Change')
-      expect(result.css('dd')[12].text).to include('admin@recovery.org')
-      expect(result.css('dd')[13].text).to include('Change')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('Yes, they will need Chromebooks')
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('school.domain.org')
+      expect(result.css('.govuk-summary-list__row')[7].text).to include('admin@recovery.org')
     end
 
     it 'does not show the school contact even if the school contact is set' do
@@ -143,10 +126,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body has not made a decision about who will order' do
-    it 'confirms that fact and provides a link to make the decision' do
+    it 'confirms that fact' do
       expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('Decide who will order')
-      expect(result.css('.govuk-summary-list__row a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
+      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Decide who will order')
     end
   end
 end
