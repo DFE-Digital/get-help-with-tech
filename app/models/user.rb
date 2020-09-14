@@ -116,6 +116,10 @@ private
 
   def full_name_from_email_address(string)
     local_part = string.split('@').first
-    local_part.gsub('.', ' ').titleize
+    if local_part.include?('.')
+      local_part.gsub('.', ' ').titleize
+    else
+      "#{local_part[0]} #{local_part[1..-1]}".titleize
+    end
   end
 end
