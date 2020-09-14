@@ -479,6 +479,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.3)
   logstash-logger (~> 0.26.1)
   mail-notify
+  nokogiri
   notifications-ruby-client
   pagy
   paper_trail

@@ -21,6 +21,8 @@ gem 'http'
 # GovUK Notify
 gem 'mail-notify'
 
+gem 'nokogiri'
+
 # pagination
 gem 'pagy'
 

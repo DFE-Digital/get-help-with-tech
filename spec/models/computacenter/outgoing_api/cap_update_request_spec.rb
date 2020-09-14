@@ -87,5 +87,35 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
         expect { request.post! }.to raise_error(Computacenter::OutgoingAPI::Error)
       end
     end
+
+    context 'when the response contains an error' do
+      let(:response_body) do
+        '<CapAdjustmentResponse dateTime="2020-08-21T12:30:40Z" payloadID="11111111-1111-1111-1111-111111111111"><HeaderResult errorDetails="Non of the records are processed" piMessageID="11111111111111111111111111111111" status="Failed"/><FailedRecords><Record capAmount="9" capType="DfE_RemainThresholdQty|Std_Device" errorDetails="New cap must be greater than or equal to used quantity" shipTO="11111111" status="Failed"/></FailedRecords></CapAdjustmentResponse>'
+      end
+
+      before do
+        allow(HTTP).to receive(:basic_auth).and_return(HTTP)
+        allow(HTTP).to receive(:post).and_return(mock_response)
+      end
+
+      it 'raises an error' do
+        expect { request.post! }.to raise_error(Computacenter::OutgoingAPI::Error)
+      end
+    end
+
+    context 'when the response does not contain an error' do
+      let(:response_body) do
+        '<CapAdjustmentResponse dateTime="2020-09-14T21:55:37Z" payloadID="11111111-1111-1111-1111-111111111111"><HeaderResult piMessageID="11111111111111111111111111111111" status="Success"/><FailedRecords/></CapAdjustmentResponse>'
+      end
+
+      before do
+        allow(HTTP).to receive(:basic_auth).and_return(HTTP)
+        allow(HTTP).to receive(:post).and_return(mock_response)
+      end
+
+      it 'does not raise an error' do
+        expect { request.post! }.not_to raise_error
+      end
+    end
   end
 end
