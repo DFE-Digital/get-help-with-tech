@@ -67,11 +67,12 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   end
 
   def then_i_can_invite_the_school
-    expect(responsible_body_page.school_rows[0]).to have_button('Invite')
+    expect(responsible_body_page.school_rows[0]).to have_link('Invite')
   end
 
   def when_i_invite_the_school
     responsible_body_page.school_rows[0].click_on 'Invite'
+    click_on 'Invite'
   end
 
   def then_the_school_is_contacted
