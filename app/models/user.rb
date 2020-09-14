@@ -94,14 +94,22 @@ class User < ApplicationRecord
   end
 
   def first_name
-    (full_name || '').strip.split(' ').first.to_s
+    cleansed_full_name.split(' ').first.to_s
   end
 
   def last_name
-    (full_name || '').strip.split(' ').last.to_s
+    cleansed_full_name.split(' ').last.to_s
   end
 
   def effective_responsible_body
     responsible_body || school&.responsible_body
+  end
+
+private
+
+  def cleansed_full_name
+    (full_name || '')
+      .strip
+      .gsub(/^(Mr|Mrs|Ms|Miss|Dr) /, '')
   end
 end
