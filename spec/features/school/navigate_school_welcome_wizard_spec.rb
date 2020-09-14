@@ -102,11 +102,11 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_school_user
-    @user = create(:school_user, :new_visitor, school: school)
+    @user = create(:school_user, :new_visitor, :has_not_seen_privacy_notice, school: school)
   end
 
   def as_a_subsequent_school_user
-    @user = create_list(:school_user, 2, :new_visitor, school: school).last
+    @user = create_list(:school_user, 2, :new_visitor, :has_not_seen_privacy_notice, school: school).last
   end
 
   def when_the_chromebooks_question_has_already_been_answered
@@ -130,7 +130,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_a_privacy_notice
-    expect(page).to have_current_path(school_welcome_wizard_privacy_path)
+    expect(page).to have_current_path(privacy_notice_path)
     expect(page).to have_text('Privacy notice')
   end
 

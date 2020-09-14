@@ -37,12 +37,15 @@ FactoryBot.define do
     end
 
     factory :local_authority_user do
+      # allow calling code to supply responsible_body: ..,
+      # responsible_bodies: [..], or nothing
+      # (in which case it will build a new local_authority)
       transient do
-        local_authority_count { 1 }
+        responsible_body { nil }
       end
-      after(:create) do |user, evaluator|
-        evaluator.local_authority_count.times do |i|
-          user.responsible_bodies << create(:local_authority, :in_connectivity_pilot)
+      after(:build) do |user, evaluator|
+        if user.responsible_bodies.empty?
+          user.responsible_bodies << (evaluator.responsible_body || build(:local_authority, :in_connectivity_pilot))
         end
       end
       approved
@@ -57,12 +60,29 @@ FactoryBot.define do
           user.responsible_bodies << create(:trust, :in_connectivity_pilot)
         end
       end
+
+      # allow calling code to supply responsible_body: ..,
+      # :responsible_bodies: [..], or nothing
+      # (in which case it will build a new trust)
+      transient do
+        responsible_body { nil }
+      end
+      after(:build) do |user, evaluator|
+        if user.responsible_bodies.empty?
+          user.responsible_bodies << (evaluator.responsible_body || build(:trust, :in_connectivity_pilot))
+        end
+      end
       approved
     end
 
     factory :school_user do
-      after(:build) do |user|
-        user.schools << build(:school)
+      # allow calling code to supply school: .., :schools: [..], or nothing
+      # (in which case it will build a new school)
+      transient do
+        school { nil }
+      end
+      after(:build) do |user, evaluator|
+        user.schools << (evaluator.school || build(:school)) if user.schools.empty?
       end
       orders_devices { false }
       has_completed_wizard

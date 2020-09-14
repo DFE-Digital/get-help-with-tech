@@ -97,4 +97,8 @@ class User < ApplicationRecord
   def effective_responsible_body
     responsible_body || school&.responsible_body
   end
+
+  def school_welcome_wizard_for(school)
+    school_welcome_wizards.find_by_school_id(school.id)
+  end
 end

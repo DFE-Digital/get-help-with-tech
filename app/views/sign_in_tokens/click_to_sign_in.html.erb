@@ -1,4 +1,10 @@
-<%- title = t(:standard, scope: %i[page_titles click_to_sign_in]) %>
+<%- if @user.is_school_user? && @user.schools.size == 1 %>
+  <%- title = t(:related_organisation, scope: %i[page_titles click_to_sign_in], organisation: @user.schools.first.name) %>
+<%- elsif @user.is_responsible_body_user? && @user.responsible_bodies.size == 1 %>
+  <%- title = t(:related_organisation, scope: %i[page_titles click_to_sign_in], organisation: @user.responsible_bodies.first.name) %>
+<%- else %>
+  <%- title = t(:standard, scope: %i[page_titles click_to_sign_in]) %>
+<%- end %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">

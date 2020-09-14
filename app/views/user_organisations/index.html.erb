@@ -1,0 +1,21 @@
+<%- titles = [] %>
+<%- %w[school trust local_authority].each do |org_type| %>
+  <%- plural = org_type.pluralize %>
+  <%- user_orgs = @form.send(plural) %>
+  <%- if user_orgs.present? %>
+    <%- titles << t(plural, scope: %i[page_titles your_organisations]) %>
+
+    <h2 class="govuk-heading-l">
+      <%= titles.last %>
+    </h2>
+
+    <%= form_for @form, url: sign_in_as_user_organisation_path, method: :patch do |f| %>
+      <%= f.govuk_collection_radio_buttons  :user_organisation_id,
+                                            user_orgs.map{ |org| OpenStruct.new({value: org.id, label: org.organisation.name}) },
+                                            :value,
+                                            :label,
+                                            legend: {size: 'm', text: t(org_type, scope: %i[user_organisations legend])} %>
+      <%= f.govuk_submit 'Login' %>
+    <%- end %>
+  <%- end %>
+<%- end %>
