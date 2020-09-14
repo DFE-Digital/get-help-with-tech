@@ -12,36 +12,70 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
 
   def rows
     [
+      preorder_status_row,
+      who_will_order_row,
+      allocation_row,
+      order_status_row,
+      school_type_row,
+    ] +
+      school_contact_row_if_contact_present +
+      chromebook_rows_if_needed
+  end
+
+private
+
+  def preorder_status_row
+    {
+      key: 'Status',
+      value: render(SchoolPreorderStatusTagComponent.new(school: @school)),
+    }
+  end
+
+  def who_will_order_row
+    {
+      key: 'Who will order?',
+      value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
+      change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
+      action: 'who will order',
+    }
+  end
+
+  def allocation_row
+    {
+      key: 'Provisional allocation',
+      value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
+      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
+      action: 'Query allocation',
+    }
+  end
+
+  def order_status_row
+    if @school.can_order?
       {
-        key: 'Status',
-        value: render(SchoolPreorderStatusTagComponent.new(school: @school)),
-      },
+        key: 'Can place orders?',
+        value: 'Yes, local coronavirus restrictions have been confirmed',
+      }
+    elsif @school.can_order_for_specific_circumstances?
       {
-        key: 'Who will order?',
-        value: "The #{(@school.preorder_information || @school.responsible_body).who_will_order_devices_label.downcase} orders devices",
-        change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
-        action: 'who will order',
-      },
-      {
-        key: 'Provisional allocation',
-        value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
-        action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-        action: 'Query allocation',
-      },
+        key: 'Can place orders?',
+        value: 'Yes, for specific circumstances',
+      }
+    else
       {
         key: 'Can place orders?',
         value: 'Not yet because there are no local coronavirus&nbsp;restrictions'.html_safe,
         action_path: responsible_body_devices_request_devices_path,
         action: 'Request devices for specific circumstances',
-      },
-      {
-        key: 'Type of school',
-        value: @school.type_label,
-      },
-    ] + school_contact_row_if_contact_present + chromebook_rows_if_needed
+      }
+    end
   end
 
-private
+  def school_type_row
+    {
+      key: 'Type of school',
+      value: @school.type_label,
+    }
+  end
 
   def school_contact_row_if_contact_present
     if school_will_order_devices? && school_contact.present?

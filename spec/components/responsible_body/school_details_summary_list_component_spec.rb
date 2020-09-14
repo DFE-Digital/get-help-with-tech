@@ -47,8 +47,32 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
+      before do
+        school.cannot_order!
+      end
+
       it 'cannot place orders' do
         expect(result.css('.govuk-summary-list__row')[3].text).to include('Not yet because there are no local coronavirus')
+      end
+    end
+
+    context 'when the school is under lockdown restrictions' do
+      before do
+        school.can_order!
+      end
+
+      it 'can place orders' do
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, local coronavirus restrictions have been confirmed')
+      end
+    end
+
+    context 'when the school can order devices for specific circumstances' do
+      before do
+        school.can_order_for_specific_circumstances!
+      end
+
+      it 'can place orders' do
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, for specific circumstances')
       end
     end
 

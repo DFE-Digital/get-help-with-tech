@@ -28,6 +28,12 @@ class School < ApplicationRecord
     other_type: 'other_type',
   }, _suffix: true
 
+  enum order_state: {
+    cannot_order: 'cannot_order',
+    can_order_for_specific_circumstances: 'can_order_for_specific_circumstances',
+    can_order: 'can_order',
+  }
+
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
   end
