@@ -8,7 +8,11 @@ class ResponsibleBody < Organisation
   has_many :schools
   has_many :user_organisations, as: :organisation
   has_many :users, through: :user_organisations
-  
+
+  scope :trusts, -> { where(type: 'Trust') }
+  scope :local_authorities, -> { where(type: 'LocalAuthority') }
+
+
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 

@@ -1,5 +1,4 @@
-<%- i18n_key = (@user.is_computacenter? || @user.is_support?) ? :standard : :related_organisation %>
-<%- title = t(i18n_key, scope: %i[page_titles click_to_sign_in], organisation: @user.organisation_name) %>
+<%- title = t(:standard, scope: %i[page_titles click_to_sign_in]) %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">

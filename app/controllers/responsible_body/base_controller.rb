@@ -1,5 +1,5 @@
 class ResponsibleBody::BaseController < ApplicationController
-  before_action :require_rb_user!, :set_responsible_body
+  before_action :require_rb_user!, :set_responsible_body, :require_responsible_body!
 
 private
 
@@ -12,6 +12,10 @@ private
   end
 
   def set_responsible_body
-    @responsible_body = @user.responsible_body
+    @responsible_body = @user.responsible_bodies.find_by_id(session[:responsible_body_id])
+  end
+
+  def require_responsible_body!
+    redirect_to user_organisations_path unless @responsible_body.present?
   end
 end

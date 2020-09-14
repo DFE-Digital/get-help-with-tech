@@ -6,7 +6,7 @@ FactoryBot.define do
     status                            { :requested }
     problem                           { nil }
     contract_type                     { :pay_as_you_go_payg }
-    responsible_body                  { created_by_user&.responsible_body }
+    responsible_body                  { created_by_user&.responsible_bodies.first }
     association :mobile_network
     association :created_by_user, factory: :local_authority_user
 

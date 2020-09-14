@@ -44,7 +44,7 @@ private
     User.find_or_create_by!(email_address: contact_data[:email_address]) do |u|
       u.full_name = contact_data[:full_name]
       u.telephone = contact_data[:telephone]
-      u.responsible_body = responsible_body
+      u.responsible_bodies << responsible_body
     end
   end
 end

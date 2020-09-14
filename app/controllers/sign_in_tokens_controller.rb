@@ -86,30 +86,4 @@ private
       :identifier,
     )
   end
-
-  def root_url_for(user)
-    if user.is_mno_user?
-      mno_extra_mobile_data_requests_path
-    elsif user.needs_to_see_privacy_notice?
-      responsible_body_privacy_notice_path
-    elsif user.is_responsible_body_user?
-      responsible_body_home_path
-    elsif user.is_school_user?
-      school_user_start_url(user)
-    elsif user.is_computacenter?
-      computacenter_home_path
-    elsif user.is_support?
-      support_internet_service_performance_path
-    else
-      '/'
-    end
-  end
-
-  def school_user_start_url(user)
-    if user.school_welcome_wizard&.complete?
-      school_home_path
-    else
-      school_welcome_wizard_privacy_path
-    end
-  end
 end

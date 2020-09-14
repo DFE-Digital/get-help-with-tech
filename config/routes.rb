@@ -42,6 +42,9 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[create destroy]
   resources :users, only: %i[new create]
+  resources :user_organisations, path: '/organisations', only: [:index]
+
+  patch '/sign-in/organisation', to: 'sessions#sign_in_as_organisation', as: :sign_in_as_user_organisation
 
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   delete '/token/validate', to: 'sign_in_tokens#destroy', as: :destroy_sign_in_token
@@ -154,6 +157,9 @@ Rails.application.routes.draw do
 
   get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in
   post '/sign-in', to: 'sign_in_tokens#create'
+
+  get '/privacy-notice', to: 'privacy_notice#show'
+  patch '/privacy-notice', to: 'privacy_notice#seen', as: :seen_privacy_notice
 
   get '/403', to: 'errors#forbidden', via: :all
   get '/404', to: 'errors#not_found', via: :all

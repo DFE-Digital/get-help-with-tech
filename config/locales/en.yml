@@ -109,6 +109,10 @@
           choice: Tell us whether your school will need Chromebooks
       what_happens_next:
         title: What happens next
+      your_organisations:
+        local_authorities: Your local authorities
+        schools: Your schools
+        trusts: Your trusts
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -236,6 +240,11 @@
       invite:
         success: "%{name} has been invited successfully"
         failure: "Could not invite %{name}"
+  user_organisations:
+    legend:
+      school: Choose which of your schools to login as
+      local_authority: Choose which of your local authorities to login as
+      trust: Choose which of your trusts to login as
   errors:
     format:
       "'%{attribute}' %{message}"

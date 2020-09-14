@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_135754) do
+ActiveRecord::Schema.define(version: 2020_09_14_111102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,14 +170,17 @@ ActiveRecord::Schema.define(version: 2020_09_10_135754) do
 
   create_table "school_welcome_wizards", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "step", default: "privacy", null: false
+    t.string "step", default: "allocation", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "user_orders_devices"
     t.boolean "first_school_user"
     t.bigint "invited_user_id"
     t.boolean "show_chromebooks"
+    t.bigint "school_id"
     t.index ["invited_user_id"], name: "index_school_welcome_wizards_on_invited_user_id"
+    t.index ["school_id"], name: "index_school_welcome_wizards_on_school_id"
+    t.index ["user_id", "school_id"], name: "index_school_welcome_wizards_on_user_id_and_school_id", unique: true
     t.index ["user_id"], name: "index_school_welcome_wizards_on_user_id"
   end
 

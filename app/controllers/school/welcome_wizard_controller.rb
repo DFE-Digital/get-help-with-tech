@@ -32,7 +32,7 @@ class School::WelcomeWizardController < School::BaseController
 private
 
   def set_wizard
-    @wizard = @user.school_welcome_wizard || @user.create_school_welcome_wizard
+    @wizard = @user.school_welcome_wizards.find_by_school_id(@school.id) || @user.create_school_welcome_wizard(school: @schools)
   end
 
   def resume_wizard

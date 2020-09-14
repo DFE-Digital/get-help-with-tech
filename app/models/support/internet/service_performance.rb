@@ -22,7 +22,7 @@ class Support::Internet::ServicePerformance
       .from_responsible_body_in_connectivity_pilot
       .signed_in_at_least_once
       .distinct
-      .pluck(:responsible_body_id)
+      .pluck('responsible_bodies.id')
       .size
   end
 

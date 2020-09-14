@@ -16,6 +16,6 @@ class Event
 private
 
   def organisation_name(user)
-    user.school&.name || user.responsible_body&.name || user.mobile_network&.brand
+    user.organisation_name
   end
 end

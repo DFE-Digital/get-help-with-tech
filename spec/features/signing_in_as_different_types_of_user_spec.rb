@@ -48,10 +48,34 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     context 'who has already seen the privacy notice' do
       let(:user) { create(:local_authority_user, :has_seen_privacy_notice) }
 
-      scenario 'it redirects to the responsible body homepage' do
-        sign_in_as user
-        expect(page).to have_current_path(responsible_body_home_path)
-        expect(page).to have_text 'Get help with technology'
+      context 'when the user only has one RB' do
+        scenario 'it redirects to the responsible body homepage' do
+          sign_in_as user
+          expect(page).to have_current_path(responsible_body_home_path)
+          expect(page).to have_text 'Get help with technology'
+        end
+      end
+
+      context 'when the user belongs to multiple RBs' do
+        let(:other_local_authority) { create(:local_authority) }
+
+        before do
+          user.responsible_bodies << other_local_authority
+        end
+
+        it 'shows the user a list of their responsible bodies' do
+          sign_in_as user
+          expect(page).to have_text user.responsible_bodies[0].name
+          expect(page).to have_text user.responsible_bodies[1].name
+        end
+
+        it 'redirects to the responsible body homepage when the user clicks on its name' do
+          sign_in_as user
+          click_on user.responsible_bodies[1].name
+          expect(page).to have_current_path(responsible_body_home_path)
+          expect(page).to have_text 'Get help with technology'
+          expect(page).to have_text user.responsible_bodies[1].name
+        end
       end
     end
 
@@ -66,7 +90,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a school user who has completed the welcome wizard' do
+  context 'as a school user with only one school who has completed the welcome wizard' do
     let(:user) { create(:school_user) }
 
     scenario 'it redirects to the school homepage' do
@@ -81,19 +105,37 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it shows the welcome wizard welcome text on the interstitial page' do
       visit validate_token_url_for(user)
-      expect(page).to have_text "You’re signed in as #{user.school.name}"
+      expect(page).to have_text "You’re signed in as #{user.schools.first.name}"
       expect(page).to have_text 'You can use the ‘Get help with technology’ service to:'
     end
 
     scenario 'clicking on Sign in shows them the privacy notice' do
       visit validate_token_url_for(user)
-      expect(page).to have_text "You’re signed in as #{user.school.name}"
+      expect(page).to have_text "You’re signed in as #{user.schools.first.name}"
       click_on 'Continue'
       expect(page).to have_text 'Before you continue, please read the privacy notice.'
     end
+
+    context 'if the user has multiple schools' do
+      let(:other_school) { create(:school) }
+
+      before do
+        user.schools << other_school
+      end
+
+      scenario 'clicking Continue on the privacy notice takes them to Your schools' do
+        visit validate_token_url_for(user)
+        click_on 'Continue'
+        expect(page).to have_text 'Before you continue, please read the privacy notice.'
+        click_on 'Continue'
+        expect(page).to have_text 'Your schools'
+        expect(page).to have_text user.schools[0].name
+        expect(page).to have_text user.schools[1].name
+      end
+    end
   end
 
-  context 'as a school user who has not done part of the welcome wizard' do
+  context 'as a school user who has done part of the welcome wizard' do
     let(:user) { create(:school_user, :has_partially_completed_wizard) }
 
     scenario 'clicking on Sign in takes them to their next step' do

@@ -243,7 +243,7 @@ RSpec.describe School, type: :model do
         expect(invited_user.full_name).to eq('Jane Smith')
         expect(invited_user.orders_devices).to be_truthy
         expect(invited_user.is_school_user?).to be_truthy
-        expect(invited_user.school).to eq(school)
+        expect(invited_user.schools).to include(school)
       end
 
       it 'sends an invitation email to the school user' do

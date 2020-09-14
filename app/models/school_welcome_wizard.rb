@@ -1,10 +1,11 @@
 class SchoolWelcomeWizard < ApplicationRecord
   belongs_to :user
+  belongs_to :school
 
   validates :step, presence: true
+  validates :school_id, uniqueness: { scope: [:user_id] }
 
   enum step: {
-    privacy: 'privacy',
     allocation: 'allocation',
     order_your_own: 'order_your_own',
     techsource_account: 'techsource_account',
@@ -15,7 +16,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     complete: 'complete',
   }
 
-  delegate :school, to: :user
   delegate :full_name, :email_address, :telephone, :orders_devices, to: :invited_user
   delegate :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address, to: :chromebook_information
   attr_accessor :invite_user
@@ -96,6 +96,7 @@ private
       user_attrs = user_params(params)
 
       @invited_user = school.users.build(user_attrs)
+      @invited_user.schools << school
       if @invited_user.valid?
         save_and_invite_user!(@invited_user)
         @invited_user = nil

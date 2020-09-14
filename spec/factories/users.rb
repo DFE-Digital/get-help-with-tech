@@ -37,17 +37,33 @@ FactoryBot.define do
     end
 
     factory :local_authority_user do
-      association :responsible_body, factory: %i[local_authority in_connectivity_pilot]
+      transient do
+        local_authority_count { 1 }
+      end
+      after(:create) do |user, evaluator|
+        evaluator.local_authority_count.times do |i|
+          user.responsible_bodies << create(:local_authority, :in_connectivity_pilot)
+        end
+      end
       approved
     end
 
     factory :trust_user do
-      association :responsible_body, factory: %i[trust in_connectivity_pilot]
+      transient do
+        trust_count { 1 }
+      end
+      after(:create) do |user, evaluator|
+        evaluator.trust_count.times do |i|
+          user.responsible_bodies << create(:trust, :in_connectivity_pilot)
+        end
+      end
       approved
     end
 
     factory :school_user do
-      school
+      after(:build) do |user|
+        user.schools << build(:school)
+      end
       orders_devices { false }
       has_completed_wizard
 
@@ -57,21 +73,21 @@ FactoryBot.define do
 
       trait :new_visitor do
         after(:create) do |user|
-          user.school_welcome_wizard&.destroy!
-          user.school_welcome_wizard = create(:school_welcome_wizard, user: user)
+          user.school_welcome_wizards.destroy_all
+          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.schools.first)
         end
       end
 
       trait :has_completed_wizard do
         after(:create) do |user|
-          user.school_welcome_wizard ||= create(:school_welcome_wizard, :completed, user: user)
+          user.school_welcome_wizards << create(:school_welcome_wizard, :completed, user: user, school: user.schools.first)
         end
       end
 
       trait :has_partially_completed_wizard do
         after(:create) do |user|
           user.school_welcome_wizard&.destroy!
-          user.school_welcome_wizard = create(:school_welcome_wizard, user: user, step: 'techsource_account')
+          user.school_welcome_wizard = create(:school_welcome_wizard, user: user, school: user.schools.first, step: 'techsource_account')
         end
       end
     end

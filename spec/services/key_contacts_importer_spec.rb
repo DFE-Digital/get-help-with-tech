@@ -36,8 +36,8 @@ RSpec.describe KeyContactsImporter, type: :model do
           email_address: 'walter.carp@example.com',
           full_name: 'Walter Carp',
           telephone: '0123456789',
-          responsible_body_id: responsible_body.id,
         )
+        expect(User.last.responsible_bodies).to eq([responsible_body])
       end
 
       it 'assigns the contact as the key contact for the responsible body' do
@@ -52,7 +52,7 @@ RSpec.describe KeyContactsImporter, type: :model do
     end
 
     context 'when a contact already exists' do
-      let(:contact) { create(:local_authority_user, responsible_body: responsible_body) }
+      let(:contact) { create(:local_authority_user, responsible_bodies: [responsible_body]) }
 
       let(:attrs) do
         {

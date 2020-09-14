@@ -20,34 +20,37 @@ RSpec.describe User, type: :model do
 
   describe '#is_responsible_body_user?' do
     it 'is true when the user is from a trust' do
-      user = build(:user, responsible_body: build(:trust))
+      user = build(:trust_user)
+      user.responsible_bodies << build(:trust)
       expect(user.is_responsible_body_user?).to be_truthy
     end
 
     it 'is true when the user is from a local authority' do
-      user = build(:user, responsible_body: build(:local_authority))
+      user = build(:local_authority_user)
+      user.responsible_bodies << build(:local_authority)
       expect(user.is_responsible_body_user?).to be_truthy
     end
 
     it 'is false when the user is from an MNO' do
-      user = build(:user, responsible_body: nil, mobile_network: build(:mobile_network))
+      user = build(:user, mobile_network: build(:mobile_network))
       expect(user.is_responsible_body_user?).to be_falsey
     end
 
     it 'is false for DfE users' do
-      user = build(:user, responsible_body: nil, email_address: 'ab@education.gov.uk')
+      user = build(:user, email_address: 'ab@education.gov.uk')
       expect(user.is_responsible_body_user?).to be_falsey
     end
   end
 
   describe '#is_school_user?' do
     it 'is true when the user is associated with a school' do
-      user = build(:user, school: build(:school))
+      user = build(:school_user)
+      user.schools << build(:school)
       expect(user.is_school_user?).to be_truthy
     end
 
     it 'is false when the user is not associated with a school' do
-      user = build(:user, school: nil)
+      user = build(:user)
       expect(user.is_school_user?).to be_falsey
     end
   end
@@ -55,11 +58,13 @@ RSpec.describe User, type: :model do
   describe 'privacy notice' do
     it 'needs to be seen by responsible body users who havent seen it' do
       user = build(:local_authority_user, privacy_notice_seen_at: nil)
+      user.responsible_bodies << build(:local_authority)
       expect(user.needs_to_see_privacy_notice?).to be_truthy
     end
 
     it 'does not need to be seen by responsible body users who have seen it' do
       user = build(:local_authority_user, :has_seen_privacy_notice)
+      user.responsible_bodies << build(:local_authority)
       expect(user.needs_to_see_privacy_notice?).to be_falsey
     end
 
@@ -102,10 +107,10 @@ RSpec.describe User, type: :model do
 
     context 'school user' do
       let(:school) { create(:school) }
-      let(:user) { build(:school_user, :orders_devices, school: school) }
+      let(:user) { build(:school_user, :orders_devices, schools: [school]) }
 
       before do
-        create_list(:school_user, 3, :orders_devices, school: school)
+        create_list(:school_user, 3, :orders_devices, schools: [school])
       end
 
       it 'validates that only 3 users can order devices for a school' do
@@ -127,26 +132,26 @@ RSpec.describe User, type: :model do
     end
 
     context 'when the user is from a trust' do
-      before { user.responsible_body = build(:trust) }
+      before { user.responsible_bodies << build(:trust) }
 
       it 'returns the trusts name' do
-        expect(user.organisation_name).to eq(user.responsible_body.name)
+        expect(user.organisation_name).to eq(user.responsible_bodies.first.name)
       end
     end
 
     context 'when the user is from a local authority' do
-      before { user.responsible_body = build(:local_authority) }
+      before { user.responsible_bodies << build(:local_authority) }
 
       it 'returns the local authoritys official name' do
-        expect(user.organisation_name).to eq(user.responsible_body.local_authority_official_name)
+        expect(user.organisation_name).to eq(user.responsible_bodies.first.local_authority_official_name)
       end
     end
 
     context 'when the user is from a school' do
-      before { user.school = build(:school) }
+      before { user.schools << build(:school) }
 
       it 'returns the schools name' do
-        expect(user.organisation_name).to eq(user.school.name)
+        expect(user.organisation_name).to eq(user.schools.first.name)
       end
     end
 
