@@ -15,7 +15,7 @@ Devices are available for:
 * disadvantaged children in years 3 to 11 who do not have access to a device and  whose face-to-face education is disrupted 
 * disadvantaged children in any year group who have been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are clinically extremely vulnerable
 
-### Find out [how we’ve calculated how many devices you can order](https://get-help-with-tech.education.gov.uk/devices/allocation-and-specification).
+### Find out [how we’ve calculated how many devices you can order](/devices/allocation-and-specification).
 
 Devices can be ordered for disadvantaged children in years 3 to 11 when:
 
@@ -35,7 +35,7 @@ Devices cannot be ordered when:
 * disadvantaged children are [self-isolating because of coronavirus symptoms](https://www.gov.uk/government/publications/covid-19-stay-at-home-guidance/stay-at-home-guidance-for-households-with-possible-coronavirus-covid-19-infection) where this is not part of broader recommendations to a ‘bubble’ or year group
 * disadvantaged children are [self-isolating following arrival in the UK](https://www.gov.uk/government/publications/coronavirus-covid-19-how-to-self-isolate-when-you-travel-to-the-uk/coronavirus-covid-19-how-to-self-isolate-when-you-travel-to-the-uk)
 
-### Find out [how to order laptops and tablets](https://get-help-with-tech.education.gov.uk/devices/how-to-order) and [get the internet](https://get-help-with-tech.education.gov.uk/internet-access).
+### Find out [how to order laptops and tablets](/devices/how-to-order) and [get the internet](/internet-access).
 
 ## Laptops, tablets and 4G wireless routers provided between May and August 2020
 
