@@ -22,6 +22,22 @@ module ViewHelper
     link_to(body, url, role: 'button', class: html_options[:class], 'data-module': 'govuk-button', draggable: false)
   end
 
+  def govuk_start_button_link_to(body, url, html_options = {})
+    options = {
+      class: prepend_css_class('govuk-button govuk-button--start', html_options[:class]),
+      role: 'button',
+      data: { module: 'govuk-button' },
+      draggable: false,
+    }.merge(html_options.except(:class))
+
+    link_to(url, options) do
+      raw(%Q(#{body}
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+        </svg>))
+    end
+  end
+
   def title_with_error_prefix(title, error)
     "#{t('page_titles.error_prefix') if error}#{title}"
   end

@@ -11,6 +11,10 @@ class SchoolDeviceAllocation < ApplicationRecord
     'std_device': 'std_device',
   }
 
+  def self.can_order_std_devices_now
+    by_device_type('std_device').where('cap > devices_ordered')
+  end
+
   def self.by_device_type(device_type)
     where(device_type: device_type)
   end

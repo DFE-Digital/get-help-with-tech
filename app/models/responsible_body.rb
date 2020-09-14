@@ -88,4 +88,34 @@ class ResponsibleBody < ApplicationRecord
       ",
     )
   end
+
+  def is_ordering_for_schools?
+    schools.that_are_centrally_managed.count.positive?
+  end
+
+  def has_centrally_managed_schools_that_can_order_now?
+    schools.that_are_centrally_managed.that_can_order_std_devices_now.count.positive?
+  end
+
+  def schools_that_can_order_devices_now
+    schools.that_order_devices.that_can_order_std_devices_now
+  end
+
+  def has_schools_that_can_order_devices_now?
+    schools_that_can_order_devices_now.count.positive?
+  end
+
+  def has_any_schools_that_can_order_now?
+    schools.that_can_order_std_devices_now.count.positive?
+  end
+
+  def count_of_schools_we_order_for_link_text
+    count = schools.that_are_centrally_managed.count
+    "#{count} #{'school'.pluralize(count)} you will be placing orders for"
+  end
+
+  def count_of_schools_that_can_order_now_link_text
+    count = schools_that_can_order_devices_now.count
+    "#{count} #{'school'.pluralize(count)} #{'has'.pluralize(count)} local coronavirus restrictions"
+  end
 end

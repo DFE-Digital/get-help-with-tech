@@ -34,6 +34,26 @@ class School < ApplicationRecord
     can_order: 'can_order',
   }
 
+  def self.that_order_devices
+    joins(:preorder_information).merge(PreorderInformation.school_will_order_devices)
+  end
+
+  def self.that_are_centrally_managed
+    joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices)
+  end
+
+  def self.that_can_order_std_devices_now
+    joins(:device_allocations).merge(SchoolDeviceAllocation.can_order_std_devices_now)
+  end
+
+  def self.that_are_ordering_for_lockdown
+    joins(:device_allocation).merge(SchoolDeviceAllocation.allocation_for_lockdown)
+  end
+  
+  def self.that_are_ordering_for_shielding
+    joins(:device_allocation).merge(SchoolDeviceAllocation.allocation_for_shielding)
+  end
+
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
   end
@@ -74,8 +94,12 @@ class School < ApplicationRecord
   end
 
   def can_order_devices?(device_type = 'std_device')
+    orderable_devices_count(device_type).positive?
+  end
+
+  def orderable_devices_count(device_type = 'std_device')
     allocation = device_allocations.by_device_type(device_type).first
-    allocation&.cap.to_i > allocation&.devices_ordered.to_i
+    allocation&.cap.to_i - allocation&.devices_ordered.to_i
   end
 
   def invite_school_contact
@@ -83,6 +107,19 @@ class School < ApplicationRecord
       preorder_information.invite_school_contact!
     else
       false
+    end
+  end
+
+  def what_to_order_text
+    count = orderable_devices_count
+    txt = "Order #{count} #{'device'.pluralize(count)} #{order_reason_text}"
+  end
+
+  def order_reason_text
+    if std_device_allocation.allocation_for_shielding?
+      'for specific circumstances'
+    else
+      ''
     end
   end
 end
