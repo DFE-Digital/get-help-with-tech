@@ -1,3 +1,13 @@
 <div class="school-details-summary-list">
-  <%= render SummaryListComponent.new(rows: rows) %>
+  <%= render GovukComponent::SummaryList.new do |component| %>
+    <% rows.each do |row| %>
+      <% component.slot(
+           :row,
+           key: row[:key],
+           value: row[:value],
+           action: action(row),
+           classes: row[:key].to_s.downcase.gsub(/ /, "-"),
+           ) %>
+    <% end %>
+  <% end %>
 </div>

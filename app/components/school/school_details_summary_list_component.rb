@@ -24,6 +24,18 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
     ] + chromebook_rows_if_needed
   end
 
+  def row_action_text(row)
+    if row[:change_path]
+      "Change<span class=\"govuk-visually-hidden\"> #{row[:key]}</span>".html_safe
+    elsif row[:action_path]
+      row[:action]
+    end
+  end
+
+  def action(row)
+    govuk_link_to(row_action_text(row), row[:action_path] || row[:change_path]) if row[:action_path] || row[:change_path]
+  end
+
 private
 
   def preorder_information

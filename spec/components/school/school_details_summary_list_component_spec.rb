@@ -33,12 +33,12 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(result.css('dd')[3].text).to include('Yes')
-      expect(result.css('dd')[4].text).to include('Change')
-      expect(result.css('dd')[5].text).to include('school.domain.org')
-      expect(result.css('dd')[6].text).to include('Change')
-      expect(result.css('dd')[7].text).to include('admin@recovery.org')
-      expect(result.css('dd')[8].text).to include('Change')
+      expect(result.css('dd')[4].text).to include('Yes')
+      expect(result.css('dd')[5].text).to include('Change')
+      expect(result.css('dd')[6].text).to include('school.domain.org')
+      expect(result.css('dd')[7].text).to include('Change')
+      expect(result.css('dd')[8].text).to include('admin@recovery.org')
+      expect(result.css('dd')[9].text).to include('Change')
     end
   end
 
@@ -60,9 +60,9 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('dd')[3].text).to include('Yes')
-      expect(result.css('dd')[4].text).to include('school.domain.org')
-      expect(result.css('dd')[5].text).to include('admin@recovery.org')
+      expect(result.css('dd')[4].text).to include('Yes')
+      expect(result.css('dd')[6].text).to include('school.domain.org')
+      expect(result.css('dd')[8].text).to include('admin@recovery.org')
     end
   end
 end

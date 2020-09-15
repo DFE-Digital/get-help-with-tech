@@ -22,7 +22,7 @@ RSpec.feature 'View school details' do
         expect(page).to have_content(school_user.school.name)
         expect(page).to have_content('Check your school details')
         expect(page).to have_content('63 devices')
-        expect(page).to have_content("Will your school need to order Chromebooks?\nYes")
+        expect(page).to have_content('Will your school need to order Chromebooks? Yes')
       end
     end
   end
