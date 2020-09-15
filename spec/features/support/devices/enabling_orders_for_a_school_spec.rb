@@ -42,23 +42,54 @@ RSpec.feature 'Enabling orders for a school from the support area' do
         end
 
         context 'filling in a valid number and clicking Continue' do
+          let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, payload_id: 'abc123') }
+
           before do
+            allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
+            allow(mock_request).to receive(:post!)
             fill_in('How many devices can they order?', with: 2)
+          end
+
+          it 'pings the Computacenter CapUpdate API' do
             click_on 'Continue'
+            expect(mock_request).to have_received(:post!)
           end
 
-          # This will be the next PR
-          it 'takes me to the Check your answers page', pending: true do
-            expect(page).to have_text 'Check your answers and confirm'
-            expect(page).to have_text 'Yes, for specific circumstances'
-            expect(page).to have_text 'Up to 2 from an allocation of 50'
+          context 'when the Computacenter CapUpdate API does not raise an error' do
+            # This will be the next PR
+            it 'takes me to the Check your answers page', pending: true do
+              click_on 'Continue'
+              expect(page).to have_text 'Check your answers and confirm'
+              expect(page).to have_text 'Yes, for specific circumstances'
+              expect(page).to have_text 'Up to 2 from an allocation of 50'
+            end
+
+            # Remove this once the example above is coded
+            it 'shows me the school details page with updated details and a success message' do
+              click_on 'Continue'
+              expect(school_details_page).to have_text("We've saved your choices")
+              expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
+              expect(school_details_page.school_details_rows[3]).to have_text 'Yes, for specific circumstances'
+            end
           end
 
-          # Remove this once the example above is coded
-          it 'shows me the school details page with updated details and a success message' do
-            expect(school_details_page).to have_text("We've saved your choices")
-            expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
-            expect(school_details_page.school_details_rows[3]).to have_text 'Yes, for specific circumstances'
+          context 'when the Computacenter CapUpdate API raises an error' do
+            before do
+              allow(mock_request).to receive(:post!).and_raise(Computacenter::OutgoingAPI::Error)
+            end
+
+            it 'shows an error' do
+              click_on 'Continue'
+              expect(page).to have_text('Could not update the cap on Computacenter\'s system - payload_id: abc123')
+            end
+
+            it 'shows the order status form' do
+              click_on 'Continue'
+              expect(page).to have_text('Can they place orders?')
+              expect(page).to have_field('No, orders cannot be placed yet')
+              expect(page).to have_field('They can place orders for specific circumstances')
+              expect(page).to have_field('They can order their full allocation because local coronavirus restrictions are confirmed')
+            end
           end
         end
       end
