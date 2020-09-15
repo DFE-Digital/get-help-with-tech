@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class Computacenter::OutgoingAPI::CapUpdateRequest
   attr_accessor :endpoint, :username, :password, :allocation_ids, :timestamp
   attr_accessor :body, :payload_id, :response, :logger
@@ -27,7 +29,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
   def handle_response!
     response_body = @response.body.to_s
     @logger.debug("Response from Computacenter: \n#{response_body}")
-    unless @response.status.success?
+    unless success?
       raise(
         Computacenter::OutgoingAPI::Error,
         "Computacenter responded with #{@response.status}, response_body: #{response_body}",
@@ -48,5 +50,21 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
 
   def renderer
     Computacenter::OutgoingAPI::BaseController
+  end
+
+private
+
+  def success?
+    @response.status.success? && xml_success?
+  end
+
+  def xml_response
+    @xml_response ||= Nokogiri::XML(@response.body)
+  end
+
+  def xml_success?
+    return true if xml_response.css('HeaderResult').blank?
+
+    xml_response.css('HeaderResult').attr('status').value == 'Success'
   end
 end
