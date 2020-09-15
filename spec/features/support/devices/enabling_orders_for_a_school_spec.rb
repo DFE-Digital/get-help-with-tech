@@ -1,0 +1,67 @@
+require 'rails_helper'
+
+RSpec.feature 'Enabling orders for a school from the support area' do
+  let(:support_user) { create(:support_user) }
+  let(:school) { create(:school) }
+  let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
+
+  before do
+    create(:school_device_allocation, :with_std_allocation, allocation: 50)
+    sign_in_as support_user
+  end
+
+  describe 'visiting a school details page' do
+    before do
+      visit support_devices_school_path(school.urn)
+    end
+
+    it 'shows a link to Change whether they can order devices' do
+      expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
+      expect(school_details_page.school_details_rows[3]).to have_link 'Change'
+    end
+
+    describe 'clicking Change' do
+      before do
+        click_on 'Change'
+      end
+
+      it 'shows the order status form' do
+        expect(page).to have_text('Can they place orders?')
+        expect(page).to have_field('No, orders cannot be placed yet')
+        expect(page).to have_field('They can place orders for specific circumstances')
+        expect(page).to have_field('They can order their full allocation because local coronavirus restrictions are confirmed')
+      end
+
+      context 'selecting They can place orders for specific circumstances' do
+        before do
+          choose 'They can place orders for specific circumstances'
+        end
+
+        it 'asks how many devices they can order' do
+          expect(page).to have_field('How many devices can they order?')
+        end
+
+        context 'filling in a valid number and clicking Continue' do
+          before do
+            fill_in('How many devices can they order?', with: 2)
+            click_on 'Continue'
+          end
+
+          # This will be the next PR
+          it 'takes me to the Check your answers page', pending: true do
+            expect(page).to have_text 'Check your answers and confirm'
+            expect(page).to have_text 'Yes, for specific circumstances'
+            expect(page).to have_text 'Up to 2 from an allocation of 50'
+          end
+
+          # Remove this once the example above is coded
+          it 'shows me the school details page with updated details and a success message' do
+            expect(school_details_page).to have_text("We've saved your choices")
+            expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
+            expect(school_details_page.school_details_rows[3]).to have_text 'Yes, for specific circumstances'
+          end
+        end
+      end
+    end
+  end
+end

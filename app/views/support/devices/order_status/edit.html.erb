@@ -1,0 +1,26 @@
+<%- content_for :before_content, govuk_link_to('Back', support_devices_school_path(@school), class: 'govuk-back-link') %>
+<%- title = t('page_titles.support_order_status.enable_orders') %>
+<%- content_for :title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= title %>
+    </h1>
+
+    <%= form_for @form, url: support_devices_school_enable_orders_path(@school.urn), method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_radio_buttons_fieldset :order_state  do %>
+        <%= f.govuk_radio_button :order_state, 'cannot_order', label: { text: School.translate_enum_value(:order_states, "cannot_order") }, link_errors: true %>
+        <%= f.govuk_radio_button :order_state, 'can_order_for_specific_circumstances', label: { text: School.translate_enum_value(:order_states, "can_order_for_specific_circumstances") } do %>
+          <%= f.govuk_number_field :cap, width: 3 %>
+        <%- end %>
+        <%= f.govuk_radio_button :order_state, 'can_order', label: { text: School.translate_enum_value(:order_states, "can_order") }, link_errors: true %>
+      <%- end %>
+
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>

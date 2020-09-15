@@ -11,6 +11,10 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end
 
+    def translate_enum_value(enum, value)
+      I18n.t(value.to_sym, scope: enum_i18n_scope(enum))
+    end
+
     def enum_i18n_scope(enum)
       [:activerecord, :attributes, name.underscore.to_sym, enum.to_sym]
     end

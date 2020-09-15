@@ -130,6 +130,8 @@ Rails.application.routes.draw do
       resources :schools, only: %i[show], param: :urn do
         get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
         post '/invite', to: 'schools#invite'
+        get '/enable-orders', to: 'order_status#edit', as: :enable_orders
+        patch '/enable-orders', to: 'order_status#update'
       end
     end
     resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do

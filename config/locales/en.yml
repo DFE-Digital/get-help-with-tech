@@ -54,6 +54,8 @@
     support_internet_responsible_bodies: Internet pilot on-boarded responsible bodies
     support_responsible_bodies: On-boarded responsible bodies
     support_devices: Devices
+    support_order_status:
+      enable_orders: Can they place orders?
     upload_key_contacts_file: Upload a CSV file of key contacts
     weve_processed_your_file: We’ve processed your file
     computacenter_home: Users with permission to place orders and receive support through Computacenter
@@ -191,6 +193,9 @@
         one: "%{count} device"
         other: "%{count} devices"
   support:
+    order_status:
+      update:
+        success: We've saved your choices
     service_performance:
       mobile_network_operators:
         one: mobile network operator
@@ -284,6 +289,11 @@
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Enter an email address in the correct format, like name@example.com
               cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
+        support/enable_orders_form:
+          attributes:
+            cap:
+              greater_than: Enter a whole number greater than zero
+              not_a_number: Enter a whole number greater than zero
   activerecord:
     attributes:
       api_token:
@@ -326,6 +336,11 @@
           school_contacted: School contacted
           school_will_be_contacted: School will be contacted
           school_ready: School ready
+      school:
+        order_states:
+          cannot_order: No, orders cannot be placed yet
+          can_order_for_specific_circumstances: They can place orders for specific circumstances
+          can_order: They can order their full allocation because local coronavirus restrictions are confirmed
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'
@@ -420,3 +435,7 @@
     invite_event: "A user from %{organisation} has invited someone to the service"
     responsible_body_will_order_event: "%{responsible_body} will manage orders centrally"
     schools_will_order_event: "%{responsible_body} has devolved ordering to schools"
+  helpers:
+    label:
+      support_enable_orders_form:
+        cap: How many devices can they order?
