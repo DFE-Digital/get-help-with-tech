@@ -1,12 +1,4 @@
 module ViewHelper
-  def govuk_link_to(body, url, html_options = {}, &_block)
-    html_options[:class] = prepend_css_class('govuk-link', html_options[:class])
-
-    return link_to(url, html_options) { yield } if block_given?
-
-    link_to(body, url, html_options)
-  end
-
   def ghwt_contact_mailto(subject: 'Increasing%20internet%20access', label: 'COVID.TECHNOLOGY@education.gov.uk')
     mail_to_url = [
       'mailto:COVID.TECHNOLOGY@education.gov.uk',
