@@ -75,7 +75,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
           context 'when the Computacenter CapUpdate API raises an error' do
             before do
-              allow(mock_request).to receive(:post!).and_raise(Computacenter::OutgoingAPI::Error)
+              allow(mock_request).to receive(:post!).and_raise(Computacenter::OutgoingAPI::Error.new(cap_update_request: mock_request))
             end
 
             it 'shows an error' do

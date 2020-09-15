@@ -31,7 +31,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
     @logger.debug("Response from Computacenter: \n#{response_body}")
     unless success?
       raise(
-        Computacenter::OutgoingAPI::Error,
+        Computacenter::OutgoingAPI::Error.new(cap_update_request: self),
         "Computacenter responded with #{@response.status}, response_body: #{response_body}",
       )
     end
