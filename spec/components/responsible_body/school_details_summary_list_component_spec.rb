@@ -23,7 +23,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
              will_need_chromebooks: 'yes',
              school_contact: headteacher)
 
-      create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 3)
+      create(:school_device_allocation, school: school, device_type: 'std_device', cap: 1, allocation: 100)
     end
 
     it 'confirms that fact' do
@@ -31,7 +31,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school allocation' do
-      expect(result.css('.govuk-summary-list__row')[2].text).to include('3 devices')
+      expect(result.css('.govuk-summary-list__row')[2].text).to include('100 devices')
     end
 
     it 'renders the school type' do

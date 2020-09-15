@@ -34,7 +34,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
   describe '#apply!' do
     let!(:school) { create(:school, computacenter_reference: '123456') }
-    let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device') }
+    let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device', cap: 30, allocation: 100) }
 
     it 'updates the correct allocation with the given usedCap' do
       expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(20)

@@ -369,6 +369,11 @@
               blank: Select whether the contract is pay monthly or pay as you go (PAYG)
             agrees_with_privacy_statement:
               inclusion: The privacy statement must be shared with the account holder
+        school_device_allocation:
+          attributes:
+            cap:
+              lte_allocation: can’t be greater than allocation
+              gte_devices_ordered: can’t be less than devices ordered
         user:
           attributes:
             full_name:

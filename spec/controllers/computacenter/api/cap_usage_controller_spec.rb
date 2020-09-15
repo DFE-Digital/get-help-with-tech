@@ -127,11 +127,11 @@ RSpec.describe Computacenter::API::CapUsageController do
         @school1 = create(:school, computacenter_reference: '81060874')
         @school2 = create(:school, computacenter_reference: '81060875')
 
-        create(:school_device_allocation, school: @school1, device_type: 'std_device', allocation: 100)
-        create(:school_device_allocation, school: @school1, device_type: 'coms_device', allocation: 100)
+        create(:school_device_allocation, school: @school1, device_type: 'std_device', cap: 100, allocation: 100)
+        create(:school_device_allocation, school: @school1, device_type: 'coms_device', cap: 100, allocation: 100)
 
-        create(:school_device_allocation, school: @school2, device_type: 'std_device', allocation: 300)
-        create(:school_device_allocation, school: @school2, device_type: 'coms_device', allocation: 400)
+        create(:school_device_allocation, school: @school2, device_type: 'std_device', cap: 100, allocation: 300)
+        create(:school_device_allocation, school: @school2, device_type: 'coms_device', cap: 100, allocation: 400)
       end
 
       it 'responds with :ok status and updates the records' do
@@ -180,8 +180,8 @@ RSpec.describe Computacenter::API::CapUsageController do
       before do
         # only 1 of 2 schools there so partial failure
         school1 = create(:school, computacenter_reference: '81060874')
-        create(:school_device_allocation, school: school1, device_type: 'std_device', allocation: 100)
-        create(:school_device_allocation, school: school1, device_type: 'coms_device', allocation: 100)
+        create(:school_device_allocation, school: school1, device_type: 'std_device', cap: 100, allocation: 100)
+        create(:school_device_allocation, school: school1, device_type: 'coms_device', cap: 100, allocation: 100)
       end
 
       it 'responds with :multi_status status' do
@@ -201,7 +201,7 @@ RSpec.describe Computacenter::API::CapUsageController do
 
       before do
         @school = create(:school, computacenter_reference: '81060874')
-        create(:school_device_allocation, school: @school, device_type: 'std_device', allocation: 100)
+        create(:school_device_allocation, school: @school, device_type: 'std_device', cap: 100, allocation: 100)
       end
 
       it 'responds with :multi_status status' do
