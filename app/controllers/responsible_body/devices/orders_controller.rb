@@ -4,10 +4,10 @@ class ResponsibleBody::Devices::OrdersController < ResponsibleBody::Devices::Bas
       if @responsible_body.has_centrally_managed_schools_that_can_order_now?
         # at least 1 centrally managed school can order now
         # or mix of centrally managed and devolved
-        @schools = @responsible_body.schools.that_are_centrally_managed.that_can_order_std_devices_now
+        @schools = @responsible_body.schools.that_are_centrally_managed.that_can_order_now
 
-        if @schools.that_are_ordering_for_lockdown.count.positive?
-          render 'order_now'
+        if @schools.can_order.count.positive?
+          render 'order_devices'
         else
           render 'specific_circumstances'
         end

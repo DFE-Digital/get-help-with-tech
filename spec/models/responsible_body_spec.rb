@@ -68,4 +68,187 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
   end
+
+  describe '#is_ordering_for_schools?' do
+    subject(:responsible_body) { create(:trust) }
+
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    context 'when some schools are centrally managed' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+      end
+
+      it 'returns true' do
+        expect(responsible_body.is_ordering_for_schools?).to be true
+      end
+    end
+
+    context 'when no schools are centrally managed' do
+      before do
+        schools[0].preorder_information.school_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+      end
+
+      it 'returns false' do
+        expect(responsible_body.is_ordering_for_schools?).to be false
+      end
+    end
+  end
+
+  describe '#has_centrally_managed_schools_that_can_order_now?' do
+    subject(:responsible_body) { create(:trust) }
+
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    context 'when some schools are centrally managed' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.responsible_body_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+      end
+
+      context 'and some managed schools have covid restrictions' do
+        before do
+          schools[0].can_order!
+          schools[2].can_order!
+        end
+
+        it 'returns true' do
+          expect(responsible_body.has_centrally_managed_schools_that_can_order_now?).to be true
+        end
+      end
+
+      context 'and no managed schools have covid restrictions' do
+        before do
+          schools[0].cannot_order!
+          schools[2].can_order!
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_centrally_managed_schools_that_can_order_now?).to be false
+        end
+      end
+    end
+
+    context 'when no schools are centrally managed' do
+      before do
+        schools[0].preorder_information.school_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+      end
+
+      context 'and no schools have covid restrictions' do
+        before do
+          schools[0].cannot_order!
+          schools[1].cannot_order!
+          schools[2].cannot_order!
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_centrally_managed_schools_that_can_order_now?).to be false
+        end
+      end
+
+      context 'and some devolved schools have covid restrictions' do
+        before do
+          schools[0].cannot_order!
+          schools[1].can_order_for_specific_circumstances!
+          schools[2].can_order!
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_centrally_managed_schools_that_can_order_now?).to be false
+        end
+      end
+    end
+  end
+
+  describe '#has_schools_that_can_order_devices_now?' do
+    subject(:responsible_body) { create(:trust) }
+
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    context 'when some schools that will order are able to order devices' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[0].can_order!
+        schools[1].cannot_order!
+        schools[2].can_order_for_specific_circumstances!
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_schools_that_can_order_devices_now?).to be true
+      end
+    end
+
+    context 'when no schools that will order are able to order devices' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[0].can_order!
+        schools[1].cannot_order!
+        schools[2].cannot_order!
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_schools_that_can_order_devices_now?).to be false
+      end
+    end
+  end
+
+  describe '#has_any_schools_that_can_order_now?' do
+    subject(:responsible_body) { create(:trust) }
+
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    context 'when some centrally managed schools are able to order devices' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[0].can_order!
+        schools[1].cannot_order!
+        schools[2].cannot_order!
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_any_schools_that_can_order_now?).to be true
+      end
+    end
+
+    context 'when some devolved schools are able to order devices' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[0].cannot_order!
+        schools[1].cannot_order!
+        schools[2].can_order_for_specific_circumstances!
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_any_schools_that_can_order_now?).to be true
+      end
+    end
+
+    context 'when none of the RBs schools are able to order devices' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[0].cannot_order!
+        schools[1].cannot_order!
+        schools[2].cannot_order!
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_any_schools_that_can_order_now?).to be false
+      end
+    end
+  end
 end

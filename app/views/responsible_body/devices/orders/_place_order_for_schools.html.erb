@@ -1,5 +1,3 @@
-
-
 <table id="schools" class="govuk-table">
   <caption class="govuk-table__caption">
     <span class="govuk-heading-m">Schools you need to place orders for</span>
@@ -14,7 +12,7 @@
     <% @schools.each do |school| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
-          <%= govuk_link_to(school.name, responsible_body_devices_school_path(school.urn)) %> (<%= school.urn %>)
+          <%= govuk_link_to("#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn)) %>
         </td>
         <td class="govuk-table__cell">
           <%= school.what_to_order_text %>
@@ -31,6 +29,6 @@
 
 <p class="govuk-body">If you do not remember your password use the 'Forgotten password?' link to reset it.</p>
 
-<%= govuk_start_button_link_to('Start now', '#', class: 'govuk-!-margin-bottom-3 govuk-!-margin-top-4', target: '_blank') -%>
+<%= govuk_start_button_link_to('Start now', techsource_url, class: 'govuk-!-margin-bottom-3 govuk-!-margin-top-4', target: '_blank') -%>
 
 <p class="govuk-body-s">on TechSource in a new window</p>

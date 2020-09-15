@@ -34,7 +34,7 @@ class School < ApplicationRecord
     can_order: 'can_order',
   }
 
-  def self.that_order_devices
+  def self.that_will_order_devices
     joins(:preorder_information).merge(PreorderInformation.school_will_order_devices)
   end
 
@@ -42,16 +42,8 @@ class School < ApplicationRecord
     joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices)
   end
 
-  def self.that_can_order_std_devices_now
-    joins(:device_allocations).merge(SchoolDeviceAllocation.can_order_std_devices_now)
-  end
-
-  def self.that_are_ordering_for_lockdown
-    joins(:device_allocation).merge(SchoolDeviceAllocation.allocation_for_lockdown)
-  end
-  
-  def self.that_are_ordering_for_shielding
-    joins(:device_allocation).merge(SchoolDeviceAllocation.allocation_for_shielding)
+  def self.that_can_order_now
+    where(order_state: %w[can_order_for_specific_circumstances can_order])
   end
 
   def allocation_for_type!(device_type)
@@ -93,11 +85,11 @@ class School < ApplicationRecord
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
 
-  def can_order_devices?(device_type = 'std_device')
-    orderable_devices_count(device_type).positive?
+  def has_devices_available_to_order?(device_type = 'std_device')
+    available_devices_count(device_type).positive?
   end
 
-  def orderable_devices_count(device_type = 'std_device')
+  def available_devices_count(device_type = 'std_device')
     allocation = device_allocations.by_device_type(device_type).first
     allocation&.cap.to_i - allocation&.devices_ordered.to_i
   end
@@ -111,12 +103,16 @@ class School < ApplicationRecord
   end
 
   def what_to_order_text
-    count = orderable_devices_count
-    txt = "Order #{count} #{'device'.pluralize(count)} #{order_reason_text}"
+    count = available_devices_count
+    if count.zero?
+      'All devices ordered'
+    else
+      "Order #{count} #{'device'.pluralize(count)} #{order_reason_text}".rstrip
+    end
   end
 
   def order_reason_text
-    if std_device_allocation.allocation_for_shielding?
+    if can_order_for_specific_circumstances?
       'for specific circumstances'
     else
       ''
