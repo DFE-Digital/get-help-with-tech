@@ -10,7 +10,7 @@ private
   end
 
   def order_status_row
-    super.except(:action_path, :action)
+    super.except(:action_path, :action).merge(change_path: support_devices_school_enable_orders_path(school_urn: @school.urn))
   end
 
   def school_contact_row_if_contact_present
