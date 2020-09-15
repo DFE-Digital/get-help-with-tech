@@ -1,10 +1,10 @@
 <% content_for :title, "#{@school.name} – Support" %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
-    { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
-    { @school.responsible_body.name => support_devices_responsible_body_path(@school.responsible_body) },
-    @school.name,
-  ]) %>
+  <%= render GovukComponent::Breadcrumbs.new(breadcrumbs:{
+    "#{t('page_titles.support_responsible_bodies')}": support_devices_responsible_bodies_path,
+    "#{@school.responsible_body.name}": support_devices_responsible_body_path(@school.responsible_body),
+    "#{@school.name}": ''
+  }) %>
 <% end %>
 
 <div class="govuk-grid-row">

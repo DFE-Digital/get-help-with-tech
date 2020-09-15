@@ -46,10 +46,6 @@ module ViewHelper
     govuk_link_to body, devices_guidance_subpage_path(subpage_slug: slug), html_options
   end
 
-  def breadcrumbs(items)
-    render BreadcrumbComponent.new(items)
-  end
-
   def sortable_table_header(title, value = title, opts = params)
     if opts[:sort] == value.to_s
       if opts[:dir] == 'd'

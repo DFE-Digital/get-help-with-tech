@@ -1,16 +1,10 @@
 <% content_for :browser_title, "#{@title} – #{t('page_titles.guide_for_distributing_bt_vouchers')}" %>
 
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.about_bt_wifi'), about_bt_wifi_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= t('page_titles.guide_for_distributing_bt_vouchers') %>
-      </li>
-    </ol>
-  </div>
+  <%= render GovukComponent::Breadcrumbs.new(breadcrumbs:{
+    "#{t('page_titles.about_bt_wifi')}": about_bt_wifi_path ,
+    "#{t('page_titles.guide_for_distributing_bt_vouchers')}": ''
+  }) %>
 <% end %>
 
 <h1 class="govuk-heading-xl">

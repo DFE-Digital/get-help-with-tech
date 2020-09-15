@@ -8,19 +8,12 @@
 
 <% content_for :title, "Add a user for #{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.support_responsible_bodies'), responsible_bodies_link, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to @responsible_body.name, responsible_body_link, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        Add a user
-      </li>
-    </ol>
-  </div>
+  <%= render GovukComponent::Breadcrumbs.new(breadcrumbs:{
+    'Home': responsible_body_home_path,
+    "#{t('page_titles.support_responsible_bodies')}": responsible_bodies_link ,
+    "#{@responsible_body.name}": responsible_body_link ,
+    "Add a user": ''
+  }) %>
 <% end %>
 
 <div class="govuk-grid-row">

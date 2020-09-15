@@ -1,15 +1,9 @@
 <% content_for :title, "#{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to t('page_titles.support_responsible_bodies'), support_internet_responsible_bodies_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= @responsible_body.name %>
-      </li>
-    </ol>
-  </div>
+  <%= render GovukComponent::Breadcrumbs.new(breadcrumbs:{
+    "#{t('page_titles.support_responsible_bodies')}": support_internet_responsible_bodies_path ,
+    "#{@responsible_body.name}": ''
+  }) %>
 <% end %>
 
 <div class="govuk-grid-row">
