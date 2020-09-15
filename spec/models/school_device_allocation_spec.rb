@@ -22,4 +22,54 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       end
     end
   end
+
+  describe 'validations' do
+    let(:school) { build(:school) }
+
+    context 'cap exceeds allocation' do
+      subject(:allocation) { described_class.new(cap: 11, allocation: 10, school: school) }
+
+      it 'fails validation' do
+        expect(allocation.valid?).to be_falsey
+        expect(allocation.errors).to have_key(:cap)
+        expect(allocation.errors[:cap]).to include('can’t be greater than allocation')
+      end
+    end
+
+    context 'cap equals allocation' do
+      subject(:allocation) { described_class.new(cap: 10, allocation: 10, school: school) }
+
+      it 'passes validation' do
+        expect(allocation.valid?).to be_truthy
+      end
+    end
+
+    context 'cap less than devices_ordered' do
+      subject(:allocation) do
+        described_class.new(cap: 9,
+                            devices_ordered: 10,
+                            allocation: 100,
+                            school: school)
+      end
+
+      it 'fails validation' do
+        expect(allocation.valid?).to be_falsey
+        expect(allocation.errors).to have_key(:cap)
+        expect(allocation.errors[:cap]).to include('can’t be less than devices ordered')
+      end
+    end
+
+    context 'cap equals devices_ordered' do
+      subject(:allocation) do
+        described_class.new(cap: 10,
+                            devices_ordered: 10,
+                            allocation: 100,
+                            school: school)
+      end
+
+      it 'passes validation' do
+        expect(allocation.valid?).to be_truthy
+      end
+    end
+  end
 end

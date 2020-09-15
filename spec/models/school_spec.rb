@@ -232,9 +232,14 @@ RSpec.describe School, type: :model do
     context 'when there is an allocation of the given type with cap > devices_ordered' do
       let(:cap) { 2 }
       let(:devices_ordered) { 1 }
+      let(:allocation) { 3 }
 
       before do
-        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', cap: cap, devices_ordered: devices_ordered)
+        school.device_allocations << build(:school_device_allocation,
+                                           device_type: 'std_device',
+                                           cap: cap,
+                                           allocation: allocation,
+                                           devices_ordered: devices_ordered)
       end
 
       it 'is true' do
@@ -242,12 +247,18 @@ RSpec.describe School, type: :model do
       end
     end
 
-    context 'when there is an allocation of the given type with cap < devices_ordered' do
-      let(:cap) { 1 }
+    context 'when there is an allocation of the given type with cap equals devices_ordered' do
+      let(:cap) { 2 }
       let(:devices_ordered) { 2 }
+      let(:allocation) { 3 }
 
       before do
-        school.device_allocations << create(:school_device_allocation, school: school, device_type: 'std_device', cap: cap, devices_ordered: devices_ordered)
+        school.device_allocations << create(:school_device_allocation,
+                                            school: school,
+                                            device_type: 'std_device',
+                                            cap: cap,
+                                            allocation: allocation,
+                                            devices_ordered: devices_ordered)
       end
 
       it 'is false' do

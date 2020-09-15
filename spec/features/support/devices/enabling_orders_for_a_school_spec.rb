@@ -6,7 +6,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
 
   before do
-    create(:school_device_allocation, :with_std_allocation, allocation: 50)
+    create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
     sign_in_as support_user
   end
 
