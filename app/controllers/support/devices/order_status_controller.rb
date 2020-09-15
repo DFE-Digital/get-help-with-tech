@@ -8,7 +8,9 @@ class Support::Devices::OrderStatusController < Support::BaseController
   def update
     @form = Support::EnableOrdersForm.new(enable_orders_form_params)
     if @form.valid?
-      CapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
+      ActiveRecord::Base.transaction do
+        CapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
+      end
       flash[:success] = t(:success, scope: %i[support order_status update])
       redirect_to support_devices_school_path(urn: @school.urn)
     else
