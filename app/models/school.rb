@@ -34,8 +34,25 @@ class School < ApplicationRecord
     can_order: 'can_order',
   }
 
+  def self.that_will_order_devices
+    joins(:preorder_information).merge(PreorderInformation.school_will_order_devices)
+  end
+
+  def self.that_are_centrally_managed
+    joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices)
+  end
+
+  def self.that_can_order_now
+    where(order_state: %w[can_order_for_specific_circumstances can_order])
+  end
+
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
+  end
+
+  def can_order_devices?
+    (can_order? || can_order_for_specific_circumstances?) &&
+      (std_device_allocation&.has_devices_available_to_order? == true)
   end
 
   def has_std_device_allocation?
@@ -71,11 +88,6 @@ class School < ApplicationRecord
 
   def next_school_in_responsible_body_when_sorted_by_name_ascending
     responsible_body.next_school_sorted_ascending_by_name(self)
-  end
-
-  def can_order_devices?(device_type = 'std_device')
-    allocation = device_allocations.by_device_type(device_type).first
-    allocation&.cap.to_i > allocation&.devices_ordered.to_i
   end
 
   def invite_school_contact

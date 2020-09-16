@@ -1,6 +1,7 @@
 class Support::Internet::ResponsibleBodiesController < Support::BaseController
   def index
     @responsible_bodies = ResponsibleBody
+      .in_connectivity_pilot
       .includes(:bt_wifi_voucher_allocation, :bt_wifi_vouchers)
       .joins(:users)
       .distinct

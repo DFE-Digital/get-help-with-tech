@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing responsible body users in the support area', type: :feature do
-  let(:local_authority) { create(:local_authority, name: 'Coventry') }
+  let(:local_authority) { create(:local_authority, name: 'Coventry', in_connectivity_pilot: true) }
   let(:responsible_bodies_page) { PageObjects::Support::Internet::ResponsibleBodiesPage.new }
   let(:responsible_body_page) { PageObjects::Support::Internet::ResponsibleBodyPage.new }
 

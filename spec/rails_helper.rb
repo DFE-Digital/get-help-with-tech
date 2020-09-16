@@ -83,6 +83,7 @@ RSpec.configure do |config|
   end
 
   config.before do
+    Faker::Number.unique.clear
     DatabaseCleaner.start
   end
 

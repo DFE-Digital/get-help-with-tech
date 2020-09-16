@@ -16,5 +16,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'DfE' # Department for Education
   inflect.acronym 'API'
   inflect.irregular 'was', 'were'
+  inflect.irregular 'has', 'have'
   inflect.irregular 'contains', 'contain'
 end

@@ -42,5 +42,13 @@ FactoryBot.define do
     trait :with_coms_device_allocation do
       association :coms_device_allocation, factory: %i[school_device_allocation with_coms_allocation]
     end
+
+    trait :with_shielding_pupils do
+      order_state { 'can_order_for_specific_circumstances' }
+    end
+
+    trait :in_lockdown do
+      order_state { 'can_order' }
+    end
   end
 end

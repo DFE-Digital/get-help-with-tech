@@ -88,4 +88,20 @@ class ResponsibleBody < ApplicationRecord
       ",
     )
   end
+
+  def is_ordering_for_schools?
+    schools.that_are_centrally_managed.any?
+  end
+
+  def has_centrally_managed_schools_that_can_order_now?
+    schools.that_are_centrally_managed.that_can_order_now.any?
+  end
+
+  def has_schools_that_can_order_devices_now?
+    schools.that_will_order_devices.that_can_order_now.any?
+  end
+
+  def has_any_schools_that_can_order_now?
+    schools.that_can_order_now.any?
+  end
 end

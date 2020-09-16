@@ -77,6 +77,11 @@
     school_details: Check your school details
     school_edit_chromebooks: Will your school need to order Chromebooks?
     school_users: Manage users
+    order_devices:
+      title: Order devices
+      you_cannot_order_yet: You cannot order devices yet
+      order_for_specific_circumstances: You can order devices for specific circumstances
+      order_devices_now: Order devices now
     invite_school_user:
       title: Invite a new user
       will_they_order_devices: Will they place orders for devices?

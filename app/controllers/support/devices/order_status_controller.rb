@@ -2,7 +2,7 @@ class Support::Devices::OrderStatusController < Support::BaseController
   before_action :set_school
 
   def edit
-    @form = Support::EnableOrdersForm.new(enable_orders_form_params)
+    @form = Support::EnableOrdersForm.new(existing_params.merge(enable_orders_form_params))
   end
 
   def update
@@ -37,6 +37,17 @@ private
 
   def set_school
     @school = School.find_by_urn(params[:school_urn])
+  end
+
+  def existing_params
+    {
+      order_state: @school.order_state,
+      cap: device_allocation.cap,
+    }
+  end
+
+  def device_allocation
+    SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: 'std_device')
   end
 
   def enable_orders_form_params(opts = params)
