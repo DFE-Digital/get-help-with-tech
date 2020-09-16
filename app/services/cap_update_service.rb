@@ -10,7 +10,7 @@ class CapUpdateService
     update_order_state!(order_state)
     allocation = update_cap!(cap)
 
-    notify_computacenter!(allocation.id)
+    update_cap_on_computacenter!(allocation.id)
   end
 
 private
@@ -28,7 +28,7 @@ private
     allocation
   end
 
-  def notify_computacenter!(allocation_id)
+  def update_cap_on_computacenter!(allocation_id)
     api_request = Computacenter::OutgoingAPI::CapUpdateRequest.new(allocation_ids: [allocation_id])
     api_request.post!
   end
