@@ -14,7 +14,7 @@ private
   def rows
     [
       can_they_order_row,
-      how_many_devices_row
+      how_many_devices_row,
     ].compact
   end
 

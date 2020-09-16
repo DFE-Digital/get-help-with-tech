@@ -7,7 +7,7 @@ class Support::Devices::OrderStatusController < Support::BaseController
 
   def update
     @form = Support::EnableOrdersForm.new(
-      enable_orders_form_params.merge(device_allocation: @school.std_device_allocation)
+      enable_orders_form_params.merge(device_allocation: @school.std_device_allocation),
     )
     if @form.valid?
       if params[:confirm].present?

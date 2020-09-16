@@ -32,5 +32,4 @@ class SchoolDeviceAllocation < ApplicationRecord
       given_cap
     end
   end
-
 end
