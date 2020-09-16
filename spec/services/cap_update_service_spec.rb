@@ -59,11 +59,12 @@ RSpec.describe CapUpdateService do
     end
 
     context 'changing order_state to can_order_for_specific_circumstances' do
+      let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
       let(:new_order_state) { 'can_order_for_specific_circumstances' }
 
       it 'sets the new cap to be the given cap' do
         service.update!(cap: 3, order_state: new_order_state)
-        expect(allocation.cap).to eq(3)
+        expect(allocation.reload.cap).to eq(3)
       end
     end
 
@@ -72,7 +73,7 @@ RSpec.describe CapUpdateService do
 
       context 'with an existing allocation' do
         before do
-          create(:school_device_allocation, :with_std_allocation, school: school, devices_ordered: 1)
+          create(:school_device_allocation, :with_std_allocation, school: school, cap: 3, devices_ordered: 1)
         end
 
         it 'sets the new cap to equal the devices_ordered, regardless of what was given' do
