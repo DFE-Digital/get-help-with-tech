@@ -18,7 +18,7 @@ class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::Device
       render :new, status: :unprocessable_entity
     else
       chosen_contact = @form.chosen_contact
-      chosen_contact.save! unless chosen_contact.persisted?
+      chosen_contact.save!
       @school.preorder_information.update!(school_contact: chosen_contact)
       flash[:success] = I18n.t(:success, scope: %i[responsible_body devices schools who_to_contact create], email_address: chosen_contact.email_address)
       redirect_to responsible_body_devices_school_path(@school.urn)
