@@ -1,8 +1,9 @@
 class CapUpdateService
-  attr_accessor :school
+  attr_accessor :school, :device_type
 
   def initialize(args = {})
     @school = args[:school]
+    @device_type = args[:device_type] || 'std_device'
   end
 
   def update!(order_state:, cap:)
@@ -19,7 +20,7 @@ private
   end
 
   def update_cap!(cap)
-    allocation = SchoolDeviceAllocation.find_or_initialize_by(school_id: @school.id, device_type: 'std_device')
+    allocation = SchoolDeviceAllocation.find_or_initialize_by(school_id: @school.id, device_type: @device_type)
     # we only take the cap from the user if they chose specific circumstances
     # for both other states, we need to infer a new cap from the chosen state
     allocation.cap = allocation.cap_implied_by_order_state(order_state: @school.order_state, given_cap: cap)

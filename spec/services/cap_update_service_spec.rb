@@ -5,8 +5,9 @@ RSpec.describe CapUpdateService do
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }
   let(:allocation) { school.std_device_allocation }
+  let(:device_type) { nil }
 
-  subject(:service) { described_class.new(school: school) }
+  subject(:service) { described_class.new(school: school, device_type: device_type) }
 
   describe '#update!' do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
@@ -25,15 +26,25 @@ RSpec.describe CapUpdateService do
         SchoolDeviceAllocation.delete_all
       end
 
-      it 'creates a new std_device allocation record' do
-        expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(SchoolDeviceAllocation, :count).by(1)
+      context 'when no device_type was given' do
+        it 'creates a new std_device allocation record' do
+          expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school.device_allocations.by_device_type('std_device'), :count).by(1)
+        end
+      end
+
+      context 'when a device_type was given' do
+        let(:device_type) { 'coms_device' }
+
+        it 'creates a new allocation record with the given device_type' do
+          expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school.device_allocations.by_device_type('coms_device'), :count).by(1)
+        end
       end
     end
 
-    context 'when a std SchoolDeviceAllocation exists' do
+    context 'when a SchoolDeviceAllocation of the right type exists' do
       let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
 
-      it 'does not create a new std_device allocation record' do
+      it 'does not create a new allocation record' do
         expect { service.update!(cap: new_cap, order_state: new_order_state) }.not_to change(SchoolDeviceAllocation, :count)
       end
 
