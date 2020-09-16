@@ -33,13 +33,11 @@ class ResponsibleBody::Devices::WhoToContactForm
     if headteacher_chosen?
       headteacher_contact
     elsif someone_else_chosen?
-      SchoolContact.new(
-        school: school,
-        role: :contact,
-        full_name: full_name,
-        email_address: email_address,
-        phone_number: phone_number,
-      )
+      school.contacts.find_or_initialize_by(email_address: email_address).tap do |contact|
+        contact.role = :contact
+        contact.full_name = full_name
+        contact.phone_number = phone_number
+      end
     end
   end
 
