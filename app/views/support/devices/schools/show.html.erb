@@ -43,5 +43,34 @@
     <% else %>
       <p class="govuk-body">None</p>
     <% end %>
+
+    <h2 class="govuk-heading-l govuk-!-margin-top-8">Contacts</h2>
+
+    <% if @contacts.present? %>
+      <table id="contacts" class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Email address</th>
+            <th scope="col" class="govuk-table__header">Full name</th>
+            <th scope="col" class="govuk-table__header">Role</th>
+            <th scope="col" class="govuk-table__header">Title</th>
+            <th scope="col" class="govuk-table__header">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @contacts.each do |contact| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= contact.email_address %></td>
+              <td class="govuk-table__cell"><%= contact.full_name %></td>
+              <td class="govuk-table__cell"><%= contact.role %></td>
+              <td class="govuk-table__cell"><%= contact.title %></td>
+              <td class="govuk-table__cell"><%= link_to 'Change', edit_support_devices_school_contact_path(school_urn: @school.urn, id: contact.id) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="govuk-body">None</p>
+    <% end %>
   </div>
 </div>
