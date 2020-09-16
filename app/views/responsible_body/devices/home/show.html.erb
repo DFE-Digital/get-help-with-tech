@@ -23,6 +23,20 @@
       <li>see your list of schools and their allocations</li>
     </ul>
 
+    <% if @responsible_body.is_ordering_for_schools? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to t('page_titles.order_devices.title'), responsible_body_devices_order_devices_path %>
+      </h2>
+
+      <p class="govuk-body">Use this section to:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>place orders in the event of local coronavirus restrictions</li>
+        <li>place orders for specific circumstances</li>
+        <li>access the Computacenter TechSource website</li>
+      </ul>
+    <%- end %>
+
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.responsible_body_devices_request_devices'), responsible_body_devices_request_devices_path %>
     </h2>

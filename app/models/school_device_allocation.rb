@@ -11,12 +11,24 @@ class SchoolDeviceAllocation < ApplicationRecord
     'std_device': 'std_device',
   }
 
+  def self.can_order_std_devices_now
+    by_device_type('std_device').where('cap > devices_ordered')
+  end
+
   def self.by_device_type(device_type)
     where(device_type: device_type)
   end
 
   def self.by_computacenter_device_type(cc_device_type)
     by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type))
+  end
+
+  def has_devices_available_to_order?
+    available_devices_count.positive?
+  end
+
+  def available_devices_count
+    cap.to_i - devices_ordered.to_i
   end
 
   def computacenter_cap_type

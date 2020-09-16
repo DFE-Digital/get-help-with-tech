@@ -8,6 +8,7 @@
 # See the file initializers/config.rb for more info on how this is configured.
 
 computacenter:
+  techsource_url: https://techsource.computacenter.com/en/
   outgoing_api:
     endpoint:
     username:

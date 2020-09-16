@@ -208,11 +208,11 @@ RSpec.describe School, type: :model do
   end
 
   describe '#can_order_devices?' do
-    let(:school) { create(:school) }
+    let(:school) { create(:school, :in_lockdown) }
 
     context 'when there is no allocation of the given type' do
       it 'is false' do
-        expect(school.can_order_devices?).to eq(false)
+        expect(school.can_order_devices?).to be false
       end
     end
 
