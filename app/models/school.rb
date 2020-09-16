@@ -50,6 +50,11 @@ class School < ApplicationRecord
     device_allocations.find_by_device_type!(device_type)
   end
 
+  def can_order_devices?
+    (can_order? || can_order_for_specific_circumstances?) &&
+      (std_device_allocation&.has_devices_available_to_order? == true)
+  end
+
   def has_std_device_allocation?
     std_device_allocation&.allocation.to_i.positive?
   end
