@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Enabling orders for a school from the support area' do
   let(:support_user) { create(:support_user) }
-  let(:school) { create(:school) }
+  let(:school) { create(:school, order_state: :cannot_order) }
   let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
 
   before do
@@ -30,6 +30,9 @@ RSpec.feature 'Enabling orders for a school from the support area' do
         expect(page).to have_field('No, orders cannot be placed yet')
         expect(page).to have_field('They can place orders for specific circumstances')
         expect(page).to have_field('They can order their full allocation because local coronavirus restrictions are confirmed')
+
+        # the 'no' option should be chosen
+        expect(find('#support-enable-orders-form-order-state-cannot-order-field')['checked']).to eq('checked')
       end
 
       context 'selecting They can place orders for specific circumstances' do
