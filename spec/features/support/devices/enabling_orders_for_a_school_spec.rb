@@ -55,7 +55,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
             expect(mock_request).to have_received(:post!)
           end
 
-          context 'when the Computacenter CapUpdate API does not raise an error' do
+          context 'when the Computacenter CapUpdate API processes the update successfully' do
             # This will be the next PR
             it 'takes me to the Check your answers page', pending: true do
               click_on 'Continue'
