@@ -1,0 +1,15 @@
+<%= form_with model: @contact, url: support_devices_school_contact_path(school_urn: @school.urn, id: @contact.id) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_text_field :full_name,
+      label: { text: 'Name' } %>
+
+  <%= f.govuk_email_field :email_address,
+      label: { text: 'Email address' } %>
+
+  <%= f.govuk_text_field :phone_number,
+      label: { text: 'Telephone number' },
+      width: 10 %>
+
+  <%= f.govuk_submit %>
+<% end %>
