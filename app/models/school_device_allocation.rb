@@ -3,8 +3,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to  :created_by_user, class_name: 'User', optional: true
   belongs_to  :last_updated_by_user, class_name: 'User', optional: true
 
-  validate :validate_cap_gte_devices_ordered
-  validate :validate_cap_lte_allocation
+  validates_with OrderStateAndCapValidator
 
   enum device_type: {
     'coms_device': 'coms_device',
@@ -34,17 +33,4 @@ class SchoolDeviceAllocation < ApplicationRecord
     end
   end
 
-private
-
-  def validate_cap_lte_allocation
-    if cap > allocation
-      errors.add(:cap, :lte_allocation)
-    end
-  end
-
-  def validate_cap_gte_devices_ordered
-    if cap < devices_ordered
-      errors.add(:cap, :gte_devices_ordered)
-    end
-  end
 end

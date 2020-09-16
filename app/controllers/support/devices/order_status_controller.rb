@@ -6,19 +6,31 @@ class Support::Devices::OrderStatusController < Support::BaseController
   end
 
   def update
-    @form = Support::EnableOrdersForm.new(enable_orders_form_params)
+    @form = Support::EnableOrdersForm.new(
+      enable_orders_form_params.merge(device_allocation: @school.std_device_allocation)
+    )
     if @form.valid?
-      ActiveRecord::Base.transaction do
-        CapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
+      if params[:confirm].present?
+        ActiveRecord::Base.transaction do
+          CapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
+        end
+        flash[:success] = t(:success, scope: %i[support order_status update])
+        redirect_to support_devices_school_path(urn: @school.urn)
+      else
+        redirect_to support_devices_school_confirm_enable_orders_path(urn: @school.urn, order_state: @form.order_state, cap: @form.cap)
       end
-      flash[:success] = t(:success, scope: %i[support order_status update])
-      redirect_to support_devices_school_path(urn: @school.urn)
     else
       render :edit, status: :unprocessable_entity
     end
   rescue Computacenter::OutgoingAPI::Error => e
     flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id: e.cap_update_request&.payload_id)
     render :edit, status: :unprocessable_entity
+  end
+
+  # GET /support/devices/schools/:urn/enable-orders/confirm
+  def confirm
+    @form = Support::EnableOrdersForm.new(order_state: params[:order_state], cap: params[:cap])
+    @allocation = @school.std_device_allocation.allocation
   end
 
 private

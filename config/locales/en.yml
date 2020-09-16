@@ -56,6 +56,7 @@
     support_devices: Devices
     support_order_status:
       enable_orders: Can they place orders?
+      confirm_enable_orders: Check your answers and confirm
     upload_key_contacts_file: Upload a CSV file of key contacts
     weve_processed_your_file: We’ve processed your file
     computacenter_home: Users with permission to place orders and receive support through Computacenter
@@ -197,6 +198,11 @@
       update:
         cap_update_request_error: "Could not update the cap on Computacenter's system - payload_id: %{payload_id}"
         success: We've saved your choices
+      confirm:
+        order_states:
+          cannot_order: cannot place orders yet
+          can_order_for_specific_circumstances: can place orders for specific circumstances
+          can_order: can order their full allocation because local coronavirus restrictions are confirmed
     service_performance:
       mobile_network_operators:
         one: mobile network operator
@@ -295,6 +301,8 @@
             cap:
               greater_than: Enter a whole number greater than zero
               not_a_number: Enter a whole number greater than zero
+              lte_allocation: Cap cannot be more than their current allocation of %{allocation}
+              gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
   activerecord:
     attributes:
       api_token:
