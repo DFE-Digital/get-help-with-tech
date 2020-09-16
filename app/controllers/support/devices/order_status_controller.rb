@@ -9,18 +9,16 @@ class Support::Devices::OrderStatusController < Support::BaseController
     @form = Support::EnableOrdersForm.new(enable_orders_form_params)
     if @form.valid?
       ActiveRecord::Base.transaction do
-        allocation = device_allocation
-        # we only take the cap from the user if they chose specific circumstances
-        # for both other states, we need to infer a new cap from the chosen state
-        allocation.cap = allocation.cap_implied_by_order_state(order_state: @form.order_state, given_cap: @form.cap)
-        allocation.save!
-        @school.update!(order_state: @form.order_state)
+        CapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
       end
       flash[:success] = t(:success, scope: %i[support order_status update])
       redirect_to support_devices_school_path(urn: @school.urn)
     else
       render :edit, status: :unprocessable_entity
     end
+  rescue Computacenter::OutgoingAPI::Error => e
+    flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id: e.cap_update_request&.payload_id)
+    render :edit, status: :unprocessable_entity
   end
 
 private

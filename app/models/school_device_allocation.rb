@@ -26,9 +26,9 @@ class SchoolDeviceAllocation < ApplicationRecord
   def cap_implied_by_order_state(order_state:, given_cap: nil)
     case order_state.to_sym
     when :cannot_order
-      self.cap = devices_ordered.to_i
+      devices_ordered.to_i
     when :can_order
-      self.cap = allocation.to_i
+      allocation.to_i
     else # specific circumstances
       given_cap
     end
