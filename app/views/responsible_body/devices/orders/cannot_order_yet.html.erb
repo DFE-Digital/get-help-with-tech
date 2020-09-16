@@ -7,7 +7,8 @@
       <%= t('page_titles.order_devices.you_cannot_order_yet') %>
     </h1>
 
-    <p class="govuk-body">None of the <%= govuk_link_to @responsible_body.count_of_schools_we_order_for_link_text, responsible_body_devices_schools_path %> have local coronavirus restrictions.</p>
+    <% school_count = @responsible_body.schools.that_are_centrally_managed.count %>
+    <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> local coronavirus restrictions.</p>
 
     <p class="govuk-body">You can only place orders when local coronavirus restrictions are confirmed.</p>
 

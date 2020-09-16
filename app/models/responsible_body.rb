@@ -90,33 +90,18 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def is_ordering_for_schools?
-    schools.that_are_centrally_managed.count.positive?
+    schools.that_are_centrally_managed.any?
   end
 
   def has_centrally_managed_schools_that_can_order_now?
-    schools.that_are_centrally_managed.that_can_order_now.count.positive?
+    schools.that_are_centrally_managed.that_can_order_now.any?
   end
 
   def has_schools_that_can_order_devices_now?
-    schools.that_will_order_devices.that_can_order_now.count.positive?
+    schools.that_will_order_devices.that_can_order_now.any?
   end
 
   def has_any_schools_that_can_order_now?
-    schools.that_can_order_now.count.positive?
-  end
-
-  def count_of_schools_we_order_for_link_text
-    count = schools.that_are_centrally_managed.count
-    "#{count} #{'school'.pluralize(count)} you will be placing orders for"
-  end
-
-  def unmanaged_schools_that_can_order_link_text
-    count = schools.that_will_order_devices.can_order.count
-    "#{count} #{'school'.pluralize(count)} #{'has'.pluralize(count)} local coronavirus restrictions"
-  end
-
-  def unmanaged_schools_that_can_order_for_specific_circumstances_text
-    count = schools.that_will_order_devices.can_order_for_specific_circumstances.count
-    "#{count} #{'school'.pluralize(count)} can order devices for specific circumstances because their #{'request'.pluralize(count)} #{'has'.pluralize(count)} been approved."
+    schools.that_can_order_now.any?
   end
 end

@@ -23,6 +23,14 @@ class SchoolDeviceAllocation < ApplicationRecord
     by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type))
   end
 
+  def has_devices_available_to_order?
+    available_devices_count.positive?
+  end
+
+  def available_devices_count
+    cap.to_i - devices_ordered.to_i
+  end
+
   def computacenter_cap_type
     Computacenter::CapTypeConverter.to_computacenter_type(device_type)
   end

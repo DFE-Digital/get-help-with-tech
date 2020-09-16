@@ -139,6 +139,14 @@ module ViewHelper
     Settings.computacenter.techsource_url
   end
 
+  def what_to_order(device_count, specific_circumstances)
+    if device_count.zero?
+      'All devices ordered'
+    else
+      "Order #{device_count} #{'device'.pluralize(device_count)}#{' for specific circumstances' if specific_circumstances}"
+    end
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

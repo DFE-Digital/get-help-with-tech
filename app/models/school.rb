@@ -85,37 +85,11 @@ class School < ApplicationRecord
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
 
-  def has_devices_available_to_order?(device_type = 'std_device')
-    available_devices_count(device_type).positive?
-  end
-
-  def available_devices_count(device_type = 'std_device')
-    allocation = device_allocations.by_device_type(device_type).first
-    allocation&.cap.to_i - allocation&.devices_ordered.to_i
-  end
-
   def invite_school_contact
     if preorder_information.present?
       preorder_information.invite_school_contact!
     else
       false
-    end
-  end
-
-  def what_to_order_text
-    count = available_devices_count
-    if count.zero?
-      'All devices ordered'
-    else
-      "Order #{count} #{'device'.pluralize(count)} #{order_reason_text}".rstrip
-    end
-  end
-
-  def order_reason_text
-    if can_order_for_specific_circumstances?
-      'for specific circumstances'
-    else
-      ''
     end
   end
 end
