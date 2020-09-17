@@ -90,9 +90,38 @@ RSpec.describe CapUpdateService do
       end
     end
 
-    it 'notifies the computacenter API' do
-      service.update!(cap: 2, order_state: new_order_state)
-      expect(mock_request).to have_received(:post!)
+    context 'when the computacenter_cap_update_api FeatureFlag is active' do
+      let!(:api_already_active) { FeatureFlag.active?(:computacenter_cap_update_api) }
+
+      before do
+        FeatureFlag.activate(:computacenter_cap_update_api)
+      end
+
+      after do
+        FeatureFlag.deactivate(:computacenter_cap_update_api) unless api_already_active
+      end
+
+      it 'notifies the computacenter API' do
+        service.update!(cap: 2, order_state: new_order_state)
+        expect(mock_request).to have_received(:post!)
+      end
+    end
+
+    context 'when the computacenter_cap_update_api FeatureFlag is inactive' do
+      let!(:api_already_active) { FeatureFlag.active?(:computacenter_cap_update_api) }
+
+      before do
+        FeatureFlag.deactivate(:computacenter_cap_update_api)
+      end
+
+      after do
+        FeatureFlag.activate(:computacenter_cap_update_api) if api_already_active
+      end
+
+      it 'does not notify the computacenter API' do
+        service.update!(cap: 2, order_state: new_order_state)
+        expect(mock_request).not_to have_received(:post!)
+      end
     end
   end
 end

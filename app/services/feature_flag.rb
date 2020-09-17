@@ -7,6 +7,7 @@ class FeatureFlag
     who_will_order_slack_notifications
     invite_slack_notifications
     rbs_can_manage_users
+    computacenter_cap_update_api
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
