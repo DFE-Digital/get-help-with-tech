@@ -57,6 +57,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
 
         expect(existing_contact.full_name).to eql('different name')
         expect(existing_contact.phone_number).to eql('020 1')
+        expect(existing_contact.role).to eql('headteacher')
       end
     end
   end
