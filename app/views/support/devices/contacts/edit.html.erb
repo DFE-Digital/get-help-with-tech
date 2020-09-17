@@ -1,15 +1,28 @@
-<%= form_with model: @contact, url: support_devices_school_contact_path(school_urn: @school.urn, id: @contact.id) do |f| %>
-  <%= f.govuk_error_summary %>
+<%- content_for :before_content, govuk_link_to('Back', support_devices_school_path(@school.urn), class: 'govuk-back-link') %>
+<%- title = t('page_titles.support_school_contacts_edit') %>
+<%- content_for :title, title %>
 
-  <%= f.govuk_text_field :full_name,
-      label: { text: 'Name' } %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= title %>
+    </h1>
 
-  <%= f.govuk_email_field :email_address,
-      label: { text: 'Email address' } %>
+    <%= form_with model: @contact, url: support_devices_school_contact_path(school_urn: @school.urn, id: @contact.id) do |f| %>
+      <%= f.govuk_error_summary %>
 
-  <%= f.govuk_text_field :phone_number,
-      label: { text: 'Telephone number' },
-      width: 10 %>
+      <%= f.govuk_text_field :full_name,
+          label: { text: 'Name' } %>
 
-  <%= f.govuk_submit %>
-<% end %>
+      <%= f.govuk_email_field :email_address,
+          label: { text: 'Email address' } %>
+
+      <%= f.govuk_text_field :phone_number,
+          label: { text: 'Telephone number' },
+          width: 10 %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
