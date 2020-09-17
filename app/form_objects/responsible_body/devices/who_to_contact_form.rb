@@ -1,7 +1,11 @@
 class ResponsibleBody::Devices::WhoToContactForm
   include ActiveModel::Model
 
-  attr_accessor :school, :who_to_contact, :headteacher_contact, :full_name, :email_address, :phone_number
+  attr_accessor :school,
+                :who_to_contact,
+                :full_name,
+                :email_address,
+                :phone_number
 
   validates :who_to_contact, inclusion: %w[headteacher someone_else]
 
@@ -22,26 +26,57 @@ class ResponsibleBody::Devices::WhoToContactForm
             if: :someone_else_chosen?
 
   def headteacher_option_label
-    @headteacher_contact.title.upcase_first
+    headteacher_contact.title.upcase_first
   end
 
   def headteacher_option_hint_text
-    "#{@headteacher_contact.full_name} (#{@headteacher_contact.email_address})"
+    "#{headteacher_contact.full_name} (#{headteacher_contact.email_address})"
   end
 
   def chosen_contact
     if headteacher_chosen?
       headteacher_contact
     elsif someone_else_chosen?
-      school.contacts.find_or_initialize_by(email_address: email_address).tap do |contact|
-        contact.role = :contact
+      existing_contact = school.contacts.find_by(email_address: email_address)
+      second_contact = school.contacts.contact.first
+      new_contact = school.contacts.build(role: :contact)
+
+      (existing_contact || second_contact || new_contact).tap do |contact|
+        contact.email_address = email_address
         contact.full_name = full_name
         contact.phone_number = phone_number
       end
     end
   end
 
+  def headteacher_contact
+    @headteacher_contact ||= school.headteacher_contact
+  end
+
+  def populate_details_from_second_contact
+    self.full_name = second_contact.full_name
+    self.email_address = second_contact.email_address
+    self.phone_number = second_contact.phone_number
+  end
+
+  def preselect_who_to_contact
+    case current_contact&.role
+    when 'headteacher'
+      self.who_to_contact = 'headteacher'
+    when 'contact'
+      self.who_to_contact = 'someone_else'
+    end
+  end
+
 private
+
+  def current_contact
+    school.current_contact || SchoolContact.new
+  end
+
+  def second_contact
+    school.contacts.contact.first || SchoolContact.new
+  end
 
   def headteacher_chosen?
     who_to_contact&.to_sym == :headteacher

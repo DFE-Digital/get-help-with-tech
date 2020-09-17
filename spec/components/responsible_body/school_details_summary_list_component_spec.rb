@@ -43,9 +43,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('dd')[9].text).to include('Yes')
-      expect(result.css('dd')[10].text).to include('school.domain.org')
-      expect(result.css('dd')[11].text).to include('admin@recovery.org')
+      expect(result.css('dd')[10].text).to include('Yes')
+      expect(result.css('dd')[11].text).to include('school.domain.org')
+      expect(result.css('dd')[12].text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do

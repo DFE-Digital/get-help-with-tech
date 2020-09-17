@@ -94,6 +94,8 @@ private
       [{
         key: 'School contact',
         value: contact_lines.map { |line| h(line) }.join('<br>').html_safe,
+        change_path: responsible_body_devices_school_who_to_contact_edit_path(school_urn: @school.urn),
+        action: 'Change',
       }]
     else
       []

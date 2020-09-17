@@ -57,6 +57,38 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
 
         expect(existing_contact.full_name).to eql('different name')
         expect(existing_contact.phone_number).to eql('020 1')
+        expect(existing_contact.role).to eql('headteacher')
+      end
+    end
+  end
+
+  describe '#update' do
+    context 'when 2 contacts exist' do
+      let!(:second_contact) { create(:school_contact, :contact, school: school) }
+
+      def perform_update!
+        put :update, params: {
+          responsible_body_devices_who_to_contact_form: {
+            who_to_contact: 'someone_else', # hidden field
+            full_name: 'totally new',
+            email_address: 'unique@example.com',
+            phone_number: '020 1',
+          },
+          school_urn: school.urn,
+        }
+      end
+
+      it 'does not create another contact' do
+        expect { perform_update! }.not_to change(SchoolContact, :count)
+      end
+
+      it 'updates the second contact' do
+        perform_update!
+        second_contact.reload
+
+        expect(second_contact.full_name).to eql('totally new')
+        expect(second_contact.email_address).to eql('unique@example.com')
+        expect(second_contact.phone_number).to eql('020 1')
       end
     end
   end

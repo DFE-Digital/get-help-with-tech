@@ -73,6 +73,10 @@ class School < ApplicationRecord
     contacts.find_by(role: :headteacher)
   end
 
+  def current_contact
+    preorder_information&.school_contact
+  end
+
   # TODO: update this method as preorder_information gets more fields
   # as per the prototype at
   # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
