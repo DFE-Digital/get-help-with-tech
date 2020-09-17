@@ -18,4 +18,26 @@ RSpec.describe SchoolContact, type: :model do
     it { is_expected.to validate_presence_of(:role) }
     it { is_expected.not_to allow_value('invalid.email').for(:email_address) }
   end
+
+  describe '#current_school_contact?' do
+    let(:school) { build(:school) }
+
+    subject(:contact) { build(:school_contact, school: school) }
+
+    context 'when current school contact' do
+      before do
+        school.build_preorder_information(school_contact: contact)
+      end
+
+      it 'returns true' do
+        expect(contact.current_school_contact?).to be_truthy
+      end
+    end
+
+    context 'when not current school contact' do
+      it 'returns false' do
+        expect(contact.current_school_contact?).to be_falsey
+      end
+    end
+  end
 end
