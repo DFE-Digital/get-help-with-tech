@@ -6,7 +6,7 @@ private
   end
 
   def allocation_row
-    super.except(:action_path, :action)
+    super.except(:action_path, :action).merge(change_path: support_devices_school_allocation_edit_path(school_urn: @school.urn))
   end
 
   def order_status_row
