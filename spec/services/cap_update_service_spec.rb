@@ -21,6 +21,26 @@ RSpec.describe CapUpdateService do
       expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school, :order_state).from('cannot_order').to('can_order')
     end
 
+    context 'when the notify_computacenter_of_cap_changes feature flag is active' do
+      before do
+        FeatureFlag.activate(:notify_computacenter_of_cap_changes)
+      end
+
+      it 'sends an email to computacenter' do
+        expect { service.update!(cap: new_cap, order_state: new_order_state) }.to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change).once
+      end
+    end
+
+    context 'when the notify_computacenter_of_cap_changes feature flag is not active' do
+      before do
+        FeatureFlag.deactivate(:notify_computacenter_of_cap_changes)
+      end
+
+      it 'does not send an email to computacenter' do
+        expect { service.update!(cap: new_cap, order_state: new_order_state) }.not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+      end
+    end
+
     context 'when a std SchoolDeviceAllocation does not exist' do
       before do
         SchoolDeviceAllocation.delete_all
@@ -37,6 +57,16 @@ RSpec.describe CapUpdateService do
 
         it 'creates a new allocation record with the given device_type' do
           expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school.device_allocations.by_device_type('coms_device'), :count).by(1)
+        end
+
+        context 'when the notify_computacenter_of_cap_changes feature flag is active' do
+          before do
+            FeatureFlag.activate(:notify_computacenter_of_cap_changes)
+          end
+
+          it 'sends an email to computacenter' do
+            expect { service.update!(cap: new_cap, order_state: new_order_state) }.to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change).once
+          end
         end
       end
     end

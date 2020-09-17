@@ -2,6 +2,7 @@ class Support::Devices::SchoolsController < Support::BaseController
   def show
     @school = School.find_by!(urn: params[:urn])
     @users = @school.users
+    @contacts = @school.contacts
   end
 
   def confirm_invitation
