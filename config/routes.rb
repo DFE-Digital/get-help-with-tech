@@ -133,6 +133,7 @@ Rails.application.routes.draw do
         get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
         post '/invite', to: 'schools#invite'
         get '/enable-orders', to: 'order_status#edit', as: :enable_orders
+        get '/enable-orders/confirm', to: 'order_status#confirm', as: :confirm_enable_orders
         patch '/enable-orders', to: 'order_status#update'
       end
     end

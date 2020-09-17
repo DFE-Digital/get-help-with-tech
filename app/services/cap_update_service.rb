@@ -10,7 +10,7 @@ class CapUpdateService
     update_order_state!(order_state)
     allocation = update_cap!(cap)
 
-    update_cap_on_computacenter!(allocation.id)
+    update_cap_on_computacenter!(allocation.id) if FeatureFlag.active?(:computacenter_cap_update_api)
 
     notify_computacenter_by_email(allocation.cap)
   end

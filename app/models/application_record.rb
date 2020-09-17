@@ -12,7 +12,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def translate_enum_value(enum, value)
-      I18n.t(value.to_sym, scope: enum_i18n_scope(enum))
+      I18n.t(value.to_sym, scope: enum_i18n_scope(enum.to_s.pluralize))
     end
 
     def enum_i18n_scope(enum)
