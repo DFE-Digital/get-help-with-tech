@@ -2,16 +2,34 @@ class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::Device
   before_action :find_school!
 
   def new
-    @form = ResponsibleBody::Devices::WhoToContactForm.new(
-      school: @school,
-      headteacher_contact: @school.headteacher_contact,
-    )
+    @form = ResponsibleBody::Devices::WhoToContactForm.new(school: @school)
   end
 
   def create
     @form = ResponsibleBody::Devices::WhoToContactForm.new({
       school: @school,
-      headteacher_contact: @school.headteacher_contact,
+    }.merge(who_to_contact_form_params))
+
+    if @form.invalid?
+      render :new, status: :unprocessable_entity
+    else
+      chosen_contact = @form.chosen_contact
+      chosen_contact.save!
+      @school.preorder_information.update!(school_contact: chosen_contact)
+      flash[:success] = I18n.t(:success, scope: %i[responsible_body devices schools who_to_contact create], email_address: chosen_contact.email_address)
+      redirect_to responsible_body_devices_school_path(@school.urn)
+    end
+  end
+
+  def edit
+    @form = ResponsibleBody::Devices::WhoToContactForm.new(school: @school)
+    @form.populate_details_from_second_contact
+    @form.preselect_who_to_contact
+  end
+
+  def update
+    @form = ResponsibleBody::Devices::WhoToContactForm.new({
+      school: @school,
     }.merge(who_to_contact_form_params))
 
     if @form.invalid?
