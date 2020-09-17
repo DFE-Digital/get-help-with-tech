@@ -1,3 +1,5 @@
+The person who placed a Chromebook order will receive an email from deal-fulfillment@google.com including important information regarding device setup. We suggest this email is forwarded to the technical contact responsible for preparing Chromebooks.
+
 ## How to enrol Chromebooks
 
 You need to enrol your Chromebooks so you can manage them remotely. 
