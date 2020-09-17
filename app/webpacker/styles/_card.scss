@@ -37,6 +37,16 @@
   background-color: govuk-colour("white");
 }
 
+.app-card__order {
+  padding: govuk-spacing(3);
+  margin-bottom: govuk-spacing(3);
+
+  @include govuk-media-query($from: desktop) {
+    padding: govuk-spacing(6);
+    margin-bottom: govuk-spacing(6);
+  }
+}
+
 .app-card__count {
   @include govuk-font($size: 80, $weight: bold);
   display: block;

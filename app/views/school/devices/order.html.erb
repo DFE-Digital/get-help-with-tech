@@ -1,0 +1,37 @@
+<%- title = t('page_titles.school_order_devices') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+    { t('page_titles.school_home') => school_home_path },
+    title,
+  ]) %>
+<%- end %>
+
+<%-
+  device_count = @school.std_device_allocation.available_devices_count
+%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <div class="app-card app-card__order">
+      <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
+        <%= "#{device_count} #{'device'.pluralize(device_count)} available" -%>
+      </h2>
+      <div class="govuk-panel__body govuk-!-font-size-24">
+        You’ve ordered <%= @school.std_device_allocation.devices_ordered %> of
+        <%= @school.std_device_allocation.cap %> devices
+      </div>
+    </div>
+
+    <p class="govuk-body">Order your devices now. Do not delay.</p>
+    <p class="govuk-body">They will arrive on the next working day if you order before 4pm.</p>
+    <p class="govuk-body">You need to place orders on a website called TechSource.</p>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+    <p class="govuk-body">It’s important to know your device allocation before you sign in. If you try to order more devices that you’ve been allocated, the order will be cancelled.</p>
+
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
+  </div>
+</div>
