@@ -103,7 +103,11 @@ RSpec.describe CapUpdateService do
 
       context 'with an existing allocation' do
         before do
-          create(:school_device_allocation, :with_std_allocation, school: school, cap: 3, devices_ordered: 1)
+          create(:school_device_allocation, :with_std_allocation,
+                 school: school,
+                 allocation: 7,
+                 cap: 3,
+                 devices_ordered: 1)
         end
 
         it 'sets the new cap to equal the devices_ordered, regardless of what was given' do
