@@ -24,5 +24,9 @@
 
       <%= f.govuk_submit %>
     <% end %>
+
+    <% unless @contact.current_school_contact? %>
+      <%= button_to('Set as the school contact', set_as_school_contact_support_devices_school_contact_path(school_urn: @school.urn, id: @contact), { method: :put, class: 'govuk-button govuk-button--secondary' }) %>
+    <% end %>
   </div>
 </div>

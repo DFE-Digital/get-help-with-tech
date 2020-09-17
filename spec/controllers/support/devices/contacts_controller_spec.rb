@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Support::Devices::ContactsController do
   include Rails.application.routes.url_helpers
 
-  let(:school) { create(:school, :with_headteacher_contact) }
+  let(:school) { create(:school, :with_headteacher_contact, :with_preorder_information) }
   let(:contact) { school.contacts.first }
   let(:support_user) { create(:support_user) }
 
@@ -55,6 +55,21 @@ RSpec.describe Support::Devices::ContactsController do
       it 'renders form again' do
         expect(contact).to render_template('support/devices/contacts/edit')
       end
+    end
+  end
+
+  describe '#set_as_school_contact' do
+    let(:other_contact) { create(:school_contact, school: school) }
+
+    before do
+      put :set_as_school_contact, params: {
+        school_urn: school.urn,
+        id: other_contact.id,
+      }
+    end
+
+    it 'updates current school contact' do
+      expect(school.preorder_information.reload.school_contact).to eql(other_contact)
     end
   end
 end
