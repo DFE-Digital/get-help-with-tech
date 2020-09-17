@@ -10,9 +10,15 @@
       <li>
         <span class="govuk-!-margin-bottom-4">download a CSV file of users who have permission to place orders on TechSource</span>
         <br /><br />
-        <%= govuk_button_link_to 'Download CSV', computacenter_user_ledger_path(format: :csv), classes: 'govuk-!-margin-top-4' %>
+        <%= govuk_button_link_to 'Download TechSource users', computacenter_user_ledger_path(format: :csv), classes: 'govuk-!-margin-top-4' %>
       </li>
     </ul>
-
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <span class="govuk-!-margin-bottom-4">download a CSV file of Google Chromebook details for schools</span>
+        <br /><br />
+        <%= govuk_button_link_to 'Download Chromebook details', computacenter_chromebooks_path(format: :csv), classes: 'govuk-!-margin-top-4' %>
+      </li>
+    </ul>
   </div>
 </div>
