@@ -19,10 +19,10 @@ Parents and guardians should provide age-appropriate supervision for the interne
 
 LAs, academy trusts and schools are responsible for avoiding risks to the online safety of the children and young people they provide devices to.
 
-If you order Microsoft Windows devices after August 2020, you have the option to receive them without Department for Education (DfE) software and settings. They will be delivered with factory settings as supplied by the manufacturer. 
+If you order Microsoft Windows devices from September 2020, you have the option to receive them without Department for Education (DfE) software and settings. They will be delivered with factory settings as supplied by the manufacturer. 
 
 You are responsible for setting up management and safeguarding measures before you distribute the devices.
-Cisco Umbrella will be pre-installed on devices ordered between May and July 2020, and those ordered after August 2020 where you have selected to have software and settings installed prior to delivery
+Cisco Umbrella will be pre-installed on devices ordered between May and August 2020, and those from September 2020 where you have selected to have software and settings installed prior to delivery
 
 Where Cisco Umbrella has been installed, content filtering has been set up to meet the needs of children and young people of all ages. You can choose to use your own content filtering solution to replace Cisco Umbrella to make it more relevant for your users’ needs.
 
