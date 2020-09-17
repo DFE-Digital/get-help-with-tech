@@ -16,13 +16,7 @@
       allocation: @allocation,
       change_path: support_devices_school_enable_orders_path(@school.urn, pass_through_params)) %>
 
-    <h2 class="govuk-heading-m govuk-!-margin-top-8">What happens next</h2>
-    <p class="govuk-body">We will:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>email everyone at <%= @school.name %> to tell them they <%= t(@form.order_state, scope: %i[support order_status confirm order_states]) %></li>
-      <li>tell their <%= @school.responsible_body.humanized_type %> <%= @school.responsible_body.name %> that this school <%= t(@form.order_state, scope: %i[support order_status confirm order_states]) %></li>
-    </ul>
-
+    <!-- render partial: '_what_happens_next' will go here when notifications are hooked in -->
 
     <%= form_for @form, url: support_devices_school_enable_orders_path(@school.urn), method: :patch do |f| %>
       <%= hidden_field_tag :confirm, true %>
