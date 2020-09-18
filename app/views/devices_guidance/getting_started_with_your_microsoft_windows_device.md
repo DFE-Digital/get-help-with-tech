@@ -38,6 +38,7 @@ Your laptop or tablet needs to access a Wi-Fi network before you can use the int
 2. Choose your Wi-Fi network, then select **"Connect"**.
 3. Type your network password, and then select **"Next"**.
 4. You should choose **"No"** when asked if you want your device to be discoverable on the Wi-Fi network.
+5. Leave your computer on and connected to the mains and the internet for at least 3 hours the first time you use it.
 
 **Note:** If you’ve been given a 4G router, look in its box to find the name of the network and the password you’ll need. If you’re using your own Wi-Fi then connect using the same network and password as you would with other devices, such as a mobile phone.
 
