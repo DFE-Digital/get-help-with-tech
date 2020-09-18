@@ -79,8 +79,10 @@ class User < ApplicationRecord
   end
 
   def orders_devices_user_limit
-    if orders_devices? && school.users.who_can_order_devices.count >= 3
-      errors.add(:orders_devices, I18n.t('activerecord.errors.models.user.attributes.orders_devices.user_limit'))
+    if orders_devices?
+      if (new_record? || orders_devices_changed?) && school.users.who_can_order_devices.count >= 3
+        errors.add(:orders_devices, I18n.t('activerecord.errors.models.user.attributes.orders_devices.user_limit'))
+      end
     end
   end
 
