@@ -272,10 +272,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'paper_trail', versioning: true do
-    before do
-      allow(ENV).to receive(:[]).with('FEATURES_update_computacenter_user_change').and_return('active')
-    end
-
     context 'creating user' do
       context 'computacenter relevant' do
         it 'creates a Computacenter::UserChange of type new' do

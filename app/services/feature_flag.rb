@@ -11,9 +11,7 @@ class FeatureFlag
     notify_computacenter_of_cap_changes
   ].freeze
 
-  TEMPORARY_FEATURE_FLAGS = %i[
-    update_computacenter_user_change
-  ].freeze
+  TEMPORARY_FEATURE_FLAGS = %i[].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
 
