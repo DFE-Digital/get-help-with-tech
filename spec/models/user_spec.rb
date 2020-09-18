@@ -99,8 +99,10 @@ RSpec.describe User, type: :model do
         expect { new_user.save! }.to change(new_user, :email_address).to('mr.mixed.case@somedomain.org')
       end
     end
+  end
 
-    context 'school user' do
+  describe 'orders devices validation' do
+    context 'for a school user' do
       let(:school) { create(:school) }
       let(:user) { build(:school_user, :orders_devices, school: school) }
 
@@ -111,6 +113,12 @@ RSpec.describe User, type: :model do
       it 'validates that only 3 users can order devices for a school' do
         expect(user.valid?).to be false
         expect(user.errors.keys).to include(:orders_devices)
+      end
+
+      it 'does not fail to update a user when there are 3 users that can order' do
+        existing_user = school.users.last
+        existing_user.sign_in_token = '1234'
+        expect(existing_user.valid?).to be true
       end
     end
   end
