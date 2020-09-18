@@ -10,6 +10,10 @@ class Support::UsersController < Support::BaseController
                                        approved_at: Time.zone.now,
                                        orders_devices: true))
 
+    if @responsible_body.school_journey?
+      @user.school = @responsible_body.schools.first
+    end
+
     if @user.valid?
       @user.save!
       redirect_to return_path

@@ -104,4 +104,8 @@ class ResponsibleBody < ApplicationRecord
   def has_any_schools_that_can_order_now?
     schools.that_can_order_now.any?
   end
+
+  def school_journey?
+    schools.count == 1 && users.blank?
+  end
 end
