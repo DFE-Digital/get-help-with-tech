@@ -5,18 +5,6 @@ RSpec.describe Computacenter::ChromebookDetails do
 
   describe '.to_csv' do
     let(:chromebook_details) { create_list(:preorder_information, 5, :needs_chromebooks) }
-    # let(:expected_headers) do
-    #   [
-    #     'Responsible Body URN',
-    #     'Responsible Body Name',
-    #     'School Name',
-    #     'School URN',
-    #     'Google Domain',
-    #     'Valid Recovery Off Domain Email Address',
-    #     'Date',
-    #     'Time',
-    #   ]
-    # end
 
     it 'has correct headers set' do
       rows = CSV.parse(service.to_csv)
