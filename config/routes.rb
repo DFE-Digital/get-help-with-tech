@@ -141,6 +141,8 @@ Rails.application.routes.draw do
         get '/enable-orders', to: 'order_status#edit', as: :enable_orders
         get '/enable-orders/confirm', to: 'order_status#confirm', as: :confirm_enable_orders
         patch '/enable-orders', to: 'order_status#update'
+        get '/allocation/edit', to: 'allocation#edit'
+        patch '/allocation', to: 'allocation#update'
       end
     end
     resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do

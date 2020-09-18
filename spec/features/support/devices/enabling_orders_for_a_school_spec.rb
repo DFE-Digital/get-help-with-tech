@@ -23,7 +23,9 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
     describe 'clicking Change' do
       before do
-        click_on 'Change'
+        within(school_details_page.school_details_rows[3]) do
+          click_on 'Change'
+        end
       end
 
       it 'shows the order status form' do
