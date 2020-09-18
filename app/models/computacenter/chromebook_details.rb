@@ -2,7 +2,7 @@ require 'csv'
 
 module Computacenter
   class ChromebookDetails
-    def self.export_to_csv
+    def self.to_csv
       CSV.generate do |csv|
         csv << [
           'Responsible Body URN',
