@@ -149,4 +149,24 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       expect(result.css('.govuk-summary-list__row a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
     end
   end
+
+  describe 'devices ordered count' do
+    context 'when no devices ordered' do
+      it 'does not show devices ordered row' do
+        expect(result.text).not_to include('Devices ordered')
+      end
+    end
+
+    context 'when devices orders' do
+      before do
+        alloc = school.build_std_device_allocation(devices_ordered: 3, cap: 100, allocation: 100)
+        alloc.save!
+      end
+
+      it 'shows devices ordered row with count' do
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('Devices ordered')
+        expect(result.css('.govuk-summary-list__row')[3].text).to include('3 devices')
+      end
+    end
+  end
 end
