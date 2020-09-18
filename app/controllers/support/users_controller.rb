@@ -6,7 +6,9 @@ class Support::UsersController < Support::BaseController
 
   def create
     @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
-    @user = User.new(user_params.merge(responsible_body: @responsible_body, approved_at: Time.zone.now))
+    @user = User.new(user_params.merge(responsible_body: @responsible_body,
+                                       approved_at: Time.zone.now,
+                                       orders_devices: true))
 
     if @user.valid?
       @user.save!

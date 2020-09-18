@@ -10,18 +10,25 @@ RSpec.describe Support::UsersController, type: :controller do
         sign_in_as dfe_user
       end
 
-      it 'creates users' do
-        expect {
-          post :create, params: { responsible_body_id: responsible_body.id,
-                                  user: attributes_for(:user),
-                                  pilot: 'devices' }
-        }.to change(User, :count).by(1)
-      end
-
-      it 'audits changes with reference to user that requested the changes' do
+      def perform_create!
         post :create, params: { responsible_body_id: responsible_body.id,
                                 user: attributes_for(:user),
                                 pilot: 'devices' }
+      end
+
+      it 'creates users' do
+        expect { perform_create! }.to change(User, :count).by(1)
+      end
+
+      it 'sets orders_devices to true' do
+        perform_create!
+
+        user = User.last
+        expect(user.orders_devices).to be_truthy
+      end
+
+      it 'audits changes with reference to user that requested the changes' do
+        perform_create!
 
         expect(User.last.versions.last.whodunnit).to eql("User:#{dfe_user.id}")
       end
