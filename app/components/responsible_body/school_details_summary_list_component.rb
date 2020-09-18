@@ -12,13 +12,15 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
   end
 
   def rows
-    [
-      preorder_status_row,
-      who_will_order_row,
-      allocation_row,
-      order_status_row,
-      school_type_row,
-    ] +
+    array = []
+    array << preorder_status_row
+    array << who_will_order_row
+    array << allocation_row
+    array << devices_ordered_row if display_devices_ordered_row?
+    array << order_status_row
+    array << school_type_row
+
+    array +
       school_contact_row_if_contact_present +
       chromebook_rows_if_needed
   end
@@ -59,6 +61,17 @@ private
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
+  end
+
+  def devices_ordered_row
+    {
+      key: 'Devices ordered',
+      value: pluralize(@school.std_device_allocation&.devices_ordered.to_i, 'device'),
+    }
+  end
+
+  def display_devices_ordered_row?
+    @school.std_device_allocation&.devices_ordered.to_i.positive?
   end
 
   def order_status_row
