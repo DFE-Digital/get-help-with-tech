@@ -37,7 +37,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'pry-rails'
 
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 5.0'
 
 # Rate-limiting
 gem 'rack-throttle'
