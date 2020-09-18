@@ -92,6 +92,8 @@ private
       mno_extra_mobile_data_requests_path
     elsif user.needs_to_see_privacy_notice?
       responsible_body_privacy_notice_path
+    elsif user.is_responsible_body_user? && user.is_school_user?
+      school_user_start_url(user)
     elsif user.is_responsible_body_user?
       responsible_body_home_path
     elsif user.is_school_user?
