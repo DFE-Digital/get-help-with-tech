@@ -26,10 +26,4 @@
 <h2 class="govuk-heading-m">Help signing in to TechSource</h2>
 <p class="govuk-body">You need to place orders on a website called TechSource, which is run by Computacenter.</p>
 
-<p class="govuk-body">Your 'User ID' is your email address: <%= @user.email_address %></p>
-
-<p class="govuk-body">If you do not remember your password use the 'Forgotten password?' link to reset it.</p>
-
-<%= govuk_start_button_link_to('Start now', techsource_url, class: 'govuk-!-margin-bottom-3 govuk-!-margin-top-4', target: '_blank') -%>
-
-<p class="govuk-body-s">on TechSource in a new window</p>
+<%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
