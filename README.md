@@ -113,9 +113,15 @@ FEATURES_show_debug_info=active bundle exec rails s
 
 The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
 
-To set / unset environment variables on GOV.UK PaaS, use the commands:
+To display, set and unset feature flags on GOV.UK PaaS:
 
 ```
+# display the feature flags
+cf env (app name) | grep FEATURES
+
+# For example:
+cf env get-help-with-tech-prod | grep FEATURES
+
 # set an env var
 cf set-env (app name) (environment variable name) (value)
 
