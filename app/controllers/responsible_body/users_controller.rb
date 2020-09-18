@@ -13,8 +13,10 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
 
   def create
     @rb_user = @responsible_body.users.new(
-      user_params.merge(responsible_body_id: @responsible_body.id),
+      user_params.merge(responsible_body_id: @responsible_body.id,
+                        orders_devices: true),
     )
+
     if @rb_user.valid?
       @rb_user.save!
       InviteResponsibleBodyUserMailer.with(user: @rb_user).invite_user_email.deliver_later

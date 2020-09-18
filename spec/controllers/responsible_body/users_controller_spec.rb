@@ -47,4 +47,32 @@ RSpec.describe ResponsibleBody::UsersController do
       end
     end
   end
+
+  describe '#create' do
+    before do
+      sign_in_as rb_user
+    end
+
+    def perform_create!
+      post :create, params: {
+        id: local_authority.id,
+        user: {
+          full_name: 'John Doe',
+          email_address: 'john.doe@example.com',
+          phone_number: '020 1',
+        },
+      }
+    end
+
+    it 'creates a user record' do
+      expect { perform_create! }.to change(User, :count).by(1)
+    end
+
+    it 'sets user with orders_devices as true' do
+      perform_create!
+
+      user = User.last
+      expect(user.orders_devices).to be_truthy
+    end
+  end
 end
