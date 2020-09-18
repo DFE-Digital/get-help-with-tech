@@ -133,8 +133,9 @@ Users may find that the login is defaulting to the ‘.\localadmin' account and 
 We’ve identified a fix for this bug. The end users – young people, children or their families – will need to:
 
 * [follow the steps](#if-no-local-user-password-has-been-set) follow the steps below to apply the .\localuser workaround and log in to the device
-* connect the device to the internet so it can receive the fix update – this can take a few hours
-* restart the device – they may need to follow the steps below again until the device successfully downloads and applies the fix. This will happen automatically once the device has been connected to the internet.
+* connect the device to the internet so it can receive the fix update – leave the device turned on, plugged in to the mains and connected to the internet for at least 3 hours for the fix to be applied 
+* restart the device – if the fix has been successful, the device should automatically login as “localuser”. If the user has previously set up a password they will need to enter it. If the device does not login automatically or the username is not “localuser” at the login prompt, then the fix has not been applied and the user may need to repeat the process
+
 
 ### If no local user password has been set
 
