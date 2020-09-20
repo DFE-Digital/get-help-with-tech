@@ -436,7 +436,8 @@
       schools:
         who_to_contact:
           create:
-            success: "Saved. We will email %{email_address} shortly"
+            failure: "Saved. We will email %{email_address} shortly"
+            success: "Saved. We’ve emailed %{email_address}"
     users:
       create:
         success: "We’ve sent an invitation to %{email_address}"
