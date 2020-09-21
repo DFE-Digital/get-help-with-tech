@@ -104,15 +104,19 @@ private
 
   def school_contact_row_if_contact_present
     if school_will_order_devices? && school_contact.present?
-      [{
-        key: 'School contact',
-        value: contact_lines.map { |line| h(line) }.join('<br>').html_safe,
-        change_path: responsible_body_devices_school_who_to_contact_edit_path(school_urn: @school.urn),
-        action: 'Change',
-      }]
+      [school_contact_row]
     else
       []
     end
+  end
+
+  def school_contact_row
+    {
+      key: 'School contact',
+      value: contact_lines.map { |line| h(line) }.join('<br>').html_safe,
+      change_path: responsible_body_devices_school_who_to_contact_edit_path(school_urn: @school.urn),
+      action: 'Change',
+    }
   end
 
   def contact_lines

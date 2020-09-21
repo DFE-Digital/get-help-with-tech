@@ -59,8 +59,11 @@ describe Support::SchoolDetailsSummaryListComponent do
                who_will_order_devices: :school,
                school_contact: headteacher)
 
+        school.preorder_information.school_contacted!
+
         expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
         expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+        expect(result.css('.govuk-summary-list__row')[5].css('a')).not_to be_present
       end
     end
 
