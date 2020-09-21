@@ -131,8 +131,7 @@ class User < ApplicationRecord
                                       full_name: full_name,
                                       role: :contact,
                                       phone_number: telephone)
-    school.preorder_information.update!(school_contact: contact,
-                                        status: 'school_contacted')
+    school.preorder_information.update!(school_contact: contact)
   end
 
 private

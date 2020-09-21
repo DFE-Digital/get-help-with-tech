@@ -23,9 +23,9 @@ RSpec.describe User, type: :model do
       expect(contact.phone_number).to eql(user.telephone)
     end
 
-    it 'marks preorder#status as school_contacted' do
+    it 'marks preorder#status as school_will_be_contacted' do
       user.hybrid_setup!
-      expect(user.school.preorder_information.status).to eql('school_contacted')
+      expect(user.school.preorder_information.status).to eql('school_will_be_contacted')
     end
   end
 
