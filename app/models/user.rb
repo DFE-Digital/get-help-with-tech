@@ -112,6 +112,7 @@ class User < ApplicationRecord
   end
 
   def hybrid_setup!
+    return unless responsible_body.present?
     one_school = responsible_body.schools.count == 1
     only_user = responsible_body.users == [self]
 
