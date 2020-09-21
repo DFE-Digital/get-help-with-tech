@@ -6,7 +6,7 @@ class Event
   end
 
   def notifiable?
-    false
+    FeatureFlag.active?(:slack_notifications)
   end
 
   def message

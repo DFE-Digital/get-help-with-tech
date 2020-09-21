@@ -1,8 +1,4 @@
 class WhoWillOrderEvent < Event
-  def notifiable?
-    FeatureFlag.active?(:who_will_order_slack_notifications)
-  end
-
   def message
     I18n.t(
       message_key,
