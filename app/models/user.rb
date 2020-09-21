@@ -111,6 +111,28 @@ class User < ApplicationRecord
     seen_privacy_notice? && orders_devices?
   end
 
+  def hybrid?
+    school_id && responsible_body_id
+  end
+
+  def hybrid_setup!
+    one_school = responsible_body.schools.count == 1
+    only_user = responsible_body.users == [self]
+
+    return unless one_school && only_user
+
+    school = responsible_body.schools.first
+
+    update!(school: school)
+    contact = school.contacts.create!(email_address: email_address,
+                                      full_name: full_name,
+                                      role: :contact,
+                                      phone_number: telephone)
+    school.create_preorder_information!(who_will_order_devices: 'school',
+                                        school_contact: contact,
+                                        status: 'school_contacted')
+  end
+
 private
 
   def cleansed_full_name

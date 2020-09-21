@@ -27,10 +27,36 @@ RSpec.describe Support::UsersController, type: :controller do
         expect(user.orders_devices).to be_truthy
       end
 
+      it 'does not set the school on the user' do
+        perform_create!
+
+        user = User.last
+        expect(user.school).to be_blank
+      end
+
       it 'audits changes with reference to user that requested the changes' do
         perform_create!
 
         expect(User.last.versions.last.whodunnit).to eql("User:#{dfe_user.id}")
+      end
+
+      context 'if RB only has one school and this is the first user' do
+        let!(:school) { create(:school, responsible_body: responsible_body) }
+
+        it 'sets user.school to the school' do
+          perform_create!
+
+          user = User.last
+          expect(user.school).to eql(school)
+        end
+
+        it 'creates preorder on the school with school to order' do
+          perform_create!
+          school.reload
+
+          expect(school.preorder_information).to be_present
+          expect(school.preorder_information.who_will_order_devices).to eql('school')
+        end
       end
     end
 

@@ -55,14 +55,16 @@ RSpec.feature 'Setting up the devices ordering' do
 
       when_i_select_to_contact_the_headteacher
       then_i_see_a_confirmation_and_the_headteacher_as_the_contact
-      and_the_status_reflects_that_the_school_will_be_contacted_shortly
+      and_the_status_reflects_that_the_school_has_been_contacted
+      and_the_headteacher_has_been_invited_to_the_service
 
       when_i_follow_the_link_to_the_next_school
       then_i_see_the_details_of_the_second_school
 
       when_i_select_to_contact_someone_else_and_save_their_details
       then_i_see_a_confirmation_and_the_someone_else_as_the_contact
-      and_the_status_reflects_that_the_school_will_be_contacted_shortly
+      and_the_status_reflects_that_the_school_has_been_contacted
+      and_the_school_contact_has_been_invited_to_the_service
     end
 
     scenario 'devolving device ordering mostly centrally' do
@@ -127,7 +129,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_see_the_form_to_nominate_someone_to_contact
       when_i_fill_in_details_of_a_contact_and_save_their_details
       then_i_see_a_confirmation_and_the_someone_else_as_the_contact
-      and_the_status_reflects_that_the_school_will_be_contacted_shortly
+      and_the_status_reflects_that_the_school_has_been_contacted
     end
 
     scenario 'when the school has no standard device allocation' do
@@ -358,13 +360,27 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def then_i_see_a_confirmation_and_the_headteacher_as_the_contact
-    expect(page).to have_content('Saved. We will email anne.jones@aardvark.sch.uk shortly')
+    expect(page).to have_content('Saved. We’ve emailed anne.jones@aardvark.sch.uk')
     expect(responsible_body_school_page.school_details).to have_content('Executive Head: Anne Jones')
     expect(responsible_body_school_page.school_details).to have_content('anne.jones@aardvark.sch.uk')
   end
 
-  def and_the_status_reflects_that_the_school_will_be_contacted_shortly
-    expect(responsible_body_school_page.school_details).to have_content('School will be contacted')
+  def and_the_status_reflects_that_the_school_has_been_contacted
+    expect(responsible_body_school_page.school_details).to have_content('School contacted')
+  end
+
+  def and_the_headteacher_has_been_invited_to_the_service
+    open_email('anne.jones@aardvark.sch.uk')
+    expect(current_email).to be_present
+    expect(current_email.header('template-id')).to eq(Settings.govuk_notify.templates.devices.school_nominated_contact)
+    expect(User.exists?(email_address: 'anne.jones@aardvark.sch.uk')).to be_truthy
+  end
+
+  def and_the_school_contact_has_been_invited_to_the_service
+    open_email('bob.leigh@sharedservices.co.uk')
+    expect(current_email).to be_present
+    expect(current_email.header('template-id')).to eq(Settings.govuk_notify.templates.devices.school_nominated_contact)
+    expect(User.exists?(email_address: 'bob.leigh@sharedservices.co.uk')).to be_truthy
   end
 
   def when_i_follow_the_link_to_the_next_school
@@ -382,7 +398,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def then_i_see_a_confirmation_and_the_someone_else_as_the_contact
-    expect(page).to have_content('Saved. We will email bob.leigh@sharedservices.co.uk shortly')
+    expect(page).to have_content('Saved. We’ve emailed bob.leigh@sharedservices.co.uk')
     expect(responsible_body_school_page.school_details).to have_content('Bob Leigh')
     expect(responsible_body_school_page.school_details).to have_content('bob.leigh@sharedservices.co.uk')
     expect(responsible_body_school_page.school_details).to have_content('020 123456')

@@ -90,6 +90,8 @@ private
   def root_url_for(user)
     if user.is_mno_user?
       mno_extra_mobile_data_requests_path
+    elsif user.hybrid?
+      school_user_start_url(user)
     elsif user.needs_to_see_privacy_notice?
       responsible_body_privacy_notice_path
     elsif user.is_responsible_body_user?
