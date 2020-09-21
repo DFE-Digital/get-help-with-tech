@@ -63,7 +63,7 @@ private
     elsif user.is_computacenter?
       computacenter_home_path
     elsif user.is_support?
-      support_service_performance_path
+      support_home_path
     else
       # this should not happen - so let's tell Sentry
       Raven.capture_message(

@@ -134,6 +134,9 @@ Rails.application.routes.draw do
   end
 
   namespace :support do
+    get '/', to: 'home#show', as: :home
+    get '/schools', to: 'home#schools'
+    get '/technical', to: 'home#technical_support', as: :technical_support
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
       resources :users, only: %i[new create edit update], controller: 'responsible_bodies/users'

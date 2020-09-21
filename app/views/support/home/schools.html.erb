@@ -1,0 +1,22 @@
+<%- title = t('page_titles.support.schools') %>
+<%- content_for :title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to 'Find schools', search_support_schools_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to find one or more schools by URN
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to 'Enable orders for many schools', devices_enable_orders_for_many_schools_support_schools_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to allow schools to order their full allocation</p>
+  </div>
+</div>

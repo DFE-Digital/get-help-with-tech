@@ -1,0 +1,12 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.support.technical_support') %>
+    </h1>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to 'Background jobs', support_sidekiq_admin_path, html_options: { target: '_blank' } %>
+    </h2>
+
+    <p class="govuk-body">Use this section to see the background queues and jobs running on the service</p>
+</div>

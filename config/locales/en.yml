@@ -61,6 +61,9 @@ en:
     service_performance: Service performance
     accessibility: Accessibility statement
     support:
+      home: Support
+      schools: Schools
+      technical_support: Technical support
       devices:
         schools:
           search: Search for schools by URN

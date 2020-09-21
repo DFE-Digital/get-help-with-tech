@@ -7,6 +7,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     given_there_have_been_sign_ins_from_responsible_body_and_mno_users
 
     when_i_sign_in_as_a_dfe_user
+    and_i_follow_links_to_the_service_performance_page
 
     then_i_see_stats_about_responsible_body_user_engagement
   end
@@ -15,6 +16,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     given_some_extra_mobile_data_requests_have_been_made
 
     when_i_sign_in_as_a_dfe_user
+    and_i_follow_links_to_the_service_performance_page
 
     then_i_see_stats_about_extra_mobile_data_requests
   end
@@ -50,6 +52,10 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def when_i_sign_in_as_a_dfe_user
     sign_in_as create(:dfe_user)
+  end
+
+  def and_i_follow_links_to_the_service_performance_page
+    click_link 'Service performance'
   end
 
   def then_i_see_stats_about_extra_mobile_data_requests

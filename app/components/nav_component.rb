@@ -28,7 +28,7 @@ class NavComponent < ViewComponent::Base
 
   def links
     if @user&.is_support?
-      support_devices_links + support_general_links
+      support_links
     elsif @user&.is_computacenter?
       computacenter_links
     elsif @user&.is_mno_user?
@@ -44,18 +44,9 @@ class NavComponent < ViewComponent::Base
 
 private
 
-  def support_devices_links
+  def support_links
     [
-      NavLinkComponent.new(title: 'Responsible bodies', url: support_responsible_bodies_path),
-      NavLinkComponent.new(title: 'Find schools', url: search_support_schools_path),
-      NavLinkComponent.new(title: 'Enable orders for many schools', url: devices_enable_orders_for_many_schools_support_schools_path),
-      NavLinkComponent.new(title: 'Performance', url: support_service_performance_path),
-    ]
-  end
-
-  def support_general_links
-    [
-      NavLinkComponent.new(title: 'Background jobs', url: support_sidekiq_admin_path, html_options: { target: '_blank' }),
+      NavLinkComponent.new(title: 'Support home', url: support_home_path),
     ]
   end
 

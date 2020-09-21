@@ -11,7 +11,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
 
   scenario 'visiting the full allocations page' do
     given_i_am_signed_in_as_a_support_user
-    when_i_click_on_the_full_allocations_nav_menu_link
+    when_i_follow_links_to_enable_orders_for_many_schools
     then_i_see_the_full_allocations_page
   end
 
@@ -35,7 +35,8 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
     sign_in_as support_user
   end
 
-  def when_i_click_on_the_full_allocations_nav_menu_link
+  def when_i_follow_links_to_enable_orders_for_many_schools
+    click_link 'Find and manage schools'
     click_link 'Enable orders for many schools'
   end
 
