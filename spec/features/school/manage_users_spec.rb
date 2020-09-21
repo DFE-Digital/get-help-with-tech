@@ -71,7 +71,7 @@ RSpec.feature 'Manage school users' do
   end
 
   def then_i_see_a_form_populated_with_the_users_details
-    expect(page).to have_selector('h1', 'Update user details')
+    expect(page).to have_selector('h1', text: 'Change user details')
     expect(page).to have_field('Name', with: user_from_same_school.full_name)
     expect(page).to have_field('Email address', with: user_from_same_school.email_address)
     expect(page).to have_field('Telephone number', with: user_from_same_school.telephone)
