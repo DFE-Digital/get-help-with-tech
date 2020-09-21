@@ -1,6 +1,6 @@
 ## Who owns the devices
 
-For laptops, tablets and connectivity devices available for schools, academy trusts and local authorities after August 2020:
+For laptops, tablets and connectivity devices available for schools, academy trusts and local authorities from September 2020:
 
 * All devices will be fully owned by the schools or academy trusts who receive them
 * It will be the responsibility of the school to loan the devices to those who need them.
