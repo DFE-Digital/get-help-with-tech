@@ -49,6 +49,14 @@ RSpec.describe Support::UsersController, type: :controller do
           user = User.last
           expect(user.school).to eql(school)
         end
+
+        it 'creates preorder on the school with school to order' do
+          perform_create!
+          school.reload
+
+          expect(school.preorder_information).to be_present
+          expect(school.preorder_information.who_will_order_devices).to eql('school')
+        end
       end
     end
 

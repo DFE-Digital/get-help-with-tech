@@ -105,7 +105,11 @@ class ResponsibleBody < ApplicationRecord
     schools.that_can_order_now.any?
   end
 
-  def school_journey?
+  def hybrid_setup?
     schools.count == 1 && users.blank?
+  end
+
+  def hybrid_setup!
+    schools.first.create_preorder_information!(who_will_order_devices: 'school')
   end
 end

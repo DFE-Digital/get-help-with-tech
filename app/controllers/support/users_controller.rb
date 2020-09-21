@@ -10,11 +10,14 @@ class Support::UsersController < Support::BaseController
                                        approved_at: Time.zone.now,
                                        orders_devices: true))
 
-    if @responsible_body.school_journey?
+    if @responsible_body.hybrid_setup?
       @user.school = @responsible_body.schools.first
     end
 
     if @user.valid?
+      if @responsible_body.hybrid_setup?
+        @responsible_body.hybrid_setup!
+      end
       @user.save!
       redirect_to return_path
     else
