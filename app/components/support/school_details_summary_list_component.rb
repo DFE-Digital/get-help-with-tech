@@ -24,4 +24,8 @@ private
         end
       end
   end
+
+  def chromebook_rows_if_needed
+    super.map { |row| row.except(:change_path, :action, :action_path) }
+  end
 end
