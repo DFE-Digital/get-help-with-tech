@@ -111,6 +111,18 @@ class User < ApplicationRecord
     school_id && responsible_body_id
   end
 
+  def hybrid_setup!
+    one_school = responsible_body.schools.count == 1
+    only_user = responsible_body.users == [self]
+
+    return unless (one_school && only_user)
+
+    school = responsible_body.schools.first
+
+    update(school: school)
+    school.create_preorder_information!(who_will_order_devices: 'school')
+  end
+
 private
 
   def cleansed_full_name
