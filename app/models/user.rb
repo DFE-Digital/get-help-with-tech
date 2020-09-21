@@ -120,7 +120,11 @@ class User < ApplicationRecord
     school = responsible_body.schools.first
 
     update(school: school)
-    school.create_preorder_information!(who_will_order_devices: 'school')
+    contact = school.contacts.create!(email_address: email_address,
+                                      full_name: full_name,
+                                      role: :contact,
+                                      phone_number: telephone)
+    school.create_preorder_information!(who_will_order_devices: 'school', school_contact: contact)
   end
 
 private
