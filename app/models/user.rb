@@ -115,11 +115,11 @@ class User < ApplicationRecord
     one_school = responsible_body.schools.count == 1
     only_user = responsible_body.users == [self]
 
-    return unless (one_school && only_user)
+    return unless one_school && only_user
 
     school = responsible_body.schools.first
 
-    update(school: school)
+    update!(school: school)
     contact = school.contacts.create!(email_address: email_address,
                                       full_name: full_name,
                                       role: :contact,
