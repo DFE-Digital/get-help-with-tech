@@ -5,7 +5,7 @@ When ordering Microsoft devices, a selection can be made between:
 
 ## Preparing laptops and tablets ordered without DfE settings installed 
 
-If you order devices after August 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. They will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
+If you order devices after September 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. They will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
 
 This allows devices to be configured to your own standards with your preferred software and settings, and without the limitations imposed by DfE configured devices. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
 
@@ -13,7 +13,7 @@ You will be responsible for setting up management and [safeguarding measures](ht
 
 ## Preparing laptops and tablets ordered with DfE settings installed
 
-The following guidance applies only to devices ordered between May and July 2020, and those ordered after August 2020 where you have selected to have software and settings installed prior to delivery.
+The following guidance applies only to devices ordered between May and July 2020, and those ordered after September 2020 where you have selected to have software and settings installed prior to delivery.
 
 DfE-provided settings are a ‘one-size fits all’ solution, designed to block harmful content. These settings are not configurable at a local level.
 
@@ -91,8 +91,8 @@ Local admin and BIOS passwords are needed to reset devices to factory default se
 
 For security, only the following people can view this information:
 
-* a key contact (the person that completed your device forecast for devices delivered between May and August) 
-* a technical contact (nominated when the devices were ordered between May and August)
+* a key contact (the person that completed your device forecast for devices delivered between May and July) 
+* a technical contact (nominated when the devices were ordered between May and July)
 * a support contact (someone given access to the Support Portal by your key contact)
 * anyone authorised to [order laptops and tablets](https://www.gov.uk/guidance/get-laptops-and-tablets-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) for disadvantaged children requiring access to remote education due to shielding or local coronavirus (COVID-19) restrictions 
  
@@ -132,7 +132,7 @@ Users may find that the login is defaulting to the ‘.\localadmin' account and 
 
 We’ve identified a fix for this bug. The end users – young people, children or their families – will need to:
 
-* [follow the steps](#if-no-local-user-password-has-been-set) follow the steps below to apply the .\localuser workaround and log in to the device
+* [follow the steps](#if-no-local-user-password-has-been-set) below to apply the .\localuser workaround and log in to the device
 * connect the device to the internet so it can receive the fix update – leave the device turned on, plugged in to the mains and connected to the internet for at least 3 hours for the fix to be applied 
 * restart the device – if the fix has been successful, the device should automatically login as “localuser”. If the user has previously set up a password they will need to enter it. If the device does not login automatically or the username is not “localuser” at the login prompt, then the fix has not been applied and the user may need to repeat the process
 
