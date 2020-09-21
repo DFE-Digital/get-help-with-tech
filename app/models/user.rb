@@ -124,7 +124,9 @@ class User < ApplicationRecord
                                       full_name: full_name,
                                       role: :contact,
                                       phone_number: telephone)
-    school.create_preorder_information!(who_will_order_devices: 'school', school_contact: contact)
+    school.create_preorder_information!(who_will_order_devices: 'school',
+                                        school_contact: contact,
+                                        status: 'school_contacted')
   end
 
 private

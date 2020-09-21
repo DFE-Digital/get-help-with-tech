@@ -22,6 +22,11 @@ RSpec.describe User, type: :model do
       expect(contact.role).to eql('contact')
       expect(contact.phone_number).to eql(user.telephone)
     end
+
+    it 'marks preorder#status as school_contacted' do
+      user.hybrid_setup!
+      expect(user.school.preorder_information.status).to eql('school_contacted')
+    end
   end
 
   describe '#is_mno_user?' do
