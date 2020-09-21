@@ -57,6 +57,13 @@ RSpec.describe Support::UsersController, type: :controller do
           expect(school.preorder_information).to be_present
           expect(school.preorder_information.who_will_order_devices).to eql('school')
         end
+
+        it 'devolves ordering to the school' do
+          perform_create!
+          responsible_body.reload
+
+          expect(responsible_body.who_will_order_devices).to eq('schools')
+        end
       end
     end
 

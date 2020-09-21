@@ -9,11 +9,7 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Device
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
       ResponsibleBody.transaction do
-        @responsible_body.update!(who_will_order_devices: @form.who_will_order)
-        @responsible_body.schools.each do |school|
-          school.preorder_information&.destroy!
-          school.create_preorder_information!(who_will_order_devices: @form.who_will_order.singularize)
-        end
+        @responsible_body.update_who_will_order_devices(@form.who_will_order)
       end
 
       event = WhoWillOrderEvent.new(responsible_body: @responsible_body)

@@ -30,6 +30,14 @@ class ResponsibleBody < ApplicationRecord
       .first
   end
 
+  def update_who_will_order_devices(who_will_order)
+    update!(who_will_order_devices: who_will_order)
+    schools.each do |school|
+      school.preorder_information&.destroy!
+      school.create_preorder_information!(who_will_order_devices: who_will_order.singularize)
+    end
+  end
+
   def who_will_order_devices_label
     case who_will_order_devices
     when 'school'
