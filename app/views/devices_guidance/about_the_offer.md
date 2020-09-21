@@ -37,9 +37,9 @@ Devices cannot be ordered when:
 
 ### Find out [how to order laptops and tablets](/devices/how-to-order) and [get the internet](/internet-access).
 
-## Laptops, tablets and 4G wireless routers provided between May and August 2020
+## Laptops, tablets and 4G wireless routers provided between May and July 2020
 
-DfE has already provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19) to local authorities and academy trusts between May and August 2020. 
+DfE has already provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19) to local authorities and academy trusts between May and July 2020. 
 
 These are being distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
 
