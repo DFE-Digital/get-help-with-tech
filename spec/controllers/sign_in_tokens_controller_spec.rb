@@ -44,7 +44,7 @@ RSpec.describe SignInTokensController, type: :controller do
       expect(EventNotificationsService).to have_received(:broadcast).with(mock_event)
     end
 
-    context 'when user is associated with RB and school' do
+    context 'when hybrid user is associated with RB and school' do
       let(:school) { create(:school) }
       let(:user) do
         create(:local_authority_user,
@@ -56,6 +56,21 @@ RSpec.describe SignInTokensController, type: :controller do
       it 'redirects them to the school journey' do
         delete :destroy, params: valid_token_params
         expect(response).to redirect_to('/school/privacy')
+      end
+
+      context 'when they have not accepted privacy policies' do
+        let(:user) do
+          create(:local_authority_user,
+                 :who_has_requested_a_magic_link,
+                 orders_devices: true,
+                 privacy_notice_seen_at: nil,
+                 school: school)
+        end
+
+        it 'redirects them to the school privacy policies' do
+          delete :destroy, params: valid_token_params
+          expect(response).to redirect_to('/school/privacy')
+        end
       end
     end
   end

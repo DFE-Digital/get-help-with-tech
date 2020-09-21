@@ -107,6 +107,10 @@ class User < ApplicationRecord
     responsible_body || school&.responsible_body
   end
 
+  def hybrid?
+    school_id && responsible_body_id
+  end
+
 private
 
   def cleansed_full_name
