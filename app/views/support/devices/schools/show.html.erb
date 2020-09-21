@@ -55,7 +55,7 @@
         <th scope="col" class="govuk-table__header">Full name</th>
         <th scope="col" class="govuk-table__header">Role</th>
         <th scope="col" class="govuk-table__header">Title</th>
-        <th scope="col" class="govuk-table__header">Actions</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Actions</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -65,7 +65,7 @@
           <td class="govuk-table__cell"><%= contact.full_name %></td>
           <td class="govuk-table__cell"><%= contact.role %></td>
           <td class="govuk-table__cell"><%= contact.title %></td>
-          <td class="govuk-table__cell"><%= govuk_link_to 'Change', edit_support_devices_school_contact_path(school_urn: @school.urn, id: contact.id) %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><%= govuk_link_to 'Change', edit_support_devices_school_contact_path(school_urn: @school.urn, id: contact.id) %></td>
         </tr>
       <% end %>
     </tbody>
