@@ -7,7 +7,7 @@ class Computacenter::UserChangeGenerator
 
   def call
     return if version.nil?
-    
+
     case type_of_update
     when 'New'
       return unless after_user.relevant_to_computacenter?
