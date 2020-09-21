@@ -5,7 +5,7 @@ When [placing an order](/start), schools, academy trusts and local authorities c
 * Google Chromebook
 * Apple iPad
 
-All devices provided before to August 2020 were delivered with [safeguarding and mobile device management (MDM) software](/devices/safeguarding-for-device-users) installed.
+All devices provided before September 2020 were delivered with [safeguarding and mobile device management (MDM) software](/devices/safeguarding-for-device-users) installed.
 
 For future orders, Microsoft devices can be supplied with factory settings to allow schools, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to set devices up with content filtering and MDM software before delivery.
 
