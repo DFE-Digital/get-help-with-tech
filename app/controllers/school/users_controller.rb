@@ -12,11 +12,32 @@ class School::UsersController < School::BaseController
     if @user.persisted?
       redirect_to school_users_path
     else
+      @user = present(@user)
       render :new, status: :unprocessable_entity
     end
   end
 
+  def edit
+    @user = present(@school.users.find(params[:id]))
+  end
+
+  def update
+    @user = @school.users.find(params[:id])
+
+    if @user.update(user_params)
+      flash[:success] = t(:success, scope: %w[school users])
+      redirect_to school_users_path
+    else
+      @user = present(@user)
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
 private
+
+  def present(user)
+    SchoolUserPresenter.new(user)
+  end
 
   def user_params
     params.require(:user).permit(
