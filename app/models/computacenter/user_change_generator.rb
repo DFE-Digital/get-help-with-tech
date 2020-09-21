@@ -19,14 +19,27 @@ class Computacenter::UserChangeGenerator
 
     return if (version.changeset.keys & fields_to_monitor).empty?
 
-    Computacenter::UserChange.create!(user_change_attributes.merge(original_csv_fields))
+    Computacenter::UserChange.create!(user_change_attributes)
   end
 
 private
 
+  def strip_hybrid_fields!(hash)
+    if before_user.hybrid? || after_user.hybrid?
+      hash.delete(:school)
+      hash.delete(:school_urn)
+      hash.delete(:cc_ship_to_number)
+    end
+  end
+
   def user_change_attributes
+    hash = meta_csv_attributes.merge(current_csv_fields).merge(original_csv_fields)
+    strip_hybrid_fields!(hash)
+    hash
+  end
+
+  def current_csv_fields
     {
-      user_id: version.item_id,
       first_name: after_user.first_name,
       last_name: after_user.last_name,
       email_address: after_user.email_address,
@@ -37,6 +50,12 @@ private
       school: after_user.school&.name,
       school_urn: after_user.school&.urn,
       cc_ship_to_number: after_user.school&.computacenter_reference,
+    }
+  end
+
+  def meta_csv_attributes
+    {
+      user_id: version.item_id,
       updated_at_timestamp: version.created_at,
       type_of_update: type_of_update,
     }
