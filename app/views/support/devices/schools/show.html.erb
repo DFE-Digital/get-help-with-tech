@@ -8,69 +8,69 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">Devices pilot</span>
       <%= @school.name %>
     </h1>
-
-    <%= render Support::SchoolDetailsSummaryListComponent.new(school: @school) %>
-
-    <h2 class="govuk-heading-l govuk-!-margin-top-8">Users</h2>
-
-    <% if @users.present? %>
-      <table id="responsible-body-users" class="govuk-table">
-        <caption class="govuk-table__caption">School users</caption>
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Email address</th>
-            <th scope="col" class="govuk-table__header">Full name</th>
-            <th scope="col" class="govuk-table__header">Sign-in count</th>
-            <th scope="col" class="govuk-table__header">Last sign in</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% @users.each do |user| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= user.email_address %></td>
-              <td class="govuk-table__cell"><%= user.full_name %></td>
-              <td class="govuk-table__cell"><%= user.sign_in_count %></td>
-              <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p class="govuk-body">None</p>
-    <% end %>
-
-    <h2 class="govuk-heading-l govuk-!-margin-top-8">Contacts</h2>
-
-    <% if @contacts.present? %>
-      <table id="contacts" class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Email address</th>
-            <th scope="col" class="govuk-table__header">Full name</th>
-            <th scope="col" class="govuk-table__header">Role</th>
-            <th scope="col" class="govuk-table__header">Title</th>
-            <th scope="col" class="govuk-table__header">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% @contacts.each do |contact| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= contact.email_address %></td>
-              <td class="govuk-table__cell"><%= contact.full_name %></td>
-              <td class="govuk-table__cell"><%= contact.role %></td>
-              <td class="govuk-table__cell"><%= contact.title %></td>
-              <td class="govuk-table__cell"><%= link_to 'Change', edit_support_devices_school_contact_path(school_urn: @school.urn, id: contact.id) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p class="govuk-body">None</p>
-    <% end %>
   </div>
 </div>
+
+<%= render Support::SchoolDetailsSummaryListComponent.new(school: @school) %>
+
+<% if @users.present? %>
+  <table id="responsible-body-users" class="govuk-table govuk-!-margin-top-6">
+    <caption class="govuk-table__caption govuk-heading-l">Users</caption>
+    <caption class="govuk-table__caption">School users</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Email address</th>
+        <th scope="col" class="govuk-table__header">Full name</th>
+        <th scope="col" class="govuk-table__header">Sign-in count</th>
+        <th scope="col" class="govuk-table__header">Last sign in</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @users.each do |user| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= user.email_address %></td>
+          <td class="govuk-table__cell"><%= user.full_name %></td>
+          <td class="govuk-table__cell"><%= user.sign_in_count %></td>
+          <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h2 class="govuk-heading-l">Users</h2>
+  <p class="govuk-body">None</p>
+<% end %>
+
+<% if @contacts.present? %>
+  <table id="contacts" class="govuk-table govuk-!-margin-top-6">
+    <caption class="govuk-table__caption govuk-heading-l">Contacts</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Email address</th>
+        <th scope="col" class="govuk-table__header">Full name</th>
+        <th scope="col" class="govuk-table__header">Role</th>
+        <th scope="col" class="govuk-table__header">Title</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @contacts.each do |contact| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= contact.email_address %></td>
+          <td class="govuk-table__cell"><%= contact.full_name %></td>
+          <td class="govuk-table__cell"><%= contact.role %></td>
+          <td class="govuk-table__cell"><%= contact.title %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><%= govuk_link_to 'Change', edit_support_devices_school_contact_path(school_urn: @school.urn, id: contact.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h2 class="govuk-heading-l">Contacts</h2>
+  <p class="govuk-body">None</p>
+<% end %>
