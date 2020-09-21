@@ -314,9 +314,37 @@ RSpec.describe User, type: :model do
           expect { create(:user, :has_seen_privacy_notice, orders_devices: true) }.to change(Computacenter::UserChange, :count).by(1)
         end
 
-        it 'persists correct data' do
-          responsible_body = create(:trust)
-          user = create(:school_user, responsible_body: responsible_body, orders_devices: true)
+        it 'persists correct data for RB user' do
+          user = create(:trust_user, orders_devices: true)
+          user_change = Computacenter::UserChange.last
+
+          expect(user_change.user_id).to eql(user.id)
+          expect(user_change.first_name).to eql(user.first_name)
+          expect(user_change.last_name).to eql(user.last_name)
+          expect(user_change.email_address).to eql(user.email_address)
+          expect(user_change.telephone).to eql(user.telephone)
+          expect(user_change.responsible_body).to eql(user.effective_responsible_body.name)
+          expect(user_change.responsible_body_urn).to eql(user.effective_responsible_body.computacenter_identifier)
+          expect(user_change.cc_sold_to_number).to eql(user.effective_responsible_body.computacenter_reference)
+          expect(user_change.school).to be_blank
+          expect(user_change.school_urn).to be_blank
+          expect(user_change.cc_ship_to_number).to be_blank
+          expect(user_change.updated_at_timestamp).to eql(user.created_at)
+          expect(user_change.type_of_update).to eql('New')
+          expect(user_change.original_email_address).to be_nil
+          expect(user_change.original_first_name).to be_nil
+          expect(user_change.original_last_name).to be_nil
+          expect(user_change.original_telephone).to be_nil
+          expect(user_change.original_responsible_body).to be_nil
+          expect(user_change.original_responsible_body_urn).to be_nil
+          expect(user_change.original_cc_sold_to_number).to be_nil
+          expect(user_change.original_school).to be_nil
+          expect(user_change.original_school_urn).to be_nil
+          expect(user_change.original_cc_ship_to_number).to be_nil
+        end
+
+        it 'persists correct data for school user' do
+          user = create(:school_user, orders_devices: true)
           user_change = Computacenter::UserChange.last
 
           expect(user_change.user_id).to eql(user.id)
@@ -343,6 +371,20 @@ RSpec.describe User, type: :model do
           expect(user_change.original_school_urn).to be_nil
           expect(user_change.original_cc_ship_to_number).to be_nil
         end
+      end
+
+      it 'persists correct data for hybrid user' do
+        school = create(:school)
+        responsible_body = create(:trust, schools: [school])
+        create(:school_user,
+               responsible_body: responsible_body,
+               school: school,
+               orders_devices: true)
+
+        user_change = Computacenter::UserChange.last
+
+        expect(user_change.responsible_body).to be_present
+        expect(user_change.school).to be_blank
       end
 
       context 'not computacenter relevant' do
@@ -461,15 +503,13 @@ RSpec.describe User, type: :model do
           end
         end
 
-        context 'when associations are changed' do
+        context 'when RB association is changed' do
           let!(:other_responsible_body) { create(:local_authority) }
           let!(:original_responsible_body) { user.responsible_body }
-          let!(:original_school) { create(:school) }
-          let!(:other_school) { create(:school) }
-          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: original_school) }
+          let!(:user) { create(:trust_user, :relevant_to_computacenter) }
 
           def perform_change!
-            user.update(responsible_body: other_responsible_body, school: other_school)
+            user.update(responsible_body: other_responsible_body)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -483,6 +523,34 @@ RSpec.describe User, type: :model do
             expect(user_change.original_responsible_body).to eql(original_responsible_body.name)
             expect(user_change.original_responsible_body_urn).to eql(original_responsible_body.computacenter_identifier)
             expect(user_change.original_cc_sold_to_number).to eql(original_responsible_body.computacenter_reference)
+          end
+
+          it 'stores correct current fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
+
+            expect(user_change.responsible_body).to eql(other_responsible_body.name)
+            expect(user_change.responsible_body_urn).to eql(other_responsible_body.computacenter_identifier)
+            expect(user_change.cc_sold_to_number).to eql(other_responsible_body.computacenter_reference)
+          end
+        end
+
+        context 'when school association is changed' do
+          let!(:original_school) { create(:school) }
+          let!(:other_school) { create(:school) }
+          let!(:user) { create(:school_user, :relevant_to_computacenter, school: original_school) }
+
+          def perform_change!
+            user.update(school: other_school)
+          end
+
+          it 'creates a Computacenter::UserChange' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+          end
+
+          it 'stores correct original fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
 
             expect(user_change.original_school).to eql(original_school.name)
             expect(user_change.original_school_urn).to eql(original_school.urn.to_s)
@@ -493,23 +561,18 @@ RSpec.describe User, type: :model do
             perform_change!
             user_change = Computacenter::UserChange.last
 
-            expect(user_change.responsible_body).to eql(other_responsible_body.name)
-            expect(user_change.responsible_body_urn).to eql(other_responsible_body.computacenter_identifier)
-            expect(user_change.cc_sold_to_number).to eql(other_responsible_body.computacenter_reference)
-
             expect(user_change.school).to eql(other_school.name)
             expect(user_change.school_urn).to eql(other_school.urn.to_s)
             expect(user_change.cc_ship_to_number).to eql(other_school.computacenter_reference)
           end
         end
 
-        context 'when associations are added' do
+        context 'when RB association is added' do
           let!(:responsible_body) { create(:local_authority) }
-          let!(:school) { create(:school) }
-          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil, responsible_body: nil) }
+          let!(:user) { create(:trust_user, :relevant_to_computacenter, responsible_body: nil) }
 
           def perform_change!
-            user.update(responsible_body: responsible_body, school: school)
+            user.update(responsible_body: responsible_body)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -523,10 +586,6 @@ RSpec.describe User, type: :model do
             expect(user_change.original_responsible_body).to be_nil
             expect(user_change.original_responsible_body_urn).to be_nil
             expect(user_change.original_cc_sold_to_number).to be_nil
-
-            expect(user_change.original_school).to be_nil
-            expect(user_change.original_school_urn).to be_nil
-            expect(user_change.original_cc_ship_to_number).to be_nil
           end
 
           it 'stores correct current fields' do
@@ -536,6 +595,33 @@ RSpec.describe User, type: :model do
             expect(user_change.responsible_body).to eql(responsible_body.name)
             expect(user_change.responsible_body_urn).to eql(responsible_body.computacenter_identifier)
             expect(user_change.cc_sold_to_number).to eql(responsible_body.computacenter_reference)
+          end
+        end
+
+        context 'when school association is added' do
+          let!(:school) { create(:school) }
+          let!(:user) { create(:school_user, :relevant_to_computacenter, school: nil) }
+
+          def perform_change!
+            user.update(school: school)
+          end
+
+          it 'creates a Computacenter::UserChange' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+          end
+
+          it 'stores correct original fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
+
+            expect(user_change.original_school).to be_nil
+            expect(user_change.original_school_urn).to be_nil
+            expect(user_change.original_cc_ship_to_number).to be_nil
+          end
+
+          it 'stores correct current fields' do
+            perform_change!
+            user_change = Computacenter::UserChange.last
 
             expect(user_change.school).to eql(school.name)
             expect(user_change.school_urn).to eql(school.urn.to_s)
