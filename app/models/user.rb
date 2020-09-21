@@ -107,6 +107,10 @@ class User < ApplicationRecord
     responsible_body || school&.responsible_body
   end
 
+  def relevant_to_computacenter?
+    seen_privacy_notice? && orders_devices?
+  end
+
 private
 
   def cleansed_full_name
