@@ -6,13 +6,12 @@ class Support::UsersController < Support::BaseController
 
   def create
     @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
-    @user = User.new(user_params.merge(responsible_body: @responsible_body,
-                                       approved_at: Time.zone.now,
-                                       orders_devices: true))
-
-    if @user.valid?
-      @user.save!
-      @user.hybrid_setup!
+    @user = CreateUserService.invite_responsible_body_user(
+      user_params.merge(responsible_body_id: params[:responsible_body_id]),
+    )
+    # If anything goes wrong, the service will return a non-persisted user
+    # object so that we can inspect the errors
+    if @user.persisted?
       redirect_to return_path
     else
       render :new, status: :unprocessable_entity

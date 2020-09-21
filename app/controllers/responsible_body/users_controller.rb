@@ -12,14 +12,12 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
   end
 
   def create
-    @rb_user = @responsible_body.users.new(
-      user_params.merge(responsible_body_id: @responsible_body.id,
-                        orders_devices: true),
+    @rb_user = CreateUserService.invite_responsible_body_user(
+      user_params.merge(responsible_body_id: @responsible_body.id),
     )
-
-    if @rb_user.valid?
-      @rb_user.save!
-      InviteResponsibleBodyUserMailer.with(user: @rb_user).invite_user_email.deliver_later
+    # If anything goes wrong, the service will return a non-persisted user
+    # object so that we can inspect the errors
+    if @rb_user.persisted?
       flash[:success] = I18n.t(:success, scope: %i[responsible_body users create], email_address: @rb_user.email_address)
       EventNotificationsService.broadcast(InviteEvent.new(user: @user))
       redirect_to responsible_body_users_path

@@ -8,10 +8,8 @@ class School::UsersController < School::BaseController
   end
 
   def create
-    @user = @school.users.new(user_params)
-    if @user.valid?
-      @user.save!
-      InviteSchoolUserMailer.with(user: @user).nominated_contact_email.deliver_later
+    @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id))
+    if @user.persisted?
       redirect_to school_users_path
     else
       render :new, status: :unprocessable_entity
