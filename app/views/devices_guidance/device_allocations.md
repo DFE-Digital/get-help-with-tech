@@ -1,6 +1,6 @@
 ## How devices are allocated
 
-### Laptops and tablets for schools, academy trusts and local authorities after August 2020
+### Laptops and tablets for schools, academy trusts and local authorities from September 2020
 
 The number of devices available to order through the [Get help with technology service](/start) reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
 
