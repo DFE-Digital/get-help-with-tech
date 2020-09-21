@@ -5,6 +5,7 @@ class Support::UsersController < Support::BaseController
   end
 
   def create
+    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = CreateUserService.invite_responsible_body_user(
       user_params.merge(responsible_body_id: params[:responsible_body_id]),
     )
