@@ -10,11 +10,11 @@ class Computacenter::UserChangeGenerator
 
     case type_of_update
     when 'New'
-      return unless after_user.seen_privacy_notice? && after_user.orders_devices?
+      return unless after_user.relevant_to_computacenter?
     when 'Change'
-      return unless after_user.seen_privacy_notice? && after_user.orders_devices?
+      return unless after_user.relevant_to_computacenter?
     when 'Remove'
-      return unless before_user.seen_privacy_notice? && before_user.orders_devices?
+      return unless before_user.relevant_to_computacenter?
     end
 
     return if (version.changeset.keys & fields_to_monitor).empty?
@@ -68,11 +68,17 @@ private
     case type_of_update
     when 'New'
       {}
-    when 'Change', 'Remove'
+    when 'Change'
       original = version.changeset.transform_values(&:first).to_h
-      original_filtered = original.filter { |k, _| fields_to_diff.include?(k) }.select { |_k, v| v }
-      original_filtered
+      diffable_attributes_and_values(original)
+    when 'Remove'
+      original = version.object_deserialized
+      diffable_attributes_and_values(original)
     end
+  end
+
+  def diffable_attributes_and_values(user_hash)
+    user_hash.filter { |k, _| fields_to_diff.include?(k) }.select { |_k, v| v }
   end
 
   def original_csv_fields
@@ -128,9 +134,7 @@ private
     @before_user ||= case version.event
                      when 'create'
                        User.new
-                     when 'update'
-                       User.new(version.object_deserialized)
-                     when 'destroy'
+                     when 'update', 'destroy'
                        User.new(version.object_deserialized)
                      end
   end
@@ -140,19 +144,18 @@ private
   end
 
   def after_user_attributes
-    case version.event
-    when 'create'
+    if version.event == 'create'
       version.changeset.transform_values(&:last)
-    when 'update'
-      version.object_deserialized.merge(version.changeset.transform_values(&:last))
-    when 'destroy'
+    elsif version.event == 'destroy' || version.changeset['orders_devices'] == [true, false]
       {}
+    elsif version.event == 'update'
+      version.object_deserialized.merge(version.changeset.transform_values(&:last))
     end
   end
 
   def type_of_update
     if Computacenter::UserChange.where(user_id: (before_user.id || after_user.id)).exists?
-      if version.event == 'destroy'
+      if is_removal?
         'Remove'
       else
         'Change'
@@ -160,5 +163,13 @@ private
     else
       'New'
     end
+  end
+
+  def is_removal?
+    version.event == 'destroy' || (
+      version.event == 'update' && \
+      before_user.relevant_to_computacenter? && \
+      !after_user.relevant_to_computacenter?
+    )
   end
 end

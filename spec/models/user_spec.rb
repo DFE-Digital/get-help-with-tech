@@ -424,6 +424,33 @@ RSpec.describe User, type: :model do
           end
         end
 
+        context 'when orders_devices is updated from true to false' do
+          let(:perform_change!) do
+            user.update(orders_devices: false)
+          end
+
+          it 'creates a Computacenter::UserChange of type Remove' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.type_of_update).to eql('Remove')
+          end
+
+          it 'sets all current fields to blank' do
+            perform_change!
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.email_address).to be_nil
+          end
+
+          it 'sets all original fields' do
+            perform_change!
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.original_email_address).to eql(user.email_address)
+          end
+        end
+
         context 'when none computacenter significant field updated' do
           def perform_change!
             user.update(sign_in_token: 'abc')
