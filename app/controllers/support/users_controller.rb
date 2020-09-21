@@ -12,6 +12,7 @@ class Support::UsersController < Support::BaseController
 
     if @user.valid?
       @user.save!
+      @user.hybrid_setup!
       redirect_to return_path
     else
       render :new, status: :unprocessable_entity

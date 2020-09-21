@@ -1,6 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe '#hybrid_setup!' do
+    let!(:responsible_body) { create(:trust, schools: [school]) }
+    let(:school) { create(:school) }
+
+    subject(:user) do
+      create(:user,
+             orders_devices: true,
+             school: school,
+             responsible_body: responsible_body)
+    end
+
+    it 'uses this user as the school contact' do
+      user.hybrid_setup!
+      contact = user.school.preorder_information.school_contact
+
+      expect(contact).to be_present
+      expect(contact.email_address).to eql(user.email_address)
+      expect(contact.full_name).to eql(user.full_name)
+      expect(contact.role).to eql('contact')
+      expect(contact.phone_number).to eql(user.telephone)
+    end
+
+    it 'marks preorder#status as school_contacted' do
+      user.hybrid_setup!
+      expect(user.school.preorder_information.status).to eql('school_contacted')
+    end
+  end
+
   describe '#is_mno_user?' do
     it 'is true when the user is from an MNO participating in the pilot' do
       user = build(:user, mobile_network: build(:mobile_network))
