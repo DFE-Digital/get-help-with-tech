@@ -13,15 +13,19 @@ private
     super.except(:action_path, :action).merge(change_path: support_devices_school_enable_orders_path(school_urn: @school.urn))
   end
 
-  def school_contact_row_if_contact_present
-    super
-      .tap do |rows|
-        if rows.present? && @school&.preorder_information&.school_will_be_contacted?
-          rows.first.merge!(
+  def school_contact_row
+    super.except(:change_path, :action)
+      .tap do |row|
+        if @school&.preorder_information&.school_will_be_contacted?
+          row.merge!(
             action_path: support_devices_school_invite_path(school_urn: @school.urn),
             action: 'Invite',
           )
         end
       end
+  end
+
+  def chromebook_rows_if_needed
+    super.map { |row| row.except(:change_path, :action, :action_path) }
   end
 end

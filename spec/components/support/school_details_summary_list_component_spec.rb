@@ -59,8 +59,11 @@ describe Support::SchoolDetailsSummaryListComponent do
                who_will_order_devices: :school,
                school_contact: headteacher)
 
+        school.preorder_information.school_contacted!
+
         expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
         expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+        expect(result.css('.govuk-summary-list__row')[5].css('a')).not_to be_present
       end
     end
 
@@ -114,10 +117,14 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
     end
 
-    it 'shows the chromebook details with links to change it' do
+    it 'shows the chromebook details' do
       expect(result.css('.govuk-summary-list__row')[5].text).to include('Yes, they will need Chromebooks')
       expect(result.css('.govuk-summary-list__row')[6].text).to include('school.domain.org')
       expect(result.css('.govuk-summary-list__row')[7].text).to include('admin@recovery.org')
+
+      expect(result.css('.govuk-summary-list__row')[5].css('a')).not_to be_present
+      expect(result.css('.govuk-summary-list__row')[6].css('a')).not_to be_present
+      expect(result.css('.govuk-summary-list__row')[7].css('a')).not_to be_present
     end
 
     it 'does not show the school contact even if the school contact is set' do
