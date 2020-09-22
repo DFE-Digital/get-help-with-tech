@@ -91,18 +91,6 @@
           <li>Wi-Fi hotspots are open to all existing customers, including those on Pay-as-you-go. Customers on Pay-as-you-go will need to have a minimum of £5 credit. Instructions to download the app and find their nearest hotspot can be found by going to <%= govuk_link_to 'www.virginmedia.com/wifiapp', 'https://www.virginmedia.com/shop/virgin-media-connect-app-mobile' %>.</li>
         </ul>
       <% end %>
-
-      <%= component.slot(:section, title: 'Another provider') do %>
-        <h4 class="govuk-heading-s">Providers that might join at a later stage</h4>
-        <p class="govuk-body">The following providers are not yet on board, but it’s possible they’ll join at a later stage.
-        It’s still worth gathering information from account holders who use these networks. If these operators join the scheme, we’ll update the service.</p>
-
-        <ul class="govuk-list govuk-list--bullet">
-          <li>O2</li>
-          <li>Tesco Mobile</li>
-          <li>Sky Mobile</li>
-        </ul>
-      <% end %>
     <% end %>
 
     <%= render partial: 'shared/guide_navigation' %>
