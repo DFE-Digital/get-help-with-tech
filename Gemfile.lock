@@ -514,7 +514,6 @@ DEPENDENCIES
   timecop
   travis
   tzinfo-data
-  view_component
   web-console (>= 3.3.0)
   webdrivers (~> 4.3)
   webmock

@@ -74,9 +74,6 @@ gem 'notifications-ruby-client'
 # parsing XLSX spreadsheets for bulk extra data requests
 gem 'rubyXL'
 
-# Reusable view code
-gem 'view_component'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
