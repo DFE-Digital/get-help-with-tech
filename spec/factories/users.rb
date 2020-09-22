@@ -46,6 +46,12 @@ FactoryBot.define do
       approved
     end
 
+    factory :hybrid_user do
+      association :responsible_body, factory: %i[trust in_connectivity_pilot]
+      school
+      orders_devices { true }
+    end
+
     factory :school_user do
       school
       orders_devices { false }
