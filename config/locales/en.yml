@@ -310,6 +310,7 @@
             school_or_rb_domain:
               blank: Enter a domain in the right format, like myschool.org.uk
               invalid: Enter a domain in the right format, like myschool.org.uk
+              invalid_domain: Enter a domain registered for G Suite for Education
             recovery_email_address:
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Enter an email address in the correct format, like name@example.com

@@ -16,6 +16,7 @@ RSpec.feature 'Change school Chromebook information' do
 
     context 'when I visit the school details and click on the Chromebook information "Change" link' do
       before do
+        allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
         click_on 'Check your school details'
         first('a', text: 'Change').click
       end
