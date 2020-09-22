@@ -144,7 +144,7 @@ Rails.application.routes.draw do
         get '/allocation/edit', to: 'allocation#edit'
         patch '/allocation', to: 'allocation#update'
       end
-      resources :school_bulk_allocations, only: %i[new create]
+      resources :school_bulk_allocations, only: %i[new create], path: 'school-bulk-allocations'
     end
     resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
       resources :users, only: %i[new create]
