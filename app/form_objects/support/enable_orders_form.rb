@@ -7,7 +7,6 @@ class Support::EnableOrdersForm
 
   validates :order_state, inclusion: { in: School.order_states }
   validates :cap, numericality: { only_integer: true, greater_than: 0 }, if: :cap_required?
-  validates_with OrderStateAndCapValidator
 
   before_validation :override_cap_according_to_order_state!
 

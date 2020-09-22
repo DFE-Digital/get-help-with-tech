@@ -52,10 +52,8 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
                             school: school)
       end
 
-      it 'fails validation' do
-        expect(allocation.valid?).to be_falsey
-        expect(allocation.errors).to have_key(:cap)
-        expect(allocation.errors[:cap]).to include('can’t be less than devices ordered')
+      it 'passes validation' do
+        expect(allocation.valid?).to be_truthy
       end
     end
 

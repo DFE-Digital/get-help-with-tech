@@ -168,6 +168,29 @@ RSpec.describe Computacenter::API::CapUsageController do
       end
     end
 
+    context 'when the used cap is greater than cap amount (see Trello card #716)' do
+      let(:cap_usage_update_packet) do
+        <<~XML
+          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="10" usedCap="37"/>
+          </CapUsage>
+        XML
+      end
+
+      let(:school) { create(:school, computacenter_reference: '81060874') }
+
+      before do
+        create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 0)
+      end
+
+      it 'is treated a valid payload' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        expect(response).to have_http_status(:ok)
+        expect(school.reload.allocation_for_type!(:std_device).devices_ordered).to eq(37)
+      end
+    end
+
     context 'when all updates failed' do
       it 'responds with :unprocessable_entity status' do
         # no schools are seeded in the DB so there will be a data mismatch for all records
