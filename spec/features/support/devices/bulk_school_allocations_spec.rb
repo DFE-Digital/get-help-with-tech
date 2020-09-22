@@ -11,7 +11,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
     then_i_see_the_full_allocations_page
   end
 
-  scenario 'submitting urns for schools that need their full allocation' do
+  scenario 'submitting URNs for schools that need their full allocation' do
     given_i_am_signed_in_as_a_support_user
     when_i_navigate_to_the_full_allocations_page
     and_i_enter_my_school_urns
@@ -19,7 +19,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
     then_i_see_a_summary_page
   end
 
-  scenario 'submitting urns for schools that includes bad data' do
+  scenario 'submitting URNs for schools that includes bad data' do
     given_i_am_signed_in_as_a_support_user
     when_i_navigate_to_the_full_allocations_page
     and_i_enter_my_school_urns_with_bad_data

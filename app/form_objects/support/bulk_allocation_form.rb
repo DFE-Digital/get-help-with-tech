@@ -8,6 +8,6 @@ class Support::BulkAllocationForm
   def urn_list
     return [] if school_urns.empty?
 
-    school_urns.split("\r\n").reject(&:blank?)
+    school_urns.split("\r\n").map(&:strip).reject(&:blank?)
   end
 end
