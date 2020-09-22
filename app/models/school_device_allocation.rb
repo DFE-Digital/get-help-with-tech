@@ -3,7 +3,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to  :created_by_user, class_name: 'User', optional: true
   belongs_to  :last_updated_by_user, class_name: 'User', optional: true
 
-  validate :cap_lte_allocation
+  validates_with CapAndAllocationValidator
 
   enum device_type: {
     'coms_device': 'coms_device',
