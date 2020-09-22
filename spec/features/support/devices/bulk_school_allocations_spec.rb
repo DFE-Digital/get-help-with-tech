@@ -55,7 +55,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   def and_i_click_the_enable_full_allocations_button
     click_on 'Enable full allocations'
   end
-  
+
   def then_i_see_a_summary_page
     expect(page).to have_selector('h1', text: 'Bulk allocation summary')
     expect(page).to have_text("#{schools.count} allocated successfully")
@@ -68,7 +68,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   def then_i_see_a_summary_page_with_error_messages
     expect(page).to have_selector('h1', text: 'Bulk allocation summary')
     expect(page).to have_text("#{schools.count} allocated successfully")
-    expect(page).to have_text("1 error")
+    expect(page).to have_text('1 error')
     schools.each do |school|
       expect(page).to have_selector('td', text: school.urn)
       expect(page).to have_selector('td', text: school.name)
