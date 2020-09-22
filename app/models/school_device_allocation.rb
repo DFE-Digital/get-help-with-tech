@@ -3,7 +3,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to  :created_by_user, class_name: 'User', optional: true
   belongs_to  :last_updated_by_user, class_name: 'User', optional: true
 
-  validates_with OrderStateAndCapValidator
+  validates_with CapAndAllocationValidator
 
   enum device_type: {
     'coms_device': 'coms_device',
@@ -42,6 +42,14 @@ class SchoolDeviceAllocation < ApplicationRecord
       allocation.to_i
     else # specific circumstances
       given_cap
+    end
+  end
+
+private
+
+  def cap_lte_allocation
+    if cap > allocation
+      errors.add(:cap, :lte_allocation, allocation: allocation)
     end
   end
 end

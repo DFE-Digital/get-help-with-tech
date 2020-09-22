@@ -47,6 +47,18 @@ RSpec.feature 'Enabling orders for a school from the support area' do
           expect(page).to have_field('How many devices can they order?')
         end
 
+        context 'filling in an invalid number and clicking Continue' do
+          before do
+            fill_in('How many devices can they order?', with: 51)
+            click_on 'Continue'
+          end
+
+          it 'shows me an error' do
+            expect(page).to have_http_status(:unprocessable_entity)
+            expect(page).to have_text('Cap cannot be more than their current allocation of 50')
+          end
+        end
+
         context 'filling in a valid number and clicking Continue' do
           let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, payload_id: 'abc123') }
           let!(:api_already_active) { FeatureFlag.active?(:computacenter_cap_update_api) }
