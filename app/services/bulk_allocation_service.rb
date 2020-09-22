@@ -10,17 +10,15 @@ class BulkAllocationService
     @urn_count = urn_list.count
 
     urn_list.each do |urn|
-      begin
-        school = School.find_by(urn: urn)
-        if school
-          update_cap_to_full_allocation!(school)
-          add_success(school)
-        else
-          add_failure(urn, 'URN not found')
-        end
-      rescue => e
-        add_failure(urn, e.message)
+      school = School.find_by(urn: urn)
+      if school
+        update_cap_to_full_allocation!(school)
+        add_success(school)
+      else
+        add_failure(urn, 'URN not found')
       end
+    rescue StandardError => e
+      add_failure(urn, e.message)
     end
     self
   end

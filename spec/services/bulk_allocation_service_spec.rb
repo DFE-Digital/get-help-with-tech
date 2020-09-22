@@ -14,7 +14,7 @@ RSpec.describe BulkAllocationService do
     end
 
     it 'enables the schools to order their full allocation' do
-      service.unlock!(schools.map { |s| s.urn })
+      service.unlock!(schools.map(&:urn))
       schools.each do |school|
         school.reload
         expect(school.std_device_allocation.cap).to eq(school.std_device_allocation.allocation)
@@ -23,11 +23,11 @@ RSpec.describe BulkAllocationService do
     end
 
     it 'keeps track of successes and failures' do
-      service.unlock!(schools.map { |s| s.urn }.append('32ew'))
+      service.unlock!(schools.map(&:urn).append('32ew'))
       expect(service.success_count).to eq(schools.count)
       expect(service.failure_count).to eq(1)
-      expect(service.success.map { |s| s[:urn] }).to eq(schools.map { |s| s.urn })
-      expect(service.failures).to eq [ { urn: '32ew', message: 'URN not found' } ]
+      expect(service.success.map { |s| s[:urn] }).to eq(schools.map(&:urn))
+      expect(service.failures).to eq [{ urn: '32ew', message: 'URN not found' }]
     end
   end
 end
