@@ -5,6 +5,13 @@ Rails.application.routes.draw do
 
   get '/start', to: 'pages#start'
 
+  get '/get-laptops-and-tablets', to: 'landing_pages#get_laptops_and_tablets', as: :get_devices_landing_page
+  get '/get-support', to:  'landing_pages#get_support', as: :get_support_landing_page
+  get '/get-internet-access', to:  'landing_pages#get_internet_access', as: :get_internet_access_landing_page
+  get '/digital-platforms', to:  'landing_pages#digital_platforms', as: :digital_platforms_landing_page
+  get '/EdTech-demonstrator-programme', to:  'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
+
+
   get '/about-bt-wifi', to: 'pages#about_bt_wifi'
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'

@@ -1,0 +1,1 @@
+# Get laptops and tablets
