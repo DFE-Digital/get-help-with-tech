@@ -1,4 +1,6 @@
 class Support::Devices::SchoolsController < Support::BaseController
+  def index; end
+
   def show
     @school = School.find_by!(urn: params[:urn])
     @users = @school.users

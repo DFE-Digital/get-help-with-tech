@@ -37,6 +37,7 @@ class NavComponent < ViewComponent::Base
     [
       NavLinkComponent.new(title: 'Performance', url: support_devices_service_performance_path),
       NavLinkComponent.new(title: 'RBs', url: support_devices_responsible_bodies_path),
+      NavLinkComponent.new(title: 'Full allocations', url: new_support_devices_school_bulk_allocation_path),
     ]
   end
 
