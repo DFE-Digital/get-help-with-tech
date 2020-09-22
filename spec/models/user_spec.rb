@@ -425,7 +425,7 @@ RSpec.describe User, type: :model do
       end
 
       context 'already computacenter relevant' do
-        let!(:user) { create(:trust_user, :relevant_to_computacenter) }
+        let!(:user) { create(:trust_user, :relevant_to_computacenter, full_name: 'Jane Smith') }
 
         context 'single field is changed' do
           let!(:original_email) { user.email_address }
