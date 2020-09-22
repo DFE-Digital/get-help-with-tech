@@ -16,151 +16,94 @@
 
     <h3 class="govuk-heading-m" id="offer-details">Offer details</h3>
 
-    <div class="govuk-accordion" data-module="govuk-accordion" id="network-providers">
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-1">
-              EE
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-1" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-1">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>The recipient will need to have been an EE customer for the last 3 months.</li>
-            <li>The recipient will get 20GB of additional data per month until 31 December.</li>
-            <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
-            <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-            <li>EE will aim to process the request within 14 days.</li>
-            <li>EE will support the first 60,000 eligible customers who are identified via this scheme.</li>
-          </ul>
+    <%= render GovukComponent::Accordion.new(id: 'network-providers') do |component| %>
+      <%= component.slot(:section, title: 'EE') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The recipient will need to have been an EE customer for the last 3 months.</li>
+          <li>The recipient will get 20GB of additional data per month until 31 December.</li>
+          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
+          <li>EE will aim to process the request within 14 days.</li>
+          <li>EE will support the first 60,000 eligible customers who are identified via this scheme.</li>
+        </ul>
 
-          <h5 class="govuk-heading-s">For EE Pay Monthly customers</h5>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>This is available for customers with an active Pay Monthly plan.</li>
-            <li>This offer is only available once.</li>
-            <li>Customers must have a 4G device.</li>
-            <li>Some plans, like Watch, or Home router plans, won’t work with this offer.</li>
-          </ul>
+        <h5 class="govuk-heading-s">For EE Pay Monthly customers</h5>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>This is available for customers with an active Pay Monthly plan.</li>
+          <li>This offer is only available once.</li>
+          <li>Customers must have a 4G device.</li>
+          <li>Some plans, like Watch, or Home router plans, won’t work with this offer.</li>
+        </ul>
 
-          <h5 class="govuk-heading-s">For EE Pay-as-you-go customers</h5>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>This offer is only available once.</li>
-            <li>Customers must have a 4G device.</li>
-            <li>Customers must have had an EE PayG account for the last 3 months, with a 30 day £10 + Pack.</li>
-            <li>If the pack is removed or becomes inactive on the customer’s account, this extra data will be removed.</li>
-            <li>Some plans, including old ones and mobile broadband ones, won’t work with this offer.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-6">
-              O2
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-6" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-6">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>This offer is available for Pay Monthly customers only.</li>
-            <li>The recipient will need to have been an O2 customer for the last 6 months.</li>
-            <li>The recipient will get 20GB additional data per month until December 2020.</li>
-            <li>O2 will support the first 7500 eligible customers who are identified via this scheme.</li>
-            <li>O2 will aim to process the request within one month.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-4">
-              Smarty
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-4" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-4">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>The recipient will get unlimited data until 31 December 2020.</li>
-            <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
-            <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-            <li>Smarty will aim to process the request within 14 days.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-7">
-              Tesco Mobile
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-7" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-7">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>This offer is available for Pay Monthly customers only.</li>
-            <li>The recipient will get 20GB additional data per month until December 2020.</li>
-            <li>Tesco will support the first 1000 eligible customers who are identified via this scheme.</li>
-            <li>Tesco will aim to process the request within 14 days.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-2">
-              Three
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-2" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-2">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>The recipient will get unlimited data until 31 December 2020.</li>
-            <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
-            <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-            <li>Three will aim to process the request within 14 days.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-3">
-              Virgin Mobile
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-3" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-3">
-          <ul class="govuk-list govuk-list--bullet">
-            <li>The recipient will get 20GB of additional data per month until 31 December 2020.</li>
-            <li>The offer is only available to Pay Monthly customers identified as needing this support. It’s not available to Pay-as-you-go customers.</li>
-            <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-            <li>Virgin Mobile will aim to process the request within 14 days.</li>
-            <li>Wi-Fi hotspots are open to all existing customers, including those on Pay-as-you-go. Customers on Pay-as-you-go will need to have a minimum of £5 credit. Instructions to download the app and find their nearest hotspot can be found by going to <%= govuk_link_to 'www.virginmedia.com/wifiapp', 'https://www.virginmedia.com/shop/virgin-media-connect-app-mobile' %>.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h4 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="network-providers-heading-5">
-              Another provider
-            </span>
-          </h4>
-        </div>
-        <div id="network-providers-content-5" class="govuk-accordion__section-content" aria-labelledby="network-providers-heading-5">
-          <h4 class="govuk-heading-s">Providers that might join at a later stage</h4>
-          <p class="govuk-body">The following providers are not yet on board, but it’s possible they’ll join at a later stage.
-          It’s still worth gathering information from account holders who use these networks. If these operators join the scheme, we’ll update the service.</p>
+        <h5 class="govuk-heading-s">For EE Pay-as-you-go customers</h5>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>This offer is only available once.</li>
+          <li>Customers must have a 4G device.</li>
+          <li>Customers must have had an EE PayG account for the last 3 months, with a 30 day £10 + Pack.</li>
+          <li>If the pack is removed or becomes inactive on the customer’s account, this extra data will be removed.</li>
+          <li>Some plans, including old ones and mobile broadband ones, won’t work with this offer.</li>
+        </ul>
+      <% end %>
 
-          <ul class="govuk-list govuk-list--bullet">
-            <li>O2</li>
-            <li>Tesco Mobile</li>
-            <li>Sky Mobile</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <%= component.slot(:section, title: 'O2') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>This offer is available for Pay Monthly customers only.</li>
+          <li>The recipient will need to have been an O2 customer for the last 6 months.</li>
+          <li>The recipient will get 20GB additional data per month until December 2020.</li>
+          <li>O2 will support the first 7500 eligible customers who are identified via this scheme.</li>
+          <li>O2 will aim to process the request within one month.</li>
+        </ul>
+      <% end %>
+
+      <%= component.slot(:section, title: 'Smarty') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The recipient will get unlimited data until 31 December 2020.</li>
+          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
+          <li>Smarty will aim to process the request within 14 days.</li>
+        </ul>
+      <% end %>
+
+      <%= component.slot(:section, title: 'Tesco Mobile') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>This offer is available for Pay Monthly customers only.</li>
+          <li>The recipient will get 20GB additional data per month until December 2020.</li>
+          <li>Tesco will support the first 1000 eligible customers who are identified via this scheme.</li>
+          <li>Tesco will aim to process the request within 14 days.</li>
+        </ul>
+      <% end %>
+
+      <%= component.slot(:section, title: 'Three') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The recipient will get unlimited data until 31 December 2020.</li>
+          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
+          <li>Three will aim to process the request within 14 days.</li>
+        </ul>
+      <% end %>
+
+      <%= component.slot(:section, title: 'Virgin Mobile') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The recipient will get 20GB of additional data per month until 31 December 2020.</li>
+          <li>The offer is only available to Pay Monthly customers identified as needing this support. It’s not available to Pay-as-you-go customers.</li>
+          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
+          <li>Virgin Mobile will aim to process the request within 14 days.</li>
+          <li>Wi-Fi hotspots are open to all existing customers, including those on Pay-as-you-go. Customers on Pay-as-you-go will need to have a minimum of £5 credit. Instructions to download the app and find their nearest hotspot can be found by going to <%= govuk_link_to 'www.virginmedia.com/wifiapp', 'https://www.virginmedia.com/shop/virgin-media-connect-app-mobile' %>.</li>
+        </ul>
+      <% end %>
+
+      <%= component.slot(:section, title: 'Another provider') do %>
+        <h4 class="govuk-heading-s">Providers that might join at a later stage</h4>
+        <p class="govuk-body">The following providers are not yet on board, but it’s possible they’ll join at a later stage.
+        It’s still worth gathering information from account holders who use these networks. If these operators join the scheme, we’ll update the service.</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>O2</li>
+          <li>Tesco Mobile</li>
+          <li>Sky Mobile</li>
+        </ul>
+      <% end %>
+    <% end %>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
