@@ -5,7 +5,8 @@ class School < ApplicationRecord
   has_one    :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
 
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
-  has_many :users
+  has_many :user_schools
+  has_many :users, through: :user_schools
   has_one :preorder_information
 
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }

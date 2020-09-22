@@ -39,5 +39,15 @@ module Computacenter
       )
       self
     end
+
+    def self.for_destroyed_user(user)
+    end
+
+    def self.for_new_user(user)
+    end
+
+    def self.for_updated_user(user)
+      
+    end
   end
 end

@@ -513,7 +513,8 @@ RSpec.describe User, type: :model do
           let!(:user) { create(:school_user, :relevant_to_computacenter, school: original_school) }
 
           def perform_change!
-            user.update(school: other_school)
+            user.school = other_school
+            user.save!
           end
 
           it 'creates a Computacenter::UserChange' do

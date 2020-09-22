@@ -7,7 +7,8 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
-  belongs_to :school, optional: true
+  has_many :user_schools, dependent: :destroy
+  has_many :schools, through: :user_schools
 
   scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
@@ -37,6 +38,9 @@ class User < ApplicationRecord
   before_validation :force_email_address_to_lowercase!
 
   include SignInWithToken
+
+  attribute :school_id, :integer
+  attribute :relevant_to_computacenter, :boolean
 
   after_save do |user|
     Computacenter::UserChangeGenerator.new(user).generate!
@@ -107,12 +111,52 @@ class User < ApplicationRecord
     responsible_body || school&.responsible_body
   end
 
-  def relevant_to_computacenter?
+  def relevant_to_computacenter
     seen_privacy_notice? && orders_devices?
   end
+  alias :relevant_to_computacenter? :relevant_to_computacenter
 
   def hybrid?
     school_id && responsible_body_id
+  end
+
+  def hybrid_setup!
+    return if responsible_body.blank?
+
+    one_school = responsible_body.schools.count == 1
+    only_user = responsible_body.users == [self]
+
+    return unless one_school && only_user
+
+    school = responsible_body.schools.first
+
+    update!(school: school)
+    responsible_body.update_who_will_order_devices('schools')
+    contact = school.contacts.create!(email_address: email_address,
+                                      full_name: full_name,
+                                      role: :contact,
+                                      phone_number: telephone)
+    school.preorder_information.update!(school_contact: contact)
+  end
+
+  # Wrapper methods to ease the transition from user belongs_to school,
+  # to user has_many schools
+  def school
+    schools.first
+  end
+
+  def school_id
+    school&.id
+  end
+
+  def school_id=(new_school_id)
+    user_schools.delete_all
+    user_schools.create(school_id: new_school_id) if new_school_id
+  end
+
+  def school=(new_school)
+    user_schools.delete_all
+    schools << new_school if new_school.present?
   end
 
 private

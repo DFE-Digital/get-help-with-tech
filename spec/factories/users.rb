@@ -53,7 +53,12 @@ FactoryBot.define do
     end
 
     factory :school_user do
-      school
+      transient do
+        school { nil }
+      end
+      after(:build) do |user, evaluator|
+        user.schools << (evaluator.school || build(:school)) if user.schools.empty?
+      end
       orders_devices { false }
       has_completed_wizard
 
