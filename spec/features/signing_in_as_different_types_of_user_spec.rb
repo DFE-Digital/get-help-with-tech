@@ -103,6 +103,19 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
+  context 'as a hybrid user' do
+    let(:user) { create(:hybrid_user) }
+
+    scenario 'logging in for the first time' do
+      visit validate_token_url_for(user)
+      expect(page).to have_text("You’re signed in as #{user.school.name}")
+      click_on 'Continue'
+      expect(page).to have_text('Before you continue, please read the privacy notice.')
+      click_on 'Continue'
+      expect(page).to have_text('You’ve been allocated 0 laptops and tablets')
+    end
+  end
+
   context 'as a support user' do
     let(:user) { create(:dfe_user) }
 
