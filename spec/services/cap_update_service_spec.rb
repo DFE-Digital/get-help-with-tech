@@ -10,7 +10,7 @@ RSpec.describe CapUpdateService do
   subject(:service) { described_class.new(school: school, device_type: device_type) }
 
   describe '#update!' do
-    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
+    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
 
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
@@ -114,6 +114,13 @@ RSpec.describe CapUpdateService do
         expect(mock_request).to have_received(:post!)
       end
 
+      it 'records timestamp and payload_id on the allocation' do
+        service.update!(cap: 2, order_state: new_order_state)
+        allocation.reload
+        expect(allocation.cap_update_request_timestamp).not_to be_nil
+        expect(allocation.cap_update_request_payload_id).not_to be_nil
+      end
+
       it 'sends an email to computacenter' do
         expect { service.update!(cap: new_cap, order_state: new_order_state) }.to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change).once
       end
@@ -127,6 +134,13 @@ RSpec.describe CapUpdateService do
       it 'does not notify the computacenter API' do
         service.update!(cap: 2, order_state: new_order_state)
         expect(mock_request).not_to have_received(:post!)
+      end
+
+      it 'does not record timestamp and payload_id on the allocation' do
+        service.update!(cap: 2, order_state: new_order_state)
+        allocation.reload
+        expect(allocation.cap_update_request_timestamp).to be_nil
+        expect(allocation.cap_update_request_payload_id).to be_nil
       end
 
       it 'does not send an email to computacenter' do

@@ -86,6 +86,16 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       it 'raises an error' do
         expect { request.post! }.to raise_error(Computacenter::OutgoingAPI::Error)
       end
+
+      it 'does not change the timestamp and payload_id on the allocations' do
+        expect { request.post! }.to raise_error(Computacenter::OutgoingAPI::Error)
+        allocation_1.reload
+        allocation_2.reload
+        expect(allocation_1.cap_update_request_timestamp).to be_nil
+        expect(allocation_1.cap_update_request_payload_id).to be_nil
+        expect(allocation_2.cap_update_request_timestamp).to be_nil
+        expect(allocation_2.cap_update_request_payload_id).to be_nil
+      end
     end
 
     context 'when the response contains an error' do

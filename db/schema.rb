@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_101304) do
+ActiveRecord::Schema.define(version: 2020_09_23_093949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,7 +162,11 @@ ActiveRecord::Schema.define(version: 2020_09_18_101304) do
     t.bigint "last_updated_by_user_id"
     t.bigint "created_by_user_id"
     t.integer "cap", default: 0, null: false
+    t.datetime "cap_update_request_timestamp"
+    t.string "cap_update_request_payload_id"
     t.index ["cap"], name: "index_school_device_allocations_on_cap"
+    t.index ["cap_update_request_payload_id"], name: "ix_allocations_cap_update_payload_id"
+    t.index ["cap_update_request_timestamp"], name: "ix_allocations_cap_update_timestamp"
     t.index ["created_by_user_id"], name: "index_school_device_allocations_on_created_by_user_id"
     t.index ["last_updated_by_user_id"], name: "index_school_device_allocations_on_last_updated_by_user_id"
     t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
