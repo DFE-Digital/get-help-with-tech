@@ -1,5 +1,3 @@
-# Get internet access
-
 ## About the scheme
 
 Internet access supports remote education, as well as virtual contact between children, their social workers and other services.
@@ -35,6 +33,6 @@ This support is available for children from early years up to 16, and care leave
 
 ## How to get support
 
-If you have a question about internet access schemes, please email COVID.TECHNOLOGY@education.gov.uk. We aim to respond within 3 working days.
+If you have a question about internet access schemes, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk). We aim to respond within 3 working days.
 
 If you need support to manage a 4G wireless router you’ve received from us, please [see our guidance](https://get-help-with-tech.education.gov.uk/devices/preparing-4g-wireless-routers). It includes information about data, contract length and security.

@@ -1,5 +1,5 @@
 class LandingPagesController < ApplicationController
-  layout 'page_with_toc', only: :get_support
+  layout 'page_with_toc', only: [:get_support, :get_internet_access]
 
   def get_laptops_and_tablets; end
 
@@ -8,7 +8,10 @@ class LandingPagesController < ApplicationController
     render
   end
 
-  def get_internet_access; end
+  def get_internet_access
+    @title = I18n.t!('second_level_content.get_internet_access.title')
+    render
+  end
 
   def digital_platforms; end
 
