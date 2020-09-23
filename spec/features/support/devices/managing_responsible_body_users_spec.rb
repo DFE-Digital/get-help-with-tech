@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Adding new responsible body users in the support area', type: :feature do
+RSpec.feature 'Managing responsible body users in the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
   let(:responsible_body_page) { PageObjects::Support::Devices::ResponsibleBodyPage.new }
 
@@ -16,6 +16,20 @@ RSpec.feature 'Adding new responsible body users in the support area', type: :fe
 
     and_when_i_retry_adding_a_new_user_with_valid_details
     then_i_can_see_the_responsible_body_with_new_users_as_well
+  end
+
+  scenario 'DfE users can update on-boarded responsible body users' do
+    given_there_is_a_responsible_body_with_users
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_visit_a_support_devices_responsible_body_page
+    then_i_can_see_the_responsible_body_with_users
+
+    when_i_try_updating_a_user_with_invalid_details
+    then_i_can_see_error_messages
+
+    when_i_retry_updating_a_user_with_valid_details
+    then_i_can_see_the_responsible_body_with_the_updated_user_details
   end
 
   def given_there_is_a_responsible_body_with_users
@@ -80,5 +94,26 @@ RSpec.feature 'Adding new responsible body users in the support area', type: :fe
     expect(second_row).to have_text('Never')
 
     expect(responsible_body_page.user_rows[2]).to have_text('Amy Adams')
+  end
+
+  def when_i_try_updating_a_user_with_invalid_details
+    click_link 'Change details for Amy Adams'
+    fill_in 'Name', with: ''
+    fill_in 'Email address', with: 'a'
+    click_on 'Save changes'
+  end
+
+  def when_i_retry_updating_a_user_with_valid_details
+    fill_in 'Name', with: 'Amy Wirral'
+    fill_in 'Email address', with: 'amy.wirral@coventry.gov.uk'
+    click_on 'Save changes'
+  end
+
+  def then_i_can_see_the_responsible_body_with_the_updated_user_details
+    expect(responsible_body_page.user_rows.size).to eq(2)
+
+    expect(responsible_body_page.user_rows[0]).to have_text('Zeta Zane')
+    expect(responsible_body_page.user_rows[1]).to have_text('amy.wirral@coventry.gov.uk')
+    expect(responsible_body_page.user_rows[1]).to have_text('Amy Wirral')
   end
 end
