@@ -14,9 +14,9 @@
           <%= @extra_mobile_data_request.account_holder_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-account-holder-name-field') ) do %>
-            Change<span class="govuk-visually-hidden"> Account holder name</span>
-          <%- end %>
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Account holder name</span>'.html_safe,
+                            new_responsible_body_internet_mobile_manual_request_path(
+                              anchor: 'extra-mobile-data-request-account-holder-name-field') ) %>
         </dd>
       </div>
 
