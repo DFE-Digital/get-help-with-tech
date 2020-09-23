@@ -17,7 +17,7 @@
     <%= form_for @user, url: support_devices_school_user_path(urn: @school.urn, id: @user.id) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render partial: 'shared/school_user_form', locals: { form: f } %>
-      <%= f.govuk_submit 'Save' %>
+      <%= f.govuk_submit 'Save changes' %>
     <%- end %>
   </div>
 </div>

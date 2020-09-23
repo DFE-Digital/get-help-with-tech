@@ -19,7 +19,7 @@
     </div>
 
     <%= form_for @rb_user, url: responsible_body_users_path do |f| %>
-      <%= render partial: 'form', locals: { submit_text: 'Send invite', form: f } %>
+      <%= render partial: 'shared/responsible_body_user_form', locals: { submit_text: 'Send invite', form: f } %>
     <%- end %>
   </div>
 </div>

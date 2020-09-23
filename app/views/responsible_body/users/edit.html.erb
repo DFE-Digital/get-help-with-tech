@@ -11,7 +11,7 @@
     </h1>
 
     <%= form_for @rb_user, url: responsible_body_user_path(@rb_user) do |f| %>
-      <%= render partial: 'form', locals: { submit_text: 'Save changes', form: f } %>
+      <%= render partial: 'shared/responsible_body_user_form', locals: { submit_text: 'Save changes', form: f } %>
     <%- end %>
   </div>
 </div>

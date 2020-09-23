@@ -18,6 +18,23 @@ class Support::UsersController < Support::BaseController
     end
   end
 
+  def edit
+    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
+    @user = @responsible_body.users.find(params[:id])
+  end
+
+  def update
+    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
+    @user = @responsible_body.users.find(params[:id])
+
+    if @user.update(user_params)
+      flash[:success] = 'User has been updated'
+      redirect_to return_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
 private
 
   def return_path
@@ -32,6 +49,7 @@ private
     params.require(:user).permit(
       :full_name,
       :email_address,
+      :telephone,
     )
   end
 end

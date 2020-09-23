@@ -1,0 +1,20 @@
+<%- title = t('page_titles.edit_responsible_body_user') %>
+<%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
+    { @responsible_body.name => support_devices_responsible_body_path(@responsible_body) },
+    @user.full_name,
+  ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <%= form_for @user, url: support_responsible_body_user_path(@responsible_body, @user, pilot: 'devices') do |f| %>
+      <%= render partial: 'shared/responsible_body_user_form', locals: { submit_text: 'Save changes', form: f } %>
+    <%- end %>
+  </div>
+</div>
