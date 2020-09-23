@@ -47,6 +47,13 @@
       </span>
       <%= t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_contact'] || 0) %>
     </div>
+
+    <div class="app-card app-card--blue">
+      <span class="app-card__secondary-count">
+        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_contacted'] || 0) %>
+      </span>
+      <%= t(:school_contacted, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_contacted'] || 0) %>
+    </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card app-card--light-blue">
@@ -54,6 +61,13 @@
         <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
       </span>
       <%= t(:school_contacts, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
+    </div>
+
+    <div class="app-card app-card--green">
+      <span class="app-card__secondary-count">
+        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_ready'] || 0) %>
+      </span>
+      <%= t(:school_ready, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_ready'] || 0) %>
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">

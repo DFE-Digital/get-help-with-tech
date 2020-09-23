@@ -36,8 +36,9 @@ class Support::Devices::ServicePerformance
   def number_of_schools_devolved_to
     needs_contact_count = preorder_information_counts_by_status['needs_contact'] || 0
     has_contact_count = preorder_information_counts_by_status['school_will_be_contacted'] || 0
-
-    needs_contact_count + has_contact_count
+    contacted_count = preorder_information_counts_by_status['school_contacted'] || 0
+    school_ready_count = preorder_information_counts_by_status['school_ready'] || 0
+    needs_contact_count + has_contact_count + contacted_count + school_ready_count
   end
 
   def number_of_schools_managed_centrally
