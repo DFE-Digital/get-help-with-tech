@@ -133,13 +133,13 @@
       title: Device allocations
       description: Find out how we estimated device requirements for each school and how to query an allocation.
       audience: responsible_body_users
-    device_specification:
-      title: Device specification
-      description: Get the technical specifications of the devices for vulnerable and disadvantaged children and young people.
-      audience: responsible_body_users
     how_to_order:
       title: How to order laptops and tablets
       description: Prepare to order laptops and tablets for disadvantaged children in certain year groups when schools are affected by disruption to face-to-face education due to coronavirus.
+      audience: responsible_body_users
+    device_specification:
+      title: Device options and specifications
+      description: Get the technical specifications of the devices for vulnerable and disadvantaged children and young people.
       audience: responsible_body_users
     preparing_microsoft_windows_laptops_and_tablets:
       title: Preparing Microsoft Windows laptops and tablets
