@@ -15,6 +15,11 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
       expect { described_class.new(urn: school.urn).call }
         .not_to change { User.count }.from(0)
     end
+
+    it 'raises an error if the passed URN cannot be found' do
+      expect { described_class.new(urn: '12345').call }
+        .to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   context 'when the responsible body has no users and the school has no headteacher' do
