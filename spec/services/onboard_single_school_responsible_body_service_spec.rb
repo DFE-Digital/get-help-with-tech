@@ -16,6 +16,14 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
         .not_to change { User.count }.from(0)
     end
 
+    it 'returns without creating any new users if the responsible body has multiple schools' do
+      create(:school, responsible_body: responsible_body) # another school in the RB
+      create(:school_contact, :headteacher, school: school)
+
+      expect { described_class.new(urn: school.urn).call }
+        .not_to change { User.count }.from(0)
+    end
+
     it 'raises an error if the passed URN cannot be found' do
       expect { described_class.new(urn: '12345').call }
         .to raise_error(ActiveRecord::RecordNotFound)
