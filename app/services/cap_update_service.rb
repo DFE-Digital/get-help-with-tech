@@ -10,22 +10,24 @@ class CapUpdateService
     update_order_state!(order_state)
     allocation = update_cap!(cap)
 
-    update_cap_on_computacenter!(allocation.id) if FeatureFlag.active?(:computacenter_cap_update_api)
-
-    notify_computacenter_by_email(allocation.cap)
+    if notify_computacenter_of_cap_changes?
+      update_cap_on_computacenter!(allocation.id)
+      notify_computacenter_by_email(allocation.cap)
+    end
   end
 
 private
 
+  def notify_computacenter_of_cap_changes?
+    Settings.computacenter.outgoing_api.endpoint.present?
+  end
+
   def notify_computacenter_by_email(new_cap_value)
-    if FeatureFlag.active?(:notify_computacenter_of_cap_changes)
-      if @device_type == 'std_device'
-        ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
-          .notify_of_devices_cap_change.deliver_later
-      else
-        ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
-          .notify_of_comms_cap_change.deliver_later
-      end
+    mailer = ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
+    if @device_type == 'std_device'
+      mailer.notify_of_devices_cap_change.deliver_later
+    else
+      mailer.notify_of_comms_cap_change.deliver_later
     end
   end
 

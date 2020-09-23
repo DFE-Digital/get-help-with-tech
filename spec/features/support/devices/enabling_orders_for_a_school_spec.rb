@@ -61,17 +61,12 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
         context 'filling in a valid number and clicking Continue' do
           let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, payload_id: 'abc123', timestamp: Time.zone.now) }
-          let!(:api_already_active) { FeatureFlag.active?(:computacenter_cap_update_api) }
 
           before do
             allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
             allow(mock_request).to receive(:post!)
             fill_in('How many devices can they order?', with: 2)
-            FeatureFlag.activate(:computacenter_cap_update_api)
-          end
-
-          after do
-            FeatureFlag.deactivate(:computacenter_cap_update_api) unless api_already_active
+            Settings.computacenter.outgoing_api.endpoint = 'https://example.com/'
           end
 
           it 'takes me to the Check your answers page' do

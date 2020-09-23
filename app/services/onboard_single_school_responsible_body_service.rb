@@ -37,10 +37,12 @@ private
   end
 
   def set_user_as_school_contact(user_to_contact)
-    contact = school.contacts.create!(email_address: user_to_contact.email_address,
-                                      full_name: user_to_contact.full_name,
-                                      role: :contact,
-                                      phone_number: user_to_contact.telephone)
+    contact = school
+      .contacts
+      .where(email_address: user_to_contact.email_address)
+      .first_or_create!(full_name: user_to_contact.full_name,
+                        role: :contact,
+                        phone_number: user_to_contact.telephone)
     school.preorder_information.update!(school_contact: contact)
   end
 
