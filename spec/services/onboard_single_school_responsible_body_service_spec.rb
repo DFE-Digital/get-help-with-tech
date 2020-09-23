@@ -69,6 +69,33 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     end
   end
 
+  context 'when the headteacher is already one of the responsible body users' do
+    before do
+      @headteacher = create(:school_contact, :headteacher, school: school)
+
+      create(:trust_user,
+             email_address: @headteacher.email_address,
+             full_name: @headteacher.full_name,
+             responsible_body: responsible_body,
+             orders_devices: true)
+
+      described_class.new(urn: school.urn).call
+      responsible_body.reload
+      school.reload
+    end
+
+    it 'contacts the headteacher and marks the school as contacted' do
+      perform_enqueued_jobs
+
+      expect(ActionMailer::Base.deliveries.first.to.first).to eq(@headteacher.email_address)
+      expect(school.preorder_information.status).to eq('school_contacted')
+    end
+
+    it 'makes the headteacher a school user' do
+      expect(User.find_by(email_address: @headteacher.email_address).is_school_user?).to be_truthy
+    end
+  end
+
   context 'when the responsible body has no users but the school has a headteacher contact' do
     before do
       @headteacher = create(:school_contact, :headteacher, school: school)
