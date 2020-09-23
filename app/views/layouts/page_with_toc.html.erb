@@ -1,0 +1,35 @@
+<%- content_for :before_content do %>
+  <div class="govuk-breadcrumbs ">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to t('page_titles.devices_guidance_index'), devices_guidance_index_path, class: 'govuk-breadcrumbs__link' %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= @title %>
+    </li>
+  </ol>
+  </div>
+<% end %>
+
+<% content_for :content do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"><%= @title %></h1>
+
+<!--      <p class="govuk-body-l"><%#= @page.description %></p>-->
+
+      <% if content_for(:html_list_of_headings_links).present? %>
+        <h2 class="govuk-heading-s">Contents</h2>
+
+        <%= content_for :html_list_of_headings_links %>
+      <% end %>
+
+      <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+      <%= yield %>
+
+    </div>
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>

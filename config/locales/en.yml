@@ -548,6 +548,20 @@ en:
         name: Name
         name_hint: Must be unique, and between 2 and 64 characters long
         create: Generate
+  second_level_content:
+    get_laptops_and_tablets:
+      title:
+      description:
+    get_support:
+      title: "Get support to order and manage devices"
+      description:
+    get_internet:
+      title:
+      description:
+    digital_platform:
+      title:
+      description:
+
   events:
     default: An event just happened
     sign_in_event: A user from %{organisation} just signed in
