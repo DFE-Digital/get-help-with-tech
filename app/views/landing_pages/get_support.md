@@ -11,7 +11,7 @@ If you need help to [order laptops and tablets](https://get-help-with-tech.educa
 
 If you need help with a laptop, tablet or 4G wireless router you’ve already received from us, please see our guidance below on [setting devices up](#setting-devices-up), or [managing devices and safeguarding](#managing-devices-and-safeguarding).
 
-If you cannot find the information you need here, please email COVID.TECHNOLOGY@education.gov.uk. We aim to respond within 3 working days.
+If you cannot find the information you need here, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk). We aim to respond within 3 working days.
 ## Allocation and ordering devices
 
 ### [Who devices are available for](https://get-help-with-tech.education.gov.uk/devices/about-the-offer)
