@@ -28,10 +28,8 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
       expect { described_class.new(urn: '12345').call }
         .to raise_error(ActiveRecord::RecordNotFound)
     end
-  end
 
-  context 'when the responsible body has no users and the school has no headteacher' do
-    it 'raises an error' do
+    it 'raises an error if the responsible body has no users and the school has no headteacher' do
       expect {
         described_class.new(urn: school.urn).call
       }.to raise_error(/Cannot continue without RB users or a school headteacher/)
