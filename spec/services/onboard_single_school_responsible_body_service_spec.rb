@@ -152,4 +152,24 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
       expect(user.responsible_body).to eq(responsible_body)
     end
   end
+
+  context 'when the headteacher email address has upper-case letters' do
+    before do
+      @headteacher = create(:school_contact, :headteacher,
+                            school: school,
+                            email_address: 'JSmith@school.sch.uk')
+
+      described_class.new(urn: school.urn).call
+      responsible_body.reload
+      school.reload
+    end
+
+    it 'adds the headteacher as a hybrid user who can order under their lowercase email' do
+      user = User.find_by!(email_address: 'jsmith@school.sch.uk')
+
+      expect(user).to be_hybrid
+      expect(user.school).to eq(school)
+      expect(user.responsible_body).to eq(responsible_body)
+    end
+  end
 end
