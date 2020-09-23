@@ -74,22 +74,26 @@ RSpec.describe Support::Devices::ServicePerformance, type: :model do
     end
   end
 
-  describe 'preorder_information_counts_by_status' do
+  describe 'status-counting methods' do
     before do
       create_list(:preorder_information, 5, status: 'needs_info')
       create_list(:preorder_information, 2, status: 'needs_contact')
       create_list(:preorder_information, 2, status: 'school_will_be_contacted')
       create_list(:preorder_information, 2, status: 'school_contacted')
       create_list(:preorder_information, 3, status: 'ready')
+      create_list(:preorder_information, 7, status: 'school_ready')
       ResponsibleBody.update_all(in_devices_pilot: true)
     end
 
-    it 'returns the total number of preorder_information records with each status' do
-      expect(stats.preorder_information_counts_by_status['needs_info']).to eq(5)
-      expect(stats.preorder_information_counts_by_status['needs_contact']).to eq(2)
-      expect(stats.preorder_information_counts_by_status['school_will_be_contacted']).to eq(2)
-      expect(stats.preorder_information_counts_by_status['school_contacted']).to eq(2)
-      expect(stats.preorder_information_counts_by_status['ready']).to eq(3)
+    describe 'preorder_information_counts_by_status' do
+      it 'returns the total number of preorder_information records with each status' do
+        expect(stats.preorder_information_counts_by_status['needs_info']).to eq(5)
+        expect(stats.preorder_information_counts_by_status['needs_contact']).to eq(2)
+        expect(stats.preorder_information_counts_by_status['school_will_be_contacted']).to eq(2)
+        expect(stats.preorder_information_counts_by_status['school_contacted']).to eq(2)
+        expect(stats.preorder_information_counts_by_status['ready']).to eq(3)
+        expect(stats.preorder_information_counts_by_status['school_ready']).to eq(7)
+      end
     end
 
     describe '#preorder_information_by_status' do
@@ -99,19 +103,26 @@ RSpec.describe Support::Devices::ServicePerformance, type: :model do
         expect(stats.preorder_information_by_status('school_will_be_contacted')).to eq(2)
         expect(stats.preorder_information_by_status('school_contacted')).to eq(2)
         expect(stats.preorder_information_by_status('ready')).to eq(3)
+        expect(stats.preorder_information_counts_by_status['school_ready']).to eq(7)
       end
     end
 
-    it 'calculates the number of schools managed centrally' do
-      expect(stats.number_of_schools_managed_centrally).to eq(8)
+    describe '#number_of_schools_managed_centrally' do
+      it 'adds up the number of schools in status "needs_info" and "ready"' do
+        expect(stats.number_of_schools_managed_centrally).to eq(8)
+      end
     end
 
-    it 'calculates the number of schools that decisions have been devolved to' do
-      expect(stats.number_of_schools_devolved_to).to eq(4)
+    describe '#number_of_schools_devolved_to' do
+      it 'adds up the number of schools in status needs_contact, school_will_be_contacted, school_contacted and school_ready' do
+        expect(stats.number_of_schools_devolved_to).to eq(13)
+      end
     end
 
-    it 'calculates the total number of schools devolved or managed centrally' do
-      expect(stats.number_of_schools_with_a_decision_made).to eq(12)
+    describe '#number_of_schools_with_a_decision_made' do
+      it 'calculates the total number of schools devolved or managed centrally' do
+        expect(stats.number_of_schools_with_a_decision_made).to eq(21)
+      end
     end
   end
 end

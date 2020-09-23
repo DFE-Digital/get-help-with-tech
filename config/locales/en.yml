@@ -268,6 +268,12 @@
       schools_devolved_to:
         one: school will place its own orders
         other: schools will place their own orders
+      school_contacted:
+        one: has been contacted
+        other: have been contacted
+      school_ready:
+        one: is ready
+        other: are ready
     schools:
       invite:
         success: "%{name} has been invited successfully"
