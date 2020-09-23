@@ -555,10 +555,10 @@ en:
     get_support:
       title: "Get support to order and manage devices"
       description:
-    get_internet:
-      title:
+    get_internet_access:
+      title: "Get internet access"
       description:
-    digital_platform:
+    digital_platforms:
       title:
       description:
 
