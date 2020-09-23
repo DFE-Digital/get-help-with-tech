@@ -6,7 +6,7 @@ RSpec.describe BulkAllocationService do
   subject(:service) { described_class.new }
 
   describe '#unlock!' do
-    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
+    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
 
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
