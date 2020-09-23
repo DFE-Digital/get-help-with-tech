@@ -1,0 +1,20 @@
+<% content_for :title, t('page_titles.computacenter.techsource') %>
+<% content_for :before_content, govuk_link_to('Back', computacenter_home_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.computacenter.techsource') %>
+    </h1>
+
+    <p class="govuk-body">Enter email addresses for users who have TechSource accounts. Use one line per address.</p>
+
+    <%= form_with model: @form, url: computacenter_techsource_path do |f| %>
+      <%= f.govuk_text_area :emails,
+                            label: { text: 'Email addresses', size: 'm' },
+                            rows: 12 %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
