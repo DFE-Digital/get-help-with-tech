@@ -1,7 +1,9 @@
 ## About the scheme
 
 Many vulnerable and disadvantaged children and young people in England do not have access to a laptop, tablet or internet connection. The Department for Education (DfE) is offering support to help children, young people and families access remote education and social care during coronavirus (COVID-19).
+
 The DfE is working with a delivery partner to supply local authorities, academy trusts and schools with laptops, tablets and connectivity packages. 
+
 We also offer guidance and a support team to help you order, distribute and manage these devices.
 ## How to get support
 
