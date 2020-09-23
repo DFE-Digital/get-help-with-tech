@@ -73,18 +73,6 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       it 'returns the response ' do
         expect(request.post!).to be_a(HTTP::Response)
       end
-
-      it 'records timestamp and payload_id on each of the allocations' do
-        request.payload_id = '123456789'
-        request.timestamp = Time.new(2020, 9, 2, 15, 3, 35, '+02:00')
-        request.post!
-        allocation_1.reload
-        allocation_2.reload
-        expect(allocation_1.cap_update_request_timestamp).not_to be_nil
-        expect(allocation_1.cap_update_request_payload_id).to eq('123456789')
-        expect(allocation_2.cap_update_request_timestamp).not_to be_nil
-        expect(allocation_2.cap_update_request_payload_id).to eq('123456789')
-      end
     end
 
     context 'when the response status is not a success' do

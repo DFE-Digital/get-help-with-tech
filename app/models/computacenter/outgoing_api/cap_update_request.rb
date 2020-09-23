@@ -36,7 +36,6 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
       )
     end
 
-    SchoolDeviceAllocation.where(id: @allocation_ids).update_all(cap_update_request_timestamp: @timestamp, cap_update_request_payload_id: @payload_id)
     @response
   end
 

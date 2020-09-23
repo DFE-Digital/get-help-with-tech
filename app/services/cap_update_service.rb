@@ -44,6 +44,11 @@ private
 
   def update_cap_on_computacenter!(allocation_id)
     api_request = Computacenter::OutgoingAPI::CapUpdateRequest.new(allocation_ids: [allocation_id])
-    api_request.post!
+    response = api_request.post!
+    SchoolDeviceAllocation.where(id: allocation_id).update_all(
+      cap_update_request_timestamp: api_request.timestamp,
+      cap_update_request_payload_id: api_request.payload_id,
+    )
+    response
   end
 end

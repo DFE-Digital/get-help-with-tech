@@ -60,7 +60,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
         end
 
         context 'filling in a valid number and clicking Continue' do
-          let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, payload_id: 'abc123') }
+          let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, payload_id: 'abc123', timestamp: Time.zone.now) }
           let!(:api_already_active) { FeatureFlag.active?(:computacenter_cap_update_api) }
 
           before do
