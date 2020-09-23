@@ -127,30 +127,46 @@
   devices_guidance:
     about_the_offer:
       title: About the offer
-      description: Find out who is eligible for devices, and why the Department for Education (DfE) is providing them.
+      description: Find out who is eligible for devices and why the DfE is providing them.
       audience: responsible_body_users
     device_allocations:
       title: Device allocations
-      description: Find out how we estimated device requirements for each school, trust and local authority, and how to query an allocation.
+      description: Find out how we estimated device requirements for each school and how to query an allocation.
       audience: responsible_body_users
     device_specification:
       title: Device specification
       description: Get the technical specifications of the devices for vulnerable and disadvantaged children and young people.
       audience: responsible_body_users
+    how_to_order:
+      title: How to order laptops and tablets
+      description: Prepare to order laptops and tablets for disadvantaged children in certain year groups when schools are affected by disruption to face-to-face education due to coronavirus.
+      audience: responsible_body_users
     preparing_microsoft_windows_laptops_and_tablets:
       title: Preparing Microsoft Windows laptops and tablets
-      description: Guidance on how to set up Microsoft Windows devices with safeguarding and mobile device management software and how to install your own software.
+      description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
       audience: responsible_body_users
+    getting_started_with_your_microsoft_windows_device:
+      title: Getting started with your Microsoft Windows device
+      description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
+      audience: device_users
     preparing_chromebooks:
       title: Preparing Chromebooks
       description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts and schools.
       audience: responsible_body_users
+    getting_started_with_your_google_chromebook:
+      title: Getting started with your Google Chromebook
+      description: User guidance for Google Chromebooks to share with children, young people and their carers.
+      audience: device_users
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
       audience: responsible_body_users
+    4g_user_guidance:
+      title: How to get started with your 4G wireless router
+      description: User guidance for 4G wireless routers to share with children, young people and their carers.
+      audience: device_users
     device_distribution_and_ownership:
-      title: Device distribution and ownership
+      title: Device ownership and distribution
       description: Advice on how to get devices to children and young people via schools, social workers and deliveries to their homes. Information on insuring devices, asset management and loan agreements.
       audience: responsible_body_users
     support_and_maintenance:
@@ -173,18 +189,6 @@
       title: Set up a Google domain for care leavers
       description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
       audience: responsible_body_users
-    getting_started_with_your_microsoft_windows_device:
-      title: Getting started with your Microsoft Windows device
-      description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
-      audience: device_users
-    getting_started_with_your_google_chromebook:
-      title: Getting started with your Google Chromebook
-      description: User guidance for Google Chromebooks to share with children, young people and their carers.
-      audience: device_users
-    4g_user_guidance:
-      title: How to get started with your 4G wireless router
-      description: User guidance for 4G wireless routers to share with children, young people and their carers.
-      audience: device_users
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
