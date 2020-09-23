@@ -131,6 +131,7 @@ Rails.application.routes.draw do
       resources :key_contacts, only: %i[new index create], path: '/key-contacts'
       resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
       resources :schools, only: %i[show], param: :urn do
+        resources :users, only: %i[edit update]
         resources :contacts, only: %i[edit update] do
           member do
             put :set_as_school_contact, path: 'set-as-school-contact'
@@ -147,7 +148,7 @@ Rails.application.routes.draw do
       resources :school_bulk_allocations, only: %i[new create], path: 'school-bulk-allocations'
     end
     resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
-      resources :users, only: %i[new create]
+      resources :users, only: %i[new create edit update]
     end
 
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin

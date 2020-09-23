@@ -28,6 +28,7 @@
         <th scope="col" class="govuk-table__header">Full name</th>
         <th scope="col" class="govuk-table__header">Sign-in count</th>
         <th scope="col" class="govuk-table__header">Last sign in</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Actions</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -37,6 +38,9 @@
           <td class="govuk-table__cell"><%= user.full_name %></td>
           <td class="govuk-table__cell"><%= user.sign_in_count %></td>
           <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">
+            <%= govuk_link_to "Change <span class='govuk-visually-hidden'>details for #{user.full_name}</span>".html_safe, edit_support_devices_school_user_path(school_urn: @school.urn, id: user.id) %>
+          </td>
         </tr>
       <% end %>
     </tbody>
