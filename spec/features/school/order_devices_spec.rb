@@ -46,7 +46,7 @@ RSpec.feature 'Order devices' do
   end
 
   def and_i_see_a_link_to_techsource
-    expect(page).to have_link('Start now', href: techsource_url)
+    expect(page).to have_link('Start now')
   end
 
   def then_i_see_that_i_cannot_order_devices_yet
