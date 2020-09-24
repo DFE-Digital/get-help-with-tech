@@ -8,8 +8,28 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
   let(:responsible_body) { create(:trust, :single_academy_trust, in_devices_pilot: false) }
   let(:school) { create(:school, responsible_body: responsible_body) }
 
-  context 'when the responsible body has no users and the school has no headteacher' do
-    it 'raises an error' do
+  context 'cases when the service does not apply' do
+    it 'returns without creating any new users if the responsible body is already in the devices pilot' do
+      responsible_body.update!(in_devices_pilot: true)
+
+      expect { described_class.new(urn: school.urn).call }
+        .not_to change { User.count }.from(0)
+    end
+
+    it 'returns without creating any new users if the responsible body has multiple schools' do
+      create(:school, responsible_body: responsible_body) # another school in the RB
+      create(:school_contact, :headteacher, school: school)
+
+      expect { described_class.new(urn: school.urn).call }
+        .not_to change { User.count }.from(0)
+    end
+
+    it 'raises an error if the passed URN cannot be found' do
+      expect { described_class.new(urn: '12345').call }
+        .to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'raises an error if the responsible body has no users and the school has no headteacher' do
       expect {
         described_class.new(urn: school.urn).call
       }.to raise_error(/Cannot continue without RB users or a school headteacher/)
@@ -126,6 +146,26 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
 
     it 'adds the headteacher as a hybrid user who can order' do
       user = User.find_by!(email_address: @headteacher.email_address)
+
+      expect(user).to be_hybrid
+      expect(user.school).to eq(school)
+      expect(user.responsible_body).to eq(responsible_body)
+    end
+  end
+
+  context 'when the headteacher email address has upper-case letters' do
+    before do
+      @headteacher = create(:school_contact, :headteacher,
+                            school: school,
+                            email_address: 'JSmith@school.sch.uk')
+
+      described_class.new(urn: school.urn).call
+      responsible_body.reload
+      school.reload
+    end
+
+    it 'adds the headteacher as a hybrid user who can order under their lowercase email' do
+      user = User.find_by!(email_address: 'jsmith@school.sch.uk')
 
       expect(user).to be_hybrid
       expect(user.school).to eq(school)

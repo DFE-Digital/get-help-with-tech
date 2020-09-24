@@ -4,7 +4,7 @@ class OnboardSingleSchoolResponsibleBodyService
   end
 
   def call
-    return unless single_school_responsible_body?
+    return unless single_school_responsible_body? && !responsible_body.in_devices_pilot?
 
     responsible_body.update!(in_devices_pilot: true)
     devolve_ordering_to_the_school
@@ -61,7 +61,10 @@ private
   end
 
   def add_school_headteacher_to_responsible_body
-    headteacher_user = school.users.find_by!(email_address: school.headteacher_contact.email_address)
+    # User email addresses are all downcased before being added
+    # however a school contact email address can still contain capitals
+    email_address = school.headteacher_contact.email_address.downcase
+    headteacher_user = school.users.find_by!(email_address: email_address)
     headteacher_user.update!(responsible_body: responsible_body)
   end
 
