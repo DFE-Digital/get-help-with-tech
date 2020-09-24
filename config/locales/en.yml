@@ -104,7 +104,7 @@
       order_your_own:
         title: You can only order your full allocation if local restrictions are confirmed
       techsource_account:
-        title: You will get an invite to the Computacenter TechSource website
+        title: Use the TechSource website to place orders
       will_other_order:
         title: Do you need to give someone else access?
         yes_label: Yes, I need to add someone
