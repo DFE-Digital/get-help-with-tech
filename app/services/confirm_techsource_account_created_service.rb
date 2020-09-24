@@ -12,7 +12,7 @@ class ConfirmTechsourceAccountCreatedService
       user = User.find_by(email_address: email)
 
       if user
-        if user.update(has_techsource_account: true)
+        if user.update(techsource_account_confirmed_at: Time.zone.now)
           processed << { email: email }
         else
           unprocessed << { email: email, message: 'User could not be updated' }
