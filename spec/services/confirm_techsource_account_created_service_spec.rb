@@ -4,13 +4,17 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
   describe '#call' do
     context 'with one email' do
       let(:user) { create(:school_user) }
+      let(:now) { Time.zone.now }
 
       subject(:service) { described_class.new(emails: [user.email_address]) }
 
-      it 'updates user#has_techsource_account to true' do
-        expect {
+      it 'updates user#techsource_account_confirmed_at to now' do
+        expect(user.reload.techsource_account_confirmed_at).to be_nil
+
+        Timecop.freeze(now) do
           service.call
-        }.to change { user.reload.has_techsource_account }.from(false).to(true)
+          expect(user.reload.techsource_account_confirmed_at).to be_within(1.second).of(now)
+        end
       end
 
       it 'adds email to processed list' do
@@ -26,11 +30,11 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
       subject(:service) { described_class.new(emails: [user1.email_address, user2.email_address]) }
 
-      it 'updates user#has_techsource_account to true' do
+      it 'updates user#techsource_account_confirmed_at to truthy' do
         service.call
 
-        expect(user1.reload.has_techsource_account).to be_truthy
-        expect(user2.reload.has_techsource_account).to be_truthy
+        expect(user1.reload.techsource_account_confirmed_at).to be_truthy
+        expect(user2.reload.techsource_account_confirmed_at).to be_truthy
       end
     end
 
