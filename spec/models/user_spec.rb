@@ -304,15 +304,15 @@ RSpec.describe User, type: :model do
           expect(user_change.updated_at_timestamp).to eql(user.created_at)
           expect(user_change.type_of_update).to eql('New')
           expect(user_change.original_email_address).to be_nil
-          expect(user_change.original_first_name).to be_nil
-          expect(user_change.original_last_name).to be_nil
+          expect(user_change.original_first_name).to be_blank
+          expect(user_change.original_last_name).to be_blank
           expect(user_change.original_telephone).to be_nil
           expect(user_change.original_responsible_body).to be_nil
           expect(user_change.original_responsible_body_urn).to be_nil
           expect(user_change.original_cc_sold_to_number).to be_nil
-          expect(user_change.original_school).to be_nil
-          expect(user_change.original_school_urn).to be_nil
-          expect(user_change.original_cc_ship_to_number).to be_nil
+          expect(user_change.original_school).to be_blank
+          expect(user_change.original_school_urn).to be_blank
+          expect(user_change.original_cc_ship_to_number).to be_blank
         end
 
         it 'persists correct data for school user' do
@@ -333,15 +333,15 @@ RSpec.describe User, type: :model do
           expect(user_change.updated_at_timestamp).to eql(user.created_at)
           expect(user_change.type_of_update).to eql('New')
           expect(user_change.original_email_address).to be_nil
-          expect(user_change.original_first_name).to be_nil
-          expect(user_change.original_last_name).to be_nil
+          expect(user_change.original_first_name).to be_blank
+          expect(user_change.original_last_name).to be_blank
           expect(user_change.original_telephone).to be_nil
           expect(user_change.original_responsible_body).to be_nil
           expect(user_change.original_responsible_body_urn).to be_nil
           expect(user_change.original_cc_sold_to_number).to be_nil
-          expect(user_change.original_school).to be_nil
-          expect(user_change.original_school_urn).to be_nil
-          expect(user_change.original_cc_ship_to_number).to be_nil
+          expect(user_change.original_school).to be_blank
+          expect(user_change.original_school_urn).to be_blank
+          expect(user_change.original_cc_ship_to_number).to be_blank
         end
       end
 
@@ -587,9 +587,9 @@ RSpec.describe User, type: :model do
             perform_change!
             user_change = Computacenter::UserChange.last
 
-            expect(user_change.original_school).to be_nil
-            expect(user_change.original_school_urn).to be_nil
-            expect(user_change.original_cc_ship_to_number).to be_nil
+            expect(user_change.original_school).to be_blank
+            expect(user_change.original_school_urn).to be_blank
+            expect(user_change.original_cc_ship_to_number).to be_blank
           end
 
           it 'stores correct current fields' do
@@ -622,13 +622,6 @@ RSpec.describe User, type: :model do
 
           user_change = Computacenter::UserChange.last
           expect(user_change.type_of_update).to eql('Remove')
-        end
-
-        it 'sets all current fields to blank' do
-          user.destroy!
-
-          user_change = Computacenter::UserChange.last
-          expect(user_change.email_address).to eql(user.email_address)
         end
 
         it 'sets all original fields' do
