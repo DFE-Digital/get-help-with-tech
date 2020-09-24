@@ -11,7 +11,7 @@
 
     <%= form_with model: @form, url: computacenter_techsource_path do |f| %>
       <%= f.govuk_text_area :emails,
-                            label: { text: 'Email addresses' },
+                            label: { text: 'Email addresses', size: 'm' },
                             hint_text: 'Enter one email address per line',
                             rows: 12 %>
 
