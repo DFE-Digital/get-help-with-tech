@@ -450,11 +450,11 @@ RSpec.describe User, type: :model do
             expect(user_change.type_of_update).to eql('Remove')
           end
 
-          it 'sets all current fields to blank' do
+          it 'sets all current fields' do
             perform_change!
 
             user_change = Computacenter::UserChange.last
-            expect(user_change.email_address).to be_nil
+            expect(user_change.email_address).to eql(user.email_address)
           end
 
           it 'sets all original fields' do
@@ -627,7 +627,7 @@ RSpec.describe User, type: :model do
           user.destroy!
 
           user_change = Computacenter::UserChange.last
-          expect(user_change.email_address).to be_nil
+          expect(user_change.email_address).to eql(user.email_address)
         end
 
         it 'sets all original fields' do
