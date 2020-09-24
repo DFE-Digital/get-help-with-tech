@@ -157,7 +157,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_i_see_the_techsource_account_page
     expect(page).to have_current_path(school_welcome_wizard_techsource_account_path)
-    expect(page).to have_text('You will get an invite to the Computacenter TechSource website')
+    expect(page).to have_text('Use the TechSource website to place orders')
   end
 
   def then_i_see_the_will_other_order_page
