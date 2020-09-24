@@ -1,0 +1,3 @@
+<% if Time.zone.now < Time.zone.local(2020,9,26,23,0,0) %>
+<%= render GovukComponent::Warning.new(text: 'The TechSource website will be closed for maintenance on Saturday 20 September. You can order devices when it reopens on Sunday 21 September.') %>
+<%- end %>
