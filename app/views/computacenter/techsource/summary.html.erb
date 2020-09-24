@@ -1,0 +1,70 @@
+<% content_for :title, t('page_titles.computacenter.techsource') %>
+<% content_for :before_content, govuk_link_to('Back', computacenter_techsource_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl">Summary of updated TechSource users</h1>
+
+    <p class="govuk-body">We found <%= @service.email_count %> <%= 'email'.pluralize(@service.email_count) %> in your request:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= @service.unprocessed.size %> <%= 'error'.pluralize(@service.unprocessed.size) %></li>
+      <li><%= @service.processed.size %> <%= 'user'.pluralize(@service.processed.size) %> updated successfully</li>
+    </ul>
+  </div>
+</div>
+
+<% if @service.unprocessed.any? %>
+  <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= "#{@service.unprocessed.size} #{'error'.pluralize(@service.unprocessed.size)} found" %></h2>
+
+  <div class="govuk-form-group--error">
+    <p class="govuk-error-message">Fix the errors in your request and try again</p>
+
+    <table class="govuk-table requests-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Email</th>
+          <th class="govuk-table__header">Error</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @service.unprocessed.each do |row| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= row[:email] %>
+            </td>
+            <td class="govuk-table__cell">
+              <span class="govuk-error-message govuk-!-margin-bottom-0"><%= row[:message] %></span>
+            </td>
+          </tr>
+        <%- end %>
+      </tbody>
+    </table>
+  </div>
+<%- end %>
+
+<% if @service.processed.any? %>
+  <h2 class="govuk-heading-l govuk-!-margin-top-4">
+    <%= "#{@service.processed.size} #{'user'.pluralize(@service.processed.size)} processed" %>
+  </h2>
+
+  <table class="govuk-table requests-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Email</th>
+      </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+      <% @service.processed.each do |row| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <%= row[:email] %>
+          </td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+<%- end %>
+
+<%= govuk_button_link_to('Finish', computacenter_techsource_path) %>

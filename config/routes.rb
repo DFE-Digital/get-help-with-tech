@@ -158,6 +158,8 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
+    get '/techsource', to: 'techsource#new'
+    post '/techsource', to: 'techsource#create'
     resources :api_tokens, path: '/api-tokens'
     resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
       put '/', to: 'school_device_allocations#bulk_update', on: :collection

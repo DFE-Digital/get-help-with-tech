@@ -1,24 +1,25 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.computacenter_home') %>
+      <%= t('page_titles.computacenter.home') %>
     </h1>
 
-    <p class="govuk-body">Use this service to:</p>
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Download TechSource users', computacenter_user_ledger_path(format: :csv) %>
+    </h2>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        <span class="govuk-!-margin-bottom-4">download a CSV file of users who have permission to place orders on TechSource</span>
-        <br /><br />
-        <%= govuk_button_link_to 'Download TechSource users', computacenter_user_ledger_path(format: :csv), classes: 'govuk-!-margin-top-4' %>
-      </li>
-    </ul>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        <span class="govuk-!-margin-bottom-4">download a CSV file of Google Chromebook details for schools</span>
-        <br /><br />
-        <%= govuk_button_link_to 'Download Chromebook details', computacenter_chromebooks_path(format: :csv), classes: 'govuk-!-margin-top-4' %>
-      </li>
-    </ul>
+    <p class="govuk-body">Download a CSV file of all users with permission to place orders on TechSource.</p>
+
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Update TechSource users', computacenter_techsource_path %>
+    </h2>
+
+    <p class="govuk-body">Tell us which email addresses have had TechSource accounts created for them.</p>
+
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Download Chromebook details', computacenter_chromebooks_path(format: :csv) %>
+    </h2>
+
+    <p class="govuk-body">Download a CSV file of Google Chromebook details for schools.</p>
   </div>
 </div>

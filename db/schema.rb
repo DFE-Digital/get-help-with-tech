@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_23_093949) do
+ActiveRecord::Schema.define(version: 2020_09_23_115939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(version: 2020_09_23_093949) do
     t.datetime "privacy_notice_seen_at"
     t.bigint "school_id"
     t.boolean "orders_devices"
+    t.boolean "has_techsource_account", default: false
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
