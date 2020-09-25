@@ -43,30 +43,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <% if @schools.present? %>
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Name and URN</th>
-            <th scope="col" class="govuk-table__header">Responsible body</th>
-            <th scope="col" class="govuk-table__header">Who is ordering</th>
-          </tr>
-        </thead>
-
-        <tbody class="govuk-table__body">
-          <% @schools.each do |school| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">
-                <%= govuk_link_to "#{school.name} (#{school.urn})", support_devices_school_path(urn: school.urn) %>
-                <br>
-                <%= school.type_label %>
-              </td>
-              <td class="govuk-table__cell"><%= govuk_link_to school.responsible_body.name, support_devices_responsible_body_path(id: school.responsible_body_id) %></td>
-              <td class="govuk-table__cell"><%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <% if @groups.present? %>
+      <% @possible_statuses_and_labels.each do |status, status_label| %>
+        <% if @groups.has_key?(status) %>
+          <h2 class="govuk-heading-l"><%= status_label %></h2>
+          <%= render partial: 'schools_table', locals: { schools: @groups[status] } %>
+        <% end %>
+      <% end %>
     <% end %>
 
     <%= govuk_button_link_to 'Perform another search', search_support_devices_schools_path, classes: 'govuk-!-margin-top-4' %>

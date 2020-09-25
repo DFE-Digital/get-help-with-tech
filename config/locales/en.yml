@@ -399,6 +399,19 @@
         device_type:
           std_device: 'Standard device (laptop etc)'
           coms_device: 'Communication device (router etc)'
+      school_status:
+        status:
+          school_not_found: School not found
+          not_yet_onboarded_other: Responsible body not on the service
+          not_yet_onboarded_single_school: Single academy trust not on the service
+          responsible_body_not_decided_who_will_order: Responsible body must decide to devolve or order centrally
+          responsible_body_users_must_sign_in: Nobody from the responsible body can place orders
+          school_users_must_sign_in: Nobody from the school can place orders
+          responsible_body_order_users_waiting_for_techsource_accounts: Responsible body users waiting for TechSource accounts
+          school_order_users_waiting_for_techsource_accounts: School users waiting for TechSource accounts
+          waiting_for_cap_to_be_set: Responsible body/school set up to order but no caps set
+          ready_to_order: Responsible body/school ready to order
+          ordered: Responsible body/school ordered
     errors:
       models:
         api_token:

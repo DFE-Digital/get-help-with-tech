@@ -45,6 +45,10 @@ class GetInformationAboutSchools
     "#{EDUBASE_URL}edubasealldata#{date.strftime('%Y%m%d')}.csv"
   end
 
+  def self.school_public_url(urn:)
+    "https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{urn}"
+  end
+
   def self.school_contacts_url
     # this is a private file
     ENV.fetch('CONTACTS_FILE_URL')

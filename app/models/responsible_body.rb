@@ -112,4 +112,8 @@ class ResponsibleBody < ApplicationRecord
   def has_any_schools_that_can_order_now?
     schools.that_can_order_now.any?
   end
+
+  def has_only_one_school?
+    schools.length == 1
+  end
 end

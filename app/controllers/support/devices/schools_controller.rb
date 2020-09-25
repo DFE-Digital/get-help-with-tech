@@ -5,7 +5,9 @@ class Support::Devices::SchoolsController < Support::BaseController
 
   def results
     @search_form = BulkUrnSearchForm.new(search_params)
-    @schools = @search_form.schools.includes(:preorder_information, :responsible_body)
+    @schools = @search_form.schools.includes(:preorder_information, :users, responsible_body: :schools)
+    @groups = @schools.group_by {|school| SchoolStatus.new(school).status }
+    @possible_statuses_and_labels = I18n.t!('activerecord.attributes.school_status.status')
   end
 
   def show

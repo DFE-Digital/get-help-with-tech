@@ -1,0 +1,28 @@
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Name and URN</th>
+      <th scope="col" class="govuk-table__header">Responsible body</th>
+      <th scope="col" class="govuk-table__header">Status</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% schools.each do |school| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <%= govuk_link_to "#{school.name} (#{school.urn})", support_devices_school_path(urn: school.urn) %>
+          <br>
+          <%= school.type_label %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= govuk_link_to school.responsible_body.name, support_devices_responsible_body_path(school.responsible_body) %>
+        </td>
+        <% school_status = SchoolStatus.new(school) %>
+        <td class="govuk-table__cell">
+          <%= school_status.status.to_s.humanize %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

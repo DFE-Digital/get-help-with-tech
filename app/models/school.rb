@@ -55,6 +55,10 @@ class School < ApplicationRecord
       (std_device_allocation&.has_devices_available_to_order? == true)
   end
 
+  def has_ordered_devices?
+    std_device_allocation&.devices_ordered.to_i.positive?
+  end
+
   def has_std_device_allocation?
     std_device_allocation&.allocation.to_i.positive?
   end

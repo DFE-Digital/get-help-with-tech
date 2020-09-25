@@ -111,6 +111,10 @@ class User < ApplicationRecord
     seen_privacy_notice? && orders_devices?
   end
 
+  def has_techsource_account?
+    techsource_account_confirmed_at.present?
+  end
+
   def hybrid?
     school_id && responsible_body_id
   end
