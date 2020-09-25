@@ -2,6 +2,36 @@ require 'rails_helper'
 
 RSpec.describe Support::Devices::SchoolsController, type: :controller do
   let(:school) { create(:school, name: 'Alpha School') }
+  let(:another_school) { create(:school, name: 'Beta School') }
+  let(:support_user) { create(:support_user) }
+
+  describe '#search' do
+    before do
+      sign_in_as support_user
+    end
+
+    it 'responds successfully' do
+      get :search
+      expect(response).to be_successful
+    end
+  end
+
+  describe '#results' do
+    before do
+      sign_in_as support_user
+    end
+
+    it 'renders results' do
+      allow(School).to receive(:where)
+
+      post :results, params: { bulk_urn_search_form: { urns: "#{school.urn}\r\n#{another_school.urn}" } }
+
+      expect(School).to have_received(:where).with(urn: [school.urn.to_s, another_school.urn.to_s])
+
+      expect(response).to be_successful
+      expect(response).to render_template('results')
+    end
+  end
 
   describe 'show' do
     it 'is forbidden for MNO users' do

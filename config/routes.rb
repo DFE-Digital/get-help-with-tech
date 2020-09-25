@@ -137,6 +137,10 @@ Rails.application.routes.draw do
             put :set_as_school_contact, path: 'set-as-school-contact'
           end
         end
+        collection do
+          get 'search'
+          post 'results'
+        end
         get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
         post '/invite', to: 'schools#invite'
         get '/enable-orders', to: 'order_status#edit', as: :enable_orders
