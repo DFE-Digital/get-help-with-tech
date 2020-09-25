@@ -1,12 +1,11 @@
 class Computacenter::UserChangeGenerator
-  attr_reader :user, :last_change_for_user
+  attr_reader :user
 
   def initialize(user)
     @user = user
   end
 
   def generate!
-    @last_change_for_user = Computacenter::UserChange.last_for(user)
     if change_needed?
       change = Computacenter::UserChange.new(consolidated_attributes)
       change.add_original_fields_from(last_change_for_user) if last_change_for_user.present?
@@ -16,6 +15,10 @@ class Computacenter::UserChangeGenerator
   end
 
 private
+
+  def last_change_for_user
+    @last_change_for_user ||= Computacenter::UserChange.last_for(user)
+  end
 
   def consolidated_attributes
     computacenter_attributes\
