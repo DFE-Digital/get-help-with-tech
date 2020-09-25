@@ -1,0 +1,43 @@
+<%- title = t('page_titles.school_order_devices') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+    { 'Home' => school_home_path },
+    title,
+  ]) %>
+<%- end %>
+
+<%-
+  device_count = @school.std_device_allocation.available_devices_count
+  has_ordered = @school.std_device_allocation.devices_ordered > 0
+%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <div class="app-card app-card__order">
+      <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
+        <%= "#{device_count} #{'device'.pluralize(device_count)}" -%> available<br />for specific circumstances
+      </h2>
+
+      <div class="govuk-panel__body govuk-!-font-size-24">
+        <% if has_ordered %>
+          You’ve ordered <%= @school.std_device_allocation.devices_ordered %> of
+          <%= @school.std_device_allocation.cap %> devices
+        <% else %>
+          You cannot order your full allocation yet
+        <% end %>
+      </div>
+    </div>
+
+    <p class="govuk-body">Now you’ve contacted us to <%= link_to 'request devices for specific circumstances', school_request_devices_path %>, you can go ahead with your order.</p>
+
+    <p class="govuk-body">You cannot order your full allocation yet because there are no local coronavirus restrictions.</p>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+    <p class="govuk-body">It’s important to know your device allocation before you sign in. If you try to order more devices that you’ve been allocated, the order will be cancelled.</p>
+
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
+  </div>
+</div>
