@@ -5,7 +5,7 @@ class Support::Devices::SchoolsController < Support::BaseController
 
   def results
     @search_form = BulkUrnSearchForm.new(search_params)
-    @schools = @search_form.schools
+    @schools = @search_form.schools.includes(:preorder_information, :responsible_body)
   end
 
   def show
