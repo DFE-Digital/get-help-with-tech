@@ -513,8 +513,7 @@ RSpec.describe User, type: :model do
           let!(:user) { create(:school_user, :relevant_to_computacenter, school: original_school) }
 
           def perform_change!
-            user.school = other_school
-            user.save!
+            user.update!(school: other_school)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -586,7 +585,6 @@ RSpec.describe User, type: :model do
           it 'stores correct original fields' do
             perform_change!
             user_change = Computacenter::UserChange.last
-
             expect(user_change.original_school).to be_blank
             expect(user_change.original_school_urn).to be_blank
             expect(user_change.original_cc_ship_to_number).to be_blank

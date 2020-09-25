@@ -12,6 +12,7 @@ class AddUserSchools < ActiveRecord::Migration[6.0]
       FROM        users
       WHERE       school_id IS NOT NULL
     SQL
+    connection.execute populate_table_sql
 
     add_index :user_schools, %i[user_id school_id], unique: true
     add_index :user_schools, %i[school_id user_id], unique: true
@@ -27,8 +28,9 @@ class AddUserSchools < ActiveRecord::Migration[6.0]
       SET     school_id = (SELECT school_id FROM user_schools WHERE user_id = users.id)
       WHERE   users.id IN (SELECT user_id FROM user_schools)
     SQL
+    connection.execute populate_column_sql
 
-    add_index :users, [:school_id, :full_name]
+    add_index :users, %i[school_id full_name]
 
     drop_table :user_schools
   end

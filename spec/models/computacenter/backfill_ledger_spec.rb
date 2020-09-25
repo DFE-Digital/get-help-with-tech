@@ -32,9 +32,9 @@ RSpec.describe Computacenter::BackfillLedger do
         expect(user_change.responsible_body).to eql(user.effective_responsible_body.name)
         expect(user_change.responsible_body_urn).to eql(user.effective_responsible_body.computacenter_identifier)
         expect(user_change.cc_sold_to_number).to eql(user.effective_responsible_body.computacenter_reference)
-        expect(user_change.school).to eql(user.school&.name)
-        expect(user_change.school_urn).to eql(user.school&.urn)
-        expect(user_change.cc_ship_to_number).to eql(user.school&.computacenter_reference)
+        expect(user_change.school).to be_blank
+        expect(user_change.school_urn).to be_blank
+        expect(user_change.cc_ship_to_number).to be_blank
         expect(user_change.updated_at_timestamp).to be_within(1.second).of(now)
         expect(user_change.type_of_update).to eql('New')
         expect(user_change.original_first_name).to be(nil)
