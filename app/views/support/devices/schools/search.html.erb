@@ -1,0 +1,19 @@
+<% content_for :title, t('page_titles.support.devices.schools.search') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.support.devices.schools.search') %>
+    </h1>
+
+    <p class="govuk-body">Search for schools by entering their URNs. Use one line per URN.</p>
+
+    <%= form_with model: @search_form, url: results_support_devices_schools_path do |f| %>
+      <%= f.govuk_text_area :urns,
+                            label: { text: 'URNs', size: 'm' },
+                            rows: 12 %>
+
+      <%= f.govuk_submit 'Search' %>
+    <% end %>
+  </div>
+</div>

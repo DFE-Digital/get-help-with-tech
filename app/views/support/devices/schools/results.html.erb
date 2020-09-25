@@ -1,0 +1,74 @@
+<% content_for :title, t('page_titles.support.devices.schools.results') %>
+<% content_for :before_content, govuk_link_to('Back', search_support_devices_schools_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.support.devices.schools.results') %>
+    </h1>
+
+    <p class="govuk-body">You searched for <%= @search_form.request_count %> <%= 'schools'.pluralize(@search_form.request_count) %> and we found <%= @search_form.result_count %> <%= 'schools'.pluralize(@search_form.result_count) %></p>
+
+    <% if @search_form.missing_urns.any? %>
+      <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= "#{@search_form.missing_count} #{'error'.pluralize(@search_form.missing_count)} found" %></h2>
+
+      <div class="govuk-form-group--error">
+        <p class="govuk-error-message">Fix the errors in your search and try again</p>
+
+        <table class="govuk-table requests-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">URN</th>
+              <th class="govuk-table__header">Error</th>
+            </tr>
+          </thead>
+
+          <tbody class="govuk-table__body">
+            <% @search_form.missing_urns.each do |urn| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <%= urn %>
+                </td>
+                <td class="govuk-table__cell">
+                  <span class="govuk-error-message govuk-!-margin-bottom-0">No school with this URN could be found</span>
+                </td>
+              </tr>
+            <%- end %>
+          </tbody>
+        </table>
+      </div>
+    <%- end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if @schools.present? %>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">URN</th>
+            <th scope="col" class="govuk-table__header">School</th>
+            <th scope="col" class="govuk-table__header">Responsible body</th>
+            <th scope="col" class="govuk-table__header">Establishment type</th>
+            <th scope="col" class="govuk-table__header">Who is ordering</th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @schools.each do |school| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header"><%= school.urn %></th>
+              <td class="govuk-table__cell"><%= link_to school.name, support_devices_school_path(urn: school.urn) %></td>
+              <td class="govuk-table__cell"><%= link_to school.responsible_body.name, support_devices_responsible_body_path(id: school.responsible_body_id) %></td>
+              <td class="govuk-table__cell"><%= school.establishment_type.humanize %></td>
+              <td class="govuk-table__cell"><%= school&.preorder_information&.who_will_order_devices %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <%= govuk_button_link_to 'Perform another search', search_support_devices_schools_path, classes: 'govuk-!-margin-top-4' %>
+  </div>
+</div>
