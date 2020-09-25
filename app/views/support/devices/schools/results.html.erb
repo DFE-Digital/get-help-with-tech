@@ -57,8 +57,8 @@
         <tbody class="govuk-table__body">
           <% @schools.each do |school| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= link_to "#{school.name} (#{school.urn})", support_devices_school_path(urn: school.urn) %></td>
-              <td class="govuk-table__cell"><%= link_to school.responsible_body.name, support_devices_responsible_body_path(id: school.responsible_body_id) %></td>
+              <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_devices_school_path(urn: school.urn) %></td>
+              <td class="govuk-table__cell"><%= govuk_link_to school.responsible_body.name, support_devices_responsible_body_path(id: school.responsible_body_id) %></td>
               <td class="govuk-table__cell"><%= school.establishment_type.humanize %></td>
               <td class="govuk-table__cell"><%= school&.preorder_information&.who_will_order_devices %></td>
             </tr>
