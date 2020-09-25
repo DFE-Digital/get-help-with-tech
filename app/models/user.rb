@@ -39,11 +39,11 @@ class User < ApplicationRecord
   include SignInWithToken
 
   after_save do |user|
-    Computacenter::UserChange.read_from_version(user.versions.last)
+    Computacenter::UserChangeGenerator.new(user).generate!
   end
 
   after_destroy do |user|
-    Computacenter::UserChange.read_from_version(user.versions.last)
+    Computacenter::UserChangeGenerator.new(user).generate!
   end
 
   def is_mno_user?

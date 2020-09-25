@@ -3,12 +3,17 @@ require 'rails_helper'
 RSpec.describe Computacenter::BackfillLedger do
   subject(:service) { described_class.new }
 
+  before do
+    Computacenter::UserChange.delete_all
+  end
+
   describe '#call when not initalized with given users' do
     context 'happy path' do
-      let!(:user) { create(:local_authority_user, orders_devices: true) }
+      let!(:user) { create(:local_authority_user, :has_seen_privacy_notice, orders_devices: true) }
       let(:now) { Time.zone.now.utc }
 
       it 'persists user to ledger' do
+        Computacenter::UserChange.delete_all
         expect { service.call }.to change(Computacenter::UserChange, :count).by(1)
       end
 
@@ -48,6 +53,7 @@ RSpec.describe Computacenter::BackfillLedger do
     context 'calling backfill multiple times' do
       before do
         create(:local_authority_user, orders_devices: true)
+        Computacenter::UserChange.delete_all
       end
 
       it 'does not persist multiple times' do
@@ -91,6 +97,7 @@ RSpec.describe Computacenter::BackfillLedger do
       create_list(:user, 2, school: school, orders_devices: true)
       other_responsible_body = create(:local_authority)
       create_list(:user, 5, :has_seen_privacy_notice, orders_devices: true, responsible_body: other_responsible_body)
+      Computacenter::UserChange.delete_all
     end
 
     it 'backfills the ledger with just the given users' do
