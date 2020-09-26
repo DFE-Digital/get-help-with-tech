@@ -58,9 +58,9 @@ private
       responsible_body: user.effective_responsible_body&.name,
       responsible_body_urn: user.effective_responsible_body&.computacenter_identifier,
       cc_sold_to_number: user.effective_responsible_body&.computacenter_reference,
-      school: (user.hybrid? ? '' : user.school&.name),
-      school_urn: (user.hybrid? ? '' : user.school&.urn.to_s),
-      cc_ship_to_number: (user.hybrid? ? '' : user.school&.computacenter_reference),
+      school: (user.hybrid? ? '' : user.schools.map(&:name).join('|')),
+      school_urn: (user.hybrid? ? '' : user.schools.map(&:urn).join('|')),
+      cc_ship_to_number: (user.hybrid? ? '' : user.schools.map(&:computacenter_reference).join('|')),
     }
   end
 
