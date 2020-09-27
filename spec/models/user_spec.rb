@@ -570,7 +570,7 @@ RSpec.describe User, type: :model do
           end
         end
 
-        context 'when school association is added' do
+        context 'when school association is updated from nil' do
           let!(:school) { create(:school) }
           let!(:user) { create(:school_user, :relevant_to_computacenter, school: nil) }
 
@@ -597,6 +597,7 @@ RSpec.describe User, type: :model do
             expect(user_change.school).to eql(school.name)
             expect(user_change.school_urn).to eql(school.urn.to_s)
             expect(user_change.cc_ship_to_number).to eql(school.computacenter_reference)
+            expect(user_change.responsible_body).to eql(school.responsible_body.name)
           end
         end
       end
@@ -607,7 +608,7 @@ RSpec.describe User, type: :model do
         let!(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
 
         def perform_change!
-          user.update!(schools: [school, other_school])
+          user.schools << other_school
         end
 
         it 'creates a Computacenter::UserChange' do
@@ -618,7 +619,7 @@ RSpec.describe User, type: :model do
           perform_change!
           user_change = Computacenter::UserChange.last
           expect(user_change.original_school).to eq(school.name)
-          expect(user_change.original_school_urn).to eq(school.urn)
+          expect(user_change.original_school_urn).to eq(school.urn.to_s)
           expect(user_change.original_cc_ship_to_number).to eq(school.computacenter_reference)
         end
 
@@ -629,6 +630,12 @@ RSpec.describe User, type: :model do
           expect(user_change.school).to eql("#{school.name}|#{other_school.name}")
           expect(user_change.school_urn).to eql("#{school.urn}|#{other_school.urn}")
           expect(user_change.cc_ship_to_number).to eql("#{school.computacenter_reference}|#{other_school.computacenter_reference}")
+        end
+
+        it 'sets responsible_body fields to be those from the first school' do
+          perform_change!
+          user_change = Computacenter::UserChange.last
+          expect(user_change.responsible_body).to eql(school.responsible_body.name)
         end
       end
 
