@@ -381,8 +381,8 @@
           maybe_participating: 'May offer data when the service launches'
       preorder_information:
         will_need_chromebooks:
-          "yes": Yes, they will need Chromebooks
-          'no': No, they will not need Chromebooks
+          "yes": Yes, we will order Chromebooks
+          'no': No, we will not order Chromebooks
         status:
           needs_contact: Needs a contact
           needs_info: Needs information
