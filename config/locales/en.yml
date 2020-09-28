@@ -121,7 +121,7 @@
       devices_you_can_order:
         title: You can order a range of laptops and tablets
       chromebooks:
-        title: Will your school’s order include a request for Chromebooks?
+        title: Will your school’s order include Chromebooks?
         'yes': Yes, we will need Chromebooks
         'no': No, we do not need Chromebooks
         i_dont_know: I don’t know

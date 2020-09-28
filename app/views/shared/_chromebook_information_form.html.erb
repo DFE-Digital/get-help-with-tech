@@ -26,7 +26,9 @@
     <% if local_assigns[:show_i_dont_know_option] %>
       <%= f.govuk_radio_button :will_need_chromebooks,
                               'i_dont_know',
-                              label: { text: t(:i_dont_know, scope: scope) } %>
+                              label: { text: t(:i_dont_know, scope: scope) } do %>
+        <p class="govuk-body">You cannot place an order until you tell us whether you’ll be ordering Chromebooks or not</p>
+      <%- end %>
     <%- end %>
   <%- end %>
   <%= f.govuk_submit submit_label %>
