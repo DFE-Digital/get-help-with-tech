@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
+
   has_many :user_schools, dependent: :destroy, after_add: :generate_user_change_if_needed!, after_remove: :generate_user_change_if_needed!
   has_many :schools, through: :user_schools
 
