@@ -9,7 +9,6 @@
       <%= title %>
     </h1>
 
-    <h2 class="govuk-heading-l">Will the school need Chromebooks?</h2>
     <%= render partial: 'shared/chromebook_information_intro' %>
     <%= render partial: 'shared/chromebook_information_form', locals: { url: responsible_body_devices_school_chromebooks_path(@school.urn), form_object: @chromebook_information_form } %>
   </div>

@@ -43,7 +43,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_asks_me_if_the_school_will_need_chromebooks
-    expect(page).to have_content 'Will the school need Chromebooks?'
+    expect(page).to have_content 'Will the school’s order include Chromebooks?'
   end
 
   def when_i_choose_no_they_will_not_need_chromebooks

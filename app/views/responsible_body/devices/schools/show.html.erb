@@ -13,9 +13,12 @@
 
     <%- if @school.preorder_information.orders_managed_centrally? %>
       <%- unless @school.preorder_information.chromebook_information_complete? %>
-      <h2 class="govuk-heading-l">Will the school need Chromebooks?</h2>
-      <%= render partial: 'shared/chromebook_information_intro' %>
-      <%= render partial: 'shared/chromebook_information_form', locals: { url: responsible_body_devices_school_chromebooks_path(@school.urn), form_object: @chromebook_information_form } %>
+        <h2 class="govuk-heading-l">Before you can order, we need more information</h2>
+        <%= render partial: 'shared/chromebook_information_intro' %>
+        <%= render partial: 'shared/chromebook_information_form', locals: {
+          legend_text: 'Will the school’s order include Chromebooks?',
+          url: responsible_body_devices_school_chromebooks_path(@school.urn),
+          form_object: @chromebook_information_form } %>
       <%- end %>
     <%- end %>
   </div>
