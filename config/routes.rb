@@ -131,7 +131,7 @@ Rails.application.routes.draw do
       resources :key_contacts, only: %i[new index create], path: '/key-contacts'
       resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
       resources :schools, only: %i[show], param: :urn do
-        resources :users, only: %i[edit update]
+        resources :users, only: %i[new create edit update]
         resources :contacts, only: %i[edit update] do
           member do
             put :set_as_school_contact, path: 'set-as-school-contact'

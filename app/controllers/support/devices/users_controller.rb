@@ -1,4 +1,20 @@
 class Support::Devices::UsersController < Support::BaseController
+  def new
+    @school = School.find_by(urn: params[:school_urn])
+    @user = @school.users.build
+  end
+
+  def create
+    @school = School.find_by(urn: params[:school_urn])
+    @user = @school.users.build(user_params)
+
+    if @user.save
+      redirect_to support_devices_school_path(urn: @school.urn)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   def edit
     @school = School.find_by(urn: params[:school_urn])
     @user = present(@school.users.find(params[:id]))
