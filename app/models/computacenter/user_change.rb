@@ -19,14 +19,21 @@ module Computacenter
 
     belongs_to :user, optional: true
 
-    def self.last_for(user)
-      where(user_id: user.id)
-        .order(:updated_at_timestamp)
-        .last
+    scope :for_user, ->(user) { where(user_id: user.id) }
+
+    def self.latest_for_user(user)
+      # when we have multiple UserChanges created in one transaction (e.g. for
+      # creating a user and assigning a school), they both get the user.updated_at
+      # as updated_at_timestamp. So we need a tie-breaker in that case:
+      for_user(user).order(updated_at_timestamp: :asc, created_at: :asc).last
     end
 
     def is_different_to?(user_change)
       user_change.computacenter_attributes != computacenter_attributes
+    end
+
+    def differences_from(user_change)
+      computacenter_attributes.reject { |k, v| v == user_change.computacenter_attributes[k] }
     end
 
     def computacenter_attributes

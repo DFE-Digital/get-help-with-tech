@@ -95,7 +95,7 @@ private
     elsif @invite_user == 'yes'
       user_attrs = user_params(params)
 
-      @invited_user = school.users.build(user_attrs)
+      @invited_user = User.new(user_attrs.merge(school_id: school.id))
       if @invited_user.valid?
         save_and_invite_user!(@invited_user)
         @invited_user = nil

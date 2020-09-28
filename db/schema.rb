@@ -212,6 +212,17 @@ ActiveRecord::Schema.define(version: 2020_09_24_142403) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_schools", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "school_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id", "user_id"], name: "index_user_schools_on_school_id_and_user_id", unique: true
+    t.index ["school_id"], name: "index_user_schools_on_school_id"
+    t.index ["user_id", "school_id"], name: "index_user_schools_on_user_id_and_school_id", unique: true
+    t.index ["user_id"], name: "index_user_schools_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "full_name"
     t.string "email_address"
@@ -228,15 +239,16 @@ ActiveRecord::Schema.define(version: 2020_09_24_142403) do
     t.boolean "is_support", default: false, null: false
     t.boolean "is_computacenter", default: false, null: false
     t.datetime "privacy_notice_seen_at"
-    t.bigint "school_id"
     t.boolean "orders_devices"
+    t.bigint "legacy_school_id"
     t.datetime "techsource_account_confirmed_at"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["legacy_school_id", "full_name"], name: "index_users_on_legacy_school_id_and_full_name"
+    t.index ["legacy_school_id"], name: "index_users_on_legacy_school_id"
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
     t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
-    t.index ["school_id"], name: "index_users_on_school_id"
     t.index ["sign_in_token"], name: "index_users_on_sign_in_token", unique: true
   end
 
@@ -259,5 +271,4 @@ ActiveRecord::Schema.define(version: 2020_09_24_142403) do
   add_foreign_key "school_device_allocations", "schools"
   add_foreign_key "school_welcome_wizards", "users", column: "invited_user_id"
   add_foreign_key "schools", "responsible_bodies"
-  add_foreign_key "users", "schools"
 end

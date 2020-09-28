@@ -190,6 +190,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       it 'updates the preorder_information with the form details' do
         wizard.update_step!(request)
+        school.reload
         expect(school.preorder_information.will_need_chromebooks).to eq(request[:will_need_chromebooks])
         expect(school.preorder_information.school_or_rb_domain).to eq(request[:school_or_rb_domain])
         expect(school.preorder_information.recovery_email_address).to eq(request[:recovery_email_address])
@@ -228,7 +229,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       it 'updates the preorder_information with the form details' do
         wizard.update_step!(request)
-        expect(school.preorder_information.will_need_chromebooks).to eq('no')
+        expect(school.preorder_information.reload.will_need_chromebooks).to eq('no')
       end
 
       it 'moves to the what_happens_next step' do

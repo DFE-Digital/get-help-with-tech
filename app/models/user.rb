@@ -7,7 +7,8 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
-  belongs_to :school, optional: true
+  has_many :user_schools, dependent: :destroy
+  has_many :schools, through: :user_schools
 
   scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
@@ -113,6 +114,26 @@ class User < ApplicationRecord
 
   def hybrid?
     school_id && responsible_body_id
+  end
+
+  # Wrapper methods to ease the transition from 'user belongs_to school',
+  # to 'user has_many schools'
+  def school
+    schools.first
+  end
+
+  def school_id
+    school&.id
+  end
+
+  def school_id=(new_school_id)
+    user_schools.delete_all
+    schools << School.find(new_school_id) if new_school_id
+  end
+
+  def school=(new_school)
+    user_schools.delete_all
+    schools << new_school if new_school.present?
   end
 
 private

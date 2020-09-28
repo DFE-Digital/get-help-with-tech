@@ -17,7 +17,7 @@ class Computacenter::UserChangeGenerator
 private
 
   def last_change_for_user
-    @last_change_for_user ||= Computacenter::UserChange.last_for(user)
+    @last_change_for_user ||= Computacenter::UserChange.latest_for_user(user)
   end
 
   def consolidated_attributes
@@ -59,7 +59,7 @@ private
       responsible_body_urn: user.effective_responsible_body&.computacenter_identifier,
       cc_sold_to_number: user.effective_responsible_body&.computacenter_reference,
       school: (user.hybrid? ? '' : user.school&.name),
-      school_urn: (user.hybrid? ? '' : user.school&.urn),
+      school_urn: (user.hybrid? ? '' : user.school&.urn.to_s),
       cc_ship_to_number: (user.hybrid? ? '' : user.school&.computacenter_reference),
     }
   end
