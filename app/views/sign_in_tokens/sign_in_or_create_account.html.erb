@@ -10,7 +10,7 @@
 
       <%= f.govuk_radio_buttons_fieldset(:already_have_account, legend: {size: 'm', text: 'Do you already have an account?'}) do %>
         <%= f.govuk_radio_button :already_have_account, 'yes', label: { text: 'Yes, sign in' }, link_errors: true do %>
-          <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint_text: 'Enter the email address you used to register, and we’ll send you a link to sign in.' %>
+          <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint: { text: 'Enter the email address you used to register, and we’ll send you a link to sign in.' } %>
         <%- end %>
         <%= f.govuk_radio_button :already_have_account, 'no', label: { text: 'No, I need to create an account' }, link_errors: true %>
       <%- end %>

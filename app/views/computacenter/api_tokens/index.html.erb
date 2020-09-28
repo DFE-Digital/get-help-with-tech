@@ -43,7 +43,7 @@
     <h2 class="govuk-heading-l"><%= t('.form_header') %></h2>
     <%= form_for @api_token, url: computacenter_api_tokens_path do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.govuk_text_field :name, label: { size: 'm', text: t('.name') }, hint_text: t('.name_hint') %>
+      <%= f.govuk_text_field :name, label: { size: 'm', text: t('.name') }, hint: { text: t('.name_hint') } %>
       <%= f.govuk_submit t('.create') %>
     <%- end %>
   </div>
