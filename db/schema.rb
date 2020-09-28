@@ -227,6 +227,28 @@ ActiveRecord::Schema.define(version: 2020_09_29_092315) do
     t.index ["user_id"], name: "index_user_schools_on_user_id"
   end
 
+  create_table "staged_schools", force: :cascade do |t|
+    t.integer "urn", null: false
+    t.string "name", null: false
+    t.string "responsible_body_name", null: false
+    t.string "address_1"
+    t.string "address_2"
+    t.string "address_3"
+    t.string "town"
+    t.string "county"
+    t.string "postcode"
+    t.string "phase", null: false
+    t.string "establishment_type"
+    t.string "status", null: false
+    t.integer "link_urn"
+    t.string "link_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_staged_schools_on_name"
+    t.index ["status"], name: "index_staged_schools_on_status"
+    t.index ["urn"], name: "index_staged_schools_on_urn"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "full_name"
     t.string "email_address"

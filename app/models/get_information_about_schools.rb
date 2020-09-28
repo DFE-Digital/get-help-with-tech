@@ -20,6 +20,15 @@ class GetInformationAboutSchools
     file.unlink
   end
 
+  def self.school_links(&block)
+    file = Tempfile.new
+    fetch_latest_edubase_links_file(file)
+    SchoolLinksDataFile.new(file.path).school_links(&block)
+  ensure
+    file.close
+    file.unlink
+  end
+
   def self.contacts(&block)
     file = Tempfile.new
     fetch_contacts_file(file)
@@ -33,6 +42,10 @@ class GetInformationAboutSchools
     RemoteFile.download(schools_url, file)
   end
 
+  def self.fetch_latest_edubase_links_file(file)
+    RemoteFile.download(school_links_url, file)
+  end
+
   def self.fetch_contacts_file(file)
     RemoteFile.download(school_contacts_url, file)
   end
@@ -43,6 +56,10 @@ class GetInformationAboutSchools
 
   def self.schools_url(date: Time.zone.now)
     "#{EDUBASE_URL}edubasealldata#{date.strftime('%Y%m%d')}.csv"
+  end
+
+  def self.school_links_url(date: Time.zone.now)
+    "#{EDUBASE_URL}links_edubasealldata#{date.strftime('%Y%m%d')}.csv"
   end
 
   def self.school_contacts_url
