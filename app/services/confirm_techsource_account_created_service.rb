@@ -35,10 +35,10 @@ private
   attr_writer :processed, :unprocessed
 
   def email_no_longer_computacenter_relevant(email)
-    Computacenter::UserChange.order(updated_at_timestamp: :desc).find_by(original_email_address: email)&.Remove?
+    Computacenter::UserChange.order(updated_at_timestamp: :desc, created_at: :desc).find_by(original_email_address: email)&.Remove?
   end
 
   def user_based_on_previous_email(email)
-    Computacenter::UserChange.order(updated_at_timestamp: :desc).find_by(original_email_address: email)&.user
+    Computacenter::UserChange.order(updated_at_timestamp: :desc, created_at: :desc).find_by(original_email_address: email)&.user
   end
 end
