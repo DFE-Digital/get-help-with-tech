@@ -178,8 +178,6 @@ Rails.application.routes.draw do
   get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in
   post '/sign-in', to: 'sign_in_tokens#create'
 
-  get '/techsource-start', to: 'techsource_launcher#start'
-
   get '/403', to: 'errors#forbidden', via: :all
   get '/404', to: 'errors#not_found', via: :all
   get '/422', to: 'errors#unprocessable_entity', via: :all
