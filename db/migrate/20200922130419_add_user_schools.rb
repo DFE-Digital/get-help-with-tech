@@ -17,20 +17,18 @@ class AddUserSchools < ActiveRecord::Migration[6.0]
     add_index :user_schools, %i[user_id school_id], unique: true
     add_index :user_schools, %i[school_id user_id], unique: true
 
-    remove_column :users, :school_id
+    rename_column :users, :school_id, :legacy_school_id
   end
 
   def down
-    add_reference :users, :school
+    rename_column :users, :legacy_school_id, :school_id
 
     populate_column_sql = <<~SQL
       UPDATE  users
-      SET     school_id = (SELECT school_id FROM user_schools WHERE user_id = users.id)
+      SET     school_id = (SELECT school_id FROM user_schools WHERE user_id = users.id ORDER BY created_at LIMIT 1)
       WHERE   users.id IN (SELECT user_id FROM user_schools)
     SQL
     connection.execute populate_column_sql
-
-    add_index :users, %i[school_id full_name]
 
     drop_table :user_schools
   end

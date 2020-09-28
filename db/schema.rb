@@ -240,10 +240,13 @@ ActiveRecord::Schema.define(version: 2020_09_24_142403) do
     t.boolean "is_computacenter", default: false, null: false
     t.datetime "privacy_notice_seen_at"
     t.boolean "orders_devices"
+    t.bigint "legacy_school_id"
     t.datetime "techsource_account_confirmed_at"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["legacy_school_id", "full_name"], name: "index_users_on_legacy_school_id_and_full_name"
+    t.index ["legacy_school_id"], name: "index_users_on_legacy_school_id"
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
     t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
     t.index ["sign_in_token"], name: "index_users_on_sign_in_token", unique: true
