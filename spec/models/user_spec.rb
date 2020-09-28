@@ -570,7 +570,7 @@ RSpec.describe User, type: :model do
           end
         end
 
-        context 'when school association is added' do
+        context 'when school association is updated from nil' do
           let!(:school) { create(:school) }
           let!(:user) { create(:school_user, :relevant_to_computacenter, school: nil) }
 
@@ -597,7 +597,45 @@ RSpec.describe User, type: :model do
             expect(user_change.school).to eql(school.name)
             expect(user_change.school_urn).to eql(school.urn.to_s)
             expect(user_change.cc_ship_to_number).to eql(school.computacenter_reference)
+            expect(user_change.responsible_body).to eql(school.responsible_body.name)
           end
+        end
+      end
+
+      context 'when a user has a second school association added' do
+        let!(:school) { create(:school) }
+        let!(:other_school) { create(:school) }
+        let!(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+
+        def perform_change!
+          user.schools << other_school
+        end
+
+        it 'creates a Computacenter::UserChange' do
+          expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+        end
+
+        it 'stores correct original fields' do
+          perform_change!
+          user_change = Computacenter::UserChange.last
+          expect(user_change.original_school).to eq(school.name)
+          expect(user_change.original_school_urn).to eq(school.urn.to_s)
+          expect(user_change.original_cc_ship_to_number).to eq(school.computacenter_reference)
+        end
+
+        it 'stores the school fields as pipe-delimited lists' do
+          perform_change!
+          user_change = Computacenter::UserChange.last
+
+          expect(user_change.school).to eql("#{school.name}|#{other_school.name}")
+          expect(user_change.school_urn).to eql("#{school.urn}|#{other_school.urn}")
+          expect(user_change.cc_ship_to_number).to eql("#{school.computacenter_reference}|#{other_school.computacenter_reference}")
+        end
+
+        it 'sets responsible_body fields to be those from the first school' do
+          perform_change!
+          user_change = Computacenter::UserChange.last
+          expect(user_change.responsible_body).to eql(school.responsible_body.name)
         end
       end
 

@@ -7,7 +7,8 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
-  has_many :user_schools, dependent: :destroy
+
+  has_many :user_schools, dependent: :destroy, after_add: :generate_user_change_if_needed!, after_remove: :generate_user_change_if_needed!
   has_many :schools, through: :user_schools
 
   scope :approved, -> { where.not(approved_at: nil) }
@@ -39,12 +40,16 @@ class User < ApplicationRecord
 
   include SignInWithToken
 
-  after_save do |user|
-    Computacenter::UserChangeGenerator.new(user).generate!
+  after_save do
+    generate_user_change_if_needed!
   end
 
-  after_destroy do |user|
-    Computacenter::UserChangeGenerator.new(user).generate!
+  after_destroy do
+    generate_user_change_if_needed!
+  end
+
+  def generate_user_change_if_needed!(_obj = nil)
+    Computacenter::UserChangeGenerator.new(self).generate!
   end
 
   def is_mno_user?
@@ -119,7 +124,7 @@ class User < ApplicationRecord
   # Wrapper methods to ease the transition from 'user belongs_to school',
   # to 'user has_many schools'
   def school
-    schools.first
+    user_schools.first&.school
   end
 
   def school_id
