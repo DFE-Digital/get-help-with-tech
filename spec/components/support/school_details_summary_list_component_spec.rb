@@ -41,7 +41,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('.govuk-summary-list__row')[6].text).to include('Yes, they will need Chromebooks')
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('Yes, we will order Chromebooks')
       expect(result.css('.govuk-summary-list__row')[7].text).to include('school.domain.org')
       expect(result.css('.govuk-summary-list__row')[8].text).to include('admin@recovery.org')
     end
@@ -118,7 +118,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details' do
-      expect(result.css('.govuk-summary-list__row')[5].text).to include('Yes, they will need Chromebooks')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('Yes, we will order Chromebooks')
       expect(result.css('.govuk-summary-list__row')[6].text).to include('school.domain.org')
       expect(result.css('.govuk-summary-list__row')[7].text).to include('admin@recovery.org')
 

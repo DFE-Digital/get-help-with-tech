@@ -183,7 +183,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_im_asked_whether_my_school_will_order_chromebooks
     expect(page).to have_current_path(school_welcome_wizard_chromebooks_path)
-    expect(page).to have_text('Will your school’s order include a request for Chromebooks?')
+    expect(page).to have_text('Will your school’s order include Chromebooks?')
   end
 
   def when_i_choose_yes_and_submit_the_chromebooks_form

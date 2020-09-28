@@ -7,7 +7,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render partial: 'shared/chromebook_information_intro', locals: { show_different_devices_text: true } %>
+    <p class="govuk-body">If you’re going to order Google Chromebooks, we need information to configure them before you place your order.</p>
     <%= render partial: 'shared/chromebook_information_form', locals: { url: school_welcome_wizard_path(step: @wizard.step), form_object: @wizard, show_i_dont_know_option: true, submit_label: 'Continue', scope: scope } %>
   </div>
 </div>

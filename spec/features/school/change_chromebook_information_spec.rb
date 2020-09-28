@@ -26,18 +26,18 @@ RSpec.feature 'Change school Chromebook information' do
       end
 
       it 'lets me choose Yes or No' do
-        expect(page).to have_field('Yes, they will need Chromebooks')
-        expect(page).to have_field('No, they will not need Chromebooks')
+        expect(page).to have_field('Yes, we will order Chromebooks')
+        expect(page).to have_field('No, we will not order Chromebooks')
       end
 
       it 'shows fields for domain and recovery email when I choose Yes' do
-        choose('Yes, they will need Chromebooks')
+        choose('Yes, we will order Chromebooks')
         expect(page).to have_field('School or local authority domain')
         expect(page).to have_field('Recovery email address')
       end
 
       it 'shows an error when I do not supply valid information' do
-        choose('Yes, they will need Chromebooks')
+        choose('Yes, we will order Chromebooks')
         fill_in('School or local authority domain', with: '')
         click_on 'Save'
         expect(page).to have_http_status(:unprocessable_entity)
@@ -45,7 +45,7 @@ RSpec.feature 'Change school Chromebook information' do
       end
 
       it 'goes back to the school details page when I save valid information' do
-        choose('Yes, they will need Chromebooks')
+        choose('Yes, we will order Chromebooks')
         fill_in('School or local authority domain', with: 'some.domain.org')
         fill_in('Recovery email address', with: 'someone@someotherdomain.org')
         click_on 'Save'
