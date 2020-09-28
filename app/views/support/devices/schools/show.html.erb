@@ -18,37 +18,23 @@
 
 <%= render Support::SchoolDetailsSummaryListComponent.new(school: @school) %>
 
-<% if @users.present? %>
-  <table id="responsible-body-users" class="govuk-table govuk-!-margin-top-6">
-    <caption class="govuk-table__caption govuk-heading-l">Users</caption>
-    <caption class="govuk-table__caption">School users</caption>
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Email address</th>
-        <th scope="col" class="govuk-table__header">Full name</th>
-        <th scope="col" class="govuk-table__header">Sign-in count</th>
-        <th scope="col" class="govuk-table__header">Last sign in</th>
-        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Actions</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l">Users</h2>
+
+    <% if @users.present? %>
       <% @users.each do |user| %>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= user.email_address %></td>
-          <td class="govuk-table__cell"><%= user.full_name %></td>
-          <td class="govuk-table__cell"><%= user.sign_in_count %></td>
-          <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">
-            <%= govuk_link_to "Change <span class='govuk-visually-hidden'>details for #{user.full_name}</span>".html_safe, edit_support_devices_school_user_path(school_urn: @school.urn, id: user.id) %>
-          </td>
-        </tr>
+        <div class="user">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h3>
+          <p class="govuk-body">
+            <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_devices_school_user_path(school_urn: @school.urn, id: user.id) %>
+          </p>
+          <%= render Support::SchoolUserSummaryListComponent.new(user: user) %>
+        </div>
       <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <h2 class="govuk-heading-l">Users</h2>
-  <p class="govuk-body">None</p>
-<% end %>
+    <% end %>
+  </div>
+</div>
 
 <% if @contacts.present? %>
   <table id="contacts" class="govuk-table govuk-!-margin-top-6">
