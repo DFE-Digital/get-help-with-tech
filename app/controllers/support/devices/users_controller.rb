@@ -6,9 +6,10 @@ class Support::Devices::UsersController < Support::BaseController
 
   def create
     @school = School.find_by(urn: params[:school_urn])
-    @user = @school.users.build(user_params)
+    user_attributes = @school.users.build(user_params).attributes
+    @user = CreateUserService.invite_school_user(user_attributes)
 
-    if @user.save
+    if @user.persisted?
       redirect_to support_devices_school_path(urn: @school.urn)
     else
       render :new, status: :unprocessable_entity

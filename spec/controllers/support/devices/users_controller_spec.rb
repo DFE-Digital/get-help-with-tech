@@ -32,9 +32,21 @@ RSpec.describe Support::Devices::UsersController do
         expect { post! }.to change(User, :count).by(1)
       end
 
+      it 'sets attributes correctly' do
+        post!
+        record = User.last
+        expect(record.orders_devices).to be_falsey
+      end
+
       it 'redirects back to the school' do
         post!
         expect(response).to redirect_to support_devices_school_path(urn: school.urn)
+      end
+
+      it 'sends out an email', sidekiq: true do
+        expect { post! }.to change {
+          ActionMailer::Base.deliveries.size
+        }.by(1)
       end
     end
 
