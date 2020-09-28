@@ -65,5 +65,24 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
         expect(user.reload.techsource_account_confirmed_at).to be_truthy
       end
     end
+
+    context 'when user has been destroyed' do
+      let!(:user) do
+        create(:school_user, :relevant_to_computacenter)
+      end
+
+      before do
+        user.destroy!
+      end
+
+      subject(:service) { described_class.new(emails: [user.email_address]) }
+
+      it 'adds to processed list' do
+        service.call
+
+        expect(service.processed).to be_present
+        expect(service.unprocessed).to be_empty
+      end
+    end
   end
 end
