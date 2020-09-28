@@ -132,11 +132,6 @@ Rails.application.routes.draw do
       resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
       resources :schools, only: %i[show], param: :urn do
         resources :users, only: %i[new create edit update]
-        resources :contacts, only: %i[edit update] do
-          member do
-            put :set_as_school_contact, path: 'set-as-school-contact'
-          end
-        end
         collection do
           get 'search'
           post 'results'
