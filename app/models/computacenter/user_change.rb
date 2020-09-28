@@ -17,6 +17,8 @@ module Computacenter
 
     enum type_of_update: { New: 0, Change: 1, Remove: 2 }
 
+    belongs_to :user, optional: true
+
     def self.last_for(user)
       where(user_id: user.id)
         .order(:updated_at_timestamp)

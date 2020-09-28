@@ -9,7 +9,7 @@ class ConfirmTechsourceAccountCreatedService
 
   def call
     emails.each do |email|
-      user = User.find_by(email_address: email)
+      user = User.find_by(email_address: email) || Computacenter::UserChange.order(updated_at_timestamp: :desc).find_by(original_email_address: email).user
 
       if user
         if user.update(techsource_account_confirmed_at: Time.zone.now)

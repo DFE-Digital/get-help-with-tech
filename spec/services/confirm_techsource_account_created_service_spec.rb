@@ -47,5 +47,23 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
         expect(service.unprocessed).to include(email: 'nobody@example.com', message: 'No user with this email found')
       end
     end
+
+    context 'when user email has changed' do
+      let!(:user) do
+        create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com')
+      end
+
+      before do
+        user.update(email_address: 'new@example.com')
+      end
+
+      subject(:service) { described_class.new(emails: ['old@example.com']) }
+
+      it 'updates user based on previous email' do
+        expect(user.techsource_account_confirmed_at).to be_falsey
+        service.call
+        expect(user.reload.techsource_account_confirmed_at).to be_truthy
+      end
+    end
   end
 end
