@@ -28,5 +28,4 @@ class Staging::School < ApplicationRecord
     special: 'special',
     other_type: 'other_type',
   }, _suffix: true
-
 end

@@ -15,6 +15,10 @@ protected
     }
   end
 
+  def skip?(row)
+    school_not_open?(row) || super(row)
+  end
+
 private
 
   def email(row)
@@ -38,5 +42,9 @@ private
       return row[key] if row[key].present?
     end
     nil
+  end
+
+  def school_not_open?(row)
+    !row['EstablishmentStatus (name)'].in? ['Open', 'Open, but proposed to close']
   end
 end

@@ -40,9 +40,8 @@ protected
   end
 
   def skip?(row)
-    # school_not_open?(row) ||
     row['LA (name)'] == 'Vale of Glamorgan' ||
-    EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
+      EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
   end
 
 private
@@ -102,8 +101,4 @@ private
       Rails.logger.info("Unknown status type: '#{row['EstablishmentStatus (name)']}'")
     end
   end
-
-  # def school_not_open?(row)
-  #   !row['EstablishmentStatus (name)'].in? ['Open', 'Open, but proposed to close']
-  # end
 end

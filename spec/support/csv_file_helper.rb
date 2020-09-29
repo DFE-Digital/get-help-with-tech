@@ -37,8 +37,18 @@ module CSVFileHelper
     telephone: 'Telephone',
   }.freeze
 
+  SCHOOL_LINKS_ATTRS = {
+    urn: 'URN',
+    link_urn: 'LinkURN',
+    link_type: 'LinkType',
+  }.freeze
+
   def create_school_csv_file(filename, array_of_hashes)
     create_csv_file(filename, SCHOOL_ATTRS.values, array_of_hashes)
+  end
+
+  def create_school_links_csv_file(filename, array_of_hashes)
+    create_csv_file(filename, SCHOOL_LINKS_ATTRS.values, array_of_hashes, SCHOOL_LINKS_ATTRS)
   end
 
   def create_allocations_csv_file(filename, array_of_hashes)
