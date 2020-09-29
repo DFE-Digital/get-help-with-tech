@@ -4,3 +4,9 @@
   - default
   - mailers
   - slack_messages
+  - scheduler
+:schedule:
+  StageGiasDataJob:
+    cron: '15 5 * * * Europe/London'  # every day at 5:15am
+    queue: scheduler
+    description: Stage GIAS school data
