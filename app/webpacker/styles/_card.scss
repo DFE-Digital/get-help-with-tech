@@ -16,12 +16,15 @@
 }
 
 .app-card--green {
-  background: govuk-colour("green");
-  color: govuk-colour("white");
+  background: govuk-tint(govuk-colour("green"), 80);
 }
 
 .app-card--yellow {
   background: govuk-tint(govuk-colour("yellow"), 75);
+}
+
+.app-card--orange {
+  background: govuk-tint(govuk-colour("orange"), 75);
 }
 
 .app-card--light-blue {

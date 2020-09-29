@@ -47,27 +47,13 @@
       </span>
       <%= t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_contact'] || 0) %>
     </div>
-
-    <div class="app-card app-card--blue">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_contacted'] || 0) %>
-      </span>
-      <%= t(:school_contacted, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_contacted'] || 0) %>
-    </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <div class="app-card app-card--light-blue">
       <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
+        1,000
       </span>
-      <%= t(:school_contacts, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
-    </div>
-
-    <div class="app-card app-card--green">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_ready'] || 0) %>
-      </span>
-      <%= t(:school_ready, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_ready'] || 0) %>
+      have contact details
     </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
@@ -84,6 +70,117 @@
         <%= number_with_delimiter(@stats.preorder_information_counts_by_status['ready'] || 0) %>
       </span>
       <%= t(:information_given, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0) %>
+    </div>
+  </div>
+</div>
+
+<h2 class="govuk-heading-l govuk-!-margin-top-8">Schools</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <div class="app-card app-card--blue">
+      <span class="app-card__count">1,000</span>
+      schools with contact details
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        100
+      </span>
+      have not been contacted yet
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--yellow">
+      <span class="app-card__secondary-count">
+        200
+      </span>
+      contacted but not signed in
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--orange">
+      <span class="app-card__secondary-count">
+        500
+      </span>
+      signed in but not given details
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--green">
+      <span class="app-card__secondary-count">
+        200
+      </span>
+      signed in, details given, ready to order
+    </div>
+  </div>
+</div>
+
+<h2 class="govuk-heading-l govuk-!-margin-top-8">Ordering</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <div class="app-card app-card--blue">
+      <span class="app-card__count">100</span>
+      schools can place orders
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        25
+      </span>
+      can order for specific circumstances
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        75
+      </span>
+      can order their full allocation
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        5
+      </span>
+      not ordered yet
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--green">
+      <span class="app-card__secondary-count">
+        25
+      </span>
+      have placed an order
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card">
+      <span class="app-card__secondary-count">
+        50
+      </span>
+      not ordered yet
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="app-card app-card--green">
+      <span class="app-card__secondary-count">
+        25
+      </span>
+      have placed an order
     </div>
   </div>
 </div>
