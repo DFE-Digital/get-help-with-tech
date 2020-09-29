@@ -5,6 +5,8 @@ class Staging::School < ApplicationRecord
   validates :name, presence: true
   validates :responsible_body_name, presence: true
 
+  scope :updated_since, ->(datetime) { where(arel_table[:updated_at].gt(datetime)) }
+
   enum status: {
     open: 'open',
     closed: 'closed',
