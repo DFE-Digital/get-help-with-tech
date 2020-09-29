@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Support::SchoolDetailsSummaryListComponent do
-  let(:school) { create(:school, :primary, :la_maintained) }
+  let(:school) { create(:school, :primary, :la_maintained, contacts: [headteacher]) }
   let(:headteacher) do
     create(:school_contact, :headteacher,
            full_name: 'Davy Jones',
@@ -18,8 +18,7 @@ describe Support::SchoolDetailsSummaryListComponent do
              who_will_order_devices: :school,
              school_or_rb_domain: 'school.domain.org',
              recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes',
-             school_contact: headteacher)
+             will_need_chromebooks: 'yes')
 
       create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 3)
     end
@@ -37,13 +36,13 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school details' do
-      expect(result.css('.govuk-summary-list__row')[0].text).to include('School will be contacted')
+      expect(result.css('.govuk-summary-list__row')[0].text).to include('Needs a contact')
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('.govuk-summary-list__row')[6].text).to include('Yes, we will order Chromebooks')
-      expect(result.css('.govuk-summary-list__row')[7].text).to include('school.domain.org')
-      expect(result.css('.govuk-summary-list__row')[8].text).to include('admin@recovery.org')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('Yes, we will order Chromebooks')
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('school.domain.org')
+      expect(result.css('.govuk-summary-list__row')[7].text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
@@ -52,49 +51,13 @@ describe Support::SchoolDetailsSummaryListComponent do
       end
     end
 
-    context 'and the headteacher has been set as the school contact' do
-      it 'displays the headteacher details' do
-        create(:preorder_information,
-               school: school,
-               who_will_order_devices: :school,
-               school_contact: headteacher)
+    it 'displays the headteacher details' do
+      create(:preorder_information,
+             school: school,
+             who_will_order_devices: :school)
 
-        school.preorder_information.school_contacted!
-
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
-        expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
-        expect(result.css('.govuk-summary-list__row')[5].css('a')).not_to be_present
-      end
-    end
-
-    context 'and the headteacher has been set as the school contact, the school is ready to be contacted' do
-      it 'displays an invite link' do
-        create(:preorder_information,
-               school: school,
-               status: :school_will_be_contacted,
-               who_will_order_devices: :school,
-               school_contact: headteacher)
-
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('Invite')
-      end
-    end
-
-    context 'and someone else has been set as the school contact' do
-      it "displays the new contact's details" do
-        new_contact = create(:school_contact, :contact,
-                             full_name: 'Jane Smith',
-                             email_address: 'abc@example.com',
-                             phone_number: '12345')
-        create(:preorder_information,
-               school: school,
-               who_will_order_devices: :school,
-               school_contact: new_contact)
-
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('Jane Smith')
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('abc@example.com')
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('12345')
-      end
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('Headteacher')
+      expect(result.css('.govuk-summary-list__row')[6].inner_html).to include('Davy Jones<br>davy.jones@school.sch.uk<br>12345')
     end
   end
 
@@ -136,6 +99,17 @@ describe Support::SchoolDetailsSummaryListComponent do
     it 'confirms that fact' do
       expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
       expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Decide who will order')
+    end
+
+    it 'displays the headteacher details if the headteacher is present' do
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('Headteacher')
+      expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+    end
+
+    it 'hides the headteacher details if none are available' do
+      school.contacts.destroy_all
+
+      expect(result.css('.govuk-summary-list__row').text).not_to include('Headteacher')
     end
   end
 end
