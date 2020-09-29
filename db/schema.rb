@@ -70,9 +70,9 @@ ActiveRecord::Schema.define(version: 2020_09_29_092315) do
     t.text "original_school_urn"
     t.text "original_cc_ship_to_number"
     t.datetime "cc_import_api_timestamp"
-    t.string "cc_import_api_payload_id"
-    t.index ["cc_import_api_payload_id"], name: "index_computacenter_user_changes_on_cc_import_api_payload_id"
-    t.index ["cc_import_api_timestamp"], name: "index_computacenter_user_changes_on_cc_import_api_timestamp"
+    t.string "cc_import_api_transaction_id"
+    t.index ["cc_import_api_timestamp"], name: "ix_cc_user_changes_timestamp"
+    t.index ["cc_import_api_transaction_id"], name: "ix_cc_user_changes_cc_tx_id"
     t.index ["updated_at_timestamp"], name: "index_computacenter_user_changes_on_updated_at_timestamp"
     t.index ["user_id"], name: "index_computacenter_user_changes_on_user_id"
   end

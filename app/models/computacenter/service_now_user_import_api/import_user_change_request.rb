@@ -23,6 +23,14 @@ module Computacenter
         handle_response!
       end
 
+      def parsed_response_body
+        JSON.parse(response.body.to_s)
+      end
+
+      def cc_transaction_id
+        response.headers['X-Transaction-Id']
+      end
+
     private
 
       def handle_response!
@@ -76,11 +84,7 @@ module Computacenter
       end
 
       def parsed_result_indicates_success?
-        parsed_body['result']&.first&.fetch('status') == 'inserted'
-      end
-
-      def parsed_body
-        JSON.parse(response.body.to_s)
+        parsed_response_body['result']&.first&.fetch('status') != 'error'
       end
     end
   end
