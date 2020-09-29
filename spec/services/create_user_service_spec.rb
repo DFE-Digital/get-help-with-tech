@@ -62,6 +62,11 @@ RSpec.describe CreateUserService do
 
   describe 'invite_school_user' do
     let(:school) { create(:school) }
+    let(:preorder_information) { create(:preorder_information, school: school, who_will_order_devices: 'school') }
+
+    before do
+      preorder_information
+    end
 
     context 'given valid user params' do
       let(:valid_params) do
@@ -94,6 +99,10 @@ RSpec.describe CreateUserService do
         expect(result).to be_a(User)
         expect(result).to have_attributes(valid_params.except(:approved_at))
         expect(result.approved_at).to be_within(5.seconds).of(now)
+      end
+
+      it 'updates the school status to reflect that the school has been contacted' do
+        expect(result.school.preorder_information.status).to eq('school_contacted')
       end
     end
 

@@ -6,6 +6,10 @@ RSpec.feature 'Inviting school users' do
   let(:school_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
   let(:new_school_user_page) { PageObjects::Support::Devices::Schools::NewUserPage.new }
 
+  before do
+    create(:preorder_information, school: school, who_will_order_devices: 'school')
+  end
+
   scenario 'support invites new school user' do
     given_i_am_signed_in_as_a_support_user
     when_i_visit_the_school_page
@@ -16,6 +20,7 @@ RSpec.feature 'Inviting school users' do
     and_i_submit_invite_school_user_form
     then_i_see_the_school_page
     and_i_see_the_user_on_the_school_page
+    and_the_school_is_shown_as_contacted
   end
 
   def given_i_am_signed_in_as_a_support_user
@@ -53,5 +58,9 @@ RSpec.feature 'Inviting school users' do
     expect(page).to have_content('John Doe')
     expect(page).to have_content('john@example.com')
     expect(page).to have_content('020 1')
+  end
+
+  def and_the_school_is_shown_as_contacted
+    expect(page).to have_content('School contacted')
   end
 end

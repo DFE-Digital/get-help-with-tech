@@ -42,6 +42,10 @@ class PreorderInformation < ApplicationRecord
     end
   end
 
+  def refresh_status!
+    update!(status: infer_status)
+  end
+
   def change_who_will_order_devices!(who)
     self.who_will_order_devices = who
     self.status = infer_status
@@ -82,7 +86,7 @@ class PreorderInformation < ApplicationRecord
 
   def update_chromebook_information_and_status!(params)
     update!(params)
-    update!(status: infer_status)
+    refresh_status!
   end
 
   def self.for_responsible_bodies_in_devices_pilot
