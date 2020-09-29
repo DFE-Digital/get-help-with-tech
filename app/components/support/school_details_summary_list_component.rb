@@ -1,4 +1,9 @@
 class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetailsSummaryListComponent
+  def rows
+    super +
+      (headteacher.present? ? [headteacher_row] : [])
+  end
+
 private
 
   def who_will_order_row
@@ -13,19 +18,30 @@ private
     super.except(:action_path, :action).merge(change_path: support_devices_school_enable_orders_path(school_urn: @school.urn))
   end
 
-  def school_contact_row
-    super.except(:change_path, :action)
-      .tap do |row|
-        if @school&.preorder_information&.school_will_be_contacted?
-          row.merge!(
-            action_path: support_devices_school_invite_path(school_urn: @school.urn),
-            action: 'Invite',
-          )
-        end
-      end
+  def school_contact_row_if_contact_present
+    []
+  end
+
+  def headteacher_row
+    {
+      key: headteacher.title.present? ? headteacher.title.upcase_first : 'Headteacher',
+      value: headteacher_lines.map { |line| h(line) }.join('<br>').html_safe,
+    }
+  end
+
+  def headteacher_lines
+    [
+      headteacher.full_name,
+      headteacher.email_address,
+      headteacher.phone_number,
+    ].reject(&:blank?)
   end
 
   def chromebook_rows_if_needed
     super.map { |row| row.except(:change_path, :action, :action_path) }
+  end
+
+  def headteacher
+    @school.headteacher_contact
   end
 end
