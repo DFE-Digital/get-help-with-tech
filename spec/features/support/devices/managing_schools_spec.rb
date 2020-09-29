@@ -113,7 +113,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   end
 
   def when_i_click_on_the_change_link_for_the_user
-    click_link 'Change details for Mike Wazowski'
+    click_link 'Edit user Mike Wazowski'
   end
 
   def then_i_see_a_form_with_the_users_details
