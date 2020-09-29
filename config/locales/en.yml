@@ -561,6 +561,9 @@ en:
     digital_platforms:
       title:
       description:
+    edtech_demonstrator_programme:
+      title: "Get free training and support to set up and use technology effectively"
+      description:
 
   events:
     default: An event just happened
