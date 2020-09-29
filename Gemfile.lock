@@ -189,7 +189,7 @@ GEM
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
-    haml (5.1.2)
+    haml (5.2.0)
       temple (>= 0.8.0)
       tilt
     hashdiff (1.0.1)
@@ -431,7 +431,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
-    view_component (2.19.0)
+    view_component (2.18.2)
       activesupport (>= 5.0.0, < 7.0)
     web-console (4.0.4)
       actionview (>= 6.0.0)
