@@ -2,20 +2,21 @@
   submit_label = local_assigns[:submit_label] || 'Save'
   legend_text = local_assigns[:legend_text] || nil
   scope = local_assigns[:scope] || 'activerecord.attributes.preorder_information.will_need_chromebooks'
+  legend = legend_text ? { text: legend_text } : { text: 'Will the school need Chromebooks?', hidden: true }
 %>
 <%= form_for local_assigns[:form_object], url: local_assigns[:url], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: { text: legend_text } ) do %>
+  <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: legend ) do %>
     <%= f.govuk_radio_button  :will_need_chromebooks,
                               'yes',
                               label: { text: t(:yes, scope: scope) } do %>
       <%= f.govuk_text_field  :school_or_rb_domain,
                               label: { text: "School or #{local_assigns[:form_object].school.responsible_body.humanized_type} domain registered for G Suite for Education", size: 's' },
-                              hint_text: "For example, ‘school.co.uk’" %>
+                              hint: { text: "For example, ‘school.co.uk’" } %>
       <%= f.govuk_text_field  :recovery_email_address,
                               label: { text: "Recovery email address", size: 's' },
-                              hint_text: "This email address must be on a different domain to the school domain. For example, if the domain is ‘school.com’, then the email must not be ‘recovery@school.com’." %>
+                              hint: { text: "This email address must be on a different domain to the school domain. For example, if the domain is ‘school.com’, then the email must not be ‘recovery@school.com’." } %>
       <p class="govuk-body govuk-!-margin-top-4">
         If you need help finding these details, email <%= ghwt_contact_mailto(subject: 'Chromebook details') %>
       </p>

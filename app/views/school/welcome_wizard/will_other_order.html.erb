@@ -18,15 +18,15 @@
 
       <%= f.govuk_error_summary %>
 
-      <%= f.govuk_radio_buttons_fieldset( :invite_user, legend: { text: nil } ) do %>
-      <%= f.govuk_radio_button  :invite_user,
-                                'yes',
-                                label: { text: t(:yes_label, scope: scope) } do %>
+      <%= f.govuk_radio_buttons_fieldset :invite_user, legend: nil do %>
+        <%= f.govuk_radio_button :invite_user,
+                                 'yes',
+                                 label: { text: t(:yes_label, scope: scope) } do %>
         <%= render partial: 'shared/school_user_form', locals: { form: f, nested: true } %>
       <%- end %>
-      <%= f.govuk_radio_button  :invite_user,
-                                'no',
-                                label: { text: t(:no_label, scope: scope) } %>
+      <%= f.govuk_radio_button :invite_user,
+                               'no',
+                               label: { text: t(:no_label, scope: scope) } %>
       <%- end %>
       <%= f.govuk_submit 'Continue' %>
     <%- end %>
