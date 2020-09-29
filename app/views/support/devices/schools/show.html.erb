@@ -32,6 +32,8 @@
           <%= render Support::SchoolUserSummaryListComponent.new(user: user) %>
         </div>
       <% end %>
+    <% else %>
+      <p class="govuk-body">None</p>
     <% end %>
   </div>
 </div>
