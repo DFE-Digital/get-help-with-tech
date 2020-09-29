@@ -8,7 +8,7 @@ class CreateUserService
   end
 
   def self.invite_school_user(user_params = {})
-    user = User.new(user_params.merge(override_params))
+    user = User.new(user_params.merge(approved_at: Time.zone.now))
     if user.save
       InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
     end

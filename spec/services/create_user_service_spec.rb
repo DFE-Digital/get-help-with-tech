@@ -70,13 +70,18 @@ RSpec.describe CreateUserService do
           email_address: 'vlad@example.com',
           telephone: '01234 567890',
           school_id: school.id,
+          orders_devices: true,
         }
       end
+
+      let(:now) { Time.zone.now }
+
       let(:result) { CreateUserService.invite_school_user(valid_params) }
 
       it 'creates a user with the given params' do
         expect { result }.to change(User, :count).by(1)
-        expect(User.last).to have_attributes(valid_params)
+        expect(User.last).to have_attributes(valid_params.except(:approved_at))
+        expect(User.last.approved_at).to be_within(5.seconds).of(now)
       end
 
       it 'sends the correct email' do
@@ -87,7 +92,8 @@ RSpec.describe CreateUserService do
 
       it 'returns the user' do
         expect(result).to be_a(User)
-        expect(result).to have_attributes(valid_params)
+        expect(result).to have_attributes(valid_params.except(:approved_at))
+        expect(result.approved_at).to be_within(5.seconds).of(now)
       end
     end
 

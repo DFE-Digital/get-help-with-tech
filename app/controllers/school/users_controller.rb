@@ -8,7 +8,7 @@ class School::UsersController < School::BaseController
   end
 
   def create
-    @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id))
+    @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id, approved_at: Time.zone.now, orders_devices: true))
     if @user.persisted?
       redirect_to school_users_path
     else
