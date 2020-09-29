@@ -9,17 +9,18 @@
           # if the user clicks submit without selecting anything,
           # and therefore we don't actually get any params %>
       <%= f.hidden_field :placeholder, value: '' %>
-
-      <h1 class="govuk-heading-xl">
-        <span class="govuk-caption-xl"><%= @school.name %></span>
-        <%= t('page_titles.change_who_will_order') %>
-      </h1>
-
       <%= f.govuk_collection_radio_buttons  :who_will_order,
                                             change_who_will_order_devices_options,
                                             :id,
-                                            :label %>
-
+                                            :label,
+                                            legend: -> do %>
+                                              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                                                <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-4">
+                                                  <span class="govuk-caption-xl"><%= @school.name %></span>
+                                                  <%= t('page_titles.change_who_will_order') %>
+                                                </h1>
+                                              </legend>
+                                            <% end %>
       <%= f.govuk_submit %>
     <%- end %>
   </div>
