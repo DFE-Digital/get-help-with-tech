@@ -32,6 +32,12 @@ RSpec.describe Support::Devices::UsersController do
         expect { post! }.to change(User, :count).by(1)
       end
 
+      it 'associates user and school' do
+        post!
+
+        expect(User.last.school).to eql(school)
+      end
+
       it 'sets attributes correctly' do
         post!
         record = User.last

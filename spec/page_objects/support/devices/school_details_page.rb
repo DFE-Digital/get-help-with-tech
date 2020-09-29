@@ -7,6 +7,7 @@ module PageObjects
         elements :school_details_rows, '.school-details-summary-list .govuk-summary-list__row'
 
         element :contacts, 'table#contacts'
+        element :invite_a_new_user, 'a', text: 'Invite a new user'
       end
     end
   end

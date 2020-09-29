@@ -6,7 +6,7 @@ class Support::Devices::UsersController < Support::BaseController
 
   def create
     @school = School.find_by(urn: params[:school_urn])
-    user_attributes = @school.users.build(user_params).attributes
+    user_attributes = @school.users.build(user_params).attributes.merge(school_id: @school.id)
     @user = CreateUserService.invite_school_user(user_attributes)
 
     if @user.persisted?
