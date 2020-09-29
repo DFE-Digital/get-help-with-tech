@@ -76,6 +76,21 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
+  context 'as a school user who has completed the welcome wizard but not decided on chromebooks' do
+    let(:preorder) { create(:preorder_information, :school_will_order) }
+    let(:school) { create(:school, preorder_information: preorder) }
+    let(:user) { create(:school_user, school: school) }
+
+    scenario 'it redirects to the before you can order page' do
+      sign_in_as user
+      expect(page).to have_current_path(school_before_you_can_order_path)
+      expect(page).to have_text 'Before you can order'
+      choose 'I don’t know'
+      click_on 'Save'
+      expect(page).to have_text 'Get devices for your school'
+    end
+  end
+
   context 'as a school user who has not done any of the welcome wizard' do
     let(:user) { create(:school_user, :new_visitor) }
 

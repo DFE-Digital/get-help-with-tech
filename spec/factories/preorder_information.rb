@@ -4,6 +4,10 @@ FactoryBot.define do
     who_will_order_devices { %w[school responsible_body].sample }
     status { infer_status }
 
+    trait :school_will_order do
+      who_will_order_devices { 'school' }
+    end
+
     trait :needs_chromebooks do
       will_need_chromebooks { 'yes' }
       school_or_rb_domain { Faker::Internet.domain_name }

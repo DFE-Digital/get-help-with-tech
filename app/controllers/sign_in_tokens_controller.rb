@@ -109,7 +109,12 @@ private
 
   def school_user_start_url(user)
     if user.school_welcome_wizard&.complete?
-      school_home_path
+      if user.school&.preorder_information&.school_will_order_devices? &&
+          user.school&.preorder_information&.chromebook_info_still_needed?
+        school_before_you_can_order_path
+      else
+        school_home_path
+      end
     else
       school_welcome_wizard_privacy_path
     end

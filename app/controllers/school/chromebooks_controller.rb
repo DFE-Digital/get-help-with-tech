@@ -16,13 +16,17 @@ class School::ChromebooksController < School::BaseController
     if @chromebook_information_form.valid?
       @preorder_info.update_chromebook_information_and_status!(chromebook_params)
       flash[:success] = t(:success, scope: %w[school chromebooks])
-      redirect_to school_details_path
+      redirect_to after_updated_redirect_location
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
 private
+
+  def after_updated_redirect_location
+    school_details_path
+  end
 
   def chromebook_params
     params.require(:chromebook_information_form).permit(

@@ -84,6 +84,10 @@ class PreorderInformation < ApplicationRecord
     end
   end
 
+  def chromebook_info_still_needed?
+    will_need_chromebooks.nil? || will_need_chromebooks == 'i_dont_know'
+  end
+
   def update_chromebook_information_and_status!(params)
     update!(params)
     refresh_status!
