@@ -11,6 +11,7 @@ class CreateUserService
     user = User.new(user_params.merge(approved_at: Time.zone.now))
     if user.save
       InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
+      user.school.preorder_information&.refresh_status!
     end
     user
   end
