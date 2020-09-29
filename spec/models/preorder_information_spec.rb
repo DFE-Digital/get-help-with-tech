@@ -25,36 +25,49 @@ RSpec.describe PreorderInformation, type: :model do
     end
 
     context "when the school orders devices, it's been contacted but hasn't logged in to input the Chromebook details" do
-      subject do
-        build(:preorder_information,
-              who_will_order_devices: :school,
-              school_contact: build(:school_contact),
-              school_contacted_at: Time.zone.now,
-              will_need_chromebooks: nil).infer_status
+      let(:preorder_information) do
+        create(:preorder_information,
+               who_will_order_devices: :school,
+               school_contact: build(:school_contact),
+               will_need_chromebooks: nil)
+      end
+
+      subject { preorder_information.infer_status }
+
+      before do
+        create(:school_user, school: preorder_information.school)
       end
 
       it { is_expected.to eq('school_contacted') }
     end
 
     context "when the school orders devices, it has logged in and doesn't plan to order Chromebooks" do
-      subject do
-        build(:preorder_information,
-              :does_not_need_chromebooks,
-              who_will_order_devices: :school,
-              school_contact: build(:school_contact),
-              school_contacted_at: Time.zone.now).infer_status
+      let(:preorder_information) do
+        create(:preorder_information,
+               :does_not_need_chromebooks,
+               who_will_order_devices: :school)
+      end
+
+      subject { preorder_information.infer_status }
+
+      before do
+        create(:school_user, school: preorder_information.school)
       end
 
       it { is_expected.to eq('school_ready') }
     end
 
     context 'when the school orders devices, it has logged in and plans to order Chromebooks' do
-      subject do
-        build(:preorder_information,
-              :needs_chromebooks,
-              who_will_order_devices: :school,
-              school_contact: build(:school_contact),
-              school_contacted_at: Time.zone.now).infer_status
+      let(:preorder_information) do
+        create(:preorder_information,
+               :needs_chromebooks,
+               who_will_order_devices: :school)
+      end
+
+      subject { preorder_information.infer_status }
+
+      before do
+        create(:school_user, school: preorder_information.school)
       end
 
       it { is_expected.to eq('school_ready') }

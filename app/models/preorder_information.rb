@@ -27,13 +27,13 @@ class PreorderInformation < ApplicationRecord
 
   # If this method is added, we may need to update School::SchoolDetailsSummaryListComponent
   def infer_status
-    if school_will_order_devices? && school_contact.nil?
+    if school_will_order_devices? && !any_school_users? && school_contact.nil?
       'needs_contact'
-    elsif school_will_order_devices? && school_contacted_at.nil?
+    elsif school_will_order_devices? && !any_school_users? && school_contact.present?
       'school_will_be_contacted'
-    elsif school_will_order_devices? && school_contacted_at.present? && !chromebook_information_complete?
+    elsif school_will_order_devices? && any_school_users? && !chromebook_information_complete?
       'school_contacted'
-    elsif school_will_order_devices? && school_contacted_at.present? && chromebook_information_complete?
+    elsif school_will_order_devices? && any_school_users? && chromebook_information_complete?
       'school_ready'
     elsif chromebook_information_complete?
       'ready'
@@ -106,6 +106,10 @@ class PreorderInformation < ApplicationRecord
   end
 
 private
+
+  def any_school_users?
+    school&.users&.any?
+  end
 
   def set_defaults
     self.status ||= infer_status
