@@ -17,7 +17,6 @@ gem 'foreman'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk-components'
 
-gem 'haml'
 gem 'http'
 
 # GovUK Notify
