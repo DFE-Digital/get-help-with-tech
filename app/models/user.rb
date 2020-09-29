@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
+
   has_many :user_schools, dependent: :destroy, after_add: :generate_user_change_if_needed!, after_remove: :generate_user_change_if_needed!
   has_many :schools, through: :user_schools
 
@@ -124,25 +125,6 @@ class User < ApplicationRecord
     school_id && responsible_body_id
   end
 
-  def hybrid_setup!
-    return if responsible_body.blank?
-
-    one_school = responsible_body.schools.count == 1
-    only_user = responsible_body.users == [self]
-
-    return unless one_school && only_user
-
-    school = responsible_body.schools.first
-
-    update!(school: school)
-    responsible_body.update_who_will_order_devices('schools')
-    contact = school.contacts.create!(email_address: email_address,
-                                      full_name: full_name,
-                                      role: :contact,
-                                      phone_number: telephone)
-    school.preorder_information.update!(school_contact: contact)
-  end
-
   # Wrapper methods to ease the transition from 'user belongs_to school',
   # to 'user has_many schools'
   def school
@@ -155,7 +137,7 @@ class User < ApplicationRecord
 
   def school_id=(new_school_id)
     user_schools.delete_all
-    user_schools.create(school_id: new_school_id) if new_school_id
+    schools << School.find(new_school_id) if new_school_id
   end
 
   def school=(new_school)

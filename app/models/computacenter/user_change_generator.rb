@@ -10,6 +10,7 @@ class Computacenter::UserChangeGenerator
       change = Computacenter::UserChange.new(consolidated_attributes)
       change.add_original_fields_from(last_change_for_user) if last_change_for_user.present?
       change.save!
+      NotifyComputacenterOfLatestChangeForUserJob.perform_later(@user.id) if Settings.computacenter.service_now_user_import_api.endpoint.present?
       change
     end
   end
