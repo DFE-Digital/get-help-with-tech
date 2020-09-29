@@ -14,6 +14,10 @@ computacenter:
     endpoint:
     username:
     password:
+  service_now_user_import_api:
+    endpoint:
+    username:
+    password:
 
 cookie_consent:
   expiry_time_months: 6
