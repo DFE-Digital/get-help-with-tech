@@ -10,12 +10,20 @@ class Computacenter::UserChangeGenerator
       change = Computacenter::UserChange.new(consolidated_attributes)
       change.add_original_fields_from(last_change_for_user) if last_change_for_user.present?
       change.save!
-      NotifyComputacenterOfLatestChangeForUserJob.perform_later(@user.id) if Settings.computacenter.service_now_user_import_api.endpoint.present?
+      notify_computacenter_via_api if computacenter_api_configured?
       change
     end
   end
 
 private
+
+  def computacenter_api_configured?
+    Settings.computacenter.service_now_user_import_api.endpoint.present?
+  end
+
+  def notify_computacenter_via_api
+    NotifyComputacenterOfLatestChangeForUserJob.perform_later(@user.id)
+  end
 
   def last_change_for_user
     @last_change_for_user ||= Computacenter::UserChange.latest_for_user(user)
