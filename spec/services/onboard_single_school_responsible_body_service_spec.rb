@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
+  before do
+    # disable computacenter user import API calls
+    Settings.computacenter.service_now_user_import_api.endpoint = nil
+  end
+
   after do
     clear_enqueued_jobs
   end

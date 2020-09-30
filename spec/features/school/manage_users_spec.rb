@@ -8,6 +8,8 @@ RSpec.feature 'Manage school users' do
   let(:school_users_page) { PageObjects::School::UsersPage.new }
 
   before do
+    # disable computacenter user import API calls
+    Settings.computacenter.service_now_user_import_api.endpoint = nil
     user_from_same_school
     user_from_other_school
 

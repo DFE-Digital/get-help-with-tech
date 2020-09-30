@@ -280,10 +280,21 @@ RSpec.describe User, type: :model do
   end
 
   describe 'paper_trail', versioning: true do
+    before do
+      Settings.computacenter.service_now_user_import_api.endpoint = 'http://example.com/import/table'
+      ActiveJob::Base.queue_adapter = :test
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+    end
+
     context 'creating user' do
       context 'computacenter relevant' do
         it 'creates a Computacenter::UserChange of type new' do
           expect { create(:user, :has_seen_privacy_notice, orders_devices: true) }.to change(Computacenter::UserChange, :count).by(1)
+        end
+
+        it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          user = create(:user, :has_seen_privacy_notice, orders_devices: true)
+          expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
         end
 
         it 'persists correct data for RB user' do
@@ -363,12 +374,21 @@ RSpec.describe User, type: :model do
         it 'does not create a Computacenter::UserChange' do
           expect { create(:user, :has_not_seen_privacy_notice) }.not_to change(Computacenter::UserChange, :count)
         end
+
+        it 'does not schedule a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          create(:user, :has_not_seen_privacy_notice)
+          expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
+        end
       end
     end
 
     context 'updating user' do
       context 'now computacenter relevant' do
         let!(:user) { create(:user, :not_relevant_to_computacenter) }
+
+        before do
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
 
         def perform_change!
           user.update(privacy_notice_seen_at: 1.second.ago, orders_devices: true)
@@ -379,6 +399,11 @@ RSpec.describe User, type: :model do
 
           user_change = Computacenter::UserChange.last
           expect(user_change.type_of_update).to eql('New')
+        end
+
+        it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          perform_change!
+          expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
         end
 
         it 'sets current fields' do
@@ -399,6 +424,10 @@ RSpec.describe User, type: :model do
       context 'already computacenter relevant' do
         let!(:user) { create(:trust_user, :relevant_to_computacenter, full_name: 'Jane Smith') }
 
+        before do
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
+
         context 'single field is changed' do
           let!(:original_email) { user.email_address }
           let!(:original_full_name) { user.full_name }
@@ -415,6 +444,11 @@ RSpec.describe User, type: :model do
 
             user_change = Computacenter::UserChange.last
             expect(user_change.type_of_update).to eql('Change')
+          end
+
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
           end
 
           it 'sets current fields' do
@@ -450,6 +484,11 @@ RSpec.describe User, type: :model do
             expect(user_change.type_of_update).to eql('Remove')
           end
 
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
+          end
+
           it 'sets all current fields' do
             perform_change!
 
@@ -473,6 +512,11 @@ RSpec.describe User, type: :model do
           it 'does not create a Computacenter::UserChange' do
             expect { perform_change! }.not_to change(Computacenter::UserChange, :count)
           end
+
+          it 'does not schedule a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
+          end
         end
 
         context 'when RB association is changed' do
@@ -486,6 +530,11 @@ RSpec.describe User, type: :model do
 
           it 'creates a Computacenter::UserChange' do
             expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+          end
+
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
           end
 
           it 'stores correct original fields' do
@@ -520,6 +569,11 @@ RSpec.describe User, type: :model do
             expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
           end
 
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
+          end
+
           it 'stores correct original fields' do
             perform_change!
             user_change = Computacenter::UserChange.last
@@ -549,6 +603,11 @@ RSpec.describe User, type: :model do
 
           it 'creates a Computacenter::UserChange' do
             expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+          end
+
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
           end
 
           it 'stores correct original fields' do
@@ -582,6 +641,11 @@ RSpec.describe User, type: :model do
             expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
           end
 
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
+          end
+
           it 'stores correct original fields' do
             perform_change!
             user_change = Computacenter::UserChange.last
@@ -607,12 +671,21 @@ RSpec.describe User, type: :model do
         let!(:other_school) { create(:school) }
         let!(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
 
+        before do
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
+
         def perform_change!
           user.schools << other_school
         end
 
         it 'creates a Computacenter::UserChange' do
           expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+        end
+
+        it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          perform_change!
+          expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
         end
 
         it 'stores correct original fields' do
@@ -641,9 +714,19 @@ RSpec.describe User, type: :model do
 
       context 'not computacenter relevant' do
         let!(:user) { create(:user, :not_relevant_to_computacenter) }
+        let(:perform_change!) { user.update(email_address: 'change@example.com') }
+
+        before do
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
 
         it 'does not create a Computacenter::UserChange' do
-          expect { user.update(email_address: 'change@example.com') }.not_to change(Computacenter::UserChange, :count)
+          expect { perform_change! }.not_to change(Computacenter::UserChange, :count)
+        end
+
+        it 'does not schedule a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          perform_change!
+          expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
         end
       end
     end
@@ -653,11 +736,20 @@ RSpec.describe User, type: :model do
         let!(:user) { create(:user, :relevant_to_computacenter) }
         let!(:original_user) { user }
 
+        before do
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
+
         it 'creates a Computacenter::UserChange of type remove' do
           expect { user.destroy! }.to change(Computacenter::UserChange, :count).by(1)
 
           user_change = Computacenter::UserChange.last
           expect(user_change.type_of_update).to eql('Remove')
+        end
+
+        it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          user.destroy!
+          expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
         end
 
         it 'sets all original fields' do
@@ -673,6 +765,11 @@ RSpec.describe User, type: :model do
 
         it 'does not create a Computacenter::UserChange' do
           expect { user.destroy! }.not_to change(Computacenter::UserChange, :count)
+        end
+
+        it 'does not schedule a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          user.destroy!
+          expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
         end
       end
     end
