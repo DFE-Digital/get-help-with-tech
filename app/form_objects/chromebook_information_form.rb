@@ -16,6 +16,10 @@ class ChromebookInformationForm
     condition.validate :recovery_email_address_cannot_be_same_domain_as_school_or_rb
   end
 
+  def recovery_email_address=(new_value)
+    @recovery_email_address = new_value&.strip
+  end
+
   def will_need_chromebooks?
     will_need_chromebooks == 'yes'
   end
