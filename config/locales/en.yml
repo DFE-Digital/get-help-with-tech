@@ -88,6 +88,7 @@
     school_details: Check your school details
     school_edit_chromebooks: Will your school need to order Chromebooks?
     school_users: Manage users
+    school_before_can_order: Before you can order, we need more information
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet

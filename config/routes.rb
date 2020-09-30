@@ -119,6 +119,8 @@ Rails.application.routes.draw do
     patch '/next(/:step)', to: 'welcome_wizard#next_step', as: :welcome_wizard
     patch '/prev', to: 'welcome_wizard#previous_step', as: :welcome_wizard_previous
     resources :users, only: %i[index new create edit update]
+    get '/before-you-can-order', to: 'before_can_order#edit'
+    patch '/before-you-can-order', to: 'before_can_order#update'
   end
 
   namespace :support do
