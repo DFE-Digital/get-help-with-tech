@@ -34,7 +34,7 @@ RSpec.describe SchoolDataFile, type: :model do
         expect(schools.first).to include(
           urn: '103001',
           name: 'Little School',
-          responsible_body: 'Camden',
+          responsible_body_name: 'Camden',
           address_1: '12 High St',
           town: 'London',
           postcode: 'NW1 1AA',
@@ -69,9 +69,18 @@ RSpec.describe SchoolDataFile, type: :model do
         remove_file(filename)
       end
 
-      it 'does not retrieve the school data' do
+      it 'retrieves the school data' do
         schools = SchoolDataFile.new(filename).schools
-        expect(schools).to be_empty
+        expect(schools.first).to include(
+          urn: '100001',
+          name: 'Big School',
+          responsible_body_name: 'Camden',
+          address_1: '12 High St',
+          town: 'London',
+          postcode: 'NW1 1AA',
+          phase: 'secondary',
+          establishment_type: 'local_authority',
+        )
       end
     end
 
@@ -137,7 +146,7 @@ RSpec.describe SchoolDataFile, type: :model do
         expect(schools.first).to include(
           urn: '100001',
           name: 'Big School',
-          responsible_body: 'The Multi-Trust Academy',
+          responsible_body_name: 'The Multi-Trust Academy',
           address_1: '12 High St',
           town: 'London',
           postcode: 'NW1 1AA',
@@ -178,7 +187,7 @@ RSpec.describe SchoolDataFile, type: :model do
         expect(schools.first).to include(
           urn: '100021',
           name: 'All Phase School',
-          responsible_body: 'The Single-Trust Academy',
+          responsible_body_name: 'The Single-Trust Academy',
           address_1: '12 High St',
           town: 'London',
           postcode: 'NW1 1AA',

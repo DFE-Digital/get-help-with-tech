@@ -26,7 +26,7 @@ protected
     {
       urn: row['URN'],
       name: row['EstablishmentName'],
-      responsible_body: find_responsible_body(row),
+      responsible_body_name: find_responsible_body(row),
       address_1: row['Street'],
       address_2: row['Locality'],
       address_3: row['Address3'],
@@ -35,12 +35,12 @@ protected
       postcode: row['Postcode'],
       phase: phase(row),
       establishment_type: establishment_type(row),
+      status: status(row),
     }
   end
 
   def skip?(row)
-    school_not_open?(row) ||
-      row['LA (name)'] == 'Vale of Glamorgan' ||
+    row['LA (name)'] == 'Vale of Glamorgan' ||
       EXCLUDED_TYPES.include?(row['TypeOfEstablishment (name)'])
   end
 
@@ -91,7 +91,14 @@ private
     end
   end
 
-  def school_not_open?(row)
-    !row['EstablishmentStatus (name)'].in? ['Open', 'Open, but proposed to close']
+  def status(row)
+    case row['EstablishmentStatus (name)']
+    when 'Open', 'Open, but proposed to close'
+      'open'
+    when 'Closed', 'Proposed to open'
+      'closed'
+    else
+      Rails.logger.info("Unknown status type: '#{row['EstablishmentStatus (name)']}'")
+    end
   end
 end
