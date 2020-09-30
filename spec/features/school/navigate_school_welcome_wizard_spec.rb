@@ -106,7 +106,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_school_user
-    @user = create(:school_user, :new_visitor, school: school)
+    @user = create(:school_user, :new_visitor, school: school, orders_devices: true)
   end
 
   def as_a_subsequent_school_user

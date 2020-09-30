@@ -40,7 +40,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
     end
 
-    context 'when the step is order_your_own and user is the only school user' do
+    context 'when the step is order_your_own and user orders devices' do
+      let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }
+
       before do
         wizard.order_your_own!
       end
