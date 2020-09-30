@@ -1,7 +1,7 @@
 namespace :import do
   desc 'Import schools from GIAS'
   task schools: :environment do
-    ImportSchoolsService.new.import_schools
+    StageGiasDataJob.perform_now
   end
 
   desc 'Import shipTo and sendTo from file at CC_REFERENCES_FILE_URI'
