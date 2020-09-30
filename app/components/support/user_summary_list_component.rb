@@ -1,4 +1,4 @@
-class Support::SchoolUserSummaryListComponent < ViewComponent::Base
+class Support::UserSummaryListComponent < ViewComponent::Base
   validates :user, presence: true
 
   def initialize(user:)

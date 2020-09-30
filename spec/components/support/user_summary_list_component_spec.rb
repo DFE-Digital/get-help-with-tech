@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Support::SchoolUserSummaryListComponent do
+describe Support::UserSummaryListComponent do
   subject(:result) { render_inline(described_class.new(user: user)) }
 
   let(:user) do
