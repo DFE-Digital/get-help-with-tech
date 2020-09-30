@@ -1,7 +1,8 @@
 class ChromebookInformationForm
   include ActiveModel::Model
 
-  attr_accessor :school, :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address
+  attr_accessor :school, :will_need_chromebooks
+  attr_reader :school_or_rb_domain, :recovery_email_address
 
   validates :will_need_chromebooks, presence: true
 
@@ -18,6 +19,10 @@ class ChromebookInformationForm
 
   def recovery_email_address=(new_value)
     @recovery_email_address = new_value&.strip
+  end
+
+  def school_or_rb_domain=(new_value)
+    @school_or_rb_domain = new_value&.strip
   end
 
   def will_need_chromebooks?
