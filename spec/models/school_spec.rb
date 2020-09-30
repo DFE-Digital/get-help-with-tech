@@ -353,4 +353,60 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#who_will_order_devices' do
+    let(:local_authority) { build(:local_authority, who_will_order_devices: 'responsible_body') }
+
+    subject(:school) { build(:school, :la_maintained, responsible_body: local_authority) }
+
+    context 'when the school has a preorder_information' do
+      before do
+        school.preorder_information = build(:preorder_information, school: school, who_will_order_devices: 'school')
+      end
+
+      it 'returns the who_will_order_devices value from the preorder_information' do
+        expect(school.who_will_order_devices).to eq('school')
+      end
+    end
+
+    context 'when the school does not have a preorder_information' do
+      before do
+        school.preorder_information = nil
+      end
+
+      it 'returns the who_will_order_devices value from the responsible_body' do
+        expect(school.who_will_order_devices).to eq('responsible_body')
+      end
+    end
+  end
+
+  describe '#active_responsible_users' do
+    subject(:school) { create(:school, :la_maintained, :with_preorder_information, responsible_body: local_authority) }
+
+    let!(:local_authority) { create(:local_authority) }
+    let!(:school_user_who_has_signed_in) { create(:school_user, :signed_in_before, school: school) }
+    let!(:responsible_body_user_who_has_signed_in) { create(:local_authority_user, :signed_in_before, responsible_body: local_authority) }
+
+    context 'when the school will order their own devices' do
+      before do
+        school.preorder_information.who_will_order_devices = 'school'
+        create(:school_user, :never_signed_in, school: school)
+      end
+
+      it 'returns the school users who have signed in' do
+        expect(school.active_responsible_users).to eq([school_user_who_has_signed_in])
+      end
+    end
+
+    context 'when the school will have device orders placed centrally' do
+      before do
+        school.preorder_information.who_will_order_devices = 'responsible_body'
+        create(:local_authority_user, :never_signed_in, responsible_body: local_authority)
+      end
+
+      it 'returns the responsible_body users who have signed in' do
+        expect(school.active_responsible_users).to eq([responsible_body_user_who_has_signed_in])
+      end
+    end
+  end
 end
