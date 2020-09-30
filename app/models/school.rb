@@ -47,6 +47,19 @@ class School < ApplicationRecord
     where(order_state: %w[can_order_for_specific_circumstances can_order])
   end
 
+  def who_will_order_devices
+    preorder_information&.who_will_order_devices || responsible_body.who_will_order_devices
+  end
+
+  def active_responsible_users
+    case who_will_order_devices
+    when 'school'
+      users.signed_in_at_least_once
+    else
+      responsible_body.users.signed_in_at_least_once
+    end
+  end
+
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
   end
