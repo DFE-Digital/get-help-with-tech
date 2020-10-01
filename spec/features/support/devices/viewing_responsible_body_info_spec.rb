@@ -69,19 +69,19 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
   end
 
   def then_i_can_see_the_users_assigned_to_that_responsible_body
-    expect(responsible_body_page.user_rows.size).to eq(2)
+    expect(responsible_body_page.users.size).to eq(2)
 
-    first_row = responsible_body_page.user_rows[0]
-    expect(first_row).to have_text('Zeta Zane')
-    expect(first_row).to have_text('zeta.zane@coventry.gov.uk')
-    expect(first_row).to have_text('2') # sign-ins
-    expect(first_row).to have_text('1 July 2020')
+    first_user = responsible_body_page.users[0]
+    expect(first_user).to have_text('Zeta Zane')
+    expect(first_user).to have_text('zeta.zane@coventry.gov.uk')
+    expect(first_user).to have_text('2') # sign-ins
+    expect(first_user).to have_text('01 Jul 00:00')
 
-    second_row = responsible_body_page.user_rows[1]
-    expect(second_row).to have_text('Amy Adams')
-    expect(second_row).to have_text('amy.adams@coventry.gov.uk')
-    expect(second_row).to have_text('0') # sign-ins
-    expect(second_row).to have_text('Never')
+    second_user = responsible_body_page.users[1]
+    expect(second_user).to have_text('Amy Adams')
+    expect(second_user).to have_text('amy.adams@coventry.gov.uk')
+    expect(second_user).to have_text('0') # sign-ins
+    expect(second_user).to have_text('Never')
   end
 
   def and_i_can_see_the_schools_managed_by_that_responsible_body

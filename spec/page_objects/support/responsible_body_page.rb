@@ -4,7 +4,7 @@ module PageObjects
       class ResponsibleBodyPage < PageObjects::BasePage
         set_url '/support/devices/responsible-bodies{/id}'
 
-        elements :user_rows, '#responsible-body-users tbody tr'
+        elements :users, '.user'
         elements :school_rows, '#responsible-body-schools tbody tr'
       end
     end
