@@ -82,6 +82,7 @@
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
+    school_can_order_devices: Your school can order devices
     school_cannot_order_devices: Your school cannot order devices yet
     school_user_cannot_order_devices: You cannot order devices yet
     school_order_devices: Order devices

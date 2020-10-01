@@ -1,0 +1,35 @@
+<%- title = t('page_titles.school_can_order_devices') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+    { 'Home' => school_home_path },
+    title,
+  ]) %>
+<%- end %>
+
+<%-
+  device_count = @school.std_device_allocation.available_devices_count
+%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Order devices</span>
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <%= render partial: 'shared/techsource_unavailable_banner' %>
+
+    <div class="app-card app-card__order">
+      <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
+        <%= "#{device_count} #{'device'.pluralize(device_count)} available" -%>
+      </h2>
+      <div class="govuk-panel__body govuk-!-font-size-24">
+        You’ve ordered <%= @school.std_device_allocation.devices_ordered %> of
+        <%= @school.std_device_allocation.cap %> devices
+      </div>
+    </div>
+
+    <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
+
+    <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path %>.</p>
+  </div>
+</div>
