@@ -17,6 +17,22 @@ RSpec.feature 'Order devices' do
     and_i_see_a_link_to_techsource
   end
 
+  context 'when I am awaiting my TechSource account' do
+    let(:school_user) do
+      create(:school_user,
+             school: school,
+             full_name: 'AAA Smith',
+             orders_devices: true,
+             techsource_account_confirmed_at: nil)
+    end
+
+    scenario 'when my school can order devices' do
+      given_i_can_order_devices
+      when_i_visit_the_order_devices_page
+      then_i_see_techsource_ready_soon
+    end
+  end
+
   scenario 'when my school cannot order devices' do
     given_i_cannot_order_devices
     when_i_visit_the_order_devices_page
@@ -52,5 +68,9 @@ RSpec.feature 'Order devices' do
   def then_i_see_that_i_cannot_order_devices_yet
     expect(page).to have_content('Your school cannot order devices yet')
     expect(page).to have_link('request devices for disadvantaged children')
+  end
+
+  def then_i_see_techsource_ready_soon
+    expect(page).to have_content('Your TechSource account will be ready soon')
   end
 end

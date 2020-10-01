@@ -774,4 +774,44 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#awaiting_techsource_account?' do
+    context 'user orders devices and techsource account not confirmed' do
+      subject(:user) do
+        described_class.new(
+          orders_devices: true,
+          techsource_account_confirmed_at: nil,
+        )
+      end
+
+      it 'returns true' do
+        expect(user.awaiting_techsource_account?).to be_truthy
+      end
+    end
+
+    context 'user orders devices and techsource account confirmed' do
+      subject(:user) do
+        described_class.new(
+          orders_devices: true,
+          techsource_account_confirmed_at: 1.second.ago,
+        )
+      end
+
+      it 'returns false' do
+        expect(user.awaiting_techsource_account?).to be_falsey
+      end
+    end
+
+    context 'user does not order devices' do
+      subject(:user) do
+        described_class.new(
+          orders_devices: false,
+        )
+      end
+
+      it 'returns false' do
+        expect(user.awaiting_techsource_account?).to be_falsey
+      end
+    end
+  end
 end
