@@ -5,6 +5,12 @@ FactoryBot.define do
     responsible_body_name { Faker::Company.name }
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }
+
+    address_1 { Faker::Address.street_name }
+    address_2 { Faker::Address.secondary_address }
+    town { Faker::Address.city }
+    postcode { Faker::Address.postcode }
+
     status { :open }
 
     trait :primary do

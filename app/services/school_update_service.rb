@@ -40,8 +40,8 @@ private
   end
 
   def staged_attributes(staged_school)
-    attrs = staged_school.attributes.except(*%w[ id responsible_body_name status created_at updated_at ])
-    attrs["responsible_body_id"] = responsible_body_id(staged_school.responsible_body_name)
+    attrs = staged_school.attributes.except('id', 'responsible_body_name', 'status', 'created_at', 'updated_at')
+    attrs['responsible_body_id'] = responsible_body_id(staged_school.responsible_body_name)
     attrs
   end
 

@@ -100,7 +100,7 @@ RSpec.describe StageSchoolData, type: :model do
     let(:filename) { Rails.root.join('tmp/school_link_test_data.csv') }
 
     context 'when a school already exists without links' do
-      let!(:school) { create(:staged_school, urn: '103001') }
+      let(:school) { create(:staged_school, urn: '103001') }
       let(:attrs) do
         [
           {
@@ -110,12 +110,12 @@ RSpec.describe StageSchoolData, type: :model do
           },
           { urn: '103001',
             link_urn: '144321',
-            link_type: 'Successor',
-          },
+            link_type: 'Successor' },
         ]
       end
 
       before do
+        school
         create_school_links_csv_file(filename, attrs)
         @service = described_class.new(SchoolLinksDataFile.new(filename))
       end
@@ -129,7 +129,7 @@ RSpec.describe StageSchoolData, type: :model do
           @service.import_school_links
         }.to change { Staging::SchoolLink.count }.by(2)
 
-        expect(Staging::SchoolLink.all.map { |sl| [sl.link_urn, sl.link_type] }).to eq([[142_311, 'Successor'],[144_321, 'Successor']])
+        expect(Staging::SchoolLink.all.map { |sl| [sl.link_urn, sl.link_type] }).to eq([[142_311, 'Successor'], [144_321, 'Successor']])
       end
     end
   end

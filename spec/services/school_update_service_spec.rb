@@ -6,19 +6,17 @@ RSpec.describe SchoolUpdateService, type: :model do
     let!(:local_authority) { create(:local_authority, name: 'Camden') }
     let!(:staged_school) { create(:staged_school, urn: 103_001, responsible_body_name: 'Camden') }
 
-
     context 'data update timestamps' do
       it 'updates the DataUpdateRecord timestamp for schools' do
         Timecop.freeze do
-          now = Time.zone.now
           service.update_schools
-          expect(Staging::DataUpdateRecord.last_update_for(:schools)).to eq(now)
+          expect(Staging::DataUpdateRecord.last_update_for(:schools)).to eq(Time.zone.now)
         end
       end
 
       it 'only applies changes since the last update' do
         Timecop.travel(6.hours.ago)
-        staged_school_2 = create(:staged_school, urn: 104_001, responsible_body_name: 'Camden')
+        create(:staged_school, urn: 104_001, responsible_body_name: 'Camden')
         Timecop.return
 
         Timecop.travel(2.hours.ago)

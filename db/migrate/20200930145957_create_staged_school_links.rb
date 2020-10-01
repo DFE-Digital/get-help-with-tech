@@ -9,7 +9,7 @@ class CreateStagedSchoolLinks < ActiveRecord::Migration[6.0]
 
     add_index :staged_school_links, %i[staged_school_id link_urn], unique: true
 
-    remove_column :staged_schools, :link_urn
-    remove_column :staged_schools, :link_type
+    remove_column :staged_schools, :link_urn, :integer
+    remove_column :staged_schools, :link_type, :string
   end
 end

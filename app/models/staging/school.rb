@@ -2,7 +2,7 @@ class Staging::School < ApplicationRecord
   self.table_name = 'staged_schools'
 
   has_many :school_links, dependent: :destroy, class_name: 'Staging::SchoolLink',
-    foreign_key: :staged_school_id
+                          foreign_key: :staged_school_id
 
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
