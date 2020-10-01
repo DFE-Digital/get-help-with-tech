@@ -17,6 +17,7 @@ class StageSchoolData
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e.message)
     end
+    Staging::DataUpdateRecord.staged!(:schools)
   end
 
   def import_school_links
@@ -24,10 +25,19 @@ class StageSchoolData
       school = Staging::School.find_by(urn: link_data[:urn])
 
       if school
-        school.update!(link_data)
-      else
-        Rails.logger.info("URN (#{link_data[:urn]}) not found, could not add link data")
+        link = school.school_links.find_by(link_urn: link_data[:link_urn])
+        if link
+          link.assign_attributes(link_data.except(:urn))
+          if link.changed?
+            link.save!
+            school.touch
+          end
+        else
+          school.school_links.create!(link_data.except(:urn))
+          school.touch
+        end
       end
     end
+    Staging::DataUpdateRecord.staged!(:school_links)
   end
 end
