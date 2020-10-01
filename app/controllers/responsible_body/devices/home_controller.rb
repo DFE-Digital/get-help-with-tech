@@ -6,6 +6,6 @@ class ResponsibleBody::Devices::HomeController < ResponsibleBody::Devices::BaseC
   def tell_us; end
 
   def request_devices
-    render 'shared/devices/request_devices'
+    render 'shared/devices/responsible_body_request_devices'
   end
 end

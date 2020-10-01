@@ -10,6 +10,6 @@ class School::DevicesController < School::BaseController
   end
 
   def request_devices
-    render 'shared/devices/request_devices'
+    render 'shared/devices/school_request_devices'
   end
 end
