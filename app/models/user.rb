@@ -121,6 +121,10 @@ class User < ApplicationRecord
     techsource_account_confirmed_at.present?
   end
 
+  def awaiting_techsource_account?
+    orders_devices? && !techsource_account_confirmed?
+  end
+
   def hybrid?
     school_id && responsible_body_id
   end
