@@ -6,7 +6,7 @@ FactoryBot.define do
     computacenter_reference { Faker::Number.number(digits: 8) }
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }
-    
+
     address_1 { Faker::Address.street_name }
     address_2 { Faker::Address.secondary_address }
     town { Faker::Address.city }
