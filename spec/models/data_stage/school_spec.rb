@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Staging::School, type: :model do
+RSpec.describe DataStage::School, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:urn) }
     it { is_expected.to allow_values('123456', '432123').for(:urn) }

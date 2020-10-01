@@ -11,7 +11,7 @@ RSpec.describe SchoolUpdateService, type: :model do
         t = Time.zone.now
         Timecop.freeze(t) do
           service.update_schools
-          expect(Staging::DataUpdateRecord.last_update_for(:schools)).to be_within(1.second).of(t)
+          expect(DataStage::DataUpdateRecord.last_update_for(:schools)).to be_within(1.second).of(t)
         end
       end
 
@@ -21,7 +21,7 @@ RSpec.describe SchoolUpdateService, type: :model do
         Timecop.return
 
         Timecop.travel(2.hours.ago)
-        Staging::DataUpdateRecord.updated!(:schools)
+        DataStage::DataUpdateRecord.updated!(:schools)
         Timecop.return
 
         expect {

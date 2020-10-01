@@ -1,4 +1,4 @@
-class Staging::DataUpdateRecord < ApplicationRecord
+class DataStage::DataUpdateRecord < ApplicationRecord
   self.table_name = 'data_update_records'
 
   validates :name, presence: true

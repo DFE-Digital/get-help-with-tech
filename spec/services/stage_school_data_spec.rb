@@ -33,12 +33,12 @@ RSpec.describe StageSchoolData, type: :model do
       it 'creates a new school record' do
         expect {
           @service.import_schools
-        }.to change { Staging::School.count }.by(1)
+        }.to change { DataStage::School.count }.by(1)
       end
 
       it 'sets the correct values on the School record' do
         @service.import_schools
-        expect(Staging::School.last).to have_attributes(
+        expect(DataStage::School.last).to have_attributes(
           urn: 103_001,
           name: 'Little School',
           responsible_body_name: 'Camden',
@@ -82,7 +82,7 @@ RSpec.describe StageSchoolData, type: :model do
 
       it 'updates the existing school record' do
         @service.import_schools
-        expect(Staging::School.last).to have_attributes(
+        expect(DataStage::School.last).to have_attributes(
           urn: 103_001,
           name: 'Little School',
           responsible_body_name: 'Camden',
@@ -127,9 +127,9 @@ RSpec.describe StageSchoolData, type: :model do
       it 'adds the school links' do
         expect {
           @service.import_school_links
-        }.to change { Staging::SchoolLink.count }.by(2)
+        }.to change { DataStage::SchoolLink.count }.by(2)
 
-        expect(Staging::SchoolLink.all.map { |sl| [sl.link_urn, sl.link_type] }).to eq([[142_311, 'Successor'], [144_321, 'Successor']])
+        expect(DataStage::SchoolLink.all.map { |sl| [sl.link_urn, sl.link_type] }).to eq([[142_311, 'Successor'], [144_321, 'Successor']])
       end
     end
   end

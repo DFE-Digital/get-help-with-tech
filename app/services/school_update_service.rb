@@ -8,10 +8,10 @@ class SchoolUpdateService
 
   def update_schools
     # look at the schools that have changed since the last update
-    last_update = Staging::DataUpdateRecord.last_update_for(:schools)
+    last_update = DataStage::DataUpdateRecord.last_update_for(:schools)
 
     # simple updates for schools that are open
-    Staging::School.updated_since(last_update).open.each do |staged_school|
+    DataStage::School.updated_since(last_update).open.each do |staged_school|
       school = School.find_by(urn: staged_school.urn)
       if school
         update_school(school, staged_school)
@@ -20,7 +20,7 @@ class SchoolUpdateService
       end
     end
 
-    Staging::DataUpdateRecord.updated!(:schools)
+    DataStage::DataUpdateRecord.updated!(:schools)
   end
 
 private

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :staged_school, class: 'Staging::School' do
+  factory :staged_school, class: 'DataStage::School' do
     urn { Faker::Number.number(digits: 6) }
     name { Faker::Educator.secondary_school }
     responsible_body_name { Faker::Company.name }
