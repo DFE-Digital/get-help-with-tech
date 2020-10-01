@@ -32,7 +32,7 @@ class SchoolWelcomeWizard < ApplicationRecord
     when 'allocation'
       order_your_own!
     when 'order_your_own'
-      if user_is_first_school_user?
+      if user_orders_devices?
         techsource_account!
       else
         devices_you_can_order!
@@ -124,8 +124,8 @@ private
     end
   end
 
-  def user_is_first_school_user?
-    first_school_user.nil? ? set_first_user_flag! : first_school_user
+  def user_orders_devices?
+    user.orders_devices?
   end
 
   def show_chromebooks_form?
@@ -134,12 +134,6 @@ private
 
   def less_than_3_users_can_order?
     school.users.who_can_order_devices.count < 3
-  end
-
-  def set_first_user_flag!
-    is_first_user_for_school = school.users.count == 1
-    update!(first_school_user: is_first_user_for_school)
-    is_first_user_for_school
   end
 
   def set_show_chromebooks_flag!
