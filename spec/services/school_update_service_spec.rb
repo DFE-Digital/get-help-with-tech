@@ -8,9 +8,10 @@ RSpec.describe SchoolUpdateService, type: :model do
 
     context 'data update timestamps' do
       it 'updates the DataUpdateRecord timestamp for schools' do
-        Timecop.freeze do
+        t = Time.zone.now
+        Timecop.freeze(t) do
           service.update_schools
-          expect(Staging::DataUpdateRecord.last_update_for(:schools)).to eq(Time.zone.now)
+          expect(Staging::DataUpdateRecord.last_update_for(:schools)).to be_within(1.second).of(t)
         end
       end
 
