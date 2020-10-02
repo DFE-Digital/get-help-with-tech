@@ -47,6 +47,7 @@ private
 
   def sanitize_county(value)
     return nil if value == 'Not recorded' || value.blank?
+
     value
   end
 
