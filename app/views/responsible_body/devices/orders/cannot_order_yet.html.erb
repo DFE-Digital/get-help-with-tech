@@ -17,12 +17,18 @@
       </div>
     <% end %>
 
+    <p class="govuk-body">You can order a school’s full allocation when:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>local coronavirus restrictions are confirmed</li>
+      <li>15 or more children (in years 3 to 11) are self-isolating having been exposed to a confirmed case outside the school community</li>
+    </ul>
+
+    <p class="govuk-body">We’ll contact you about placing orders if a school reports disruption through the <a href="https://form.education.gov.uk/service/educational-setting-status">DfE educational settings status form</a>.</p>
+
     <% school_count = @responsible_body.schools.that_are_centrally_managed.count %>
-    <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> local coronavirus restrictions.</p>
+    <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> reported disruption.</p>
 
-    <p class="govuk-body">You should only order the devices a school needs. You can do this when local coronavirus restrictions are confirmed.</p>
-
-    <p class="govuk-body">We’ll contact you as soon as you’re able to place orders.</p>
     <% if @responsible_body.has_schools_that_can_order_devices_now? %>
       <%= render partial: 'some_schools_can_order' %>
     <%- end %>
