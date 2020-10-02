@@ -1,4 +1,5 @@
-<%- title = t('page_titles.school_user_welcome_wizard.order_your_own.title') %>
+<%- who_orders = @user.orders_devices? ? 'school_user' : 'school' %>
+<%- title = t("page_titles.school_user_welcome_wizard.order_your_own.#{who_orders}.title") %>
 <%- content_for :title, title %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -9,8 +10,15 @@
         <%= title %>
       </h1>
 
-      <p class="govuk-body">If your school is affected by local coronavirus restrictions, we’ll contact you
-      with instructions as soon as you’re able to place orders.</p>
+      <p class="govuk-body"><%= t("page_titles.#{who_orders}_cannot_order_devices.can_order_when") %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <% t('pages.order_devices.can_order_full_allocation_when_list').each do |li| %>
+          <li><%= li %></li>
+        <% end %>
+      </ul>
+
+      <p class="govuk-body">If your school reports disruption through the <%= link_to 'DfE educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status' %> we will contact you about placing orders.</p>
 
       <h2 class="govuk-heading-m">Get devices earlier for specific circumstances</h2>
 

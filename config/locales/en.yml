@@ -142,7 +142,10 @@ en:
       allocation:
         title: "You’ve been allocated %{allocation} laptops and tablets"
       order_your_own:
-        title: You can only order your full allocation if local restrictions are confirmed
+        school:
+          title: Your school cannot order its full allocation right away
+        school_user:
+          title: You cannot order your full allocation right away
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:
