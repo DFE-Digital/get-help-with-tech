@@ -7,30 +7,40 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     sign_in_as rb_user
   end
 
-  scenario 'the user can navigate to the manual request form from the responsible body home page' do
-    click_on 'Get the internet'
-    click_on 'Request extra data for mobile devices'
+  context 'when the MNO offer is activated' do
+    before do
+      FeatureFlag.activate(:mno_offer)
+    end
 
-    expect(page).to have_css('h1', text: 'Request extra mobile data')
-    expect(page).to have_http_status(:ok)
-    click_on 'New request'
-    expect(page).to have_css('h1', text: 'How would you like to submit information?')
-    choose 'Manually (entering details one at a time)'
-    click_on 'Continue'
-    expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
-  end
+    after do
+      FeatureFlag.deactivate(:mno_offer)
+    end
 
-  scenario 'the user can navigate to the bulk upload form from the responsible body home page' do
-    click_on 'Get the internet'
-    click_on 'Request extra data for mobile devices'
+    scenario 'the user can navigate to the manual request form from the responsible body home page' do
+      click_on 'Get the internet'
+      click_on 'Request extra data for mobile devices'
 
-    expect(page).to have_css('h1', text: 'Request extra mobile data')
-    expect(page).to have_http_status(:ok)
-    click_on 'New request'
-    expect(page).to have_css('h1', text: 'How would you like to submit information?')
-    choose 'Using a spreadsheet'
-    click_on 'Continue'
-    expect(page).to have_css('h1', text: 'Upload a spreadsheet of extra data requests')
+      expect(page).to have_css('h1', text: 'Request extra mobile data')
+      expect(page).to have_http_status(:ok)
+      click_on 'New request'
+      expect(page).to have_css('h1', text: 'How would you like to submit information?')
+      choose 'Manually (entering details one at a time)'
+      click_on 'Continue'
+      expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
+    end
+
+    scenario 'the user can navigate to the bulk upload form from the responsible body home page' do
+      click_on 'Get the internet'
+      click_on 'Request extra data for mobile devices'
+
+      expect(page).to have_css('h1', text: 'Request extra mobile data')
+      expect(page).to have_http_status(:ok)
+      click_on 'New request'
+      expect(page).to have_css('h1', text: 'How would you like to submit information?')
+      choose 'Using a spreadsheet'
+      click_on 'Continue'
+      expect(page).to have_css('h1', text: 'Upload a spreadsheet of extra data requests')
+    end
   end
 
   context 'when the user has already submitted requests' do

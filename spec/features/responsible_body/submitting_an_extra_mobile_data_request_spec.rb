@@ -19,11 +19,16 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     let(:mobile_network) { create(:mobile_network) }
 
     before do
+      FeatureFlag.activate(:mno_offer)
       mobile_network
       sign_in_as user
       # prevent api call to Notify
       stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
         .to_return(status: 201, body: '{}')
+    end
+
+    after do
+      FeatureFlag.deactivate(:mno_offer)
     end
 
     scenario 'Navigating to the form' do
