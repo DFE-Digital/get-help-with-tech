@@ -1,4 +1,6 @@
 class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBody::BaseController
+  before_action { render_404_if_feature_flag_inactive(:mno_offer) }
+
   def new
     @upload_form = BulkUploadForm.new
   end

@@ -15,9 +15,14 @@ RSpec.feature 'Session behaviour', type: :feature do
       create(:mobile_network)
     end
 
-    # this seems overly-verbose compared to let!, but this is what rubocop wants
     before do
+      FeatureFlag.activate(:mno_offer)
+      # this seems overly-verbose compared to let!, but this is what rubocop wants
       participating_mobile_network
+    end
+
+    after do
+      FeatureFlag.activate(:mno_offer)
     end
 
     # TODO: need to think about how verification should work
