@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_092315) do
+ActiveRecord::Schema.define(version: 2020_09_30_145957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,15 @@ ActiveRecord::Schema.define(version: 2020_09_29_092315) do
     t.index ["cc_import_api_transaction_id"], name: "ix_cc_user_changes_cc_tx_id"
     t.index ["updated_at_timestamp"], name: "index_computacenter_user_changes_on_updated_at_timestamp"
     t.index ["user_id"], name: "index_computacenter_user_changes_on_user_id"
+  end
+
+  create_table "data_update_records", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "staged_at"
+    t.datetime "updated_records_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_data_update_records_on_name", unique: true
   end
 
   create_table "extra_mobile_data_requests", force: :cascade do |t|
@@ -216,6 +225,16 @@ ActiveRecord::Schema.define(version: 2020_09_29_092315) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "staged_school_links", force: :cascade do |t|
+    t.bigint "staged_school_id"
+    t.integer "link_urn", null: false
+    t.string "link_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["staged_school_id", "link_urn"], name: "index_staged_school_links_on_staged_school_id_and_link_urn", unique: true
+    t.index ["staged_school_id"], name: "index_staged_school_links_on_staged_school_id"
+  end
+
   create_table "staged_schools", force: :cascade do |t|
     t.integer "urn", null: false
     t.string "name", null: false
@@ -229,8 +248,6 @@ ActiveRecord::Schema.define(version: 2020_09_29_092315) do
     t.string "phase", null: false
     t.string "establishment_type"
     t.string "status", null: false
-    t.integer "link_urn"
-    t.string "link_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_staged_schools_on_name"

@@ -7,27 +7,37 @@ class StageSchoolData
 
   def import_schools
     datasource.schools do |school_data|
-      school = Staging::School.find_by(urn: school_data[:urn])
+      school = DataStage::School.find_by(urn: school_data[:urn])
 
       if school
         school.update!(school_data)
       else
-        Staging::School.create!(school_data)
+        DataStage::School.create!(school_data)
       end
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e.message)
     end
+    DataStage::DataUpdateRecord.staged!(:schools)
   end
 
   def import_school_links
     datasource.school_links do |link_data|
-      school = Staging::School.find_by(urn: link_data[:urn])
+      school = DataStage::School.find_by(urn: link_data[:urn])
 
       if school
-        school.update!(link_data)
-      else
-        Rails.logger.info("URN (#{link_data[:urn]}) not found, could not add link data")
+        link = school.school_links.find_by(link_urn: link_data[:link_urn])
+        if link
+          link.assign_attributes(link_data.except(:urn))
+          if link.changed?
+            link.save!
+            school.touch
+          end
+        else
+          school.school_links.create!(link_data.except(:urn))
+          school.touch
+        end
       end
     end
+    DataStage::DataUpdateRecord.staged!(:school_links)
   end
 end
