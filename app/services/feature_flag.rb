@@ -9,7 +9,9 @@ class FeatureFlag
     notify_computacenter_of_cap_changes
   ].freeze
 
-  TEMPORARY_FEATURE_FLAGS = %i[].freeze
+  TEMPORARY_FEATURE_FLAGS = %i[
+    mno_offer
+  ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
 
