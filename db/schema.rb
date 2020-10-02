@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_30_145957) do
+ActiveRecord::Schema.define(version: 2020_10_02_105725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,6 +253,25 @@ ActiveRecord::Schema.define(version: 2020_09_30_145957) do
     t.index ["name"], name: "index_staged_schools_on_name"
     t.index ["status"], name: "index_staged_schools_on_status"
     t.index ["urn"], name: "index_staged_schools_on_urn"
+  end
+
+  create_table "staged_trusts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "organisation_type", null: false
+    t.string "gias_group_uid", null: false
+    t.string "companies_house_number"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "address_3"
+    t.string "town"
+    t.string "county"
+    t.string "postcode"
+    t.string "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gias_group_uid"], name: "index_staged_trusts_on_gias_group_uid", unique: true
+    t.index ["name"], name: "index_staged_trusts_on_name"
+    t.index ["status"], name: "index_staged_trusts_on_status"
   end
 
   create_table "user_schools", force: :cascade do |t|
