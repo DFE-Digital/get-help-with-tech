@@ -41,9 +41,9 @@ RSpec.describe School::DevicesController do
                  cap: 0)
         end
 
-        it 'renders can_order' do
+        it 'renders cannot_order_as_cap_reached' do
           get :order
-          expect(controller).to render_template('school/devices/cannot_order')
+          expect(controller).to render_template('school/devices/cannot_order_as_cap_reached')
         end
       end
     end
@@ -76,9 +76,9 @@ RSpec.describe School::DevicesController do
                  cap: 0)
         end
 
-        it 'renders cannot_order' do
+        it 'renders cannot_order_as_cap_reached' do
           get :order
-          expect(controller).to render_template('school/devices/cannot_order')
+          expect(controller).to render_template('school/devices/cannot_order_as_cap_reached')
         end
       end
     end

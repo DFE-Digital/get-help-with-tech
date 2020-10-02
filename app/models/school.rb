@@ -64,9 +64,12 @@ class School < ApplicationRecord
     device_allocations.find_by_device_type!(device_type)
   end
 
-  def can_order_devices?
-    (can_order? || can_order_for_specific_circumstances?) &&
-      (std_device_allocation&.has_devices_available_to_order? == true)
+  def can_order_devices_right_now?
+    is_eligible_to_order? && has_devices_available_to_order?
+  end
+
+  def all_devices_ordered?
+    is_eligible_to_order? && !has_devices_available_to_order?
   end
 
   def has_std_device_allocation?
@@ -114,5 +117,15 @@ class School < ApplicationRecord
     else
       false
     end
+  end
+
+private
+
+  def is_eligible_to_order?
+    can_order? || can_order_for_specific_circumstances?
+  end
+
+  def has_devices_available_to_order?
+    std_device_allocation&.has_devices_available_to_order?
   end
 end
