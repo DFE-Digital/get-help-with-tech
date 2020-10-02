@@ -20,8 +20,9 @@
     <p class="govuk-body">You can order a school’s full allocation when:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>local coronavirus restrictions are confirmed</li>
-      <li>15 or more children (in years 3 to 11) are self-isolating having been exposed to a confirmed case outside the school community</li>
+      <% t('pages.order_devices.can_order_full_allocation_when_list').each do |li| %>
+        <li><%= li %></li>
+      <% end %>
     </ul>
 
     <p class="govuk-body">We’ll contact you about placing orders if a school reports disruption through the <a href="https://form.education.gov.uk/service/educational-setting-status">DfE educational settings status form</a>.</p>
