@@ -1,35 +1,18 @@
-<% if @user.is_school_user? %>
+q<% if @user.is_school_user? %>
   <%- title = t('page_titles.school_request_devices') %>
   <%- content_for :before_content do %>
-    <div class="govuk-breadcrumbs">
-      <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to 'Home', school_home_path, class: 'govuk-breadcrumbs__link' %>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= title %>
-        </li>
-      </ol>
-    </div>
+    <% breadcrumbs([{ "Home" => school_home_path }, title ]) %>
   <% end %>
 
 <% elsif @user.is_responsible_body_user? %>
 
   <%- title = t('page_titles.responsible_body_devices_request_devices') %>
   <%- content_for :before_content do %>
-    <div class="govuk-breadcrumbs">
-      <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to 'Home', responsible_body_home_path, class: 'govuk-breadcrumbs__link' %>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= link_to t('page_titles.responsible_body_devices_home'), responsible_body_devices_path, class: 'govuk-breadcrumbs__link' %>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-          <%= title %>
-        </li>
-      </ol>
-    </div>
+    <% breadcrumbs([
+                     { "Home" => responsible_body_home_path },
+                     { t('page_titles.responsible_body_devices_home') => responsible_body_devices_path},
+                     title ,
+                   ]) %>
   <% end %>
 
 <% end %>
