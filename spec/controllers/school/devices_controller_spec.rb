@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe School::DevicesController do
-  let(:user) { create(:school_user, school: school) }
+  let(:user) do
+    create(:school_user,
+           school: school,
+           orders_devices: true,
+           techsource_account_confirmed_at: 1.second.ago)
+  end
 
   before do
     sign_in_as user

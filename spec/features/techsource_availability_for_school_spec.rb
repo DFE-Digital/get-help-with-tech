@@ -4,7 +4,13 @@ RSpec.feature 'TechSource availability for school' do
   include ViewHelper
 
   let(:school) { create(:school, :with_std_device_allocation) }
-  let(:school_user) { create(:school_user, school: school, full_name: 'AAA Smith') }
+  let(:school_user) do
+    create(:school_user,
+           school: school,
+           orders_devices: true,
+           techsource_account_confirmed_at: 1.second.ago,
+           full_name: 'AAA Smith')
+  end
 
   after do
     Timecop.return

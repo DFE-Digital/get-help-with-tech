@@ -3,6 +3,8 @@ class School::DevicesController < School::BaseController
     if @school.can_order? && @school.can_order_devices?
       if @user.awaiting_techsource_account?
         render :can_order_awaiting_techsource
+      elsif !@user.orders_devices?
+        render :school_can_order_user_cannot
       else
         render :can_order
       end
