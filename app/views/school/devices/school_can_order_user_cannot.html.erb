@@ -8,7 +8,7 @@
 <%- end %>
 
 <%-
-  device_count = @school.std_device_allocation.available_devices_count
+  device_count = @school&.std_device_allocation&.available_devices_count || 0
 %>
 
 <div class="govuk-grid-row">
