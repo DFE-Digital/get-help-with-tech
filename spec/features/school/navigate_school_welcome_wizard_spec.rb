@@ -1,13 +1,34 @@
 require 'rails_helper'
 
 RSpec.feature 'Navigate school welcome wizard' do
-  let(:school) { create(:school, :with_preorder_information, :with_std_device_allocation) }
+  let(:available_allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 100, cap: 50) }
+  let(:unavailable_allocation) { create(:school_device_allocation, :with_std_allocation) }
+  let(:school_with_unavailable_allocation) { create(:school, :with_preorder_information, std_device_allocation: unavailable_allocation) }
+  let(:school_with_available_allocation) { create(:school, :with_preorder_information, std_device_allocation: available_allocation) }
+  let(:school) { @school }
 
   before do
     allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
   end
 
+  scenario 'step through the wizard as the first user for a school that has available allocation' do
+    given_my_school_has_an_available_allocation
+    as_a_new_school_user
+    when_i_sign_in_for_the_first_time
+    then_i_see_a_welcome_page_for_my_school
+
+    when_i_click_continue
+    then_i_see_a_privacy_notice
+
+    when_i_click_continue
+    then_i_see_the_allocation_for_my_school
+
+    when_i_click_continue
+    then_i_see_the_techsource_account_page
+  end
+
   scenario 'step through the wizard as the first user for a school' do
+    given_my_school_has_an_unavailable_allocation
     as_a_new_school_user
     when_i_sign_in_for_the_first_time
     then_i_see_a_welcome_page_for_my_school
@@ -41,6 +62,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   scenario 'step through wizard as subsequent user when the chromebooks question has been answered yes/no' do
+    given_my_school_has_an_unavailable_allocation
     as_a_subsequent_school_user
     when_the_chromebooks_question_has_already_been_answered
     when_i_sign_in_for_the_first_time
@@ -66,6 +88,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   scenario 'step through wizard as subsequent user when the chromebooks question has not been answered yes/no' do
+    given_my_school_has_an_unavailable_allocation
     as_a_subsequent_school_user
     when_i_sign_in_for_the_first_time
     then_i_see_a_welcome_page_for_my_school
@@ -93,6 +116,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   scenario 'the wizard resumes where left off' do
+    given_my_school_has_an_unavailable_allocation
     as_a_new_school_user
     when_i_sign_in_for_the_first_time
     then_i_see_a_welcome_page_for_my_school
@@ -103,6 +127,14 @@ RSpec.feature 'Navigate school welcome wizard' do
     when_i_sign_out
     and_then_sign_in_again
     then_i_see_a_privacy_notice
+  end
+
+  def given_my_school_has_an_unavailable_allocation
+    @school = school_with_unavailable_allocation
+  end
+
+  def given_my_school_has_an_available_allocation
+    @school = school_with_available_allocation
   end
 
   def as_a_new_school_user
@@ -145,7 +177,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_i_see_the_order_your_own_page
     expect(page).to have_current_path(welcome_wizard_order_your_own_school_path(urn: @user.school.urn))
-    expect(page).to have_text('You can only order your full allocation if local restrictions are confirmed')
+    expect(page.body).to match(/You cannot order your full allocation right away|Your school cannot order its full allocation right away/)
   end
 
   def then_i_see_the_school_home_page
