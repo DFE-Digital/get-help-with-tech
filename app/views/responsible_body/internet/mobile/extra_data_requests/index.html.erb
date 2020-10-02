@@ -18,14 +18,11 @@
     <h1 class="govuk-heading-xl">
       <%= t('page_titles.request_extra_mobile_data') %>
     </h1>
-    <% unless @extra_mobile_data_requests.any? %>
-      <%= render partial: 'shared/use_the_mobile_guide' %>
-    <% end %>
-    <p class="govuk-body">
-      <%= govuk_button_link_to 'New request',
-        responsible_body_internet_mobile_extra_data_requests_type_path
-      %>
-    </p>
+
+    <h2 class="govuk-heading-l">You cannot request data at the&nbsp;moment</h2>
+    <p class="govuk-body">Our initial pilot ended on 30 September 2020, and we are now working with mobile network providers to prepare for the next phase.</p>
+    <p class="govuk-body">If you were planning to request a data increase, please hold on to the information you’ve gathered and wait for an update on the scheme.</p>
+    <p class="govuk-body">Data increases already received will continue until 31 December 2020.</p>
   </div>
 </div>
 <% if @extra_mobile_data_requests.any? %>

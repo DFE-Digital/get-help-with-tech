@@ -27,8 +27,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'Navigating to the form' do
-      visit responsible_body_internet_mobile_extra_data_requests_path
-      click_on('New request')
+      visit new_responsible_body_internet_mobile_bulk_request_path
       expect(page).to have_text('How would you like to submit information?')
       choose('Manually (entering details one at a time)')
       click_on('Continue')
