@@ -51,6 +51,11 @@ module CSVFileHelper
     create_csv_file(filename, SCHOOL_LINKS_ATTRS.values, array_of_hashes, SCHOOL_LINKS_ATTRS)
   end
 
+  def create_trust_csv_file(filename, array_of_hashes)
+    attrs = TrustDataFile::ATTR_MAP
+    create_csv_file(filename, attrs.values, array_of_hashes, attrs)
+  end
+
   def create_allocations_csv_file(filename, array_of_hashes)
     head_keys = array_of_hashes.first.keys
     headings = head_keys.map { |k| SCHOOL_ATTRS[k] }

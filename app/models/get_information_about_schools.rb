@@ -11,6 +11,15 @@ class GetInformationAboutSchools
     }.map(&:to_h)
   end
 
+  def self.trusts(&block)
+    file = Tempfile.new
+    fetch_latest_trusts_file(file)
+    TrustDataFile.new(file.path).trusts(&block)
+  ensure
+    file.close
+    file.unlink
+  end
+
   def self.schools(&block)
     file = Tempfile.new
     fetch_latest_edubase_file(file)
@@ -44,6 +53,10 @@ class GetInformationAboutSchools
 
   def self.fetch_latest_edubase_links_file(file)
     RemoteFile.download(school_links_url, file)
+  end
+
+  def self.fetch_latest_trusts_file(file)
+    RemoteFile.download(groups_url, file)
   end
 
   def self.fetch_contacts_file(file)
