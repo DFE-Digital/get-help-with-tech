@@ -52,7 +52,7 @@ module CSVFileHelper
   end
 
   def create_trust_csv_file(filename, array_of_hashes)
-    attrs = DataStage::Trust::ATTR_MAP
+    attrs = TrustDataFile::ATTR_MAP
     create_csv_file(filename, attrs.values, array_of_hashes, attrs)
   end
 

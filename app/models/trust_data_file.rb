@@ -1,4 +1,19 @@
 class TrustDataFile < CsvDataFile
+
+  ATTR_MAP = {
+    name: 'Group Name',
+    organisation_type: 'Group Type',
+    companies_house_number: 'Companies House Number',
+    gias_group_uid: 'Group UID',
+    status: 'Group Status',
+    address_1: 'Group Street',
+    address_2: 'Group Locality',
+    address_3: 'Group Address 3',
+    town: 'Group Town',
+    county: 'Group County',
+    postcode: 'Group Postcode',
+  }.freeze
+
   def trusts(&block)
     records(&block)
   end
@@ -7,7 +22,7 @@ protected
 
   def extract_record(row)
     record = {}
-    DataStage::Trust::ATTR_MAP.each do |k, v|
+    ATTR_MAP.each do |k, v|
       record[k] = row[v]
     end
     record
