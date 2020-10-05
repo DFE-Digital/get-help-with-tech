@@ -30,7 +30,7 @@
         :label,
         legend: {size: 'm', text: 'Pay monthly or pay as you go (PAYG)?'} %>
 
-      <%= f.govuk_check_boxes_fieldset :agrees_with_privacy_statement, multiple: false, legend: { text: 'Has someone shared the privacy statement with the account holder?', tag: 'h2' } do %>
+      <%= f.govuk_check_boxes_fieldset :agrees_with_privacy_statement, multiple: false, legend: { text: 'Has someone shared the privacy statement with the account holder?' } do %>
         <%= f.govuk_check_box :agrees_with_privacy_statement, 1, 0, multiple: false, link_errors: true, label: { text: 'Yes, the privacy statement has been shared' } %>
 
         <p class="govuk-hint">
