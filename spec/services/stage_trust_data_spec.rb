@@ -7,7 +7,7 @@ RSpec.describe StageTrustData, type: :model do
     context 'when a trust does not already exist' do
       let(:attrs) do
         {
-          group_uid: '4001',
+          gias_group_uid: '4001',
           companies_house_number: '09933123',
           name: 'Callio Forsythe Academy',
           address_1: 'Big Academy',
@@ -15,7 +15,7 @@ RSpec.describe StageTrustData, type: :model do
           town: 'Easttown',
           postcode: 'EW1 1AA',
           status: 'Closed',
-          group_type: 'Single-academy trust',
+          organisation_type: 'Single-academy trust',
         }
       end
 
@@ -44,7 +44,7 @@ RSpec.describe StageTrustData, type: :model do
           address_2: 'Strange Lane',
           town: 'Easttown',
           postcode: 'EW1 1AA',
-          status: 'closed',
+          status: 'Closed',
           organisation_type: 'single_academy_trust',
         )
       end
@@ -55,7 +55,7 @@ RSpec.describe StageTrustData, type: :model do
 
       let(:attrs) do
         {
-          group_uid: '4001',
+          gias_group_uid: '4001',
           companies_house_number: '09933123',
           name: 'Academy of Wigtown',
           address_1: 'Academy Campus',
@@ -63,7 +63,7 @@ RSpec.describe StageTrustData, type: :model do
           town: 'Wigtown',
           postcode: 'W1G 1AA',
           status: 'Open',
-          group_type: 'Multi-academy trust',
+          organisation_type: 'Multi-academy trust',
         }
       end
 
@@ -86,7 +86,7 @@ RSpec.describe StageTrustData, type: :model do
           address_2: 'Wigtown Lane',
           town: 'Wigtown',
           postcode: 'W1G 1AA',
-          status: 'open',
+          status: 'Open',
           organisation_type: 'multi_academy_trust',
         )
       end

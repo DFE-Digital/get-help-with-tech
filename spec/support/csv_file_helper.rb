@@ -43,20 +43,6 @@ module CSVFileHelper
     link_type: 'LinkType',
   }.freeze
 
-  TRUST_ATTRS = {
-    name: 'Group Name',
-    group_type: 'Group Type',
-    companies_house_number: 'Companies House Number',
-    group_uid: 'Group UID',
-    status: 'Group Status',
-    address_1: 'Group Street',
-    address_2: 'Group Locality',
-    address_3: 'Group Address 3',
-    town: 'Group Town',
-    county: 'Group County',
-    postcode: 'Group Postcode',
-  }.freeze
-
   def create_school_csv_file(filename, array_of_hashes)
     create_csv_file(filename, SCHOOL_ATTRS.values, array_of_hashes)
   end
@@ -66,7 +52,8 @@ module CSVFileHelper
   end
 
   def create_trust_csv_file(filename, array_of_hashes)
-    create_csv_file(filename, TRUST_ATTRS.values, array_of_hashes, TRUST_ATTRS)
+    attrs = DataStage::Trust::ATTR_MAP
+    create_csv_file(filename, attrs.values, array_of_hashes, attrs)
   end
 
   def create_allocations_csv_file(filename, array_of_hashes)

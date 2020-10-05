@@ -8,18 +8,18 @@ RSpec.describe TrustDataFile, type: :model do
       let(:attrs) do
         [
           {
-            group_uid: '1001',
+            gias_group_uid: '1001',
             companies_house_number: '01234222',
             name: 'Little Hampton Academy',
             address_1: '12 High St',
-            address_2: 'Little Hampton Count',
+            address_2: 'Little Hampton Court',
             town: 'London',
             postcode: 'NW1 1AA',
             status: 'Open',
-            group_type: 'Multi-academy trust',
+            organisation_type: 'Multi-academy trust',
           },
           {
-            group_uid: '4001',
+            gias_group_uid: '4001',
             companies_house_number: '09933123',
             name: 'Callio Forsythe Academy',
             address_1: 'Big Academy',
@@ -27,7 +27,7 @@ RSpec.describe TrustDataFile, type: :model do
             town: 'Easttown',
             postcode: 'EW1 1AA',
             status: 'Closed',
-            group_type: 'Single-academy trust',
+            organisation_type: 'Single-academy trust',
           },
         ]
       end
@@ -47,10 +47,10 @@ RSpec.describe TrustDataFile, type: :model do
           companies_house_number: '01234222',
           name: 'Little Hampton Academy',
           address_1: '12 High St',
-          address_2: 'Little Hampton Count',
+          address_2: 'Little Hampton Court',
           town: 'London',
           postcode: 'NW1 1AA',
-          status: 'open',
+          status: 'Open',
           organisation_type: 'Multi-academy trust',
         )
         expect(trusts.second).to include(
@@ -61,13 +61,13 @@ RSpec.describe TrustDataFile, type: :model do
           address_2: 'Strange Lane',
           town: 'Easttown',
           postcode: 'EW1 1AA',
-          status: 'closed',
+          status: 'Closed',
           organisation_type: 'Single-academy trust',
         )
       end
     end
 
-    context 'when a trust is has no companies house number or is not a single or multi academy trust' do
+    context 'when a trust has no Companies House number or is not a single- or multi-academy trust' do
       let(:attrs) do
         [
           {
@@ -75,7 +75,7 @@ RSpec.describe TrustDataFile, type: :model do
             companies_house_number: '01234222',
             name: 'Little Hampton Academy',
             address_1: '12 High St',
-            address_2: 'Little Hampton Count',
+            address_2: 'Little Hampton Court',
             town: 'London',
             postcode: 'NW1 1AA',
             status: 'Open',
