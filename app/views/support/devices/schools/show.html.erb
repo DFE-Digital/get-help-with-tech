@@ -20,7 +20,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_devices_school_user_path(school_urn: @school.urn) %>
+    <%= govuk_button_link_to t('page_titles.new_school_user'), new_support_devices_school_user_path(school_urn: @school.urn) %>
 
     <h2 class="govuk-heading-l">Users</h2>
 
@@ -31,7 +31,7 @@
           <p class="govuk-body">
             <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_devices_school_user_path(school_urn: @school.urn, id: user.id) %>
           </p>
-          <%= render Support::SchoolUserSummaryListComponent.new(user: user) %>
+          <%= render Support::UserSummaryListComponent.new(user: user) %>
         </div>
       <% end %>
     <% else %>

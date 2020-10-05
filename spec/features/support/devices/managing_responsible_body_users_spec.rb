@@ -55,14 +55,14 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   end
 
   def then_i_can_see_the_responsible_body_with_users
-    expect(responsible_body_page.user_rows.size).to eq(2)
+    expect(responsible_body_page.users.size).to eq(2)
 
-    expect(responsible_body_page.user_rows[0]).to have_text('Zeta Zane')
-    expect(responsible_body_page.user_rows[1]).to have_text('Amy Adams')
+    expect(responsible_body_page.users[0]).to have_text('Zeta Zane')
+    expect(responsible_body_page.users[1]).to have_text('Amy Adams')
   end
 
   def when_try_adding_a_new_user_with_invalid_details
-    click_on 'Add a user'
+    click_on 'Invite a new user'
 
     fill_in 'Full name', with: ''
     fill_in 'Email address', with: 'k'
@@ -83,21 +83,21 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   end
 
   def then_i_can_see_the_responsible_body_with_new_users_as_well
-    expect(responsible_body_page.user_rows.size).to eq(3)
+    expect(responsible_body_page.users.size).to eq(3)
 
-    expect(responsible_body_page.user_rows[0]).to have_text('Zeta Zane')
+    expect(responsible_body_page.users[0]).to have_text('Zeta Zane')
 
-    second_row = responsible_body_page.user_rows[1]
+    second_row = responsible_body_page.users[1]
     expect(second_row).to have_text('Kate Krampton')
     expect(second_row).to have_text('kate.krampton@coventry.gov.uk')
     expect(second_row).to have_text('0') # sign-ins
     expect(second_row).to have_text('Never')
 
-    expect(responsible_body_page.user_rows[2]).to have_text('Amy Adams')
+    expect(responsible_body_page.users[2]).to have_text('Amy Adams')
   end
 
   def when_i_try_updating_a_user_with_invalid_details
-    click_link 'Change details for Amy Adams'
+    click_link 'Edit user Amy Adams'
     fill_in 'Name', with: ''
     fill_in 'Email address', with: 'a'
     click_on 'Save changes'
@@ -110,10 +110,10 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   end
 
   def then_i_can_see_the_responsible_body_with_the_updated_user_details
-    expect(responsible_body_page.user_rows.size).to eq(2)
+    expect(responsible_body_page.users.size).to eq(2)
 
-    expect(responsible_body_page.user_rows[0]).to have_text('Zeta Zane')
-    expect(responsible_body_page.user_rows[1]).to have_text('amy.wirral@coventry.gov.uk')
-    expect(responsible_body_page.user_rows[1]).to have_text('Amy Wirral')
+    expect(responsible_body_page.users[0]).to have_text('Zeta Zane')
+    expect(responsible_body_page.users[1]).to have_text('amy.wirral@coventry.gov.uk')
+    expect(responsible_body_page.users[1]).to have_text('Amy Wirral')
   end
 end

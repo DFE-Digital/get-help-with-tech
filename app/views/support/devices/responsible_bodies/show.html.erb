@@ -11,33 +11,27 @@
   <%= @responsible_body.name %>
 </h1>
 
-<table id="responsible-body-users" class="govuk-table">
-  <caption class="govuk-table__caption govuk-heading-l">Users</caption>
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Email address</th>
-      <th scope="col" class="govuk-table__header">Full name</th>
-      <th scope="col" class="govuk-table__header">Sign-in count</th>
-      <th scope="col" class="govuk-table__header">Last sign in</th>
-      <th scope="col" class="govuk-table__header govuk-table__header--numeric">Actions</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @users.each do |user| %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= user.email_address %></td>
-        <td class="govuk-table__cell"><%= user.full_name %></td>
-        <td class="govuk-table__cell"><%= user.sign_in_count %></td>
-        <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_date&.to_s(:govuk) || 'Never' %></td>
-        <td class="govuk-table__cell govuk-table__cell--numeric">
-          <%= govuk_link_to "Change <span class='govuk-visually-hidden'>details for #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user, pilot: 'devices') %>
-          </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body, pilot: 'devices') %>
 
-<%= govuk_button_link_to 'Add a user', new_support_responsible_body_user_path(@responsible_body, pilot: 'devices') %>
+    <h2 class="govuk-heading-l">Users</h2>
+
+    <% if @users.present? %>
+      <% @users.each do |user| %>
+        <div class="user">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h3>
+          <p class="govuk-body">
+            <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user, pilot: 'devices') %>
+          </p>
+          <%= render Support::UserSummaryListComponent.new(user: user) %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="govuk-body">None</p>
+    <% end %>
+  </div>
+</div>
 
 <table id="responsible-body-schools" class="govuk-table govuk-!-margin-top-6">
   <caption class="govuk-table__caption govuk-heading-l">Schools</caption>
