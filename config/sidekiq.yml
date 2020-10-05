@@ -10,3 +10,7 @@
     cron: '15 5 * * * Europe/London'  # every day at 5:15am
     queue: scheduler
     description: Stage GIAS school data
+  StageTrustDataJob:
+    cron: '30 5 * * * Europe/London' # every daya at 5:30am
+    queue: scheduler
+    description: Stage GIAS trust data
