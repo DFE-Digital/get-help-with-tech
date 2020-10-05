@@ -1,19 +1,10 @@
 <%- title = t('page_titles.invite_school_user.title') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
-<div class="govuk-breadcrumbs ">
-  <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <%= link_to 'Home', school_home_path, class: 'govuk-breadcrumbs__link' %>
-    </li>
-    <li class="govuk-breadcrumbs__list-item">
-      <%= link_to t('page_titles.school_users'), school_users_path, class: 'govuk-breadcrumbs__link' %>
-    </li>
-    <li class="govuk-breadcrumbs__list-item">
-      <%= title %>
-    </li>
-  </ol>
-</div>
+  <% breadcrumbs([{ "Home" => school_home_path },
+                  { t('page_titles.school_users') => school_users_path },
+                  title ,
+                 ]) %>
 <% end %>
 
 <div class="govuk-grid-row">

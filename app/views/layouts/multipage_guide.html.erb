@@ -2,16 +2,9 @@
 <%= content_for :title, @page.title %>
 
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs ">
-  <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <%= link_to t('page_titles.devices_guidance_index'), devices_guidance_index_path, class: 'govuk-breadcrumbs__link' %>
-    </li>
-    <li class="govuk-breadcrumbs__list-item">
-      <%= @page.title %>
-    </li>
-  </ol>
-  </div>
+  <% breadcrumbs([{ t('page_titles.devices_guidance_index') => devices_guidance_index_path },
+                   @page.title,
+                 ]) %>
 <% end %>
 
 <% content_for :content do %>

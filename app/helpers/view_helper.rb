@@ -39,7 +39,8 @@ module ViewHelper
   end
 
   def breadcrumbs(items)
-    render BreadcrumbComponent.new(items)
+    breadcrumbs = items.map { |k, _v| k.is_a?(Hash) ? k : { k => '' } }.inject(:merge)
+    render GovukComponent::Breadcrumbs.new(breadcrumbs: breadcrumbs)
   end
 
   def sortable_table_header(title, value = title, opts = params)
