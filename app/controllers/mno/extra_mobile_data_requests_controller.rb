@@ -13,7 +13,9 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
           extra_mobile_data_requests: @extra_mobile_data_requests,
           extra_mobile_data_request_ids: selected_extra_mobile_data_request_ids(@extra_mobile_data_requests, params),
         )
-        @statuses = ExtraMobileDataRequest.translated_enum_values(:statuses).reject { |status| status.value == 'queried' }
+        @statuses = ExtraMobileDataRequest
+          .translated_enum_values(:statuses)
+          .reject { |status| status.value.in?(%w[queried cancelled]) }
       end
     end
   end
