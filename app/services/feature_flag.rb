@@ -5,7 +5,6 @@ class FeatureFlag
     public_account_creation
     slack_notifications
     rbs_can_manage_users
-    notify_computacenter_of_cap_changes
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
