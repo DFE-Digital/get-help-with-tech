@@ -9,6 +9,6 @@ RSpec.feature 'How to order devices', type: :feature do
     expect(devices_guidance_how_to_order_page).to be_displayed
 
     expect(devices_guidance_how_to_order_page.page_heading).to have_content('How to order laptops and tablets during coronavirus (COVID-19)')
-    expect(devices_guidance_how_to_order_page.steps.length).to equal(5)
+    expect(devices_guidance_how_to_order_page.steps.length).to equal(6)
   end
 end
