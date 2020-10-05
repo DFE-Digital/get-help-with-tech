@@ -7,8 +7,9 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
            to: :preorder_information,
            allow_nil: true
 
-  def initialize(school:)
+  def initialize(school:, viewer: nil)
     @school = school
+    @viewer = viewer
   end
 
   def rows
@@ -27,10 +28,12 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
 
 private
 
+  attr_reader :viewer
+
   def preorder_status_row
     {
       key: 'Status',
-      value: render(SchoolPreorderStatusTagComponent.new(school: @school)),
+      value: render(SchoolPreorderStatusTagComponent.new(school: @school, viewer: viewer)),
     }
   end
 

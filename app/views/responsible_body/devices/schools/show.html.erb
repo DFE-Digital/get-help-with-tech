@@ -27,8 +27,9 @@
 <%- if @school.preorder_information.orders_managed_centrally? || !@school.has_std_device_allocation? %>
   <h2 class="govuk-heading-l govuk-!-margin-top-4">School details</h2>
 <%- end %>
+
 <div class="govuk-!-padding-top-0 govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-  <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @school) %>
+  <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @responsible_body) %>
 </div>
 
 <p class="govuk-body">

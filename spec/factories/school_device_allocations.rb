@@ -16,5 +16,10 @@ FactoryBot.define do
       allocation { Faker::Number.within(range: 1..100) }
       cap { 0 }
     end
+
+    trait :with_orderable_devices do
+      allocation { 100 }
+      cap { Faker::Number.within(range: 20..80) }
+    end
   end
 end

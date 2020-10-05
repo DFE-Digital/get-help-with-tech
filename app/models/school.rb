@@ -109,6 +109,21 @@ class School < ApplicationRecord
     end
   end
 
+  def perceived_state
+    case preorder_status_or_default
+    when 'ready', 'school_ready'
+      if preorder_information.orders_managed_centrally? && std_device_allocation&.has_devices_available_to_order?
+        'rb_can_order'
+      elsif !preorder_information.orders_managed_centrally? && std_device_allocation&.has_devices_available_to_order?
+        'school_can_order'
+      else
+        preorder_status_or_default
+      end
+    else
+      preorder_status_or_default
+    end
+  end
+
   def next_school_in_responsible_body_when_sorted_by_name_ascending
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
