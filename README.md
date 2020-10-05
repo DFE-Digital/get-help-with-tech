@@ -107,8 +107,8 @@ Certain aspects of app behaviour are governed by a minimal implementation of Fea
 These are activated by having an environment variable FEATURES_(flag name) set to 'active', for example:
 
 ```
-# start the rails server with debug info rendered into the footer
-FEATURES_show_debug_info=active bundle exec rails s
+# start the rails server with slack notifications active
+FEATURES_slack_notifications=active bundle exec rails s
 ```
 
 The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
@@ -126,13 +126,13 @@ cf env get-help-with-tech-prod | grep FEATURES
 cf set-env (app name) (environment variable name) (value)
 
 # For example:
-cf set-env get-help-with-tech-prod FEATURES_show_debug_info active
+cf set-env get-help-with-tech-prod FEATURES_slack_notifications active
 
 # To unset the var:
 cf unset-env (app name) (environment variable name)
 
 # For example:
-cf unset-env get-help-with-tech-prod FEATURES_show_debug_info
+cf unset-env get-help-with-tech-prod FEATURES_slack_notifications
 ```
 
 ## Operations

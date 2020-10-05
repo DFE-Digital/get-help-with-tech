@@ -1,6 +1,5 @@
 class FeatureFlag
   PERMANENT_SETTINGS = %i[
-    show_debug_info
     rate_limiting
     public_account_creation
     slack_notifications
