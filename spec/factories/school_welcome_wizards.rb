@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :school_welcome_wizard do
     user { create(:school_user) }
-    step { 'privacy' }
+    step { 'allocation' }
 
     trait :completed do
       step { 'complete' }

@@ -3,7 +3,7 @@
 
     <%= render partial: 'shared/privacy_notice' %>
 
-    <%= form_for responsible_body_privacy_notice_path do %>
+    <%= form_for seen_privacy_notice_path, method: :patch do %>
       <%= submit_tag 'Continue', class: 'govuk-button' %>
     <% end %>
   </div>

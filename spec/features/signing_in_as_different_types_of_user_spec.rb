@@ -58,17 +58,17 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
 
     context 'who has not seen the privacy notice' do
-      let(:user) { create(:local_authority_user, privacy_notice_seen_at: nil) }
+      let(:user) { create(:local_authority_user, :has_not_seen_privacy_notice) }
 
       scenario 'it redirects to the privacy notice page' do
         sign_in_as user
-        expect(page).to have_current_path(responsible_body_privacy_notice_path)
+        expect(page).to have_current_path(privacy_notice_path)
         expect(page).to have_text 'Privacy notice'
       end
     end
   end
 
-  context 'as a school user who has completed the welcome wizard' do
+  context 'as a school user with only one school who has completed the welcome wizard' do
     let(:user) { create(:school_user) }
 
     scenario 'it redirects to the school homepage' do
@@ -94,7 +94,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   end
 
   context 'as a school user who has not done any of the welcome wizard' do
-    let(:user) { create(:school_user, :new_visitor) }
+    let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice) }
 
     scenario 'it shows the welcome wizard welcome text on the interstitial page' do
       visit validate_token_url_for(user)
@@ -108,9 +108,40 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       click_on 'Continue'
       expect(page).to have_text 'Before you continue, please read the privacy notice.'
     end
+
+    context 'when the user orders_devices' do
+      let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice, orders_devices: true) }
+
+      describe 'continuing after the privacy notice' do
+        before do
+          visit validate_token_url_for(user)
+          click_on 'Continue'
+        end
+
+        it 'adds a Computacenter::UserChange record for the user' do
+          expect { click_on 'Continue' }.to change(Computacenter::UserChange, :count).by(1)
+          expect(Computacenter::UserChange.last).to have_attributes(user_id: user.id, type_of_update: 'New')
+        end
+      end
+    end
+
+    context 'when the user does not order devices' do
+      let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice, orders_devices: false) }
+
+      describe 'continuing after the privacy notice' do
+        before do
+          visit validate_token_url_for(user)
+          click_on 'Continue'
+        end
+
+        it 'does not add a Computacenter::UserChange record for the user' do
+          expect { click_on 'Continue' }.not_to change(Computacenter::UserChange, :count)
+        end
+      end
+    end
   end
 
-  context 'as a school user who has not done part of the welcome wizard' do
+  context 'as a school user who has only done part of the welcome wizard' do
     let(:user) { create(:school_user, :has_partially_completed_wizard) }
 
     scenario 'clicking on Sign in takes them to their next step' do
@@ -121,7 +152,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   end
 
   context 'as a hybrid user' do
-    let(:user) { create(:hybrid_user) }
+    let(:user) { create(:hybrid_user, :has_not_seen_privacy_notice) }
 
     scenario 'logging in for the first time' do
       visit validate_token_url_for(user)

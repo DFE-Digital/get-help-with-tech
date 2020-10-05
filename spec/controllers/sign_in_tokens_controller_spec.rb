@@ -55,7 +55,7 @@ RSpec.describe SignInTokensController, type: :controller do
 
       it 'redirects them to the school journey' do
         delete :destroy, params: valid_token_params
-        expect(response).to redirect_to('/school/privacy')
+        expect(response).to redirect_to('/school')
       end
 
       context 'when they have not accepted privacy policies' do
@@ -67,9 +67,9 @@ RSpec.describe SignInTokensController, type: :controller do
                  school: school)
         end
 
-        it 'redirects them to the school privacy policies' do
+        it 'redirects them to the privacy policy' do
           delete :destroy, params: valid_token_params
-          expect(response).to redirect_to('/school/privacy')
+          expect(response).to redirect_to(privacy_notice_path)
         end
       end
     end

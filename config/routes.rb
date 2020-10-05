@@ -175,6 +175,9 @@ Rails.application.routes.draw do
   get '/sign-in', to: 'sign_in_tokens#new', as: :sign_in
   post '/sign-in', to: 'sign_in_tokens#create'
 
+  get '/privacy-notice', to: 'privacy_notice#show'
+  patch '/privacy-notice', to: 'privacy_notice#seen', as: :seen_privacy_notice
+
   get '/techsource-start', to: 'techsource_launcher#start'
 
   get '/403', to: 'errors#forbidden', via: :all

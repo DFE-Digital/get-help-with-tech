@@ -11,24 +11,6 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
     subject(:wizard) { school_user.school_welcome_wizard }
 
-    context 'when the step is privacy' do
-      before do
-        wizard.privacy!
-      end
-
-      it 'moves to the allocation step' do
-        wizard.update_step!
-        expect(wizard.allocation?).to be true
-      end
-
-      it 'records when the privacy notice was seen' do
-        Timecop.freeze(Time.zone.now) do
-          wizard.update_step!
-          expect(school_user.privacy_notice_seen_at).to eq(Time.zone.now)
-        end
-      end
-    end
-
     context 'when the step is allocation' do
       before do
         wizard.allocation!
@@ -109,7 +91,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         expect(user.email_address).to eq(new_user_attrs[:email_address])
         expect(user.telephone).to eq(new_user_attrs[:telephone])
         expect(user.orders_devices).to eq(new_user_attrs[:orders_devices])
-        expect(user.school).to eq(school_user.school)
+        expect(user.schools.first).to eq(wizard.school)
       end
 
       it 'sends an email to the new user' do
@@ -249,7 +231,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       it 'updates the preorder_information with the form details' do
         wizard.update_step!(request)
-        expect(school.preorder_information.will_need_chromebooks).to be_nil
+        expect(school.preorder_information.reload.will_need_chromebooks).to be_nil
       end
 
       it 'moves to the what_happens_next step' do
