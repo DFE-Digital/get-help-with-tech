@@ -75,7 +75,7 @@ private
         "couldn't figure out root_url_for user",
         logger: 'logger',
         extra: {
-          time_at: Time.now,
+          time_at: Time.zone.now,
           user_id: user.id,
         },
         tags: {

@@ -108,6 +108,37 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       click_on 'Continue'
       expect(page).to have_text 'Before you continue, please read the privacy notice.'
     end
+
+    context 'when the user orders_devices' do
+      let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice, orders_devices: true) }
+
+      describe 'continuing after the privacy notice' do
+        before do
+          visit validate_token_url_for(user)
+          click_on 'Continue'
+        end
+
+        it 'adds a Computacenter::UserChange record for the user' do
+          expect { click_on 'Continue' }.to change(Computacenter::UserChange, :count).by(1)
+          expect(Computacenter::UserChange.last).to have_attributes(user_id: user.id, type_of_update: 'New')
+        end
+      end
+    end
+
+    context 'when the user does not order devices' do
+      let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice, orders_devices: false) }
+
+      describe 'continuing after the privacy notice' do
+        before do
+          visit validate_token_url_for(user)
+          click_on 'Continue'
+        end
+
+        it 'does not add a Computacenter::UserChange record for the user' do
+          expect { click_on 'Continue' }.not_to change(Computacenter::UserChange, :count)
+        end
+      end
+    end
   end
 
   context 'as a school user who has only done part of the welcome wizard' do
