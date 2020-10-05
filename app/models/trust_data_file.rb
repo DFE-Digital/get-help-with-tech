@@ -1,5 +1,4 @@
 class TrustDataFile < CsvDataFile
-
   ATTR_MAP = {
     name: 'Group Name',
     organisation_type: 'Group Type',
