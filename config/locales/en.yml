@@ -40,7 +40,7 @@
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
     devices_guidance_index: "Get help with technology: devices"
-    devices_guidance_how_to_order: "How to order laptops and tablets during coronavirus (COVID-19)"
+    devices_guidance_how_to_order: "How and when to order laptops and tablets during coronavirus (COVID-19)"
     download_bt_hotspots: Download your BT hotspot log-ins
     click_to_sign_in:
       standard: You’re signed in
@@ -147,7 +147,7 @@
       description: Find out how we estimated device requirements for each school and how to query an allocation.
       audience: responsible_body_users
     how_to_order:
-      title: How to order laptops and tablets
+      title: How and when to order laptops and tablets
       description: Prepare to order laptops and tablets for disadvantaged children in certain year groups when schools are affected by disruption to face-to-face education due to coronavirus.
       audience: responsible_body_users
     device_specification:
