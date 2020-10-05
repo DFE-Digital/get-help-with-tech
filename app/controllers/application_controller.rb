@@ -70,6 +70,18 @@ private
     elsif user.is_support?
       support_internet_service_performance_path
     else
+      # this should not happen - so let's tell Sentry
+      Raven.capture_message(
+        "couldn't figure out root_url_for user",
+        logger: 'logger',
+        extra: {
+          time_at: Time.now,
+          user_id: user.id,
+        },
+        tags: {
+          env: Rails.env,
+        },
+      )
       '/'
     end
   end
