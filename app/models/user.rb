@@ -125,6 +125,10 @@ class User < ApplicationRecord
     orders_devices? && !techsource_account_confirmed?
   end
 
+  def has_an_active_techsource_account?
+    orders_devices? && techsource_account_confirmed?
+  end
+
   def hybrid?
     school_id && responsible_body_id
   end

@@ -207,12 +207,12 @@ RSpec.describe School, type: :model do
     end
   end
 
-  describe '#can_order_devices?' do
+  describe '#can_order_devices_right_now?' do
     let(:school) { create(:school, :in_lockdown) }
 
     context 'when there is no allocation of the given type' do
       it 'is false' do
-        expect(school.can_order_devices?).to be false
+        expect(school.can_order_devices_right_now?).to be_falsey
       end
     end
 
@@ -225,7 +225,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.can_order_devices?).to eq(false)
+        expect(school.can_order_devices_right_now?).to be_falsey
       end
     end
 
@@ -243,7 +243,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is true' do
-        expect(school.can_order_devices?).to eq(true)
+        expect(school.can_order_devices_right_now?).to be_truthy
       end
     end
 
@@ -262,7 +262,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.can_order_devices?).to eq(false)
+        expect(school.can_order_devices_right_now?).to be_falsey
       end
     end
   end

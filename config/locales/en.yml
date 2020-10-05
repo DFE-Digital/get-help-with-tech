@@ -84,6 +84,13 @@
     school_home: Get devices for your school
     school_can_order_devices: Your school can order devices
     school_cannot_order_devices: Your school cannot order devices yet
+    school:
+      devices:
+        cannot_order_as_cap_reached:
+          school:
+            title: Your school has ordered all the devices it can
+          user:
+            title: You’ve ordered all the devices you can
     school_user_cannot_order_devices: You cannot order devices yet
     school_order_devices: Order devices
     school_order_devices_soon: Order devices soon
