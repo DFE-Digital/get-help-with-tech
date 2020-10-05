@@ -7,7 +7,13 @@
       <%= @school.name %>
     </h1>
 
-    <%- unless @school.has_std_device_allocation? %>
+    <%- if @school.has_std_device_allocation? %>
+      <%= render DeviceCountComponent.new(
+        max_count: @school.std_device_allocation.cap,
+        ordered_count: @school.std_device_allocation.devices_ordered,
+        show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
+        action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
+    <% else %>
       <%= render partial: 'shared/school_without_allocation' %>
     <%- end %>
 
@@ -23,10 +29,6 @@
     <%- end %>
   </div>
 </div>
-
-<%- if @school.preorder_information.orders_managed_centrally? || !@school.has_std_device_allocation? %>
-  <h2 class="govuk-heading-l govuk-!-margin-top-4">School details</h2>
-<%- end %>
 
 <div class="govuk-!-padding-top-0 govuk-!-margin-top-0 govuk-!-margin-bottom-6">
   <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @responsible_body) %>
