@@ -41,7 +41,6 @@ Rails.application.routes.draw do
   post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
 
   resources :sessions, only: %i[create destroy]
-  resources :users, only: %i[new create]
 
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   delete '/token/validate', to: 'sign_in_tokens#destroy', as: :destroy_sign_in_token
