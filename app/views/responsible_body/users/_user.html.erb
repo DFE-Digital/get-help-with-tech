@@ -1,9 +1,7 @@
 <div class="user">
   <h3 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h3>
-  <%- if FeatureFlag.active?(:rbs_can_manage_users) %>
-    <p class="govuk-body">
-      <%= govuk_link_to 'Edit user', edit_responsible_body_user_path(user) %>
-    </p>
-  <%- end %>
+  <p class="govuk-body">
+    <%= govuk_link_to 'Edit user', edit_responsible_body_user_path(user) %>
+  </p>
   <%= render UserSummaryListComponent.new(user: user) %>
 </div>

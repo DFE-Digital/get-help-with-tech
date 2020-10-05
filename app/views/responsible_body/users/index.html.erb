@@ -21,11 +21,7 @@
 
     <p class="govuk-body">Everyone has the same level of access, they can:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-      <%- if FeatureFlag.active?(:rbs_can_manage_users) %>
-        <li>add or edit existing users</li>
-      <%- else %>
-        <li>add users</li>
-      <%- end %>
+      <li>add or edit existing users</li>
       <li>view the list of existing users</li>
       <li>order devices for centrally managed schools</li>
       <%- if @responsible_body.in_connectivity_pilot? %>
