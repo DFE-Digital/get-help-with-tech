@@ -73,7 +73,7 @@ class User < ApplicationRecord
   end
 
   def needs_to_see_privacy_notice?
-    is_responsible_body_user? && !seen_privacy_notice?
+    (is_responsible_body_user? || is_school_user?) && !seen_privacy_notice?
   end
 
   def seen_privacy_notice?

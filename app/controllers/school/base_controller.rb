@@ -1,5 +1,5 @@
 class School::BaseController < ApplicationController
-  before_action :require_school_user!, :set_school
+  before_action :require_school_user!, :set_school, :require_completed_welcome_wizard!
 
 private
 
@@ -13,5 +13,11 @@ private
 
   def set_school
     @school = @user.school
+  end
+
+  def require_completed_welcome_wizard!
+    unless @user.school_welcome_wizard&.complete? || params[:controller] == 'school/welcome_wizard'
+      redirect_to school_welcome_wizard_allocation_path
+    end
   end
 end

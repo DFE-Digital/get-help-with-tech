@@ -4,7 +4,6 @@ class SchoolWelcomeWizard < ApplicationRecord
   validates :step, presence: true
 
   enum step: {
-    privacy: 'privacy',
     allocation: 'allocation',
     order_your_own: 'order_your_own',
     techsource_account: 'techsource_account',
@@ -26,9 +25,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     return true if complete?
 
     case step
-    when 'privacy'
-      user.seen_privacy_notice!
-      allocation!
     when 'allocation'
       order_your_own!
     when 'order_your_own'
@@ -95,7 +91,8 @@ private
     elsif @invite_user == 'yes'
       user_attrs = user_params(params)
 
-      @invited_user = User.new(user_attrs.merge(school_id: school.id))
+      @invited_user = User.new(user_attrs)
+      @invited_user.schools << school
       if @invited_user.valid?
         save_and_invite_user!(@invited_user)
         @invited_user = nil

@@ -50,4 +50,27 @@ private
   def not_found
     render 'errors/not_found', status: :not_found and return
   end
+
+  def root_url_for(user)
+    if user.needs_to_see_privacy_notice? && !user.seen_privacy_notice?
+      privacy_notice_path
+    elsif user.is_mno_user?
+      mno_extra_mobile_data_requests_path
+    elsif user.is_responsible_body_user? && !user.hybrid?
+      responsible_body_home_path
+    elsif user.is_school_user?
+      if user.school.preorder_information&.school_will_order_devices? &&
+          user.school.preorder_information&.chromebook_info_still_needed?
+        school_before_you_can_order_path
+      else
+        school_home_path
+      end
+    elsif user.is_computacenter?
+      computacenter_home_path
+    elsif user.is_support?
+      support_internet_service_performance_path
+    else
+      '/'
+    end
+  end
 end
