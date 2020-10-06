@@ -146,6 +146,12 @@ ActiveRecord::Schema.define(version: 2020_10_06_114218) do
     t.string "gias_group_uid"
     t.string "gias_id"
     t.bigint "key_contact_id"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "address_3"
+    t.string "town"
+    t.string "county"
+    t.string "postcode"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
     t.index ["gias_id"], name: "index_responsible_bodies_on_gias_id", unique: true
