@@ -16,7 +16,7 @@ private
   end
 
   def require_completed_welcome_wizard!
-    unless @user.school_welcome_wizard&.complete? || params[:controller] == 'school/welcome_wizard'
+    unless @user.school_welcome_wizards.find_by_school_id(@school.id)&.complete? || params[:controller] == 'school/welcome_wizard'
       redirect_to school_welcome_wizard_allocation_path
     end
   end

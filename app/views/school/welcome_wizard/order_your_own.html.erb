@@ -4,7 +4,10 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @wizard, url: school_welcome_wizard_path(step: @wizard.step) do |f| %>
       <%= f.hidden_field :step %>
-      <h1 class="govuk-heading-l"><%= title %></h1>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l"><%= @school.name %></span>
+        <%= title %>
+      </h1>
 
       <p class="govuk-body">If your school is affected by local coronavirus restrictions, we’ll contact you
       with instructions as soon as you’re able to place orders.</p>

@@ -631,7 +631,7 @@ RSpec.describe User, type: :model do
 
         context 'when school association is updated from nil' do
           let!(:school) { create(:school) }
-          let!(:user) { create(:school_user, :relevant_to_computacenter, school: nil) }
+          let!(:user) { create(:user, :relevant_to_computacenter, school: nil) }
 
           def perform_change!
             user.update(school: school)
