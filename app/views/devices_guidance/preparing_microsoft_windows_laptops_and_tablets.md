@@ -1,11 +1,11 @@
 When ordering Microsoft devices, a selection can be made between:
 
-* not having DfE settings installed - these devices can be configured with your preferred safeguarding software and brought into your existing device management framework
-* having DfE settings installed - these devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
+* not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
+* having DfE settings installed - these 'DfE Restricted' devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
 
 ## Preparing laptops and tablets ordered without DfE settings installed 
 
-If you order devices after September 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. They will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
+If you order devices after September 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. These 'Standard' devices will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
 
 This allows devices to be configured to your own standards with your preferred software and settings, and without the limitations imposed by DfE configured devices. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
 
@@ -13,7 +13,7 @@ You will be responsible for setting up management and [safeguarding measures](ht
 
 ## Preparing laptops and tablets ordered with DfE settings installed
 
-The following guidance applies only to devices ordered between May and July 2020, and those ordered after September 2020 where you have selected to have software and settings installed prior to delivery.
+The following guidance applies only to devices ordered between May and July 2020, and those ordered after September 2020 where you have selected 'DfE Restricted' devices which have software and settings installed prior to delivery.
 
 DfE-provided settings are a ‘one-size fits all’ solution, designed to block harmful content. These settings are not configurable at a local level.
 
