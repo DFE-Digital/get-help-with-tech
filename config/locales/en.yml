@@ -16,6 +16,9 @@ en:
     confirm: Check your answers before confirming
     new_user: Create an account
     error_prefix: "Error: "
+    responsible_body:
+      devices:
+        order_devices: Order devices now
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
     responsible_body_devices_tell_us: Tell us who will order a school’s laptops and tablets
