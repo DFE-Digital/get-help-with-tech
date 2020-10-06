@@ -153,6 +153,10 @@ class User < ApplicationRecord
     schools << new_school if new_school.present?
   end
 
+  def welcome_wizard_for(school)
+    school_welcome_wizards.find_by_school_id(school.id)
+  end
+
 private
 
   def cleansed_full_name

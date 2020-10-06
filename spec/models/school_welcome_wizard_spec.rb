@@ -9,7 +9,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     let(:school) { create(:school, :with_preorder_information) }
     let(:school_user) { create(:school_user, :new_visitor, school: school) }
 
-    subject(:wizard) { school_user.school_welcome_wizards.find_by_school_id(school.id) }
+    subject(:wizard) { school_user.welcome_wizard_for(school) }
 
     context 'when the step is allocation' do
       before do
