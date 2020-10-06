@@ -13,6 +13,14 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     sign_in_as mno_user
   end
 
+  describe 'GET index' do
+    it 'does not list "queried" and "cancelled" as possible statuses to transition a request into' do
+      get :index
+
+      expect(assigns(:statuses).map(&:value)).to match_array(%w[requested in_progress complete unavailable])
+    end
+  end
+
   describe 'PATCH update' do
     let(:params) do
       {
