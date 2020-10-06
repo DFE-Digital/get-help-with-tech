@@ -44,7 +44,7 @@ RSpec.describe StageTrustData, type: :model do
           address_2: 'Strange Lane',
           town: 'Easttown',
           postcode: 'EW1 1AA',
-          status: 'Closed',
+          status: 'closed',
           organisation_type: 'single_academy_trust',
         )
       end
@@ -86,7 +86,7 @@ RSpec.describe StageTrustData, type: :model do
           address_2: 'Wigtown Lane',
           town: 'Wigtown',
           postcode: 'W1G 1AA',
-          status: 'Open',
+          status: 'open',
           organisation_type: 'multi_academy_trust',
         )
       end
