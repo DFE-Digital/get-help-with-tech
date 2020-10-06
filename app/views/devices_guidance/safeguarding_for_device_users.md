@@ -19,10 +19,10 @@ Parents and guardians should provide age-appropriate supervision for the interne
 
 LAs, academy trusts and schools are responsible for avoiding risks to the online safety of the children and young people they provide devices to.
 
-If you order Microsoft Windows devices from September 2020, you have the option to receive them without Department for Education (DfE) software and settings. They will be delivered with factory settings as supplied by the manufacturer. 
+If you order Microsoft Windows devices from September 2020, you have the option to receive them without Department for Education (DfE) software and settings. These 'Standard' devices will be delivered with factory settings as supplied by the manufacturer. 
 
 You are responsible for setting up management and safeguarding measures before you distribute the devices.
-Cisco Umbrella will be pre-installed on devices ordered between May and July 2020, and those from September 2020 where you have selected to have software and settings installed prior to delivery
+Cisco Umbrella will be pre-installed on devices ordered between May and July 2020, and those from September 2020 where you have selected 'DfE Restricted' devices which will have software and settings installed prior to delivery.
 
 Where Cisco Umbrella has been installed, content filtering has been set up to meet the needs of children and young people of all ages. You can choose to use your own content filtering solution to replace Cisco Umbrella to make it more relevant for your users’ needs.
 
@@ -31,9 +31,9 @@ Please see our guidance on content filtering software for [Google Chromebooks](/
 Updating your Microsoft mobile device management
 ------------------------------------------------
 
-Microsoft Windows laptops and tablets can be supplied with security settings already configured and managed by DfE using Microsoft Intune.
+'DfE Restricted' Microsoft Windows laptops and tablets can be supplied with security settings already configured and managed by DfE using Microsoft Intune.
 
-You can loan the devices out to users straight away as the mobile device management (MDM) will be in place. After 30 September 2021, the MDM will expire and the devices will be unprotected.
+You can lend the devices out to users straight away as the mobile device management (MDM) will be in place. After 30 September 2021, the MDM will expire and the devices will be unprotected.
 
 You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
