@@ -9,10 +9,6 @@ RSpec.describe ResponsibleBody::UsersController do
   let(:user_from_other_rb) { create(:local_authority_user, responsible_body: other_local_authority) }
 
   describe '#edit' do
-    before do
-      FeatureFlag.activate(:rbs_can_manage_users)
-    end
-
     context 'logged in as a RB user' do
       before do
         sign_in_as rb_user
