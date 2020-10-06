@@ -5,7 +5,7 @@ class TrustUpdateService
 
     # simple updates for trusts that are open
     DataStage::Trust.updated_since(last_update).open.each do |staged_trust|
-      trust = Trust.find_by(urn: staged_trust.urn)
+      trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
       if trust
         update_trust(trust, staged_trust)
       else
@@ -33,6 +33,6 @@ private
   end
 
   def staged_attributes(staged_trust)
-    staged_trust.attributes.except('id', 'created_at', 'updated_at')
+    staged_trust.attributes.except('id', 'status', 'created_at', 'updated_at')
   end
 end
