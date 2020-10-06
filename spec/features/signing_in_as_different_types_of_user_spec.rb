@@ -17,33 +17,12 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     expect(page).to have_content('Sign in')
   end
 
-  context 'with the public_account_creation FeatureFlag active' do
-    before do
-      FeatureFlag.activate(:public_account_creation)
-    end
-
-    scenario 'supplying a valid email sends a token' do
-      visit sign_in_path
-      find('#sign-in-token-form-already-have-account-yes-field').choose
-      fill_in('Email address', with: user.email_address)
-      click_on 'Continue'
-      expect(page).to have_content 'Check your email'
-      expect(page).not_to have_content('Sign out')
-    end
-  end
-
-  context 'with the public_account_creation FeatureFlag inactive' do
-    before do
-      FeatureFlag.deactivate(:public_account_creation)
-    end
-
-    scenario 'supplying a valid email sends a token' do
-      visit sign_in_path
-      fill_in('Email address', with: user.email_address)
-      click_on 'Continue'
-      expect(page).to have_content 'Check your email'
-      expect(page).not_to have_content('Sign out')
-    end
+  scenario 'supplying a valid email sends a token' do
+    visit sign_in_path
+    fill_in('Email address', with: user.email_address)
+    click_on 'Continue'
+    expect(page).to have_content 'Check your email'
+    expect(page).not_to have_content('Sign out')
   end
 
   context 'as a user who belongs to a responsible body' do

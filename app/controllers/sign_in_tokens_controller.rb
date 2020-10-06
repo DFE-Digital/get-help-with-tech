@@ -1,11 +1,7 @@
 class SignInTokensController < ApplicationController
   def new
     @sign_in_token_form ||= SignInTokenForm.new
-    if FeatureFlag.active?(:public_account_creation)
-      render :sign_in_or_create_account
-    else
-      render :sign_in_only
-    end
+    render :sign_in_only
   end
 
   # GET /token/validate
@@ -35,10 +31,6 @@ class SignInTokensController < ApplicationController
 
   def create
     @sign_in_token_form = SignInTokenForm.new(sign_in_token_form_params)
-    if FeatureFlag.active?(:public_account_creation) && \
-        @sign_in_token_form.already_have_account == 'no'
-      redirect_to new_user_path and return
-    end
 
     new and return unless @sign_in_token_form.valid?
 
@@ -80,7 +72,6 @@ private
 
   def sign_in_token_form_params
     params.require(:sign_in_token_form).permit(
-      :already_have_account,
       :email_address,
       :token,
       :identifier,

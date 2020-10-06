@@ -1,7 +1,6 @@
 class FeatureFlag
   PERMANENT_SETTINGS = %i[
     rate_limiting
-    public_account_creation
     slack_notifications
     rbs_can_manage_users
   ].freeze

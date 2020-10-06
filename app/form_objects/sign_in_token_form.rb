@@ -1,7 +1,7 @@
 class SignInTokenForm
   include ActiveModel::Model
 
-  attr_accessor :email_address, :token, :identifier, :already_have_account
+  attr_accessor :email_address, :token, :identifier
 
   validates :email_address,
             presence: { message: 'Enter an email address in the correct format, like name@example.com' },

@@ -106,104 +106,44 @@ RSpec.feature 'Session behaviour', type: :feature do
   context 'with a valid user' do
     let(:valid_user) { create(:local_authority_user) }
 
-    context 'with the public_account_creation FeatureFlag active' do
-      before do
-        FeatureFlag.activate(:public_account_creation)
-      end
+    scenario 'Signing in as a recognised user sends a magic link email' do
+      visit '/'
+      click_on 'Sign in'
+      expect(page).to have_text('Email address')
 
-      scenario 'Signing in as a recognised user sends a magic link email' do
-        visit '/'
-        click_on 'Sign in'
-        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
-        expect(page).to have_text('Email address')
+      clear_emails
+      expect(current_email).to be_nil
+      fill_in 'Email address', with: valid_user.email_address
+      click_on 'Continue'
+      open_email(valid_user.email_address)
 
-        clear_emails
-        expect(current_email).to be_nil
-        fill_in 'Email address', with: valid_user.email_address
-        click_on 'Continue'
-
-        open_email(valid_user.email_address)
-        expect(current_email).not_to be_nil
-        expect(current_email.to[0]).to eq(valid_user.email_address)
-        expect(page).to have_text('Check your email')
-      end
-
-      scenario "Signing in as a recognised user still works even when the email address case doesn't exactly match" do
-        valid_user.update!(email_address: 'Jane.Smith@example.com')
-
-        visit '/'
-        click_on 'Sign in'
-        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
-        expect(page).to have_text('Email address')
-
-        clear_emails
-        expect(current_email).to be_nil
-        fill_in 'Email address', with: 'jane.smith@example.com'
-        click_on 'Continue'
-        open_email(valid_user.email_address)
-
-        expect(current_email).not_to be_nil
-        expect(page).to have_text('Check your email')
-      end
-
-      scenario 'Entering an unrecognised email address shows an informative message' do
-        visit '/'
-        click_on 'Sign in'
-        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
-        expect(page).to have_text('Email address')
-
-        fill_in 'Email address', with: 'unrecognised@example.com'
-        click_on 'Continue'
-
-        expect(page).to have_text('We didn’t recognise that email address')
-      end
+      expect(current_email).not_to be_nil
+      expect(page).to have_text('Check your email')
     end
 
-    context 'with the public_account_creation FeatureFlag inactive' do
-      before do
-        FeatureFlag.deactivate(:public_account_creation)
-      end
+    scenario 'Entering an unrecognised email address shows an informative message' do
+      visit '/'
+      click_on 'Sign in'
+      expect(page).to have_text('Email address')
 
-      scenario 'Signing in as a recognised user sends a magic link email' do
-        visit '/'
-        click_on 'Sign in'
-        expect(page).to have_text('Email address')
+      fill_in 'Email address', with: 'unrecognised@example.com'
+      click_on 'Continue'
 
-        clear_emails
-        expect(current_email).to be_nil
-        fill_in 'Email address', with: valid_user.email_address
-        click_on 'Continue'
-        open_email(valid_user.email_address)
+      expect(page).to have_text('We didn’t recognise that email address')
+    end
 
-        expect(current_email).not_to be_nil
-        expect(page).to have_text('Check your email')
-      end
+    scenario 'Entering an invalid email sends the user back to the sign-in page' do
+      visit '/'
+      click_on 'Sign in'
+      expect(page).to have_text('Email address')
 
-      scenario 'Entering an unrecognised email address shows an informative message' do
-        visit '/'
-        click_on 'Sign in'
-        find('#sign-in-token-form-already-have-account-yes-field').choose if FeatureFlag.active?(:public_account_creation)
-        expect(page).to have_text('Email address')
+      clear_emails
+      expect(current_email).to be_nil
+      fill_in 'Email address', with: 'ab.c'
+      click_on 'Continue'
 
-        fill_in 'Email address', with: 'unrecognised@example.com'
-        click_on 'Continue'
-
-        expect(page).to have_text('We didn’t recognise that email address')
-      end
-
-      scenario 'Entering an invalid email sends the user back to the sign-in page' do
-        visit '/'
-        click_on 'Sign in'
-        expect(page).to have_text('Email address')
-
-        clear_emails
-        expect(current_email).to be_nil
-        fill_in 'Email address', with: 'ab.c'
-        click_on 'Continue'
-
-        expect(page).to have_text('Sign in')
-        expect(page).to have_text('Enter an email address in the correct format')
-      end
+      expect(page).to have_text('Sign in')
+      expect(page).to have_text('Enter an email address in the correct format')
     end
   end
 end
