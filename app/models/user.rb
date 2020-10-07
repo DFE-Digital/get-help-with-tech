@@ -95,7 +95,7 @@ class User < ApplicationRecord
   def organisation_name
     mobile_network&.brand || \
       responsible_body&.local_authority_official_name || \
-      school&.name || \
+      (schools.size == 1 && school&.name) || \
       responsible_body&.name || \
       (is_computacenter? && 'Computacenter') || \
       (is_support? && 'DfE Support')

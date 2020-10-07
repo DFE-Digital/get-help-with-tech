@@ -6,7 +6,7 @@
     </h1>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_order_devices'), school_order_devices_path %>
+      <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>
@@ -17,7 +17,7 @@
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_request_devices'), school_request_devices_path %>
+      <%= govuk_link_to t('page_titles.school_request_devices'), request_devices_school_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to request devices for children who:</p>
@@ -28,7 +28,7 @@
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_details'), school_details_path %>
+      <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>
@@ -39,7 +39,7 @@
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_users'), school_users_path %>
+      <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>

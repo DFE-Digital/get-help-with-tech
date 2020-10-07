@@ -42,7 +42,7 @@ private
 
     unless info.orders_managed_centrally?
       detail.merge!({
-        change_path: school_chromebooks_edit_path,
+        change_path: chromebooks_edit_school_path(@school),
         action: 'whether Chromebooks are needed',
       })
     end
@@ -61,11 +61,11 @@ private
 
       unless info.orders_managed_centrally?
         domain.merge!({
-          change_path: school_chromebooks_edit_path,
+          change_path: chromebooks_edit_school_path(@school),
           action: 'Domain',
         })
         recovery.merge!({
-          change_path: school_chromebooks_edit_path,
+          change_path: chromebooks_edit_school_path(@school),
           action: 'Recovery email',
         })
       end

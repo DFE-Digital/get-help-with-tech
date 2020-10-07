@@ -2,7 +2,7 @@
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([
-    { 'Home' => school_home_path },
+    { 'Home' => home_school_path },
     title,
   ]) %>
 <%- end %>
@@ -30,6 +30,6 @@
 
     <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
 
-    <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path %>.</p>
+    <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path(@school) %>.</p>
   </div>
 </div>

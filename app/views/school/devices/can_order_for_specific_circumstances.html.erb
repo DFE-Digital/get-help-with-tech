@@ -2,7 +2,7 @@
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([
-    { 'Home' => school_home_path },
+    { 'Home' => home_school_path },
     title,
   ]) %>
 <%- end %>
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <p class="govuk-body">Now you’ve contacted us to <%= govuk_link_to 'request devices for specific circumstances', school_request_devices_path %>, you can go ahead with your order.</p>
+    <p class="govuk-body">Now you’ve contacted us to <%= govuk_link_to 'request devices for specific circumstances', request_devices_school_path(@school) %>, you can go ahead with your order.</p>
 
     <p class="govuk-body">You cannot order your full allocation yet because there are no local coronavirus restrictions.</p>
 

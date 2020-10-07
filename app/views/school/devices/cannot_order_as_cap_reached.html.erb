@@ -3,7 +3,7 @@
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([
-    { 'Home' => school_home_path },
+    { 'Home' => home_school_path },
     'Order devices',
   ]) %>
 <%- end %>
@@ -36,7 +36,7 @@
     <% end %>
 
     <h2 class="govuk-heading-m">Get devices early for specific circumstances</h2>
-    <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', school_request_devices_path %> from any year group who:</p>
+    <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', request_devices_school_path(@school) %> from any year group who:</p>
 
     <%= render partial: 'shared/devices/who_to_request_for_list' %>
   </div>

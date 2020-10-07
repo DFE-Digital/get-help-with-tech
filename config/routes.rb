@@ -99,27 +99,29 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :school do
-    get '/', to: 'home#show', as: :home
-    get '/request-devices', to: 'devices#request_devices'
-    get '/order-devices', to: 'devices#order'
-    get '/details', to: 'details#show', as: :details
-    get '/chromebooks/edit', to: 'chromebooks#edit'
-    patch '/chromebooks', to: 'chromebooks#update'
-    get '/welcome', to: 'welcome_wizard#welcome', as: :welcome_wizard_welcome
-    get '/privacy', to: 'welcome_wizard#privacy', as: :welcome_wizard_privacy
-    get '/allocation', to: 'welcome_wizard#allocation', as: :welcome_wizard_allocation
-    get '/order-your-own', to: 'welcome_wizard#order_your_own', as: :welcome_wizard_order_your_own
-    get '/techsource-account', to: 'welcome_wizard#techsource_account', as: :welcome_wizard_techsource_account
-    get '/will-other-order', to: 'welcome_wizard#will_other_order', as: :welcome_wizard_will_other_order
-    get '/devices-you-can-order', to: 'welcome_wizard#devices_you_can_order', as: :welcome_wizard_devices_you_can_order
-    get '/chromebooks', to: 'welcome_wizard#chromebooks', as: :welcome_wizard_chromebooks
-    get '/what-happens-next', to: 'welcome_wizard#what_happens_next', as: :welcome_wizard_what_happens_next
-    patch '/next(/:step)', to: 'welcome_wizard#next_step', as: :welcome_wizard
-    patch '/prev', to: 'welcome_wizard#previous_step', as: :welcome_wizard_previous
-    resources :users, only: %i[index new create edit update]
-    get '/before-you-can-order', to: 'before_can_order#edit'
-    patch '/before-you-can-order', to: 'before_can_order#update'
+  resources :schools, only: %i[index], param: :urn do
+    member do
+      get '/', to: 'school/home#show', as: :home
+      get '/before-you-can-order', to: 'school/before_can_order#edit'
+      patch '/before-you-can-order', to: 'school/before_can_order#update'
+      get '/request-devices', to: 'school/devices#request_devices'
+      get '/order-devices', to: 'school/devices#order'
+      get '/details', to: 'school/details#show', as: :details
+      get '/chromebooks/edit', to: 'school/chromebooks#edit'
+      patch '/chromebooks', to: 'school/chromebooks#update'
+      get '/welcome', to: 'school/welcome_wizard#welcome', as: :welcome_wizard_welcome
+      get '/privacy', to: 'school/welcome_wizard#privacy', as: :welcome_wizard_privacy
+      get '/allocation', to: 'school/welcome_wizard#allocation', as: :welcome_wizard_allocation
+      get '/order-your-own', to: 'school/welcome_wizard#order_your_own', as: :welcome_wizard_order_your_own
+      get '/techsource-account', to: 'school/welcome_wizard#techsource_account', as: :welcome_wizard_techsource_account
+      get '/will-other-order', to: 'school/welcome_wizard#will_other_order', as: :welcome_wizard_will_other_order
+      get '/devices-you-can-order', to: 'school/welcome_wizard#devices_you_can_order', as: :welcome_wizard_devices_you_can_order
+      get '/chromebooks', to: 'school/welcome_wizard#chromebooks', as: :welcome_wizard_chromebooks
+      get '/what-happens-next', to: 'school/welcome_wizard#what_happens_next', as: :welcome_wizard_what_happens_next
+      patch '/next(/:step)', to: 'school/welcome_wizard#next_step', as: :welcome_wizard
+      patch '/prev', to: 'school/welcome_wizard#previous_step', as: :welcome_wizard_previous
+      resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
+    end
   end
 
   namespace :support do

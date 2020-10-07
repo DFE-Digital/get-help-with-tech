@@ -1,8 +1,8 @@
 <%- title = t('page_titles.invite_school_user.title') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ "Home" => school_home_path },
-                  { t('page_titles.school_users') => school_users_path },
+  <% breadcrumbs([{ "Home" => home_school_path },
+                  { t('page_titles.school_users') => school_users_path(@school) },
                   title ,
                  ]) %>
 <% end %>
@@ -17,7 +17,7 @@
       <li>understands what devices are needed and who will get them</li>
       <li>can configure devices or give technical information</li>
     </ul>
-    <%= form_for @user, url: school_users_path do |f| %>
+    <%= form_for @user, url: school_users_path(@school) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render partial: 'shared/school_user_form', locals: { form: f } %>
       <%= f.govuk_submit 'Send invite' %>

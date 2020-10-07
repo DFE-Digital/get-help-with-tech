@@ -88,7 +88,7 @@ RSpec.feature 'Order devices' do
   end
 
   def when_i_visit_the_order_devices_page
-    visit school_order_devices_path
+    visit order_devices_school_path(school)
     expect(page).to have_http_status(:ok)
   end
 

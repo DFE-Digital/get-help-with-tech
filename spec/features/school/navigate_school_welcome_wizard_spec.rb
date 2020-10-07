@@ -145,23 +145,23 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_the_order_your_own_page
-    expect(page).to have_current_path(school_welcome_wizard_order_your_own_path)
+    expect(page).to have_current_path(welcome_wizard_order_your_own_school_path(urn: @user.school.urn))
     expect(page).to have_text('You can only order your full allocation if local restrictions are confirmed')
   end
 
   def then_i_see_the_school_home_page
-    expect(page).to have_current_path(school_home_path)
+    expect(page).to have_current_path(home_school_path(urn: @user.school.urn))
     expect(page).to have_text(school.name)
     expect(page).to have_text('Get devices for your school')
   end
 
   def then_i_see_the_techsource_account_page
-    expect(page).to have_current_path(school_welcome_wizard_techsource_account_path)
+    expect(page).to have_current_path(welcome_wizard_techsource_account_school_path(urn: @user.school.urn))
     expect(page).to have_text('Use the TechSource website to place orders')
   end
 
   def then_i_see_the_will_other_order_page
-    expect(page).to have_current_path(school_welcome_wizard_will_other_order_path)
+    expect(page).to have_current_path(welcome_wizard_will_other_order_school_path(urn: @user.school.urn))
     expect(page).to have_text('Do you need to give someone else access?')
   end
 
@@ -177,12 +177,12 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_information_about_devices_i_can_order
-    expect(page).to have_current_path(school_welcome_wizard_devices_you_can_order_path)
+    expect(page).to have_current_path(welcome_wizard_devices_you_can_order_school_path(urn: @user.school.urn))
     expect(page).to have_text('You can order a range of laptops and tablets')
   end
 
   def then_im_asked_whether_my_school_will_order_chromebooks
-    expect(page).to have_current_path(school_welcome_wizard_chromebooks_path)
+    expect(page).to have_current_path(welcome_wizard_chromebooks_school_path(urn: @user.school.urn))
     expect(page).to have_text('Will your school’s order include Chromebooks?')
   end
 
@@ -201,7 +201,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_information_about_what_happens_next
-    expect(page).to have_current_path(school_welcome_wizard_what_happens_next_path)
+    expect(page).to have_current_path(welcome_wizard_what_happens_next_school_path(urn: school.urn))
     expect(page).to have_text('we’ll contact you as soon as you’re able to place orders')
   end
 

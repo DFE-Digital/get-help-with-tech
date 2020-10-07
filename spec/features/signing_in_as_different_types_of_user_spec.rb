@@ -47,13 +47,41 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a school user with only one school who has completed the welcome wizard' do
+  context 'as a school user who has completed the welcome wizard' do
     let(:user) { create(:school_user) }
 
-    scenario 'it redirects to the school homepage' do
-      sign_in_as user
-      expect(page).to have_current_path(school_home_path)
-      expect(page).to have_text 'Get devices for your school'
+    context 'who has not seen the privacy notice' do
+      let(:user) { create(:school_user, :has_not_seen_privacy_notice) }
+
+      scenario 'it redirects to the privacy notice page' do
+        sign_in_as user
+        expect(page).to have_current_path(privacy_notice_path)
+        expect(page).to have_text 'Privacy notice'
+      end
+    end
+
+    context 'when the user has only one school' do
+      scenario 'it redirects to the school homepage' do
+        sign_in_as user
+        expect(page).to have_current_path(home_school_path(user.school))
+        expect(page).to have_text 'Get devices for your school'
+      end
+    end
+
+    context 'if the user has multiple schools' do
+      let(:other_school) { create(:school) }
+
+      before do
+        user.schools << other_school
+      end
+
+      scenario 'it takes them to Your schools' do
+        visit validate_token_url_for(user)
+        click_on 'Continue'
+        expect(page).to have_text 'Your schools'
+        expect(page).to have_text user.schools[0].name
+        expect(page).to have_text user.schools[1].name
+      end
     end
   end
 
@@ -64,7 +92,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it redirects to the before you can order page' do
       sign_in_as user
-      expect(page).to have_current_path(school_before_you_can_order_path)
+      expect(page).to have_current_path(before_you_can_order_school_path(school))
       expect(page).to have_text 'Before you can order'
       choose 'I don’t know'
       click_on 'Save'

@@ -10,7 +10,7 @@
     <%= render 'shared/chromebook_information_intro' %>
     <%= render partial: 'shared/chromebook_information_form',
       locals: {
-        url: school_before_you_can_order_path,
+        url: before_you_can_order_school_path(@school),
         show_i_dont_know_option: true,
         scope: 'page_titles.school_user_welcome_wizard.chromebooks',
         form_object: @chromebook_information_form } %>

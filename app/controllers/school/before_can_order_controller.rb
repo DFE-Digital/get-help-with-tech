@@ -8,6 +8,6 @@ class School::BeforeCanOrderController < School::ChromebooksController
 private
 
   def after_updated_redirect_location
-    school_home_path
+    home_school_path
   end
 end

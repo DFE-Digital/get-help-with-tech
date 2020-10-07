@@ -1,8 +1,8 @@
 <%- title = t('page_titles.edit_school_user') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ "Home" => school_home_path },
-                  { t('page_titles.school_users') => school_users_path },
+  <% breadcrumbs([{ "Home" => home_school_path },
+                  { t('page_titles.school_users') => school_users_path(@school) },
                   title ]) %>
 <% end %>
 
