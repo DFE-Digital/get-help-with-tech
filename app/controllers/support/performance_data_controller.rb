@@ -5,7 +5,6 @@ private
 
   def authenticate_with_bearer_token
     authenticate_or_request_with_http_token do |token, options|
-      Rails.logger.debug("Token [#{token}] - access_token [#{access_token}]")
       token == access_token
     end
   end
