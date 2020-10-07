@@ -99,6 +99,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :monkeys, only: [:index], param: :urn do
+    member do
+      get '/', to: 'monkey/home#show'
+      # get '/', to: 'monkey/home#show', as: :monkey_home, shallow_prefix: ''
+    end
+  end
+
   namespace :school do
     get '/', to: 'home#show', as: :home
     get '/request-devices', to: 'devices#request_devices'
@@ -150,7 +157,9 @@ Rails.application.routes.draw do
     resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
       resources :users, only: %i[new create edit update]
     end
-
+    namespace :performance_data, path: 'performance-data' do
+      resources :schools, only: :index
+    end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 
