@@ -99,13 +99,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :monkeys, only: [:index], param: :urn do
-    member do
-      get '/', to: 'monkey/home#show'
-      # get '/', to: 'monkey/home#show', as: :monkey_home, shallow_prefix: ''
-    end
-  end
-
   namespace :school do
     get '/', to: 'home#show', as: :home
     get '/request-devices', to: 'devices#request_devices'
