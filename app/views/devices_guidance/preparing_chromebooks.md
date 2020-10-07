@@ -29,7 +29,7 @@ The web-filtering settings are designed to make the devices safe to use and suit
 
 We will not actively monitor users' activity on the devices. Websites users visit on their devices will not be logged by Cisco Umbrella. Those logs would not be available to the local authority or trust but could help ensure that ongoing filtering is effective, for example by letting us test whether it's working after we adjust filtering rules.
 
-If you decide not to use Cisco Umbrella, we strongly recommend that you enable alternative security settings before you distribute the devices. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to.
+If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to.
 
 You can report access to any inappropriate content that should not be allowed by Cisco Umbrella by emailing [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk).
 
