@@ -4,7 +4,7 @@ class Support::PerformanceDataController < ApplicationController
 private
 
   def authenticate_with_bearer_token
-    authenticate_or_request_with_http_token do |token, options|
+    authenticate_or_request_with_http_token do |token, _options|
       token == access_token
     end
   end
