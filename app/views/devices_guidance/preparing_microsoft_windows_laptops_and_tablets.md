@@ -63,13 +63,21 @@ This filtering should not prevent legitimate use of the devices. You can [access
 
 The first time the device connects to a new network, there will be a short delay before the content filtering starts to work. This usually takes less than 15 seconds but could take up to 2.5 minutes. During this time, users may be able to access any website without restriction while Cisco Umbrella registers the new device and checks network ports. DfE is working with Cisco to reduce this delay. Any updates made to support this will be deployed to the devices automatically.
 
-You can loan the devices out to users straight away as the MDM and content filtering will be in place until 30 September 2021. After this, the MDM will expire. The devices will continue to work with the last settings provided by the MDM but they will no longer be managed or updated, and web content will no longer be filtered.
+You can lend the devices to users straight away as the MDM and content filtering will be in place until 30 September 2021. After this, the MDM will expire. The devices will continue to work with the last settings provided by the MDM but they will no longer be managed or updated, and web content will no longer be filtered.
+
+## Reconfigure your devices
 
 You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#installing-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
-### If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.
+### If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
 
-When you loan the devices out, it’s important to underline that parents and guardians should supervise the internet use of children and young people in their care. Local authorities should be alert to cases where parents or guardians of children with a social worker may not be in a position to do this.
+You can choose to remove the DfE safeguarding software and replace it with your own, or you can distribute the devices without any content filtering and MDM installed. You cannot change the DfE content filtering settings on the devices to relax the restrictions and meet individual needs. 
+
+If you remove the DfE software, then devices will function as a new device would, without any web content blocked. This means the young person will be able to access all areas of the internet unrestricted. 
+
+It is up to you to decide whether it’s appropriate to remove the DfE safeguarding software on the Windows devices for users in your care. We recommend that you make this decision for care leavers together with their social workers.
+
+When you lend the devices to users, it’s important to underline that parents and guardians should supervise the internet use of children and young people in their care. Local authorities should be alert to cases where parents or guardians of children with a social worker may not be in a position to do this.
 
 See government advice on:
 
@@ -77,7 +85,7 @@ See government advice on:
 * [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
 * [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
 
-## Requesting local admin and BIOS passwords, and installing your own software and settings
+## Requesting local admin and BIOS passwords to install your own software and settings
 
 To install your own software or replace the mobile device management you will need to reset the device using the instructions below. This will remove all of the pre-installed configuration and software from the device.
 
