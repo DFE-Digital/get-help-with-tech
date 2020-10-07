@@ -50,7 +50,7 @@ private
   end
 
   def is_removal?
-    (last_change_for_user.present? && !user.relevant_to_computacenter?) || \
+    (last_change_for_user.present? && last_change_for_user.type_of_update != 'Remove' && !user.relevant_to_computacenter?) || \
       (user.relevant_to_computacenter? && user.destroyed?)
   end
 

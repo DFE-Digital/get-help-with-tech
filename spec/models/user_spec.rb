@@ -729,6 +729,31 @@ RSpec.describe User, type: :model do
           expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
         end
       end
+
+      context 'BUG #815 - when the user already has a UserChange of type Remove' do
+        let!(:user) { create(:user, :relevant_to_computacenter) }
+
+        before do
+          # this will generate a UserChange of type Remove
+          user.update!(orders_devices: false)
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
+
+        context 'when the user is updated' do
+          let(:perform_change!) do
+            user.update!(full_name: Faker::Name.unique.name)
+          end
+
+          it 'does not create a Computacenter::UserChange' do
+            expect { perform_change! }.not_to change(Computacenter::UserChange, :count)
+          end
+
+          it 'does not schedule a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
+          end
+        end
+      end
     end
 
     context 'deleting user' do
