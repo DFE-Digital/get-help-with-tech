@@ -1,5 +1,6 @@
 class SchoolWelcomeWizard < ApplicationRecord
   belongs_to :user
+  belongs_to :school
 
   validates :step, presence: true
 
@@ -14,7 +15,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     complete: 'complete',
   }
 
-  delegate :school, to: :user
   delegate :full_name, :email_address, :telephone, :orders_devices, to: :invited_user
   delegate :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address, to: :chromebook_information
   attr_accessor :invite_user

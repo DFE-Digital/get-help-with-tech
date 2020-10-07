@@ -69,21 +69,21 @@ FactoryBot.define do
 
       trait :new_visitor do
         after(:create) do |user|
-          user.school_welcome_wizard&.destroy!
-          user.school_welcome_wizard = create(:school_welcome_wizard, user: user)
+          user.school_welcome_wizards&.destroy_all
+          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school)
         end
       end
 
       trait :has_completed_wizard do
         after(:create) do |user|
-          user.school_welcome_wizard ||= create(:school_welcome_wizard, :completed, user: user)
+          user.school_welcome_wizards << create(:school_welcome_wizard, :completed, user: user, school: user.school)
         end
       end
 
       trait :has_partially_completed_wizard do
         after(:create) do |user|
-          user.school_welcome_wizard&.destroy!
-          user.school_welcome_wizard = create(:school_welcome_wizard, user: user, step: 'techsource_account')
+          user.school_welcome_wizards&.destroy_all
+          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school, step: 'techsource_account')
         end
       end
     end
