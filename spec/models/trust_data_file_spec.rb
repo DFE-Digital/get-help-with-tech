@@ -50,7 +50,7 @@ RSpec.describe TrustDataFile, type: :model do
           address_2: 'Little Hampton Court',
           town: 'London',
           postcode: 'NW1 1AA',
-          status: 'Open',
+          status: 'open',
           organisation_type: 'Multi-academy trust',
         )
         expect(trusts.second).to include(
@@ -61,7 +61,7 @@ RSpec.describe TrustDataFile, type: :model do
           address_2: 'Strange Lane',
           town: 'Easttown',
           postcode: 'EW1 1AA',
-          status: 'Closed',
+          status: 'closed',
           organisation_type: 'Single-academy trust',
         )
       end

@@ -22,7 +22,7 @@ protected
   def extract_record(row)
     record = {}
     ATTR_MAP.each do |k, v|
-      record[k] = row[v]
+      record[k] = (k == :status ? row[v]&.downcase : row[v])
     end
     record
   end
