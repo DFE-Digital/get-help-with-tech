@@ -1,10 +1,18 @@
 ## Who owns the devices
 
-Ownership of devices is transferred from DfE to the local authorities (LAs), academy trusts, schools and further education (FE) colleges who receive them at the point of delivery. 
+Ownership of devices is transferred from DfE to the local authorities (LAs), academy trusts, schools and further education (FE) colleges who receive them at the point of delivery.
 
 ### Devices for education: children and young people in schools and FE colleges
 
-##### This guidance is about laptops and tablets given to LAs and academy trusts for disadvantaged year 10s between May and July 2020, and those given to LAs, academy trusts and schools for disadvantaged children in years 3 to 11, attending a closed hospital school or FE college, and critically extremely vulnerable children that are shielding after September 2020.
+<div class="app-card govuk-!-margin-bottom-4">
+  <p class="govuk-body">
+    This guidance is about laptops and tablets given to LAs and academy trusts for disadvantaged:
+  </p>
+  <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
+    <li>year 10s between May and July 2020</li>
+    <li>children in years 3 to 11, attending a closed hospital school or FE college, and critically extremely vulnerable children that are shielding after September 2020</li>
+  </ul>
+</div>
 
 The school, trust or LA should retain ownership and lend the devices to those that need them. This gives them the ability to re-allocate the devices where required, for example, when different groups are required to self-isolate at different times.
 
@@ -12,13 +20,17 @@ LAs and trusts may choose to transfer ownership to schools.
 
 ### Devices for social care: care leavers, children and families with a social worker
 
-##### This guidance is about laptops and tablets given to LAs and academy trusts for care leavers, children and families with a social worker between May and July 2020. 
+<div class="app-card govuk-!-margin-bottom-4">
+  <p class="govuk-body govuk-!-margin-bottom-0">
+    This guidance is about laptops and tablets given to LAs and academy trusts for care leavers, children and families with a social worker between May and July 2020.
+  </p>
+</div>
 
-Ownership of devices is transferred from DfE to the local authorities (LAs) who receive them at the point of delivery. 
+Ownership of devices is transferred from DfE to the local authorities (LAs) who receive them at the point of delivery.
 
-Ideally, LAs should retain ownership and management of the devices and lend them to children, families and young people. This means that the device can be actively managed and can be reallocated where possible and necessary. LAs can also choose to transfer ownership to schools to manage them. 
+Ideally, LAs should retain ownership and management of the devices and lend them to children, families and young people. This means that the device can be actively managed and can be reallocated where possible and necessary. LAs can also choose to transfer ownership to schools to manage them.
 
-LAs can transfer ownership of the devices to the children, families and young people themselves in situations where the young person, family or child needs a different approach, eg. you may wish to gift laptops and tablets to care leavers. 
+LAs can transfer ownership of the devices to the children, families and young people themselves in situations where the young person, family or child needs a different approach, eg. you may wish to gift laptops and tablets to care leavers.
 
 LAs should consider safeguarding when deciding whether to gift a device and involve relevant parties (such as social workers, schools and carers) in making the decision.
 
@@ -28,7 +40,7 @@ LAs should consider safeguarding when deciding whether to gift a device and invo
 
 There will be circumstances where a child or young person no longer meets the criteria under which a device was provided, for example, they no longer receive support from a social worker.
 
-LAs and trusts will have decided to provide a device based on their assessment of need and consideration of safeguarding concerns for that individual child or young person. LAs, trusts or the school (that the device has been gifted to) are best placed to identify if a device should be recalled or if the child or young person should retain it. 
+LAs and trusts will have decided to provide a device based on their assessment of need and consideration of safeguarding concerns for that individual child or young person. LAs, trusts or the school (that the device has been gifted to) are best placed to identify if a device should be recalled or if the child or young person should retain it.
 
 ##### If a child or young person has moved to another area
 
@@ -42,7 +54,7 @@ If the device is going to the child’s new school, the previous school should u
 
 #### Retaining devices
 
-LAs can decide how best to meet the needs of vulnerable children and young people. We anticipate LAs and trusts will safely distribute devices to children and young people that need them as soon as it is manageable to do so. 
+LAs can decide how best to meet the needs of vulnerable children and young people. We anticipate LAs and trusts will safely distribute devices to children and young people that need them as soon as it is manageable to do so.
 
 
 However, if LAs have any concerns about lending or gifting a device to a child or young person due to safeguarding reasons, LAs can use their judgement about next steps. LAs may decide that the device should:
@@ -88,6 +100,6 @@ See the [guidance on preparing devices](/devices/preparing-chromebooks) for info
 
 ## Lost, stolen or sold devices
 
-The LA, trust and/or school should make clear to recipients of devices that it is unlawful for any device lent by an LA, trust or school to be sold by a child or their family. If a lent device is lost, stolen or sold, or where recall is not possible, LAs should follow any existing protocol they may have for lost, stolen or missing devices. 
+The LA, trust and/or school should make clear to recipients of devices that it is unlawful for any device lent by an LA, trust or school to be sold by a child or their family. If a lent device is lost, stolen or sold, or where recall is not possible, LAs should follow any existing protocol they may have for lost, stolen or missing devices.
 
 Where an LA or trust has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should contact [covid.technology@education.gov.uk](covid.technology@education.gov.uk).
