@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CapUpdateService do
+RSpec.describe SchoolOrderStateAndCapUpdateService do
   let(:school) { create(:school, order_state: 'cannot_order') }
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }

@@ -1,4 +1,4 @@
-class CapUpdateService
+class SchoolOrderStateAndCapUpdateService
   attr_accessor :school, :device_type
 
   def initialize(args = {})
