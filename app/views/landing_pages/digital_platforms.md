@@ -74,12 +74,32 @@ After you complete your support request form, you'll receive an email from the D
 
 Once your platform is set up, you can claim the following grant funding:
 
-Type of school | Grant funding available
-:--- | :---
-Individual primary school | £1,500
-Individual secondary school | £2,000
-Multi-academy trust | £1,000 per school
-Virtual school | £1,500
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Type of school</th>
+      <th scope="col" class="govuk-table__header">Grant funding available</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Individual primary school</th>
+        <td class="govuk-table__cell">£1,500</td>  
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Individual secondary school</th>
+        <td class="govuk-table__cell">£2,000</td>  
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Multi-academy trust</th>
+        <td class="govuk-table__cell">£1,000 per school</td>  
+      </tr>       
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Virtual school</th>
+        <td class="govuk-table__cell">£1,500</td>  
+      </tr>
+  </tbody>
+</table>
 
 ## Will platforms continue to be free to use?
 
