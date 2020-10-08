@@ -3,7 +3,7 @@ When ordering Microsoft devices, a selection can be made between:
 * not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
 * having DfE settings installed - these 'DfE Restricted' devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
 
-## Preparing laptops and tablets ordered without DfE settings installed 
+## Preparing laptops and tablets ordered without DfE settings installed
 
 If you order devices after September 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. These 'Standard' devices will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
 
@@ -19,7 +19,7 @@ DfE-provided settings are a ‘one-size fits all’ solution, designed to block 
 
 ## Managing settings and software
 
-Microsoft Windows devices come with antivirus software, content filtering and remote management settings 
+Microsoft Windows devices come with antivirus software, content filtering and remote management settings
 already so they're ready to use.
 
 Content filtering and remote management will stop working when the licences expire on 30 September 2021. You can replace the DfE settings with your own at any point.
@@ -69,11 +69,15 @@ You can lend the devices to users straight away as the MDM and content filtering
 
 You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#installing-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
-### If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
+<div class="app-card govuk-!-margin-bottom-4">
+  <p class="govuk-body">
+    If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
+  </p>
+</div>
 
-You can choose to remove the DfE safeguarding software and replace it with your own, or you can distribute the devices without any content filtering and MDM installed. You cannot change the DfE content filtering settings on the devices to relax the restrictions and meet individual needs. 
+You can choose to remove the DfE safeguarding software and replace it with your own, or you can distribute the devices without any content filtering and MDM installed. You cannot change the DfE content filtering settings on the devices to relax the restrictions and meet individual needs.
 
-If you remove the DfE software, then devices will function as a new device would, without any web content blocked. This means the young person will be able to access all areas of the internet unrestricted. 
+If you remove the DfE software, then devices will function as a new device would, without any web content blocked. This means the young person will be able to access all areas of the internet unrestricted.
 
 It is up to you to decide whether it’s appropriate to remove the DfE safeguarding software on the Windows devices for users in your care. We recommend that you make this decision for care leavers together with their social workers.
 
@@ -95,15 +99,15 @@ It is possible to install some software on the devices without resetting them, b
 
 ### Who can request local admin and BIOS passwords to reset devices
 
-Local admin and BIOS passwords are needed to reset devices to factory default settings and install new software. 
+Local admin and BIOS passwords are needed to reset devices to factory default settings and install new software.
 
 For security, only the following people can view this information:
 
-* a key contact (the person that completed your device forecast for devices delivered between May and July) 
+* a key contact (the person that completed your device forecast for devices delivered between May and July)
 * a technical contact (nominated when the devices were ordered between May and July)
 * a support contact (someone given access to the Support Portal by your key contact)
-* anyone authorised to [order laptops and tablets](https://www.gov.uk/guidance/get-laptops-and-tablets-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) for disadvantaged children requiring access to remote education due to shielding or local coronavirus (COVID-19) restrictions 
- 
+* anyone authorised to [order laptops and tablets](https://www.gov.uk/guidance/get-laptops-and-tablets-for-children-who-cannot-attend-school-due-to-coronavirus-covid-19) for disadvantaged children requiring access to remote education due to shielding or local coronavirus (COVID-19) restrictions
+
 Your local authority, trust or school is responsible for keeping this information secure when sharing it with colleagues who are preparing devices for children and young people.
 
 To log in to the [Support Portal](https://computacenterprod.service-now.com/dfe) for the first time, enter your email address and click ‘forgotten password’. If you’re authorised to access the support portal, you’ll receive an email with instructions on how to set up a password.
@@ -114,7 +118,7 @@ If you do not have access to the portal but think you should, please email [COVI
 
 1. Log in to the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe)
 
-2. Click on the ‘How do I?’ section 
+2. Click on the ‘How do I?’ section
 
 3. Select the ‘Get local admin and BIOS passwords for Microsoft Windows laptops and tablets’ guide and follow the instructions
 
@@ -128,20 +132,20 @@ For guidance on how to do this:
 
 1. Log in to the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe)
 
-2. Click on the ‘How do I?’ section 
+2. Click on the ‘How do I?’ section
 
 3. Select ‘How to reset your Microsoft Windows device to default factory settings’ and follow the instructions to use local admin and BIOS passwords to reset your devices
 
 ## How to help anyone experiencing problems logging in to Windows devices
 
-Some users with Windows device, which have been pre-installed with DfE settings, may experience a bug that makes it harder for them to log in to their laptops and tablets. 
+Some users with Windows device, which have been pre-installed with DfE settings, may experience a bug that makes it harder for them to log in to their laptops and tablets.
 
-Users may find that the login is defaulting to the ‘.\localadmin' account and asking for a password, which they do not have. 
+Users may find that the login is defaulting to the ‘.\localadmin' account and asking for a password, which they do not have.
 
 We’ve identified a fix for this bug. The end users – young people, children or their families – will need to:
 
 * [follow the steps](#if-no-local-user-password-has-been-set) below to apply the .\localuser workaround and log in to the device
-* connect the device to the internet so it can receive the fix update – leave the device turned on, plugged in to the mains and connected to the internet for at least 3 hours for the fix to be applied 
+* connect the device to the internet so it can receive the fix update – leave the device turned on, plugged in to the mains and connected to the internet for at least 3 hours for the fix to be applied
 * restart the device – if the fix has been successful, the device should automatically login as “localuser”. If the user has previously set up a password they will need to enter it. If the device does not login automatically or the username is not “localuser” at the login prompt, then the fix has not been applied and the user may need to repeat the process
 
 
@@ -167,7 +171,7 @@ We’ve illustrated these steps in our [user guidance](/devices/getting-started-
 
 ## User guidance for young people and their carers
 
-You can share this [user guide](/devices/getting-started-with-your-microsoft-windows-device) on setting up Microsoft Windows laptops and tablets with young people and their parents, guardians and carers. 
+You can share this [user guide](/devices/getting-started-with-your-microsoft-windows-device) on setting up Microsoft Windows laptops and tablets with young people and their parents, guardians and carers.
 
 You may want to add contact information to this guidance for the person or team offering IT support to device users.
 
