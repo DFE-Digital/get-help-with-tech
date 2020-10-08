@@ -3,7 +3,6 @@ class SchoolDataFile < CsvDataFile
     'British schools overseas',
     "Children's centre",
     "Children's centre linked site",
-    'Further education',
     'Higher education institutions',
     'Institution funded by other government department',
     'Miscellaneous',
