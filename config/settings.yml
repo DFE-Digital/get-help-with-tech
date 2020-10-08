@@ -83,3 +83,6 @@ throttling:
 logstash:
   host: # Fill in with logstash host, leave blank to disable
   port: # Fill in with logstash port, leave blank to disable
+
+support:
+  performance_data_access_token: # bearer token for support performance data

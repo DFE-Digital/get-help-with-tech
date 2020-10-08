@@ -150,7 +150,9 @@ Rails.application.routes.draw do
     resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
       resources :users, only: %i[new create edit update]
     end
-
+    namespace :performance_data, path: 'performance-data' do
+      resources :schools, only: :index
+    end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 
