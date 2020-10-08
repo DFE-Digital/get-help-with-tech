@@ -43,7 +43,7 @@ module ViewHelper
     render GovukComponent::Breadcrumbs.new(breadcrumbs: breadcrumbs)
   end
 
-  def sortable_table_header(title, value = title, opts = params)
+  def sortable_extra_mobile_data_requests_table_header(title, value = title, opts = params)
     if opts[:sort] == value.to_s
       if opts[:dir] == 'd'
         suffix = '▲'
@@ -52,9 +52,9 @@ module ViewHelper
         suffix = '▼'
         dir = 'd'
       end
-      safe_join([govuk_link_to(title, sort: value, dir: dir), suffix], ' ')
+      safe_join([govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, dir: dir)), suffix], ' ')
     else
-      govuk_link_to(title, sort: value)
+      govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value))
     end
   end
 
