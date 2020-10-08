@@ -1,5 +1,5 @@
 class LandingPagesController < ApplicationController
-  layout 'page_with_toc', only: [:get_support, :get_internet_access, :edtech_demonstrator_programme]
+  layout 'page_with_toc', only: [:get_support, :get_internet_access, :edtech_demonstrator_programme, :digital_platforms]
 
   def get_laptops_and_tablets; end
 
@@ -13,7 +13,10 @@ class LandingPagesController < ApplicationController
     render
   end
 
-  def digital_platforms; end
+  def digital_platforms
+    @title = I18n.t!('second_level_content.digital_platforms.title')
+    render
+  end
 
   def edtech_demonstrator_programme
     @title = I18n.t!('second_level_content.edtech_demonstrator_programme.title')
