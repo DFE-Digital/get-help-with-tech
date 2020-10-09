@@ -14,6 +14,11 @@ class SchoolOrderStateAndCapUpdateService
       update_cap_on_computacenter!(allocation.id)
       notify_computacenter_by_email(allocation.cap)
     end
+
+    # notifying users should only happen after successful completion of the Computacenter
+    # cap update, because it's possible for that to fail and the whole thing
+    # is rolled back
+    CanOrderDevicesNotifications.new(school: school).call
   end
 
 private
