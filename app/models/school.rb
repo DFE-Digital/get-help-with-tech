@@ -55,6 +55,13 @@ class School < ApplicationRecord
     device_ordering_organisation.users.signed_in_at_least_once
   end
 
+  def order_users_with_active_techsource_accounts
+    device_ordering_organisation
+      .users
+      .who_can_order_devices
+      .with_techsource_account_confirmed
+  end
+
   def allocation_for_type!(device_type)
     device_allocations.find_by_device_type!(device_type)
   end
