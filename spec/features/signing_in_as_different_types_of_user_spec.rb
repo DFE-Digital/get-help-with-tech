@@ -64,7 +64,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       scenario 'it redirects to the school homepage' do
         sign_in_as user
         expect(page).to have_current_path(home_school_path(user.school))
-        expect(page).to have_text 'Get devices for your school'
+        expect(page).to have_text user.school.name
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       expect(page).to have_text 'Before you can order'
       choose 'I don’t know'
       click_on 'Save'
-      expect(page).to have_text 'Get devices for your school'
+      expect(page).to have_text user.school.name
     end
   end
 

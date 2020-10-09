@@ -152,7 +152,6 @@ RSpec.feature 'Navigate school welcome wizard' do
   def then_i_see_the_school_home_page
     expect(page).to have_current_path(home_school_path(urn: @user.school.urn))
     expect(page).to have_text(school.name)
-    expect(page).to have_text('Get devices for your school')
   end
 
   def then_i_see_the_techsource_account_page

@@ -1,9 +1,20 @@
 <%- title = t('page_titles.edit_school_user') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ "Home" => home_school_path },
-                  { t('page_titles.school_users') => school_users_path(@school) },
-                  title ]) %>
+  <%- if @user.has_multiple_schools? %>
+    <%- breadcrumbs([
+      { 'Your schools' => schools_path },
+      { @school.name => home_school_path(@school) },
+      { t('page_titles.school_users') => school_users_path(@school) },
+      title,
+    ]) %>
+  <%- else %>
+    <% breadcrumbs([
+      { 'Home' => home_school_path },
+      { t('page_titles.school_users') => school_users_path(@school) },
+      title,
+    ]) %>
+  <%- end %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -11,7 +22,7 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
-    <%= form_for @user, url: school_user_path(@user) do |f| %>
+    <%= form_for @user, url: school_user_path(@school, @user) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render partial: 'shared/school_user_form', locals: { form: f } %>
       <%= f.govuk_submit 'Save' %>

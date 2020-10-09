@@ -12,7 +12,7 @@ RSpec.describe School::HomeController do
 
       it 'shows the school home page' do
         get :show, params: { urn: urn }
-        expect(subject).to render_template(:show)
+        expect(controller).to render_template(:show)
         expect(response).to have_http_status(:ok)
       end
     end
@@ -31,5 +31,4 @@ RSpec.describe School::HomeController do
       end
     end
   end
-
 end
