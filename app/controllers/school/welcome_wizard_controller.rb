@@ -55,9 +55,9 @@ private
   end
 
   def next_step_path
-    return school_home_path if @wizard.complete?
+    return home_school_path if @wizard.complete?
 
-    send("school_welcome_wizard_#{@wizard.step}_path")
+    send("welcome_wizard_#{@wizard.step}_school_path", urn: @wizard.school.urn)
   end
 
   def clear_user_sign_in_token!

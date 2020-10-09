@@ -6,11 +6,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-l"><%= @school.name %></span>
+      <%- if @user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
       <%= title %>
     </h1>
 
     <p class="govuk-body">If you’re going to order Google Chromebooks, we need information to configure them before you place your order.</p>
-    <%= render partial: 'shared/chromebook_information_form', locals: { url: school_welcome_wizard_path(step: @wizard.step), form_object: @wizard, show_i_dont_know_option: true, submit_label: 'Continue', scope: scope } %>
+    <%= render partial: 'shared/chromebook_information_form', locals: { url: welcome_wizard_school_path(urn: @school.urn, step: @wizard.step), form_object: @wizard, show_i_dont_know_option: true, submit_label: 'Continue', scope: scope } %>
   </div>
 </div>

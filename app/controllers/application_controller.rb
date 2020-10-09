@@ -59,12 +59,7 @@ private
     elsif user.is_responsible_body_user? && !user.hybrid?
       responsible_body_home_path
     elsif user.is_school_user?
-      if user.school.preorder_information&.school_will_order_devices? &&
-          user.school.preorder_information&.chromebook_info_still_needed?
-        school_before_you_can_order_path
-      else
-        school_home_path
-      end
+      school_root_url_for(user)
     elsif user.is_computacenter?
       computacenter_home_path
     elsif user.is_support?
@@ -83,6 +78,19 @@ private
         },
       )
       '/'
+    end
+  end
+
+  def school_root_url_for(user)
+    if user.schools.size == 1
+      if user.school.preorder_information&.school_will_order_devices? &&
+          user.school.preorder_information&.chromebook_info_still_needed?
+        before_you_can_order_school_path(user.school)
+      else
+        home_school_path(user.schools.first)
+      end
+    else
+      schools_path
     end
   end
 end

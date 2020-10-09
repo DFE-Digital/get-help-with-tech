@@ -11,7 +11,7 @@ RSpec.describe School::UsersController, type: :controller do
 
     describe 'create' do
       let(:request_data) do
-        { user: { full_name: new_user.full_name, email_address: new_user.email_address, orders_devices: false } }
+        { urn: school_user.school.urn, user: { full_name: new_user.full_name, email_address: new_user.email_address, orders_devices: false } }
       end
 
       it 'adds the new user to the school' do

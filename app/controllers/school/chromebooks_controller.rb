@@ -25,7 +25,7 @@ class School::ChromebooksController < School::BaseController
 private
 
   def after_updated_redirect_location
-    school_details_path
+    details_school_path(@school)
   end
 
   def chromebook_params

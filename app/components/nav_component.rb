@@ -77,7 +77,7 @@ class NavComponent < ViewComponent::Base
 
   def school_links
     [
-      NavLinkComponent.new(title: 'Home', url: school_home_path),
+      NavLinkComponent.new(title: 'Home', url: schools_path),
       NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
     ]
   end

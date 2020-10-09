@@ -119,6 +119,10 @@ class School < ApplicationRecord
     end
   end
 
+  def to_param
+    urn.to_s
+  end
+
 private
 
   def is_eligible_to_order?

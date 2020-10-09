@@ -10,7 +10,7 @@ class School::UsersController < School::BaseController
   def create
     @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id, approved_at: Time.zone.now, orders_devices: true))
     if @user.persisted?
-      redirect_to school_users_path
+      redirect_to school_users_path(@school)
     else
       @user = present(@user)
       render :new, status: :unprocessable_entity
@@ -26,7 +26,7 @@ class School::UsersController < School::BaseController
 
     if @user.update(user_params)
       flash[:success] = t(:success, scope: %w[school users])
-      redirect_to school_users_path
+      redirect_to school_users_path(@school)
     else
       @user = present(@user)
       render :edit, status: :unprocessable_entity
