@@ -29,7 +29,7 @@ RSpec.describe School::DevicesController do
         end
 
         it 'renders can_order' do
-          get :order
+          get :order, params: { urn: school.urn }
           expect(controller).to render_template('school/devices/can_order')
         end
       end
@@ -42,7 +42,7 @@ RSpec.describe School::DevicesController do
         end
 
         it 'renders cannot_order_as_cap_reached' do
-          get :order
+          get :order, params: { urn: school.urn }
           expect(controller).to render_template('school/devices/cannot_order_as_cap_reached')
         end
       end
@@ -64,7 +64,7 @@ RSpec.describe School::DevicesController do
         end
 
         it 'renders can_order_for_specific_circumstances' do
-          get :order
+          get :order, params: { urn: school.urn }
           expect(controller).to render_template('school/devices/can_order_for_specific_circumstances')
         end
       end
@@ -77,7 +77,7 @@ RSpec.describe School::DevicesController do
         end
 
         it 'renders cannot_order_as_cap_reached' do
-          get :order
+          get :order, params: { urn: school.urn }
           expect(controller).to render_template('school/devices/cannot_order_as_cap_reached')
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe School::DevicesController do
       let(:school) { create(:school, order_state: :cannot_order) }
 
       it 'renders cannot_order' do
-        get :order
+        get :order, params: { urn: school.urn }
         expect(controller).to render_template('school/devices/cannot_order')
       end
     end

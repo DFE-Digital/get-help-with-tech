@@ -64,6 +64,10 @@ class User < ApplicationRecord
     school.present?
   end
 
+  def has_multiple_schools?
+    schools.size > 1
+  end
+
   def update_sign_in_count_and_timestamp!
     update(sign_in_count: sign_in_count + 1, last_signed_in_at: Time.zone.now)
   end
@@ -95,7 +99,7 @@ class User < ApplicationRecord
   def organisation_name
     mobile_network&.brand || \
       responsible_body&.local_authority_official_name || \
-      school&.name || \
+      (schools.size == 1 && school&.name) || \
       responsible_body&.name || \
       (is_computacenter? && 'Computacenter') || \
       (is_support? && 'DfE Support')

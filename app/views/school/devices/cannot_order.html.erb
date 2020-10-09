@@ -2,10 +2,7 @@
 <%- title = t("page_titles.#{who_cannot_order}_cannot_order_devices") %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([
-    { 'Home' => school_home_path },
-    'Order devices',
-  ]) %>
+  <%- school_breadcrumbs items: 'Order devices', school: @school, user: @user %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -19,7 +16,7 @@
     <p class="govuk-body">We’ll contact you as soon as you’re able to place orders.</p>
 
     <h2 class="govuk-heading-m">Get devices early for specific circumstances</h2>
-    <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', school_request_devices_path %> from any year group who:</p>
+    <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', request_devices_school_path(@school) %> from any year group who:</p>
 
     <%= render partial: 'shared/devices/who_to_request_for_list' %>
 
@@ -30,7 +27,7 @@
 
       <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
 
-      <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path %>.</p>
+      <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path(@school) %>.</p>
     <% end %>
   </div>
 </div>

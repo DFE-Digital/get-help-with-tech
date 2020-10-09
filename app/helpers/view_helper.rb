@@ -43,6 +43,20 @@ module ViewHelper
     render GovukComponent::Breadcrumbs.new(breadcrumbs: breadcrumbs)
   end
 
+  def school_breadcrumbs(items:, user:, school:)
+    scope = if user.has_multiple_schools?
+              [
+                { 'Your schools' => schools_path },
+                { school.name => home_school_path(school) },
+              ]
+            else
+              [
+                { 'Home' => home_school_path },
+              ]
+            end
+    breadcrumbs(scope + Array(items))
+  end
+
   def sortable_extra_mobile_data_requests_table_header(title, value = title, opts = params)
     if opts[:sort] == value.to_s
       if opts[:dir] == 'd'
