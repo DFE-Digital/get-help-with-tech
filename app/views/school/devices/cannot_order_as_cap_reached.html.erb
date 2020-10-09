@@ -2,18 +2,7 @@
 <%- title = t("page_titles.school.devices.cannot_order_as_cap_reached.#{who_orders}.title") %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- if @user.has_multiple_schools? %>
-    <%- breadcrumbs([
-      { 'Your schools' => schools_path },
-      { @school.name => home_school_path(@school) },
-      title,
-    ]) %>
-  <%- else %>
-    <% breadcrumbs([
-      { 'Home' => home_school_path },
-      'Order devices',
-    ]) %>
-  <%- end %>
+  <%- school_breadcrumbs items: 'Order devices', school: @school, user: @user %>
 <%- end %>
 
 <%-

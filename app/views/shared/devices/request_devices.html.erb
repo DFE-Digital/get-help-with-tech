@@ -1,4 +1,4 @@
-q<% if @user.is_school_user? %>
+<% if @user.is_school_user? %>
   <%- title = t('page_titles.school_request_devices') %>
   <%- content_for :before_content do %>
     <% breadcrumbs([{ "Home" => home_school_path }, title ]) %>

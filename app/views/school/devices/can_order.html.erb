@@ -1,18 +1,7 @@
 <%- title = t('page_titles.school_order_devices') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- if @user.has_multiple_schools? %>
-    <%- breadcrumbs([
-      { 'Your schools' => schools_path },
-      { @school.name => home_school_path(@school) },
-      title,
-    ]) %>
-  <%- else %>
-    <% breadcrumbs([
-      { 'Home' => home_school_path },
-      title,
-    ]) %>
-    <%- end %>
+  <%- school_breadcrumbs items: title, school: @school, user: @user %>
 <%- end %>
 
 <%-

@@ -141,7 +141,6 @@ RSpec.feature 'Navigate school welcome wizard' do
   def then_i_see_the_allocation_for_my_school
     heading = I18n.t('page_titles.school_user_welcome_wizard.allocation.title', allocation: device_allocation)
     expect(page).to have_text(heading)
-    expect(page).to have_text(@user.school.name)
   end
 
   def then_i_see_the_order_your_own_page
