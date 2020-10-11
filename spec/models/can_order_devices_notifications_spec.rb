@@ -10,8 +10,10 @@ RSpec.describe CanOrderDevicesNotifications do
 
   around do |example|
     FeatureFlag.activate(:notify_can_place_orders)
+    FeatureFlag.activate(:slack_notifications)
     example.run
     FeatureFlag.deactivate(:notify_can_place_orders)
+    FeatureFlag.deactivate(:slack_notifications)
   end
 
   describe '#call' do
@@ -40,6 +42,19 @@ RSpec.describe CanOrderDevicesNotifications do
           expect {
             service.call
           }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+
+        it 'puts a message in Slack' do
+          user
+
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('slack_messages').with(
+            username: 'dfe_ghwt_slack_bot',
+            channel: 'get-help-with-tech-test',
+            text: "[User can order event] A user from #{school.name} is able to place orders",
+            mrkdwn: true,
+          )
         end
 
         context 'when feature is deactivated' do
