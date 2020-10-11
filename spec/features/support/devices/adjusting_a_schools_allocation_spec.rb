@@ -17,15 +17,13 @@ RSpec.feature 'Adjusting a schools allocation' do
     end
 
     it 'shows a link to Change whether they can order devices' do
-      expect(school_details_page.school_details_rows[2]).to have_text 'Provisional allocation'
-      expect(school_details_page.school_details_rows[2]).to have_link 'Change'
+      expect(school_details_page).to have_text 'Provisional allocation'
+      expect(school_details_page).to have_link 'Change provisional allocation'
     end
 
     describe 'clicking Change' do
       before do
-        within(school_details_page.school_details_rows[2]) do
-          click_on 'Change'
-        end
+        click_on 'Change provisional allocation'
       end
 
       it 'shows me a form to change the allocation' do
