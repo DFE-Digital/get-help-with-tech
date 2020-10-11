@@ -12,13 +12,22 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_i_sign_in_as_a_support_user
   end
 
+  scenario 'Enabling a school to place orders for their full allocation' do
+    when_i_navigate_to_the_school_page_in_support
+    and_i_allow_the_school_to_order_their_full_allocation_of_devices
+    and_i_confirm_the_changes
+
+    then_ordering_is_confirmed
+    and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_devices
+  end
+
   scenario 'Enabling a school to place orders for specific circustances' do
     when_i_navigate_to_the_school_page_in_support
     and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 2)
     and_i_confirm_the_changes
 
     then_the_ordering_for_specific_circumstances_is_confirmed
-    and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_two_devices
+    and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_two_devices
   end
 
   scenario 'Correcting a mistake at the confirmation stage' do
@@ -82,6 +91,18 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     expect(enable_orders_confirm_page.how_many_devices_row).to have_text "Up to #{number_of_devices} from an allocation of 50"
   end
 
+  def and_i_allow_the_school_to_order_their_full_allocation_of_devices
+    click_on 'Change whether they can place orders'
+
+    choose 'They can order their full allocation because local coronavirus restrictions are confirmed'
+    click_on 'Continue'
+
+    expect(enable_orders_confirm_page).to be_displayed
+    expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
+    expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'They can order their full allocation because local coronavirus restrictions are confirmed'
+    expect(enable_orders_confirm_page.how_many_devices_row).to have_text 'Their full allocation of 50'
+  end
+
   def and_i_confirm_the_changes
     click_on 'Confirm'
   end
@@ -92,8 +113,19 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     expect(school_details_page.school_details_rows[3]).to have_text 'Yes, for specific circumstances'
   end
 
-  def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_two_devices
+  def then_ordering_is_confirmed
+    expect(school_details_page).to have_text("We've saved your choices")
+    expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
+    expect(school_details_page.school_details_rows[3]).to have_text 'Yes'
+  end
+
+  def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_two_devices
     expect(@computacenter_caps_api_request.with { |req| req.body.include?('shipTo="cc_ref" capAmount="2"') })
+      .to have_been_made
+  end
+
+  def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_devices
+    expect(@computacenter_caps_api_request.with { |req| req.body.include?('shipTo="cc_ref" capAmount="50"') })
       .to have_been_made
   end
 
