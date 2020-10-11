@@ -1,136 +1,113 @@
 require 'rails_helper'
 
 RSpec.feature 'Enabling orders for a school from the support area' do
-  let(:support_user) { create(:support_user) }
-  let(:school) { create(:school, order_state: :cannot_order) }
   let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
 
   before do
-    create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
-    sign_in_as support_user
+    @computacenter_caps_api_request = stub_request(:post, 'http://computacenter.example.com/')
+      .to_return(status: 200, body: '', headers: {})
+
+    @school = given_a_school_with_a_device_allocation_that_cannot_order
+    and_i_sign_in_as_a_support_user
   end
 
-  describe 'visiting a school details page' do
-    before do
-      visit support_devices_school_path(school.urn)
-    end
+  scenario 'Enabling a school to place orders for specific circustances' do
+    when_i_navigate_to_the_school_page_in_support
+    and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 2)
+    and_i_confirm_the_changes
 
-    it 'shows a link to Change whether they can order devices' do
-      expect(school_details_page).to have_text 'Can place orders?'
-      expect(school_details_page).to have_link 'Change whether they can place orders'
-    end
+    then_the_ordering_for_specific_circumstances_is_confirmed
+    and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_two_devices
+  end
 
-    describe 'clicking Change' do
-      before do
-        click_on 'Change whether they can place orders'
+  scenario 'Correcting a mistake at the confirmation stage' do
+    when_i_navigate_to_the_school_page_in_support
+    and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 5)
+    and_i_change_the_number_of_devices
+
+    then_i_see_my_previously_entered_value_for_specific_circumstances(number_of_devices: 5)
+  end
+
+  scenario 'The Computacenter cap update fails' do
+    given_the_school_has_already_ordered_more_devices_than_their_proposed_cap
+
+    when_i_navigate_to_the_school_page_in_support
+    and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 2)
+    and_i_confirm_the_changes
+
+    then_i_see_an_error_message_relating_to_computacenter
+    then_i_see_my_previously_entered_value_for_specific_circumstances(number_of_devices: 2)
+  end
+
+  def given_a_school_with_a_device_allocation_that_cannot_order
+    create(:school, order_state: :cannot_order, computacenter_reference: 'cc_ref')
+      .tap do |school|
+        create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
       end
+  end
 
-      it 'shows the order status form' do
-        expect(page).to have_text('Can they place orders?')
-        expect(page).to have_field('No, orders cannot be placed yet')
-        expect(page).to have_field('They can place orders for specific circumstances')
-        expect(page).to have_field('They can order their full allocation because local coronavirus restrictions are confirmed')
+  def given_the_school_has_already_ordered_more_devices_than_their_proposed_cap
+    WebMock.reset!
 
-        # the 'no' option should be chosen
-        expect(find('#support-enable-orders-form-order-state-cannot-order-field')['checked']).to eq('checked')
-      end
+    cc_failure_response = '<CapAdjustmentResponse dateTime="2020-08-21T12:30:40Z" payloadID="abc123"><HeaderResult errorDetails="Non of the records are processed" piMessageID="11111111111111111111111111111111" status="Failed"/><FailedRecords><Record capAmount="2" capType="DfE_RemainThresholdQty|Std_Device" errorDetails="New cap must be greater than or equal to used quantity" shipTO="cc_ref" status="Failed"/></FailedRecords></CapAdjustmentResponse>'
 
-      context 'selecting They can place orders for specific circumstances' do
-        before do
-          choose 'They can place orders for specific circumstances'
-        end
+    @computacenter_caps_api_request = stub_request(:post, 'http://computacenter.example.com/')
+      .to_return(status: 200, body: cc_failure_response, headers: {})
+  end
 
-        it 'asks how many devices they can order' do
-          expect(page).to have_field('How many devices can they order?')
-        end
+  def and_i_sign_in_as_a_support_user
+    sign_in_as create(:support_user)
+  end
 
-        context 'filling in an invalid number and clicking Continue' do
-          before do
-            fill_in('How many devices can they order?', with: 51)
-            click_on 'Continue'
-          end
+  def when_i_navigate_to_the_school_page_in_support
+    visit support_devices_school_path(@school.urn)
 
-          it 'shows me an error' do
-            expect(page).to have_http_status(:unprocessable_entity)
-            expect(page).to have_text('Cap cannot be more than their current allocation of 50')
-          end
-        end
+    expect(school_details_page).to have_text 'Can place orders?'
+    expect(school_details_page).to have_link 'Change whether they can place orders'
+  end
 
-        context 'filling in a valid number and clicking Continue' do
-          let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, payload_id: 'abc123', timestamp: Time.zone.now) }
+  def and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices:)
+    click_on 'Change whether they can place orders'
+    # the 'no' option should be chosen
+    expect(find('#support-enable-orders-form-order-state-cannot-order-field')['checked']).to eq('checked')
 
-          before do
-            allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-            allow(mock_request).to receive(:post!)
-            fill_in('How many devices can they order?', with: 2)
-          end
+    choose 'They can place orders for specific circumstances'
+    fill_in('How many devices can they order?', with: number_of_devices)
+    click_on 'Continue'
 
-          it 'takes me to the Check your answers page' do
-            click_on 'Continue'
-            expect(enable_orders_confirm_page).to be_displayed
-            expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
-            expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'They can place orders for specific circumstances'
-            expect(enable_orders_confirm_page.how_many_devices_row).to have_text 'Up to 2 from an allocation of 50'
-          end
+    expect(enable_orders_confirm_page).to be_displayed
+    expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
+    expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'They can place orders for specific circumstances'
+    expect(enable_orders_confirm_page.how_many_devices_row).to have_text "Up to #{number_of_devices} from an allocation of 50"
+  end
 
-          it 'shows links to change the order status and how many devices' do
-            click_on 'Continue'
-            expect(enable_orders_confirm_page.can_order_devices_row).to have_link 'Change'
-            expect(enable_orders_confirm_page.how_many_devices_row).to have_link 'Change'
-          end
+  def and_i_confirm_the_changes
+    click_on 'Confirm'
+  end
 
-          context 'clicking Change' do
-            before do
-              click_on 'Continue'
-              click_on 'Change whether they can place orders'
-            end
+  def then_the_ordering_for_specific_circumstances_is_confirmed
+    expect(school_details_page).to have_text("We've saved your choices")
+    expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
+    expect(school_details_page.school_details_rows[3]).to have_text 'Yes, for specific circumstances'
+  end
 
-            it 'shows the order status form with my previously entered values preserved' do
-              expect(page).to have_text('Can they place orders?')
-              expect(page.find_field('support-enable-orders-form-order-state-can-order-for-specific-circumstances-field')).to be_checked
-              expect(page).to have_field('How many devices can they order?', with: 2)
-            end
-          end
+  def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_two_devices
+    expect(@computacenter_caps_api_request.with { |req| req.body.include?('shipTo="cc_ref" capAmount="2"') })
+      .to have_been_made
+  end
 
-          context 'clicking Confirm' do
-            it 'pings the Computacenter CapUpdate API' do
-              click_on 'Continue'
-              click_on 'Confirm'
-              expect(mock_request).to have_received(:post!)
-            end
+  def and_i_change_the_number_of_devices
+    click_on 'Change how many devices'
+  end
 
-            context 'when the Computacenter CapUpdate API processes the update successfully' do
-              it 'shows me the school details page with updated details and a success message' do
-                click_on 'Continue'
-                click_on 'Confirm'
-                expect(school_details_page).to have_text("We've saved your choices")
-                expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
-                expect(school_details_page.school_details_rows[3]).to have_text 'Yes, for specific circumstances'
-              end
-            end
+  def then_i_see_my_previously_entered_value_for_specific_circumstances(number_of_devices:)
+    expect(page).to have_text('Can they place orders?')
+    expect(page.find_field('support-enable-orders-form-order-state-can-order-for-specific-circumstances-field')).to be_checked
+    expect(page).to have_field('How many devices can they order?', with: number_of_devices)
+  end
 
-            context 'when the Computacenter CapUpdate API raises an error' do
-              before do
-                allow(mock_request).to receive(:post!).and_raise(Computacenter::OutgoingAPI::Error.new(cap_update_request: mock_request))
-                click_on 'Continue'
-                click_on 'Confirm'
-              end
-
-              it 'shows an error' do
-                expect(page).to have_text('Could not update the cap on Computacenter\'s system - payload_id: abc123')
-              end
-
-              it 'shows the order status form' do
-                expect(page).to have_text('Can they place orders?')
-                expect(page).to have_field('No, orders cannot be placed yet')
-                expect(page).to have_field('They can place orders for specific circumstances')
-                expect(page).to have_field('They can order their full allocation because local coronavirus restrictions are confirmed')
-              end
-            end
-          end
-        end
-      end
-    end
+  def then_i_see_an_error_message_relating_to_computacenter
+    expect(page).to have_text('Could not update the cap on Computacenter\'s system')
   end
 end
