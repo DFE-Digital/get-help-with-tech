@@ -5,9 +5,8 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   let(:schools) { create_list(:school, 3, :with_std_device_allocation, order_state: :cannot_order) }
   let(:bad_urn) { '12492903' }
 
-  # disable the sending of cap update requests & emails
   before do
-    Settings.computacenter.outgoing_api.endpoint = nil
+    allow_computacenter_outgoing_api_calls
   end
 
   scenario 'visiting the full allocations page' do

@@ -19,7 +19,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   end
 
   before do
-    stub_request(:post, Settings.computacenter.outgoing_api.endpoint).to_return(status: 200, body: response_body)
+    allow_computacenter_outgoing_api_calls(response_body: response_body)
   end
 
   describe '#post!' do

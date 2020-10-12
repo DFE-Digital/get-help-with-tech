@@ -48,11 +48,9 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         end
 
         context 'when the endpoint setting is present' do
-          before do
-            Settings.computacenter.outgoing_api.endpoint = 'HERE'
-          end
-
           it 'sends an email to computacenter' do
+            expect(Settings.computacenter.outgoing_api.endpoint).to be_present
+
             expect { service.update!(cap: new_cap, order_state: new_order_state) }.to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change).once
           end
         end
@@ -114,7 +112,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
     context 'when the endpoint setting is present' do
       before do
-        Settings.computacenter.outgoing_api.endpoint = 'HERE'
+        raise 'Outgoing CC API endpoint not set' if Settings.computacenter.outgoing_api.endpoint.blank?
       end
 
       it 'notifies the computacenter API' do
@@ -135,8 +133,11 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     end
 
     context 'when the endpoint setting is not present' do
-      before do
+      around do |example|
+        original_value = Settings.computacenter.outgoing_api.endpoint
         Settings.computacenter.outgoing_api.endpoint = ''
+        example.run
+        Settings.computacenter.outgoing_api.endpoint = original_value
       end
 
       it 'does not notify the computacenter API' do
