@@ -1,12 +1,12 @@
 ## Who owns the devices
 
-Ownership of devices is transferred from DfE to the local authorities (LAs), academy trusts, schools and further education (FE) colleges who receive them at the point of delivery.
+Ownership of devices is transferred from the Department for Education (DfE) to the local authorities (LAs), academy trusts, schools and further education (FE) colleges who receive them at the point of delivery.
 
 ### Devices for education: children and young people in schools and FE colleges
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body">
-    This guidance is about laptops and tablets given to LAs and academy trusts for disadvantaged:
+    This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for disadvantaged:
   </p>
   <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
     <li>year 10s between May and July 2020</li>
@@ -22,7 +22,7 @@ LAs and trusts may choose to transfer ownership to schools.
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
-    This guidance is about laptops and tablets given to LAs and academy trusts for care leavers, children and families with a social worker between May and July 2020.
+    This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for care leavers, children and families with a social worker between May and July 2020.
   </p>
 </div>
 
@@ -30,7 +30,7 @@ Ownership of devices is transferred from DfE to the local authorities (LAs) who 
 
 Ideally, LAs should retain ownership and management of the devices and lend them to children, families and young people. This means that the device can be actively managed and can be reallocated where possible and necessary. LAs can also choose to transfer ownership to schools to manage them.
 
-LAs can transfer ownership of the devices to the children, families and young people themselves in situations where the young person, family or child needs a different approach, eg. you may wish to gift laptops and tablets to care leavers.
+LAs can transfer ownership of the devices to the children, families and young people themselves in situations where the young person, family or child needs a different approach, eg. you may wish to gift laptops, tablets and 4G wireless routers to care leavers.
 
 LAs should consider safeguarding when deciding whether to gift a device and involve relevant parties (such as social workers, schools and carers) in making the decision.
 
@@ -68,7 +68,6 @@ LAs may also have valid reasons for retaining a pool of devices. For example, th
 
 
 
-
 ## Distributing devices
 
 Laptops, tablets and 4G wireless routers will be delivered directly to schools or local authorities named in the order.  Read guidance on [how to order](/devices/how-to-order) for more information on the delivery process.
@@ -81,6 +80,11 @@ Organisations are responsible for deciding how they deliver devices. For example
 * use local organisations, such as those supporting care leavers
 
 All distribution and return of lent devices should be done in accordance with [social distancing guidelines](https://www.gov.uk/government/publications/staying-alert-and-safe-social-distancing), and any [social distancing guidelines relevant to your local area](https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19).
+
+### Redistributing unused devices
+
+Local authorities and academy trusts can use the [support portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you should collect them and lend them to other children and young people who may have greater need.  The DfE is investigating options for extending data contracts on all 4G wireless routers that are being actively used.
+
 
 ## Loan agreements
 

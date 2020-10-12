@@ -17,15 +17,13 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     end
 
     it 'shows a link to Change whether they can order devices' do
-      expect(school_details_page.school_details_rows[3]).to have_text 'Can place orders?'
-      expect(school_details_page.school_details_rows[3]).to have_link 'Change'
+      expect(school_details_page).to have_text 'Can place orders?'
+      expect(school_details_page).to have_link 'Change whether they can place orders'
     end
 
     describe 'clicking Change' do
       before do
-        within(school_details_page.school_details_rows[3]) do
-          click_on 'Change'
-        end
+        click_on 'Change whether they can place orders'
       end
 
       it 'shows the order status form' do
@@ -86,9 +84,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
           context 'clicking Change' do
             before do
               click_on 'Continue'
-              within(enable_orders_confirm_page.can_order_devices_row) do
-                click_on 'Change'
-              end
+              click_on 'Change whether they can place orders'
             end
 
             it 'shows the order status form with my previously entered values preserved' do
