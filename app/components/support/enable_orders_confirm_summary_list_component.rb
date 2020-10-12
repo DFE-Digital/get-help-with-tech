@@ -23,6 +23,7 @@ private
       key: 'Can they order devices?',
       value: School.translate_enum_value(:order_state, order_state),
       change_path: change_path,
+      action: 'whether they can place orders',
     }
   end
 
@@ -35,12 +36,14 @@ private
         key: 'How many devices?',
         value: "Their full allocation of #{allocation}",
         change_path: change_path,
+        action: 'how many devices',
       }
     when :can_order_for_specific_circumstances
       {
         key: 'How many devices?',
         value: "Up to #{cap} from an allocation of #{allocation}",
         change_path: change_path,
+        action: 'how many devices',
       }
     end
   end

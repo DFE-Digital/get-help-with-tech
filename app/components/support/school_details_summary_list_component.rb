@@ -11,11 +11,21 @@ private
   end
 
   def allocation_row
-    super.except(:action_path, :action).merge(change_path: support_devices_school_allocation_edit_path(school_urn: @school.urn))
+    super
+      .except(:action_path, :action)
+      .merge(
+        change_path: support_devices_school_allocation_edit_path(school_urn: @school.urn),
+        action: 'provisional allocation',
+      )
   end
 
   def order_status_row
-    super.except(:action_path, :action).merge(change_path: support_devices_school_enable_orders_path(school_urn: @school.urn))
+    super
+      .except(:action_path, :action)
+      .merge(
+        change_path: support_devices_school_enable_orders_path(school_urn: @school.urn),
+        action: 'whether they can place orders',
+      )
   end
 
   def school_contact_row_if_contact_present
