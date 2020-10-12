@@ -83,7 +83,7 @@ All distribution and return of lent devices should be done in accordance with [s
 
 ### Redistributing unused devices
 
-Local authorities and academy trusts can use the support portal to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you should collect them and lend them to other children and young people who may have greater need.  The DfE is investigating options for extending data contracts on all 4G wireless routers that are being actively used.
+Local authorities and academy trusts can use the [support portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you should collect them and lend them to other children and young people who may have greater need.  The DfE is investigating options for extending data contracts on all 4G wireless routers that are being actively used.
 
 
 ## Loan agreements
