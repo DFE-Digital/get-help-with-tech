@@ -4,10 +4,17 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
 
+  around do |example|
+    FeatureFlag.activate(:notify_can_place_orders)
+    example.run
+    FeatureFlag.deactivate(:notify_can_place_orders)
+  end
+
   before do
     @computacenter_caps_api_request = stub_computacenter_outgoing_api_calls
 
     @school = given_a_school_with_a_device_allocation_that_cannot_order
+    and_the_school_has_order_users_with_confirmed_techsource_accounts
     and_i_sign_in_as_a_support_user
   end
 
@@ -18,6 +25,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
     then_ordering_is_confirmed
     and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_devices
+    and_the_school_order_users_have_been_informed_that_they_can_order
   end
 
   scenario 'Enabling a school to place orders for specific circustances' do
@@ -27,6 +35,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
     then_the_ordering_for_specific_circumstances_is_confirmed
     and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_two_devices
+    and_the_school_order_users_have_been_informed_that_they_can_order
   end
 
   scenario 'A school cannot order any longer' do
@@ -71,6 +80,14 @@ RSpec.feature 'Enabling orders for a school from the support area' do
       .tap do |school|
         create(:school_device_allocation, :with_std_allocation, allocation: 50, cap: 50, devices_ordered: 25, school: school)
       end
+  end
+
+  def and_the_school_has_order_users_with_confirmed_techsource_accounts
+    create(:preorder_information, :school_will_order, school: @school)
+    create_list(:school_user, 2,
+                :relevant_to_computacenter,
+                :with_a_confirmed_techsource_account,
+                school: @school)
   end
 
   def given_the_school_has_already_ordered_more_devices_than_their_proposed_cap
@@ -154,6 +171,14 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     expect(school_details_page.school_details_rows[3]).to have_text '25'
     expect(school_details_page.school_details_rows[4]).to have_text 'Can place orders?'
     expect(school_details_page.school_details_rows[4]).to have_text 'No'
+  end
+
+  def and_the_school_order_users_have_been_informed_that_they_can_order
+    @school.users.each do |user|
+      open_email(user.email_address)
+      expect(current_email).to be_present
+      expect(current_email.header('template-id')).to eq(Settings.govuk_notify.templates.devices.can_order_devices)
+    end
   end
 
   def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_two_devices
