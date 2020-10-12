@@ -44,6 +44,8 @@ govuk_notify:
     computacenter:
       device_cap_change: '6e00f2bf-d373-436d-a2c0-2910f20ef521'
       comms_cap_change: '01f1b2a3-a216-44cc-a567-704bfd0a3c56'
+      school_can_order: '90df56c1-997b-4a73-ba97-4220328a1917'
+
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000
 

@@ -19,6 +19,16 @@ class ComputacenterMailer < ApplicationMailer
     )
   end
 
+  def notify_of_school_can_order
+    setup_params
+
+    template_mail(
+      school_can_order_template_id,
+      to: recipient,
+      personalisation: personalisation,
+    )
+  end
+
 private
 
   def setup_params
@@ -49,5 +59,9 @@ private
 
   def comms_cap_change_template_id
     Settings.govuk_notify.templates.computacenter.comms_cap_change
+  end
+
+  def school_can_order_template_id
+    Settings.govuk_notify.templates.computacenter.school_can_order
   end
 end
