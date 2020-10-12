@@ -30,11 +30,7 @@ private
   attr_reader :viewer
 
   def status
-    @status ||= if viewer.is_a?(ResponsibleBody)
-                  school.perceived_state
-                else
-                  school.preorder_status_or_default
-                end
+    @status ||= school.preorder_status_or_default
   end
 
   def text_key

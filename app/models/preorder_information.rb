@@ -13,6 +13,8 @@ class PreorderInformation < ApplicationRecord
     school_will_be_contacted: 'school_will_be_contacted',
     school_contacted: 'school_contacted',
     school_ready: 'school_ready',
+    rb_can_order: 'rb_can_order',
+    school_can_order: 'school_can_order',
   }
 
   enum who_will_order_devices: {
@@ -34,9 +36,17 @@ class PreorderInformation < ApplicationRecord
     elsif school_will_order_devices? && any_school_users? && !chromebook_information_complete?
       'school_contacted'
     elsif school_will_order_devices? && any_school_users? && chromebook_information_complete?
-      'school_ready'
+      if school.std_device_allocation&.has_devices_available_to_order?
+        'school_can_order'
+      else
+        'school_ready'
+      end
     elsif chromebook_information_complete?
-      'ready'
+      if orders_managed_centrally? && school.std_device_allocation&.has_devices_available_to_order?
+        'rb_can_order'
+      else
+        'ready'
+      end
     else
       'needs_info'
     end

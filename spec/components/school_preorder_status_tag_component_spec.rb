@@ -13,7 +13,7 @@ RSpec.describe SchoolPreorderStatusTagComponent do
       end
 
       context 'when viewer is an RB' do
-        let(:school) { instance_double('School', perceived_state: 'rb_can_order') }
+        let(:school) { instance_double('School', preorder_status_or_default: 'rb_can_order') }
         let(:viewer) { LocalAuthority.new }
 
         it 'returns You can order' do
