@@ -60,7 +60,7 @@ class User < ApplicationRecord
   end
 
   def generate_user_change_if_needed!(_obj = nil)
-    Computacenter::UserChangeGenerator.new(self).generate!
+    Computacenter::UserChangeGenerator.new(self).generate! unless id.nil?
   end
 
   def destroy_school_welcome_wizard!(school)
