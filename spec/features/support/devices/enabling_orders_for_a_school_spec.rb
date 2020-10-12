@@ -5,8 +5,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
 
   before do
-    @computacenter_caps_api_request = stub_request(:post, 'http://computacenter.example.com/')
-      .to_return(status: 200, body: '', headers: {})
+    @computacenter_caps_api_request = stub_computacenter_outgoing_api_calls
 
     @school = given_a_school_with_a_device_allocation_that_cannot_order
     and_i_sign_in_as_a_support_user
