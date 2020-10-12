@@ -52,12 +52,14 @@ class School < ApplicationRecord
   end
 
   def active_responsible_users
-    case who_will_order_devices
-    when 'school'
-      users.signed_in_at_least_once
-    else
-      responsible_body.users.signed_in_at_least_once
-    end
+    device_ordering_organisation.users.signed_in_at_least_once
+  end
+
+  def order_users_with_active_techsource_accounts
+    device_ordering_organisation
+      .users
+      .who_can_order_devices
+      .with_techsource_account_confirmed
   end
 
   def allocation_for_type!(device_type)
@@ -124,6 +126,10 @@ class School < ApplicationRecord
   end
 
 private
+
+  def device_ordering_organisation
+    who_will_order_devices == 'school' ? self : responsible_body
+  end
 
   def is_eligible_to_order?
     can_order? || can_order_for_specific_circumstances?

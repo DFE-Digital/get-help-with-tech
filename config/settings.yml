@@ -40,6 +40,7 @@ govuk_notify:
       invite_responsible_body_user: '42e5cd7a-deaa-4234-bdea-db63b7c4ad90'
       nominate_contacts: 'ef964a6f-d984-4f35-a074-6f3cb79bfec7'
       school_nominated_contact: '61eb33fc-87a0-488c-8121-354dd67093ef'
+      can_order_devices: '9df2c08a-c457-4b13-9270-c5a20687d168'
     computacenter:
       device_cap_change: '6e00f2bf-d373-436d-a2c0-2910f20ef521'
       comms_cap_change: '01f1b2a3-a216-44cc-a567-704bfd0a3c56'

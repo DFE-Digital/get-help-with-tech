@@ -12,7 +12,7 @@ class Support::Devices::OrderStatusController < Support::BaseController
     if @form.valid?
       if params[:confirm].present?
         ActiveRecord::Base.transaction do
-          CapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
+          SchoolOrderStateAndCapUpdateService.new(school: @school).update!(cap: @form.cap, order_state: @form.order_state)
         end
         flash[:success] = t(:success, scope: %i[support order_status update])
         redirect_to support_devices_school_path(urn: @school.urn)

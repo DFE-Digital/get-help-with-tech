@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CapUpdateService do
+RSpec.describe SchoolOrderStateAndCapUpdateService do
   let(:school) { create(:school, order_state: 'cannot_order') }
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }
@@ -11,14 +11,22 @@ RSpec.describe CapUpdateService do
 
   describe '#update!' do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
+    let(:notifications) { instance_double(CanOrderDevicesNotifications) }
 
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
       allow(mock_request).to receive(:post!)
+      allow(CanOrderDevicesNotifications).to receive(:new).with(school: school).and_return(notifications)
+      allow(notifications).to receive(:call)
     end
 
     it 'updates the school with the given order_state' do
       expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school, :order_state).from('cannot_order').to('can_order')
+    end
+
+    it 'triggers notifications that the school can order' do
+      service.update!(cap: new_cap, order_state: new_order_state)
+      expect(notifications).to have_received(:call)
     end
 
     context 'when a std SchoolDeviceAllocation does not exist' do
