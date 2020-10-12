@@ -1,7 +1,7 @@
 module ComputacenterHelper
-  def allow_computacenter_outgoing_api_calls(response_body: '')
+  def allow_computacenter_outgoing_api_calls(response_body: '', response_status: 200)
     stub_request(:post, 'http://computacenter.example.com/')
-      .to_return(status: 200, body: response_body, headers: {})
+      .to_return(status: response_status, body: response_body, headers: {})
   end
 end
 
