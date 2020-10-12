@@ -839,4 +839,26 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'removing the user from a school' do
+    context 'when there is a SchoolWelcomeWizard for that user and school' do
+      let(:user) { create(:school_user, :has_partially_completed_wizard) }
+
+      context 'by destroying the user_school object' do
+        let(:change!) { user.user_schools.first.destroy! }
+
+        it 'deletes the wizard' do
+          expect { change! }.to change(user.school_welcome_wizards.reload, :count).by(-1)
+        end
+      end
+
+      context 'by updating the schools association' do
+        let(:change!) { user.update!(schools: []) }
+
+        it 'deletes the wizard' do
+          expect { change! }.to change(user.school_welcome_wizards.reload, :count).by(-1)
+        end
+      end
+    end
+  end
 end
