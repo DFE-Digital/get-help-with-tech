@@ -14,6 +14,26 @@
       <%= title %>
     </h1>
 
+    <div class="govuk-warning-text govuk-!-margin-bottom-2">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <span class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        <% if @allocation.zero? %>
+          <h2 class="govuk-heading-m govuk-!-font-weight-bold">We removed your allocation because of<br />delays in our supply chain</h2>
+          <p class="govuk-body">
+            Only schools with children in years 10 and 11 will be able to order their allocation of laptops and tablets. We’ve made this difficult decision so we can target support at disadvantaged children in key exam years.</p>
+          <p class="govuk-body">
+            <%= govuk_link_to('More about this change to your allocation', responsible_body_devices_reduced_allocations_path) %>
+          </p>
+        <% else %>
+          <h2 class="govuk-heading-m govuk-!-font-weight-bold">We reduced your allocation because of<br />delays in our supply chain</h2>
+          <p class="govuk-body">
+            <%= govuk_link_to('More about your reduced allocation', responsible_body_devices_reduced_allocations_path) %>
+          </p>
+        <% end %>
+      </span>
+    </div>
+
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
     </h2>
