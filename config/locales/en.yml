@@ -27,6 +27,7 @@ en:
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
+    responsible_body_reduced_allocations: We reduced device allocations because of delays in our supply chain
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Get schools ready
