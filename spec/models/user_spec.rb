@@ -289,7 +289,7 @@ RSpec.describe User, type: :model do
     context 'creating user' do
       context 'computacenter relevant' do
         it 'creates a Computacenter::UserChange of type new' do
-          expect { create(:user, :has_seen_privacy_notice, orders_devices: true) }.to change(Computacenter::UserChange, :count).by(1)
+          expect { create(:user, :relevant_to_computacenter) }.to change(Computacenter::UserChange, :count).by(1)
         end
 
         it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
@@ -353,6 +353,17 @@ RSpec.describe User, type: :model do
           expect(user_change.original_school).to be_blank
           expect(user_change.original_school_urn).to be_blank
           expect(user_change.original_cc_ship_to_number).to be_blank
+        end
+      end
+
+      context 'when the user has a school and is relevant_to_computacenter' do
+        before do
+          Computacenter::UserChange.delete_all
+          create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com')
+        end
+
+        it 'does not create any UserChanges without a user_id (bug found & fixed in PR #634)' do
+          expect(Computacenter::UserChange.where(user_id: nil).count).to eq(0)
         end
       end
 
@@ -836,6 +847,28 @@ RSpec.describe User, type: :model do
 
       it 'returns false' do
         expect(user.awaiting_techsource_account?).to be_falsey
+      end
+    end
+  end
+
+  describe 'removing the user from a school' do
+    context 'when there is a SchoolWelcomeWizard for that user and school' do
+      let(:user) { create(:school_user, :has_partially_completed_wizard) }
+
+      context 'by destroying the user_school object' do
+        let(:change!) { user.user_schools.first.destroy! }
+
+        it 'deletes the wizard' do
+          expect { change! }.to change(user.school_welcome_wizards.reload, :count).by(-1)
+        end
+      end
+
+      context 'by updating the schools association' do
+        let(:change!) { user.update!(schools: []) }
+
+        it 'deletes the wizard' do
+          expect { change! }.to change(user.school_welcome_wizards.reload, :count).by(-1)
+        end
       end
     end
   end

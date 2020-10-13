@@ -15,5 +15,6 @@ class UserSchool < ApplicationRecord
 
   after_destroy do |user_school|
     user_school.user.generate_user_change_if_needed!
+    user_school.user.destroy_school_welcome_wizard!(user_school.school)
   end
 end

@@ -36,7 +36,8 @@ private
   end
 
   def change_needed?
-    is_addition? || is_removal? || (is_change? && computacenter_fields_have_changed?)
+    @user&.id.present? && \
+      (is_addition? || is_removal? || (is_change? && computacenter_fields_have_changed?))
   end
 
   def is_addition?

@@ -8,8 +8,19 @@ class User < ApplicationRecord
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
 
-  has_many :user_schools, dependent: :destroy, after_add: :generate_user_change_if_needed!, after_remove: :generate_user_change_if_needed!
-  has_many :schools, through: :user_schools
+  has_many :user_schools, dependent: :destroy,
+                          after_add: :generate_user_change_if_needed!,
+                          after_remove: [
+                            :generate_user_change_if_needed!,
+                            ->(user, user_school) { user.destroy_school_welcome_wizard!(user_school.school) },
+                          ]
+
+  has_many :schools,  through: :user_schools,
+                      after_add: :generate_user_change_if_needed!,
+                      after_remove: [
+                        :generate_user_change_if_needed!,
+                        ->(user, school) { user.destroy_school_welcome_wizard!(school) },
+                      ]
 
   scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
@@ -51,6 +62,10 @@ class User < ApplicationRecord
 
   def generate_user_change_if_needed!(_obj = nil)
     Computacenter::UserChangeGenerator.new(self).generate!
+  end
+
+  def destroy_school_welcome_wizard!(school)
+    welcome_wizard_for(school)&.destroy!
   end
 
   def is_mno_user?
