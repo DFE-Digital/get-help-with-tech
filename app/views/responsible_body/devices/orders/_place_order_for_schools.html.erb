@@ -1,6 +1,7 @@
 <table id="schools" class="govuk-table">
   <caption class="govuk-table__caption">
     <span class="govuk-heading-m">Schools you need to place orders for</span>
+    <p class="govuk-body">Place an order for each school.</p>
   </caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
@@ -23,6 +24,9 @@
   </tbody>
 </table>
 
-<h2 class="govuk-heading-m">Help signing in to TechSource</h2>
-
-<%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Help signing in to TechSource</h2>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
+  </div>
+</div>
