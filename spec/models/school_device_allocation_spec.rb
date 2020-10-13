@@ -70,4 +70,14 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       end
     end
   end
+
+  describe '#available_devices_count' do
+    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 200) }
+
+    context 'when negative' do
+      it 'returns zero' do
+        expect(allocation.available_devices_count).to be_zero
+      end
+    end
+  end
 end

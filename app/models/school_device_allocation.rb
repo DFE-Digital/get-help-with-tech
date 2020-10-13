@@ -32,7 +32,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def available_devices_count
-    cap.to_i - devices_ordered.to_i
+    [0, (cap.to_i - devices_ordered.to_i)].max
   end
 
   def computacenter_cap_type
