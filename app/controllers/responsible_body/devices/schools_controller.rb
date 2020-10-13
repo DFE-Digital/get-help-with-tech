@@ -14,4 +14,8 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::Devices::Ba
       @chromebook_information_form = ChromebookInformationForm.new(school: @school)
     end
   end
+
+  def order_devices
+    @school = @responsible_body.schools.find_by!(urn: params[:urn])
+  end
 end

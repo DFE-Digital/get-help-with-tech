@@ -1,0 +1,23 @@
+<% content_for :title, t('page_titles.responsible_body.devices.order_devices') %>
+<% content_for :before_content, govuk_link_to('Back', responsible_body_devices_school_path(urn: @school.urn), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= t('page_titles.responsible_body.devices.order_devices') %>
+    </h1>
+
+    <%= render DeviceCountComponent.new(
+      max_count: @school.std_device_allocation.cap,
+      ordered_count: @school.std_device_allocation.devices_ordered) %>
+
+    <p class="govuk-body">Order your devices now. Do not delay.</p>
+    <p class="govuk-body">They will arrive on the next working day if you order before 4pm.</p>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+    <p class="govuk-body">It’s important to know your device allocation before you sign in. If you try to order more devices that you’ve been allocated, the order will be cancelled.</p>
+
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
+  </div>
+</div>

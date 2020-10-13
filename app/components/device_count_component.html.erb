@@ -1,0 +1,13 @@
+<div class="app-card app-card__order">
+  <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
+    <%= "#{available_count} #{'device'.pluralize(available_count)} available" -%>
+  </h2>
+
+  <div class="govuk-panel__body govuk-!-font-size-24">
+    You’ve ordered <%= ordered_count %> of <%= max_count %> devices
+  </div>
+
+  <% if show_action && action.present? %>
+    <%= govuk_button_link_to action.first[0], action.first[1], class: 'govuk-!-margin-top-4 govuk-!-margin-bottom-1' %>
+  <% end %>
+</div>

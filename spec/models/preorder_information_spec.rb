@@ -102,5 +102,52 @@ RSpec.describe PreorderInformation, type: :model do
 
       it { is_expected.to eq('ready') }
     end
+
+    context 'when rb orders and status is ready' do
+      let(:school) { build(:school, std_device_allocation: allocation) }
+
+      subject do
+        build(:preorder_information,
+              :needs_chromebooks,
+              school: school,
+              who_will_order_devices: :responsible_body).infer_status
+      end
+
+      context 'when there are devices available to order' do
+        let(:allocation) { build(:school_device_allocation, :with_orderable_devices) }
+
+        it { is_expected.to eq('rb_can_order') }
+      end
+
+      context 'when there are no devices available to order' do
+        let(:allocation) { build(:school_device_allocation) }
+
+        it { is_expected.to eq('ready') }
+      end
+    end
+
+    context 'when school orders and status is school ready' do
+      let(:user) { build(:school_user) }
+      let(:school) { build(:school, std_device_allocation: allocation, users: [user]) }
+
+      subject do
+        build(:preorder_information,
+              :needs_chromebooks,
+              school: school,
+              who_will_order_devices: 'school').infer_status
+      end
+
+      context 'when there are devices available to order' do
+        let(:allocation) { build(:school_device_allocation, :with_orderable_devices) }
+
+        it { is_expected.to eq('school_can_order') }
+      end
+
+      context 'when there are no devices available to order' do
+        let(:allocation) { build(:school_device_allocation) }
+
+        it { is_expected.to eq('school_ready') }
+      end
+    end
   end
 end

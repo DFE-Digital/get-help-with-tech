@@ -1,12 +1,13 @@
 class SchoolPreorderStatusTagComponent < ViewComponent::Base
   validates :school, presence: true
 
-  def initialize(school:)
+  def initialize(school:, viewer: nil)
     @school = school
+    @viewer = viewer
   end
 
   def text
-    I18n.t!(status, scope: PreorderInformation.enum_i18n_scope(:status))
+    I18n.t!(status, scope: [:components, :school_preorder_status_tag_component, :status, text_key])
   end
 
   def type
@@ -17,6 +18,8 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
       :yellow
     when 'school_ready', 'ready'
       :blue
+    when 'rb_can_order', 'school_can_order'
+      :green
     else
       :default
     end
@@ -24,8 +27,19 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
 
 private
 
+  attr_reader :viewer
+
   def status
-    school.preorder_status_or_default
+    @status ||= school.preorder_status_or_default
+  end
+
+  def text_key
+    hash = {
+      'trust' => :responsible_body,
+      'local_authority' => :responsible_body,
+    }
+
+    hash.fetch(viewer.class.to_s.underscore, :default)
   end
 
   attr_reader :school

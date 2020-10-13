@@ -76,6 +76,9 @@ Rails.application.routes.draw do
         get '/who-to-contact/edit', to: 'who_to_contact#edit'
         get '/change-who-will-order', to: 'change_who_will_order#edit'
         patch '/change-who-will-order', to: 'change_who_will_order#update'
+        member do
+          get 'order-devices'
+        end
       end
     end
     namespace :internet do

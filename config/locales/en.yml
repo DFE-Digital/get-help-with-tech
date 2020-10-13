@@ -1,4 +1,4 @@
- en:
+en:
   service_name: Get help with technology
   page_titles:
     about_bt_wifi: Increasing children’s internet access through free BT hotspots
@@ -16,6 +16,9 @@
     confirm: Check your answers before confirming
     new_user: Create an account
     error_prefix: "Error: "
+    responsible_body:
+      devices:
+        order_devices: Order devices now
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
     responsible_body_devices_tell_us: Tell us who will order a school’s laptops and tablets
@@ -316,6 +319,27 @@
       no_items: "No %{item_name} found"
       single_page: "%{count} %{item_name}"
       multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
+  components:
+    school_preorder_status_tag_component:
+      status:
+        responsible_body:
+          needs_contact: Needs a contact
+          needs_info: Needs information
+          ready: Ready
+          school_contacted: School contacted
+          school_will_be_contacted: School will be contacted
+          school_ready: School ready
+          rb_can_order: You can order
+          school_can_order: School can order
+        default:
+          needs_contact: Needs a contact
+          needs_info: Needs information
+          ready: Ready
+          school_contacted: School contacted
+          school_will_be_contacted: School will be contacted
+          school_ready: School ready
+          rb_can_order: Responsible body can order
+          school_can_order: School can order
   activemodel:
     errors:
       models:
