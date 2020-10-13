@@ -1,6 +1,8 @@
 computacenter:
   outgoing_api:
     endpoint: http://computacenter.example.com/
+    username: user
+    password: pass
 
 govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
