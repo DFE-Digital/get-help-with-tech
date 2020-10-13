@@ -12,7 +12,7 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   def rows
     [
       {
-        key: 'Provisional allocation',
+        key: 'Allocation',
         value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
         action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
         action: 'Query allocation',
