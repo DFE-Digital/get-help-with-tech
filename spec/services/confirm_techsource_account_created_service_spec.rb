@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ConfirmTechsourceAccountCreatedService do
   describe '#call' do
     context 'with one email' do
-      let(:user) { create(:school_user) }
+      let(:user) { create(:school_user, orders_devices: true) }
       let(:now) { Time.zone.now }
 
       subject(:service) { described_class.new(emails: [user.email_address]) }
@@ -21,6 +21,35 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
         service.call
 
         expect(service.processed).to include(email: user.email_address)
+      end
+
+      context 'if there are devices orderable' do
+        before do
+          create(:school_device_allocation, :with_std_allocation, cap: 3, allocation: 5, school: user.school)
+          create(:preorder_information, school: user.school, who_will_order_devices: 'school')
+          user.school.update!(order_state: :can_order)
+        end
+
+        it 'sends an email' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers')
+        end
+
+        it 'only sends one email if touched multiple times' do
+          expect {
+            service.call
+            service.call
+          }.to have_enqueued_job.on_queue('mailers')
+        end
+      end
+
+      context 'if there are no devices orderable' do
+        it 'does not send an email' do
+          expect {
+            service.call
+          }.not_to have_enqueued_job.on_queue('mailers')
+        end
       end
     end
 

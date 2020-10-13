@@ -177,6 +177,19 @@ class User < ApplicationRecord
     school_welcome_wizards.find_by_school_id(school.id)
   end
 
+  def schools_i_order_for
+    return [] unless orders_devices?
+
+    array = []
+    array += schools.includes(:preorder_information).where(preorder_information: { who_will_order_devices: 'school' })
+
+    if responsible_body
+      array += responsible_body.schools.includes(:preorder_information).where(preorder_information: { who_will_order_devices: 'responsible_body' })
+    end
+
+    array
+  end
+
 private
 
   def cleansed_full_name
