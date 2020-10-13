@@ -122,5 +122,9 @@ FactoryBot.define do
       has_not_seen_privacy_notice
       orders_devices { false }
     end
+
+    trait :with_a_confirmed_techsource_account do
+      techsource_account_confirmed_at { Time.zone.now }
+    end
   end
 end
