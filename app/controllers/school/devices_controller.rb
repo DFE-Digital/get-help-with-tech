@@ -17,6 +17,12 @@ class School::DevicesController < School::BaseController
     end
   end
 
+  def reduced_allocation
+    @allocation = @school.std_device_allocation&.allocation || 0
+
+    render 'school/devices/reduced_to_zero_allocation' if @allocation.zero?
+  end
+
   def request_devices
     render 'shared/devices/request_devices'
   end

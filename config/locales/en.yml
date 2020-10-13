@@ -102,6 +102,11 @@ en:
     school_edit_chromebooks: Will your school need to order Chromebooks?
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
+    school_reduced_allocation:
+      one: We reduced your allocation to %{allocation} device because of delays in our supply chain
+      many: We reduced your allocation to %{allocation} devices because of delays in our supply chain
+      other: We reduced your allocation to %{allocation} devices because of delays in our supply chain
+    school_reduced_to_zero_allocation: We removed your allocation because of delays in our supply chain
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet

@@ -109,6 +109,7 @@ Rails.application.routes.draw do
       patch '/before-you-can-order', to: 'school/before_can_order#update'
       get '/request-devices', to: 'school/devices#request_devices'
       get '/order-devices', to: 'school/devices#order'
+      get '/reduced-allocation', to: 'school/devices#reduced_allocation'
       get '/details', to: 'school/details#show', as: :details
       get '/chromebooks/edit', to: 'school/chromebooks#edit'
       patch '/chromebooks', to: 'school/chromebooks#update'
