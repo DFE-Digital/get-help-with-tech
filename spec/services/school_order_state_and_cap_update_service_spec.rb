@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SchoolOrderStateAndCapUpdateService do
-  let(:school) { create(:school, order_state: 'cannot_order') }
+  let(:preorder) { create(:preorder_information, :does_not_need_chromebooks, who_will_order_devices: :responsible_body) }
+  let(:school) { create(:school, order_state: 'cannot_order', preorder_information: preorder) }
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }
   let(:allocation) { school.std_device_allocation }
@@ -99,6 +100,12 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         it 'sets the new cap to equal the devices_ordered, regardless of what was given' do
           service.update!(cap: 5, order_state: new_order_state)
           expect(allocation.cap).to eq(1)
+        end
+
+        it 'refreshes the status of the preorder' do
+          expect {
+            service.update!(cap: 5, order_state: new_order_state)
+          }.to change(preorder, :status)
         end
       end
 

@@ -19,6 +19,8 @@ class SchoolOrderStateAndCapUpdateService
     @school.std_device_allocation&.reload
     @school.coms_device_allocation&.reload
 
+    school&.preorder_information&.refresh_status!
+
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
