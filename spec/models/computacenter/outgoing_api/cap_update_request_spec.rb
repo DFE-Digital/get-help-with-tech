@@ -8,7 +8,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   let(:allocation_2) { create(:school_device_allocation, school: school_2, device_type: 'coms_device', allocation: 22, cap: 0) }
 
   before do
-    @network_call = allow_computacenter_outgoing_api_calls(response_body: response_body)
+    @network_call = stub_computacenter_outgoing_api_calls(response_body: response_body)
   end
 
   describe '#post!' do
@@ -48,7 +48,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
     context 'when the response status is not a success' do
       before do
         WebMock.reset!
-        allow_computacenter_outgoing_api_calls(response_body: response_body, response_status: 401)
+        stub_computacenter_outgoing_api_calls(response_body: response_body, response_status: 401)
       end
 
       it 'raises an error' do

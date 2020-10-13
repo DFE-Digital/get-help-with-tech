@@ -6,7 +6,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   let(:bad_urn) { '12492903' }
 
   before do
-    allow_computacenter_outgoing_api_calls
+    stub_computacenter_outgoing_api_calls
   end
 
   scenario 'visiting the full allocations page' do
