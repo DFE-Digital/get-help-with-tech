@@ -41,7 +41,7 @@ RSpec.describe CanOrderDevicesNotifications do
 
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
         end
 
         it 'puts a message in Slack' do
@@ -169,7 +169,7 @@ RSpec.describe CanOrderDevicesNotifications do
 
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesButActionNeededMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_but_action_needed', 'deliver_now', params: { user: user, school: school }, args: [])
       end
 
       context 'when the user has a techsource account' do

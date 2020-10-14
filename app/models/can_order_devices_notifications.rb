@@ -34,16 +34,16 @@ private
     school.order_users_with_active_techsource_accounts.each do |user|
       CanOrderDevicesMailer
         .with(user: user, school: school)
-        .notify_user_email
+        .user_can_order
         .deliver_later
     end
   end
 
   def notify_all_organisation_users_that_action_is_needed
     school.organisation_users.each do |user|
-      CanOrderDevicesButActionNeededMailer
+      CanOrderDevicesMailer
         .with(user: user, school: school)
-        .notify_user_email
+        .user_can_order_but_action_needed
         .deliver_later
     end
   end
@@ -65,7 +65,7 @@ private
     user.schools_i_order_for.select(&:can_order_devices_right_now?).each do |school|
       CanOrderDevicesMailer
         .with(user: user, school: school)
-        .notify_user_email
+        .user_can_order
         .deliver_later
     end
   end
