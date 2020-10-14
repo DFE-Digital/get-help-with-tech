@@ -40,12 +40,7 @@ private
     # Guard against multiple updates
     return if user.previous_changes.dig('techsource_account_confirmed_at', 0).present?
 
-    user.schools_i_order_for.select(&:can_order_devices_right_now?).each do |school|
-      CanOrderDevicesMailer
-        .with(user: user, school: school)
-        .notify_user_email
-        .deliver_later
-    end
+    CanOrderDevicesNotifications.new(user: user).call
   end
 
   def email_no_longer_computacenter_relevant(email)
