@@ -52,7 +52,7 @@ RSpec.describe CanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user from #{school.name} is able to place orders",
+            text: "[User can order event] A user has been told they can place orders for #{school.name}",
             mrkdwn: true,
           )
         end
@@ -184,7 +184,7 @@ RSpec.describe CanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user from #{school.name} is able to place orders",
+            text: "[User can order event] A user has been told they can place orders for #{school.name}",
             mrkdwn: true,
           )
         end
