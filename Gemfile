@@ -93,7 +93,7 @@ group :development, :test do
   gem 'webmock'
 
   # GOV.UK interpretation of rubocop for linting Ruby
-  gem 'rubocop-govuk'
+  gem 'rubocop-govuk', '>= 3.17.2'
   gem 'scss_lint-govuk'
 
   gem 'travis'
