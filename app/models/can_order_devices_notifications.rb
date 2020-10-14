@@ -17,13 +17,19 @@ class CanOrderDevicesNotifications
 private
 
   def notify_about_school_being_able_to_order
-    status = school.preorder_information.status
-    if status.in? %w[needs_info school_contacted]
+    case school.preorder_information.status
+    when 'needs_contact'
+      # TODO: we need to nudge the responsible body that this school needs a contact
+    when 'school_will_be_contacted'
+      # This is on the DfE to onboard these schools - there is nothing users can do in this case
+    when 'needs_info', 'school_contacted'
       notify_all_organisation_users_that_action_is_needed
       notify_computacenter
-    elsif status.in? %w[ready school_ready rb_can_order school_can_order]
+    when 'ready', 'school_ready', 'rb_can_order', 'school_can_order'
       notify_all_order_users_with_active_techsource_accounts
       notify_computacenter
+    else
+      raise "Unexpected preorder status #{school.preorder_information.status} for #{school.name} (#{school.urn})"
     end
   end
 
