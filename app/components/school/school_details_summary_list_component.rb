@@ -10,7 +10,6 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   end
 
   def rows
-    supply_chain_delays = FeatureFlag.active?(:reduced_allocations) ? " (#{govuk_link_to('reduced due to supply chain delays', reduced_allocation_school_path(@school))})" : ''
     allocation_row_value = pluralize(@school.std_device_allocation&.allocation.to_i, 'device') + supply_chain_delays
 
     [
@@ -28,6 +27,14 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   end
 
 private
+
+  def supply_chain_delays
+    if FeatureFlag.active?(:reduced_allocations)
+      " (#{govuk_link_to('reduced due to supply chain delays', reduced_allocation_school_path(@school))})"
+    else
+      ''
+    end
+  end
 
   def preorder_information
     @school.preorder_information
