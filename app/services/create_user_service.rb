@@ -37,6 +37,7 @@ class CreateUserService
     if user.schools << school
       AddAdditionalSchoolToExistingUserMailer.with(user: user, school: school).additional_school_email.deliver_later
       school.preorder_information&.refresh_status!
+      user.update!(user_params.select { |key, _value| user.send(key).blank? })
     end
     user
   end
