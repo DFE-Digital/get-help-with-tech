@@ -6,16 +6,14 @@ RSpec.feature 'Reduced allocations due to supply chain delays' do
   let(:responsible_body) { create(:local_authority, :in_devices_pilot) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
-  before do
+  around do |example|
     FeatureFlag.activate(:reduced_allocations)
     given_i_am_signed_in_as_a_responsible_body_user
-  end
-
-  after do
+    example.run
     FeatureFlag.deactivate(:reduced_allocations)
   end
 
-  scenario 'I see that allocation have been reduced' do
+  scenario 'I see that allocations have been reduced' do
     given_i_am_signed_in_as_a_responsible_body_user
     when_i_follow_the_more_about_reduced_allocations_link
     then_i_see_that_allocations_were_reduced

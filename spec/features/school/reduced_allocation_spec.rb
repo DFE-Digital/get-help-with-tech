@@ -2,11 +2,10 @@ require 'rails_helper'
 
 RSpec.feature 'Reduced allocation due to supply chain delays' do
   include ViewHelper
-  before do
-    FeatureFlag.activate(:reduced_allocations)
-  end
 
-  after do
+  around do |example|
+    FeatureFlag.activate(:reduced_allocations)
+    example.run
     FeatureFlag.deactivate(:reduced_allocations)
   end
 
