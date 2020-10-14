@@ -21,7 +21,13 @@ class SignInTokensController < ApplicationController
       save_user_to_session!
       EventNotificationsService.broadcast(SignInEvent.new(user: @user))
       @user.clear_token!
-      redirect_to root_url_for(@user)
+
+      if session['return_url'].present?
+        redirect_to session['return_url']
+        session.delete('return_url')
+      else
+        redirect_to root_url_for(@user)
+      end
     end
   end
 

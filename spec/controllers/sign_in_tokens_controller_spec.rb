@@ -44,6 +44,24 @@ RSpec.describe SignInTokensController, type: :controller do
       expect(EventNotificationsService).to have_received(:broadcast).with(mock_event)
     end
 
+    context "session['return_url'] is set" do
+      it 'redirects to return_url' do
+        session['return_url'] = 'https://example.com'
+
+        delete :destroy, params: valid_token_params
+
+        expect(response).to redirect_to('https://example.com')
+      end
+
+      it 'deletes it from the session' do
+        session['return_url'] = 'https://example.com'
+
+        delete :destroy, params: valid_token_params
+
+        expect(session.key?('return_url')).to be_falsey
+      end
+    end
+
     context 'when hybrid user is associated with RB and school' do
       let(:school) { create(:school) }
       let(:user) do
