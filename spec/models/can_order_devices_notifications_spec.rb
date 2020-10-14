@@ -184,7 +184,7 @@ RSpec.describe CanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user has been told they can place orders for #{school.name}",
+            text: "[User can order event] A user has been told action is needed so #{school.name} can place orders",
             mrkdwn: true,
           )
         end

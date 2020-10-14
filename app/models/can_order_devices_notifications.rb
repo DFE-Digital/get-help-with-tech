@@ -25,7 +25,6 @@ private
       notify_all_order_users_with_active_techsource_accounts
       notify_computacenter
     end
-    send_slack_notifications_for_users_who_can_order_right_now
   end
 
   def notify_all_order_users_with_active_techsource_accounts
@@ -37,12 +36,6 @@ private
   def notify_all_organisation_users_that_action_is_needed
     school.organisation_users.each do |user|
       notify_user_can_order_but_action_needed(user: user, school: school)
-    end
-  end
-
-  def send_slack_notifications_for_users_who_can_order_right_now
-    school.order_users_with_active_techsource_accounts.each do |user|
-      EventNotificationsService.broadcast(UserCanOrderEvent.new(user: user, school: @school))
     end
   end
 
@@ -67,6 +60,9 @@ private
         .with(user: user, school: school)
         .user_can_order
         .deliver_later
+      EventNotificationsService.broadcast(
+        UserCanOrderEvent.new(user: user, school: school, type: :user_can_order),
+      )
     end
   end
 
@@ -76,6 +72,9 @@ private
         .with(user: user, school: school)
         .user_can_order_but_action_needed
         .deliver_later
+      EventNotificationsService.broadcast(
+        UserCanOrderEvent.new(user: user, school: school, type: :user_can_order_but_action_needed),
+      )
     end
   end
 

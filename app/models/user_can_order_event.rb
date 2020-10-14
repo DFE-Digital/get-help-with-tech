@@ -1,7 +1,7 @@
 class UserCanOrderEvent < Event
   def message
     I18n.t(
-      :user_can_order_event,
+      "#{@params[:type]}_event".to_sym,
       scope: [:events],
       school: @params[:school].name,
     )
