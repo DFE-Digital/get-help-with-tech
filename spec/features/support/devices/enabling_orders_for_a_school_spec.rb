@@ -72,6 +72,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     create(:school, order_state: :cannot_order, computacenter_reference: 'cc_ref')
       .tap do |school|
         create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
+        create(:preorder_information, :does_not_need_chromebooks, :school_will_order, status: 'ready', school: school)
       end
   end
 
@@ -79,11 +80,11 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     create(:school, order_state: :can_order, computacenter_reference: 'cc_ref')
       .tap do |school|
         create(:school_device_allocation, :with_std_allocation, allocation: 50, cap: 50, devices_ordered: 25, school: school)
+        create(:preorder_information, :does_not_need_chromebooks, :school_will_order, status: 'ready', school: school)
       end
   end
 
   def and_the_school_has_order_users_with_confirmed_techsource_accounts
-    create(:preorder_information, :school_will_order, school: @school)
     create_list(:school_user, 2,
                 :relevant_to_computacenter,
                 :with_a_confirmed_techsource_account,
