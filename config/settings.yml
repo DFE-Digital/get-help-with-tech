@@ -42,6 +42,7 @@ govuk_notify:
       school_nominated_contact: '61eb33fc-87a0-488c-8121-354dd67093ef'
       can_order_devices: '9df2c08a-c457-4b13-9270-c5a20687d168'
       can_order_but_action_needed: '9096f09c-0b36-486c-9395-a6626198fd86'
+      user_added_to_additional_school: 'f3ec0c69-17f8-424d-9c33-f17438355c2c'
     computacenter:
       device_cap_change: '6e00f2bf-d373-436d-a2c0-2910f20ef521'
       comms_cap_change: '01f1b2a3-a216-44cc-a567-704bfd0a3c56'

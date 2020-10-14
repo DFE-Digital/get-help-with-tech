@@ -68,6 +68,65 @@ RSpec.describe CreateUserService do
       preorder_information
     end
 
+    context 'given an email address that already exists' do
+      let(:params) do
+        {
+          full_name: 'Vlad Valid',
+          email_address: 'existing@user.com',
+          telephone: '01234 567890',
+          school_id: school.id,
+          orders_devices: true,
+        }
+      end
+      let(:result) { CreateUserService.invite_school_user(params) }
+
+      context 'on the given school' do
+        let(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: school) }
+
+        it 'does not create a user with the given params' do
+          expect { result }.not_to change(User, :count)
+        end
+
+        it 'does not send any email' do
+          expect { perform_enqueued_jobs { result } }.not_to change(ActionMailer::Base.deliveries, :size)
+        end
+
+        it 'returns the user unpersisted, with errors' do
+          expect(result).to be_a(User)
+          expect(result).to have_attributes(params)
+          expect(result.errors.full_messages).not_to be_empty
+        end
+      end
+
+      context 'on a different school' do
+        let!(:other_school) { create(:school) }
+        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: other_school) }
+
+        before { create(:preorder_information, school: other_school, who_will_order_devices: 'school') }
+
+        it 'returns the existing user' do
+          expect(result).to be_a(User)
+          expect(result).to eq(existing_user)
+        end
+
+        it 'adds this school to the existing users schools' do
+          expect(result.schools).to include(other_school)
+          expect(result.schools).to include(school)
+        end
+
+        it 'sends the additional school added email' do
+          expect { perform_enqueued_jobs { result } }.to change(ActionMailer::Base.deliveries, :size).by(1)
+          expect(last_email.to[0]).to eq(existing_user[:email_address])
+          expect(last_email.header['template-id'].value).to eq(Settings.govuk_notify.templates.devices.user_added_to_additional_school)
+        end
+
+        it 'updates the school status to reflect that the school has been contacted' do
+          result
+          expect(school.preorder_information.reload.status).to eq('school_contacted')
+        end
+      end
+    end
+
     context 'given valid user params' do
       let(:valid_params) do
         {
