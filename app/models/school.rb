@@ -12,6 +12,11 @@ class School < ApplicationRecord
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
+  enum status: {
+    open: 'open',
+    closed: 'closed',
+  }
+
   enum phase: {
     primary: 'primary',
     secondary: 'secondary',
