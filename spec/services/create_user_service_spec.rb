@@ -81,7 +81,7 @@ RSpec.describe CreateUserService do
       let(:result) { CreateUserService.invite_school_user(params) }
 
       context 'on the given school' do
-        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: school) }
+        before { create(:school_user, email_address: 'existing@user.com', school: school) }
 
         it 'does not create a user with the given params' do
           expect { result }.not_to change(User, :count)
@@ -131,13 +131,13 @@ RSpec.describe CreateUserService do
           end
 
           it 'applies the given telephone number' do
-            expect { result }.to change{ existing_user.reload.telephone }.to('01234 567890')
+            expect { result }.to(change { existing_user.reload.telephone }.to('01234 567890'))
           end
         end
 
         context 'when the existing user has a non-blank telephone number' do
           it 'retains the existing telephone number' do
-            expect { result }.not_to change{ existing_user.reload.telephone }
+            expect { result }.not_to(change { existing_user.reload.telephone })
           end
         end
 
@@ -147,17 +147,27 @@ RSpec.describe CreateUserService do
           end
 
           it 'applies the new orders_devices value' do
-            expect { result }.to change{ existing_user.reload.orders_devices }.to(true)
+            expect { result }.to(change { existing_user.reload.orders_devices }.to(true))
           end
         end
 
-        context 'when the existing user can order devices' do
+        context 'when the existing user can order devices, but the given orders_devices is false' do
+          let(:params) do
+            {
+              full_name: 'Vlad Valid',
+              email_address: 'existing@user.com',
+              telephone: '01234 567890',
+              school_id: school.id,
+              orders_devices: false,
+            }
+          end
+
           before do
             existing_user.update!(orders_devices: true)
           end
-          
+
           it 'retains the existing value' do
-            expect { result }.not_to change{ existing_user.reload.orders_devices }
+            expect { result }.not_to(change { existing_user.reload.orders_devices })
           end
         end
       end
