@@ -29,7 +29,7 @@ RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest d
   let(:expected_json) do
     {
       u_email: user_change.email_address,
-      u_type_of_update: 'New',
+      u_type_of_update: user_change.type_of_update,
       u_cc_sold_to_number: user_change.cc_sold_to_number,
       u_first_name: user_change.first_name,
       u_last_name: user_change.last_name,
@@ -74,6 +74,37 @@ RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest d
       request.timestamp = Time.new(2020, 9, 2, 15, 3, 35, '+02:00')
       request.post!
       expect(a_request(:post, request.endpoint).with(body: expected_json)).to have_been_made
+    end
+
+    context 'for different types of update' do
+      before do
+        request.timestamp = Time.new(2020, 9, 2, 15, 3, 35, '+02:00')
+        request.post!
+      end
+
+      context 'when the type_of_update is New' do
+        let(:user_change) { create(:user_change, :school_user, type_of_update: 'New') }
+
+        it 'generates a correct body' do
+          expect(a_request(:post, request.endpoint).with(body: expected_json)).to have_been_made
+        end
+      end
+
+      context 'when the type_of_update is Change' do
+        let(:user_change) { create(:user_change, :school_user, type_of_update: 'Change') }
+
+        it 'generates a correct body' do
+          expect(a_request(:post, request.endpoint).with(body: expected_json)).to have_been_made
+        end
+      end
+
+      context 'when the type_of_update is Remove' do
+        let(:user_change) { create(:user_change, :school_user, type_of_update: 'Remove') }
+
+        it 'generates a correct body' do
+          expect(a_request(:post, request.endpoint).with(body: expected_json)).to have_been_made
+        end
+      end
     end
 
     context 'when the response status is success' do

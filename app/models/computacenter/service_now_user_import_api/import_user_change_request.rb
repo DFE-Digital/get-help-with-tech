@@ -49,7 +49,7 @@ module Computacenter
       def construct_body
         {
           u_email: user_change.email_address,
-          u_type_of_update: 'New',
+          u_type_of_update: user_change.type_of_update,
           u_cc_sold_to_number: user_change.cc_sold_to_number,
           u_first_name: user_change.first_name,
           u_last_name: user_change.last_name,
