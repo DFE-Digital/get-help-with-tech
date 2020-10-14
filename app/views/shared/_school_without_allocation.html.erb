@@ -4,7 +4,11 @@
 
 <p class="govuk-body">Reasons for a 0 allocation include:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>the school has no children in the eligible year groups, years 3 to 11</li>
+  <% if FeatureFlag.active?(:reduced_allocations) %>
+    <li>the school has no children in years 10 to 11 and <%= govuk_link_to 'their allocation was removed due to supply chain delays', responsible_body_devices_reduced_allocations_path %></li>
+  <% else %>
+    <li>the school has no children in the eligible year groups, years 3 to 11</li>
+  <% end %>
   <li>there are very few children on free school meals according to the most recent census data</li>
   <li>there was not enough data to calculate an allocation – for example it’s a new school</li>
 </ul>

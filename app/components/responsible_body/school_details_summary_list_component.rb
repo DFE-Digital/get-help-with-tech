@@ -58,12 +58,22 @@ private
   end
 
   def allocation_row
+    allocation_row_value = pluralize(@school.std_device_allocation&.allocation.to_i, 'device') + supply_chain_delays
+
     {
-      key: 'Provisional allocation',
-      value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
+      key: 'Allocation',
+      value: allocation_row_value.html_safe,
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
+  end
+
+  def supply_chain_delays
+    if FeatureFlag.active?(:reduced_allocations)
+      " (#{govuk_link_to('reduced due to supply chain delays', responsible_body_devices_reduced_allocations_path)})"
+    else
+      ''
+    end
   end
 
   def devices_ordered_row

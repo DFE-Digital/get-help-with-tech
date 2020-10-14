@@ -6,6 +6,20 @@
     </h1>
 
     <%- if @responsible_body.in_devices_pilot? %>
+      <% if FeatureFlag.active?(:reduced_allocations) %>
+        <div class="govuk-warning-text govuk-!-margin-bottom-2">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <span class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            <h2 class="govuk-heading-m govuk-!-font-weight-bold">We reduced device allocations because of delays in our supply chain</h2>
+            <p class="govuk-body">With fewer devices available we’re targeting support at disadvantaged children in key exam years (10 and 11). Primary schools cannot currently place orders for laptops and tablets.</p>
+            <p class="govuk-body">
+              <%= govuk_link_to('More about changes to allocations', responsible_body_devices_reduced_allocations_path) %>
+            </p>
+          </span>
+        </div>
+      <% end %>
+
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to 'Get laptops and tablets', responsible_body_devices_path %>
       </h2>
