@@ -5,7 +5,10 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
+Rake::Task[:default].clear
+
 task lint_ruby: ['lint:ruby']
 task lint_scss: ['lint:scss']
 task test_js: ['test:jest']
-task default: %i[spec test_js lint_ruby lint_scss]
+task parallel_spec: ['parallel:spec']
+task default: %i[lint_ruby lint_scss parallel_spec test_js]
