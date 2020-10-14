@@ -62,8 +62,9 @@ class School < ApplicationRecord
       .with_techsource_account_confirmed
   end
 
-  def device_ordering_organisation_users
-    device_ordering_organisation.users
+  def organisation_users
+    device_ordering_organisation
+      .users
   end
 
   def allocation_for_type!(device_type)

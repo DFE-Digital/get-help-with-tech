@@ -33,7 +33,7 @@ private
   end
 
   def notify_all_organisation_users_that_action_is_needed
-    school.device_ordering_organisation_users.each do |user|
+    school.organisation_users.each do |user|
       CanOrderDevicesButActionNeededMailer
         .with(user: user, school: school)
         .notify_user_email

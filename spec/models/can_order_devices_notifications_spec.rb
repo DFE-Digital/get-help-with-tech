@@ -25,7 +25,7 @@ RSpec.describe CanOrderDevicesNotifications do
       before do
         school.update!(order_state: 'can_order')
         school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
-        school.preorder_information.update!(who_will_order_devices: 'school')
+        school.preorder_information.update!(who_will_order_devices: 'school', status: 'ready', will_need_chromebooks: 'no')
       end
 
       context 'user has confirmed techsource account' do
@@ -57,12 +57,6 @@ RSpec.describe CanOrderDevicesNotifications do
           )
         end
 
-        it 'emails computacenter' do
-          expect {
-            service.call
-          }.to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer', 'notify_of_school_can_order', 'deliver_now', params: { school: school, new_cap_value: school.std_device_allocation.cap }, args: [])
-        end
-
         context 'when feature is deactivated' do
           around do |example|
             FeatureFlag.deactivate(:notify_can_place_orders)
@@ -73,13 +67,13 @@ RSpec.describe CanOrderDevicesNotifications do
           it 'does not notify the user' do
             expect {
               service.call
-            }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+            }.not_to have_enqueued_job.on_queue('mailers')
           end
         end
       end
 
       context 'user can order devices but yet to have techsource account' do
-        let!(:user) do
+        before do
           create(:school_user,
                  school: school,
                  techsource_account_confirmed_at: nil,
@@ -89,17 +83,19 @@ RSpec.describe CanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
         end
       end
 
       context 'user can not order devices' do
-        let!(:user) { create(:school_user, school: school, orders_devices: false) }
+        before do
+          create(:school_user, school: school, orders_devices: false)
+        end
 
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
         end
       end
     end
@@ -130,7 +126,7 @@ RSpec.describe CanOrderDevicesNotifications do
       end
     end
 
-    context 'when status change from can_order to cannot_order' do
+    context 'when status changes from can_order to cannot_order' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order') }
 
       subject(:service) { described_class.new(school: school) }
@@ -159,6 +155,7 @@ RSpec.describe CanOrderDevicesNotifications do
       subject(:service) do
         described_class.new(school: school)
       end
+
       let(:user) { create(:school_user, school: school) }
 
       before do
@@ -175,17 +172,22 @@ RSpec.describe CanOrderDevicesNotifications do
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesButActionNeededMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
       end
 
-      it 'puts a message in Slack' do
-        user
+      context 'when the user has a techsource account' do
+        before do
+          user.update!(techsource_account_confirmed_at: 1.second.ago,
+                       orders_devices: true)
+        end
 
-        expect {
-          service.call
-        }.to have_enqueued_job.on_queue('slack_messages').with(
-          username: 'dfe_ghwt_slack_bot',
-          channel: 'get-help-with-tech-test',
-          text: "[User can order event] A user from #{school.name} is able to place orders",
-          mrkdwn: true,
-        )
+        it 'puts a message in Slack' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('slack_messages').with(
+            username: 'dfe_ghwt_slack_bot',
+            channel: 'get-help-with-tech-test',
+            text: "[User can order event] A user from #{school.name} is able to place orders",
+            mrkdwn: true,
+          )
+        end
       end
 
       context 'when feature is deactivated' do
