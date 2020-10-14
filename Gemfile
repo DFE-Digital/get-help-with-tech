@@ -81,6 +81,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.32'
 
+  gem 'parallel_tests'
+
   # Debugging
   gem 'pry-byebug'
 

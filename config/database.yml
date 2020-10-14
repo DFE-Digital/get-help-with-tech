@@ -59,7 +59,7 @@ test:
   <<: *default
   host: <%= ENV['POSTGRES_HOST'] %>
   port: <%= ENV['POSTGRES_PORT'] %>
-  database: get-help-with-tech_test
+  database: get-help-with-tech_test<%= ENV['TEST_ENV_NUMBER'] %>
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
 
