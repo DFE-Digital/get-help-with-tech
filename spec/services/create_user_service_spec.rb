@@ -81,7 +81,7 @@ RSpec.describe CreateUserService do
       let(:result) { CreateUserService.invite_school_user(params) }
 
       context 'on the given school' do
-        before { create(:school_user, email_address: 'existing@user.com', school: school) }
+        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: school) }
 
         it 'does not create a user with the given params' do
           expect { result }.not_to change(User, :count)
@@ -123,6 +123,42 @@ RSpec.describe CreateUserService do
         it 'updates the school status to reflect that the school has been contacted' do
           result
           expect(school.preorder_information.reload.status).to eq('school_contacted')
+        end
+
+        context 'when the existing user has a blank telephone number' do
+          before do
+            existing_user.update!(telephone: '')
+          end
+
+          it 'applies the given telephone number' do
+            expect { result }.to change{ existing_user.reload.telephone }.to('01234 567890')
+          end
+        end
+
+        context 'when the existing user has a non-blank telephone number' do
+          it 'retains the existing telephone number' do
+            expect { result }.not_to change{ existing_user.reload.telephone }
+          end
+        end
+
+        context 'when the existing user cannot order devices' do
+          before do
+            existing_user.update!(orders_devices: false)
+          end
+
+          it 'applies the new orders_devices value' do
+            expect { result }.to change{ existing_user.reload.orders_devices }.to(true)
+          end
+        end
+
+        context 'when the existing user can order devices' do
+          before do
+            existing_user.update!(orders_devices: true)
+          end
+          
+          it 'retains the existing value' do
+            expect { result }.not_to change{ existing_user.reload.orders_devices }
+          end
         end
       end
     end
