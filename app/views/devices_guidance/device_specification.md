@@ -1,7 +1,7 @@
-When [placing an order](/start), schools, academy trusts and local authorities can choose from:
+When [placing an order](/start), schools, academy trusts and local authorities can choose (depending on availability) from:
 
 * Microsoft Windows laptops
-* Microsoft Windows tablets
+* Microsoft Windows tablets (with or without keyboards)
 * Google Chromebooks
 * Apple iPads
 
