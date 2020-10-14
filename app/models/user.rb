@@ -178,16 +178,11 @@ class User < ApplicationRecord
   end
 
   def schools_i_order_for
-    return [] unless orders_devices?
-
-    array = []
-    array += schools.includes(:preorder_information).where(preorder_information: { who_will_order_devices: 'school' })
-
-    if responsible_body
-      array += responsible_body.schools.includes(:preorder_information).where(preorder_information: { who_will_order_devices: 'responsible_body' })
+    if orders_devices?
+      schools.that_will_order_devices + Array(responsible_body&.schools&.that_are_centrally_managed)
+    else
+      []
     end
-
-    array
   end
 
 private
