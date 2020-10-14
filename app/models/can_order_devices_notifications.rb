@@ -12,6 +12,7 @@ class CanOrderDevicesNotifications
     elsif user
       notify_user_about_all_schools_they_can_order_for
     end
+    # TODO: if the school could order devices but cannot anymore, should somebody be notified?
   end
 
 private
@@ -34,12 +35,14 @@ private
   end
 
   def notify_all_order_users_with_active_techsource_accounts
+    # TODO: what if there aren't any order users with active accounts?
     school.order_users_with_active_techsource_accounts.each do |user|
       notify_user_can_order(user: user, school: school)
     end
   end
 
   def notify_all_organisation_users_that_action_is_needed
+    # TODO: what if there aren't any school organisation users?
     school.organisation_users.each do |user|
       notify_user_can_order_but_action_needed(user: user, school: school)
     end
