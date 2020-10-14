@@ -5,6 +5,10 @@ class ResponsibleBody::Devices::HomeController < ResponsibleBody::Devices::BaseC
 
   def tell_us; end
 
+  def reduced_allocations
+    render_404_if_feature_flag_inactive(:reduced_allocations)
+  end
+
   def request_devices
     render 'shared/devices/request_devices'
   end

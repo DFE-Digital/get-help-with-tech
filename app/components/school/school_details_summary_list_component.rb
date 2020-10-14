@@ -10,10 +10,13 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   end
 
   def rows
+    supply_chain_delays = FeatureFlag.active?(:reduced_allocations) ? " (#{govuk_link_to('reduced due to supply chain delays', reduced_allocation_school_path(@school))})" : ''
+    allocation_row_value = pluralize(@school.std_device_allocation&.allocation.to_i, 'device') + supply_chain_delays
+
     [
       {
         key: 'Allocation',
-        value: "#{pluralize(@school.std_device_allocation&.allocation.to_i, 'device')} (#{govuk_link_to('reduced due to supply chain delays', reduced_allocation_school_path(@school))})".html_safe,
+        value: allocation_row_value.html_safe,
         action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
         action: 'Query allocation',
       },
