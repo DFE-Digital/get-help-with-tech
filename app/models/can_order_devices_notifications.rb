@@ -18,8 +18,8 @@ class CanOrderDevicesNotifications
 private
 
   def notify_about_school_being_able_to_order
-    case school.preorder_information.status
-    when 'needs_contact'
+    case school.preorder_information&.status
+    when nil, 'needs_contact'
       # TODO: we need to nudge the responsible body that this school needs a contact
     when 'school_will_be_contacted'
       # This is on the DfE to onboard these schools - there is nothing users can do in this case
