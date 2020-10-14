@@ -57,6 +57,12 @@ RSpec.describe CanOrderDevicesNotifications do
           )
         end
 
+        it 'emails computacenter' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer', 'notify_of_school_can_order', 'deliver_now', params: { school: school, new_cap_value: school.std_device_allocation.cap }, args: [])
+        end
+
         context 'when feature is deactivated' do
           around do |example|
             FeatureFlag.deactivate(:notify_can_place_orders)
@@ -67,13 +73,13 @@ RSpec.describe CanOrderDevicesNotifications do
           it 'does not notify the user' do
             expect {
               service.call
-            }.not_to have_enqueued_job.on_queue('mailers')
+            }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
           end
         end
       end
 
       context 'user can order devices but yet to have techsource account' do
-        before do
+        let!(:user) do
           create(:school_user,
                  school: school,
                  techsource_account_confirmed_at: nil,
@@ -83,19 +89,17 @@ RSpec.describe CanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers')
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
         end
       end
 
       context 'user can not order devices' do
-        before do
-          create(:school_user, school: school, orders_devices: false)
-        end
+        let!(:user) { create(:school_user, school: school, orders_devices: false) }
 
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers')
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
         end
       end
     end

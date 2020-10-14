@@ -872,4 +872,43 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#schools_i_order_for' do
+    context 'when they dont order devices' do
+      subject(:user) { create(:user, orders_devices: false) }
+
+      it 'returns []' do
+        expect(user.schools_i_order_for).to be_empty
+      end
+    end
+
+    context 'when they order devices' do
+      let(:rb) { create(:trust) }
+
+      let(:included_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'school')) }
+      let(:excluded_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'responsible_body')) }
+
+      let(:included_rb_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'responsible_body')) }
+      let(:excluded_rb_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'school')) }
+
+      subject(:user) { create(:user, orders_devices: true, responsible_body: rb) }
+
+      before do
+        user.schools << included_school
+        user.schools << excluded_school
+        rb.schools << included_rb_school
+        rb.schools << excluded_rb_school
+      end
+
+      it 'includes schools who will order their own devices' do
+        expect(user.schools_i_order_for).to include(included_school)
+        expect(user.schools_i_order_for).not_to include(excluded_school)
+      end
+
+      it 'includes responsible body schools where responsible body orders' do
+        expect(user.schools_i_order_for).to include(included_rb_school)
+        expect(user.schools_i_order_for).not_to include(excluded_rb_school)
+      end
+    end
+  end
 end
