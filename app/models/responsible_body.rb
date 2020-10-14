@@ -67,7 +67,7 @@ class ResponsibleBody < ApplicationRecord
                           INNER JOIN schools
                                   ON schools.id = preorder_information.school_id
         WHERE   schools.responsible_body_id = responsible_bodies.id
-          AND   status NOT IN (?)
+          AND   preorder_information.status NOT IN (?)
       )', %w[needs_info needs_contact]
     )
   end
