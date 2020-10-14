@@ -18,4 +18,8 @@ class Support::EnableOrdersForm
   def override_cap_according_to_order_state!
     @cap = device_allocation.cap_implied_by_order_state(order_state: order_state, given_cap: cap)
   end
+
+  def will_enable_orders?
+    order_state.to_s.in?(%w[can_order_for_specific_circumstances can_order])
+  end
 end
