@@ -30,17 +30,33 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
           user.school.update!(order_state: :can_order)
         end
 
-        it 'sends an email' do
-          expect {
-            service.call
-          }.to have_enqueued_job.on_queue('mailers')
+        context 'and the "notify_can_place_orders" feature flag is activated' do
+          around do |example|
+            FeatureFlag.activate(:notify_can_place_orders)
+            example.run
+            FeatureFlag.deactivate(:notify_can_place_orders)
+          end
+
+          it 'sends an email' do
+            expect {
+              service.call
+            }.to have_enqueued_job.on_queue('mailers')
+          end
+
+          it 'only sends one email if touched multiple times' do
+            expect {
+              service.call
+              service.call
+            }.to have_enqueued_job.on_queue('mailers')
+          end
         end
 
-        it 'only sends one email if touched multiple times' do
-          expect {
-            service.call
-            service.call
-          }.to have_enqueued_job.on_queue('mailers')
+        context 'and the "notify_can_place_orders" feature flag is deactivated' do
+          it 'does not send an email' do
+            expect {
+              service.call
+            }.not_to have_enqueued_job.on_queue('mailers')
+          end
         end
       end
 
