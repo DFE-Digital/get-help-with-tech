@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CanOrderDevicesNotifications do
+RSpec.describe SchoolCanOrderDevicesNotifications do
   let(:school) do
     create(:school,
            :with_std_device_allocation,
