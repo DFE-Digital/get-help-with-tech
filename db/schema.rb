@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_110726) do
+ActiveRecord::Schema.define(version: 2020_10_15_123703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 2020_10_12_110726) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_data_update_records_on_name", unique: true
+  end
+
+  create_table "email_audits", force: :cascade do |t|
+    t.string "message_type", null: false
+    t.string "template", null: false
+    t.integer "school_urn"
+    t.string "email_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_type"], name: "index_email_audits_on_message_type"
   end
 
   create_table "extra_mobile_data_requests", force: :cascade do |t|
@@ -224,6 +234,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_110726) do
     t.string "establishment_type"
     t.string "phone_number"
     t.string "order_state", default: "cannot_order", null: false
+    t.string "status", default: "open", null: false
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
