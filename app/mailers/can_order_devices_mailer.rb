@@ -35,7 +35,8 @@ private
     EmailAudit.create!(message_type: message_type,
                        template: template_id,
                        email_address: @user.email_address,
-                       school_urn: @school.urn)
+                       user: @user,
+                       school: @school)
 
     template_mail(template_id, mail_params)
   end
