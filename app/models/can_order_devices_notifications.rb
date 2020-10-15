@@ -19,11 +19,13 @@ class CanOrderDevicesNotifications
 private
 
   def notify_about_school_being_able_to_order
-    message_type = what_message_to_send_about(school)
+    all_relevant_users = school.organisation_users.presence || school.responsible_body.users
+    all_relevant_users.each do |user|
+      message_type = what_message_to_send(school, user)
+      next if message_type.blank?
 
-    if message_type.present?
-      notify_users(
-        users: which_users_to_send_message_to(school: school, message_type: message_type),
+      notify_user(
+        user: user,
         school: school,
         message_type: message_type,
       )
@@ -36,30 +38,13 @@ private
     end
   end
 
-  def what_message_to_send_about(school)
-    case school.preorder_information&.status
-    when nil, 'needs_contact'
+  def what_message_to_send(school, user)
+    if status?(nil, 'needs_contact', school: school) && user.in?(school.responsible_body.users)
       :nudge_rb_to_add_school_contact
-    when 'school_will_be_contacted'
-      # This is on the DfE to onboard these schools - there is nothing users can do in this case
-    when 'needs_info', 'school_contacted'
+    elsif status?('needs_info', 'school_contacted', school: school) && user.in?(school.organisation_users)
       :user_can_order_but_action_needed
-    when 'ready', 'school_ready', 'rb_can_order', 'school_can_order'
+    elsif status?('ready', 'school_ready', 'rb_can_order', 'school_can_order', school: school) && user.in?(school.order_users_with_active_techsource_accounts)
       :user_can_order
-    else
-      raise "Unexpected preorder status #{school.preorder_information.status} for #{school.name} (#{school.urn})"
-    end
-  end
-
-  def which_users_to_send_message_to(school:, message_type:)
-    if message_type == :user_can_order
-      # TODO: what if there aren't any order users with active accounts?
-      school.order_users_with_active_techsource_accounts
-    elsif message_type == :user_can_order_but_action_needed
-      # TODO: what if there aren't any school organisation users?
-      school.organisation_users
-    elsif message_type == :nudge_rb_to_add_school_contact
-      school.responsible_body.users
     end
   end
 
@@ -92,5 +77,9 @@ private
 
   def new_cap_value
     school&.std_device_allocation&.cap || 0
+  end
+
+  def status?(*statuses, school:)
+    school.preorder_information&.status&.in?(statuses)
   end
 end
