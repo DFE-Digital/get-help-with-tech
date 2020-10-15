@@ -33,11 +33,10 @@ class CanOrderDevicesMailer < ApplicationMailer
     @user = params[:user]
     @school = params[:school]
 
-    tracked_template_mail(
-      nudge_user_to_read_privacy_policy_template_id,
-      to: @user.email_address,
-      personalisation: personalisation,
-    )
+    tracked_template_mail('nudge_user_to_read_privacy_policy',
+                          nudge_user_to_read_privacy_policy_template_id,
+                          to: @user.email_address,
+                          personalisation: personalisation)
   end
 
 private
