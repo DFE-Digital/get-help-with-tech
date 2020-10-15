@@ -41,7 +41,7 @@ RSpec.describe CanOrderDevicesNotifications do
 
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
         end
 
         it 'puts a message in Slack' do
@@ -52,7 +52,7 @@ RSpec.describe CanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user from #{school.name} is able to place orders",
+            text: "[User can order event] A user has been told they can place orders for #{school.name}",
             mrkdwn: true,
           )
         end
@@ -169,7 +169,7 @@ RSpec.describe CanOrderDevicesNotifications do
 
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesButActionNeededMailer', 'notify_user_email', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_but_action_needed', 'deliver_now', params: { user: user, school: school }, args: [])
       end
 
       context 'when the user has a techsource account' do
@@ -184,7 +184,7 @@ RSpec.describe CanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user from #{school.name} is able to place orders",
+            text: "[User can order event] A user has been told action is needed so #{school.name} can place orders",
             mrkdwn: true,
           )
         end
