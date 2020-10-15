@@ -16,7 +16,7 @@ class CreateUserService
   end
 
   def self.user_exists_on_other_school?(user_params)
-    user = User.where(email_address: user_params[:email_address]).first
+    user = User.find_by(email_address: user_params[:email_address])
     user && !user.school_ids.empty? && !user.school_ids.include?(user_params[:school_id])
   end
 
