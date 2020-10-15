@@ -91,7 +91,7 @@ jobs:
       - name: Compile assets
         run: bundle exec rails webpacker:compile
       - name: Run rubocop
-        run: bundle exec rubocop app config db lib spec Gemfile --format clang
+        run: bundle exec rubocop app config db lib spec Gemfile --format clang --parallel
       - name: Run rspec
         run: bundle exec rake parallel:spec
         env:
