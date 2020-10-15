@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  layout 'single_page', only: :accessibility
+  layout 'single_page', only: [:accessibility, :privacy]
 
   def guidance; end
 
@@ -16,6 +16,8 @@ class PagesController < ApplicationController
   def about_increasing_mobile_data; end
 
   def accessibility; end
+
+  def privacy; end
 
   def request_a_change; end
 end
