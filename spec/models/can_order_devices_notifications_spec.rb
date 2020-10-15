@@ -241,5 +241,25 @@ RSpec.describe CanOrderDevicesNotifications do
         }.not_to have_enqueued_job.on_queue('mailers')
       end
     end
+
+    context 'when school preorder needs contact' do
+      let(:preorder) { create(:preorder_information, :school_will_order, status: 'needs_contact') }
+      let(:school) { create(:school, preorder_information: preorder, std_device_allocation: allocation, order_state: :can_order) }
+      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+      let(:rb) { school.responsible_body }
+      let(:user) { create(:user, responsible_body: rb) }
+
+      before do
+        user
+      end
+
+      subject(:service) { described_class.new(school: school) }
+
+      it 'nudges RB that school needs a contact' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_rb_to_add_school_contact', 'deliver_now', params: { user: user, school: school }, args: [])
+      end
+    end
   end
 end
