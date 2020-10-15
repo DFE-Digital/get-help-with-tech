@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CanOrderDevicesNotifications do
+RSpec.describe SchoolCanOrderDevicesNotifications do
   let(:school) do
     create(:school,
            :with_std_device_allocation,
@@ -25,7 +25,7 @@ RSpec.describe CanOrderDevicesNotifications do
       before do
         school.update!(order_state: 'can_order')
         school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
-        school.preorder_information.update!(who_will_order_devices: 'school', status: 'ready', will_need_chromebooks: 'no')
+        school.preorder_information.update!(who_will_order_devices: 'school', status: 'school_can_order', will_need_chromebooks: 'no')
       end
 
       context 'user has confirmed techsource account' do
@@ -69,6 +69,22 @@ RSpec.describe CanOrderDevicesNotifications do
               service.call
             }.not_to have_enqueued_job.on_queue('mailers')
           end
+        end
+      end
+
+      context 'user can order devices but not read privacy policy' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 techsource_account_confirmed_at: nil,
+                 privacy_notice_seen_at: nil,
+                 orders_devices: true)
+        end
+
+        it 'notifies the user' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_user_to_read_privacy_policy', 'deliver_now', params: { user: user, school: school }, args: [])
         end
       end
 
@@ -239,6 +255,26 @@ RSpec.describe CanOrderDevicesNotifications do
         expect {
           service.call
         }.not_to have_enqueued_job.on_queue('mailers')
+      end
+    end
+
+    context 'when school preorder needs contact' do
+      let(:preorder) { create(:preorder_information, :school_will_order, status: 'needs_contact') }
+      let(:school) { create(:school, preorder_information: preorder, std_device_allocation: allocation, order_state: :can_order) }
+      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+      let(:rb) { school.responsible_body }
+      let(:user) { create(:user, responsible_body: rb) }
+
+      before do
+        user
+      end
+
+      subject(:service) { described_class.new(school: school) }
+
+      it 'nudges RB that school needs a contact' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_rb_to_add_school_contact', 'deliver_now', params: { user: user, school: school }, args: [])
       end
     end
   end

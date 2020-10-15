@@ -26,7 +26,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
       context 'if there are devices orderable' do
         before do
           create(:school_device_allocation, :with_std_allocation, cap: 3, allocation: 5, school: user.school)
-          create(:preorder_information, school: user.school, who_will_order_devices: 'school')
+          create(:preorder_information, school: user.school, who_will_order_devices: 'school', status: :school_can_order)
           user.school.update!(order_state: :can_order)
         end
 
