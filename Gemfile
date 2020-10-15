@@ -81,6 +81,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.32'
 
+  gem 'parallel_tests'
+
   # Debugging
   gem 'pry-byebug'
 
@@ -91,7 +93,7 @@ group :development, :test do
   gem 'webmock'
 
   # GOV.UK interpretation of rubocop for linting Ruby
-  gem 'rubocop-govuk'
+  gem 'rubocop-govuk', '>= 3.17.2'
   gem 'scss_lint-govuk'
 
   gem 'travis'

@@ -27,6 +27,7 @@ en:
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
+    responsible_body_reduced_allocations: We reduced device allocations because of delays in our supply chain
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Get schools ready
@@ -102,6 +103,11 @@ en:
     school_edit_chromebooks: Will your school need to order Chromebooks?
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
+    school_reduced_allocation:
+      one: We reduced your allocation to %{allocation} device because of delays in our supply chain
+      many: We reduced your allocation to %{allocation} devices because of delays in our supply chain
+      other: We reduced your allocation to %{allocation} devices because of delays in our supply chain
+    school_reduced_to_zero_allocation: We removed your allocation because of delays in our supply chain
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet
@@ -532,7 +538,8 @@ en:
     invite_event: "A user from %{organisation} has invited someone to the service"
     responsible_body_will_order_event: "%{responsible_body} will manage orders centrally"
     schools_will_order_event: "%{responsible_body} has devolved ordering to schools"
-    user_can_order_event: A user from %{organisation} is able to place orders
+    user_can_order_event: A user has been told they can place orders for %{school}
+    user_can_order_but_action_needed_event: A user has been told action is needed so %{school} can place orders
   helpers:
     label:
       support_enable_orders_form:

@@ -13,6 +13,8 @@ class ConfirmTechsourceAccountCreatedService
 
       if user
         if user.update(techsource_account_confirmed_at: Time.zone.now)
+          notify_user_can_order(user)
+
           processed << { email: email }
         else
           unprocessed << { email: email, message: 'User could not be updated' }
@@ -33,6 +35,13 @@ private
 
   attr_reader :emails
   attr_writer :processed, :unprocessed
+
+  def notify_user_can_order(user)
+    # Guard against multiple updates
+    return if user.previous_changes.dig('techsource_account_confirmed_at', 0).present?
+
+    CanOrderDevicesNotifications.new(user: user).call
+  end
 
   def email_no_longer_computacenter_relevant(email)
     Computacenter::UserChange.order(updated_at_timestamp: :desc, created_at: :desc).find_by(original_email_address: email)&.Remove?

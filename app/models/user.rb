@@ -177,6 +177,14 @@ class User < ApplicationRecord
     school_welcome_wizards.find_by_school_id(school.id)
   end
 
+  def schools_i_order_for
+    if orders_devices?
+      schools.that_will_order_devices + Array(responsible_body&.schools&.that_are_centrally_managed)
+    else
+      []
+    end
+  end
+
 private
 
   def cleansed_full_name

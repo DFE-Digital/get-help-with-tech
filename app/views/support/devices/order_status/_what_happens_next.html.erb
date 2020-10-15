@@ -1,6 +1,5 @@
 <h2 class="govuk-heading-m govuk-!-margin-top-8">What happens next</h2>
 <p class="govuk-body">We will:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>email everyone at <%= @school.name %> to tell them they <%= t(@form.order_state, scope: %i[support order_status confirm order_states]) %></li>
-  <li>tell their <%= @school.responsible_body.humanized_type %> <%= @school.responsible_body.name %> that this school <%= t(@form.order_state, scope: %i[support order_status confirm order_states]) %></li>
+  <li>email everyone who can order for <%= @school.name %> to tell them they <%= t(@form.order_state, scope: %i[support order_status confirm order_states]) %></li>
 </ul>

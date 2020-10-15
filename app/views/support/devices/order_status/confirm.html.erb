@@ -16,7 +16,9 @@
       allocation: @allocation,
       change_path: support_devices_school_enable_orders_path(@school.urn, pass_through_params)) %>
 
-    <!-- render partial: '_what_happens_next' will go here when notifications are hooked in -->
+    <% if FeatureFlag.active?(:notify_can_place_orders) && @form.will_enable_orders? %>
+      <%= render partial: 'what_happens_next' %>
+    <% end %>
 
     <%= form_for @form, url: support_devices_school_enable_orders_path(@school.urn), method: :patch do |f| %>
       <%= hidden_field_tag :confirm, true %>
