@@ -25,7 +25,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       before do
         school.update!(order_state: 'can_order')
         school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
-        school.preorder_information.update!(who_will_order_devices: 'school', status: 'ready', will_need_chromebooks: 'no')
+        school.preorder_information.update!(who_will_order_devices: 'school', status: 'school_can_order', will_need_chromebooks: 'no')
       end
 
       context 'user has confirmed techsource account' do
@@ -69,6 +69,22 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
               service.call
             }.not_to have_enqueued_job.on_queue('mailers')
           end
+        end
+      end
+
+      context 'user can order devices but not read privacy policy' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 techsource_account_confirmed_at: nil,
+                 privacy_notice_seen_at: nil,
+                 orders_devices: true)
+        end
+
+        it 'notifies the user' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_user_to_read_privacy_policy', 'deliver_now', params: { user: user, school: school }, args: [])
         end
       end
 

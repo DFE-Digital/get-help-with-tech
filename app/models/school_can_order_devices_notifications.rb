@@ -36,6 +36,8 @@ private
       :nudge_rb_to_add_school_contact
     elsif status?('needs_info', 'school_contacted', school: school) && user.in?(school.organisation_users)
       :user_can_order_but_action_needed
+    elsif status?('rb_can_order', 'school_can_order', school: school) && user.orders_devices? && !user.seen_privacy_notice?
+      :nudge_user_to_read_privacy_policy
     elsif status?('ready', 'school_ready', 'rb_can_order', 'school_can_order', school: school) && user.in?(school.order_users_with_active_techsource_accounts)
       :user_can_order
     end
