@@ -29,6 +29,17 @@ class CanOrderDevicesMailer < ApplicationMailer
                           personalisation: personalisation)
   end
 
+  def nudge_user_to_read_privacy_policy
+    @user = params[:user]
+    @school = params[:school]
+
+    tracked_template_mail(
+      nudge_user_to_read_privacy_policy_template_id,
+      to: @user.email_address,
+      personalisation: personalisation,
+    )
+  end
+
 private
 
   def tracked_template_mail(message_type, template_id, mail_params = {})
@@ -45,6 +56,10 @@ private
     {
       school: @school.name,
     }
+  end
+
+  def nudge_user_to_read_privacy_policy_template_id
+    Settings.govuk_notify.templates.devices.nudge_user_to_read_privacy_policy
   end
 
   def nudge_rb_to_add_school_contact_template_id

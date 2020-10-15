@@ -12,12 +12,12 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
   describe '#update!' do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
-    let(:notifications) { instance_double(CanOrderDevicesNotifications) }
+    let(:notifications) { instance_double(SchoolCanOrderDevicesNotifications) }
 
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
       allow(mock_request).to receive(:post!)
-      allow(CanOrderDevicesNotifications).to receive(:new).with(school: school).and_return(notifications)
+      allow(SchoolCanOrderDevicesNotifications).to receive(:new).with(school: school).and_return(notifications)
       allow(notifications).to receive(:call)
     end
 
