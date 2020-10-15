@@ -39,7 +39,7 @@ private
   def what_message_to_send_about(school)
     case school.preorder_information&.status
     when nil, 'needs_contact'
-      # TODO: we need to nudge the responsible body that this school needs a contact
+      :nudge_rb_to_add_school_contact
     when 'school_will_be_contacted'
       # This is on the DfE to onboard these schools - there is nothing users can do in this case
     when 'needs_info', 'school_contacted'
@@ -58,6 +58,8 @@ private
     elsif message_type == :user_can_order_but_action_needed
       # TODO: what if there aren't any school organisation users?
       school.organisation_users
+    elsif message_type == :nudge_rb_to_add_school_contact
+      school.responsible_body.users
     end
   end
 
