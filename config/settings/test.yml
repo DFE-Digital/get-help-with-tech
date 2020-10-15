@@ -3,6 +3,8 @@ computacenter:
     endpoint: http://computacenter.example.com/
     username: user
     password: pass
+  service_now_user_import_api:
+    endpoint: ''
 
 govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
