@@ -15,8 +15,9 @@ class SchoolUpdateService
       school = School.find_by(urn: staged_school.urn)
       if school
         update_school(school, staged_school)
-      else
-        create_school(staged_school)
+      # FIXME: for now avoid auto adding schools, just process updates
+      # else
+      #   create_school(staged_school)
       end
     end
 
@@ -35,12 +36,12 @@ private
 
   def create_school(staged_school)
     Rails.logger.info("Adding school #{staged_school.urn} #{staged_school.name} (#{staged_school.status})")
-    s = School.create!(staged_attributes(staged_school))
-    unless s.responsible_body.who_will_order_devices.nil?
-      s.create_preorder_information!(who_will_order_devices: s.responsible_body.who_will_order_devices.singularize)
-      s.device_allocations.create!(device_type: 'std_device', allocation: 0)
+    school = School.create!(staged_attributes(staged_school))
+    unless school.responsible_body.who_will_order_devices.nil?
+      school.create_preorder_information!(who_will_order_devices: school.responsible_body.who_will_order_devices.singularize)
+      school.device_allocations.create!(device_type: 'std_device', allocation: 0)
     end
-    s
+    school
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end
