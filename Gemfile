@@ -54,6 +54,7 @@ gem 'sentry-raven'
 
 # Job queue
 gem 'sidekiq'
+gem 'sidekiq-failures'
 gem 'sidekiq-scheduler'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
