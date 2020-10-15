@@ -39,4 +39,20 @@ RSpec.describe CanOrderDevicesMailer, type: :mailer do
                                                  email_address: user.email_address)
     end
   end
+
+  describe '#nudge_rb_to_add_school_contact' do
+    it 'adds an email audit record' do
+      expect {
+        described_class.with(user: user, school: school).nudge_rb_to_add_school_contact.deliver_now
+      }.to change { EmailAudit.count }.by(1)
+    end
+
+    it 'sets the correct values on the email audit record' do
+      described_class.with(user: user, school: school).nudge_rb_to_add_school_contact.deliver_now
+      expect(EmailAudit.last).to have_attributes(message_type: 'nudge_rb_to_add_school_contact',
+                                                 template: Settings.govuk_notify.templates.devices.nudge_rb_to_add_school_contact,
+                                                 school_urn: school.urn,
+                                                 email_address: user.email_address)
+    end
+  end
 end
