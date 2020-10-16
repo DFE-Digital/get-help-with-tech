@@ -280,10 +280,13 @@ RSpec.describe User, type: :model do
   end
 
   describe 'paper_trail', versioning: true do
-    before do
+    around do |example|
+      original_endpoint = Settings.computacenter.service_now_user_import_api.endpoint
       Settings.computacenter.service_now_user_import_api.endpoint = 'http://example.com/import/table'
       ActiveJob::Base.queue_adapter = :test
       ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+      example.run
+      Settings.computacenter.service_now_user_import_api.endpoint = original_endpoint
     end
 
     context 'creating user' do
