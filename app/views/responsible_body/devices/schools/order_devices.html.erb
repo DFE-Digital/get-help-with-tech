@@ -12,11 +12,12 @@
       max_count: @school.std_device_allocation.cap,
       ordered_count: @school.std_device_allocation.devices_ordered) %>
 
-    <p class="govuk-body">Order your devices now. Do not delay.</p>
-    <p class="govuk-body">They will arrive on the next working day if you order before 4pm.</p>
+    <p class="govuk-body">Only order devices for children who cannot attend school and do not have access to a laptop or tablet.</p>
+    <p class="govuk-body">We’re working hard to get devices delivered within 5 working days.</p>
+    <p class="govuk-body">Ordering will close when the school reopens.</p>
 
     <h2 class="govuk-heading-m">Before you start</h2>
-    <p class="govuk-body">It’s important to know your device allocation before you sign in. If you try to order more devices that you’ve been allocated, the order will be cancelled.</p>
+    <p class="govuk-body">It’s important to know how many devices you can order before you sign in. Please order only what you need. If you try to order more than you’ve been allocated, the order will be cancelled.</p>
 
     <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
   </div>
