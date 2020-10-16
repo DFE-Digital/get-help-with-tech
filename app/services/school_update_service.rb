@@ -26,7 +26,7 @@ class SchoolUpdateService
 private
 
   def update_school(school, staged_school)
-    # update school details (not RB association)
+    # update school details
     attrs = staged_attributes(staged_school)
     school.update!(attrs)
   rescue ActiveRecord::RecordInvalid => e
