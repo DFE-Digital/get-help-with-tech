@@ -648,7 +648,7 @@ RSpec.describe User, type: :model do
           let!(:user) { create(:user, :relevant_to_computacenter, school: nil) }
 
           def perform_change!
-            user.update(school: school)
+            user.update!(school: school)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -676,6 +676,31 @@ RSpec.describe User, type: :model do
             expect(user_change.school_urn).to eql(school.urn.to_s)
             expect(user_change.cc_ship_to_number).to eql(school.computacenter_reference)
             expect(user_change.responsible_body).to eql(school.responsible_body.name)
+          end
+        end
+
+        context 'when a school is added to a user who already has a responsible_body different to that of the school' do
+          let!(:other_rb) { create(:trust) }
+          let(:user_change) { Computacenter::UserChange.last }
+          let(:perform_change!) { user.update!(school: school) }
+          let!(:school) { create(:school, responsible_body: other_rb) }
+          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil) }
+
+          before do
+            user.update!(responsible_body: other_rb)
+            perform_change!
+          end
+
+          it 'shows both RBs in the RB field' do
+            expect(user_change.responsible_body).to eql([other_rb.name, school.responsible_body.name].join('|'))
+          end
+
+          it 'shows both RB computacenter_identifiers in the RB URN field' do
+            expect(user_change.responsible_body_urn).to eql([other_rb.computacenter_identifier, school.responsible_body.computacenter_identifier].join('|'))
+          end
+
+          it 'shows both RB computacenter_references in the cc_sold_to_number field' do
+            expect(user_change.cc_sold_to_number).to eql([other_rb.computacenter_reference, school.responsible_body.computacenter_reference].join('|'))
           end
         end
       end
