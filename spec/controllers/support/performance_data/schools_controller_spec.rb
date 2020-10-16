@@ -45,6 +45,7 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
       'cap' => school.std_device_allocation.cap,
       'devices_ordered' => school.std_device_allocation.devices_ordered,
       'preorder_info_status' => school.preorder_information.status,
+      'school_order_state' => school.order_state,
     }
   end
 
