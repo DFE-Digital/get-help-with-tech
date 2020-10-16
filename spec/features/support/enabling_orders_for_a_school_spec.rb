@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.feature 'Enabling orders for a school from the support area' do
+RSpec.feature 'Enabling orders for a school from the support area', with_feature_flags: { notify_can_place_orders: 'active' } do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
+  let(:enable_orders_page) { PageObjects::Support::Schools::Devices::EnableOrdersPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
 
   before do
@@ -107,12 +108,11 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
   def and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices:)
     click_on 'Change whether they can place orders'
-    # the 'no' option should be chosen
-    expect(find('#support-enable-orders-form-order-state-cannot-order-field')['checked']).to eq('checked')
+    expect(enable_orders_page.no).to be_checked
 
-    choose 'They can place orders for specific circumstances'
-    fill_in('How many devices can they order?', with: number_of_devices)
-    click_on 'Continue'
+    enable_orders_page.yes_specific_cirumstances.choose
+    enable_orders_page.how_many_devices.set(number_of_devices)
+    enable_orders_page.continue.click
 
     expect(enable_orders_confirm_page).to be_displayed
     expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
@@ -123,8 +123,8 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   def and_i_allow_the_school_to_order_their_full_allocation_of_devices
     click_on 'Change whether they can place orders'
 
-    choose 'They can order their full allocation because local coronavirus restrictions are confirmed'
-    click_on 'Continue'
+    enable_orders_page.yes.choose
+    enable_orders_page.continue.click
 
     expect(enable_orders_confirm_page).to be_displayed
     expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
@@ -134,10 +134,10 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
   def and_i_stop_the_school_from_ordering_devices
     click_on 'Change whether they can place orders'
-    expect(find('#support-enable-orders-form-order-state-can-order-field')['checked']).to eq('checked')
+    expect(enable_orders_page.yes).to be_checked
 
-    choose 'No, orders cannot be placed yet'
-    click_on 'Continue'
+    enable_orders_page.no.choose
+    enable_orders_page.continue.click
 
     expect(enable_orders_confirm_page).to be_displayed
     expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
