@@ -52,7 +52,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user has been emailed that they can place orders for #{school.name}",
+            text: "[User can order event] We emailed a user to tell them that they can place orders for #{school.name}",
             mrkdwn: true,
           )
         end
@@ -200,7 +200,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           }.to have_enqueued_job.on_queue('slack_messages').with(
             username: 'dfe_ghwt_slack_bot',
             channel: 'get-help-with-tech-test',
-            text: "[User can order event] A user has been emailed that action is needed so #{school.name} can place orders",
+            text: "[User can order event] We emailed a user to tell them that action is needed before #{school.name} can place orders",
             mrkdwn: true,
           )
         end
