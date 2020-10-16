@@ -17,27 +17,29 @@ RSpec.describe SchoolUpdateService, type: :model do
 
       it 'only applies changes since the last update' do
         Timecop.travel(6.hours.ago)
-        staged_school = create(:staged_school, urn: 103_001, responsible_body_name: 'Camden')
+        create(:staged_school, urn: 103_001, responsible_body_name: 'Camden')
         Timecop.return
 
         Timecop.travel(2.hours.ago)
         DataStage::DataUpdateRecord.updated!(:schools)
         Timecop.return
 
-        staged_school.update!(address_3: 'West Countyshire')
+        school_attrs = school.attributes.symbolize_keys
+
         service.update_schools
 
         expect(school.reload).to have_attributes(
-          urn: school.urn,
-          name: school.name,
+          urn: school_attrs[:urn],
+          name: school_attrs[:name],
           responsible_body_id: local_authority.id,
-          address_1: school.address_1,
-          address_2: school.address_2,
-          address_3: staged_school.address_3,
-          town: school.town,
-          postcode: school.postcode,
-          phase: school.phase,
-          establishment_type: school.establishment_type,
+          address_1: school_attrs[:address_1],
+          address_2: school_attrs[:address_2],
+          address_3: school_attrs[:address_3],
+          town: school_attrs[:town],
+          postcode: school_attrs[:postcode],
+          phase: school_attrs[:phase],
+          establishment_type: school_attrs[:establishment_type],
+          status: school_attrs[:status],
         )
       end
     end
@@ -84,6 +86,7 @@ RSpec.describe SchoolUpdateService, type: :model do
           postcode: staged_school.postcode,
           phase: staged_school.phase,
           establishment_type: staged_school.establishment_type,
+          status: staged_school.status,
         )
       end
     end

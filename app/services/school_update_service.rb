@@ -13,12 +13,11 @@ class SchoolUpdateService
     # attribute updates for schools
     DataStage::School.updated_since(last_update).find_each(batch_size: 100) do |staged_school|
       school = School.find_by(urn: staged_school.urn)
-      if school
-        update_school(school, staged_school)
+
       # FIXME: for now avoid auto adding schools, just process updates
-      # else
-      #   create_school(staged_school)
-      end
+      next unless school
+
+      update_school(school, staged_school)
     end
 
     DataStage::DataUpdateRecord.updated!(:schools)
