@@ -52,7 +52,7 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def cap_implied_by_order_state(order_state:, given_cap: nil)
     case order_state.to_sym
-    when :cannot_order
+    when :cannot_order, :cannot_order_as_reopened
       devices_ordered.to_i
     when :can_order
       allocation.to_i

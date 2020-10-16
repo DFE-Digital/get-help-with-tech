@@ -449,6 +449,7 @@ en:
       school:
         order_states:
           cannot_order: No, orders cannot be placed yet
+          cannot_order_as_reopened: No, as school has reopened
           can_order_for_specific_circumstances: They can place orders for specific circumstances
           can_order: They can order their full allocation because local coronavirus restrictions are confirmed
       school_device_allocation:
