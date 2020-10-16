@@ -628,9 +628,9 @@ RSpec.describe User, type: :model do
             perform_change!
             user_change = Computacenter::UserChange.last
 
-            expect(user_change.original_responsible_body).to be_nil
-            expect(user_change.original_responsible_body_urn).to be_nil
-            expect(user_change.original_cc_sold_to_number).to be_nil
+            expect(user_change.original_responsible_body).to be_blank
+            expect(user_change.original_responsible_body_urn).to be_blank
+            expect(user_change.original_cc_sold_to_number).to be_blank
           end
 
           it 'stores correct current fields' do
@@ -680,11 +680,12 @@ RSpec.describe User, type: :model do
         end
 
         context 'when a school is added to a user who already has a responsible_body different to that of the school' do
+          let!(:rb) { create(:trust) }
           let!(:other_rb) { create(:trust) }
           let(:user_change) { Computacenter::UserChange.last }
           let(:perform_change!) { user.update!(school: school) }
-          let!(:school) { create(:school, responsible_body: other_rb) }
-          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil) }
+          let!(:school) { create(:school, responsible_body: rb) }
+          let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil, responsible_body: other_rb) }
 
           before do
             user.update!(responsible_body: other_rb)

@@ -134,7 +134,7 @@ class User < ApplicationRecord
   end
 
   def effective_responsible_bodies
-    schools.map(&:responsible_body).prepend(responsible_body).compact
+    user_schools.map { |us| us.school.responsible_body }.prepend(responsible_body).compact.uniq
   end
 
   def relevant_to_computacenter?
