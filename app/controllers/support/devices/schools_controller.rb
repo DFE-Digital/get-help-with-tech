@@ -12,6 +12,7 @@ class Support::Devices::SchoolsController < Support::BaseController
     @school = School.find_by!(urn: params[:urn])
     @users = @school.users
     @contacts = @school.contacts
+    @email_audits = @school.email_audits.order(created_at: :desc)
   end
 
   def confirm_invitation

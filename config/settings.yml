@@ -29,6 +29,7 @@ google:
 govuk_notify:
   # API key for the GOV.UK Notify service, used for sending emails
   api_key:
+  service_id: 71eea423-f9c5-4b7f-aac9-c88a4ca4dea2
 
   templates:
     # ID of the template in GOV.UK Notify used for mailing sign-in tokens

@@ -15,6 +15,10 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
     when_a_computacenter_user_logs_in
     and_confirms_techsource_accounts(@school_user)
     then_it_sends_an_email_to_the_user(@school_user)
+
+    when_a_support_user_logs_in
+    and_navigates_to_the_school_page
+    then_an_email_audit_entry_is_present
   end
 
   scenario 'when rb user + rbs schools can order devices' do
@@ -80,11 +84,20 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
     sign_in_as @computacenter_user
   end
 
+  def when_a_support_user_logs_in
+    sign_in_as create(:support_user)
+  end
+
   def and_confirms_techsource_accounts(user)
     techsource_page = PageObjects::Computacenter::TechSourcePage.new
     techsource_page.load
     techsource_page.bulk_email_input.set(user.email_address)
     techsource_page.continue.click
+  end
+
+  def and_navigates_to_the_school_page
+    school_page = PageObjects::Support::Devices::SchoolDetailsPage.new
+    school_page.load(urn: @school.urn)
   end
 
   def then_it_sends_an_email_to_the_user(user)
@@ -95,5 +108,9 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
   def then_it_does_not_send_an_email_to_the_user
     email = ActionMailer::Base.deliveries.last
     expect(email).to be_nil
+  end
+
+  def then_an_email_audit_entry_is_present
+    expect(page.text).to include("#{@school_user.full_name} <#{@school_user.email_address}>")
   end
 end
