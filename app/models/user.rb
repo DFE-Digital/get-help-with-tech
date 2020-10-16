@@ -133,6 +133,10 @@ class User < ApplicationRecord
     responsible_body || school&.responsible_body
   end
 
+  def effective_responsible_bodies
+    user_schools.map { |us| us.school.responsible_body }.prepend(responsible_body).compact.uniq
+  end
+
   def relevant_to_computacenter?
     seen_privacy_notice? && orders_devices?
   end
