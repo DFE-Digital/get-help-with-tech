@@ -745,7 +745,7 @@ RSpec.describe User, type: :model do
           expect(user_change.cc_ship_to_number).to eql("#{school.computacenter_reference}|#{other_school.computacenter_reference}")
         end
 
-        context 'when the users schools each have a different ResponsibleBody' do
+        context "when the user's schools each have a different responsible body" do
           let(:other_responsible_body) { create(:trust) }
           let(:user_change) { Computacenter::UserChange.last }
 
