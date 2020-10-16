@@ -122,7 +122,7 @@ RSpec.describe PreorderInformation, type: :model do
       context 'when all devices have been ordered' do
         let(:allocation) { build(:school_device_allocation, :fully_ordered) }
 
-        it { is_expected.to eq('school_has_ordered') }
+        it { is_expected.to eq('ordered') }
       end
 
       context 'when there are no devices available to order' do
@@ -152,7 +152,7 @@ RSpec.describe PreorderInformation, type: :model do
       context 'when all devices have been ordered' do
         let(:allocation) { build(:school_device_allocation, :fully_ordered) }
 
-        it { is_expected.to eq('school_has_ordered') }
+        it { is_expected.to eq('ordered') }
       end
 
       context 'when there are no devices available to order' do

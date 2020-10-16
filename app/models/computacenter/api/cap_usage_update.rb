@@ -17,6 +17,7 @@ class Computacenter::API::CapUsageUpdate
     allocation = school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
     CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
     allocation.update!(devices_ordered: cap_used)
+    school.preorder_information&.refresh_status!
     @status = 'succeeded'
   end
 
