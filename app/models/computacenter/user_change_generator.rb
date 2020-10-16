@@ -65,9 +65,9 @@ private
       last_name: user.last_name,
       email_address: user.email_address,
       telephone: user.telephone,
-      responsible_body: user.effective_responsible_body&.name,
-      responsible_body_urn: user.effective_responsible_body&.computacenter_identifier,
-      cc_sold_to_number: user.effective_responsible_body&.computacenter_reference,
+      responsible_body: user.effective_responsible_bodies.map(&:name).join('|'),
+      responsible_body_urn: user.effective_responsible_bodies.map(&:computacenter_identifier).join('|'),
+      cc_sold_to_number: user.effective_responsible_bodies.map(&:computacenter_reference).join('|'),
       # NOTE: we must loop round user_schools (which may be dirty) not schools (which won't be)
       school: (user.hybrid? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
       school_urn: (user.hybrid? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),

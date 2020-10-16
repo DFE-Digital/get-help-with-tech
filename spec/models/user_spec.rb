@@ -719,10 +719,26 @@ RSpec.describe User, type: :model do
           expect(user_change.cc_ship_to_number).to eql("#{school.computacenter_reference}|#{other_school.computacenter_reference}")
         end
 
-        it 'sets responsible_body fields to be those from the first school' do
-          perform_change!
-          user_change = Computacenter::UserChange.last
-          expect(user_change.responsible_body).to eql(school.responsible_body.name)
+        context 'when the users schools each have a different ResponsibleBody' do
+          let(:other_responsible_body) { create(:trust) }
+          let(:user_change) { Computacenter::UserChange.last }
+
+          before do
+            other_school.update!(responsible_body: other_responsible_body)
+            perform_change!
+          end
+
+          it 'shows both schools RBs in the RB field' do
+            expect(user_change.responsible_body).to eql([school.responsible_body.name, other_school.responsible_body.name].join('|'))
+          end
+
+          it 'shows both schools RB computacenter_identifiers in the RB URN field' do
+            expect(user_change.responsible_body_urn).to eql([school.responsible_body.computacenter_identifier, other_school.responsible_body.computacenter_identifier].join('|'))
+          end
+
+          it 'shows both schools RB computacenter_references in the cc_sold_to_number field' do
+            expect(user_change.cc_sold_to_number).to eql([school.responsible_body.computacenter_reference, other_school.responsible_body.computacenter_reference].join('|'))
+          end
         end
       end
 
