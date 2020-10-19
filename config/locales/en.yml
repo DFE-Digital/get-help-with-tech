@@ -106,6 +106,11 @@ en:
             title: Your school has ordered all the devices it can
           user:
             title: You’ve ordered all the devices you can
+        cannot_order_as_reopened:
+          school:
+            title: Your school has reopened and ordering has closed
+          user:
+            title: Your school has reopened and ordering has closed
     school_order_devices: Order devices
     school_order_devices_soon: Order devices soon
     school_request_devices: Request devices for specific circumstances
