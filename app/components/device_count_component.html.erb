@@ -6,7 +6,7 @@
   <% end %>
 
   <div class="govuk-panel__body govuk-!-font-size-24">
-    You’ve ordered <%= ordered_count %> of <%= max_count %> devices
+    <%= t(body_i18n_key, ordered_count: ordered_count, max_count: max_count) %>
   </div>
 
   <% if show_action && action.present? %>

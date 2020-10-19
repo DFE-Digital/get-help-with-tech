@@ -19,6 +19,11 @@ en:
     responsible_body:
       devices:
         order_devices: Order devices now
+      schools:
+        show:
+          cannot_order_as_reopened:
+            device_count_component:
+              body: You ordered %{ordered_count} of %{max_count} devices
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
     responsible_body_devices_tell_us: Tell us who will order a school’s laptops and tablets
@@ -331,6 +336,8 @@ en:
       single_page: "%{count} %{item_name}"
       multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
   components:
+    device_count_component:
+      default_body: You’ve ordered %{ordered_count} of %{max_count} devices
     school_preorder_status_tag_component:
       status:
         responsible_body:
