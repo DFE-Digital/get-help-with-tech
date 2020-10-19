@@ -88,6 +88,13 @@ private
         key: 'Can place orders?',
         value: 'Yes, for specific circumstances',
       }
+    elsif @school.cannot_order_as_reopened?
+      {
+        key: 'Can place orders?',
+        value: 'No, as school has reopened',
+        action_path: responsible_body_devices_request_devices_path,
+        action: 'Request devices for specific circumstances',
+      }
     else
       {
         key: 'Can place orders?',

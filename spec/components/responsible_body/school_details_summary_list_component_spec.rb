@@ -169,4 +169,12 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
     end
   end
+
+  describe 'when school cannot_order_as_reopened' do
+    let(:school) { build(:school, order_state: :cannot_order_as_reopened) }
+
+    it 'shows correct can place orders text' do
+      expect(result.text).to include('No, as school has reopened')
+    end
+  end
 end
