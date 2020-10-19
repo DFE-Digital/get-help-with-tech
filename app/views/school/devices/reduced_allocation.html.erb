@@ -1,7 +1,7 @@
 <%- title = t('page_titles.school_reduced_allocation', allocation: @allocation, count: @allocation) %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: 'Delays in our supply chain', school: @school, user: @user %>
+  <%- school_breadcrumbs items: 'Delays in the global supply chain', school: @school, user: @user %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -10,7 +10,7 @@
       <%= title %>
     </h1>
 
-    <p class="govuk-body">Due to delays in our supply chain, we reduced the number of laptops and tablets allocated to you. This is so we can target support at disadvantaged children in years 6, 10 and 11.</p>
+    <p class="govuk-body">Due to delays in the global supply chain, we reduced the number of laptops and tablets allocated to you. This is so we can target support at disadvantaged children in years 6, 10 and 11.</p>
 
     <p class="govuk-body">Your new allocation of <%= pluralize(@allocation, 'device') %> is based on:</p>
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reduced allocations due to supply chain delays' do
+RSpec.feature 'Reduced allocations due to global supply chain delays' do
   include ViewHelper
 
   let(:responsible_body) { create(:local_authority, :in_devices_pilot) }
@@ -29,7 +29,7 @@ RSpec.feature 'Reduced allocations due to supply chain delays' do
 
   def then_i_see_that_allocations_were_reduced
     expect(page).to have_http_status(:ok)
-    expect(page).to have_text('We reduced device allocations because of delays in our supply chain')
+    expect(page).to have_text('We reduced device allocations because of delays in the global supply chain')
     expect(page).to have_text('Allocations of devices are now based on')
   end
 end

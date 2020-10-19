@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reduced allocation due to supply chain delays' do
+RSpec.feature 'Reduced allocation due to global supply chain delays' do
   include ViewHelper
 
   around do |example|
@@ -52,6 +52,6 @@ RSpec.feature 'Reduced allocation due to supply chain delays' do
 
   def then_i_see_that_my_allocation_was_removed
     expect(page).to have_http_status(:ok)
-    expect(page).to have_text('We removed your allocation because of delays in our supply chain')
+    expect(page).to have_text('We removed your allocation because of delays in the global supply chain')
   end
 end
