@@ -279,7 +279,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'paper_trail', versioning: true do
+  describe 'generating user changes for downstream Computacenter systems' do
     around do |example|
       original_endpoint = Settings.computacenter.service_now_user_import_api.endpoint
       Settings.computacenter.service_now_user_import_api.endpoint = 'http://example.com/import/table'
