@@ -20,6 +20,8 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
       :blue
     when 'rb_can_order', 'school_can_order'
       :green
+    when 'ordered'
+      :purple
     else
       :default
     end

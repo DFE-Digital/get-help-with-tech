@@ -119,6 +119,12 @@ RSpec.describe PreorderInformation, type: :model do
         it { is_expected.to eq('rb_can_order') }
       end
 
+      context 'when all devices have been ordered' do
+        let(:allocation) { build(:school_device_allocation, :fully_ordered) }
+
+        it { is_expected.to eq('ordered') }
+      end
+
       context 'when there are no devices available to order' do
         let(:allocation) { build(:school_device_allocation) }
 
@@ -141,6 +147,12 @@ RSpec.describe PreorderInformation, type: :model do
         let(:allocation) { build(:school_device_allocation, :with_orderable_devices) }
 
         it { is_expected.to eq('school_can_order') }
+      end
+
+      context 'when all devices have been ordered' do
+        let(:allocation) { build(:school_device_allocation, :fully_ordered) }
+
+        it { is_expected.to eq('ordered') }
       end
 
       context 'when there are no devices available to order' do

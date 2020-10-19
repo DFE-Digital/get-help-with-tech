@@ -6,7 +6,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       'capType' => 'DfE_RemainThresholdQty|Std_Device',
       'shipTo' => '123456',
       'capAmount' => 100,
-      'usedCap' => 20,
+      'usedCap' => 100,
     }
   end
 
@@ -33,11 +33,18 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
   end
 
   describe '#apply!' do
-    let!(:school) { create(:school, computacenter_reference: '123456') }
+    let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, status: 'ready') }
+    let!(:school) { create(:school, preorder_information: preorder, computacenter_reference: '123456') }
     let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device', cap: 30, allocation: 100) }
 
     it 'updates the correct allocation with the given usedCap' do
-      expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(20)
+      expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(100)
+    end
+
+    it 'refresh preorder status' do
+      expect {
+        cap_usage_update.apply!
+      }.to change { school.preorder_information.reload.status }.from('ready').to('ordered')
     end
 
     context 'if the given cap_amount does not match the stored allocation' do

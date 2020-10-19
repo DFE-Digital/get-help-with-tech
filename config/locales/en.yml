@@ -337,6 +337,7 @@ en:
           school_ready: School ready
           rb_can_order: You can order
           school_can_order: School can order
+          ordered: School has ordered
         default:
           needs_contact: Needs a contact
           needs_info: Needs information
@@ -346,6 +347,7 @@ en:
           school_ready: School ready
           rb_can_order: Responsible body can order
           school_can_order: School can order
+          ordered: School has ordered
   activemodel:
     errors:
       models:
