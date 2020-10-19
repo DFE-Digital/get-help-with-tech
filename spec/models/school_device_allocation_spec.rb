@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SchoolDeviceAllocation, type: :model do
+  it { is_expected.to be_versioned }
+
   describe '#cap_implied_by_order_state' do
     subject(:allocation) { described_class.new(allocation: 27, cap: nil, devices_ordered: 13) }
 
