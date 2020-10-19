@@ -5,7 +5,7 @@
 <p class="govuk-body">Reasons for a 0 allocation include:</p>
 <ul class="govuk-list govuk-list--bullet">
   <% if FeatureFlag.active?(:reduced_allocations) %>
-    <li>the school has no children in years 10 to 11 and <%= govuk_link_to 'their allocation was removed due to supply chain delays', responsible_body_devices_reduced_allocations_path %></li>
+    <li>the school has no children in years 6, 10 or 11 and <%= govuk_link_to 'their allocation was removed due to supply chain delays', responsible_body_devices_reduced_allocations_path %></li>
   <% else %>
     <li>the school has no children in the eligible year groups, years 3 to 11</li>
   <% end %>
