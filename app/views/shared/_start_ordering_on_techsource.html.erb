@@ -1,11 +1,21 @@
 <p class="govuk-body">You need to place orders on a website called TechSource.</p>
 
 <p class="govuk-body">Use these details to sign in:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
   <li>User ID: <%= local_assigns[:email_address] %></li>
   <li>Password: Use the ‘Forgotten password?’ link to set a password the first time you sign in</li>
 </ul>
 
-<%= govuk_start_button_link_to('Start now', techsource_start_path, class: 'govuk-!-margin-bottom-3 govuk-!-margin-top-4', target: '_blank') -%>
+<% if FeatureFlag.active?(:no_chromebook_or_ipad_stock) %>
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    Temporarily, we have no Google Chromebooks or iPads in stock. We expect to have these back in stock and available to order soon.
+  </strong>
+</div>
+<% end %>
+
+<%= govuk_start_button_link_to('Start now', techsource_start_path, class: 'govuk-!-margin-bottom-3', target: '_blank') -%>
 
 <p class="govuk-body-s">on TechSource in a new window</p>

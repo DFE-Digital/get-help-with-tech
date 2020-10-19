@@ -8,6 +8,7 @@ class FeatureFlag
     mno_offer
     notify_can_place_orders
     reduced_allocations
+    no_chromebook_or_ipad_stock
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
