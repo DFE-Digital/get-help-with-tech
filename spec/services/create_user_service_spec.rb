@@ -171,6 +171,81 @@ RSpec.describe CreateUserService do
           end
         end
       end
+
+      context 'on a responsible body' do
+        let(:trust) { create(:trust) }
+        let!(:existing_user) { create(:trust_user, email_address: 'existing@user.com', responsible_body: trust) }
+
+        it 'returns the existing user' do
+          expect(result).to be_a(User)
+          expect(result).to eq(existing_user)
+        end
+
+        it 'adds this school to the existing users schools' do
+          expect(result.schools).to include(school)
+        end
+
+        it 'leaves the responsible_body_id on the existing user as-is' do
+          expect { result }.not_to change(existing_user.reload, :responsible_body_id)
+        end
+
+        it 'sends the additional school added email' do
+          expect { perform_enqueued_jobs { result } }.to change(ActionMailer::Base.deliveries, :size).by(1)
+          expect(last_email.to[0]).to eq(existing_user[:email_address])
+          expect(last_email.header['template-id'].value).to eq(Settings.govuk_notify.templates.devices.user_added_to_additional_school)
+        end
+
+        it 'updates the school status to reflect that the school has been contacted' do
+          result
+          expect(school.preorder_information.reload.status).to eq('school_contacted')
+        end
+
+        context 'when the existing user has a blank telephone number' do
+          before do
+            existing_user.update!(telephone: '')
+          end
+
+          it 'applies the given telephone number' do
+            expect { result }.to(change { existing_user.reload.telephone }.to('01234 567890'))
+          end
+        end
+
+        context 'when the existing user has a non-blank telephone number' do
+          it 'retains the existing telephone number' do
+            expect { result }.not_to(change { existing_user.reload.telephone })
+          end
+        end
+
+        context 'when the existing user cannot order devices' do
+          before do
+            existing_user.update!(orders_devices: false)
+          end
+
+          it 'applies the new orders_devices value' do
+            expect { result }.to(change { existing_user.reload.orders_devices }.to(true))
+          end
+        end
+
+        context 'when the existing user can order devices, but the given orders_devices is false' do
+          let(:params) do
+            {
+              full_name: 'Vlad Valid',
+              email_address: 'existing@user.com',
+              telephone: '01234 567890',
+              school_id: school.id,
+              orders_devices: false,
+            }
+          end
+
+          before do
+            existing_user.update!(orders_devices: true)
+          end
+
+          it 'retains the existing value' do
+            expect { result }.not_to(change { existing_user.reload.orders_devices })
+          end
+        end
+      end
     end
 
     context 'given valid user params' do

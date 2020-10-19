@@ -6,6 +6,7 @@ RSpec.feature 'Manage school users' do
   let(:new_school_user) { build(:school_user, full_name: 'BBB Brown', school: school_user.school) }
   let(:user_from_other_school) { create(:school_user) }
   let(:school_users_page) { PageObjects::School::UsersPage.new }
+  let(:responsible_body_user) { create(:trust_user, full_name: 'JJJ Johnson') }
 
   before do
     # disable computacenter user import API calls
@@ -51,6 +52,17 @@ RSpec.feature 'Manage school users' do
     and_i_submit_form
     then_the_request_is_successful
     and_i_see_that_user_in_the_list_of_users_for_my_school
+  end
+
+  scenario 'adding a school user who is already on the system as a Responsible Body user' do
+    when_i_follow_the_link_to_manage_who_can_order_devices
+    and_i_click_the_link_to_invite_a_new_user
+    then_i_see_the_form_to_invite_a_new_user
+
+    when_i_fill_in_the_form_with_a_user_from_a_responsible_body
+    and_i_submit_form
+    then_the_request_is_successful
+    and_i_see_the_rb_user_in_the_list_of_users_for_my_school
   end
 
   def when_i_follow_the_link_to_manage_who_can_order_devices
@@ -110,6 +122,13 @@ RSpec.feature 'Manage school users' do
     choose 'No'
   end
 
+  def when_i_fill_in_the_form_with_a_user_from_a_responsible_body
+    fill_in 'Name', with: responsible_body_user.full_name
+    fill_in 'Email address', with: responsible_body_user.email_address
+    fill_in 'Telephone', with: responsible_body_user.telephone
+    choose 'No'
+  end
+
   def and_i_submit_form
     click_button 'Send invite'
   end
@@ -137,6 +156,12 @@ RSpec.feature 'Manage school users' do
   def and_i_see_that_user_in_the_list_of_users_for_my_school
     expect(school_users_page.user_rows[0]).to have_content('AAA Smith')
     expect(school_users_page.user_rows[1]).to have_content(user_from_other_school.full_name)
+    expect(school_users_page.user_rows[2]).to have_content('ZZZ Jones')
+  end
+
+  def and_i_see_the_rb_user_in_the_list_of_users_for_my_school
+    expect(school_users_page.user_rows[0]).to have_content('AAA Smith')
+    expect(school_users_page.user_rows[1]).to have_content('JJJ Johnson')
     expect(school_users_page.user_rows[2]).to have_content('ZZZ Jones')
   end
 end
