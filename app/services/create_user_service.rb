@@ -8,7 +8,7 @@ class CreateUserService
   end
 
   def self.invite_school_user(user_params = {})
-    if user_exists_on_other_school?(user_params)
+    if user_exists_on_other_school?(user_params) || user_exists_as_responsible_body_user?(user_params)
       invite_to_additional_school!(user_params)
     else
       create_new_school_user!(user_params)
@@ -18,6 +18,12 @@ class CreateUserService
   def self.user_exists_on_other_school?(user_params)
     user = User.find_by(email_address: user_params[:email_address])
     user && !user.school_ids.empty? && !user.school_ids.include?(user_params[:school_id])
+  end
+
+  def self.user_exists_as_responsible_body_user?(user_params)
+    User.where(email_address: user_params[:email_address])
+        .where.not(responsible_body_id: nil)
+        .exists?
   end
 
   def self.create_new_school_user!(user_params)
