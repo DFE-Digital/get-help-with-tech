@@ -10,7 +10,7 @@ RSpec.describe UserCanOrderEvent do
 
   describe '#message' do
     it 'returns meaningful message' do
-      expect(event.message).to eql("A user from #{school.name} was nudged to read the privacy policy")
+      expect(event.message).to eql("We emailed a user asking them to sign in and read the privacy policy so that #{school.name} can place orders")
     end
   end
 end
