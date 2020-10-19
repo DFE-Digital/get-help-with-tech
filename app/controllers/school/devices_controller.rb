@@ -10,6 +10,8 @@ class School::DevicesController < School::BaseController
       else # user has no techsource account
         render :school_can_order_user_cannot
       end
+    elsif @school.cannot_order_as_reopened?
+      render :cannot_order_as_reopened
     elsif @school.all_devices_ordered?
       render :cannot_order_as_cap_reached
     else

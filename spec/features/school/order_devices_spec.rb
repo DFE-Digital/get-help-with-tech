@@ -51,6 +51,15 @@ RSpec.feature 'Order devices' do
     then_i_see_that_the_school_cannot_order_devices_yet
   end
 
+  scenario 'when my reopened school cannot order devices but I can' do
+    given_the_school_cannot_order_devices_as_reopened
+    given_i_can_order_devices
+    given_i_am_signed_in_as_a_school_user
+
+    when_i_visit_the_order_devices_page
+    then_i_see_that_i_cannot_order_as_school_reopened
+  end
+
   def given_i_am_signed_in_as_a_school_user
     sign_in_as @school_user
   end
@@ -87,6 +96,10 @@ RSpec.feature 'Order devices' do
     school.cannot_order!
   end
 
+  def given_the_school_cannot_order_devices_as_reopened
+    school.cannot_order_as_reopened!
+  end
+
   def when_i_visit_the_order_devices_page
     visit order_devices_school_path(school)
     expect(page).to have_http_status(:ok)
@@ -103,6 +116,10 @@ RSpec.feature 'Order devices' do
   def then_i_see_that_i_cannot_order_devices_yet
     expect(page).to have_content('You cannot order devices yet')
     expect(page).to have_link('request devices for disadvantaged children')
+  end
+
+  def then_i_see_that_i_cannot_order_as_school_reopened
+    expect(page).to have_content('Your school has reopened and ordering has closed')
   end
 
   def then_i_see_that_the_school_cannot_order_devices_yet
