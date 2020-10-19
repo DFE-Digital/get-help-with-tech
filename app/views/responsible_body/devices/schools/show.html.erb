@@ -12,7 +12,9 @@
         max_count: @school.std_device_allocation.cap,
         ordered_count: @school.std_device_allocation.devices_ordered,
         show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
-        action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
+        action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) },
+        show_availabilty: !@school.cannot_order_as_reopened?,
+      ) %>
     <% else %>
       <%= render partial: 'shared/school_without_allocation' %>
     <%- end %>
