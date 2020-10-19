@@ -541,6 +541,7 @@ en:
     user_can_order_event: A user has been told they can place orders for %{school}
     user_can_order_but_action_needed_event: A user has been told action is needed so %{school} can place orders
     nudge_rb_to_add_school_contact_event: A responsible body user has been told to add a contact for %{school}
+    nudge_user_to_read_privacy_policy_event: A user from %{school} was nudged to read the privacy policy
   helpers:
     label:
       support_enable_orders_form:
