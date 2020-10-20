@@ -7,7 +7,6 @@ class TrustUpdateService
     DataStage::Trust.updated_since(last_update).open.each do |staged_trust|
       trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
 
-      # FIXME: temporarily prevent creates coming in automatically
       next unless trust
 
       update_trust(trust, staged_trust)

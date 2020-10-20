@@ -14,7 +14,6 @@ class SchoolUpdateService
     DataStage::School.updated_since(last_update).find_each(batch_size: 100) do |staged_school|
       school = School.find_by(urn: staged_school.urn)
 
-      # FIXME: for now avoid auto adding schools, just process updates
       next unless school
 
       update_school(school, staged_school)

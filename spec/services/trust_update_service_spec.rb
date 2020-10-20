@@ -40,30 +40,6 @@ RSpec.describe TrustUpdateService, type: :model do
       end
     end
 
-    # FIXME: add this functionality back in later
-    # context 'when a trust does not already exist' do
-    #   it 'creates a new trust record' do
-    #     expect {
-    #       service.update_trusts
-    #     }.to change { Trust.count }.by(1)
-    #   end
-    #
-    #   it 'sets the correct values on the Trust record' do
-    #     service.update_trusts
-    #
-    #     expect(Trust.last).to have_attributes(
-    #       companies_house_number: staged_trust.companies_house_number,
-    #       name: staged_trust.name,
-    #       address_1: staged_trust.address_1,
-    #       address_2: staged_trust.address_2,
-    #       address_3: staged_trust.address_3,
-    #       town: staged_trust.town,
-    #       postcode: staged_trust.postcode,
-    #       organisation_type: staged_trust.organisation_type,
-    #     )
-    #   end
-    # end
-
     context 'when a trust already exists' do
       let!(:trust) { create(:trust, companies_house_number: '01111222') }
       let!(:staged_trust) { create(:staged_trust, companies_house_number: '01111222') }
