@@ -7,6 +7,16 @@
       <%= t('page_titles.order_devices.you_cannot_order_yet') %>
     </h1>
 
+    <% if School.show_temporary_cannot_order_yet_banner? %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          As we won’t be able to deliver devices before half term, schools reporting closures on 22 and 23 October will not be invited to order.
+        </strong>
+      </div>
+    <% end %>
+
     <% school_count = @responsible_body.schools.that_are_centrally_managed.count %>
     <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> local coronavirus restrictions.</p>
 
