@@ -62,10 +62,10 @@ RSpec.describe SignInTokensController, type: :controller do
       end
     end
 
-    context 'when hybrid user is associated with RB and school' do
+    context 'when single_academy_trust user is associated with RB and school' do
       let(:school) { create(:school) }
       let(:user) do
-        create(:local_authority_user,
+        create(:single_academy_trust_user,
                :who_has_requested_a_magic_link,
                orders_devices: true,
                school: school)

@@ -46,9 +46,9 @@ FactoryBot.define do
       approved
     end
 
-    factory :hybrid_user do
-      association :responsible_body, factory: %i[trust in_connectivity_pilot]
-      school
+    factory :single_academy_trust_user do
+      association :responsible_body, factory: %i[trust single_academy_trust in_connectivity_pilot]
+      school { build(:school, :academy, responsible_body: responsible_body) }
       orders_devices { true }
     end
 

@@ -69,9 +69,9 @@ private
       responsible_body_urn: user.effective_responsible_bodies.map(&:computacenter_identifier).join('|'),
       cc_sold_to_number: user.effective_responsible_bodies.map(&:computacenter_reference).join('|'),
       # NOTE: we must loop round user_schools (which may be dirty) not schools (which won't be)
-      school: (user.hybrid? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
-      school_urn: (user.hybrid? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
-      cc_ship_to_number: (user.hybrid? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|')),
+      school: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
+      school_urn: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
+      cc_ship_to_number: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|')),
     }
   end
 

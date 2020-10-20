@@ -24,6 +24,10 @@ class ResponsibleBody < ApplicationRecord
     type == 'Trust'
   end
 
+  def is_a_single_academy_trust?
+    organisation_type == 'single_academy_trust'
+  end
+
   def is_a_local_authority?
     type == 'LocalAuthority'
   end
