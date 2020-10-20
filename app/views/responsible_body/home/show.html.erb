@@ -34,15 +34,26 @@
 
     <%- if @responsible_body.in_connectivity_pilot? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Get the internet', responsible_body_internet_path %>
+        <%= govuk_link_to 'Get the internet pilots', responsible_body_internet_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to:</p>
+      <p class="govuk-body">
+        These pilot schemes have come to an end. We are now:
+      </p>
+
       <ul class="govuk-list govuk-list--bullet">
-        <li>request extra data for mobile devices</li>
-        <li>download BT wifi vouchers to distribute</li>
+        <li>working with mobile companies to prepare for the next phase of the increasing mobile data scheme</li>
+        <li>closing the BT wifi hotspot pilot</li>
       </ul>
     <%- end %>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      You can request 4G wireless routers
+    </h2>
+
+    <p class="govuk-body">
+      If your school or local area is facing disruption to education because of local restrictions and you’ve been invited to order devices, <%= govuk_link_to 'you can request 4G wireless routers', how_to_request_4g_wireless_routers_path %>.
+    </p>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <% if @responsible_body.is_a_trust? %>

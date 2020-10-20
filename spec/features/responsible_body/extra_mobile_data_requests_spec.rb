@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the extra mobile data requests area as a responsible body user', type: :feature do
+RSpec.xfeature 'Accessing the extra mobile data requests area as a responsible body user', type: :feature do
   let(:rb_user) { create(:local_authority_user) }
 
   before do
