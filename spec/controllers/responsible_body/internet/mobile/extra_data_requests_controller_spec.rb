@@ -5,12 +5,13 @@ RSpec.describe ResponsibleBody::Internet::Mobile::ExtraDataRequestsController, t
 
   context 'when authenticated' do
     before do
-      FeatureFlag.activate(:mno_offer)
       sign_in_as local_authority_user
     end
 
-    after do
-      FeatureFlag.deactivate(:mno_offer)
+    around do |example|
+      FeatureFlag.temporarily_activate(:mno_offer) do
+        example.run
+      end
     end
 
     describe 'submitting spreadsheet choice' do

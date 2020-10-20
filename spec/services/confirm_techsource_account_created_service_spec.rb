@@ -32,9 +32,9 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
         context 'and the "notify_can_place_orders" feature flag is activated' do
           around do |example|
-            FeatureFlag.activate(:notify_can_place_orders)
-            example.run
-            FeatureFlag.deactivate(:notify_can_place_orders)
+            FeatureFlag.temporarily_activate(:notify_can_place_orders) do
+              example.run
+            end
           end
 
           it 'sends an email' do

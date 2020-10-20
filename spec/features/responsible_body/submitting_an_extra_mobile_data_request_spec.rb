@@ -19,7 +19,6 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     let(:mobile_network) { create(:mobile_network) }
 
     before do
-      FeatureFlag.activate(:mno_offer)
       mobile_network
       sign_in_as user
       # prevent api call to Notify
@@ -27,8 +26,10 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
         .to_return(status: 201, body: '{}')
     end
 
-    after do
-      FeatureFlag.deactivate(:mno_offer)
+    around do |example|
+      FeatureFlag.temporarily_activate(:mno_offer) do
+        example.run
+      end
     end
 
     scenario 'Navigating to the form' do

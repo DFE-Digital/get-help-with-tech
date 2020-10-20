@@ -8,12 +8,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
   end
 
   context 'when the MNO offer is activated' do
-    before do
-      FeatureFlag.activate(:mno_offer)
-    end
-
-    after do
-      FeatureFlag.deactivate(:mno_offer)
+    around do |example|
+      FeatureFlag.temporarily_activate(:mno_offer) do
+        example.run
+      end
     end
 
     scenario 'the user can navigate to the manual request form from the responsible body home page' do

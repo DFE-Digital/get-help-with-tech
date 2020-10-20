@@ -34,4 +34,26 @@ class FeatureFlag
   def self.inactive?(feature_name)
     !active?(feature_name)
   end
+
+  def self.temporarily_activate(*feature_names)
+    original_values = {}
+    Array(feature_names).each do |name|
+      original_values[name] = FeatureFlag.active?(name)
+      activate(name)
+    end
+    return_value = yield
+    feature_names.each { |name| FeatureFlag.deactivate(name) unless original_values[name] }
+    return_value
+  end
+
+  def self.temporarily_deactivate(*feature_names)
+    original_values = {}
+    Array(feature_names).each do |name|
+      original_values[name] = FeatureFlag.active?(name)
+      deactivate(name)
+    end
+    return_value = yield
+    feature_names.each { |name| FeatureFlag.activate(name) if original_values[name] }
+    return_value
+  end
 end

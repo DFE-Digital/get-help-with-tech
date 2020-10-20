@@ -24,11 +24,12 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       # prevent api call to Notify
       stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
         .to_return(status: 201, body: '{}')
-      FeatureFlag.activate(:mno_offer)
     end
 
-    after do
-      FeatureFlag.deactivate(:mno_offer)
+    around do |example|
+      FeatureFlag.temporarily_activate(:mno_offer) do
+        example.run
+      end
     end
 
     scenario 'submitting the form with a valid file shows a summary page' do
@@ -64,7 +65,12 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       # prevent api call to Notify
       stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
         .to_return(status: 201, body: '{}')
-      FeatureFlag.deactivate(:mno_offer)
+    end
+
+    around do |example|
+      FeatureFlag.temporarily_deactivate(:mno_offer) do
+        example.run
+      end
     end
 
     scenario 'user is informed about the initial pilot having ended' do

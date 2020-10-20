@@ -280,13 +280,10 @@ RSpec.describe User, type: :model do
   end
 
   describe 'generating user changes for downstream Computacenter systems' do
-    around do |example|
-      original_endpoint = Settings.computacenter.service_now_user_import_api.endpoint
-      Settings.computacenter.service_now_user_import_api.endpoint = 'http://example.com/import/table'
+    before do
+      allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return('http://example.com/import/table')
       ActiveJob::Base.queue_adapter = :test
       ActiveJob::Base.queue_adapter.enqueued_jobs.clear
-      example.run
-      Settings.computacenter.service_now_user_import_api.endpoint = original_endpoint
     end
 
     context 'creating user' do

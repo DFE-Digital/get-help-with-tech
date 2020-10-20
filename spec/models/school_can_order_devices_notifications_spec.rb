@@ -9,11 +9,9 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
   end
 
   around do |example|
-    FeatureFlag.activate(:notify_can_place_orders)
-    FeatureFlag.activate(:slack_notifications)
-    example.run
-    FeatureFlag.deactivate(:notify_can_place_orders)
-    FeatureFlag.deactivate(:slack_notifications)
+    FeatureFlag.temporarily_activate(:notify_can_place_orders, :slack_notifications) do
+      example.run
+    end
   end
 
   describe '#call' do
@@ -59,9 +57,9 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
         context 'when feature is deactivated' do
           around do |example|
-            FeatureFlag.deactivate(:notify_can_place_orders)
-            example.run
-            FeatureFlag.activate(:notify_can_place_orders)
+            FeatureFlag.temporarily_deactivate(:notify_can_place_orders) do
+              example.run
+            end
           end
 
           it 'does not notify the user' do
@@ -208,9 +206,9 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       context 'when feature is deactivated' do
         around do |example|
-          FeatureFlag.deactivate(:notify_can_place_orders)
-          example.run
-          FeatureFlag.activate(:notify_can_place_orders)
+          FeatureFlag.temporarily_deactivate(:notify_can_place_orders) do
+            example.run
+          end
         end
 
         it 'does not notify the user' do

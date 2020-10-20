@@ -4,13 +4,14 @@ RSpec.describe ResponsibleBody::Internet::Mobile::BulkRequestsController, type: 
   let(:local_authority_user) { create(:local_authority_user) }
 
   context 'when authenticated' do
-    before do
-      FeatureFlag.activate(:mno_offer)
-      sign_in_as local_authority_user
+    around do |example|
+      FeatureFlag.temporarily_activate(:mno_offer) do
+        example.run
+      end
     end
 
-    after do
-      FeatureFlag.deactivate(:mno_offer)
+    before do
+      sign_in_as local_authority_user
     end
 
     describe 'create' do
