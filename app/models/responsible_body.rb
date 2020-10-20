@@ -14,7 +14,7 @@ class ResponsibleBody < ApplicationRecord
   enum status: {
     open: 'open',
     closed: 'closed',
-  }
+  }, _prefix: 'gias_status'
 
   def humanized_type
     type.demodulize.underscore.humanize.downcase

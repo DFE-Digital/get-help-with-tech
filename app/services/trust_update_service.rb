@@ -4,7 +4,7 @@ class TrustUpdateService
     last_update = DataStage::DataUpdateRecord.last_update_for(:trusts)
 
     # simple updates for trusts that are open
-    DataStage::Trust.updated_since(last_update).open.each do |staged_trust|
+    DataStage::Trust.updated_since(last_update).gias_status_open.each do |staged_trust|
       trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
 
       next unless trust

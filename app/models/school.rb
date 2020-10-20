@@ -15,7 +15,7 @@ class School < ApplicationRecord
   enum status: {
     open: 'open',
     closed: 'closed',
-  }
+  }, _prefix: 'gias_status'
 
   enum phase: {
     primary: 'primary',
