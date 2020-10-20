@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/accessibility', to: 'pages#accessibility'
   get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
+  get '/how-to-request-4g-wireless-routers', to: 'pages#how_request_4g_routers'
 
   # redirects for moved guidance pages
   get '/pages/guidance', to: redirect('/')

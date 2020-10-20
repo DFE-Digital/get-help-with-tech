@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Downloading BT Wifi vouchers', type: :feature do
+RSpec.xfeature 'Downloading BT Wifi vouchers', type: :feature do
   let(:user) { create(:local_authority_user) }
   let(:responsible_body_vouchers_download_page) { PageObjects::ResponsibleBody::VouchersDownloadPage.new }
 
