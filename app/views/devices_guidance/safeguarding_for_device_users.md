@@ -37,7 +37,9 @@ You can lend the devices out to users straight away as the mobile device managem
 
 You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
-**If you remove the MDM provided by DfE or continue using the devices after 30 September 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**  
+**If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.**  
+
+You can choose to remove the DfE safeguarding software and replace it with your own, or you can distribute the devices without any content filtering and MDM installed. 
 
 Please see our guidance on management of [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
 
@@ -52,10 +54,18 @@ Unless you have selected to order devices without a DfE configuration, Microsoft
 * Windows Defender Exploit Guard
 * Windows Defender Antivirus
 
-## DfE privacy notice: mobile device management for the Department for Education’s ‘Get help with technology’ programme
+## How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
 
-### How we use your personal information
+This privacy policy is for the end users of Microsoft Windows laptops and tablets provided as part of the Department for Education’s Get help with technology programme.
 
+### Who this information is for
+
+This information is for:
+
+* children, young people and care leavers
+* parents and carers
+
+## How we use your personal information
 The Get Help with Technology programme is run by the Department for Education (DfE). This privacy notice explains how it will use your personal information.
 
 As part of the Get Help with Technology programme we need to be able to:
@@ -77,19 +87,19 @@ For these purposes, the personal information above is securely shared between th
 
 Your name is not shared with the DfE or mobile device management software providers (including their contracted partners).
 
-### When we can use your personal information
+## When we can use your personal information
 
-To use your personal information we need to meet one (or more) conditions in the data protection legislation. For this service we can use your information as part of our legitimate interest.
+To use your personal information we need to meet one (or more) conditions in the data protection legislation. For this service we can use your information as part of our legitimate interests to provide a safe and secure platform, including disabling laptops that may have been stolen.
 
-### How long we hold personal information
+## How long we hold personal information
 
 Personal information is held by the DfE and the protective software providers (including their contracted partners) for up to 2 years.
 
-### Who we share your personal information with
+## Who we share your personal information with
 
 We only share your personal information with the protective software providers (and their contracted partners) under our agreement for the reasons described above, unless there is a legal requirement for us to share it.
 
-### Your individual rights
+## Your individual rights
 
 Under the Data Protection Act 2018, you’re entitled to ask if we hold information relating to you and ask for a copy, by making a ‘subject access request’.
 
