@@ -10,14 +10,13 @@ class SchoolUpdateService
     # look at the schools that have changed since the last update
     last_update = DataStage::DataUpdateRecord.last_update_for(:schools)
 
-    # simple updates for schools that are open
-    DataStage::School.updated_since(last_update).open.each do |staged_school|
+    # attribute updates for schools
+    DataStage::School.updated_since(last_update).find_each(batch_size: 100) do |staged_school|
       school = School.find_by(urn: staged_school.urn)
-      if school
-        update_school(school, staged_school)
-      else
-        create_school(staged_school)
-      end
+
+      next unless school
+
+      update_school(school, staged_school)
     end
 
     DataStage::DataUpdateRecord.updated!(:schools)
@@ -34,13 +33,19 @@ private
   end
 
   def create_school(staged_school)
-    School.create!(staged_attributes(staged_school))
+    Rails.logger.info("Adding school #{staged_school.urn} #{staged_school.name} (#{staged_school.status})")
+    school = School.create!(staged_attributes(staged_school))
+    unless school.responsible_body.who_will_order_devices.nil?
+      school.create_preorder_information!(who_will_order_devices: school.responsible_body.who_will_order_devices.singularize)
+      school.device_allocations.create!(device_type: 'std_device', allocation: 0)
+    end
+    school
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end
 
   def staged_attributes(staged_school)
-    attrs = staged_school.attributes.except('id', 'responsible_body_name', 'status', 'created_at', 'updated_at')
+    attrs = staged_school.attributes.except('id', 'responsible_body_name', 'created_at', 'updated_at')
     attrs['responsible_body_id'] = responsible_body_id(staged_school.responsible_body_name)
     attrs
   end

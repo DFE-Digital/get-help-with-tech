@@ -4,7 +4,7 @@ RSpec.describe SchoolUpdateService, type: :model do
   describe 'importing schools from staging' do
     let(:service) { subject }
     let!(:local_authority) { create(:local_authority, name: 'Camden') }
-    let!(:staged_school) { create(:staged_school, urn: 103_001, responsible_body_name: 'Camden') }
+    let!(:school) { create(:school, urn: '103001', responsible_body: local_authority) }
 
     context 'data update timestamps' do
       it 'updates the DataUpdateRecord timestamp for schools' do
@@ -17,59 +17,35 @@ RSpec.describe SchoolUpdateService, type: :model do
 
       it 'only applies changes since the last update' do
         Timecop.travel(6.hours.ago)
-        create(:staged_school, urn: 104_001, responsible_body_name: 'Camden')
+        create(:staged_school, urn: 103_001, responsible_body_name: 'Camden')
         Timecop.return
 
         Timecop.travel(2.hours.ago)
         DataStage::DataUpdateRecord.updated!(:schools)
         Timecop.return
 
-        expect {
-          service.update_schools
-        }.to change { School.count }.by(1)
+        school_attrs = school.attributes.symbolize_keys
 
-        expect(School.last).to have_attributes(
-          urn: staged_school.urn,
-          name: staged_school.name,
-          responsible_body_id: local_authority.id,
-          address_1: staged_school.address_1,
-          address_2: staged_school.address_2,
-          address_3: staged_school.address_3,
-          town: staged_school.town,
-          postcode: staged_school.postcode,
-          phase: staged_school.phase,
-          establishment_type: staged_school.establishment_type,
-        )
-      end
-    end
-
-    context 'when a school does not already exist' do
-      it 'creates a new school record' do
-        expect {
-          service.update_schools
-        }.to change { School.count }.by(1)
-      end
-
-      it 'sets the correct values on the School record' do
         service.update_schools
 
-        expect(School.last).to have_attributes(
-          urn: staged_school.urn,
-          name: staged_school.name,
+        expect(school.reload).to have_attributes(
+          urn: school_attrs[:urn],
+          name: school_attrs[:name],
           responsible_body_id: local_authority.id,
-          address_1: staged_school.address_1,
-          address_2: staged_school.address_2,
-          address_3: staged_school.address_3,
-          town: staged_school.town,
-          postcode: staged_school.postcode,
-          phase: staged_school.phase,
-          establishment_type: staged_school.establishment_type,
+          address_1: school_attrs[:address_1],
+          address_2: school_attrs[:address_2],
+          address_3: school_attrs[:address_3],
+          town: school_attrs[:town],
+          postcode: school_attrs[:postcode],
+          phase: school_attrs[:phase],
+          establishment_type: school_attrs[:establishment_type],
+          status: school_attrs[:status],
         )
       end
     end
 
     context 'when a school already exists' do
-      let!(:school) { create(:school, urn: '103001', responsible_body: local_authority) }
+      let!(:staged_school) { create(:staged_school, urn: 103_001, responsible_body_name: 'Camden') }
 
       it 'updates the existing school record' do
         service.update_schools
@@ -84,6 +60,7 @@ RSpec.describe SchoolUpdateService, type: :model do
           postcode: staged_school.postcode,
           phase: staged_school.phase,
           establishment_type: staged_school.establishment_type,
+          status: staged_school.status,
         )
       end
     end

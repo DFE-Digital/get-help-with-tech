@@ -11,6 +11,11 @@ class ResponsibleBody < ApplicationRecord
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 
+  enum status: {
+    open: 'open',
+    closed: 'closed',
+  }, _prefix: 'gias_status'
+
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end

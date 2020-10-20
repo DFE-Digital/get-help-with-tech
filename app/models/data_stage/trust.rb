@@ -4,7 +4,7 @@ class DataStage::Trust < ApplicationRecord
   enum status: {
     open: 'open',
     closed: 'closed',
-  }
+  }, _prefix: 'gias_status'
 
   enum organisation_type: {
     multi_academy_trust: 'Multi-academy trust',
