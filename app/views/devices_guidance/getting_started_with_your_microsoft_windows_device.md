@@ -65,35 +65,47 @@ If your child is worried or needs support, they can call [Childline](https://www
 
 If your child has a social worker, you should contact your local authority if you have any concerns about your child’s safety or wellbeing.
 
-## Privacy notice: protective software for the Department for Education’s Get help with technology programme
+
+## Privacy notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
+
+This privacy policy is for the end users of Microsoft Windows laptops and tablets provided as part of the Department for Education’s Get help with technology programme.
+
+### Who this information is for
+
+This information is for:
+
+* children, young people and care leavers
+* parents and carers
 
 ### How we use your personal information
-
 The Get Help with Technology programme is run by the Department for Education (DfE). This privacy notice explains how it will use your personal information.
 
-As part of the Get Help with Technology programme we need to be able to keep children safe while they are online.
+As part of the Get Help with Technology programme we need to be able to:
 
-We’ve installed mobile device management and web-filtering software on the laptop to do this. The mobile device management and web-filtering solutions will collect some personal information when it is implemented on your laptop or tablet.
+* keep children safe whilst they are online
+* locate, disable and delete data from the laptop that is on loan, if it is lost
 
-The Department for Education is the data controller for the personal information collected by mobile device management and web-filtering solutions on a laptop or tablet provided through the Get Help with Technology programme.
+The DfE have installed mobile device management software on the laptop or tablet to do this. The mobile device management solution will collect some personal information when it is implemented on the device.
+
+The DfE is the data controller for the personal information collected when using mobile device management on a laptop or tablet provided through the Get help with technology programme.
 
 The personal information collected will be:
 
-* a device number for the laptop loaned to you
+* a device number for the laptop or tablet loaned or given to you
 * your Internet Protocol (IP) address, which is a number linked to a device connected to a computer network
-* addresses of websites you visit when using the device
+* addresses of websites visited when using the laptop or tablet
 
-For these purposes, the personal information above is securely shared between the Department for Education and the protective software providers (including their contracted partners), under agreements with the Department for Education.
+For these purposes, the personal information above is securely shared between the DfE and the mobile device management software providers (including their contracted partners), under agreements with the DfE.
 
-Your name is not shared with the Department for Education or mobile device management software providers (including their contracted partners).
+Your name is not shared with the DfE or mobile device management software providers (including their contracted partners).
 
 ### When we can use your personal information
 
-To use your personal information we need to meet one (or more) conditions in the data protection legislation. For this service we can use your information as part of our legitimate interest.
+To use your personal information we need to meet one (or more) conditions in the data protection legislation. For this service we can use your information as part of our legitimate interests to provide a safe and secure platform, including disabling laptops that may have been stolen.
 
 ### How long we hold personal information
 
-Personal information is held by the Department for Education and the protective software providers (including their contracted partners) for up to 2 years.
+Personal information is held by the DfE and the protective software providers (including their contracted partners) for up to 2 years.
 
 ### Who we share your personal information with
 
@@ -104,6 +116,5 @@ We only share your personal information with the protective software providers (
 Under the Data Protection Act 2018, you’re entitled to ask if we hold information relating to you and ask for a copy, by making a ‘subject access request’.
 
 For further information and how to request your data, use the ‘contact form’ under the ‘How to find out what personal information we hold about you’ section in the [Personal Information Charter](https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter).
-
 
 You can read further information about your data protection rights at the [Information Commissioner’s Office](https://ico.org.uk/).
