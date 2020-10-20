@@ -54,7 +54,7 @@ Unless you have selected to order devices without a DfE configuration, Microsoft
 * Windows Defender Exploit Guard
 * Windows Defender Antivirus
 
-## How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
+## Privacy notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
 
 This privacy policy is for the end users of Microsoft Windows laptops and tablets provided as part of the Department for Education’s Get help with technology programme.
 
