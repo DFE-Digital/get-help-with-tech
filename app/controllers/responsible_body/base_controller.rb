@@ -1,6 +1,6 @@
 class ResponsibleBody::BaseController < ApplicationController
   before_action :require_signed_in!,
-                :deny_hybrid_user!,
+                :deny_single_academy_trust_user!,
                 :require_rb_user!,
                 :set_responsible_body
 
@@ -10,8 +10,8 @@ private
     redirect_to_sign_in unless SessionService.is_signed_in?(session)
   end
 
-  def deny_hybrid_user!
-    render 'errors/forbidden', status: :forbidden if @user.hybrid?
+  def deny_single_academy_trust_user!
+    render 'errors/forbidden', status: :forbidden if @user.is_a_single_academy_trust_user?
   end
 
   def require_rb_user!

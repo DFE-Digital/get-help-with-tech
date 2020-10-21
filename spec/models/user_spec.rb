@@ -52,6 +52,45 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'is_a_single_academy_trust_user?' do
+    context 'when the user has a responsible_body that is a single_academy_trust, but the user has no schools' do
+      let(:user) { create(:single_academy_trust_user, schools: []) }
+
+      it 'is false' do
+        expect(user.is_a_single_academy_trust_user?).to be_falsey
+      end
+    end
+
+    context 'when the user has a responsible_body and one school' do
+      let(:school) { create(:school, :academy, responsible_body: responsible_body) }
+      let(:user) { create(:trust_user, schools: [school], responsible_body: responsible_body, orders_devices: true) }
+
+      context 'and the responsible_body is a single academy trust' do
+        let(:responsible_body) { create(:trust, :single_academy_trust) }
+
+        it 'is true' do
+          expect(user.is_a_single_academy_trust_user?).to be_truthy
+        end
+      end
+
+      context 'and the responsible_body is a multi academy trust' do
+        let(:responsible_body) { create(:trust, :multi_academy_trust) }
+
+        it 'is false' do
+          expect(user.is_a_single_academy_trust_user?).to be_falsey
+        end
+      end
+
+      context 'and the responsible_body is a local authority' do
+        let(:responsible_body) { create(:local_authority) }
+
+        it 'is false' do
+          expect(user.is_a_single_academy_trust_user?).to be_falsey
+        end
+      end
+    end
+  end
+
   describe 'privacy notice' do
     it 'needs to be seen by responsible body users who havent seen it' do
       user = build(:local_authority_user, privacy_notice_seen_at: nil)
@@ -367,9 +406,9 @@ RSpec.describe User, type: :model do
         end
       end
 
-      it 'persists correct data for hybrid user' do
+      it 'persists correct data for single academy trust user' do
         school = create(:school)
-        responsible_body = create(:trust, schools: [school])
+        responsible_body = create(:trust, :single_academy_trust, schools: [school])
         create(:school_user,
                responsible_body: responsible_body,
                school: school,

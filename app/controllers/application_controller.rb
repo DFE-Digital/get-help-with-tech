@@ -56,7 +56,7 @@ private
       privacy_notice_path
     elsif user.is_mno_user?
       mno_extra_mobile_data_requests_path
-    elsif user.is_responsible_body_user? && !user.hybrid?
+    elsif user.is_responsible_body_user? && !user.responsible_body&.is_a_single_academy_trust?
       responsible_body_home_path
     elsif user.is_school_user?
       school_root_url_for(user)

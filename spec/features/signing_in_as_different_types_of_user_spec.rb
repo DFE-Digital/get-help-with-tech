@@ -158,8 +158,8 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a hybrid user' do
-    let(:user) { create(:hybrid_user, :has_not_seen_privacy_notice) }
+  context 'as a single_academy_trust user' do
+    let(:user) { create(:single_academy_trust_user, :has_not_seen_privacy_notice) }
 
     scenario 'logging in for the first time' do
       visit validate_token_url_for(user)

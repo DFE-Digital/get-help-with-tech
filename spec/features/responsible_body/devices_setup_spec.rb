@@ -165,7 +165,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   context 'as a trust user' do
-    let(:responsible_body) { create(:trust, in_devices_pilot: true) }
+    let(:responsible_body) { create(:trust, :multi_academy_trust, in_devices_pilot: true) }
     let(:trust_user) { create(:trust_user, responsible_body: responsible_body) }
 
     before do

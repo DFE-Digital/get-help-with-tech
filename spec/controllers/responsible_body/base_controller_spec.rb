@@ -7,8 +7,8 @@ RSpec.describe ResponsibleBody::BaseController do
     end
   end
 
-  context 'when user is a hybrid user' do
-    let(:user) { create(:hybrid_user) }
+  context 'when user is a single_academy_trust user' do
+    let(:user) { create(:single_academy_trust_user) }
 
     before do
       sign_in_as user

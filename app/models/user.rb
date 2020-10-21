@@ -153,8 +153,8 @@ class User < ApplicationRecord
     orders_devices? && techsource_account_confirmed?
   end
 
-  def hybrid?
-    school_id && responsible_body_id
+  def is_a_single_academy_trust_user?
+    user_schools.size == 1 && responsible_body&.is_a_single_academy_trust? && school.responsible_body_id == responsible_body.id
   end
 
   # Wrapper methods to ease the transition from 'user belongs_to school',
