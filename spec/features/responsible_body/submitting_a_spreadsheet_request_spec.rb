@@ -14,7 +14,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
   end
 
-  context 'signed in and the MNO offer is activated' do
+  context 'signed in and the MNO offer is activated', with_feature_flags: { mno_offer: 'active' } do
     let(:user) { create(:local_authority_user) }
     let(:mobile_network) { create(:mobile_network) }
 
@@ -24,12 +24,6 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       # prevent api call to Notify
       stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
         .to_return(status: 201, body: '{}')
-    end
-
-    around do |example|
-      FeatureFlag.temporarily_activate(:mno_offer) do
-        example.run
-      end
     end
 
     scenario 'submitting the form with a valid file shows a summary page' do
@@ -55,7 +49,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
   end
 
-  context 'signed in and the MNO offer is deactivated' do
+  context 'signed in and the MNO offer is deactivated', with_feature_flags: { mno_offer: 'inactive' } do
     let(:user) { create(:local_authority_user) }
     let(:mobile_network) { create(:mobile_network) }
 
@@ -65,12 +59,6 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       # prevent api call to Notify
       stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
         .to_return(status: 201, body: '{}')
-    end
-
-    around do |example|
-      FeatureFlag.temporarily_deactivate(:mno_offer) do
-        example.run
-      end
     end
 
     scenario 'user is informed about the initial pilot having ended' do

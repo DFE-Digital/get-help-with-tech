@@ -91,6 +91,18 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.around(:each, :with_feature_flags) do |example|
+    FeatureFlag.set_temporary_flags(example.metadata.fetch(:with_feature_flags)) do
+      example.run
+    end
+  end
+
+  config.around(:each, :with_env_vars) do |example|
+    ClimateControl.modify(example.metadata.fetch(:with_env_vars)) do
+      example.run
+    end
+  end
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.

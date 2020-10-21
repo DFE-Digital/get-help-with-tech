@@ -14,7 +14,7 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
   end
 
-  context 'signed in' do
+  context 'signed in', with_feature_flags: { mno_offer: 'active' } do
     let(:user) { create(:local_authority_user) }
     let(:mobile_network) { create(:mobile_network) }
 
@@ -24,12 +24,6 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
       # prevent api call to Notify
       stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
         .to_return(status: 201, body: '{}')
-    end
-
-    around do |example|
-      FeatureFlag.temporarily_activate(:mno_offer) do
-        example.run
-      end
     end
 
     scenario 'Navigating to the form' do

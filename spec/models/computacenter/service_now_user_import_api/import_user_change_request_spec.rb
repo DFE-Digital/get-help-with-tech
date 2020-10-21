@@ -55,12 +55,9 @@ RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest d
     }.to_json
   end
 
-  around do |example|
-    original_endpoint = Settings.computacenter.service_now_user_import_api.endpoint
-    Settings.computacenter.service_now_user_import_api.endpoint = 'http://example.com/import/table'
+  before do
+    allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return 'http://example.com/import/table'
     stub_request(:post, Settings.computacenter.service_now_user_import_api.endpoint).to_return(status: 201, body: response_body)
-    example.run
-    Settings.computacenter.service_now_user_import_api.endpoint = original_endpoint
   end
 
   describe '#post!' do

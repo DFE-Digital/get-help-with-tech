@@ -124,6 +124,7 @@ end
 
 group :test do
   gem 'capybara-email'
+  gem 'climate_control'
   gem 'database_cleaner-active_record'
   gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'

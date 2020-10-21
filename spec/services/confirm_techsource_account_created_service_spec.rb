@@ -30,13 +30,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
           user.school.update!(order_state: :can_order)
         end
 
-        context 'and the "notify_can_place_orders" feature flag is activated' do
-          around do |example|
-            FeatureFlag.temporarily_activate(:notify_can_place_orders) do
-              example.run
-            end
-          end
-
+        context 'and the "notify_can_place_orders" feature flag is activated', with_feature_flags: { notify_can_place_orders: 'active' } do
           it 'sends an email' do
             expect {
               service.call

@@ -56,4 +56,17 @@ class FeatureFlag
     feature_names.each { |name| FeatureFlag.activate(name) if original_values[name] }
     return_value
   end
+
+  def self.set_temporary_flags(features = {})
+    originally_active_status = features.map { |name, _| [name, FeatureFlag.active?(name)] }.to_h
+    features.each do |name, value|
+      FeatureFlag.activate(name) if value == 'active'
+      FeatureFlag.deactivate(name) if value == 'inactive'
+    end
+    return_value = yield
+    originally_active_status.each do |name, originally_active|
+      originally_active ? FeatureFlag.activate(name) : FeatureFlag.deactivate(name)
+    end
+    return_value
+  end
 end
