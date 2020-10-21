@@ -1,14 +1,8 @@
 require 'rails_helper'
 
-RSpec.feature 'Enabling orders for a school from the support area' do
+RSpec.feature 'Enabling orders for a school from the support area', with_feature_flags: { notify_can_place_orders: 'active' } do
   let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
-
-  around do |example|
-    FeatureFlag.activate(:notify_can_place_orders)
-    example.run
-    FeatureFlag.deactivate(:notify_can_place_orders)
-  end
 
   before do
     @computacenter_caps_api_request = stub_computacenter_outgoing_api_calls

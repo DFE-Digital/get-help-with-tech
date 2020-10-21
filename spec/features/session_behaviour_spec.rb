@@ -9,20 +9,15 @@ RSpec.feature 'Session behaviour', type: :feature do
     expect(page).to have_text('Sign in')
   end
 
-  context 'with a participating mobile network' do
+  context 'with a participating mobile network', with_feature_flags: { mno_offer: 'active' } do
     let(:user) { create(:local_authority_user) }
     let(:participating_mobile_network) do
       create(:mobile_network)
     end
 
     before do
-      FeatureFlag.activate(:mno_offer)
       # this seems overly-verbose compared to let!, but this is what rubocop wants
       participating_mobile_network
-    end
-
-    after do
-      FeatureFlag.activate(:mno_offer)
     end
 
     # TODO: need to think about how verification should work

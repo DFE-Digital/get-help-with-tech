@@ -140,11 +140,8 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     end
 
     context 'when the endpoint setting is not present' do
-      around do |example|
-        original_value = Settings.computacenter.outgoing_api.endpoint
-        Settings.computacenter.outgoing_api.endpoint = ''
-        example.run
-        Settings.computacenter.outgoing_api.endpoint = original_value
+      before do
+        allow(Settings.computacenter.outgoing_api).to receive(:endpoint).and_return(nil)
       end
 
       it 'does not notify the computacenter API' do

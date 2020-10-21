@@ -1,13 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe UserCanOrderDevicesNotifications do
+RSpec.describe UserCanOrderDevicesNotifications, with_feature_flags: { notify_can_place_orders: 'active' } do
   subject(:service) { described_class.new(user: user) }
-
-  around do |example|
-    FeatureFlag.activate(:notify_can_place_orders)
-    example.run
-    FeatureFlag.deactivate(:notify_can_place_orders)
-  end
 
   context 'when orders can be placed' do
     let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }

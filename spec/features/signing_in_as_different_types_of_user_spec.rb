@@ -8,7 +8,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
   before do
     # disable computacenter user import API calls
-    Settings.computacenter.service_now_user_import_api.endpoint = nil
+    allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return(nil)
     stub_request(:post, Settings.slack.event_notifications.webhook_url).to_return(status: 200, body: '')
   end
 

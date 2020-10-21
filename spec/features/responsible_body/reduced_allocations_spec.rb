@@ -1,17 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'Reduced allocations due to supply chain delays' do
+RSpec.feature 'Reduced allocations due to supply chain delays', with_feature_flags: { reduced_allocations: 'active' } do
   include ViewHelper
 
   let(:responsible_body) { create(:local_authority, :in_devices_pilot) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
-
-  around do |example|
-    FeatureFlag.activate(:reduced_allocations)
-    given_i_am_signed_in_as_a_responsible_body_user
-    example.run
-    FeatureFlag.deactivate(:reduced_allocations)
-  end
 
   scenario 'I see that allocations have been reduced' do
     given_i_am_signed_in_as_a_responsible_body_user

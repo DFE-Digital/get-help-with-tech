@@ -1,13 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'Reduced allocation due to supply chain delays' do
+RSpec.feature 'Reduced allocation due to supply chain delays', with_feature_flags: { reduced_allocations: 'active' } do
   include ViewHelper
-
-  around do |example|
-    FeatureFlag.activate(:reduced_allocations)
-    example.run
-    FeatureFlag.deactivate(:reduced_allocations)
-  end
 
   let(:school) { create(:school, :with_std_device_allocation) }
 

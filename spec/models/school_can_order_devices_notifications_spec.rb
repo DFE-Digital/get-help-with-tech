@@ -1,19 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe SchoolCanOrderDevicesNotifications do
+RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { notify_can_place_orders: 'active', slack_notifications: 'active' } do
   let(:school) do
     create(:school,
            :with_std_device_allocation,
            :with_preorder_information,
            order_state: 'cannot_order')
-  end
-
-  around do |example|
-    FeatureFlag.activate(:notify_can_place_orders)
-    FeatureFlag.activate(:slack_notifications)
-    example.run
-    FeatureFlag.deactivate(:notify_can_place_orders)
-    FeatureFlag.deactivate(:slack_notifications)
   end
 
   describe '#call' do
@@ -57,13 +49,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           )
         end
 
-        context 'when feature is deactivated' do
-          around do |example|
-            FeatureFlag.deactivate(:notify_can_place_orders)
-            example.run
-            FeatureFlag.activate(:notify_can_place_orders)
-          end
-
+        context 'when feature is deactivated', with_feature_flags: { notify_can_place_orders: 'inactive' } do
           it 'does not notify the user' do
             expect {
               service.call
@@ -206,13 +192,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         end
       end
 
-      context 'when feature is deactivated' do
-        around do |example|
-          FeatureFlag.deactivate(:notify_can_place_orders)
-          example.run
-          FeatureFlag.activate(:notify_can_place_orders)
-        end
-
+      context 'when feature is deactivated', with_feature_flags: { notify_can_place_orders: 'inactive' } do
         it 'does not notify the user' do
           expect {
             service.call

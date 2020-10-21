@@ -7,15 +7,7 @@ RSpec.xfeature 'Accessing the extra mobile data requests area as a responsible b
     sign_in_as rb_user
   end
 
-  context 'when the MNO offer is activated' do
-    before do
-      FeatureFlag.activate(:mno_offer)
-    end
-
-    after do
-      FeatureFlag.deactivate(:mno_offer)
-    end
-
+  context 'when the MNO offer is activated', with_feature_flags: { mno_offer: 'active' } do
     scenario 'the user can navigate to the manual request form from the responsible body home page' do
       click_on 'Get the internet'
       click_on 'Request extra data for mobile devices'

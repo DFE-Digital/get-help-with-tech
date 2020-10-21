@@ -29,11 +29,7 @@ RSpec.describe MonitoringController, type: :controller do
       end
     end
 
-    context 'when GIT_BRANCH is present in the ENV' do
-      before do
-        ENV['GIT_BRANCH'] = 'my-branch-name'
-      end
-
+    context 'when GIT_BRANCH is present in the ENV', with_env_vars: { 'GIT_BRANCH' => 'my-branch-name' } do
       it 'reports GIT_BRANCH in the info/git/branch key' do
         get :healthcheck, format: :json
 
@@ -41,11 +37,7 @@ RSpec.describe MonitoringController, type: :controller do
       end
     end
 
-    context 'when GIT_BRANCH is not present in the ENV' do
-      before do
-        ENV['GIT_BRANCH'] = nil
-      end
-
+    context 'when GIT_BRANCH is not present in the ENV', with_env_vars: { 'GIT_BRANCH' => nil } do
       it 'reports null in the info/git/branch key' do
         get :healthcheck, format: :json
 
@@ -53,11 +45,7 @@ RSpec.describe MonitoringController, type: :controller do
       end
     end
 
-    context 'when GIT_COMMIT_SHA is present in the ENV' do
-      before do
-        ENV['GIT_COMMIT_SHA'] = 'my-commit-sha'
-      end
-
+    context 'when GIT_COMMIT_SHA is present in the ENV', with_env_vars: { 'GIT_COMMIT_SHA' => 'my-commit-sha' } do
       it 'reports GIT_COMMIT_SHA in the info/git/commit_sha key' do
         get :healthcheck, format: :json
 
@@ -65,11 +53,7 @@ RSpec.describe MonitoringController, type: :controller do
       end
     end
 
-    context 'when GIT_COMMIT_SHA is not present in the ENV' do
-      before do
-        ENV['GIT_COMMIT_SHA'] = nil
-      end
-
+    context 'when GIT_COMMIT_SHA is not present in the ENV', with_env_vars: { 'GIT_COMMIT_SHA' => nil } do
       it 'reports null in the info/git/commit_sha key' do
         get :healthcheck, format: :json
 
@@ -77,11 +61,7 @@ RSpec.describe MonitoringController, type: :controller do
       end
     end
 
-    context 'when DOCKER_IMAGE_ID is present in the ENV' do
-      before do
-        ENV['DOCKER_IMAGE_ID'] = 'abc123'
-      end
-
+    context 'when DOCKER_IMAGE_ID is present in the ENV', with_env_vars: { 'DOCKER_IMAGE_ID' => 'abc123' } do
       it 'reports DOCKER_IMAGE_ID in the info/docker/image_id key' do
         get :healthcheck, format: :json
 
@@ -89,11 +69,7 @@ RSpec.describe MonitoringController, type: :controller do
       end
     end
 
-    context 'when DOCKER_IMAGE_ID is not present in the ENV' do
-      before do
-        ENV['DOCKER_IMAGE_ID'] = nil
-      end
-
+    context 'when DOCKER_IMAGE_ID is not present in the ENV', with_env_vars: { 'DOCKER_IMAGE_ID' => nil } do
       it 'reports null in the info/docker/image_id key' do
         get :healthcheck, format: :json
 

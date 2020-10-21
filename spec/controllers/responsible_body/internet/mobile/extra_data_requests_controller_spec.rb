@@ -3,14 +3,9 @@ require 'rails_helper'
 RSpec.describe ResponsibleBody::Internet::Mobile::ExtraDataRequestsController, type: :controller do
   let(:local_authority_user) { create(:local_authority_user) }
 
-  context 'when authenticated' do
+  context 'when authenticated', with_feature_flags: { mno_offer: 'active' } do
     before do
-      FeatureFlag.activate(:mno_offer)
       sign_in_as local_authority_user
-    end
-
-    after do
-      FeatureFlag.deactivate(:mno_offer)
     end
 
     describe 'submitting spreadsheet choice' do
