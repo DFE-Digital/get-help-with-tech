@@ -22,11 +22,7 @@ RSpec.describe Support::Devices::SchoolsController, type: :controller do
     end
 
     it 'renders results' do
-      allow(School).to receive(:where)
-
       post :results, params: { bulk_urn_search_form: { urns: "#{school.urn}\r\n#{another_school.urn}" } }
-
-      expect(School).to have_received(:where).with(urn: [school.urn.to_s, another_school.urn.to_s])
 
       expect(response).to be_successful
       expect(response).to render_template('results')
