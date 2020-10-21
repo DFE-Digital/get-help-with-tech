@@ -247,7 +247,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
-    pagy (3.8.3)
+    pagy (3.9.0)
     paper_trail (11.0.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
