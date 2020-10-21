@@ -56,8 +56,8 @@ private
       privacy_notice_path
     elsif user.is_mno_user?
       mno_extra_mobile_data_requests_path
-    elsif user.is_responsible_body_user? && !user.responsible_body&.is_a_single_academy_trust?
-      responsible_body_home_path
+    elsif user.is_responsible_body_user?
+      root_url_for_responsible_body(user)
     elsif user.is_school_user?
       school_root_url_for(user)
     elsif user.is_computacenter?
@@ -78,6 +78,18 @@ private
         },
       )
       '/'
+    end
+  end
+
+  def root_url_for_responsible_body(user)
+    if user.is_school_user?
+      if user.is_a_single_academy_trust_user?
+        school_root_url_for(user)
+      else
+        schools_path
+      end
+    else
+      responsible_body_home_path
     end
   end
 
