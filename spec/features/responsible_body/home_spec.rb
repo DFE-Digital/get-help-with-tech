@@ -115,7 +115,7 @@ RSpec.feature ResponsibleBody do
   end
 
   context 'as a first-time RB user' do
-    let(:rb_user) { create(:trust_user, privacy_notice_seen_at: nil) }
+    let(:rb_user) { create(:local_authority_user, privacy_notice_seen_at: nil) }
 
     it 'shows the privacy notice for the first time' do
       sign_in_as rb_user
