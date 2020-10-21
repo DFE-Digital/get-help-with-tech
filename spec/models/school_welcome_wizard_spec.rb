@@ -20,6 +20,29 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.update_step!
         expect(wizard.order_your_own?).to be true
       end
+
+      context 'has devices available to order' do
+        let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices) }
+        let(:school) { create(:school, :with_preorder_information, std_device_allocation: allocation) }
+
+        context 'user orders devices' do
+          let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }
+
+          it 'goes to techsource_account page' do
+            wizard.update_step!
+            expect(wizard.techsource_account?).to be true
+          end
+        end
+
+        context 'user does not order devices' do
+          let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: false) }
+
+          it 'goes to devices_you_can_order page' do
+            wizard.update_step!
+            expect(wizard.devices_you_can_order?).to be true
+          end
+        end
+      end
     end
 
     context 'when the step is order_your_own and user orders devices' do

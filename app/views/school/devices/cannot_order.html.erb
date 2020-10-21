@@ -1,5 +1,5 @@
 <%- who_cannot_order = @user.orders_devices? ? 'school_user' : 'school' %>
-<%- title = t("page_titles.#{who_cannot_order}_cannot_order_devices") %>
+<%- title = t("page_titles.#{who_cannot_order}_cannot_order_devices.title") %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs items: 'Order devices', school: @school, user: @user %>
@@ -22,8 +22,15 @@
       </div>
     <% end %>
 
-    <p class="govuk-body">You should only order the devices you need. You can do this when local coronavirus restrictions are confirmed.</p>
-    <p class="govuk-body">We’ll contact you as soon as you’re able to place orders.</p>
+    <p class="govuk-body"><%= t("page_titles.#{who_cannot_order}_cannot_order_devices.can_order_when") %></p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <% t('pages.order_devices.can_order_full_allocation_when_list').each do |list_item| %>
+        <li><%= list_item %></li>
+      <% end %>
+    </ul>
+
+    <p class="govuk-body">We’ll contact you about placing orders if you report disruption through the <%= link_to 'DfE educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status' %>.</p>
 
     <h2 class="govuk-heading-m">Get devices early for specific circumstances</h2>
     <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', request_devices_school_path(@school) %> from any year group who:</p>
