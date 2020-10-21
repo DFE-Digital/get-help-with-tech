@@ -7,7 +7,9 @@
       <%= t('page_titles.support.devices.schools.results') %>
     </h1>
 
-    <p class="govuk-body">You searched for <%= @search_form.request_count %> <%= 'schools'.pluralize(@search_form.request_count) %> and we found <%= @search_form.result_count %> <%= 'schools'.pluralize(@search_form.result_count) %></p>
+    <p class="govuk-body">
+      <%= pluralize(@search_form.request_count, 'school') %> found
+    </p>
 
     <% if @search_form.missing_urns.any? %>
       <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= "#{@search_form.missing_count} #{'error'.pluralize(@search_form.missing_count)} found" %></h2>
