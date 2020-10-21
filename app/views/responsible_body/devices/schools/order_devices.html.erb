@@ -8,9 +8,7 @@
       <%= t('page_titles.responsible_body.devices.order_devices') %>
     </h1>
 
-    <%= render DeviceCountComponent.new(
-      max_count: @school.std_device_allocation.cap,
-      ordered_count: @school.std_device_allocation.devices_ordered) %>
+    <%= render DeviceCountComponent.new(school: @school) %>
 
     <p class="govuk-body">Only order devices for children who cannot attend school and do not have access to a laptop or tablet.</p>
     <p class="govuk-body">We’re working hard to get devices delivered within 5 working days.</p>
