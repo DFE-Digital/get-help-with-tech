@@ -4,40 +4,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.support.devices.schools.results') %>
+      <%= t('page_titles.support.devices.schools.results') %> (<%= @search_form.result_count %>)
     </h1>
 
-    <p class="govuk-body">
-      <%= pluralize(@search_form.request_count, 'school') %> found
-    </p>
-
     <% if @search_form.missing_urns.any? %>
-      <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= "#{@search_form.missing_count} #{'error'.pluralize(@search_form.missing_count)} found" %></h2>
-
       <div class="govuk-form-group--error">
-        <p class="govuk-error-message">Fix the errors in your search and try again</p>
+        <p class="govuk-body">
+          No schools found for <%= pluralize(@search_form.missing_count, 'URN') %>:
+        </p>
 
-        <table class="govuk-table requests-table schools">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header">URN</th>
-              <th class="govuk-table__header">Error</th>
-            </tr>
-          </thead>
-
-          <tbody class="govuk-table__body">
-            <% @search_form.missing_urns.each do |urn| %>
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                  <%= urn %>
-                </td>
-                <td class="govuk-table__cell">
-                  <span class="govuk-error-message govuk-!-margin-bottom-0">No school with this URN could be found</span>
-                </td>
-              </tr>
-            <%- end %>
-          </tbody>
-        </table>
+        <ul class="govuk-list">
+          <% @search_form.missing_urns.each do |urn| %>
+            <li><%= urn %></li>
+          <%- end %>
+        </ul>
       </div>
     <%- end %>
   </div>
@@ -46,7 +26,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <% if @schools.present? %>
-      <table class="govuk-table">
+      <table class="govuk-table schools">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Name and URN</th>
