@@ -63,11 +63,13 @@ RSpec.describe SignInTokensController, type: :controller do
     end
 
     context 'when single_academy_trust user is associated with RB and school' do
-      let(:school) { create(:school) }
+      let(:trust) { create(:trust, :single_academy_trust) }
+      let(:school) { create(:school, :academy, responsible_body: trust) }
       let(:user) do
         create(:single_academy_trust_user,
                :who_has_requested_a_magic_link,
                orders_devices: true,
+               responsible_body: trust,
                school: school)
       end
 
