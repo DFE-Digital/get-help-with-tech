@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
 
-RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
+RSpec.feature 'Submitting an extra mobile data request', type: :feature do
   context 'not signed in' do
     it 'does not show the link in the nav' do
       visit '/'
@@ -27,7 +27,9 @@ RSpec.feature 'Submitting an ExtraMobileDataRequest', type: :feature do
     end
 
     scenario 'Navigating to the form' do
-      visit responsible_body_internet_mobile_extra_data_requests_path
+      visit responsible_body_home_path
+      click_on('Get the internet pilots')
+      click_on('Request extra data for mobile devices')
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
       choose('Manually (entering details one at a time)')
