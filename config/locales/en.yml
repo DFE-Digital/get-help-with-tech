@@ -119,7 +119,6 @@ en:
       one: We reduced your allocation to %{allocation} device because of delays in our supply chain
       many: We reduced your allocation to %{allocation} devices because of delays in our supply chain
       other: We reduced your allocation to %{allocation} devices because of delays in our supply chain
-    school_reduced_to_zero_allocation: We removed your allocation because of delays in our supply chain
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet

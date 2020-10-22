@@ -21,7 +21,6 @@ class School::DevicesController < School::BaseController
     render_404_if_feature_flag_inactive(:reduced_allocations)
 
     @allocation = @school.std_device_allocation&.allocation || 0
-    render 'school/devices/reduced_to_zero_allocation' if @allocation.zero?
   end
 
   def request_devices
