@@ -44,12 +44,10 @@ private
   end
 
   def notify_computacenter
-    if FeatureFlag.active?(:notify_can_place_orders)
-      ComputacenterMailer
-        .with(school: school, new_cap_value: new_cap_value)
-        .notify_of_school_can_order
-        .deliver_later
-    end
+    ComputacenterMailer
+      .with(school: school, new_cap_value: new_cap_value)
+      .notify_of_school_can_order
+      .deliver_later
   end
 
   def notify_users(users:, school:, message_type:)
@@ -59,15 +57,13 @@ private
   end
 
   def notify_user(user:, school:, message_type:)
-    if FeatureFlag.active?(:notify_can_place_orders)
-      CanOrderDevicesMailer
-        .with(user: user, school: school)
-        .send(message_type)
-        .deliver_later
-      EventNotificationsService.broadcast(
-        UserCanOrderEvent.new(user: user, school: school, type: message_type),
-      )
-    end
+    CanOrderDevicesMailer
+      .with(user: user, school: school)
+      .send(message_type)
+      .deliver_later
+    EventNotificationsService.broadcast(
+      UserCanOrderEvent.new(user: user, school: school, type: message_type),
+    )
   end
 
   def new_cap_value

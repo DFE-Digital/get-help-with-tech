@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Computacenter confirming TechSource accounts', with_feature_flags: { notify_can_place_orders: 'active' } do
+RSpec.describe 'Computacenter confirming TechSource accounts' do
   scenario 'when school user + school can order devices' do
     given_school_exists_that_can_order_devices
     and_school_user_awaiting_techsource_confirmation
