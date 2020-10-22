@@ -10,16 +10,9 @@
 
       <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint: { text: 'Enter your email address, and we’ll send you a link to sign in.' } %>
 
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            Change email address
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <p>Contact <%= ghwt_contact_mailto(subject: 'Request access for another email address') %> to request access for a different email address.</p>
-        </div>
-      </details>
+      <%= render GovukComponent::Details.new(summary: 'Change email address') do %>
+        <p>Contact <%= ghwt_contact_mailto(subject: 'Request access for another email address') %> to request access for a different email address.</p>
+      <%- end %>
 
       <%= f.govuk_submit %>
     <% end %>
