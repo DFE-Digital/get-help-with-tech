@@ -113,16 +113,23 @@ class PreorderInformation < ApplicationRecord
   end
 
   def invite_school_contact!
-    new_user = school_contact&.to_user
-
-    if new_user&.valid?
+    if school_contact.present?
       transaction do
-        new_user.save!
-        InviteSchoolUserMailer.with(user: new_user).nominated_contact_email.deliver_later
-        update!(school_contacted_at: Time.zone.now)
-        update!(status: infer_status)
+        user = CreateUserService.invite_school_user(
+          email_address: school_contact.email_address,
+          full_name: school_contact.full_name,
+          telephone: school_contact.phone_number,
+          school_id: school_id,
+          orders_devices: true,
+        )
+        if user.errors.empty?
+          update!(school_contacted_at: Time.zone.now)
+          update!(status: infer_status)
+          true
+        else
+          false
+        end
       end
-      true
     else
       false
     end
