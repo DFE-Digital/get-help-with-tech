@@ -49,11 +49,11 @@ RSpec.feature 'Searching for schools by URNs' do
   end
 
   def and_i_see_summary_count_string
-    expect(page).to have_content('You searched for 3 schools and we found 2 schools')
+    expect(page).to have_content('2 schools found')
   end
 
   def and_i_see_one_error
-    expect(page).to have_content('1 error found')
+    expect(page).to have_content('No schools found for 1 URN:')
   end
 
   def and_i_see_results_with_schools(count)
