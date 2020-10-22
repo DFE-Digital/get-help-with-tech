@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reduced allocation due to supply chain delays', with_feature_flags: { reduced_allocations: 'active' } do
+RSpec.feature 'Reduced allocation', with_feature_flags: { reduced_allocations: 'active' } do
   include ViewHelper
 
   let(:school) { create(:school, :with_std_device_allocation) }
@@ -27,6 +27,6 @@ RSpec.feature 'Reduced allocation due to supply chain delays', with_feature_flag
 
   def then_i_see_my_reduced_allocation
     expect(page).to have_http_status(:ok)
-    expect(page).to have_text("Your new allocation of #{school.std_device_allocation.allocation}")
+    expect(page).to have_text("We reduced your allocation to #{school.std_device_allocation.allocation}")
   end
 end

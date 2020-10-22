@@ -17,13 +17,13 @@
     <% if FeatureFlag.active?(:reduced_allocations) %>
       <div class="govuk-warning-text govuk-!-margin-bottom-2">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <span class="govuk-warning-text__text">
+        <strong class="govuk-warning-text__text">
           <span class="govuk-warning-text__assistive">Warning</span>
-          <h2 class="govuk-heading-m govuk-!-font-weight-bold">We reduced device allocations</h2>
+          <span class="govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-1">We reduced device allocations</span>
           <p class="govuk-body">
             <%= govuk_link_to('More about your reduced allocation', reduced_allocation_school_path(@school)) %>
           </p>
-        </span>
+        </strong>
       </div>
     <% end %>
 
