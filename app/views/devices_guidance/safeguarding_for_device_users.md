@@ -2,7 +2,7 @@
 
 Devices are being provided to help children and young people access social care and receive remote education, as well as support for their safety and wellbeing. In particular they are being provided to help:
 
-* social workers to provide virtual safeguarding and support to the children and families they work with via video conferences, for example 
+* social workers to provide virtual safeguarding and support to the children and families they work with via video conferences, for example
 * children, young people, families and care leavers to access the online services they need to protect their wellbeing
 * families and care leavers to avoid social isolation
 * children and young people to access remote learning, including year 10 pupils with upcoming GCSE exams
@@ -19,7 +19,7 @@ Parents and guardians should provide age-appropriate supervision for the interne
 
 LAs, academy trusts and schools are responsible for avoiding risks to the online safety of the children and young people they provide devices to.
 
-If you order Microsoft Windows devices from September 2020, you have the option to receive them without Department for Education (DfE) software and settings. These 'Standard' devices will be delivered with factory settings as supplied by the manufacturer. 
+If you order Microsoft Windows devices from September 2020, you have the option to receive them without Department for Education (DfE) software and settings. These 'Standard' devices will be delivered with factory settings as supplied by the manufacturer.
 
 You are responsible for setting up management and safeguarding measures before you distribute the devices.
 Cisco Umbrella will be pre-installed on devices ordered between May and July 2020, and those from September 2020 where you have selected 'DfE Restricted' devices which will have software and settings installed prior to delivery.
@@ -37,7 +37,13 @@ You can lend the devices out to users straight away as the mobile device managem
 
 You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
-**If you remove the MDM provided by DfE or continue using the devices after 30 September 2021, it’s your responsibility to set up alternative safeguarding measures to avoid risks to the children and young people in your care.**  
+<div class="app-card govuk-!-margin-bottom-4">
+  <p class="govuk-body govuk-!-margin-bottom-0">
+    If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
+  </p>
+</div>
+
+You can choose to remove the DfE safeguarding software and replace it with your own, or you can distribute the devices without any content filtering and MDM installed.
 
 Please see our guidance on management of [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
 
@@ -52,10 +58,18 @@ Unless you have selected to order devices without a DfE configuration, Microsoft
 * Windows Defender Exploit Guard
 * Windows Defender Antivirus
 
-## DfE privacy notice: mobile device management for the Department for Education’s ‘Get help with technology’ programme
+## Privacy notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
+
+This privacy policy is for the end users of Microsoft Windows laptops and tablets provided as part of the Department for Education’s Get help with technology programme.
+
+### Who this information is for
+
+This information is for:
+
+* children, young people and care leavers
+* parents and carers
 
 ### How we use your personal information
-
 The Get Help with Technology programme is run by the Department for Education (DfE). This privacy notice explains how it will use your personal information.
 
 As part of the Get Help with Technology programme we need to be able to:
@@ -79,7 +93,7 @@ Your name is not shared with the DfE or mobile device management software provid
 
 ### When we can use your personal information
 
-To use your personal information we need to meet one (or more) conditions in the data protection legislation. For this service we can use your information as part of our legitimate interest.
+To use your personal information we need to meet one (or more) conditions in the data protection legislation. For this service we can use your information as part of our legitimate interests to provide a safe and secure platform, including disabling laptops that may have been stolen.
 
 ### How long we hold personal information
 
