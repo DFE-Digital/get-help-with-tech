@@ -32,8 +32,8 @@ RSpec.describe DeviceCountComponent, type: :component do
       expect(html).to include 'ordered 1 of 5 devices'
     end
 
-    context 'when show_availabilty is false' do
-      subject(:component) { described_class.new(max_count: 5, ordered_count: 1, show_availabilty: false) }
+    context 'when show_availability is false' do
+      subject(:component) { described_class.new(max_count: 5, ordered_count: 1, show_availability: false) }
 
       it 'does not show availability' do
         html = render_inline(component).to_html

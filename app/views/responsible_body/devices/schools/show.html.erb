@@ -13,7 +13,7 @@
         ordered_count: @school.std_device_allocation.devices_ordered,
         show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
         action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) },
-        show_availabilty: !@school.cannot_order_as_reopened?,
+        show_availability: !@school.cannot_order_as_reopened?,
         body_i18n_key: (@school.cannot_order_as_reopened? ? 'page_titles.responsible_body.schools.show.cannot_order_as_reopened.device_count_component.body' : nil),
       ) %>
     <% else %>
