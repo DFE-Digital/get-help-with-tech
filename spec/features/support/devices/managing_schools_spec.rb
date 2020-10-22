@@ -44,7 +44,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_can_no_longer_invite_the_school
   end
 
-  scenario 'DfE user invites school contact who is already a user on a responsible_body' do
+  scenario 'DfE user invites school contact who is already a user on a responsible_body', pending: true do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
     and_the_school_contact_is_already_a_user_on_the_responsible_body
@@ -110,7 +110,6 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   def and_the_school_contact_is_already_a_user_on_the_responsible_body
     create(:local_authority_user, full_name: school_contact.full_name, email_address: school_contact.email_address, orders_devices: true, responsible_body: local_authority)
   end
-
 
   def when_i_sign_in_as_a_dfe_user
     sign_in_as create(:dfe_user)
