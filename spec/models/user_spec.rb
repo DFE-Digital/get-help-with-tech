@@ -845,6 +845,24 @@ RSpec.describe User, type: :model do
             expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
           end
         end
+
+        context 'when the user is reactivated (BUG #881)' do
+          let(:perform_change!) do
+            user.update!(orders_devices: true)
+          end
+
+          it 'generates a Computacenter::UserChange of type New' do
+            expect { perform_change! }.to change(Computacenter::UserChange, :count).by(1)
+
+            user_change = Computacenter::UserChange.last
+            expect(user_change.type_of_update).to eql('New')
+          end
+
+          it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+            perform_change!
+            expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
+          end
+        end
       end
     end
 

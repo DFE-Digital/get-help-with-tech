@@ -41,7 +41,7 @@ private
   end
 
   def is_addition?
-    user.relevant_to_computacenter? && last_change_for_user.nil?
+    user.relevant_to_computacenter? && (last_change_for_user.nil? || last_change_for_user.type_of_update == 'Remove')
   end
 
   def is_change?
@@ -84,12 +84,12 @@ private
   end
 
   def type_of_update
-    if is_change?
+    if is_addition?
+      'New'
+    elsif is_change?
       'Change'
     elsif is_removal?
       'Remove'
-    else
-      'New'
     end
   end
 end
