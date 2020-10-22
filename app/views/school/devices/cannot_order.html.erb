@@ -12,7 +12,7 @@
       <%= title %>
     </h1>
 
-    <% if School.show_temporary_cannot_order_yet_banner? %>
+    <% if FeatureFlag.active?(:half_term_order_closure) %>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
