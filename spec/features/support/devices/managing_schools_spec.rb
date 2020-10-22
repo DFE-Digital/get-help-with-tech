@@ -4,6 +4,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry', in_devices_pilot: true) }
   let(:responsible_bodies_page) { PageObjects::Support::Devices::ResponsibleBodiesPage.new }
   let(:responsible_body_page) { PageObjects::Support::Devices::ResponsibleBodyPage.new }
+  let(:school_contact) { School.find_by_name('Alpha School').contacts.first }
 
   scenario 'DfE users see school users' do
     given_a_responsible_body
@@ -19,6 +20,34 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   scenario 'DfE users invite school contacts to prepare for ordering devices' do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_visit_the_responsible_body_page
+    then_i_can_invite_the_school
+
+    when_i_invite_the_school
+    then_the_school_is_contacted
+    and_i_can_no_longer_invite_the_school
+  end
+
+  scenario 'DfE user invites school contact who is already a user on another school' do
+    given_a_responsible_body
+    and_it_has_a_school_that_needs_to_be_contacted
+    and_the_school_contact_is_already_a_user_on_another_school
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_visit_the_responsible_body_page
+    then_i_can_invite_the_school
+
+    when_i_invite_the_school
+    then_the_school_is_contacted
+    and_i_can_no_longer_invite_the_school
+  end
+
+  scenario 'DfE user invites school contact who is already a user on a responsible_body' do
+    given_a_responsible_body
+    and_it_has_a_school_that_needs_to_be_contacted
+    and_the_school_contact_is_already_a_user_on_the_responsible_body
 
     when_i_sign_in_as_a_dfe_user
     and_i_visit_the_responsible_body_page
@@ -72,6 +101,16 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     create(:school_user, school: school, full_name: 'James P. Sullivan', email_address: 'sully@alpha.sch.uk')
     create(:school_user, school: school, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk')
   end
+
+  def and_the_school_contact_is_already_a_user_on_another_school
+    other_school = create(:school, name: 'Other school', responsible_body: local_authority)
+    create(:school_user, full_name: school_contact.full_name, email_address: school_contact.email_address, orders_devices: true, schools: [other_school])
+  end
+
+  def and_the_school_contact_is_already_a_user_on_the_responsible_body
+    create(:local_authority_user, full_name: school_contact.full_name, email_address: school_contact.email_address, orders_devices: true, responsible_body: local_authority)
+  end
+
 
   def when_i_sign_in_as_a_dfe_user
     sign_in_as create(:dfe_user)
