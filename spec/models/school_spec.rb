@@ -1,38 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe School, type: :model do
-  describe '::show_temporary_cannot_order_yet_banner?' do
-    context 'before timeframe' do
-      it 'returns falsey' do
-        Timecop.freeze(Time.zone.local(2020, 10, 21, 22)) do
-          expect(described_class.show_temporary_cannot_order_yet_banner?).to be_falsey
-        end
-      end
-    end
-
-    context 'during timeframe' do
-      it 'at start returns truthy' do
-        Timecop.freeze(Time.zone.local(2020, 10, 22, 2)) do
-          expect(described_class.show_temporary_cannot_order_yet_banner?).to be_truthy
-        end
-      end
-
-      it 'at end returns truthy' do
-        Timecop.freeze(Time.zone.local(2020, 10, 23, 22)) do
-          expect(described_class.show_temporary_cannot_order_yet_banner?).to be_truthy
-        end
-      end
-    end
-
-    context 'after timeframe' do
-      it 'returns falsey' do
-        Timecop.freeze(Time.zone.local(2020, 10, 24, 1)) do
-          expect(described_class.show_temporary_cannot_order_yet_banner?).to be_falsey
-        end
-      end
-    end
-  end
-
   describe 'validating URN' do
     let(:school) { subject }
 

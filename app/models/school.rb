@@ -41,14 +41,6 @@ class School < ApplicationRecord
     can_order: 'can_order',
   }
 
-  def self.show_temporary_cannot_order_yet_banner?
-    now = Time.zone.now
-    start_period = Time.zone.local(2020, 10, 22)
-    end_period = Time.zone.local(2020, 10, 24)
-
-    now > start_period && now < end_period
-  end
-
   def self.that_will_order_devices
     joins(:preorder_information).merge(PreorderInformation.school_will_order_devices)
   end
