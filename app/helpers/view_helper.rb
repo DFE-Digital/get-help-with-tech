@@ -1,8 +1,8 @@
 module ViewHelper
-  def ghwt_contact_mailto(subject: 'Increasing%20internet%20access', label: 'COVID.TECHNOLOGY@education.gov.uk')
+  def ghwt_contact_mailto(subject: nil, label: 'COVID.TECHNOLOGY@education.gov.uk')
     mail_to_url = [
       'mailto:COVID.TECHNOLOGY@education.gov.uk',
-      (subject.present? ? "subject=#{subject}" : nil),
+      (subject.present? ? "subject=#{ERB::Util.url_encode(subject)}" : nil),
     ].compact.join('?')
 
     govuk_link_to label, mail_to_url

@@ -11,13 +11,17 @@
       <%= t('page_titles.responsible_body_internet_home') %>
     </h1>
 
-    <h2 class="govuk-heading-l">
-      Increasing mobile data pilot
-    </h2>
+    <% if FeatureFlag.active?(:mno_offer) %>
+      <%= render partial: 'extra_mobile_data_offer' %>
+    <% else %>
+      <h2 class="govuk-heading-l">
+        Increasing mobile data pilot
+      </h2>
 
-    <p class="govuk-body">
-      This pilot has ended. We’re now working with the mobile companies to prepare for the next phase of the scheme. We’ll let you know when it’s up and running again.
-    </p>
+      <p class="govuk-body">
+        This pilot has ended. We’re now working with the mobile companies to prepare for the next phase of the scheme. We’ll let you know when it’s up and running again.
+      </p>
+    <% end %>
 
     <h2 class="govuk-heading-l">
       BT wifi hotspot pilot
@@ -28,7 +32,7 @@
     </p>
 
     <p class="govuk-body">
-      If you were invited to take part in the pilot and have not downloaded your vouchers yet, please contact <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk">COVID.TECHNOLOGY@education.gov.uk</a> for support.
+      If you were invited to take part in the pilot and have not downloaded your vouchers yet, please contact <%= ghwt_contact_mailto %> for support.
     </p>
 
     <p class="govuk-body">
