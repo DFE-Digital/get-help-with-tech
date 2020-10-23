@@ -109,11 +109,11 @@ RSpec.describe DeviceCountComponent, type: :component do
     end
   end
 
-  context 'with custom ordered_string' do
-    let(:school) { School.new(device_allocations: [allocation]) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
+  context 'when school can_order_for_specific_circumstances and has_ordered' do
+    let(:school) { School.new(device_allocations: [allocation], order_state: :can_order_for_specific_circumstances) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 1, allocation: 1) }
 
-    subject(:component) { described_class.new(school: school, custom_ordered_string: 'hello') }
+    subject(:component) { described_class.new(school: school) }
 
     it 'renders availability' do
       html = render_inline(component).to_html
@@ -125,7 +125,7 @@ RSpec.describe DeviceCountComponent, type: :component do
       html = render_inline(component).to_html
 
       expect(html).not_to include 'ordered 0 of 0 devices'
-      expect(html).to include 'hello'
+      expect(html).to include 'You cannot order your full allocation yet'
     end
   end
 
