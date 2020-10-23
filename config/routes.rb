@@ -85,9 +85,6 @@ Rails.application.routes.draw do
     end
     namespace :internet do
       get '/', to: 'home#show'
-      resources :bt_wifi_vouchers, only: %i[index], path: '/bt-wifi-vouchers' do
-        get 'download', to: 'bt_wifi_vouchers#download', on: :collection
-      end
       namespace :mobile, path: '/mobile' do
         get '/', to: 'extra_data_requests#index', as: :extra_data_requests
         get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
