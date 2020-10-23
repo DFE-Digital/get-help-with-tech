@@ -44,7 +44,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_computacenter_device_cap_for_the_school_matches_the_devices_ordered
   end
 
-  scenario 'A school cannot order any longer as reopened' do
+  scenario 'Marking a school as having reopened' do
     @school = a_school_with_a_device_allocation_that_can_order
 
     when_i_navigate_to_the_school_page_in_support

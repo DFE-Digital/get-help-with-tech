@@ -5,7 +5,7 @@ RSpec.feature 'Ordering via a school' do
   let(:rb_user) { create(:local_authority_user, responsible_body: rb) }
   let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
   let(:another_preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
-  let(:another_allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, devices_ordered: 3) }
+  let(:another_allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, devices_ordered: 3, cap: 12) }
   let(:school) { create(:school, :with_headteacher_contact) }
   let(:school_that_cannot_order_as_reopened) { create(:school, :with_headteacher_contact, order_state: :cannot_order_as_reopened) }
 
@@ -26,11 +26,11 @@ RSpec.feature 'Ordering via a school' do
     end
   end
 
-  scenario 'when school cannot_order_as_reopened' do
+  scenario 'when the school has reopened' do
     given_i_am_signed_in_as_rb_user
 
     when_i_view_a_school(school_that_cannot_order_as_reopened)
-    then_i_see("You ordered #{another_allocation.devices_ordered} of #{another_allocation.cap} devices")
+    then_i_see('You ordered 3 of 12 devices')
   end
 
   context 'when school has devices to order' do
