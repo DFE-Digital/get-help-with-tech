@@ -30,6 +30,14 @@ class DeviceCountComponent < ViewComponent::Base
     !@school.cannot_order_as_reopened?
   end
 
+  def state_prefix
+    if @school.cannot_order_as_reopened?
+      'You ordered'
+    else
+      'You’ve ordered'
+    end
+  end
+
 private
 
   def availability_suffix
