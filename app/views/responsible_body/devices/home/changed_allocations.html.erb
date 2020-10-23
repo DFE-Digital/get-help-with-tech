@@ -1,9 +1,9 @@
-<%- title = t('page_titles.responsible_body_reduced_allocations') %>
+<%- title = t('page_titles.responsible_body_changed_allocations') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([
     { 'Home' => responsible_body_home_path },
-    'Reduced allocations',
+    title,
   ]) %>
 <% end %>
 
@@ -13,7 +13,7 @@
       <%= title %>
     </h1>
 
-    <p class="govuk-body">We reduced the number of laptops and tablets allocated to schools.</p>
+    <p class="govuk-body">We’ve changed how we allocate laptops and tablets. This is to get them to those in greatest need as effectively as we can.</p>
 
     <p class="govuk-body">We know most schools have small groups of children self-isolating at any one time. We believe the revised allocations should provide enough devices to support these groups.</p>
 
@@ -21,12 +21,10 @@
 
     <h2 class="govuk-heading-m">If a school closes fully</h2>
 
-    <p class="govuk-body">If a school closes fully, and there are still devices in stock, you’ll be able to order more. We’ll email you to explain what your options are if this happens.</p>
+    <p class="govuk-body">If a school closes fully, we’ll email you to explain what your options are, including how to request more devices.</p>
 
     <h2 class="govuk-heading-m">If you think schools need more devices</h2>
 
     <p class="govuk-body">If schools face extremely challenging circumstances, you can request more devices by emailing <%= ghwt_contact_mailto(subject: 'More devices request') %>.</p>
-
-    <p class="govuk-body">Please be aware that we’ll ask you to provide more information, and there’s no guarantee you’ll get all the devices you request.</p>
   </div>
 </div>
