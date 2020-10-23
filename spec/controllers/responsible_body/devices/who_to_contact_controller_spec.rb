@@ -85,7 +85,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
       end
     end
 
-    context 'when the contact already exists as a user on a responsible body (temporary until we merge #682)' do
+    context 'when the contact already exists as a user on a responsible body' do
       let(:existing_user) { create(:local_authority_user) }
 
       before do
@@ -104,8 +104,8 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
         expect { response }.not_to raise_error
       end
 
-      it 'displays that the school user will be contacted shortly - not now' do
-        expect(request.flash[:success]).to eq("Saved. We will email #{existing_user.email_address} shortly")
+      it 'displays that the school user has been contacted' do
+        expect(request.flash[:success]).to eq("Saved. We’ve emailed #{existing_user.email_address}")
       end
     end
   end
