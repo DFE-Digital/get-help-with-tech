@@ -29,4 +29,31 @@ RSpec.describe GetInformationAboutSchools, type: :model do
       'Group Status' => 'Open',
     })
   end
+
+  describe '.groups_url' do
+    it 'returns the groups file url for the date specified' do
+      t = Time.zone.now
+      file = "allgroupsdata#{t.strftime('%Y%m%d')}.csv"
+      url = GetInformationAboutSchools.groups_url(date: t)
+      expect(url).to end_with(file)
+    end
+  end
+
+  describe '.schools_url' do
+    it 'returns the schools file url for the date specified' do
+      t = Time.zone.now
+      file = "edubasealldata#{t.strftime('%Y%m%d')}.csv"
+      url = GetInformationAboutSchools.schools_url(date: t)
+      expect(url).to end_with(file)
+    end
+  end
+
+  describe '.school_links_url' do
+    it 'returns the school links file url for the date specified' do
+      t = Time.zone.now
+      file = "links_edubasealldata#{t.strftime('%Y%m%d')}.csv"
+      url = GetInformationAboutSchools.school_links_url(date: t)
+      expect(url).to end_with(file)
+    end
+  end
 end

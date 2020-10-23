@@ -63,16 +63,20 @@ class GetInformationAboutSchools
     RemoteFile.download(school_contacts_url, file)
   end
 
-  def self.groups_url
-    "#{EDUBASE_URL}allgroupsdata.csv"
+  def self.groups_url(date: Time.zone.now)
+    make_edubase_url('allgroupsdata', date)
   end
 
   def self.schools_url(date: Time.zone.now)
-    "#{EDUBASE_URL}edubasealldata#{date.strftime('%Y%m%d')}.csv"
+    make_edubase_url('edubasealldata', date)
   end
 
   def self.school_links_url(date: Time.zone.now)
-    "#{EDUBASE_URL}links_edubasealldata#{date.strftime('%Y%m%d')}.csv"
+    make_edubase_url('links_edubasealldata', date)
+  end
+
+  def self.make_edubase_url(filename, date)
+    "#{EDUBASE_URL}#{filename}#{date.strftime('%Y%m%d')}.csv"
   end
 
   def self.school_contacts_url
