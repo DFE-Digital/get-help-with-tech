@@ -28,7 +28,7 @@ Demonstrators are [schools and colleges](https://edtech-demonstrator.lgfl.net/de
 ## Who the programme is for
 Any publicly funded school or college in England can apply for support from an EdTech Demonstrator. Independent schools and training providers are not eligible for the scheme.
 
-The programme offers support to schools and colleges who are setting up a [new online learning platform](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/digital-education-platform-hub/). 
+The programme offers support to schools and colleges who are setting up a [new online learning platform](/digital-platforms). 
 
 It can also help those that would like support to develop their approach to remote learning to improve learner outcomes, engagement and wellbeing.
 
