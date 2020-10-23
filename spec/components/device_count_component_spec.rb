@@ -2,12 +2,15 @@ require 'rails_helper'
 
 RSpec.describe DeviceCountComponent, type: :component do
   context 'when no devices available' do
-    subject(:component) { described_class.new(max_count: 0, ordered_count: 0) }
+    let(:school) { School.new(device_allocations: [allocation]) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
+
+    subject(:component) { described_class.new(school: school) }
 
     it 'renders availability' do
       html = render_inline(component).to_html
 
-      expect(html).to include '0 devices available'
+      expect(html).to include 'All devices ordered'
     end
 
     it 'renders state' do
@@ -18,7 +21,10 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'when devices available' do
-    subject(:component) { described_class.new(max_count: 5, ordered_count: 1) }
+    let(:school) { School.new(device_allocations: [allocation]) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 5) }
+
+    subject(:component) { described_class.new(school: school) }
 
     it 'renders availability' do
       html = render_inline(component).to_html
@@ -31,15 +37,28 @@ RSpec.describe DeviceCountComponent, type: :component do
 
       expect(html).to include 'ordered 1 of 5 devices'
     end
+
+    context 'when school can_order_for_specific_circumstances' do
+      let(:school) { School.new(device_allocations: [allocation], order_state: :can_order_for_specific_circumstances) }
+
+      it 'renders availability with suffix' do
+        content = render_inline(component).content
+
+        expect(content).to include '4 devices available for specific circumstances'
+      end
+    end
   end
 
   context 'when all devices ordered' do
-    subject(:component) { described_class.new(max_count: 5, ordered_count: 5) }
+    let(:school) { School.new(device_allocations: [allocation]) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 5, cap: 5) }
+
+    subject(:component) { described_class.new(school: school) }
 
     it 'renders availability' do
       html = render_inline(component).to_html
 
-      expect(html).to include '0 devices available'
+      expect(html).to include 'All devices ordered'
     end
 
     it 'renders state' do
@@ -50,7 +69,10 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'with an action' do
-    subject(:component) { described_class.new(max_count: 3, ordered_count: 1, action: { 'hello' => 'https://example.com' }) }
+    let(:school) { School.new(device_allocations: [allocation]) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 3) }
+
+    subject(:component) { described_class.new(school: school, action: { 'hello' => 'https://example.com' }) }
 
     it 'renders action button' do
       doc = render_inline(component)
@@ -60,8 +82,7 @@ RSpec.describe DeviceCountComponent, type: :component do
 
     context 'when show action is true' do
       subject(:component) do
-        described_class.new(max_count: 3,
-                            ordered_count: 1,
+        described_class.new(school: school,
                             show_action: true,
                             action: { 'hello' => 'https://example.com' })
       end
@@ -75,8 +96,7 @@ RSpec.describe DeviceCountComponent, type: :component do
 
     context 'when show action is false' do
       subject(:component) do
-        described_class.new(max_count: 3,
-                            ordered_count: 1,
+        described_class.new(school: school,
                             show_action: false,
                             action: { 'hello' => 'https://example.com' })
       end
@@ -86,6 +106,46 @@ RSpec.describe DeviceCountComponent, type: :component do
 
         expect(html).not_to include 'hello'
       end
+    end
+  end
+
+  context 'with custom ordered_string' do
+    let(:school) { School.new(device_allocations: [allocation]) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
+
+    subject(:component) { described_class.new(school: school, custom_ordered_string: 'hello') }
+
+    it 'renders availability' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'All devices ordered'
+    end
+
+    it 'renders custom state' do
+      html = render_inline(component).to_html
+
+      expect(html).not_to include 'ordered 0 of 0 devices'
+      expect(html).to include 'hello'
+    end
+  end
+
+  context 'with different allocations present' do
+    let(:allocation1) { SchoolDeviceAllocation.new(device_type: 'std_device', devices_ordered: 1, cap: 3) }
+    let(:allocation2) { SchoolDeviceAllocation.new(device_type: 'coms_device', devices_ordered: 2, cap: 5) }
+    let(:school) { School.new(device_allocations: [allocation1, allocation2]) }
+
+    subject(:component) { described_class.new(school: school) }
+
+    it 'renders availability' do
+      content = render_inline(component).content
+
+      expect(content).to include '2 devices and 3 routers available'
+    end
+
+    it 'renders state' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'ordered 1 of 3 devices and 2 of 5 routers'
     end
   end
 end

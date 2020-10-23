@@ -12,6 +12,15 @@ class SchoolDeviceAllocation < ApplicationRecord
     'std_device': 'std_device',
   }
 
+  def device_type_name
+    case device_type
+    when 'coms_device'
+      'router'
+    else
+      'device'
+    end
+  end
+
   def self.included_in_performance_analysis
     t = SchoolDeviceAllocation.arel_table
     std_device.where(t[:cap].gt(0).or(t[:allocation].gt(0)))

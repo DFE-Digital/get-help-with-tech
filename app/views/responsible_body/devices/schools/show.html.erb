@@ -9,8 +9,7 @@
 
     <%- if @school.has_std_device_allocation? %>
       <%= render DeviceCountComponent.new(
-        max_count: @school.std_device_allocation.cap,
-        ordered_count: @school.std_device_allocation.devices_ordered,
+        school: @school,
         show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
         action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
     <% else %>

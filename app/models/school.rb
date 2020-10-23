@@ -53,6 +53,10 @@ class School < ApplicationRecord
     where(order_state: %w[can_order_for_specific_circumstances can_order])
   end
 
+  def has_ordered?
+    device_allocations.to_a.any? { |alloc| alloc.devices_ordered.positive? }
+  end
+
   def who_will_order_devices
     preorder_information&.who_will_order_devices || responsible_body.who_will_order_devices
   end
@@ -136,6 +140,10 @@ class School < ApplicationRecord
     urn.to_s
   end
 
+  def has_devices_available_to_order?
+    device_allocations.any?(&:has_devices_available_to_order?)
+  end
+
 private
 
   def device_ordering_organisation
@@ -144,9 +152,5 @@ private
 
   def is_eligible_to_order?
     can_order? || can_order_for_specific_circumstances?
-  end
-
-  def has_devices_available_to_order?
-    std_device_allocation&.has_devices_available_to_order?
   end
 end

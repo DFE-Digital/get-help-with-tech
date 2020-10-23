@@ -4,31 +4,17 @@
   <%- school_breadcrumbs items: title, school: @school, user: @user %>
 <%- end %>
 
-<%-
-  device_count = @school.std_device_allocation.available_devices_count
-  has_ordered = @school.std_device_allocation.devices_ordered > 0
-%>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
     <%= render partial: 'shared/techsource_unavailable_banner' %>
 
-    <div class="app-card app-card__order">
-      <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
-        <%= "#{device_count} #{'device'.pluralize(device_count)}" -%> available<br />for specific circumstances
-      </h2>
+    <% custom_ordered_string = (@school.has_ordered? ? nil : 'You cannot order your full allocation yet') %>
 
-      <div class="govuk-panel__body govuk-!-font-size-24">
-        <% if has_ordered %>
-          You’ve ordered <%= @school.std_device_allocation.devices_ordered %> of
-          <%= @school.std_device_allocation.cap %> devices
-        <% else %>
-          You cannot order your full allocation yet
-        <% end %>
-      </div>
-    </div>
+    <%= render DeviceCountComponent.new(
+      school: @school,
+      custom_ordered_string: custom_ordered_string) %>
 
     <p class="govuk-body">Now you’ve contacted us to <%= govuk_link_to 'request devices for specific circumstances', request_devices_school_path(@school) %>, you can go ahead with your order. You cannot order your full allocation yet because there are no local coronavirus restrictions.</p>
 

@@ -153,12 +153,26 @@ module ViewHelper
     now >= window_start && now <= window_end
   end
 
-  def what_to_order(device_count, specific_circumstances)
-    if device_count.zero?
-      'All devices ordered'
+  def what_to_order_availability(school:)
+    suffix = (school.can_order_for_specific_circumstances? ? ' for specific circumstances' : nil)
+
+    if school.has_devices_available_to_order?
+      string = school.device_allocations.map { |alloc|
+        "#{alloc.available_devices_count} #{alloc.device_type_name.pluralize(alloc.available_devices_count)}"
+      }.join(' and ')
+
+      "Order #{string}#{suffix}"
     else
-      "Order #{device_count} #{'device'.pluralize(device_count)}#{' for specific circumstances' if specific_circumstances}"
+      'All devices ordered'
     end
+  end
+
+  def what_to_order_state(school:)
+    string = school.device_allocations.map { |alloc|
+      "#{alloc.devices_ordered} #{alloc.device_type_name.pluralize(alloc.devices_ordered)}"
+    }.join(' and ')
+
+    "You’ve ordered #{string}"
   end
 
 private

@@ -4,25 +4,13 @@
   <%- school_breadcrumbs items: title, school: @school, user: @user %>
 <%- end %>
 
-<%-
-  device_count = @school.std_device_allocation.available_devices_count
-%>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
     <%= render partial: 'shared/techsource_unavailable_banner' %>
 
-    <div class="app-card app-card__order">
-      <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
-        <%= "#{device_count} #{'device'.pluralize(device_count)} available" -%>
-      </h2>
-      <div class="govuk-panel__body govuk-!-font-size-24">
-        You’ve ordered <%= @school.std_device_allocation.devices_ordered %> of
-        <%= @school.std_device_allocation.cap %> devices
-      </div>
-    </div>
+    <%= render DeviceCountComponent.new(school: @school) %>
 
     <p class="govuk-body">Only order devices for children who cannot attend school and do not have access to a laptop or tablet.</p>
     <p class="govuk-body">We’re working hard to get devices delivered within 5 working days.</p>

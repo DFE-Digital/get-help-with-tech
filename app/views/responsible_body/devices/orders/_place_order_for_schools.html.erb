@@ -16,8 +16,10 @@
           <%= govuk_link_to("#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn)) %>
         </td>
         <td class="govuk-table__cell">
-          <%= what_to_order(school.std_device_allocation.available_devices_count,
-                            school.can_order_for_specific_circumstances?) %>
+          <%= what_to_order_availability(school: school) %>
+          <span class="govuk-caption-m">
+            <%= what_to_order_state(school: school) %>
+          </span>
         </td>
       </tr>
     <%- end %>
