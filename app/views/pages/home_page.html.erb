@@ -1,15 +1,15 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Get help with technology
+      <%= t('service_name') %>
     </h1>
 
     <p class="govuk-body">
       Information for local authorities, academy trusts and schools about the devices, internet access
-      and support available to provide remote education and access to children’s social care during coronavirus (COVID-19).
+      and support available to provide remote education and access to children&rsquo;s social care during coronavirus (COVID-19).
     </p>
     <p class="govuk-body govuk-!-margin-bottom-9">
-      Find out more about the Department for Education’s <br>
+      Find out more about the Department for Education&rsquo;s <br>
       <a href="https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19" class="govuk-link">Get help with technology programme on GOV.UK.</a>
     </p>
   </div>
@@ -33,9 +33,8 @@
     </h2>
 
     <p class="govuk-body">
-      Get information about choosing, ordering, setting up, distributing and managing the laptops, tablets and 4G
-      wireless routers you’ve received. You can also find guides to share with children and young people to help them
-      use the devices.
+      Get information about setting up, distributing and managing the laptops, tablets and 4G wireless routers
+      you’ve received. You can also find guides to share with children and young people to help them use the devices.
     </p>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
@@ -57,8 +56,8 @@
     </h2>
 
     <p class="govuk-body">
-      Visit The Key for School Leaders website to find out how to apply for government-funded support to access one of
-      two free-to-use digital education platforms: G Suite for Education or Office 365 Education.
+      Find out how to apply for government-funded support to access one of two free-to-use digital education platforms:
+      G Suite for Education or Office 365 Education.
     </p>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
@@ -68,43 +67,22 @@
     </h2>
 
     <p class="govuk-body">
-      The EdTech Demonstrator Programme website has information on how to contact a network of schools and colleges who
-      are already using remote education technology resources for help and support. You can also access CPD training resources.
+      Access funded advice, guidance and training from the EdTech demonstrators, a network of schools and colleges expert in their use of technology.
+      This may be helpful if you&rsquo;ve received devices or support to set up a new digital platform through the Get help with technology programme,
+      or if you&rsquo;re developing your approach to remote education, reducing teacher workloads and improving pupil outcomes.
     </p>
   </div>
 
   <div class="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      Guidance you might find useful
-    </h2>
-
-    <ul class="govuk-list govuk-list--spaced govuk-!-font-size-16">
-      <li>
-        <%= govuk_link_to 'Request local admin and BIOS passwords to install your own software', '/devices/preparing-microsoft-windows-laptops-and-tablets#requesting-local-admin-and-bios-passwords-and-installing-your-own-software-and-settings' %>
-      </li>
-
-      <li>
-        <%= govuk_link_to 'How devices are allocated', '/devices/device-allocations' %>
-      </li>
-
-      <li>
-        <%= govuk_link_to 'Internet access through free BT hotspots', '/about-bt-wifi' %>
-      </li>
-
-      <li>
-        <%= govuk_link_to 'Increasing data allowances on mobile devices', '/about-increasing-mobile-data' %>
-      </li>
-    </ul>
-
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
       Contact us
     </h2>
     <p class="govuk-body-s">
       If you work for a local authority, academy trust or school and you need help with any of the devices or services
-      offered by this programme, please email <%= ghwt_contact_mailto %>. We aim to respond within 3 working days.
+      offered by this programme, please email <%= ghwt_contact_mailto(subject: nil) %>. We aim to respond within 3 working days.
     </p>
     <p class="govuk-body-s">
-      If you’ve been given a laptop, tablet or 4G wireless router by your local authority or school and need some help,
+      If you&rsquo;ve been given a laptop, tablet or 4G wireless router by your local authority or school and need some help,
       please contact the person or school who gave it to you.
     </p>
   </div>
