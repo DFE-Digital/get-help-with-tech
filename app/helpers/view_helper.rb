@@ -44,17 +44,7 @@ module ViewHelper
   end
 
   def school_breadcrumbs(items:, user:, school:)
-    scope = if user.has_multiple_schools?
-              [
-                { 'Your schools' => schools_path },
-                { school.name => home_school_path(school) },
-              ]
-            else
-              [
-                { 'Home' => home_school_path },
-              ]
-            end
-    breadcrumbs(scope + Array(items))
+    render School::SchoolBreadcrumbsComponent.new(items: items, user: user, school: school)
   end
 
   def sortable_extra_mobile_data_requests_table_header(title, value = title, opts = params)
