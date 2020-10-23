@@ -253,10 +253,17 @@
           </div>
 
           <div class="app-step-nav__panel" id="step-panel-place-an-order-5">
+            <% if FeatureFlag.active?(:half_term_order_closure) %>
+              <div class="app-card govuk-!-margin-bottom-4">
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                  Ordering is temporarily paused over half term while children are not reliant on remote education, and because we’re unable to deliver devices to schools during half term (up to 2 November).
+                </p>
+              </div>
+            <% end %>
             <p class="app-step-nav__paragraph">
               If face-to-face education at a school is disrupted due to coronavirus (such as a ‘bubble’ or year group being advised not to attend), schools can make us aware via the <a href="https://form.education.gov.uk/service/educational-setting-status" class="govuk-link" target="_blank">Educational settings status form</a> which is monitored daily.
             </p>
-            <p class="app-step-nav__paragraph">  
+            <p class="app-step-nav__paragraph">
               We’ll then email nominated contacts to inform them when device orders can be placed.
             </p>
               <p class="app-step-nav__paragraph">
@@ -303,10 +310,6 @@
           </div>
 
           <div class="app-step-nav__panel" id="step-panel-receive-and-distribute-laptops-and-tablets-6">
-            <p class="app-step-nav__paragraph">
-              Due to high demand, the current estimate for devices to be delivered to schools is within 5 working days of an order being confirmed.
-            </p>
-
             <p class="app-step-nav__paragraph">
               All devices will be fully owned by the schools or academy trusts who receive them. It will be the
               responsibility of the school to lend the devices to those who need them.
