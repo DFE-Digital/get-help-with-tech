@@ -253,14 +253,17 @@
           </div>
 
           <div class="app-step-nav__panel" id="step-panel-place-an-order-5">
-            <div class="app-card govuk-!-margin-bottom-4">
-  <p class="govuk-body govuk-!-margin-bottom-0">
-Please note, as we're unable to deliver devices to schools during half term, all orders are temporarily closed.</p>
-</div>
+            <% if FeatureFlag.active?(:half_term_order_closure) %>
+              <div class="app-card govuk-!-margin-bottom-4">
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                  Please note, as we're unable to deliver devices to schools during half term, all orders are temporarily closed.
+                </p>
+              </div>
+            <% end %>
             <p class="app-step-nav__paragraph">
               If face-to-face education at a school is disrupted due to coronavirus (such as a ‘bubble’ or year group being advised not to attend), schools can make us aware via the <a href="https://form.education.gov.uk/service/educational-setting-status" class="govuk-link" target="_blank">Educational settings status form</a> which is monitored daily.
             </p>
-            <p class="app-step-nav__paragraph">  
+            <p class="app-step-nav__paragraph">
               We’ll then email nominated contacts to inform them when device orders can be placed.
             </p>
               <p class="app-step-nav__paragraph">
