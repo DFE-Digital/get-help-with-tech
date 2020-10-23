@@ -26,6 +26,10 @@ class DeviceCountComponent < ViewComponent::Base
     }.join(' and ')
   end
 
+  def show_availability?
+    !@school.cannot_order_as_reopened?
+  end
+
 private
 
   def availability_suffix
