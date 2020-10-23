@@ -164,6 +164,9 @@ en:
     techsource_unavailable: Sorry, TechSource is unavailable
     your_schools: Your schools
     your_organisations: Your organisations
+  landing_pages:
+    edtech_demonstrator_programme:
+      title: Get free training and support to set up and use technology effectively
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
