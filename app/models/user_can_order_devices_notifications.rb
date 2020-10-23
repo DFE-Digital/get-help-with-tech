@@ -18,8 +18,6 @@ private
   end
 
   def notify_user(school:)
-    return unless FeatureFlag.active?(:notify_can_place_orders)
-
     message_type = message_type_for_school(school)
 
     return unless message_type

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Enabling orders for a school from the support area', with_feature_flags: { notify_can_place_orders: 'active' } do
+RSpec.feature 'Enabling orders for a school from the support area' do
   let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
 

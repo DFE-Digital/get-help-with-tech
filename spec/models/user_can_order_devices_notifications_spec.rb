@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserCanOrderDevicesNotifications, with_feature_flags: { notify_can_place_orders: 'active' } do
+RSpec.describe UserCanOrderDevicesNotifications do
   subject(:service) { described_class.new(user: user) }
 
   context 'when orders can be placed' do

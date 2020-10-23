@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { notify_can_place_orders: 'active', slack_notifications: 'active' } do
+RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_notifications: 'active' } do
   let(:school) do
     create(:school,
            :with_std_device_allocation,
@@ -47,14 +47,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { notify_
             text: "[User can order event] We emailed a user to tell them that they can place orders for #{school.name}",
             mrkdwn: true,
           )
-        end
-
-        context 'when feature is deactivated', with_feature_flags: { notify_can_place_orders: 'inactive' } do
-          it 'does not notify the user' do
-            expect {
-              service.call
-            }.not_to have_enqueued_job.on_queue('mailers')
-          end
         end
       end
 
@@ -189,14 +181,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { notify_
             text: "[User can order event] We emailed a user to tell them that action is needed before #{school.name} can place orders",
             mrkdwn: true,
           )
-        end
-      end
-
-      context 'when feature is deactivated', with_feature_flags: { notify_can_place_orders: 'inactive' } do
-        it 'does not notify the user' do
-          expect {
-            service.call
-          }.not_to have_enqueued_job.on_queue('mailers')
         end
       end
     end
