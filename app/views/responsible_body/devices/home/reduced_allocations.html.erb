@@ -3,32 +3,30 @@
 <%- content_for :before_content do %>
   <% breadcrumbs([
     { 'Home' => responsible_body_home_path },
-    'Delays in our supply chain',
+    'Reduced allocations',
   ]) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">
+    <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
 
-    <p class="govuk-body">Due to delays in our supply chain, we reduced the number of laptops and tablets allocated to schools. This is so we can target support at disadvantaged children in key exam years (10 and 11).</p>
+    <p class="govuk-body">We reduced the number of laptops and tablets allocated to schools.</p>
 
-    <p class="govuk-body">This means only schools with children in years 10 and 11 will be able to order their allocation of laptops and tablets.</p>
+    <p class="govuk-body">We know most schools have small groups of children self-isolating at any one time. We believe the revised allocations should provide enough devices to support these groups.</p>
 
-    <p class="govuk-body">Allocations of devices are now based on:</p>
+    <p class="govuk-body">Once children who had been self-isolating return to school, schools may choose to reallocate devices so as many pupils as possible can benefit from them.</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>the number of children in years 10 and 11</li>
-      <li>free school meals data</li>
-      <li>an estimate of the number of devices a school already has</li>
-    </ul>
+    <h2 class="govuk-heading-m">If a school closes fully</h2>
 
-    <h2 class="govuk-heading-m">We’re working hard to increase stock levels</h2>
+    <p class="govuk-body">If a school closes fully, and there are still devices in stock, you’ll be able to order more. We’ll email you to explain what your options are if this happens.</p>
 
-    <p class="govuk-body">We’re working hard with suppliers to increase stock levels as quickly as we can, and we hope to restore your original allocation. We’ll let you know when things change.</p>
+    <h2 class="govuk-heading-m">If you think schools need more devices</h2>
 
-    <p class="govuk-body">We understand this news is disappointing, and we’re sorry.</p>
+    <p class="govuk-body">If schools face extremely challenging circumstances, you can request more devices by emailing <%= ghwt_contact_mailto(subject: 'More devices request') %>.</p>
+
+    <p class="govuk-body">Please be aware that we’ll ask you to provide more information, and there’s no guarantee you’ll get all the devices you request.</p>
   </div>
 </div>
