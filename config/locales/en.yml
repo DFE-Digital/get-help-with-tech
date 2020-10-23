@@ -35,7 +35,7 @@ en:
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
-    responsible_body_reduced_allocations: We reduced device allocations
+    responsible_body_changed_allocations: We’ve changed how we allocate devices
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Get schools ready
@@ -115,10 +115,7 @@ en:
     school_edit_chromebooks: Will your school need to order Chromebooks?
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
-    school_reduced_allocation:
-      one: We reduced your allocation to %{allocation} device
-      many: We reduced your allocation to %{allocation} devices
-      other: We reduced your allocation to %{allocation} devices
+    school_changed_allocation: We’ve changed how we allocate devices
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet

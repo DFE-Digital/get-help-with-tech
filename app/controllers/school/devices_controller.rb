@@ -17,10 +17,8 @@ class School::DevicesController < School::BaseController
     end
   end
 
-  def reduced_allocation
+  def changed_allocation
     render_404_if_feature_flag_inactive(:reduced_allocations)
-
-    @allocation = @school.std_device_allocation&.allocation || 0
   end
 
   def request_devices
