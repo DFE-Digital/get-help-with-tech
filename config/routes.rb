@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get '/start', to: 'pages#start'
 
+  get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
   get '/about-bt-wifi', to: 'pages#about_bt_wifi'

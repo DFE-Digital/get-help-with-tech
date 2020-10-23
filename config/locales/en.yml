@@ -164,9 +164,10 @@ en:
     techsource_unavailable: Sorry, TechSource is unavailable
     your_schools: Your schools
   landing_pages:
+    digital_platforms:
+      title: "Get funding and support to set up a digital education platform"
     edtech_demonstrator_programme:
       title: "Get free training and support to set up and use technology effectively"
-
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
