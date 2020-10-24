@@ -1,0 +1,17 @@
+<% content_for :title, t('page_titles.service_performance') %>
+
+<h1 class="govuk-heading-xl">
+  <%= t('page_titles.service_performance') %>
+</h1>
+
+<%= govuk_tabs(title: 'Contents') do |component| %>
+  <% component.slot(:tab, title: 'Devices') do %>
+    <%= render partial: 'responsible_body_sign_ins' %>
+
+    <%= render partial: 'preorder_information' %>
+  <% end %>
+
+  <% component.slot(:tab, title: 'Connectivity') do %>
+    <%= render partial: 'mobile_data_requests' %>
+  <% end %>
+<%- end %>

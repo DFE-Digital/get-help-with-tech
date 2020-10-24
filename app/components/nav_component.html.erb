@@ -1,8 +1,5 @@
 <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
   <%- if @user&.is_support? %>
-    <%= nav_item(content: 'Internet:') %>
-    <%= render_nav_links(support_internet_links) %>
-    <%= nav_item(content: 'Devices:') %>
     <%= render_nav_links(support_devices_links) %>
     <%= render_nav_links(support_general_links) %>
   <%- elsif @user&.is_computacenter? %>
