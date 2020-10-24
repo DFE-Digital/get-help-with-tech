@@ -1,16 +1,8 @@
-<%- if params[:pilot] == 'devices' %>
-  <%- responsible_body_link = support_devices_responsible_body_path(@responsible_body) %>
-  <%- responsible_bodies_link = support_devices_responsible_bodies_path %>
-<%- else %>
-  <%- responsible_body_link = support_internet_responsible_body_path(@responsible_body) %>
-  <%- responsible_bodies_link = support_internet_responsible_bodies_path %>
-<%- end %>
-
 <% content_for :title, "Add a user for #{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
   <% breadcrumbs([
-                   { t('page_titles.support_responsible_bodies') => responsible_bodies_link },
-                   { @responsible_body.name => responsible_body_link },
+                   { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
+                   { @responsible_body.name => support_devices_responsible_body_path(@responsible_body) },
                    "Add a user"
                   ]) %>
 <% end %>

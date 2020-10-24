@@ -38,11 +38,7 @@ class Support::UsersController < Support::BaseController
 private
 
   def return_path
-    if params[:pilot] == 'devices'
-      support_devices_responsible_body_path(@responsible_body)
-    else
-      support_internet_responsible_body_path(@responsible_body)
-    end
+    support_devices_responsible_body_path(@responsible_body)
   end
 
   def user_params

@@ -136,7 +136,6 @@ Rails.application.routes.draw do
   namespace :support do
     namespace :internet do
       get '/performance', to: 'service_performance#index', as: :service_performance
-      resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
     end
     namespace :devices do
       get '/performance', to: 'service_performance#index', as: :service_performance

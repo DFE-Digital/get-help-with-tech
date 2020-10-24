@@ -29,7 +29,6 @@ class NavComponent < ViewComponent::Base
   def support_internet_links
     [
       NavLinkComponent.new(title: 'Performance', url: support_internet_service_performance_path),
-      NavLinkComponent.new(title: 'RBs', url: support_internet_responsible_bodies_path),
     ]
   end
 
