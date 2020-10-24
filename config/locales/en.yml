@@ -274,9 +274,6 @@ en:
       update:
         success: We’ve saved the new allocation
     service_performance:
-      mobile_network_operators:
-        one: mobile network operator
-        other: different mobile network operators
       requests:
         one: request
         other: requests
@@ -286,9 +283,6 @@ en:
       users_signed_in:
         one: user has signed in
         other: users have signed in
-      vouchers:
-        one: voucher
-        other: vouchers
       responsible_bodies_with_at_least_one_preorder_information_completed:
         one: responsible body has given all the information needed for at least one school
         other: responsible bodies have given all the information needed for at least one school
