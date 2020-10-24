@@ -2,45 +2,39 @@
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
-    <div class="app-card app-card--blue">
-      <span class="app-card__count"><%= @stats.total_extra_mobile_data_requests %></span>
-      <%= t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.total_extra_mobile_data_requests,
+                 label: t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests),
+                 colour: :blue) %>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card">
-      <span class="app-card__secondary-count">
-        <%= @stats.extra_mobile_data_requests_by_status['requested'] || 0 %>
-      </span>
-      new
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.extra_mobile_data_requests_by_status['requested'] || 0,
+                 label: 'new',
+                 size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card">
-      <span class="app-card__secondary-count">
-        <%= @stats.extra_mobile_data_requests_by_status['in_progress'] || 0 %>
-      </span>
-      in progress
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.extra_mobile_data_requests_by_status['in_progress'] || 0,
+                 label: 'in progress',
+                 size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card app-card--red">
-      <span class="app-card__secondary-count">
-        <%= (@stats.extra_mobile_data_requests_by_status['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status['cancelled'] || 0) %>
-      </span>
-      not valid or cancelled
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: (@stats.extra_mobile_data_requests_by_status['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status['cancelled'] || 0),
+                 label: 'not valid or cancelled',
+                 colour: :red,
+                 size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card app-card--green">
-      <span class="app-card__secondary-count">
-        <%= @stats.extra_mobile_data_requests_by_status['complete'] || 0 %>
-      </span>
-      completed
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.extra_mobile_data_requests_by_status['complete'] || 0,
+                 label: 'completed',
+                 colour: :green,
+                 size: :reduced) %>
   </div>
 </div>
 

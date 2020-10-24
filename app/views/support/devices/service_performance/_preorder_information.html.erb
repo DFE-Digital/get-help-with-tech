@@ -2,10 +2,10 @@
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
-    <div class="app-card app-card--blue">
-      <span class="app-card__count"><%= number_with_delimiter(@stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed) %></span>
-      <%= t(:responsible_bodies_with_at_least_one_preorder_information_completed, scope: %i[support service_performance], count: @stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed,
+                 label: t(:responsible_bodies_with_at_least_one_preorder_information_completed, scope: %i[support service_performance], count: @stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed),
+                 colour: :blue) %>
   </div>
 </div>
 
@@ -13,77 +13,67 @@
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
-    <div class="app-card app-card--blue">
-      <span class="app-card__count"><%= number_with_delimiter(@stats.number_of_schools_with_a_decision_made) %></span>
-      <%= t(:decision_made, scope: %i[support devices_performance], count: @stats.number_of_schools_with_a_decision_made) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.number_of_schools_with_a_decision_made,
+                 label: t(:decision_made, scope: %i[support devices_performance], count: @stats.number_of_schools_with_a_decision_made),
+                 colour: :blue) %>
   </div>
 </div>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-one-half">
-    <div class="app-card">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.number_of_schools_devolved_to) %>
-      </span>
-      <%= t(:schools_devolved_to, scope: %i[support devices_performance], count: @stats.number_of_schools_devolved_to) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.number_of_schools_devolved_to,
+                 label: t(:schools_devolved_to, scope: %i[support devices_performance], count: @stats.number_of_schools_devolved_to),
+                 size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-half">
-    <div class="app-card">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.number_of_schools_managed_centrally) %>
-      </span>
-      <%= t(:schools_managed_centrally, scope: %i[support devices_performance], count: @stats.number_of_schools_managed_centrally) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.number_of_schools_managed_centrally,
+                 label: t(:schools_managed_centrally, scope: %i[support devices_performance], count: @stats.number_of_schools_managed_centrally),
+                 size: :reduced) %>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['needs_contact'] || 0) %>
-      </span>
-      <%= t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_contact'] || 0) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.preorder_information_counts_by_status['needs_contact'] || 0,
+                 label: t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_contact'] || 0),
+                 size: :reduced) %>
 
-    <div class="app-card app-card--blue">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_contacted'] || 0) %>
-      </span>
-      <%= t(:school_contacted, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_contacted'] || 0) %>
-    </div>
-  </div>
-  <div class="govuk-grid-column-one-quarter">
-    <div class="app-card app-card--light-blue">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
-      </span>
-      <%= t(:school_contacts, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.preorder_information_counts_by_status['school_contacted'] || 0,
+                 label: t(:school_contacted, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_contacted'] || 0),
+                 colour: :blue,
+                 size: :reduced) %>
 
-    <div class="app-card app-card--green">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['school_ready'] || 0) %>
-      </span>
-      <%= t(:school_ready, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_ready'] || 0) %>
-    </div>
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['needs_info'] || 0) %>
-      </span>
-      <%= t(:needs_information, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0,
+                 label: t(:school_contacts, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0),
+                 colour: :'light-blue',
+                 size: :reduced) %>
+
+    <%= render Support::TileComponent.new(
+                 count: @stats.preorder_information_counts_by_status['school_ready'] || 0,
+                 label: t(:school_ready, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_ready'] || 0),
+                 colour: :green,
+                 size: :reduced) %>
+
   </div>
   <div class="govuk-grid-column-one-quarter">
-    <div class="app-card app-card--light-blue">
-      <span class="app-card__secondary-count">
-        <%= number_with_delimiter(@stats.preorder_information_counts_by_status['ready'] || 0) %>
-      </span>
-      <%= t(:information_given, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0) %>
-    </div>
+    <%= render Support::TileComponent.new(
+                 count: @stats.preorder_information_counts_by_status['needs_info'] || 0,
+                 label: t(:needs_information, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0),
+                 size: :reduced) %>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <%= render Support::TileComponent.new(
+                 count: @stats.preorder_information_counts_by_status['ready'] || 0,
+                 label: t(:information_given, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0),
+                 colour: :'light-blue',
+                 size: :reduced) %>
   </div>
 </div>
