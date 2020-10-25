@@ -1,4 +1,4 @@
-class Support::UsersController < Support::BaseController
+class Support::ResponsibleBodies::UsersController < Support::BaseController
   def new
     @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = @responsible_body.users.build

@@ -136,7 +136,7 @@ Rails.application.routes.draw do
   namespace :support do
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
-      resources :users, only: %i[new create edit update]
+      resources :users, only: %i[new create edit update], controller: 'responsible_bodies/users'
     end
     namespace :devices do
       resources :key_contacts, only: %i[new index create], path: '/key-contacts'

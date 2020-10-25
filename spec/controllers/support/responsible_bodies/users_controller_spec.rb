@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Support::UsersController, type: :controller do
+RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
   describe '#create' do
     context 'for support users', versioning: true do
       let(:responsible_body) { create(:local_authority) }
