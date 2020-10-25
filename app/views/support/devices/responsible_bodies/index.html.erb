@@ -1,4 +1,4 @@
-<% content_for :title, t('page_titles.support_devices_responsible_bodies') %>
+<% content_for :title, t('page_titles.support_responsible_bodies') %>
 
 <h1 class="govuk-heading-xl">
   <span class="govuk-caption-xl">Devices pilot</span>
@@ -6,11 +6,9 @@
 </h1>
 
 <table id="responsible-bodies" class="govuk-table">
-  <caption class="govuk-table__caption">Responsible bodies with at least one user</caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Type</th>
-      <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">Name and type</th>
       <th scope="col" class="govuk-table__header">User count</th>
       <th scope="col" class="govuk-table__header">Users signed in at least once</th>
       <th scope="col" class="govuk-table__header">Who will order devices?</th>
@@ -20,13 +18,19 @@
   <tbody class="govuk-table__body">
     <% @responsible_bodies.each do |responsible_body| %>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= responsible_body.type.underscore.humanize %></td>
-        <td class="govuk-table__cell"><%= govuk_link_to responsible_body.name, support_devices_responsible_body_path(responsible_body) %></td>
+        <td class="govuk-table__cell">
+          <%= govuk_link_to responsible_body.name, support_devices_responsible_body_path(responsible_body) %>
+          <% unless responsible_body.in_devices_pilot %>
+            (not in device reserve)
+          <% end %>
+          <br>
+          <%= responsible_body.type.underscore.humanize %>
+        </td>
         <td class="govuk-table__cell"><%= pluralize(responsible_body.user_count, "user") %></td>
         <td class="govuk-table__cell">
           <%= pluralize(responsible_body.users_who_have_signed_in_at_least_once, "user") %> signed in
         </td>
-        <td class="govuk-table__cell"><%= responsible_body.who_will_order_devices %></td>
+        <td class="govuk-table__cell"><%= responsible_body.who_will_order_devices&.humanize %></td>
         <td class="govuk-table__cell">
           <%= responsible_body.completed_preorder_info_count %>
         </td>

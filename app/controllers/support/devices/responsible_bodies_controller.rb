@@ -2,7 +2,7 @@ class Support::Devices::ResponsibleBodiesController < Support::BaseController
   def index
     @responsible_bodies = ResponsibleBody
       .select('responsible_bodies.*')
-      .in_devices_pilot
+      .excluding_department_for_education
       .with_users_who_have_signed_in_at_least_once
       .with_user_count
       .with_completed_preorder_info_count

@@ -8,6 +8,8 @@ class ResponsibleBody < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :schools
 
+  scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
+
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 
