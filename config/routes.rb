@@ -146,13 +146,12 @@ Rails.application.routes.draw do
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'
       resources :users, only: %i[new create edit update], controller: 'schools/users'
-      namespace :devices do
-        get '/enable-orders', to: 'order_status#edit', as: :enable_orders
-        get '/enable-orders/confirm', to: 'order_status#confirm', as: :confirm_enable_orders
-        patch '/enable-orders', to: 'order_status#update'
-        get '/allocation/edit', to: 'allocation#edit'
-        patch '/allocation', to: 'allocation#update'
-      end
+
+      get '/devices/enable-orders', to: 'schools/devices/order_status#edit', as: :enable_orders
+      get '/devices/enable-orders/confirm', to: 'schools/devices/order_status#confirm', as: :confirm_enable_orders
+      patch '/devices/enable-orders', to: 'schools/devices/order_status#update'
+      get '/devices/allocation/edit', to: 'schools/devices/allocation#edit'
+      patch '/devices/allocation', to: 'schools/devices/allocation#update'
     end
     namespace :devices do
       resources :school_bulk_allocations, only: %i[new create], path: 'school-bulk-allocations'

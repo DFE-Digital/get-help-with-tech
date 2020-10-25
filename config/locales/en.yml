@@ -256,7 +256,7 @@ en:
     order_status:
       update:
         cap_update_request_error: "Could not update the cap on Computacenter's system - payload_id: %{payload_id}"
-        success: We've saved your choices
+        success: We’ve saved your choices
       confirm:
         order_states:
           cannot_order: cannot place orders yet

@@ -1,4 +1,4 @@
-class Support::Devices::OrderStatusController < Support::BaseController
+class Support::Schools::Devices::OrderStatusController < Support::BaseController
   before_action :set_school
 
   def edit
@@ -17,7 +17,7 @@ class Support::Devices::OrderStatusController < Support::BaseController
         flash[:success] = t(:success, scope: %i[support order_status update])
         redirect_to support_school_path(urn: @school.urn)
       else
-        redirect_to support_school_devices_confirm_enable_orders_path(urn: @school.urn, order_state: @form.order_state, cap: @form.cap)
+        redirect_to support_school_confirm_enable_orders_path(urn: @school.urn, order_state: @form.order_state, cap: @form.cap)
       end
     else
       render :edit, status: :unprocessable_entity

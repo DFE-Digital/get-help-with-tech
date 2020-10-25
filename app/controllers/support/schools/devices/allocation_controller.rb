@@ -1,4 +1,4 @@
-class Support::Devices::AllocationController < Support::BaseController
+class Support::Schools::Devices::AllocationController < Support::BaseController
   before_action :set_school_and_allocation
 
   def edit
