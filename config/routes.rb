@@ -146,12 +146,14 @@ Rails.application.routes.draw do
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'
       resources :users, only: %i[new create edit update], controller: 'schools/users'
-    end
-    namespace :devices do
-      resources :schools, only: %i[], param: :urn do
+      namespace :devices do
         get '/enable-orders', to: 'order_status#edit', as: :enable_orders
         get '/enable-orders/confirm', to: 'order_status#confirm', as: :confirm_enable_orders
         patch '/enable-orders', to: 'order_status#update'
+      end
+    end
+    namespace :devices do
+      resources :schools, only: %i[], param: :urn do
         get '/allocation/edit', to: 'allocation#edit'
         patch '/allocation', to: 'allocation#update'
       end

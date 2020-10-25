@@ -9,7 +9,7 @@
       <%= title %>
     </h1>
 
-    <%= form_for @form, url: support_devices_school_enable_orders_path(@school.urn), method: :patch do |f| %>
+    <%= form_for @form, url: support_school_devices_enable_orders_path(@school.urn), method: :patch do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_radio_buttons_fieldset :order_state, legend: nil do %>

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Enabling orders for a school from the support area' do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
-  let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
+  let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
 
   before do
     @computacenter_caps_api_request = stub_computacenter_outgoing_api_calls

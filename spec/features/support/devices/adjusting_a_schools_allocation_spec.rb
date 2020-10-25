@@ -4,7 +4,7 @@ RSpec.feature 'Adjusting a schools allocation' do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school, order_state: :cannot_order) }
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
-  let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
+  let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
 
   before do
     create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
