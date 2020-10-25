@@ -15,7 +15,7 @@
       <%= title %>
     </h1>
 
-    <%= form_for @user, url: support_devices_school_users_path(@school) do |f| %>
+    <%= form_for @user, url: support_school_users_path(@school) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render partial: 'shared/school_user_form', locals: { form: f } %>
       <%= f.govuk_submit 'Send invite' %>

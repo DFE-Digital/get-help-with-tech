@@ -5,7 +5,7 @@ RSpec.feature 'Inviting school users' do
   let(:school) { create(:school) }
   let(:other_school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
-  let(:new_school_user_page) { PageObjects::Support::Devices::Schools::NewUserPage.new }
+  let(:new_school_user_page) { PageObjects::Support::Schools::NewUserPage.new }
   let(:existing_user) { create(:school_user, email_address: 'existinguser@example.com', schools: [other_school]) }
 
   before do

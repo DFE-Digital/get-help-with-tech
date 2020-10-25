@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Support::Devices::UsersController do
+RSpec.describe Support::Schools::UsersController do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school) }
 

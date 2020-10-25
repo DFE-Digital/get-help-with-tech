@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Enabling orders for a school from the support area' do
-  let(:school_details_page) { PageObjects::Support::Devices::SchoolDetailsPage.new }
+  let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Devices::EnableOrdersConfirmPage.new }
 
   before do

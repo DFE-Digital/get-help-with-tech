@@ -1,4 +1,4 @@
-class Support::Devices::UsersController < Support::BaseController
+class Support::Schools::UsersController < Support::BaseController
   def new
     @school = School.find_by(urn: params[:school_urn])
     @user = @school.users.build
