@@ -148,7 +148,6 @@ Rails.application.routes.draw do
       resources :users, only: %i[new create edit update], controller: 'schools/users'
     end
     namespace :devices do
-      resources :key_contacts, only: %i[new index create], path: '/key-contacts'
       resources :schools, only: %i[], param: :urn do
         get '/enable-orders', to: 'order_status#edit', as: :enable_orders
         get '/enable-orders/confirm', to: 'order_status#confirm', as: :confirm_enable_orders
