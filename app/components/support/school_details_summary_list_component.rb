@@ -14,7 +14,7 @@ private
     super
       .except(:action_path, :action)
       .merge(
-        change_path: support_devices_school_allocation_edit_path(school_urn: @school.urn),
+        change_path: support_school_devices_allocation_edit_path(school_urn: @school.urn),
         action: 'allocation',
       )
   end

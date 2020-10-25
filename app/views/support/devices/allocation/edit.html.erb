@@ -9,7 +9,7 @@
       <%= title %>
     </h1>
 
-    <%= form_for @form, url: support_devices_school_allocation_path(@school.urn), method: :patch do |f| %>
+    <%= form_for @form, url: support_school_devices_allocation_path(@school.urn), method: :patch do |f| %>
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">
