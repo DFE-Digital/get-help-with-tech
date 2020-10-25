@@ -46,10 +46,10 @@ private
 
   def support_devices_links
     [
+      NavLinkComponent.new(title: 'Responsible bodies', url: support_responsible_bodies_path),
+      NavLinkComponent.new(title: 'Find schools', url: search_support_schools_path),
+      NavLinkComponent.new(title: 'Enable orders for many schools', url: devices_enable_orders_for_many_schools_support_schools_path),
       NavLinkComponent.new(title: 'Performance', url: support_service_performance_path),
-      NavLinkComponent.new(title: 'RBs', url: support_responsible_bodies_path),
-      NavLinkComponent.new(title: 'Schools', url: search_support_schools_path),
-      NavLinkComponent.new(title: 'Full allocations', url: new_support_devices_school_bulk_allocation_path),
     ]
   end
 

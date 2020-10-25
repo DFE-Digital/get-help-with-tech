@@ -36,7 +36,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   end
 
   def when_i_click_on_the_full_allocations_nav_menu_link
-    click_link 'Full allocations'
+    click_link 'Enable orders for many schools'
   end
 
   def then_i_see_the_full_allocations_page
@@ -44,7 +44,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   end
 
   def when_i_navigate_to_the_full_allocations_page
-    visit new_support_devices_school_bulk_allocation_path
+    visit devices_enable_orders_for_many_schools_support_schools_path
   end
 
   def and_i_enter_my_school_urns

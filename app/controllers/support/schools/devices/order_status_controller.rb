@@ -33,6 +33,21 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
     @allocation = @school.std_device_allocation.allocation
   end
 
+  def collect_urns_to_allow_many_schools_to_order
+    @form = Support::BulkAllocationForm.new
+  end
+
+  def allow_ordering_for_many_schools
+    @form = Support::BulkAllocationForm.new(restriction_params)
+
+    if @form.valid?
+      @summary = allocation_service.unlock!(@form.urn_list)
+      render :summary
+    else
+      render :collect_urns_to_allow_many_schools_to_order, status: :unprocessable_entity
+    end
+  end
+
 private
 
   def set_school
@@ -52,5 +67,13 @@ private
 
   def enable_orders_form_params(opts = params)
     opts.fetch(:support_enable_orders_form, {}).permit(:order_state, :cap)
+  end
+
+  def restriction_params
+    params.require(:support_bulk_allocation_form).permit(:school_urns)
+  end
+
+  def allocation_service
+    @allocation_service ||= BulkAllocationService.new
   end
 end

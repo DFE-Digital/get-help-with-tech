@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= form_for @form, url: support_devices_school_bulk_allocations_path do |f| %>
+    <%= form_for @form, url: allow_ordering_for_many_schools_support_schools_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">These schools can place orders because local coronavirus restrictions are confirmed.</p>

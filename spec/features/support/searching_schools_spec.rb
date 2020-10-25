@@ -28,7 +28,7 @@ RSpec.feature 'Searching for schools by URNs' do
   end
 
   def when_i_click_on_the_schools_nav_menu_link
-    click_link 'Schools'
+    click_link 'Find schools'
   end
 
   def then_i_see_the_schools_search_page
