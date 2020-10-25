@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing responsible bodies in the support area', type: :feature do
-  let(:responsible_bodies_page) { PageObjects::Support::Devices::ResponsibleBodiesPage.new }
+  let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
 
   scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_are_responsible_bodies_in_the_devices_pilot_that_have_users
     and_given_there_are_responsible_bodies_not_in_the_devices_pilot
 
     when_i_sign_in_as_a_dfe_user
-    and_i_visit_the_support_devices_responsible_bodies_page
+    and_i_visit_the_support_responsible_bodies_page
 
     then_i_can_see_the_responsible_bodies_in_the_devices_pilot
     and_i_can_see_the_responsible_bodies_not_in_the_devices_pilot
@@ -36,7 +36,7 @@ RSpec.feature 'Viewing responsible bodies in the support area', type: :feature d
     sign_in_as create(:dfe_user)
   end
 
-  def and_i_visit_the_support_devices_responsible_bodies_page
+  def and_i_visit_the_support_responsible_bodies_page
     responsible_bodies_page.load
   end
 

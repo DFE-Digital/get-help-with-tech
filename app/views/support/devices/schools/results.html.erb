@@ -48,7 +48,7 @@
                 <%= render SchoolPreorderStatusTagComponent.new(school: school) %>
               </td>
               <td class="govuk-table__cell">
-                <%= govuk_link_to school.responsible_body.name, support_devices_responsible_body_path(id: school.responsible_body_id) %>
+                <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
               </td>
               <td class="govuk-table__cell">
                 <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>

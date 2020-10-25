@@ -2,8 +2,8 @@
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
   <%= breadcrumbs([
-    { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
-    { @responsible_body.name => support_devices_responsible_body_path(@responsible_body) },
+    { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
+    { @responsible_body.name => support_responsible_body_path(@responsible_body) },
     @user.full_name,
   ]) %>
 <% end %>

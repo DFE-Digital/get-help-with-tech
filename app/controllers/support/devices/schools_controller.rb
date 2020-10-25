@@ -32,7 +32,7 @@ class Support::Devices::SchoolsController < Support::BaseController
     else
       flash[:warning] = I18n.t('support.schools.invite.failure', name: school.name)
     end
-    redirect_to support_devices_responsible_body_path(school.responsible_body)
+    redirect_to support_responsible_body_path(school.responsible_body)
   end
 
 private

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Support::Devices::ResponsibleBodiesController, type: :controller do
+RSpec.describe Support::ResponsibleBodiesController, type: :controller do
   describe 'index' do
     it 'is forbidden for MNO users' do
       sign_in_as create(:mno_user)

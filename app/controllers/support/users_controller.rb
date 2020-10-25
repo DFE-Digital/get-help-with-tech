@@ -38,7 +38,7 @@ class Support::UsersController < Support::BaseController
 private
 
   def return_path
-    support_devices_responsible_body_path(@responsible_body)
+    support_responsible_body_path(@responsible_body)
   end
 
   def user_params

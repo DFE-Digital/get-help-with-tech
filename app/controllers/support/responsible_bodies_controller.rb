@@ -1,4 +1,4 @@
-class Support::Devices::ResponsibleBodiesController < Support::BaseController
+class Support::ResponsibleBodiesController < Support::BaseController
   def index
     @responsible_bodies = ResponsibleBody
       .select('responsible_bodies.*')

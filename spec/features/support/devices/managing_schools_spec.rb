@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Managing schools from the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry', in_devices_pilot: true) }
-  let(:responsible_bodies_page) { PageObjects::Support::Devices::ResponsibleBodiesPage.new }
-  let(:responsible_body_page) { PageObjects::Support::Devices::ResponsibleBodyPage.new }
+  let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
+  let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
   let(:school_contact) { School.find_by_name('Alpha School').contacts.first }
 
   scenario 'DfE users see school users' do

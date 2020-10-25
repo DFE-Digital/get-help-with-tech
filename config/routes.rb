@@ -135,9 +135,11 @@ Rails.application.routes.draw do
 
   namespace :support do
     get '/performance', to: 'service_performance#index', as: :service_performance
+    resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
+      resources :users, only: %i[new create edit update]
+    end
     namespace :devices do
       resources :key_contacts, only: %i[new index create], path: '/key-contacts'
-      resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
       resources :schools, only: %i[show], param: :urn do
         resources :users, only: %i[new create edit update]
         collection do
@@ -153,9 +155,6 @@ Rails.application.routes.draw do
         patch '/allocation', to: 'allocation#update'
       end
       resources :school_bulk_allocations, only: %i[new create], path: 'school-bulk-allocations'
-    end
-    resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
-      resources :users, only: %i[new create edit update]
     end
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index

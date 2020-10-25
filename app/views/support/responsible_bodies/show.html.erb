@@ -1,7 +1,7 @@
 <% content_for :title, "#{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
   <%= breadcrumbs([
-    { t('page_titles.support_responsible_bodies') => support_devices_responsible_bodies_path },
+    { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
     @responsible_body.name,
   ]) %>
 <% end %>
@@ -13,7 +13,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body, pilot: 'devices') %>
+    <%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body) %>
 
     <h2 class="govuk-heading-l">Users</h2>
 
