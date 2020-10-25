@@ -26,6 +26,24 @@ class NavComponent < ViewComponent::Base
     }.join('').html_safe
   end
 
+  def links
+    if @user&.is_support?
+      support_devices_links + support_general_links
+    elsif @user&.is_computacenter?
+      computacenter_links
+    elsif @user&.is_mno_user?
+      mno_links
+    elsif @user&.is_responsible_body_user?
+      responsible_body_links
+    elsif @user&.is_school_user?
+      school_links
+    else
+      not_signed_in_links
+    end
+  end
+
+private
+
   def support_devices_links
     [
       NavLinkComponent.new(title: 'Performance', url: support_service_performance_path),

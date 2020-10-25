@@ -1,18 +1,5 @@
 <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-  <%- if @user&.is_support? %>
-    <%= render_nav_links(support_devices_links) %>
-    <%= render_nav_links(support_general_links) %>
-  <%- elsif @user&.is_computacenter? %>
-    <%= render_nav_links(computacenter_links) %>
-  <%- elsif @user&.is_mno_user? %>
-    <%= render_nav_links(mno_links) %>
-  <%- elsif @user&.is_responsible_body_user? %>
-    <%= render_nav_links(responsible_body_links) %>
-  <%- elsif @user&.is_school_user? %>
-    <%= render_nav_links(school_links) %>
-  <%- else %>
-    <%= render_nav_links(not_signed_in_links) %>
-  <%- end %>
+  <%= render_nav_links links %>
 
   <%- if SessionService.is_signed_in?(session) && @user %>
     <%- sign_out_link = button_to("Sign out", session_path(id: session[:session_id]), method: :delete, class: 'nav-button-as-link govuk-link govuk-header__link', form_class: 'form-inline' ) %>
