@@ -8,7 +8,7 @@
 
     <p class="govuk-body">Search for schools by entering their URNs. Use one line per URN.</p>
 
-    <%= form_with model: @search_form, url: results_support_devices_schools_path do |f| %>
+    <%= form_with model: @search_form, url: results_support_schools_path do |f| %>
       <%= f.govuk_text_area :urns,
                             label: { text: 'URNs', size: 'm' },
                             rows: 12 %>

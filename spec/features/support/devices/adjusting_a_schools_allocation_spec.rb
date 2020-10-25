@@ -13,7 +13,7 @@ RSpec.feature 'Adjusting a schools allocation' do
 
   describe 'visiting a school details page' do
     before do
-      visit support_devices_school_path(school.urn)
+      visit support_school_path(school.urn)
     end
 
     it 'shows a link to Change whether they can order devices' do
@@ -49,7 +49,7 @@ RSpec.feature 'Adjusting a schools allocation' do
         end
 
         it 'takes me back to the school details page' do
-          expect(page).to have_current_path(support_devices_school_path(school.urn))
+          expect(page).to have_current_path(support_school_path(school.urn))
           expect(page).to have_http_status(:ok)
           expect(page).to have_text('We’ve saved the new allocation')
           expect(school_details_page.school_details_rows[2]).to have_text(51)

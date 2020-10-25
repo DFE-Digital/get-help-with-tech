@@ -13,7 +13,7 @@ class Support::Devices::AllocationController < Support::BaseController
     if @form.valid?
       @allocation.update!(allocation: @form.allocation)
       flash[:success] = t(:success, scope: %i[support allocation update])
-      redirect_to support_devices_school_path(urn: @school.urn)
+      redirect_to support_school_path(urn: @school.urn)
     else
       render :edit, status: :unprocessable_entity
     end

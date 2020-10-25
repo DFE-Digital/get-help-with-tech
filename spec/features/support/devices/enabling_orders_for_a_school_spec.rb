@@ -99,7 +99,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   end
 
   def when_i_navigate_to_the_school_page_in_support
-    visit support_devices_school_path(@school.urn)
+    visit support_school_path(@school.urn)
 
     expect(school_details_page).to have_text 'Can place orders?'
     expect(school_details_page).to have_link 'Change whether they can place orders'

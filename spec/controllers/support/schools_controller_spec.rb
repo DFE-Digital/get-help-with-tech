@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Support::Devices::SchoolsController, type: :controller do
+RSpec.describe Support::SchoolsController, type: :controller do
   let(:school) { create(:school, name: 'Alpha School') }
   let(:another_school) { create(:school, name: 'Beta School') }
   let(:support_user) { create(:support_user) }
@@ -63,7 +63,7 @@ RSpec.describe Support::Devices::SchoolsController, type: :controller do
       it 'redirects back to the school page with an error' do
         get :confirm_invitation, params: { school_urn: school.urn }
 
-        expect(response).to redirect_to(support_devices_school_path(school))
+        expect(response).to redirect_to(support_school_path(school))
         expect(request.flash[:warning]).to eq('Could not invite Alpha School because the school does not have a contact')
       end
     end

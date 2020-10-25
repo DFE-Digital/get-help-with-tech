@@ -10,7 +10,7 @@ class Support::Devices::UsersController < Support::BaseController
     @user = CreateUserService.invite_school_user(user_attributes)
 
     if @user.persisted?
-      redirect_to support_devices_school_path(urn: @school.urn)
+      redirect_to support_school_path(urn: @school.urn)
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Support::Devices::UsersController < Support::BaseController
 
     if @user.update(user_params)
       flash[:success] = 'User has been updated'
-      redirect_to support_devices_school_path(urn: @school.urn)
+      redirect_to support_school_path(urn: @school.urn)
     else
       @user = present(@user)
       render :edit, status: :unprocessable_entity

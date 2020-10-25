@@ -1,4 +1,4 @@
-class Support::Devices::SchoolsController < Support::BaseController
+class Support::SchoolsController < Support::BaseController
   def search
     @search_form = BulkUrnSearchForm.new
   end
@@ -20,7 +20,7 @@ class Support::Devices::SchoolsController < Support::BaseController
     @school_contact = @school.preorder_information&.school_contact
     if @school_contact.nil?
       flash[:warning] = I18n.t('support.schools.invite.no_school_contact', name: @school.name)
-      redirect_to support_devices_school_path(@school)
+      redirect_to support_school_path(@school)
     end
   end
 

@@ -46,7 +46,7 @@ RSpec.describe Support::Devices::UsersController do
 
       it 'redirects back to the school' do
         post!
-        expect(response).to redirect_to support_devices_school_path(urn: school.urn)
+        expect(response).to redirect_to support_school_path(urn: school.urn)
       end
 
       it 'sends out an email', sidekiq: true do

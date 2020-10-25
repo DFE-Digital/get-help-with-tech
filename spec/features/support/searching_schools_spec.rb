@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Searching for schools by URNs' do
-  let(:search_page) { PageObjects::Support::Devices::School::SearchPage.new }
-  let(:results_page) { PageObjects::Support::Devices::School::ResultsPage.new }
+  let(:search_page) { PageObjects::Support::School::SearchPage.new }
+  let(:results_page) { PageObjects::Support::School::ResultsPage.new }
   let(:support_user) { create(:support_user) }
   let(:schools) { create_list(:school, 2) }
   let(:bad_urn) { '12492903' }

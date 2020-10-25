@@ -4,7 +4,7 @@
   <%= breadcrumbs([
     { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
     { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
-    { @school.name => support_devices_school_path(urn: @school.urn) },
+    { @school.name => support_school_path(urn: @school.urn) },
     title,
   ]) %>
 <% end %>
