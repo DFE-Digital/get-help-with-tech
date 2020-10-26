@@ -3,6 +3,9 @@ class SchoolsController < ApplicationController
 
   def index
     @schools = @user.schools
-    redirect_to home_school_path(@user.schools.first) if @user.schools.size == 1
+    if @user.schools.size == 1 && \
+        (@user.is_a_single_academy_trust_user? || !@user.is_responsible_body_user?)
+      redirect_to home_school_path(@user.schools.first)
+    end
   end
 end

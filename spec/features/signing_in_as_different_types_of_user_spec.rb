@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.feature 'Signing-in as different types of user', type: :feature do
   let(:user) { create(:local_authority_user) }
+  let(:local_authority_school) { create(:school, :la_maintained, responsible_body: user.responsible_body) }
+  let(:single_academy_trust) { create(:school, :single_academy_trust) }
+  let(:single_academy_trust_user) { create(:user, :single_academy_trust_user) }
   let(:token) { user.generate_token! }
   let(:identifier) { user.sign_in_identifier(token) }
   let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
@@ -27,12 +30,25 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
   context 'as a user who belongs to a responsible body' do
     context 'who has already seen the privacy notice' do
-      let(:user) { create(:local_authority_user, :has_seen_privacy_notice) }
+      let(:user) { create(:local_authority_user, :has_seen_privacy_notice, orders_devices: true) }
 
       scenario 'it redirects to the responsible body homepage' do
         sign_in_as user
         expect(page).to have_current_path(responsible_body_home_path)
         expect(page).to have_text 'Get help with technology'
+      end
+
+      context 'and who also belongs to a school' do
+        before do
+          user.schools << local_authority_school
+        end
+
+        scenario 'it redirects to Your organisations' do
+          sign_in_as user
+          expect(page).to have_text 'Your organisations'
+          expect(page).to have_link user.schools[0].name
+          expect(page).to have_link user.responsible_body.name
+        end
       end
     end
 
