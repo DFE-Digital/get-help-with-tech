@@ -84,6 +84,7 @@ Rails.application.routes.draw do
         end
       end
     end
+
     namespace :internet do
       get '/', to: 'home#show'
       namespace :mobile, path: '/mobile' do
@@ -125,6 +126,12 @@ Rails.application.routes.draw do
       patch '/next(/:step)', to: 'school/welcome_wizard#next_step', as: :welcome_wizard
       patch '/prev', to: 'school/welcome_wizard#previous_step', as: :welcome_wizard_previous
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
+
+      scope module: :school do
+        namespace :internet do
+          get '/', to: 'home#show'
+        end
+      end
     end
   end
 

@@ -1,0 +1,21 @@
+<%- title = t('page_titles.school.internet.home.show.title') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: @user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      Request extra data for mobile devices
+    </h2>
+
+    <p class="govuk-body">We’re working with mobile companies to temporarily increase data allowances on certain networks. This is so children and young people can continue their remote education without incurring extra data charges.</p>
+
+    <p class="govuk-body">If a child or young person doesn’t have their own phone, we can increase data on a family member’s phone, as long as they’re in the same household.</p>
+
+    <p class="govuk-body">Once you submit mobile numbers and network details through our service, we’ll request extra data. How much data someone gets will depend on their network.</p>
+  </div>
+</div>
