@@ -1,12 +1,8 @@
 <%- title = @school.name %>
-<%- if @user.has_multiple_schools? %>
-  <%- content_for :before_content do %>
-    <% breadcrumbs([
-      { 'Your schools' => schools_path },
-      title,
-    ]) %>
-  <% end %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs(school: @school, user: @user, items: title) %>
 <%- end %>
+<%- content_for :title, title %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
