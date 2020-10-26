@@ -1,13 +1,6 @@
 <%- title = t('page_titles.edit_school_user') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
-<%- content_for :before_content do %>
-  <%= breadcrumbs([
-    { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
-    { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
-    { @school.name => support_school_path(urn: @school.urn) },
-    @user.full_name,
-  ]) %>
-<% end %>
+<%- content_for :before_content, govuk_link_to('Back', support_school_path(urn: @school.urn), class: 'govuk-back-link') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

@@ -1,7 +1,15 @@
-<% content_for :title, t('page_titles.service_performance') %>
+<%- title = t('page_titles.service_performance') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    title,
+  ]) %>
+<% end %>
+
 
 <h1 class="govuk-heading-xl">
-  <%= t('page_titles.service_performance') %>
+  <%= title %>
 </h1>
 
 <%= govuk_tabs(title: 'Contents') do |component| %>

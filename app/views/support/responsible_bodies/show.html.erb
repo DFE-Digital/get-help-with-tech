@@ -1,6 +1,7 @@
 <% content_for :title, "#{@responsible_body.name} – Support" %>
 <%- content_for :before_content do %>
   <%= breadcrumbs([
+    { 'Support home' => support_home_path },
     { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
     @responsible_body.name,
   ]) %>

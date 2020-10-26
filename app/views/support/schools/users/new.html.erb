@@ -2,6 +2,7 @@
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
   <%= breadcrumbs([
+    { 'Support home' => support_home_path },
     { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
     { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
     { @school.name => support_school_path(urn: @school.urn) },

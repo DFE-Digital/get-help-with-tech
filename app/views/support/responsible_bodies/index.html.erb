@@ -1,7 +1,14 @@
-<% content_for :title, t('page_titles.support_responsible_bodies') %>
+<%- title = t('page_titles.support_responsible_bodies') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    title,
+  ]) %>
+<%- end %>
 
 <h1 class="govuk-heading-xl">
-  <%= t('page_titles.support_responsible_bodies') %>
+  <%= title %>
 </h1>
 
 <table id="responsible-bodies" class="govuk-table">
