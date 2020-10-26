@@ -4,7 +4,7 @@ module ApplicationHelper
   delegate :is_signed_in?, to: :controller
 
   def browser_title
-    service_name = content_for(:devices_service) ? t('page_titles.devices_guidance_index') : t('service_name')
+    service_name = content_for(:devices_service) ? t('landing_pages.get_support_guides.title') : t('service_name')
     page_browser_title = content_for(:browser_title).presence || content_for(:title)
     [page_browser_title, service_name, 'GOV.UK'].select(&:present?).join(' - ')
   end

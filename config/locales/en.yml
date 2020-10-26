@@ -51,7 +51,6 @@ en:
     internet_access: Getting internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_index: "Get help with technology: devices"
     devices_guidance_how_to_order: "How and when to order laptops and tablets during coronavirus (COVID-19)"
     download_bt_hotspots: Download your BT hotspot log-ins
     click_to_sign_in:
@@ -165,8 +164,10 @@ en:
     your_schools: Your schools
     your_organisations: Your organisations
   landing_pages:
+    get_support_guides:
+      title: Get support guides for laptops, tablets and 4G wireless routers
     digital_platforms:
-      title: "Get funding and support to set up a digital education platform"
+      title: Get funding and support to set up a digital education platform
     edtech_demonstrator_programme:
       title: Get free training and support to set up and use technology effectively
   cookie_preferences:
