@@ -39,5 +39,14 @@ module Computacenter::ResponsibleBodyUrns
         "t#{companies_house_number.to_i}"
       end
     end
+
+    def computacenter_name
+      case type
+      when 'LocalAuthority'
+        local_authority_official_name
+      when 'Trust'
+        name
+      end
+    end
   end
 end

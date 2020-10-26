@@ -1,31 +1,28 @@
 require 'csv'
+require 'string_utils'
 
 class ResponsibleBodyExporter
-  attr_reader :filename
+  include StringUtils
 
-  EXPORT_ATTRS = %i[
-    name
-    type
-    local_authority_official_name
-    local_authority_eng
-    companies_house_number
-  ].freeze
+  attr_reader :filename
 
   def initialize(filename)
     @filename = filename
   end
 
-  def export_responsible_bodies
+  def export_responsible_bodies(query = responsible_bodies)
     CSV.open(filename, 'w') do |csv|
       csv << headings
-      responsible_bodies.each do |rb|
-        csv << EXPORT_ATTRS.map do |attr|
-          if attr == :type && rb.type == 'LocalAuthority'
-            'Local Authority'
-          else
-            rb.send(attr)
-          end
-        end
+      query.find_each do |rb|
+        csv << [
+          rb.computacenter_identifier,
+          *build_name_fields_for(rb),
+          rb.address_1,
+          rb.address_2,
+          rb.address_3,
+          rb.town,
+          rb.postcode,
+        ]
       end
     end
     nil
@@ -34,7 +31,20 @@ class ResponsibleBodyExporter
 private
 
   def headings
-    EXPORT_ATTRS.map { |s| s.to_s.humanize.titlecase }
+    [
+      'Responsible body URN',
+      'Responsible Body Name',
+      'Responsible Body Name (overflow)',
+      'Address line 1',
+      'Address line 2',
+      'Address line 3',
+      'Town/City',
+      'Postcode',
+    ].freeze
+  end
+
+  def build_name_fields_for(responsible_body)
+    split_string(responsible_body.computacenter_name, limit: 35)
   end
 
   def responsible_bodies
