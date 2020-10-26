@@ -11,6 +11,7 @@ describe 'Viewing the Sidekiq Admin panel' do
     end
 
     it 'responds with HTTP 200 when I click "Background jobs"' do
+      click_on 'Technical support'
       click_on 'Background jobs'
       expect(page).to have_http_status(:ok)
     end

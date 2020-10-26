@@ -90,7 +90,7 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
   end
 
   def and_navigates_to_the_school_page
-    school_page = PageObjects::Support::Devices::SchoolDetailsPage.new
+    school_page = PageObjects::Support::SchoolDetailsPage.new
     school_page.load(urn: @school.urn)
   end
 

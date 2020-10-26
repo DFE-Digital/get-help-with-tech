@@ -26,25 +26,27 @@ class NavComponent < ViewComponent::Base
     }.join('').html_safe
   end
 
-  def support_internet_links
-    [
-      NavLinkComponent.new(title: 'Performance', url: support_internet_service_performance_path),
-      NavLinkComponent.new(title: 'RBs', url: support_internet_responsible_bodies_path),
-    ]
+  def links
+    if @user&.is_support?
+      support_links
+    elsif @user&.is_computacenter?
+      computacenter_links
+    elsif @user&.is_mno_user?
+      mno_links
+    elsif @user&.is_responsible_body_user?
+      responsible_body_links
+    elsif @user&.is_school_user?
+      school_links
+    else
+      not_signed_in_links
+    end
   end
 
-  def support_devices_links
-    [
-      NavLinkComponent.new(title: 'Performance', url: support_devices_service_performance_path),
-      NavLinkComponent.new(title: 'RBs', url: support_devices_responsible_bodies_path),
-      NavLinkComponent.new(title: 'Schools', url: search_support_devices_schools_path),
-      NavLinkComponent.new(title: 'Full allocations', url: new_support_devices_school_bulk_allocation_path),
-    ]
-  end
+private
 
-  def support_general_links
+  def support_links
     [
-      NavLinkComponent.new(title: 'Background jobs', url: support_sidekiq_admin_path, html_options: { target: '_blank' }),
+      NavLinkComponent.new(title: 'Support home', url: support_home_path),
     ]
   end
 
