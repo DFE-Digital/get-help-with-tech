@@ -1,0 +1,44 @@
+<% content_for :before_content, govuk_link_to('Back', extra_data_requests_type_internet_mobile_school_path(@school), class: 'govuk-back-link') %>
+<% content_for :title, title_with_error_prefix(t('page_titles.who_needs_the_data'), @extra_mobile_data_request.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @extra_mobile_data_request, url: internet_mobile_manual_requests_path(@school) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-xl">
+        <%= t('page_titles.who_needs_the_data') %>
+      </h1>
+
+      <%= render partial: 'shared/use_the_mobile_guide' %>
+
+      <%= f.govuk_text_field :account_holder_name, label: {size: 'm', text: 'Account holder name'}, hint: { text: 'The account holder for a pay monthly contract must be over 18. There’s no minimum age for Pay-as-you-go customers.' } %>
+      <%= f.govuk_text_field :device_phone_number, label: {size: 'm', text: 'Mobile phone number'}, hint: { text: 'This should start with 07 and have 11 digits' } %>
+
+      <%= f.govuk_radio_buttons_fieldset(:mobile_network_id, legend: {size: 'm', text: 'Mobile network'}, hint: { text: 'Only networks participating in the service are listed' }) do %>
+        <%- for mobile_network in @participating_mobile_networks do %>
+          <%= f.govuk_radio_button :mobile_network_id,
+                                   mobile_network.id,
+                                   label: { text: mobile_network.brand },
+                                   hint: { text: participation_description(mobile_network) } %>
+        <%- end %>
+      <%- end %>
+
+      <%= f.govuk_collection_radio_buttons :contract_type,
+        @extra_mobile_data_request.contract_type_options,
+        :value,
+        :label,
+        legend: {size: 'm', text: 'Pay monthly or pay as you go (PAYG)?'} %>
+
+      <%= f.govuk_check_boxes_fieldset :agrees_with_privacy_statement, multiple: false, legend: { text: 'Has someone shared the privacy statement with the account holder?' } do %>
+        <%= f.govuk_check_box :agrees_with_privacy_statement, 1, 0, multiple: false, link_errors: true, label: { text: 'Yes, the privacy statement has been shared' } %>
+
+        <p class="govuk-hint">
+          <%= govuk_link_to 'Guidance for sharing the privacy statement', guide_to_collecting_mobile_information_privacy_path %>
+        </p>
+      <%- end %>
+      <%= f.govuk_submit %>
+
+    <%- end %>
+  </div>
+</div>

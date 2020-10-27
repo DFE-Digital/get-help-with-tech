@@ -1,0 +1,88 @@
+<%- content_for :before_content, govuk_link_to('Back', new_internet_mobile_manual_request_path(@school), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.confirm') %>
+    </h1>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row" id="account-holder-name">
+        <dt class="govuk-summary-list__key">
+          Account holder name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.account_holder_name %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Account holder name</span>'.html_safe,
+                            new_internet_mobile_manual_request_path(@school,
+                              anchor: 'extra-mobile-data-request-account-holder-name-field') ) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="mobile-phone-number">
+        <dt class="govuk-summary-list__key">
+          Mobile phone number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.device_phone_number %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Mobile phone number</span>'.html_safe,
+                          new_internet_mobile_manual_request_path(@school, anchor: 'extra-mobile-data-request-device-phone-number-field') ) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="mobile-network">
+        <dt class="govuk-summary-list__key">
+          Mobile network
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.network_name_with_participation_status %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Mobile network</span>'.html_safe,
+                          new_internet_mobile_manual_request_path(@school, anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="contract-type">
+        <dt class="govuk-summary-list__key">
+          Pay monthly or pay as you go
+        </dt>
+        <dd class="govuk-summary-list__value">
+        <%= t(@extra_mobile_data_request.contract_type,
+              scope: 'responsible_body.extra_mobile_data_requests.new') %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        <%= govuk_link_to('Change<span class="govuk-visually-hidden"> pay monthly or pay as you go</span>'.html_safe,
+                          new_internet_mobile_manual_request_path(@school, anchor: "extra-mobile-data-request-contract-type-pay-monthly-field") ) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row" id="agrees-with-privacy-statement">
+        <dt class="govuk-summary-list__key">
+          Agrees with privacy statement
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @extra_mobile_data_request.agrees_with_privacy_statement ? 'Yes' : 'No' %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Agrees with privacy statement</span>'.html_safe, new_internet_mobile_manual_request_path(@school, anchor: 'extra-mobile-data-request-agrees-with-privacy-statement-1-field') ) %>
+        </dd>
+      </div>
+    </dl>
+    <p class="govuk-body"><%= @extra_mobile_data_request.passing_data_to_provider_message %></p>
+
+    <%= form_for @extra_mobile_data_request, url: internet_mobile_manual_requests_path(@school) do |f| %>
+      <%= f.hidden_field :account_holder_name %>
+      <%= f.hidden_field :device_phone_number %>
+      <%= f.hidden_field :mobile_network_id %>
+      <%= f.hidden_field :contract_type %>
+      <%= f.hidden_field :agrees_with_privacy_statement %>
+      <%= hidden_field_tag(:confirm, true) %>
+
+      <%= f.govuk_submit 'Confirm request' %>
+    <%- end %>
+  </div>
+</div>

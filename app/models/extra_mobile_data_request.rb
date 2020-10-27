@@ -3,7 +3,8 @@ class ExtraMobileDataRequest < ApplicationRecord
 
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
-  belongs_to :responsible_body
+  belongs_to :responsible_body, optional: true
+  belongs_to :school, optional: true
 
   validates :status, presence: true
   validates :account_holder_name, presence: true

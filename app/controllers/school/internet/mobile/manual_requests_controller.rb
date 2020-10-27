@@ -1,6 +1,4 @@
-class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleBody::BaseController
-  before_action { render_404_if_feature_flag_inactive(:mno_offer) }
-
+class School::Internet::Mobile::ManualRequestsController < School::BaseController
   def index
     @extra_mobile_data_requests = @user.extra_mobile_data_requests
   end
@@ -14,9 +12,8 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
   end
 
   def create
-    @extra_mobile_data_request = ExtraMobileDataRequest.new(
-      extra_mobile_data_request_params.merge(created_by_user: @user,
-                                             responsible_body: @user.responsible_body),
+    @extra_mobile_data_request = @school.extra_mobile_data_requests.new(
+      extra_mobile_data_request_params.merge(created_by_user: @user),
     )
 
     if @extra_mobile_data_request.valid?
@@ -27,7 +24,7 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
         @extra_mobile_data_request.save_and_notify_account_holder!
 
         flash[:success] = build_success_message(@extra_mobile_data_request.mobile_network.participating?)
-        redirect_to responsible_body_internet_mobile_extra_data_requests_path
+        redirect_to extra_data_requests_internet_mobile_school_path(@school)
       else
         # store given params in session,so that we don't have to pass them back in the URL
         # if the user clicks 'Change' on the confirmation page
