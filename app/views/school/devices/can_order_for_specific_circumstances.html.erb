@@ -10,11 +10,7 @@
 
     <%= render partial: 'shared/techsource_unavailable_banner' %>
 
-    <% custom_ordered_string = (@school.has_ordered? ? nil : 'You cannot order your full allocation yet') %>
-
-    <%= render DeviceCountComponent.new(
-      school: @school,
-      custom_ordered_string: custom_ordered_string) %>
+    <%= render DeviceCountComponent.new(school: @school) %>
 
     <p class="govuk-body">Now you’ve contacted us to <%= govuk_link_to 'request devices for specific circumstances', request_devices_school_path(@school) %>, you can go ahead with your order. You cannot order your full allocation yet because there are no local coronavirus restrictions.</p>
 

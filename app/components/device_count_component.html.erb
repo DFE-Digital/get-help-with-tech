@@ -1,14 +1,12 @@
 <div class="app-card app-card__order">
-  <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
-    <%= availablility_string.html_safe -%>
-  </h2>
+  <% if show_availability? %>
+    <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
+      <%= availablility_string.html_safe -%>
+    </h2>
+  <% end %>
 
   <div class="govuk-panel__body govuk-!-font-size-24">
-    <% if custom_ordered_string %>
-      <%= custom_ordered_string %>
-    <% else %>
-      You’ve ordered <%= ordered_string -%>
-    <% end %>
+    <%= ordered_string -%>
   </div>
 
   <% if show_action && action.present? %>

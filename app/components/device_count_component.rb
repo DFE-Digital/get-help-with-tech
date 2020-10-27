@@ -1,13 +1,12 @@
 class DeviceCountComponent < ViewComponent::Base
   include ViewHelper
 
-  attr_reader :school, :action, :show_action, :custom_ordered_string
+  attr_reader :school, :action, :show_action
 
-  def initialize(school:, show_action: true, action: {}, custom_ordered_string: nil)
+  def initialize(school:, show_action: true, action: {})
     @school = school
     @action = action
     @show_action = show_action
-    @custom_ordered_string = custom_ordered_string
   end
 
   def availablility_string
@@ -21,9 +20,25 @@ class DeviceCountComponent < ViewComponent::Base
   end
 
   def ordered_string
-    allocations.map { |allocation|
-      "#{allocation.devices_ordered} of #{allocation.cap} #{allocation.device_type_name.pluralize(allocation.cap)}"
-    }.join(' and ')
+    if school.can_order_for_specific_circumstances? && school.has_ordered?
+      'You cannot order your full allocation yet'
+    else
+      state_prefix + allocations.map { |allocation|
+        "#{allocation.devices_ordered} of #{allocation.cap} #{allocation.device_type_name.pluralize(allocation.cap)}"
+      }.join(' and ')
+    end
+  end
+
+  def show_availability?
+    !@school.cannot_order_as_reopened?
+  end
+
+  def state_prefix
+    if @school.cannot_order_as_reopened?
+      'You ordered '
+    else
+      'You’ve ordered '
+    end
   end
 
 private
