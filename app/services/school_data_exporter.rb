@@ -1,39 +1,28 @@
 require 'csv'
+require 'string_utils'
 
 class SchoolDataExporter
-  attr_reader :filename
+  include StringUtils
 
-  EXPORT_ATTRS = %i[
-    urn
-    name
-    address_1
-    address_2
-    address_3
-    town
-    county
-    postcode
-    responsible_body_name
-  ].freeze
+  attr_reader :filename
 
   def initialize(filename)
     @filename = filename
   end
 
-  def export_schools
+  def export_schools(query = schools)
     CSV.open(filename, 'w') do |csv|
       csv << headings
-      schools.each do |school|
-        csv << EXPORT_ATTRS.map do |attr|
-          if attr == :responsible_body_name
-            if school.responsible_body.type == 'LocalAuthority'
-              school.responsible_body.local_authority_official_name
-            else
-              school.responsible_body.name
-            end
-          else
-            school.send(attr)
-          end
-        end
+      query.find_each do |school|
+        csv << [
+          school.responsible_body.computacenter_identifier,
+          *build_name_fields_for(school),
+          school.address_1,
+          school.address_2,
+          school.address_3,
+          school.town,
+          school.postcode,
+        ]
       end
     end
     nil
@@ -42,7 +31,20 @@ class SchoolDataExporter
 private
 
   def headings
-    EXPORT_ATTRS.map { |s| s.to_s.humanize.titlecase }
+    [
+      'Responsible body URN',
+      'School URN + School Name',
+      'School Name (overflow)',
+      'Address line 1',
+      'Address line 2',
+      'Address line 3',
+      'Town/City',
+      'Postcode',
+    ].freeze
+  end
+
+  def build_name_fields_for(school)
+    split_string("#{school.urn} #{school.name}", limit: 35)
   end
 
   def schools
