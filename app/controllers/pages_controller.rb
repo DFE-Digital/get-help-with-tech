@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  layout 'single_page', only: [:accessibility, :privacy]
+  layout 'single_page', only: %i[accessibility privacy]
 
   def guidance; end
 
@@ -20,6 +20,8 @@ class PagesController < ApplicationController
   def privacy; end
 
   def dfe_windows_privacy_notice; end
+
+  def general_privacy_notice; end
 
   def request_a_change; end
 end
