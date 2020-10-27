@@ -43,9 +43,10 @@ jobs:
         shell: bash
         id: install-cf-cli
         run: |
-          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
-          sudo mv cf /usr/local/bin
-
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf7-cli
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
         shell: bash
