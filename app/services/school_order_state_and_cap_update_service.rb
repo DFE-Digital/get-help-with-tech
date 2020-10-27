@@ -36,9 +36,9 @@ private
   def notify_computacenter_by_email(new_cap_value)
     mailer = ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
     if @device_type == 'std_device'
-      mailer.notify_of_devices_cap_change.deliver_later
+      mailer.notify_of_devices_cap_change.deliver_later(wait: Settings.active_job.default_wait)
     else
-      mailer.notify_of_comms_cap_change.deliver_later
+      mailer.notify_of_comms_cap_change.deliver_later(wait: Settings.active_job.default_wait)
     end
   end
 

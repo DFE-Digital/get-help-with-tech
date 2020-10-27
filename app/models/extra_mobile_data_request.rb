@@ -84,7 +84,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   def save_and_notify_account_holder!
     update_status_from_mobile_network_participation
     save!
-    notification.deliver_later
+    notification.deliver_later(wait: Settings.active_job.default_wait)
   end
 
   def has_already_been_made?

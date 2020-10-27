@@ -9,8 +9,8 @@ class ExtraMobileDataRequestAccountHolderNotification
     build_message.deliver!
   end
 
-  def deliver_later
-    NotifyExtraMobileDataRequestAccountHolderJob.perform_later(extra_mobile_data_request)
+  def deliver_later(wait: Settings.active_job.default_wait)
+    NotifyExtraMobileDataRequestAccountHolderJob.set(wait: wait).perform_later(extra_mobile_data_request)
   end
 
 private

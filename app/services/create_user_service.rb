@@ -2,7 +2,7 @@ class CreateUserService
   def self.invite_responsible_body_user(user_params = {})
     user = User.new(user_params.merge(override_params))
     if user.save
-      InviteResponsibleBodyUserMailer.with(user: user).invite_user_email.deliver_later
+      InviteResponsibleBodyUserMailer.with(user: user).invite_user_email.deliver_later(wait: Settings.active_job.default_wait)
     end
     user
   end
@@ -29,7 +29,7 @@ class CreateUserService
   def self.create_new_school_user!(user_params)
     user = User.new(user_params.merge(approved_at: Time.zone.now))
     if user.save
-      InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
+      InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later(wait: Settings.active_job.default_wait)
       user.school.preorder_information&.refresh_status!
     end
     user
@@ -41,7 +41,7 @@ class CreateUserService
     user = User.find_by_email_address(user_params[:email_address])
     school = School.find(user_params[:school_id])
     if user.schools << school
-      AddAdditionalSchoolToExistingUserMailer.with(user: user, school: school).additional_school_email.deliver_later
+      AddAdditionalSchoolToExistingUserMailer.with(user: user, school: school).additional_school_email.deliver_later(wait: Settings.active_job.default_wait)
       school.preorder_information&.refresh_status!
       user.update!(user_params.select { |key, _value| user.send(key).blank? })
     end

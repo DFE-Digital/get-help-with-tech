@@ -25,7 +25,7 @@ private
     CanOrderDevicesMailer
       .with(user: user, school: school)
       .send(message_type)
-      .deliver_later
+      .deliver_later(wait: Settings.active_job.default_wait)
     EventNotificationsService.broadcast(
       UserCanOrderEvent.new(user: user, school: school, type: message_type),
     )
