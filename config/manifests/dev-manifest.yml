@@ -16,3 +16,5 @@ applications:
   services:
     - get-help-with-tech-dev-db
     - get-help-with-tech-dev-redis
+  env:
+    DOCKER_IMAGE_ID: ((docker_image_id))
