@@ -19,5 +19,7 @@ class PagesController < ApplicationController
 
   def privacy; end
 
+  def dfe_windows_privacy_notice; end
+
   def request_a_change; end
 end
