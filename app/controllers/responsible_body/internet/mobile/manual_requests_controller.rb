@@ -15,7 +15,8 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
 
   def create
     @extra_mobile_data_request = ExtraMobileDataRequest.new(
-      extra_mobile_data_request_params.merge(created_by_user: @user),
+                                   extra_mobile_data_request_params.merge(created_by_user: @user,
+                                                                          responsible_body: @user.responsible_body),
     )
 
     if @extra_mobile_data_request.valid?

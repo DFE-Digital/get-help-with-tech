@@ -5,11 +5,11 @@ class ExtraDataRequestSpreadsheetImporter
     @summary = BulkUploadSummary.new
   end
 
-  def import!(spreadsheet_path, user)
+  def import!(spreadsheet_path, extra_fields: {})
     spreadsheet = ExtraMobileDataRequestSpreadsheet.new(spreadsheet_path)
 
     spreadsheet.requests.each do |extra_mobile_data_request|
-      extra_mobile_data_request.created_by_user = user
+      extra_mobile_data_request.assign_attributes(extra_fields)
 
       if extra_mobile_data_request.invalid?
         summary.add_error_record(extra_mobile_data_request)

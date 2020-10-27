@@ -13,13 +13,25 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
 
   it 'imports valid requests from a spreadsheet' do
     expect {
-      importer.import!(file, user)
+      importer.import!(file, extra_fields: { created_by_user: user })
     }.to change { ExtraMobileDataRequest.count }.by(4)
+  end
+
+  it 'sets created_by_user' do
+    importer.import!(file, extra_fields: { created_by_user: user })
+    record = ExtraMobileDataRequest.last
+    expect(record.created_by_user).to eql(user)
+  end
+
+  it 'sets responsible_body' do
+    importer.import!(file, extra_fields: { created_by_user: user, responsible_body: user.responsible_body })
+    record = ExtraMobileDataRequest.last
+    expect(record.responsible_body).to eql(user.responsible_body)
   end
 
   it 'queues a SMS notification for the valid request account holders' do
     expect {
-      importer.import!(file, user)
+      importer.import!(file, extra_fields: { created_by_user: user })
     }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(4).times
   end
 end

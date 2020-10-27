@@ -11,7 +11,7 @@ class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBod
     if @upload_form.valid?
       # parse file and generate records
       begin
-        @summary = importer.import!(@upload_form.file.path, @user)
+        @summary = importer.import!(@upload_form.file.path, extra_fields: { created_by_user: @user, responsible_body: @user.responsible_body })
         render :summary
       rescue StandardError => e
         Rails.logger.error(e.message)

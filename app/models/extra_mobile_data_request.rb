@@ -95,11 +95,6 @@ class ExtraMobileDataRequest < ApplicationRecord
     )
   end
 
-  def created_by_user=(new_user)
-    super
-    self.responsible_body = new_user.responsible_body if new_user
-  end
-
 private
 
   def update_status_from_mobile_network_participation
