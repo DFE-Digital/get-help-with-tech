@@ -16,3 +16,5 @@ applications:
   services:
     - get-help-with-tech-staging-db
     - get-help-with-tech-staging-redis
+  env:
+    DOCKER_IMAGE_ID: ((docker_image_id))

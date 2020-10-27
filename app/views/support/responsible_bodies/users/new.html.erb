@@ -1,0 +1,25 @@
+<% content_for :title, "Add a user for #{@responsible_body.name} – Support" %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+                   { 'Support home' => support_home_path },
+                   { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
+                   { @responsible_body.name => support_responsible_body_path(@responsible_body) },
+                   "Add a user"
+                  ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      <%= form_for @user, url: support_responsible_body_users_path, method: :post do |f| %>
+          <%= f.govuk_error_summary %>
+
+          <h1 class="govuk-heading-xl">Add a user</h1>
+
+          <%= f.govuk_text_field :full_name, label: {size: 'm', text: 'Full name'} %>
+
+          <%= f.govuk_text_field :email_address, label: {size: 'm', text: 'Email address'} %>
+
+          <%= f.govuk_submit 'Submit' %>
+      <%- end %>
+    </div>
+</div>

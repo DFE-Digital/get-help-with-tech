@@ -1,9 +1,15 @@
 <% content_for :devices_service, true %>
 
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  t('landing_pages.get_support_guides.title'),
+                 ]) %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.devices_guidance_index') %>
+      <%= t('landing_pages.get_support_guides.title') %>
     </h1>
 
     <p class="govuk-body">Many vulnerable and disadvantaged children and young people in England do not have access to a laptop, tablet or internet connection. The Department for Education (DfE) is offering support to help children, young people and families access remote education and social care during coronavirus (COVID-19).</p>

@@ -1,0 +1,25 @@
+<%- title = t('page_titles.service_performance') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    title,
+  ]) %>
+<% end %>
+
+
+<h1 class="govuk-heading-xl">
+  <%= title %>
+</h1>
+
+<%= govuk_tabs(title: 'Contents') do |component| %>
+  <% component.slot(:tab, title: 'Devices') do %>
+    <%= render partial: 'responsible_body_sign_ins' %>
+
+    <%= render partial: 'preorder_information' %>
+  <% end %>
+
+  <% component.slot(:tab, title: 'Connectivity') do %>
+    <%= render partial: 'mobile_data_requests' %>
+  <% end %>
+<%- end %>

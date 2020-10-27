@@ -51,25 +51,23 @@ en:
     internet_access: Getting internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_index: "Get help with technology: devices"
     devices_guidance_how_to_order: "How and when to order laptops and tablets during coronavirus (COVID-19)"
     download_bt_hotspots: Download your BT hotspot log-ins
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
     you_are_signed_in: You’re signed in
-    devices_service_performance: Devices service performance
-    internet_service_performance: Internet service performance
     service_performance: Service performance
     accessibility: Accessibility statement
     support:
+      home: Support
+      schools: Schools
+      technical_support: Technical support
       devices:
         schools:
           search: Search for schools by URN
           results: School search results
-    support_devices_responsible_bodies: Devices pilot on-boarded responsible bodies
-    support_internet_responsible_bodies: Internet pilot on-boarded responsible bodies
-    support_responsible_bodies: On-boarded responsible bodies
+    support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices
     support_order_status:
@@ -165,8 +163,10 @@ en:
     your_schools: Your schools
     your_organisations: Your organisations
   landing_pages:
+    get_support_guides:
+      title: Get support guides for laptops, tablets and 4G wireless routers
     digital_platforms:
-      title: "Get funding and support to set up a digital education platform"
+      title: Get funding and support to set up a digital education platform
     edtech_demonstrator_programme:
       title: Get free training and support to set up and use technology effectively
   cookie_preferences:
@@ -260,7 +260,7 @@ en:
     order_status:
       update:
         cap_update_request_error: "Could not update the cap on Computacenter's system - payload_id: %{payload_id}"
-        success: We've saved your choices
+        success: We’ve saved your choices
       confirm:
         order_states:
           cannot_order: cannot place orders yet
@@ -275,9 +275,6 @@ en:
       update:
         success: We’ve saved the new allocation
     service_performance:
-      mobile_network_operators:
-        one: mobile network operator
-        other: different mobile network operators
       requests:
         one: request
         other: requests
@@ -285,11 +282,8 @@ en:
         one: responsible body
         other: different responsible bodies
       users_signed_in:
-        one: user has signed in
-        other: users have signed in
-      vouchers:
-        one: voucher
-        other: vouchers
+        one: responsible body user has signed in
+        other: responsible body users have signed in
       responsible_bodies_with_at_least_one_preorder_information_completed:
         one: responsible body has given all the information needed for at least one school
         other: responsible bodies have given all the information needed for at least one school

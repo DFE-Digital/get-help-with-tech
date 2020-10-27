@@ -134,32 +134,30 @@ Rails.application.routes.draw do
   end
 
   namespace :support do
-    namespace :internet do
-      get '/performance', to: 'service_performance#index', as: :service_performance
-      resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
+    get '/', to: 'home#show', as: :home
+    get '/schools', to: 'home#schools'
+    get '/technical', to: 'home#technical_support', as: :technical_support
+    get '/performance', to: 'service_performance#index', as: :service_performance
+    resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
+      resources :users, only: %i[new create edit update], controller: 'responsible_bodies/users'
     end
-    namespace :devices do
-      get '/performance', to: 'service_performance#index', as: :service_performance
-      resources :key_contacts, only: %i[new index create], path: '/key-contacts'
-      resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
-      resources :schools, only: %i[show], param: :urn do
-        resources :users, only: %i[new create edit update]
-        collection do
-          get 'search'
-          post 'results'
-        end
-        get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
-        post '/invite', to: 'schools#invite'
-        get '/enable-orders', to: 'order_status#edit', as: :enable_orders
-        get '/enable-orders/confirm', to: 'order_status#confirm', as: :confirm_enable_orders
-        patch '/enable-orders', to: 'order_status#update'
-        get '/allocation/edit', to: 'allocation#edit'
-        patch '/allocation', to: 'allocation#update'
+    resources :schools, only: %i[show], param: :urn do
+      collection do
+        get 'search'
+        post 'results'
+
+        get '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#collect_urns_to_allow_many_schools_to_order'
+        patch '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#allow_ordering_for_many_schools', as: :allow_ordering_for_many_schools
       end
-      resources :school_bulk_allocations, only: %i[new create], path: 'school-bulk-allocations'
-    end
-    resources :responsible_bodies, only: %i[], path: '/:pilot/responsible-bodies' do
-      resources :users, only: %i[new create edit update]
+      get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
+      post '/invite', to: 'schools#invite'
+      resources :users, only: %i[new create edit update], controller: 'schools/users'
+
+      get '/devices/enable-orders', to: 'schools/devices/order_status#edit', as: :enable_orders
+      get '/devices/enable-orders/confirm', to: 'schools/devices/order_status#confirm', as: :confirm_enable_orders
+      patch '/devices/enable-orders', to: 'schools/devices/order_status#update'
+      get '/devices/allocation/edit', to: 'schools/devices/allocation#edit'
+      patch '/devices/allocation', to: 'schools/devices/allocation#update'
     end
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index

@@ -67,7 +67,7 @@ GEM
     bindex (0.8.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bootsnap (1.4.8)
+    bootsnap (1.4.9)
       msgpack (~> 1.0)
     brakeman (4.10.0)
     builder (3.2.4)
@@ -266,7 +266,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (5.0.2)
+    puma (5.0.3)
       nio4r (~> 2.0)
     pusher-client (0.6.2)
       json
