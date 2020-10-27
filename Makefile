@@ -90,8 +90,8 @@ promote:
 	make $(env_stub) push deploy
 
 ssh: set_cf_target
-	@echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
-		cf ssh $(APP_NAME)-$(env_stub)
+	@echo "\nTo get a Rails console, run: \nbundle exec rails c\n\n" && \
+		cf $(CF_V3_PREFIX)ssh $(APP_NAME)-$(env_stub)
 
 logs: set_cf_target
 	cf logs $(APP_NAME)-$(env_stub)

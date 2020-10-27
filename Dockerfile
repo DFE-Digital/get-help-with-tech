@@ -19,6 +19,11 @@ WORKDIR $RAILS_ROOT
 RUN groupadd -r deploy && useradd -m -u 1001 -r -g deploy deploy
 RUN chown deploy:deploy /var/www/${APPNAME}
 
+# make it easier to get a rails console when ssh-ed on
+RUN echo "PATH=/usr/local/bundle/ruby/2.6.0/bin:/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:${PATH}" >> /home/deploy/.bashrc
+RUN echo "cd ${RAILS_ROOT}" >> /home/deploy/.bashrc
+RUN chown deploy:deploy /home/deploy/.bashrc
+
 ENV BUNDLER_VERSION 2.0.2
 RUN gem install bundler
 RUN chown -R deploy:deploy /usr/local/bundle/
@@ -52,9 +57,6 @@ ARG GIT_BRANCH=""
 ENV GIT_COMMIT_SHA=${GIT_COMMIT_SHA}
 ENV GIT_BRANCH=${GIT_BRANCH}
 RUN echo "[{'commit_sha': '${GIT_COMMIT_SHA}', 'branch': '${GIT_BRANCH}'}]" > ./.gitinfo.json
-
-# symlink the scripts from scripts/ into the users' path
-RUN find ${RAILS_ROOT}/scripts -type f | xargs -I {} ln -s {} ~/
 
 # run the rails server
 ARG RAILS_ENV=production
