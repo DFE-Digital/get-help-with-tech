@@ -6,6 +6,6 @@ module StringUtils
       character_count += word.length + 1
       character_count <= limit
     end
-    [words1.join(' '), (words2.join(' ')[0...35])]
+    [words1.join(' '), (words2.join(' ')[0...limit])]
   end
 end
