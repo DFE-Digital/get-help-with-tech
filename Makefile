@@ -96,7 +96,7 @@ set_docker_image_id: require_env_stub
 	# So we take that value if given, otherwise pull the latest image and get it
 	# from that
 	$(eval DOCKER_IMAGE_ID ?= $(shell (docker pull ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest > /dev/null) && docker images ${REMOTE_DOCKER_IMAGE_NAME}-${env_stub}:latest -q) )
-	cf set-env $(APP_NAME)-$(env_stub) DOCKER_IMAGE_ID ${DOCKER_IMAGE_ID}	
+	cf set-env $(APP_NAME)-$(env_stub) DOCKER_IMAGE_ID ${DOCKER_IMAGE_ID}
 	# we only update the env var *after* a successful push (not before)
 	# ...which means we then have to restage for the app to pick it up
 	cf restage $(APP_NAME)-$(env_stub)
@@ -117,7 +117,7 @@ promote:
 	make $(env_stub) push deploy
 
 ssh: set_cf_target
-	@echo "\n\nTo get a Rails console, run: \n./setup_env_for_rails_app \nbundle exec rails c\n\n" && \
+	@echo "\nTo get a Rails console, run: \nbundle exec rails c\n\n" && \
 		cf $(CF_V3_PREFIX)ssh $(APP_NAME)-$(env_stub)
 
 logs: set_cf_target
