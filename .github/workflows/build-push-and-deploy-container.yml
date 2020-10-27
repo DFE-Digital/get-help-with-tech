@@ -5,12 +5,10 @@ on:
   push:
     branches:
       - main
-      - hotfix-cf-cli-version-on-ci
 
 jobs:
   build-and-push-container:
     runs-on: ubuntu-latest
-    if: ${{ false }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -37,15 +35,13 @@ jobs:
 
   deploy-to-paas:
     runs-on: ubuntu-latest
-    # needs: build-and-push-container
+    needs: build-and-push-container
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - name: Install CloudFoundry CLI
         shell: bash
         id: install-cf-cli
-        # curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
-        # sudo mv cf /usr/local/bin
         run: |
           wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
           echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
