@@ -4,10 +4,19 @@ An app to host content and forms for the "Get Help With Tech" COVID-19 response 
 
 ## Prerequisites
 
+For running the app:
+
 - Ruby 2.6.3
 - PostgreSQL
 - NodeJS >= 12.13.x
 - Yarn >= 1.12.x
+
+For performing releases:
+
+- Docker
+- CloudFoundry CLI >= v7.0
+- make
+- a bash-compatible shell (bash, or Mac OS/X)
 
 ## Setting up the app in development
 
@@ -59,7 +68,7 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 
 - Your department, agency or team has a GOV.UK PaaS account
 - You have a personal account granted by your organisation manager
-- You have downloaded and installed the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads) for your platform
+- You have downloaded and installed the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads) for your platform - *v7.0+ is REQUIRED*
 - You have downloaded and installed [Docker Desktop](https://docs.docker.com/desktop/)
 
 ### The deployment process
