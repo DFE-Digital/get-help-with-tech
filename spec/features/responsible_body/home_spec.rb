@@ -119,7 +119,7 @@ RSpec.feature ResponsibleBody do
 
     it 'shows the privacy notice for the first time' do
       sign_in_as rb_user
-      expect(page).to have_content('Get help with technology – How we look after personal data')
+      expect(page).to have_content('How we look after personal information as part of the Get help with technology programme')
 
       click_on 'Continue'
       expect(responsible_body_home_page).to be_displayed

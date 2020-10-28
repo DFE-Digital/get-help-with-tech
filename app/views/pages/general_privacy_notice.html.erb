@@ -1,0 +1,12 @@
+<% content_for :title, t('page_titles.general_privacy_notice') %>
+<% content_for :before_content do %>
+  <% breadcrumbs([{ "Privacy" => privacy_path },
+                  "Privacy notice for local authorities, academy trusts and schools",
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/privacy_notice_text' %>
+  </div>
+</div>
