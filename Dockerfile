@@ -1,33 +1,29 @@
-FROM ministryofjustice/ruby:2.6.3
+FROM ruby:2.7.2-alpine
 
 ARG APPNAME=get-help-with-tech
 
-# https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-
-# make sure we get an up-to-date yarn & nodejs
 USER root
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |  apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" |  tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get update && apt-get install -y nodejs postgresql-contrib libpq-dev yarn
+# dependencies relied upon to build native-extension gems etc
+RUN apk add libxml2-dev libxslt-dev build-base postgresql-dev tzdata
+RUN apk update && apk add nodejs postgresql-contrib libpq yarn
 
 ENV RAILS_ROOT /var/www/${APPNAME}
 RUN mkdir -p $RAILS_ROOT
 WORKDIR $RAILS_ROOT
 
-RUN groupadd -r deploy && useradd -m -u 1001 -r -g deploy deploy
+RUN addgroup deploy && adduser -S -u 1001 -s bash -D -G deploy deploy
 RUN chown deploy:deploy /var/www/${APPNAME}
 
-# make it easier to get a rails console when ssh-ed on
-RUN echo "PATH=/usr/local/bundle/ruby/2.6.0/bin:/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:${PATH}" >> /home/deploy/.bashrc
-RUN echo "cd ${RAILS_ROOT}" >> /home/deploy/.bashrc
-RUN chown deploy:deploy /home/deploy/.bashrc
-
-ENV BUNDLER_VERSION 2.0.2
+ENV BUNDLER_VERSION 2.1.4
 RUN gem install bundler
 RUN chown -R deploy:deploy /usr/local/bundle/
 USER 1001
+
+# make it easier to get a rails console when ssh-ed on
+RUN echo "PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:${PATH}" >> /home/deploy/.profile
+RUN echo "cd ${RAILS_ROOT}" >> /home/deploy/.profile
+RUN chown deploy:deploy /home/deploy/.profile
 
 # install all gems
 COPY --chown=deploy:deploy Gemfile Gemfile.lock .ruby-version ./
