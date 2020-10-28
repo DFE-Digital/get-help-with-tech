@@ -1,9 +1,10 @@
 <%- content_for :before_content do %>
-  <% breadcrumbs([
-                   { "Home" => schools_path },
-                   { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
-                   t('page_titles.request_extra_mobile_data') ,
-                 ]) %>
+  <%- school_breadcrumbs(items: [
+      { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
+      t('page_titles.request_extra_mobile_data')
+    ],
+    user: @user,
+    school: @school) %>
 <% end %>
 
 <div class="govuk-grid-row">
