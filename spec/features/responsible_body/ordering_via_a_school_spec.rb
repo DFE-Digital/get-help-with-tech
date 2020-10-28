@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Ordering via a school' do
-  let(:rb) { create(:local_authority, in_devices_pilot: true, schools: [school, school_that_cannot_order_as_reopened]) }
+  let(:rb) { create(:local_authority, schools: [school, school_that_cannot_order_as_reopened]) }
   let(:rb_user) { create(:local_authority_user, responsible_body: rb) }
   let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
   let(:another_preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Setting up the devices ordering' do
-  let(:responsible_body) { create(:local_authority, in_devices_pilot: true, who_will_order_devices: 'responsible_body') }
+  let(:responsible_body) { create(:local_authority, who_will_order_devices: 'responsible_body') }
   let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let!(:school) { create(:school, :la_maintained, :with_preorder_information, responsible_body: responsible_body) }
 

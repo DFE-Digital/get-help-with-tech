@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Changing allocations', with_feature_flags: { reduced_allocations: 'active' } do
   include ViewHelper
 
-  let(:responsible_body) { create(:local_authority, :in_devices_pilot) }
+  let(:responsible_body) { create(:local_authority) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   scenario 'I see that allocations are changing' do

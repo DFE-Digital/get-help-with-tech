@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ResponsibleBody::Devices::WhoToContactController do
   let(:school) { create(:school, :with_headteacher_contact, :with_preorder_information) }
-  let(:local_authority) { create(:local_authority, schools: [school], in_devices_pilot: true) }
+  let(:local_authority) { create(:local_authority, schools: [school]) }
   let(:rb_user) { create(:local_authority_user, responsible_body: local_authority) }
 
   before do

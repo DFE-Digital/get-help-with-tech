@@ -5,7 +5,7 @@ RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
   context 'as a local authority user' do
-    let(:responsible_body) { create(:local_authority, in_devices_pilot: true) }
+    let(:responsible_body) { create(:local_authority) }
     let(:local_authority_user) { create(:local_authority_user, responsible_body: responsible_body) }
     let(:school_with_no_headteacher) { create(:school, :la_maintained, :secondary, responsible_body: responsible_body, name: 'School with no headteacher') }
 
@@ -165,7 +165,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   context 'as a trust user' do
-    let(:responsible_body) { create(:trust, :multi_academy_trust, in_devices_pilot: true) }
+    let(:responsible_body) { create(:trust, :multi_academy_trust) }
     let(:trust_user) { create(:trust_user, responsible_body: responsible_body) }
 
     before do

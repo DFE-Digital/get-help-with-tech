@@ -6,7 +6,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#responsible_body_users_signed_in_at_least_once' do
     it 'counts only responsible body users who have signed in at least once' do
       # the following should be counted
-      create(:local_authority_user, :signed_in_before, responsible_body: create(:local_authority, in_devices_pilot: true))
+      create(:local_authority_user, :signed_in_before, responsible_body: create(:local_authority))
 
       # the following should be ignored
       create(:dfe_user, :signed_in_before)
@@ -20,11 +20,11 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#number_of_different_responsible_bodies_signed_in' do
     it 'counts only the responsible bodies where at least one user has signed in' do
       # this one should count
-      local_authority = create(:local_authority, in_devices_pilot: true)
+      local_authority = create(:local_authority)
       create_list(:local_authority_user, 2, :signed_in_before, responsible_body: local_authority)
 
       # this one should count
-      trust = create(:trust, in_devices_pilot: true)
+      trust = create(:trust)
       create(:trust_user, :signed_in_before, responsible_body: trust)
       create(:trust_user, :never_signed_in, responsible_body: trust)
 
@@ -32,7 +32,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
       create(:trust_user, :never_signed_in)
 
       # this one shouldn't count as it has no users
-      create(:local_authority, in_devices_pilot: true)
+      create(:local_authority)
 
       expect(stats.number_of_different_responsible_bodies_signed_in).to eq(2)
     end
@@ -41,11 +41,11 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#number_of_different_responsible_bodies_who_have_chosen_who_will_order' do
     it 'counts only the responsible bodies who have a non-nil value in who_will_order_devices' do
       # these will count
-      create_list(:local_authority, 3, in_devices_pilot: true, who_will_order_devices: 'responsible_body')
-      create_list(:trust, 4, in_devices_pilot: true, who_will_order_devices: 'school')
+      create_list(:local_authority, 3, who_will_order_devices: 'responsible_body')
+      create_list(:trust, 4, who_will_order_devices: 'school')
 
       # these won't count
-      create_list(:local_authority, 2, in_devices_pilot: true, who_will_order_devices: nil)
+      create_list(:local_authority, 2, who_will_order_devices: nil)
 
       expect(stats.number_of_different_responsible_bodies_who_have_chosen_who_will_order).to eq(7)
     end
@@ -54,7 +54,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed' do
     it 'counts the number of unique responsible bodies where there is at least one school with preorder information that is not in a "needs_(x)" status' do
       # these will count
-      rbs = create_list(:local_authority, 3, in_devices_pilot: true)
+      rbs = create_list(:local_authority, 3)
       schools = []
       rbs.each do |rb|
         schools << create(:school, responsible_body: rb)
@@ -64,7 +64,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
       create(:preorder_information, school: schools[0], status: 'ready')
 
       # these won't count
-      trusts = create_list(:trust, 2, in_devices_pilot: true)
+      trusts = create_list(:trust, 2)
       school = create(:school, responsible_body: trusts[0])
       create(:preorder_information, school: school, status: 'needs_info')
       school1 = create(:school, responsible_body: trusts[1])
@@ -82,7 +82,6 @@ RSpec.describe Support::ServicePerformance, type: :model do
       create_list(:preorder_information, 2, status: 'school_contacted')
       create_list(:preorder_information, 3, status: 'ready')
       create_list(:preorder_information, 7, status: 'school_ready')
-      ResponsibleBody.update_all(in_devices_pilot: true)
     end
 
     describe 'preorder_information_counts_by_status' do

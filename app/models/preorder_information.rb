@@ -108,10 +108,6 @@ class PreorderInformation < ApplicationRecord
     refresh_status!
   end
 
-  def self.for_responsible_bodies_in_devices_pilot
-    joins(school: :responsible_body).merge(ResponsibleBody.in_devices_pilot)
-  end
-
   def invite_school_contact!
     if school_contact.present?
       transaction do

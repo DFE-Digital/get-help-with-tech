@@ -10,17 +10,10 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     clear_enqueued_jobs
   end
 
-  let(:responsible_body) { create(:trust, :single_academy_trust, in_devices_pilot: false) }
+  let(:responsible_body) { create(:trust, :single_academy_trust) }
   let(:school) { create(:school, responsible_body: responsible_body) }
 
   context 'cases when the service does not apply' do
-    it 'returns without creating any new users if the responsible body is already in the devices pilot' do
-      responsible_body.update!(in_devices_pilot: true)
-
-      expect { described_class.new(urn: school.urn).call }
-        .not_to change { User.count }.from(0)
-    end
-
     it 'returns without creating any new users if the responsible body has multiple schools' do
       create(:school, responsible_body: responsible_body) # another school in the RB
       create(:school_contact, :headteacher, school: school)
@@ -48,10 +41,6 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
       described_class.new(urn: school.urn).call
       responsible_body.reload
       school.reload
-    end
-
-    it 'brings the responsible body into the devices pilot' do
-      expect(responsible_body.in_devices_pilot?).to be_truthy
     end
 
     it 'marks the responsible body as having devolved ordering to schools' do
@@ -128,10 +117,6 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
       described_class.new(urn: school.urn).call
       responsible_body.reload
       school.reload
-    end
-
-    it 'brings the responsible body into the devices pilot' do
-      expect(responsible_body.in_devices_pilot?).to be_truthy
     end
 
     it 'marks the responsible body as having devolved ordering to schools' do

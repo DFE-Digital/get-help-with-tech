@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::Devices::BaseController
+class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::BaseController
   before_action :find_school!
 
   def new

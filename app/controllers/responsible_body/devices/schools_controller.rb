@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::Devices::BaseController
+class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseController
   def index
     @schools = @responsible_body.schools
                                 .includes(:preorder_information)

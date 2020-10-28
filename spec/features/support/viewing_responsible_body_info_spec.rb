@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing responsible body information in the support area', type: :feature do
-  let(:local_authority) { create(:local_authority, name: 'Coventry', in_devices_pilot: true) }
+  let(:local_authority) { create(:local_authority, name: 'Coventry') }
   let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
   let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
 

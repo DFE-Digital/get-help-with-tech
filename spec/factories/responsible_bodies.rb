@@ -11,10 +11,6 @@ FactoryBot.define do
     trait :in_connectivity_pilot do
       in_connectivity_pilot       { true }
     end
-
-    trait :in_devices_pilot do
-      in_devices_pilot            { true }
-    end
   end
 
   factory :trust do
@@ -36,10 +32,6 @@ FactoryBot.define do
 
     trait :in_connectivity_pilot do
       in_connectivity_pilot       { true }
-    end
-
-    trait :in_devices_pilot do
-      in_devices_pilot            { true }
     end
   end
 end
