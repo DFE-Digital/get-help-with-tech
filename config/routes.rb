@@ -35,11 +35,6 @@ Rails.application.routes.draw do
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
-  get '/guide-for-distributing-bt-vouchers', to: 'guide_for_distributing_bt_vouchers#index'
-  get '/guide-for-distributing-bt-vouchers/who-to-give-vouchers-to', to: 'guide_for_distributing_bt_vouchers#who_to_give_vouchers_to'
-  get '/guide-for-distributing-bt-vouchers/what-to-do-with-the-vouchers', to: 'guide_for_distributing_bt_vouchers#what_to_do_with_the_vouchers'
-  get '/guide-for-distributing-bt-vouchers/not-offered-vouchers-yet', to: 'guide_for_distributing_bt_vouchers#not_offered_vouchers_yet'
-
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
@@ -91,9 +86,6 @@ Rails.application.routes.draw do
     end
     namespace :internet do
       get '/', to: 'home#show'
-      resources :bt_wifi_vouchers, only: %i[index], path: '/bt-wifi-vouchers' do
-        get 'download', to: 'bt_wifi_vouchers#download', on: :collection
-      end
       namespace :mobile, path: '/mobile' do
         get '/', to: 'extra_data_requests#index', as: :extra_data_requests
         get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
