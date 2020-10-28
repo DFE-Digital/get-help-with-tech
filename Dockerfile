@@ -20,6 +20,11 @@ RUN gem install bundler
 RUN chown -R deploy:deploy /usr/local/bundle/
 USER 1001
 
+# make it easier to get a rails console when ssh-ed on
+RUN echo "PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:${PATH}" >> /home/deploy/.profile
+RUN echo "cd ${RAILS_ROOT}" >> /home/deploy/.profile
+RUN chown deploy:deploy /home/deploy/.profile
+
 # install all gems
 COPY --chown=deploy:deploy Gemfile Gemfile.lock .ruby-version ./
 ARG BUNDLE_FLAGS="--jobs 2"
