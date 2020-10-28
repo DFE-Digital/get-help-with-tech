@@ -4,9 +4,8 @@ class OnboardSingleSchoolResponsibleBodyService
   end
 
   def call
-    return unless single_school_responsible_body? && !responsible_body.in_devices_pilot?
+    return unless single_school_responsible_body?
 
-    responsible_body.update!(in_devices_pilot: true)
     devolve_ordering_to_the_school
 
     ensure_both_responsible_body_and_school_have_users

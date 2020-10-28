@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Ordering devices' do
-  let(:responsible_body) { create(:local_authority, :in_devices_pilot) }
+  let(:responsible_body) { create(:local_authority) }
   let(:schools) { create_list(:school, 5, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 

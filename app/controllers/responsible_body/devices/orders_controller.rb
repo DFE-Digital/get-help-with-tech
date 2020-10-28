@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::OrdersController < ResponsibleBody::Devices::BaseController
+class ResponsibleBody::Devices::OrdersController < ResponsibleBody::BaseController
   def show
     if @responsible_body.has_any_schools_that_can_order_now?
       if @responsible_body.has_centrally_managed_schools_that_can_order_now?

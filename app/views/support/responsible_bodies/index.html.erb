@@ -26,9 +26,6 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
           <%= govuk_link_to responsible_body.name, support_responsible_body_path(responsible_body) %>
-          <% unless responsible_body.in_devices_pilot %>
-            (not in device reserve)
-          <% end %>
           <br>
           <%= responsible_body.type.underscore.humanize %>
         </td>

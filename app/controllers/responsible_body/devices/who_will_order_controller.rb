@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::Devices::BaseController
+class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::BaseController
   def edit
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(
       who_will_order: @responsible_body.who_will_order_devices,

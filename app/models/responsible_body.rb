@@ -58,10 +58,6 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
-  def self.in_devices_pilot
-    where(in_devices_pilot: true)
-  end
-
   def self.in_connectivity_pilot
     where(in_connectivity_pilot: true)
   end

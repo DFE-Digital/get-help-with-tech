@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::Devices::BaseController
+class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::BaseController
   before_action :set_school
 
   def edit

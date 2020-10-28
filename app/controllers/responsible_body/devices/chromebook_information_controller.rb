@@ -1,4 +1,4 @@
-class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBody::Devices::BaseController
+class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBody::BaseController
   before_action :find_school!
 
   def edit
