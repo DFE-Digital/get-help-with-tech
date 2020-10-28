@@ -46,7 +46,6 @@ en:
     upload_a_spreadsheet_of_extra_data_requests: Upload a spreadsheet of extra data requests
     weve_processed_your_spreadsheet: We’ve processed your spreadsheet
     guide_to_collecting_mobile_information: Guide to collecting mobile information
-    guide_for_distributing_bt_vouchers: A guide for distributing vouchers to families
     start: Get help with technology
     internet_access: Getting internet access
     who_needs_the_data: Who needs the extra mobile data?
@@ -238,11 +237,6 @@ en:
     asking_for_account_holder: Asking for account holder name and mobile number
     telling_about_offer: Telling them about their offer
     privacy: Explaining our privacy policy
-  guide_for_distributing_bt_vouchers:
-    overview: Overview
-    who_to_give_vouchers_to: Who to give BT vouchers to
-    what_to_do_with_the_vouchers: What to do with the vouchers
-    not_offered_vouchers_yet: If you haven’t been offered vouchers yet
   school:
     chromebooks:
       success: We’ve saved your choices
