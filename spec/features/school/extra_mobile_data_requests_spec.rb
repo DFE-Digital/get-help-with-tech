@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature, with_feature_flags: { school_mno: 'active' } do
+RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
 
   before do
+    school.update!(mno_feature_flag: true)
     sign_in_as user
   end
 

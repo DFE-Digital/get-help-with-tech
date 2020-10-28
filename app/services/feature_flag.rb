@@ -5,7 +5,6 @@ class FeatureFlag
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
-    school_mno
     mno_offer
     reduced_allocations
     no_chromebook_or_ipad_stock

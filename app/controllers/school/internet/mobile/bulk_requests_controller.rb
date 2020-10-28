@@ -1,5 +1,5 @@
 class School::Internet::Mobile::BulkRequestsController < School::BaseController
-  before_action { render_404_if_feature_flag_inactive(:school_mno) }
+  before_action { render_404_unless_school_in_mno_feature(@school) }
 
   def new
     @upload_form = BulkUploadForm.new

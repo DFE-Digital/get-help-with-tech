@@ -47,6 +47,12 @@ private
     end
   end
 
+  def render_404_unless_school_in_mno_feature(school)
+    unless school.mno_feature_flag
+      render 'errors/not_found', status: :not_found and return
+    end
+  end
+
   def not_found
     render 'errors/not_found', status: :not_found and return
   end

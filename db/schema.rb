@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(version: 2020_10_28_174801) do
     t.string "phone_number"
     t.string "order_state", default: "cannot_order", null: false
     t.string "status", default: "open", null: false
+    t.boolean "mno_feature_flag", default: false
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true

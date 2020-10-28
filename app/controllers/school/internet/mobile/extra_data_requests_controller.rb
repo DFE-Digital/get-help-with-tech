@@ -1,5 +1,5 @@
 class School::Internet::Mobile::ExtraDataRequestsController < School::BaseController
-  before_action { render_404_if_feature_flag_inactive(:school_mno) }
+  before_action { render_404_unless_school_in_mno_feature(@school) }
 
   def index
     @extra_mobile_data_requests = @school.extra_mobile_data_requests

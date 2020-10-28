@@ -8,14 +8,18 @@ RSpec.describe School::Internet::HomeController do
     sign_in_as user
   end
 
-  context 'when school_mno feature flag not active' do
+  context 'when school mno_feature_flag not active' do
     it 'renders 404' do
       get :show, params: { urn: school.urn }
       expect(response).to be_not_found
     end
   end
 
-  context 'when school_mno feature flag active', with_feature_flags: { school_mno: 'active' } do
+  context 'when school mno_feature_flag active' do
+    before do
+      school.update(mno_feature_flag: true)
+    end
+
     it 'renders 200' do
       get :show, params: { urn: school.urn }
       expect(response).to be_successful

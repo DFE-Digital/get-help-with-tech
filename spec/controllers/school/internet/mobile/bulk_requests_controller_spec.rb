@@ -4,8 +4,9 @@ RSpec.describe School::Internet::Mobile::BulkRequestsController, type: :controll
   let(:user) { create(:school_user) }
   let(:school) { user.school }
 
-  context 'when authenticated', with_feature_flags: { school_mno: 'active' } do
+  context 'when authenticated' do
     before do
+      school.update!(mno_feature_flag: true)
       sign_in_as user
     end
 
