@@ -6,10 +6,10 @@ An app to host content and forms for the "Get Help With Tech" COVID-19 response 
 
 For running the app:
 
-- Ruby 2.6.3
+- ([Ruby](.ruby-version))
 - PostgreSQL
-- NodeJS >= 12.13.x
-- Yarn >= 1.12.x
+- NodeJS >= 12.18.x
+- Yarn >= 1.22.x
 
 For performing releases:
 
