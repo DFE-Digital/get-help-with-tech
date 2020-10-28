@@ -14,6 +14,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   validates :contract_type, presence: true, on: :create
   validates :agrees_with_privacy_statement, inclusion: { in: [true] }
 
+  validate :validate_school_or_rb_present
+
   enum status: {
     requested: 'requested',
     in_progress: 'in_progress',
@@ -97,6 +99,13 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
 private
+
+  def validate_school_or_rb_present
+    if school_id.blank? && responsible_body_id.blank?
+      errors.add(:school, 'school or responsible body must be present')
+      errors.add(:responsible_body, 'school or responsible body must be present')
+    end
+  end
 
   def update_status_from_mobile_network_participation
     participating = mobile_network.participating?

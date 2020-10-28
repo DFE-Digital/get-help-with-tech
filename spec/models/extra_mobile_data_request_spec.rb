@@ -34,6 +34,51 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
   end
 
+  describe 'validate RB or school must be present' do
+    let(:school) { create(:school) }
+    let(:rb) { create(:trust) }
+
+    context 'when rb and school present' do
+      subject(:model) { described_class.new(responsible_body: rb, school: school) }
+
+      it 'is valid' do
+        model.valid?
+        expect(model.errors[:school]).to be_blank
+        expect(model.errors[:responsible_body]).to be_blank
+      end
+    end
+
+    context 'when responsible body present' do
+      subject(:model) { described_class.new(responsible_body: rb) }
+
+      it 'is valid with rb present' do
+        model.valid?
+        expect(model.errors[:school]).to be_blank
+        expect(model.errors[:responsible_body]).to be_blank
+      end
+    end
+
+    context 'when school present' do
+      subject(:model) { described_class.new(responsible_body: rb) }
+
+      it 'is valid with school present' do
+        model.valid?
+        expect(model.errors[:school]).to be_blank
+        expect(model.errors[:responsible_body]).to be_blank
+      end
+    end
+
+    context 'when neither rb or school present' do
+      subject(:model) { described_class.new }
+
+      it 'is not valid' do
+        model.valid?
+        expect(model.errors[:school]).to be_present
+        expect(model.errors[:responsible_body]).to be_present
+      end
+    end
+  end
+
   describe 'validating device_phone_number' do
     context 'a phone number that starts with 07' do
       let(:request) { subject }
@@ -89,7 +134,8 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   describe '#notify_account_holder_later' do
-    let(:request) { build(:extra_mobile_data_request, mobile_network: create(:mobile_network)) }
+    let(:rb) { create(:trust) }
+    let(:request) { build(:extra_mobile_data_request, responsible_body: rb, mobile_network: create(:mobile_network)) }
 
     it 'enqueues a job to send the message' do
       expect {
