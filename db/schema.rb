@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_174103) do
+ActiveRecord::Schema.define(version: 2020_10_28_174801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,7 +152,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_174103) do
     t.string "companies_house_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "in_devices_pilot", default: false
     t.boolean "in_connectivity_pilot", default: false
     t.string "who_will_order_devices"
     t.string "computacenter_reference"
