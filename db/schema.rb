@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_28_174801) do
+ActiveRecord::Schema.define(version: 2020_10_29_132711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -316,7 +316,6 @@ ActiveRecord::Schema.define(version: 2020_10_28_174801) do
     t.string "sign_in_token"
     t.integer "mobile_network_id"
     t.datetime "sign_in_token_expires_at"
-    t.datetime "approved_at"
     t.bigint "responsible_body_id"
     t.integer "sign_in_count", default: 0
     t.datetime "last_signed_in_at"
@@ -327,7 +326,6 @@ ActiveRecord::Schema.define(version: 2020_10_28_174801) do
     t.boolean "orders_devices"
     t.datetime "techsource_account_confirmed_at"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
-    t.index ["approved_at"], name: "index_users_on_approved_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
     t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
