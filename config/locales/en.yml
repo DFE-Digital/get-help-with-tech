@@ -74,7 +74,9 @@ en:
     support_order_status:
       enable_orders: Can they place orders?
       confirm_enable_orders: Check your answers and confirm
-    support_edit_allocation: Change device allocation
+    support_edit_allocation:
+      std_device: Change device allocation
+      coms_device: Change router allocation
     support_bulk_allocation: Allow schools to order their full allocation
     support_bulk_allocation_result: Bulk allocation summary
     upload_key_contacts_file: Upload a CSV file of key contacts
