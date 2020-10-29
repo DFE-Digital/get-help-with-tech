@@ -1,6 +1,6 @@
 class CreateUserService
   def self.invite_responsible_body_user(user_params = {})
-    user = User.new(user_params.merge(override_params))
+    user = User.new(user_params.merge(orders_devices: true))
     if user.save
       InviteResponsibleBodyUserMailer.with(user: user).invite_user_email.deliver_later
     end
@@ -27,7 +27,7 @@ class CreateUserService
   end
 
   def self.create_new_school_user!(user_params)
-    user = User.new(user_params.merge(approved_at: Time.zone.now))
+    user = User.new(user_params)
     if user.save
       InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
       user.school.preorder_information&.refresh_status!
@@ -49,10 +49,4 @@ class CreateUserService
   end
 
   private_class_method :invite_to_additional_school!
-
-  def self.override_params
-    { approved_at: Time.zone.now, orders_devices: true }
-  end
-
-  private_class_method :override_params
 end

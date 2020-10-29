@@ -22,7 +22,6 @@ class User < ApplicationRecord
                         ->(user, school) { user.destroy_school_welcome_wizard!(school) },
                       ]
 
-  scope :approved, -> { where.not(approved_at: nil) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
   scope :responsible_body_users, -> { where.not(responsible_body: nil) }
   scope :from_responsible_body_in_connectivity_pilot, -> { joins(:responsible_body).where('responsible_bodies.in_connectivity_pilot = ?', true) }

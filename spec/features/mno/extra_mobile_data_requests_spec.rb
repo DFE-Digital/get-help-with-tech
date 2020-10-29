@@ -3,13 +3,11 @@ require 'shared/expect_download'
 
 RSpec.feature 'MNO Requests view', type: :feature do
   let(:local_authority_user) { create(:local_authority_user) }
-  let(:unapproved_user) { create(:local_authority_user, email_address: 'dubious@example.com', approved_at: nil) }
   let(:mno_user) { create(:mno_user) }
   let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }
   let(:user_from_other_mno) { create(:mno_user, name: 'Other MNO-User', organisation: 'Other MNO', mobile_network: other_mno) }
   let!(:extra_mobile_data_request_for_mno) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
   let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
-  let!(:extra_mobile_data_request_from_unapproved_user) { create(:extra_mobile_data_request, account_holder_name: 'mno extra_mobile_data_request from unapproved user', mobile_network: mno_user.mobile_network, created_by_user: unapproved_user) }
 
   context 'signed in as an mno user' do
     before do
@@ -26,11 +24,6 @@ RSpec.feature 'MNO Requests view', type: :feature do
         expect(page).to have_content(mno_user.mobile_network.brand)
         expect(page).to have_content(extra_mobile_data_request_for_mno.account_holder_name)
         expect(page).not_to have_content(extra_mobile_data_request_for_other_mno.account_holder_name)
-      end
-
-      scenario 'does not show requests from users who are not approved' do
-        expect(page).to have_content(extra_mobile_data_request_for_mno.account_holder_name)
-        expect(page).not_to have_content(extra_mobile_data_request_from_unapproved_user.account_holder_name)
       end
 
       scenario 'clicking Select All selects all checkboxes' do
@@ -57,7 +50,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
         all('tbody tr').map { |e| e[:id].split('-').last.to_i }
       end
       let(:mno_extra_mobile_data_requests) do
-        ExtraMobileDataRequest.from_approved_users.where(mobile_network_id: mno_user.mobile_network_id)
+        ExtraMobileDataRequest.where(mobile_network: mno_user.mobile_network)
       end
 
       before do

@@ -38,18 +38,6 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
         expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('queried')
       end
     end
-
-    context 'for a request from an unapproved user' do
-      before do
-        extra_mobile_data_request_1_for_mno.created_by_user.update(approved_at: nil)
-      end
-
-      it 'does not update the status to queried' do
-        patch :update, params: params
-        expect(extra_mobile_data_request_1_for_mno.reload.problem).to be_nil
-        expect(extra_mobile_data_request_1_for_mno.reload.status).not_to eq('queried')
-      end
-    end
   end
 
   describe 'PUT /bulk_update' do
