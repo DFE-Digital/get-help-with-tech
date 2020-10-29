@@ -56,7 +56,7 @@ private
     # we can't have more than 3 school users who order devices!
     user.update!(orders_devices: false) if school.users.count >= 3
     school.users << user
-    InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later(wait: Settings.active_job.default_wait)
+    InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
   end
 
   def add_school_headteacher_to_responsible_body

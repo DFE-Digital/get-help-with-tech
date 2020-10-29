@@ -151,7 +151,7 @@ private
     SchoolWelcomeWizard.transaction do
       new_user.save!
       update!(invited_user_id: new_user.id)
-      InviteSchoolUserMailer.with(user: new_user).nominated_contact_email.deliver_later(wait: Settings.active_job.default_wait)
+      InviteSchoolUserMailer.with(user: new_user).nominated_contact_email.deliver_later
     end
     true
   end

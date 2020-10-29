@@ -47,7 +47,7 @@ private
     ComputacenterMailer
       .with(school: school, new_cap_value: new_cap_value)
       .notify_of_school_can_order
-      .deliver_later(wait: Settings.active_job.default_wait)
+      .deliver_later
   end
 
   def notify_users(users:, school:, message_type:)
@@ -60,7 +60,7 @@ private
     CanOrderDevicesMailer
       .with(user: user, school: school)
       .send(message_type)
-      .deliver_later(wait: Settings.active_job.default_wait)
+      .deliver_later
     EventNotificationsService.broadcast(
       UserCanOrderEvent.new(user: user, school: school, type: message_type),
     )
