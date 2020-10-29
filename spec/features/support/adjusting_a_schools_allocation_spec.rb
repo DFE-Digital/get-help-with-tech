@@ -17,7 +17,7 @@ RSpec.feature 'Adjusting a schools allocation' do
     end
 
     it 'shows a link to Change whether they can order devices' do
-      expect(school_details_page).to have_text 'Allocation'
+      expect(school_details_page).to have_text 'Device allocation'
       expect(school_details_page).to have_link 'Change allocation'
     end
 

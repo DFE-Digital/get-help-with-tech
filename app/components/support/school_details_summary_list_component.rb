@@ -10,7 +10,7 @@ private
     super.except(:change_path, :action, :action_path)
   end
 
-  def allocation_row
+  def device_allocation_row
     super
       .except(:action_path, :action)
       .merge(
@@ -53,5 +53,9 @@ private
 
   def headteacher
     @school.headteacher_contact
+  end
+
+  def display_router_allocation_row?
+    true
   end
 end
