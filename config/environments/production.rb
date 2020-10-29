@@ -1,3 +1,5 @@
+require 'active_job/queue_adapters/sidekiq_with_enforced_delay_adapter'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

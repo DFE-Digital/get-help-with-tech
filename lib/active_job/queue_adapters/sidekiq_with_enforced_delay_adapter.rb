@@ -13,7 +13,7 @@ module ActiveJob
     # The simplest fix for this is just to add a short delay to all async jobs
     class SidekiqWithEnforcedDelayAdapter < SidekiqAdapter
       def enqueue(job)
-        enqueue_at(job, Time.zone.now.utc + Settings.active_job.default_wait.seconds)
+        enqueue_at(job, (Time.zone.now.utc + Settings.active_job.default_wait.seconds).to_i)
       end
     end
   end
