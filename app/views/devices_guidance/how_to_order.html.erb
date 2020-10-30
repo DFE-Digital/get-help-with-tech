@@ -316,6 +316,12 @@
           </div>
 
           <div class="app-step-nav__panel" id="step-panel-receive-and-distribute-laptops-and-tablets-6">
+            <% unless FeatureFlag.active?(:half_term_order_closure) %>
+              <p class="app-step-nav__paragraph">
+                Due to increased levels of demand, devices will be delivered to schools within 5 working days of an order being confirmed, subject to stock availability.
+              </p>
+            <% end %>
+
             <p class="app-step-nav__paragraph">
               All devices will be fully owned by the schools or academy trusts who receive them. It will be the
               responsibility of the school to lend the devices to those who need them.
