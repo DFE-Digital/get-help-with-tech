@@ -14,11 +14,13 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
     if @form.valid?
       if params[:confirm].present?
         ActiveRecord::Base.transaction do
-          service = SchoolOrderStateAndCapUpdateService.new(school: @school, device_type: 'std_device')
-          service.update!(cap: @form.device_cap, order_state: @form.order_state)
-
-          service = SchoolOrderStateAndCapUpdateService.new(school: @school, device_type: 'coms_device')
-          service.update!(cap: @form.router_cap, order_state: @form.order_state)
+          service = SchoolOrderStateAndCapUpdateService.new(school: @school,
+                                                            order_state: @form.order_state,
+                                                            caps: [
+                                                              { device_type: 'std_device', cap: @form.device_cap },
+                                                              { device_type: 'coms_device', cap: @form.router_cap },
+                                                            ])
+          service.update!
         end
         flash[:success] = t(:success, scope: %i[support order_status update])
         redirect_to support_school_path(urn: @school.urn)

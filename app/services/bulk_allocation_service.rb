@@ -34,8 +34,10 @@ class BulkAllocationService
 private
 
   def update_cap_to_full_allocation!(school)
-    cus = SchoolOrderStateAndCapUpdateService.new(school: school, device_type: 'std_device')
-    cus.update!(order_state: 'can_order', cap: nil)
+    service = SchoolOrderStateAndCapUpdateService.new(school: school,
+                                                      order_state: 'can_order',
+                                                      caps: [{ device_type: 'std_device', cap: nil }])
+    service.update!
   end
 
   def add_success(school)

@@ -6,9 +6,9 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }
   let(:allocation) { school.std_device_allocation }
-  let(:device_type) { nil }
+  let(:device_type) { 'std_device' }
 
-  subject(:service) { described_class.new(school: school, device_type: device_type) }
+  subject(:service) { described_class.new(school: school, order_state: new_order_state, caps: [{ device_type: device_type, cap: new_cap }]) }
 
   describe '#update!' do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
@@ -22,11 +22,11 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     end
 
     it 'updates the school with the given order_state' do
-      expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school, :order_state).from('cannot_order').to('can_order')
+      expect { service.update! }.to change(school, :order_state).from('cannot_order').to('can_order')
     end
 
     it 'triggers notifications that the school can order' do
-      service.update!(cap: new_cap, order_state: new_order_state)
+      service.update!
       expect(notifications).to have_received(:call)
     end
 
@@ -37,7 +37,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
       context 'when no device_type was given' do
         it 'creates a new std_device allocation record' do
-          expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school.device_allocations.by_device_type('std_device'), :count).by(1)
+          expect { service.update! }.to change(school.device_allocations.by_device_type('std_device'), :count).by(1)
         end
       end
 
@@ -45,14 +45,14 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         let(:device_type) { 'coms_device' }
 
         it 'creates a new allocation record with the given device_type' do
-          expect { service.update!(cap: new_cap, order_state: new_order_state) }.to change(school.device_allocations.by_device_type('coms_device'), :count).by(1)
+          expect { service.update! }.to change(school.device_allocations.by_device_type('coms_device'), :count).by(1)
         end
 
         context 'when the endpoint setting is present' do
           it 'sends an email to computacenter' do
             expect(Settings.computacenter.outgoing_api.endpoint).to be_present
 
-            expect { service.update!(cap: new_cap, order_state: new_order_state) }.to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change).once
+            expect { service.update! }.to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change).once
           end
         end
       end
@@ -62,14 +62,12 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
 
       it 'does not create a new allocation record' do
-        expect { service.update!(cap: new_cap, order_state: new_order_state) }.not_to change(SchoolDeviceAllocation, :count)
+        expect { service.update! }.not_to change(SchoolDeviceAllocation, :count)
       end
 
       context 'changing order_state to can_order' do
-        let(:new_order_state) { 'can_order' }
-
         it 'sets the new cap to match the full allocation, regardless of what was given' do
-          service.update!(cap: 2, order_state: new_order_state)
+          service.update!
           expect(allocation.reload.cap).to eq(7)
         end
       end
@@ -78,9 +76,10 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     context 'changing order_state to can_order_for_specific_circumstances' do
       let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
       let(:new_order_state) { 'can_order_for_specific_circumstances' }
+      let(:new_cap) { 3 }
 
       it 'sets the new cap to be the given cap' do
-        service.update!(cap: 3, order_state: new_order_state)
+        service.update!
         expect(allocation.reload.cap).to eq(3)
       end
     end
@@ -89,6 +88,8 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       let(:new_order_state) { 'cannot_order' }
 
       context 'with an existing allocation' do
+        let(:new_cap) { 5 }
+
         before do
           create(:school_device_allocation, :with_std_allocation,
                  school: school,
@@ -98,20 +99,22 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         end
 
         it 'sets the new cap to equal the devices_ordered, regardless of what was given' do
-          service.update!(cap: 5, order_state: new_order_state)
+          service.update!
           expect(allocation.cap).to eq(1)
         end
 
         it 'refreshes the status of the preorder' do
           expect {
-            service.update!(cap: 5, order_state: new_order_state)
+            service.update!
           }.to change(preorder, :status)
         end
       end
 
       context 'with no existing allocation' do
+        let(:new_cap) { 5 }
+
         it 'sets the new cap to 0, regardless of what was given' do
-          service.update!(cap: 5, order_state: new_order_state)
+          service.update!
           expect(allocation.cap).to eq(0)
         end
       end
@@ -123,19 +126,19 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
 
       it 'notifies the computacenter API' do
-        service.update!(cap: 2, order_state: new_order_state)
+        service.update!
         expect(mock_request).to have_received(:post!)
       end
 
       it 'records timestamp and payload_id on the allocation' do
-        service.update!(cap: 2, order_state: new_order_state)
+        service.update!
         allocation.reload
         expect(allocation.cap_update_request_timestamp).not_to be_nil
         expect(allocation.cap_update_request_payload_id).not_to be_nil
       end
 
       it 'sends an email to computacenter' do
-        expect { service.update!(cap: new_cap, order_state: new_order_state) }.to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change).once
+        expect { service.update! }.to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change).once
       end
     end
 
@@ -145,19 +148,19 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
 
       it 'does not notify the computacenter API' do
-        service.update!(cap: 2, order_state: new_order_state)
+        service.update!
         expect(mock_request).not_to have_received(:post!)
       end
 
       it 'does not record timestamp and payload_id on the allocation' do
-        service.update!(cap: 2, order_state: new_order_state)
+        service.update!
         allocation.reload
         expect(allocation.cap_update_request_timestamp).to be_nil
         expect(allocation.cap_update_request_payload_id).to be_nil
       end
 
       it 'does not send an email to computacenter' do
-        expect { service.update!(cap: new_cap, order_state: new_order_state) }.not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+        expect { service.update! }.not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
       end
     end
   end

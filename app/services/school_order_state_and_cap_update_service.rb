@@ -1,18 +1,24 @@
 class SchoolOrderStateAndCapUpdateService
-  attr_accessor :school, :device_type
+  attr_accessor :school, :order_state, :caps
 
-  def initialize(args = {})
-    @school = args[:school]
-    @device_type = args[:device_type] || 'std_device'
+  # caps: [{ device_type: 'std_device', cap: 3 }, { device_type: 'coms_device', cap: 1 }]
+  # caps: [{ device_type: 'std_device', cap: 7 }]
+  def initialize(school:, order_state:, caps:)
+    @school = school
+    @order_state = order_state
+    @caps = caps
   end
 
-  def update!(order_state:, cap:)
+  def update!
     update_order_state!(order_state)
-    allocation = update_cap!(cap)
 
-    if notify_computacenter_of_cap_changes?
-      update_cap_on_computacenter!(allocation.id)
-      notify_computacenter_by_email(allocation.cap)
+    caps.each do |cap|
+      allocation = update_cap!(cap[:device_type], cap[:cap])
+
+      if notify_computacenter_of_cap_changes?
+        update_cap_on_computacenter!(allocation.id)
+        notify_computacenter_by_email(allocation.device_type, allocation.cap)
+      end
     end
 
     # ensure the updates are picked up
@@ -33,9 +39,10 @@ private
     Settings.computacenter.outgoing_api.endpoint.present?
   end
 
-  def notify_computacenter_by_email(new_cap_value)
+  def notify_computacenter_by_email(device_type, new_cap_value)
     mailer = ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
-    if @device_type == 'std_device'
+
+    if device_type == 'std_device'
       mailer.notify_of_devices_cap_change.deliver_later
     else
       mailer.notify_of_comms_cap_change.deliver_later
@@ -46,8 +53,8 @@ private
     @school.update!(order_state: order_state)
   end
 
-  def update_cap!(cap)
-    allocation = SchoolDeviceAllocation.find_or_initialize_by(school_id: @school.id, device_type: @device_type)
+  def update_cap!(device_type, cap)
+    allocation = SchoolDeviceAllocation.find_or_initialize_by(school_id: @school.id, device_type: device_type)
     # we only take the cap from the user if they chose specific circumstances
     # for both other states, we need to infer a new cap from the chosen state
     allocation.cap = allocation.cap_implied_by_order_state(order_state: @school.order_state, given_cap: cap)
