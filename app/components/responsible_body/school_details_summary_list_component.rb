@@ -63,7 +63,7 @@ private
       key: 'Device allocation',
       value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-      action: 'Query allocation',
+      action: 'Query <span class="govuk-visually-hidden">device</span> allocation'.html_safe,
     }
   end
 
@@ -71,6 +71,8 @@ private
     {
       key: 'Router allocation',
       value: pluralize(@school.coms_device_allocation&.allocation.to_i, 'router'),
+      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
+      action: 'Query <span class="govuk-visually-hidden">router</span> allocation'.html_safe,
     }
   end
 
