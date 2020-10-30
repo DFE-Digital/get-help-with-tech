@@ -9,6 +9,7 @@ class School < ApplicationRecord
   has_many :users, through: :user_schools
   has_one :preorder_information
   has_many :email_audits
+  has_many :extra_mobile_data_requests
 
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true

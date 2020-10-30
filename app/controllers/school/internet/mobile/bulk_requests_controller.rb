@@ -1,5 +1,5 @@
-class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBody::BaseController
-  before_action { render_404_if_feature_flag_inactive(:mno_offer) }
+class School::Internet::Mobile::BulkRequestsController < School::BaseController
+  before_action { render_404_unless_school_in_mno_feature(@school) }
 
   def new
     @upload_form = BulkUploadForm.new
@@ -11,7 +11,7 @@ class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBod
     if @upload_form.valid?
       # parse file and generate records
       begin
-        @summary = importer.import!(@upload_form.file.path, extra_fields: { created_by_user: @user, responsible_body: @user.responsible_body })
+        @summary = importer.import!(@upload_form.file.path, extra_fields: { created_by_user: @user, school: @school })
         render :summary
       rescue StandardError => e
         Rails.logger.error(e.message)

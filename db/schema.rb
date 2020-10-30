@@ -109,10 +109,12 @@ ActiveRecord::Schema.define(version: 2020_10_29_132711) do
     t.integer "created_by_user_id"
     t.boolean "agrees_with_privacy_statement"
     t.string "problem"
-    t.integer "responsible_body_id", null: false
+    t.integer "responsible_body_id"
     t.string "contract_type"
+    t.bigint "school_id"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
     t.index ["responsible_body_id"], name: "index_extra_mobile_data_requests_on_responsible_body_id"
+    t.index ["school_id"], name: "index_extra_mobile_data_requests_on_school_id"
     t.index ["status"], name: "index_extra_mobile_data_requests_on_status"
   end
 
@@ -238,6 +240,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_132711) do
     t.string "phone_number"
     t.string "order_state", default: "cannot_order", null: false
     t.string "status", default: "open", null: false
+    t.boolean "mno_feature_flag", default: false
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
@@ -346,6 +349,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_132711) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
+  add_foreign_key "extra_mobile_data_requests", "schools"
   add_foreign_key "preorder_information", "school_contacts"
   add_foreign_key "responsible_bodies", "users", column: "key_contact_id"
   add_foreign_key "school_device_allocations", "schools"

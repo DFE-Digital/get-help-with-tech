@@ -3,7 +3,8 @@ class ExtraMobileDataRequest < ApplicationRecord
 
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network
-  belongs_to :responsible_body
+  belongs_to :responsible_body, optional: true
+  belongs_to :school, optional: true
 
   validates :status, presence: true
   validates :account_holder_name, presence: true
@@ -12,6 +13,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   validates :mobile_network_id, presence: true
   validates :contract_type, presence: true, on: :create
   validates :agrees_with_privacy_statement, inclusion: { in: [true] }
+
+  validate :validate_school_or_rb_present
 
   enum status: {
     requested: 'requested',
@@ -91,12 +94,14 @@ class ExtraMobileDataRequest < ApplicationRecord
     )
   end
 
-  def created_by_user=(new_user)
-    super
-    self.responsible_body = new_user.responsible_body if new_user
-  end
-
 private
+
+  def validate_school_or_rb_present
+    if school_id.blank? && responsible_body_id.blank?
+      errors.add(:school, 'school or responsible body must be present')
+      errors.add(:responsible_body, 'school or responsible body must be present')
+    end
+  end
 
   def update_status_from_mobile_network_participation
     participating = mobile_network.participating?
