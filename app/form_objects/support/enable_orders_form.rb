@@ -7,7 +7,8 @@ class Support::EnableOrdersForm
 
   validates :order_state, inclusion: { in: School.order_states }
   validates :cap, numericality: { only_integer: true, greater_than: 0 }, if: :cap_required?
-  validates_with CapAndAllocationValidator
+
+  validate :validate_cap_lte_allocation
 
   before_validation :override_cap_according_to_order_state!
 
@@ -21,5 +22,13 @@ class Support::EnableOrdersForm
 
   def will_enable_orders?
     order_state.to_s.in?(%w[can_order_for_specific_circumstances can_order])
+  end
+
+private
+
+  def validate_cap_lte_allocation
+    if cap.to_i > allocation.to_i
+      errors.add(:cap, :lte_allocation, allocation: allocation.to_i)
+    end
   end
 end
