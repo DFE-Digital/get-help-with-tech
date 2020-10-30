@@ -11,14 +11,18 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
            phone_number: '12345')
   end
 
+  def row_for_key(doc, key)
+    doc.css('.govuk-summary-list__row').find { |row| row.css('dt').text.strip == key }
+  end
+
   def value_for_row(doc, key)
-    index = doc.css('dt, dd').find_index { |dt| dt.text.strip == key }
-    doc.css('dt, dd')[index + 1]
+    row = row_for_key(doc, key)
+    row.css('dd')[0]
   end
 
   def action_for_row(doc, key)
-    index = doc.css('dt, dd').find_index { |dt| dt.text.strip == key }
-    doc.css('dt, dd')[index + 2]
+    row = row_for_key(doc, key)
+    row.css('dd')[1]
   end
 
   subject(:result) { render_inline(described_class.new(school: school)) }
