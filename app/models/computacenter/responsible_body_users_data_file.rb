@@ -29,7 +29,6 @@ class Computacenter::ResponsibleBodyUsersDataFile < CsvDataFile
       telephone: record[:telephone],
       email_address: record[:email_address],
       responsible_body: responsible_body,
-      approved_at: Time.zone.now.utc,
     )
   end
 end

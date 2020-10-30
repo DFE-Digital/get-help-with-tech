@@ -13,14 +13,6 @@ FactoryBot.define do
       privacy_notice_seen_at { nil }
     end
 
-    trait :approved do
-      approved_at { Time.zone.now.utc - 3.days }
-    end
-
-    trait :not_approved do
-      approved_at { nil }
-    end
-
     trait :never_signed_in do
       sign_in_count     { 0 }
       last_signed_in_at { nil }
@@ -38,12 +30,10 @@ FactoryBot.define do
 
     factory :local_authority_user do
       association :responsible_body, factory: %i[local_authority in_connectivity_pilot]
-      approved
     end
 
     factory :trust_user do
       association :responsible_body, factory: %i[trust in_connectivity_pilot]
-      approved
     end
 
     factory :single_academy_trust_user do

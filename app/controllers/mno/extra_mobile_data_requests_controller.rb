@@ -52,7 +52,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
 private
 
   def extra_mobile_data_request_scope
-    @mobile_network.extra_mobile_data_requests.from_approved_users
+    @mobile_network.extra_mobile_data_requests
   end
 
   def load_extra_mobile_data_request(emdr_id)

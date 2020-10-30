@@ -1,18 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ExtraMobileDataRequest, type: :model do
-  describe '.from_approved_users' do
-    let(:approved_user) { create(:local_authority_user, :approved) }
-    let(:not_approved_user) { create(:local_authority_user, :not_approved) }
-
-    it 'includes entries from approved users only' do
-      extra_mobile_data_request_from_approved_user = create(:extra_mobile_data_request, created_by_user: approved_user)
-      create(:extra_mobile_data_request, created_by_user: not_approved_user)
-
-      expect(ExtraMobileDataRequest.from_approved_users).to eq([extra_mobile_data_request_from_approved_user])
-    end
-  end
-
   describe 'to_csv' do
     let(:requests) { ExtraMobileDataRequest.all }
 

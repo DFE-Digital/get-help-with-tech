@@ -265,8 +265,7 @@ RSpec.describe CreateUserService do
 
       it 'creates a user with the given params' do
         expect { result }.to change(User, :count).by(1)
-        expect(User.last).to have_attributes(valid_params.except(:approved_at))
-        expect(User.last.approved_at).to be_within(5.seconds).of(now)
+        expect(User.last).to have_attributes(valid_params)
       end
 
       it 'sends the correct email' do
@@ -277,8 +276,7 @@ RSpec.describe CreateUserService do
 
       it 'returns the user' do
         expect(result).to be_a(User)
-        expect(result).to have_attributes(valid_params.except(:approved_at))
-        expect(result.approved_at).to be_within(5.seconds).of(now)
+        expect(result).to have_attributes(valid_params)
       end
 
       it 'updates the school status to reflect that the school has been contacted' do

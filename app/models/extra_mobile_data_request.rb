@@ -69,10 +69,6 @@ class ExtraMobileDataRequest < ApplicationRecord
     }
   end
 
-  def self.from_approved_users
-    joins(:created_by_user).merge(User.approved)
-  end
-
   def self.on_mobile_network(mobile_network_id)
     where(mobile_network_id: mobile_network_id)
   end
