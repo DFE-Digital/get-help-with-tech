@@ -11,6 +11,20 @@ describe School::SchoolDetailsSummaryListComponent do
 
   subject(:result) { render_inline(described_class.new(school: school)) }
 
+  def row_for_key(doc, key)
+    doc.css('.govuk-summary-list__row').find { |row| row.css('dt').text.strip == key }
+  end
+
+  def value_for_row(doc, key)
+    row = row_for_key(doc, key)
+    row.css('dd')[0]
+  end
+
+  def action_for_row(doc, key)
+    row = row_for_key(doc, key)
+    row.css('dd')[1]
+  end
+
   context 'when the school will place device orders' do
     before do
       create(:preorder_information,
@@ -25,20 +39,22 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school allocation' do
-      expect(result.css('dd')[0].text).to include('3 devices')
+      expect(value_for_row(result, 'Device allocation').text).to include('3 devices')
     end
 
     it 'renders the school type' do
-      expect(result.css('dd')[2].text).to include('Primary school')
+      expect(value_for_row(result, 'Type of school').text).to include('Primary school')
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(result.css('dd')[3].text).to include('Yes')
-      expect(result.css('dd')[4].text).to include('Change')
-      expect(result.css('dd')[5].text).to include('school.domain.org')
-      expect(result.css('dd')[6].text).to include('Change')
-      expect(result.css('dd')[7].text).to include('admin@recovery.org')
-      expect(result.css('dd')[8].text).to include('Change')
+      expect(value_for_row(result, 'Will your school need to order Chromebooks?').text).to include('Yes')
+      expect(action_for_row(result, 'Will your school need to order Chromebooks?').text).to include('Change')
+
+      expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
+      expect(action_for_row(result, 'Domain').text).to include('Change')
+
+      expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
+      expect(action_for_row(result, 'Recovery email').text).to include('Change')
     end
   end
 
@@ -60,9 +76,42 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('dd')[3].text).to include('Yes')
-      expect(result.css('dd')[4].text).to include('school.domain.org')
-      expect(result.css('dd')[5].text).to include('admin@recovery.org')
+      expect(value_for_row(result, 'Will your school need to order Chromebooks?').text).to include('Yes')
+      expect(action_for_row(result, 'Will your school need to order Chromebooks?')).not_to be_present
+
+      expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
+      expect(action_for_row(result, 'Domain')).not_to be_present
+
+      expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
+      expect(action_for_row(result, 'Recovery email')).not_to be_present
+    end
+  end
+
+  describe 'router allocation' do
+    context 'when there is no allocation' do
+      it 'does not show router allocation' do
+        expect(result.text).not_to include('Router allocation')
+      end
+    end
+
+    context 'when there is a zero allocation' do
+      before do
+        create(:school_device_allocation, :with_coms_allocation, allocation: 0, school: school)
+      end
+
+      it 'does not show router allocation' do
+        expect(result.text).not_to include('Router allocation')
+      end
+    end
+
+    context 'when there is a non-zero allocation' do
+      before do
+        create(:school_device_allocation, :with_coms_allocation, school: school)
+      end
+
+      it 'shows router allocation' do
+        expect(result.text).to include('Router allocation')
+      end
     end
   end
 end

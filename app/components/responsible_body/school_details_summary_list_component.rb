@@ -16,7 +16,8 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
     array = []
     array << preorder_status_row
     array << who_will_order_row
-    array << allocation_row
+    array << device_allocation_row
+    array << router_allocation_row if display_router_allocation_row?
     array << devices_ordered_row if display_devices_ordered_row?
     array << order_status_row
     array << school_type_row
@@ -57,12 +58,21 @@ private
     end
   end
 
-  def allocation_row
+  def device_allocation_row
     {
-      key: 'Allocation',
+      key: 'Device allocation',
       value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-      action: 'Query allocation',
+      action: 'Query <span class="govuk-visually-hidden">device</span> allocation'.html_safe,
+    }
+  end
+
+  def router_allocation_row
+    {
+      key: 'Router allocation',
+      value: pluralize(@school.coms_device_allocation&.allocation.to_i, 'router'),
+      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
+      action: 'Query <span class="govuk-visually-hidden">router</span> allocation'.html_safe,
     }
   end
 
@@ -75,6 +85,10 @@ private
 
   def display_devices_ordered_row?
     @school.std_device_allocation&.devices_ordered.to_i.positive?
+  end
+
+  def display_router_allocation_row?
+    @school.coms_device_allocation&.allocation.to_i.positive?
   end
 
   def order_status_row

@@ -11,6 +11,20 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
            phone_number: '12345')
   end
 
+  def row_for_key(doc, key)
+    doc.css('.govuk-summary-list__row').find { |row| row.css('dt').text.strip == key }
+  end
+
+  def value_for_row(doc, key)
+    row = row_for_key(doc, key)
+    row.css('dd')[0]
+  end
+
+  def action_for_row(doc, key)
+    row = row_for_key(doc, key)
+    row.css('dd')[1]
+  end
+
   subject(:result) { render_inline(described_class.new(school: school)) }
 
   context 'when the school will place device orders' do
@@ -35,17 +49,17 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school type' do
-      expect(result.css('.govuk-summary-list__row')[4].text).to include('Primary school')
+      expect(value_for_row(result, 'Type of school').text).to include('Primary school')
     end
 
     it 'renders the school details' do
-      expect(result.css('.govuk-summary-list__row')[0].text).to include('School will be contacted')
+      expect(value_for_row(result, 'Status').text).to include('School will be contacted')
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(result.css('dd')[10].text).to include('Yes')
-      expect(result.css('dd')[11].text).to include('school.domain.org')
-      expect(result.css('dd')[12].text).to include('admin@recovery.org')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
+      expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
@@ -54,7 +68,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'cannot place orders' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Not yet because there are no local coronavirus')
+        expect(value_for_row(result, 'Can place orders?').text).to include('Not yet because there are no local coronavirus')
       end
     end
 
@@ -64,7 +78,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'can place orders' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, local coronavirus restrictions have been confirmed')
+        expect(value_for_row(result, 'Can place orders?').text).to include('Yes, local coronavirus restrictions have been confirmed')
       end
     end
 
@@ -74,7 +88,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'can place orders' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Yes, for specific circumstances')
+        expect(value_for_row(result, 'Can place orders?').text).to include('Yes, for specific circumstances')
       end
     end
 
@@ -85,8 +99,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                who_will_order_devices: :school,
                school_contact: headteacher)
 
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
-        expect(result.css('.govuk-summary-list__row')[5].inner_html).to include('Headteacher: Davy Jones<br>davy.jones@school.sch.uk<br>12345')
+        expect(value_for_row(result, 'School contact').text).to include('Headteacher: Davy Jones')
+        expect(value_for_row(result, 'School contact').text).to include('davy.jones@school.sch.uk')
+        expect(value_for_row(result, 'School contact').text).to include('12345')
       end
     end
 
@@ -101,10 +116,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                who_will_order_devices: :school,
                school_contact: new_contact)
 
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('School contact')
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('Jane Smith')
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('abc@example.com')
-        expect(result.css('.govuk-summary-list__row')[5].text).to include('12345')
+        expect(value_for_row(result, 'School contact').text).to include('Jane Smith')
+        expect(value_for_row(result, 'School contact').text).to include('abc@example.com')
+        expect(value_for_row(result, 'School contact').text).to include('12345')
       end
     end
   end
@@ -125,16 +139,18 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     it 'confirms that fact' do
       create(:preorder_information, school: school, who_will_order_devices: :responsible_body)
 
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
+      expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(result.css('dd')[8].text).to include('Yes')
-      expect(result.css('dd')[9].text).to include('Change')
-      expect(result.css('dd')[10].text).to include('school.domain.org')
-      expect(result.css('dd')[11].text).to include('Change')
-      expect(result.css('dd')[12].text).to include('admin@recovery.org')
-      expect(result.css('dd')[13].text).to include('Change')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
+      expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
+
+      expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
+      expect(action_for_row(result, 'Domain').text).to include('Change')
+
+      expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
+      expect(action_for_row(result, 'Recovery email').text).to include('Change')
     end
 
     it 'does not show the school contact even if the school contact is set' do
@@ -144,9 +160,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
   context 'when the responsible body has not made a decision about who will order' do
     it 'confirms that fact and provides a link to make the decision' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('Decide who will order')
-      expect(result.css('.govuk-summary-list__row a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
+      expect(value_for_row(result, 'Who will order?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
+      expect(action_for_row(result, 'Who will order?').text).to include('Decide who will order')
+      expect(action_for_row(result, 'Who will order?').css('a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
     end
   end
 
@@ -164,8 +180,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'shows devices ordered row with count' do
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('Devices ordered')
-        expect(result.css('.govuk-summary-list__row')[3].text).to include('3 devices')
+        expect(value_for_row(result, 'Devices ordered').text).to include('3 devices')
       end
     end
   end
@@ -175,6 +190,34 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
     it 'shows correct can place orders text' do
       expect(result.text).to include('No, as school has reopened')
+    end
+  end
+
+  describe 'coms_device_allocation' do
+    context 'when not present' do
+      let(:school) { build(:school) }
+
+      it 'does not show Router allocation' do
+        expect(result.text).not_to include('Router allocation')
+      end
+    end
+
+    context 'when zero' do
+      let(:school) { build(:school, coms_device_allocation: coms_allocation) }
+      let(:coms_allocation) { build(:school_device_allocation, :with_coms_allocation, allocation: 0) }
+
+      it 'does not show Router allocation' do
+        expect(result.text).not_to include('Router allocation')
+      end
+    end
+
+    context 'when non-zero value present' do
+      let(:school) { build(:school, coms_device_allocation: coms_allocation) }
+      let(:coms_allocation) { build(:school_device_allocation, :with_coms_allocation) }
+
+      it 'shows Router allocation' do
+        expect(result.text).to include('Router allocation')
+      end
     end
   end
 end

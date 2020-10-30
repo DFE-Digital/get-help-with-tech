@@ -10,21 +10,43 @@ class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   end
 
   def rows
-    [
-      {
-        key: 'Allocation',
-        value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
-        action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-        action: 'Query allocation',
-      },
-      {
-        key: 'Type of school',
-        value: @school.type_label,
-      },
-    ] + chromebook_rows_if_needed
+    array = []
+    array << device_allocation_row
+    array << router_allocation_row if display_router_allocation_row?
+    array << type_of_school_row
+    array + chromebook_rows_if_needed
   end
 
 private
+
+  def device_allocation_row
+    {
+      key: 'Device allocation',
+      value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
+      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
+      action: 'Query allocation',
+    }
+  end
+
+  def router_allocation_row
+    {
+      key: 'Router allocation',
+      value: pluralize(@school.coms_device_allocation&.allocation.to_i, 'router'),
+      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
+      action: 'Query allocation',
+    }
+  end
+
+  def display_router_allocation_row?
+    @school.coms_device_allocation&.allocation.to_i.positive?
+  end
+
+  def type_of_school_row
+    {
+      key: 'Type of school',
+      value: @school.type_label,
+    }
+  end
 
   def preorder_information
     @school.preorder_information
