@@ -1,4 +1,6 @@
 class School < ApplicationRecord
+  has_paper_trail
+
   belongs_to :responsible_body
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
   has_one    :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
