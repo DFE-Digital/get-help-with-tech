@@ -1,10 +1,14 @@
 class Support::EnableOrdersConfirmSummaryListComponent < SummaryListComponent
-  attr_accessor :order_state, :cap, :allocation, :change_path
+  attr_accessor :order_state, :device_cap, :router_cap,
+                :device_allocation, :router_allocation,
+                :change_path
 
-  def initialize(order_state:, cap:, allocation:, change_path:)
+  def initialize(order_state:, device_cap:, router_cap:, device_allocation:, router_allocation:, change_path:)
     @order_state = order_state
-    @cap = cap
-    @allocation = allocation
+    @device_cap = device_cap
+    @router_cap = router_cap
+    @device_allocation = device_allocation
+    @router_allocation = router_allocation
     @change_path = change_path
     super(rows: rows)
   end
@@ -15,6 +19,7 @@ private
     [
       can_they_order_row,
       how_many_devices_row,
+      how_many_routers_row,
     ].compact
   end
 
@@ -34,16 +39,37 @@ private
     when :can_order
       {
         key: 'How many devices?',
-        value: "Their full allocation of #{allocation}",
+        value: "Their full allocation of #{device_allocation}",
         change_path: change_path,
         action: 'how many devices',
       }
     when :can_order_for_specific_circumstances
       {
         key: 'How many devices?',
-        value: "Up to #{cap} from an allocation of #{allocation}",
+        value: "Up to #{device_cap} from an allocation of #{device_allocation}",
         change_path: change_path,
         action: 'how many devices',
+      }
+    end
+  end
+
+  def how_many_routers_row
+    case order_state.to_sym
+    when :cannot_order
+      nil
+    when :can_order
+      {
+        key: 'How many routers?',
+        value: "Their full allocation of #{router_allocation}",
+        change_path: change_path,
+        action: 'how many routers',
+      }
+    when :can_order_for_specific_circumstances
+      {
+        key: 'How many routers?',
+        value: "Up to #{router_cap} from an allocation of #{router_allocation}",
+        change_path: change_path,
+        action: 'how many routers',
       }
     end
   end

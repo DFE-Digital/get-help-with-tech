@@ -14,6 +14,10 @@ module PageObjects
           def how_many_devices_row
             school_details_rows[1]
           end
+
+          def how_many_routers_row
+            school_details_rows[2]
+          end
         end
       end
     end
