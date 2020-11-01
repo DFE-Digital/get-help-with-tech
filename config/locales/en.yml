@@ -401,13 +401,13 @@ en:
         support/enable_orders_form:
           attributes:
             device_cap:
-              greater_than: Enter zero or a whole number greater than zero
-              not_a_number: Enter zero or a whole number greater than zero
+              greater_than_or_equal_to: Enter a device cap that’s a non-negative whole number
+              not_a_number: Enter a device cap that’s a non-negative whole number
               lte_allocation: Cap cannot be more than their current allocation of %{allocation}
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
             router_cap:
-              greater_than: Enter zero or a whole number greater than zero
-              not_a_number: Enter zero or a whole number greater than zero
+              greater_than_or_equal_to: Enter a router cap that’s a non-negative whole number
+              not_a_number: Enter a router cap that’s a non-negative whole number
               lte_allocation: Cap cannot be more than their current allocation of %{allocation}
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
         support/allocation_form:

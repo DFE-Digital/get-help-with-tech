@@ -27,8 +27,8 @@ class Support::EnableOrdersForm
   end
 
   validates :order_state, inclusion: { in: School.order_states }
-  validates :device_cap, numericality: { only_integer: true, greater_than: -1 }, if: :cap_required?
-  validates :router_cap, numericality: { only_integer: true, greater_than: -1 }, if: :cap_required?
+  validates :device_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :cap_required?
+  validates :router_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :cap_required?
 
   validate :validate_caps_lte_allocation
 
