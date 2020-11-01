@@ -69,6 +69,9 @@ en:
         schools:
           search: Search for schools by URN
           results: School search results
+      users:
+        search: Find responsible body or school users
+        results: Users
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices

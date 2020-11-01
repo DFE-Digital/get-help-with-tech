@@ -173,6 +173,12 @@ Rails.application.routes.draw do
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index
     end
+    resources :users, only: %i[] do
+      collection do
+        get 'search'
+        post 'results'
+      end
+    end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 
