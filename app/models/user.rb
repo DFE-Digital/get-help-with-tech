@@ -188,6 +188,10 @@ class User < ApplicationRecord
     end
   end
 
+  def soft_deleted?
+    deleted_at.present?
+  end
+
 private
 
   def cleansed_full_name
