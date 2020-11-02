@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - 924-use-authenticated-docker-pulls
 
 jobs:
   build-and-push-container:
