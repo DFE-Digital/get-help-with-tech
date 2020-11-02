@@ -72,7 +72,7 @@ push: require_env_stub ## push the Docker image to Docker Hub
 	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
 
 deploy: set_cf_target set_docker_image_id ## Deploy the docker image to gov.uk PaaS
-	cf push $(APP_NAME)-$(env_stub) --manifest ./config/manifests/${env_stub}-manifest.yml --var docker_image_id=$(DOCKER_IMAGE_ID) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --strategy rolling
+	cf push $(APP_NAME)-$(env_stub) --manifest ./config/manifests/${env_stub}-manifest.yml --var docker_image_id=$(DOCKER_IMAGE_ID) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --docker-username ${CF_DOCKER_USERNAME} --strategy rolling
 
 set_docker_image_id: require_env_stub
 	# The Github action will pass in DOCKER_IMAGE_ID from a previous step

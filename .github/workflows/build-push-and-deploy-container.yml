@@ -50,6 +50,9 @@ jobs:
       - name: Deploy to Gov.uk PaaS
         id: deploy-to-paas
         shell: bash
+        env:
+          CF_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          CF_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
