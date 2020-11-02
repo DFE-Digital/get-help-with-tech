@@ -6,11 +6,8 @@ RSpec.describe BulkAllocationService do
   subject(:service) { described_class.new }
 
   describe '#unlock!' do
-    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
-
     before do
-      allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-      allow(mock_request).to receive(:post!)
+      @computacenter_api_call = stub_computacenter_outgoing_api_calls
     end
 
     it 'enables the schools to order their full allocation' do
@@ -21,6 +18,7 @@ RSpec.describe BulkAllocationService do
         expect(school.coms_device_allocation.cap).to eq(school.coms_device_allocation.allocation)
         expect(school.can_order?).to be true
       end
+      expect(@computacenter_api_call).to have_been_requested.times(6)
     end
 
     it 'keeps track of successes and failures' do
