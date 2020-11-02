@@ -70,6 +70,8 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 - You have a personal account granted by your organisation manager
 - You have downloaded and installed the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads) for your platform - *v7.0+ is REQUIRED*
 - You have downloaded and installed [Docker Desktop](https://docs.docker.com/desktop/)
+- You have an account on https://hub.docker.com/ that is a member of the dfedigital organisation
+- You have the environment variables `CF_DOCKER_USERNAME` and `CF_DOCKER_PASSWORD` set to the values of your Docker Hub account
 
 ### The deployment process
 
