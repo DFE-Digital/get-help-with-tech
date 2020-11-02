@@ -50,7 +50,7 @@ govuk_notify:
       user_added_to_additional_school: 'f3ec0c69-17f8-424d-9c33-f17438355c2c'
       nudge_rb_to_add_school_contact: '867df323-b377-4906-8386-79db71e9c428'
       nudge_user_to_read_privacy_policy: '0ae8dc73-121b-4d24-8346-a80bbbcc5cea'
-
+      notify_support_school_can_order_but_no_one_contacted: 'b673e290-47d3-4744-84fb-a1be7002d201'
     computacenter:
       device_cap_change: '6e00f2bf-d373-436d-a2c0-2910f20ef521'
       comms_cap_change: '01f1b2a3-a216-44cc-a567-704bfd0a3c56'

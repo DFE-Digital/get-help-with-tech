@@ -1,19 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_notifications: 'active' } do
+  let(:order_state) { 'cannot_order' }
   let(:school) do
     create(:school,
            :with_std_device_allocation,
            :with_preorder_information,
-           order_state: 'cannot_order')
+           order_state: order_state)
+  end
+
+  subject(:service) do
+    described_class.new(school: school)
   end
 
   describe '#call' do
     context 'when school which is ready changes from cannot_order to can lockdown order' do
-      subject(:service) do
-        described_class.new(school: school)
-      end
-
       before do
         school.update!(order_state: 'can_order')
         school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
@@ -239,6 +240,20 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
         expect {
           service.call
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_rb_to_add_school_contact', 'deliver_now', params: { user: user, school: school }, args: [])
+      end
+    end
+
+    context 'when the school has no stakeholders' do
+      let(:order_state) { 'can_order' }
+
+      before do
+        school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
+      end
+
+      it 'notifies support that school is missing out' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_support_school_can_order_but_no_one_contacted', 'deliver_now', params: { school: school }, args: [])
       end
     end
   end

@@ -39,6 +39,14 @@ class CanOrderDevicesMailer < ApplicationMailer
                           personalisation: personalisation)
   end
 
+  def notify_support_school_can_order_but_no_one_contacted
+    @school = params[:school]
+
+    template_mail(notify_support_school_can_order_but_no_one_contacted_template_id,
+                  to: 'COVID.TECHNOLOGY@education.gov.uk',
+                  personalisation: personalisation)
+  end
+
 private
 
   def tracked_template_mail(message_type, template_id, mail_params = {})
@@ -54,6 +62,7 @@ private
   def personalisation
     {
       school: @school.name,
+      urn: @school.urn,
     }
   end
 
@@ -71,5 +80,9 @@ private
 
   def can_order_but_action_needed_template_id
     Settings.govuk_notify.templates.devices.can_order_but_action_needed
+  end
+
+  def notify_support_school_can_order_but_no_one_contacted_template_id
+    Settings.govuk_notify.templates.devices.notify_support_school_can_order_but_no_one_contacted
   end
 end

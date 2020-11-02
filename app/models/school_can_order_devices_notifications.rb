@@ -8,6 +8,7 @@ class SchoolCanOrderDevicesNotifications
   def call
     if school&.can_order_devices_right_now?
       notify_about_school_being_able_to_order
+      notify_support_if_no_one_to_contact
       notify_computacenter
     end
   end
@@ -25,6 +26,15 @@ private
         message_type: message_type,
       )
     end
+  end
+
+  def notify_support_if_no_one_to_contact
+    return if all_relevant_users.present?
+
+    CanOrderDevicesMailer
+      .with(school: school)
+      .send(:notify_support_school_can_order_but_no_one_contacted)
+      .deliver_later
   end
 
   def all_relevant_users
