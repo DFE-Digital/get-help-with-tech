@@ -18,3 +18,4 @@ applications:
     - get-help-with-tech-prod-redis
   env:
     DOCKER_IMAGE_ID: ((docker_image_id))
+    ENV: $HOME/.profile
