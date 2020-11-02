@@ -12,7 +12,7 @@
     <%- end %>
     <%- if @user.responsible_body.present? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to @user.responsible_body.name, responsible_body_home_path(@user.responsible_body) %>
+        <%= govuk_link_to @user.responsible_body.name, responsible_body_home_path %>
       </h2>
     <%- end %>
   </div>
