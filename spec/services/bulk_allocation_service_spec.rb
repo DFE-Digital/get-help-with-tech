@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BulkAllocationService do
-  let(:schools) { create_list(:school, 3, :with_std_device_allocation, order_state: 'cannot_order') }
+  let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, order_state: 'cannot_order') }
 
   subject(:service) { described_class.new }
 
@@ -18,6 +18,7 @@ RSpec.describe BulkAllocationService do
       schools.each do |school|
         school.reload
         expect(school.std_device_allocation.cap).to eq(school.std_device_allocation.allocation)
+        expect(school.coms_device_allocation.cap).to eq(school.coms_device_allocation.allocation)
         expect(school.can_order?).to be true
       end
     end

@@ -1,12 +1,13 @@
 class SchoolOrderStateAndCapUpdateService
   attr_accessor :school, :order_state, :caps
 
-  # caps: [{ device_type: 'std_device', cap: 3 }, { device_type: 'coms_device', cap: 1 }]
-  # caps: [{ device_type: 'std_device', cap: 7 }]
-  def initialize(school:, order_state:, caps:)
+  def initialize(school:, order_state:, std_device_cap: nil, coms_device_cap: nil)
     @school = school
     @order_state = order_state
-    @caps = caps
+    @caps = [
+      { device_type: 'std_device', cap: std_device_cap },
+      { device_type: 'coms_device', cap: coms_device_cap },
+    ]
   end
 
   def update!

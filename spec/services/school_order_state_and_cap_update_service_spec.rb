@@ -6,9 +6,12 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }
   let(:allocation) { school.std_device_allocation }
+  let(:router_allocation) { school.coms_device_allocation }
   let(:device_type) { 'std_device' }
 
-  subject(:service) { described_class.new(school: school, order_state: new_order_state, caps: [{ device_type: device_type, cap: new_cap }]) }
+  subject(:service) do
+    described_class.new(school: school, order_state: new_order_state, std_device_cap: new_cap)
+  end
 
   describe '#update!' do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
@@ -42,7 +45,9 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
 
       context 'when a device_type was given' do
-        let(:device_type) { 'coms_device' }
+        subject(:service) do
+          described_class.new(school: school, order_state: new_order_state, coms_device_cap: new_cap)
+        end
 
         it 'creates a new allocation record with the given device_type' do
           expect { service.update! }.to change(school.device_allocations.by_device_type('coms_device'), :count).by(1)
@@ -60,6 +65,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
     context 'when a SchoolDeviceAllocation of the right type exists' do
       let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
+      let!(:router_allocation) { create(:school_device_allocation, :with_coms_allocation, allocation: 5, school: school) }
 
       it 'does not create a new allocation record' do
         expect { service.update! }.not_to change(SchoolDeviceAllocation, :count)
@@ -69,18 +75,23 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         it 'sets the new cap to match the full allocation, regardless of what was given' do
           service.update!
           expect(allocation.reload.cap).to eq(7)
+          expect(router_allocation.reload.cap).to eq(5)
         end
       end
     end
 
     context 'changing order_state to can_order_for_specific_circumstances' do
       let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
-      let(:new_order_state) { 'can_order_for_specific_circumstances' }
-      let(:new_cap) { 3 }
+      let!(:router_allocation) { create(:school_device_allocation, :with_coms_allocation, allocation: 5, school: school) }
+
+      subject(:service) do
+        described_class.new(school: school, order_state: 'can_order_for_specific_circumstances', std_device_cap: 3, coms_device_cap: 2)
+      end
 
       it 'sets the new cap to be the given cap' do
         service.update!
         expect(allocation.reload.cap).to eq(3)
+        expect(router_allocation.reload.cap).to eq(2)
       end
     end
 
@@ -127,7 +138,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
       it 'notifies the computacenter API' do
         service.update!
-        expect(mock_request).to have_received(:post!)
+        expect(mock_request).to have_received(:post!).twice
       end
 
       it 'records timestamp and payload_id on the allocation' do
