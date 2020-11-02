@@ -56,3 +56,25 @@
   @include govuk-font($size: 48, $weight: bold);
   display: block;
 }
+
+.app-card__link {
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    color: govuk-tint(govuk-colour('blue'), 80);
+  }
+
+  &--selected {
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
+.app-card__label {
+  text-decoration: underline;
+}
+
