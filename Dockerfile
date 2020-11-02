@@ -5,8 +5,9 @@ ARG APPNAME=get-help-with-tech
 USER root
 
 # dependencies relied upon to build native-extension gems etc
+RUN apk update
 RUN apk add libxml2-dev libxslt-dev build-base postgresql-dev tzdata
-RUN apk update && apk add nodejs postgresql-contrib libpq yarn
+RUN apk add nodejs postgresql-contrib libpq yarn less
 
 ENV RAILS_ROOT /var/www/${APPNAME}
 RUN mkdir -p $RAILS_ROOT
