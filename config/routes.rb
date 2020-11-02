@@ -148,7 +148,7 @@ Rails.application.routes.draw do
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
-      resources :users, only: %i[new create edit update], controller: 'responsible_bodies/users'
+      resources :users, only: %i[new create edit update destroy], controller: 'responsible_bodies/users'
     end
     resources :schools, only: %i[show], param: :urn do
       collection do

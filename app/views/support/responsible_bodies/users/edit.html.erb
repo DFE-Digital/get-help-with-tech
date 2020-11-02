@@ -10,5 +10,9 @@
     <%= form_for @user, url: support_responsible_body_user_path(@responsible_body, @user, pilot: 'devices') do |f| %>
       <%= render partial: 'shared/responsible_body_user_form', locals: { submit_text: 'Save changes', form: f } %>
     <%- end %>
+
+    <%= form_for @user, url: support_responsible_body_user_path(@responsible_body, @user), method: :delete do |f| %>
+      <%= f.govuk_submit 'Delete user', warning: true %>
+    <%- end %>
   </div>
 </div>
