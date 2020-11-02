@@ -8,7 +8,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   before do
     @computacenter_caps_api_request = stub_computacenter_outgoing_api_calls
 
-    @school = given_a_school_with_a_device_allocation_that_cannot_order
+    @school = given_a_school_with_device_and_router_allocations_that_cannot_order
     and_the_school_has_order_users_with_confirmed_techsource_accounts
     and_i_sign_in_as_a_support_user
   end
@@ -20,16 +20,18 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
     then_ordering_is_confirmed
     and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_devices
+    and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_routers
     and_the_school_order_users_have_been_informed_that_they_can_order
   end
 
   scenario 'Enabling a school to place orders for specific circustances' do
     when_i_navigate_to_the_school_page_in_support
-    and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 2)
+    and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 2, number_of_routers: 3)
     and_i_confirm_the_changes
 
     then_the_ordering_for_specific_circumstances_is_confirmed
     and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_two_devices
+    and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_three_routers
     and_the_school_order_users_have_been_informed_that_they_can_order
   end
 
@@ -74,10 +76,11 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     then_i_see_my_previously_entered_value_for_specific_circumstances(number_of_devices: 2)
   end
 
-  def given_a_school_with_a_device_allocation_that_cannot_order
+  def given_a_school_with_device_and_router_allocations_that_cannot_order
     create(:school, order_state: :cannot_order, computacenter_reference: 'cc_ref')
       .tap do |school|
         create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
+        create(:school_device_allocation, :with_coms_allocation, allocation: 40, school: school)
         create(:preorder_information, :does_not_need_chromebooks, :school_will_order, status: 'ready', school: school)
       end
   end
@@ -117,12 +120,13 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     expect(school_details_page).to have_link 'Change whether they can place orders'
   end
 
-  def and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices:)
+  def and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices:, number_of_routers: 0)
     click_on 'Change whether they can place orders'
     expect(enable_orders_page.no).to be_checked
 
     enable_orders_page.yes_specific_cirumstances.choose
     enable_orders_page.how_many_devices.set(number_of_devices)
+    enable_orders_page.how_many_routers.set(number_of_routers)
     enable_orders_page.continue.click
 
     expect(enable_orders_confirm_page).to be_displayed
@@ -204,8 +208,18 @@ RSpec.feature 'Enabling orders for a school from the support area' do
       .to have_been_made
   end
 
+  def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_three_routers
+    expect(@computacenter_caps_api_request.with { |req| req.body.include?('shipTo="cc_ref" capAmount="3"') })
+      .to have_been_made
+  end
+
   def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_devices
     expect(@computacenter_caps_api_request.with { |req| req.body.include?('shipTo="cc_ref" capAmount="50"') })
+      .to have_been_made
+  end
+
+  def and_computacenter_device_cap_for_the_school_has_been_updated_to_allow_ordering_all_routers
+    expect(@computacenter_caps_api_request.with { |req| req.body.include?('shipTo="cc_ref" capAmount="40"') })
       .to have_been_made
   end
 
