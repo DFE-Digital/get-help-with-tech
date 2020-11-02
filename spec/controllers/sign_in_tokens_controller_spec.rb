@@ -110,4 +110,15 @@ RSpec.describe SignInTokensController, type: :controller do
       end
     end
   end
+
+  describe '#create' do
+    let(:user) { create(:local_authority_user, :who_has_requested_a_magic_link, deleted_at: 1.second.ago) }
+
+    context 'when user has been marked as deleted' do
+      it 'does not recognise the email' do
+        post :create, params: { sign_in_token_form: { email_address: user.email_address } }
+        expect(response).to redirect_to email_not_recognised_path
+      end
+    end
+  end
 end
