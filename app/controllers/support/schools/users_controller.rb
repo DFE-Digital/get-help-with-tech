@@ -37,7 +37,7 @@ class Support::Schools::UsersController < Support::BaseController
   def destroy
     @school = School.find_by(urn: params[:school_urn])
     @user = @school.users.find(params[:id])
-    @user.update(deleted_at: Time.zone.now)
+    @user.update!(deleted_at: Time.zone.now)
 
     redirect_to support_school_path(@school)
   end

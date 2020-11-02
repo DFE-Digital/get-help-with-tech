@@ -38,7 +38,7 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   def destroy
     @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = @responsible_body.users.find(params[:id])
-    @user.update(deleted_at: Time.zone.now)
+    @user.update!(deleted_at: Time.zone.now)
 
     redirect_to support_responsible_body_path(@responsible_body)
   end
