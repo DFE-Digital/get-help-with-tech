@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe School, type: :model do
+  it { is_expected.to be_versioned }
+
   describe 'validating URN' do
     let(:school) { subject }
 
