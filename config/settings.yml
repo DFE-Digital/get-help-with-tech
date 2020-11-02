@@ -7,6 +7,9 @@
 #
 # See the file initializers/config.rb for more info on how this is configured.
 
+active_job:
+  default_wait: 2
+
 computacenter:
   notify_email_address: departmentforeducation@computacenter.com
   techsource_url: https://techsource.computacenter.com/en/
