@@ -165,6 +165,10 @@ module ViewHelper
     "You’ve ordered #{string}"
   end
 
+  def link_to_ed_settings_form
+    link_to 'Educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status'
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)
