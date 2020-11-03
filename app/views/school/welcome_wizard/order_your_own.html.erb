@@ -5,24 +5,28 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @wizard, url: welcome_wizard_school_path(step: @wizard.step) do |f| %>
       <%= f.hidden_field :step %>
+
       <h1 class="govuk-heading-l">
         <%- if @user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
         <%= title %>
       </h1>
 
-      <p class="govuk-body"><%= t("page_titles.#{who_orders}_cannot_order_devices.can_order_when") %></p>
+      <p class="govuk-body">
+        You’ll be able to order your current device allocation during term time if you use the <%= link_to_ed_settings_form %> to:
+      </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <% t('pages.order_devices.can_order_full_allocation_when_list').each do |li| %>
-          <li><%= li %></li>
-        <% end %>
+        <li>report a closure</li>
+        <li>tell us that more than 15 children are self-isolating</li>
       </ul>
 
-      <p class="govuk-body">If your school reports disruption through the <%= link_to 'DfE educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status' %> we will contact you about placing orders.</p>
+      <p class="govuk-body">
+        If the number of pupils unable to attend school and in need of devices is greater than your allocation at that time, you can email <%= ghwt_contact_mailto %> to request more. We’ll only be able to approve such requests in exceptional circumstances.
+      </p>
 
-      <h2 class="govuk-heading-m">Get devices earlier for specific circumstances</h2>
-
-      <%= render partial: 'shared/devices/who_to_request_for' %>
+      <p class="govuk-body">
+        You can still request extra devices for clinically extremely vulnerable children in any year group.
+      </p>
 
       <%= f.govuk_submit 'Continue' %>
     <%- end %>

@@ -149,9 +149,9 @@ en:
         title: "You’ve been allocated %{allocation} laptops and tablets"
       order_your_own:
         school:
-          title: Your school cannot order its full allocation right away
+          title: Ordering devices during school disruption
         school_user:
-          title: You cannot order your full allocation right away
+          title: Ordering devices during school disruption
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:

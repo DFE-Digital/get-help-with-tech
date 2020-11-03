@@ -177,7 +177,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_i_see_the_order_your_own_page
     expect(page).to have_current_path(welcome_wizard_order_your_own_school_path(urn: @user.school.urn))
-    expect(page.body).to match(/You cannot order your full allocation right away|Your school cannot order its full allocation right away/)
+    expect(page.body).to match(/You cannot order your full allocation right away|Your school cannot order its full allocation right away|Ordering devices during school disruption/)
   end
 
   def then_i_see_the_school_home_page
