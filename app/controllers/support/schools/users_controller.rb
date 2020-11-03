@@ -39,6 +39,8 @@ class Support::Schools::UsersController < Support::BaseController
     @user = @school.users.find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
+    flash[:success] = 'User has been deleted'
+
     redirect_to support_school_path(@school)
   end
 

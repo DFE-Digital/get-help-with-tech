@@ -40,6 +40,8 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
     @user = @responsible_body.users.find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
+    flash[:success] = 'User has been deleted'
+
     redirect_to support_responsible_body_path(@responsible_body)
   end
 
