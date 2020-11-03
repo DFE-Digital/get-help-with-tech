@@ -37,7 +37,7 @@ RSpec.feature 'Ordering via a school' do
     let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
 
     before do
-      school.update!(std_device_allocation: allocation)
+      school.update!(std_device_allocation: allocation, order_state: 'can_order')
       school.preorder_information.refresh_status!
     end
 

@@ -104,59 +104,75 @@ RSpec.describe PreorderInformation, type: :model do
     end
 
     context 'when rb orders and status is ready' do
-      let(:school) { build(:school, std_device_allocation: allocation) }
+      let(:order_state) { 'can_order' }
+      let(:school) { create(:school, std_device_allocation: allocation, order_state: order_state) }
 
       subject do
-        build(:preorder_information,
-              :needs_chromebooks,
-              school: school,
-              who_will_order_devices: :responsible_body).infer_status
+        create(:preorder_information,
+               :needs_chromebooks,
+               school: school,
+               who_will_order_devices: :responsible_body).infer_status
       end
 
       context 'when there are devices available to order' do
-        let(:allocation) { build(:school_device_allocation, :with_orderable_devices) }
+        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
 
         it { is_expected.to eq('rb_can_order') }
       end
 
+      context 'when there are devices available to order but school cannot order' do
+        let(:order_state) { 'cannot_order' }
+        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
+
+        it { is_expected.to eq('ready') }
+      end
+
       context 'when all devices have been ordered' do
-        let(:allocation) { build(:school_device_allocation, :fully_ordered) }
+        let(:allocation) { create(:school_device_allocation, :fully_ordered) }
 
         it { is_expected.to eq('ordered') }
       end
 
       context 'when there are no devices available to order' do
-        let(:allocation) { build(:school_device_allocation) }
+        let(:allocation) { create(:school_device_allocation) }
 
         it { is_expected.to eq('ready') }
       end
     end
 
     context 'when school orders and status is school ready' do
-      let(:user) { build(:school_user) }
-      let(:school) { build(:school, std_device_allocation: allocation, users: [user]) }
+      let(:user) { create(:school_user) }
+      let(:order_state) { 'can_order' }
+      let(:school) { create(:school, std_device_allocation: allocation, users: [user], order_state: order_state) }
 
       subject do
-        build(:preorder_information,
-              :needs_chromebooks,
-              school: school,
-              who_will_order_devices: 'school').infer_status
+        create(:preorder_information,
+               :needs_chromebooks,
+               school: school,
+               who_will_order_devices: 'school').infer_status
       end
 
       context 'when there are devices available to order' do
-        let(:allocation) { build(:school_device_allocation, :with_orderable_devices) }
+        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
 
         it { is_expected.to eq('school_can_order') }
       end
 
+      context 'when there are devices available to order but school cannot order' do
+        let(:order_state) { 'cannot_order' }
+        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
+
+        it { is_expected.to eq('school_ready') }
+      end
+
       context 'when all devices have been ordered' do
-        let(:allocation) { build(:school_device_allocation, :fully_ordered) }
+        let(:allocation) { create(:school_device_allocation, :fully_ordered) }
 
         it { is_expected.to eq('ordered') }
       end
 
       context 'when there are no devices available to order' do
-        let(:allocation) { build(:school_device_allocation) }
+        let(:allocation) { create(:school_device_allocation) }
 
         it { is_expected.to eq('school_ready') }
       end
