@@ -58,16 +58,16 @@ class Support::ServicePerformance
       .count
   end
 
-  def total_extra_mobile_data_requests
-    ExtraMobileDataRequest.count
+  def total_extra_mobile_data_requests(scope: ExtraMobileDataRequest)
+    scope.count
   end
 
-  def extra_mobile_data_requests_by_status
-    ExtraMobileDataRequest.group(:status).count
+  def extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest)
+    scope.group(:status).count
   end
 
-  def extra_mobile_data_requests_by_mobile_network_brand
-    ExtraMobileDataRequest
+  def extra_mobile_data_requests_by_mobile_network_brand(scope: ExtraMobileDataRequest)
+    scope
       .joins(:mobile_network)
       .group('mobile_networks.brand')
       .count

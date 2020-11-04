@@ -30,24 +30,31 @@ RSpec.feature 'Viewing service performance', type: :feature do
     ee = create(:mobile_network, brand: 'EE')
     three = create(:mobile_network, brand: 'Three')
     virgin = create(:mobile_network, brand: 'Virgin')
-    requester = create(:user, responsible_body: local_authority)
+    rb_requester = create(:user, responsible_body: local_authority)
+    rb = local_authority
+    school_requester = create(:school_user)
+    school = school_requester.school
 
     create_list(:extra_mobile_data_request, 1,
                 status: :requested,
                 mobile_network: virgin,
-                created_by_user: requester)
+                responsible_body: rb,
+                created_by_user: rb_requester)
     create_list(:extra_mobile_data_request, 3,
                 status: :in_progress,
                 mobile_network: ee,
-                created_by_user: requester)
-    create_list(:extra_mobile_data_request, 5,
+                responsible_body: rb,
+                created_by_user: rb_requester)
+    create_list(:extra_mobile_data_request, 4,
                 status: :complete,
                 mobile_network: three,
-                created_by_user: create(:user, responsible_body: local_authority))
+                school: school,
+                created_by_user: school_requester)
     create_list(:extra_mobile_data_request, 1,
                 status: :cancelled,
                 mobile_network: virgin,
-                created_by_user: requester)
+                responsible_body: rb,
+                created_by_user: rb_requester)
   end
 
   def when_i_sign_in_as_a_dfe_user
@@ -59,14 +66,22 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   def then_i_see_stats_about_extra_mobile_data_requests
-    expect(page).to have_text('10 requests')
+    expect(page).to have_text('5 requests')
     expect(page).to have_text('1 new')
     expect(page).to have_text('3 in progress')
     expect(page).to have_text('1 not valid or cancelled')
-    expect(page).to have_text('5 completed')
+    expect(page).to have_text('0 completed')
+
     expect(page).to have_text('EE 3')
-    expect(page).to have_text('Three 5')
     expect(page).to have_text('Virgin 2')
+
+    expect(page).to have_text('4 requests')
+    expect(page).to have_text('0 new')
+    expect(page).to have_text('0 in progress')
+    expect(page).to have_text('0 not valid or cancelled')
+    expect(page).to have_text('4 completed')
+
+    expect(page).to have_text('Three 4')
   end
 
   def then_i_see_stats_about_responsible_body_user_engagement

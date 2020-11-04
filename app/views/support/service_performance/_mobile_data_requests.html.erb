@@ -1,10 +1,10 @@
-<h2 class="govuk-heading-l">Mobile data requests</h2>
+<h2 class="govuk-heading-l">Mobile data requests from responsible bodies</h2>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
     <%= render Support::TileComponent.new(
-                 count: @stats.total_extra_mobile_data_requests,
-                 label: t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests),
+                 count: @stats.total_extra_mobile_data_requests(scope: ExtraMobileDataRequest.from_responsible_bodies),
+                 label: t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests(scope: ExtraMobileDataRequest.from_responsible_bodies)),
                  colour: :blue) %>
   </div>
 </div>
@@ -12,26 +12,26 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status['requested'] || 0,
+                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['requested'] || 0,
                  label: 'new',
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status['in_progress'] || 0,
+                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['in_progress'] || 0,
                  label: 'in progress',
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: (@stats.extra_mobile_data_requests_by_status['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status['cancelled'] || 0),
+                 count: (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['cancelled'] || 0),
                  label: 'not valid or cancelled',
                  colour: :red,
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status['complete'] || 0,
+                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['complete'] || 0,
                  label: 'completed',
                  colour: :green,
                  size: :reduced) %>
@@ -49,7 +49,69 @@
       </thead>
 
       <tbody class="govuk-table__body">
-        <% @stats.extra_mobile_data_requests_by_mobile_network_brand.each do |mno_name, count| %>
+        <% @stats.extra_mobile_data_requests_by_mobile_network_brand(scope: ExtraMobileDataRequest.from_responsible_bodies).each do |mno_name, count| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= mno_name %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 class="govuk-heading-l">Mobile data requests from schools</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <%= render Support::TileComponent.new(
+                 count: @stats.total_extra_mobile_data_requests(scope: ExtraMobileDataRequest.from_schools),
+                 label: t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests(scope: ExtraMobileDataRequest.from_schools)),
+                 colour: :blue) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <%= render Support::TileComponent.new(
+                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['requested'] || 0,
+                 label: 'new',
+                 size: :reduced) %>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <%= render Support::TileComponent.new(
+                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['in_progress'] || 0,
+                 label: 'in progress',
+                 size: :reduced) %>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <%= render Support::TileComponent.new(
+                 count: (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['cancelled'] || 0),
+                 label: 'not valid or cancelled',
+                 colour: :red,
+                 size: :reduced) %>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <%= render Support::TileComponent.new(
+                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['complete'] || 0,
+                 label: 'completed',
+                 colour: :green,
+                 size: :reduced) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-4">
+  <div class="govuk-grid-column-one-half">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Network</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Requests</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @stats.extra_mobile_data_requests_by_mobile_network_brand(scope: ExtraMobileDataRequest.from_schools).each do |mno_name, count| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= mno_name %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= count %></td>
