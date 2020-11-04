@@ -8,9 +8,10 @@ USER root
 RUN apk update
 RUN apk add libxml2-dev libxslt-dev build-base postgresql-dev tzdata
 # Fix incompatibility with slim tzdata from 2020b onwards
+# see https://github.com/tzinfo/tzinfo/issues/120 for details
 RUN wget https://data.iana.org/time-zones/tzdb/tzdata.zi -O /usr/share/zoneinfo/tzdata.zi && \
     /usr/sbin/zic -b fat /usr/share/zoneinfo/tzdata.zi
-    
+
 RUN apk add nodejs postgresql-contrib libpq yarn less
 
 ENV RAILS_ROOT /var/www/${APPNAME}
