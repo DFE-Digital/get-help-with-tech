@@ -1,6 +1,6 @@
 # Move an existing school to a different RB
 
-This can happen without the school changing the URN (closeing and reopening) but often it has closed and reopened so you will need to check depending on whether you are given a URN or name for the school. When a request has come in from a RB asking for the school to be included, they often won't include the URN.  If the school has changed URN then there may be an existing school (under the closed URN) in the service and the current school with a new URN in the `DataStage`. The school might've renamed in the process too.
+This can happen commonly with academy conversions but also without the school changing the URN (closing and reopening). Mostly the school will have closed and reopened with a new URN. When a request has come in from a RB asking for the school to be included, they often won't include the URN.  If the school has changed URN then there may be an existing school (under the closed URN) in the service and the current school with a new URN in the `DataStage`. The school might've renamed in the process too.
 
 Find the school in the `DataStage` area to check that it hasn't in fact closed and reopened with a new URN.
 
@@ -38,7 +38,7 @@ Move the school to the new RB
 
 
 
-__NOTE:__ So far I haven't had to deal with users accounts when doing this, but we should work out how this should be handled. 
+__NOTE:__ So far I haven't had to deal with users accounts when doing this, but we should work out how this should be handled.
 
 
 

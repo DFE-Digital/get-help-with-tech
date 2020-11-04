@@ -22,9 +22,9 @@ Add the school using the `SchoolUpdateService`
 [4] pry(main)> s = sus.send(:create_school, ss)
 ```
 
-This will create the school based on the attributes in the `DataStage::School` and it will create `preorder_information` and a `std_device_allocation` with a zero allocation
+This will create the school based on the attributes in the `DataStage::School`. If the responsible body has answered the 'who will order' question, this will also create `preorder_information` and a `std_device_allocation` with a zero allocation.
 
-Check if the school was added as the result of a 'closing' and 'reopening' an existing school that may already have an allocation
+Check whether the school was added as the result of a 'closing' and 'reopening' an existing school that may already have an allocation
 
 ```ruby
 [3] pry(main)> ss.school_links

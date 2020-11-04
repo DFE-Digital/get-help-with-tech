@@ -41,8 +41,9 @@ Once downloaded, remember to remove the files from the server from the SSH comma
 $ rm public/rb-changes.csv
 ```
 
-Finally open these CSV files in a suitable editor and append an extra column at the end with the header "New/Amended".  For each row in the file indicate whether the row is a "New" or "Amended" record to make it easier for CC to process.
+Finally open the CSV file in a suitable editor and append an extra column at the end with the header "New/Amended".  For each new trust row in the file indicate that it is a "New" record to make it easier for CC to process.
 
 Email the CSV files to  CC.
 
 CC will return the file with `soldTo` references added. These should be used to update the `computacenter_reference` for the trust.  Sometimes if a school is added at the same time, only the school data is returned, but the school will have a `soldTo` which is the same reference for the trust, so that can be used to set the trust's `computacenter_reference`.
+
