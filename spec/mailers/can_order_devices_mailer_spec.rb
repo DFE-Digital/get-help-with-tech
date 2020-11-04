@@ -23,6 +23,34 @@ RSpec.describe CanOrderDevicesMailer, type: :mailer do
                                                  school_id: school.id,
                                                  email_address: user.email_address)
     end
+
+    it 'enqueues mailer job with #deliver_later' do
+      expect {
+        described_class.with(user: user, school: school).user_can_order.deliver_later
+      }.to have_enqueued_job.on_queue('mailers')
+    end
+
+    it 'sends mail with #deliver_now' do
+      expect {
+        described_class.with(user: user, school: school).user_can_order.deliver_now
+      }.to change { ActionMailer::Base.deliveries.size }.by(1)
+    end
+
+    context 'when user is deleted' do
+      let(:user) { create(:school_user, deleted_at: 1.second.ago) }
+
+      it 'enqueues mailer job with #deliver_later' do
+        expect {
+          described_class.with(user: user, school: school).user_can_order.deliver_later
+        }.to have_enqueued_job.on_queue('mailers')
+      end
+
+      it 'does not send mail with #deliver_now' do
+        expect {
+          described_class.with(user: user, school: school).user_can_order.deliver_now
+        }.not_to change(ActionMailer::Base.deliveries, :size)
+      end
+    end
   end
 
   describe '#user_can_order_but_action_is_needed' do
