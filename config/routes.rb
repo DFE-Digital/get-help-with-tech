@@ -178,6 +178,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
+    get '/school-closures', to: 'closed_schools#index', as: :closed_schools
     get '/techsource', to: 'techsource#new'
     post '/techsource', to: 'techsource#create'
     resources :api_tokens, path: '/api-tokens'
