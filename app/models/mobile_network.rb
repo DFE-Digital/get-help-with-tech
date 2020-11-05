@@ -10,6 +10,6 @@ class MobileNetwork < ApplicationRecord
   }
 
   def self.participating_in_pilot
-    participating.or(maybe_participating)
+    participating
   end
 end

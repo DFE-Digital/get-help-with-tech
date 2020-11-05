@@ -19,8 +19,7 @@
         <%- for mobile_network in @participating_mobile_networks do %>
           <%= f.govuk_radio_button :mobile_network_id,
                                    mobile_network.id,
-                                   label: { text: mobile_network.brand },
-                                   hint: { text: participation_description(mobile_network) } %>
+                                   label: { text: mobile_network.brand } %>
         <%- end %>
       <%- end %>
 
