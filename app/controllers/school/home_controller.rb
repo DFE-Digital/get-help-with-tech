@@ -6,4 +6,6 @@ class School::HomeController < School::BaseController
   def request_devices
     render 'shared/devices/request_devices'
   end
+
+  def specific_circumstances; end
 end
