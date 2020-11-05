@@ -59,7 +59,7 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
 
-    context "when the school isn't under lockdown restrictions or has any shielding children" do
+    context "when the school isn't under lockdown restrictions or has any clinically extremely vulnerable children" do
       it 'cannot place orders' do
         expect(value_for_row(result, 'Can place orders?').text).to include('Not yet because there are no local coronavirus')
       end

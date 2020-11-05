@@ -62,7 +62,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
 
-    context "when the school isn't under lockdown restrictions or has any shielding children" do
+    context "when the school isn't under lockdown restrictions or has any clinically extremely vulnerable children" do
       before do
         school.cannot_order!
       end
