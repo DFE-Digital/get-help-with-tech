@@ -67,7 +67,7 @@ You can lend the devices to users straight away as the MDM and content filtering
 
 ## Reconfigure your devices
 
-You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#installing-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
+You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#requesting-local-admin-and-bios-passwords-to-install-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
