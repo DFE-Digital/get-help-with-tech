@@ -1,7 +1,14 @@
 <% if @user.is_school_user? %>
   <%- title = t('page_titles.school_request_devices') %>
   <%- content_for :before_content do %>
-    <% breadcrumbs([{ "Home" => home_school_path }, title ]) %>
+    <% if @school.mno_feature_flag %>
+      <% breadcrumbs([{ "Home" => home_school_path },
+                    { t('page_titles.school_specific_circumstances') => specific_circumstances_school_path(@school) },
+                    title
+      ]) %>
+    <% else %>
+      <% breadcrumbs([{ "Home" => home_school_path }, title ]) %>
+    <% end %>
   <% end %>
 
 <% elsif @user.is_responsible_body_user? %>
