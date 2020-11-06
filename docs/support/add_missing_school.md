@@ -3,23 +3,23 @@
 Find the school in the `DataStage` area.  If it is not there then it is outside of the types of establishments onboarded to the service.
 
 ```ruby
-[1] pry(main)> ss = DataStage::School.find_by(urn: 123456)
+ss = DataStage::School.find_by(urn: 123456)
 ```
 
 Check that the responsible body exists (if it does not then that will need to be added first)
 
 ```ruby
-[2] pry(main)> t = ResponsibleBody.find_by(name: ss.responsible_body_name)
+t = ResponsibleBody.find_by(name: ss.responsible_body_name)
 ```
 
 Add the school using the `SchoolUpdateService`
 
 ```ruby
-[3] pry(main)> sus = SchoolUpdateService.new
+sus = SchoolUpdateService.new
 ```
 
 ```ruby
-[4] pry(main)> s = sus.send(:create_school, ss)
+s = sus.send(:create_school, ss)
 ```
 
 This will create the school based on the attributes in the `DataStage::School`. If the responsible body has answered the 'who will order' question, this will also create `preorder_information` and a `std_device_allocation` with a zero allocation.
@@ -29,14 +29,7 @@ This will create the school based on the attributes in the `DataStage::School`. 
 Check whether the school was added as the result of a 'closing' and 'reopening' an existing school (e.g. academy conversion or amalgamation) that may already have had an allocation
 
 ```ruby
-[3] pry(main)> ss.school_links
-=> [#<DataStage::SchoolLink:0x0000561c0e3cc9b0
-  id: 11305,
-  staged_school_id: 21557,
-  link_urn: 123436,
-  link_type: "Predecessor",
-  created_at: Sat, 03 Oct 2020 05:19:02 BST +01:00,
-  updated_at: Sat, 03 Oct 2020 05:19:02 BST +01:00>]
+ss.school_links
 ```
 
 If there's a predecessor link, look up the school using the`link_urn` and if it exists in the system check its device allocations
@@ -48,23 +41,7 @@ School.find_by(urn: 123436)&.device_allocations
 Confirm that the predecessor is closed in the `DataStage`
 
 ```ruby
-[5] pry(main)> DataStage::School.find_by(urn: 123436)
-=> #<DataStage::School:0x000055ec963d26a0
- id: 39985,
- urn: 123436,
- name: "Broad School",
- responsible_body_name: "BROAD LEARNING TRUST",
- address_1: "Summers Road",
- address_2: "",
- address_3: "Hampton",
- town: "Broadcester",
- county: "Surrey",
- postcode: "GU1 3EA",
- phase: "secondary",
- establishment_type: "academy",
- status: "closed",
- created_at: Fri, 02 Oct 2020 05:18:15 BST +01:00,
- updated_at: Sat, 03 Oct 2020 05:22:10 BST +01:00>
+DataStage::School.find_by(urn: 123436)
 ```
 
 Mark the predecessor as closed in the service
@@ -88,61 +65,43 @@ Check whether the predecessor school had users that could be moved the the new s
 To move a user, the user needs to have the association removed between ot the old school and one added for the new school.
 
 ```ruby
-[12] pry(main)> old_school.users
-=> [#<User:0x000055a55299a690
-  id: 18578,
-  full_name: "Arthur Askey",
-  email_address: "askey.a@oldschool.sch.uk",
-  created_at: Thu, 24 Sep 2020 15:33:38 BST +01:00,
-  updated_at: Fri, 25 Sep 2020 12:00:40 BST +01:00,
-  sign_in_token: nil,
-  mobile_network_id: nil,
-  sign_in_token_expires_at: nil,
-  responsible_body_id: nil,
-  sign_in_count: 1,
-  last_signed_in_at: Thu, 24 Sep 2020 15:35:58 BST +01:00,
-  telephone: "01234 546789",
-  is_support: false,
-  is_computacenter: false,
-  privacy_notice_seen_at: Thu, 24 Sep 2020 15:36:07 BST +01:00,
-  orders_devices: true,
-  techsource_account_confirmed_at: Fri, 25 Sep 2020 12:00:40 BST +01:00>,
- #<User:0x000055a552aff3a0
-  id: 18022,
-  full_name: "Peter Bonetti",
-  email_address: "bonetti.p@oldschool.sch.uk",
-  created_at: Thu, 24 Sep 2020 12:15:49 BST +01:00,
-  updated_at: Fri, 25 Sep 2020 12:00:40 BST +01:00,
-  sign_in_token: nil,
-  mobile_network_id: nil,
-  sign_in_token_expires_at: nil,
-  responsible_body_id: nil,
-  sign_in_count: 1,
-  last_signed_in_at: Thu, 24 Sep 2020 15:32:03 BST +01:00,
-  telephone: "01234 940321",
-  is_support: false,
-  is_computacenter: false,
-  privacy_notice_seen_at: Thu, 24 Sep 2020 15:32:13 BST +01:00,
-  orders_devices: true,
-  techsource_account_confirmed_at: Fri, 25 Sep 2020 12:00:40 BST +01:00>]
+old_school.users
+```
+
+Add users to new school
+
+```ruby
+old_school.users.each { |u| s.users << u }
+```
+
+Remove a user from the old school (doesn't destroy the user object)
+
+```ruby
+old_school.users.destroy(user)
+```
+
+Remove all users from the old school (doesn't destroy the user objects)
+
+```ruby
+old_school.users.destroy_all
 ```
 
 
 
 ## Notify Computacenter
 
+### Schools changes
+
 We need to let Computacenter know of changes to schools or new schools.  As we've added a new school we need to export it to a CSV file and send it to CC so that they can send us a `shipTo` number (`computacenter_reference`)
 
 Select the schools to include and use the `SchoolDataExporter` to generate a CSV for CC.  I normally create this in the `public` folder under the rails root:
 
 ```ruby
-[15] pry(main)> SchoolDataExporter.new('public/school-changes.csv').export_schools(School.where(urn: [147860,138156]))
-=> nil
+SchoolDataExporter.new('public/school-changes.csv').export_schools(School.where(urn: [147860,138156]))
 ```
 Repeat for any new or updated responsible bodies using the `ResponsibleBodyExporter`:
 ```ruby
-[18] pry(main)> ResponsibleBodyExporter.new('public/responsible-body-changes.csv').export_responsible_bodies(Trust.where(id: 3444))
-=> nil
+ResponsibleBodyExporter.new('public/responsible-body-changes.csv').export_responsible_bodies(Trust.where(id: 3444))
 ```
 
 You should be able to download the file with your browser by entering the file name directly after the prod site url as the rails server is currently set to serve static assets
@@ -162,4 +121,8 @@ Finally open these CSV files in a suitable editor and append an extra column at 
 Email the CSV files to  CC.
 
 CC will return the file with `shipTo` references added. These should be used to update the `computacenter_reference` for the school.  Sometimes if a trust is added at the same time, only the school data is returned, but the school will also have a `soldTo` reference which is the `computacenter_reference` for the trust, so that can be used to update trust.
+
+### User changes
+
+__TODO:__ Computacenter need to be updated if user accounts are moved between schools, this needs to be worked out and handled in conjunction with the automated notifications.
 
