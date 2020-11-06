@@ -404,6 +404,24 @@ RSpec.describe User, type: :model do
         it 'does not create any UserChanges without a user_id (bug found & fixed in PR #634)' do
           expect(Computacenter::UserChange.where(user_id: nil).count).to eq(0)
         end
+
+        context 'when the school has a computacenter_reference' do
+          let(:school) { create(:school, computacenter_reference: '123456') }
+          let!(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'user@example.com', schools: [school]) }
+
+          it 'creates a UserChange' do
+            expect(Computacenter::UserChange.latest_for_user(user)).not_to be_nil
+          end
+        end
+
+        context 'when the school does not have a computacenter_reference' do
+          let(:school) { create(:school, computacenter_reference: '') }
+          let!(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'user@example.com', schools: [school]) }
+
+          it 'does not create a UserChange' do
+            expect(Computacenter::UserChange.latest_for_user(user)).to be_nil
+          end
+        end
       end
 
       it 'persists correct data for single academy trust user' do

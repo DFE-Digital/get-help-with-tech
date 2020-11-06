@@ -96,8 +96,9 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
     end
 
     context 'when user has been destroyed' do
+      let(:school) { create(:school, computacenter_reference: '123456') }
       let!(:user) do
-        create(:school_user, :relevant_to_computacenter)
+        create(:school_user, :relevant_to_computacenter, school: school)
       end
 
       before do
