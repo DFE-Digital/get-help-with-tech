@@ -34,10 +34,11 @@ ss.school_links
   updated_at: Sat, 03 Oct 2020 05:19:02 BST +01:00>]
 ```
 
-e.g. if there's a predecessor link, look up the school using the `link_urn` and if it exists in the system check its device allocations:
+e.g. if there's a predecessor link, look up the school using the `link_urn` and if it exists in the system check its device allocations (the code below assumes there's only one predecessor):
 
 ```ruby
-School.find_by(urn: 123436)&.device_allocations
+p = School.find_by(urn: ss.school_links.first.link_urn)
+p&.device_allocations
 ```
 
 If there is an existing allocation, move the values to the new school (I've only moved `allocation` so far as the other values have been zero - if this is not the case you might need to work our what needs to happen, e.g. move the remaining allocation amount - best check with the support colleagues) and reset the allocation on the old school.
