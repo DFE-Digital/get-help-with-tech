@@ -109,6 +109,7 @@ Rails.application.routes.draw do
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
       get '/request-devices', to: 'school/devices#request_devices'
+      get '/specific-circumstances', to: 'school/home#specific_circumstances'
       get '/order-devices', to: 'school/devices#order'
       get '/changed-allocation', to: 'school/devices#changed_allocation'
       get '/details', to: 'school/details#show', as: :details
