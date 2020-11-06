@@ -14,7 +14,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       click_on 'Get internet access'
       click_on 'Request extra data for mobile devices'
 
-      expect(page).to have_css('h1', text: 'Request extra mobile data')
+      expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
       expect(page).to have_http_status(:ok)
       click_on 'New request'
       expect(page).to have_css('h1', text: 'How would you like to submit information?')
@@ -27,7 +27,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       click_on 'Get internet access'
       click_on 'Request extra data for mobile devices'
 
-      expect(page).to have_css('h1', text: 'Request extra mobile data')
+      expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
       expect(page).to have_http_status(:ok)
       click_on 'New request'
       expect(page).to have_css('h1', text: 'How would you like to submit information?')
@@ -45,10 +45,23 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       @requests.last.unavailable!
     end
 
+    scenario 'the user can navigate to their previous requests from the home page' do
+      click_on 'Get the internet'
+      click_on 'Request extra data for mobile devices'
+
+      expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
+      expect(page).to have_http_status(:ok)
+
+      click_on 'Check your requests'
+
+      expect(page).to have_css('h1', text: 'Your requests')
+      expect(page).to have_http_status(:ok)
+    end
+
     scenario 'the user can see their previous requests' do
       visit extra_data_requests_internet_mobile_school_path(school)
 
-      expect(page).to have_css('h2', text: 'Your requests')
+      expect(page).to have_css('h1', text: 'Your requests')
 
       @requests.each do |request|
         expect(page).to have_content(request.device_phone_number)

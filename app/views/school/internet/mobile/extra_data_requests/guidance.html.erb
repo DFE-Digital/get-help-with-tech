@@ -1,0 +1,59 @@
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs(items: [
+      { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
+      t('page_titles.request_extra_mobile_data')
+    ],
+    user: @user,
+    school: @school) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.request_extra_mobile_data') %>
+    </h1>
+
+    <h2 class="govuk-heading-m">1. Check who is eligible for extra mobile data</h2>
+
+    <p class="govuk-body">You can request extra mobile data for disadvantaged children who:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>have no broadband connection at home</li>
+      <li>cannot afford additional data</li>
+    </ul>
+
+    <p class="govuk-body">One of the following must also apply. They are children:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>in years 3 to 11 and whose face-to-face education is disrupted</li>
+      <li>who are <%= govuk_link_to 'extremely clinically vulnerable', 'https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19', target: '_blank', rel: 'noopener noreferrer' %> and need to shield on current official advice (this could be from a doctor or hospital consultant)</li>
+      <li>who live in a household that’s been advised to shield because a family member is clinically extremely vulnerable</li>
+      <li>who cannot attend school – even though theirs is open – because they live in a different area with local coronavirus restrictions</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">2. Use our guide to gather the information you need</h2>
+
+    <p class="govuk-body">
+      You will need to collect names, telephone numbers and network details from households. They also need to understand how we’ll use their personal information.
+    </p>
+    <p class="govuk-body">Use our guide to tell people what’s available and collect the information you&nbsp;need: </p>
+    <p class="govuk-body">
+      <%= govuk_link_to 'Guide to collecting mobile information from families', guide_to_collecting_mobile_information_path %>
+    </p>
+
+    <h2 class="govuk-heading-m">3. Enter the information you collect</h2>
+
+    <p class="govuk-body">Once you submit mobile numbers and network details through our service, we’ll request extra data. How much data someone gets will depend on their network.</p>
+
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'New request',
+        extra_data_requests_type_internet_mobile_school_path(@school)
+      %>
+    </p>
+
+    <h2 class="govuk-heading-m">4. Check your requests</h2>
+
+    <p class="govuk-body">Check whether a network has received and approved your requests.</p>
+
+    <p class="govuk-body"><%= govuk_link_to 'Check your requests', extra_data_requests_internet_mobile_school_path(@school) %></p>
+  </div>
+</div>
