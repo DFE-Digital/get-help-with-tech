@@ -28,7 +28,7 @@ RSpec.feature 'Accessing the get help for specific circumstances area as a schoo
       visit specific_circumstances_school_path(school)
 
       click_on 'Request extra mobile data for specific circumstances'
-      expect(page).to have_css('h1', text: 'Get the internet')
+      expect(page).to have_css('h1', text: 'Get internet access')
     end
   end
 

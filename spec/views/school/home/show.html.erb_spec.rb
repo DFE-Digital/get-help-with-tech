@@ -5,12 +5,12 @@ RSpec.describe 'school/home/show.html.erb' do
   let(:user) { build(:school_user) }
 
   context 'when school mno_feature_flag is not enabled' do
-    it 'does not show Get the internet section' do
+    it 'does not show Get internet access section' do
       assign(:school, school)
       assign(:user, user)
 
       render
-      expect(rendered).not_to include('Get the internet')
+      expect(rendered).not_to include('Get internet access')
     end
   end
 
@@ -19,12 +19,12 @@ RSpec.describe 'school/home/show.html.erb' do
       school.update(mno_feature_flag: true)
     end
 
-    it 'does not show Get the internet section' do
+    it 'does not show Get internet access section' do
       assign(:school, school)
       assign(:user, user)
 
       render
-      expect(rendered).to include('Get the internet')
+      expect(rendered).to include('Get internet access')
     end
   end
 end
