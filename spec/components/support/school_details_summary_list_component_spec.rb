@@ -61,7 +61,7 @@ describe Support::SchoolDetailsSummaryListComponent do
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
       it 'cannot place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Not yet because there are no local coronavirus')
+        expect(value_for_row(result, 'Can place orders?').text).to include('Not yet because no closures have been reported')
       end
     end
 

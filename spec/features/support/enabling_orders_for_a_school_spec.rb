@@ -143,7 +143,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
     expect(enable_orders_confirm_page).to be_displayed
     expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
-    expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'They can order their full allocation because local coronavirus restrictions are confirmed'
+    expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'They can order their full allocation because a closure has been reported'
     expect(enable_orders_confirm_page.how_many_devices_row).to have_text 'Their full allocation of 50'
   end
 
