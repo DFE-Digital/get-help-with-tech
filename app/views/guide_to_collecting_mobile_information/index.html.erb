@@ -8,11 +8,18 @@
 
     <h3 class="govuk-heading-m" id="who-can-get-help">Who can get help</h3>
 
-    <%= render partial: 'shared/pilot_mno_offer_eligibility' %>
+    <p class="govuk-body">
+      This scheme is open to children and young people who:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <%= render partial: 'shared/eligibility_points_across_bt_wifi_and_mno_offers' %>
+      <li>have access to a mobile device that uses a participating network</li>
+      <li>are facing disruption to their face-to-face education, or have been advised not to attend school</li>
+    </ul>
 
     <h3 class="govuk-heading-m" id="what-information-youll-need-to-collect">What information you’ll need to collect</h3>
 
-    <p class="govuk-body">To request extra mobile data for an eligible person we need you to collect the following information:</p>
+    <p class="govuk-body">To request extra mobile data, you will need to collect the following information:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>the account holder’s name</li>
@@ -21,7 +28,7 @@
       <li>whether they pay monthly or pay as they go</li>
     </ul>
 
-    <p class="govuk-body">You also need to explain our privacy policy to the account holder.</p>
+    <p class="govuk-body">You also need to <%= govuk_link_to 'explain our privacy policy', guide_to_collecting_mobile_information_privacy_path %> to the account holder.</p>
 
     <h3 class="govuk-heading-m" id="how-to-save-information">How to save information</h3>
 
