@@ -24,7 +24,9 @@ Add the school using the `SchoolUpdateService`
 
 This will create the school based on the attributes in the `DataStage::School`. If the responsible body has answered the 'who will order' question, this will also create `preorder_information` and a `std_device_allocation` with a zero allocation.
 
-Check whether the school was added as the result of a 'closing' and 'reopening' an existing school that may already have an allocation
+## When the school has predecessor school(s)
+
+Check whether the school was added as the result of a 'closing' and 'reopening' an existing school (e.g. academy conversion or amalgamation) that may already have had an allocation
 
 ```ruby
 [3] pry(main)> ss.school_links
@@ -37,17 +39,95 @@ Check whether the school was added as the result of a 'closing' and 'reopening' 
   updated_at: Sat, 03 Oct 2020 05:19:02 BST +01:00>]
 ```
 
-e.g. if there's a predecessor link, look up the school using the`link_urn` and if it exists in the system check its device allocations
+If there's a predecessor link, look up the school using the`link_urn` and if it exists in the system check its device allocations
 
 ```ruby
- School.find_by(urn: 123436)&.device_allocations
+School.find_by(urn: 123436)&.device_allocations
 ```
 
-If there is an existing allocation, move the values to the new school (I've only moved `allocation` so far as the other values have been zero - if this is not the case you might need to work our what needs to happen, e.g. move the remaining allocation amount - best check with the support colleagues) and reset the allocation on the old school.
+Confirm that the predecessor is closed in the `DataStage`
 
-If you change/move the allocation you need to let Charlotte/Anya know so they can update the allocations spreadsheet.
+```ruby
+[5] pry(main)> DataStage::School.find_by(urn: 123436)
+=> #<DataStage::School:0x000055ec963d26a0
+ id: 39985,
+ urn: 123436,
+ name: "Broad School",
+ responsible_body_name: "BROAD LEARNING TRUST",
+ address_1: "Summers Road",
+ address_2: "",
+ address_3: "Hampton",
+ town: "Broadcester",
+ county: "Surrey",
+ postcode: "GU1 3EA",
+ phase: "secondary",
+ establishment_type: "academy",
+ status: "closed",
+ created_at: Fri, 02 Oct 2020 05:18:15 BST +01:00,
+ updated_at: Sat, 03 Oct 2020 05:22:10 BST +01:00>
+```
+
+Mark the predecessor as closed in the service
+
+```ruby
+School.find_by(urn: 123436).gias_status_closed!
+```
+
+#### Transferring the device allocation
+
+If there is an existing allocation, move the values to the new school (I've only moved `allocation` so far as the other values have been zero - if this is not the case you might need to work our what needs to happen, e.g. move the remaining allocation amount, or not - best check with the support colleagues) and reset the allocation on the old school.
+
+If you change/move the allocation you need to inform Charlotte/Anya know so that the allocations spreadsheet can be updated.
 
 If there were no links and the school is in the allocations spreadsheet, use the allocation from the there and update the `std_device_allocation.allocation`with the value.
+
+#### Moving Users
+
+Check whether the predecessor school had users that could be moved the the new school.  It may not always make sense to move users, in cases where a school have moved trusts or converted to an academy it is likely that any existing users would now have new email addresses.
+
+To move a user, the user needs to have the association removed between ot the old school and one added for the new school.
+
+```ruby
+[12] pry(main)> old_school.users
+=> [#<User:0x000055a55299a690
+  id: 18578,
+  full_name: "Arthur Askey",
+  email_address: "askey.a@oldschool.sch.uk",
+  created_at: Thu, 24 Sep 2020 15:33:38 BST +01:00,
+  updated_at: Fri, 25 Sep 2020 12:00:40 BST +01:00,
+  sign_in_token: nil,
+  mobile_network_id: nil,
+  sign_in_token_expires_at: nil,
+  responsible_body_id: nil,
+  sign_in_count: 1,
+  last_signed_in_at: Thu, 24 Sep 2020 15:35:58 BST +01:00,
+  telephone: "01234 546789",
+  is_support: false,
+  is_computacenter: false,
+  privacy_notice_seen_at: Thu, 24 Sep 2020 15:36:07 BST +01:00,
+  orders_devices: true,
+  techsource_account_confirmed_at: Fri, 25 Sep 2020 12:00:40 BST +01:00>,
+ #<User:0x000055a552aff3a0
+  id: 18022,
+  full_name: "Peter Bonetti",
+  email_address: "bonetti.p@oldschool.sch.uk",
+  created_at: Thu, 24 Sep 2020 12:15:49 BST +01:00,
+  updated_at: Fri, 25 Sep 2020 12:00:40 BST +01:00,
+  sign_in_token: nil,
+  mobile_network_id: nil,
+  sign_in_token_expires_at: nil,
+  responsible_body_id: nil,
+  sign_in_count: 1,
+  last_signed_in_at: Thu, 24 Sep 2020 15:32:03 BST +01:00,
+  telephone: "01234 940321",
+  is_support: false,
+  is_computacenter: false,
+  privacy_notice_seen_at: Thu, 24 Sep 2020 15:32:13 BST +01:00,
+  orders_devices: true,
+  techsource_account_confirmed_at: Fri, 25 Sep 2020 12:00:40 BST +01:00>]
+```
+
+
 
 ## Notify Computacenter
 
