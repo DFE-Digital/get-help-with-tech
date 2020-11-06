@@ -7,7 +7,6 @@ class FeatureFlag
   TEMPORARY_FEATURE_FLAGS = %i[
     mno_offer
     reduced_allocations
-    no_chromebook_or_ipad_stock
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
