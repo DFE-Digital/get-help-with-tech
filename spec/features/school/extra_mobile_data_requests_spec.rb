@@ -46,7 +46,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     end
 
     scenario 'the user can navigate to their previous requests from the home page' do
-      click_on 'Get the internet'
+      click_on 'Get internet access'
       click_on 'Request extra data for mobile devices'
 
       expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
