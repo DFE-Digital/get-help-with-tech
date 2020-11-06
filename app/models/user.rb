@@ -29,8 +29,8 @@ class User < ApplicationRecord
   scope :who_can_order_devices, -> { where(orders_devices: true) }
   scope :with_techsource_account_confirmed, -> { where.not(techsource_account_confirmed_at: nil) }
   scope :who_have_seen_privacy_notice, -> { where.not(privacy_notice_seen_at: nil) }
-  scope :deleted, -> { where('deleted_at IS NOT NULL') }
-  scope :not_deleted, -> { where('deleted_at IS NULL') }
+  scope :deleted, -> { where.not(deleted_at: nil) }
+  scope :not_deleted, -> { where(deleted_at: nil) }
 
   validates :full_name,
             presence: true,

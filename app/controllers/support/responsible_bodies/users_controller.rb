@@ -1,11 +1,11 @@
 class Support::ResponsibleBodies::UsersController < Support::BaseController
+  before_action :set_responsible_body
+
   def new
-    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = @responsible_body.users.build
   end
 
   def create
-    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = CreateUserService.invite_responsible_body_user(
       user_params.merge(responsible_body_id: params[:responsible_body_id]),
     )
@@ -19,12 +19,10 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   end
 
   def edit
-    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = @responsible_body.users.find(params[:id])
   end
 
   def update
-    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = @responsible_body.users.find(params[:id])
 
     if @user.update(user_params)
@@ -36,13 +34,12 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   end
 
   def destroy
-    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
     @user = @responsible_body.users.find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
     flash[:success] = 'User has been deleted'
 
-    redirect_to support_responsible_body_path(@responsible_body)
+    redirect_to return_path
   end
 
 private
@@ -57,5 +54,9 @@ private
       :email_address,
       :telephone,
     )
+  end
+
+  def set_responsible_body
+    @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
   end
 end
