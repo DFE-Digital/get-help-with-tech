@@ -6,16 +6,6 @@
   <li>Password: Use the ‘Forgotten password?’ link to set a password the first time you sign in</li>
 </ul>
 
-<% if FeatureFlag.active?(:no_chromebook_or_ipad_stock) %>
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-warning-text__assistive">Warning</span>
-    Temporarily, we have no Google Chromebooks or iPads in stock. We expect to have these back in stock and available to order soon.
-  </strong>
-</div>
-<% end %>
-
 <%= govuk_start_button_link_to('Start now', techsource_start_path, class: 'govuk-!-margin-bottom-3', target: '_blank') -%>
 
 <p class="govuk-body-s">on TechSource in a new window</p>
