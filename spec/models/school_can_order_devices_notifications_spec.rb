@@ -10,7 +10,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
   end
 
   subject(:service) do
-    described_class.new(school: school)
+    described_class.new(school: school.reload)
   end
 
   describe '#call' do
@@ -22,7 +22,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       end
 
       context 'user has confirmed techsource account' do
-        let(:user) do
+        let!(:user) do
           create(:school_user,
                  school: school,
                  techsource_account_confirmed_at: 1.second.ago,
@@ -30,16 +30,12 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
         end
 
         it 'notifies the user' do
-          user
-
           expect {
             service.call
           }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
         end
 
         it 'puts a message in Slack' do
-          user
-
           expect {
             service.call
           }.to have_enqueued_job.on_queue('slack_messages').with(
@@ -102,7 +98,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
 
       before do
         school.update!(order_state: 'can_order')
-        service
       end
 
       context 'user has confirmed techsource account' do
@@ -123,8 +118,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
 
     context 'when status changes from can_order to cannot_order' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order') }
-
-      subject(:service) { described_class.new(school: school) }
 
       before do
         school.update!(order_state: 'cannot_order')
@@ -147,11 +140,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
     end
 
     context 'when school which is not ready changes from cannot_order to can lockdown order' do
-      subject(:service) do
-        described_class.new(school: school)
-      end
-
-      let(:user) { create(:school_user, school: school) }
+      let!(:user) { create(:school_user, school: school) }
 
       before do
         school.update!(order_state: 'can_order')
@@ -160,8 +149,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       end
 
       it 'notifies the ordering organisations user' do
-        user
-
         expect {
           service.call
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_but_action_needed', 'deliver_now', params: { user: user, school: school }, args: [])
@@ -190,12 +177,9 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order_for_specific_circumstances') }
       let(:user) { create(:school_user, school: school) }
 
-      subject(:service) { described_class.new(school: school) }
-
       before do
         school.update!(order_state: 'can_order')
         school.preorder_information.needs_info!
-        service
       end
 
       it 'does not notify the user' do
@@ -208,8 +192,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
     context 'when status change from can_order to cannot_order' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order') }
       let(:user) { create(:school_user, school: school) }
-
-      subject(:service) { described_class.new(school: school) }
 
       before do
         school.update!(order_state: 'cannot_order')
@@ -228,13 +210,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       let(:school) { create(:school, preorder_information: preorder, std_device_allocation: allocation, order_state: :can_order) }
       let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
       let(:rb) { school.responsible_body }
-      let(:user) { create(:user, responsible_body: rb) }
-
-      before do
-        user
-      end
-
-      subject(:service) { described_class.new(school: school) }
+      let!(:user) { create(:user, responsible_body: rb) }
 
       it 'nudges RB that school needs a contact' do
         expect {
