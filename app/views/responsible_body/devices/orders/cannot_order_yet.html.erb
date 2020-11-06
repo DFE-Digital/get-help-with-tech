@@ -7,16 +7,6 @@
       <%= t('page_titles.order_devices.you_cannot_order_yet') %>
     </h1>
 
-    <% if FeatureFlag.active?(:half_term_order_closure) %>
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-          As we won’t be able to deliver devices before half term, we've temporarily closed orders.
-        </strong>
-      </div>
-    <% end %>
-
     <p class="govuk-body">You can order a school’s full allocation when:</p>
 
     <ul class="govuk-list govuk-list--bullet">
