@@ -4,7 +4,7 @@ RSpec.feature 'Viewing closed schools caps' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
     let!(:closed_schools) { create_list(:school, 5, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, :in_lockdown) }
-    let!(:partially_closed_schools) { create_list(:school, 10, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, :with_shielding_pupils) }
+    let!(:partially_closed_schools) { create_list(:school, 10, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, :can_order_for_specific_circumstances) }
 
     before do
       given_i_am_signed_in_as_a_computacenter_user
