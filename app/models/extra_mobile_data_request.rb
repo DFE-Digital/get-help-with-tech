@@ -59,6 +59,9 @@ class ExtraMobileDataRequest < ApplicationRecord
 
   include ExportableAsCsv
 
+  scope :from_responsible_bodies, -> { where.not(responsible_body: nil) }
+  scope :from_schools, -> { where.not(school: nil) }
+
   def self.exportable_attributes
     {
       id: 'ID',
