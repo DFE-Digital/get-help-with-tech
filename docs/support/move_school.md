@@ -5,13 +5,13 @@ This can happen commonly with academy conversions but also without the school ch
 Find the school in the `DataStage` area to check that it hasn't in fact closed and reopened with a new URN.
 
 ```ruby
-[1] pry(main)> ss = DataStage::School.find_by(urn: 123456)
+ss = DataStage::School.find_by(urn: 123456)
 ```
 
 or
 
 ```ruby
-[1] pry(main)> ss = DataStage::School.where("name like '%School Name%'")
+ss = DataStage::School.where("name like '%School Name%'")
 ```
 
 If the school has closed/reopened then follow the procedure to add a new school (see add_missing_school.md).
@@ -21,26 +21,22 @@ If the school has closed/reopened then follow the procedure to add a new school 
 Get the school from the school table
 
 ```ruby
-[1] pry(main)> s = School.find_by(urn: 123456)
+s = School.find_by(urn: 123456)
 ```
 
 Check that the receiving responsible body exists (if it does not then that will need to be added first)
 
 ```ruby
-[2] pry(main)> rb = ResponsibleBody.find_by(name: ss.responsible_body_name)
+rb = ResponsibleBody.find_by(name: ss.responsible_body_name)
 ```
 
 Move the school to the new RB
 
 ```ruby
-[1] pry(main)> s.update!(responsible_body: rb)
+s.update!(responsible_body: rb)
 ```
 
-
-
-__NOTE:__ So far I haven't had to deal with users accounts when doing this, but we should work out how this should be handled.
-
-
+This leaves the existing preorder information, allocations and users still associated with the school.  This might not be desired so further updates to these may be necessary or in some cases these can be handled later by support colleagues via the support portal.
 
 ## Notify Computacenter
 
@@ -49,8 +45,7 @@ We need to let Computacenter know of the changes.  As we've moved the school to 
 Select the schools to include and use the `SchoolDataExporter` to generate a CSV for CC.  I normally create this in the `public` folder under the rails root:
 
 ```ruby
-[15] pry(main)> SchoolDataExporter.new('public/school-changes.csv').export_schools(School.where(urn: [147860,138156]))
-=> nil
+SchoolDataExporter.new('public/school-changes.csv').export_schools(School.where(urn: [147860,138156]))
 ```
 You should be able to download the file with your browser by entering the file name directly after the prod site url as the rails server is currently set to serve static assets
 
