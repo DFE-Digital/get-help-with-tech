@@ -166,7 +166,7 @@ module ViewHelper
   end
 
   def link_to_ed_settings_form
-    link_to 'Educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status'
+    govuk_link_to 'DfE educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status'
   end
 
 private
