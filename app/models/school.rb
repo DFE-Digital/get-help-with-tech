@@ -45,6 +45,8 @@ class School < ApplicationRecord
     can_order: 'can_order',
   }
 
+  after_update :maybe_generate_user_changes
+
   def self.that_will_order_devices
     joins(:preorder_information).merge(PreorderInformation.school_will_order_devices)
   end
@@ -149,6 +151,10 @@ class School < ApplicationRecord
   end
 
 private
+
+  def maybe_generate_user_changes
+    users.each(&:generate_user_change_if_needed!)
+  end
 
   def device_ordering_organisation
     who_will_order_devices == 'school' ? self : responsible_body

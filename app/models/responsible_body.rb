@@ -18,6 +18,8 @@ class ResponsibleBody < ApplicationRecord
     closed: 'closed',
   }, _prefix: 'gias_status'
 
+  after_update :maybe_generate_user_changes
+
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end
@@ -118,5 +120,11 @@ class ResponsibleBody < ApplicationRecord
 
   def has_any_schools_that_can_order_now?
     schools.that_can_order_now.any?
+  end
+
+private
+
+  def maybe_generate_user_changes
+    users.each(&:generate_user_change_if_needed!)
   end
 end
