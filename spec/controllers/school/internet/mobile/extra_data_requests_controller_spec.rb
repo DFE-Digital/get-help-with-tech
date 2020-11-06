@@ -10,6 +10,22 @@ RSpec.describe School::Internet::Mobile::ExtraDataRequestsController, type: :con
       sign_in_as user
     end
 
+    describe '#index' do
+      it 'shows the previous mobile data requests page' do
+        get :index, params: { urn: school.urn }
+        expect(controller).to render_template(:index)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    describe '#guidance' do
+      it 'shows the request data for mobile devices guidance page' do
+        get :guidance, params: { urn: school.urn }
+        expect(controller).to render_template(:guidance)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     describe 'submitting spreadsheet choice' do
       it 'redirects to bulk requests' do
         request_data = {

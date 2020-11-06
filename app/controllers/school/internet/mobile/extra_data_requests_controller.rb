@@ -5,6 +5,8 @@ class School::Internet::Mobile::ExtraDataRequestsController < School::BaseContro
     @extra_mobile_data_requests = @school.extra_mobile_data_requests
   end
 
+  def guidance; end
+
   def new
     if params.fetch(:commit, '') == 'Continue'
       @submission_type = ExtraMobileDataSubmissionForm.new(submission_type_params)
