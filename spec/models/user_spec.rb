@@ -1100,4 +1100,23 @@ RSpec.describe User, type: :model do
       expect(user_search('bob')).to be_empty
     end
   end
+
+  describe '.from_responsible_body_or_schools' do
+    it 'filters school users' do
+      user = create(:school_user)
+      expect(User.from_responsible_body_or_schools).to eq([user])
+    end
+
+    it 'filters responsible body users' do
+      user = create(:local_authority_user)
+      expect(User.from_responsible_body_or_schools).to eq([user])
+    end
+
+    it 'ignores MNO, CC and support users' do
+      create(:computacenter_user, full_name: 'Jane Smith 1')
+      create(:mno_user, full_name: 'Jane Smith 2')
+      create(:support_user, full_name: 'Jane Smith 3')
+      expect(User.from_responsible_body_or_schools).to be_empty
+    end
+  end
 end
