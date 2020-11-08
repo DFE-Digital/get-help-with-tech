@@ -165,7 +165,7 @@ RSpec.describe User, type: :model do
   describe '#organisation_name' do
     let(:user) { build(:user) }
 
-    context 'when the user is from a mobilenetwork' do
+    context 'when the user is from a mobile network' do
       before { user.mobile_network = build(:mobile_network) }
 
       it 'returns the mobile networks brand' do
