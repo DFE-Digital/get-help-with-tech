@@ -1071,4 +1071,14 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#organisations' do
+    it 'includes the schools and responsible body that the user belongs to' do
+      user = create(:local_authority_user, schools: create_list(:school, 2))
+
+      expect(user.organisations.size).to eq(3)
+      expect(user.organisations).to include(user.responsible_body)
+      expect(user.organisations).to include(*user.schools)
+    end
+  end
 end

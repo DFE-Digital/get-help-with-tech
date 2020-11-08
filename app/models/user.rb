@@ -121,6 +121,10 @@ class User < ApplicationRecord
       (is_support? && 'DfE Support')
   end
 
+  def organisations
+    [schools, responsible_body].flatten.compact
+  end
+
   def first_name
     cleansed_full_name.split(' ').first.to_s
   end
