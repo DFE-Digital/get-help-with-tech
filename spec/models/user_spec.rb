@@ -1081,4 +1081,23 @@ RSpec.describe User, type: :model do
       expect(user.organisations).to include(*user.schools)
     end
   end
+
+  describe '.search_by_email_address_or_full_name' do
+    def user_search(search_string)
+      User.search_by_email_address_or_full_name(search_string)
+    end
+
+    it 'filters case insensitively on parts of the email address' do
+      user = create(:school_user, email_address: 'admin@school.sch.uk')
+      expect(user_search('Admin')).to eq([user])
+      expect(user_search('xxx')).to be_empty
+    end
+
+    it 'filters case insensitively on parts of the name' do
+      user = create(:school_user, full_name: 'Jane Smith')
+      expect(user_search('jane')).to eq([user])
+      expect(user_search('smith')).to eq([user])
+      expect(user_search('bob')).to be_empty
+    end
+  end
 end

@@ -31,6 +31,9 @@ class User < ApplicationRecord
   scope :who_have_seen_privacy_notice, -> { where.not(privacy_notice_seen_at: nil) }
   scope :deleted, -> { where.not(deleted_at: nil) }
   scope :not_deleted, -> { where(deleted_at: nil) }
+  scope :search_by_email_address_or_full_name, lambda { |search_term|
+    where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term}%", "%#{search_term}%")
+  }
 
   validates :full_name,
             presence: true,
