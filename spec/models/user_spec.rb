@@ -908,6 +908,49 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe 'marking user as soft deleted' do
+      context 'computacenter relevant' do
+        let!(:user) { create(:user, :relevant_to_computacenter) }
+        let!(:original_user) { user }
+
+        before do
+          ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+        end
+
+        it 'creates a Computacenter::UserChange of type remove' do
+          expect { user.update!(deleted_at: 1.second.ago) }.to change(Computacenter::UserChange, :count).by(1)
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.type_of_update).to eql('Remove')
+        end
+
+        it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          user.update!(deleted_at: 1.second.ago)
+          expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
+        end
+
+        it 'sets all original fields' do
+          user.update!(deleted_at: 1.second.ago)
+
+          user_change = Computacenter::UserChange.last
+          expect(user_change.original_email_address).to eql(original_user.email_address)
+        end
+      end
+
+      context 'not computacenter relevant' do
+        let!(:user) { create(:user, :not_relevant_to_computacenter) }
+
+        it 'does not create a Computacenter::UserChange' do
+          expect { user.update!(deleted_at: 1.second.ago) }.not_to change(Computacenter::UserChange, :count)
+        end
+
+        it 'does not schedule a NotifyComputacenterOfLatestChangeForUserJob for the user' do
+          user.update!(deleted_at: 1.second.ago)
+          expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
+        end
+      end
+    end
   end
 
   describe '#awaiting_techsource_account?' do

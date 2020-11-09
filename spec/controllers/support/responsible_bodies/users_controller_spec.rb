@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
+  let(:dfe_user) { create(:dfe_user) }
+
   describe '#create' do
     context 'for support users', versioning: true do
       let(:responsible_body) { create(:local_authority) }
-      let(:dfe_user) { create(:dfe_user) }
 
       before do
         sign_in_as dfe_user
@@ -61,6 +62,25 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
       post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
 
       expect(response).to redirect_to(sign_in_path)
+    end
+  end
+
+  describe '#destroy' do
+    let(:user) { create(:trust_user) }
+    let(:rb) { user.responsible_body }
+
+    before do
+      sign_in_as dfe_user
+    end
+
+    it 'sets user deleted_at timestamp' do
+      delete :destroy, params: { responsible_body_id: rb.id, id: user.id }
+      expect(user.reload.deleted_at).to be_present
+    end
+
+    it 'redirects back to the RB' do
+      delete :destroy, params: { responsible_body_id: rb.id, id: user.id }
+      expect(response).to redirect_to(support_responsible_body_path(rb))
     end
   end
 end

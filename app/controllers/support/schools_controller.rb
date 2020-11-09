@@ -10,7 +10,7 @@ class Support::SchoolsController < Support::BaseController
 
   def show
     @school = School.find_by!(urn: params[:urn])
-    @users = @school.users
+    @users = @school.users.not_deleted
     @contacts = @school.contacts
     @email_audits = @school.email_audits.order(created_at: :desc)
   end

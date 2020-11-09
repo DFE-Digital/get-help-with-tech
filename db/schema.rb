@@ -328,7 +328,9 @@ ActiveRecord::Schema.define(version: 2020_11_04_165458) do
     t.datetime "privacy_notice_seen_at"
     t.boolean "orders_devices"
     t.datetime "techsource_account_confirmed_at"
+    t.datetime "deleted_at"
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["mobile_network_id"], name: "index_users_on_mobile_network_id"
     t.index ["responsible_body_id"], name: "index_users_on_responsible_body_id"
