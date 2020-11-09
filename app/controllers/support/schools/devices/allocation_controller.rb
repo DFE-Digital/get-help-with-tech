@@ -11,7 +11,7 @@ class Support::Schools::Devices::AllocationController < Support::BaseController
     @current_allocation = @allocation.dup
     @form = Support::AllocationForm.new(allocation_params.merge(school_allocation: @allocation))
     if @form.valid?
-      @allocation.update!(allocation: @form.allocation)
+      update_service.call
       flash[:success] = t(:success, scope: %i[support allocation update])
       redirect_to support_school_path(urn: @school.urn)
     else
@@ -34,5 +34,9 @@ private
 
   def allocation_params
     params.fetch(:support_allocation_form, {}).permit(:allocation)
+  end
+
+  def update_service
+    @update_service ||= AllocationUpdater.new(school: @school, device_type: device_type, value: @form.allocation)
   end
 end
