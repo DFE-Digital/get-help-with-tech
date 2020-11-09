@@ -165,7 +165,7 @@ RSpec.describe User, type: :model do
   describe '#organisation_name' do
     let(:user) { build(:user) }
 
-    context 'when the user is from a mobilenetwork' do
+    context 'when the user is from a mobile network' do
       before { user.mobile_network = build(:mobile_network) }
 
       it 'returns the mobile networks brand' do
@@ -1069,6 +1069,54 @@ RSpec.describe User, type: :model do
         expect(user.schools_i_order_for).to include(included_rb_school)
         expect(user.schools_i_order_for).not_to include(excluded_rb_school)
       end
+    end
+  end
+
+  describe '#organisations' do
+    it 'includes the schools and responsible body that the user belongs to' do
+      user = create(:local_authority_user, schools: create_list(:school, 2))
+
+      expect(user.organisations.size).to eq(3)
+      expect(user.organisations).to include(user.responsible_body)
+      expect(user.organisations).to include(*user.schools)
+    end
+  end
+
+  describe '.search_by_email_address_or_full_name' do
+    def user_search(search_string)
+      User.search_by_email_address_or_full_name(search_string)
+    end
+
+    it 'filters case insensitively on parts of the email address' do
+      user = create(:school_user, email_address: 'admin@school.sch.uk')
+      expect(user_search('Admin')).to eq([user])
+      expect(user_search('xxx')).to be_empty
+    end
+
+    it 'filters case insensitively on parts of the name' do
+      user = create(:school_user, full_name: 'Jane Smith')
+      expect(user_search('jane')).to eq([user])
+      expect(user_search('smith')).to eq([user])
+      expect(user_search('bob')).to be_empty
+    end
+  end
+
+  describe '.from_responsible_body_or_schools' do
+    it 'filters school users' do
+      user = create(:school_user)
+      expect(User.from_responsible_body_or_schools).to eq([user])
+    end
+
+    it 'filters responsible body users' do
+      user = create(:local_authority_user)
+      expect(User.from_responsible_body_or_schools).to eq([user])
+    end
+
+    it 'ignores MNO, CC and support users' do
+      create(:computacenter_user, full_name: 'Jane Smith 1')
+      create(:mno_user, full_name: 'Jane Smith 2')
+      create(:support_user, full_name: 'Jane Smith 3')
+      expect(User.from_responsible_body_or_schools).to be_empty
     end
   end
 end

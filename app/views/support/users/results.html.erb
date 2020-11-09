@@ -1,0 +1,50 @@
+<%- title = t('page_titles.support.users.results') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    { t('page_titles.support.users.search') => search_support_users_path },
+    title,
+  ]) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <p class="govuk-body search-results__count" data-qa="course-count">
+          <% if @maximum_search_result_number_reached %>First<% end %>
+          <%= pluralize(@results.size, 'user') %> found matching ‘<%= @search_term %>’
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <p class="govuk-body search-results__new-search">
+          <%= govuk_link_to 'New search', search_support_users_path %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <ul class="govuk-list search-results">
+      <% @results.each do |user| %>
+        <li>
+          <%= render Support::UserSearchResultComponent.new(user) %>
+        </li>
+      <%- end %>
+    </ul>
+    <p class="govuk-body">
+      <%= govuk_link_to 'Search again', search_support_users_path %>
+    </p>
+  </div>
+</div>

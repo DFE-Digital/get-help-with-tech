@@ -25,12 +25,16 @@ class User < ApplicationRecord
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
   scope :responsible_body_users, -> { where.not(responsible_body: nil) }
   scope :from_responsible_body_in_connectivity_pilot, -> { joins(:responsible_body).where('responsible_bodies.in_connectivity_pilot = ?', true) }
+  scope :from_responsible_body_or_schools, -> { left_joins(:user_schools).where('responsible_body_id IS NOT NULL or user_schools.id IS NOT NULL') }
   scope :mno_users, -> { where.not(mobile_network: nil) }
   scope :who_can_order_devices, -> { where(orders_devices: true) }
   scope :with_techsource_account_confirmed, -> { where.not(techsource_account_confirmed_at: nil) }
   scope :who_have_seen_privacy_notice, -> { where.not(privacy_notice_seen_at: nil) }
   scope :deleted, -> { where.not(deleted_at: nil) }
   scope :not_deleted, -> { where(deleted_at: nil) }
+  scope :search_by_email_address_or_full_name, lambda { |search_term|
+    where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term}%", "%#{search_term}%")
+  }
 
   validates :full_name,
             presence: true,
@@ -119,6 +123,10 @@ class User < ApplicationRecord
       responsible_body&.name || \
       (is_computacenter? && 'Computacenter') || \
       (is_support? && 'DfE Support')
+  end
+
+  def organisations
+    [schools, responsible_body].flatten.compact
   end
 
   def first_name
