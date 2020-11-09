@@ -28,9 +28,7 @@
           <%= @extra_mobile_data_request.device_phone_number %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-device-phone-number-field') ) do %>
-            Change<span class="govuk-visually-hidden"> Mobile phone number</span>
-          <%- end %>
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Mobile phone number</span>'.html_safe, new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-device-phone-number-field') ) %>
         </dd>
       </div>
 
@@ -42,9 +40,7 @@
           <%= @extra_mobile_data_request.network_name_with_participation_status %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path(anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) do %>
-            Change<span class="govuk-visually-hidden"> Mobile network</span>
-          <%- end %>
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Mobile network</span>'.html_safe, new_responsible_body_internet_mobile_manual_request_path(anchor: "extra-mobile-data-request-mobile-network-id-#{@extra_mobile_data_request.mobile_network_id}-field") ) %>
         </dd>
       </div>
 
@@ -57,9 +53,7 @@
               scope: 'responsible_body.extra_mobile_data_requests.new') %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path(anchor: "extra-mobile-data-request-contract_type-#{@extra_mobile_data_request.contract_type}-field") ) do %>
-            Change<span class="govuk-visually-hidden"> pay monthly or pay as you go</span>
-          <%- end %>
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> pay monthly or pay as you go</span>'.html_safe, new_responsible_body_internet_mobile_manual_request_path(anchor: "extra-mobile-data-request-contract_type-#{@extra_mobile_data_request.contract_type}-field") ) %>
         </dd>
       </div>
 
@@ -71,9 +65,7 @@
           <%= @extra_mobile_data_request.agrees_with_privacy_statement ? 'Yes' : 'No' %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= govuk_link_to('', new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-agrees-with-privacy-statement-true-field') ) do %>
-            Change<span class="govuk-visually-hidden"> Agrees with privacy statement</span>
-          <%- end %>
+          <%= govuk_link_to('Change<span class="govuk-visually-hidden"> Agrees with privacy statement</span>'.html_safe, new_responsible_body_internet_mobile_manual_request_path( anchor: 'extra-mobile-data-request-agrees-with-privacy-statement-true-field') ) %>
         </dd>
       </div>
     </dl>
