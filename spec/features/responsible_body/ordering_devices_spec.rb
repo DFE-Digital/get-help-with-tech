@@ -132,12 +132,12 @@ RSpec.feature 'Ordering devices' do
 
   def and_i_see_that_1_school_can_place_their_own_order_for_local_restrictions
     expect(page).to have_css('h2', text: 'Some schools can place their own orders')
-    expect(page).to have_text('1 school has local coronavirus restrictions')
+    expect(page).to have_text('1 school can order their full allocation')
   end
 
   def and_i_see_that_2_schools_can_place_their_own_orders
     expect(page).to have_css('h2', text: 'Some schools can place their own orders')
-    expect(page).to have_text('1 school has local coronavirus restrictions')
+    expect(page).to have_text('1 school can order their full allocation')
     expect(page).to have_text('1 school can order devices for specific circumstances because their request has been approved.')
   end
 
