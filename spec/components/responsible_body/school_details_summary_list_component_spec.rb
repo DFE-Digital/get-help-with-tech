@@ -68,7 +68,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'cannot place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Not yet because no closures have been reported')
+        expect(value_for_row(result, 'Can place orders?').text).to include('Not yet because no closure or group of self-isolating children has been reported')
       end
     end
 
@@ -78,7 +78,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'can place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Yes, a closure has been reported')
+        expect(value_for_row(result, 'Can place orders?').text).to include('Yes, a closure or group of self-isolating children has been reported')
       end
     end
 

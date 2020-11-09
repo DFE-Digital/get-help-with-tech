@@ -275,13 +275,13 @@ en:
         order_states:
           cannot_order: cannot place orders yet
           can_order_for_specific_circumstances: can place orders for specific circumstances
-          can_order: can order their full allocation because a closure has been reported
+          can_order: can order their full allocation because a closure or group of self-isolating children has been reported
     allocation:
       edit:
         order_states:
           cannot_order: They cannot place orders yet. When they can, their total allocation is %{allocation} devices.
           can_order_for_specific_circumstances: They can place orders for specific circumstances, up to %{cap} devices from their total allocation of %{allocation}.
-          can_order: They can order their full allocation of %{allocation} because a closure has been reported.
+          can_order: They can order their full allocation of %{allocation} because a closure or group of self-isolating children has been reported.
       update:
         success: We’ve saved the new allocation
     service_performance:
@@ -466,7 +466,7 @@ en:
           cannot_order: No, orders cannot be placed yet
           cannot_order_as_reopened: No, as school has reopened
           can_order_for_specific_circumstances: They can place orders for specific circumstances
-          can_order: They can order their full allocation because a closure has been reported
+          can_order: They can order their full allocation because a closure or group of self-isolating children has been reported
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'

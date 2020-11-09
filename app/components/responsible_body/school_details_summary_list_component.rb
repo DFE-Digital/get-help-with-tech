@@ -95,7 +95,7 @@ private
     if @school.can_order?
       {
         key: 'Can place orders?',
-        value: 'Yes, a closure has been reported',
+        value: 'Yes, a closure or group of self-isolating children has been reported',
       }
     elsif @school.can_order_for_specific_circumstances?
       {
@@ -112,7 +112,7 @@ private
     else
       {
         key: 'Can place orders?',
-        value: 'Not yet because no closures have been reported'.html_safe,
+        value: 'Not yet because no closure or group of self-isolating children has been reported'.html_safe,
         action_path: responsible_body_devices_request_devices_path,
         action: 'Request devices for specific circumstances',
       }
