@@ -18,14 +18,14 @@
         selected: @view_mode.blank? || @view_mode == 'all')
       %>
       <%= render TabComponent.new(
-        label: 'Partially closed',
-        path: computacenter_closed_schools_path(view: 'partially-closed'),
-        selected: @view_mode == 'partially-closed')
+        label: 'Ordering for specific circumstances',
+        path: computacenter_closed_schools_path(view: 'specific-circumstances'),
+        selected: @view_mode == 'specific-circumstances')
       %>
       <%= render TabComponent.new(
-        label: 'Fully closed',
-        path: computacenter_closed_schools_path(view: 'fully-closed'),
-        selected: @view_mode == 'fully-closed')
+        label: 'Ordering for closures or self-isolating pupils',
+        path: computacenter_closed_schools_path(view: 'closures-or-self-isolating'),
+        selected: @view_mode == 'closures-or-self-isolating')
       %>
     </ul>
     <div class="govuk-tabs__panel">

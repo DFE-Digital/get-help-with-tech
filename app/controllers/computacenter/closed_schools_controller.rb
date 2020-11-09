@@ -28,15 +28,15 @@ private
 
   def parse_view_mode
     mode = params[:view]
-    mode = 'all' unless mode.in? %w[partially-closed fully-closed]
+    mode = 'all' unless mode.in? %w[specific-circumstances closures-or-self-isolating]
     mode
   end
 
   def query_for_view_mode
     case view_mode
-    when 'partially-closed'
+    when 'specific-circumstances'
       :can_order_for_specific_circumstances
-    when 'fully-closed'
+    when 'closures-or-self-isolating'
       :can_order
     else
       :that_can_order_now
