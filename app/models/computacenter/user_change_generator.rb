@@ -37,7 +37,12 @@ private
 
   def change_needed?
     @user&.id.present? && \
-      (is_addition? || is_removal? || (is_change? && computacenter_fields_have_changed?))
+      (is_addition? || is_removal? || (is_change? && computacenter_fields_have_changed?)) && \
+      (!user_has_a_school_but_no_ship_to? || user.is_a_single_academy_trust_user?)
+  end
+
+  def user_has_a_school_but_no_ship_to?
+    user.user_schools.present? && cc_ship_to_number_list.blank?
   end
 
   def is_addition?
@@ -73,8 +78,12 @@ private
       # NOTE: we must loop round user_schools (which may be dirty) not schools (which won't be)
       school: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
       school_urn: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
-      cc_ship_to_number: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|')),
+      cc_ship_to_number: cc_ship_to_number_list,
     }
+  end
+
+  def cc_ship_to_number_list
+    (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|'))
   end
 
   def meta_attributes
