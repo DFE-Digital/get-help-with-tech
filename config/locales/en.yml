@@ -6,9 +6,8 @@ en:
         - local coronavirus restrictions are confirmed
         - 15 or more children (in years 3 to 11) are self-isolating having been exposed to a confirmed case outside the school community
   page_titles:
-    pages:
-      how_request_4g_routers:
-        title: How to request 4G wireless routers
+    how_request_4g_routers: How to request 4G wireless routers
+    choosing_help_with_internet_access: Choosing help with internet access
     about_bt_wifi: Increasing children’s internet access through free BT hotspots
     api_tokens: Your API tokens
     bt_wifi_privacy_notice: How we look after personal data for the BT wifi hotspot scheme
