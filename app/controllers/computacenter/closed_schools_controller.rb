@@ -16,7 +16,7 @@ private
 
   def fetch_schools_for_view
     School.joins(:responsible_body)
-      .includes(:std_device_allocation, :coms_device_allocation)
+      .includes(:std_device_allocation, :coms_device_allocation, :responsible_body)
       .gias_status_open
       .send(query_for_view_mode)
       .order(ResponsibleBody.arel_table[:type].asc, ResponsibleBody.arel_table[:name].asc, School.arel_table[:name].asc)
