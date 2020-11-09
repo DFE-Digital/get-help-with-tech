@@ -1,0 +1,7 @@
+computacenter:
+  outgoing_api:
+    # Computacenter's dev endpoint
+    # Uncomment this to automatically send allocation cap updates to Computacenter
+    # (assuming you also have valid settings for username: and password:
+    # under the same scope)
+    # endpoint: https://b2b-uat.gw.computacenter.com/?resource=DFE/CapAdjustment&zAdpt=rest&zl=nc2
