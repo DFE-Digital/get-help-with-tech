@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe AllocationUpdater do
-  let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
+  let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
+  let(:mock_response) { OpenStruct.new(body: '<xml>test-response</xml>') }
   let(:mock_update_service) { instance_double(SchoolOrderStateAndCapUpdateService) }
 
   before do
     allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-    allow(mock_request).to receive(:post!)
+    allow(mock_request).to receive(:post!).and_return(mock_response)
     allow(mock_update_service).to receive(:update!)
   end
 

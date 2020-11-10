@@ -1,9 +1,10 @@
 class SchoolDeviceAllocation < ApplicationRecord
   has_paper_trail
 
-  belongs_to  :school
-  belongs_to  :created_by_user, class_name: 'User', optional: true
-  belongs_to  :last_updated_by_user, class_name: 'User', optional: true
+  belongs_to :school
+  belongs_to :created_by_user, class_name: 'User', optional: true
+  belongs_to :last_updated_by_user, class_name: 'User', optional: true
+  has_many :cap_update_calls
 
   validates_with CapAndAllocationValidator
 

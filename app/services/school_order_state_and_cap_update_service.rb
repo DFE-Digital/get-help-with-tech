@@ -70,6 +70,8 @@ private
       cap_update_request_timestamp: api_request.timestamp,
       cap_update_request_payload_id: api_request.payload_id,
     )
+    allocation = SchoolDeviceAllocation.find_by(id: allocation_id)
+    allocation.cap_update_calls << CapUpdateCall.new(request_body: api_request.body, response_body: response.body) if allocation
     response
   end
 end
