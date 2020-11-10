@@ -24,7 +24,7 @@ prod:
 	@true
 
 .PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh \
-				logs logs-recent dockerhub-tags
+				logs logs-recent remote-docker-tags push-tag rollback-to timestamp-latest
 
 require_env_stub:
 	@test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
