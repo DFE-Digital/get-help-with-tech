@@ -24,8 +24,7 @@ prod:
 	@true
 
 .PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh \
-				logs logs-recent
-
+				logs logs-recent dockerhub-tags
 
 require_env_stub:
 	@test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
@@ -67,9 +66,24 @@ setup_paas_env: set_cf_target
 build: require_env_stub get_git_status ## Create & tag a new docker image
 	docker build -t $(APP_NAME)-$(env_stub) --build-arg GIT_COMMIT_SHA=$(git_commit_sha) --build-arg GIT_BRANCH=$(git_branch) .
 
-push: require_env_stub ## push the Docker image to Docker Hub
-	docker tag $(APP_NAME)-$(env_stub) $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
-	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)
+push: require_env_stub timestamp-latest ## push the Docker image to Docker Hub
+	docker tag $(APP_NAME)-$(env_stub) $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest
+	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest
+
+timestamp-latest: require_env_stub
+	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest
+	$(eval export timestamp_tag=replaced-at-$(shell (date -u +%Y%m%d-%H%M%S)))
+	docker tag  $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):$(timestamp_tag)
+	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):$(timestamp_tag)
+
+remote-docker-tags: require_env_stub
+	@curl -L -s 'https://registry.hub.docker.com/v2/repositories/$(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub)/tags?page_size=1024' |jq -r '."results"[]["name"]'
+
+push-tag: require_env_stub timestamp-latest ## pull a remote tag, re-tag it as :latest and push it to Docker Hub
+	@test ${TAG} || (echo ">> TAG is not set (${TAG})- please use make push-tag TAG=(some tag that already exists on Docker Hub)."; echo "You can list all existing tags with: \nmake $(env_stub) remote-docker-tags"; exit 1)
+	docker pull $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):${TAG}
+	docker tag  $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):${TAG} $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest
+	docker push $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub):latest
 
 deploy: set_cf_target set_docker_image_id ## Deploy the docker image to gov.uk PaaS
 	cf push $(APP_NAME)-$(env_stub) --manifest ./config/manifests/${env_stub}-manifest.yml --var docker_image_id=$(DOCKER_IMAGE_ID) --docker-image $(REMOTE_DOCKER_IMAGE_NAME)-$(env_stub) --docker-username ${CF_DOCKER_USERNAME} --strategy rolling
@@ -82,6 +96,11 @@ set_docker_image_id: require_env_stub
 
 release: require_env_stub
 	make ${env_stub} build push deploy
+
+rollback-to: require_env_stub ## rollback to a given TAG, which must already exist on Docker Hub
+	@test ${TAG} || (echo ">> TAG is not set (${TAG})- please use make rollback-to TAG=(some tag that already exists on Docker Hub)."; echo "You can list all existing tags with: \nmake $(env_stub) remote-docker-tags"; exit 1)
+	make ${env_stub} push-tag TAG=${TAG}
+	make ${env_stub} deploy
 
 promote:
 	@test ${FROM} || (echo ">> FROM is not set (${FROM})- please use make promote FROM=(dev|staging|prod)"; exit 1)

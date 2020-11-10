@@ -77,7 +77,7 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 
 1. [Sign in to Cloud Foundry](https://docs.cloud.service.gov.uk/get_started.html#sign-in-to-cloud-foundry) (using either your GOV.UK PaaS account or single sign-on, once you've enabled it for your account)
 2. Run `docker login` to log in to Docker Hub
-3. Run `make dev build push deploy` to build, push and deploy the Docker image to GOV.UK PaaS development instance
+3. Run `make dev release` to build, push and deploy the Docker image to GOV.UK PaaS development instance
 4. Test on https://get-help-with-tech-dev.london.cloudapps.digital
 5. Run `make staging promote FROM=dev` to deploy the -dev image to staging
 7. Test on https://get-help-with-tech-staging.london.cloudapps.digital
@@ -85,6 +85,35 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 10. Test on https://get-help-with-tech-prod.london.cloudapps.digital
 
 The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
+
+### If you need to rollback a release
+
+Sometimes releases fail on production - sometimes this is due to a migration which fails due to unexpected data in production, for instance.
+When this happens, you'll probably want to minimize user impact by rolling back the release to a previous version ASAP, while you investigate offline.
+
+There are some make tasks that can help:
+
+`make (env) remote-docker-tags` - list all available tags for the given environment's Docker image, on Docker Hub
+`make (env) rollback-to TAG=...` - re-deploy the Docker image tagged with the given TAG
+
+#### How does this work?
+
+The normal release process works as follows:
+
+1. Build a new Docker image called `get-help-with-tech-(env name)`
+2. Pull any existing image from Docker Hub called `dfedigital/get-help-with-tech-(env name):latest`. Re-tag it with `replaced-at-(timestamp)` and push it back up to Docker Hub.  
+3. Tag the newly-built image as `dfedigital/get-help-with-tech-(env name):latest`, and push it to Docker Hub, overwriting any existing image with the same name and tag
+4. Tell Gov.uk PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
+
+If you're not building a new image but promoting an image from another environment, the process is a little simpler, but largely the same:
+
+1. Pull any existing image from Docker Hub called `dfedigital/get-help-with-tech-(env name):latest`. Re-tag it with `replaced-at-(timestamp)` and push it back up to Docker Hub.
+2. Pull the image `dfedigital/get-help-with-tech-(FROM env name):latest`, re-tag it as `dfedigital/get-help-with-tech-(TO env name):latest`' and push it back up to Docker Hub
+3. Tell Gov.uk PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
+
+In either case, before replacing the `dfedigital/get-help-with-tech-(env name):latest` image on Docker Hub, it will automatically re-tag the existing image as `replaced-at-(timestamp)` - making it straightforward to rollback to any available previous tag.
+
+Over time, the timestamped tags will accumulate in Docker Hub, and should be pruned occasionally. You can do this by visiting https://hub.docker.com/repository/registry-1.docker.io/dfedigital/get-help-with-tech-dev/tags as a logged-in member of the `dfedigital` organisation, clicking the checkboxes next to any no-longer-required tags, and choosing 'Delete' from the select box at the top of the list.
 
 ## Environment variables
 
