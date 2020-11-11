@@ -1,10 +1,16 @@
 <p class="govuk-body">You need to place orders on a website called TechSource.</p>
 
 <p class="govuk-body">Use these details to sign in:</p>
-<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+<ul class="govuk-list govuk-list--bullet<% unless local_assigns[:school_urn] %> govuk-!-margin-bottom-7<% end %>">
   <li>User ID: <%= local_assigns[:email_address] %></li>
   <li>Password: Use the ‘Forgotten password?’ link to set a password the first time you sign in</li>
 </ul>
+
+<% if local_assigns[:school_urn] %>
+<p class="govuk-body govuk-!-margin-bottom-7">
+  You’ll also need your school’s unique reference number (URN) when you place an order. It is: <%= local_assigns[:school_urn] %>
+</p>
+<% end %>
 
 <%= govuk_start_button_link_to('Start now', techsource_start_path, class: 'govuk-!-margin-bottom-3', target: '_blank') -%>
 
