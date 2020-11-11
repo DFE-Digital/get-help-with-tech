@@ -1,4 +1,10 @@
 <% content_for :title, t('page_titles.about_bt_wifi') %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => guidance_page_path },
+                  { t('page_titles.internet_access') => connectivity_home_path },
+                  t('page_titles.about_bt_wifi'),
+                 ]) %>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
