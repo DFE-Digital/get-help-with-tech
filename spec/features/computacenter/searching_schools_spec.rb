@@ -9,7 +9,7 @@ RSpec.feature 'Searching for schools by URNs' do
 
   scenario 'happy journey' do
     given_i_am_signed_in_as_a_computacenter_user
-    when_i_follow_the_links_to_find_schools
+    when_i_follow_the_link_to_find_schools
     then_i_see_the_schools_search_page
 
     when_i_fill_in_some_urns
@@ -27,8 +27,7 @@ RSpec.feature 'Searching for schools by URNs' do
     sign_in_as computacenter_user
   end
 
-  def when_i_follow_the_links_to_find_schools
-    click_link 'Find schools'
+  def when_i_follow_the_link_to_find_schools
     click_link 'Find schools'
   end
 
