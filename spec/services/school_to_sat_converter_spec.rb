@@ -14,6 +14,13 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.companies_house_number).to be_blank
       expect(trust.organisation_type).to eq('single_academy_trust')
       expect(trust.who_will_order_devices).to eq('schools')
+      expect(trust.address_1).to eq(school.address_1)
+      expect(trust.address_2).to eq(school.address_2)
+      expect(trust.address_3).to eq(school.address_3)
+      expect(trust.town).to eq(school.town)
+      expect(trust.county).to eq(school.county)
+      expect(trust.postcode).to eq(school.postcode)
+
       school.reload
       expect(school.preorder_information.who_will_order_devices).to eq('school')
       expect(school.std_device_allocation.allocation).to eq(0)
