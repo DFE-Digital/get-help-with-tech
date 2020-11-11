@@ -57,7 +57,13 @@ private
   end
 
   def chromebook_rows_if_needed
-    super.map { |row| row.except(:change_path, :action, :action_path) }
+    super.map do |row|
+      row
+        .except(:change_path, :action, :action_path)
+        .merge(
+          change_path: support_school_devices_chromebooks_edit_path(school_urn: @school.urn),
+        )
+    end
   end
 
   def headteacher
