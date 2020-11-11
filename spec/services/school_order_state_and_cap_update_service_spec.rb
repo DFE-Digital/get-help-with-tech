@@ -8,18 +8,19 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
   let(:allocation) { school.std_device_allocation }
   let(:router_allocation) { school.coms_device_allocation }
   let(:device_type) { 'std_device' }
+  let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
   subject(:service) do
     described_class.new(school: school, order_state: new_order_state, std_device_cap: new_cap)
   end
 
   describe '#update!' do
-    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789') }
+    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
     let(:notifications) { instance_double(SchoolCanOrderDevicesNotifications) }
 
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-      allow(mock_request).to receive(:post!)
+      allow(mock_request).to receive(:post!).and_return(response)
       allow(SchoolCanOrderDevicesNotifications).to receive(:new).with(school: school).and_return(notifications)
       allow(notifications).to receive(:call)
     end
@@ -41,6 +42,13 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       context 'when no device_type was given' do
         it 'creates a new std_device allocation record' do
           expect { service.update! }.to change(school.device_allocations.by_device_type('std_device'), :count).by(1)
+        end
+
+        it 'stores the request and response against the allocation' do
+          service.update!
+          expect(allocation.cap_update_calls).to be_present
+          expect(allocation.cap_update_calls.last.request_body).to include('test-request')
+          expect(allocation.cap_update_calls.last.response_body).to include('test-response')
         end
       end
 
