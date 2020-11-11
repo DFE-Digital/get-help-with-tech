@@ -36,6 +36,8 @@ module Computacenter::ResponsibleBodyUrns
       when 'LocalAuthority'
         "LEA#{gias_id}"
       when 'Trust'
+        return '' if companies_house_number.blank?
+
         "t#{companies_house_number.to_i}"
       end
     end
