@@ -187,6 +187,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
+    get '/schools', to: 'home#schools'
     get '/schools-that-can-order', to: 'closed_schools#index', as: :closed_schools
     get '/techsource', to: 'techsource#new'
     post '/techsource', to: 'techsource#create'
@@ -196,6 +197,13 @@ Rails.application.routes.draw do
     end
     namespace :api do
       post '/cap-usage/bulk-update', to: 'cap_usage#bulk_update'
+    end
+    resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies'
+    resources :schools, only: %i[show], param: :urn do
+      collection do
+        get 'search'
+        post 'results'
+      end
     end
   end
 

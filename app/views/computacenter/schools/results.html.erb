@@ -1,0 +1,66 @@
+<% content_for :title, t('page_titles.computacenter.schools.results') %>
+<% content_for :before_content, govuk_link_to('Back', search_computacenter_schools_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= pluralize(@search_form.result_count, 'school') %> found
+    </h1>
+
+    <% if @search_form.missing_urns.any? %>
+      <div class="govuk-form-group--error">
+        <p class="govuk-body">
+          No schools found for <%= pluralize(@search_form.missing_count, 'URN') %>:
+        </p>
+
+        <ul class="govuk-list">
+          <% @search_form.missing_urns.each do |urn| %>
+            <li><%= urn %></li>
+          <%- end %>
+        </ul>
+      </div>
+    <%- end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if @schools.present? %>
+      <table class="govuk-table schools">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name and URN</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+            <th scope="col" class="govuk-table__header">Responsible body</th>
+            <th scope="col" class="govuk-table__header">Who is ordering</th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @schools.each do |school| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= govuk_link_to "#{school.name} (#{school.urn})", computacenter_school_path(urn: school.urn) %>
+                <br>
+                <%= school.type_label %>
+              </td>
+              <td class="govuk-table__cell govuk-table__cell--nowrap">
+                <%= render SchoolPreorderStatusTagComponent.new(school: school) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_link_to school.responsible_body.name, computacenter_responsible_body_path(id: school.responsible_body_id) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Try another search', search_computacenter_schools_path, classes: 'govuk-!-margin-top-4' %>
+    </p>
+  </div>
+</div>
