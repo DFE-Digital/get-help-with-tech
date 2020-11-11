@@ -12,7 +12,9 @@ Your technical contact must also keep accurate records of who has each device, a
 
 ## Contract length
 
-The SIM card inside each router will be activated the day after you receive them. The data allowance will start from this point and will remain active for 6 months. You should loan the 4G wireless routers to the children, young people and their parents and carers the following day at the earliest.
+The SIM card inside each 4G wireless router will be activated the day after you receive them. You should loan the routers to the children, young people and their parents and carers the following day at the earliest. The data allowance starts from this point.
+
+Data allowances were initially set to remain active for 6 months, but routers received during the 2020 summer term have had data on them extended until the end of January 2021. We are working on extending the data on all routers to the end of July 2021 and will update this page with any developments.
 
 ## Data cap
 
