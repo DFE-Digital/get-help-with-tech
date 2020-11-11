@@ -1,7 +1,11 @@
 class SignInTokensController < ApplicationController
   def new
-    @sign_in_token_form ||= SignInTokenForm.new
-    render :sign_in_only
+    if SessionService.is_signed_in?(session) && @user
+      redirect_to root_url_for(@user)
+    else
+      @sign_in_token_form ||= SignInTokenForm.new
+      render :sign_in_only
+    end
   end
 
   # GET /token/validate
