@@ -162,7 +162,7 @@ describe Support::SchoolDetailsSummaryListComponent do
       let(:school) { build(:school, mno_feature_flag: false) }
 
       it 'does not display row' do
-        expect(result.text).not_to include('Extra mobile data')
+        expect(result.text).not_to include('Extra mobile data requests')
       end
     end
 
@@ -170,13 +170,13 @@ describe Support::SchoolDetailsSummaryListComponent do
       let(:school) { build(:school, mno_feature_flag: true) }
 
       it 'shows Extra mobile data row with 0 requests' do
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Total: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Requested: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('In progress: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Queried: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Complete: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Cancelled: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Unavailable: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Total: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Requested: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('In progress: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Queried: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Complete: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Cancelled: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Unavailable: 0')
       end
     end
 
@@ -190,13 +190,13 @@ describe Support::SchoolDetailsSummaryListComponent do
       end
 
       it 'shows Extra mobile data row with 0 requests' do
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Total: 3')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Requested: 2')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('In progress: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Queried: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Complete: 1')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Cancelled: 0')
-        expect(value_for_row(result, 'Extra mobile data').text).to include('Unavailable: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Total: 3')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Requested: 2')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('In progress: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Queried: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Complete: 1')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Cancelled: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Unavailable: 0')
       end
     end
   end
