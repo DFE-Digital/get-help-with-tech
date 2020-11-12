@@ -9,7 +9,11 @@ class PagesController < ApplicationController
 
   def suggested_email_to_schools; end
 
-  def start; end
+  def start
+    if SessionService.is_signed_in?(session) && @user
+      redirect_to root_url_for(@user)
+    end
+  end
 
   def home_page; end
 

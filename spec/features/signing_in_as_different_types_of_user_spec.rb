@@ -20,6 +20,24 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     expect(page).to have_content('Sign in')
   end
 
+  context 'user has already signed in' do
+    let(:user) { create(:local_authority_user, :has_seen_privacy_notice) }
+
+    scenario 'visiting sign in when already signed in redirects user to home page' do
+      sign_in_as user
+      visit sign_in_path
+      expect(page).to have_current_path(responsible_body_home_path)
+      expect(page).to have_text 'Get help with technology'
+    end
+
+    scenario 'visiting start page when already signed in redirects user to home page' do
+      sign_in_as user
+      visit start_path
+      expect(page).to have_current_path(responsible_body_home_path)
+      expect(page).to have_text 'Get help with technology'
+    end
+  end
+
   scenario 'supplying a valid email sends a token' do
     visit sign_in_path
     fill_in('Email address', with: user.email_address)
