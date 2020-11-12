@@ -178,7 +178,7 @@ There are three parts to this installation:
 * Installing the Cisco Umbrella Chromebook client application on your Chromebooks
 * \[Optional\] Installing Cisco Umbrella Root CA
 
-Details of the JSON configuration needed to install Cisco Umbrella Chromebook client application are available in the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe). Search for 'Cisco Umbrella' within the 'How do I' section.
+Details of the JSON configuration needed to install Cisco Umbrella Chromebook client application are available in the [Support Portal](https://computacenterprod.service-now.com/dfe). Search for 'Cisco Umbrella' within the 'How do I' section.
 
 You can also find instructions for removing Umbrella Chromebook software in the [last section of this guide](#Removing-the-Umbrella-clients-from-the-Chrome-Devices).
 
@@ -227,7 +227,7 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
 
 2. Search for the ID of the Cisco Umbrella Chromebook client application **cpnjigmgeapagmdimmoenaghmhilodfg** (Searching by name will not work.)
 3. Select **Force Install**. This ensures that Chromebook users in the selected Organization Unit cannot remove or disable the application.
-4. Find the JSON configuration to enter into the ‘Policy for extensions’ box in the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe). Search for 'Cisco Umbrella' within the 'How do I' section.
+4. Find the JSON configuration to enter into the ‘Policy for extensions’ box in the [Support Portal](https://computacenterprod.service-now.com/dfe). Search for 'Cisco Umbrella' within the 'How do I' section.
 
     ![Screenshot showing locally added App](/devices/nouserlogins9.png)
 
