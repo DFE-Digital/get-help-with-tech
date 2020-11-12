@@ -116,7 +116,7 @@ If you do not have access to the portal but think you should, please email [COVI
 
 ### How to get local admin and BIOS passwords
 
-1. Log in to the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe)
+1. Log in to the [Support Portal](https://computacenterprod.service-now.com/dfe)
 
 2. Click on the ‘How do I?’ section
 
@@ -130,7 +130,7 @@ You’ll need to do this for each device individually.
 
 For guidance on how to do this:
 
-1. Log in to the [Computacenter Support Portal](https://computacenterprod.service-now.com/dfe)
+1. Log in to the [Support Portal](https://computacenterprod.service-now.com/dfe)
 
 2. Click on the ‘How do I?’ section
 
