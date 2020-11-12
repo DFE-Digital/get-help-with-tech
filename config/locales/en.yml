@@ -8,10 +8,11 @@ en:
   page_titles:
     how_request_4g_routers: How to request 4G wireless routers
     choosing_help_with_internet_access: Choosing help with internet access
-    about_bt_wifi: Increasing children’s internet access through free BT hotspots
+    about_bt_wifi: Offering free access to BT wifi hotspots
     api_tokens: Your API tokens
     bt_wifi_privacy_notice: How we look after personal data for the BT wifi hotspot scheme
     about_increasing_mobile_data: Increasing data allowances on mobile devices to support disadvantaged children
+    about_increasing_mobile_data_short: Increasing data allowances on mobile devices
     increasing_mobile_data_privacy_notice: How we look after personal information for the Increasing Children’s Mobile Data scheme
     sign_in_or_create_account: Create an account or sign in
     sign_in: Sign in
@@ -47,7 +48,7 @@ en:
     weve_processed_your_spreadsheet: We’ve processed your spreadsheet
     guide_to_collecting_mobile_information: Guide to collecting mobile information
     start: Get help with technology
-    internet_access: Getting internet access
+    internet_access: Get internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
     devices_guidance_how_to_order: "How and when to order laptops and tablets during coronavirus (COVID-19)"
