@@ -156,4 +156,40 @@ describe Support::SchoolDetailsSummaryListComponent do
       end
     end
   end
+
+  describe 'extra mobile data' do
+    context 'when there are no requests' do
+      let(:school) { build(:school) }
+
+      it 'shows Extra mobile data row with 0 requests' do
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Total: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Requested: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('In progress: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Queried: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Complete: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Cancelled: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Unavailable: 0')
+      end
+    end
+
+    context 'when there are requests' do
+      let(:school) { create(:school) }
+
+      before do
+        school.extra_mobile_data_requests << create(:extra_mobile_data_request)
+        school.extra_mobile_data_requests << create(:extra_mobile_data_request)
+        school.extra_mobile_data_requests << create(:extra_mobile_data_request, status: 'complete')
+      end
+
+      it 'shows Extra mobile data row with 0 requests' do
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Total: 3')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Requested: 2')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('In progress: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Queried: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Complete: 1')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Cancelled: 0')
+        expect(value_for_row(result, 'Extra mobile data').text).to include('Unavailable: 0')
+      end
+    end
+  end
 end

@@ -177,22 +177,18 @@ RSpec.feature 'Enabling orders for a school from the support area' do
 
   def then_the_ordering_for_specific_circumstances_is_confirmed
     expect(school_details_page).to have_text('We’ve saved your choices')
-    expect(school_details_page.school_details_rows[4]).to have_text 'Can place orders?'
-    expect(school_details_page.school_details_rows[4]).to have_text 'Yes, for specific circumstances'
+    expect(school_details_page.school_details['Can place orders?']).to have_text 'Yes, for specific circumstances'
   end
 
   def then_ordering_is_confirmed
     expect(school_details_page).to have_text('We’ve saved your choices')
-    expect(school_details_page.school_details_rows[4]).to have_text 'Can place orders?'
-    expect(school_details_page.school_details_rows[4]).to have_text 'Yes'
+    expect(school_details_page.school_details['Can place orders?']).to have_text 'Yes'
   end
 
   def then_i_see_a_confirmation_that_the_school_cannot_order
     expect(school_details_page).to have_text('We’ve saved your choices')
-    expect(school_details_page.school_details_rows[4]).to have_text 'Devices ordered'
-    expect(school_details_page.school_details_rows[4]).to have_text '25'
-    expect(school_details_page.school_details_rows[5]).to have_text 'Can place orders?'
-    expect(school_details_page.school_details_rows[5]).to have_text 'No'
+    expect(school_details_page.school_details['Devices ordered']).to have_text '25'
+    expect(school_details_page.school_details['Can place orders?']).to have_text 'No'
   end
 
   def and_the_school_order_users_have_been_informed_that_they_can_order
