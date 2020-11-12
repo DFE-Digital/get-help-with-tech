@@ -1,10 +1,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render partial: 'guide_contents' %>
+    <%= render partial: 'guide_contents', locals: { index: 4 } %>
 
     <p class="govuk-body">Those affected by the offer need to understand how we’ll use their personal information.</p>
 
-    <p class="govuk-body">Please read the following privacy statement out loud to:</p>
+    <p class="govuk-body">Please share the following privacy statement with:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>the adult account holder for the mobile device</li>
@@ -31,7 +31,7 @@
 
     <p class="govuk-body">If the account holder wants to receive some written information first, you can send them a link to our <%= govuk_link_to 'privacy information', increasing_mobile_data_privacy_notice_path %>.</p>
 
-    <p class="govuk-body">If they want to take up the offer, you need to confirm you’ve explained the privacy policy. Once you’ve done this, complete the privacy column in the spreadsheet.</p>
+    <p class="govuk-body">If they want to take up the offer, you will need to confirm you’ve shared the privacy policy.</p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
