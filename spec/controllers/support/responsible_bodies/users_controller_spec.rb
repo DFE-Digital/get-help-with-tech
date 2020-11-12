@@ -2,19 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
   let(:dfe_user) { create(:dfe_user) }
+  let(:responsible_body) { create(:local_authority) }
 
   describe '#create' do
     context 'for support users', versioning: true do
-      let(:responsible_body) { create(:local_authority) }
-
       before do
         sign_in_as dfe_user
       end
 
       def perform_create!
         post :create, params: { responsible_body_id: responsible_body.id,
-                                user: attributes_for(:user),
-                                pilot: 'devices' }
+                                user: attributes_for(:user) }
       end
 
       it 'creates users' do
@@ -45,7 +43,7 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
     it 'is forbidden for MNO users' do
       sign_in_as create(:mno_user)
 
-      post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
+      post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
 
       expect(response).to have_http_status(:forbidden)
     end
@@ -53,13 +51,13 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
     it 'is forbidden for responsible body users' do
       sign_in_as create(:trust_user)
 
-      post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
+      post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
 
       expect(response).to have_http_status(:forbidden)
     end
 
     it 'redirects to / for unauthenticated users' do
-      post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
+      post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
 
       expect(response).to redirect_to(sign_in_path)
     end
