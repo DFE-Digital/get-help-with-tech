@@ -8,8 +8,9 @@ describe Support::SchoolDetailsSummaryListComponent do
            email_address: 'davy.jones@school.sch.uk',
            phone_number: '12345')
   end
+  let(:support_user) { build(:support_user) }
 
-  subject(:result) { render_inline(described_class.new(school: school)) }
+  subject(:result) { render_inline(described_class.new(school: school, viewer: support_user)) }
 
   def row_for_key(doc, key)
     doc.css('.govuk-summary-list__row').find { |row| row.css('dt').text.strip == key }

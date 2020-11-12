@@ -1,6 +1,8 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
+  before_action { authorize User }
+
   def search
     @search_form = Support::UserSearchForm.new
   end

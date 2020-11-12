@@ -17,10 +17,13 @@
   </div>
 </div>
 
-<%= render Support::SchoolDetailsSummaryListComponent.new(school: @school) %>
+<%= render Support::SchoolDetailsSummaryListComponent.new(school: @school, viewer: current_user) %>
 
 <h2 class="govuk-heading-l govuk-!-margin-top-9">Users</h2>
-<%= govuk_button_link_to t('page_titles.new_school_user'), new_support_school_user_path(school_urn: @school.urn) %>
+
+<% if policy(User).new? %>
+  <%= govuk_button_link_to t('page_titles.new_school_user'), new_support_school_user_path(school_urn: @school.urn) %>
+<% end %>
 
 <% if @users.present? %>
   <% @users.each do |user| %>

@@ -1,0 +1,2 @@
+class ResponsibleBodyPolicy < SupportPolicy
+end

@@ -1,4 +1,6 @@
 class Support::SchoolsController < Support::BaseController
+  before_action { authorize School }
+
   def search
     @search_form = BulkUrnSearchForm.new
   end

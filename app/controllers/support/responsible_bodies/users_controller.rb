@@ -1,5 +1,6 @@
 class Support::ResponsibleBodies::UsersController < Support::BaseController
   before_action :set_responsible_body
+  before_action { authorize User }
 
   def new
     @user = @responsible_body.users.build
@@ -58,5 +59,6 @@ private
 
   def set_responsible_body
     @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
+    authorize @responsible_body, :show?
   end
 end

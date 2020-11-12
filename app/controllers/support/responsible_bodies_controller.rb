@@ -1,4 +1,6 @@
 class Support::ResponsibleBodiesController < Support::BaseController
+  before_action { authorize ResponsibleBody }
+
   def index
     @responsible_bodies = ResponsibleBody
       .select('responsible_bodies.*')

@@ -13,15 +13,19 @@
 
 <h2 class="govuk-heading-l govuk-!-margin-top-9">Users</h2>
 
-<%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body) %>
+<% if policy(User).new? %>
+  <%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body) %>
+<% end %>
 
 <% if @users.present? %>
   <% @users.each do |user| %>
     <div class="user">
       <h3 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-1"><%= user.full_name %></h3>
-      <p class="govuk-body">
-        <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user, pilot: 'devices') %>
-      </p>
+      <% if policy(user).edit? %>
+        <p class="govuk-body">
+          <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user) %>
+        </p>
+      <% end %>
       <%= render Support::UserSummaryListComponent.new(user: user) %>
     </div>
   <% end %>
@@ -58,7 +62,7 @@
           <%= dongles_allocations_data&.devices_ordered || 0 %> ordered
         </td>
         <td class="govuk-table__cell">
-          <% if school&.preorder_information&.school_will_be_contacted? %>
+          <% if policy(school).invite? && school&.preorder_information&.school_will_be_contacted? %>
             <%= govuk_link_to 'Invite', support_school_confirm_invitation_path(school_urn: school.urn) %>
           <% end %>
         </td>

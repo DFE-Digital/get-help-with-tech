@@ -1,11 +1,12 @@
 class Support::Schools::UsersController < Support::BaseController
+  before_action :set_school
+  before_action { authorize User }
+
   def new
-    @school = School.find_by(urn: params[:school_urn])
     @user = @school.users.build
   end
 
   def create
-    @school = School.find_by(urn: params[:school_urn])
     user_attributes = @school.users.build(user_params).attributes.merge(school_id: @school.id).symbolize_keys!
     @user = CreateUserService.invite_school_user(user_attributes)
 
@@ -17,12 +18,10 @@ class Support::Schools::UsersController < Support::BaseController
   end
 
   def edit
-    @school = School.find_by(urn: params[:school_urn])
     @user = present(@school.users.safe_to_show_to(@current_user).find(params[:id]))
   end
 
   def update
-    @school = School.find_by(urn: params[:school_urn])
     @user = @school.users.safe_to_show_to(@current_user).find(params[:id])
 
     if @user.update(user_params)
@@ -35,7 +34,6 @@ class Support::Schools::UsersController < Support::BaseController
   end
 
   def destroy
-    @school = School.find_by(urn: params[:school_urn])
     @user = @school.users.safe_to_show_to(@current_user).find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
@@ -45,6 +43,11 @@ class Support::Schools::UsersController < Support::BaseController
   end
 
 private
+
+  def set_school
+    @school = School.find_by(urn: params[:school_urn])
+    authorize @school, :show?
+  end
 
   def present(user)
     SchoolUserPresenter.new(user)
