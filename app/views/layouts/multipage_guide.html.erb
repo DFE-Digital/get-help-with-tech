@@ -2,8 +2,9 @@
 <%= content_for :title, @page.title %>
 
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ t('landing_pages.get_support_guides.title') => devices_guidance_index_path },
-                   @page.title,
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  { t('landing_pages.get_support_guides.title') => devices_guidance_index_path },
+                  @page.title,
                  ]) %>
 <% end %>
 
