@@ -158,8 +158,16 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   describe 'extra mobile data' do
+    context 'when school is not using mno_feature' do
+      let(:school) { build(:school, mno_feature_flag: false) }
+
+      it 'does not display row' do
+        expect(result.text).not_to include('Extra mobile data')
+      end
+    end
+
     context 'when there are no requests' do
-      let(:school) { build(:school) }
+      let(:school) { build(:school, mno_feature_flag: true) }
 
       it 'shows Extra mobile data row with 0 requests' do
         expect(value_for_row(result, 'Extra mobile data').text).to include('Total: 0')
@@ -173,7 +181,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     context 'when there are requests' do
-      let(:school) { create(:school) }
+      let(:school) { create(:school, mno_feature_flag: true) }
 
       before do
         school.extra_mobile_data_requests << create(:extra_mobile_data_request)
