@@ -170,6 +170,8 @@ Rails.application.routes.draw do
       patch '/devices/enable-orders', to: 'schools/devices/order_status#update'
       get '/devices/allocation/edit', to: 'schools/devices/allocation#edit'
       patch '/devices/allocation', to: 'schools/devices/allocation#update'
+      get '/devices/chromebooks/edit', to: 'schools/devices/chromebooks#edit'
+      patch '/devices/chromebooks', to: 'schools/devices/chromebooks#update'
     end
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index

@@ -100,9 +100,9 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
 
-      expect(action_for_row(result, 'Ordering Chromebooks?')).not_to be_present
-      expect(action_for_row(result, 'Domain')).not_to be_present
-      expect(action_for_row(result, 'Recovery email')).not_to be_present
+      expect(action_for_row(result, 'Ordering Chromebooks?')).to be_present
+      expect(action_for_row(result, 'Domain')).to be_present
+      expect(action_for_row(result, 'Recovery email')).to be_present
     end
 
     it 'does not show the school contact even if the school contact is set' do

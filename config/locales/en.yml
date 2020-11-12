@@ -80,6 +80,7 @@ en:
     support_edit_allocation:
       std_device: Change device allocation
       coms_device: Change router allocation
+    support_edit_chromebook_details: Will the school need to order Chromebooks?
     support_bulk_allocation: Allow schools to order their full allocation
     support_bulk_allocation_result: Bulk allocation summary
     upload_key_contacts_file: Upload a CSV file of key contacts

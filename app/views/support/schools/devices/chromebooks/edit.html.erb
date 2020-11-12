@@ -1,0 +1,15 @@
+<%- title = t('page_titles.support_edit_chromebook_details') %>
+<%- content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', support_school_path(@school.urn), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= title %>
+    </h1>
+
+    <%= render partial: 'shared/chromebook_information_intro' %>
+    <%= render partial: 'shared/chromebook_information_form', locals: { url: support_school_devices_chromebooks_path(@school), form_object: @chromebook_information_form } %>
+  </div>
+</div>
