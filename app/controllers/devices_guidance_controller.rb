@@ -29,6 +29,7 @@ private
         title: page_metadata[:title],
         description: page_metadata[:description],
         audience: page_metadata[:audience],
+        noindex: page_metadata[:noindex],
       }
     end
   end
