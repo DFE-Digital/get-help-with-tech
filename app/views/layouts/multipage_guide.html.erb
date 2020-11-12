@@ -1,6 +1,12 @@
 <% content_for :devices_service, true %>
 <%= content_for :title, @page.title %>
 
+<%= content_for :head do %>
+  <% if @page.noindex %>
+    <meta name="robots" content="noindex" />
+  <% end %>
+<% end %>
+
 <%- content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => guidance_page_path },
                   { t('landing_pages.get_support_guides.title') => devices_guidance_index_path },

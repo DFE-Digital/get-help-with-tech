@@ -255,6 +255,7 @@ en:
       title: Set up a Google domain for care leavers
       description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
       audience: responsible_body_users
+      noindex: true
   guide_to_collecting_mobile_information:
     overview: Overview
     asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
