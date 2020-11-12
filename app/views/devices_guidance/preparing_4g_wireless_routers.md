@@ -12,9 +12,10 @@ Your technical contact must also keep accurate records of who has each device, a
 
 ## Contract length
 
-The SIM card inside each 4G wireless router will be activated the day after you receive them. You should loan the routers to the children, young people and their parents and carers the following day at the earliest. The data allowance starts from this point.
+The SIM card inside each router is activated the day after it is delivered to a trust, local authority or school. You should loan the 4G wireless routers to the children, young people and their parents and carers the following day at the earliest.
 
-Data allowances were initially set to remain active for 6 months, but routers received during the 2020 summer term have had data on them extended until the end of January 2021. We are working on extending the data on all routers to the end of July 2021 and will update this page with any developments.
+The SIM card in each router was initially set to provide data for a 6 month period, but this has been extended through the end of January 2021 for routers received during the 2020 summer term. We are working on keeping data connections active until the end of July 2021 and will update this page with any developments.
+
 
 ## Data cap
 
@@ -43,6 +44,7 @@ You may have particular resources or sites you would choose to signpost them to,
 * [What parents and carers need to know during school closures](https://www.gov.uk/government/publications/closure-of-educational-settings-information-for-parents-and-carers) which includes detailed advice on keeping children safe online. It includes how to have age appropriate conversations with children about online safety, home filters, age appropriate parental controls and risks of platforms and apps
 * [Support for parents and carers to keep children safe from online harms](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) outlines resources to help keep children safe from different risks online and where to go to receive support and advice
 * [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) includes information on security and privacy settings
+
 
 ## User guidance for young people and their carers
 
