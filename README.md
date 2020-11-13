@@ -109,7 +109,7 @@ If you're not building a new image but promoting an image from another environme
 
 1. Pull any existing image from Docker Hub called `dfedigital/get-help-with-tech-(env name):latest`. Re-tag it with `replaced-at-(timestamp)` and push it back up to Docker Hub.
 2. Pull the image `dfedigital/get-help-with-tech-(FROM env name):latest`, re-tag it as `dfedigital/get-help-with-tech-(TO env name):latest`' and push it back up to Docker Hub
-3. Tell Gov.uk PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
+3. Tell GOV.UK PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
 
 In either case, before replacing the `dfedigital/get-help-with-tech-(env name):latest` image on Docker Hub, it will automatically re-tag the existing image as `replaced-at-(timestamp)` - making it straightforward to rollback to any available previous tag.
 
