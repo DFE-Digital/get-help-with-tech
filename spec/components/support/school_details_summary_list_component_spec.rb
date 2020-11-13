@@ -170,7 +170,7 @@ describe Support::SchoolDetailsSummaryListComponent do
       let(:school) { build(:school, mno_feature_flag: true) }
 
       it 'shows Extra mobile data row with 0 requests' do
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Total: 0')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('0 requests')
         expect(value_for_row(result, 'Extra mobile data requests').text).to include('Requested: 0')
         expect(value_for_row(result, 'Extra mobile data requests').text).to include('In progress: 0')
         expect(value_for_row(result, 'Extra mobile data requests').text).to include('Queried: 0')
@@ -190,7 +190,7 @@ describe Support::SchoolDetailsSummaryListComponent do
       end
 
       it 'shows Extra mobile data row with 0 requests' do
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Total: 3')
+        expect(value_for_row(result, 'Extra mobile data requests').text).to include('3 requests')
         expect(value_for_row(result, 'Extra mobile data requests').text).to include('Requested: 2')
         expect(value_for_row(result, 'Extra mobile data requests').text).to include('In progress: 0')
         expect(value_for_row(result, 'Extra mobile data requests').text).to include('Queried: 0')

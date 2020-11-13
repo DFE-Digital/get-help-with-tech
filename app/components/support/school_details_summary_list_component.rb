@@ -25,7 +25,7 @@ private
       "Unavailable: #{@school.extra_mobile_data_requests.unavailable.count}",
     ].join('<br>').html_safe
 
-    govuk_details(summary: "Total: #{@school.extra_mobile_data_requests.count}", description: description)
+    govuk_details(summary: pluralize(@school.extra_mobile_data_requests.count, 'request'), description: description)
   end
 
   def who_will_order_row
