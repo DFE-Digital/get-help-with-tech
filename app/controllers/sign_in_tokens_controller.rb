@@ -23,7 +23,6 @@ class SignInTokensController < ApplicationController
   def destroy
     validate_token_and do
       save_user_to_session!
-      EventNotificationsService.broadcast(SignInEvent.new(user: @user))
       @user.clear_token!
 
       if session['return_url'].present?
