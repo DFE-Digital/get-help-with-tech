@@ -16,8 +16,7 @@ private
   end
 
   def mno_value
-    [
-      "Total: #{@school.extra_mobile_data_requests.count}",
+    description = [
       "Requested: #{@school.extra_mobile_data_requests.requested.count}",
       "In progress: #{@school.extra_mobile_data_requests.in_progress.count}",
       "Queried: #{@school.extra_mobile_data_requests.queried.count}",
@@ -25,6 +24,8 @@ private
       "Cancelled: #{@school.extra_mobile_data_requests.cancelled.count}",
       "Unavailable: #{@school.extra_mobile_data_requests.unavailable.count}",
     ].join('<br>').html_safe
+
+    govuk_details(summary: "Total: #{@school.extra_mobile_data_requests.count}", description: description)
   end
 
   def who_will_order_row
