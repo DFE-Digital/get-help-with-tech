@@ -163,4 +163,28 @@ RSpec.describe Support::ServicePerformance, type: :model do
       end
     end
   end
+
+  describe '#mno_schools_count' do
+    before do
+      create(:school, mno_feature_flag: true)
+      create(:school, mno_feature_flag: false)
+      create(:school, mno_feature_flag: false)
+    end
+
+    it 'returns number of school with mno_feature_flag enabled' do
+      expect(stats.mno_schools_count).to be(1)
+    end
+  end
+
+  describe '#mno_schools' do
+    let!(:included_school) { create(:school, mno_feature_flag: true) }
+    let!(:excluded_school_1) { create(:school, mno_feature_flag: false) }
+    let!(:excluded_school_2) { create(:school, mno_feature_flag: false) }
+
+    it 'returns schools with mno_feature_flag enabled' do
+      expect(stats.mno_schools).to include(included_school)
+      expect(stats.mno_schools).not_to include(excluded_school_1)
+      expect(stats.mno_schools).not_to include(excluded_school_2)
+    end
+  end
 end

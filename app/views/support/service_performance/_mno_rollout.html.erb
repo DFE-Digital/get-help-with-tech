@@ -1,0 +1,27 @@
+<h2 class="govuk-heading-l">MNO rollout</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <%= render Support::TileComponent.new(
+                 count: @stats.mno_schools_count,
+                 label: pluralize(@stats.mno_schools_count, 'school'),
+                 colour: :blue) %>
+  </div>
+</div>
+
+<table class="govuk-table govuk-!-margin-top-4">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name and URN</th>
+      <th scope="col" class="govuk-table__header">Responsible body</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @stats.mno_schools.each do |school| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.type_label %></td>
+        <td class="govuk-table__cell"><%= govuk_link_to school.responsible_body.name, support_responsible_body_path(school.responsible_body) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
