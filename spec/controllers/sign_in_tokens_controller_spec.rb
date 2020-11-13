@@ -3,12 +3,9 @@ require 'rails_helper'
 RSpec.describe SignInTokensController, type: :controller do
   let(:user) { create(:local_authority_user, :who_has_requested_a_magic_link) }
   let(:valid_token_params) { { token: user.sign_in_token, identifier: user.sign_in_identifier(user.sign_in_token) } }
-  let(:mock_event) { instance_double(SignInEvent, notifiable?: false) }
 
   before do
     allow(controller).to receive(:save_user_to_session!)
-    allow(SignInEvent).to receive(:new).with(user: user).and_return(mock_event)
-    allow(EventNotificationsService).to receive(:broadcast)
   end
 
   describe 'destroy' do
@@ -16,7 +13,6 @@ RSpec.describe SignInTokensController, type: :controller do
       # Test-only hack - TestSession doesn't auto-create session IDs in
       # controller specs like a Rack Session does.
       create_session_id!
-      allow(EventNotificationsService).to receive(:broadcast)
     end
 
     it 'clears the token when the user provides recognised token & identifier' do
@@ -37,11 +33,6 @@ RSpec.describe SignInTokensController, type: :controller do
       allow(controller).to receive(:save_user_to_session!)
       delete :destroy, params: valid_token_params
       expect(controller).to have_received(:save_user_to_session!)
-    end
-
-    it 'broadcasts a SignInEvent for the user' do
-      delete :destroy, params: valid_token_params
-      expect(EventNotificationsService).to have_received(:broadcast).with(mock_event)
     end
 
     context "session['return_url'] is set" do
@@ -102,11 +93,6 @@ RSpec.describe SignInTokensController, type: :controller do
       it 'does not save the user to session' do
         get :validate, params: params
         expect(controller).not_to have_received(:save_user_to_session!)
-      end
-
-      it 'does not broadcast a SignInEvent for the user' do
-        get :validate, params: params
-        expect(EventNotificationsService).not_to have_received(:broadcast)
       end
     end
   end
