@@ -103,7 +103,7 @@ The normal release process works as follows:
 1. Build a new Docker image called `get-help-with-tech-(env name)`
 2. Pull any existing image from Docker Hub called `dfedigital/get-help-with-tech-(env name):latest`. Re-tag it with `replaced-at-(timestamp)` and push it back up to Docker Hub.  
 3. Tag the newly-built image as `dfedigital/get-help-with-tech-(env name):latest`, and push it to Docker Hub, overwriting any existing image with the same name and tag
-4. Tell Gov.uk PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
+4. Tell GOV.UK PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
 
 If you're not building a new image but promoting an image from another environment, the process is a little simpler, but largely the same:
 
