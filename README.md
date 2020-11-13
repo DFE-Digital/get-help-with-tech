@@ -93,8 +93,8 @@ When this happens, you'll probably want to minimize user impact by rolling back 
 
 There are some make tasks that can help:
 
-`make (env) remote-docker-tags` - list all available tags for the given environment's Docker image, on Docker Hub
-`make (env) rollback-to TAG=...` - re-deploy the Docker image tagged with the given TAG
+`make prod remote-docker-tags` - list all available tags for production Docker image, on Docker Hub (you can replace `prod` with another environment)
+`make prod rollback-to TAG=...` - re-deploy the Docker image tagged with the given TAG
 
 #### How does this work?
 
