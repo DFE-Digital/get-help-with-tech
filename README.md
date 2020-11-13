@@ -17,6 +17,7 @@ For performing releases:
 - CloudFoundry CLI >= v7.0
 - make
 - a bash-compatible shell (bash, or Mac OS/X)
+- [jq](https://github.com/stedolan/jq) (only required for listing remote Docker tags, not required for normal releases)
 
 ## Setting up the app in development
 
