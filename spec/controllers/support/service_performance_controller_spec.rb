@@ -11,19 +11,11 @@ RSpec.describe Support::ServicePerformanceController, type: :controller do
     end
 
     it 'is forbidden for MNO users' do
-      sign_in_as create(:mno_user)
-
-      get :index
-
-      expect(response).to have_http_status(:forbidden)
+      expect { get :index }.to be_forbidden_for(create(:mno_user))
     end
 
     it 'is forbidden for responsible body users' do
-      sign_in_as create(:trust_user)
-
-      get :index
-
-      expect(response).to have_http_status(:forbidden)
+      expect { get :index }.to be_forbidden_for(create(:trust_user))
     end
 
     it 'redirects to / for unauthenticated users' do

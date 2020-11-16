@@ -31,19 +31,11 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
   describe 'show' do
     it 'is forbidden for MNO users' do
-      sign_in_as create(:mno_user)
-
-      get :show, params: { urn: school.urn }
-
-      expect(response).to have_http_status(:forbidden)
+      expect { get :show, params: { urn: school.urn } }.to be_forbidden_for(create(:mno_user))
     end
 
     it 'is forbidden for responsible body users' do
-      sign_in_as create(:trust_user)
-
-      get :show, params: { urn: school.urn }
-
-      expect(response).to have_http_status(:forbidden)
+      expect { get :show, params: { urn: school.urn } }.to be_forbidden_for(create(:trust_user))
     end
 
     it 'redirects to / for unauthenticated users' do

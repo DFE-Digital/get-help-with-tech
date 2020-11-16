@@ -41,19 +41,15 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
     end
 
     it 'is forbidden for MNO users' do
-      sign_in_as create(:mno_user)
-
-      post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
-
-      expect(response).to have_http_status(:forbidden)
+      expect {
+        post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+      }.to be_forbidden_for(create(:mno_user))
     end
 
     it 'is forbidden for responsible body users' do
-      sign_in_as create(:trust_user)
-
-      post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
-
-      expect(response).to have_http_status(:forbidden)
+      expect {
+        post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+      }.to be_forbidden_for(create(:trust_user))
     end
 
     it 'redirects to / for unauthenticated users' do
