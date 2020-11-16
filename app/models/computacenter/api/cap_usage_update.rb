@@ -13,6 +13,7 @@ class Computacenter::API::CapUsageUpdate
   end
 
   def apply!
+    log_to_devices_ordered_updates
     school = School.find_by_computacenter_reference!(ship_to)
     allocation = school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
     CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
@@ -50,5 +51,16 @@ class Computacenter::API::CapUsageUpdate
     def cap_mismatch_message(cap_amount)
       "CapUsage mismatch: given capAmount: #{cap_amount}, school URN: #{school.urn}, SchoolDeviceAllocation: #{allocation.inspect}"
     end
+  end
+
+private
+
+  def log_to_devices_ordered_updates
+    Computacenter::DevicesOrderedUpdate.create!(
+      cap_type: cap_type,
+      ship_to: ship_to,
+      cap_amount: cap_amount,
+      cap_used: cap_used,
+    )
   end
 end

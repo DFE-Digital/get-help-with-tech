@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_10_103917) do
+ActiveRecord::Schema.define(version: 2020_11_16_150859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 2020_11_10_103917) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_device_allocation_id"], name: "index_cap_update_calls_on_school_device_allocation_id"
+  end
+
+  create_table "computacenter_devices_ordered_updates", force: :cascade do |t|
+    t.string "cap_type"
+    t.string "ship_to"
+    t.integer "cap_amount"
+    t.integer "cap_used"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ship_to"], name: "index_computacenter_devices_ordered_updates_on_ship_to"
   end
 
   create_table "computacenter_user_changes", force: :cascade do |t|

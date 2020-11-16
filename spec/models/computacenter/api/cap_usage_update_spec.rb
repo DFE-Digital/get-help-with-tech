@@ -47,6 +47,22 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       }.to change { school.preorder_information.reload.status }.from('ready').to('ordered')
     end
 
+    it 'logs to devices_ordered_updates' do
+      expect {
+        cap_usage_update.apply!
+      }.to change { Computacenter::DevicesOrderedUpdate.count }.by(1)
+
+      log = Computacenter::DevicesOrderedUpdate.last
+
+      expect(log.cap_type).to eql(args['capType'])
+      expect(log.ship_to).to eql(args['shipTo'])
+      expect(log.cap_amount).to eql(args['capAmount'])
+      expect(log.cap_used).to eql(args['usedCap'])
+
+      expect(log.school).to eql(school)
+      expect(school.devices_ordered_updates).to include(log)
+    end
+
     context 'if the given cap_amount does not match the stored allocation' do
       let(:mock_mismatch) { instance_double(Computacenter::API::CapUsageUpdate::CapMismatch) }
 
