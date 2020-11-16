@@ -8,6 +8,10 @@ class ResponsibleBody < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :schools
 
+  has_many :virtual_cap_pools
+  has_one :std_device_pool, -> { std_device }, class_name: 'VirtualCapPool'
+  has_one :coms_device_pool, -> { coms_device }, class_name: 'VirtualCapPool'
+
   scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
 
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
@@ -19,6 +23,17 @@ class ResponsibleBody < ApplicationRecord
   }, _prefix: 'gias_status'
 
   after_update :maybe_generate_user_changes
+
+  def calculate_virtual_caps!
+    virtual_cap_pools.each(&:recalculate_caps!)
+  end
+
+  def add_school_to_virtual_cap_pools(school)
+    school.device_allocations.each do |allocation|
+      pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
+      pool.add_school(school)
+    end
+  end
 
   def humanized_type
     type.demodulize.underscore.humanize.downcase

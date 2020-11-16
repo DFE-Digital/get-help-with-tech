@@ -4,6 +4,8 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to :school
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :last_updated_by_user, class_name: 'User', optional: true
+  has_one :school_virtual_cap
+
   has_many :cap_update_calls
 
   validates_with CapAndAllocationValidator
@@ -37,6 +39,22 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def self.by_computacenter_device_type(cc_device_type)
     by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type))
+  end
+
+  def cap
+    school_virtual_cap&.cap || super
+  end
+
+  def raw_cap
+    self[:cap]
+  end
+
+  def devices_ordered
+    school_virtual_cap&.devices_ordered || super
+  end
+
+  def raw_devices_ordered
+    self[:devices_ordered]
   end
 
   def has_devices_available_to_order?
