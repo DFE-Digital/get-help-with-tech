@@ -17,6 +17,6 @@
     <h2 class="govuk-heading-m">Before you start</h2>
     <p class="govuk-body">It’s important to know how many devices you can order before you sign in. Please order only what you need. If you try to order more than you’ve been allocated, the order will be cancelled.</p>
 
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @user.email_address } %>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address } %>
   </div>
 </div>

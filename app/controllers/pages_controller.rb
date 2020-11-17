@@ -10,8 +10,8 @@ class PagesController < ApplicationController
   def suggested_email_to_schools; end
 
   def start
-    if SessionService.is_signed_in?(session) && @user
-      redirect_to root_url_for(@user)
+    if SessionService.is_signed_in?(session) && @current_user
+      redirect_to root_url_for(@current_user)
     end
   end
 

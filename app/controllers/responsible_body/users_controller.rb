@@ -17,7 +17,7 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
     # object so that we can inspect the errors
     if @rb_user.persisted?
       flash[:success] = I18n.t(:success, scope: %i[responsible_body users create], email_address: @rb_user.email_address)
-      EventNotificationsService.broadcast(InviteEvent.new(user: @user))
+      EventNotificationsService.broadcast(InviteEvent.new(user: @current_user))
       redirect_to responsible_body_users_path
     else
       render :new, status: :unprocessable_entity

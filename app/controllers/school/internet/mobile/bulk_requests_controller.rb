@@ -11,7 +11,7 @@ class School::Internet::Mobile::BulkRequestsController < School::BaseController
     if @upload_form.valid?
       # parse file and generate records
       begin
-        @summary = importer.import!(@upload_form.file.path, extra_fields: { created_by_user: @user, school: @school })
+        @summary = importer.import!(@upload_form.file.path, extra_fields: { created_by_user: @current_user, school: @school })
         render :summary
       rescue StandardError => e
         Rails.logger.error(e.message)

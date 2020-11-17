@@ -2,7 +2,7 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
   before_action { render_404_if_feature_flag_inactive(:mno_offer) }
 
   def index
-    @extra_mobile_data_requests = @user.extra_mobile_data_requests
+    @extra_mobile_data_requests = @current_user.extra_mobile_data_requests
   end
 
   def new
@@ -15,8 +15,8 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
 
   def create
     @extra_mobile_data_request = ExtraMobileDataRequest.new(
-      extra_mobile_data_request_params.merge(created_by_user: @user,
-                                             responsible_body: @user.responsible_body),
+      extra_mobile_data_request_params.merge(created_by_user: @current_user,
+                                             responsible_body: @current_user.responsible_body),
     )
 
     if @extra_mobile_data_request.valid?

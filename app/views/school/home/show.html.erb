@@ -1,6 +1,6 @@
 <%- title = @school.name %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs(school: @school, user: @user, items: title) %>
+  <%- school_breadcrumbs(school: @school, user: @current_user, items: title) %>
 <%- end %>
 <%- content_for :title, title %>
 
@@ -59,7 +59,7 @@
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to t('page_titles.school_specific_circumstances'), specific_circumstances_school_path(@school) %>
       </h2>
-      
+
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>understand when children can get support</li>
