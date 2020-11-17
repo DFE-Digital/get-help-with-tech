@@ -22,6 +22,7 @@ private
 
   def identify_user!
     @user ||= (SessionService.identify_user!(session) || User.new)
+    @current_user = @user # avoid conflicts in support/users_controller.rb
   end
 
   def save_user_to_session!(user = @user)

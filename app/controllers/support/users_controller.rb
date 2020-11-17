@@ -10,6 +10,7 @@ class Support::UsersController < Support::BaseController
     @search_term = @search_form.email_address_or_full_name
     @results = User
       .from_responsible_body_or_schools
+      .safe_to_show_to(@current_user)
       .search_by_email_address_or_full_name(@search_term)
       .distinct
       .includes(:responsible_body, :schools)
