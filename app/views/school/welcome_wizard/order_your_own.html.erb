@@ -1,4 +1,4 @@
-<%- who_orders = @user.orders_devices? ? 'school_user' : 'school' %>
+<%- who_orders = @current_user.orders_devices? ? 'school_user' : 'school' %>
 <%- title = t("page_titles.school_user_welcome_wizard.order_your_own.#{who_orders}.title") %>
 <%- content_for :title, title %>
 <div class="govuk-grid-row">
@@ -7,7 +7,7 @@
       <%= f.hidden_field :step %>
 
       <h1 class="govuk-heading-l">
-        <%- if @user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
+        <%- if @current_user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
         <%= title %>
       </h1>
 

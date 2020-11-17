@@ -2,7 +2,7 @@ class School::Internet::Mobile::ManualRequestsController < School::BaseControlle
   before_action { render_404_unless_school_in_mno_feature(@school) }
 
   def index
-    @extra_mobile_data_requests = @user.extra_mobile_data_requests
+    @extra_mobile_data_requests = @current_user.extra_mobile_data_requests
   end
 
   def new
@@ -15,7 +15,7 @@ class School::Internet::Mobile::ManualRequestsController < School::BaseControlle
 
   def create
     @extra_mobile_data_request = @school.extra_mobile_data_requests.new(
-      extra_mobile_data_request_params.merge(created_by_user: @user),
+      extra_mobile_data_request_params.merge(created_by_user: @current_user),
     )
 
     if @extra_mobile_data_request.valid?

@@ -4,7 +4,7 @@ class PrivacyNoticeController < ApplicationController
   def show; end
 
   def seen
-    @user.seen_privacy_notice!
-    redirect_to root_url_for(@user)
+    @current_user.seen_privacy_notice!
+    redirect_to root_url_for(@current_user)
   end
 end
