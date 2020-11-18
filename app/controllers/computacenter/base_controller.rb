@@ -5,7 +5,7 @@ private
 
   def require_cc_user!
     if SessionService.is_signed_in?(session)
-      render 'errors/forbidden', status: :forbidden unless @user.is_computacenter?
+      render 'errors/forbidden', status: :forbidden unless @current_user.is_computacenter?
     else
       redirect_to_sign_in
     end

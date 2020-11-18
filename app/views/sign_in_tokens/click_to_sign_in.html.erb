@@ -1,5 +1,5 @@
-<%- i18n_key = (@user.is_school_user? || (@user.is_responsible_body_user? && !@user.is_a_single_academy_trust_user?)) ? :related_organisation : :standard %>
-<%- title = t(i18n_key, scope: %i[page_titles click_to_sign_in], organisation: @user.organisation_name) %>
+<%- i18n_key = (@current_user.is_school_user? || (@current_user.is_responsible_body_user? && !@current_user.is_a_single_academy_trust_user?)) ? :related_organisation : :standard %>
+<%- title = t(i18n_key, scope: %i[page_titles click_to_sign_in], organisation: @current_user.organisation_name) %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">
@@ -7,7 +7,7 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
-    <%- if @user.is_school_user? %>
+    <%- if @current_user.is_school_user? %>
       <%= render partial: 'shared/school_user_welcome_text' %>
     <%- end %>
     <p class="govuk-body">

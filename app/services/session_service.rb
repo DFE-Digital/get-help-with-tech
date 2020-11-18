@@ -41,9 +41,9 @@ class SessionService
 
   def self.identify_user!(session)
     if is_signed_in?(session)
-      @user = User.find(session[:user_id])
+      @current_user = User.find(session[:user_id])
       update_session!(session[:session_id])
-      @user
+      @current_user
     end
   end
 

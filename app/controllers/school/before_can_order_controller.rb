@@ -1,7 +1,7 @@
 class School::BeforeCanOrderController < School::ChromebooksController
   def edit
     @chromebook_information_form = ChromebookInformationForm.new(
-      school: @user.school,
+      school: @current_user.school,
     )
   end
 

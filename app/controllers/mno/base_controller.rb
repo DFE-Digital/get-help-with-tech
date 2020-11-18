@@ -6,13 +6,13 @@ private
 
   def require_mno_user!
     if SessionService.is_signed_in?(session)
-      render 'errors/forbidden', status: :forbidden unless @user.is_mno_user?
+      render 'errors/forbidden', status: :forbidden unless @current_user.is_mno_user?
     else
       redirect_to_sign_in
     end
   end
 
   def set_mobile_network
-    @mobile_network = @user.mobile_network
+    @mobile_network = @current_user.mobile_network
   end
 end

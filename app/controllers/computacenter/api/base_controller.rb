@@ -13,7 +13,7 @@ class Computacenter::API::BaseController < ApplicationController
 private
 
   def identify_user!
-    @user = APIToken.active.find_by(token: bearer_token)&.user
+    @current_user = APIToken.active.find_by(token: bearer_token)&.user
   end
 
   def bearer_token
@@ -23,7 +23,7 @@ private
   # overriden method tailored for XML responses
   def require_cc_user!
     if bearer_token.present?
-      raise Computacenter::API::APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @user&.is_computacenter?
+      raise Computacenter::API::APIError.new(status: :forbidden, message: 'You are not authorized to perform this action') unless @current_user&.is_computacenter?
     else
       raise Computacenter::API::APIError.new(status: :unauthorized, message: 'You must provide an Authorization header with a valid Bearer token')
     end

@@ -21,11 +21,10 @@ private
   end
 
   def identify_user!
-    @user ||= (SessionService.identify_user!(session) || User.new)
-    @current_user = @user # avoid conflicts in support/users_controller.rb
+    @current_user ||= (SessionService.identify_user!(session) || User.new)
   end
 
-  def save_user_to_session!(user = @user)
+  def save_user_to_session!(user = @current_user)
     # prevent duplicate key errors if they're already signed_in
     SessionService.destroy_session!(session[:session_id]) if session[:session_id]
     session[:user_id] = user.id

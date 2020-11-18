@@ -1,7 +1,7 @@
 class SignInTokensController < ApplicationController
   def new
-    if SessionService.is_signed_in?(session) && @user
-      redirect_to root_url_for(@user)
+    if SessionService.is_signed_in?(session) && @current_user
+      redirect_to root_url_for(@current_user)
     else
       @sign_in_token_form ||= SignInTokenForm.new
       render :sign_in_only
@@ -23,13 +23,13 @@ class SignInTokensController < ApplicationController
   def destroy
     validate_token_and do
       save_user_to_session!
-      @user.clear_token!
+      @current_user.clear_token!
 
       if session['return_url'].present?
         redirect_to session['return_url']
         session.delete('return_url')
       else
-        redirect_to root_url_for(@user)
+        redirect_to root_url_for(@current_user)
       end
     end
   end
@@ -52,7 +52,7 @@ class SignInTokensController < ApplicationController
   end
 
   def sent
-    @user = User.where(sign_in_token: params[:token]).first
+    @current_user = User.where(sign_in_token: params[:token]).first
   end
 
   def hide_nav_menu?
@@ -64,12 +64,12 @@ private
   # if the token is valid, yield to the given block
   # if not, handle appropriately
   def validate_token_and
-    @user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
+    @current_user = SessionService.validate_token!(token: params[:token], identifier: params[:identifier])
     yield
   rescue SessionService::TokenValidButExpired
     # If it's the same user who already has a valid session, and they've just
     # re-clicked a link with a token that's expired, but a session that _hasn't_
-    if SessionService.is_signed_in?(session) && @user.id == session[:user_id]
+    if SessionService.is_signed_in?(session) && @current_user.id == session[:user_id]
       # - that's ok, we'll allow it
       yield
     else

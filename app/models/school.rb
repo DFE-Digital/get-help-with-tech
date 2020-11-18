@@ -12,6 +12,9 @@ class School < ApplicationRecord
   has_one :preorder_information
   has_many :email_audits
   has_many :extra_mobile_data_requests
+  has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
+                                     primary_key: :computacenter_reference,
+                                     foreign_key: :ship_to
 
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
