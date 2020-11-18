@@ -25,3 +25,15 @@ RSpec::Matchers.define :be_forbidden_for do |user|
 
   supports_block_expectations
 end
+
+RSpec::Matchers.define :receive_status_ok_for do |user|
+  match do |actual|
+    sign_in_as user
+
+    actual.call
+
+    response.status == 200
+  end
+
+  supports_block_expectations
+end
