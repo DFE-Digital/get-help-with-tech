@@ -20,11 +20,11 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   end
 
   def edit
-    @user = @responsible_body.users.safe_to_show_to(@current_user).find(params[:id])
+    @user = policy_scope(@responsible_body.users).find(params[:id])
   end
 
   def update
-    @user = @responsible_body.users.safe_to_show_to(@current_user).find(params[:id])
+    @user = policy_scope(@responsible_body.users).find(params[:id])
 
     if @user.update(user_params)
       flash[:success] = 'User has been updated'
@@ -35,7 +35,7 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   end
 
   def destroy
-    @user = @responsible_body.users.safe_to_show_to(@current_user).find(params[:id])
+    @user = policy_scope(@responsible_body.users).find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
     flash[:success] = 'User has been deleted'
