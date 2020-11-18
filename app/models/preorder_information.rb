@@ -1,4 +1,6 @@
 class PreorderInformation < ApplicationRecord
+  has_paper_trail
+
   self.table_name = 'preorder_information'
 
   belongs_to :school
