@@ -255,7 +255,7 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#add_school_to_virtual_cap_pools' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       schools.each do |s|
@@ -265,7 +265,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     it 'adds the schools cap and devices_ordered to the relevant pool' do
-      schools.each { |s| responsible_body.add_school_to_virtual_cap_pools(s) }
+      schools.each { |s| responsible_body.add_school_to_virtual_cap_pools!(s) }
       responsible_body.reload
       expect(responsible_body.std_device_pool.cap).to eq(30)
       expect(responsible_body.std_device_pool.devices_ordered).to eq(6)
@@ -274,21 +274,21 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     it 'creates the virtual pool for the device type if it does not exists' do
-      expect { responsible_body.add_school_to_virtual_cap_pools(schools.first) }.to change { VirtualCapPool.count }.by(2)
-      expect { responsible_body.add_school_to_virtual_cap_pools(schools.second) }.not_to(change { VirtualCapPool.count })
+      expect { responsible_body.add_school_to_virtual_cap_pools!(schools.first) }.to change { VirtualCapPool.count }.by(2)
+      expect { responsible_body.add_school_to_virtual_cap_pools!(schools.second) }.not_to(change { VirtualCapPool.count })
     end
   end
 
   describe '#calculate_virtual_caps!' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       schools.each do |s|
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
-        responsible_body.add_school_to_virtual_cap_pools(s)
+        responsible_body.add_school_to_virtual_cap_pools!(s)
       end
     end
 

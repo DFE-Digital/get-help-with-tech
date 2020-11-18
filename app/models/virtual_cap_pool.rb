@@ -16,16 +16,22 @@ class VirtualCapPool < ApplicationRecord
     # TODO: trigger events for CC here?
   end
 
-  def add_school(school)
-    if school.responsible_body_id == responsible_body_id
-      allocation = school.device_allocations.find_by(device_type: device_type)
-      if allocation && !school_virtual_caps.exists?(school_device_allocation: allocation)
-        add_school_allocation(allocation)
-      end
+  def add_school!(school)
+    if school_can_be_added_to_pool?(school)
+      add_school_allocation(school.device_allocations.find_by(device_type: device_type))
+    else
+      raise VirtualCapPoolError, "Cannot add school to virtual pool #{school.urn} #{school.name}"
     end
   end
 
 private
+
+  def school_can_be_added_to_pool?(school)
+    school.responsible_body_id == responsible_body_id &&
+      (school.can_order? || school.can_order_for_specific_circumstances?) &&
+      school.device_allocations.exists?(device_type: device_type) &&
+      !school_virtual_caps.exists?(school_device_allocation: school.device_allocations.find_by(device_type: device_type))
+  end
 
   def add_school_allocation(allocation)
     transaction do

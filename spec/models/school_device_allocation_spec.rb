@@ -85,13 +85,13 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
   context 'when in a virtual pool' do
     let(:responsible_body) { create(:trust, :manages_centrally) }
-    let(:school) { create(:school, :with_preorder_information, responsible_body: responsible_body) }
+    let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 100, school: school) }
 
     before do
       allocation
-      responsible_body.add_school_to_virtual_cap_pools(school)
+      responsible_body.add_school_to_virtual_cap_pools!(school)
       responsible_body.std_device_pool.update!(cap: 256, devices_ordered: 145)
       allocation.reload
     end
