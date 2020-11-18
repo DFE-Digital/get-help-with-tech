@@ -4,7 +4,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to :school
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :last_updated_by_user, class_name: 'User', optional: true
-  has_one :school_virtual_cap
+  has_one :school_virtual_cap, dependent: :destroy
 
   has_many :cap_update_calls
 
@@ -42,7 +42,12 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def cap
-    school_virtual_cap&.cap || super
+    if FeatureFlag.active? :virtual_caps
+      school_virtual_cap&.cap || super
+    else
+      Rails.logger.info("Virtual cap: #{school_virtual_cap&.cap}") if is_in_virtual_cap_pool?
+      super
+    end
   end
 
   def raw_cap
@@ -50,11 +55,20 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def devices_ordered
-    school_virtual_cap&.devices_ordered || super
+    if FeatureFlag.active? :virtual_caps
+      school_virtual_cap&.devices_ordered || super
+    else
+      Rails.logger.info("Virtual devices_ordered: #{school_virtual_cap&.devices_ordered}") if is_in_virtual_cap_pool?
+      super
+    end
   end
 
   def raw_devices_ordered
     self[:devices_ordered]
+  end
+
+  def is_in_virtual_cap_pool?
+    school_virtual_cap.present?
   end
 
   def has_devices_available_to_order?

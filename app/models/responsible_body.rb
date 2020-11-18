@@ -8,7 +8,7 @@ class ResponsibleBody < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :schools
 
-  has_many :virtual_cap_pools
+  has_many :virtual_cap_pools, dependent: :destroy
   has_one :std_device_pool, -> { std_device }, class_name: 'VirtualCapPool'
   has_one :coms_device_pool, -> { coms_device }, class_name: 'VirtualCapPool'
 
