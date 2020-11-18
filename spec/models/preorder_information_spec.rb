@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PreorderInformation, type: :model do
+  it { is_expected.to be_versioned }
+
   describe 'status' do
     context 'when the school orders devices and the school contact is missing' do
       subject do
