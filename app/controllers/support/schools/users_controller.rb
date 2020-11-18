@@ -18,12 +18,12 @@ class Support::Schools::UsersController < Support::BaseController
 
   def edit
     @school = School.find_by(urn: params[:school_urn])
-    @user = present(@school.users.find(params[:id]))
+    @user = present(@school.users.safe_to_show_to(@current_user).find(params[:id]))
   end
 
   def update
     @school = School.find_by(urn: params[:school_urn])
-    @user = @school.users.find(params[:id])
+    @user = @school.users.safe_to_show_to(@current_user).find(params[:id])
 
     if @user.update(user_params)
       flash[:success] = 'User has been updated'
@@ -36,7 +36,7 @@ class Support::Schools::UsersController < Support::BaseController
 
   def destroy
     @school = School.find_by(urn: params[:school_urn])
-    @user = @school.users.find(params[:id])
+    @user = @school.users.safe_to_show_to(@current_user).find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
     flash[:success] = 'User has been deleted'

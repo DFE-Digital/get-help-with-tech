@@ -5,6 +5,7 @@ RSpec.feature 'Searching for school or RB users' do
   let(:results_page) { PageObjects::Support::Users::ResultsPage.new }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:support_user) { create(:support_user) }
+  let(:computacenter_user) { create(:computacenter_user, is_support: true) }
 
   scenario 'finding a user by their name or email address' do
     given_i_am_signed_in_as_a_support_user
@@ -20,17 +21,41 @@ RSpec.feature 'Searching for school or RB users' do
     and_i_can_navigate_to_the_support_page_for_their_school
   end
 
+  scenario 'Computacenter user can only find users who have seen the privacy notice' do
+    given_i_am_signed_in_as_a_computacenter_user
+    and_there_are_school_and_responsible_body_users
+
+    when_i_visit_support_and_follow_the_links_to_find_users
+    and_i_search_for_a_school_user_who_has_not_seen_the_privacy_notice_by_their_name
+    then_i_dont_see_the_school_user_on_the_results_page
+
+    when_i_search_again
+    and_i_search_for_a_school_user_who_has_seen_the_privacy_notice_by_their_name
+    then_i_see_the_school_user_on_the_results_page
+    and_i_can_navigate_to_the_support_page_for_their_school
+  end
+
   def given_i_am_signed_in_as_a_support_user
     sign_in_as support_user
   end
 
+  def given_i_am_signed_in_as_a_computacenter_user
+    sign_in_as computacenter_user
+  end
+
   def and_there_are_school_and_responsible_body_users
-    create(:school_user, full_name: 'Jane Smith', email_address: 'jsmith@school.sch.uk')
-    create(:school_user, full_name: 'David Jones', email_address: 'djones@another-school.sch.uk')
-    create(:local_authority_user, full_name: 'Debbie Barry', email_address: 'dbarry@council.gov.uk')
+    create(:school_user, full_name: 'Jane Smith', email_address: 'jsmith@school.sch.uk', privacy_notice_seen_at: 1.month.ago)
+    create(:school_user, full_name: 'David Jones', email_address: 'djones@another-school.sch.uk', privacy_notice_seen_at: nil)
+    create(:local_authority_user, full_name: 'Debbie Barry', email_address: 'dbarry@council.gov.uk', privacy_notice_seen_at: 1.month.ago)
+    create(:local_authority_user, full_name: 'Wendy Wilson', email_address: 'wendy.wilson@council.gov.uk', privacy_notice_seen_at: 1.month.ago)
   end
 
   def when_i_follow_the_links_to_find_users
+    click_link 'Find users'
+  end
+
+  def when_i_visit_support_and_follow_the_links_to_find_users
+    visit '/support'
     click_link 'Find users'
   end
 
@@ -43,6 +68,16 @@ RSpec.feature 'Searching for school or RB users' do
     search_page.submit.click
   end
 
+  def and_i_search_for_a_school_user_who_has_seen_the_privacy_notice_by_their_name
+    search_page.search_term.set 'Jane Smith'
+    search_page.submit.click
+  end
+
+  def and_i_search_for_a_school_user_who_has_not_seen_the_privacy_notice_by_their_name
+    search_page.search_term.set 'David Jones'
+    search_page.submit.click
+  end
+
   def and_i_search_for_an_existing_school_user_by_their_email
     search_page.search_term.set 'jsmith@school.sch.uk'
     search_page.submit.click
@@ -52,6 +87,12 @@ RSpec.feature 'Searching for school or RB users' do
     expect(results_page).to be_displayed
     expect(results_page.users.size).to eq(1)
     expect(results_page.users.first).to have_text('jsmith@school.sch.uk')
+    expect(results_page).not_to have_text('djones@another-school.sch.uk')
+  end
+
+  def then_i_dont_see_the_school_user_on_the_results_page
+    expect(results_page).to be_displayed
+    expect(results_page.users.size).to eq(0)
     expect(results_page).not_to have_text('djones@another-school.sch.uk')
   end
 

@@ -18,6 +18,15 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
     then_i_can_see_the_responsible_body_with_new_users_as_well
   end
 
+  scenario 'Computacenter users see the on-boarded responsible bodies and stats about them' do
+    given_there_is_a_responsible_body_with_users
+
+    when_i_sign_in_as_a_computacenter_user
+    and_i_visit_a_support_devices_responsible_body_page
+    then_i_can_see_the_responsible_body
+    and_i_only_see_the_users_who_have_seen_the_privacy_policy
+  end
+
   scenario 'DfE users can update on-boarded responsible body users' do
     given_there_is_a_responsible_body_with_users
 
@@ -37,17 +46,23 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
            full_name: 'Amy Adams',
            sign_in_count: 0,
            last_signed_in_at: nil,
+           privacy_notice_seen_at: nil,
            responsible_body: local_authority)
 
     create(:user,
            full_name: 'Zeta Zane',
            sign_in_count: 2,
            last_signed_in_at: Date.new(2020, 7, 1),
+           privacy_notice_seen_at: Date.new(2020, 7, 1),
            responsible_body: local_authority)
   end
 
   def when_i_sign_in_as_a_dfe_user
     sign_in_as create(:dfe_user)
+  end
+
+  def when_i_sign_in_as_a_computacenter_user
+    sign_in_as create(:computacenter_user, is_support: true)
   end
 
   def and_i_visit_a_support_devices_responsible_body_page
@@ -59,6 +74,17 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
 
     expect(responsible_body_page.users[0]).to have_text('Zeta Zane')
     expect(responsible_body_page.users[1]).to have_text('Amy Adams')
+  end
+
+  def then_i_can_see_the_responsible_body
+    expect(responsible_body_page).to be_displayed
+  end
+
+  def and_i_only_see_the_users_who_have_seen_the_privacy_policy
+    expect(responsible_body_page.users.size).to eq(1)
+
+    expect(responsible_body_page.users[0]).to have_text('Zeta Zane')
+    expect(responsible_body_page.users[1]).not_to have_text('Amy Adams')
   end
 
   def when_try_adding_a_new_user_with_invalid_details

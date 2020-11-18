@@ -17,6 +17,18 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     then_i_see_the_school_users
   end
 
+  scenario 'Computacenter users can only see school users who have seen the privacy notice' do
+    given_a_responsible_body
+    and_it_has_a_school_with_users
+
+    when_i_sign_in_as_a_computacenter_user
+    and_i_visit_the_responsible_body_page
+    and_i_visit_the_school_page
+
+    then_i_see_the_school_users_who_have_seen_the_privacy_policy
+    and_i_dont_see_the_school_users_who_have_not_seen_the_privacy_policy
+  end
+
   scenario 'DfE users invite school contacts to prepare for ordering devices' do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
@@ -99,7 +111,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
                     urn: '123321',
                     responsible_body: local_authority)
     create(:school_user, school: school, full_name: 'James P. Sullivan', email_address: 'sully@alpha.sch.uk')
-    create(:school_user, school: school, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk')
+    create(:school_user, school: school, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk', privacy_notice_seen_at: nil)
   end
 
   def and_the_school_contact_is_already_a_user_on_another_school
@@ -113,6 +125,10 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
 
   def when_i_sign_in_as_a_dfe_user
     sign_in_as create(:dfe_user)
+  end
+
+  def when_i_sign_in_as_a_computacenter_user
+    sign_in_as create(:computacenter_user, is_support: true)
   end
 
   def and_i_visit_the_responsible_body_page
@@ -148,6 +164,16 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
 
     expect(page).to have_text('Mike Wazowski')
     expect(page).to have_text('mike@alpha.sch.uk')
+  end
+
+  def then_i_see_the_school_users_who_have_seen_the_privacy_policy
+    expect(page).to have_text('James P. Sullivan')
+    expect(page).to have_text('sully@alpha.sch.uk')
+  end
+
+  def and_i_dont_see_the_school_users_who_have_not_seen_the_privacy_policy
+    expect(page).not_to have_text('Mike Wazowski')
+    expect(page).not_to have_text('mike@alpha.sch.uk')
   end
 
   def when_i_click_on_the_change_link_for_the_user

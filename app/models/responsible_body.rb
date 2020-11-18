@@ -81,16 +81,31 @@ class ResponsibleBody < ApplicationRecord
     )
   end
 
-  def self.with_users_who_have_signed_in_at_least_once
-    select('(SELECT COUNT(*)  FROM  users
-                              WHERE responsible_body_id=responsible_bodies.id
-                                AND sign_in_count > 0)
-            AS  users_who_have_signed_in_at_least_once')
+  def self.with_users_who_have_signed_in_at_least_once(privacy_notice_required: false)
+    sql = <<~SQL
+      (
+        SELECT COUNT(*)
+        FROM  users
+        WHERE responsible_body_id=responsible_bodies.id
+          AND sign_in_count > 0
+          #{privacy_notice_required ? ' AND privacy_notice_seen_at IS NOT NULL' : ''}
+      )
+      AS  users_who_have_signed_in_at_least_once
+    SQL
+    select(sql)
   end
 
-  def self.with_user_count
-    select('(SELECT COUNT(*) FROM users WHERE responsible_body_id=responsible_bodies.id)
-              AS user_count')
+  def self.with_user_count(privacy_notice_required: false)
+    sql = <<~SQL
+      (
+          SELECT  COUNT(*)
+          FROM    users
+          WHERE   responsible_body_id=responsible_bodies.id
+            #{privacy_notice_required ? ' AND privacy_notice_seen_at IS NOT NULL' : ''}
+      )
+      AS user_count
+    SQL
+    select(sql)
   end
 
   def self.with_completed_preorder_info_count

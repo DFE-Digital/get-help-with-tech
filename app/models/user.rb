@@ -35,6 +35,12 @@ class User < ApplicationRecord
   scope :search_by_email_address_or_full_name, lambda { |search_term|
     where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term}%", "%#{search_term}%")
   }
+  # used in /support/ to avoid showing user contact info to third parties if the
+  # user hasn't accepted the privacy notice
+  scope :safe_to_show_to, lambda { |user|
+    # TODO: update this check once we have a proper authorization system in place
+    user.is_computacenter? ? where.not(privacy_notice_seen_at: nil) : all
+  }
 
   validates :full_name,
             presence: true,
