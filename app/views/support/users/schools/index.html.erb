@@ -39,7 +39,7 @@
                 <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
               </td>
               <td class="govuk-table__cell">
-                <%- if @user.school_id == school.id %>
+                <%- if @user.school_ids.include?(school.id) %>
                   (already associated)
                 <%- else %>
                   <%= govuk_button_to('Associate', support_user_schools_path(urn: school.urn, id: @user.id), method: :post) %>

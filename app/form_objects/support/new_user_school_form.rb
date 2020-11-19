@@ -9,7 +9,7 @@ class Support::NewUserSchoolForm
   end
 
   def matching_schools
-    School.includes(:user_schools)
+    School.includes(:responsible_body)
           .where('urn = ? OR LOWER(name) LIKE(?)', @name_or_urn.to_i, "%#{@name_or_urn.downcase}%")
           .order(:name)
   end
