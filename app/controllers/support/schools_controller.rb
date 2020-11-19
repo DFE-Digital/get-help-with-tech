@@ -7,7 +7,7 @@ class Support::SchoolsController < Support::BaseController
 
   def results
     @search_form = BulkUrnSearchForm.new(search_params)
-    @schools = @search_form.schools.includes(:preorder_information, :responsible_body)
+    @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
   end
 
   def show
