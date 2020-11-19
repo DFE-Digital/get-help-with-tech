@@ -30,15 +30,17 @@
       <li>enable orders for many schools</li>
     </ul>
 
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to 'Service performance', support_service_performance_path %>
-    </h2>
+    <% if policy(Support::ServicePerformance).index? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'Service performance', support_service_performance_path %>
+      </h2>
 
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>see the service performance for the device reserve</li>
-      <li>see the service performance for the connectivity offers</li>
-    </ul>
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>see the service performance for the device reserve</li>
+        <li>see the service performance for the connectivity offers</li>
+      </ul>
+    <% end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to 'Technical support', support_technical_support_path %>
