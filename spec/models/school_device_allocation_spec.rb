@@ -83,25 +83,17 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     end
   end
 
-  context 'when in a virtual pool' do
+  context 'when in a virtual pool', with_feature_flags: { virtual_caps: 'active' } do
     let(:responsible_body) { create(:trust, :manages_centrally) }
     let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 100, school: school) }
 
-    ### moving this into an around block causes test fails elsewhere in the suite?!?
     before do
       allocation
       responsible_body.add_school_to_virtual_cap_pools!(school)
       responsible_body.std_device_pool.update!(cap: 256, devices_ordered: 145)
       allocation.reload
-
-      @original_state = FeatureFlag.active?(:virtual_caps)
-      FeatureFlag.activate(:virtual_caps) unless @original_state
-    end
-
-    after do
-      FeatureFlag.deactivate(:virtual_caps) unless @original_state
     end
 
     it ':cap refers to the pool cap instead of local version' do
