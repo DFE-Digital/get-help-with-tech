@@ -14,11 +14,15 @@ class Computacenter::API::CapUsageUpdate
 
   def apply!
     log_to_devices_ordered_updates
-    school = School.find_by_computacenter_reference!(ship_to)
-    allocation = school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
     CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
+    original_devices_ordered = allocation.devices_ordered
     allocation.update!(devices_ordered: cap_used)
     school.preorder_information&.refresh_status!
+
+    if cap_used.to_i < original_devices_ordered
+      SchoolCanOrderDevicesNotifications.new(school: school).call
+    end
+
     @status = 'succeeded'
   end
 
@@ -54,6 +58,14 @@ class Computacenter::API::CapUsageUpdate
   end
 
 private
+
+  def school
+    @school ||= School.find_by_computacenter_reference!(ship_to)
+  end
+
+  def allocation
+    @allocation ||= school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
+  end
 
   def log_to_devices_ordered_updates
     Computacenter::DevicesOrderedUpdate.create!(
