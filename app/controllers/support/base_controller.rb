@@ -3,11 +3,15 @@ class Support::BaseController < ApplicationController
 
   before_action :require_dfe_user!
   after_action :verify_authorized
-  after_action :verify_policy_scoped, only: %i[index results] # # rubocop:disable Rails/LexicallyScopedActionFilter
+  after_action :verify_policy_scoped, if: :index_method?
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 private
+
+  def index_method?
+    %i[index results].include?(action_name)
+  end
 
   def require_dfe_user!
     unless SessionService.is_signed_in?(session)
