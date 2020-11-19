@@ -113,5 +113,12 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       expect(allocation.devices_ordered).to eq(145)
       expect(allocation.raw_devices_ordered).to eq(87)
     end
+
+    it 'propagates changes up to the pool' do
+      allocation.update!(allocation: 400, cap: 300, devices_ordered: 200)
+      responsible_body.std_device_pool.reload
+      expect(responsible_body.std_device_pool.cap).to eq(300)
+      expect(responsible_body.std_device_pool.devices_ordered).to eq(200)
+    end
   end
 end

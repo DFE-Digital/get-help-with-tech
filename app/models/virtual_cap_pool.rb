@@ -4,6 +4,8 @@ class VirtualCapPool < ApplicationRecord
   has_many :school_device_allocations, through: :school_virtual_caps
   has_many :schools, through: :school_device_allocations
 
+  after_touch :recalculate_caps!
+
   enum device_type: {
     'coms_device': 'coms_device',
     'std_device': 'std_device',

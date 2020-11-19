@@ -4,7 +4,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to :school
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :last_updated_by_user, class_name: 'User', optional: true
-  has_one :school_virtual_cap, dependent: :destroy
+  has_one :school_virtual_cap, touch: true, dependent: :destroy
 
   has_many :cap_update_calls
 
