@@ -9,7 +9,7 @@ class Support::UserResponsibleBodyForm
   end
 
   def matching_responsible_bodies
-    ResponsibleBody.where('LOWER(name) LIKE(?)', "%#{@name.downcase}%")
+    ResponsibleBody.where('name ILIKE(?)', "%#{@name}%")
                    .order(:name)
   end
 end

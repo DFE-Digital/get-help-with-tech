@@ -10,7 +10,7 @@ RSpec.feature 'Changing a users associated organisations' do
   let(:other_school) { create(:school, name: 'CCC school') }
   let(:responsible_body_user_with_multiple_schools) { create(:trust_user, responsible_body: trust, schools: [trust_school_1, trust_school_2]) }
   let(:other_trust) { create(:trust) }
-  let(:other_local_authority) { create(:local_authority) }
+  let(:other_local_authority) { create(:local_authority, name: 'AN ALL-UPPERCASE LA') }
   let(:search_page) { PageObjects::Support::Users::SearchPage.new }
   let(:results_page) { PageObjects::Support::Users::ResultsPage.new }
   let(:associated_organisations_page) { PageObjects::Support::Users::AssociatedOrganisationsPage.new }
@@ -59,7 +59,7 @@ RSpec.feature 'Changing a users associated organisations' do
   scenario 'entering a partial school name lets me associate schools matching that name' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_associated_organisations_page
-    and_i_enter_a_partial_school_name
+    and_i_enter_a_partial_school_name_in_any_case
     then_i_see_schools_matching_that_name
     and_i_see_an_associate_button_next_to_each_school
     when_i_click_the_associate_button
@@ -78,7 +78,7 @@ RSpec.feature 'Changing a users associated organisations' do
   scenario 'entering a partial responsible body name lets me associate responsible bodies matching that name' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_associated_organisations_page
-    and_i_enter_a_partial_responsible_body_name
+    and_i_enter_a_partial_responsible_body_name_in_any_case
     then_i_see_responsible_bodies_matching_that_name
     and_i_see_an_associate_button_next_to_each_responsible_body
     when_i_click_the_associate_button_next_to_the_responsible_body
@@ -180,8 +180,8 @@ RSpec.feature 'Changing a users associated organisations' do
     expect(associated_organisations_page).to have_text("#{responsible_body_user_with_multiple_schools.full_name} is no longer associated with a Responsible body")
   end
 
-  def and_i_enter_a_partial_school_name
-    fill_in 'School name or URN', with: other_school.name.first(3)
+  def and_i_enter_a_partial_school_name_in_any_case
+    fill_in 'School name or URN', with: other_school.name.first(3).downcase
     associated_organisations_page.submit_school_name_or_urn.click
   end
 
@@ -222,8 +222,8 @@ RSpec.feature 'Changing a users associated organisations' do
     expect(matching_schools_page.schools[0]).not_to have_button('Associate')
   end
 
-  def and_i_enter_a_partial_responsible_body_name
-    fill_in 'Responsible body name', with: other_local_authority.name.first(3)
+  def and_i_enter_a_partial_responsible_body_name_in_any_case
+    fill_in 'Responsible body name', with: other_local_authority.name.first(3).downcase
     associated_organisations_page.submit_responsible_body_name.click
   end
 
