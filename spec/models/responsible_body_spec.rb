@@ -251,4 +251,56 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
   end
+
+  describe '#add_school_to_virtual_cap_pools' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+
+    before do
+      schools.each do |s|
+        s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
+        s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+      end
+    end
+
+    it 'adds the schools cap and devices_ordered to the relevant pool' do
+      schools.each { |s| responsible_body.add_school_to_virtual_cap_pools!(s) }
+      responsible_body.reload
+      expect(responsible_body.std_device_pool.cap).to eq(30)
+      expect(responsible_body.std_device_pool.devices_ordered).to eq(6)
+      expect(responsible_body.coms_device_pool.cap).to eq(15)
+      expect(responsible_body.coms_device_pool.devices_ordered).to eq(9)
+    end
+
+    it 'creates the virtual pool for the device type if it does not exists' do
+      expect { responsible_body.add_school_to_virtual_cap_pools!(schools.first) }.to change { VirtualCapPool.count }.by(2)
+      expect { responsible_body.add_school_to_virtual_cap_pools!(schools.second) }.not_to(change { VirtualCapPool.count })
+    end
+  end
+
+  describe '#calculate_virtual_caps!' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+
+    before do
+      schools.each do |s|
+        s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
+        s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+        responsible_body.add_school_to_virtual_cap_pools!(s)
+      end
+    end
+
+    it 'calculates the virtual cap for all device types' do
+      schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 75)
+      schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 25)
+
+      responsible_body.calculate_virtual_caps!
+      expect(responsible_body.std_device_pool.cap).to eq(120)
+      expect(responsible_body.std_device_pool.devices_ordered).to eq(79)
+      expect(responsible_body.coms_device_pool.cap).to eq(60)
+      expect(responsible_body.coms_device_pool.devices_ordered).to eq(31)
+    end
+  end
 end

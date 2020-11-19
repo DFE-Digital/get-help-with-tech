@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_150859) do
+ActiveRecord::Schema.define(version: 2020_11_19_110109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,15 @@ ActiveRecord::Schema.define(version: 2020_11_16_150859) do
     t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
   end
 
+  create_table "school_virtual_caps", force: :cascade do |t|
+    t.bigint "virtual_cap_pool_id"
+    t.bigint "school_device_allocation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_device_allocation_id"], name: "index_school_virtual_caps_on_school_device_allocation_id"
+    t.index ["virtual_cap_pool_id"], name: "index_school_virtual_caps_on_virtual_cap_pool_id"
+  end
+
   create_table "school_welcome_wizards", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "step", default: "allocation", null: false
@@ -367,6 +376,16 @@ ActiveRecord::Schema.define(version: 2020_11_16_150859) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "virtual_cap_pools", force: :cascade do |t|
+    t.string "device_type", null: false
+    t.bigint "responsible_body_id", null: false
+    t.integer "cap", default: 0, null: false
+    t.integer "devices_ordered", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["responsible_body_id"], name: "index_virtual_cap_pools_on_responsible_body_id"
+  end
+
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
@@ -374,6 +393,9 @@ ActiveRecord::Schema.define(version: 2020_11_16_150859) do
   add_foreign_key "preorder_information", "school_contacts"
   add_foreign_key "responsible_bodies", "users", column: "key_contact_id"
   add_foreign_key "school_device_allocations", "schools"
+  add_foreign_key "school_virtual_caps", "school_device_allocations"
+  add_foreign_key "school_virtual_caps", "virtual_cap_pools"
   add_foreign_key "school_welcome_wizards", "users", column: "invited_user_id"
   add_foreign_key "schools", "responsible_bodies"
+  add_foreign_key "virtual_cap_pools", "responsible_bodies"
 end

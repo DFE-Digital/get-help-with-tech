@@ -11,6 +11,14 @@ FactoryBot.define do
     trait :in_connectivity_pilot do
       in_connectivity_pilot       { true }
     end
+
+    trait :manages_centrally do
+      who_will_order_devices      { 'responsible_body' }
+    end
+
+    trait :devolves_management do
+      who_will_order_devices      { 'schools' }
+    end
   end
 
   factory :trust do
@@ -32,6 +40,14 @@ FactoryBot.define do
 
     trait :in_connectivity_pilot do
       in_connectivity_pilot       { true }
+    end
+
+    trait :manages_centrally do
+      who_will_order_devices      { 'responsible_body' }
+    end
+
+    trait :devolves_management do
+      who_will_order_devices      { 'schools' }
     end
   end
 end

@@ -4,6 +4,8 @@ class SchoolDeviceAllocation < ApplicationRecord
   belongs_to :school
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :last_updated_by_user, class_name: 'User', optional: true
+  has_one :school_virtual_cap, touch: true, dependent: :destroy
+
   has_many :cap_update_calls
 
   validates_with CapAndAllocationValidator
@@ -37,6 +39,36 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def self.by_computacenter_device_type(cc_device_type)
     by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type))
+  end
+
+  def cap
+    if FeatureFlag.active? :virtual_caps
+      school_virtual_cap&.cap || super
+    else
+      Rails.logger.info("Virtual cap: #{school_virtual_cap&.cap}") if is_in_virtual_cap_pool?
+      super
+    end
+  end
+
+  def raw_cap
+    self[:cap]
+  end
+
+  def devices_ordered
+    if FeatureFlag.active? :virtual_caps
+      school_virtual_cap&.devices_ordered || super
+    else
+      Rails.logger.info("Virtual devices_ordered: #{school_virtual_cap&.devices_ordered}") if is_in_virtual_cap_pool?
+      super
+    end
+  end
+
+  def raw_devices_ordered
+    self[:devices_ordered]
+  end
+
+  def is_in_virtual_cap_pool?
+    school_virtual_cap.present?
   end
 
   def has_devices_available_to_order?

@@ -36,7 +36,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
     context 'when a std SchoolDeviceAllocation does not exist' do
       before do
-        SchoolDeviceAllocation.delete_all
+        SchoolDeviceAllocation.destroy_all
       end
 
       context 'when no device_type was given' do

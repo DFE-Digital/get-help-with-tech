@@ -82,4 +82,35 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       end
     end
   end
+
+  context 'when in a virtual pool', with_feature_flags: { virtual_caps: 'active' } do
+    let(:responsible_body) { create(:trust, :manages_centrally) }
+    let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+
+    subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 100, school: school) }
+
+    before do
+      allocation
+      responsible_body.add_school_to_virtual_cap_pools!(school)
+      responsible_body.std_device_pool.update!(cap: 256, devices_ordered: 145)
+      allocation.reload
+    end
+
+    it ':cap refers to the pool cap instead of local version' do
+      expect(allocation.cap).to eq(256)
+      expect(allocation.raw_cap).to eq(100)
+    end
+
+    it ':devices_ordered refers to the pool devices_ordered instead of the local version' do
+      expect(allocation.devices_ordered).to eq(145)
+      expect(allocation.raw_devices_ordered).to eq(87)
+    end
+
+    it 'propagates changes up to the pool' do
+      allocation.update!(allocation: 400, cap: 300, devices_ordered: 200)
+      responsible_body.std_device_pool.reload
+      expect(responsible_body.std_device_pool.cap).to eq(300)
+      expect(responsible_body.std_device_pool.devices_ordered).to eq(200)
+    end
+  end
 end
