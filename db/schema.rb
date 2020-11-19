@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_150859) do
+ActiveRecord::Schema.define(version: 2020_11_19_110109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,6 +383,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_150859) do
     t.integer "devices_ordered", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["responsible_body_id"], name: "index_virtual_cap_pools_on_responsible_body_id"
   end
 
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
