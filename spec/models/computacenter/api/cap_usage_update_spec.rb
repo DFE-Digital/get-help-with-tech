@@ -34,11 +34,11 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
   describe '#apply!' do
     let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, status: 'ready') }
-    let!(:school) { create(:school, preorder_information: preorder, computacenter_reference: '123456') }
-    let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device', cap: 30, allocation: 100) }
+    let!(:school) { create(:school, :in_lockdown, preorder_information: preorder, computacenter_reference: '123456') }
+    let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device', cap: 100, allocation: 100, devices_ordered: 10) }
 
     it 'updates the correct allocation with the given usedCap' do
-      expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(0).to(100)
+      expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(10).to(100)
     end
 
     it 'refresh preorder status' do
@@ -82,6 +82,44 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       it 'sets the status to "succeeded"' do
         cap_usage_update.apply!
         expect(cap_usage_update.status).to eq('succeeded')
+      end
+    end
+
+    context 'if the devices_ordered decreases' do
+      let!(:user) { create(:user, :with_a_confirmed_techsource_account, orders_devices: true, responsible_body: school.responsible_body) }
+
+      let(:args) do
+        {
+          'capType' => 'DfE_RemainThresholdQty|Std_Device',
+          'shipTo' => '123456',
+          'capAmount' => 100,
+          'usedCap' => 1,
+        }
+      end
+
+      it 'sends a notification to order if they can order' do
+        expect {
+          cap_usage_update.apply!
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+      end
+    end
+
+    context 'if the devices_ordered increases' do
+      let!(:user) { create(:user, :with_a_confirmed_techsource_account, orders_devices: true, responsible_body: school.responsible_body) }
+
+      let(:args) do
+        {
+          'capType' => 'DfE_RemainThresholdQty|Std_Device',
+          'shipTo' => '123456',
+          'capAmount' => 100,
+          'usedCap' => 99,
+        }
+      end
+
+      it 'does not send notification to order' do
+        expect {
+          cap_usage_update.apply!
+        }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
       end
     end
   end
