@@ -2,7 +2,7 @@ class Support::ResponsibleBodiesController < Support::BaseController
   before_action { authorize ResponsibleBody }
 
   def index
-    @responsible_bodies = ResponsibleBody
+    @responsible_bodies = policy_scope(ResponsibleBody)
       .select('responsible_bodies.*')
       .excluding_department_for_education
       .with_users_who_have_signed_in_at_least_once(privacy_notice_required: @current_user.is_computacenter?)
