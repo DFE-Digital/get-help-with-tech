@@ -8,33 +8,28 @@
 <% end %>
 
 <h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl">Devices pilot</span>
   <%= @responsible_body.name %>
 </h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body) %>
+<h2 class="govuk-heading-l govuk-!-margin-top-9">Users</h2>
 
-    <h2 class="govuk-heading-l">Users</h2>
+<%= govuk_button_link_to t('page_titles.new_responsible_body_user'), new_support_responsible_body_user_path(@responsible_body) %>
 
-    <% if @users.present? %>
-      <% @users.each do |user| %>
-        <div class="user">
-          <h3 class="govuk-heading-m govuk-!-margin-bottom-1"><%= user.full_name %></h3>
-          <p class="govuk-body">
-            <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user, pilot: 'devices') %>
-          </p>
-          <%= render Support::UserSummaryListComponent.new(user: user) %>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="govuk-body">None</p>
-    <% end %>
-  </div>
-</div>
+<% if @users.present? %>
+  <% @users.each do |user| %>
+    <div class="user">
+      <h3 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-1"><%= user.full_name %></h3>
+      <p class="govuk-body">
+        <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user, pilot: 'devices') %>
+      </p>
+      <%= render Support::UserSummaryListComponent.new(user: user) %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="govuk-body">None</p>
+<% end %>
 
-<table id="responsible-body-schools" class="govuk-table govuk-!-margin-top-6">
+<table id="responsible-body-schools" class="govuk-table govuk-!-margin-top-9">
   <caption class="govuk-table__caption govuk-heading-l">Schools</caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
