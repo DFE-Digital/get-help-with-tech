@@ -20,9 +20,32 @@ class Support::UsersController < Support::BaseController
     @maximum_search_result_number_reached = (@results.size == SEARCH_RESULTS_LIMIT)
   end
 
+  def associated_organisations
+    @user = User.find(params[:id])
+    @schools = @user.schools.order(:name)
+    @responsible_body = @user.responsible_body
+    @user_responsible_body_form = Support::UserResponsibleBodyForm.new(user: @user)
+    @user_school_form = Support::NewUserSchoolForm.new(user: @user)
+  end
+
+  def update_responsible_body
+    @user = User.find(params[:id])
+    @user.update!(responsible_body_id: params[:responsible_body_id])
+    flash[:success] = success_message
+    redirect_to associated_organisations_support_user_path(@user.id)
+  end
+
 private
 
   def search_params
     params.require(:support_user_search_form).permit(:email_address_or_full_name)
+  end
+
+  def success_message
+    if @user.responsible_body.present?
+      "#{@user.full_name} is now associated with #{@user.responsible_body.name}"
+    else
+      "#{@user.full_name} is no longer associated with a Responsible body"
+    end
   end
 end

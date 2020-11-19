@@ -70,8 +70,13 @@ en:
           search: Search for schools by URN
           results: School search results
       users:
+        associated_organisations: Associated organisations
         search: Find responsible body or school users
         results: Users
+        schools:
+          index: Associate with a school
+        responsible_bodies:
+          index: Associate with a responsible body
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices
@@ -581,3 +586,7 @@ en:
       support_enable_orders_form:
         device_cap: How many devices can they order?
         router_cap: How many routers can they order?
+      support_new_user_school_form:
+        name_or_urn: School name or URN
+      support_user_responsible_body_form:
+        name: Responsible body name

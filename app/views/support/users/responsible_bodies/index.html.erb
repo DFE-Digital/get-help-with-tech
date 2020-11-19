@@ -1,0 +1,53 @@
+<%- title = t('page_titles.support.users.responsible_bodies.index') %>
+<% content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', associated_organisations_support_user_path(@user), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @user.full_name %></span>
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">
+      Responsible bodies matching <q><%= @form.name %></q>
+    </h2>
+    <%- if @responsible_bodies.present? %>
+      <table class="govuk-table responsible-bodies">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Type</th>
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @responsible_bodies.each do |responsible_body| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= responsible_body.humanized_type %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_link_to responsible_body.name, support_responsible_body_path(id: responsible_body.id) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%- if @user.responsible_body_id == responsible_body.id %>
+                  (already associated)
+                <%- else %>
+                  <%= govuk_button_to('Associate', update_responsible_body_support_user_path(responsible_body_id: responsible_body.id, id: @user.id), method: :patch) %>
+                <%- end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <%- else %>
+      <p class="govuk-body">(none matching)</p>
+    <%- end %>
+  </div>
+</div>

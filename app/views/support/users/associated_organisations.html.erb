@@ -1,0 +1,106 @@
+<%- title = t('page_titles.support.users.associated_organisations') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    { t('page_titles.support.users.search') => search_support_users_path },
+    @user.full_name,
+    title,
+  ]) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @user.full_name %></span>
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Schools</h2>
+    <%- if @schools.present? %>
+      <table class="govuk-table schools">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name and URN</th>
+            <th scope="col" class="govuk-table__header">Responsible body</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @schools.each do |school| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %>
+                <br>
+                <%= school.type_label %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_button_to('Remove', support_user_school_path(urn: school.urn, id: @user.id), method: :delete, form_class: 'form-inline')  %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    <%- else %>
+      <p class="govuk-body">(none)</p>
+    <%- end %>
+
+    <%= form_for @user_school_form, url: support_user_schools_path(@user), method: :get do |f| %>
+      <%= f.govuk_fieldset legend: { text: 'Associate with a school', size: 'm' } do %>
+        <%= f.govuk_text_field :name_or_urn, width: 'one-third' %>
+        <%= f.govuk_submit %>
+      <%- end %>
+    <%- end %>
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Responsible body</h2>
+    <%- if @responsible_body.present? %>
+      <table class="govuk-table responsible-body">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
+            <th scope="col" class="govuk-table__header">Type</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= govuk_link_to @responsible_body.name, support_responsible_body_path(id: @responsible_body.id) %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= @responsible_body.humanized_type %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= govuk_button_to('Remove', update_responsible_body_support_user_path(responsible_body_id: nil, id: @user.id), method: :patch) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    <%- else %>
+      <p class="govuk-body">(none)</p>
+    <%- end %>
+
+    <%= form_for @user_responsible_body_form, url: responsible_bodies_support_user_path(@user), method: :get do |f| %>
+      <%= f.govuk_fieldset legend: { text: 'Associate with a responsible body', size: 'm' } do %>
+        <%= f.govuk_text_field :name, width: 'one-third' %>
+        <%= f.govuk_submit %>
+      <%- end %>
+    <%- end %>
+  </div>
+</div>
