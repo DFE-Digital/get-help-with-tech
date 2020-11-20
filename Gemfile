@@ -40,6 +40,9 @@ gem 'pry-rails'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 
+# Use Pundit for authorisation
+gem 'pundit'
+
 # Rate-limiting
 gem 'rack-throttle'
 

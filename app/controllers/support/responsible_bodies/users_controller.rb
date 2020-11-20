@@ -1,5 +1,6 @@
 class Support::ResponsibleBodies::UsersController < Support::BaseController
   before_action :set_responsible_body
+  before_action { authorize User }
 
   def new
     @user = @responsible_body.users.build
@@ -19,11 +20,11 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   end
 
   def edit
-    @user = @responsible_body.users.safe_to_show_to(@current_user).find(params[:id])
+    @user = policy_scope(@responsible_body.users).find(params[:id])
   end
 
   def update
-    @user = @responsible_body.users.safe_to_show_to(@current_user).find(params[:id])
+    @user = policy_scope(@responsible_body.users).find(params[:id])
 
     if @user.update(user_params)
       flash[:success] = 'User has been updated'
@@ -34,7 +35,7 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
   end
 
   def destroy
-    @user = @responsible_body.users.safe_to_show_to(@current_user).find(params[:id])
+    @user = policy_scope(@responsible_body.users).find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
 
     flash[:success] = 'User has been deleted'
@@ -58,5 +59,6 @@ private
 
   def set_responsible_body
     @responsible_body = ResponsibleBody.find(params[:responsible_body_id])
+    authorize @responsible_body, :show?
   end
 end

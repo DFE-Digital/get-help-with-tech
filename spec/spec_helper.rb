@@ -17,6 +17,7 @@ require 'simplecov'
 require "capybara"
 require "capybara/rspec"
 require "site_prism"
+require 'pundit/rspec'
 
 SimpleCov.start
 

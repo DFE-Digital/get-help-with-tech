@@ -1,0 +1,2 @@
+class TrustPolicy < ResponsibleBodyPolicy
+end

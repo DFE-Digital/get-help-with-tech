@@ -54,6 +54,18 @@ RSpec/EmptyLineAfterSubject:
   Exclude:
     - 'spec/factories.rb'
 
+# The Pundit RSpec DSL triggers this cop false positively
+# Although this may be resolved fairly soon, see https://github.com/rubocop-hq/rubocop-rspec/issues/333
+RSpec/RepeatedExample:
+  Exclude:
+    - 'spec/policies/**/*'
+
+# The Pundit RSpec DSL triggers this cop false positively
+# Although this may be resolved fairly soon, see https://github.com/rubocop-hq/rubocop-rspec/issues/333
+RSpec/RepeatedDescription:
+  Exclude:
+    - 'spec/policies/**/*'
+
 Naming/MethodParameterName:
   AllowedNames:
     - e

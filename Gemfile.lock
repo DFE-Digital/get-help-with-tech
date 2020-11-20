@@ -268,6 +268,8 @@ GEM
     public_suffix (4.0.6)
     puma (5.0.4)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     pusher-client (0.6.2)
       json
       websocket (~> 1.0)
@@ -514,6 +516,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma (~> 5.0)
+  pundit
   rack-throttle
   rails (>= 6.0.3.1)
   rails-controller-testing

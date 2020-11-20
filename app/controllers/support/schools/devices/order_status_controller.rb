@@ -1,5 +1,5 @@
 class Support::Schools::Devices::OrderStatusController < Support::BaseController
-  before_action :set_school
+  before_action :set_school, except: %i[collect_urns_to_allow_many_schools_to_order allow_ordering_for_many_schools]
 
   def edit
     @form = Support::EnableOrdersForm.new(existing_params.merge(enable_orders_form_params))
@@ -46,10 +46,12 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
   end
 
   def collect_urns_to_allow_many_schools_to_order
+    authorize School, :edit?
     @form = Support::BulkAllocationForm.new
   end
 
   def allow_ordering_for_many_schools
+    authorize School, :edit?
     @form = Support::BulkAllocationForm.new(restriction_params)
 
     if @form.valid?
@@ -64,6 +66,7 @@ private
 
   def set_school
     @school = School.find_by_urn(params[:school_urn])
+    authorize @school, :show?
   end
 
   def existing_params

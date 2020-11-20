@@ -2,19 +2,32 @@ require 'rails_helper'
 
 RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
   let(:dfe_user) { create(:dfe_user) }
+  let(:responsible_body) { create(:local_authority) }
+  let(:existing_user) { create(:local_authority_user, responsible_body: responsible_body) }
+
+  describe '#new' do
+    it 'is successful for support users' do
+      expect {
+        get :new, params: { responsible_body_id: responsible_body.id }
+      }.to receive_status_ok_for(dfe_user)
+    end
+
+    it 'is forbidden for computacenter users' do
+      expect {
+        get :new, params: { responsible_body_id: responsible_body.id }
+      }.to be_forbidden_for(create(:computacenter_user))
+    end
+  end
 
   describe '#create' do
     context 'for support users', versioning: true do
-      let(:responsible_body) { create(:local_authority) }
-
       before do
         sign_in_as dfe_user
       end
 
       def perform_create!
         post :create, params: { responsible_body_id: responsible_body.id,
-                                user: attributes_for(:user),
-                                pilot: 'devices' }
+                                user: attributes_for(:user) }
       end
 
       it 'creates users' do
@@ -43,44 +56,95 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
     end
 
     it 'is forbidden for MNO users' do
-      sign_in_as create(:mno_user)
-
-      post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
-
-      expect(response).to have_http_status(:forbidden)
+      expect {
+        post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+      }.to be_forbidden_for(create(:mno_user))
     end
 
     it 'is forbidden for responsible body users' do
-      sign_in_as create(:trust_user)
+      expect {
+        post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+      }.to be_forbidden_for(create(:trust_user))
+    end
 
-      post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
-
-      expect(response).to have_http_status(:forbidden)
+    it 'is forbidden for Computacenter users' do
+      expect {
+        post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+      }.to be_forbidden_for(create(:computacenter_user))
     end
 
     it 'redirects to / for unauthenticated users' do
-      post :create, params: { responsible_body_id: 1, user: { some: 'data' } }
+      post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
 
       expect(response).to redirect_to(sign_in_path)
     end
   end
 
-  describe '#destroy' do
-    let(:user) { create(:trust_user) }
-    let(:rb) { user.responsible_body }
+  describe '#edit' do
+    it 'is successful for support users' do
+      expect {
+        get :edit, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
+      }.to receive_status_ok_for(dfe_user)
+    end
 
-    before do
+    it 'is forbidden for computacenter users' do
+      expect {
+        get :edit, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
+      }.to be_forbidden_for(create(:computacenter_user))
+    end
+  end
+
+  describe '#update' do
+    it 'is successful for support users' do
       sign_in_as dfe_user
+
+      put :update, params: {
+        responsible_body_id: responsible_body.id,
+        id: existing_user.id,
+        user: {
+          full_name: 'someone_else',
+        },
+      }
+
+      expect(response).to redirect_to(support_responsible_body_path(responsible_body))
     end
 
-    it 'sets user deleted_at timestamp' do
-      delete :destroy, params: { responsible_body_id: rb.id, id: user.id }
-      expect(user.reload.deleted_at).to be_present
+    it 'is forbidden for computacenter users' do
+      expect {
+        put :update, params: {
+          responsible_body_id: responsible_body.id,
+          id: existing_user.id,
+          user: {
+            full_name: 'someone_else',
+          },
+        }
+      }.to be_forbidden_for(create(:computacenter_user))
+    end
+  end
+
+  describe '#destroy' do
+    context 'for support users' do
+      before do
+        sign_in_as dfe_user
+      end
+
+      it 'sets user deleted_at timestamp' do
+        delete :destroy, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
+        expect(existing_user.reload.deleted_at).to be_present
+      end
+
+      it 'redirects back to the RB' do
+        delete :destroy, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
+        expect(response).to redirect_to(support_responsible_body_path(responsible_body))
+      end
     end
 
-    it 'redirects back to the RB' do
-      delete :destroy, params: { responsible_body_id: rb.id, id: user.id }
-      expect(response).to redirect_to(support_responsible_body_path(rb))
+    context 'for computacenter users' do
+      it 'is forbidden' do
+        expect {
+          delete :destroy, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
+        }.to be_forbidden_for(create(:computacenter_user))
+      end
     end
   end
 end

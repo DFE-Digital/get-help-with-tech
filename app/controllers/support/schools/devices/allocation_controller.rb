@@ -29,7 +29,9 @@ private
 
   def set_school_and_allocation
     @school = School.find_by_urn(params[:school_urn])
+    authorize @school, :show?
     @allocation = SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: device_type)
+    authorize @allocation
   end
 
   def allocation_params

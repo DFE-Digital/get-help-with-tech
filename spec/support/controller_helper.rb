@@ -13,3 +13,27 @@ end
 RSpec.configure do |c|
   c.include ControllerHelper, type: :controller
 end
+
+RSpec::Matchers.define :be_forbidden_for do |user|
+  match do |actual|
+    sign_in_as user
+
+    actual.call
+
+    response.status == 403
+  end
+
+  supports_block_expectations
+end
+
+RSpec::Matchers.define :receive_status_ok_for do |user|
+  match do |actual|
+    sign_in_as user
+
+    actual.call
+
+    response.status == 200
+  end
+
+  supports_block_expectations
+end

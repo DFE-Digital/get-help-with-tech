@@ -1,16 +1,18 @@
 class Support::SchoolsController < Support::BaseController
+  before_action { authorize School }
+
   def search
     @search_form = BulkUrnSearchForm.new
   end
 
   def results
     @search_form = BulkUrnSearchForm.new(search_params)
-    @schools = @search_form.schools.includes(:preorder_information, :responsible_body)
+    @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
   end
 
   def show
     @school = School.find_by!(urn: params[:urn])
-    @users = @school.users.safe_to_show_to(@current_user).not_deleted
+    @users = policy_scope(@school.users).not_deleted
     @email_audits = @school.email_audits.order(created_at: :desc)
   end
 
