@@ -96,7 +96,7 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
     end
 
-    it 'shows the chromebook details' do
+    it 'shows the chromebook details and allows them to be edited' do
       expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we will order Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
@@ -108,6 +108,29 @@ describe Support::SchoolDetailsSummaryListComponent do
 
     it 'does not show the school contact even if the school contact is set' do
       expect(result.css('dl').text).not_to include('School contact')
+    end
+  end
+
+  context 'when a computacenter user is the viewer' do
+    subject(:result) { render_inline(described_class.new(school: school, viewer: build(:computacenter_user))) }
+
+    before do
+      create(:preorder_information,
+             school: school,
+             who_will_order_devices: :responsible_body,
+             school_or_rb_domain: 'school.domain.org',
+             recovery_email_address: 'admin@recovery.org',
+             will_need_chromebooks: 'yes')
+    end
+
+    it 'shows the chromebook details and allows them to be edited' do
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we will order Chromebooks')
+      expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
+      expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
+
+      expect(action_for_row(result, 'Ordering Chromebooks?')).to be_present
+      expect(action_for_row(result, 'Domain')).to be_present
+      expect(action_for_row(result, 'Recovery email')).to be_present
     end
   end
 

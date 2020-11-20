@@ -1,6 +1,6 @@
 class Support::Schools::Devices::ChromebooksController < Support::BaseController
   before_action :set_school
-  before_action { authorize PreorderInformation }
+  before_action { authorize :chromebook }
 
   def edit
     @chromebook_information_form = ChromebookInformationForm.new(
