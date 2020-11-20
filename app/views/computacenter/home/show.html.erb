@@ -28,10 +28,12 @@
 
     <p class="govuk-body">View details of schools with that can place orders.</p>
 
-    <h2 class="govuk-heading-m">
-      <%= govuk_link_to 'Support home', support_home_path %>
-    </h2>
+    <% if policy(:support).readable? %>
+      <h2 class="govuk-heading-m">
+        <%= govuk_link_to 'Support home', support_home_path %>
+      </h2>
 
-    <p class="govuk-body">Use this section to browse responsible bodies, find users and find schools.</p>
+      <p class="govuk-body">Use this section to browse responsible bodies, find users and find schools.</p>
+    <% end %>
   </div>
 </div>
