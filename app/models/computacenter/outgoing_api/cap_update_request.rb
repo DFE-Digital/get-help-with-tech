@@ -20,7 +20,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
     @payload_id ||= SecureRandom.uuid
     @body = construct_body
 
-    @logger.debug("POSTing to Computacenter, payload_id: #{@payload_id}, body: \n#{@body}")
+    @logger.info("POSTing to Computacenter, payload_id: #{@payload_id}, body: \n#{@body}")
     @response = HTTP.basic_auth(user: @username, pass: @password)
                     .post(@endpoint, body: @body)
     handle_response!
@@ -28,7 +28,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
 
   def handle_response!
     response_body = @response.body.to_s
-    @logger.debug("Response from Computacenter: \n#{response_body}")
+    @logger.info("Response from Computacenter: \n#{response_body}")
     unless success?
       raise(
         Computacenter::OutgoingAPI::Error.new(cap_update_request: self),
