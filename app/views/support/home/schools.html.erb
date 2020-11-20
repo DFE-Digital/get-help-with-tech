@@ -16,12 +16,14 @@
       <%= govuk_link_to 'Find schools', search_support_schools_path %>
     </h2>
 
-    <p class="govuk-body">Use this section to find one or more schools by URN
+    <p class="govuk-body">Use this section to find one or more schools by URN.</p>
 
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to 'Enable orders for many schools', devices_enable_orders_for_many_schools_support_schools_path %>
-    </h2>
+    <% if policy(School).edit? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'Enable orders for many schools', devices_enable_orders_for_many_schools_support_schools_path %>
+      </h2>
 
-    <p class="govuk-body">Use this section to allow schools to order their full allocation</p>
+      <p class="govuk-body">Use this section to allow schools to order their full allocation</p>
+    <% end %>
   </div>
 </div>
