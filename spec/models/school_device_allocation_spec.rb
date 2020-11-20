@@ -87,13 +87,19 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     let(:responsible_body) { create(:trust, :manages_centrally) }
     let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
-    subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 100, school: school) }
+    subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 120, school: school) }
 
     before do
       allocation
+      school.preorder_information.responsible_body_will_order_devices!
       responsible_body.add_school_to_virtual_cap_pools!(school)
-      responsible_body.std_device_pool.update!(cap: 256, devices_ordered: 145)
+      responsible_body.std_device_pool.update!(allocation: 300, cap: 256, devices_ordered: 145)
       allocation.reload
+    end
+
+    it ':allocation refers to the pool allocation instead of local version' do
+      expect(allocation.allocation).to eq(300)
+      expect(allocation.raw_allocation).to eq(120)
     end
 
     it ':cap refers to the pool cap instead of local version' do
@@ -109,6 +115,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     it 'propagates changes up to the pool' do
       allocation.update!(allocation: 400, cap: 300, devices_ordered: 200)
       responsible_body.std_device_pool.reload
+      expect(responsible_body.std_device_pool.allocation).to eq(400)
       expect(responsible_body.std_device_pool.cap).to eq(300)
       expect(responsible_body.std_device_pool.devices_ordered).to eq(200)
     end

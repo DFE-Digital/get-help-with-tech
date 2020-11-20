@@ -67,6 +67,19 @@ class SchoolDeviceAllocation < ApplicationRecord
     self[:devices_ordered]
   end
 
+  def allocation
+    if FeatureFlag.active? :virtual_caps
+      school_virtual_cap&.allocation || super
+    else
+      Rails.logger.info("Virtual allocation: #{school_virtual_cap&.allocation}") if is_in_virtual_cap_pool?
+      super
+    end
+  end
+
+  def raw_allocation
+    self[:allocation]
+  end
+
   def is_in_virtual_cap_pool?
     school_virtual_cap.present?
   end
