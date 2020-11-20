@@ -97,6 +97,12 @@ private
   end
 
   def remove_change_links_if_read_only(row)
-    Pundit.policy(viewer, @school).edit? ? row : row.except(:change_path, :action, :action_path)
+    if row.in?(chromebook_rows_if_needed) && Pundit.policy(viewer, :chromebook).edit?
+      row
+    elsif Pundit.policy(viewer, @school).edit?
+      row
+    else
+      row.except(:change_path, :action, :action_path)
+    end
   end
 end
