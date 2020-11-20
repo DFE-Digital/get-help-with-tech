@@ -30,7 +30,7 @@ class NavComponent < ViewComponent::Base
     if @user&.is_support?
       support_links
     elsif @user&.is_computacenter?
-      computacenter_links
+      computacenter_links + support_links
     elsif @user&.is_mno_user?
       mno_links
     elsif @user&.is_responsible_body_user?
