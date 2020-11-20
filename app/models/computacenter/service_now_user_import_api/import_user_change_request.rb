@@ -17,7 +17,7 @@ module Computacenter
       def post!
         @body = construct_body
 
-        @logger.debug("POSTing to Computacenters' ServiceNow, endpoint: #{@endpoint}, body: \n#{@body}")
+        @logger.info("POSTing to Computacenters' ServiceNow, endpoint: #{@endpoint}, body: \n#{@body}")
         @response = HTTP.basic_auth(user: @username, pass: @password)
                         .post(@endpoint, body: @body)
         handle_response!
@@ -35,7 +35,7 @@ module Computacenter
 
       def handle_response!
         response_body = @response.body.to_s
-        @logger.debug("Response from Computacenter: \n#{response_body}")
+        @logger.info("Response from Computacenter: \n#{response_body}")
         unless success?
           raise(
             Computacenter::ServiceNowUserImportAPI::Error.new(import_user_change_request: self),
