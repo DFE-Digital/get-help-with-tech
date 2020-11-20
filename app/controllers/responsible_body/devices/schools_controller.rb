@@ -3,6 +3,7 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseControl
     @schools = @responsible_body.schools
                                 .includes(:preorder_information)
                                 .includes(:std_device_allocation)
+                                .gias_status_open
                                 .order(name: :asc)
   end
 

@@ -20,7 +20,7 @@ class BulkUrnSearchForm
   end
 
   def schools
-    @schools ||= School.where(urn: array_of_urns)
+    @schools ||= School.gias_status_open.where(urn: array_of_urns)
   end
 
   def missing_urns
