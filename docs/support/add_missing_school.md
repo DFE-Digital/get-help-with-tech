@@ -9,7 +9,7 @@ ss = DataStage::School.find_by(urn: 123456)
 Check that the responsible body exists (if it does not then that will need to be added first)
 
 ```ruby
-t = ResponsibleBody.find_by(name: ss.responsible_body_name)
+ss.responsible_body
 ```
 
 Add the school using the `SchoolUpdateService`
@@ -32,7 +32,7 @@ Check whether the school was added as the result of 'closing' and 'reopening' an
 ss.school_links
 ```
 
-If there's a predecessor link, look up the school using the`link_urn` and if it exists in the system check its device allocations
+If there’s a predecessor link, look up the school using the `link_urn` and if it exists in the system check its device allocations:
 
 ```ruby
 School.find_by(urn: 123436)&.device_allocations
@@ -56,7 +56,7 @@ If there is an existing allocation, move the values to the new school (I've only
 
 If you change/move the allocation you need to inform Charlotte/Anya know so that the allocations spreadsheet can be updated.
 
-If there were no links and the school is in the allocations spreadsheet, use the allocation from the there and update the `std_device_allocation.allocation`with the value.
+If there were no links and the school is in the allocations spreadsheet, use the allocation from the there and update the `std_device_allocation.allocation` with the value.
 
 #### Moving Users
 

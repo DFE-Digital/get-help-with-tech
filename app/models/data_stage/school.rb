@@ -1,6 +1,13 @@
 class DataStage::School < ApplicationRecord
   self.table_name = 'staged_schools'
 
+  RB_NAME_MAP = {
+    'Bristol, City of' => 'City of Bristol',
+    'Dorset' => 'Dorset Council',
+    'Herefordshire, County of' => 'Herefordshire',
+    'Kingston upon Hull, City of' => 'Kingston upon Hull',
+  }.freeze
+
   has_many :school_links, dependent: :destroy, class_name: 'DataStage::SchoolLink',
                           foreign_key: :staged_school_id
 
@@ -31,4 +38,22 @@ class DataStage::School < ApplicationRecord
     special: 'special',
     other_type: 'other_type',
   }, _suffix: true
+
+  def responsible_body
+    ResponsibleBody.find_by(name: translated_responsible_body_name)
+  end
+
+  def staged_attributes
+    Rails.logger.error("Did not find responsible body: #{responsible_body_name}") if responsible_body.blank?
+
+    attributes
+      .except('id', 'responsible_body_name', 'created_at', 'updated_at')
+      .merge(responsible_body: responsible_body)
+  end
+
+private
+
+  def translated_responsible_body_name
+    RB_NAME_MAP.fetch(responsible_body_name, responsible_body_name)
+  end
 end
