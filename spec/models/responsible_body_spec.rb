@@ -271,6 +271,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
     before do
       schools.each do |s|
+        s.preorder_information.responsible_body_will_order_devices!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
       end
@@ -279,8 +280,10 @@ RSpec.describe ResponsibleBody, type: :model do
     it 'adds the schools cap and devices_ordered to the relevant pool' do
       schools.each { |s| responsible_body.add_school_to_virtual_cap_pools!(s) }
       responsible_body.reload
+      expect(responsible_body.std_device_pool.allocation).to eq(30)
       expect(responsible_body.std_device_pool.cap).to eq(30)
       expect(responsible_body.std_device_pool.devices_ordered).to eq(6)
+      expect(responsible_body.coms_device_pool.allocation).to eq(60)
       expect(responsible_body.coms_device_pool.cap).to eq(15)
       expect(responsible_body.coms_device_pool.devices_ordered).to eq(9)
     end
@@ -298,6 +301,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
     before do
       schools.each do |s|
+        s.preorder_information.responsible_body_will_order_devices!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
         responsible_body.add_school_to_virtual_cap_pools!(s)
