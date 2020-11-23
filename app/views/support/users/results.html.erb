@@ -39,7 +39,7 @@
     <ul class="govuk-list search-results">
       <% @results.each do |user| %>
         <li>
-          <%= render Support::UserSearchResultComponent.new(user) %>
+          <%= render Support::UserSearchResultComponent.new(user: user, current_user: current_user) %>
         </li>
       <%- end %>
     </ul>

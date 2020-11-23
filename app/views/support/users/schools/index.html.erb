@@ -1,0 +1,56 @@
+<%- title = t('page_titles.support.users.schools.index') %>
+<% content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', associated_organisations_support_user_path(@user), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @user.full_name %></span>
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">
+      Schools matching <q><%= @form.name_or_urn %></q>
+    </h2>
+
+    <%- if @schools.present? %>
+      <table class="govuk-table schools">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name and URN</th>
+            <th scope="col" class="govuk-table__header">Responsible body</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @schools.each do |school| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %>
+                <br>
+                <%= school.type_label %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%- if @user.school_ids.include?(school.id) %>
+                  (already associated)
+                <%- else %>
+                  <%= govuk_button_to('Associate', support_user_schools_path(urn: school.urn, id: @user.id), method: :post) %>
+                <%- end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <%- else %>
+      <p class="govuk-body">(none matching)</p>
+    <%- end %>
+  </div>
+</div>
