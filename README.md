@@ -27,6 +27,27 @@ For performing releases:
 4. Run `bundle exec rails server` to launch the app on http://localhost:3000
 5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
+### Setting up some development data
+
+There are several tasks you can run to get schools and responsible bodies:
+
+- Run `bundle exec rake import:responsible_bodies` to import local authorities and trusts
+- Run `bundle exec rake import:schools` to import schools into staging area
+- Then open up a rails console with `bundle exec rails c`
+- Run `service = SchoolUpdateService.new; DataStage::School.all.each { |staged| puts "importing #{staged.urn}..."; service.send(:create_school, staged) }` to convert staged schools into schools
+
+### Setting up GOV.UK Notify
+
+- Ask to be invited to GOV.UK Notify by another team member
+- Create yourself an API key with permissions `Test – pretends to send messages`
+- Run `echo "GHWT__GOVUK_NOTIFY__API_KEY: YOUR_API_KEY_GOES_HERE" > .env` so the local app uses this new key
+
+### Creating a support user
+
+- Open up a rails console with `bundle exec rails c`
+- Then run `User.create!(full_name: 'Your Name', email_address: 'your.name@example.com', is_support: true)`
+
+You can then login with your new support user, check the rails logs for the magic link that you must use to log in as the new user.
 
 ## Running specs
 ```
