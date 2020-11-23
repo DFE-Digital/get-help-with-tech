@@ -5,11 +5,7 @@ class SchoolUpdateService
 
     # attribute updates for schools
     DataStage::School.updated_since(last_update).find_each(batch_size: 100) do |staged_school|
-      school = School.find_by(urn: staged_school.urn)
-
-      next unless school
-
-      update_school(school, staged_school)
+      update_school(staged_school) if staged_school.counterpart_school.present?
     end
 
     DataStage::DataUpdateRecord.updated!(:schools)
@@ -17,9 +13,8 @@ class SchoolUpdateService
 
 private
 
-  def update_school(school, staged_school)
-    # update school details
-    school.update!(staged_school.staged_attributes)
+  def update_school(staged_school)
+    staged_school.counterpart_school.update!(staged_school.staged_attributes)
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end

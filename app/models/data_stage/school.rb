@@ -11,6 +11,10 @@ class DataStage::School < ApplicationRecord
   has_many :school_links, dependent: :destroy, class_name: 'DataStage::SchoolLink',
                           foreign_key: :staged_school_id
 
+  has_one :counterpart_school, class_name: '::School',
+                               foreign_key: :urn,
+                               primary_key: :urn
+
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
   validates :responsible_body_name, presence: true
