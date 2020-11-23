@@ -11,14 +11,6 @@ class SchoolUpdateService
     DataStage::DataUpdateRecord.updated!(:schools)
   end
 
-private
-
-  def update_school(staged_school)
-    staged_school.counterpart_school.update!(staged_school.staged_attributes)
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error(e.record.errors)
-  end
-
   def create_school(staged_school)
     Rails.logger.info("Adding school #{staged_school.urn} #{staged_school.name} (#{staged_school.status})")
     school = School.create!(staged_school.staged_attributes)
@@ -27,6 +19,14 @@ private
       school.device_allocations.create!(device_type: 'std_device', allocation: 0)
     end
     school
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error(e.record.errors)
+  end
+
+private
+
+  def update_school(staged_school)
+    staged_school.counterpart_school.update!(staged_school.staged_attributes)
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end

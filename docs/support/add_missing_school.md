@@ -12,14 +12,10 @@ Check that the responsible body exists (if it does not then that will need to be
 ss.responsible_body
 ```
 
-Add the school using the `SchoolUpdateService`
+Add the school:
 
 ```ruby
-sus = SchoolUpdateService.new
-```
-
-```ruby
-s = sus.send(:create_school, ss)
+SchoolUpdateService.new.create_school(ss)
 ```
 
 This will create the school based on the attributes in the `DataStage::School`. If the responsible body has answered the 'who will order' question, this will also create `preorder_information` and a `std_device_allocation` with a zero allocation.
