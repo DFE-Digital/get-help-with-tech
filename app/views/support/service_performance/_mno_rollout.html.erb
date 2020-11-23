@@ -22,7 +22,7 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.type_label %></td>
         <td class="govuk-table__cell"><%= govuk_link_to school.responsible_body.name, support_responsible_body_path(school.responsible_body) %></td>
-        <td class="govuk-table__cell"><%= pluralize(school.extra_mobile_data_requests.count(:id), 'request') %></td>
+        <td class="govuk-table__cell"><%= pluralize(school.extra_mobile_data_requests.count(:id), 'request').gsub(' ', '&nbsp;').html_safe %></td>
       </tr>
     <% end %>
   </tbody>
