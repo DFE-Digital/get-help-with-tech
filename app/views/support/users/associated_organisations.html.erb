@@ -97,7 +97,7 @@
     <%- end %>
 
     <%= form_for @user_responsible_body_form, url: responsible_bodies_support_user_path(@user), method: :get do |f| %>
-      <%= f.govuk_fieldset legend: { text: 'Associate with a responsible body', size: 'm' } do %>
+      <%= f.govuk_fieldset legend: { text: 'Move to a different responsible body', size: 'm' } do %>
         <%= f.govuk_text_field :name, width: 'one-third' %>
         <%= f.govuk_submit %>
       <%- end %>
