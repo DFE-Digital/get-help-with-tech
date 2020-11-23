@@ -10,7 +10,8 @@ class Support::Users::ResponsibleBodiesController < Support::BaseController
 private
 
   def set_user
-    @user = policy_scope(User).find(params[:id])
+    @user = User.find(params[:id])
+    authorize @user
   end
 
   def user_responsible_body_params(opts = params)

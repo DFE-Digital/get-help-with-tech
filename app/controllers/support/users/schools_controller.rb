@@ -27,7 +27,8 @@ class Support::Users::SchoolsController < Support::BaseController
 private
 
   def set_user
-    @user = policy_scope(User).find(params[:id])
+    @user = User.find(params[:id])
+    authorize @user
   end
 
   def set_school

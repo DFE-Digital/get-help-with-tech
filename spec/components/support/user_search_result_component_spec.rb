@@ -7,8 +7,9 @@ RSpec.describe Support::UserSearchResultComponent do
   let(:st_josephs) { create(:school, name: 'St Joseph’s School') }
   let(:coventry) { create(:local_authority, name: 'Coventry') }
   let(:user) { create(:user, schools: [st_marys, st_josephs], responsible_body: coventry, email_address: 'jsmith@school.sch.uk') }
+  let(:support_user) { create(:support_user) }
 
-  subject { described_class.new(user) }
+  subject { described_class.new(user: user, current_user: support_user) }
 
   it 'renders the user’s email address' do
     expect(rendered_result_text).to include('jsmith@school.sch.uk')
@@ -21,6 +22,20 @@ RSpec.describe Support::UserSearchResultComponent do
   it 'renders links to the school support pages' do
     expect(rendered_result_html).to include(support_school_path(urn: st_marys.urn))
     expect(rendered_result_html).to include(support_school_path(urn: st_josephs.urn))
+  end
+
+  context 'when the current_user is a support user' do
+    it 'renders a Change link for the users associated organisations' do
+      expect(rendered_result_html).to include(associated_organisations_support_user_path(user))
+    end
+  end
+
+  context 'when the current_user is a Computacenter user' do
+    subject { described_class.new(user: user, current_user: create(:computacenter_user)) }
+
+    it 'does not render a Change link for the users associated organisations' do
+      expect(rendered_result_html).not_to include(associated_organisations_support_user_path(user))
+    end
   end
 
   def rendered_result_html
