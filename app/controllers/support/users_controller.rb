@@ -1,6 +1,7 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
+  before_action :set_user, only: %i[associated_organisations update_responsible_body]
   before_action { authorize User }
 
   def search
@@ -21,7 +22,6 @@ class Support::UsersController < Support::BaseController
   end
 
   def associated_organisations
-    @user = User.find(params[:id])
     @schools = @user.schools.order(:name)
     @responsible_body = @user.responsible_body
     @user_responsible_body_form = Support::UserResponsibleBodyForm.new(user: @user)
@@ -29,7 +29,6 @@ class Support::UsersController < Support::BaseController
   end
 
   def update_responsible_body
-    @user = User.find(params[:id])
     @user.update!(responsible_body_id: params[:responsible_body_id])
     flash[:success] = success_message
     redirect_to associated_organisations_support_user_path(@user.id)
@@ -47,5 +46,9 @@ private
     else
       "#{@user.full_name} is no longer associated with a Responsible body"
     end
+  end
+
+  def set_user
+    @user = policy_scope(User).find(params[:id])
   end
 end

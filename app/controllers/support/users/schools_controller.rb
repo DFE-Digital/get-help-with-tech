@@ -1,5 +1,6 @@
 class Support::Users::SchoolsController < Support::BaseController
   before_action :set_user, :set_school
+  before_action { authorize User }
 
   def index
     @form = Support::NewUserSchoolForm.new(user: @user, name_or_urn: user_school_params[:name_or_urn])
@@ -26,8 +27,7 @@ class Support::Users::SchoolsController < Support::BaseController
 private
 
   def set_user
-    # @user = User.safe_to_show_to(@current_user).find(params[:id])
-    @user = User.find(params[:id])
+    @user = policy_scope(User).find(params[:id])
   end
 
   def set_school

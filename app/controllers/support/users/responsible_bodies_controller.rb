@@ -1,5 +1,6 @@
 class Support::Users::ResponsibleBodiesController < Support::BaseController
   before_action :set_user
+  before_action { authorize User }
 
   def index
     @form = Support::UserResponsibleBodyForm.new(user: @user, name: user_responsible_body_params[:name])
@@ -9,7 +10,7 @@ class Support::Users::ResponsibleBodiesController < Support::BaseController
 private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = policy_scope(User).find(params[:id])
   end
 
   def user_responsible_body_params(opts = params)

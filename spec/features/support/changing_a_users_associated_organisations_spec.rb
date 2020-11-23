@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Changing a users associated organisations' do
   let(:support_user) { create(:dfe_user) }
+  let(:computacenter_support_user) { create(:computacenter_user) }
   let(:school_user) { create(:school_user) }
   let(:trust) { create(:trust) }
   let(:trust_school_1) { create(:school, responsible_body: trust, name: 'AAA school') }
@@ -21,6 +22,13 @@ RSpec.feature 'Changing a users associated organisations' do
     when_i_search_for_an_existing_user_by_email
     then_i_see_their_associated_organisations
     and_i_see_a_link_to_change_their_associated_organisations
+  end
+
+  scenario 'a Computacenter support user does not see a Change link next to the users assocations' do
+    given_i_am_logged_in_as_a_computacenter_support_user
+    when_i_search_for_an_existing_user_by_email
+    then_i_see_their_associated_organisations
+    and_i_do_not_see_a_link_to_change_their_associated_organisations
   end
 
   scenario 'clicking the Change link shows the  associated organisations' do
@@ -90,6 +98,10 @@ RSpec.feature 'Changing a users associated organisations' do
     sign_in_as support_user
   end
 
+  def given_i_am_logged_in_as_a_computacenter_support_user
+    sign_in_as computacenter_support_user
+  end
+
   def when_i_search_for_an_existing_user_by_email
     visit '/support'
     click_on 'Find users'
@@ -106,6 +118,10 @@ RSpec.feature 'Changing a users associated organisations' do
 
   def and_i_see_a_link_to_change_their_associated_organisations
     expect(results_page.users.first).to have_link('Change')
+  end
+
+  def and_i_do_not_see_a_link_to_change_their_associated_organisations
+    expect(results_page.users.first).not_to have_link('Change')
   end
 
   def and_i_click_the_link_to_change_their_associated_organisations

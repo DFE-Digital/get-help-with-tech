@@ -4,5 +4,8 @@
 
 <%= govuk_summary_list(classes: 'govuk-summary-list--no-border') do |component|
   component.slot(:row, key: 'Email address', value: user.email_address)
-  component.slot(:row, key: 'Associated with', value: unordered_list_of_orgs, action: govuk_link_to('Change', associated_organisations_support_user_path(user)) )
+  component.slot(:row,
+                  key: 'Associated with',
+                  value: unordered_list_of_orgs,
+                  action: (UserPolicy.new(current_user, user).editable? ? govuk_link_to('Change', associated_organisations_support_user_path(user)) : nil) )
 end %>
