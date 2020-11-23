@@ -19,6 +19,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     and_i_follow_links_to_the_service_performance_page
 
     then_i_see_stats_about_extra_mobile_data_requests
+    and_i_see_stats_about_mno_rollout
   end
 
   def given_there_have_been_sign_ins_from_responsible_body_and_mno_users
@@ -34,6 +35,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     rb = local_authority
     school_requester = create(:school_user)
     school = school_requester.school
+    school.update!(mno_feature_flag: true)
 
     create_list(:extra_mobile_data_request, 1,
                 status: :requested,
@@ -87,5 +89,11 @@ RSpec.feature 'Viewing service performance', type: :feature do
   def then_i_see_stats_about_responsible_body_user_engagement
     expect(page).to have_text('2 responsible body users have signed in')
     expect(page).to have_text('1 responsible body')
+  end
+
+  def and_i_see_stats_about_mno_rollout
+    within('#mno-rollout') do
+      expect(page).to have_content('4 requests')
+    end
   end
 end

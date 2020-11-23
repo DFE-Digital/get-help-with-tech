@@ -14,6 +14,7 @@
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name and URN</th>
       <th scope="col" class="govuk-table__header">Responsible body</th>
+      <th scope="col" class="govuk-table__header">Requests</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -21,6 +22,7 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.type_label %></td>
         <td class="govuk-table__cell"><%= govuk_link_to school.responsible_body.name, support_responsible_body_path(school.responsible_body) %></td>
+        <td class="govuk-table__cell"><%= pluralize(school.extra_mobile_data_requests.count(:id), 'request') %></td>
       </tr>
     <% end %>
   </tbody>
