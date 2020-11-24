@@ -23,11 +23,11 @@ class SchoolOrderStateAndCapUpdateService
           # don't send updates as they will happen when the pool is updated and the caps adjusted
           unless allocation.is_in_virtual_pool?
             update_cap_on_computacenter!(allocation.id)
-            notify_computacenter_by_email(allocation.device_type, allocation.cap)
+            notify_computacenter_by_email(@school, allocation.device_type, allocation.cap)
           end
         else
           update_cap_on_computacenter!(allocation.id)
-          notify_computacenter_by_email(allocation.device_type, allocation.cap)
+          notify_computacenter_by_email(@school, allocation.device_type, allocation.cap)
         end
       end
     end

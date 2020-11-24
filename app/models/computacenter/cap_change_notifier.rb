@@ -4,8 +4,8 @@ module Computacenter
       Settings.computacenter.outgoing_api.endpoint.present?
     end
 
-    def notify_computacenter_by_email(device_type, new_cap_value)
-      mailer = ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
+    def notify_computacenter_by_email(school, device_type, new_cap_value)
+      mailer = ComputacenterMailer.with(school: school, new_cap_value: new_cap_value)
 
       if device_type == 'std_device'
         mailer.notify_of_devices_cap_change.deliver_later
