@@ -1,13 +1,6 @@
 class DataStage::School < ApplicationRecord
   self.table_name = 'staged_schools'
 
-  RB_NAME_MAP = {
-    'Bristol, City of' => 'City of Bristol',
-    'Dorset' => 'Dorset Council',
-    'Herefordshire, County of' => 'Herefordshire',
-    'Kingston upon Hull, City of' => 'Kingston upon Hull',
-  }.freeze
-
   has_many :school_links, dependent: :destroy, class_name: 'DataStage::SchoolLink',
                           foreign_key: :staged_school_id
 
@@ -44,7 +37,7 @@ class DataStage::School < ApplicationRecord
   }, _suffix: true
 
   def responsible_body
-    ResponsibleBody.find_by(name: translated_responsible_body_name)
+    DataStage::ResponsibleBody.find_by_name(responsible_body_name)
   end
 
   def staged_attributes
@@ -53,11 +46,5 @@ class DataStage::School < ApplicationRecord
     attributes
       .except('id', 'responsible_body_name', 'created_at', 'updated_at')
       .merge(responsible_body: responsible_body)
-  end
-
-private
-
-  def translated_responsible_body_name
-    RB_NAME_MAP.fetch(responsible_body_name, responsible_body_name)
   end
 end
