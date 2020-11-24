@@ -271,8 +271,11 @@ ActiveRecord::Schema.define(version: 2020_12_10_140102) do
     t.string "status", default: "open", null: false
     t.boolean "mno_feature_flag", default: false
     t.boolean "increased_allocations_feature_flag", default: false
+    t.string "type", default: "CompulsorySchool", null: false
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
+    t.index ["type", "id"], name: "index_schools_on_type_and_id"
+    t.index ["type"], name: "index_schools_on_type"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 

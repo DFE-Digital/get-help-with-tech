@@ -1,0 +1,2 @@
+class CompulsorySchool < School
+end
