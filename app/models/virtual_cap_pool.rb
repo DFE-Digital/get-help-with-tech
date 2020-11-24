@@ -1,4 +1,6 @@
 class VirtualCapPool < ApplicationRecord
+  include Computacenter::CapChangeNotifier
+
   belongs_to :responsible_body
   has_many :school_virtual_caps, dependent: :destroy
   has_many :school_device_allocations, through: :school_virtual_caps
@@ -18,7 +20,7 @@ class VirtualCapPool < ApplicationRecord
     self.devices_ordered = school_device_allocations.sum(:devices_ordered)
     self.allocation = school_device_allocations.sum(:allocation)
     save!
-    # TODO: trigger events for CC here?
+    notify_computacenter!
   end
 
   def add_school!(school)
@@ -45,7 +47,18 @@ private
       update!(cap: cap + device_allocation.raw_cap,
               devices_ordered: devices_ordered + device_allocation.raw_devices_ordered,
               allocation: allocation + device_allocation.raw_allocation)
-      # TODO: trigger events for CC here?
+      notify_computacenter!
+    end
+  end
+
+  def notify_computacenter!
+    if FeatureFlag.active? :virtual_caps
+      if notify_computacenter_of_cap_changes?
+        allocation_ids = school_device_allocations.joins(:school).where(schools: { order_state: %w[can_order can_order_for_specific_circumstances]}).pluck(:id)
+        update_cap_on_computacenter!(allocation_ids)
+      end
+    else
+      Rails.logger.info("VirtualCapPool #{id}: (not) Notifying CC of changes (cap: #{cap}, devices_ordered: #{devices_ordered})")
     end
   end
 end

@@ -3,6 +3,6 @@ xml.CapAdjustmentRequest(payloadID: assigns[:payload_id], dateTime: assigns[:tim
   assigns[:allocations].each do |allocation|
     xml.Record(capType: allocation.computacenter_cap_type,
                shipTo: allocation.school.computacenter_reference,
-               capAmount: allocation.cap)
+               capAmount: allocation.computacenter_cap)
   end
 end

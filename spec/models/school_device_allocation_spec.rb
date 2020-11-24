@@ -83,33 +83,55 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     end
   end
 
+  describe '#allocation' do
+    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+
+    it 'refers to the local allocation' do
+      expect(allocation.allocation).to eq(allocation.raw_allocation)
+    end
+  end
+
+  describe '#cap' do
+    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+
+    it 'refers to the local cap' do
+      expect(allocation.cap).to eq(allocation.raw_cap)
+    end
+  end
+
+  describe '#devices_ordered' do
+    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+
+    it 'refers to the local devices_ordered' do
+      expect(allocation.devices_ordered).to eq(allocation.raw_devices_ordered)
+    end
+  end
+
+  describe '#computacenter_cap' do
+    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+
+    it 'returns the cap amount for computacenter' do
+      expect(allocation.computacenter_cap).to eq(allocation.raw_cap)
+    end
+  end
+
   context 'when in a virtual pool', with_feature_flags: { virtual_caps: 'active' } do
     let(:responsible_body) { create(:trust, :manages_centrally) }
     let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
+    let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
     subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 120, school: school) }
 
     before do
+      allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
+      allow(mock_request).to receive(:post!).and_return(response)
+
       allocation
       school.preorder_information.responsible_body_will_order_devices!
       responsible_body.add_school_to_virtual_cap_pools!(school)
       responsible_body.std_device_pool.update!(allocation: 300, cap: 256, devices_ordered: 145)
       allocation.reload
-    end
-
-    it ':allocation refers to the pool allocation instead of local version' do
-      expect(allocation.allocation).to eq(300)
-      expect(allocation.raw_allocation).to eq(120)
-    end
-
-    it ':cap refers to the pool cap instead of local version' do
-      expect(allocation.cap).to eq(256)
-      expect(allocation.raw_cap).to eq(100)
-    end
-
-    it ':devices_ordered refers to the pool devices_ordered instead of the local version' do
-      expect(allocation.devices_ordered).to eq(145)
-      expect(allocation.raw_devices_ordered).to eq(87)
     end
 
     it 'propagates changes up to the pool' do
@@ -118,6 +140,46 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       expect(responsible_body.std_device_pool.allocation).to eq(400)
       expect(responsible_body.std_device_pool.cap).to eq(300)
       expect(responsible_body.std_device_pool.devices_ordered).to eq(200)
+    end
+
+    it 'receives cap updates from the pool' do
+      allocation.update!(allocation: 400, cap: 300, devices_ordered: 200)
+      allocation.reload
+      expect(allocation.cap_update_calls).to be_present
+      expect(allocation.cap_update_calls.last.request_body).to include('test-request')
+      expect(allocation.cap_update_calls.last.response_body).to include('test-response')
+    end
+
+    describe '#allocation' do
+      it 'refers to the pool allocation instead of local version' do
+        pool = responsible_body.std_device_pool
+        expect(allocation.allocation).to eq(pool.allocation)
+        expect(allocation.raw_allocation).to eq(120)
+      end
+    end
+
+    describe '#cap' do
+      it 'refers to the pool cap instead of local version' do
+        pool = responsible_body.std_device_pool
+        expect(allocation.cap).to eq(pool.cap)
+        expect(allocation.raw_cap).to eq(100)
+      end
+    end
+
+    describe '#devices_ordered' do
+      it 'refers to the pool devices_ordered instead of the local version' do
+        pool = responsible_body.std_device_pool
+        expect(allocation.devices_ordered).to eq(pool.devices_ordered)
+        expect(allocation.raw_devices_ordered).to eq(87)
+      end
+    end
+
+    describe '#computacenter_cap' do
+      it 'returns an adjusted cap amount for computacenter' do
+        pool = responsible_body.std_device_pool
+        expected = pool.cap - pool.devices_ordered + allocation.raw_devices_ordered
+        expect(allocation.computacenter_cap).to eq(expected)
+      end
     end
   end
 end
