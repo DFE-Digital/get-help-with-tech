@@ -8,7 +8,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
   describe '#start' do
     context 'before techsource maintenance window' do
       before do
-        Timecop.travel(Time.zone.local(2020, 9, 25, 23, 0, 0))
+        Timecop.travel(Time.zone.local(2020, 11, 27, 23, 0, 0))
         sign_in_as user
       end
 
@@ -20,7 +20,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
 
     context 'during techsource maintenance window' do
       before do
-        Timecop.travel(Time.zone.local(2020, 9, 26, 8, 0, 0))
+        Timecop.travel(Time.zone.local(2020, 11, 28, 8, 0, 0))
         sign_in_as user
       end
 
@@ -37,7 +37,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
 
     context 'after techsource maintenance window' do
       before do
-        Timecop.travel(Time.zone.local(2020, 9, 27, 3, 1, 0))
+        Timecop.travel(Time.zone.local(2020, 11, 29, 3, 1, 0))
         sign_in_as user
       end
 
