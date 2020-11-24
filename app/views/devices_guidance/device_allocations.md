@@ -15,7 +15,7 @@ You’ll be able to order your current allocation during term time when you repo
 
 If your school is supporting a disadvantaged child in any year group who has been advised not to attend school because they (or someone they live with) is clinically extremely vulnerable, you should request devices to lend to these children by emailing [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk).
 
-If the number of children unable to attend school and unable to access a device through other means is more than your allocation at that time (including if your school is fully closed), you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to request more. Requests will be reviewed on a case-by-case basis and allocations may be increased in exceptional circumstances.
+If the number of children unable to attend school and unable to access a device through other means is more than your allocation at that time (including if your school is fully closed), you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to request more.
 
 We’ll ask you for some information about the situation, including the information listed below. Before querying your allocation, you should make sure that children cannot access a device privately, or by being lent a device already owned by your school.
 
