@@ -12,7 +12,7 @@ private
   end
 
   def set_school
-    @school = @current_user.schools.find_by!(urn: params[:urn])
+    @school = @current_user.schools.where_urn_or_ukprn(params[:urn].to_i).first!
   end
 
   def require_completed_welcome_wizard!

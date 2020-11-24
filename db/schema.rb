@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 2020_12_10_140102) do
   end
 
   create_table "schools", force: :cascade do |t|
-    t.integer "urn", null: false
+    t.integer "urn"
     t.string "name", null: false
     t.string "computacenter_reference"
     t.bigint "responsible_body_id"
@@ -272,10 +272,12 @@ ActiveRecord::Schema.define(version: 2020_12_10_140102) do
     t.boolean "mno_feature_flag", default: false
     t.boolean "increased_allocations_feature_flag", default: false
     t.string "type", default: "CompulsorySchool", null: false
+    t.integer "ukprn"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["type", "id"], name: "index_schools_on_type_and_id"
     t.index ["type"], name: "index_schools_on_type"
+    t.index ["ukprn"], name: "index_schools_on_ukprn", unique: true
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
