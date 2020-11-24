@@ -65,7 +65,7 @@ class SchoolDeviceAllocation < ApplicationRecord
         super
       end
     else
-      Rails.logger.info("Virtual cap: #{school_virtual_cap.adjusted_cap_for_school}") if is_in_virtual_cap_pool?
+      Rails.logger.info("Virtual cap: #{school_virtual_cap.cap}") if is_in_virtual_cap_pool?
       super
     end
   end

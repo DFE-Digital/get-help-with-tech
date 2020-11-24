@@ -38,6 +38,8 @@ class SchoolOrderStateAndCapUpdateService
 
     school&.preorder_information&.refresh_status!
 
+    add_school_to_virtual_cap_pool_if_eligible
+
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
@@ -45,20 +47,6 @@ class SchoolOrderStateAndCapUpdateService
   end
 
 private
-
-  # def notify_computacenter_of_cap_changes?
-  #   Settings.computacenter.outgoing_api.endpoint.present?
-  # end
-
-  # def notify_computacenter_by_email(device_type, new_cap_value)
-  #   mailer = ComputacenterMailer.with(school: @school, new_cap_value: new_cap_value)
-  #
-  #   if device_type == 'std_device'
-  #     mailer.notify_of_devices_cap_change.deliver_later
-  #   else
-  #     mailer.notify_of_comms_cap_change.deliver_later
-  #   end
-  # end
 
   def update_order_state!(order_state)
     @school.update!(order_state: order_state)
@@ -73,15 +61,16 @@ private
     allocation
   end
 
-  # def update_cap_on_computacenter!(allocation_id)
-  #   api_request = Computacenter::OutgoingAPI::CapUpdateRequest.new(allocation_ids: [allocation_id])
-  #   response = api_request.post!
-  #   SchoolDeviceAllocation.where(id: allocation_id).update_all(
-  #     cap_update_request_timestamp: api_request.timestamp,
-  #     cap_update_request_payload_id: api_request.payload_id,
-  #   )
-  #   allocation = SchoolDeviceAllocation.find_by(id: allocation_id)
-  #   allocation.cap_update_calls << CapUpdateCall.new(request_body: api_request.body, response_body: response.body) if allocation
-  #   response
-  # end
+  def add_school_to_virtual_cap_pool_if_eligible
+    if @school.can_order? || @school.can_order_for_specific_circumstances? &&
+        @school.preorder_information.responsible_body_will_order_devices?
+      unless @school.device_allocations.first.is_in_virtual_cap_pool?
+        begin
+          @school.responsible_body.add_school_to_virtual_cap_pools!(@school)
+        rescue VirtualCapPoolError
+          Rails.logger.error("Failed to add school to virtual pool (urn: #{@school.urn})")
+        end
+      end
+    end
+  end
 end

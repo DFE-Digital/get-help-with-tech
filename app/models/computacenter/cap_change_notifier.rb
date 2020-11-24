@@ -19,7 +19,7 @@ module Computacenter
       api_request = Computacenter::OutgoingAPI::CapUpdateRequest.new(allocation_ids: ids)
       response = api_request.post!
 
-      SchoolDeviceAllocation.where(id: ids).each do |allocation|
+      SchoolDeviceAllocation.where(id: ids).find_each do |allocation|
         allocation.update!(
           cap_update_request_timestamp: api_request.timestamp,
           cap_update_request_payload_id: api_request.payload_id,
