@@ -42,13 +42,8 @@ private
   end
 
   def add_school_allocation(device_allocation)
-    transaction do
-      school_virtual_caps.create!(school_device_allocation: device_allocation)
-      update!(cap: cap + device_allocation.raw_cap,
-              devices_ordered: devices_ordered + device_allocation.raw_devices_ordered,
-              allocation: allocation + device_allocation.raw_allocation)
-      notify_computacenter!
-    end
+    school_virtual_caps.create!(school_device_allocation: device_allocation)
+    recalculate_caps!
   end
 
   def notify_computacenter!
