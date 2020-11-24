@@ -290,9 +290,12 @@ ActiveRecord::Schema.define(version: 2020_12_16_144840) do
     t.boolean "mno_feature_flag", default: false
     t.string "computacenter_change", default: "none", null: false
     t.boolean "increased_allocations_feature_flag", default: false
+    t.string "type", default: "CompulsorySchool", null: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
+    t.index ["type", "id"], name: "index_schools_on_type_and_id"
+    t.index ["type"], name: "index_schools_on_type"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 

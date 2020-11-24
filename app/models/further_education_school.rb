@@ -1,0 +1,2 @@
+class FurtherEducationSchool < School
+end

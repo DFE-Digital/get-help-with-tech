@@ -1,0 +1,2 @@
+class CompulsorySchoolPolicy < SchoolPolicy
+end
