@@ -270,7 +270,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_144840) do
   end
 
   create_table "schools", force: :cascade do |t|
-    t.integer "urn", null: false
+    t.integer "urn"
     t.string "name", null: false
     t.string "computacenter_reference"
     t.bigint "responsible_body_id"
@@ -291,11 +291,13 @@ ActiveRecord::Schema.define(version: 2020_12_16_144840) do
     t.string "computacenter_change", default: "none", null: false
     t.boolean "increased_allocations_feature_flag", default: false
     t.string "type", default: "CompulsorySchool", null: false
+    t.integer "ukprn"
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["type", "id"], name: "index_schools_on_type_and_id"
     t.index ["type"], name: "index_schools_on_type"
+    t.index ["ukprn"], name: "index_schools_on_ukprn", unique: true
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 

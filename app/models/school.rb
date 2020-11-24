@@ -2,7 +2,8 @@ class School < ApplicationRecord
   has_paper_trail
   include PgSearch::Model
 
-  belongs_to :responsible_body
+  belongs_to :responsible_body, optional: true
+
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
   has_one    :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
   has_one    :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
@@ -17,7 +18,6 @@ class School < ApplicationRecord
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
 
-  validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
   pg_search_scope :matching_name_or_urn, against: %i[name urn], using: { tsearch: { prefix: true } }
@@ -59,6 +59,8 @@ class School < ApplicationRecord
     amended: 'amended',
     closed: 'closed',
   }, _prefix: true
+
+  scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
 
   after_update :maybe_generate_user_changes
 
@@ -159,10 +161,6 @@ class School < ApplicationRecord
     else
       false
     end
-  end
-
-  def to_param
-    urn.to_s
   end
 
   def has_devices_available_to_order?
