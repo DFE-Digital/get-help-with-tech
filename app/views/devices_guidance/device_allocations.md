@@ -7,7 +7,7 @@ The number of devices available to order through the [Get help with technology s
 * free school meals data
 * an estimate of the number of devices a school already has
 
-We've allocated laptops and tablets in line with the data we’re seeing that suggests that most schools have smaller groups of children self-isolating at any one time, rather than closing fully. Schools are able to redistribute devices when children return from self-isolation. This more targeted approach will mean that as many schools and disadvantaged children as possible can benefit from receiving a device if their face-to-face education is disrupted. 
+We’ve allocated laptops and tablets in line with the data we’re seeing that suggests that most schools have smaller groups of children self-isolating at any one time, rather than closing fully. Schools are able to redistribute devices when children return from self-isolation. This more targeted approach will mean that as many schools and disadvantaged children as possible can benefit from receiving a device if their face-to-face education is disrupted.
 
 ## How to query an allocation
 
