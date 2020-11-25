@@ -53,23 +53,23 @@ RSpec.feature 'TechSource availability for responsible body' do
   end
 
   def given_it_is_before_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 9, 25, 23, 0, 0))
+    Timecop.travel(Time.zone.local(2020, 11, 27, 23, 0, 0))
   end
 
   def given_it_is_during_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 9, 26, 8, 0, 0))
+    Timecop.travel(Time.zone.local(2020, 11, 28, 8, 0, 0))
   end
 
   def given_it_is_after_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 9, 27, 3, 1, 0))
+    Timecop.travel(Time.zone.local(2020, 11, 29, 3, 1, 0))
   end
 
   def then_i_see_a_warning_notice
-    expect(page).to have_text('The TechSource website will be closed for maintenance on Saturday 26 September. You can order devices when it reopens on Sunday 27 September.')
+    expect(page).to have_text('The TechSource website will be closed for maintenance on Saturday 28 November. You can order devices when it reopens on Sunday 29 November.')
   end
 
   def then_i_do_not_see_a_warning_notice
-    expect(page).not_to have_text('The TechSource website will be closed for maintenance on Saturday 26 September. You can order devices when it reopens on Sunday 27 September.')
+    expect(page).not_to have_text('The TechSource website will be closed for maintenance on Saturday 28 November. You can order devices when it reopens on Sunday 29 November.')
   end
 
   def when_i_click_the_start_now_button
