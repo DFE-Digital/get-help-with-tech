@@ -10,7 +10,7 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
     end
 
     context 'when a valid authentication token is supplied' do
-      let!(:schools) { create_list(:school, 3, :with_preorder_information, :with_std_device_allocation) }
+      let!(:schools) { create_list(:school, 3, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
 
       before do
         setup_auth_token
@@ -44,6 +44,9 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
       'allocation' => school.std_device_allocation.allocation,
       'cap' => school.std_device_allocation.cap,
       'devices_ordered' => school.std_device_allocation.devices_ordered,
+      'coms_allocation' => school.coms_device_allocation.allocation,
+      'coms_cap' => school.coms_device_allocation.cap,
+      'coms_devices_ordered' => school.coms_device_allocation.devices_ordered,
       'preorder_info_status' => school.preorder_information.status,
       'school_order_state' => school.order_state,
     }
