@@ -129,7 +129,7 @@ RSpec.describe StageSchoolData, type: :model do
           @service.import_school_links
         }.to change { DataStage::SchoolLink.count }.by(2)
 
-        expect(DataStage::SchoolLink.all.map { |sl| [sl.link_urn, sl.link_type] }).to eq([[142_311, 'Successor'], [144_321, 'Successor']])
+        expect(DataStage::SchoolLink.all.map { |sl| [sl.link_urn, sl.link_type] }).to eq([[142_311, 'successor'], [144_321, 'successor']])
       end
     end
   end

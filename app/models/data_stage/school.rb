@@ -40,6 +40,10 @@ class DataStage::School < ApplicationRecord
     DataStage::ResponsibleBody.find_by_name(responsible_body_name)
   end
 
+  def predecessors
+    School.where(urn: school_links.any_predecessor.map(&:link_urn))
+  end
+
   def staged_attributes
     Rails.logger.error("Did not find responsible body: #{responsible_body_name}") if responsible_body.blank?
 
