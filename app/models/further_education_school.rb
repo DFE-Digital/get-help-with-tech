@@ -5,6 +5,10 @@ class FurtherEducationSchool < School
     ukprn.to_s
   end
 
+  def urn
+    ukprn
+  end
+
 private
 
   def generate_fake_ukprn

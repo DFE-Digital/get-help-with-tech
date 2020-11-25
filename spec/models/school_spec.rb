@@ -88,6 +88,12 @@ RSpec.describe School, type: :model do
 
       it { is_expected.to be_blank }
     end
+
+    context 'when phase is nil' do
+      let(:school) { build(:school, establishment_type: :academy, phase: nil) }
+
+      it { is_expected.to be_blank }
+    end
   end
 
   describe '#has_std_device_allocation?' do
