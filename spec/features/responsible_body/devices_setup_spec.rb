@@ -94,7 +94,7 @@ RSpec.feature 'Setting up the devices ordering' do
       given_the_responsible_body_has_decided_to_order_centrally
       when_i_visit_the_responsible_body_homepage
       when_i_follow_the_get_devices_link
-      and_i_choose_to_get_schools_ready
+      and_i_follow_the_list_of_schools_link
       then_i_see_a_list_of_the_schools_i_am_responsible_for
 
       when_i_click_on_the_first_school_name
@@ -202,8 +202,8 @@ RSpec.feature 'Setting up the devices ordering' do
     click_on 'Get laptops and tablets'
   end
 
-  def and_i_choose_to_get_schools_ready
-    click_on 'Get schools ready'
+  def and_i_follow_the_list_of_schools_link
+    click_on 'List of schools'
   end
 
   def then_i_see_guidance_for_a_trust
