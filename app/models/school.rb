@@ -107,7 +107,7 @@ class School < ApplicationRecord
   def type_label
     if special_establishment_type?
       'Special school'
-    elsif !phase_not_applicable?
+    elsif phase && !phase_not_applicable?
       "#{phase.humanize.upcase_first} school"
     else
       ''
