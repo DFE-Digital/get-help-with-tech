@@ -4,6 +4,10 @@ class DataStage::School < ApplicationRecord
   has_many :school_links, dependent: :destroy, class_name: 'DataStage::SchoolLink',
                           foreign_key: :staged_school_id
 
+  has_one :counterpart_school, class_name: '::School',
+                               foreign_key: :urn,
+                               primary_key: :urn
+
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
   validates :responsible_body_name, presence: true
@@ -31,4 +35,16 @@ class DataStage::School < ApplicationRecord
     special: 'special',
     other_type: 'other_type',
   }, _suffix: true
+
+  def responsible_body
+    DataStage::ResponsibleBody.find_by_name(responsible_body_name)
+  end
+
+  def staged_attributes
+    Rails.logger.error("Did not find responsible body: #{responsible_body_name}") if responsible_body.blank?
+
+    attributes
+      .except('id', 'responsible_body_name', 'created_at', 'updated_at')
+      .merge(responsible_body: responsible_body)
+  end
 end
