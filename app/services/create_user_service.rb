@@ -1,10 +1,10 @@
 class CreateUserService
   def self.invite_responsible_body_user(user_params = {})
-    user = User.new(user_params.merge(orders_devices: true))
-    if user.save
-      InviteResponsibleBodyUserMailer.with(user: user).invite_user_email.deliver_later
+    if user_exists?(user_params)
+      invite_existing_user_to_responsible_body!(user_params)
+    else
+      invite_new_user_to_responsible_body!(user_params)
     end
-    user
   end
 
   def self.invite_school_user(user_params = {})
@@ -13,6 +13,10 @@ class CreateUserService
     else
       create_new_school_user!(user_params)
     end
+  end
+
+  def self.user_exists?(user_params)
+    User.where(email_address: user_params[:email_address]).exists?
   end
 
   def self.user_exists_on_other_school?(user_params)
@@ -49,4 +53,26 @@ class CreateUserService
   end
 
   private_class_method :invite_to_additional_school!
+
+  def self.invite_existing_user_to_responsible_body!(user_params)
+    user = User.find_by_email_address(user_params[:email_address])
+    if user.responsible_body_id.present?
+      user.assign_attributes(user_params)
+      user.errors.add(:base, :existing_responsible_body_user)
+      user.errors.add(:email_address, :belongs_to_existing_responsible_body_user)
+    elsif user.update(user_params.select { |key, _value| user.send(key).blank? })
+      InviteExistingUserToResponsibleBodyMailer.with(user: user, responsible_body: user.responsible_body).invite_existing_user_to_responsible_body_email.deliver_later
+    end
+    user
+  end
+
+  private_class_method :invite_existing_user_to_responsible_body!
+
+  def self.invite_new_user_to_responsible_body!(user_params)
+    user = User.new(user_params.merge(orders_devices: true))
+    if user.save
+      InviteResponsibleBodyUserMailer.with(user: user).invite_user_email.deliver_later
+    end
+    user
+  end
 end

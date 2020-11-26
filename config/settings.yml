@@ -42,6 +42,7 @@ govuk_notify:
       mno_not_in_scheme_sms: '401aed7e-83ac-4e90-abac-3e2f9bc45a95'
     devices:
       invite_responsible_body_user: '42e5cd7a-deaa-4234-bdea-db63b7c4ad90'
+      invite_existing_user_to_responsible_body: 'a8fe1f78-85b3-43e8-87b7-77e64fe56fc1'
       nominate_contacts: 'ef964a6f-d984-4f35-a074-6f3cb79bfec7'
       school_nominated_contact: '61eb33fc-87a0-488c-8121-354dd67093ef'
       can_order_devices: '9df2c08a-c457-4b13-9270-c5a20687d168'

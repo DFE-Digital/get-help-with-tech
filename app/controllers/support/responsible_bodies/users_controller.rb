@@ -10,9 +10,9 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
     @user = CreateUserService.invite_responsible_body_user(
       user_params.merge(responsible_body_id: params[:responsible_body_id]),
     )
-    # If anything goes wrong, the service will return a non-persisted user
+    # If anything goes wrong, the service will return a  user
     # object so that we can inspect the errors
-    if @user.persisted?
+    if @user.errors.empty?
       redirect_to return_path
     else
       render :new, status: :unprocessable_entity
