@@ -6,7 +6,7 @@ RSpec.describe CreateUserService do
   describe 'invite_responsible_body_user' do
     let(:trust) { create(:trust) }
 
-    context 'given valid user params' do
+    context 'given valid new user params' do
       let(:valid_params) do
         {
           full_name: 'Vlad Valid',
@@ -56,6 +56,56 @@ RSpec.describe CreateUserService do
         expect(result).to be_a(User)
         expect(result).to have_attributes(invalid_params)
         expect(result.errors.full_messages).not_to be_empty
+      end
+    end
+
+    context 'given an email address that already exists' do
+      let(:valid_params) do
+        {
+          full_name: 'Vlad Valid',
+          email_address: 'existing@user.com',
+          telephone: '01234 567890',
+          responsible_body_id: trust.id,
+        }
+      end
+      let(:result) { CreateUserService.invite_responsible_body_user(valid_params) }
+
+      context 'on a school' do
+        let!(:other_school) { create(:school) }
+        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: other_school) }
+
+        it 'returns the existing user' do
+          expect(result).to be_a(User)
+          expect(result).to eq(existing_user)
+        end
+
+        it 'adds this responsible_body to the existing user' do
+          expect(result.responsible_body).to eq(trust)
+        end
+
+        it 'sends the correct email' do
+          expect { perform_enqueued_jobs { result } }.to change(ActionMailer::Base.deliveries, :size).by(1)
+          expect(last_email.to[0]).to eq(valid_params[:email_address])
+          expect(last_email.header['template-id'].value).to eq(Settings.govuk_notify.templates.devices.invite_existing_user_to_responsible_body)
+        end
+      end
+
+      context 'on a responsible_body' do
+        before { create(:school_user, email_address: 'existing@user.com', responsible_body: create(:trust)) }
+
+        it 'does not create a user with the given params' do
+          expect { result }.not_to change(User, :count)
+        end
+
+        it 'does not send any email' do
+          expect { perform_enqueued_jobs { result } }.not_to change(ActionMailer::Base.deliveries, :size)
+        end
+
+        it 'returns the user unpersisted, with an error on the base' do
+          expect(result).to be_a(User)
+          expect(result).to have_attributes(valid_params)
+          expect(result.errors[:base]).not_to be_empty
+        end
       end
     end
   end
