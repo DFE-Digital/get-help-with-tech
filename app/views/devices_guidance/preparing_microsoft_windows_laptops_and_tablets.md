@@ -28,6 +28,12 @@ Content filtering and remote management will stop working when the licences expi
 
 Microsoft Windows laptops and tablets come with the Windows 10 Education operating system.
 
+#### Issue with updating Windows
+
+Microsoft have identified a bug which causes laptops and tablets running the Windows 10 Pro Education 1909 operating system to appear as ‘non-activated’ when updating to version 2004. To avoid problems with devices supplied by DfE, Microsoft have applied a block to prevent this update taking place until the bug is resolved.
+
+A fix is expected to be released in early 2021 which will be automatically available to devices. For further information on this issue or if you have devices showing as unactivated, please see [Microsoft’s support page](https://support.microsoft.com/en-gb/help/4592045/windows-10-pro-education-device-fails-activation).
+
 ### Security and antivirus
 
 Microsoft Windows devices include the following security and antivirus software:
