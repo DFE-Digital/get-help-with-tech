@@ -105,6 +105,21 @@ ActiveRecord::Schema.define(version: 2020_12_10_140102) do
     t.index ["name"], name: "index_data_update_records_on_name", unique: true
   end
 
+  create_table "delivery_addresses", force: :cascade do |t|
+    t.bigint "school_id"
+    t.string "computacenter_reference"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "address_3"
+    t.string "town"
+    t.string "county"
+    t.string "postcode"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["computacenter_reference"], name: "index_delivery_addresses_on_computacenter_reference"
+    t.index ["school_id"], name: "index_delivery_addresses_on_school_id"
+  end
+
   create_table "email_audits", force: :cascade do |t|
     t.string "message_type", null: false
     t.string "template", null: false
