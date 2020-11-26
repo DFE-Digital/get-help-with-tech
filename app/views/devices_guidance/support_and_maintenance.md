@@ -125,7 +125,7 @@ If you find a fault with the device after the initial warranty support service p
 
 You can contact the manufacturer to ask for an extension to the 12-month manufacturer’s warranty. The management and associated costs of this will be the responsibility of the local authorities and trusts who own the devices.
 
-Please note that SIMs will not work on the day you receive the 4G wireless routers because they will not be activated until the following day. The data allowance will start from this point and will remain active for 6 months. You should wait until the day after you receive the 4G wireless routers before loaning the devices to users.
+Please note that SIMs will not work on the day you receive the 4G wireless routers because they will not be activated until the following day. The data allowance will start from this point. You should wait until the day after you receive the 4G wireless routers before loaning the devices to users.
 
 If your 4G wireless router will not start, please check that it is fully charged.
 
