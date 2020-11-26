@@ -512,6 +512,9 @@ en:
               gte_devices_ordered: can’t be less than devices ordered
         user:
           attributes:
+            base:
+              existing_responsible_body_user:
+                That email address belongs to a user for another responsible body.
             full_name:
               blank: Enter the user’s full name
               length: Enter a name that is between 2 and 1024 characters
@@ -520,6 +523,7 @@ en:
               taken: Email address has already been used
               too_short: Enter an email address that is at least %{count} characters
               invalid: Enter an email address in the correct format, like name@example.com
+              belongs_to_existing_responsible_body_user: Enter an email address for someone who isn't already a user for another responsible body
             orders_devices:
               inclusion: Tell us whether the user will order devices
               user_limit: There are already 3 users who can order devices. Change or remove another user.

@@ -101,10 +101,11 @@ RSpec.describe CreateUserService do
           expect { perform_enqueued_jobs { result } }.not_to change(ActionMailer::Base.deliveries, :size)
         end
 
-        it 'returns the user unpersisted, with an error on the base' do
+        it 'returns the user unpersisted, with errors on the base and the email_address' do
           expect(result).to be_a(User)
           expect(result).to have_attributes(valid_params)
           expect(result.errors[:base]).not_to be_empty
+          expect(result.errors[:email_address]).not_to be_empty
         end
       end
     end

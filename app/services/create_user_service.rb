@@ -58,7 +58,8 @@ class CreateUserService
     user = User.find_by_email_address(user_params[:email_address])
     if user.responsible_body_id.present?
       user.assign_attributes(user_params)
-      user.errors.add(:base, 'That email address is already a user on another responsible body')
+      user.errors.add(:base, :existing_responsible_body_user)
+      user.errors.add(:email_address, :belongs_to_existing_responsible_body_user)
     elsif user.update(user_params.select { |key, _value| user.send(key).blank? })
       InviteExistingUserToResponsibleBodyMailer.with(user: user, responsible_body: user.responsible_body).invite_existing_user_to_responsible_body_email.deliver_later
     end
