@@ -24,6 +24,22 @@ RSpec.describe SchoolDataExporter, type: :model do
       line_count = `wc -l "#{filename}"`.split.first.to_i
       expect(line_count).to eq(School.count + 1)
     end
+
+    it 'exports data correctly' do
+      rows = CSV.read(filename)
+      expect(rows.last).to eql(
+        [
+          school.responsible_body.computacenter_identifier,
+          "#{school.urn} #{school.name}",
+          '',
+          school.delivery_address.address_1,
+          school.delivery_address.address_2,
+          school.delivery_address.address_3,
+          school.delivery_address.town,
+          school.delivery_address.postcode,
+        ],
+      )
+    end
   end
 
   context 'when exporting single academy trusts' do
