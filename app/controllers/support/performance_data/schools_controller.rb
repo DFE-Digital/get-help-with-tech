@@ -5,9 +5,9 @@ class Support::PerformanceData::SchoolsController < Support::PerformanceDataCont
     response.headers['Content-Type'] = 'application/json'
     response.stream.write '['
 
-    school_query.find_each.with_index do |school, index|
+    School.connection.select_all(school_query).each_with_index do |row, index|
       response.stream.write ",\n" unless index.zero?
-      response.stream.write attrs_for(school).to_json
+      response.stream.write row.to_json
     end
 
     response.stream.write ']'
@@ -17,26 +17,36 @@ class Support::PerformanceData::SchoolsController < Support::PerformanceDataCont
 private
 
   def school_query
-    School.includes(:preorder_information, :responsible_body, :std_device_allocation)
-      .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.included_in_performance_analysis)
-  end
+    <<-SQL
+      SELECT  schools.name AS school_name,
+              CAST(schools.urn AS TEXT) AS school_urn,
+              schools.order_state AS school_order_state,
+              responsible_bodies.name AS responsible_body_name,
+              responsible_bodies.gias_id AS responsible_body_gias_id,
+              responsible_bodies.companies_house_number AS responsible_body_companies_house_number,
+              std_device_allocation.allocation,
+              std_device_allocation.cap,
+              std_device_allocation.devices_ordered,
+              coms_device_allocation.allocation AS coms_allocation,
+              coms_device_allocation.cap AS coms_cap,
+              coms_device_allocation.devices_ordered AS coms_devices_ordered,
+              preorder_information.status AS preorder_info_status
 
-  def attrs_for(school)
-    {
-      school_name: school.name,
-      school_urn: school.urn.to_s,
-      responsible_body_name: school.responsible_body.name,
-      responsible_body_gias_id: school.responsible_body.gias_id,
-      responsible_body_companies_house_number: school.responsible_body.companies_house_number,
-      allocation: school.std_device_allocation.allocation,
-      cap: school.std_device_allocation.cap,
-      devices_ordered: school.std_device_allocation.devices_ordered,
-      coms_allocation: school.coms_device_allocation&.allocation,
-      coms_cap: school.coms_device_allocation&.cap,
-      coms_devices_ordered: school.coms_device_allocation&.devices_ordered,
-      preorder_info_status: school.preorder_information&.status,
-      school_order_state: school.order_state,
-    }
+      FROM    schools   INNER JOIN responsible_bodies
+                                ON responsible_bodies.id = schools.responsible_body_id
+                  LEFT OUTER JOIN  preorder_information
+                                ON preorder_information.school_id = schools.id
+                  LEFT OUTER JOIN  school_device_allocations AS std_device_allocation
+                                ON std_device_allocation.school_id = schools.id
+                              AND  std_device_allocation.device_type = 'std_device'
+                  LEFT OUTER JOIN  school_device_allocations AS coms_device_allocation
+                                ON coms_device_allocation.school_id = schools.id
+                              AND  coms_device_allocation.device_type = 'coms_device'
+
+      WHERE  std_device_allocation.cap > 0
+          OR std_device_allocation.allocation > 0
+          OR coms_device_allocation.cap > 0
+          OR coms_device_allocation.allocation > 0
+    SQL
   end
 end
