@@ -1,0 +1,2 @@
+class FurtherEducationSchoolPolicy < SchoolPolicy
+end

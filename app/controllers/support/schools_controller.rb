@@ -27,7 +27,7 @@ class Support::SchoolsController < Support::BaseController
   end
 
   def show
-    @school = School.find_by!(urn: params[:urn])
+    @school = School.where_urn_or_ukprn(params[:urn]).first!
     @users = policy_scope(@school.users).not_deleted
     @email_audits = @school.email_audits.order(created_at: :desc)
   end

@@ -1,11 +1,14 @@
 <% content_for :title, "#{@school.name} – Support" %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
-    { 'Support home' => support_home_path },
-    { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
-    { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
-    @school.name,
-  ]) %>
+  <%
+    crumbs = []
+    crumbs << { 'Support home' => support_home_path }
+    crumbs << { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path } if @school.responsible_body
+    crumbs << { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) } if @school.responsible_body
+    crumbs << { 'Schools' => support_schools_path } unless @school.responsible_body
+    crumbs << @school.name
+  %>
+  <%= breadcrumbs(crumbs) %>
 <% end %>
 
 <%= render partial: 'shared/banners/school' %>
@@ -13,7 +16,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl"><%= @school.responsible_body.name %></span>
+      <% if @school.responsible_body %>
+        <span class="govuk-caption-xl"><%= @school.responsible_body.name %></span>
+      <% end %>
       <%= @school.name %>
     </h1>
   </div>
