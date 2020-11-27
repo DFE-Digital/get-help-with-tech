@@ -10,21 +10,18 @@
                  ]) %>
 <% end %>
 
-<h1 class="govuk-heading-xl">
-  <span class="govuk-caption-xl">Get laptops and tablets</span>
-  <%= title %>
-</h1>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l govuk-!-margin-bottom-2"><%= pluralize(@schools.size, 'school') %></h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <%= pluralize(@schools.size, 'school') %>
+    </h1>
 
     <%= render GovukComponent::Details.new(summary: 'Is this list wrong?') do %>
       <% if @responsible_body.is_a_local_authority? %>
         <p>This is a list of all local authority maintained and special schools.</p>
       <% end %>
       <p>Email <%= ghwt_contact_mailto(subject: 'Problem with list of schools') %>
-        and tell us what to change.</p>
+        and tell us what to&nbsp;change.</p>
     <%- end %>
   </div>
 </div>
