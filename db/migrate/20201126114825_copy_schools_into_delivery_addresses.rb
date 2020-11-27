@@ -28,6 +28,6 @@ class CopySchoolsIntoDeliveryAddresses < ActiveRecord::Migration[6.0]
   end
 
   def down
-    ActiveRecord::Base.connection.execute("TRUNCATE delivery_addresses")
+    ActiveRecord::Base.connection.execute('TRUNCATE delivery_addresses')
   end
 end

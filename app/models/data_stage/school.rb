@@ -48,7 +48,12 @@ class DataStage::School < ApplicationRecord
     Rails.logger.error("Did not find responsible body: #{responsible_body_name}") if responsible_body.blank?
 
     attributes
-      .except('id', 'responsible_body_name', 'created_at', 'updated_at')
+      .except('id', 'responsible_body_name', 'created_at', 'updated_at', 'address_1', 'address_2', 'address_3', 'town', 'postcode')
       .merge(responsible_body: responsible_body)
+  end
+
+  def staged_delivery_address_attributes
+    attributes
+      .slice('address_1', 'address_2', 'address_3', 'town', 'postcode')
   end
 end

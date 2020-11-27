@@ -31,12 +31,12 @@ private
       csv << [
         school.responsible_body.computacenter_identifier,
         *build_name_fields_for(school),
-        school.address_1,
-        school.address_2,
-        school.address_3,
-        school.town,
-        school.postcode,
-        school.computacenter_change&.capitalize,
+        school.delivery_address.address_1,
+        school.delivery_address.address_2,
+        school.delivery_address.address_3,
+        school.delivery_address.town,
+        school.delivery_address.postcode,
+        school.delivery_address.computacenter_change&.capitalize,
       ]
     end
   end
