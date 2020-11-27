@@ -24,10 +24,6 @@ class SchoolDeviceAllocation < ApplicationRecord
     end
   end
 
-  def self.included_in_performance_analysis
-    where('cap > 0 OR allocation > 0')
-  end
-
   def self.can_order_std_devices_now
     by_device_type('std_device').where('cap > devices_ordered')
   end
