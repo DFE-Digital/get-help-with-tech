@@ -15,8 +15,10 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
       before do
         setup_auth_token
         schools[0].std_device_allocation.update!(allocation: 0, cap: 0)
+        schools[0].coms_device_allocation.update!(allocation: 0, cap: 0)
+
         schools[1].std_device_allocation.update!(allocation: 10, cap: 10)
-        schools[2].std_device_allocation.update!(allocation: 10, cap: 0)
+        schools[2].coms_device_allocation.update!(allocation: 10, cap: 0)
       end
 
       it 'does not return an unauthorized status' do
@@ -27,6 +29,7 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
       it 'lists schools with allocations or caps in JSON format' do
         get :index
         payload = JSON.parse(response.body)
+
         expect(payload.count).to eq(2)
         expect(payload.first).to eql(school_data(schools[1]))
         expect(payload.last).to eql(school_data(schools[2]))

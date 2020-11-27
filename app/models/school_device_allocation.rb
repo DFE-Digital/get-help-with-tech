@@ -25,8 +25,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def self.included_in_performance_analysis
-    t = SchoolDeviceAllocation.arel_table
-    std_device.where(t[:cap].gt(0).or(t[:allocation].gt(0)))
+    where('cap > 0 OR allocation > 0')
   end
 
   def self.can_order_std_devices_now
