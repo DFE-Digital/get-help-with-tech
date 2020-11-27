@@ -7,3 +7,5 @@
 ./public/packs
 .byebug_history
 .git
+npm-debug.log
+node_modules
