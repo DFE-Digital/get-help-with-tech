@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :school do
+  factory :school, class: 'CompulsorySchool' do
     association :responsible_body, factory: %i[local_authority trust].sample
     urn { Faker::Number.unique.number(digits: 6) }
     name { Faker::Educator.secondary_school }
@@ -7,9 +7,12 @@ FactoryBot.define do
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }
 
-    delivery_address do
-      association :delivery_address,
-                  school: instance
+    transient do
+      delivery_addresses_count { 1 }
+    end
+
+    after(:create) do |school, evaluator|
+      create_list(:delivery_address, evaluator.delivery_addresses_count, school: school)
     end
 
     trait :with_preorder_information do

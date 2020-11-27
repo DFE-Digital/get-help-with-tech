@@ -14,7 +14,7 @@ class SchoolUpdateService
   def create_school(staged_school)
     Rails.logger.info("Adding school #{staged_school.urn} #{staged_school.name} (#{staged_school.status})")
     school = School.new(staged_school.staged_attributes)
-    school.build_delivery_address(staged_school.staged_delivery_address_attributes)
+    school.delivery_addresses.build(staged_school.staged_delivery_address_attributes)
     school.save!
 
     unless school.responsible_body.who_will_order_devices.nil?
