@@ -104,7 +104,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   end
 
   def and_i_see_one_error
-    expect(page).to have_content('No schools found for 1 URN:')
+    expect(page).to have_content('No schools found for 1 identifier:')
   end
 
   def and_i_see_results_with_schools(count)

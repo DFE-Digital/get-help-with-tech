@@ -26,6 +26,11 @@ class Support::SchoolsController < Support::BaseController
     end
   end
 
+  def results
+    @search_form = BulkSchoolSearchForm.new(search_params)
+    @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
+  end
+
   def show
     @school = School.where_urn_or_ukprn(params[:urn]).first!
     @users = policy_scope(@school.users).not_deleted
@@ -55,6 +60,6 @@ class Support::SchoolsController < Support::BaseController
 private
 
   def search_params
-    params.require(:school_search_form).permit(:urns, :responsible_body_id, :order_state)
+    params.require(:school_search_form).permit(:identifiers, :responsible_body_id, :order_state)
   end
 end
