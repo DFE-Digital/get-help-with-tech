@@ -191,7 +191,7 @@ GEM
     govuk-components (0.6.0)
       rails (~> 6.0.3, >= 6.0.3)
       view_component (~> 2.18.1)
-    govuk_design_system_formbuilder (2.1.4)
+    govuk_design_system_formbuilder (2.1.5)
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
@@ -221,7 +221,7 @@ GEM
     logstash-event (1.2.02)
     logstash-logger (0.26.1)
       logstash-event (~> 1.2)
-    loofah (2.7.0)
+    loofah (2.8.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -477,7 +477,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.4.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
