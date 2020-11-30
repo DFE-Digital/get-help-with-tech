@@ -19,6 +19,10 @@ FactoryBot.define do
     trait :devolves_management do
       who_will_order_devices      { 'schools' }
     end
+
+    trait :vcap_feature_flag do
+      vcap_feature_flag           { true }
+    end
   end
 
   factory :trust do
@@ -44,6 +48,10 @@ FactoryBot.define do
 
     trait :manages_centrally do
       who_will_order_devices      { 'responsible_body' }
+    end
+
+    trait :vcap_feature_flag do
+      vcap_feature_flag           { true }
     end
 
     trait :devolves_management do
