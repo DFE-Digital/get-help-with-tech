@@ -53,7 +53,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def cap
-    if FeatureFlag.active? :virtual_caps
+    if has_virtual_cap_feature_flags?
       if is_in_virtual_cap_pool?
         school_virtual_cap.cap
       else
@@ -70,7 +70,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def devices_ordered
-    if FeatureFlag.active? :virtual_caps
+    if has_virtual_cap_feature_flags?
       if is_in_virtual_cap_pool?
         school_virtual_cap.devices_ordered
       else
@@ -87,7 +87,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def allocation
-    if FeatureFlag.active? :virtual_caps
+    if has_virtual_cap_feature_flags?
       if is_in_virtual_cap_pool?
         school_virtual_cap.allocation
       else
@@ -131,6 +131,10 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
 private
+
+  def has_virtual_cap_feature_flags?
+    school&.responsible_body&.has_virtual_cap_feature_flags? || false
+  end
 
   def cap_lte_allocation
     if cap > allocation
