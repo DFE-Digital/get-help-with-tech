@@ -6,29 +6,39 @@ class ResponsibleBodyExporter
 
   attr_reader :filename
 
-  def initialize(filename)
+  def initialize(filename = nil)
     @filename = filename
   end
 
   def export_responsible_bodies(query = responsible_bodies)
-    CSV.open(filename, 'w') do |csv|
-      csv << headings
-      query.find_each do |rb|
-        csv << [
-          rb.computacenter_identifier,
-          *build_name_fields_for(rb),
-          rb.address_1,
-          rb.address_2,
-          rb.address_3,
-          rb.town,
-          rb.postcode,
-        ]
+    if filename
+      CSV.open(filename, 'w') do |csv|
+        render(csv, query)
+      end
+      nil
+    else
+      CSV.generate(headers: true) do |csv|
+        render(csv, query)
       end
     end
-    nil
   end
 
 private
+
+  def render(csv, query)
+    csv << headings
+    query.find_each do |rb|
+      csv << [
+        rb.computacenter_identifier,
+        *build_name_fields_for(rb),
+        rb.address_1,
+        rb.address_2,
+        rb.address_3,
+        rb.town,
+        rb.postcode,
+      ]
+    end
+  end
 
   def headings
     [

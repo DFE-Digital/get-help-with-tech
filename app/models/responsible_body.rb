@@ -22,6 +22,13 @@ class ResponsibleBody < ApplicationRecord
     closed: 'closed',
   }, _prefix: 'gias_status'
 
+  enum computacenter_change: {
+    none: 'none',
+    new: 'new',
+    amended: 'amended',
+    closed: 'closed',
+  }, _prefix: true
+
   after_update :maybe_generate_user_changes
 
   def calculate_virtual_caps!
@@ -192,6 +199,10 @@ class ResponsibleBody < ApplicationRecord
       specific_circumstances_schools: schools_by_name.can_order_for_specific_circumstances,
       fully_open_schools: schools_by_name.where(order_state: %w[cannot_order cannot_order_as_reopened]),
     }
+  end
+
+  def address
+    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
   end
 
 private

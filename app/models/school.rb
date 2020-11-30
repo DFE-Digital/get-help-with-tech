@@ -19,6 +19,8 @@ class School < ApplicationRecord
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
+  before_create :set_computacenter_change
+
   enum status: {
     open: 'open',
     closed: 'closed',
@@ -47,6 +49,13 @@ class School < ApplicationRecord
     can_order_for_specific_circumstances: 'can_order_for_specific_circumstances',
     can_order: 'can_order',
   }
+
+  enum computacenter_change: {
+    none: 'none',
+    new: 'new',
+    amended: 'amended',
+    closed: 'closed',
+  }, _prefix: true
 
   after_update :maybe_generate_user_changes
 
@@ -157,10 +166,18 @@ class School < ApplicationRecord
     responsible_body.has_school_in_virtual_cap_pools?(self)
   end
 
+  def address
+    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
+  end
+
 private
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)
+  end
+
+  def set_computacenter_change
+    self.computacenter_change = 'added' unless computacenter_change
   end
 
   def device_ordering_organisation

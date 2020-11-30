@@ -1,0 +1,26 @@
+<%- content_for :before_content, govuk_link_to('Back', computacenter_responsible_body_changes_path(@responsible_body), class: 'govuk-back-link') %>
+<%- title = t('page_titles.computacenter.responsible_body_changes_edit') %>
+<%- content_for :title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= "#{@responsible_body.name}" %></span>
+      <%= title %>
+    </h1>
+
+    <%= form_for @form, url: computacenter_responsible_body_change_path(@responsible_body), method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <p class="govuk-body">
+      Confirm the ‘Sold To’ reference is correct or update as appropriate 
+      </p>
+
+      <%= f.govuk_text_field :sold_to,
+                              only_integer: true,
+                              label: {text: 'Sold To'} %>
+
+      <%= f.govuk_submit 'Save' %>
+    <%- end %>
+  </div>
+</div>

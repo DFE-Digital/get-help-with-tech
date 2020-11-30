@@ -28,6 +28,17 @@
 
     <p class="govuk-body">View details of schools with that can place orders.</p>
 
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Changes to schools', computacenter_school_changes_path %>
+    </h2>
+
+    <p class="govuk-body">Review and update Ship To references for schools that have changed.</p>
+
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Changes to responsible bodies', computacenter_responsible_body_changes_path %>
+    </h2>
+
+    <p class="govuk-body">Review and update Sold To references for responsible bodies that have changed.</p>
     <% if policy(:support).readable? %>
       <h2 class="govuk-heading-m">
         <%= govuk_link_to 'Support home', support_home_path %>

@@ -187,6 +187,8 @@ ActiveRecord::Schema.define(version: 2020_12_10_140102) do
     t.string "postcode"
     t.string "status", default: "open", null: false
     t.boolean "vcap_feature_flag", default: false
+    t.string "computacenter_change", default: "none", null: false
+    t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
     t.index ["gias_id"], name: "index_responsible_bodies_on_gias_id", unique: true

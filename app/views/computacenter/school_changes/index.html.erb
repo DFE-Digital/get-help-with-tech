@@ -1,0 +1,79 @@
+<% title = t('page_titles.computacenter.school_changes') %>
+<% content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', computacenter_home_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<%- item_count = @schools.count %>
+<% if item_count.positive? %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body">
+      <%= govuk_link_to 'Download changes as CSV file', computacenter_school_changes_path(format: :csv) %>
+    </div>
+  </div>
+</div>
+<%- end %>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-tabs">
+      <ul class="govuk-tabs__list">
+        <%= render TabComponent.new(
+          label: 'All changes',
+          path: computacenter_school_changes_path(view: 'all'),
+          selected: @view_mode.blank? || @view_mode == 'all')
+        %>
+        <%= render TabComponent.new(
+          label: 'New schools',
+          path: computacenter_school_changes_path(view: 'new'),
+          selected: @view_mode == 'new')
+        %>
+        <%= render TabComponent.new(
+          label: 'Amended schools',
+          path: computacenter_school_changes_path(view: 'amended'),
+          selected: @view_mode == 'amended')
+        %>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <table class="govuk-table" id="closed-schools">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">RB URN</th>
+              <th scope="col" class="govuk-table__header">Sold To</th>
+              <th scope="col" class="govuk-table__header">School URN</th>
+              <th scope="col" class="govuk-table__header">School Name</th>
+              <th scope="col" class="govuk-table__header">Address</th>
+              <th scope="col" class="govuk-table__header">Ship To</th>
+              <th scope="col" class="govuk-table__header">Change</th>
+              <th scope="col" class="govuk-table__header">Action</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @schools.each do |school| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><%= school.responsible_body.computacenter_identifier %></td>
+                <td class="govuk-table__cell"><%= school.responsible_body.computacenter_reference %></td>
+                <td class="govuk-table__cell"><%= school.urn %></td>
+                <td class="govuk-table__cell"><%= school.name %></td>
+                <td class="govuk-table__cell"><%= school.address %></td>
+                <td class="govuk-table__cell"><%= school.computacenter_reference %></td>
+                <td class="govuk-table__cell"><%= school.computacenter_change.capitalize %></td>
+                <td class="govuk-table__cell"><%= govuk_link_to 'Update', edit_computacenter_school_change_path(school) %></td>
+              </tr>
+            <%- end %>
+          </tbody>
+        </table>
+        <div class="govuk-body">
+          <%= "#{item_count} #{'record'.pluralize(item_count)} found" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
