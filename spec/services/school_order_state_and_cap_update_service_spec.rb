@@ -88,6 +88,17 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
+    context 'when a school is centrally managed and the school is not in the virtual cap pool' do
+      before do
+        school.preorder_information.responsible_body_will_order_devices!
+      end
+
+      it 'adds the school to the virtual cap pool of the responsible body' do
+        service.update!
+        expect(school.responsible_body.std_device_pool.schools).to include(school)
+      end
+    end
+
     context 'changing order_state to can_order_for_specific_circumstances' do
       let!(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
       let!(:router_allocation) { create(:school_device_allocation, :with_coms_allocation, allocation: 5, school: school) }
