@@ -4,7 +4,7 @@ module PageObjects
       class SearchPage < PageObjects::BasePage
         set_url '/support/schools/search'
 
-        element :urns, 'textarea#bulk-urn-search-form-urns-field'
+        element :urns, 'textarea#bulk-school-search-form-identifiers-field'
         element :submit, 'input[value=Search]'
       end
     end

@@ -1,5 +1,10 @@
 FactoryBot.define do
   factory :school, class: 'CompulsorySchool' do
+    factory :fe_school, class: 'FurtherEducationSchool' do
+      ukprn { Faker::Number.number(digits: 8) }
+      urn { nil }
+    end
+
     association :responsible_body, factory: %i[local_authority trust].sample
     urn { Faker::Number.unique.number(digits: 6) }
     name { Faker::Educator.secondary_school }
