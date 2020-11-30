@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_144840) do
   create_table "delivery_addresses", force: :cascade do |t|
     t.bigint "school_id"
     t.string "computacenter_reference"
+    t.string "name"
     t.string "address_1"
     t.string "address_2"
     t.string "address_3"

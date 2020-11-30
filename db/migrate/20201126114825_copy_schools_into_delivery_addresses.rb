@@ -4,6 +4,7 @@ class CopySchoolsIntoDeliveryAddresses < ActiveRecord::Migration[6.0]
       INSERT INTO delivery_addresses(
         school_id,
         computacenter_reference,
+        name,
         address_1,
         address_2,
         address_3,
@@ -16,6 +17,7 @@ class CopySchoolsIntoDeliveryAddresses < ActiveRecord::Migration[6.0]
       SELECT
       id,
       computacenter_reference,
+      name,
       address_1,
       address_2,
       address_3,
