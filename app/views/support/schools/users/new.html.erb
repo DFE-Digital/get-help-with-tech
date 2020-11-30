@@ -1,13 +1,14 @@
 <%- title = t('page_titles.new_school_user') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
-    { 'Support home' => support_home_path },
-    { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
-    { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
-    { @school.name => support_school_path(urn: @school.urn) },
-    title,
-  ]) %>
+  <% crumbs = []
+     crumbs << { 'Support home' => support_home_path }
+     crumbs << { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path } if @school.responsible_body
+     crumbs << { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) } if @school.responsible_body
+     crumbs << { @school.name => support_school_path(urn: @school.urn) }
+     crumbs << title
+  %>
+  <%= breadcrumbs(crumbs) %>
 <% end %>
 
 <div class="govuk-grid-row">

@@ -45,7 +45,7 @@ class Support::Schools::UsersController < Support::BaseController
 private
 
   def set_school
-    @school = School.find_by(urn: params[:school_urn])
+    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
     authorize @school, :show?
   end
 
