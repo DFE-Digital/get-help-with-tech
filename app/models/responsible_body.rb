@@ -17,6 +17,8 @@ class ResponsibleBody < ApplicationRecord
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 
+  before_create :set_computacenter_change
+
   enum status: {
     open: 'open',
     closed: 'closed',
@@ -209,5 +211,9 @@ private
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)
+  end
+
+  def set_computacenter_change
+    self.computacenter_change = 'new' unless computacenter_change
   end
 end
