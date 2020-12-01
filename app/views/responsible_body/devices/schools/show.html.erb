@@ -7,23 +7,29 @@
       <%= @school.name %>
     </h1>
 
-    <%- if @school.has_std_device_allocation? %>
-      <%= render DeviceCountComponent.new(
-        school: @school,
-        show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
-        action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
-    <% else %>
-      <%= render partial: 'shared/school_without_allocation' %>
-    <%- end %>
+    <%- if @responsible_body.has_virtual_cap_feature_flags? %>
+      <%- if @school.can_order? || @school.can_order_for_specific_circumstances? %>
+        <p class="govuk-body"><%= govuk_link_to 'Order devices now', responsible_body_devices_order_devices_path %></p>
+      <%- end %>
+    <%- else %>
+      <%- if @school.has_std_device_allocation? %>
+        <%= render DeviceCountComponent.new(
+          school: @school,
+          show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
+          action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
+      <% else %>
+        <%= render partial: 'shared/school_without_allocation' %>
+      <%- end %>
 
-    <%- if @school.preorder_information.orders_managed_centrally? %>
-      <%- unless @school.preorder_information.chromebook_information_complete? %>
-        <h2 class="govuk-heading-l">Before you can order, we need more information</h2>
-        <%= render partial: 'shared/chromebook_information_intro' %>
-        <%= render partial: 'shared/chromebook_information_form', locals: {
-          legend_text: 'Will the school’s order include Chromebooks?',
-          url: responsible_body_devices_school_chromebooks_path(@school.urn),
-          form_object: @chromebook_information_form } %>
+      <%- if @school.preorder_information.orders_managed_centrally? %>
+        <%- unless @school.preorder_information.chromebook_information_complete? %>
+          <h2 class="govuk-heading-l">Before you can order, we need more information</h2>
+          <%= render partial: 'shared/chromebook_information_intro' %>
+          <%= render partial: 'shared/chromebook_information_form', locals: {
+            legend_text: 'Will the school’s order include Chromebooks?',
+            url: responsible_body_devices_school_chromebooks_path(@school.urn),
+            form_object: @chromebook_information_form } %>
+        <%- end %>
       <%- end %>
     <%- end %>
   </div>
