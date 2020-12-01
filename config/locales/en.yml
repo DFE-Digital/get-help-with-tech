@@ -611,9 +611,9 @@ en:
     sold_to:
       update:
         success: "Updated Sold To reference for %{name}"
-    sold_to_ship_to:
+    ship_to:
       update:
-        success: "Updated references for %{name}"
+        success: "Updated Ship To reference for %{name}"
   events:
     default: An event just happened
     sign_in_event: A user from %{organisation} just signed in

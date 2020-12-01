@@ -11,11 +11,11 @@
 </div>
 
 <%- item_count = @schools.count %>
-<% if item_count.positive? %>
+<% if @show_download_link %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body">
-      <%= govuk_link_to 'Download changes as CSV file', computacenter_school_changes_path(format: :csv) %>
+      <%= govuk_link_to 'Download changes as a CSV file', computacenter_school_changes_path(format: :csv) %>
     </div>
   </div>
 </div>
@@ -42,7 +42,7 @@
         %>
       </ul>
       <div class="govuk-tabs__panel">
-        <table class="govuk-table" id="closed-schools">
+        <table class="govuk-table" id="school-changes">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">RB URN</th>
@@ -65,7 +65,7 @@
                 <td class="govuk-table__cell"><%= school.address %></td>
                 <td class="govuk-table__cell"><%= school.computacenter_reference %></td>
                 <td class="govuk-table__cell"><%= school.computacenter_change.capitalize %></td>
-                <td class="govuk-table__cell"><%= govuk_link_to 'Update', edit_computacenter_school_change_path(school) %></td>
+                <td class="govuk-table__cell"><%= govuk_link_to "Verify<span class=\"govuk-visually-hidden\"> ship to reference for #{school.name}</span>".html_safe, edit_computacenter_school_change_path(school) %></td>
               </tr>
             <%- end %>
           </tbody>

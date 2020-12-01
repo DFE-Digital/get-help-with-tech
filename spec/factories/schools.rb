@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :school do
     association :responsible_body, factory: %i[local_authority trust].sample
     urn { Faker::Number.unique.number(digits: 6) }
-    name { Faker::Educator.secondary_school }
+    sequence(:name) { |n| "#{Faker::Educator.secondary_school}-#{n}" }
     computacenter_reference { Faker::Number.number(digits: 8) }
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }

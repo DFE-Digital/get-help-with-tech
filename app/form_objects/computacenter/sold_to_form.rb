@@ -9,4 +9,3 @@ class Computacenter::SoldToForm
     super(params)
   end
 end
-
