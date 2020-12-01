@@ -1,4 +1,7 @@
 class SchoolDeviceAllocation < ApplicationRecord
+  include DeviceType
+  include DeviceCount
+
   has_paper_trail
 
   belongs_to :school
@@ -9,20 +12,6 @@ class SchoolDeviceAllocation < ApplicationRecord
   has_many :cap_update_calls
 
   validates_with CapAndAllocationValidator
-
-  enum device_type: {
-    'coms_device': 'coms_device',
-    'std_device': 'std_device',
-  }
-
-  def device_type_name
-    case device_type
-    when 'coms_device'
-      'router'
-    else
-      'device'
-    end
-  end
 
   def self.can_order_std_devices_now
     by_device_type('std_device').where('cap > devices_ordered')
@@ -105,14 +94,6 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def is_in_virtual_cap_pool?
     school_virtual_cap.present?
-  end
-
-  def has_devices_available_to_order?
-    available_devices_count.positive?
-  end
-
-  def available_devices_count
-    [0, (cap.to_i - devices_ordered.to_i)].max
   end
 
   def computacenter_cap_type

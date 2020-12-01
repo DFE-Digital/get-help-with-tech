@@ -6,7 +6,11 @@ class ResponsibleBody::Devices::OrdersController < ResponsibleBody::BaseControll
         # or mix of centrally managed and devolved
         @schools = @responsible_body.schools.gias_status_open.that_are_centrally_managed.that_can_order_now.order(name: :asc)
 
-        if @schools.can_order.count.positive?
+        @schools_can_order = @schools.can_order
+        @schools_can_order_for_specific_circumstances = @schools.can_order_for_specific_circumstances
+
+        # There is no seperate 'specific circumstances' page if we're using virtual caps.
+        if @responsible_body.has_virtual_cap_feature_flags? || @schools.can_order.count.positive?
           render 'order_devices'
         else
           render 'specific_circumstances'

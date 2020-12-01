@@ -1,0 +1,80 @@
+require 'rails_helper'
+
+RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
+  context 'when no devices available' do
+    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
+    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 0, cap: 0, device_type: 'std_device') }
+
+    subject(:component) { described_class.new(responsible_body: responsible_body) }
+
+    it 'renders availability' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'All devices ordered'
+    end
+
+    it 'renders state' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'ordered 0 devices'
+    end
+  end
+
+  context 'when devices available' do
+    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
+    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 1, cap: 5, device_type: 'std_device') }
+
+    subject(:component) { described_class.new(responsible_body: responsible_body) }
+
+    it 'renders availability' do
+      html = render_inline(component).to_html
+
+      expect(html).to include '4 devices available to order'
+    end
+
+    it 'renders state' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'ordered 1 devices'
+    end
+  end
+
+  context 'when all devices ordered' do
+    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
+    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 5, cap: 5, device_type: 'std_device') }
+
+    subject(:component) { described_class.new(responsible_body: responsible_body) }
+
+    it 'renders availability' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'All devices ordered'
+    end
+
+    it 'renders state' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'ordered 5 devices'
+    end
+  end
+
+  context 'with different allocations present' do
+    let(:pooled_allocation1) { VirtualCapPool.new(device_type: 'std_device', devices_ordered: 1, cap: 3) }
+    let(:pooled_allocation2) { VirtualCapPool.new(device_type: 'coms_device', devices_ordered: 2, cap: 5) }
+    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation1, pooled_allocation2]) }
+
+    subject(:component) { described_class.new(responsible_body: responsible_body) }
+
+    it 'renders availability' do
+      content = render_inline(component).content
+
+      expect(content).to include '2 devices and 3 routers available to order'
+    end
+
+    it 'renders state' do
+      html = render_inline(component).to_html
+
+      expect(html).to include 'ordered 1 devices and 2 routers'
+    end
+  end
+end
