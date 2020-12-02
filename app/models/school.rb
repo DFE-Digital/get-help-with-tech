@@ -62,6 +62,7 @@ class School < ApplicationRecord
   }, _prefix: true
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
+  scope :further_education, -> { where(type: 'FurtherEducationSchool') }
 
   after_update :maybe_generate_user_changes
 
@@ -79,6 +80,10 @@ class School < ApplicationRecord
 
   def self.requiring_a_new_computacenter_reference
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+  end
+
+  def delivery_address
+    delivery_addresses.first
   end
 
   def has_ordered?

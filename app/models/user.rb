@@ -146,6 +146,14 @@ class User < ApplicationRecord
     user_schools.map { |us| us.school&.responsible_body }.prepend(responsible_body).compact.uniq
   end
 
+  def computacenter_account_orgs
+    effective_responsible_bodies + further_education_schools
+  end
+
+  def further_education_schools
+    user_schools.map { |us| us.school }.filter { |s| s.kind_of?(FurtherEducationSchool) }
+  end
+
   def relevant_to_computacenter?
     seen_privacy_notice? && orders_devices?
   end
