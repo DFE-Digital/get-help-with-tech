@@ -9,6 +9,10 @@ class FurtherEducationSchool < School
     ukprn
   end
 
+  def computacenter_identifier
+    "fe#{ukprn}"
+  end
+
 private
 
   def generate_fake_ukprn

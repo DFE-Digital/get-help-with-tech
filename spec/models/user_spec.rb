@@ -438,6 +438,57 @@ RSpec.describe User, type: :model do
         expect(user_change.school).to be_blank
       end
 
+      context 'when an FE school user' do
+        it 'persists correct data' do
+          school = create(:fe_school)
+          user = create(:user, school: school, orders_devices: true)
+          user_change = Computacenter::UserChange.last
+
+          expect(user_change.user_id).to eql(user.id)
+          expect(user_change.first_name).to eql(user.first_name)
+          expect(user_change.last_name).to eql(user.last_name)
+          expect(user_change.email_address).to eql(user.email_address)
+          expect(user_change.telephone).to eql(user.telephone)
+          expect(user_change.responsible_body).to eql(school.name)
+          expect(user_change.responsible_body_urn).to eql(school.computacenter_identifier)
+          expect(user_change.cc_sold_to_number).to eql(school.computacenter_reference)
+          expect(user_change.school).to eql(user.school.name)
+          expect(user_change.school_urn).to eql(user.school.ukprn.to_s)
+          expect(user_change.cc_ship_to_number).to eql(user.school.computacenter_reference)
+          expect(user_change.updated_at_timestamp).to eql(user.created_at)
+          expect(user_change.type_of_update).to eql('New')
+          expect(user_change.original_email_address).to be_nil
+          expect(user_change.original_first_name).to be_nil
+          expect(user_change.original_last_name).to be_nil
+          expect(user_change.original_telephone).to be_nil
+          expect(user_change.original_responsible_body).to be_nil
+          expect(user_change.original_responsible_body_urn).to be_nil
+          expect(user_change.original_cc_sold_to_number).to be_nil
+          expect(user_change.original_school).to be_blank
+          expect(user_change.original_school_urn).to be_blank
+          expect(user_change.original_cc_ship_to_number).to be_blank
+        end
+
+        context 'when a new delivery address is added' do
+          fit 'creates the user change for this' do
+            school = create(:fe_school)
+            user = create(:user, school: school, orders_devices: true)
+
+            expect {
+              school.delivery_addresses << DeliveryAddress.new(attributes_for(:delivery_address))
+            }.to change(Computacenter::UserChange, :count).by(1)
+
+            user_change = Computacenter::UserChange.last
+
+            # binding.pry
+
+            expect(user_change.school).to eql(school.delivery_addresses.map(&:name).join('|'))
+            expect(user_change.school_urn).to eql(123)
+            expect(user_change.cc_ship_to_number).to eql(123)
+          end
+        end
+      end
+
       context 'not computacenter relevant' do
         it 'does not create a Computacenter::UserChange' do
           expect { create(:user, :has_not_seen_privacy_notice) }.not_to change(Computacenter::UserChange, :count)

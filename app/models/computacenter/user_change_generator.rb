@@ -72,18 +72,41 @@ private
       last_name: user.last_name,
       email_address: user.email_address,
       telephone: user.telephone,
-      responsible_body: user.effective_responsible_bodies.map(&:name).join('|'),
-      responsible_body_urn: user.effective_responsible_bodies.map(&:computacenter_identifier).join('|'),
-      cc_sold_to_number: user.effective_responsible_bodies.map(&:computacenter_reference).join('|'),
+      responsible_body: user.computacenter_account_orgs.map(&:name).join('|'),
+      responsible_body_urn: user.computacenter_account_orgs.map(&:computacenter_identifier).join('|'),
+      cc_sold_to_number: user.computacenter_account_orgs.map(&:computacenter_reference).join('|'),
       # NOTE: we must loop round user_schools (which may be dirty) not schools (which won't be)
-      school: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
-      school_urn: (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
+      school: school_attribute,
+      school_urn: school_urn_attribute,
       cc_ship_to_number: cc_ship_to_number_list,
     }
   end
 
+  # user.effective_responsible_bodies => user.cc_account_orgs
+  # schools => delivery_addresses
+
+  def school_attribute
+    if user.is_a_single_academy_trust_user?
+      ''
+    else
+      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map{ |da| da.name }.join('|')
+    end
+  end
+
+  def school_urn_attribute
+    if user.is_a_single_academy_trust_user?
+      ''
+    else
+      user.user_schools.map { |us| us.school.urn }.join('|')
+    end
+  end
+
   def cc_ship_to_number_list
-    (user.is_a_single_academy_trust_user? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|'))
+    if user.is_a_single_academy_trust_user?
+      ''
+    else
+      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map{ |da| da.computacenter_reference }.join('|')
+    end
   end
 
   def meta_attributes

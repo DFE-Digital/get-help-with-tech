@@ -11,7 +11,10 @@ class School < ApplicationRecord
   has_many :user_schools
   has_many :users, through: :user_schools
   has_one :preorder_information
-  has_many :delivery_addresses
+  has_many :delivery_addresses,
+           after_add: [
+             ->(school, delivery_address) { school.users.each(&:generate_user_change_if_needed!) }
+           ]
   has_many :email_audits
   has_many :extra_mobile_data_requests
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
@@ -50,6 +53,7 @@ class School < ApplicationRecord
   }
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
+  scope :further_education, -> { where(type: 'FurtherEducationSchool') }
 
   after_update :maybe_generate_user_changes
 
@@ -63,6 +67,10 @@ class School < ApplicationRecord
 
   def self.that_can_order_now
     where(order_state: %w[can_order_for_specific_circumstances can_order])
+  end
+
+  def delivery_address
+    delivery_addresses.first
   end
 
   def has_ordered?
