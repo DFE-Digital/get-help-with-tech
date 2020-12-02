@@ -38,7 +38,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'pry-rails'
 
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 5.1'
 
 # Use Pundit for authorisation
 gem 'pundit'
