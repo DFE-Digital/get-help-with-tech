@@ -88,6 +88,13 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
+    context 'when a school is not in the virtual cap pool', with_feature_flags: { virtual_caps: 'active' } do
+      it 'triggers notifications that the school can order' do
+        service.update!
+        expect(notifications).to have_received(:call)
+      end
+    end
+
     context 'when a school is centrally managed and the school is not in the virtual cap pool' do
       before do
         school.preorder_information.responsible_body_will_order_devices!

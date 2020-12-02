@@ -21,7 +21,7 @@ class SchoolOrderStateAndCapUpdateService
       if notify_computacenter_of_cap_changes?
         if FeatureFlag.active? :virtual_caps
           # don't send updates as they will happen when the pool is updated and the caps adjusted
-          unless allocation.is_in_virtual_pool?
+          unless allocation.is_in_virtual_cap_pool?
             update_cap_on_computacenter!(allocation.id)
             notify_computacenter_by_email(@school, allocation.device_type, allocation.cap)
           end
