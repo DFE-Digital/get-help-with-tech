@@ -44,7 +44,7 @@ RSpec.describe SchoolDataExporter, type: :model do
 
       found = false
       data.each do |row|
-        if row['School URN + School Name'] == "#{school.urn} #{school.name}"
+        if row['School URN + School Name'].start_with?(school.urn.to_s)
           expect(row['Responsible body URN']).to be_blank
           found = true
         end
