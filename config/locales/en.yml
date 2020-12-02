@@ -228,6 +228,10 @@ en:
       title: Getting started with your Google Chromebook
       description: User guidance for Google Chromebooks to share with children, young people and their carers.
       audience: device_users
+    preparing_ipads:
+      title: Preparing iPads
+      description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
+      audience: responsible_body_users
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
