@@ -3,6 +3,75 @@ require 'rails_helper'
 RSpec.describe PreorderInformation, type: :model do
   it { is_expected.to be_versioned }
 
+  describe 'validations' do
+    describe '#school_or_rb_domain' do
+      subject(:model) { described_class.new }
+
+      context 'when has lead and trailing whitespace' do
+        it 'is strips whitespace padding' do
+          model.will_need_chromebooks = 'yes'
+          model.school_or_rb_domain = '  example.com    '
+          model.valid?
+          expect(model.school_or_rb_domain).to eql('example.com')
+          expect(model.errors[:school_or_rb_domain]).to be_empty
+        end
+      end
+
+      context 'when mixed casing' do
+        it 'downcases' do
+          model.will_need_chromebooks = 'yes'
+          model.school_or_rb_domain = 'ExampLE.Com'
+          model.valid?
+          expect(model.school_or_rb_domain).to eql('example.com')
+          expect(model.errors[:school_or_rb_domain]).to be_empty
+        end
+      end
+
+      context 'has trailing slash' do
+        it 'removes trailing slash' do
+          model.will_need_chromebooks = 'yes'
+          model.school_or_rb_domain = 'example.com/'
+          model.valid?
+          expect(model.school_or_rb_domain).to eql('example.com')
+          expect(model.errors[:school_or_rb_domain]).to be_empty
+        end
+      end
+
+      context 'contains weird characters' do
+        it 'is not valid' do
+          model.will_need_chromebooks = 'yes'
+
+          model.school_or_rb_domain = 'examp    le.com'
+          model.valid?
+          expect(model.errors[:school_or_rb_domain]).not_to be_empty
+
+          model.school_or_rb_domain = 'user@example.com'
+          model.valid?
+          expect(model.errors[:school_or_rb_domain]).not_to be_empty
+
+          model.school_or_rb_domain = '"example.com"'
+          model.valid?
+          expect(model.errors[:school_or_rb_domain]).not_to be_empty
+        end
+      end
+
+      it 'only valdidates on create otherwise will block existing invalid records from being saved' do
+        record = build(:preorder_information, school_or_rb_domain: 'fail@example.com', will_need_chromebooks: 'yes')
+        record.save!(validate: false)
+        record.update!(school_contacted_at: Time.zone.now)
+        record.reload
+        expect(record.school_contacted_at).to be_present
+        expect(record).to be_valid
+      end
+
+      it 'only validates if will_need_chromebooks?' do
+        record = create(:preorder_information, school_or_rb_domain: '', will_need_chromebooks: 'no')
+        expect(record).to be_valid
+        expect(record).to be_persisted
+      end
+    end
+  end
+
   describe 'status' do
     context 'when the school orders devices and the school contact is missing' do
       subject do

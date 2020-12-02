@@ -7,6 +7,12 @@ class PreorderInformation < ApplicationRecord
   belongs_to :school_contact, optional: true
 
   validates :status, presence: true
+  validates :school_or_rb_domain,
+            format: { with: /\A[a-z0-9._-]+\z/ },
+            on: :create,
+            if: proc { |pre| pre.will_need_chromebooks? }
+
+  before_validation :prepare_school_or_rb_domain
 
   enum status: {
     needs_contact: 'needs_contact',
@@ -134,6 +140,12 @@ class PreorderInformation < ApplicationRecord
   end
 
 private
+
+  def prepare_school_or_rb_domain
+    if school_or_rb_domain.present?
+      self.school_or_rb_domain = school_or_rb_domain.strip.downcase.gsub(/\/$/, '')
+    end
+  end
 
   def any_school_users?
     school&.users&.any?
