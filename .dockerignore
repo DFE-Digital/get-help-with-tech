@@ -7,3 +7,4 @@
 ./public/packs
 .byebug_history
 .git
+node_modules
