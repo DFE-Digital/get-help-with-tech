@@ -4,11 +4,12 @@ require 'shared/expect_download'
 RSpec.feature 'Administering responsible body changes' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
-    let!(:new_trusts) { create_list(:trust, 2, computacenter_change: 'new') }
-    let!(:amended_trusts) { create_list(:trust, 2, computacenter_change: 'amended') }
+    let!(:new_trusts) { create_list(:trust, 2) }
+    let!(:amended_trusts) { create_list(:trust, 2) }
     let!(:trusts) { create_list(:trust, 2) }
 
     before do
+      given_the_responsible_bodies_have_the_correct_computacenter_change_states
       given_i_am_signed_in_as_a_computacenter_user
     end
 
@@ -42,7 +43,7 @@ RSpec.feature 'Administering responsible body changes' do
       when_i_click_the_verify_link_for_a_responsible_body
       then_i_see_the_verify_sold_to_form
       when_i_update_the_sold_to_reference
-      and_i_click_save
+      and_i_click_confirm
       then_i_see_an_updated_list_of_all_changed_responsible_bodies
     end
 
@@ -52,12 +53,18 @@ RSpec.feature 'Administering responsible body changes' do
       when_i_click_the_verify_link_for_a_responsible_body
       then_i_see_the_verify_sold_to_form
       when_i_update_the_sold_to_reference_with_bad_data
-      and_i_click_save
+      and_i_click_confirm
       then_i_see_an_error_message
     end
 
     def given_i_am_signed_in_as_a_computacenter_user
       sign_in_as user
+    end
+
+    def given_the_responsible_bodies_have_the_correct_computacenter_change_states
+      new_trusts.each { |s| s.update!(computacenter_change: 'new', computacenter_reference: nil) }
+      amended_trusts.each(&:computacenter_change_amended!)
+      trusts.each(&:computacenter_change_none!)
     end
 
     def when_i_visit_the_home_page
@@ -165,7 +172,7 @@ RSpec.feature 'Administering responsible body changes' do
     end
 
     def then_i_see_the_verify_sold_to_form
-      expect(page).to have_text('Verify the Sold To reference')
+      expect(page).to have_text('Verify the responsible body details')
       expect(page).to have_field('Sold To')
     end
 
@@ -173,8 +180,8 @@ RSpec.feature 'Administering responsible body changes' do
       fill_in 'Sold To', with: '80129999'
     end
 
-    def and_i_click_save
-      click_on 'Save'
+    def and_i_click_confirm
+      click_on 'Confirm'
     end
 
     def then_i_see_an_updated_list_of_all_changed_responsible_bodies
@@ -185,18 +192,18 @@ RSpec.feature 'Administering responsible body changes' do
       within '#responsible-body-changes' do
         new_trusts.each_with_index do |t, i|
           if i == 0
-            expect(page).not_to have_text(t.computacenter_name)
+            expect(page).not_to have_text(t.computacenter_identifier)
           else
-            expect(page).to have_text(t.computacenter_name)
+            expect(page).to have_text(t.computacenter_identifier)
           end
         end
 
         amended_trusts.each do |t|
-          expect(page).to have_text(t.computacenter_name)
+          expect(page).to have_text(t.computacenter_identifier)
         end
 
         trusts.each do |t|
-          expect(page).not_to have_text(t.computacenter_name)
+          expect(page).not_to have_text(t.computacenter_identifier)
         end
       end
     end
@@ -206,7 +213,7 @@ RSpec.feature 'Administering responsible body changes' do
     end
 
     def then_i_see_an_error_message
-      expect(page).to have_text('Sold To must be a number greater than zero')
+      expect(page).to have_text('Sold To must be a number')
     end
   end
 end

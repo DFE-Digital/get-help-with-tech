@@ -1,9 +1,10 @@
 class Computacenter::SoldToForm
   include ActiveModel::Model
 
-  attr_accessor :sold_to, :responsible_body
+  attr_accessor :change_sold_to, :sold_to, :responsible_body
 
-  validates :sold_to, numericality: { only_integer: true, greater_than: 0, message: 'Sold To must be a number greater than zero' }
+  validates :sold_to, numericality: { only_integer: true, message: 'Sold To must be a number' }
+  validates :change_sold_to, inclusion: { in: %w[yes no], message: 'Tell us whether the Sold To number needs to change' }
 
   def initialize(params = {})
     super(params)

@@ -177,7 +177,7 @@ private
   end
 
   def set_computacenter_change
-    self.computacenter_change = 'new' unless computacenter_change
+    self.computacenter_change = 'new'
   end
 
   def device_ordering_organisation

@@ -12,15 +12,21 @@
     <%= form_for @form, url: computacenter_responsible_body_change_path(@responsible_body), method: :patch do |f| %>
       <%= f.govuk_error_summary %>
 
-      <p class="govuk-body">
-      Confirm the ‘Sold To’ reference is correct or update as appropriate 
-      </p>
+      <%= render Computacenter::ResponsibleBodyChangesDetailsComponent.new(responsible_body: @responsible_body) %>
 
-      <%= f.govuk_text_field :sold_to,
-                              only_integer: true,
-                              label: {text: 'Sold To'} %>
+      <%- if @responsible_body.computacenter_change_amended? %>
+        <%= f.govuk_radio_buttons_fieldset(:change_sold_to, legend: { text: 'Does the Sold To number need to change?', size: 'm' }) do %>
+          <%= f.govuk_radio_button :change_sold_to, 'yes', label: { text: 'Yes, change the Sold To number' } do %>
+            <%= f.govuk_text_field  :sold_to, label: { text: 'Sold To number', size: 's' } %>
+          <%- end %>
+          <%= f.govuk_radio_button :change_sold_to, 'no', label: { text: 'No, keep the same Sold To number' } %>
+        <%- end %>
+      <%- else %>
+        <%= f.govuk_text_field :sold_to, label: {text: 'New Sold To number', size: 's'} %>
+        <%= f.hidden_field :change_sold_to, value: 'yes' %>
+      <%- end %>
 
-      <%= f.govuk_submit 'Save' %>
+      <%= f.govuk_submit 'Confirm' %>
     <%- end %>
   </div>
 </div>

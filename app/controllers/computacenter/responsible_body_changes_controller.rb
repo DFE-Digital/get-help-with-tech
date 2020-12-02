@@ -21,7 +21,8 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
 
     if @form.valid?
       update_sold_to
-      flash[:success] = t(:success, scope: %i[computacenter sold_to update], name: @responsible_body.name)
+      flash[:success] = t(:success, scope: %i[computacenter sold_to update], name: @responsible_body.name,
+                                    sold_to: @responsible_body.computacenter_reference)
       redirect_to computacenter_responsible_body_changes_path
     else
       render :edit, status: :unprocessable_entity
@@ -74,7 +75,7 @@ private
   end
 
   def sold_to_params
-    params.require(:computacenter_sold_to_form).permit(:sold_to)
+    params.require(:computacenter_sold_to_form).permit(:sold_to, :change_sold_to)
   end
 
   def update_sold_to

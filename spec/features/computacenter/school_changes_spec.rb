@@ -4,11 +4,12 @@ require 'shared/expect_download'
 RSpec.feature 'Administering school changes' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
-    let!(:new_schools) { create_list(:school, 5, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, computacenter_change: 'new') }
-    let!(:amended_schools) { create_list(:school, 5, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, computacenter_change: 'amended') }
-    let!(:schools) { create_list(:school, 5, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
+    let!(:new_schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
+    let!(:amended_schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
+    let!(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
 
     before do
+      given_the_schools_have_the_correct_computacenter_change_states
       given_i_am_signed_in_as_a_computacenter_user
     end
 
@@ -42,7 +43,7 @@ RSpec.feature 'Administering school changes' do
       when_i_click_the_verify_link_for_a_school
       then_i_see_the_verify_ship_to_form
       when_i_update_the_ship_to_reference
-      and_i_click_save
+      and_i_click_confirm
       then_i_see_an_updated_list_of_all_changed_schools
     end
 
@@ -52,12 +53,18 @@ RSpec.feature 'Administering school changes' do
       when_i_click_the_verify_link_for_a_school
       then_i_see_the_verify_ship_to_form
       when_i_update_the_ship_to_reference_with_bad_data
-      and_i_click_save
+      and_i_click_confirm
       then_i_see_an_error_message
     end
 
     def given_i_am_signed_in_as_a_computacenter_user
       sign_in_as user
+    end
+
+    def given_the_schools_have_the_correct_computacenter_change_states
+      new_schools.each { |s| s.update!(computacenter_change: 'new', computacenter_reference: nil) }
+      amended_schools.each(&:computacenter_change_amended!)
+      schools.each(&:computacenter_change_none!)
     end
 
     def when_i_visit_the_home_page
@@ -161,7 +168,7 @@ RSpec.feature 'Administering school changes' do
     end
 
     def then_i_see_the_verify_ship_to_form
-      expect(page).to have_text('Verify the Ship To reference')
+      expect(page).to have_text('Verify the school details')
       expect(page).to have_field('Ship To')
     end
 
@@ -169,8 +176,8 @@ RSpec.feature 'Administering school changes' do
       fill_in 'Ship To', with: '80129999'
     end
 
-    def and_i_click_save
-      click_on 'Save'
+    def and_i_click_confirm
+      click_on 'Confirm'
     end
 
     def then_i_see_an_updated_list_of_all_changed_schools
@@ -201,7 +208,7 @@ RSpec.feature 'Administering school changes' do
     end
 
     def then_i_see_an_error_message
-      expect(page).to have_text('Ship To must be a number greater than zero')
+      expect(page).to have_text('Ship To must be a number')
     end
   end
 end

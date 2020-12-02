@@ -21,7 +21,7 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
 
     if @form.valid?
       update_ship_to
-      flash[:success] = t(:success, scope: %i[computacenter ship_to update], name: @school.name)
+      flash[:success] = t(:success, scope: %i[computacenter ship_to update], name: @school.name, ship_to: @school.computacenter_reference)
       redirect_to computacenter_school_changes_path
     else
       render :edit, status: :unprocessable_entity
@@ -76,7 +76,7 @@ private
   end
 
   def ship_to_params
-    params.require(:computacenter_ship_to_form).permit(:ship_to)
+    params.require(:computacenter_ship_to_form).permit(:ship_to, :change_ship_to)
   end
 
   def update_ship_to
