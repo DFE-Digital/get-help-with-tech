@@ -16,6 +16,20 @@ RSpec.describe UserCanOrderDevicesNotifications do
     end
   end
 
+  context 'when orders can be placed within a virtual cap', with_feature_flags: { virtual_caps: 'active' } do
+    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+    let(:preorder) { create(:preorder_information, :school_will_order, status: :rb_can_order) }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:school) { create(:school, preorder_information: preorder, std_device_allocation: allocation, order_state: :can_order, responsible_body: responsible_body) }
+    let(:user) { create(:school_user, orders_devices: true, school: school) }
+
+    it 'sends :user_can_order email' do
+      expect {
+        service.call
+      }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_in_virtual_cap', 'deliver_now', params: { user: user, school: school }, args: [])
+    end
+  end
+
   context 'when orders cannot be placed' do
     let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
     let(:preorder) { create(:preorder_information, :school_will_order, status: :needs_info) }

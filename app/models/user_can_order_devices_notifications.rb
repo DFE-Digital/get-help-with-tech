@@ -32,7 +32,9 @@ private
   end
 
   def message_type_for_school(school)
-    if %w[rb_can_order school_can_order].include?(school.preorder_information&.status)
+    if %w[rb_can_order].include?(school.preorder_information&.status) && school.responsible_body.has_virtual_cap_feature_flags?
+      :user_can_order_in_virtual_cap
+    elsif %w[rb_can_order school_can_order].include?(school.preorder_information&.status)
       :user_can_order
     elsif %w[needs_info].include?(school.preorder_information&.status)
       :user_can_order_but_action_needed
