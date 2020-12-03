@@ -35,7 +35,7 @@ You need to enter the Computacenter reseller ID in Apple School Manager (ASM) be
 4. Click ‘Device Management Settings’
 5. In the ‘Customer Numbers’ section in the right-hand pane tap ‘Edit’
 6. Select ‘Reseller Number’ from the drop down box
-7. Enter #892F050# and then click ‘Add’
+7. Enter *892F050* and then click ‘Add’
 8. Once the number has been verified click ‘Done’
 
 
