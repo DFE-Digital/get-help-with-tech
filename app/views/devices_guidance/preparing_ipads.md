@@ -35,7 +35,7 @@ You need to enter the Computacenter reseller ID in Apple School Manager (ASM) be
 4. Click ‘Device Management Settings’
 5. In the ‘Customer Numbers’ section in the right-hand pane tap ‘Edit’
 6. Select ‘Reseller Number’ from the drop down box
-7. Enter *892F050* and then click ‘Add’
+7. Enter #892F050# and then click ‘Add’
 8. Once the number has been verified click ‘Done’
 
 
@@ -55,20 +55,23 @@ It includes a checklist with project milestones, best practices for deployment s
 
 You can contact the Education Team at Apple directly to help guide and support you so that you can maximise the use of your iPads.
 
-Email [uk_edu_enquiries@group.apple.com](mailto:uk_edu_enquiries@group.apple.com) using the subject “DfE - Get Help with Technology Programme”.
+Email [\uk_edu_enquiries@group.apple.com\](mailto:uk_edu_enquiries@group.apple.com) using the subject “DfE - Get Help with Technology Programme”.
 
 Apple also provide guidance and online events to help you use iPad features:
 
 ### Quick Guides for Learning with Apple 
-From managing schedules and screen time to building a story, these guides help create productive learning environments by making the most of iPad and Mac built-in features.  
+From managing schedules and screen time to building a story, these guides help create productive learning environments by making the most of iPad and Mac built-in features.
+
 [Download the Quick Guides for Learning with Apple](https://education-static.apple.com/learning-with-apple/apple-quick-guides.pdf)
 
 ### Education Online Event Series 
 Events for UK leaders, teachers and IT staff.  Explore the potential of technology for teaching and learning and how Apple supports with products and programmes for education.
+
 [View all events in the series](https://events.apple.com/content/events/emeia/gb/en/default.html?token=7ZjTgsSqK5CjU9XqowzkH2rQJd12N7I94OWog7qfI1O4kJjfxRCtZLPSfb_QRfID8Pvjeyy_HgFJBlBfMlFHrKWaG6hsWMRImRg8RqQQoYQ&a=1&l=e)
  
 ### 30 Time-Saving Tips for Teachers 
 Discover fun and simple activities highlighting iPad built-in features and apps.  Designed for teachers, these tips can help save time on many tasks teachers do daily.
+
 [Download 30 Time-Saving Tips for Teachers](https://education-static.apple.com/geo/uk/education/2020/tips-for-teachers/ipad-teacher-activities.pdf)
 
 
