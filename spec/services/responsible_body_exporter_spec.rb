@@ -7,12 +7,12 @@ RSpec.describe ResponsibleBodyExporter, type: :model do
   subject(:exporter) { described_class.new(filename) }
 
   context 'when exporting responsible_body data' do
-    around do |example|
+    before do
       responsible_body
       exporter.export_responsible_bodies
+    end
 
-      example.run
-
+    after do
       remove_file(filename)
     end
 
@@ -29,10 +29,12 @@ RSpec.describe ResponsibleBodyExporter, type: :model do
   context 'when exporting single academy trusts' do
     let(:sat) { create(:trust, :single_academy_trust, companies_house_number: nil) }
 
-    around do |example|
+    before do
       sat
       exporter.export_responsible_bodies
-      example.run
+    end
+
+    after do
       remove_file(filename)
     end
 
