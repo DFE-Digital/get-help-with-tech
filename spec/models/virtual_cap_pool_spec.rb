@@ -140,6 +140,34 @@ RSpec.describe VirtualCapPool, type: :model do
     end
   end
 
+  describe '#has_school?', with_feature_flags: { virtual_caps: 'active' } do
+    before do
+      allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
+      allow(mock_request).to receive(:post!).and_return(response)
+    end
+
+    context 'with some schools on the pool' do
+      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
+
+      before do
+        schools.first.preorder_information.responsible_body_will_order_devices!
+        schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
+        schools.last.preorder_information.responsible_body_will_order_devices!
+        schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
+
+        pool.add_school!(schools.first)
+      end
+
+      it 'returns true for a school on the pool' do
+        expect(pool.has_school?(schools.first)).to be true
+      end
+
+      it 'returns false for a school not on the pool' do
+        expect(pool.has_school?(schools.last)).to be false
+      end
+    end
+  end
+
   describe '#available_devices_count' do
     subject(:allocation) { described_class.new(cap: 100, devices_ordered: 200) }
 

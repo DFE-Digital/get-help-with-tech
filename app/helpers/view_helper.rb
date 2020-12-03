@@ -161,12 +161,25 @@ module ViewHelper
     end
   end
 
-  def what_to_order_state(school:)
-    string = school.device_allocations.map { |alloc|
+  def what_to_order_state_list(allocations:)
+    allocations.map { |alloc|
       "#{alloc.devices_ordered} #{alloc.device_type_name.pluralize(alloc.devices_ordered)}"
     }.join(' and ')
+  end
+
+  def what_to_order_state(school:)
+    string = what_to_order_state_list(allocations: school.device_allocations)
 
     "You’ve ordered #{string}"
+  end
+
+  def centrally_managing_count_or_all_schools(responsible_body:)
+    schools = responsible_body.schools.gias_status_open
+    if responsible_body.is_ordering_for_all_schools?
+      'all'
+    else
+      "#{schools.that_are_centrally_managed.count} of #{schools.count}"
+    end
   end
 
   def link_to_ed_settings_form

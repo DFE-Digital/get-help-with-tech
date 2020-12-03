@@ -173,6 +173,38 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
+  describe '#has_centrally_managed_schools?' do
+    subject(:responsible_body) { create(:trust) }
+
+    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    context 'when some schools are centrally managed' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.responsible_body_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[3].update!(status: :closed)
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_centrally_managed_schools?).to be true
+      end
+    end
+
+    context 'when no schools are centrally managed' do
+      before do
+        schools[0].preorder_information.school_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[3].update!(status: :closed)
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_centrally_managed_schools?).to be false
+      end
+    end
+  end
+
   describe '#has_schools_that_can_order_devices_now?' do
     subject(:responsible_body) { create(:trust) }
 
@@ -320,6 +352,28 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
+  describe '#has_school_in_virtual_cap_pools?' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+
+    before do
+      first_school = schools.first
+      first_school.preorder_information.responsible_body_will_order_devices!
+      first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
+      first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+      responsible_body.add_school_to_virtual_cap_pools!(first_school)
+    end
+
+    it 'returns true for a school within the pool' do
+      expect(responsible_body.has_school_in_virtual_cap_pools?(schools.first)).to be true
+    end
+
+    it 'returns false for a school outside the pool' do
+      expect(responsible_body.has_school_in_virtual_cap_pools?(schools.last)).to be false
+    end
+  end
+
   describe '#has_devices_available_to_order?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
@@ -413,6 +467,118 @@ RSpec.describe ResponsibleBody, type: :model do
 
       it 'returns true' do
         expect(responsible_body.has_virtual_cap_feature_flags?).to be true
+      end
+    end
+  end
+
+  describe '#has_virtual_cap_feature_flags_and_centrally_managed_schools?' do
+    subject(:responsible_body) { create(:trust) }
+
+    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    context 'when some schools are centrally managed' do
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+        schools[1].preorder_information.responsible_body_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[3].update!(status: :closed)
+      end
+
+      context 'without any feature flags', with_feature_flags: { virtual_caps: 'inactive' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: false)
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      context 'when global feature flag is enabled', with_feature_flags: { virtual_caps: 'active' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: false)
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      context 'when responsible body flag is enabled', with_feature_flags: { virtual_caps: 'inactive' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: true)
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      context 'when responsible body flag and global feature flag are enabled', with_feature_flags: { virtual_caps: 'active' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: true)
+        end
+
+        it 'returns true' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be true
+        end
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+      end
+    end
+
+    context 'when no schools are centrally managed' do
+      before do
+        schools[0].preorder_information.school_will_order_devices!
+        schools[1].preorder_information.school_will_order_devices!
+        schools[2].preorder_information.school_will_order_devices!
+        schools[3].update!(status: :closed)
+      end
+
+      context 'without any feature flags', with_feature_flags: { virtual_caps: 'inactive' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: false)
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      context 'when global feature flag is enabled', with_feature_flags: { virtual_caps: 'active' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: false)
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      context 'when responsible body flag is enabled', with_feature_flags: { virtual_caps: 'inactive' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: true)
+        end
+
+        it 'returns false' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      context 'when responsible body flag and global feature flag are enabled', with_feature_flags: { virtual_caps: 'active' } do
+        before do
+          responsible_body.update!(vcap_feature_flag: true)
+        end
+
+        it 'returns true' do
+          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+        end
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
       end
     end
   end

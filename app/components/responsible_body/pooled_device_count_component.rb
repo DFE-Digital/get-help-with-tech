@@ -30,6 +30,6 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
 private
 
   def allocations
-    responsible_body.virtual_cap_pools.order(Arel.sql("device_type = 'coms_device' ASC"))
+    responsible_body.virtual_cap_pools.with_std_device_first
   end
 end

@@ -5,6 +5,7 @@ module PageObjects
 
       elements :users, '.user'
       elements :school_rows, '#responsible-body-schools tbody tr'
+      elements :centrally_managed_stats, '#responsible-body-centrally-managed-stats li'
     end
   end
 end

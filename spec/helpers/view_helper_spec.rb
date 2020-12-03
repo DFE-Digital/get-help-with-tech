@@ -81,6 +81,26 @@ RSpec.describe ViewHelper do
     end
   end
 
+  describe '#what_to_order_state_list' do
+    context 'when devices available to order' do
+      let(:allocations) { [SchoolDeviceAllocation.new(cap: 4, devices_ordered: 2)] }
+
+      it 'returns X devices' do
+        expect(helper.what_to_order_state_list(allocations: allocations)).to eql('2 devices')
+      end
+    end
+
+    context 'when devices and routers available to order' do
+      let(:allocation1) { SchoolDeviceAllocation.new(device_type: :std_device, cap: 10, devices_ordered: 3) }
+      let(:allocation2) { SchoolDeviceAllocation.new(device_type: :coms_device, cap: 4, devices_ordered: 2) }
+      let(:allocations) { [allocation1, allocation2] }
+
+      it 'returns X devices and X routers' do
+        expect(helper.what_to_order_state_list(allocations: allocations)).to eql('3 devices and 2 routers')
+      end
+    end
+  end
+
   describe '#what_to_order_state' do
     context 'when devices available to order' do
       let(:allocations) { [SchoolDeviceAllocation.new(cap: 4, devices_ordered: 2)] }

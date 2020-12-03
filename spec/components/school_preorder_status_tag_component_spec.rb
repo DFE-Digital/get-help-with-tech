@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SchoolPreorderStatusTagComponent do
   subject(:component) { described_class.new(school: school, viewer: viewer) }
 
-  let(:school) { instance_double('School', preorder_status_or_default: 'rb_can_order') }
+  let(:school) { instance_double('School', preorder_status_or_default: 'rb_can_order', who_will_order_devices: 'responsible_body') }
   let(:viewer) { nil }
 
   describe '#text' do
@@ -13,11 +13,31 @@ RSpec.describe SchoolPreorderStatusTagComponent do
       end
 
       context 'when viewer is an RB' do
-        let(:school) { instance_double('School', preorder_status_or_default: 'rb_can_order') }
+        let(:school) { instance_double('School', preorder_status_or_default: 'rb_can_order', who_will_order_devices: 'responsible_body') }
         let(:viewer) { LocalAuthority.new }
 
         it 'returns You can order' do
           expect(component.text).to eql('You can order')
+        end
+      end
+    end
+
+    context 'when school is managed centrally' do
+      context 'when the RB has ordered' do
+        let(:school) { instance_double('School', preorder_status_or_default: 'ordered', who_will_order_devices: 'responsible_body') }
+
+        it 'returns RB has ordered' do
+          expect(component.text).to eql('Responsible body has ordered')
+        end
+      end
+    end
+
+    context 'when school manages orders' do
+      let(:school) { instance_double('School', preorder_status_or_default: 'ordered', who_will_order_devices: 'school') }
+
+      context 'when the school has ordered' do
+        it 'returns school has ordered' do
+          expect(component.text).to eql('School has ordered')
         end
       end
     end

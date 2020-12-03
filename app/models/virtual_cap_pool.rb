@@ -12,6 +12,10 @@ class VirtualCapPool < ApplicationRecord
 
   validates :device_type, uniqueness: { scope: :responsible_body_id }
 
+  def self.with_std_device_first
+    order(Arel.sql("device_type = 'coms_device' ASC"))
+  end
+
   def recalculate_caps!
     self.cap = school_device_allocations.sum(:cap)
     self.devices_ordered = school_device_allocations.sum(:devices_ordered)
@@ -26,6 +30,10 @@ class VirtualCapPool < ApplicationRecord
     else
       raise VirtualCapPoolError, "Cannot add school to virtual pool #{school.urn} #{school.name}"
     end
+  end
+
+  def has_school?(school)
+    schools.exists?(school.id)
   end
 
 private
