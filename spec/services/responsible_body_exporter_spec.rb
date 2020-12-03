@@ -33,7 +33,7 @@ RSpec.describe ResponsibleBodyExporter, type: :model do
       sat
       exporter.export_responsible_bodies
     end
-    
+
     after do
       remove_file(filename)
     end
