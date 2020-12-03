@@ -7,10 +7,12 @@ RSpec.describe SchoolDataExporter, type: :model do
   subject(:exporter) { described_class.new(filename) }
 
   context 'when exporting school data' do
-    around do |example|
+    before do
       school
       exporter.export_schools
-      example.run
+    end
+
+    after do
       remove_file(filename)
     end
 
@@ -27,10 +29,12 @@ RSpec.describe SchoolDataExporter, type: :model do
   context 'when exporting single academy trusts' do
     let(:sat) { create(:trust, :single_academy_trust, companies_house_number: nil) }
 
-    around do |example|
+    before do
       school.update!(responsible_body: sat)
       exporter.export_schools
-      example.run
+    end
+
+    after do
       remove_file(filename)
     end
 
