@@ -1,5 +1,9 @@
 module Computacenter::ResponsibleBodyUrns
   module ClassMethods
+    def with_changes_relevant_to_computacenter
+      gias_status_open.where(computacenter_change: %w[new amended])
+    end
+
     def find_by_computacenter_urn!(cc_urn)
       our_identifier = convert_computacenter_urn(cc_urn)
       # given URNs starting with 't' are for Trusts

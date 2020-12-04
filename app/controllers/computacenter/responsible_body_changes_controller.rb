@@ -5,7 +5,7 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
     respond_to do |format|
       format.html do
         @responsible_bodies = fetch_responsible_bodies
-        @show_download_link = show_download_link?
+        @show_download_link = ResponsibleBody.with_changes_relevant_to_computacenter.any?
       end
       format.csv { send_data csv_generator, filename: "rb-changes-#{Time.zone.now.strftime('%Y%m%d')}.csv" }
     end
@@ -80,9 +80,5 @@ private
 
   def update_sold_to
     @responsible_body.update!(computacenter_reference: @form.sold_to, computacenter_change: 'none')
-  end
-
-  def show_download_link?
-    ResponsibleBody.gias_status_open.where(computacenter_change: %w[new amended]).count.positive?
   end
 end
