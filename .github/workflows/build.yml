@@ -90,6 +90,8 @@ jobs:
 
       - name: Compile assets
         run: bundle exec rails webpacker:compile
+      - name: Dump out manifest contents in case of JSON::ParserError
+        run: cat public/packs/manifest.json
       - name: Run rubocop
         run: bundle exec rubocop app config db lib spec Gemfile --format clang --parallel
       - name: Run rspec
