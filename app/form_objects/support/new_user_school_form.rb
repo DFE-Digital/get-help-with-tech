@@ -3,9 +3,21 @@ class Support::NewUserSchoolForm
 
   MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 50
 
-  attr_accessor :user, :name_or_urn
+  attr_accessor :user, :name_or_urn, :school_urn
 
   def matching_schools
+    school_by_urn || schools_by_name_or_urn
+  end
+
+private
+
+  def school_by_urn
+    if @school_urn
+      [School.gias_status_open.find_by(urn: @school_urn)]
+    end
+  end
+
+  def schools_by_name_or_urn
     School
       .matching_name_or_urn(@name_or_urn)
       .includes(:responsible_body)

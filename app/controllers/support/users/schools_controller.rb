@@ -13,7 +13,7 @@ class Support::Users::SchoolsController < Support::BaseController
   end
 
   def new
-    @form = Support::NewUserSchoolForm.new(user: @user, name_or_urn: user_school_params[:name_or_urn])
+    @form = Support::NewUserSchoolForm.new(user_school_params.merge(user: @user))
     @schools = @form.matching_schools
   end
 
@@ -45,6 +45,6 @@ private
   end
 
   def user_school_params(opts = params)
-    opts.fetch('support_new_user_school_form').permit(:name_or_urn)
+    opts.fetch('support_new_user_school_form').permit(:name_or_urn, :school_urn)
   end
 end
