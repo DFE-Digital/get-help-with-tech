@@ -5,7 +5,7 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
     respond_to do |format|
       format.html do
         @schools = fetch_schools
-        @show_download_link = show_download_link?
+        @show_download_link = School.with_changes_relevant_to_computacenter.any?
       end
       format.csv { send_data csv_generator, filename: "school-changes-#{Time.zone.now.strftime('%Y%m%d')}.csv" }
     end
@@ -51,9 +51,11 @@ private
   end
 
   def parse_view_mode
-    mode = params[:view]
-    mode = 'all' unless mode.in? %w[new amended]
-    mode
+    if params[:view].in?(%w[new amended])
+      params[:view]
+    else
+      'all'
+    end
   end
 
   def query_for_view_mode
@@ -81,9 +83,5 @@ private
 
   def update_ship_to
     @school.update!(computacenter_reference: @form.ship_to, computacenter_change: 'none')
-  end
-
-  def show_download_link?
-    School.gias_status_open.where(computacenter_change: %w[new amended]).count.positive?
   end
 end

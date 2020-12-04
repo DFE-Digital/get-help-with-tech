@@ -71,6 +71,10 @@ class School < ApplicationRecord
     where(order_state: %w[can_order_for_specific_circumstances can_order])
   end
 
+  def self.with_changes_relevant_to_computacenter
+    gias_status_open.where(computacenter_change: %w[new amended])
+  end
+
   def has_ordered?
     device_allocations.to_a.any? { |alloc| alloc.devices_ordered.positive? }
   end
