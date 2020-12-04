@@ -67,7 +67,7 @@ RSpec.configure do |config|
 
   config.before do |example|
     DatabaseCleaner.strategy = :transaction
-    puts "#{Thread.current} running #{example.location}"
+    puts "#{Thread.current} running #{example.location}" if ENV['DEBUG_SPEC_RUN_ORDER'].present?
   end
 
   config.before(:each, type: :feature) do
