@@ -156,6 +156,16 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     it 'does not show the school contact even if the school contact is set' do
       expect(result.css('dl').text).not_to include('School contact')
     end
+
+    context 'when the responsible body has virtual caps enabled', with_feature_flags: { virtual_caps: 'active' } do
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let(:school) { create(:school, :primary, :academy, responsible_body: responsible_body) }
+
+      it 'confirms that fact but does not allow changes' do
+        expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
+        expect(action_for_row(result, 'Who will order?')).to be_nil
+      end
+    end
   end
 
   context 'when the responsible body has not made a decision about who will order' do

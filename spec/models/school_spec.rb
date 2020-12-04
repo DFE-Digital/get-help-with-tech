@@ -411,4 +411,26 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#in_virtual_cap_pool?' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+
+    before do
+      first_school = schools.first
+      first_school.preorder_information.responsible_body_will_order_devices!
+      first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
+      first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+      responsible_body.add_school_to_virtual_cap_pools!(first_school)
+    end
+
+    it 'returns true for a school within the pool' do
+      expect(schools.first.in_virtual_cap_pool?).to be true
+    end
+
+    it 'returns false for a school outside the pool' do
+      expect(schools.last.in_virtual_cap_pool?).to be false
+    end
+  end
 end
