@@ -320,6 +320,59 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
+  describe '#has_devices_available_to_order?' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+
+    before do
+      stub_computacenter_outgoing_api_calls
+      schools.each do |s|
+        s.preorder_information.responsible_body_will_order_devices!
+        responsible_body.add_school_to_virtual_cap_pools!(s)
+      end
+    end
+
+    context 'when used full allocation' do
+      before do
+        schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 100)
+        schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 100)
+
+        responsible_body.calculate_virtual_caps!
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_devices_available_to_order?).to be false
+      end
+    end
+
+    context 'when partially used allocation' do
+      before do
+        schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 75)
+        schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 100)
+
+        responsible_body.calculate_virtual_caps!
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_devices_available_to_order?).to be true
+      end
+    end
+
+    context 'when no devices ordered' do
+      before do
+        schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 0)
+        schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 0)
+
+        responsible_body.calculate_virtual_caps!
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_devices_available_to_order?).to be true
+      end
+    end
+  end
+
   describe '#has_virtual_cap_feature_flags?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 

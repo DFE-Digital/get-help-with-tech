@@ -1,5 +1,7 @@
 class VirtualCapPool < ApplicationRecord
   include Computacenter::CapChangeNotifier
+  include DeviceType
+  include DeviceCount
 
   belongs_to :responsible_body
   has_many :school_virtual_caps, dependent: :destroy
@@ -9,11 +11,6 @@ class VirtualCapPool < ApplicationRecord
   after_touch :recalculate_caps!
 
   validates :device_type, uniqueness: { scope: :responsible_body_id }
-
-  enum device_type: {
-    'coms_device': 'coms_device',
-    'std_device': 'std_device',
-  }
 
   def recalculate_caps!
     self.cap = school_device_allocations.sum(:cap)

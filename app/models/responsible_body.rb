@@ -35,6 +35,10 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
+  def has_devices_available_to_order?
+    virtual_cap_pools.any?(&:has_devices_available_to_order?)
+  end
+
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices' do
   let(:responsible_body) { create(:local_authority) }
-  let(:schools) { create_list(:school, 5, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 6, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -148,7 +148,7 @@ RSpec.feature 'Ordering devices' do
   end
 
   def then_i_see_the_order_now_page
-    expect(page).to have_css('h1', text: 'Order devices now')
+    expect(page).to have_css('h1', text: 'Order devices')
   end
 
   def and_i_see_1_school_that_i_need_to_place_orders_for

@@ -1,0 +1,49 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
+
+    <% if @schools_can_order.any? && @schools_can_order_for_specific_circumstances.any? %>
+      <p class="govuk-body govuk-!-margin-bottom-1">
+        The number of devices you can order is the remaining allocation of devices for:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>approved requests <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %></li>
+        <li><%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time</li>
+      </ul>
+    <% elsif @schools_can_order.any? %>
+      <p class="govuk-body">
+        The number of devices you can order is the remaining allocation of devices for <%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time.
+      </p>
+    <% elsif @schools_can_order_for_specific_circumstances.any? %>
+      <p class="govuk-body">
+        The number of devices you can order is the remaining allocation of devices where a request <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %> has been approved.
+      </p>
+    <% end %>
+
+    <h2 class="govuk-heading-m">
+      How to order
+    </h2>
+    <p class="govuk-body">
+      You need to place orders on a website called TechSource.
+    </p>
+    <p class="govuk-body">
+      If you try to order more than <%= what_to_order_allocation_list(allocations: @responsible_body.virtual_cap_pools) %> the order will be cancelled.
+    </p>
+    <p class="govuk-body">
+      Devices will be delivered within 2 working days.
+    </p>
+    <h3 class="govuk-heading-s">
+      Ordering devices for more than one school
+    </h3>
+    <p class="govuk-body">
+      You can combine allocations for all your schools, and have all devices delivered to one place. If you want different schools to get devices directly, place a separate order for each delivery address.
+    </p>
+    <p class="govuk-body">
+      When using TechSource, you will be asked for a URN. Use any URN for one of the schools you manage.
+    </p>
+
+    <h3 class="govuk-heading-s">Using TechSource for the first time</h3>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address } %>
+  </div>
+</div>

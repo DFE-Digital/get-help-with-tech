@@ -143,13 +143,17 @@ module ViewHelper
     now >= window_start && now <= window_end
   end
 
+  def what_to_order_allocation_list(allocations:)
+    allocations.map { |alloc|
+      "#{alloc.available_devices_count} #{alloc.device_type_name.pluralize(alloc.available_devices_count)}"
+    }.join(' and ')
+  end
+
   def what_to_order_availability(school:)
     suffix = (school.can_order_for_specific_circumstances? ? ' for specific circumstances' : nil)
 
     if school.has_devices_available_to_order?
-      string = school.device_allocations.map { |alloc|
-        "#{alloc.available_devices_count} #{alloc.device_type_name.pluralize(alloc.available_devices_count)}"
-      }.join(' and ')
+      string = what_to_order_allocation_list(allocations: school.device_allocations)
 
       "Order #{string}#{suffix}"
     else
