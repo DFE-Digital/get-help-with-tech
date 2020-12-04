@@ -48,6 +48,8 @@ private
       :user_can_order_but_action_needed
     elsif status?('rb_can_order', 'school_can_order', school: school) && user.orders_devices? && !user.seen_privacy_notice?
       :nudge_user_to_read_privacy_policy
+    elsif status?('rb_can_order', school: school) && school.responsible_body.has_virtual_cap_feature_flags? && user.in?(school.order_users_with_active_techsource_accounts)
+      :user_can_order_in_virtual_cap
     elsif status?('ready', 'school_ready', 'rb_can_order', 'school_can_order', school: school) && user.in?(school.order_users_with_active_techsource_accounts)
       :user_can_order
     end

@@ -46,6 +46,7 @@ govuk_notify:
       nominate_contacts: 'ef964a6f-d984-4f35-a074-6f3cb79bfec7'
       school_nominated_contact: '61eb33fc-87a0-488c-8121-354dd67093ef'
       can_order_devices: '9df2c08a-c457-4b13-9270-c5a20687d168'
+      can_order_devices_in_virtual_cap: 'ab40ae48-6086-4fd7-b391-b29883572d86'
       user_added_to_additional_school: 'f3ec0c69-17f8-424d-9c33-f17438355c2c'
       can_order_but_action_needed: '9096f09c-0b36-486c-9395-a6626198fd86'
       user_added_to_additional_school: 'f3ec0c69-17f8-424d-9c33-f17438355c2c'

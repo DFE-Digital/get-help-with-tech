@@ -91,6 +91,38 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       end
     end
 
+    context 'when school ordering centrally in virtual cap which is ready changes from cannot_order to can_order', with_feature_flags: { virtual_caps: 'active' } do
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let(:school) do
+        create(:school,
+               :with_std_device_allocation,
+               :with_preorder_information,
+               order_state: order_state,
+               responsible_body: responsible_body)
+      end
+
+      before do
+        school.update!(order_state: 'can_order')
+        school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
+        school.preorder_information.update!(who_will_order_devices: 'school', status: 'rb_can_order', will_need_chromebooks: 'no')
+      end
+
+      context 'user has confirmed techsource account' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 techsource_account_confirmed_at: 1.second.ago,
+                 orders_devices: true)
+        end
+
+        it 'notifies the user' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_in_virtual_cap', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+      end
+    end
+
     context 'when a school that is ready changes status from specfic circumstances to lockdown' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order_for_specific_circumstances') }
 
