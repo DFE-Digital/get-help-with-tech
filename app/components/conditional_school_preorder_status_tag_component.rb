@@ -8,7 +8,7 @@ class ConditionalSchoolPreorderStatusTagComponent < SchoolPreorderStatusTagCompo
     when 'responsible_body'
       status.in? statuses_to_display
     when 'school'
-      status.in? (statuses_to_display + ['ordered'])
+      status.in?(statuses_to_display + %w[ordered])
     else
       true
     end

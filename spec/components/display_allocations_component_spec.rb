@@ -7,6 +7,7 @@ RSpec.describe DisplayAllocationsComponent, type: :component do
   let(:trust) { create(:trust, :manages_centrally, :vcap_feature_flag) }
   let(:school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
   let(:another_school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
+
   subject(:component) { described_class.new(school: school) }
 
   before do
@@ -42,9 +43,9 @@ RSpec.describe DisplayAllocationsComponent, type: :component do
     end
   end
 
-  def put_school_in_pool(rb, pool_school)
+  def put_school_in_pool(responsible_body, pool_school)
     pool_school.preorder_information.responsible_body_will_order_devices!
     pool_school.can_order!
-    rb.add_school_to_virtual_cap_pools!(pool_school)
+    responsible_body.add_school_to_virtual_cap_pools!(pool_school)
   end
 end
