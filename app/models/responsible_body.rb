@@ -39,6 +39,10 @@ class ResponsibleBody < ApplicationRecord
     virtual_cap_pools.any?(&:has_devices_available_to_order?)
   end
 
+  def has_school_in_virtual_cap_pools?(school)
+    virtual_cap_pools.any? { |pool| pool.has_school?(school) }
+  end
+
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end
@@ -81,6 +85,10 @@ class ResponsibleBody < ApplicationRecord
 
   def has_virtual_cap_feature_flags?
     FeatureFlag.active?(:virtual_caps) && vcap_feature_flag?
+  end
+
+  def has_virtual_cap_feature_flags_and_centrally_managed_schools?
+    has_virtual_cap_feature_flags? && has_centrally_managed_schools?
   end
 
   def self.in_connectivity_pilot
@@ -145,6 +153,14 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def is_ordering_for_schools?
+    schools.gias_status_open.that_are_centrally_managed.any?
+  end
+
+  def is_ordering_for_all_schools?
+    schools.gias_status_open.count == schools.gias_status_open.that_are_centrally_managed.count
+  end
+
+  def has_centrally_managed_schools?
     schools.gias_status_open.that_are_centrally_managed.any?
   end
 

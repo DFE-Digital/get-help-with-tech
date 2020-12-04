@@ -363,26 +363,48 @@ en:
   components:
     school_preorder_status_tag_component:
       status:
+        school:
+          responsible_body:
+            needs_contact: Needs a contact
+            needs_info: Needs information
+            ready: Ready
+            school_contacted: School contacted
+            school_will_be_contacted: School will be contacted
+            school_ready: School ready
+            rb_can_order: You can order
+            school_can_order: School can order
+            ordered: School has ordered
+          default:
+            needs_contact: Needs a contact
+            needs_info: Needs information
+            ready: Ready
+            school_contacted: School contacted
+            school_will_be_contacted: School will be contacted
+            school_ready: School ready
+            rb_can_order: Responsible body can order
+            school_can_order: School can order
+            ordered: School has ordered
         responsible_body:
-          needs_contact: Needs a contact
-          needs_info: Needs information
-          ready: Ready
-          school_contacted: School contacted
-          school_will_be_contacted: School will be contacted
-          school_ready: School ready
-          rb_can_order: You can order
-          school_can_order: School can order
-          ordered: School has ordered
-        default:
-          needs_contact: Needs a contact
-          needs_info: Needs information
-          ready: Ready
-          school_contacted: School contacted
-          school_will_be_contacted: School will be contacted
-          school_ready: School ready
-          rb_can_order: Responsible body can order
-          school_can_order: School can order
-          ordered: School has ordered
+          responsible_body:
+            needs_contact: Needs a contact
+            needs_info: Needs information
+            ready: Ready
+            school_contacted: School contacted
+            school_will_be_contacted: School will be contacted
+            school_ready: School ready
+            rb_can_order: You can order
+            school_can_order: School can order
+            ordered: You have ordered
+          default:
+            needs_contact: Needs a contact
+            needs_info: Needs information
+            ready: Ready
+            school_contacted: School contacted
+            school_will_be_contacted: School will be contacted
+            school_ready: School ready
+            rb_can_order: Responsible body can order
+            school_can_order: School can order
+            ordered: Responsible body has ordered
   activemodel:
     errors:
       models:
