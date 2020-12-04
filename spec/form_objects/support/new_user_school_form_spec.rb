@@ -22,4 +22,13 @@ RSpec.describe Support::NewUserSchoolForm, type: :model do
 
     expect(form.matching_schools.size).to eq(2)
   end
+
+  it 'returns an exact match on the school URN when one is provided' do
+    matching_school = create(:school, name: 'Southmead School', urn: 123_456)
+    create(:school, name: 'Southdean School', urn: 654_321)
+
+    form = Support::NewUserSchoolForm.new(school_urn: '123456')
+
+    expect(form.matching_schools).to contain_exactly(matching_school)
+  end
 end

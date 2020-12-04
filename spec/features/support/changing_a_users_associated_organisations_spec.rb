@@ -51,6 +51,13 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_see_a_message_telling_me_the_school_has_been_associated
   end
 
+  scenario 'a support agent adds a user to a school by selecting it from an autocomplete' do
+    given_i_am_logged_in_as_a_support_user
+    when_i_visit_a_users_schools_page
+    and_i_pick_a_school_via_the_schools_autocomplete
+    then_i_see_one_school_matching_that_urn
+  end
+
   scenario 'a support user cannot add a user to a school twice' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_schools_page
@@ -142,6 +149,18 @@ RSpec.feature 'Changing users’ associated organisations' do
   def and_i_enter_a_partial_school_name_in_any_case
     fill_in 'School name or URN', with: other_school.name.first(3).downcase
     user_schools_page.submit_school_name_or_urn.click
+  end
+
+  def and_i_pick_a_school_via_the_schools_autocomplete
+    # we don't want to do the full JS round-trip here so we'll simulate what the JS autocomplete
+    # does, which is setting the hidden 'school-urn' attribute
+    user_schools_page.school_urn(visible: false).set trust_school_1.urn
+    user_schools_page.submit_school_name_or_urn.click
+  end
+
+  def then_i_see_one_school_matching_that_urn
+    expect(matching_schools_page).to be_displayed
+    expect(matching_schools_page.school_names.first).to have_text(trust_school_1.name)
   end
 
   def then_i_see_schools_matching_that_name
