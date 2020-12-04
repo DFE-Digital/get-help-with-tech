@@ -30,7 +30,7 @@ private
       value: school.urn,
     },
      {
-       key: 'School Name',
+       key: 'School name',
        value: school.name,
      },
      {
