@@ -6,8 +6,8 @@ class DisplayAllocationsComponent < ViewComponent::Base
   end
 
   def allocations
-    std_devices_count = school&.std_device_allocation.allocation.to_i
-    coms_devices_count = school&.coms_device_allocation.allocation.to_i
+    std_devices_count = school.std_device_allocation&.raw_allocation.to_i
+    coms_devices_count = school.coms_device_allocation&.raw_allocation.to_i
     [
       build_text(std_devices_count, 'device'),
       build_text(coms_devices_count, 'router'),

@@ -59,18 +59,20 @@ private
   end
 
   def device_allocation_row
+    allocation = @school.std_device_allocation&.raw_allocation.to_i
     {
       key: 'Device allocation',
-      value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
+      value: pluralize(allocation, 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query <span class="govuk-visually-hidden">device</span> allocation'.html_safe,
     }
   end
 
   def router_allocation_row
+    allocation = @school.coms_device_allocation&.raw_allocation.to_i
     {
       key: 'Router allocation',
-      value: pluralize(@school.coms_device_allocation&.allocation.to_i, 'router'),
+      value: pluralize(allocation, 'router'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query <span class="govuk-visually-hidden">router</span> allocation'.html_safe,
     }
@@ -88,7 +90,7 @@ private
   end
 
   def display_router_allocation_row?
-    @school.coms_device_allocation&.allocation.to_i.positive?
+    @school.coms_device_allocation&.raw_allocation.to_i.positive?
   end
 
   def order_status_row
