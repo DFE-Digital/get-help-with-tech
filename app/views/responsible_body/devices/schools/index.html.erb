@@ -36,16 +36,19 @@
 
 <% if @specific_circumstances_schools.count.positive? %>
   <%= render partial: 'school_states_table', locals: { schools: @specific_circumstances_schools,
-    heading: t('.specific_circumstances_heading') } %>
+                                                       table_id: 'specific-circumstances-schools',
+                                                       heading: t('.specific_circumstances_heading') } %>
 <%- end %>
 
 <% if @ordering_schools.count.positive? %>
   <%= render partial: 'school_states_table', locals: { schools: @ordering_schools,
-    heading: t('.ordering_schools_heading'),
-    heading_text: t('.ordering_schools_heading_text') } %>
+                                                       table_id: 'ordering-schools',
+                                                       heading: t('.ordering_schools_heading'),
+                                                       heading_text: t('.ordering_schools_heading_text') } %>
 <%- end %>
 
 <% if @fully_open_schools.count.positive? %>
   <%= render partial: 'school_states_table', locals: { schools: @fully_open_schools,
-    heading: t('.fully_open_schools_heading') } %>
+                                                       table_id: 'fully-open-schools',
+                                                       heading: t('.fully_open_schools_heading') } %>
 <%- end %>

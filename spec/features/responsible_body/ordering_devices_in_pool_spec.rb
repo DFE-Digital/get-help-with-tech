@@ -95,7 +95,7 @@ RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { vi
 
   def then_i_see_the_get_laptops_and_tablets_page
     expect(page).to have_css('h1', text: 'Get laptops and tablets')
-    expect(page).to have_link('List of schools')
+    expect(page).to have_link('Your schools')
     expect(page).to have_link('Order devices')
     expect(page).to have_link('Request devices for specific circumstances')
   end

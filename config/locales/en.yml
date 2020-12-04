@@ -570,6 +570,11 @@ en:
         update:
           success: We’ve saved your choice
       schools:
+        index:
+          ordering_schools_heading: Schools reporting a closure or self-isolation group
+          ordering_schools_heading_text: When a school has reported either a closure or a group of 15 or more pupils self-isolating at the same time, you can order its allocation of devices or routers
+          specific_circumstances_heading: Schools with approved requests for specific circumstances
+          fully_open_schools_heading: Schools without a reported closure or self-isolating group
         who_to_contact:
           create:
             failure: "Saved. We will email %{email_address} shortly"
@@ -620,11 +625,3 @@ en:
         name_or_urn: School name or URN
       support_user_responsible_body_form:
         name: Responsible body name
-  responsible_body:
-    devices:
-      schools:
-        index:
-          ordering_schools_heading: Schools reporting a closure or self-isolation group
-          ordering_schools_heading_text: When a school has reported either a closure or a group of 15 or more pupils self-isolating at the same time, you can order its allocation of devices or routers
-          specific_circumstances_heading: Schools with approved requests for specific circumstances
-          fully_open_schools_heading: Schools without a reported closure or self-isolating group
