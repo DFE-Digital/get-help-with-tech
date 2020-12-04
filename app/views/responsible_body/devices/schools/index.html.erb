@@ -13,7 +13,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      <%= pluralize(@schools.size, 'school') %>
+      <%= title %>
     </h1>
 
     <%= render GovukComponent::Details.new(summary: 'Is this list wrong?') do %>
@@ -26,33 +26,18 @@
   </div>
 </div>
 
-<table id="schools" class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header app-schools-table__school-column">School and URN</th>
-      <th class="govuk-table__header">Allocation</th>
-      <th class="govuk-table__header">Who will order?</th>
-      <th class="govuk-table__header">Status</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @schools.each do |school| %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">
-          <%= govuk_link_to "#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn) %>
-          <br>
-          <%= school.type_label %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= school.std_device_allocation&.allocation.to_i %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
-        </td>
-        <td class="govuk-table__cell govuk-table__cell--nowrap">
-          <%= render SchoolPreorderStatusTagComponent.new(school: school, viewer: @responsible_body) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @specific_circumstances_schools.count.positive? %>
+  <%= render partial: 'school_states_table', locals: { schools: @specific_circumstances_schools,
+    heading: t('.specific_circumstances_heading') } %>
+<%- end %>
+
+<% if @ordering_schools.count.positive? %>
+  <%= render partial: 'school_states_table', locals: { schools: @ordering_schools,
+    heading: t('.ordering_schools_heading'),
+    heading_text: t('.ordering_schools_heading_text') } %>
+<%- end %>
+
+<% if @fully_open_schools.count.positive? %>
+  <%= render partial: 'school_states_table', locals: { schools: @fully_open_schools,
+    heading: t('.fully_open_schools_heading') } %>
+<%- end %>

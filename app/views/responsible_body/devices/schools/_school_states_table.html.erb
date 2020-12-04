@@ -1,0 +1,38 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margine-top-4">
+    <h3 class="govuk-heading-m"><%= heading %></h3>
+    <% if local_assigns[:heading_text] %>
+      <p class="govuk-body"><%= heading_text %></p>
+    <%- end %>
+  </div>
+</div>
+<table id="specific-circumstances-schools" class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header app-schools-table__school-column">School</th>
+      <th class="govuk-table__header">Who will order?</th>
+      <th class="govuk-table__header">Allocation</th>
+      <th class="govuk-table__header"><span class="govuk-visually-hidden">Status</span></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% schools.each do |school| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <%= govuk_link_to "#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn) %>
+          <br>
+          <%= school.type_label %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= render DisplayAllocationsComponent.new(school: school) %>
+        </td>
+        <td class="govuk-table__cell govuk-table__cell--nowrap">
+          <%= render ConditionalSchoolPreorderStatusTagComponent.new(school: school, viewer: @responsible_body) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
