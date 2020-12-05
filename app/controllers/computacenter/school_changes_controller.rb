@@ -1,7 +1,10 @@
 class Computacenter::SchoolChangesController < Computacenter::BaseController
   before_action :set_school, except: :index
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: :index
 
   def index
+    authorize School
     respond_to do |format|
       format.html do
         @schools = fetch_schools
@@ -12,11 +15,13 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
   end
 
   def edit
+    authorize @school, :update_computacenter_reference?
     @form = Computacenter::ShipToForm.new(school: @school,
                                           ship_to: @school.computacenter_reference)
   end
 
   def update
+    authorize @school, :update_computacenter_reference?
     @form = Computacenter::ShipToForm.new(ship_to_params.merge(school: @school))
 
     if @form.valid?
@@ -32,6 +37,7 @@ private
 
   def set_school
     @school = School.gias_status_open.find_by(urn: params[:id])
+    authorize @school, :show?
   end
 
   def csv_generator
@@ -39,7 +45,8 @@ private
   end
 
   def fetch_schools
-    School.joins(:responsible_body)
+    policy_scope(School)
+      .joins(:responsible_body)
       .includes(:responsible_body)
       .gias_status_open
       .merge(query_for_view_mode)
