@@ -40,9 +40,13 @@ module Computacenter::ResponsibleBodyUrns
       when 'LocalAuthority'
         "LEA#{gias_id}"
       when 'Trust'
-        return '' if companies_house_number.blank?
-
-        "t#{companies_house_number.to_i}"
+        if companies_house_number.blank?
+          ''
+        else
+          "t#{companies_house_number.to_i}"
+        end
+      when 'DfE'
+        'DfE'
       end
     end
 
@@ -52,6 +56,8 @@ module Computacenter::ResponsibleBodyUrns
         local_authority_official_name
       when 'Trust'
         name
+      when 'DfE'
+        'Department for Education'
       end
     end
   end
