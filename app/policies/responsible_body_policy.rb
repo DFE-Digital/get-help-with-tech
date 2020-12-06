@@ -4,4 +4,8 @@ class ResponsibleBodyPolicy < SupportPolicy
       scope.all
     end
   end
+
+  def update_computacenter_reference?
+    user.is_computacenter?
+  end
 end
