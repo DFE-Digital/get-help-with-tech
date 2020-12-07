@@ -153,6 +153,10 @@ class School < ApplicationRecord
     device_allocations.any?(&:has_devices_available_to_order?)
   end
 
+  def in_virtual_cap_pool?
+    responsible_body.has_school_in_virtual_cap_pools?(self)
+  end
+
 private
 
   def maybe_generate_user_changes
