@@ -174,6 +174,10 @@ class School < ApplicationRecord
     [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
   end
 
+  def update_computacenter_reference!(new_value)
+    update!(computacenter_reference: new_value, computacenter_change: 'none')
+  end
+
 private
 
   def maybe_generate_user_changes
