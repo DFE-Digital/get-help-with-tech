@@ -14,7 +14,7 @@
 
     <p class="govuk-body">Order your devices now. Do not delay.</p>
     <p class="govuk-body">Most devices will be delivered within 2 working days.</p>
-    <% if @school.std_device_allocation.available_devices_count > 149 %>
+    <% if @school&.std_device_allocation&.available_devices_count > 149 %>
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
     <p class="govuk-body">Ordering will close when your school reopens.</p>
