@@ -638,4 +638,132 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
   end
+
+  describe '.managing_multiple_chromebook_domains' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+    let(:second_rb) { create(:trust, :manages_centrally) }
+    let(:third_rb) { create(:trust, :devolves_management) }
+
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:second_schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: second_rb) }
+    let(:third_schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: third_rb) }
+
+    before do
+      schools[0].preorder_information.responsible_body_will_order_devices!
+      schools[1].preorder_information.responsible_body_will_order_devices!
+      second_schools[0].preorder_information.responsible_body_will_order_devices!
+      second_schools[1].preorder_information.responsible_body_will_order_devices!
+      third_schools[0].preorder_information.school_will_order_devices!
+      third_schools[1].preorder_information.school_will_order_devices!
+    end
+
+    context 'when centrally managed schools have different chromebook domains within a responsible body' do
+      before do
+        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google.com')
+        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google.com')
+        second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google2.com')
+        second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google2.com')
+      end
+
+      it 'returns the responsible bodies that manage those schools' do
+        result = described_class.managing_multiple_chromebook_domains
+        expect(result).to match_array [responsible_body, second_rb]
+      end
+    end
+
+    context 'when a closed school has a different chromebook domain' do
+      before do
+        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school.google.com')
+        schools[1].gias_status_closed!
+        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school4.google.com')
+        second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google2.com')
+        second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google2.com')
+      end
+
+      it 'does not count closed schools when determining the domains' do
+        result = described_class.managing_multiple_chromebook_domains
+        expect(result).to include second_rb
+        expect(result).not_to include responsible_body
+      end
+    end
+
+    context 'it does not consider schools that are not centrally managed' do
+      before do
+        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google.com')
+        schools[1].preorder_information.school_will_order_devices!
+        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google.com')
+        third_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google3.com')
+        third_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google3.com')
+      end
+
+      it 'does not count closed schools when determining the domains' do
+        result = described_class.managing_multiple_chromebook_domains
+        expect(result).to be_empty
+      end
+    end
+  end
+
+  describe '#has_multiple_chromebook_domains_in_managed_schools?' do
+    subject(:responsible_body) { create(:trust, :manages_centrally) }
+
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+    before do
+      schools[0].preorder_information.responsible_body_will_order_devices!
+      schools[1].preorder_information.responsible_body_will_order_devices!
+    end
+
+    context 'when centrally managed schools have different chromebook domains' do
+      before do
+        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google.com')
+        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google.com')
+      end
+
+      it 'returns true' do
+        expect(responsible_body.has_multiple_chromebook_domains_in_managed_schools?).to be true
+      end
+    end
+
+    context 'it does not consider closed schools' do
+      before do
+        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school.google.com')
+        schools[1].gias_status_closed!
+        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school4.google.com')
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_multiple_chromebook_domains_in_managed_schools?).to be false
+      end
+    end
+
+    context 'it does not consider schools that are not centrally managed' do
+      before do
+        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school0.google.com')
+        schools[1].preorder_information.school_will_order_devices!
+        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                                school_or_rb_domain: 'school1.google.com')
+      end
+
+      it 'returns false' do
+        expect(responsible_body.has_multiple_chromebook_domains_in_managed_schools?).to be false
+      end
+    end
+  end
 end

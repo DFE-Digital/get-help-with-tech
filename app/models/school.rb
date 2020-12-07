@@ -178,6 +178,10 @@ class School < ApplicationRecord
     update!(computacenter_reference: new_value, computacenter_change: 'none')
   end
 
+  def chromebook_domain
+    preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks? 
+  end
+
 private
 
   def maybe_generate_user_changes
