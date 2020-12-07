@@ -12,12 +12,12 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
-    <p class='govuk-body'>Order your devices now. Do not delay.</p>
-    <p class='govuk-body'>Most devices will be delivered within 2 working days.</p>
+    <p class="govuk-body">Order your devices now. Do not delay.</p>
+    <p class="govuk-body">Most devices will be delivered within 2 working days.</p>
     <% if @school.std_device_allocation.available_devices_count > 149 %>
-      <p class='govuk-body'>For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
+      <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
-    <p class='govuk-body'>Ordering will close when your school reopens.</p>
+    <p class="govuk-body">Ordering will close when your school reopens.</p>
 
     <h2 class="govuk-heading-m">Before you start</h2>
     <p class="govuk-body">It’s important to know how many devices you can order before you sign in. Please order only what you need. If you try to order more than you’ve been allocated, the order will be cancelled.</p>
