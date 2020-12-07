@@ -20,29 +20,41 @@ RSpec.feature 'Viewing your schools' do
 
     when_i_follow_the_your_schools_link
     then_i_see_the_your_schools_page
+    then_i_dont_see_the_order_devices_link
   end
 
   scenario 'see a school that is able to fully order' do
     given_a_school_can_order
     when_i_visit_the_your_schools_page
+    then_i_dont_see_the_order_devices_link
     then_i_see_the_school_in_the_schools_reporting_closure_list
   end
 
   scenario 'see a school that is able to order for specific circumstances' do
     given_a_school_can_order_for_specific_circumstances
     when_i_visit_the_your_schools_page
+    then_i_dont_see_the_order_devices_link
     then_i_see_the_school_in_the_schools_with_approved_requests_list
   end
 
   scenario 'see a schools that is fully open' do
     given_a_school_is_fully_open
     when_i_visit_the_your_schools_page
+    then_i_dont_see_the_order_devices_link
     then_i_see_the_school_in_the_fully_open_schools_list
   end
 
-  scenario 'when the virtual caps are enabled and the trust manages centrally', with_feature_flags: { virtual_caps: 'active' } do
+  scenario 'when virtual caps are enabled and the trust manages centrally', with_feature_flags: { virtual_caps: 'active' } do
     given_there_are_schools_in_the_pool
     when_i_visit_the_your_schools_page
+    then_i_see_the_order_devices_link
+    then_i_see_the_summary_pooled_device_count_card
+  end
+
+  scenario 'when virtual caps are enabled and the trust manages centrally but there is nothing to order', with_feature_flags: { virtual_caps: 'active' } do
+    given_there_are_schools_in_the_pool_that_cant_order
+    when_i_visit_the_your_schools_page
+    then_i_dont_see_the_order_devices_link
     then_i_see_the_summary_pooled_device_count_card
   end
 
@@ -81,6 +93,15 @@ RSpec.feature 'Viewing your schools' do
     responsible_body.add_school_to_virtual_cap_pools!(schools.second)
   end
 
+  def given_there_are_schools_in_the_pool_that_cant_order
+    schools.first.can_order!
+    schools.first.std_device_allocation.update!(cap: 5, allocation: 5, devices_ordered: 5)
+    responsible_body.add_school_to_virtual_cap_pools!(schools.first)
+    schools.second.can_order_for_specific_circumstances!
+    schools.second.std_device_allocation.update!(cap: 5, allocation: 20, devices_ordered: 5)
+    responsible_body.add_school_to_virtual_cap_pools!(schools.second)
+  end
+
   def when_i_visit_the_responsible_body_home_page
     visit responsible_body_home_path
     expect(page).to have_http_status(:ok)
@@ -110,6 +131,14 @@ RSpec.feature 'Viewing your schools' do
     expect(page).to have_css('h1', text: 'Your schools')
   end
 
+  def then_i_see_the_order_devices_link
+    expect(page).to have_link('Order devices')
+  end
+
+  def then_i_dont_see_the_order_devices_link
+    expect(page).not_to have_link('Order devices')
+  end
+
   def then_i_see_the_school_in_the_schools_reporting_closure_list
     school = schools.first
     expect(your_schools_page.ordering_school_rows[0].title).to have_content(school.name)
@@ -123,7 +152,7 @@ RSpec.feature 'Viewing your schools' do
     expect(your_schools_page.specific_circumstances_school_rows[0].title).to have_content(school.name)
     expect(your_schools_page.specific_circumstances_school_rows[0].who_will_order_devices).to have_content('Trust')
     expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} devices")
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} routers")
+    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} router")
   end
 
   def then_i_see_the_school_in_the_fully_open_schools_list
@@ -138,7 +167,12 @@ RSpec.feature 'Viewing your schools' do
     expect(page).to have_content("#{responsible_body.name} has:")
     std_count = responsible_body.std_device_pool.cap - responsible_body.std_device_pool.devices_ordered
     coms_count = responsible_body.coms_device_pool.cap - responsible_body.coms_device_pool.devices_ordered
-    expected = "#{std_count} #{'device'.pluralize(std_count)} and #{coms_count} #{'router'.pluralize(coms_count)} available to order"
+    expected =
+      if std_count == 0 && coms_count == 0
+        'All devices ordered'
+      else
+        "#{std_count} #{'device'.pluralize(std_count)} and #{coms_count} #{'router'.pluralize(coms_count)} available to order"
+      end
     expect(page).to have_content(expected)
   end
 end

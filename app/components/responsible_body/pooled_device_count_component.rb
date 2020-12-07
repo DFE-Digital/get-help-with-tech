@@ -1,10 +1,12 @@
 class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
   include ViewHelper
 
-  attr_reader :responsible_body
+  attr_reader :responsible_body, :action, :show_action
 
-  def initialize(responsible_body:)
+  def initialize(responsible_body:, show_action: true, action: {})
     @responsible_body = responsible_body
+    @action = action
+    @show_action = show_action
   end
 
   def name_string
