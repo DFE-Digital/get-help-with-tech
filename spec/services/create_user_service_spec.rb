@@ -153,8 +153,6 @@ RSpec.describe CreateUserService do
         let!(:other_school) { create(:school) }
         let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: other_school) }
 
-        before { create(:preorder_information, school: other_school, who_will_order_devices: 'school') }
-
         it 'returns the existing user' do
           expect(result).to be_a(User)
           expect(result).to eq(existing_user)
@@ -163,6 +161,18 @@ RSpec.describe CreateUserService do
         it 'adds this school to the existing users schools' do
           expect(result.schools).to include(other_school)
           expect(result.schools).to include(school)
+        end
+
+        context 'when the additional school has no value for who_will_order_devices' do
+          before do
+            school.preorder_information&.destroy!
+            school.responsible_body.update!(who_will_order_devices: nil)
+          end
+
+          it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
+            expect { result }.to change { school.reload.preorder_information&.who_will_order_devices }.from(nil).to('school')
+            expect(school.preorder_information.who_will_order_devices).to eq('school')
+          end
         end
 
         it 'sends the additional school added email' do
@@ -332,6 +342,18 @@ RSpec.describe CreateUserService do
 
       it 'updates the school status to reflect that the school has been contacted' do
         expect(result.school.preorder_information.status).to eq('school_contacted')
+      end
+
+      context 'when the additional school has no value for who_will_order_devices' do
+        before do
+          school.preorder_information&.destroy!
+          school.responsible_body.update!(who_will_order_devices: nil)
+        end
+
+        it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
+          expect { result }.to change { school.reload.preorder_information&.who_will_order_devices }.from(nil).to('school')
+          expect(school.preorder_information.who_will_order_devices).to eq('school')
+        end
       end
     end
 
