@@ -73,7 +73,7 @@ RSpec.feature 'Administering responsible body changes' do
     end
 
     def and_i_click_the_changes_to_responsible_bodies_link
-      click_on 'Changes to responsible bodies'
+      click_on 'Changes to responsible bodies (4)'
       expect(page).to have_text 'Changes to responsible bodies'
     end
 

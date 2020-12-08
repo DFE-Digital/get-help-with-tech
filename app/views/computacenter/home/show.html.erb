@@ -35,7 +35,7 @@
     <p class="govuk-body">Review and update Ship To references for schools that have changed.</p>
 
     <h2 class="govuk-heading-m">
-      <%= govuk_link_to 'Changes to responsible bodies', computacenter_responsible_body_changes_path %>
+      <%= govuk_link_to "Changes to responsible bodies (#{ResponsibleBody.requiring_a_new_computacenter_reference.count})", computacenter_responsible_body_changes_path %>
     </h2>
 
     <p class="govuk-body">Review and update Sold To references for responsible bodies that have changed.</p>
