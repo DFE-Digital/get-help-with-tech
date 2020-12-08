@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe VirtualCapPool, type: :model do
-  let(:local_authority) { create(:local_authority) }
+  let(:local_authority) { create(:local_authority, :vcap_feature_flag) }
 
   let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
   let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
