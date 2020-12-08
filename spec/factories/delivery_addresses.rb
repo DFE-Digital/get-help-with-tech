@@ -5,7 +5,6 @@ FactoryBot.define do
     address_2 { Faker::Address.secondary_address }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }
-
-    trait :with_computacenter_refence
+    computacenter_reference { Faker::Number.unique.number(digits: 8) }
   end
 end

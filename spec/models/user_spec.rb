@@ -147,6 +147,7 @@ RSpec.describe User, type: :model do
 
       before do
         create_list(:school_user, 3, :orders_devices, school: school)
+        school.reload
       end
 
       it 'validates that only 3 users can order devices for a school' do
@@ -453,7 +454,7 @@ RSpec.describe User, type: :model do
           expect(user_change.responsible_body_urn).to eql(school.computacenter_identifier)
           expect(user_change.cc_sold_to_number).to eql(school.computacenter_reference)
           expect(user_change.school).to eql(user.school.name)
-          expect(user_change.school_urn).to eql(user.school.ukprn.to_s)
+          expect(user_change.school_urn).to eql("#{user.school.ukprn}-A")
           expect(user_change.cc_ship_to_number).to eql(user.school.computacenter_reference)
           expect(user_change.updated_at_timestamp).to eql(user.created_at)
           expect(user_change.type_of_update).to eql('New')
@@ -470,21 +471,21 @@ RSpec.describe User, type: :model do
         end
 
         context 'when a new delivery address is added' do
-          fit 'creates the user change for this' do
-            school = create(:fe_school)
-            user = create(:user, school: school, orders_devices: true)
+          it 'creates the user change for this' do
+            delivery_address = DeliveryAddress.new(attributes_for(:delivery_address))
+            school = create(:fe_school, delivery_addresses_count: 0, delivery_addresses: [delivery_address])
+            create(:user, school: school, orders_devices: true)
+            second_delivery_address = DeliveryAddress.new(attributes_for(:delivery_address))
 
             expect {
-              school.delivery_addresses << DeliveryAddress.new(attributes_for(:delivery_address))
+              school.delivery_addresses << second_delivery_address
             }.to change(Computacenter::UserChange, :count).by(1)
 
             user_change = Computacenter::UserChange.last
 
-            binding.pry
-
             expect(user_change.school).to eql(school.delivery_addresses.map(&:name).join('|'))
             expect(user_change.school_urn).to eql("#{school.ukprn}-A|#{school.ukprn}-B")
-            expect(user_change.cc_ship_to_number).to eql(123)
+            expect(user_change.cc_ship_to_number).to eql("#{delivery_address.computacenter_reference}|#{second_delivery_address.computacenter_reference}")
           end
         end
       end

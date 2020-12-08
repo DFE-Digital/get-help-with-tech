@@ -51,6 +51,7 @@ FactoryBot.define do
       transient do
         school { build(:school) }
       end
+
       after(:build) do |user, evaluator|
         user.schools << evaluator.school if user.schools.empty? && evaluator.school.present?
       end
