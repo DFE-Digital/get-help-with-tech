@@ -76,8 +76,8 @@ private
       responsible_body_urn: user.computacenter_account_orgs.map(&:computacenter_identifier).join('|'),
       cc_sold_to_number: user.computacenter_account_orgs.map(&:computacenter_reference).join('|'),
       # NOTE: we must loop round user_schools (which may be dirty) not schools (which won't be)
-      school: school_attribute,
-      school_urn: school_urn_attribute,
+      school: school_names_attribute,
+      school_urn: school_urns_attribute,
       cc_ship_to_number: cc_ship_to_number_list,
     }
   end
@@ -85,19 +85,19 @@ private
   # user.effective_responsible_bodies => user.cc_account_orgs
   # schools => delivery_addresses
 
-  def school_attribute
+  def school_names_attribute
     if user.is_a_single_academy_trust_user?
       ''
     else
-      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map{ |da| da.name }.join('|')
+      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map(&:name).join('|')
     end
   end
 
-  def school_urn_attribute
+  def school_urns_attribute
     if user.is_a_single_academy_trust_user?
       ''
     else
-      user.user_schools.map { |us| us.school.urn }.join('|')
+      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map(&:computacenter_identifier_otherwise_urn).join('|')
     end
   end
 
@@ -105,7 +105,7 @@ private
     if user.is_a_single_academy_trust_user?
       ''
     else
-      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map{ |da| da.computacenter_reference }.join('|')
+      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map(&:computacenter_reference).join('|')
     end
   end
 

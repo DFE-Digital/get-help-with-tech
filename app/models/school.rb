@@ -69,6 +69,10 @@ class School < ApplicationRecord
     where(order_state: %w[can_order_for_specific_circumstances can_order])
   end
 
+  def is_further_education?
+    type == 'FurtherEducationSchool'
+  end
+
   def delivery_address
     delivery_addresses.first
   end

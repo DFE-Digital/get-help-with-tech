@@ -4,6 +4,7 @@ class CreateDeliveryAddresses < ActiveRecord::Migration[6.0]
       t.references :school
 
       t.string :computacenter_reference
+      t.string :computacenter_identifier
 
       t.string :name
       t.string :address_1
