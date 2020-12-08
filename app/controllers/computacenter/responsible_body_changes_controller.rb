@@ -8,7 +8,7 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
     respond_to do |format|
       format.html do
         @responsible_bodies = fetch_responsible_bodies
-        @show_download_link = ResponsibleBody.with_changes_relevant_to_computacenter.any?
+        @show_download_link = ResponsibleBody.requiring_a_new_computacenter_reference.any?
       end
       format.csv { send_data csv_generator, filename: "rb-changes-#{Time.zone.now.strftime('%Y%m%d')}.csv" }
     end
@@ -65,11 +65,11 @@ private
   def query_for_view_mode
     case view_mode
     when 'new'
-      new_responsible_bodies
+      ResponsibleBody.requiring_a_new_computacenter_reference.where.not(computacenter_change: :amended)
     when 'amended'
-      amended_responsible_bodies
+      ResponsibleBody.requiring_a_new_computacenter_reference.where(computacenter_change: :amended)
     when 'all'
-      new_responsible_bodies.or(amended_responsible_bodies)
+      ResponsibleBody.requiring_a_new_computacenter_reference
     end
   end
 

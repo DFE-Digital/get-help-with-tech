@@ -8,7 +8,7 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
     respond_to do |format|
       format.html do
         @schools = fetch_schools
-        @show_download_link = School.with_changes_relevant_to_computacenter.any?
+        @show_download_link = School.requiring_a_new_computacenter_reference.any?
       end
       format.csv { send_data csv_generator, filename: "school-changes-#{Time.zone.now.strftime('%Y%m%d')}.csv" }
     end
@@ -68,20 +68,12 @@ private
   def query_for_view_mode
     case view_mode
     when 'new'
-      new_schools
+      School.requiring_a_new_computacenter_reference.where.not(computacenter_change: :amended)
     when 'amended'
-      amended_schools
+      School.requiring_a_new_computacenter_reference.where(computacenter_change: :amended)
     else
-      new_schools.or(amended_schools)
+      School.requiring_a_new_computacenter_reference
     end
-  end
-
-  def new_schools
-    School.where(computacenter_reference: nil).or(School.computacenter_change_new)
-  end
-
-  def amended_schools
-    School.computacenter_change_amended
   end
 
   def ship_to_params

@@ -71,8 +71,8 @@ class School < ApplicationRecord
     where(order_state: %w[can_order_for_specific_circumstances can_order])
   end
 
-  def self.with_changes_relevant_to_computacenter
-    gias_status_open.where(computacenter_change: %w[new amended])
+  def self.requiring_a_new_computacenter_reference
+    gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
   def has_ordered?
