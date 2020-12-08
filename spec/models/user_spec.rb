@@ -480,10 +480,10 @@ RSpec.describe User, type: :model do
 
             user_change = Computacenter::UserChange.last
 
-            # binding.pry
+            binding.pry
 
             expect(user_change.school).to eql(school.delivery_addresses.map(&:name).join('|'))
-            expect(user_change.school_urn).to eql(123)
+            expect(user_change.school_urn).to eql("#{school.ukprn}-A|#{school.ukprn}-B")
             expect(user_change.cc_ship_to_number).to eql(123)
           end
         end

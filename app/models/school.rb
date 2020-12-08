@@ -82,6 +82,10 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
+  def is_further_education?
+    type == 'FurtherEducationSchool'
+  end
+
   def delivery_address
     delivery_addresses.first
   end

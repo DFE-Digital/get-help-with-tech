@@ -5,5 +5,7 @@ FactoryBot.define do
     address_2 { Faker::Address.secondary_address }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }
+
+    trait :with_computacenter_refence
   end
 end
