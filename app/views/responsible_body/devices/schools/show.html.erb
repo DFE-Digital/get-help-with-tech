@@ -41,4 +41,5 @@
 
 <p class="govuk-body">
   <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
+  <%= render ResponsibleBody::NextSchoolLinkComponent.new(current_school: @school, recordsets: @schools.values) %>
 </p>

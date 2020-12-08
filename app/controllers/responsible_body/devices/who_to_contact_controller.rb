@@ -2,6 +2,7 @@ class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::BaseCo
   before_action :find_school!
 
   def new
+    load_schools_by_order_status
     @form = ResponsibleBody::Devices::WhoToContactForm.new(school: @school)
   end
 
@@ -50,5 +51,9 @@ private
     params
       .require(:responsible_body_devices_who_to_contact_form)
       .permit(:who_to_contact, :full_name, :email_address, :phone_number)
+  end
+
+  def load_schools_by_order_status
+    @schools = @responsible_body.schools_by_order_status
   end
 end

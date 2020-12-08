@@ -1,0 +1,3 @@
+<%- if next_school.present? %>
+  or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(next_school.urn) %>
+<%- end %>

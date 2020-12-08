@@ -60,6 +60,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
       when_i_follow_the_link_to_the_next_school
       then_i_see_the_details_of_the_second_school
+      and_i_do_not_see_a_next_school_link
 
       when_i_select_to_contact_someone_else_and_save_their_details
       then_i_see_a_confirmation_and_the_someone_else_as_the_contact
@@ -385,6 +386,10 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def when_i_follow_the_link_to_the_next_school
     click_on 'go to the next school'
+  end
+
+  def and_i_do_not_see_a_next_school_link
+    expect(page).not_to have_link('go to the next school')
   end
 
   def when_i_select_to_contact_someone_else_and_save_their_details

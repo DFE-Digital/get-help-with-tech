@@ -8,6 +8,7 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
       school_or_rb_domain: @school.preorder_information&.school_or_rb_domain,
       recovery_email_address: @school.preorder_information&.recovery_email_address,
     )
+    load_schools_by_order_status
   end
 
   def update
@@ -19,6 +20,7 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
       @preorder_info.update_chromebook_information_and_status!(chromebook_params)
       redirect_to responsible_body_devices_school_path(urn: @school.urn)
     else
+      load_schools_by_order_status
       render :edit, status: :unprocessable_entity
     end
   end
@@ -35,5 +37,9 @@ private
       :school_or_rb_domain,
       :recovery_email_address,
     )
+  end
+
+  def load_schools_by_order_status
+    @schools = @responsible_body.schools_by_order_status
   end
 end

@@ -25,7 +25,5 @@
 
 <p class="govuk-body">
   <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
-  <% if @school.next_school_in_responsible_body_when_sorted_by_name_ascending.present? %>
-    or <%= govuk_link_to 'go to the next school', responsible_body_devices_school_path(@school.next_school_in_responsible_body_when_sorted_by_name_ascending.urn) %>
-  <% end %>
+  <%= render ResponsibleBody::NextSchoolLinkComponent.new(current_school: @school, recordsets: @schools.values) %>
 </p>
