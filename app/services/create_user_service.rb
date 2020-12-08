@@ -8,6 +8,7 @@ class CreateUserService
   end
 
   def self.invite_school_user(user_params = {})
+    devolve_ordering_if_needed!(user_params)
     if user_exists_on_other_school?(user_params) || user_exists_as_responsible_body_user?(user_params)
       invite_to_additional_school!(user_params)
     else
@@ -75,4 +76,11 @@ class CreateUserService
     end
     user
   end
+
+  def self.devolve_ordering_if_needed!(user_params)
+    school = School.find_by(id: user_params[:school_id])
+    school.create_preorder_information!(who_will_order_devices: 'school') if school && school.preorder_information.nil?
+  end
+
+  private_class_method :devolve_ordering_if_needed!
 end
