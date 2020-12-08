@@ -38,7 +38,7 @@
   <p class="govuk-body"><%= @responsible_body.name %>:</p>
   <ul id="responsible-body-centrally-managed-stats" class="govuk-list govuk-list--bullet">
     <li>manages ordering for <%= centrally_managing_count_or_all_schools(responsible_body: @responsible_body) %> of its schools</li>
-    <li>has <%= what_to_order_allocation_list(allocations: @virtual_cap_pools) %> available</li>
+    <li>has <%= what_to_order_allocation_list(allocations: @virtual_cap_pools) %> available to order right now</li>
     <li>has ordered <%= what_to_order_state_list(allocations: @virtual_cap_pools) %></li>
   </ul>
 <% end %>
