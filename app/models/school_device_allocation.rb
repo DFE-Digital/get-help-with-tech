@@ -27,7 +27,7 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def computacenter_cap
     # value to pass to computacenter
-    if FeatureFlag.active? :virtual_caps
+    if has_virtual_cap_feature_flags?
       if is_in_virtual_cap_pool?
         # set the cap so the whole remaining pool amount could be ordered against this school
         # CC keep track of devices ordered by school. Assume devices_ordered has been correctly sync'd
