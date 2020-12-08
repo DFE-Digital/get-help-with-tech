@@ -197,6 +197,7 @@ Rails.application.routes.draw do
     resources :responsible_bodies, only: %i[index edit update], path: '/responsible-body-changes', as: :responsible_body_changes, controller: 'responsible_body_changes'
     get '/techsource', to: 'techsource#new'
     post '/techsource', to: 'techsource#create'
+    get '/multi-domain-chromebooks', to: 'multi_domain_chromebooks#index', as: :multi_domain_chromebooks
     resources :api_tokens, path: '/api-tokens'
     resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
       put '/', to: 'school_device_allocations#bulk_update', on: :collection

@@ -98,6 +98,7 @@ en:
       school_changes_edit: Verify the school details
       responsible_body_changes: Changes to responsible bodies
       responsible_body_changes_edit: Verify the responsible body details
+      multi_domain_chromebooks: Responsible bodies managing multiple Chromebook domains
     who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
       schools: Each school will place their own orders
