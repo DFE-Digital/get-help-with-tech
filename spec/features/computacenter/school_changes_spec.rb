@@ -73,7 +73,7 @@ RSpec.feature 'Administering school changes' do
     end
 
     def and_i_click_the_changes_to_schools_link
-      click_on 'Changes to schools'
+      click_on 'Changes to schools (4)'
       expect(page).to have_text 'Changes to schools'
     end
 

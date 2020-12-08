@@ -29,7 +29,7 @@
     <p class="govuk-body">View details of schools with that can place orders.</p>
 
     <h2 class="govuk-heading-m">
-      <%= govuk_link_to 'Changes to schools', computacenter_school_changes_path %>
+      <%= govuk_link_to "Changes to schools (#{School.requiring_a_new_computacenter_reference.count})", computacenter_school_changes_path %>
     </h2>
 
     <p class="govuk-body">Review and update Ship To references for schools that have changed.</p>
