@@ -2,7 +2,11 @@
 
 ### Laptops and tablets for schools, academy trusts and local authorities after September 2020
 
-The number of devices available to order through the [Get help with technology service](/start) reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
+<div class="govuk-inset-text">
+  If you have an account, you can find out your current allocation by signing in to the [Get help with technology service](/start).
+</div>
+
+The number of devices available to order through the service reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
 
 * free school meals data
 * an estimate of the number of devices a school already has
@@ -10,6 +14,10 @@ The number of devices available to order through the [Get help with technology s
 We’ve allocated laptops and tablets in line with the data we’re seeing that suggests that most schools have smaller groups of children self-isolating at any one time, rather than closing fully. Schools are able to redistribute devices when children return from self-isolation. This more targeted approach will mean that as many schools and disadvantaged children as possible can benefit from receiving a device if their face-to-face education is disrupted.
 
 ## How to query an allocation
+
+<div class="govuk-inset-text">
+  You can find out your current allocation by signing in to the [Get help with technology service](/start).
+</div>
 
 You’ll be able to order your current allocation during term time when you report a closure or that more than 15 children are self-isolating through the [educational setting status form](https://form.education.gov.uk/service/educational-setting-status).
 
