@@ -6,7 +6,6 @@ class FeatureFlag
 
   TEMPORARY_FEATURE_FLAGS = %i[
     mno_offer
-    reduced_allocations
     virtual_caps
   ].freeze
 
