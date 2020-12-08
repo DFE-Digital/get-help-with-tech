@@ -13,7 +13,7 @@ class School < ApplicationRecord
   has_one :preorder_information
   has_many :delivery_addresses,
            after_add: [
-             ->(school, delivery_address) { school.users.each(&:generate_user_change_if_needed!) }
+             ->(school, _delivery_address) { school.users.reload.each(&:generate_user_change_if_needed!) },
            ]
   has_many :email_audits
   has_many :extra_mobile_data_requests

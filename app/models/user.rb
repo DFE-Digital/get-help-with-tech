@@ -150,7 +150,7 @@ class User < ApplicationRecord
   end
 
   def further_education_schools
-    user_schools.map { |us| us.school }.filter { |s| s.kind_of?(FurtherEducationSchool) }
+    user_schools.map(&:school).filter { |s| s.is_a?(FurtherEducationSchool) }
   end
 
   def relevant_to_computacenter?

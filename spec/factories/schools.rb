@@ -17,8 +17,16 @@ FactoryBot.define do
       delivery_addresses_count { 1 }
     end
 
-    after(:create) do |school, evaluator|
-      create_list(:delivery_address, evaluator.delivery_addresses_count, school: school)
+    after(:build) do |school, evaluator|
+      evaluator.delivery_addresses_count.times do |i|
+        delivery_address = if i == 0
+                             DeliveryAddress.new(name: school.name, address_1: school.address_1, address_2: school.address_2, town: school.town, postcode: school.postcode, computacenter_reference: school.computacenter_reference)
+                           else
+                             DeliveryAddress.new(attributes_for(:delivery_address))
+                           end
+
+        school.delivery_addresses << delivery_address
+      end
     end
 
     trait :with_preorder_information do
