@@ -30,8 +30,11 @@
     <p class="govuk-body">
       If you try to order more than <%= what_to_order_allocation_list(allocations: @responsible_body.virtual_cap_pools) %> the order will be cancelled.
     </p>
+    <% if @responsible_body&.std_device_pool&.available_devices_count > 149 %>
+      <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
+    <% end %>
     <p class="govuk-body">
-      Devices will be delivered within 2 working days.
+      Most devices will be delivered within 2 working days.
     </p>
     <h3 class="govuk-heading-s">
       Ordering devices for more than one school
