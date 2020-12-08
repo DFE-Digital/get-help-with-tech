@@ -20,6 +20,47 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     end
   end
 
+  context 'with an action' do
+    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
+    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 0, cap: 0, device_type: 'std_device') }
+
+    subject(:component) { described_class.new(responsible_body: responsible_body, action: { 'hello' => 'https://example.com' }) }
+
+    it 'renders action button' do
+      doc = render_inline(component)
+
+      expect(doc.css("a[href='https://example.com']")[0].text).to eql('hello')
+    end
+
+    context 'when show action is true' do
+      subject(:component) do
+        described_class.new(responsible_body: responsible_body,
+                            show_action: true,
+                            action: { 'hello' => 'https://example.com' })
+      end
+
+      it 'renders the action' do
+        doc = render_inline(component)
+
+        expect(doc.css("a[href='https://example.com']")[0].text).to eql('hello')
+      end
+    end
+
+    context 'when show action is false' do
+      subject(:component) do
+        described_class.new(responsible_body: responsible_body,
+                            show_action: false,
+                            action: { 'hello' => 'https://example.com' })
+      end
+
+      it 'does not render the action' do
+        html = render_inline(component).to_html
+
+        expect(html).not_to include 'hello'
+      end
+    end
+  end
+
   context 'when devices available' do
     let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
     let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 1, cap: 5, device_type: 'std_device') }

@@ -29,7 +29,10 @@
 <% if @responsible_body.has_virtual_cap_feature_flags? %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
+    <%= render ResponsibleBody::PooledDeviceCountComponent.new(
+      responsible_body: @responsible_body,
+      show_action: @responsible_body.has_any_schools_that_can_order_now? && @responsible_body.has_devices_available_to_order?,
+      action: { 'Order devices' => responsible_body_devices_order_devices_path } ) %>
   </div>
 </div>
 <%- end %>
