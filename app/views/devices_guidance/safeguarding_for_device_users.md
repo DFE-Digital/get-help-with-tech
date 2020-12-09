@@ -7,7 +7,7 @@ Devices are being provided to help children and young people access social care 
 * families and care leavers to avoid social isolation
 * children and young people to access remote learning, including year 10 pupils with upcoming GCSE exams
 
-Local authorities (LAs), academy trusts and schools own the devices, and should consider including an acceptable use policy in loan agreements. Please see our [guidance on loaning devices](/devices/distributing-devices) for more information.
+Local authorities (LAs), academy trusts and schools own the devices, and should consider including an acceptable use policy in loan agreements. Please see our [guidance on lending devices](/devices/distributing-devices) for more information.
 
 Parents and guardians should provide age-appropriate supervision for the internet use of the children and young people in their care (but LAs should be alert to cases where parents of children with a social worker may not be in a position to do this). They may find the following information helpful:
 
@@ -22,7 +22,7 @@ LAs, academy trusts and schools are responsible for avoiding risks to the online
 If you order Microsoft Windows devices from September 2020, you have the option to receive them without Department for Education (DfE) software and settings. These 'Standard' devices will be delivered with factory settings as supplied by the manufacturer.
 
 You are responsible for setting up management and safeguarding measures before you distribute the devices.
-Cisco Umbrella will be pre-installed on devices ordered between May and July 2020, and those from September 2020 where you have selected 'DfE Restricted' devices which will have software and settings installed prior to delivery.
+Cisco Umbrella will be pre-installed on devices ordered during the 2020 summer term, and those from September 2020 where you have selected 'DfE Restricted' devices which will have software and settings installed prior to delivery.
 
 Where Cisco Umbrella has been installed, content filtering has been set up to meet the needs of children and young people of all ages. You can choose to use your own content filtering solution to replace Cisco Umbrella to make it more relevant for your users’ needs.
 
