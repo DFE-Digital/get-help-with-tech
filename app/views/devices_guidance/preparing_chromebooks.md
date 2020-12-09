@@ -15,7 +15,7 @@ Find out how to enrol Chromebooks and add Cisco Umbrella:
 
 When you ordered your Google Chromebooks you entered your Google domain, which we used to link to your licenses for the Google Admin console.
 
-If you didn’t enter a Google domain and don’t have one, you can set one up. Schools can set up a Google Domain and get access to Google for Education by [applying for government-funded support through The Key for School Leaders](https://schoolleaders.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/access-support-set-digital-education-platform/).
+If you didn’t enter a Google domain and don’t have one, you can set one up. Schools can set up a Google Domain and get access to Google for Education by [applying for government-funded support](/digital-platforms).
 
 For Chromebooks for children linked to schools, local authorities should use the school’s domain so that children can access their remote education as well as social care. If the Chromebook is for a young person who is not linked to a school, local authorities can [set up a Google domain for care leavers and families with children that have a social worker](/devices/google-domain-for-care-leavers-and-children-with-social-worker).
 
