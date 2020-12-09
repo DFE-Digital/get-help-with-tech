@@ -79,7 +79,7 @@ Discover fun and simple activities highlighting iPad built-in features and apps.
 
 Go to [Apple service and repair](https://support.apple.com/en-gb/ipad/repair/service) to find out what to do if your device does not turn on when you receive it, develops a fault or is accidentally broken.
 
-If you need further assistance, contact [COVID.technology@education.gov.uk](mailto:COVID.technology@education.gov.uk).
+If you need further assistance, contact [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.technology@education.gov.uk).
 
 
 ## User guidance for iPads
