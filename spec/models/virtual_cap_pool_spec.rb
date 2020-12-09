@@ -119,15 +119,6 @@ RSpec.describe VirtualCapPool, type: :model do
       expect(pool.devices_ordered).to eq(27)
     end
 
-    it 'notifies computacenter of changes' do
-      schools.first.std_device_allocation.update!(cap: 40, allocation: 40, devices_ordered: 26)
-      pool.recalculate_caps!
-      pool.school_device_allocations.each do |allocation|
-        allocation.reload
-        expect(allocation.cap_update_request_payload_id).to eq('123456789')
-      end
-    end
-
     it 'stores the request and response against the allocations' do
       schools.first.std_device_allocation.update!(cap: 40, allocation: 40, devices_ordered: 26)
       pool.recalculate_caps!
@@ -136,6 +127,36 @@ RSpec.describe VirtualCapPool, type: :model do
         expect(allocation.cap_update_calls).to be_present
         expect(allocation.cap_update_calls.last.request_body).to include('test-request')
         expect(allocation.cap_update_calls.last.response_body).to include('test-response')
+      end
+    end
+
+    context 'when cap or devices_ordered have not changed' do
+      before do
+        VirtualCapPool.no_touching do
+          pool.schools.each do |s|
+            s.std_device_allocation.update!(cap_update_request_payload_id: nil)
+          end
+        end
+      end
+
+      it 'does not notify computacenter of the change' do
+        pool.schools.first.std_device_allocation.update!(allocation: 70)
+        pool.recalculate_caps!
+        pool.school_device_allocations.each do |allocation|
+          allocation.reload
+          expect(allocation.cap_update_request_payload_id).to be_nil
+        end
+      end
+    end
+
+    context 'when cap or devices_ordered have changed' do
+      it 'notifies computacenter of changes' do
+        schools.first.std_device_allocation.update!(cap: 40, allocation: 40, devices_ordered: 26)
+        pool.recalculate_caps!
+        pool.school_device_allocations.each do |allocation|
+          allocation.reload
+          expect(allocation.cap_update_request_payload_id).to eq('123456789')
+        end
       end
     end
   end
