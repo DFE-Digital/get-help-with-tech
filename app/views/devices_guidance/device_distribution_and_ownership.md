@@ -9,7 +9,7 @@ Ownership of devices is transferred from the Department for Education (DfE) to t
     This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for disadvantaged:
   </p>
   <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
-    <li>year 10s between May and July 2020</li>
+    <li>year 10s in the 2020 summer term</li>
     <li>children in years 3 to 11, attending a closed hospital school or FE college, and critically extremely vulnerable children that are shielding after September 2020</li>
   </ul>
 </div>
@@ -22,7 +22,7 @@ LAs and trusts may choose to transfer ownership to schools.
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
-    This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for care leavers, children and families with a social worker between May and July 2020.
+    This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for care leavers, children and families with a social worker during the 2020 summer term.
   </p>
 </div>
 
@@ -81,9 +81,9 @@ Organisations are responsible for deciding how they deliver devices. For example
 
 All distribution and return of lent devices should be done in accordance with [social distancing guidelines](https://www.gov.uk/government/publications/staying-alert-and-safe-social-distancing), and any [social distancing guidelines relevant to your local area](https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19).
 
-### Redistributing unused devices
+### Redistributing unused 4G wireless routers
 
-Local authorities and academy trusts can use the [support portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you should collect them and lend them to other children and young people who may have greater need.  The DfE is investigating options for extending data contracts on all 4G wireless routers that are being actively used.
+Local authorities and academy trusts can use the [Support Portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you should collect them and lend them to other children and young people who may have greater need.  The DfE is investigating options for extending data contracts on all 4G wireless routers that are being actively used.
 
 
 ## Loan agreements
@@ -106,4 +106,4 @@ See the [guidance on preparing devices](/devices/preparing-chromebooks) for info
 
 The LA, trust and/or school should make clear to recipients of devices that it is unlawful for any device lent by an LA, trust or school to be sold by a child or their family. If a lent device is lost, stolen or sold, or where recall is not possible, LAs should follow any existing protocol they may have for lost, stolen or missing devices.
 
-Where an LA or trust has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should contact [covid.technology@education.gov.uk](covid.technology@education.gov.uk).
+Where an LA or trust has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should contact [COVID.TECHNOLOGY@education.gov.uk](covid.technology@education.gov.uk).
