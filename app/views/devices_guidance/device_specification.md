@@ -13,7 +13,7 @@ Find out more about [preparing Microsoft devices](/devices/preparing-microsoft-w
 
 For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set devices up for a school.
 
-If an education platform is not currently in use, schools, local authorities and academy trusts can apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education. More information is available from [The Key for School Leaders](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/digital-education-platform-hub/).
+If an education platform is not currently in use, schools, local authorities and academy trusts can [apply for DfE-funded support](/digital-platforms) to get and set up G Suite for Education or Office 365 Education.
 
 ## Minimum specifications
 
