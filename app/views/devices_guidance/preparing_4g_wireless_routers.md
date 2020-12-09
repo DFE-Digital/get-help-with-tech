@@ -35,7 +35,7 @@ The router will only operate with the SIM card that is already installed. Attemp
 
 The device will connect to the mobile network with the strongest signal available. Regardless of which network it uses, all traffic will pass through a private, secure connection to a filtered service.  
 
-The 4G routers use a filtering system that blocks a range of categories of content and limits searching to the ‘Safe Search’ supported by popular search engines. This filtering should not prevent legitimate use of the devices. If a child is able to access illegal or inappropriate content that should be filtered out, you should report this through the 4G wireless router [support portal](https://computacenterprod.service-now.com/dfe).
+The 4G routers use a filtering system that blocks a range of categories of content and limits searching to the ‘Safe Search’ supported by popular search engines. This filtering should not prevent legitimate use of the devices. If a child is able to access illegal or inappropriate content that should be filtered out, you should report this through the 4G wireless router [Support Portal](https://computacenterprod.service-now.com/dfe).
 
 Parents and guardians of the young people making use of these devices should be mindful of advice on supervising internet use by children.  
 
@@ -63,4 +63,4 @@ You should give young people and their carers a copy of this content. You can ed
 
 ## Get support
 
-You can get help with 4G wireless routers through the [4G wireless router support portal](https://computacenterprod.service-now.com/). Key contacts at local authorities and academy trusts should have login details, if they don’t, contact [COVID.Technology@education.gov.uk](mailto:COVID.Technology@education.gov.uk).
+You can get help with 4G wireless routers through the [4G wireless router support portal](https://computacenterprod.service-now.com/). Key contacts at local authorities and academy trusts should have login details, if they don’t, contact [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.Technology@education.gov.uk).
