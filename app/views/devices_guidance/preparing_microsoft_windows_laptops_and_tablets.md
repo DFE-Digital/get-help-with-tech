@@ -13,14 +13,13 @@ You will be responsible for setting up management and [safeguarding measures](ht
 
 ## Preparing laptops and tablets ordered with DfE settings installed
 
-The following guidance applies only to devices ordered between May and July 2020, and those ordered after September 2020 where you have selected 'DfE Restricted' devices which have software and settings installed prior to delivery.
+The following guidance applies only to devices ordered in the 2020 summer term, and those ordered after September 2020 where you have selected 'DfE Restricted' devices which have software and settings installed prior to delivery.
 
 DfE-provided settings are a ‘one-size fits all’ solution, designed to block harmful content. These settings are not configurable at a local level.
 
 ## Managing settings and software
 
-Microsoft Windows devices come with antivirus software, content filtering and remote management settings
-already so they're ready to use.
+Microsoft Windows devices come with antivirus software, content filtering and remote management settings already so they're ready to use.
 
 Content filtering and remote management will stop working when the licences expire on 30 September 2021. You can replace the DfE settings with your own at any point.
 
@@ -47,7 +46,7 @@ Microsoft Windows devices include the following security and antivirus software:
 
 Microsoft Windows devices do not have Office 365 applications installed, but school-aged children will be able to use Office 365 online if you or their school have an active subscription. A child or young person not in school (such as a care leaver) can make use of their own preferred online system.
 
-Schools can [apply to get set up on Office 365 Education](https://covid19.thekeysupport.com/remote-learning/) for free. Office 365 Education includes Microsoft Word, Excel and Powerpoint as well as many mobile device management features.
+Schools can [apply for government funding to get set up on Office 365 Education](/digital-platforms). Office 365 Education includes Microsoft Word, Excel and Powerpoint as well as many mobile device management features.
 
 ## Mobile device management
 
