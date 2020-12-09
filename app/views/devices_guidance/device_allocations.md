@@ -3,7 +3,7 @@
 ### Laptops and tablets for schools, academy trusts and local authorities after September 2020
 
 <div class="govuk-inset-text">
-  If you have an account, you can find out your current allocation by signing in to the [Get help with technology service](/start).
+  If you have an account, you can find out your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
 </div>
 
 The number of devices available to order through the service reflects the number of laptops and tablets we estimate are needed by each school. This calculation is based on:
@@ -16,7 +16,7 @@ We’ve allocated laptops and tablets in line with the data we’re seeing that 
 ## How to query an allocation
 
 <div class="govuk-inset-text">
-  You can find out your current allocation by signing in to the [Get help with technology service](/start).
+  You can find out your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
 </div>
 
 You’ll be able to order your current allocation during term time when you report a closure or that more than 15 children are self-isolating through the [educational setting status form](https://form.education.gov.uk/service/educational-setting-status).
