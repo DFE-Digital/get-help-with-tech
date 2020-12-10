@@ -629,3 +629,13 @@ en:
     christmas:
       heading: No orders over Christmas
       content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Thursday 17 December and we’ll then close ordering until Monday 4 January.
+    increased_allocations:
+      school:
+        heading:
+          zero: Your allocation has increased to 0 devices
+          one: Your allocation has increased to 1 device
+          other: Your allocation has increased to %{count} devices
+        content: As international stocks of laptops and tablets have increased, we’ve restored your allocation to what it was before October half term.
+      responsible_body:
+        heading: We’ve restored original device allocations
+        content: As international stocks of laptops and tablets have increased, we’ve restored allocations to what they were before October half term.
