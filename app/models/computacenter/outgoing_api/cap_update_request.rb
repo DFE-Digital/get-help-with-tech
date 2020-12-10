@@ -65,7 +65,7 @@ private
       records = records.map do |allocation|
         OpenStruct.new(cap_type: allocation.computacenter_cap_type,
                        ship_to: allocation.school.computacenter_reference,
-                       cap: zero_caps ? 0 : allocation.computacenter_cap)
+                       cap: zero_caps ? allocation.raw_devices_ordered : allocation.computacenter_cap)
       end
     end
 

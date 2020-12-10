@@ -641,6 +641,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
   describe '.managing_multiple_chromebook_domains' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
+
     let(:second_rb) { create(:trust, :manages_centrally) }
     let(:third_rb) { create(:trust, :devolves_management) }
 
@@ -664,9 +665,9 @@ RSpec.describe ResponsibleBody, type: :model do
         schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school1.google.com')
         second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google2.com')
+                                                       school_or_rb_domain: 'school0.google2.com')
         second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google2.com')
+                                                       school_or_rb_domain: 'school1.google2.com')
       end
 
       it 'returns the responsible bodies that manage those schools' do
@@ -683,9 +684,9 @@ RSpec.describe ResponsibleBody, type: :model do
         schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school4.google.com')
         second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google2.com')
+                                                       school_or_rb_domain: 'school0.google2.com')
         second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google2.com')
+                                                       school_or_rb_domain: 'school1.google2.com')
       end
 
       it 'does not count closed schools when determining the domains' do
@@ -703,9 +704,9 @@ RSpec.describe ResponsibleBody, type: :model do
         schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school1.google.com')
         third_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google3.com')
+                                                      school_or_rb_domain: 'school0.google3.com')
         third_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google3.com')
+                                                      school_or_rb_domain: 'school1.google3.com')
       end
 
       it 'does not count closed schools when determining the domains' do

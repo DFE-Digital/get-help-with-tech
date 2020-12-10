@@ -179,7 +179,7 @@ class School < ApplicationRecord
   end
 
   def chromebook_domain
-    preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks? 
+    preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks?
   end
 
 private

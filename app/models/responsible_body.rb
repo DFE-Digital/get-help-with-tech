@@ -109,7 +109,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?
-    schools.gias_status_open.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map { |s| s.chromebook_domain }.uniq.count > 1
+    schools.gias_status_open.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
   end
 
   def self.in_connectivity_pilot
@@ -175,17 +175,17 @@ class ResponsibleBody < ApplicationRecord
 
   def self.managing_multiple_chromebook_domains
     where(
-      <<~SQL
-      id IN
-        (SELECT rb_id FROM
-          (SELECT DISTINCT s.responsible_body_id AS rb_id, p.school_or_rb_domain
-            FROM schools s JOIN preorder_information p ON (p.school_id = s.id)
-            WHERE s.status='open'
-            AND p.who_will_order_devices='responsible_body'
-            AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
-          ) AS t1
-          GROUP BY t1.rb_id HAVING COUNT(*) > 1
-        )
+      <<~SQL,
+        id IN
+          (SELECT rb_id FROM
+            (SELECT DISTINCT s.responsible_body_id AS rb_id, p.school_or_rb_domain
+              FROM schools s JOIN preorder_information p ON (p.school_id = s.id)
+              WHERE s.status='open'
+              AND p.who_will_order_devices='responsible_body'
+              AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
+            ) AS t1
+            GROUP BY t1.rb_id HAVING COUNT(*) > 1
+          )
       SQL
     )
   end

@@ -1,7 +1,6 @@
 require 'csv'
 
 class Computacenter::MultiDomainChromebooksController < Computacenter::BaseController
-
   def index
     @responsible_bodies = ResponsibleBody.managing_multiple_chromebook_domains.order(type: :asc, name: :asc)
     respond_to do |format|
@@ -21,10 +20,10 @@ private
       csv << ['RB Type', 'RB Name', 'RB URN', 'Sold To']
       @responsible_bodies.each do |responsible_body|
         csv << [
-            responsible_body.humanized_type,
-            responsible_body.computacenter_name,
-            responsible_body.computacenter_identifier,
-            responsible_body.computacenter_reference,
+          responsible_body.humanized_type,
+          responsible_body.computacenter_name,
+          responsible_body.computacenter_identifier,
+          responsible_body.computacenter_reference,
         ]
       end
     end
