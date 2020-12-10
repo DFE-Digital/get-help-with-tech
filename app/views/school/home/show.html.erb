@@ -15,6 +15,9 @@
           <p class="govuk-body">
             <%= t('banners.increased_allocations.school.content') %>
           </p>
+        <% end %>
+
+        <% if FeatureFlag.active?(:christmas_banner) && FeatureFlag.active?(:increased_allocations_banner) && @school.increased_allocations_feature_flag? %>
           <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
         <% end %>
 

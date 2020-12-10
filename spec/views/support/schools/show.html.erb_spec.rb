@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'support/responsible_bodies/show.html.erb' do
-  let(:responsible_body) { create(:trust) }
-  let(:schools) { [] }
+RSpec.describe 'support/schools/show.html.erb' do
+  let(:school) { create(:school, :with_std_device_allocation, increased_allocations_feature_flag: true) }
 
   before do
+    create(:support_user)
+
     controller.singleton_class.class_eval do
     protected
 
@@ -12,10 +13,14 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
         OpenStruct.new(new?: true, edit?: true)
       end
       helper_method :policy
+
+      def current_user
+        User.where(is_support: true).first!
+      end
+      helper_method :current_user
     end
 
-    assign(:responsible_body, responsible_body)
-    assign(:schools, schools)
+    assign(:school, school)
   end
 
   describe 'banners' do
@@ -23,7 +28,7 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
       it 'shows banners' do
         render
         expect(rendered).not_to include('No orders over Christmas')
-        expect(rendered).not_to include('We’ve restored original device allocations')
+        expect(rendered).not_to include('Your allocation has increased to')
       end
     end
 
@@ -31,7 +36,7 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
       it 'shows banners' do
         render
         expect(rendered).to include('No orders over Christmas')
-        expect(rendered).to include('We’ve restored original device allocations')
+        expect(rendered).to include("Your allocation has increased to #{school.std_device_allocation.allocation} devices")
       end
     end
   end
