@@ -6,6 +6,14 @@ class Support::UserSearchResultComponent < ViewComponent::Base
     @current_user = current_user
   end
 
+  def organisations
+    if user.organisations.empty?
+      no_organisations
+    else
+      unordered_list_of_orgs
+    end
+  end
+
   def unordered_list_of_orgs
     tag.ul(class: 'govuk-list') do
       safe_join(user.organisations.sort_by(&:name).map do |organisation|
@@ -17,6 +25,10 @@ class Support::UserSearchResultComponent < ViewComponent::Base
   end
 
 private
+
+  def no_organisations
+    '(no schools or responsible bodies)'
+  end
 
   def organisation_link_or_text(organisation)
     case organisation

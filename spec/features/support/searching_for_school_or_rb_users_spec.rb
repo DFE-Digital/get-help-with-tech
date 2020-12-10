@@ -35,6 +35,15 @@ RSpec.feature 'Searching for school or RB users' do
     and_i_can_navigate_to_the_support_page_for_their_school
   end
 
+  scenario 'users with no associated organisations are still shown in the results' do
+    given_i_am_signed_in_as_a_support_user
+    and_there_is_a_user_with_no_associations
+
+    when_i_follow_the_links_to_find_users
+    and_i_search_for_the_unassociated_user_by_email
+    then_i_see_the_unassociated_user_on_the_results_page
+  end
+
   def given_i_am_signed_in_as_a_support_user
     sign_in_as support_user
   end
@@ -48,6 +57,10 @@ RSpec.feature 'Searching for school or RB users' do
     create(:school_user, full_name: 'David Jones', email_address: 'djones@another-school.sch.uk', privacy_notice_seen_at: nil)
     create(:local_authority_user, full_name: 'Debbie Barry', email_address: 'dbarry@council.gov.uk', privacy_notice_seen_at: 1.month.ago)
     create(:local_authority_user, full_name: 'Wendy Wilson', email_address: 'wendy.wilson@council.gov.uk', privacy_notice_seen_at: 1.month.ago)
+  end
+
+  def and_there_is_a_user_with_no_associations
+    create(:user, full_name: 'Michelle Michaels', email_address: 'michelle.michaels@example.com', responsible_body_id: nil, schools: [], privacy_notice_seen_at: nil)
   end
 
   def when_i_follow_the_links_to_find_users
@@ -83,6 +96,11 @@ RSpec.feature 'Searching for school or RB users' do
     search_page.submit.click
   end
 
+  def and_i_search_for_the_unassociated_user_by_email
+    search_page.search_term.set 'michelle.michaels'
+    search_page.submit.click
+  end
+
   def then_i_see_the_school_user_on_the_results_page
     expect(results_page).to be_displayed
     expect(results_page.users.size).to eq(1)
@@ -94,6 +112,12 @@ RSpec.feature 'Searching for school or RB users' do
     expect(results_page).to be_displayed
     expect(results_page.users.size).to eq(0)
     expect(results_page).not_to have_text('djones@another-school.sch.uk')
+  end
+
+  def then_i_see_the_unassociated_user_on_the_results_page
+    expect(results_page).to be_displayed
+    expect(results_page.users.size).to eq(1)
+    expect(results_page.users.first).to have_text('michelle.michaels@example.com')
   end
 
   def and_i_can_navigate_to_the_support_page_for_their_school

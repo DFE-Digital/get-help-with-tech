@@ -7,6 +7,7 @@ RSpec.describe Support::UserSearchResultComponent do
   let(:st_josephs) { create(:school, name: 'St Joseph’s School') }
   let(:coventry) { create(:local_authority, name: 'Coventry') }
   let(:user) { create(:user, schools: [st_marys, st_josephs], responsible_body: coventry, email_address: 'jsmith@school.sch.uk') }
+  let(:unassociated_user) { create(:user, responsible_body: nil, schools: [], email_address: 'fran@free.com', full_name: 'Fran Free') }
   let(:support_user) { create(:support_user) }
 
   subject { described_class.new(user: user, current_user: support_user) }
@@ -35,6 +36,14 @@ RSpec.describe Support::UserSearchResultComponent do
 
     it 'does not render a Change link for the users associated organisations' do
       expect(rendered_result_html).not_to include(associated_organisations_support_user_path(user))
+    end
+  end
+
+  context 'when the user has no associations' do
+    subject { described_class.new(user: unassociated_user, current_user: support_user) }
+
+    it 'shows (no schools or responsible bodies) in the associations' do
+      expect(rendered_result_html).to include('(no schools or responsible bodies)')
     end
   end
 

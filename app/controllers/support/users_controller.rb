@@ -12,7 +12,6 @@ class Support::UsersController < Support::BaseController
     @search_form = Support::UserSearchForm.new(search_params)
     @search_term = @search_form.email_address_or_full_name
     @results = policy_scope(User)
-      .from_responsible_body_or_schools
       .search_by_email_address_or_full_name(@search_term)
       .distinct
       .includes(:responsible_body, :schools)
