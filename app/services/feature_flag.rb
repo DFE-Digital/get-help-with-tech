@@ -8,6 +8,7 @@ class FeatureFlag
     mno_offer
     reduced_allocations
     virtual_caps
+    christmas_banner
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
