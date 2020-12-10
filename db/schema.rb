@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_111700) do
+ActiveRecord::Schema.define(version: 2020_12_10_140102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,9 +186,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_111700) do
     t.string "county"
     t.string "postcode"
     t.string "status", default: "open", null: false
-    t.string "computacenter_change", default: "none", null: false
     t.boolean "vcap_feature_flag", default: false
-    t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
     t.index ["gias_id"], name: "index_responsible_bodies_on_gias_id", unique: true
@@ -272,8 +270,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_111700) do
     t.string "order_state", default: "cannot_order", null: false
     t.string "status", default: "open", null: false
     t.boolean "mno_feature_flag", default: false
-    t.string "computacenter_change", default: "none", null: false
-    t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
+    t.boolean "increased_allocations_feature_flag", default: false
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
