@@ -27,6 +27,7 @@ RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { vi
     and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
     and_is_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
     and_i_see_where_my_allocation_has_come_from_for_the_1_school_in_local_restrictions
+    and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
   scenario 'a centrally managed school that can order for specific circumstances' do
@@ -36,6 +37,7 @@ RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { vi
     and_i_see_1_school_with_specific_circumstances_that_i_need_to_place_orders_for
     and_is_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
     and_i_see_where_my_allocation_has_come_from_for_the_1_school_with_specific_circumstances
+    and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
   scenario 'centrally managed schools that can order for local restrictions and specific circumstances' do
@@ -46,6 +48,15 @@ RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { vi
     and_i_see_2_schools_that_i_need_to_place_orders_for
     and_i_see_2_schools_that_i_have_already_placed_orders_for
     and_i_see_where_my_allocation_has_come_from_for_the_2_schools
+    and_i_do_not_see_a_section_on_ordering_chromebooks
+  end
+
+  scenario 'centrally managed schools with multiple Chromebook domains that can order' do
+    given_there_are_multiple_chromebook_domains_being_managed
+    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+    when_i_visit_the_order_devices_page
+    then_i_see_the_order_now_page
+    and_i_see_a_section_regarding_ordering_chromebooks
   end
 
   def given_i_am_signed_in_as_a_responsible_body_user
@@ -73,6 +84,15 @@ RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { vi
     schools[1].coms_device_allocation.update!(cap: 0, allocation: 0, devices_ordered: 0) # 0 left
 
     add_school_to_virtual_cap(school: schools[1])
+  end
+
+  def given_there_are_multiple_chromebook_domains_being_managed
+    schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
+                                            school_or_rb_domain: 'school_1.com',
+                                            recovery_email_address: 'school_1@gmail.com')
+    schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
+                                            school_or_rb_domain: 'school_2.com',
+                                            recovery_email_address: 'school_2@gmail.com')
   end
 
   def when_i_visit_the_responsible_body_home_page
@@ -144,6 +164,15 @@ RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { vi
     expect(page).to have_text('remaining allocation of devices for:')
     expect(page).to have_text('approved requests for specific circumstances')
     expect(page).to have_text('schools that have reported a closure or 15')
+  end
+
+  def and_i_do_not_see_a_section_on_ordering_chromebooks
+    expect(page).not_to have_css('h3', text: 'Chromebooks')
+  end
+
+  def and_i_see_a_section_regarding_ordering_chromebooks
+    expect(page).to have_css('h3', text: 'Chromebooks')
+    expect(page).to have_text('If you place an order for Chromebooks, TechSource will contact you about which ‘G Suite for Education’ domains you want to use')
   end
 
   def add_school_to_virtual_cap(school:)

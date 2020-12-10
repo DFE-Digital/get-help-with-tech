@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   let(:response_body) { 'response body' }
-  let(:school_1) { create(:school, computacenter_reference: '01234567') }
-  let(:school_2) { create(:school, computacenter_reference: '98765432') }
+  let(:trust) { create(:trust, :manages_centrally) }
+  let(:school_1) { create(:school, responsible_body: trust, computacenter_reference: '01234567') }
+  let(:school_2) { create(:school, responsible_body: trust, computacenter_reference: '98765432') }
   let(:allocation_1) { create(:school_device_allocation, school: school_1, device_type: 'std_device', allocation: 11, cap: 1) }
   let(:allocation_2) { create(:school_device_allocation, school: school_2, device_type: 'coms_device', allocation: 22, cap: 0) }
 
@@ -37,6 +38,45 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
         </CapAdjustmentRequest>
       XML
       expect(@network_call.with(body: expected_xml)).to have_been_requested
+    end
+
+    context 'when the responsible_body is managing multiple chromebook domains', with_feature_flags: { virtual_caps: 'active' } do
+      subject(:request) { described_class.new(allocation_ids: [allocation_1.id, allocation_2.id]) }
+
+      before do
+        allocation_1.update!(cap: allocation_1.allocation)
+        allocation_2.update!(cap: allocation_2.allocation)
+
+        trust.update!(vcap_feature_flag: true)
+        school_1.create_preorder_information!(who_will_order_devices: 'responsible_body',
+                                              will_need_chromebooks: 'yes',
+                                              school_or_rb_domain: 'school_1.com',
+                                              recovery_email_address: 'school_1@gmail.com')
+        school_2.create_preorder_information!(who_will_order_devices: 'responsible_body',
+                                              will_need_chromebooks: 'yes',
+                                              school_or_rb_domain: 'school_2.com',
+                                              recovery_email_address: 'school_2@gmail.com')
+        school_1.can_order!
+        school_2.can_order!
+        trust.add_school_to_virtual_cap_pools!(school_1)
+        trust.add_school_to_virtual_cap_pools!(school_2)
+        trust.reload
+      end
+
+      it 'generates a correct body with zero cap amounts' do
+        request.payload_id = '123456789'
+        request.timestamp = Time.new(2020, 9, 2, 15, 3, 35, '+02:00')
+        request.post!
+
+        expected_xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <CapAdjustmentRequest payloadID="123456789" dateTime="2020-09-02T15:03:35+02:00">
+          <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="01234567" capAmount="0"/>
+          <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="98765432" capAmount="0"/>
+        </CapAdjustmentRequest>
+        XML
+        expect(@network_call.with(body: expected_xml)).to have_been_requested
+      end
     end
 
     context 'when the response status is success' do
