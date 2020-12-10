@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-      <% if FeatureFlag.active?(:christmas_banner) || FeatureFlag.active?(:increased_allocations_banner) %>
+    <% if FeatureFlag.active?(:christmas_banner) || FeatureFlag.active?(:increased_allocations_banner) %>
       <%= render NotificationBanner.new(title: 'Important') do |banner| %>
         <% if FeatureFlag.active?(:increased_allocations_banner) %>
           <p class="govuk-notification-banner__heading"><%= t('banners.increased_allocations.responsible_body.heading') %></p>

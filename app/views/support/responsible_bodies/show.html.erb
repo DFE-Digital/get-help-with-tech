@@ -7,6 +7,28 @@
   ]) %>
 <% end %>
 
+<% if FeatureFlag.active?(:christmas_banner) || FeatureFlag.active?(:increased_allocations_banner) %>
+  <%= render NotificationBanner.new(title: 'Important') do |banner| %>
+    <% if FeatureFlag.active?(:increased_allocations_banner) %>
+      <p class="govuk-notification-banner__heading"><%= t('banners.increased_allocations.responsible_body.heading') %></p>
+      <p class="govuk-body">
+        <%= t('banners.increased_allocations.responsible_body.content') %>
+      </p>
+    <% end %>
+
+    <% if FeatureFlag.active?(:christmas_banner) && FeatureFlag.active?(:increased_allocations_banner) %>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    <% end %>
+
+    <% if FeatureFlag.active?(:christmas_banner) %>
+      <p class="govuk-notification-banner__heading"><%= t('banners.christmas.heading') %></p>
+      <p class="govuk-body">
+        <%= t('banners.christmas.content') %>
+      </p>
+    <% end %>
+  <% end %>
+<% end %>
+
 <h1 class="govuk-heading-xl">
   <%= @responsible_body.name %>
 </h1>
