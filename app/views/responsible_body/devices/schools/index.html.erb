@@ -37,21 +37,21 @@
 </div>
 <%- end %>
 
-<% if @specific_circumstances_schools.count.positive? %>
-  <%= render partial: 'school_states_table', locals: { schools: @specific_circumstances_schools,
+<% if @schools[:specific_circumstances_schools].count.positive? %>
+  <%= render partial: 'school_states_table', locals: { schools: @schools[:specific_circumstances_schools],
                                                        table_id: 'specific-circumstances-schools',
                                                        heading: t('.specific_circumstances_heading') } %>
 <%- end %>
 
-<% if @ordering_schools.count.positive? %>
-  <%= render partial: 'school_states_table', locals: { schools: @ordering_schools,
+<% if @schools[:ordering_schools].count.positive? %>
+  <%= render partial: 'school_states_table', locals: { schools: @schools[:ordering_schools],
                                                        table_id: 'ordering-schools',
                                                        heading: t('.ordering_schools_heading'),
                                                        heading_text: t('.ordering_schools_heading_text') } %>
 <%- end %>
 
-<% if @fully_open_schools.count.positive? %>
-  <%= render partial: 'school_states_table', locals: { schools: @fully_open_schools,
+<% if @schools[:fully_open_schools].count.positive? %>
+  <%= render partial: 'school_states_table', locals: { schools: @schools[:fully_open_schools],
                                                        table_id: 'fully-open-schools',
                                                        heading: t('.fully_open_schools_heading') } %>
 <%- end %>

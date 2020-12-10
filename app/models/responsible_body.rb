@@ -176,6 +176,20 @@ class ResponsibleBody < ApplicationRecord
     schools.gias_status_open.that_can_order_now.any?
   end
 
+  def schools_by_order_status
+    schools_by_name = schools
+      .includes(:preorder_information)
+      .includes(:std_device_allocation)
+      .gias_status_open
+      .order(name: :asc)
+
+    {
+      ordering_schools: schools_by_name.can_order,
+      specific_circumstances_schools: schools_by_name.can_order_for_specific_circumstances,
+      fully_open_schools: schools_by_name.where(order_state: %w[cannot_order cannot_order_as_reopened]),
+    }
+  end
+
 private
 
   def maybe_generate_user_changes

@@ -12,9 +12,9 @@ RSpec.describe ResponsibleBody::Devices::SchoolsController do
   describe '#index' do
     it 'excludes closed schools' do
       get :index
-      expect(assigns(:ordering_schools)).not_to include(closed_school)
-      expect(assigns(:specific_circumstances_schools)).not_to include(closed_school)
-      expect(assigns(:fully_open_schools)).not_to include(closed_school)
+      expect(assigns(:schools)[:ordering_schools]).not_to include(closed_school)
+      expect(assigns(:schools)[:specific_circumstances_schools]).not_to include(closed_school)
+      expect(assigns(:schools)[:fully_open_schools]).not_to include(closed_school)
     end
   end
 end
