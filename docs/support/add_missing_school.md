@@ -28,23 +28,15 @@ Check whether the school was added as the result of 'closing' and 'reopening' an
 ss.school_links
 ```
 
-If there’s a predecessor link, look up the school using the `link_urn` and if it exists in the system check its device allocations:
+Close any open predecessor schools (which are now closed in the GIAS staged data):
 
 ```ruby
-School.find_by(urn: 123436)&.device_allocations
+ss.predecessors.select(&:gias_status_open?).each do |s|
+  s.gias_status_closed! if DataStage::School.find_by(urn: s.urn).gias_status_closed?
+end
 ```
 
-Confirm that the predecessor is closed in the `DataStage`
-
-```ruby
-DataStage::School.find_by(urn: 123436)
-```
-
-Mark the predecessor as closed in the service
-
-```ruby
-School.find_by(urn: 123436).gias_status_closed!
-```
+For other types of link (e.g. amalgamation), you will need to adjust the above step appropriately.
 
 #### Transferring the device allocation
 
