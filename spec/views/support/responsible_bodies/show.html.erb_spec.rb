@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'support/responsible_bodies/show.html.erb' do
   let(:responsible_body) { create(:trust) }
-  let(:schools) { [] }
+  let(:schools) { [create(:school, responsible_body: responsible_body)] }
 
   before do
     controller.singleton_class.class_eval do
@@ -20,6 +20,10 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
 
   describe 'banners' do
     context 'when feature flags disabled' do
+      before do
+        schools.each { |school| school.update!(increased_allocations_feature_flag: false) }
+      end
+
       it 'shows banners' do
         render
         expect(rendered).not_to include('No orders over Christmas')
@@ -28,6 +32,10 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
     end
 
     context 'when feature flags enabled', with_feature_flags: { christmas_banner: 'active', increased_allocations_banner: 'active' } do
+      before do
+        schools.each { |school| school.update!(increased_allocations_feature_flag: true) }
+      end
+
       it 'shows banners' do
         render
         expect(rendered).to include('No orders over Christmas')
