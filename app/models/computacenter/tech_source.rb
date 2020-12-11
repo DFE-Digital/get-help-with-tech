@@ -1,9 +1,9 @@
 class Computacenter::TechSource
   NEXT_MAINTENANCE = {
-    window_start: Time.zone.local(2020, 11, 28, 7, 0, 0),
-    window_end: Time.zone.local(2020, 11, 28, 23, 0, 0),
-    maintenance_on_date: Date.new(2020, 11, 28),
-    reopened_on_date: Date.new(2020, 11, 29),
+    window_start: Time.zone.local(2020, 12, 12, 9, 0, 0),
+    window_end: Time.zone.local(2020, 12, 12, 17, 0, 0),
+    maintenance_on_date: Date.new(2020, 12, 12),
+    reopened_on_date: Date.new(2020, 12, 13),
   }.freeze
 
   def next_maintenance
