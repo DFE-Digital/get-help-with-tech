@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TechsourceLauncherController, type: :controller do
-  include ViewHelper
-
   let(:user) { create(:local_authority_user) }
+  let(:techsource_url) { Computacenter::TechSource.new.url }
 
   describe '#start' do
     context 'before techsource maintenance window' do

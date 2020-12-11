@@ -132,10 +132,6 @@ module ViewHelper
     ]
   end
 
-  def techsource_url
-    Settings.computacenter.techsource_url
-  end
-
   def techsource_unavailable?
     now = Time.zone.now
     window_start = Time.zone.local(2020, 11, 28, 7, 0, 0)
