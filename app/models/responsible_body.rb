@@ -83,6 +83,10 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
+  def has_increased_allocation_feature_flags?
+    FeatureFlag.active?(:increased_allocations_banner) && schools.any?(&:increased_allocations_feature_flag)
+  end
+
   def has_virtual_cap_feature_flags?
     FeatureFlag.active?(:virtual_caps) && vcap_feature_flag?
   end

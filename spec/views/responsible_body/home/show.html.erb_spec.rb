@@ -22,8 +22,12 @@ RSpec.describe 'responsible_body/home/show.html.erb' do
   end
 
   describe 'increased_allocations_banner' do
+    let(:trust) { create(:trust) }
+    let(:school) { create(:school, responsible_body: trust) }
+
     before do
-      assign(:responsible_body, build(:trust))
+      school.update! increased_allocations_feature_flag: false
+      assign(:responsible_body, trust)
     end
 
     context 'when increased_allocations_banner feature flag disabled' do
@@ -34,6 +38,10 @@ RSpec.describe 'responsible_body/home/show.html.erb' do
     end
 
     context 'when increased_allocations_banner feature flag enabled', with_feature_flags: { increased_allocations_banner: 'active' } do
+      before do
+        school.update increased_allocations_feature_flag: true
+      end
+
       it 'renders increased_allocations_banner' do
         render
         expect(rendered).to include('We’ve restored original device allocations')
