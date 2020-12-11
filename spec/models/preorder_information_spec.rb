@@ -168,7 +168,7 @@ RSpec.describe PreorderInformation, type: :model do
       end
 
       context 'when all devices have been ordered' do
-        let(:allocation) { create(:school_device_allocation, :fully_ordered) }
+        let(:allocation) { build(:school_device_allocation, :fully_ordered, device_type: 'std_device') }
 
         it { is_expected.to eq('ordered') }
       end

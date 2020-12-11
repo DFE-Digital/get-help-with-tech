@@ -171,7 +171,7 @@ class School < ApplicationRecord
 private
 
   def maybe_generate_user_changes
-    users.each(&:generate_user_change_if_needed!)
+    user_schools.map(&:user).each(&:generate_user_change_if_needed!)
   end
 
   def device_ordering_organisation
