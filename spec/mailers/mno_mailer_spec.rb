@@ -17,5 +17,15 @@ RSpec.describe MnoMailer, type: :mailer do
 
       expect(mail[:personalisation].unparsed_value).to eq(expected_personalisation)
     end
+
+    it 'audits the email' do
+      expect { mail.deliver_now }.to change(EmailAudit, :count).by(1)
+
+      audit = EmailAudit.last
+      expect(audit.message_type).to eql('notify_new_requests')
+      expect(audit.template).to eql(Settings.govuk_notify.templates.mno.notify_new_requests)
+      expect(audit.email_address).to eql(user.email_address)
+      expect(audit.user).to eql(user)
+    end
   end
 end

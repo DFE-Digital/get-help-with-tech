@@ -1,6 +1,6 @@
 class EmailAudit < ApplicationRecord
   belongs_to :user
-  belongs_to :school
+  belongs_to :school, optional: true
 
   validates :message_type, presence: true
   validates :template, presence: true
