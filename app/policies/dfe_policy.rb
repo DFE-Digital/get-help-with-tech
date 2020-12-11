@@ -1,0 +1,2 @@
+class DfEPolicy < ResponsibleBodyPolicy
+end
