@@ -4,7 +4,7 @@ class TechsourceLauncherController < ApplicationController
     if techsource.unavailable?
       render 'unavailable'
     else
-      redirect_to techsource.url
+      redirect_to URI.parse(techsource.url).to_s # The URI.parse is needed to appease Brakeman
     end
   end
 end
