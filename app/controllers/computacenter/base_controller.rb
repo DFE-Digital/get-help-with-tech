@@ -1,6 +1,4 @@
 class Computacenter::BaseController < ApplicationController
-  include Pundit
-
   before_action :require_cc_user!
 
 private
@@ -12,7 +10,4 @@ private
       redirect_to_sign_in
     end
   end
-
-  attr_reader :current_user
-  helper_method :current_user
 end

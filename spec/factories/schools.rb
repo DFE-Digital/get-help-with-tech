@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :school do
     association :responsible_body, factory: %i[local_authority trust].sample
     urn { Faker::Number.unique.number(digits: 6) }
-    name { Faker::Educator.secondary_school }
+    sequence(:name) { |n| "#{Faker::Educator.secondary_school}-#{n}" }
     computacenter_reference { Faker::Number.number(digits: 8) }
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }
@@ -13,7 +13,7 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
 
     trait :with_preorder_information do
-      preorder_information
+      preorder_information { association :preorder_information, school: instance }
     end
 
     trait :with_headteacher_contact do
@@ -41,11 +41,11 @@ FactoryBot.define do
     end
 
     trait :with_std_device_allocation do
-      association :std_device_allocation, factory: %i[school_device_allocation with_std_allocation]
+      std_device_allocation { association :school_device_allocation, :with_std_allocation, school: instance }
     end
 
     trait :with_coms_device_allocation do
-      association :coms_device_allocation, factory: %i[school_device_allocation with_coms_allocation]
+      coms_device_allocation { association :school_device_allocation, :with_coms_allocation, school: instance }
     end
 
     trait :can_order_for_specific_circumstances do

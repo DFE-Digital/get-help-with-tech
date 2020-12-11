@@ -94,6 +94,10 @@ en:
       home: Home
       techsource: Update TechSource users
       closed_schools: Schools that can order
+      school_changes: Changes to schools
+      school_changes_edit: Verify the school details
+      responsible_body_changes: Changes to responsible bodies
+      responsible_body_changes_edit: Verify the responsible body details
     who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
       schools: Each school will place their own orders
@@ -604,6 +608,12 @@ en:
         name: Name
         name_hint: Must be unique, and between 2 and 64 characters long
         create: Generate
+    sold_to:
+      update:
+        success: "Sold To reference for %{name} is %{sold_to}"
+    ship_to:
+      update:
+        success: "Ship To reference for %{name} is %{ship_to}"
   events:
     default: An event just happened
     sign_in_event: A user from %{organisation} just signed in

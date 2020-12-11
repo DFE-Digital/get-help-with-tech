@@ -17,10 +17,19 @@ class ResponsibleBody < ApplicationRecord
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 
+  before_create :set_computacenter_change
+
   enum status: {
     open: 'open',
     closed: 'closed',
   }, _prefix: 'gias_status'
+
+  enum computacenter_change: {
+    none: 'none',
+    new: 'new',
+    amended: 'amended',
+    closed: 'closed',
+  }, _prefix: true
 
   after_update :maybe_generate_user_changes
 
@@ -194,9 +203,17 @@ class ResponsibleBody < ApplicationRecord
     }
   end
 
+  def address
+    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
+  end
+
 private
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)
+  end
+
+  def set_computacenter_change
+    self.computacenter_change = 'new'
   end
 end

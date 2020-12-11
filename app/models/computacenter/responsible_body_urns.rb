@@ -1,5 +1,9 @@
 module Computacenter::ResponsibleBodyUrns
   module ClassMethods
+    def requiring_a_new_computacenter_reference
+      gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+    end
+
     def find_by_computacenter_urn!(cc_urn)
       our_identifier = convert_computacenter_urn(cc_urn)
       # given URNs starting with 't' are for Trusts
@@ -36,9 +40,13 @@ module Computacenter::ResponsibleBodyUrns
       when 'LocalAuthority'
         "LEA#{gias_id}"
       when 'Trust'
-        return '' if companies_house_number.blank?
-
-        "t#{companies_house_number.to_i}"
+        if companies_house_number.blank?
+          ''
+        else
+          "t#{companies_house_number.to_i}"
+        end
+      when 'DfE'
+        'DfE'
       end
     end
 
@@ -48,6 +56,8 @@ module Computacenter::ResponsibleBodyUrns
         local_authority_official_name
       when 'Trust'
         name
+      when 'DfE'
+        'Department for Education'
       end
     end
   end

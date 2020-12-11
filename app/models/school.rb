@@ -19,6 +19,8 @@ class School < ApplicationRecord
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
+  before_create :set_computacenter_change
+
   enum status: {
     open: 'open',
     closed: 'closed',
@@ -48,6 +50,13 @@ class School < ApplicationRecord
     can_order: 'can_order',
   }
 
+  enum computacenter_change: {
+    none: 'none',
+    new: 'new',
+    amended: 'amended',
+    closed: 'closed',
+  }, _prefix: true
+
   after_update :maybe_generate_user_changes
 
   def self.that_will_order_devices
@@ -60,6 +69,10 @@ class School < ApplicationRecord
 
   def self.that_can_order_now
     where(order_state: %w[can_order_for_specific_circumstances can_order])
+  end
+
+  def self.requiring_a_new_computacenter_reference
+    gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
   def has_ordered?
@@ -157,10 +170,22 @@ class School < ApplicationRecord
     responsible_body.has_school_in_virtual_cap_pools?(self)
   end
 
+  def address
+    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
+  end
+
+  def update_computacenter_reference!(new_value)
+    update!(computacenter_reference: new_value, computacenter_change: 'none')
+  end
+
 private
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)
+  end
+
+  def set_computacenter_change
+    self.computacenter_change = 'new'
   end
 
   def device_ordering_organisation

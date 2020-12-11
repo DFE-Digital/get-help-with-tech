@@ -1,0 +1,32 @@
+<%- content_for :before_content, govuk_link_to('Back', computacenter_school_changes_path, class: 'govuk-back-link') %>
+<%- title = t('page_titles.computacenter.school_changes_edit') %>
+<%- content_for :title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= "#{@school.name} (#{@school.urn})" %></span>
+      <%= title %>
+    </h1>
+
+    <%= form_for @form, url: computacenter_school_change_path(@form.school), method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= render Computacenter::SchoolChangesDetailsComponent.new(school: @school) %>
+
+      <%- if @school.computacenter_change_amended? %>
+        <%= f.govuk_radio_buttons_fieldset(:change_ship_to, legend: { text: 'Does the Ship To number need to change?', size: 'm' }) do %>
+          <%= f.govuk_radio_button :change_ship_to, 'yes', label: { text: 'Yes, change the Ship To number' } do %>
+            <%= f.govuk_text_field  :ship_to, label: { text: "Ship To number", size: 's' } %>
+          <%- end %>
+          <%= f.govuk_radio_button :change_ship_to, 'no', label: { text: 'No, keep the same Ship To number' } %>
+        <%- end %>
+      <%- else %>
+        <%= f.govuk_text_field :ship_to, label: {text: 'New Ship To number', size: 's'} %>
+        <%= f.hidden_field :change_ship_to, value: 'yes' %>
+      <%- end %>
+
+      <%= f.govuk_submit 'Confirm' %>
+    <%- end %>
+  </div>
+</div>

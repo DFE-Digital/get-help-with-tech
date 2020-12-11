@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :identify_user!
@@ -7,6 +9,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protect_from_forgery unless: -> { request.format.json? || request.format.xml? }
 
@@ -24,6 +27,9 @@ private
     @current_user ||= (SessionService.identify_user!(session) || User.new)
   end
 
+  attr_reader :current_user
+  helper_method :current_user
+
   def save_user_to_session!(user = @current_user)
     # prevent duplicate key errors if they're already signed_in
     SessionService.destroy_session!(session[:session_id]) if session[:session_id]
@@ -33,6 +39,10 @@ private
 
   def require_sign_in!
     redirect_to_sign_in unless SessionService.is_signed_in?(session)
+  end
+
+  def user_not_authorized
+    render 'errors/forbidden', status: :forbidden
   end
 
   def redirect_to_sign_in
