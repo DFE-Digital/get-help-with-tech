@@ -196,7 +196,7 @@ class School < ApplicationRecord
 private
 
   def maybe_generate_user_changes
-    users.each(&:generate_user_change_if_needed!)
+    user_schools.map(&:user).each(&:generate_user_change_if_needed!)
   end
 
   def set_computacenter_change
