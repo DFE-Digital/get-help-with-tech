@@ -4,9 +4,10 @@ require 'shared/expect_download'
 RSpec.feature 'Administering responsible body changes' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
-    let!(:new_trusts) { create_list(:trust, 2) }
-    let!(:amended_trusts) { create_list(:trust, 2) }
-    let!(:trusts) { create_list(:trust, 2) }
+    let!(:new_trusts) { create_list(:trust, 2, :with_schools) }
+    let!(:amended_trusts) { create_list(:trust, 2, :with_schools) }
+    let!(:trusts) { create_list(:trust, 2, :with_schools) }
+    let!(:trusts_without_schools) { create_list(:trust, 2) }
 
     before do
       given_the_responsible_bodies_have_the_correct_computacenter_change_states
@@ -63,7 +64,7 @@ RSpec.feature 'Administering responsible body changes' do
 
     def given_the_responsible_bodies_have_the_correct_computacenter_change_states
       new_trusts.each { |s| s.update!(computacenter_change: 'new', computacenter_reference: nil) }
-      amended_trusts.each(&:computacenter_change_amended!)
+      (trusts_without_schools + amended_trusts).each(&:computacenter_change_amended!)
       trusts.each(&:computacenter_change_none!)
     end
 
@@ -90,7 +91,7 @@ RSpec.feature 'Administering responsible body changes' do
         expect(page).to have_text(t.computacenter_identifier)
       end
 
-      trusts.each do |t|
+      (trusts_without_schools + trusts).each do |t|
         expect(page).not_to have_text(t.computacenter_identifier)
       end
     end

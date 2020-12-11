@@ -1,7 +1,10 @@
 module Computacenter::ResponsibleBodyUrns
   module ClassMethods
     def requiring_a_new_computacenter_reference
-      gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+      gias_status_open
+        .where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+        .joins(:schools)
+        .distinct
     end
 
     def find_by_computacenter_urn!(cc_urn)
