@@ -1,9 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe TechsourceLauncherController, type: :controller do
-  include ViewHelper
-
   let(:user) { create(:local_authority_user) }
+  let(:techsource) { Computacenter::TechSource.new }
+
+  before do
+    stub_const('Computacenter::TechSource::NEXT_MAINTENANCE', {
+      window_start: Time.zone.local(2020, 11, 28, 7, 0, 0),
+      window_end: Time.zone.local(2020, 11, 28, 23, 0, 0),
+      maintenance_on_date: Date.new(2020, 11, 28),
+      reopened_on_date: Date.new(2020, 11, 29),
+    })
+  end
 
   describe '#start' do
     context 'before techsource maintenance window' do
@@ -14,7 +22,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
 
       it 'redirects to techsource' do
         get 'start'
-        expect(response).to redirect_to(techsource_url)
+        expect(response).to redirect_to(techsource.url)
       end
     end
 
@@ -47,7 +55,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
 
       it 'redirects to techsource' do
         get 'start'
-        expect(response).to redirect_to(techsource_url)
+        expect(response).to redirect_to(techsource.url)
       end
     end
   end

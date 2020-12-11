@@ -132,17 +132,6 @@ module ViewHelper
     ]
   end
 
-  def techsource_url
-    Settings.computacenter.techsource_url
-  end
-
-  def techsource_unavailable?
-    now = Time.zone.now
-    window_start = Time.zone.local(2020, 11, 28, 7, 0, 0)
-    window_end = Time.zone.local(2020, 11, 28, 23, 0, 0)
-    now >= window_start && now <= window_end
-  end
-
   def what_to_order_allocation_list(allocations:)
     allocations.map { |alloc|
       "#{alloc.available_devices_count} #{alloc.device_type_name.pluralize(alloc.available_devices_count)}"
