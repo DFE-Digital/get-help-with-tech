@@ -1,7 +1,7 @@
 class TechsourceLauncherController < ApplicationController
   def start
     techsource = Computacenter::TechSource.new
-    if helpers.techsource_unavailable?
+    if techsource.unavailable?
       render 'unavailable'
     else
       redirect_to techsource.url
