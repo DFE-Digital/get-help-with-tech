@@ -233,7 +233,7 @@
             </ul>
 
             <p class="app-step-nav__paragraph">
-              If an education platform is not currently in use, schools, local authorities and academy trusts can <a href="/digital-platforms" class="govuk-link" target="_blank">apply for DfE-funded support</a> to get access to either G Suite for Education or Office 365 Education.  
+              If an education platform is not currently in use, schools, local authorities and academy trusts can <a href="/digital-platforms" class="govuk-link" target="_blank">apply for DfE-funded support</a> to get access to either G Suite for Education or Office 365 Education.
             </p>
           </div>
         </li>
@@ -256,6 +256,13 @@
           </div>
 
           <div class="app-step-nav__panel" id="step-panel-place-an-order-5">
+            <% if FeatureFlag.active?(:christmas_banner) %>
+              <div class="app-card govuk-!-margin-bottom-4">
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                  You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Thursday 17 December and we’ll then close ordering until Monday 4 January.
+                </p>
+              </div>
+            <% end %>
             <p class="app-step-nav__paragraph">
               If face-to-face education at a school is disrupted due to coronavirus (such as a ‘bubble’ or year group being advised not to attend), schools can make us aware via the <%= link_to_ed_settings_form %> which is monitored daily.
             </p>
