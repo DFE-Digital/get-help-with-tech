@@ -4,7 +4,16 @@ RSpec.feature 'TechSource availability for responsible body' do
   let(:local_authority) { create(:local_authority) }
   let(:la_user) { create(:local_authority_user, responsible_body: local_authority) }
   let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: local_authority) }
-  let(:techsource_url) { Computacenter::TechSource.new.url }
+  let(:techsource) { Computacenter::TechSource.new }
+
+  before do
+    stub_const('Computacenter::TechSource::NEXT_MAINTENANCE', {
+      window_start: Time.zone.local(2020, 11, 28, 7, 0, 0),
+      window_end: Time.zone.local(2020, 11, 28, 23, 0, 0),
+      maintenance_on_date: Date.new(2020, 11, 28),
+      reopened_on_date: Date.new(2020, 11, 29),
+    })
+  end
 
   after do
     Timecop.return
@@ -76,7 +85,7 @@ RSpec.feature 'TechSource availability for responsible body' do
   end
 
   def then_i_can_access_techsource
-    expect(page).to have_current_path(techsource_url)
+    expect(page).to have_current_path(techsource.url)
   end
 
   def then_i_see_a_service_unavailable_page
