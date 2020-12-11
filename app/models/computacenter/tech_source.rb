@@ -15,7 +15,9 @@ class Computacenter::TechSource
   end
 
   def warn_users_about_upcoming_maintenance_window?
-    Time.zone.now < next_maintenance[:reopened_on_date].at_beginning_of_day
+    now = Time.zone.now
+    (now >= next_maintenance[:maintenance_on_date].at_beginning_of_day - 2.days) &&
+      now <= next_maintenance[:reopened_on_date].at_beginning_of_day
   end
 
   def unavailable?
