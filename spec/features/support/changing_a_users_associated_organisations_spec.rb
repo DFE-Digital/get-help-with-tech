@@ -10,12 +10,11 @@ RSpec.feature 'Changing a users associated organisations' do
   let(:other_school) { create(:school, name: 'CCC school') }
   let(:responsible_body_user_with_multiple_schools) { create(:trust_user, responsible_body: trust, schools: [trust_school_1, trust_school_2]) }
   let(:other_trust) { create(:trust) }
-  let(:other_local_authority) { create(:local_authority, name: 'AN ALL-UPPERCASE LA') }
+  let!(:other_local_authority) { create(:local_authority, name: 'AN ALL-UPPERCASE LA') }
   let(:search_page) { PageObjects::Support::Users::SearchPage.new }
   let(:results_page) { PageObjects::Support::Users::ResultsPage.new }
   let(:associated_organisations_page) { PageObjects::Support::Users::AssociatedOrganisationsPage.new }
   let(:matching_schools_page) { PageObjects::Support::Users::MatchingSchoolsPage.new }
-  let(:matching_responsible_bodies_page) { PageObjects::Support::Users::MatchingResponsibleBodiesPage.new }
 
   scenario 'a support user sees a Change link next to the users assocations' do
     given_i_am_logged_in_as_a_support_user
@@ -31,7 +30,7 @@ RSpec.feature 'Changing a users associated organisations' do
     and_i_do_not_see_a_link_to_change_their_associated_organisations
   end
 
-  scenario 'clicking the Change link shows the  associated organisations' do
+  scenario 'clicking the Change link shows the associated organisations' do
     given_i_am_logged_in_as_a_support_user
     when_i_search_for_an_existing_user_by_email
     and_i_click_the_link_to_change_their_associated_organisations
@@ -75,23 +74,12 @@ RSpec.feature 'Changing a users associated organisations' do
     and_i_dont_see_a_button_to_associate_the_school
   end
 
-  scenario 'entering a partial responsible body name lets me associate responsible bodies matching that name' do
+  scenario 'moving the user to a different responsible body' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_associated_organisations_page
-    and_i_enter_a_partial_responsible_body_name_in_any_case
-    then_i_see_responsible_bodies_matching_that_name
-    and_i_see_an_associate_button_next_to_each_responsible_body
-    when_i_click_the_associate_button_next_to_the_responsible_body
+    and_i_select_a_new_responsible_body_name
     then_i_see_the_new_responsible_body_replaces_their_existing_responsible_body
     and_i_see_a_message_telling_me_the_responsible_body_has_been_associated
-  end
-
-  scenario 'entering the name of a responsible_body that is already associated shows it as already associated' do
-    given_i_am_logged_in_as_a_support_user
-    when_i_visit_a_users_associated_organisations_page
-    and_i_enter_a_responsible_body_name_that_the_user_already_has
-    then_i_see_the_responsible_body_is_already_associated
-    and_i_dont_see_a_button_to_associate_the_responsible_body
   end
 
   def given_i_am_logged_in_as_a_support_user
@@ -177,7 +165,7 @@ RSpec.feature 'Changing a users associated organisations' do
   end
 
   def and_i_see_a_message_telling_me_the_responsible_body_has_been_removed
-    expect(associated_organisations_page).to have_text("#{responsible_body_user_with_multiple_schools.full_name} is no longer associated with a Responsible body")
+    expect(associated_organisations_page).to have_text("#{responsible_body_user_with_multiple_schools.full_name} is no longer associated with a responsible body")
   end
 
   def and_i_enter_a_partial_school_name_in_any_case
@@ -222,22 +210,9 @@ RSpec.feature 'Changing a users associated organisations' do
     expect(matching_schools_page.schools[0]).not_to have_button('Associate')
   end
 
-  def and_i_enter_a_partial_responsible_body_name_in_any_case
-    fill_in 'Responsible body name', with: other_local_authority.name.first(3).downcase
+  def and_i_select_a_new_responsible_body_name
+    select other_local_authority.name, from: 'support-user-responsible-body-form-responsible-body-field'
     associated_organisations_page.submit_responsible_body_name.click
-  end
-
-  def then_i_see_responsible_bodies_matching_that_name
-    expect(matching_responsible_bodies_page).to be_displayed
-    expect(matching_responsible_bodies_page.responsible_body_names).to all(have_text(other_school.name.first(3)))
-  end
-
-  def and_i_see_an_associate_button_next_to_each_responsible_body
-    expect(matching_responsible_bodies_page.responsible_bodies).to all(have_button('Associate'))
-  end
-
-  def when_i_click_the_associate_button_next_to_the_responsible_body
-    matching_responsible_bodies_page.associate_responsible_body_link.click
   end
 
   def then_i_see_the_new_responsible_body_replaces_their_existing_responsible_body
@@ -252,15 +227,5 @@ RSpec.feature 'Changing a users associated organisations' do
   def and_i_enter_a_responsible_body_name_that_the_user_already_has
     fill_in 'Responsible body name', with: trust.name
     associated_organisations_page.submit_responsible_body_name.click
-  end
-
-  def then_i_see_the_responsible_body_is_already_associated
-    expect(matching_responsible_bodies_page).to be_displayed
-    expect(matching_responsible_bodies_page.responsible_body_names).to all(have_text(trust.name))
-    expect(matching_responsible_bodies_page.responsible_bodies[0]).to have_text('already associated')
-  end
-
-  def and_i_dont_see_a_button_to_associate_the_responsible_body
-    expect(matching_responsible_bodies_page.responsible_bodies[0]).not_to have_button('Associate')
   end
 end
