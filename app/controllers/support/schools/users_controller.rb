@@ -17,15 +17,6 @@ class Support::Schools::UsersController < Support::BaseController
     end
   end
 
-  def destroy
-    @user = policy_scope(@school.users).find(params[:id])
-    @user.update!(deleted_at: Time.zone.now)
-
-    flash[:success] = 'User has been deleted'
-
-    redirect_to support_school_path(@school)
-  end
-
 private
 
   def set_school

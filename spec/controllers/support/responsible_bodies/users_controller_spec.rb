@@ -79,30 +79,4 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
       expect(response).to redirect_to(sign_in_path)
     end
   end
-
-  describe '#destroy' do
-    context 'for support users' do
-      before do
-        sign_in_as dfe_user
-      end
-
-      it 'sets user deleted_at timestamp' do
-        delete :destroy, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
-        expect(existing_user.reload.deleted_at).to be_present
-      end
-
-      it 'redirects back to the RB' do
-        delete :destroy, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
-        expect(response).to redirect_to(support_responsible_body_path(responsible_body))
-      end
-    end
-
-    context 'for computacenter users' do
-      it 'is forbidden' do
-        expect {
-          delete :destroy, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
-        }.to be_forbidden_for(create(:computacenter_user))
-      end
-    end
-  end
 end

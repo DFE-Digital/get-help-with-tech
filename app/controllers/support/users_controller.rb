@@ -53,6 +53,21 @@ class Support::UsersController < Support::BaseController
     redirect_to associated_organisations_support_user_path(@user.id)
   end
 
+  def destroy
+    @user.update!(deleted_at: Time.zone.now)
+
+    flash[:success] = 'User has been deleted'
+
+    return_params = params.fetch(:user, {}).permit(:school_urn, :responsible_body_id)
+    if return_params[:responsible_body_id]
+      redirect_to support_responsible_body_path(return_params[:responsible_body_id])
+    elsif return_params[:school_urn]
+      redirect_to support_school_path(return_params[:school_urn])
+    else
+      redirect_to support_home_path
+    end
+  end
+
 private
 
   # this is necessary to turn orders_devices=true/false into 0/1

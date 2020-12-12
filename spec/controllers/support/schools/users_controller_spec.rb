@@ -103,33 +103,4 @@ RSpec.describe Support::Schools::UsersController do
       }.to be_forbidden_for(create(:computacenter_user))
     end
   end
-
-  describe '#destroy' do
-    let(:user) { create(:school_user) }
-    let(:school) { user.school }
-
-    context 'for support users' do
-      before do
-        sign_in_as support_user
-      end
-
-      it 'sets user deleted_at timestamp' do
-        delete :destroy, params: { school_urn: school.urn, id: user.id }
-        expect(user.reload.deleted_at).to be_present
-      end
-
-      it 'redirects back to the school' do
-        delete :destroy, params: { school_urn: school.urn, id: user.id }
-        expect(response).to redirect_to(support_school_path(school))
-      end
-    end
-
-    context 'for computacenter users' do
-      it 'is forbidden' do
-        expect {
-          delete :destroy, params: { school_urn: school.urn, id: user.id }
-        }.to be_forbidden_for(create(:computacenter_user))
-      end
-    end
-  end
 end

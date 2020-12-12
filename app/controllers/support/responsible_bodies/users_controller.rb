@@ -19,15 +19,6 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
     end
   end
 
-  def destroy
-    @user = policy_scope(@responsible_body.users).find(params[:id])
-    @user.update!(deleted_at: Time.zone.now)
-
-    flash[:success] = 'User has been deleted'
-
-    redirect_to return_path
-  end
-
 private
 
   def return_path

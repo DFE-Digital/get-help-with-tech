@@ -82,4 +82,39 @@ RSpec.describe Support::UsersController do
       }.to be_forbidden_for(create(:computacenter_user))
     end
   end
+
+  describe '#destroy' do
+    let(:responsible_body) { create(:local_authority) }
+    let(:school) { create(:school) }
+    let(:existing_user) { create(:local_authority_user) }
+
+    context 'for support users' do
+      before do
+        sign_in_as support_user
+      end
+
+      it 'sets user deleted_at timestamp' do
+        delete :destroy, params: { id: existing_user.id }
+        expect(existing_user.reload.deleted_at).to be_present
+      end
+
+      it 'redirects back to the RB page when called from the responsible body area' do
+        delete :destroy, params: { id: existing_user.id, user: { responsible_body_id: responsible_body.id } }
+        expect(response).to redirect_to(support_responsible_body_path(responsible_body))
+      end
+
+      it 'redirects back to the school page when called from the school area' do
+        delete :destroy, params: { id: existing_user.id, user: { school_urn: school.urn } }
+        expect(response).to redirect_to(support_school_path(school))
+      end
+    end
+
+    context 'for computacenter users' do
+      it 'is forbidden' do
+        expect {
+          delete :destroy, params: { id: existing_user.id }
+        }.to be_forbidden_for(create(:computacenter_user))
+      end
+    end
+  end
 end
