@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing your schools' do
+  include ActionView::Helpers::TextHelper
+
   let(:responsible_body) { create(:trust, :manages_centrally) }
   let(:schools) { create_list(:school, 3, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
@@ -143,16 +145,16 @@ RSpec.feature 'Viewing your schools' do
     school = schools.first
     expect(your_schools_page.ordering_school_rows[0].title).to have_content(school.name)
     expect(your_schools_page.ordering_school_rows[0].who_will_order_devices).to have_content('Trust')
-    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} devices")
-    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} routers")
+    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content(pluralize(school.std_device_allocation.raw_allocation, 'device'))
+    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content(pluralize(school.coms_device_allocation&.raw_allocation, 'router'))
   end
 
   def then_i_see_the_school_in_the_schools_with_approved_requests_list
     school = schools.second
     expect(your_schools_page.specific_circumstances_school_rows[0].title).to have_content(school.name)
     expect(your_schools_page.specific_circumstances_school_rows[0].who_will_order_devices).to have_content('Trust')
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} devices")
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} router")
+    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content(pluralize(school.std_device_allocation.raw_allocation, 'device'))
+    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content(pluralize(school.coms_device_allocation&.raw_allocation, 'router'))
   end
 
   def then_i_see_the_school_in_the_fully_open_schools_list
