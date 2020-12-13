@@ -34,7 +34,7 @@
       <p class="govuk-body">
         <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_school_user_path(school_urn: @school.urn, id: user.id) %>
       </p>
-      <%= render Support::UserSummaryListComponent.new(user: user) %>
+      <%= render Support::UserPreviewSummaryListComponent.new(user: user) %>
     </div>
   <% end %>
 <% else %>
