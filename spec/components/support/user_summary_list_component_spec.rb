@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 describe Support::UserSummaryListComponent do
+  include Rails.application.routes.url_helpers
+
+  let(:responsible_body) { create(:local_authority) }
   subject(:result) { render_inline(described_class.new(user: user)) }
 
   let(:user) do
-    build(:school_user, telephone: '12345')
+    build(:school_user, telephone: '12345', responsible_body: responsible_body)
   end
 
   it 'displays the email address' do
@@ -60,6 +63,16 @@ describe Support::UserSummaryListComponent do
 
     it 'displays the user as able to order devices' do
       expect(value_for_row(result, 'Can order devices?').text).to include('Yes')
+    end
+  end
+
+  it 'renders links to the responsible body support page' do
+    expect(result.to_html).to include(support_responsible_body_path(user.responsible_body))
+  end
+
+  it 'renders links to the school support pages' do
+    user.schools.each do |school|
+      expect(result.to_html).to include(support_school_path(urn: school.urn))
     end
   end
 end
