@@ -18,6 +18,7 @@ RSpec.feature 'Searching for school or RB users' do
     when_i_search_again
     and_i_search_for_an_existing_school_user_by_their_email
     then_i_see_the_school_user_on_the_results_page
+    and_i_can_navigate_to_the_user_page
     and_i_can_navigate_to_the_support_page_for_their_school
   end
 
@@ -32,6 +33,7 @@ RSpec.feature 'Searching for school or RB users' do
     when_i_search_again
     and_i_search_for_a_school_user_who_has_seen_the_privacy_notice_by_their_name
     then_i_see_the_school_user_on_the_results_page
+    and_i_can_navigate_to_the_user_page
     and_i_can_navigate_to_the_support_page_for_their_school
   end
 
@@ -118,6 +120,11 @@ RSpec.feature 'Searching for school or RB users' do
     expect(results_page).to be_displayed
     expect(results_page.users.size).to eq(1)
     expect(results_page.users.first).to have_text('michelle.michaels@example.com')
+  end
+
+  def and_i_can_navigate_to_the_user_page
+    click_link 'Jane Smith'
+    expect(page).to have_title('Jane Smith – Support')
   end
 
   def and_i_can_navigate_to_the_support_page_for_their_school

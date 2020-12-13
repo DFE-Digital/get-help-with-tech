@@ -1,5 +1,5 @@
 <h3 class="govuk-heading-l">
-  <%= user.full_name %>
+  <%= govuk_link_to user.full_name, support_user_path(user) %>
 </h3>
 
 <%= govuk_summary_list(classes: 'govuk-summary-list--no-border') do |component|

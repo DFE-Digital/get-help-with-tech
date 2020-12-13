@@ -12,6 +12,10 @@ RSpec.describe Support::UserSearchResultComponent do
 
   subject { described_class.new(user: user, current_user: support_user) }
 
+  it 'renders a link to the user’s support page' do
+    expect(rendered_result_html).to include(support_user_path(user))
+  end
+
   it 'renders the user’s email address' do
     expect(rendered_result_text).to include('jsmith@school.sch.uk')
   end

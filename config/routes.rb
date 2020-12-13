@@ -175,7 +175,7 @@ Rails.application.routes.draw do
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index
     end
-    resources :users, only: %i[] do
+    resources :users, only: %i[show] do
       collection do
         get 'search'
         post 'results'

@@ -1,8 +1,10 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
-  before_action :set_user, only: %i[associated_organisations update_responsible_body]
+  before_action :set_user, only: %i[show associated_organisations update_responsible_body]
   before_action { authorize User }
+
+  def show; end
 
   def search
     @search_form = Support::UserSearchForm.new
@@ -56,6 +58,7 @@ private
   end
 
   def set_user
-    @user = policy_scope(User).find(params[:id])
+    @user = User.find(params[:id])
+    authorize @user
   end
 end
