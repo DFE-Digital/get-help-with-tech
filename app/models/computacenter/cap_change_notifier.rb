@@ -27,6 +27,17 @@ module Computacenter
         allocation.cap_update_calls << CapUpdateCall.new(request_body: api_request.body, response_body: response.body)
       end
       response
+    rescue Computacenter::OutgoingAPI::Error => e
+      ids.each do |allocation_id|
+        CapUpdateCall.create!(
+          school_device_allocation_id: allocation_id,
+          request_body: e.cap_update_request.body,
+          response_body: e.cap_update_request&.response&.body,
+          failure: true,
+        )
+      end
+
+      raise
     end
   end
 end

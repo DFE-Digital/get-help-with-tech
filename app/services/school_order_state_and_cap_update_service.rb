@@ -17,7 +17,6 @@ class SchoolOrderStateAndCapUpdateService
 
     caps.each do |cap|
       allocation = update_cap!(cap[:device_type], cap[:cap])
-
       if notify_computacenter_of_cap_changes?
         if responsible_body_has_virtual_caps_enabled?
           # don't send updates as they will happen when the pool is updated and the caps adjusted

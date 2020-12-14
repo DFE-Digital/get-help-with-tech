@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_10_140102) do
+ActiveRecord::Schema.define(version: 2020_12_14_114914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2020_12_10_140102) do
     t.text "response_body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "failure", default: false
     t.index ["school_device_allocation_id"], name: "index_cap_update_calls_on_school_device_allocation_id"
   end
 
