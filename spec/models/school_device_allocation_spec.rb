@@ -23,6 +23,45 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
         expect(allocation.cap_implied_by_order_state(order_state: 'can_order_for_specific_circumstances', given_cap: 17)).to eq(17)
       end
     end
+
+    context 'within a virtual cap', with_feature_flags: { virtual_caps: 'active' } do
+      let(:responsible_body) { create(:trust, :vcap_feature_flag) }
+      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: responsible_body) }
+
+      let(:school) { schools.first }
+      let(:allocation) { school.std_device_allocation.reload }
+
+      before do
+        stub_computacenter_outgoing_api_calls
+
+        schools.each do |school|
+          school.std_device_allocation.update!(allocation: 27, cap: 0, devices_ordered: 13, school: school)
+
+          school.preorder_information.update!(who_will_order_devices: 'responsible_body')
+          school.can_order!
+          responsible_body.add_school_to_virtual_cap_pools!(school)
+          responsible_body.calculate_virtual_caps!
+        end
+      end
+
+      context 'given cannot_order' do
+        it 'returns the value of devices_ordered' do
+          expect(allocation.cap_implied_by_order_state(order_state: 'cannot_order')).to eq(13)
+        end
+      end
+
+      context 'given can_order' do
+        it 'returns the value of allocation' do
+          expect(allocation.cap_implied_by_order_state(order_state: 'can_order')).to eq(27)
+        end
+      end
+
+      context 'given can_order_for_specific_circumstances' do
+        it 'returns the given cap' do
+          expect(allocation.cap_implied_by_order_state(order_state: 'can_order_for_specific_circumstances', given_cap: 17)).to eq(17)
+        end
+      end
+    end
   end
 
   describe 'validations' do

@@ -21,7 +21,8 @@
       <%= f.govuk_number_field :allocation,
                               only_integer: true,
                               label: {text: 'New allocation'},
-                              width: 3 %>
+                              width: 3,
+                              value: @form.current_allocation.raw_allocation %>
 
       <%= f.govuk_submit 'Save' %>
     <%- end %>
