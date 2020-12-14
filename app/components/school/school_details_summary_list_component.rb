@@ -22,7 +22,7 @@ private
   def device_allocation_row
     {
       key: 'Device allocation',
-      value: pluralize(@school.std_device_allocation&.allocation.to_i, 'device'),
+      value: pluralize(@school.std_device_allocation&.raw_allocation.to_i, 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
@@ -31,14 +31,14 @@ private
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: pluralize(@school.coms_device_allocation&.allocation.to_i, 'router'),
+      value: pluralize(@school.coms_device_allocation&.raw_allocation.to_i, 'router'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
   end
 
   def display_router_allocation_row?
-    @school.coms_device_allocation&.allocation.to_i.positive?
+    @school.coms_device_allocation&.raw_allocation.to_i.positive?
   end
 
   def type_of_school_row

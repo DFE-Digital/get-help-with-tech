@@ -43,7 +43,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school allocation' do
-      expect(value_for_row(result, 'Device allocation').text).to include('3 devices')
+      expect(value_for_row(result, 'Device allocation').text).to include("#{school.std_device_allocation.raw_allocation} devices")
     end
 
     it 'renders the school type' do

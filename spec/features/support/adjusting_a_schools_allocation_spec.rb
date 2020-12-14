@@ -27,7 +27,7 @@ RSpec.feature 'Adjusting a schools allocation' do
       end
 
       it 'shows me a form to change the allocation' do
-        expect(page).to have_field('New allocation')
+        expect(page).to have_field('New allocation', with: school.std_device_allocation.raw_allocation)
       end
 
       context 'filling in an invalid value and clicking Save' do
