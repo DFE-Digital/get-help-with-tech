@@ -65,8 +65,7 @@ private
   end
 
   def add_school_to_virtual_cap_pool_if_eligible
-    if @school.can_order? || @school.can_order_for_specific_circumstances? &&
-        @school.preorder_information.responsible_body_will_order_devices?
+    if @school.preorder_information.responsible_body_will_order_devices?
       unless @school.device_allocations.first.is_in_virtual_cap_pool?
         begin
           @school.responsible_body.add_school_to_virtual_cap_pools!(@school)
