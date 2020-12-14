@@ -104,6 +104,10 @@ class ResponsibleBody < ApplicationRecord
     has_virtual_cap_feature_flags? && has_centrally_managed_schools?
   end
 
+  def has_mno_feature_flags_and_centrally_managed_schools?
+    FeatureFlag.active?(:mno_offer) && in_connectivity_pilot? && has_centrally_managed_schools?
+  end
+
   def self.in_connectivity_pilot
     where(in_connectivity_pilot: true)
   end
