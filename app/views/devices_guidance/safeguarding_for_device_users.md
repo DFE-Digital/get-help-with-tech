@@ -51,12 +51,7 @@ Please see our guidance on management of [Microsoft laptops and tablets](/device
 
 Google Chromebooks will arrive with Chrome OS, which includes virus protection.  
 
-Unless you have selected to order devices without a DfE configuration, Microsoft laptops and tablets will arrive with Windows 10 and the following antivirus and security software installed:
-
-* Windows Information Protection
-* Windows Defender Credential/System Guard
-* Windows Defender Exploit Guard
-* Windows Defender Antivirus
+Unless you have selected to order devices without a DfE configuration, Microsoft laptops and tablets will arrive with Windows 10 and Windows Defender Antivirus software enabled.
 
 ## Privacy notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
 
