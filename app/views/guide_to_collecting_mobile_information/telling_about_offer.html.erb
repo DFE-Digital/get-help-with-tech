@@ -17,6 +17,16 @@
     <h3 class="govuk-heading-m" id="network-offers">Network offers</h3>
 
     <%= render GovukComponent::Accordion.new(id: 'network-providers') do |component| %>
+      <%= component.slot(:section, title: 'EE') do %>
+        <p class="govuk-body">Be aware that until the end of January, it may take EE some time to process requests.</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The recipient will get 20GB of additional data per month until 31 July 2021.</li>
+          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
+          <li>EE will process no more than 60,000 requests across all schools. If they reach this limit, they will not accept further requests.</li>
+        </ul>
+      <% end %>
+
       <%= component.slot(:section, title: 'Smarty') do %>
         <ul class="govuk-list govuk-list--bullet">
           <li>The recipient will get unlimited data until 31 July 2021.</li>
