@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SchoolOrderStateAndCapUpdateService do
+  let(:responsible_body) { create(:trust, :manages_centrally) }
   let(:preorder) { create(:preorder_information, :does_not_need_chromebooks, who_will_order_devices: :responsible_body) }
-  let(:school) { create(:school, order_state: 'cannot_order', preorder_information: preorder) }
+  let(:school) { create(:school, order_state: 'cannot_order', preorder_information: preorder, responsible_body: responsible_body) }
   let(:new_order_state) { 'can_order' }
   let(:new_cap) { 2 }
   let(:allocation) { school.std_device_allocation }
@@ -89,20 +90,69 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     end
 
     context 'when a school is not in the virtual cap pool', with_feature_flags: { virtual_caps: 'active' } do
+      before do
+        responsible_body.update!(vcap_feature_flag: true)
+      end
+
       it 'triggers notifications that the school can order' do
         service.update!
         expect(notifications).to have_received(:call)
       end
     end
 
-    context 'when a school is centrally managed and the school is not in the virtual cap pool' do
+    context 'when a school is centrally managed and the school is not in the virtual cap pool', with_feature_flags: { virtual_caps: 'active' } do
       before do
         school.preorder_information.responsible_body_will_order_devices!
+        responsible_body.update!(vcap_feature_flag: true)
       end
 
       it 'adds the school to the virtual cap pool of the responsible body' do
         service.update!
         expect(school.responsible_body.std_device_pool.schools).to include(school)
+      end
+    end
+
+    context 'when a school that cannot order and is in the virtual cap pool is enabled for ordering', with_feature_flags: { virtual_caps: 'active' } do
+      let(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
+      let(:router_allocation) { create(:school_device_allocation, :with_coms_allocation, allocation: 17, school: school) }
+
+      before do
+        allocation
+        router_allocation
+        responsible_body.update!(vcap_feature_flag: true)
+        add_school_to_pool_without_side_affects(responsible_body, school)
+        responsible_body.virtual_cap_pools.each(&:recalculate_caps!)
+      end
+
+      it 'sends cap updates' do
+        service.update!
+        # received via after_touch callback
+        expect(mock_request).to have_received(:post!).twice
+      end
+
+      it 'triggers notifications that the school can order' do
+        service.update!
+        expect(notifications).to have_received(:call)
+      end
+    end
+
+    context 'when a school that cannot order and is in the virtual cap pool is enabled for ordering when the responsible body does not have the feature enabled', with_feature_flags: { virtual_caps: 'active' } do
+      let(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
+
+      before do
+        allocation
+        responsible_body.update!(vcap_feature_flag: false)
+        add_school_to_pool_without_side_affects(responsible_body, school)
+      end
+
+      it 'sends cap updates' do
+        service.update!
+        expect(mock_request).to have_received(:post!).twice
+      end
+
+      it 'triggers notifications that the school can order' do
+        service.update!
+        expect(notifications).to have_received(:call)
       end
     end
 
@@ -199,6 +249,15 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       it 'does not send an email to computacenter' do
         expect { service.update! }.not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
       end
+    end
+  end
+end
+
+def add_school_to_pool_without_side_affects(responsible_body, school)
+  VirtualCapPool.no_touching do
+    school.device_allocations.each do |allocation|
+      pool = responsible_body.virtual_cap_pools.send(allocation.device_type).first_or_create!
+      pool.school_virtual_caps.create!(school_device_allocation: allocation)
     end
   end
 end
