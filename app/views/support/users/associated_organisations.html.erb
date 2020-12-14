@@ -86,7 +86,11 @@
               <%= @responsible_body.humanized_type %>
             </td>
             <td class="govuk-table__cell">
-              <%= govuk_button_to('Remove', update_responsible_body_support_user_path(responsible_body_id: nil, id: @user.id), method: :patch) %>
+              <%= form_for @user_responsible_body_form, url: update_responsible_body_support_user_path(@user), method: :patch do |f| %>
+
+                <%= f.hidden_field :responsible_body, value: nil %>
+                <%= f.govuk_submit 'Remove' %>
+              <%- end %>
             </td>
           </tr>
         </tbody>
@@ -96,11 +100,16 @@
       <p class="govuk-body">(none)</p>
     <%- end %>
 
-    <%= form_for @user_responsible_body_form, url: responsible_bodies_support_user_path(@user), method: :get do |f| %>
-      <%= f.govuk_fieldset legend: { text: 'Move to a different responsible body', size: 'm' } do %>
-        <%= f.govuk_text_field :name, width: 'one-third' %>
-        <%= f.govuk_submit %>
-      <%- end %>
+    <%= form_for @user_responsible_body_form, url: update_responsible_body_support_user_path(@user), method: :patch do |f| %>
+
+      <%= f.govuk_collection_select(
+        :responsible_body,
+        @user_responsible_body_form.select_responsible_body_options,
+        :id,
+        :name,
+        label: { text: 'Move to a different responsible body' }
+        ) %>
+      <%= f.govuk_submit 'Move' %>
     <%- end %>
   </div>
 </div>

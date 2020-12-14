@@ -9,7 +9,7 @@ module PageObjects
         elements :schools, 'table.schools tbody tr'
 
         element :responsible_body_name, 'input#support-user-responsible-body-form-name-field'
-        element :submit_responsible_body_name, '#new_support_user_responsible_body_form input[value=Continue]'
+        element :submit_responsible_body_name, '#new_support_user_responsible_body_form input[value=Move]'
         element :responsible_body, 'table.responsible-body tbody tr'
 
         def has_responsible_body?

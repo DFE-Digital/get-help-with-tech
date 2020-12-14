@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :responsible_body do
     computacenter_reference { Faker::Number.number(digits: 8) }
+    status                  { 'open' }
 
     trait :in_connectivity_pilot do
       in_connectivity_pilot       { true }

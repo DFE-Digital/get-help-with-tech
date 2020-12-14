@@ -1,15 +1,20 @@
 class Support::UserResponsibleBodyForm
   include ActiveModel::Model
 
-  attr_accessor :user, :name
+  attr_accessor :user
 
-  def initialize(user:, name: nil)
+  def initialize(user:, possible_responsible_bodies: nil)
     @user = user
-    @name = name
+    @possible_responsible_bodies = possible_responsible_bodies
   end
 
-  def matching_responsible_bodies
-    ResponsibleBody.where('name ILIKE(?)', "%#{@name}%")
-                   .order(:name)
+  def responsible_body
+    @user.responsible_body&.id
+  end
+
+  def select_responsible_body_options
+    @possible_responsible_bodies.pluck(:id, :name).map do |id, name|
+      OpenStruct.new(id: id, name: name)
+    end
   end
 end
