@@ -166,7 +166,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def is_ordering_for_schools?
-    schools.gias_status_open.that_are_centrally_managed.any?
+    has_centrally_managed_schools?
   end
 
   def is_ordering_for_all_schools?
