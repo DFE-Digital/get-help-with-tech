@@ -1,7 +1,9 @@
+<%- title = t('page_titles.request_extra_mobile_data') %>
+<%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs(items: [
       { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
-      t('page_titles.request_extra_mobile_data')
+      title
     ],
     user: @current_user,
     school: @school) %>
@@ -10,7 +12,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.request_extra_mobile_data') %>
+      <%= title %>
     </h1>
 
     <%= render partial: 'shared/internet/mno_guidance' %>
