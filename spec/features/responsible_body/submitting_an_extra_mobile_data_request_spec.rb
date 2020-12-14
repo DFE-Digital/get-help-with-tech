@@ -18,11 +18,10 @@ RSpec.feature 'Submitting an extra mobile data request', type: :feature do
     let(:responsible_body) { create(:local_authority) }
     let(:user) { create(:local_authority_user, responsible_body: responsible_body) }
     let(:mobile_network) { create(:mobile_network) }
-
-    let(:schools) { create_list(:school, 1, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     before do
-      schools[0].preorder_information.responsible_body_will_order_devices!
+      school.preorder_information.responsible_body_will_order_devices!
       responsible_body.update!(in_connectivity_pilot: true)
 
       mobile_network

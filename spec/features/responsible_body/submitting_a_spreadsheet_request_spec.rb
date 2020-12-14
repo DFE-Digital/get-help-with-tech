@@ -15,10 +15,15 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
   end
 
   context 'signed in and the MNO offer is activated', with_feature_flags: { mno_offer: 'active' } do
-    let(:user) { create(:local_authority_user) }
+    let(:responsible_body) { create(:local_authority) }
+    let(:user) { create(:local_authority_user, responsible_body: responsible_body) }
     let(:mobile_network) { create(:mobile_network) }
+    let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     before do
+      school.preorder_information.responsible_body_will_order_devices!
+      responsible_body.update!(in_connectivity_pilot: true)
+
       mobile_network
       sign_in_as user
       # prevent api call to Notify
@@ -46,25 +51,6 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       click_on 'Upload requests'
       expect(page.status_code).not_to eq(200)
       expect(page).to have_text('There is a problem')
-    end
-  end
-
-  context 'signed in and the MNO offer is deactivated', with_feature_flags: { mno_offer: 'inactive' } do
-    let(:user) { create(:local_authority_user) }
-    let(:mobile_network) { create(:mobile_network) }
-
-    before do
-      mobile_network
-      sign_in_as user
-      # prevent api call to Notify
-      stub_request(:post, 'https://api.notifications.service.gov.uk/v2/notifications/sms')
-        .to_return(status: 201, body: '{}')
-    end
-
-    scenario 'user is informed about the initial pilot having ended' do
-      visit responsible_body_internet_mobile_extra_data_requests_path
-      expect(page).to have_text('Our initial pilot ended on 30 September 2020')
-      expect(page).not_to have_link('New request')
     end
   end
 end
