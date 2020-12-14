@@ -1,35 +1,27 @@
+<%- title = t('page_titles.your_requests') %>
+<%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([
                    { "Home" => responsible_body_home_path },
                    { t('page_titles.responsible_body_internet_home') => responsible_body_internet_path },
-                   t('page_titles.request_extra_mobile_data') ,
+                   { t('page_titles.request_extra_mobile_data') => responsible_body_internet_mobile_extra_data_guidance_path },
+                   title
                  ]) %>
 <% end %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.request_extra_mobile_data') %>
+      <%= t('page_titles.your_requests') %>
     </h1>
 
-    <% if FeatureFlag.active?(:mno_offer) %>
-      <% unless @extra_mobile_data_requests.any? %>
-        <%= render partial: 'shared/use_the_mobile_guide' %>
-      <% end %>
-      <p class="govuk-body">
-        <%= govuk_button_link_to 'New request',
-          responsible_body_internet_mobile_extra_data_requests_type_path
-        %>
-      </p>
-    <% else %>
-      <h2 class="govuk-heading-l">You cannot request data at the&nbsp;moment</h2>
-      <p class="govuk-body">Our initial pilot ended on 30 September 2020, and we are now working with mobile network providers to prepare for the next phase.</p>
-      <p class="govuk-body">If you were planning to request a data increase, please hold on to the information you’ve gathered and wait for an update on the scheme.</p>
-      <p class="govuk-body">Data increases already received will continue until 31 December 2020.</p>
-    <% end %>
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'New request',
+        responsible_body_internet_mobile_extra_data_requests_type_path
+      %>
+    </p>
   </div>
 </div>
 <% if @extra_mobile_data_requests.any? %>
-<h2 class="govuk-heading-l govuk-!-margin-top-6">Your requests</h2>
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">

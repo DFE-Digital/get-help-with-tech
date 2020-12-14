@@ -88,7 +88,8 @@ Rails.application.routes.draw do
     namespace :internet do
       get '/', to: 'home#show'
       namespace :mobile, path: '/mobile' do
-        get '/', to: 'extra_data_requests#index', as: :extra_data_requests
+        get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
+        get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
         get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
         resources :manual_requests, only: %i[new create], path: '/manual'
         resources :bulk_requests, only: %i[new create], path: '/bulk'

@@ -5,6 +5,8 @@ class ResponsibleBody::Internet::Mobile::ExtraDataRequestsController < Responsib
     @extra_mobile_data_requests = @responsible_body.extra_mobile_data_requests
   end
 
+  def guidance; end
+
   def new
     if params.fetch(:commit, '') == 'Continue'
       @submission_type = ExtraMobileDataSubmissionForm.new(submission_type_params)
