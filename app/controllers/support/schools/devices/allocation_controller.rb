@@ -2,7 +2,7 @@ class Support::Schools::Devices::AllocationController < Support::BaseController
   before_action :set_school_and_allocation
 
   def edit
-    @form = Support::AllocationForm.new(allocation: @allocation.allocation, school_allocation: @allocation)
+    @form = Support::AllocationForm.new(allocation: @allocation.raw_allocation, school_allocation: @allocation)
   end
 
   def update

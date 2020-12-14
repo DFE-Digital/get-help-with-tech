@@ -361,11 +361,11 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     first_row = responsible_body_page.school_rows[0]
     expect(first_row).to have_text('Alpha Primary School (567891)')
     # devices
-    expect(first_row).to have_text('10 allocated')
+    expect(first_row).to have_text('5 allocated')
     expect(first_row).not_to have_text('3 caps')
     expect(first_row).not_to have_text('1 ordered')
     # dongles
-    expect(first_row).to have_text('8 allocated')
+    expect(first_row).to have_text('4 allocated')
     expect(first_row).not_to have_text('2 caps')
     expect(first_row).not_to have_text('0 ordered')
     expect(first_row).to have_text('Trust')
@@ -374,11 +374,11 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     expect(second_row).to have_text('Beta Secondary School (123457)')
 
     # devices
-    expect(second_row).to have_text('10 allocated')
+    expect(second_row).to have_text('5 allocated')
     expect(second_row).not_to have_text('3 caps')
     expect(second_row).not_to have_text('1 ordered')
     # dongles
-    expect(second_row).to have_text('8 allocated')
+    expect(second_row).to have_text('4 allocated')
     expect(second_row).not_to have_text('2 caps')
     expect(second_row).not_to have_text('0 ordered')
 
