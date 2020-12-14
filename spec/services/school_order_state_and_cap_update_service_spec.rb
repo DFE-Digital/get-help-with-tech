@@ -47,8 +47,31 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         it 'stores the request and response against the allocation' do
           service.update!
           expect(allocation.cap_update_calls).to be_present
+          expect(allocation.cap_update_calls.last.failure).to be false
           expect(allocation.cap_update_calls.last.request_body).to include('test-request')
           expect(allocation.cap_update_calls.last.response_body).to include('test-response')
+        end
+      end
+
+      context 'when computacentre returns a failure response' do
+        let(:response_body) { '<CapAdjustmentResponse dateTime="2020-08-21T12:30:40Z" payloadID="abc123"><HeaderResult errorDetails="None of the records are processed" piMessageID="11111111111111111111111111111111" status="Failed"/><FailedRecords><Record capAmount="2" capType="DfE_RemainThresholdQty|Std_Device" errorDetails="New cap must be greater than or equal to used quantity" shipTO="cc_ref" status="Failed"/></FailedRecords></CapAdjustmentResponse>' }
+
+        let(:mock_status) { instance_double(HTTP::Response::Status, code: 200, success?: true) }
+        let(:mock_response) { instance_double(HTTP::Response, status: mock_status, body: response_body) }
+
+        before do
+          allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_call_original
+          allow(HTTP).to receive(:basic_auth).and_return(HTTP)
+          allow(HTTP).to receive(:post).and_return(mock_response)
+        end
+
+        it 'stores the request and response against the allocation' do
+          expect { service.update! }.to raise_error(Computacenter::OutgoingAPI::Error)
+
+          expect(allocation.cap_update_calls).to be_present
+          expect(allocation.cap_update_calls.last.failure).to be true
+          expect(allocation.cap_update_calls.last.request_body).to include('<CapAdjustmentRequest')
+          expect(allocation.cap_update_calls.last.response_body).to include('None of the records are processed')
         end
       end
 
