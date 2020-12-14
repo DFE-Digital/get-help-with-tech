@@ -80,48 +80,6 @@ RSpec.describe Support::ResponsibleBodies::UsersController, type: :controller do
     end
   end
 
-  describe '#edit' do
-    it 'is successful for support users' do
-      expect {
-        get :edit, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
-      }.to receive_status_ok_for(dfe_user)
-    end
-
-    it 'is forbidden for computacenter users' do
-      expect {
-        get :edit, params: { responsible_body_id: responsible_body.id, id: existing_user.id }
-      }.to be_forbidden_for(create(:computacenter_user))
-    end
-  end
-
-  describe '#update' do
-    it 'is successful for support users' do
-      sign_in_as dfe_user
-
-      put :update, params: {
-        responsible_body_id: responsible_body.id,
-        id: existing_user.id,
-        user: {
-          full_name: 'someone_else',
-        },
-      }
-
-      expect(response).to redirect_to(support_responsible_body_path(responsible_body))
-    end
-
-    it 'is forbidden for computacenter users' do
-      expect {
-        put :update, params: {
-          responsible_body_id: responsible_body.id,
-          id: existing_user.id,
-          user: {
-            full_name: 'someone_else',
-          },
-        }
-      }.to be_forbidden_for(create(:computacenter_user))
-    end
-  end
-
   describe '#destroy' do
     context 'for support users' do
       before do

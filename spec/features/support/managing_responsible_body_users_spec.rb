@@ -133,6 +133,8 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
     fill_in 'Name', with: 'Amy Wirral'
     fill_in 'Email address', with: 'amy.wirral@coventry.gov.uk'
     click_on 'Save changes'
+
+    click_on local_authority.name
   end
 
   def then_i_can_see_the_responsible_body_with_the_updated_user_details

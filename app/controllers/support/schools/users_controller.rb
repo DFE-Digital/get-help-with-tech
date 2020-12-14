@@ -17,22 +17,6 @@ class Support::Schools::UsersController < Support::BaseController
     end
   end
 
-  def edit
-    @user = present(policy_scope(@school.users).find(params[:id]))
-  end
-
-  def update
-    @user = policy_scope(@school.users).find(params[:id])
-
-    if @user.update(user_params)
-      flash[:success] = 'User has been updated'
-      redirect_to support_school_path(urn: @school.urn)
-    else
-      @user = present(@user)
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     @user = policy_scope(@school.users).find(params[:id])
     @user.update!(deleted_at: Time.zone.now)
@@ -47,10 +31,6 @@ private
   def set_school
     @school = School.find_by(urn: params[:school_urn])
     authorize @school, :show?
-  end
-
-  def present(user)
-    SchoolUserPresenter.new(user)
   end
 
   def user_params

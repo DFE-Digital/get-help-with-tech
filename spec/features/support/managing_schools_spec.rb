@@ -196,6 +196,8 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     fill_in 'Name', with: 'Michael Wazowski'
     fill_in 'Email address', with: 'mwazowski@alpha.sch.uk'
     click_on 'Save changes'
+
+    click_on 'Alpha School'
   end
 
   def then_i_see_the_school_users_with_updated_details

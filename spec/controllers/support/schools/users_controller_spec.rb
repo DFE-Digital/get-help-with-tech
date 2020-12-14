@@ -104,48 +104,6 @@ RSpec.describe Support::Schools::UsersController do
     end
   end
 
-  describe '#edit' do
-    it 'is successful for support users' do
-      expect {
-        get :edit, params: { school_urn: school.urn, id: existing_user.id }
-      }.to receive_status_ok_for(support_user)
-    end
-
-    it 'is forbidden for computacenter users' do
-      expect {
-        get :edit, params: { school_urn: school.urn, id: existing_user.id }
-      }.to be_forbidden_for(create(:computacenter_user))
-    end
-  end
-
-  describe '#update' do
-    it 'is successful for support users' do
-      sign_in_as support_user
-
-      put :update, params: {
-        school_urn: school.urn,
-        id: existing_user.id,
-        user: {
-          full_name: 'someone_else',
-        },
-      }
-
-      expect(response).to redirect_to(support_school_path(school))
-    end
-
-    it 'is forbidden for computacenter users' do
-      expect {
-        put :update, params: {
-          school_urn: school.urn,
-          id: existing_user.id,
-          user: {
-            full_name: 'someone_else',
-          },
-        }
-      }.to be_forbidden_for(create(:computacenter_user))
-    end
-  end
-
   describe '#destroy' do
     let(:user) { create(:school_user) }
     let(:school) { user.school }

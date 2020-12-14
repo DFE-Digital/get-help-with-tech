@@ -19,21 +19,6 @@ class Support::ResponsibleBodies::UsersController < Support::BaseController
     end
   end
 
-  def edit
-    @user = policy_scope(@responsible_body.users).find(params[:id])
-  end
-
-  def update
-    @user = policy_scope(@responsible_body.users).find(params[:id])
-
-    if @user.update(user_params)
-      flash[:success] = 'User has been updated'
-      redirect_to return_path
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     @user = policy_scope(@responsible_body.users).find(params[:id])
     @user.update!(deleted_at: Time.zone.now)

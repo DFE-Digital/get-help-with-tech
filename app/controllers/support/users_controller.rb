@@ -1,10 +1,24 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
-  before_action :set_user, only: %i[show associated_organisations update_responsible_body]
+  before_action :set_user, except: %i[search results]
   before_action { authorize User }
 
   def show; end
+
+  def edit
+    @user = present(@user)
+  end
+
+  def update
+    if @user.update(user_params)
+      flash[:success] = 'User has been updated'
+      redirect_to support_user_path(@user)
+    else
+      @user = present(@user)
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   def search
     @search_form = Support::UserSearchForm.new
@@ -40,6 +54,20 @@ class Support::UsersController < Support::BaseController
   end
 
 private
+
+  # this is necessary to turn orders_devices=true/false into 0/1
+  def present(user)
+    SchoolUserPresenter.new(user)
+  end
+
+  def user_params
+    params.require(:user).permit(
+      :full_name,
+      :email_address,
+      :telephone,
+      :orders_devices,
+    )
+  end
 
   def search_params
     params.require(:support_user_search_form).permit(:email_address_or_full_name)

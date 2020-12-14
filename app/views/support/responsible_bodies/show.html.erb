@@ -29,7 +29,7 @@
           </h3>
           <% if policy(user).edit? %>
             <p class="govuk-body">
-              <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_responsible_body_user_path(@responsible_body, user) %>
+              <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_user_path(user) %>
             </p>
           <% end %>
           <%= render Support::UserPreviewSummaryListComponent.new(user: user) %>
