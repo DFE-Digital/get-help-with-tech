@@ -19,7 +19,7 @@ class SchoolOrderStateAndCapUpdateService
       allocation = update_cap!(cap[:device_type], cap[:cap])
 
       if notify_computacenter_of_cap_changes?
-        if FeatureFlag.active? :virtual_caps
+        if responsible_body_has_virtual_caps_enabled?
           # don't send updates as they will happen when the pool is updated and the caps adjusted
           unless allocation.is_in_virtual_cap_pool?
             update_cap_on_computacenter!(allocation.id)
@@ -47,6 +47,10 @@ class SchoolOrderStateAndCapUpdateService
   end
 
 private
+
+  def responsible_body_has_virtual_caps_enabled?
+    @school.responsible_body.has_virtual_cap_feature_flags?
+  end
 
   def update_order_state!(order_state)
     @school.update!(order_state: order_state)
