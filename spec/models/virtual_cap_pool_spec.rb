@@ -66,17 +66,29 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when the school is not in an ordering state' do
+      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
+
       let(:non_ordering_school) { create(:school, :with_preorder_information, :with_std_device_allocation, responsible_body: local_authority) }
 
       before do
+        schools.first.preorder_information.responsible_body_will_order_devices!
+        schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
+        schools.last.preorder_information.responsible_body_will_order_devices!
+        schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
         non_ordering_school.preorder_information.responsible_body_will_order_devices!
         non_ordering_school.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
+        schools.each { |s| pool.add_school!(s) }
       end
 
-      it 'does not add the schools allocation to the pool' do
-        expect { pool.add_school!(non_ordering_school) }.to raise_error VirtualCapPoolError
-        expect(pool.cap).to eq(0)
-        expect(pool.devices_ordered).to eq(0)
+      it 'adds the allocation values to the pool' do
+        pool.add_school!(non_ordering_school)
+        expect(pool.cap).to eq(50)
+        expect(pool.devices_ordered).to eq(21)
+      end
+
+      it 'does not send or store a cap update against the allocation' do
+        pool.add_school!(non_ordering_school)
+        expect(non_ordering_school.std_device_allocation.cap_update_calls).not_to be_present
       end
     end
 
