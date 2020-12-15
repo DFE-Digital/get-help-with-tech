@@ -4,6 +4,7 @@ RSpec.describe Support::UsersController do
   let(:support_user) { create(:support_user) }
   let(:user_who_has_seen_privacy_notice) { create(:school_user, :has_seen_privacy_notice, full_name: 'Jane Smith') }
   let(:user_who_has_not_seen_privacy_notice) { create(:school_user, :has_not_seen_privacy_notice, full_name: 'John Smith') }
+  let(:user_who_is_deleted) { create(:school_user, :has_seen_privacy_notice, :deleted, full_name: 'July Smith') }
 
   describe '#search' do
     it 'is successful for support users' do
@@ -23,6 +24,7 @@ RSpec.describe Support::UsersController do
     before do
       user_who_has_seen_privacy_notice
       user_who_has_not_seen_privacy_notice
+      user_who_is_deleted
     end
 
     it 'returns all matching school and RB users for support users' do

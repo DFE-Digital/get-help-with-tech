@@ -29,6 +29,10 @@ FactoryBot.define do
       sign_in_token_expires_at { 30.minutes.from_now }
     end
 
+    trait :deleted do
+      deleted_at { 30.minutes.ago }
+    end
+
     factory :local_authority_user do
       association :responsible_body, factory: %i[local_authority in_connectivity_pilot]
     end
