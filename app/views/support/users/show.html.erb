@@ -13,5 +13,11 @@
     </h1>
 
     <%= render Support::UserSummaryListComponent.new(user: @user) %>
+
+    <% if policy(@user).destroy? %>
+      <%= form_for @user, url: support_user_path(@user), method: :delete do |f| %>
+        <%= f.govuk_submit 'Delete user', warning: true %>
+      <%- end %>
+    <% end %>
   </div>
 </div>
