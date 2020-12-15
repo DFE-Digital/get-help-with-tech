@@ -39,6 +39,13 @@
     </h2>
 
     <p class="govuk-body">Review and update Sold To references for responsible bodies that have changed.</p>
+
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Responsible bodies managing multiple Chromebook domains', computacenter_multi_domain_chromebooks_path %>
+    </h2>
+
+    <p class="govuk-body">View details of responsible bodies that manage schools with mutliple Chromebook domains.</p>
+
     <% if policy(:support).readable? %>
       <h2 class="govuk-heading-m">
         <%= govuk_link_to 'Support home', support_home_path %>
