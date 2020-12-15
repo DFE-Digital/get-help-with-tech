@@ -1,7 +1,5 @@
 class ResponsibleBody::Internet::Mobile::ExtraDataRequestsController < ResponsibleBody::BaseController
-  before_action only: :new do
-    render_404_if_feature_flag_inactive(:mno_offer)
-  end
+  before_action { render_404_unless_responsible_body_in_mno_feature(@responsible_body) }
 
   def index
     @extra_mobile_data_requests = @responsible_body.extra_mobile_data_requests

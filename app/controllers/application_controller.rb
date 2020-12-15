@@ -63,6 +63,12 @@ private
     end
   end
 
+  def render_404_unless_responsible_body_in_mno_feature(responsible_body)
+    unless responsible_body.has_mno_feature_flags_and_centrally_managed_schools?
+      render 'errors/not_found', status: :not_found and return
+    end
+  end
+
   def not_found
     render 'errors/not_found', status: :not_found and return
   end

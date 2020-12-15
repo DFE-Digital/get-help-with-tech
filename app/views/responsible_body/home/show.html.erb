@@ -18,18 +18,15 @@
       <li>give schools access to the services they need</li>
     </ul>
 
-    <%- if @responsible_body.in_connectivity_pilot? %>
+    <%- if @responsible_body.has_mno_feature_flags_and_centrally_managed_schools? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Get the internet pilots', responsible_body_internet_path %>
+        <%= govuk_link_to t('page_titles.responsible_body_internet_home'), responsible_body_internet_path %>
       </h2>
 
-      <p class="govuk-body">
-        These pilot schemes have come to an end. We are now:
-      </p>
-
+      <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>working with mobile companies to prepare for the next phase of the increasing mobile data scheme</li>
-        <li>closing the BT wifi hotspot pilot</li>
+        <li>request extra data for mobile devices</li>
+        <li>request 4G wireless routers</li>
       </ul>
     <%- end %>
 

@@ -4,9 +4,9 @@ RSpec.feature ResponsibleBody do
   let(:sign_in_page) { PageObjects::SignInPage.new }
   let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
 
-  let(:rb_user) { create(:local_authority_user) }
+  let(:responsible_body) { create(:local_authority) }
+  let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let(:mno_user) { create(:mno_user) }
-  let(:responsible_body) { rb_user.responsible_body }
 
   context 'not signed-in' do
     scenario 'visiting the page redirects to sign-in' do
@@ -43,31 +43,60 @@ RSpec.feature ResponsibleBody do
       expect(page).to have_link('Get laptops and tablets')
     end
 
-    context 'with the in_connectivity_pilot flag set' do
-      before do
-        rb_user.responsible_body.update(in_connectivity_pilot: true)
+    context 'with the MNO offer feature flag active', with_feature_flags: { mno_offer: 'active' } do
+      context 'with a responsible body managing at least 1 school centrally' do
+        let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
+        before do
+          schools[0].preorder_information.responsible_body_will_order_devices!
+        end
+
+        context 'with the in_connectivity_pilot flag set' do
+          before do
+            responsible_body.update!(in_connectivity_pilot: true)
+          end
+
+          it 'shows link to get extra data' do
+            visit responsible_body_home_path
+            expect(page).to have_link('Get internet access')
+          end
+        end
+
+        context 'with the in_connectivity_pilot flag not set' do
+          before do
+            responsible_body.update!(in_connectivity_pilot: false)
+          end
+
+          it 'does not show link to get extra data' do
+            visit responsible_body_home_path
+            expect(page).not_to have_link('Get internet access')
+          end
+        end
       end
 
-      it 'shows link to get extra data' do
-        visit responsible_body_home_path
+      context 'with a responsible body devolved to all schools' do
+        before do
+          responsible_body.update!(in_connectivity_pilot: true)
+        end
 
-        expect(responsible_body_home_page).to be_displayed
-        expect(page.status_code).to eq 200
-        expect(page).to have_link('Get the internet')
+        it 'does not show link to get extra data' do
+          visit responsible_body_home_path
+          expect(page).not_to have_link('Get internet access')
+        end
       end
     end
 
-    context 'with the in_connectivity_pilot flag not set' do
+    context 'with the MNO offer feature flag disabled' do
+      let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+
       before do
-        rb_user.responsible_body.update(in_connectivity_pilot: false)
+        responsible_body.update!(in_connectivity_pilot: true)
+        schools[0].preorder_information.responsible_body_will_order_devices!
       end
 
       it 'does not show link to get extra data' do
         visit responsible_body_home_path
-
-        expect(responsible_body_home_page).to be_displayed
-        expect(page.status_code).to eq 200
-        expect(page).not_to have_link('Get the internet')
+        expect(page).not_to have_link('Get internet access')
       end
     end
 
