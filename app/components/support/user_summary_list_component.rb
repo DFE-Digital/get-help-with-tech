@@ -1,8 +1,9 @@
 class Support::UserSummaryListComponent < ViewComponent::Base
   validates :user, presence: true
 
-  def initialize(user:)
+  def initialize(user:, viewer:)
     @user = user
+    @viewer = viewer
   end
 
   def rows
@@ -10,10 +11,12 @@ class Support::UserSummaryListComponent < ViewComponent::Base
       {
         key: 'Email address',
         value: @user.email_address,
+        change_path: edit_support_user_path(@user),
       },
       {
         key: 'Telephone',
         value: @user.telephone,
+        change_path: edit_support_user_path(@user),
       },
       {
         key: 'Last sign in',
@@ -26,16 +29,19 @@ class Support::UserSummaryListComponent < ViewComponent::Base
       {
         key: 'Can order devices?',
         value: can_order_devices_label,
+        change_path: edit_support_user_path(@user),
       },
       {
         key: 'Responsible body',
         value: link_to_responsible_body_page_if_present,
+        change_path: associated_organisations_support_user_path(@user, anchor: 'responsible-body'),
       },
       {
         key: 'Schools',
         value: schools_list,
+        change_path: associated_organisations_support_user_path(@user, anchor: 'schools'),
       },
-    ]
+    ].map { |row| remove_change_link_if_editing_disallowed(row) }
   end
 
 private
@@ -67,6 +73,14 @@ private
           govuk_link_to school.name, support_school_path(urn: school.urn)
         end
       end)
+    end
+  end
+
+  def remove_change_link_if_editing_disallowed(row)
+    if Pundit.policy(@viewer, @user).edit?
+      row
+    else
+      row.except(:change_path)
     end
   end
 end
