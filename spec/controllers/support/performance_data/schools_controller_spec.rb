@@ -31,8 +31,8 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
         payload = JSON.parse(response.body)
 
         expect(payload.count).to eq(2)
-        expect(payload.first).to eql(school_data(schools[1]))
-        expect(payload.last).to eql(school_data(schools[2]))
+        expect(payload).to include(school_data(schools[1]))
+        expect(payload).to include(school_data(schools[2]))
       end
     end
   end
