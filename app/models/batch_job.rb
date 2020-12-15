@@ -9,10 +9,9 @@ class BatchJob
     @logger = logger || Rails.logger
   end
 
-  def process!(&block)
-    @run_id = SecureRandom.uuid
-    @successes = []
-    @failures = []
+  # call this with a block, to which each record will be yielded
+  def process!
+    new_run!
     @records.each_with_index do |record, index|
       log index: index, message: "processing #{record.class.name}: #{record_id(record)}"
       yield record
@@ -20,40 +19,44 @@ class BatchJob
     rescue Exception => e
       failure!(record: record, error: e)
     end
-    report_stats
+    job_stats
   end
 
-  def report_stats
-    puts BatchJobLogEntry.status(run_id: @run_id)
-    puts BatchJobLogEntry.speed_stats(run_id: @run_id)
+  def job_stats
+    BatchJobLogEntry.status(run_id: @run_id).merge( BatchJobLogEntry.speed_stats(run_id: @run_id) )
   end
 
 private
+
+  def new_run!
+    @run_id = SecureRandom.uuid
+    @successes = []
+    @failures = []
+  end
+
   def record_id(record)
     record.respond_to?(:id) ? record.id : record.to_s.first(100)
   end
 
   def success!(record)
-    entry = BatchJobLogEntry.create!(
-      job_name:     @job_name,
-      run_id:       @run_id,
-      record_id:    record_id(record),
-      record_class: record.class.name,
-      status:       'success',
-    )
+    entry = create_job_log_entry(record: record, status: 'success')
     @successes << entry
   end
 
   def failure!(record:, error:)
-    entry = BatchJobLogEntry.create!(
+    entry = create_job_log_entry(record: record, status: 'failure', error: error)
+    @failures << entry
+  end
+
+  def create_job_log_entry(record:, status:, error: nil)
+    BatchJobLogEntry.create!(
       job_name:     @job_name,
       run_id:       @run_id,
       record_id:    record_id(record),
       record_class: record.class.name,
-      status:       'failure',
-      error:        error.message,
+      status:       status,
+      error:        error&.message,
     )
-    @failures << entry
   end
 
   def log(index:, message:)
