@@ -1,6 +1,8 @@
 class BatchJobLogEntry < ApplicationRecord
   def self.status(run_id:)
-    where(run_id: run_id).group(:status).count.symbolize_keys
+    { success: 0, failure: 0 }.merge(
+      where(run_id: run_id).group(:status).count.symbolize_keys,
+    )
   end
 
   def self.latest_for_job(job_name:)
