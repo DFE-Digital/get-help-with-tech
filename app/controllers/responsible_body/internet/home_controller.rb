@@ -1,5 +1,5 @@
 class ResponsibleBody::Internet::HomeController < ResponsibleBody::Internet::BaseController
-  def show
-    @requests = @current_user.extra_mobile_data_requests
-  end
+  before_action { render_404_unless_responsible_body_in_mno_feature(@responsible_body) }
+
+  def show; end
 end
