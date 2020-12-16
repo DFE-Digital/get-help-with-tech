@@ -155,6 +155,7 @@ Rails.application.routes.draw do
     resources :schools, only: %i[show], param: :urn do
       collection do
         get 'search'
+        get 'results'
         post 'results'
 
         get '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#collect_urns_to_allow_many_schools_to_order'

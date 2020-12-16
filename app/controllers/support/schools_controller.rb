@@ -6,8 +6,13 @@ class Support::SchoolsController < Support::BaseController
   end
 
   def results
-    @search_form = BulkUrnSearchForm.new(search_params)
-    @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
+    if request.post?
+      @search_form = BulkUrnSearchForm.new(search_params)
+      @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
+    elsif request.get?
+      @schools = Support::NewUserSchoolForm.new(name_or_urn: params[:query]).matching_schools
+      render json: @schools.as_json(only: %i[id name urn postcode town])
+    end
   end
 
   def show
