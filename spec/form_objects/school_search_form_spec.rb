@@ -51,8 +51,11 @@ RSpec.describe SchoolSearchForm do
 
     context 'given an order_state' do
       let!(:school_that_can_order) { create(:school, :in_lockdown) }
-      let!(:school_that_can_order_for_specific_circumstances) { create(:school, :can_order_for_specific_circumstances) }
-      let!(:school_that_can_order_but_is_closed) { create(:school, :in_lockdown, status: :closed) }
+
+      before do
+        create(:school, :can_order_for_specific_circumstances)
+        create(:school, :in_lockdown, status: :closed)
+      end
 
       subject(:form) do
         described_class.new(order_state: 'can_order')

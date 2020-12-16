@@ -2,11 +2,11 @@ class Support::SchoolsController < Support::BaseController
   before_action { authorize School }
 
   def search
-    @search_form = BulkUrnSearchForm.new
+    @search_form = SchoolSearchForm.new
   end
 
   def results
-    @search_form = BulkUrnSearchForm.new(search_params)
+    @search_form = SchoolSearchForm.new(search_params)
     @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
   end
 
@@ -39,6 +39,6 @@ class Support::SchoolsController < Support::BaseController
 private
 
   def search_params
-    params.require(:bulk_urn_search_form).permit(:urns)
+    params.require(:school_search_form).permit(:urns, :responsible_body_id, :order_state)
   end
 end

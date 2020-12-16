@@ -5,6 +5,7 @@ RSpec.feature 'Searching for schools by URNs' do
   let(:results_page) { PageObjects::Support::School::ResultsPage.new }
   let(:support_user) { create(:support_user) }
   let(:schools) { create_list(:school, 2) }
+  let(:responsible_body) { create(:trust) }
   let(:bad_urn) { '12492903' }
 
   scenario 'happy journey' do
@@ -25,6 +26,7 @@ RSpec.feature 'Searching for schools by URNs' do
 
   scenario 'searching by other criteria' do
     given_i_am_signed_in_as_a_support_user
+    and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     when_i_follow_the_links_to_find_schools
     then_i_see_the_schools_search_page
 
@@ -42,6 +44,11 @@ RSpec.feature 'Searching for schools by URNs' do
     sign_in_as support_user
   end
 
+  def and_multiple_schools_from_the_same_responsible_body_in_different_order_states
+    create_list(:school, 2, responsible_body: responsible_body, order_state: 'can_order')
+    create_list(:school, 2, responsible_body: responsible_body, order_state: 'cannot_order')
+  end
+
   def when_i_follow_the_links_to_find_schools
     click_link 'Find and manage schools'
     click_link 'Find schools'
@@ -57,12 +64,13 @@ RSpec.feature 'Searching for schools by URNs' do
   end
 
   def when_i_choose_an_order_state_and_responsible_body
-    search_page.responsible_body.select responsible_body.name
-    search_page.order_state.select 'can_order'
+    select responsible_body.name, from: 'Responsible body'
+    select 'They can order their full allocation because a closure or group of self-isolating children has been reported', from: 'Order state (devices)'
   end
 
   def and_i_see_schools_matching_the_given_order_state_and_responsible_body
-    expect(results_page.results_table.responsible_bodies).to_all( have_text(responsible_body.name) )
+    expect(results_page.results_table.responsible_bodies).to all(have_text(responsible_body.name))
+    expect(results_page.results_table.order_states).to all(have_text('can_order'))
   end
 
   def and_i_submit

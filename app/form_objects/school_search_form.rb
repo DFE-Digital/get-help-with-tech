@@ -31,4 +31,14 @@ class SchoolSearchForm
   def missing_urns
     array_of_urns - schools.pluck(:urn).map(&:to_s)
   end
+
+  def select_responsible_body_options
+    ResponsibleBody.order(:name).pluck(:id, :name).map { |id, name|
+      OpenStruct.new(id: id, name: name)
+    }.prepend(OpenStruct.new(id: nil, name: '(all)'))
+  end
+
+  def select_order_state_options
+    School.translated_enum_values(:order_states).prepend(OpenStruct.new(value: nil, label: '(all)'))
+  end
 end
