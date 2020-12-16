@@ -1,8 +1,10 @@
+<%- title = t('page_titles.your_requests') %>
+<%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs(items: [
       { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
       { t('page_titles.request_extra_mobile_data') => extra_data_guidance_internet_mobile_school_path(@school) },
-      t('page_titles.your_requests')
+      title
     ],
     user: @current_user,
     school: @school) %>
@@ -11,12 +13,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.your_requests') %>
+      <%= title %>
     </h1>
-
-    <% unless @extra_mobile_data_requests.any? %>
-      <%= render partial: 'shared/use_the_mobile_guide' %>
-    <% end %>
 
     <p class="govuk-body">
       <%= govuk_button_link_to 'New request',
