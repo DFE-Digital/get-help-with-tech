@@ -1,5 +1,9 @@
-<%- who_cannot_order = @current_user.orders_devices? ? 'school_user' : 'school' %>
-<%- title = t("page_titles.#{who_cannot_order}_cannot_order_devices.title") %>
+<% if FeatureFlag.active?(:ordering_closed_for_christmas) %>
+  <%- title = t('page_titles.cannot_order_devices_over_christmas') %>
+<% else %>
+  <%- who_cannot_order = @current_user.orders_devices? ? 'school_user' : 'school' %>
+  <%- title = t("page_titles.#{who_cannot_order}_cannot_order_devices.title") %>
+<% end %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs items: 'Order devices', school: @school, user: @current_user %>
@@ -12,29 +16,40 @@
       <%= title %>
     </h1>
 
-    <p class="govuk-body"><%= t("page_titles.#{who_cannot_order}_cannot_order_devices.can_order_when") %></p>
+    <% if FeatureFlag.active?(:ordering_closed_for_christmas) %>
+      <p class="govuk-body">Ordering is now closed until Monday 4 January.</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <% t('pages.order_devices.can_order_full_allocation_when_list').each do |list_item| %>
-        <li><%= list_item %></li>
+      <p class="govuk-body">When ordering reopens, you can order your full allocation if:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a school closure is reported</li>
+        <li>15 or more children (in years 3 to 11) are self-isolating</li>
+      </ul>
+    <% else %>
+      <p class="govuk-body"><%= t("page_titles.#{who_cannot_order}_cannot_order_devices.can_order_when") %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <% t('pages.order_devices.can_order_full_allocation_when_list').each do |list_item| %>
+          <li><%= list_item %></li>
+        <% end %>
+      </ul>
+
+      <p class="govuk-body">We’ll contact you about placing orders if you report disruption through the <%= link_to_ed_settings_form %>.</p>
+
+      <h2 class="govuk-heading-m">Get devices early for specific circumstances</h2>
+      <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', request_devices_school_path(@school) %> from any year group who:</p>
+
+      <%= render partial: 'shared/devices/who_to_request_for_list' %>
+
+      <% unless @current_user.orders_devices? %>
+        <h2 class="govuk-heading-m">
+          You won’t be able to place orders yourself
+        </h2>
+
+        <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
+
+        <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path(@school) %>.</p>
       <% end %>
-    </ul>
-
-    <p class="govuk-body">We’ll contact you about placing orders if you report disruption through the <%= link_to_ed_settings_form %>.</p>
-
-    <h2 class="govuk-heading-m">Get devices early for specific circumstances</h2>
-    <p class="govuk-body">You can still <%= govuk_link_to 'request devices for disadvantaged children', request_devices_school_path(@school) %> from any year group who:</p>
-
-    <%= render partial: 'shared/devices/who_to_request_for_list' %>
-
-    <% unless @current_user.orders_devices? %>
-      <h2 class="govuk-heading-m">
-        You won’t be able to place orders yourself
-      </h2>
-
-      <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
-
-      <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path(@school) %>.</p>
     <% end %>
   </div>
 </div>

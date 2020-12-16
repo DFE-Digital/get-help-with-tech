@@ -8,6 +8,7 @@ class FeatureFlag
     mno_offer
     virtual_caps
     christmas_banner
+    ordering_closed_for_christmas
     increased_allocations_banner
   ].freeze
 
