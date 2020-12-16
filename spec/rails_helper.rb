@@ -86,6 +86,8 @@ RSpec.configure do |config|
   config.before do
     Faker::Number.unique.clear
     Faker::Educator.unique.clear
+    Faker::Address.unique.clear
+    Faker::App.unique.clear
     DatabaseCleaner.start
   end
 
