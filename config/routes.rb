@@ -150,7 +150,7 @@ Rails.application.routes.draw do
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
-      resources :users, only: %i[new create edit update destroy], controller: 'responsible_bodies/users'
+      resources :users, only: %i[new create], controller: 'responsible_bodies/users'
     end
     resources :schools, only: %i[show], param: :urn do
       collection do
@@ -162,7 +162,7 @@ Rails.application.routes.draw do
       end
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'
-      resources :users, only: %i[new create edit update destroy], controller: 'schools/users'
+      resources :users, only: %i[new create], controller: 'schools/users'
 
       get '/devices/enable-orders', to: 'schools/devices/order_status#edit', as: :enable_orders
       get '/devices/enable-orders/confirm', to: 'schools/devices/order_status#confirm', as: :confirm_enable_orders
@@ -175,7 +175,7 @@ Rails.application.routes.draw do
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index
     end
-    resources :users, only: %i[] do
+    resources :users, only: %i[show edit update destroy] do
       collection do
         get 'search'
         post 'results'

@@ -1,8 +1,24 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
-  before_action :set_user, only: %i[associated_organisations update_responsible_body]
+  before_action :set_user, except: %i[search results]
   before_action { authorize User }
+
+  def show; end
+
+  def edit
+    @user = present(@user)
+  end
+
+  def update
+    if @user.update(user_params)
+      flash[:success] = 'User has been updated'
+      redirect_to support_user_path(@user)
+    else
+      @user = present(@user)
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   def search
     @search_form = Support::UserSearchForm.new
@@ -37,7 +53,36 @@ class Support::UsersController < Support::BaseController
     redirect_to associated_organisations_support_user_path(@user.id)
   end
 
+  def destroy
+    @user.update!(deleted_at: Time.zone.now)
+
+    flash[:success] = 'User has been deleted'
+
+    return_params = params.fetch(:user, {}).permit(:school_urn, :responsible_body_id)
+    if return_params[:responsible_body_id]
+      redirect_to support_responsible_body_path(return_params[:responsible_body_id])
+    elsif return_params[:school_urn]
+      redirect_to support_school_path(return_params[:school_urn])
+    else
+      redirect_to support_home_path
+    end
+  end
+
 private
+
+  # this is necessary to turn orders_devices=true/false into 0/1
+  def present(user)
+    SchoolUserPresenter.new(user)
+  end
+
+  def user_params
+    params.require(:user).permit(
+      :full_name,
+      :email_address,
+      :telephone,
+      :orders_devices,
+    )
+  end
 
   def search_params
     params.require(:support_user_search_form).permit(:email_address_or_full_name)
@@ -56,6 +101,7 @@ private
   end
 
   def set_user
-    @user = policy_scope(User).find(params[:id])
+    @user = User.find(params[:id])
+    authorize @user
   end
 end

@@ -1,0 +1,23 @@
+<% content_for :title, "#{@user.full_name} – Support" %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    @user.full_name,
+  ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= @user.full_name %>
+    </h1>
+
+    <%= render Support::UserSummaryListComponent.new(user: @user, viewer: @current_user) %>
+
+    <% if policy(@user).destroy? %>
+      <%= form_for @user, url: support_user_path(@user), method: :delete do |f| %>
+        <%= f.govuk_submit 'Delete user', warning: true %>
+      <%- end %>
+    <% end %>
+  </div>
+</div>

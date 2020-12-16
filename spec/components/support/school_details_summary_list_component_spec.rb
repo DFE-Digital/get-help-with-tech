@@ -12,20 +12,6 @@ describe Support::SchoolDetailsSummaryListComponent do
 
   subject(:result) { render_inline(described_class.new(school: school, viewer: support_user)) }
 
-  def row_for_key(doc, key)
-    doc.css('.govuk-summary-list__row').find { |row| row.css('dt').text.strip == key }
-  end
-
-  def value_for_row(doc, key)
-    row = row_for_key(doc, key)
-    row.css('dd')[0]
-  end
-
-  def action_for_row(doc, key)
-    row = row_for_key(doc, key)
-    row.css('dd')[1]
-  end
-
   context 'when the school will place device orders' do
     before do
       create(:preorder_information,

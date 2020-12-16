@@ -30,11 +30,13 @@
 <% if @users.present? %>
   <% @users.each do |user| %>
     <div class="user">
-      <h3 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-1"><%= user.full_name %></h3>
+      <h3 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-2">
+        <%= govuk_link_to user.full_name, support_user_path(user) %>
+      </h3>
       <p class="govuk-body">
-        <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_school_user_path(school_urn: @school.urn, id: user.id) %>
+        <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_user_path(user) %>
       </p>
-      <%= render Support::UserSummaryListComponent.new(user: user) %>
+      <%= render Support::UserPreviewSummaryListComponent.new(user: user) %>
     </div>
   <% end %>
 <% else %>

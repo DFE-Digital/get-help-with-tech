@@ -154,7 +154,7 @@ en:
       can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
     new_school_user: Invite a new user
-    edit_school_user: Change user details
+    edit_user: Change user details
     school_user_welcome_wizard:
       welcome:
         title: "You’re signed in as %{school}"
