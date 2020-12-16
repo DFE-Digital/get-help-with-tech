@@ -3,10 +3,10 @@ class BatchJob
   attr_accessor :records
   attr_accessor :run_id, :job_name, :logger
 
-  def initialize(records:, job_name:, logger: nil)
+  def initialize(records:, job_name:, logger: Rails.logger)
     @records = records
     @job_name = job_name
-    @logger = logger || Rails.logger
+    @logger = logger
     new_run!
   end
 
