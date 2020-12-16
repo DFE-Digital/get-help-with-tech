@@ -1,13 +1,6 @@
 <%- title = t('page_titles.support.users.associated_organisations') %>
 <% content_for :title, title %>
-<%- content_for :before_content do %>
-  <%= breadcrumbs([
-    { 'Support home' => support_home_path },
-    { t('page_titles.support.users.search') => search_support_users_path },
-    @user.full_name,
-    title,
-  ]) %>
-<%- end %>
+<%- content_for :before_content, govuk_link_to('Back', support_user_path(@user), class: 'govuk-back-link') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
