@@ -16,7 +16,12 @@ class Computacenter::API::CapUsageUpdate
     log_to_devices_ordered_updates
     CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
     original_devices_ordered = allocation.devices_ordered
-    allocation.update!(devices_ordered: cap_used)
+    begin
+      allocation.update!(devices_ordered: cap_used)
+    rescue Computacenter::OutgoingAPI::Error => e
+      # Don't raise failure if a cascading cap update to CC fails
+      Rails.logger.warn(e.message)
+    end
     school.preorder_information&.refresh_status!
 
     if cap_used.to_i < original_devices_ordered

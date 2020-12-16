@@ -78,6 +78,28 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       end
     end
 
+    context 'if the devices_ordered update triggers a cap update', with_feature_flags: { virtual_caps: 'active' } do
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let!(:school) { create(:school, :in_lockdown, preorder_information: preorder, computacenter_reference: '123456', responsible_body: responsible_body) }
+
+      let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
+      let(:exception) { Computacenter::OutgoingAPI::Error.new(cap_update_request: OpenStruct.new(body: 'body')) }
+
+      before do
+        stub_computacenter_outgoing_api_calls
+        school.std_device_allocation.update!(allocation: 103)
+        WebMock.allow_net_connect!
+        put_school_in_pool(responsible_body, school)
+        allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
+        allow(mock_request).to receive(:post!).and_raise(exception)
+      end
+
+      it 'will not fail if the cap update were to fail' do
+        expect { cap_usage_update.apply! }.not_to raise_error
+        expect(cap_usage_update.status).to eq('succeeded')
+      end
+    end
+
     context 'when no errors are raised' do
       it 'sets the status to "succeeded"' do
         cap_usage_update.apply!
@@ -122,5 +144,11 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
         }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
       end
     end
+  end
+
+  def put_school_in_pool(responsible_body, pool_school)
+    pool_school.preorder_information.responsible_body_will_order_devices!
+    pool_school.can_order!
+    responsible_body.add_school_to_virtual_cap_pools!(pool_school)
   end
 end
