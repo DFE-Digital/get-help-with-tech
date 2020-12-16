@@ -12,11 +12,13 @@ class Support::UserSummaryListComponent < ViewComponent::Base
         key: 'Email address',
         value: @user.email_address,
         change_path: edit_support_user_path(@user),
+        action: 'email address',
       },
       {
         key: 'Telephone',
         value: @user.telephone,
         change_path: edit_support_user_path(@user),
+        action: 'telephone',
       },
       {
         key: 'Last sign in',
@@ -35,11 +37,13 @@ class Support::UserSummaryListComponent < ViewComponent::Base
         key: 'Responsible body',
         value: link_to_responsible_body_page_if_present,
         change_path: associated_organisations_support_user_path(@user, anchor: 'responsible-body'),
+        action: 'responsible body',
       },
       {
         key: 'Schools',
         value: schools_list,
         change_path: associated_organisations_support_user_path(@user, anchor: 'schools'),
+        action: 'schools',
       },
     ].map { |row| remove_change_link_if_editing_disallowed(row) }
   end
@@ -80,7 +84,7 @@ private
     if Pundit.policy(@viewer, @user).edit?
       row
     else
-      row.except(:change_path)
+      row.except(:change_path, :action)
     end
   end
 end

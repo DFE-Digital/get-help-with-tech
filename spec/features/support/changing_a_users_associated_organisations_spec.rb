@@ -13,6 +13,7 @@ RSpec.feature 'Changing a users associated organisations' do
   let!(:other_local_authority) { create(:local_authority, name: 'AN ALL-UPPERCASE LA') }
   let(:search_page) { PageObjects::Support::Users::SearchPage.new }
   let(:results_page) { PageObjects::Support::Users::ResultsPage.new }
+  let(:user_page) { PageObjects::Support::Users::UserPage.new }
   let(:associated_organisations_page) { PageObjects::Support::Users::AssociatedOrganisationsPage.new }
   let(:matching_schools_page) { PageObjects::Support::Users::MatchingSchoolsPage.new }
 
@@ -20,6 +21,7 @@ RSpec.feature 'Changing a users associated organisations' do
     given_i_am_logged_in_as_a_support_user
     when_i_search_for_an_existing_user_by_email
     then_i_see_their_associated_organisations
+    and_i_navigate_to_the_user_page
     and_i_see_a_link_to_change_their_associated_organisations
   end
 
@@ -27,12 +29,14 @@ RSpec.feature 'Changing a users associated organisations' do
     given_i_am_logged_in_as_a_computacenter_support_user
     when_i_search_for_an_existing_user_by_email
     then_i_see_their_associated_organisations
+    and_i_navigate_to_the_user_page
     and_i_do_not_see_a_link_to_change_their_associated_organisations
   end
 
   scenario 'clicking the Change link shows the associated organisations' do
     given_i_am_logged_in_as_a_support_user
     when_i_search_for_an_existing_user_by_email
+    and_i_navigate_to_the_user_page
     and_i_click_the_link_to_change_their_associated_organisations
     then_i_see_their_associated_schools_and_responsible_body
     and_i_see_a_link_to_remove_each_school
@@ -97,6 +101,12 @@ RSpec.feature 'Changing a users associated organisations' do
     click_on 'Search'
   end
 
+  def and_i_navigate_to_the_user_page
+    within results_page.users.first do
+      find('h3 a').click
+    end
+  end
+
   def then_i_see_their_associated_organisations
     expect(results_page).to be_displayed
     expect(results_page.users.first).to have_text(responsible_body_user_with_multiple_schools.email_address)
@@ -105,16 +115,16 @@ RSpec.feature 'Changing a users associated organisations' do
   end
 
   def and_i_see_a_link_to_change_their_associated_organisations
-    expect(results_page.users.first).to have_link('Change')
+    expect(user_page.summary_list).to have_link('Change responsible body')
   end
 
   def and_i_do_not_see_a_link_to_change_their_associated_organisations
-    expect(results_page.users.first).not_to have_link('Change')
+    expect(results_page.users.first).not_to have_link('Change responsible body')
   end
 
   def and_i_click_the_link_to_change_their_associated_organisations
-    within(results_page.users.first) do
-      click_on 'Change'
+    within(user_page.summary_list) do
+      click_on 'Change responsible body'
     end
   end
 

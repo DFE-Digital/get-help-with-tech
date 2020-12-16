@@ -4,8 +4,5 @@
 
 <%= govuk_summary_list(classes: 'govuk-summary-list--no-border') do |component|
   component.slot(:row, key: 'Email address', value: user.email_address)
-  component.slot(:row,
-                  key: 'Associated with',
-                  value: organisations,
-                  action: (Pundit.policy(current_user, user).editable? ? govuk_link_to('Change', associated_organisations_support_user_path(user)) : nil) )
+  component.slot(:row, key: 'Associated with', value: organisations)
 end %>

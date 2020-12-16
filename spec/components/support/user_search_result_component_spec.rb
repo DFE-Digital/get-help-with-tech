@@ -29,20 +29,6 @@ RSpec.describe Support::UserSearchResultComponent do
     expect(rendered_result_html).to include(support_school_path(urn: st_josephs.urn))
   end
 
-  context 'when the current_user is a support user' do
-    it 'renders a Change link for the users associated organisations' do
-      expect(rendered_result_html).to include(associated_organisations_support_user_path(user))
-    end
-  end
-
-  context 'when the current_user is a Computacenter user' do
-    subject { described_class.new(user: user, current_user: create(:computacenter_user)) }
-
-    it 'does not render a Change link for the users associated organisations' do
-      expect(rendered_result_html).not_to include(associated_organisations_support_user_path(user))
-    end
-  end
-
   context 'when the user has no associations' do
     subject { described_class.new(user: unassociated_user, current_user: support_user) }
 
