@@ -4,26 +4,41 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl"><%= t('page_titles.order_devices.title') %></span>
-      <%= t('page_titles.order_devices.you_cannot_order_yet') %>
+      <% if FeatureFlag.active?(:ordering_closed_for_christmas) %>
+        <%= t('page_titles.cannot_order_devices_over_christmas') %>
+      <% else %>
+        <%= t('page_titles.order_devices.you_cannot_order_yet') %>
+      <% end %>
     </h1>
 
-    <p class="govuk-body">You can order a school’s full allocation when:</p>
+    <% if FeatureFlag.active?(:ordering_closed_for_christmas) %>
+      <p class="govuk-body">Ordering is now closed until Monday 4 January.</p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <% t('pages.order_devices.can_order_full_allocation_when_list').each do |li| %>
-        <li><%= li %></li>
-      <% end %>
-    </ul>
+      <p class="govuk-body">When ordering reopens, you can order a school’s full allocation if:</p>
 
-    <p class="govuk-body">We’ll contact you about placing orders if a school reports disruption through the <%= link_to_ed_settings_form %>.</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a school closure is reported</li>
+        <li>15 or more children (in years 3 to 11) are self-isolating</li>
+      </ul>
+    <% else %>
+      <p class="govuk-body">You can order a school’s full allocation when:</p>
 
-    <% school_count = @responsible_body.schools.that_are_centrally_managed.count %>
-    <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> reported disruption.</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <% t('pages.order_devices.can_order_full_allocation_when_list').each do |li| %>
+          <li><%= li %></li>
+        <% end %>
+      </ul>
 
-    <% if @responsible_body.has_schools_that_can_order_devices_now? %>
-      <%= render partial: 'some_schools_can_order' %>
-    <%- end %>
+      <p class="govuk-body">We’ll contact you about placing orders if a school reports disruption through the <%= link_to_ed_settings_form %>.</p>
 
-    <%= render partial: 'get_devices_early' %>
+      <% school_count = @responsible_body.schools.that_are_centrally_managed.count %>
+      <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> reported disruption.</p>
+
+      <% if @responsible_body.has_schools_that_can_order_devices_now? %>
+        <%= render partial: 'some_schools_can_order' %>
+      <%- end %>
+
+      <%= render partial: 'get_devices_early' %>
+    <% end %>
   </div>
 </div>

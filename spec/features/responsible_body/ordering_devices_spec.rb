@@ -19,6 +19,17 @@ RSpec.feature 'Ordering devices' do
     then_i_see_the_cannot_order_devices_yet_page
   end
 
+  context 'when it’s Christmas', with_feature_flags: { ordering_closed_for_christmas: 'active' } do
+    scenario 'navigate to order devices page' do
+      when_i_visit_the_responsible_body_home_page
+      and_i_follow_the_get_laptops_and_tablets_link
+      then_i_see_the_get_laptops_and_tablets_page
+
+      when_i_follow_the_order_devices_link
+      then_i_see_that_i_cannot_order_devices_over_christmas
+    end
+  end
+
   scenario 'a centrally managed school can order for specific circumstances' do
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
@@ -174,5 +185,9 @@ RSpec.feature 'Ordering devices' do
 
   def what_to_order_state(school)
     "You’ve ordered #{school.std_device_allocation.devices_ordered} devices"
+  end
+
+  def then_i_see_that_i_cannot_order_devices_over_christmas
+    expect(page).to have_content('You cannot place orders over Christmas')
   end
 end
