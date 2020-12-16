@@ -11,6 +11,10 @@
     queue: scheduler
     description: Stage GIAS school data
   StageTrustDataJob:
-    cron: '30 5 * * * Europe/London' # every daya at 5:30am
+    cron: '30 5 * * * Europe/London' # every day at 5:30am
     queue: scheduler
     description: Stage GIAS trust data
+  NotifyMnosJob:
+    cron: '0 8 * * 1-5 Europe/London'  # every weekday at 8:00am
+    queue: scheduler
+    description: Notify MNOs of requests
