@@ -13,6 +13,7 @@ class Support::UsersController < Support::BaseController
     @search_term = @search_form.email_address_or_full_name
     @results = policy_scope(User)
       .search_by_email_address_or_full_name(@search_term)
+      .not_deleted
       .distinct
       .includes(:responsible_body, :schools)
       .order(full_name: :asc)
