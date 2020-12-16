@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_120852) do
+ActiveRecord::Schema.define(version: 2020_12_16_144840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,9 @@ ActiveRecord::Schema.define(version: 2020_12_15_120852) do
     t.string "error"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_name", "created_at"], name: "index_batch_job_log_entries_on_job_name_and_created_at"
+    t.index ["run_id", "created_at"], name: "index_batch_job_log_entries_on_run_id_and_created_at"
+    t.index ["run_id", "record_class", "record_id"], name: "ix_btle_run_record"
   end
 
   create_table "bt_wifi_voucher_allocations", force: :cascade do |t|
