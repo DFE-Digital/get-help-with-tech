@@ -21,11 +21,31 @@ RSpec.describe Support::SchoolsController, type: :controller do
       sign_in_as support_user
     end
 
-    it 'renders results' do
+    it 'renders HTML results when POSTing' do
       post :results, params: { school_search_form: { urns: "#{school.urn}\r\n#{another_school.urn}" } }
 
       expect(response).to be_successful
       expect(response).to render_template('results')
+    end
+
+    it 'returns JSON results when GETing (from a JS autocomplete)' do
+      # ensure schools exist
+      school
+      another_school
+
+      get :results, params: { query: 'Alpha' }, format: :json
+
+      expect(response).to be_successful
+      expect(response.content_type).to eq 'application/json; charset=utf-8'
+
+      body = JSON.parse(response.body)
+      expect(body).to eq([{
+        'id' => school.id,
+        'name' => school.name,
+        'urn' => school.urn,
+        'town' => school.town,
+        'postcode' => school.postcode,
+      }])
     end
   end
 
