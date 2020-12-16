@@ -23,6 +23,21 @@ RSpec.feature 'Searching for schools by URNs' do
     then_i_see_the_schools_search_page
   end
 
+  scenario 'searching by other criteria' do
+    given_i_am_signed_in_as_a_support_user
+    when_i_follow_the_links_to_find_schools
+    then_i_see_the_schools_search_page
+
+    when_i_choose_an_order_state_and_responsible_body
+    and_i_submit
+    then_i_see_the_results_page
+    and_i_see_summary_count_string
+    and_i_see_schools_matching_the_given_order_state_and_responsible_body
+
+    when_i_click_on_perform_another_search
+    then_i_see_the_schools_search_page
+  end
+
   def given_i_am_signed_in_as_a_support_user
     sign_in_as support_user
   end
@@ -39,6 +54,15 @@ RSpec.feature 'Searching for schools by URNs' do
   def when_i_fill_in_some_urns
     data = schools.map(&:urn).append(bad_urn).join("\r\n")
     search_page.urns.set data
+  end
+
+  def when_i_choose_an_order_state_and_responsible_body
+    search_page.responsible_body.select responsible_body.name
+    search_page.order_state.select 'can_order'
+  end
+
+  def and_i_see_schools_matching_the_given_order_state_and_responsible_body
+    expect(results_page.results_table.responsible_bodies).to_all( have_text(responsible_body.name) )
   end
 
   def and_i_submit
