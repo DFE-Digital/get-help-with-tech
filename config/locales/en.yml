@@ -623,6 +623,7 @@ en:
     schools_will_order_event: "%{responsible_body} has devolved ordering to schools"
     user_can_order_event: We emailed a user to tell them that they can place orders for %{school}
     user_can_order_but_action_needed_event: We emailed a user to tell them that action is needed before %{school} can place orders
+    user_can_order_in_virtual_cap: We emailed a user to tell them that they can place orders for %{school}
     nudge_rb_to_add_school_contact_event: We emailed a responsible body user asking them to add a contact for %{school}
     nudge_user_to_read_privacy_policy_event: We emailed a user asking them to sign in and read the privacy policy so that %{school} can place orders
   helpers:
