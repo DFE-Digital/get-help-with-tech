@@ -639,6 +639,7 @@ en:
     christmas:
       heading: No orders over Christmas
       content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Thursday 17 December and we’ll then close ordering until Monday 4 January.
+      content_2: Deliveries will continue until 6pm on 18 December. Any outstanding deliveries will be dispatched from 4 January.
     increased_allocations:
       school:
         heading:
