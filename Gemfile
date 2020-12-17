@@ -33,6 +33,9 @@ gem 'paper_trail'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
+# Fuzzy school search
+gem 'pg_search'
+
 # Pry console is more resilient to readline issues that can stop
 # the arrow keys etc working
 gem 'pry-rails'
