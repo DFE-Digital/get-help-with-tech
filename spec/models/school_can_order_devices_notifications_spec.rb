@@ -12,14 +12,12 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
   #          order_state: order_state)
   # end
 
-
   subject(:service) do
     described_class.new(school: school.reload)
   end
 
   describe '#call' do
     context 'when school which is ready changes from cannot_order to can lockdown order' do
-
       # before do
       #   school.users << contact
       #   school.update!(order_state: 'can_order')
