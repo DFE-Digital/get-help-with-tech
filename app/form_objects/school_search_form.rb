@@ -20,7 +20,7 @@ class SchoolSearchForm
   end
 
   def schools
-    school_records = School.gias_status_open
+    school_records = School.gias_status_open.includes(:responsible_body, :std_device_allocation)
     school_records = school_records.where(urn: array_of_urns) if array_of_urns.present?
     school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
     school_records = school_records.where(order_state: order_state) if order_state.present?
@@ -40,5 +40,14 @@ class SchoolSearchForm
 
   def select_order_state_options
     School.translated_enum_values(:order_states).prepend(OpenStruct.new(value: nil, label: '(all)'))
+  end
+
+  def csv_filename
+    tokens = %w[allocations]
+    tokens << "#{urns.count}-URNs" if urns.present?
+    tokens << "RB-#{responsible_body_id}" if responsible_body_id.present?
+    tokens << order_state if order_state.present?
+    tokens << Time.zone.now.utc.iso8601
+    tokens.join('-') + '.csv'
   end
 end

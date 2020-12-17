@@ -8,6 +8,12 @@ class Support::SchoolsController < Support::BaseController
   def results
     @search_form = SchoolSearchForm.new(search_params)
     @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
+    respond_to do |format|
+      format.html {}
+      format.csv do
+        send_data AllocationsExporter.new.export(@schools), filename: @search_form.csv_filename
+      end
+    end
   end
 
   def show

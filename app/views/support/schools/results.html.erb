@@ -33,8 +33,6 @@
             <th scope="col" class="govuk-table__header">Status</th>
             <th scope="col" class="govuk-table__header">Responsible body</th>
             <th scope="col" class="govuk-table__header">Who is ordering</th>
-            <th scope="col" class="govuk-table__header">Order state</th>
-            <th scope="col" class="govuk-table__header">Devices</th>
           </tr>
         </thead>
 
@@ -43,10 +41,10 @@
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
                 <%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %>
-                <br>
+                <br />
                 <%= school.type_label %>
               </td>
-              <td class="govuk-table__cell govuk-table__cell--nowrap">
+              <td class="govuk-table__cell">
                 <%= render SchoolPreorderStatusTagComponent.new(school: school) %>
               </td>
               <td class="govuk-table__cell">
@@ -55,26 +53,32 @@
               <td class="govuk-table__cell">
                 <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>
               </td>
-              <td class="govuk-table__cell">
-                <%= school.order_state %>
-              </td>
-              <td class="govuk-table__cell govuk-table__cell--nowrap">
-                <%- if school.std_device_allocation.present? %>
-                  cap: <%= school.std_device_allocation.cap %><br />
-                  allocation: <%= school.std_device_allocation.allocation %><br />
-                  ordered: <%= school.std_device_allocation.devices_ordered %>
-                <%- else %>
-                  (no allocation)
-                <%- end %>
-              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     <% end %>
+  </div>
+</div>
 
-    <p class="govuk-body">
-      <%= govuk_link_to 'Try another search', search_support_schools_path, classes: 'govuk-!-margin-top-4' %>
-    </p>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><%= govuk_link_to 'Try another search', search_support_schools_path, classes: 'govuk-!-margin-top-8' %></p>
+  </div>
+  <div class="govuk-grid-column-one-third">
+      <%- if @schools.present? %>
+        <%= govuk_button_to('Download allocations as CSV',
+                            results_support_schools_path(format: :csv),
+                            params: {
+                              school_search_form: {
+                                urns: params[:school_search_form][:urns],
+                                responsible_body_id: params[:school_search_form][:responsible_body_id],
+                                order_state: params[:school_search_form][:order_state],
+                              },
+                            },
+                            method: :post,
+                            form_class: 'govuk-!-display-inline-block search-results__new-search')  %>
+      <%- end %>
   </div>
 </div>
