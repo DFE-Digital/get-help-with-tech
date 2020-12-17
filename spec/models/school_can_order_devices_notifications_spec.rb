@@ -5,12 +5,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
   let(:order_state) { 'cannot_order' }
   let(:contact) { create(:user) }
   let(:school) { create_schools_at_status(preorder_status: 'school_can_order') }
-  # let(:school) do
-  #   create(:school,
-  #          :with_std_device_allocation,
-  #          :with_preorder_information,
-  #          order_state: order_state)
-  # end
 
   subject(:service) do
     described_class.new(school: school.reload)
@@ -18,13 +12,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
 
   describe '#call' do
     context 'when school which is ready changes from cannot_order to can lockdown order' do
-      # before do
-      #   school.users << contact
-      #   school.update!(order_state: 'can_order')
-      #   school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
-      #   school.preorder_information.update!(who_will_order_devices: 'school', status: 'school_can_order', will_need_chromebooks: 'no')
-      # end
-
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
