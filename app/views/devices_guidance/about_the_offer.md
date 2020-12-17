@@ -7,8 +7,11 @@ Examples of this include disadvantaged children:
 * with no digital devices in their household
 * whose only available device is a smartphone
 * with a single device in their household that's being shared with more than one other family member
+* who do not have access to the internet at home
 
-This offer applies to maintained schools, pupil referral units, academy trusts and hospital schools, as well as sixth-form colleges and further education providers who have enrolled 14 to 16-year-olds. They’ll receive an allocation of devices to be used to support disadvantaged children if they do not have access to a digital device through other means.
+This offer applies to maintained schools, pupil referral units, academy trusts and hospital schools, as well as sixth-form colleges and further education providers which have enrolled 14 to 16-year-olds. They’ll receive an allocation of laptops and tablets to be used to support disadvantaged children if they do not have access to a digital device through other means.
+
+They may also be eligible to get internet access for disadvantaged children through [increased mobile phone data allowances](/about-increasing-mobile-data) or [4G wireless routers](/how-to-request-4g-wireless-routers).
 
 Devices are available for:
 
