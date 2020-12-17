@@ -20,7 +20,7 @@ If you work for a local authority, academy trust or school and need help with an
 
 [Find out how to get a replacement for a faulty laptop, tablet or 4G wireless router](/devices/replace-a-faulty-device), the cost to replace a damaged device, how to service and repair an iPad and other warranty details.
 
-If your laptop, Microsoft tablet or 4G wireless router develops a fault, we’ll arrange to replace it from 4 Jan 2021.
+If your laptop, Microsoft tablet or 4G wireless router develops a fault, we’ll arrange to replace it from 4 January 2021.
 
 ## Request local admin and BIOS passwords, and install your own software and settings
 
@@ -45,7 +45,7 @@ If you receive a 4G wireless router that will not start, please check that it is
 
 If a 4G wireless router has powered-up but is experiencing technical issues, trusts and local authorities can check the status of each router and if needed raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk).
 
-It is important that users do not attempt to reset their device to try to resolve issues, as this will result in both the router and SIM to stop working.
+It is important that users do not attempt to reset their device to try to resolve issues, as this will cause both the router and the SIM to stop workin.
 Schools and colleges will need to ask their trust or local authority to access the [Support Portal](https://computacenterprod.service-now.com/dfe) on their behalf. Email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) if you’re unsure who to contact.
 
 We can help you to:
