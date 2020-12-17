@@ -32,8 +32,6 @@ class SchoolOrderStateAndCapUpdateService
     end
 
     # ensure the updates are picked up
-    # @school.std_device_allocation&.reload
-    # @school.coms_device_allocation&.reload
     school.reload
 
     school&.preorder_information&.refresh_status!

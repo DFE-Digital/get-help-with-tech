@@ -1,14 +1,17 @@
 require 'rails_helper'
+require 'shared/school_creator'
 
 RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_notifications: 'active' } do
   let(:order_state) { 'cannot_order' }
   let(:contact) { create(:user) }
-  let(:school) do
-    create(:school,
-           :with_std_device_allocation,
-           :with_preorder_information,
-           order_state: order_state)
-  end
+  let(:school) { create_schools_at_status(preorder_status: 'school_can_order') }
+  # let(:school) do
+  #   create(:school,
+  #          :with_std_device_allocation,
+  #          :with_preorder_information,
+  #          order_state: order_state)
+  # end
+
 
   subject(:service) do
     described_class.new(school: school.reload)
@@ -16,12 +19,13 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
 
   describe '#call' do
     context 'when school which is ready changes from cannot_order to can lockdown order' do
-      before do
-        school.users << contact
-        school.update!(order_state: 'can_order')
-        school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
-        school.preorder_information.update!(who_will_order_devices: 'school', status: 'school_can_order', will_need_chromebooks: 'no')
-      end
+
+      # before do
+      #   school.users << contact
+      #   school.update!(order_state: 'can_order')
+      #   school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
+      #   school.preorder_information.update!(who_will_order_devices: 'school', status: 'school_can_order', will_need_chromebooks: 'no')
+      # end
 
       context 'user has confirmed techsource account' do
         let!(:user) do
@@ -177,13 +181,11 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
     end
 
     context 'when school which is not ready changes from cannot_order to can lockdown order' do
-      let!(:user) { create(:school_user, school: school) }
+      # let!(:user) { create(:school_user, school: school) }
+      let(:user) { school.users.first }
 
       before do
-        school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
         school.preorder_information.update!(who_will_order_devices: 'school', will_need_chromebooks: nil)
-        school.reload
-        school.update!(order_state: 'can_order')
       end
 
       it 'notifies the ordering organisations user' do
@@ -246,11 +248,14 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
     end
 
     context 'when school preorder needs contact' do
-      let(:preorder) { create(:preorder_information, :school_will_order, status: 'needs_contact') }
-      let(:school) { create(:school, preorder_information: preorder, std_device_allocation: allocation, order_state: :can_order) }
-      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+      let(:school) { create_schools_at_status(preorder_status: 'needs_contact') }
       let(:rb) { school.responsible_body }
       let!(:user) { create(:user, responsible_body: rb) }
+
+      before do
+        school.device_allocations.std_device.create!(cap: 10, devices_ordered: 0, allocation: 10)
+        school.can_order!
+      end
 
       it 'nudges RB that school needs a contact' do
         expect {
@@ -260,10 +265,8 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
     end
 
     context 'when the school has no stakeholders' do
-      let(:order_state) { 'can_order' }
-
       before do
-        school.std_device_allocation.update!(cap: school.std_device_allocation.allocation)
+        school.users.destroy_all
       end
 
       it 'notifies support that school is missing out' do
