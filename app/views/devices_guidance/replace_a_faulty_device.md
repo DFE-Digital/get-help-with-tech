@@ -8,7 +8,7 @@ If your laptop, Microsoft tablet or 4G wireless router develops a fault, we’ll
 
 ### If it is not working within 3 days of receiving it
 
-We’ll send you with a replacement device within 2 working days of returning a device.
+We’ll send you a replacement device within 2 working days of returning a device.
 
 If a device will not start, please check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Please include your order number and the device serial number so that we can help you as quickly as possible.
 
