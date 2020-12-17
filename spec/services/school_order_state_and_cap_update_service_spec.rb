@@ -38,6 +38,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     context 'when a std SchoolDeviceAllocation does not exist' do
       before do
         SchoolDeviceAllocation.destroy_all
+        school.reload
       end
 
       context 'when no device_type was given' do
@@ -47,6 +48,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
         it 'stores the request and response against the allocation' do
           service.update!
+          allocation = school.std_device_allocation
           expect(allocation.cap_update_calls).to be_present
           expect(allocation.cap_update_calls.last.failure).to be false
           expect(allocation.cap_update_calls.last.request_body).to include('test-request')
@@ -68,7 +70,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
         it 'stores the request and response against the allocation' do
           expect { service.update! }.to raise_error(Computacenter::OutgoingAPI::Error)
-
+          allocation = school.reload.std_device_allocation
           expect(allocation.cap_update_calls).to be_present
           expect(allocation.cap_update_calls.last.failure).to be true
           expect(allocation.cap_update_calls.last.request_body).to include('<CapAdjustmentRequest')
@@ -206,6 +208,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
                  allocation: 7,
                  cap: 3,
                  devices_ordered: 1)
+          school.can_order!
         end
 
         it 'sets the new cap to equal the devices_ordered, regardless of what was given' do
@@ -214,6 +217,8 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         end
 
         it 'refreshes the status of the preorder' do
+          expect(preorder.status).to eq('rb_can_order')
+
           expect {
             service.update!
           }.to change(preorder, :status)

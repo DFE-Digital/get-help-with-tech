@@ -1,6 +1,6 @@
 class UserSchool < ApplicationRecord
   belongs_to :user
-  belongs_to :school
+  belongs_to :school, touch: true
 
   after_save do |user_school|
     user_school.user.generate_user_change_if_needed!

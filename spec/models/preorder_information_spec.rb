@@ -180,4 +180,104 @@ RSpec.describe PreorderInformation, type: :model do
       end
     end
   end
+
+  describe 'changes to related status information' do
+    let(:trust) { create(:trust) }
+    let(:school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
+
+    subject(:preorder_info) { create(:preorder_information, school: school) }
+
+    context 'when school will order devices' do
+      let(:user) { create(:user) }
+
+      before do
+        trust.update!(who_will_order_devices: 'schools')
+        preorder_info.update!(who_will_order_devices: 'school', will_need_chromebooks: nil)
+        preorder_info.refresh_status!
+      end
+
+      it 'responds to setting a contact' do
+        expect(preorder_info.status).to eq('needs_contact')
+        school.contacts.create!(email_address: 'contact@school.com',
+                                full_name: 'Mary Smith',
+                                role: 'headteacher')
+        preorder_info.update!(school_contact: school.contacts.first)
+        expect(preorder_info.status).to eq('school_will_be_contacted')
+      end
+
+      it 'responds to removing the contact' do
+        school.contacts.create!(email_address: 'contact@school.com',
+                                full_name: 'Mary Smith',
+                                role: 'headteacher')
+        preorder_info.update!(school_contact: school.contacts.first)
+        expect(preorder_info.status).to eq('school_will_be_contacted')
+
+        preorder_info.update!(school_contact: nil)
+        expect(preorder_info.status).to eq('needs_contact')
+      end
+
+      it 'responds to adding users' do
+        expect(preorder_info.status).to eq('needs_contact')
+        school.users << user
+        expect(preorder_info.status).to eq('school_contacted')
+      end
+
+      it 'responds to removing users' do
+        school.users << user
+        expect(preorder_info.status).to eq('school_contacted')
+        school.users.destroy(user)
+        expect(preorder_info.status).to eq('needs_contact')
+      end
+
+      it 'responds to completing chromebook information' do
+        school.users << user
+        expect(preorder_info.status).to eq('school_contacted')
+        preorder_info.update!(will_need_chromebooks: 'no')
+        expect(preorder_info.status).to eq('school_ready')
+      end
+
+      it 'responds to changing the device allocation' do
+        school.users << user
+        preorder_info.update!(will_need_chromebooks: 'no')
+        expect(preorder_info.status).to eq('school_ready')
+
+        school.std_device_allocation.update!(devices_ordered: 2)
+        expect(preorder_info.status).to eq('ordered')
+      end
+
+      it 'responds to changing the order_state of the school' do
+        school.users << user
+        school.std_device_allocation.update!(cap: 10, allocation: 10, devices_ordered: 0)
+        preorder_info.update!(will_need_chromebooks: 'no')
+        expect(preorder_info.status).to eq('school_ready')
+        school.can_order!
+        expect(preorder_info.status).to eq('school_can_order')
+      end
+    end
+
+    context 'when chromebook information complete' do
+      before do
+        trust.update!(who_will_order_devices: 'responsible_body')
+        school.std_device_allocation.update!(devices_ordered: 0, cap: 4, allocation: 10)
+        preorder_info.update!(who_will_order_devices: 'responsible_body',
+                              will_need_chromebooks: 'yes',
+                              school_or_rb_domain: 'domain.com',
+                              recovery_email_address: 'school@gmail.com')
+
+        preorder_info.refresh_status!
+      end
+
+      it 'responds to changing the device allocation' do
+        expect(preorder_info.status).to eq('ready')
+        school.std_device_allocation.update!(devices_ordered: 2)
+        expect(preorder_info.status).to eq('ordered')
+      end
+
+      it 'responds to changing the order_state of the school' do
+        expect(preorder_info.status).to eq('ready')
+        school.can_order!
+        expect(preorder_info.status).to eq('rb_can_order')
+      end
+    end
+  end
 end

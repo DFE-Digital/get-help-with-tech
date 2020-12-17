@@ -48,8 +48,10 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
 
   def given_school_exists_that_can_order_devices
     allocation = create(:school_device_allocation, :with_std_allocation, :with_orderable_devices)
-    preorder = create(:preorder_information, who_will_order_devices: 'school', status: :school_can_order)
+    preorder = create(:preorder_information, :does_not_need_chromebooks, who_will_order_devices: 'school', status: :school_can_order)
     @school = create(:school, preorder_information: preorder, order_state: :can_order, std_device_allocation: allocation)
+    @school.users << create(:school_user)
+    expect(preorder.status).to eq('school_can_order')
   end
 
   def given_school_exists_that_cannot_order_devices

@@ -22,18 +22,19 @@ class SchoolOrderStateAndCapUpdateService
           # don't send updates as they will happen when the pool is updated and the caps adjusted
           unless allocation.is_in_virtual_cap_pool?
             update_cap_on_computacenter!(allocation.id)
-            notify_computacenter_by_email(@school, allocation.device_type, allocation.cap)
+            notify_computacenter_by_email(school, allocation.device_type, allocation.cap)
           end
         else
           update_cap_on_computacenter!(allocation.id)
-          notify_computacenter_by_email(@school, allocation.device_type, allocation.cap)
+          notify_computacenter_by_email(school, allocation.device_type, allocation.cap)
         end
       end
     end
 
     # ensure the updates are picked up
-    @school.std_device_allocation&.reload
-    @school.coms_device_allocation&.reload
+    # @school.std_device_allocation&.reload
+    # @school.coms_device_allocation&.reload
+    school.reload
 
     school&.preorder_information&.refresh_status!
 
@@ -48,29 +49,29 @@ class SchoolOrderStateAndCapUpdateService
 private
 
   def responsible_body_has_virtual_caps_enabled?
-    @school.responsible_body.has_virtual_cap_feature_flags?
+    school.responsible_body.has_virtual_cap_feature_flags?
   end
 
   def update_order_state!(order_state)
-    @school.update!(order_state: order_state)
+    school.update!(order_state: order_state)
   end
 
   def update_cap!(device_type, cap)
-    allocation = SchoolDeviceAllocation.find_or_initialize_by(school_id: @school.id, device_type: device_type)
+    allocation = SchoolDeviceAllocation.find_or_initialize_by(school_id: school.id, device_type: device_type)
     # we only take the cap from the user if they chose specific circumstances
     # for both other states, we need to infer a new cap from the chosen state
-    allocation.cap = allocation.cap_implied_by_order_state(order_state: @school.order_state, given_cap: cap)
+    allocation.cap = allocation.cap_implied_by_order_state(order_state: school.order_state, given_cap: cap)
     allocation.save!
     allocation
   end
 
   def add_school_to_virtual_cap_pool_if_eligible
-    if @school&.preorder_information&.responsible_body_will_order_devices?
-      unless @school.device_allocations.first.is_in_virtual_cap_pool?
+    if school&.preorder_information&.responsible_body_will_order_devices?
+      unless school.device_allocations.first.is_in_virtual_cap_pool?
         begin
-          @school.responsible_body.add_school_to_virtual_cap_pools!(@school)
+          school.responsible_body.add_school_to_virtual_cap_pools!(school)
         rescue VirtualCapPoolError
-          Rails.logger.error("Failed to add school to virtual pool (urn: #{@school.urn})")
+          Rails.logger.error("Failed to add school to virtual pool (urn: #{school.urn})")
         end
       end
     end

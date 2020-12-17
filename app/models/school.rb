@@ -9,7 +9,7 @@ class School < ApplicationRecord
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
   has_many :user_schools
   has_many :users, through: :user_schools
-  has_one :preorder_information
+  has_one :preorder_information, touch: true
   has_many :email_audits
   has_many :extra_mobile_data_requests
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
