@@ -258,8 +258,12 @@
           <div class="app-step-nav__panel" id="step-panel-place-an-order-5">
             <% if FeatureFlag.active?(:christmas_banner) %>
               <div class="app-card govuk-!-margin-bottom-4">
+                <p class="govuk-body">
+                  You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Friday 18 December and we’ll then close ordering until Monday 4 January.
+                </p>
+
                 <p class="govuk-body govuk-!-margin-bottom-0">
-                  You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Thursday 17 December and we’ll then close ordering until Monday 4 January.
+                  Deliveries will continue until 6pm on 18 December. Any outstanding deliveries will be dispatched from 4 January.
                 </p>
               </div>
             <% end %>
