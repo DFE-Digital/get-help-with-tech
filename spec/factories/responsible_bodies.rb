@@ -33,7 +33,7 @@ FactoryBot.define do
 
   factory :local_authority, parent: :responsible_body, class: 'LocalAuthority' do
     organisation_type             { LocalAuthority.organisation_types.values.sample }
-    name                          { [Faker::Address.county, organisation_type].join(' ') }
+    name                          { [Faker::Address.unique.county, organisation_type, Faker::Number.unique.number(digits: 3)].join(' ') }
     local_authority_official_name { [organisation_type, name].join(' of ') }
     local_authority_eng           { name.first(3).upcase }
     gias_id                       { Faker::Number.unique.number(digits: 3) }
@@ -41,7 +41,7 @@ FactoryBot.define do
 
   factory :trust, parent: :responsible_body, class: 'Trust' do
     organisation_type             { Trust.organisation_types.values.sample }
-    name                          { [Faker::App.name, organisation_type == 'Single academy trust' ? 'Academy' : 'Academies'].join(' ') }
+    name                          { [Faker::App.unique.name, organisation_type == 'Single academy trust' ? 'Academy' : 'Academies'].join(' ') }
     local_authority_official_name { nil }
     local_authority_eng           { nil }
     companies_house_number        { Faker::Number.leading_zero_number(digits: 8) }
