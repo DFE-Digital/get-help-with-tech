@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_14_114914) do
+ActiveRecord::Schema.define(version: 2020_12_16_144840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,21 @@ ActiveRecord::Schema.define(version: 2020_12_14_114914) do
     t.index ["user_id", "name"], name: "index_api_tokens_on_user_id_and_name", unique: true
     t.index ["user_id", "token"], name: "index_api_tokens_on_user_id_and_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
+  create_table "batch_job_log_entries", force: :cascade do |t|
+    t.string "record_id"
+    t.string "record_class"
+    t.string "job_name"
+    t.string "run_id"
+    t.string "status"
+    t.string "message"
+    t.string "error"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_name", "created_at"], name: "index_batch_job_log_entries_on_job_name_and_created_at"
+    t.index ["run_id", "created_at"], name: "index_batch_job_log_entries_on_run_id_and_created_at"
+    t.index ["run_id", "record_class", "record_id"], name: "ix_btle_run_record"
   end
 
   create_table "bt_wifi_voucher_allocations", force: :cascade do |t|
@@ -187,8 +202,8 @@ ActiveRecord::Schema.define(version: 2020_12_14_114914) do
     t.string "county"
     t.string "postcode"
     t.string "status", default: "open", null: false
-    t.string "computacenter_change", default: "none", null: false
     t.boolean "vcap_feature_flag", default: false
+    t.string "computacenter_change", default: "none", null: false
     t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
