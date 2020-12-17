@@ -53,10 +53,12 @@ class Support::UsersController < Support::BaseController
     redirect_to associated_organisations_support_user_path(@user.id)
   end
 
+  def confirm_destroy; end
+
   def destroy
     @user.update!(deleted_at: Time.zone.now)
 
-    flash[:success] = 'User has been deleted'
+    flash[:success] = 'You have deleted this user'
 
     return_params = params.fetch(:user, {}).permit(:school_urn, :responsible_body_id)
     if return_params[:responsible_body_id]

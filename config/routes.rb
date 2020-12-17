@@ -182,6 +182,7 @@ Rails.application.routes.draw do
       end
       member do
         get 'associated-organisations', as: :associated_organisations
+        get 'confirm-deletion', to: 'users#confirm_destroy'
         patch 'responsible-body', to: 'users#update_responsible_body', as: :update_responsible_body
         resources :schools, only: %i[index create destroy], as: :user_schools, controller: 'users/schools', param: :urn
       end
