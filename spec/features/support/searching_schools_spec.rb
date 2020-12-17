@@ -83,7 +83,7 @@ RSpec.feature 'Searching for schools by URNs' do
 
   def when_i_choose_an_order_state_and_responsible_body
     select responsible_body.name, from: 'Responsible body'
-    select 'They can order their full allocation because a closure or group of self-isolating children has been reported', from: 'Order state (devices)'
+    select 'They can order their full allocation because a closure or group of self-isolating children has been reported', from: 'Order state'
   end
 
   def and_i_see_schools_matching_the_given_order_state_and_responsible_body
