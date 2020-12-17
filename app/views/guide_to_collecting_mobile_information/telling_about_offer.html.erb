@@ -27,6 +27,16 @@
         </ul>
       <% end %>
 
+      <%= component.slot(:section, title: 'Sky Mobile') do %>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>The recipient will get 100GB of additional data.</li>
+          <li>The offer is only available to Pay Monthly customers identified as needing this support. It’s not available to Pay-as-you-go customers.</li>
+          <li>Sky Mobile customers will be able to see the data uplift in their piggybank.</li>
+          <li>Sky Mobile will aim to process the request within 14 days.</li>
+          <li>Sky Mobile will process no more than 1800 requests across all schools. If they reach this limit, they will not accept further requests.</li>
+        </ul>
+      <% end %>
+
       <%= component.slot(:section, title: 'Smarty') do %>
         <ul class="govuk-list govuk-list--bullet">
           <li>The recipient will get unlimited data until 31 July 2021.</li>
