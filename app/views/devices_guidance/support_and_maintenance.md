@@ -43,13 +43,16 @@ If you receive a 4G wireless router that will not start, please check that it is
 
 ### If you have technical issues with 4G wireless routers 
 
-If a 4G wireless router has powered-up but is experiencing technical issues, trusts and local authorities can check the status of each router and if needed raise an issue via the Support Portal. Login details will have been provided when you placed your order, but if you’re unable to access, please email COVID.TECHNOLOGY@education.gov.uk.
+If a 4G wireless router has powered-up but is experiencing technical issues, trusts and local authorities can check the status of each router and if needed raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk).
 
-If your 4G wireless router has powered-up but you are experiencing technical issues, for example if you need to:
+It is important that users do not attempt to reset their device to try to resolve issues, as this will result in both the router and SIM to stop working.
+Schools and colleges will need to ask their trust or local authority to access the [Support Portal](https://computacenterprod.service-now.com/dfe) on their behalf. Email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) if you’re unsure who to contact.
+
+We can help you to:
  
 * deactivate a SIM
 * un-bar a SIM
 * request a replacement device
 * reconfigure an existing device
 
-Please raise a ticket via the dedicated [Support Portal](https://computacenterprod.service-now.com/dfe). If you do not have log in details, please contact the key contact for the device. This will be the person at the local authority or academy trust who completed the device forecast.
+We are unable to increase data limits if a user has used 20GB within a month. Please advise them that this will reset on the first of the next month and that data should only be used to access remote education, with ‘Standard Definition’ (SD) video selected where possible.
