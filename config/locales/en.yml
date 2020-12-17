@@ -252,6 +252,10 @@ en:
       title: Support and maintenance
       description: Find out how to support your users, access additional support and deal with a faulty device.
       audience: responsible_body_users
+    replace_a_faulty_device:
+      title: Replace a faulty device
+      description: Find out how to get a replacement for a faulty laptop, tablet or 4G wireless router, the cost to replace a damaged device, how to service and repair an iPad and other warranty details.
+      audience: responsible_body_users
     safeguarding_for_device_users:
       title: Safeguarding for device users
       description: Information on content filtering, privacy policies and mobile device management to ensure devices are used appropriately by young people and families.
