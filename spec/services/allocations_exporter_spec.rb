@@ -35,7 +35,7 @@ RSpec.describe AllocationsExporter, type: :model do
     let(:mock_response) { instance_double(HTTP::Response) }
 
     before do
-      stub_request(:post, "http://computacenter.example.com/").to_return(status: 200, body: "", headers: {})
+      stub_request(:post, 'http://computacenter.example.com/').to_return(status: 200, body: '', headers: {})
       create(:preorder_information, :rb_will_order, school: schools.first)
       create(:preorder_information, :rb_will_order, school: schools.last)
       create(:school_device_allocation, device_type: 'std_device', school: schools.first, allocation: 20, cap: 20, devices_ordered: 10)

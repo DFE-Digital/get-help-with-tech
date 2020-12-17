@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Searching for schools by URNs' do
+RSpec.feature 'Searching for schools by URNs and other criteria' do
   let(:search_page) { PageObjects::Support::School::SearchPage.new }
   let(:results_page) { PageObjects::Support::School::ResultsPage.new }
   let(:support_user) { create(:support_user) }
