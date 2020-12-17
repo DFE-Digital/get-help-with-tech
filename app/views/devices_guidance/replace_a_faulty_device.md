@@ -1,6 +1,6 @@
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body">
-Ordering is currently closed. If your laptop, Microsoft tablet or 4G wireless router develops a fault, we’ll arrange to replace it from 4 Jan 2021. <a href="https://get-help-with-tech.education.gov.uk/devices/replace-a-faulty-device/#apple-ipad-service-and-repair>Find out about iPad warranty</a>.  </p>
+If your laptop, Microsoft tablet or 4G wireless router develops a fault, we’ll arrange to replace it from 4 Jan 2021. <a href="https://get-help-with-tech.education.gov.uk/devices/replace-a-faulty-device/#apple-ipad-service-and-repair>Find out about iPad warranty</a>.  </p>
   </p>
 </div>
 
