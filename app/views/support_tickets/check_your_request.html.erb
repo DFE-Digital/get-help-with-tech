@@ -1,0 +1,82 @@
+<% content_for :title, 'Check your answers, then submit your request' %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  {t('landing_pages.get_support.start') => support_ticket_path},
+                  'Check your answers, then submit your request',
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">Get support</span>
+      Check your answers, then submit your request
+    </h1>
+
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render GovukComponent::SummaryList.new do |component| %>
+      <% component.slot(
+         :row,
+         key: "Which of these best describes you?",
+         value: SupportTicket::DescribeYourselfForm.new.selected_option_label(@support_ticket["user_type"]),
+         action: govuk_link_to("Change", support_ticket_describe_yourself_path),
+         classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-"),
+         )
+      %>
+
+      <% unless [ 'parent_or_guardian_or_carer_or_pupil_or_care_leaver', 'other_type_of_user'].include?  @support_ticket["user_type"] %>
+
+        <% component.slot(
+           :row,
+           key: "Which school do you work for?",
+           value: "#{@support_ticket["school_name"]} (URN: #{ @support_ticket["school_unique_id"]})",
+           action: govuk_link_to("Change", @school_details_path),
+           classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-"),
+           )
+        %>
+      <% end %>
+
+      <% component.slot(
+         :row,
+         key: "How can we contact you?",
+         value: "#{ @support_ticket["full_name"]}<br>#{ @support_ticket["email_address"]}<br>#{ @support_ticket["telephone_number"]}".html_safe ,
+         action: govuk_link_to("Change", support_ticket_contact_details_path),
+         classes: "Name".to_s.downcase.gsub(/ /, "-"),
+       ) %>
+
+      <% support_topics = @support_ticket["support_topics"].each{} %>
+      <% component.slot(
+         :row,
+         key: "What do you need help with?",
+         value: content_tag(:ul, :class => 'govuk-list govuk-list--bullet') do
+           @support_ticket["support_topics"].collect do |topic|
+             content_tag(:li, SupportTicket::SupportNeedsForm.new.selected_option_label(topic))
+           end.join.html_safe
+         end ,
+         action: govuk_link_to("Change", support_ticket_support_needs_path),
+         classes: "Name".to_s.downcase.gsub(/ /, "-"),
+         ) %>
+
+      <% component.slot(
+         :row,
+         key: "How can we help you?",
+         value: @support_ticket["message"] ,
+         action: govuk_link_to("Change", support_ticket_support_details_path),
+         classes: "Name".to_s.downcase.gsub(/ /, "-"),
+         ) %>
+
+    <% end %>
+
+    <div class="govuk-form-group">
+      <%= form_for @form, url: support_ticket_check_your_request_path do |f| %>
+        <%= f.govuk_submit 'Submit' %>
+      <% end %>
+    </div>
+
+  </div>
+</div>

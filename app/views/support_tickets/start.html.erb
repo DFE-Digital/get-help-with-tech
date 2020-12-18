@@ -1,0 +1,62 @@
+<% content_for :title, t('landing_pages.get_support.start') %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  t('landing_pages.get_support.start'),
+                 ]) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      <%= t('landing_pages.get_support.start') %>
+    </h1>
+
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      We're here to answer any queries you have about the Get help with technology programme.
+      To help us respond to you more quickly (within 3 working days), please answer a few questions.
+      These should take no longer than 5 minutes.
+    </p>
+
+    <%= render GovukComponent::StartNowButton.new(
+      text: 'Start now',
+      href: support_ticket_describe_yourself_path) %>
+
+    <p class="govuk-body govuk-!-margin-top-3">
+      If you'd rather not answer these questions, you can email <a href="COVID.TECHNOLOGY@education.gov.uk" class="govuk-link">COVID.TECHNOLOGY@education.gov.uk</a>
+      instead. We'll still aim to respond to you within 3 working days.
+
+    <p class="govuk-body">You can also find out more about the Department for Education&rsquo;s Get help with technology programme on <a href="https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19" class="govuk-link">GOV.UK.</a></p>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-m" id="help-guides">
+        Most viewed help guides
+      </h2>
+      <!-- @TODO NEED TRACKING FOR THESE LINKS ? -->
+      <nav role="navigation" aria-labelledby="help-guides">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <%= govuk_link_to "How and when to order laptops and tablets" , devices_how_to_order_path %>
+          </li>
+          <li>
+            <a class="govuk-link" href="/devices/device-allocations">
+              About device allocations
+            </a>
+          </li>
+          <li>
+            <a class="govuk-link" href="/devices/device-specification">
+              Device options and specifications
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+  </div>
+</div>

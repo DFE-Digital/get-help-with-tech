@@ -45,6 +45,31 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[create destroy]
 
+  namespace :support_ticket, path: '/get-support' do
+    get '/', to: 'base#start'
+    get '/describe-yourself', to: 'describe_yourself#new'
+    post '/describe-yourself', to: 'describe_yourself#save'
+    get '/school-details', to: 'school_details#new'
+    post '/school-details', to: 'school_details#save'
+    get '/academy-details', to: 'academy_details#new'
+    post '/academy-details', to: 'academy_details#save'
+    get '/local-authority-details', to: 'local_authority_details#new'
+    post '/local-authority-details', to: 'local_authority_details#save'
+    get '/college-details', to: 'college_details#new'
+    post '/college-details', to: 'college_details#save'
+    get '/contact-details', to: 'contact_details#new'
+    post '/contact-details', to: 'contact_details#save'
+    get '/support-needs', to: 'support_needs#new'
+    post '/support-needs', to: 'support_needs#save'
+    get '/support-details', to: 'support_details#new'
+    post '/support-details', to: 'support_details#save'
+    get '/check-your-request', to: 'check_your_request#new'
+    post '/check-your-request', to: 'check_your_request#save'
+
+    get '/parent-support', to: 'base#parent_support'
+    get '/thank-you', to: 'base#thank_you'
+  end
+
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   delete '/token/validate', to: 'sign_in_tokens#destroy', as: :destroy_sign_in_token
   get '/token/validate-manual', to: 'sign_in_tokens#validate_manual', as: :validate_manually_entered_sign_in_token

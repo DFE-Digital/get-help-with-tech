@@ -1,0 +1,25 @@
+<% content_for :title, 'Which academy trust do you work for?' %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  {t('landing_pages.get_support.start') => support_ticket_path},
+                  'Which academy trust do you work for?',
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @form, url: support_ticket_academy_details_path do |f| %>
+      <%= f.govuk_error_summary "There’s a problem" %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Get support</span>
+        Which academy trust do you work for?
+      </h1>
+
+      <%= f.govuk_text_field :academy_name, label: {text: 'Academy trust name', size: 's'} %>
+
+      <%= f.govuk_submit 'Next' %>
+    <% end %>
+  </div>
+</div>

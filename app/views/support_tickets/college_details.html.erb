@@ -1,0 +1,28 @@
+<% content_for :title, 'Which college do you work for?' %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  {t('landing_pages.get_support.start') => support_ticket_path},
+                  'Which college do you work for?',
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @form, url: support_ticket_college_details_path do |f| %>
+      <%= f.govuk_error_summary "There’s a problem" %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Get support</span>
+        Which college do you work for?
+      </h1>
+
+      <%= f.govuk_text_field :college_name, label: {text: 'College name', size: 's'} %>
+      <%= f.govuk_text_field :college_ukprn,
+                             label: {text: 'College UKPRN', size: 's'},
+                             hint: { text: 'This 8-digit number helps us to locate your college. Find your <a href="https://get-information-schools.service.gov.uk/" target="_blank" rel="noopener noreferrer">UKPRN</a>.'.html_safe },
+                             width: 5 %>
+      <%= f.govuk_submit 'Next' %>
+    <% end %>
+  </div>
+</div>
