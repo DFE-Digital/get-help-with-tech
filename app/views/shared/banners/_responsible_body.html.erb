@@ -1,7 +1,17 @@
-<% if FeatureFlag.active?(:christmas_banner) || @responsible_body.has_increased_allocation_feature_flags? %>
+<% if FeatureFlag.active?(:secondary_mass_testing_banner) || FeatureFlag.active?(:christmas_banner) || @responsible_body.has_increased_allocation_feature_flags? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= render NotificationBanner.new(title: 'Important') do |banner| %>
+        <% if FeatureFlag.active?(:secondary_mass_testing_banner) %>
+          <p class="govuk-notification-banner__heading">
+            <%= t('banners.secondary_mass_testing.heading') %>
+          </p>
+        <% end %>
+
+        <% if FeatureFlag.active?(:secondary_mass_testing_banner) && (FeatureFlag.active?(:christmas_banner) || @responsible_body.has_increased_allocation_feature_flags?) %>
+          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+        <% end %>
+
         <% if @responsible_body.has_increased_allocation_feature_flags? %>
           <p class="govuk-notification-banner__heading"><%= t('banners.increased_allocations.responsible_body.heading') %></p>
           <p class="govuk-body">

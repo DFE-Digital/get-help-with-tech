@@ -641,6 +641,8 @@ en:
       support_user_responsible_body_form:
         name: Responsible body name
   banners:
+    secondary_mass_testing:
+      heading: All secondary schools closed for mass testing can order laptops and devices now
     christmas:
       heading: No orders over Christmas
       content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Friday 18 December and we’ll then close ordering until Monday 4 January.
