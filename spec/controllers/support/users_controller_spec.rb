@@ -55,6 +55,15 @@ RSpec.describe Support::UsersController do
         get :edit, params: { id: existing_user.id }
       }.to be_forbidden_for(create(:computacenter_user))
     end
+
+    it 'does not edit deleted users' do
+      sign_in_as support_user
+
+      deleted_user = create(:school_user, :deleted)
+
+      get :edit, params: { id: deleted_user }
+      expect(response).to have_http_status(:not_found)
+    end
   end
 
   describe '#update' do

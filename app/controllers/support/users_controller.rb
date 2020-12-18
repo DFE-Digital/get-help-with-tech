@@ -101,7 +101,7 @@ private
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.not_deleted.find(params[:id])
     authorize @user
   end
 end
