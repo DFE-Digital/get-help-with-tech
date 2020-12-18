@@ -1,0 +1,39 @@
+<%- title = t('page_titles.support.allocation.adjust_allocations_for_many_schools') %>
+<% content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', adjust_allocations_for_many_schools_support_schools_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        <%= @job.successes.count %> allocations updated
+      </h2>
+      <h2 class="govuk-panel__body">
+        <%= @job.failures.count %> failures
+      </h2>
+    </div>
+
+    <%- if @job.failures.present? %>
+      <h3 class="govuk-heading-m"><%= @job.failures.count %> failures</h3>
+      <table class="govuk-table">
+        <thead>
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header">URN</th>
+            <th class="govuk-table__header">Error</th>
+          </tr>
+        </thead>
+        <%- @job.failures.each do |failure| %>
+          <%- urn = failure.record[:urn] %>
+          <tr class="govuk-table__row" id="urn-<%= urn %>">
+            <th class="govuk-table__header">
+              <%= urn %>
+            </th>
+            <td class="govuk-table__cell">
+              <%= failure.error %>
+            </td>
+          </div>
+        <%- end %>
+      </dl>
+    <%- end %>
+  </div>
+</div>
