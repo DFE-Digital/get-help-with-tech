@@ -6,15 +6,15 @@
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
     <div class="govuk-panel govuk-panel--confirmation">
       <h1 class="govuk-panel__title">
-        <%= @job.successes.count %> allocations updated
+        <%= @job.successes.count %> <%= 'allocation'.pluralize(@job.successes.count) %> updated
       </h2>
       <h2 class="govuk-panel__body">
-        <%= @job.failures.count %> failures
+        <%= @job.failures.count %> <%= 'failure'.pluralize(@job.failures.count) %>
       </h2>
     </div>
 
     <%- if @job.failures.present? %>
-      <h3 class="govuk-heading-m"><%= @job.failures.count %> failures</h3>
+      <h3 class="govuk-heading-m"><%= @job.failures.count %> <%= 'failure'.pluralize(@job.failures.count) %></h3>
       <table class="govuk-table">
         <thead>
           <tr class="govuk-table__row">
@@ -31,9 +31,9 @@
             <td class="govuk-table__cell">
               <%= failure.error %>
             </td>
-          </div>
+          </tr>
         <%- end %>
-      </dl>
+      </table>
     <%- end %>
   </div>
 </div>
