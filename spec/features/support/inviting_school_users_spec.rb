@@ -20,8 +20,8 @@ RSpec.feature 'Inviting school users' do
 
     when_fill_in_invite_school_user_form
     and_i_submit_invite_school_user_form
-    then_i_see_the_school_page
-    and_i_see_the_user_on_the_school_page
+    and_i_click_through_to_the_school_page
+    then_i_see_the_user_on_the_school_page
     and_the_school_is_shown_as_contacted
   end
 
@@ -34,8 +34,8 @@ RSpec.feature 'Inviting school users' do
 
     when_i_fill_in_the_existing_users_details
     and_i_submit_invite_school_user_form
-    then_i_see_the_school_page
-    and_i_see_the_existing_user_on_the_school_page
+    and_i_click_through_to_the_school_page
+    then_i_see_the_existing_user_on_the_school_page
     and_the_school_is_shown_as_contacted
   end
 
@@ -77,17 +77,18 @@ RSpec.feature 'Inviting school users' do
     new_school_user_page.submit.click
   end
 
-  def then_i_see_the_school_page
+  def and_i_click_through_to_the_school_page
+    click_on school.name
     expect(school_page).to be_displayed
   end
 
-  def and_i_see_the_user_on_the_school_page
+  def then_i_see_the_user_on_the_school_page
     expect(page).to have_content('John Doe')
     expect(page).to have_content('john@example.com')
     expect(page).to have_content('020 1')
   end
 
-  def and_i_see_the_existing_user_on_the_school_page
+  def then_i_see_the_existing_user_on_the_school_page
     expect(page).to have_content(existing_user.full_name)
     expect(page).to have_content('existinguser@example.com')
     expect(page).to have_content(existing_user.telephone)

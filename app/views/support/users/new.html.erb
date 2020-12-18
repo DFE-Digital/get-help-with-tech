@@ -1,0 +1,47 @@
+<%
+  title = if @school
+            t('page_titles.new_school_user')
+          elsif @responsible_body
+            t('page_titles.new_responsible_body_user')
+          end
+%>
+<%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
+<%- content_for :before_content do %>
+  <% if @school
+       breadcrumbs([
+         { 'Support home' => support_home_path },
+         { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
+         { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
+         { @school.name => support_school_path(urn: @school.urn) },
+         title,
+       ])
+     elsif @responsible_body
+       breadcrumbs([
+         { 'Support home' => support_home_path },
+         { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
+         { @responsible_body.name => support_responsible_body_path(@responsible_body) },
+         title,
+       ])
+     end
+  %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <% form_path = if @school
+                     support_school_users_path(@school)
+                   elsif @responsible_body
+                     support_responsible_body_users_path(@responsible_body)
+                   end
+    %>
+    <%= form_for @user, url: form_path do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= render partial: 'shared/school_user_form', locals: { form: f } %>
+      <%= f.govuk_submit 'Send invite' %>
+    <%- end %>
+  </div>
+</div>

@@ -1,8 +1,34 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
-  before_action :set_user, except: %i[search results]
+  before_action :set_user, except: %i[new create search results]
   before_action { authorize User }
+  before_action :set_school_if_present, only: %i[new create]
+  before_action :set_responsible_body_if_present, only: %i[new create]
+
+  def new
+    @user = User.new
+    authorize @user
+  end
+
+  def create
+    authorize User, :create?
+    if @school
+      @user = CreateUserService.invite_school_user(
+        user_params.merge(school_id: @school.id),
+      )
+    elsif @responsible_body
+      @user = CreateUserService.invite_responsible_body_user(
+        user_params.merge(responsible_body_id: @responsible_body.id),
+      )
+    end
+
+    if @user.persisted?
+      redirect_to support_user_path(@user)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
 
   def show; end
 
@@ -105,5 +131,19 @@ private
   def set_user
     @user = User.not_deleted.find(params[:id])
     authorize @user
+  end
+
+  def set_school_if_present
+    if params[:school_urn]
+      @school = School.gias_status_open.find_by(urn: params[:school_urn])
+      authorize @school, :show?
+    end
+  end
+
+  def set_responsible_body_if_present
+    if params[:responsible_body_id]
+      @responsible_body = ResponsibleBody.gias_status_open.find(params[:responsible_body_id])
+      authorize @responsible_body, :show?
+    end
   end
 end

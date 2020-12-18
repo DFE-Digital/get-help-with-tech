@@ -90,10 +90,10 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   def when_try_adding_a_new_user_with_invalid_details
     click_on 'Invite a new user'
 
-    fill_in 'Full name', with: ''
+    fill_in 'Name', with: ''
     fill_in 'Email address', with: 'k'
 
-    click_on 'Submit'
+    click_on 'Send invite'
   end
 
   def then_i_can_see_error_messages
@@ -102,13 +102,15 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   end
 
   def and_when_i_retry_adding_a_new_user_with_valid_details
-    fill_in 'Full name', with: 'Kate Krampton'
+    fill_in 'Name', with: 'Kate Krampton'
     fill_in 'Email address', with: 'kate.krampton@coventry.gov.uk'
 
-    click_on 'Submit'
+    click_on 'Send invite'
   end
 
   def then_i_can_see_the_responsible_body_with_new_users_as_well
+    click_on local_authority.name
+
     expect(responsible_body_page.users.size).to eq(3)
 
     expect(responsible_body_page.users[0]).to have_text('Zeta Zane')

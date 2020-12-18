@@ -5,7 +5,187 @@ RSpec.describe Support::UsersController do
   let(:user_who_has_seen_privacy_notice) { create(:school_user, :has_seen_privacy_notice, full_name: 'Jane Smith') }
   let(:user_who_has_not_seen_privacy_notice) { create(:school_user, :has_not_seen_privacy_notice, full_name: 'John Smith') }
   let(:user_who_is_deleted) { create(:school_user, :has_seen_privacy_notice, :deleted, full_name: 'July Smith') }
-  let(:existing_user) { create(:local_authority_user) }
+  let(:existing_user) { create(:local_authority_user, responsible_body: responsible_body) }
+  let(:responsible_body) { create(:local_authority) }
+  let(:school) { create(:school) }
+
+  describe '#new' do
+    context 'when inviting to a responsible body' do
+      it 'is successful for support users' do
+        expect {
+          get :new, params: { responsible_body_id: responsible_body.id }
+        }.to receive_status_ok_for(support_user)
+      end
+
+      it 'is forbidden for computacenter users' do
+        expect {
+          get :new, params: { responsible_body_id: responsible_body.id }
+        }.to be_forbidden_for(create(:computacenter_user))
+      end
+    end
+
+    context 'when inviting to a school' do
+      it 'is successful for support users' do
+        sign_in_as support_user
+        get :new, params: { school_urn: school.urn }
+        expect(response).to be_successful
+      end
+
+      it 'is forbidden for computacenter users' do
+        expect {
+          get :new, params: { school_urn: school.urn }
+        }.to be_forbidden_for(create(:computacenter_user))
+      end
+    end
+  end
+
+  describe '#create' do
+    context 'when inviting to a responsible body' do
+      context 'for support users', versioning: true do
+        before do
+          sign_in_as support_user
+        end
+
+        def perform_create!
+          post :create, params: { responsible_body_id: responsible_body.id,
+                                  user: attributes_for(:user) }
+        end
+
+        it 'creates users' do
+          expect { perform_create! }.to change(User, :count).by(1)
+        end
+
+        it 'sets orders_devices to true' do
+          perform_create!
+
+          user = User.last
+          expect(user.orders_devices).to be_truthy
+        end
+
+        it 'does not set the school on the user' do
+          perform_create!
+
+          user = User.last
+          expect(user.school).to be_blank
+        end
+
+        it 'audits changes with reference to user that requested the changes' do
+          perform_create!
+
+          expect(User.last.versions.last.whodunnit).to eql("User:#{support_user.id}")
+        end
+      end
+
+      it 'is forbidden for MNO users' do
+        expect {
+          post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+        }.to be_forbidden_for(create(:mno_user))
+      end
+
+      it 'is forbidden for responsible body users' do
+        expect {
+          post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+        }.to be_forbidden_for(create(:trust_user))
+      end
+
+      it 'is forbidden for Computacenter users' do
+        expect {
+          post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+        }.to be_forbidden_for(create(:computacenter_user))
+      end
+
+      it 'redirects to / for unauthenticated users' do
+        post :create, params: { responsible_body_id: responsible_body.id, user: { some: 'data' } }
+
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+
+    context 'when inviting to a school' do
+      context 'for a support user, with valid new user details' do
+        before do
+          sign_in_as support_user
+        end
+
+        def post!
+          post :create, params: {
+            school_urn: school.urn,
+            user: {
+              full_name: 'John Doe',
+              email_address: 'john@example.com',
+              orders_devices: '0',
+            },
+          }
+        end
+
+        it 'creates a new user' do
+          expect { post! }.to change(User, :count).by(1)
+        end
+
+        it 'associates user and school' do
+          post!
+
+          expect(User.last.school).to eql(school)
+        end
+
+        it 'sets attributes correctly' do
+          post!
+          record = User.last
+          expect(record.orders_devices).to be_falsey
+        end
+
+        it 'redirects to the user page' do
+          post!
+          expect(response).to redirect_to support_user_path(User.last)
+        end
+
+        it 'sends out an email', sidekiq: true do
+          expect { post! }.to change {
+            ActionMailer::Base.deliveries.size
+          }.by(1)
+        end
+      end
+
+      context 'for a support user, when there is an error' do
+        before do
+          sign_in_as support_user
+        end
+
+        def post!
+          post :create, params: {
+            school_urn: school.urn,
+            user: {
+              full_name: '',
+              email_address: 'john@example.com',
+              orders_devices: '0',
+            },
+          }
+        end
+
+        it 'does not create a user' do
+          expect { post! }.not_to change(User, :count)
+        end
+
+        it 're-renders :new' do
+          post!
+          expect(response).to render_template(:new)
+        end
+      end
+
+      it 'is forbidden for a computacenter user' do
+        expect {
+          post :create, params: {
+            school_urn: school.urn,
+            user: {
+              full_name: 'John Doe',
+              email_address: 'john@example.com',
+              orders_devices: '0',
+            },
+          }
+        }.to be_forbidden_for(create(:computacenter_user))
+      end
+    end
+  end
 
   describe '#search' do
     it 'is successful for support users' do
