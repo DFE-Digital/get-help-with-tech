@@ -2,7 +2,7 @@ class Support::Users::SchoolsController < Support::BaseController
   before_action :set_user, :set_school
   before_action { authorize User }
 
-  def index
+  def new
     @form = Support::NewUserSchoolForm.new(user: @user, name_or_urn: user_school_params[:name_or_urn])
     @schools = @form.matching_schools
   end

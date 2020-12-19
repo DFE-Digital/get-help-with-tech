@@ -73,7 +73,7 @@ en:
         search: Find responsible body or school users
         results: Users
         schools:
-          index: Associate with a school
+          new: Associate with a school
         responsible_bodies:
           index: Associate with a responsible body
           edit: Update responsible body
