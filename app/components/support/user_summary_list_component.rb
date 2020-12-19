@@ -42,7 +42,7 @@ class Support::UserSummaryListComponent < ViewComponent::Base
       {
         key: 'Schools',
         value: schools_list,
-        change_path: associated_organisations_support_user_path(@user, anchor: 'schools'),
+        change_path: support_user_schools_path(@user),
         action: 'schools',
       },
     ].map { |row| remove_change_link_if_editing_disallowed(row) }

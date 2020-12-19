@@ -63,16 +63,6 @@ class Support::UsersController < Support::BaseController
     @maximum_search_result_number_reached = (@results.size == SEARCH_RESULTS_LIMIT)
   end
 
-  def associated_organisations
-    @schools = @user.schools.order(:name)
-    @responsible_body = @user.responsible_body
-    @user_responsible_body_form = Support::UserResponsibleBodyForm.new(
-      user: @user,
-      possible_responsible_bodies: ResponsibleBody.gias_status_open.order(type: :asc, name: :asc),
-    )
-    @user_school_form = Support::NewUserSchoolForm.new(user: @user)
-  end
-
   def confirm_destroy; end
 
   def destroy

@@ -13,6 +13,5 @@ class UserPolicy < SupportPolicy
 
   alias_method :search?, :readable?
   alias_method :results?, :readable?
-  alias_method :associated_organisations?, :editable?
   alias_method :confirm_destroy?, :editable?
 end

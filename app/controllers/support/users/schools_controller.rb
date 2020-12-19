@@ -2,6 +2,16 @@ class Support::Users::SchoolsController < Support::BaseController
   before_action :set_user, :set_school
   before_action { authorize User }
 
+  def index
+    @schools = @user.schools.order(:name)
+    @responsible_body = @user.responsible_body
+    @user_responsible_body_form = Support::UserResponsibleBodyForm.new(
+      user: @user,
+      possible_responsible_bodies: ResponsibleBody.gias_status_open.order(type: :asc, name: :asc),
+    )
+    @user_school_form = Support::NewUserSchoolForm.new(user: @user)
+  end
+
   def new
     @form = Support::NewUserSchoolForm.new(user: @user, name_or_urn: user_school_params[:name_or_urn])
     @schools = @form.matching_schools
@@ -14,13 +24,13 @@ class Support::Users::SchoolsController < Support::BaseController
     else
       flash[:warning] = @user_school.errors.full_messages.join("\n")
     end
-    redirect_to associated_organisations_support_user_path(@user.id)
+    redirect_to support_user_schools_path(@user)
   end
 
   def destroy
     @user.schools.destroy(@school)
     flash[:success] = "#{@user.full_name} is no longer associated with #{@school.name}"
-    redirect_to associated_organisations_support_user_path(@user.id)
+    redirect_to support_user_schools_path(@user)
   end
 
 private
