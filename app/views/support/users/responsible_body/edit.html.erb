@@ -1,0 +1,61 @@
+<%- title = t('page_titles.support.users.responsible_bodies.edit') %>
+<% content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', support_user_path(@user), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @user.full_name %></span>
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%- if @responsible_body.present? %>
+      <table class="govuk-table responsible-body">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
+            <th scope="col" class="govuk-table__header">Type</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= govuk_link_to @responsible_body.name, support_responsible_body_path(id: @responsible_body.id) %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= @responsible_body.humanized_type %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= form_for @user_responsible_body_form, url: support_user_responsible_body_path(@user), method: :patch do |f| %>
+
+                <%= f.hidden_field :responsible_body, value: nil %>
+                <%= f.govuk_submit 'Remove' %>
+              <%- end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    <%- else %>
+      <p class="govuk-body">(none)</p>
+    <%- end %>
+
+    <%= form_for @user_responsible_body_form, url: support_user_responsible_body_path(@user), method: :patch do |f| %>
+
+      <%= f.govuk_collection_select(
+        :responsible_body,
+        @user_responsible_body_form.select_responsible_body_options,
+        :id,
+        :name,
+        label: { text: 'Move to a different responsible body' }
+        ) %>
+      <%= f.govuk_submit 'Move' %>
+    <%- end %>
+  </div>
+</div>

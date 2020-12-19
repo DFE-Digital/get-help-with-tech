@@ -76,6 +76,7 @@ en:
           index: Associate with a school
         responsible_bodies:
           index: Associate with a responsible body
+          edit: Update responsible body
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices

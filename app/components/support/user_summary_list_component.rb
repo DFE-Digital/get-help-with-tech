@@ -36,7 +36,7 @@ class Support::UserSummaryListComponent < ViewComponent::Base
       {
         key: 'Responsible body',
         value: link_to_responsible_body_page_if_present,
-        change_path: associated_organisations_support_user_path(@user, anchor: 'responsible-body'),
+        change_path: edit_support_user_responsible_body_path(@user),
         action: 'responsible body',
       },
       {

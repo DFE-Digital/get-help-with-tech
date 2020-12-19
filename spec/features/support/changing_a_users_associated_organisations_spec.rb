@@ -132,9 +132,7 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def and_i_remove_the_responsible_body
-    within(associated_organisations_page.responsible_body) do
-      click_on('Remove')
-    end
+    click_on('Remove')
   end
 
   def and_i_see_a_message_telling_me_the_responsible_body_has_been_removed
@@ -189,8 +187,8 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def then_i_see_the_new_responsible_body_replaces_their_existing_responsible_body
-    expect(associated_organisations_page.responsible_body).not_to have_text(trust.name)
-    expect(associated_organisations_page.responsible_body).to have_text(other_local_authority.name)
+    expect(user_page.summary_list['Responsible body']).not_to have_text(trust.name)
+    expect(user_page.summary_list['Responsible body']).to have_text(other_local_authority.name)
   end
 
   def and_i_see_a_message_telling_me_the_responsible_body_has_been_associated

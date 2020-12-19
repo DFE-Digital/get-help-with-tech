@@ -1,10 +1,18 @@
 class Support::Users::ResponsibleBodyController < Support::BaseController
   before_action :set_user
 
+  def edit
+    @responsible_body = @user.responsible_body
+    @user_responsible_body_form = Support::UserResponsibleBodyForm.new(
+      user: @user,
+      possible_responsible_bodies: ResponsibleBody.gias_status_open.order(type: :asc, name: :asc),
+    )
+  end
+
   def update
     @user.update!(responsible_body_id: responsible_body_params[:responsible_body])
     flash[:success] = success_message
-    redirect_to associated_organisations_support_user_path(@user.id)
+    redirect_to support_user_path(@user)
   end
 
 private
