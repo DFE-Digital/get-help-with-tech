@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Changing a users associated organisations' do
+RSpec.feature 'Changing users’ associated organisations' do
   let(:support_user) { create(:dfe_user) }
   let(:computacenter_support_user) { create(:computacenter_user) }
   let(:school_user) { create(:school_user) }
@@ -9,23 +9,13 @@ RSpec.feature 'Changing a users associated organisations' do
   let(:trust_school_2) { create(:school, responsible_body: trust, name: 'BBB school') }
   let(:other_school) { create(:school, name: 'CCC school') }
   let(:responsible_body_user_with_multiple_schools) { create(:trust_user, responsible_body: trust, schools: [trust_school_1, trust_school_2]) }
-  let(:other_trust) { create(:trust) }
   let!(:other_local_authority) { create(:local_authority, name: 'AN ALL-UPPERCASE LA') }
-  let(:search_page) { PageObjects::Support::Users::SearchPage.new }
   let(:results_page) { PageObjects::Support::Users::ResultsPage.new }
   let(:user_page) { PageObjects::Support::Users::UserPage.new }
   let(:associated_organisations_page) { PageObjects::Support::Users::AssociatedOrganisationsPage.new }
   let(:matching_schools_page) { PageObjects::Support::Users::MatchingSchoolsPage.new }
 
-  scenario 'a support user sees a Change link next to the users assocations' do
-    given_i_am_logged_in_as_a_support_user
-    when_i_search_for_an_existing_user_by_email
-    then_i_see_their_associated_organisations
-    and_i_navigate_to_the_user_page
-    and_i_see_a_link_to_change_their_associated_organisations
-  end
-
-  scenario 'a Computacenter support user does not see a Change link next to the users assocations' do
+  scenario 'a Computacenter support user cannot change a user’s organisations' do
     given_i_am_logged_in_as_a_computacenter_support_user
     when_i_search_for_an_existing_user_by_email
     then_i_see_their_associated_organisations
@@ -33,17 +23,7 @@ RSpec.feature 'Changing a users associated organisations' do
     and_i_do_not_see_a_link_to_change_their_associated_organisations
   end
 
-  scenario 'clicking the Change link shows the associated organisations' do
-    given_i_am_logged_in_as_a_support_user
-    when_i_search_for_an_existing_user_by_email
-    and_i_navigate_to_the_user_page
-    and_i_click_the_link_to_change_their_associated_organisations
-    then_i_see_their_associated_schools_and_responsible_body
-    and_i_see_a_link_to_remove_each_school
-    and_i_see_a_link_to_remove_the_responsible_body
-  end
-
-  scenario 'clicking a school Remove link removes the school' do
+  scenario 'a support agent removes a user from a school' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_associated_organisations_page
     and_i_click_the_remove_link_next_to_a_school
@@ -51,15 +31,16 @@ RSpec.feature 'Changing a users associated organisations' do
     and_i_see_a_message_telling_me_the_school_has_been_removed
   end
 
-  scenario 'clicking the responsible body Remove link removes the responsible_body' do
+  scenario 'a support agent removes a user from a responsible body' do
     given_i_am_logged_in_as_a_support_user
-    when_i_visit_a_users_associated_organisations_page
-    and_i_click_the_remove_link_next_to_the_responsible_body
+    when_i_visit_a_users_support_page
+    and_i_start_changing_the_responsible_body
+    and_i_remove_the_responsible_body
     then_i_see_the_user_has_no_responsible_body
     and_i_see_a_message_telling_me_the_responsible_body_has_been_removed
   end
 
-  scenario 'entering a partial school name lets me associate schools matching that name' do
+  scenario 'a support agent adds a user to a school by partially matching on the school name' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_associated_organisations_page
     and_i_enter_a_partial_school_name_in_any_case
@@ -70,7 +51,7 @@ RSpec.feature 'Changing a users associated organisations' do
     and_i_see_a_message_telling_me_the_school_has_been_associated
   end
 
-  scenario 'entering the URN of a school that is already associated shows it as already associated' do
+  scenario 'a support user cannot add a user to a school twice' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_associated_organisations_page
     and_i_enter_a_school_urn_that_the_user_already_has
@@ -78,9 +59,10 @@ RSpec.feature 'Changing a users associated organisations' do
     and_i_dont_see_a_button_to_associate_the_school
   end
 
-  scenario 'moving the user to a different responsible body' do
+  scenario 'a support agent moves the user to a different responsible body' do
     given_i_am_logged_in_as_a_support_user
-    when_i_visit_a_users_associated_organisations_page
+    when_i_visit_a_users_support_page
+    and_i_start_changing_the_responsible_body
     and_i_select_a_new_responsible_body_name
     then_i_see_the_new_responsible_body_replaces_their_existing_responsible_body
     and_i_see_a_message_telling_me_the_responsible_body_has_been_associated
@@ -114,35 +96,12 @@ RSpec.feature 'Changing a users associated organisations' do
     expect(results_page.users.first).to have_text(trust_school_2.name)
   end
 
-  def and_i_see_a_link_to_change_their_associated_organisations
-    expect(user_page.summary_list).to have_link('Change responsible body')
-  end
-
   def and_i_do_not_see_a_link_to_change_their_associated_organisations
     expect(results_page.users.first).not_to have_link('Change responsible body')
   end
 
-  def and_i_click_the_link_to_change_their_associated_organisations
-    within(user_page.summary_list) do
-      click_on 'Change responsible body'
-    end
-  end
-
-  def then_i_see_their_associated_schools_and_responsible_body
-    expect(associated_organisations_page).to be_displayed
-    expect(associated_organisations_page.schools.size).to eq(2)
-    expect(associated_organisations_page.schools[0]).to have_text(trust_school_1.name)
-    expect(associated_organisations_page.schools[1]).to have_text(trust_school_2.name)
-    expect(associated_organisations_page.responsible_body).to have_text(trust.name)
-  end
-
-  def and_i_see_a_link_to_remove_each_school
-    expect(associated_organisations_page.schools[0]).to have_css('input[type=submit][value=Remove]')
-    expect(associated_organisations_page.schools[1]).to have_css('input[type=submit][value=Remove]')
-  end
-
-  def and_i_see_a_link_to_remove_the_responsible_body
-    expect(associated_organisations_page.responsible_body).to have_css('input[type=submit][value=Remove]')
+  def when_i_visit_a_users_support_page
+    visit support_user_path(responsible_body_user_with_multiple_schools)
   end
 
   def when_i_visit_a_users_associated_organisations_page
@@ -168,7 +127,11 @@ RSpec.feature 'Changing a users associated organisations' do
     expect(associated_organisations_page).not_to have_responsible_body
   end
 
-  def and_i_click_the_remove_link_next_to_the_responsible_body
+  def and_i_start_changing_the_responsible_body
+    click_on 'Change responsible body'
+  end
+
+  def and_i_remove_the_responsible_body
     within(associated_organisations_page.responsible_body) do
       click_on('Remove')
     end
@@ -232,10 +195,5 @@ RSpec.feature 'Changing a users associated organisations' do
 
   def and_i_see_a_message_telling_me_the_responsible_body_has_been_associated
     expect(associated_organisations_page).to have_text("#{responsible_body_user_with_multiple_schools.full_name} is now associated with #{other_local_authority.name}")
-  end
-
-  def and_i_enter_a_responsible_body_name_that_the_user_already_has
-    fill_in 'Responsible body name', with: trust.name
-    associated_organisations_page.submit_responsible_body_name.click
   end
 end
