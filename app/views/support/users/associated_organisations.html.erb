@@ -36,7 +36,7 @@
                 <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
               </td>
               <td class="govuk-table__cell">
-                <%= govuk_button_to('Remove', support_user_school_path(urn: school.urn, id: @user.id), method: :delete, form_class: 'form-inline')  %>
+                <%= govuk_button_to('Remove', support_user_school_path(@user, urn: school.urn), method: :delete, form_class: 'form-inline')  %>
               </td>
             </tr>
           <% end %>

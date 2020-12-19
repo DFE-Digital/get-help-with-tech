@@ -18,8 +18,7 @@ class Support::Users::SchoolsController < Support::BaseController
   end
 
   def destroy
-    @user_school = @user.user_schools.find_by_school_id(@school.id)
-    @user_school&.destroy!
+    @user.schools.destroy(@school)
     flash[:success] = "#{@user.full_name} is no longer associated with #{@school.name}"
     redirect_to associated_organisations_support_user_path(@user.id)
   end
@@ -27,12 +26,12 @@ class Support::Users::SchoolsController < Support::BaseController
 private
 
   def set_user
-    @user = User.find(params[:id])
-    authorize @user
+    @user = User.find(params[:user_id])
+    authorize @user, :edit?
   end
 
   def set_school
-    @school = School.find_by_urn(params[:urn])
+    @school = @user.schools.find_by(urn: params[:urn]) || School.gias_status_open.find_by(urn: params[:urn])
   end
 
   def user_school_params(opts = params)

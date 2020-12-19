@@ -183,8 +183,8 @@ Rails.application.routes.draw do
       member do
         get 'associated-organisations', as: :associated_organisations
         get 'confirm-deletion', to: 'users#confirm_destroy'
-        resources :schools, only: %i[index create destroy], as: :user_schools, controller: 'users/schools', param: :urn
       end
+      resources :schools, only: %i[index create destroy], controller: 'users/schools', param: :urn
       resource :responsible_body, only: %i[edit update], controller: 'users/responsible_body', path: 'responsible-body'
     end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
