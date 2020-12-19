@@ -183,9 +183,9 @@ Rails.application.routes.draw do
       member do
         get 'associated-organisations', as: :associated_organisations
         get 'confirm-deletion', to: 'users#confirm_destroy'
-        patch 'responsible-body', to: 'users#update_responsible_body', as: :update_responsible_body
         resources :schools, only: %i[index create destroy], as: :user_schools, controller: 'users/schools', param: :urn
       end
+      resource :responsible_body, only: %i[update], controller: 'users/responsible_body', path: 'responsible-body'
     end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end

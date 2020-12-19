@@ -79,7 +79,7 @@
               <%= @responsible_body.humanized_type %>
             </td>
             <td class="govuk-table__cell">
-              <%= form_for @user_responsible_body_form, url: update_responsible_body_support_user_path(@user), method: :patch do |f| %>
+              <%= form_for @user_responsible_body_form, url: support_user_responsible_body_path(@user), method: :patch do |f| %>
 
                 <%= f.hidden_field :responsible_body, value: nil %>
                 <%= f.govuk_submit 'Remove' %>
@@ -93,7 +93,7 @@
       <p class="govuk-body">(none)</p>
     <%- end %>
 
-    <%= form_for @user_responsible_body_form, url: update_responsible_body_support_user_path(@user), method: :patch do |f| %>
+    <%= form_for @user_responsible_body_form, url: support_user_responsible_body_path(@user), method: :patch do |f| %>
 
       <%= f.govuk_collection_select(
         :responsible_body,

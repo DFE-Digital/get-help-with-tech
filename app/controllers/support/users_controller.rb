@@ -73,12 +73,6 @@ class Support::UsersController < Support::BaseController
     @user_school_form = Support::NewUserSchoolForm.new(user: @user)
   end
 
-  def update_responsible_body
-    @user.update!(responsible_body_id: responsible_body_params[:responsible_body])
-    flash[:success] = success_message
-    redirect_to associated_organisations_support_user_path(@user.id)
-  end
-
   def confirm_destroy; end
 
   def destroy
@@ -114,18 +108,6 @@ private
 
   def search_params
     params.require(:support_user_search_form).permit(:email_address_or_full_name)
-  end
-
-  def responsible_body_params
-    params.require(:support_user_responsible_body_form).permit(:responsible_body)
-  end
-
-  def success_message
-    if @user.responsible_body.present?
-      "#{@user.full_name} is now associated with #{@user.responsible_body.name}"
-    else
-      "#{@user.full_name} is no longer associated with a responsible body"
-    end
   end
 
   def set_user
