@@ -2,7 +2,7 @@ import accessibleAutocomplete from "accessible-autocomplete";
 
 const initResponsibleBodiesAutocomplete = () => {
   try {
-    const id = "#support-user-responsible-body-form-responsible-body-field";
+    const id = "#support-user-responsible-body-form-responsible-body-id-field";
     const responsibleBodiesSelect = document.querySelector(id);
     if (!responsibleBodiesSelect) return;
 
