@@ -138,7 +138,8 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def and_i_remove_the_responsible_body
-    click_on 'Remove'
+    choose 'Remove user from responsible body'
+    click_on 'Update'
   end
 
   def and_i_see_a_message_telling_me_the_responsible_body_has_been_removed
@@ -199,8 +200,9 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def and_i_select_a_new_responsible_body_name
-    select other_local_authority.name, from: 'support-user-responsible-body-form-responsible-body-field'
-    click_on 'Move'
+    choose 'Move user to a different responsible body'
+    select other_local_authority.name, from: 'New responsible body'
+    click_on 'Update'
   end
 
   def then_i_see_the_new_responsible_body_replaces_their_existing_responsible_body

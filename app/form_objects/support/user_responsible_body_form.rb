@@ -1,15 +1,20 @@
 class Support::UserResponsibleBodyForm
   include ActiveModel::Model
 
-  attr_accessor :user
+  attr_accessor :user, :change, :possible_responsible_bodies
+  attr_writer :responsible_body_id
 
-  def initialize(user:, possible_responsible_bodies: nil)
-    @user = user
-    @possible_responsible_bodies = possible_responsible_bodies
+  def new_responsible_body_id
+    case change
+    when 'add', 'move' then responsible_body_id
+    when 'remove' then nil
+    else
+      raise "Unexpected change #{change}"
+    end
   end
 
-  def responsible_body
-    @user.responsible_body&.id
+  def responsible_body_id
+    @responsible_body_id || @user.responsible_body&.id
   end
 
   def select_responsible_body_options
