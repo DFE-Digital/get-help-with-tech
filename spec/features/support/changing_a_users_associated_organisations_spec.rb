@@ -26,9 +26,9 @@ RSpec.feature 'Changing users’ associated organisations' do
   scenario 'a support agent removes a user from a school' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_schools_page
-    and_i_click_the_remove_link_next_to_a_school
+    and_i_remove_the_first_school
     then_i_no_longer_see_the_removed_school_in_their_schools
-    and_i_see_a_message_telling_me_the_school_has_been_removed
+    and_i_see_a_message_telling_me_the_schools_have_been_updated
   end
 
   scenario 'a support agent removes a user from a responsible body' do
@@ -108,19 +108,18 @@ RSpec.feature 'Changing users’ associated organisations' do
     visit support_user_schools_path(responsible_body_user_with_multiple_schools)
   end
 
-  def and_i_click_the_remove_link_next_to_a_school
-    within(user_schools_page.schools[0]) do
-      click_on('Remove')
-    end
+  def and_i_remove_the_first_school
+    uncheck trust_school_1.name
+    click_on 'Update'
   end
 
   def then_i_no_longer_see_the_removed_school_in_their_schools
-    expect(user_schools_page.schools.size).to eq(1)
-    expect(user_schools_page.schools[0]).to have_text(trust_school_2.name)
+    expect(user_page.summary_list['Schools']).not_to have_text(trust_school_1.name)
+    expect(user_page.summary_list['Schools']).to have_text(trust_school_2.name)
   end
 
-  def and_i_see_a_message_telling_me_the_school_has_been_removed
-    expect(user_schools_page).to have_text("#{responsible_body_user_with_multiple_schools.full_name} is no longer associated with #{trust_school_1.name}")
+  def and_i_see_a_message_telling_me_the_schools_have_been_updated
+    expect(user_schools_page).to have_text('Schools updated')
   end
 
   def then_i_see_the_user_has_no_responsible_body
@@ -158,8 +157,7 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def then_i_see_the_school_added_to_their_schools
-    expect(user_schools_page.schools.size).to eq(3)
-    expect(user_schools_page.schools[2]).to have_text(other_school.name)
+    expect(user_page.summary_list['Schools']).to have_text(other_school.name)
   end
 
   def and_i_see_a_message_telling_me_the_school_has_been_associated

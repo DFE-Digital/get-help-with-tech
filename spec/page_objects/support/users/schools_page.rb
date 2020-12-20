@@ -6,7 +6,6 @@ module PageObjects
 
         element :school_name_or_urn, 'input#support-new-user-school-form-name-or-urn-field'
         element :submit_school_name_or_urn, '#new_support_new_user_school_form input[value=Continue]'
-        elements :schools, 'table.schools tbody tr'
       end
     end
   end

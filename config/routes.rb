@@ -183,7 +183,8 @@ Rails.application.routes.draw do
       member do
         get 'confirm-deletion', to: 'users#confirm_destroy'
       end
-      resources :schools, only: %i[index new create destroy], controller: 'users/schools', param: :urn
+      resources :schools, only: %i[index new create], controller: 'users/schools', param: :urn
+      patch 'schools', to: 'users/schools#update_schools', as: :update_schools
       resource :responsible_body, only: %i[edit update], controller: 'users/responsible_body', path: 'responsible-body'
     end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
