@@ -24,13 +24,13 @@ class Support::Users::SchoolsController < Support::BaseController
     else
       flash[:warning] = @user_school.errors.full_messages.join("\n")
     end
-    redirect_to support_user_schools_path(@user)
+    redirect_to support_user_path(@user)
   end
 
-  def destroy
-    @user.schools.destroy(@school)
-    flash[:success] = "#{@user.full_name} is no longer associated with #{@school.name}"
-    redirect_to support_user_schools_path(@user)
+  def update_schools
+    @user.schools = @user.schools.where(id: update_schools_params)
+    flash[:success] = 'Schools updated'
+    redirect_to support_user_path(@user)
   end
 
 private
@@ -46,5 +46,9 @@ private
 
   def user_school_params(opts = params)
     opts.fetch('support_school_suggestion_form').permit(:name_or_urn, :school_urn)
+  end
+
+  def update_schools_params
+    params.require(:user).require(:school_ids).reject(&:blank?)
   end
 end
