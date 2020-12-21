@@ -3,7 +3,7 @@ class Support::NewUserSchoolForm
 
   MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 50
 
-  attr_accessor :user, :name_or_urn
+  attr_accessor :user, :name_or_urn, :urn
 
   def initialize(user:, name_or_urn: nil)
     @user = user
@@ -14,7 +14,23 @@ class Support::NewUserSchoolForm
     School
       .matching_name_or_urn(@name_or_urn)
       .includes(:responsible_body)
+      .where.not(id: @user.school_ids)
       .order(:name)
       .limit(MAX_NUMBER_OF_SUGGESTED_SCHOOLS)
+      .map { |school| option_for(school) }
+  end
+
+private
+
+  def option_for(school)
+    meta_info = [school.urn, school.town, school.postcode].reject(&:blank?).compact
+    display_name = "#{school.name} (#{meta_info.join(', ')})"
+    OpenStruct.new(
+      id: school.id,
+      name: display_name,
+      urn: school.urn,
+      responsible_body: school.responsible_body,
+      responsible_body_id: school.responsible_body_id,
+    )
   end
 end

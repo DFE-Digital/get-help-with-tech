@@ -41,11 +41,11 @@ private
   end
 
   def set_school
-    @school = @user.schools.find_by(urn: params[:urn]) || School.gias_status_open.find_by(urn: params[:urn])
+    @school = @user.schools.find_by(urn: params[:urn]) || School.gias_status_open.find_by(urn: params[:urn] || user_school_params[:urn])
   end
 
   def user_school_params(opts = params)
-    opts.fetch('support_new_user_school_form').permit(:name_or_urn)
+    opts.fetch('support_new_user_school_form', {}).permit(:name_or_urn, :urn)
   end
 
   def update_schools_params

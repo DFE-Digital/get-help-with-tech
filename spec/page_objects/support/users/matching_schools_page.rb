@@ -4,9 +4,8 @@ module PageObjects
       class MatchingSchoolsPage < PageObjects::BasePage
         set_url '/support/users/{id}/schools/new'
 
-        element :associate_school_link, 'table.schools tbody tr input[type=submit][value=Associate]'
-        elements :schools, 'table.schools tbody tr'
-        elements :school_names, 'table.schools tbody tr td:first-child a'
+        element :form_with_suggested_schools, '#new_support_new_user_school_form'
+        element :existing_schools, '#existing-schools'
       end
     end
   end
