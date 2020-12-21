@@ -5,4 +5,5 @@ class SupportTicket::SchoolDetailsForm
 
   validates :school_name, presence: { message: 'Enter your school name' }
   validates :school_urn, presence: { message: 'Enter your school URN' }
+  validates :school_urn, format: { with: /\A\d{6}\z/, message: 'The school URN must be 6 digits' }
 end
