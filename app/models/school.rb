@@ -1,5 +1,6 @@
 class School < ApplicationRecord
   has_paper_trail
+  include PgSearch::Model
 
   belongs_to :responsible_body
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
@@ -19,7 +20,7 @@ class School < ApplicationRecord
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
-  scope :matching_name_or_urn, ->(name_or_urn) { where(urn: name_or_urn).or(where('name ILIKE(?)', "%#{name_or_urn}%")) }
+  pg_search_scope :matching_name_or_urn, against: %i[name urn], using: { tsearch: { prefix: true } }
 
   before_create :set_computacenter_change
 
