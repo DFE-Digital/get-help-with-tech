@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.feature 'Managing responsible body users in the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
   let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
+  let(:invite_new_user_page) { PageObjects::Support::Users::InviteNewUserPage.new }
+  let(:edit_user_page) { PageObjects::Support::Users::EditUserPage.new }
 
   scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_is_a_responsible_body_with_users
@@ -88,12 +90,11 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   end
 
   def when_try_adding_a_new_user_with_invalid_details
-    click_on 'Invite a new user'
+    responsible_body_page.invite_a_new_user_link.click
 
-    fill_in 'Full name', with: ''
-    fill_in 'Email address', with: 'k'
-
-    click_on 'Submit'
+    invite_new_user_page.name.set ''
+    invite_new_user_page.email_address.set 'k'
+    invite_new_user_page.send_invite.click
   end
 
   def then_i_can_see_error_messages
@@ -102,13 +103,14 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
   end
 
   def and_when_i_retry_adding_a_new_user_with_valid_details
-    fill_in 'Full name', with: 'Kate Krampton'
-    fill_in 'Email address', with: 'kate.krampton@coventry.gov.uk'
-
-    click_on 'Submit'
+    invite_new_user_page.name.set 'Kate Krampton'
+    invite_new_user_page.email_address.set 'kate.krampton@coventry.gov.uk'
+    invite_new_user_page.send_invite.click
   end
 
   def then_i_can_see_the_responsible_body_with_new_users_as_well
+    click_on local_authority.name
+
     expect(responsible_body_page.users.size).to eq(3)
 
     expect(responsible_body_page.users[0]).to have_text('Zeta Zane')
@@ -124,15 +126,16 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
 
   def when_i_try_updating_a_user_with_invalid_details
     click_link 'Edit user Amy Adams'
-    fill_in 'Name', with: ''
-    fill_in 'Email address', with: 'a'
-    click_on 'Save changes'
+
+    edit_user_page.name.set ''
+    edit_user_page.email_address.set 'a'
+    edit_user_page.save_changes.click
   end
 
   def when_i_retry_updating_a_user_with_valid_details
-    fill_in 'Name', with: 'Amy Wirral'
-    fill_in 'Email address', with: 'amy.wirral@coventry.gov.uk'
-    click_on 'Save changes'
+    edit_user_page.name.set 'Amy Wirral'
+    edit_user_page.email_address.set 'amy.wirral@coventry.gov.uk'
+    edit_user_page.save_changes.click
 
     click_on local_authority.name
   end

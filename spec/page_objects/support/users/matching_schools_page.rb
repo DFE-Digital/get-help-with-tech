@@ -2,7 +2,7 @@ module PageObjects
   module Support
     module Users
       class MatchingSchoolsPage < PageObjects::BasePage
-        set_url '/support/users/{id}/schools'
+        set_url '/support/users/{id}/schools/new'
 
         element :associate_school_link, 'table.schools tbody tr input[type=submit][value=Associate]'
         elements :schools, 'table.schools tbody tr'

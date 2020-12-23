@@ -69,13 +69,15 @@ en:
           search: Search for schools by URN
           results: School search results
       users:
-        associated_organisations: Associated organisations
         search: Find responsible body or school users
         results: Users
+        new: Invite a new user
         schools:
-          index: Associate with a school
+          index: Update schools
+          new: Associate with a school
         responsible_bodies:
           index: Associate with a responsible body
+          edit: Update responsible body
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices
@@ -154,7 +156,6 @@ en:
       can_order_devices: Yes, give them access to the TechSource website
       can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
-    new_school_user: Invite a new user
     edit_user: Change user details
     confirm_destroy_user: Are you sure you want to delete this user?
     school_user_welcome_wizard:

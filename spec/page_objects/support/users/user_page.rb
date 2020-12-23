@@ -4,7 +4,7 @@ module PageObjects
       class UserPage < PageObjects::BasePage
         set_url '/support/users{/user_id}'
 
-        element :summary_list, 'dl'
+        section :summary_list, SummaryListSection, '.govuk-summary-list'
       end
     end
   end

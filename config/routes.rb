@@ -150,7 +150,7 @@ Rails.application.routes.draw do
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
-      resources :users, only: %i[new create], controller: 'responsible_bodies/users'
+      resources :users, only: %i[new create], controller: 'users'
     end
     resources :schools, only: %i[show], param: :urn do
       collection do
@@ -162,7 +162,7 @@ Rails.application.routes.draw do
       end
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'
-      resources :users, only: %i[new create], controller: 'schools/users'
+      resources :users, only: %i[new create], controller: 'users'
 
       get '/devices/enable-orders', to: 'schools/devices/order_status#edit', as: :enable_orders
       get '/devices/enable-orders/confirm', to: 'schools/devices/order_status#confirm', as: :confirm_enable_orders
@@ -181,11 +181,10 @@ Rails.application.routes.draw do
         post 'results'
       end
       member do
-        get 'associated-organisations', as: :associated_organisations
         get 'confirm-deletion', to: 'users#confirm_destroy'
-        patch 'responsible-body', to: 'users#update_responsible_body', as: :update_responsible_body
-        resources :schools, only: %i[index create destroy], as: :user_schools, controller: 'users/schools', param: :urn
       end
+      resources :schools, only: %i[index new create destroy], controller: 'users/schools', param: :urn
+      resource :responsible_body, only: %i[edit update], controller: 'users/responsible_body', path: 'responsible-body'
     end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
