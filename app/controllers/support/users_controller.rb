@@ -8,6 +8,10 @@ class Support::UsersController < Support::BaseController
     set_school_if_present
     set_responsible_body_if_present
 
+    @form = Support::NewUserForm.new(
+      school: @school,
+      responsible_body: @responsible_body,
+    )
     @user = User.new
     authorize @user
   end
@@ -30,6 +34,10 @@ class Support::UsersController < Support::BaseController
     if @user.persisted?
       redirect_to support_user_path(@user)
     else
+      @form = Support::NewUserForm.new(
+        school: @school,
+        responsible_body: @responsible_body,
+      )
       render :new, status: :unprocessable_entity
     end
   end
