@@ -71,6 +71,7 @@ en:
       users:
         search: Find responsible body or school users
         results: Users
+        new: Invite a new user
         schools:
           index: Update schools
           new: Associate with a school
@@ -155,7 +156,6 @@ en:
       can_order_devices: Yes, give them access to the TechSource website
       can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
-    new_school_user: Invite a new user
     edit_user: Change user details
     confirm_destroy_user: Are you sure you want to delete this user?
     school_user_welcome_wizard:

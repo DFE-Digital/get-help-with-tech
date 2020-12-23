@@ -1,10 +1,4 @@
-<%
-  title = if @school
-            t('page_titles.new_school_user')
-          elsif @responsible_body
-            t('page_titles.new_responsible_body_user')
-          end
-%>
+<% title = t('page_titles.support.users.new') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
   <% if @school
