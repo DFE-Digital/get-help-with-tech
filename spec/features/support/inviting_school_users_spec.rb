@@ -5,7 +5,7 @@ RSpec.feature 'Inviting school users' do
   let(:school) { create(:school) }
   let(:other_school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
-  let(:new_school_user_page) { PageObjects::Support::Schools::NewUserPage.new }
+  let(:new_school_user_page) { PageObjects::Support::Users::InviteNewUserPage.new }
   let(:existing_user) { create(:school_user, email_address: 'existinguser@example.com', schools: [other_school]) }
 
   before do
@@ -61,20 +61,20 @@ RSpec.feature 'Inviting school users' do
 
   def when_fill_in_invite_school_user_form
     new_school_user_page.name.set 'John Doe'
-    new_school_user_page.email.set 'john@example.com'
+    new_school_user_page.email_address.set 'john@example.com'
     new_school_user_page.phone.set '020 1'
     new_school_user_page.orders_devices_no.click
   end
 
   def when_i_fill_in_the_existing_users_details
     new_school_user_page.name.set 'New Name'
-    new_school_user_page.email.set 'existinguser@example.com'
+    new_school_user_page.email_address.set 'existinguser@example.com'
     new_school_user_page.phone.set '0202 022202'
     new_school_user_page.orders_devices_no.click
   end
 
   def and_i_submit_invite_school_user_form
-    new_school_user_page.submit.click
+    new_school_user_page.send_invite.click
   end
 
   def and_i_click_through_to_the_school_page
