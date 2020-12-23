@@ -3,15 +3,19 @@ class Support::UsersController < Support::BaseController
 
   before_action :set_user, except: %i[new create search results]
   before_action { authorize User }
-  before_action :set_school_if_present, only: %i[new create]
-  before_action :set_responsible_body_if_present, only: %i[new create]
 
   def new
+    set_school_if_present
+    set_responsible_body_if_present
+
     @user = User.new
     authorize @user
   end
 
   def create
+    set_school_if_present
+    set_responsible_body_if_present
+
     authorize User, :create?
     if @school
       @user = CreateUserService.invite_school_user(
