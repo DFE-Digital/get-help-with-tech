@@ -11,13 +11,21 @@ class Support::NewUserSchoolForm
   end
 
   def matching_schools
-    School
+    @matching_schools ||= School
       .matching_name_or_urn(@name_or_urn)
       .includes(:responsible_body)
       .where.not(id: @user.school_ids)
       .order(:name)
       .limit(MAX_NUMBER_OF_SUGGESTED_SCHOOLS)
       .map { |school| option_for(school) }
+  end
+
+  def matching_schools_capped?
+    matching_schools.size == MAX_NUMBER_OF_SUGGESTED_SCHOOLS
+  end
+
+  def maximum_matching_schools
+    MAX_NUMBER_OF_SUGGESTED_SCHOOLS
   end
 
 private

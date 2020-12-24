@@ -19,7 +19,8 @@
 
     <%- if @schools.present? %>
       <p class="govuk-body">
-        We found these schools which matched your search:
+        We found these schools which matched your search
+        <%- if @form.matching_schools_capped? %> (showing the first <%= @form.maximum_matching_schools %> results)<%- end %>:
       </p>
 
       <%= form_for @form, url: support_user_schools_path(@user) do |f| %>
