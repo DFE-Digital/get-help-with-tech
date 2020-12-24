@@ -19,6 +19,8 @@ class School < ApplicationRecord
   validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
+  scope :matching_name_or_urn, ->(name_or_urn) { where(urn: name_or_urn).or(where('name ILIKE(?)', "%#{name_or_urn}%")) }
+
   before_create :set_computacenter_change
 
   enum status: {

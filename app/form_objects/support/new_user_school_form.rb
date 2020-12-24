@@ -9,8 +9,9 @@ class Support::NewUserSchoolForm
   end
 
   def matching_schools
-    School.includes(:responsible_body)
-          .where('urn = ? OR name ILIKE(?)', @name_or_urn.to_i, "%#{@name_or_urn}%")
-          .order(:name)
+    School
+      .matching_name_or_urn(@name_or_urn)
+      .includes(:responsible_body)
+      .order(:name)
   end
 end
