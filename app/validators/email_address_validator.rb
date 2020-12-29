@@ -10,7 +10,7 @@ class EmailAddressValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)
     if value.blank? || !value.match?(EMAIL_REGEX)
-      record.errors[attribute] << I18n.t!('activerecord.errors.models.user.attributes.email_address.invalid')
+      record.errors.add attribute, :invalid
     end
   end
 end
