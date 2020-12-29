@@ -5,10 +5,7 @@ class Support::NewUserSchoolForm
 
   attr_accessor :user, :name_or_urn, :urn
 
-  def initialize(user:, name_or_urn: nil)
-    @user = user
-    @name_or_urn = name_or_urn
-  end
+  validates :name_or_urn, length: { minimum: 3 }
 
   def matching_schools
     @matching_schools ||= School

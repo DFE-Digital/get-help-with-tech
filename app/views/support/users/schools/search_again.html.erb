@@ -1,0 +1,18 @@
+<%- title = t('page_titles.support.users.schools.new') %>
+<% content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', support_user_schools_path(@user), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @user.full_name %></span>
+      <%= title %>
+    </h1>
+
+    <%= form_for @form, url: new_support_user_school_path(@user), method: :get do |f| %>
+    <%= f.govuk_error_summary %>
+      <%= f.govuk_text_field :name_or_urn, width: 'two-thirds', hint: { text: 'Enter part of a school name or URN' } %>
+      <%= f.govuk_submit 'Search again' %>
+    <%- end %>
+  </div>
+</div>

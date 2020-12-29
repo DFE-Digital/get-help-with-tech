@@ -14,7 +14,11 @@ class Support::Users::SchoolsController < Support::BaseController
 
   def new
     @form = Support::NewUserSchoolForm.new(user: @user, name_or_urn: user_school_params[:name_or_urn])
-    @schools = @form.matching_schools
+    if @form.valid?
+      @schools = @form.matching_schools
+    else
+      render :search_again, status: :unprocessable_entity
+    end
   end
 
   def create
