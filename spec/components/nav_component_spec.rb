@@ -4,7 +4,7 @@ RSpec.describe NavComponent do
   let(:user) { build(:local_authority_user) }
   let(:current_path) { '/current/path' }
   let(:test_context) { ActionView::LookupContext.new(ActionController::Base.view_paths) }
-  let(:test_view) { ActionView::Base.new(test_context, {}) }
+  let(:test_view) { ActionView::Base.new(test_context, {}, ActionController::Base.new) }
 
   subject(:nav) { NavComponent.new(current_path: current_path, user: user) }
 
