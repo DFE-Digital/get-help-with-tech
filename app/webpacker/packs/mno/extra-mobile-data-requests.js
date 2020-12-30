@@ -1,17 +1,42 @@
-hideOnLoad = function() {
-  $('.non-js-only').hide();
-  $('.js-only').show();
-}
+const hideFallbackOnLoad = (component) => {
+  component.querySelectorAll('.non-js-only').forEach((el) => {
+    el.style.display = 'none'
+  })
 
-setupSelectAllNone = function() {
-  $('#all-rows').change(function() {
-    className = $(this).parent().data('controls')
-    controlled_items = $(this).closest('table').find('.' + className).find('input[type=checkbox]')
-    controlled_items.prop('checked', $(this).prop('checked'))
+  component.querySelectorAll('.js-only').forEach((el) => {
+    el.style.display = 'block'
   })
 }
 
+const changeCheckboxStateForEachRow = (event) => {
+  const $allNoneCheckbox = event.target
+  const controlledItems = $allNoneCheckbox.closest('table').querySelectorAll('tbody input[type=checkbox]')
 
-hideOnLoad();
-setupSelectAllNone();
+  controlledItems.forEach((checkbox) => {
+    checkbox.checked = $allNoneCheckbox.checked
+  })
+}
+
+let setupIndividualComponent = ($component) => {
+  const $selectAllNoneCheckbox = $component.querySelector('thead input[type=checkbox]')
+
+  hideFallbackOnLoad($component)
+
+  $selectAllNoneCheckbox.addEventListener('change', changeCheckboxStateForEachRow)
+}
+
+const initSelectAllNone = () => {
+  const $components = document.querySelectorAll('[data-module="app-select-all-none"]')
+
+  if( $components.length === 0 ){ return false }
+
+  $components.forEach((component) =>{
+    setupIndividualComponent(component)
+  })
+}
+
+export {
+  initSelectAllNone,
+  setupIndividualComponent
+}
 
