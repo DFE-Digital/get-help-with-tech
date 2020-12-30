@@ -9,8 +9,7 @@ import initWarnOnUnsavedChanges from "./warn-on-unsaved-changes";
 
 initAll();
 initWarnOnUnsavedChanges();
+import {initSelectAllNone} from './mno/extra-mobile-data-requests'
 
-require('jquery')
-require('./mno/extra-mobile-data-requests.js');
-
+initSelectAllNone();
 initResponsibleBodiesAutocomplete();
