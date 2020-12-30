@@ -134,7 +134,7 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'
-  gem 'webdrivers', '~> 4.3'
+  gem 'webdrivers', '~> 4.4'
   gem 'shoulda-matchers', '~> 4.4'
   gem 'rails-controller-testing'
 end
