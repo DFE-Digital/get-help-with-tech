@@ -11,6 +11,5 @@ initAll();
 initWarnOnUnsavedChanges();
 import {initSelectAllNone} from './mno/extra-mobile-data-requests'
 
-require('jquery')
 initSelectAllNone();
 initResponsibleBodiesAutocomplete();
