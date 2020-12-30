@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="govuk-template ">
+<html lang="en" class="govuk-template">
   <head>
     <%= csp_meta_tag %>
     <%- if Settings.google.analytics.tracking_id.present? && cookies['consented-to-cookies'].to_s == 'yes' %>
@@ -19,11 +19,10 @@
     <%= favicon_link_tag asset_pack_path('media/images/govuk-apple-touch-icon-167x167.png'), rel: 'apple-touch-icon', type: 'image/png', size: '167x167' %>
     <%= favicon_link_tag asset_pack_path('media/images/govuk-apple-touch-icon-180x180.png'), rel: 'apple-touch-icon', type: 'image/png', size: '180x180' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application', defer: true %>
     <%= yield(:head) %>
   </head>
 
-  <body class="govuk-template__body ">
+  <body class="govuk-template__body">
     <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
@@ -117,5 +116,6 @@
         </div>
       </div>
     </footer>
+    <%= javascript_pack_tag 'application', defer: true %>
   </body>
 </html>

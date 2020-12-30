@@ -11,7 +11,7 @@ setupSelectAllNone = function() {
   })
 }
 
-$(document).ready(function() {
-  hideOnLoad();
-  setupSelectAllNone();
-});
+
+hideOnLoad();
+setupSelectAllNone();
+
