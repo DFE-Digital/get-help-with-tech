@@ -30,9 +30,9 @@
                 <div id="all-none-links" class="non-js-only">
                   Select
                   <br />
-                  <%= govuk_link_to 'all', {select: 'all'} %>
+                  <%= govuk_link_to 'all', mno_extra_mobile_data_requests_path(select: 'all') %>
                   |
-                  <%= govuk_link_to 'none', {select: 'none'} %>
+                  <%= govuk_link_to 'none', mno_extra_mobile_data_requests_path(select: 'none') %>
                 </div>
                 <div id="all-none-checkbox" class="js-only govuk-checkboxes__item" data-controls="all-none-item">
                   <input class="govuk-checkboxes__input" id="all-rows" name="all-rows" type="checkbox" value="all-rows">
