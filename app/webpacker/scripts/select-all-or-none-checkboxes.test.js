@@ -1,4 +1,4 @@
-import * as SelectAllNone from './extra-mobile-data-requests'
+import * as SelectAllNone from './select-all-or-none-checkboxes'
 
 describe('initSelectAllNone', () => {
 
