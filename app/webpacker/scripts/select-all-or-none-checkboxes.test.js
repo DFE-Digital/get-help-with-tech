@@ -83,16 +83,34 @@ describe('initSelectAllNone', () => {
   })
 
   describe('when method is called and there are multiple SelectAllNone components on the page', () => {
-    beforeAll(() => {
+
+
+    beforeEach(() => {
       document.body.innerHTML = mockHTML + mockHTML
+      jest.spyOn( SelectAllNone, 'setupIndividualComponent')
     })
 
-    it.skip('should setup an instance for each component on the page', () => {
-      // jest.spyOn( SelectAllNone, 'setupIndividualComponent')
-      SelectAllNone.setupIndividualComponent = jest.fn((component)=> component)
+    afterEach( () =>{
+      document.body.innerHTML = ''
+    })
+
+    it('should setup an instance for each component on the page', () => {
       SelectAllNone.initSelectAllNone()
       expect(SelectAllNone.setupIndividualComponent).toBeCalledTimes(2)
     })
 
+    it('should only tick the options for the component it relates to', () => {
+      const firstComponent = document.querySelector('table:first-of-type')
+      const firstComponentOptions = firstComponent.querySelectorAll('input[type="checkbox"]')
+      const secondComponent = document.querySelector('table:last-of-type')
+      const secondComponentOptions = secondComponent.querySelectorAll('input[type="checkbox"]')
+
+      SelectAllNone.initSelectAllNone()
+      secondComponent.querySelector('thead input[type="checkbox"]').click()
+
+      expect(Array.from(firstComponentOptions).filter(checkbox => checkbox.checked).length).toBe(0)
+      expect(Array.from(secondComponentOptions).filter(checkbox => checkbox.checked).length).toBe(4)
+
+    })
   })
 })
