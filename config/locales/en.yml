@@ -465,6 +465,10 @@ en:
               lte_allocation: Enter an allocation that’s greater than, or the same as, the current cap
             allocation:
               greater_than: Enter an allocation that’s non-negative
+        support/new_user_school_form:
+          attributes:
+            name_or_urn:
+              too_short: Enter a school name that is at least %{count} characters
   activerecord:
     attributes:
       api_token:

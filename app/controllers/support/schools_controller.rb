@@ -16,8 +16,13 @@ class Support::SchoolsController < Support::BaseController
         end
       end
     elsif request.get?
-      @schools = Support::NewUserSchoolForm.new(name_or_urn: params[:query]).matching_schools
-      render json: @schools.as_json(only: %i[id name urn postcode town])
+      @form = Support::NewUserSchoolForm.new(name_or_urn: params[:query])
+      if @form.valid?
+        @schools = @form.matching_schools
+        render json: @schools.as_json(only: %i[id name urn postcode town])
+      else
+        render json: { errors: @form.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
 

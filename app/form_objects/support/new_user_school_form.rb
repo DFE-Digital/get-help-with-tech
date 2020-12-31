@@ -5,6 +5,8 @@ class Support::NewUserSchoolForm
 
   attr_accessor :user, :name_or_urn
 
+  validates :name_or_urn, length: { minimum: 3 }
+
   def matching_schools
     School
       .matching_name_or_urn(@name_or_urn)
