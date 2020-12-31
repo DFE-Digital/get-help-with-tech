@@ -17,7 +17,7 @@ const changeCheckboxStateForEachRow = (event) => {
   })
 }
 
-let setupIndividualComponent = ($component) => {
+export const setupIndividualComponent = ($component) => {
   const $selectAllNoneCheckbox = $component.querySelector('thead input[type=checkbox]')
 
   hideFallbackOnLoad($component)
@@ -25,18 +25,14 @@ let setupIndividualComponent = ($component) => {
   $selectAllNoneCheckbox.addEventListener('change', changeCheckboxStateForEachRow)
 }
 
-const initSelectAllNone = () => {
+export const initSelectAllNone = () => {
   const $components = document.querySelectorAll('[data-module="app-select-all-none"]')
 
   if( $components.length === 0 ){ return false }
 
   $components.forEach((component) =>{
-    setupIndividualComponent(component)
+    exports.setupIndividualComponent(component)
   })
 }
 
-export {
-  initSelectAllNone,
-  setupIndividualComponent
-}
 
