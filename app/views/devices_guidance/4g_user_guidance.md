@@ -1,71 +1,61 @@
-**This is suggested guidance for end users. You can edit this and you should add contact details for a support person so the user can get help with their device. You can also add details to the safeguarding section to make it more relevant to your organisation.**
+Subject to stock availability, the Department for Education (DfE) will send routers (either Huawei or D-Link) to trusts, local authorities or schools to distribute to disadvantaged children and families
 
-In the box, you’ll find a:
+For both router types, users will find the following in the box:
 
-* multilingual quick start guide
-* MiFi Router
-* battery
-* micro-usb charging cable
+- 4G wireless router
+- battery (with approximately 25% charge)
+- charging cable (micro-USB)
+- quick start guide(s)
 
-![A photo of the 4G box contents](/devices/4g1.jpg)
+The router will have a SIM card inserted that provides 20GB of data per month which will reset on the first day of each month.
 
-**Do not remove the SIM, the router will stop working**
+We suggest you make young people and families aware that:
 
-**The router will only operate with the SIM card that is already installed. Attempting to use the SIM card with any other device will either not give a data connection or will cause the SIM card to become barred.**
+- SIM cards will remain active until the end of July 2021.
+- routers will only work with the SIM provided - attempts to insert an alternative SIM or to use the SIM in another device will result in it being blocked 
+- once the 20GB limit has been reached the device will no longer connect to the internet - to reduce data usage, devices should be used for accessing remote education with ‘Standard Definition’ (SD) video selected where possible
+- they should not attempt to reset their device to try to resolve issues, as this will result in both the router and SIM to stop working
 
-1. Gently remove the back cover
+Step-by-step instructions for each type of router are provided below. These PDFs can be downloaded and provided by schools or local authorities to users to help them get online.
 
-    ![The router and the battery](/devices/4g2.jpg)
+## Setting up a Huawei router
 
-2. Take a note of the SSID and the WiFi key on the label, you’ll need this to get online
+- [Download step-by-step setup instructions](/devices/huawei-4g-wireless-router-user-guide.pdf) (PDF)
 
-    ![The router front cover, the back cover showing the SSID and WiFi key labels, and the battery](/devices/4g3.jpg)
+The label inside the cover of each device contains the:
 
-3. Insert the battery and replace the back cover
+- WiFi network name (SSID)
+- Password (WIFI KEY - this is case sensitive)
 
-    ![The router front cover and the back cover with the battery inserted](/devices/4g4.jpg)
+If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out how to resolve technical issues.
 
-4. Turn the router on, using the button on the top-left
+## Setting up a D-Link router
 
-    ![The router with the power button on the side](/devices/4g5.jpg)
+- [Download step-by-step setup instructions](/devices/d-link-4g-wireless-router-user-guide.pdf) (PDF)
 
-5.  The lights will change colour while it is booting up, they’ll go from green to red and back to green – then the router is ready to use
+The label inside the cover of each device contains the:
 
-    ![The router powered up, with the network and power buttons lit green](/devices/4g6.jpg)
+- WiFi network name (SSID)
+- Password (this is case sensitive)
 
-6.  On your laptop or tablet, select the Wifi network – this is the SSID you noted earlier and click Connect
-7.  Tick the box that says “Connect automatically” so that your device will always connect to the router when it is turned on
+## Technical support
 
-    ![Screenshot of Microsoft Windows showing a list of Wifi networks](/devices/4g7.png)
+Children and families should raise any queries regarding 4G wireless routers with the trust, local authority or school which sent the device to them. They will be able to support with setting up routers or raising an issue if there is a problem with the router or SIM card.  They should not press the reset button.
 
-8.  Enter the Wifi Key you noted down earlier and click Next
+### For local authorities and trusts
 
-    ![Screenshot of Microsoft Windows showing a list of Wifi networks, with the password filled in](/devices/4g8.png)
+You can check the status of each router and if needed raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, please email [COVID.TECHNOLOGY@education.gov.uk](covid.technology@education.gov.uk).
 
-9.  You’re now online
+### For schools and colleges
 
-## Charging your router
-
-Connect the micro-USB charging cable included into the micro-USB port on the bottom of the device and connect the other end to any USB charger.
-
-## Getting support with your router
-
-If you have any problems with your router, you should contact \[insert the contact details of your support person below\]:
-
-## Managing your monthly data allowance
-
-Your 4G router has a monthly data cap. When the router runs out of data it will not connect to the internet until more data is added at the beginning of the next month.
-
-To help prevent this, make sure your 4G router’s data connection is only used for education and for social care services.
+You will need to ask your trust or local authority to access the Support Portal on your behalf to check the status of a router or raise an issue. Email [COVID.TECHNOLOGY@education.gov.uk](covid.technology@education.gov.uk) if you’re unsure who to contact.
 
 ## Staying safe online
 
-Your 4G wireless router uses a filtering system that blocks some inappropriate content and limits searching to the ‘Safe Search’ supported by popular search engines. The router is also set up to comply with privacy and human rights legislation.
+4G wireless routers provided by DfE use a filtering system that blocks inappropriate content and limits searching to the ‘Safe Search’ supported by popular search engines. The router is also set up to comply with privacy and human rights legislation.
 
-If you’re blocked from viewing something you think you need for your work or wellbeing, get in touch with your school or local authority contact.
+Users should get in touch with their school or local authority contact if they’re unable to access content required for remote education.
 
-If you’re worried that your child is accessing harmful content on any device, visit this web page to see support and advice: [https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19#communicating-with-parents-carers-and-pupils](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19#communicating-with-parents-carers-and-pupils).
+Parents and guardians of the young people making use of these devices should be aware of advice on supervising internet use by children. Support for parents and carers to keep children safe from online harm is available at [https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19#communicating-with-parents-carers-and-pupils](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19#communicating-with-parents-carers-and-pupils).
 
 If a child is worried or needs support, they can call Childline (0800 1111), download their ‘For Me’ app or visit the website: [https://www.childline.org.uk/](https://www.childline.org.uk/).
-
-If your child has a social worker, you should contact your local authority if you have any concerns about your child’s safety or wellbeing.
