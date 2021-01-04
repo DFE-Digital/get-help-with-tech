@@ -5,6 +5,8 @@ When [placing an order](/start), schools, academy trusts and local authorities c
 * Google Chromebooks
 * Apple iPads
 
+Read our [4G wireless router guidance](/devices/preparing-4g-wireless-routers) for information on internet connectivity devices and data limits.
+
 All devices provided before September 2020 were delivered with [safeguarding and mobile device management (MDM) software](/devices/safeguarding-for-device-users) installed.
 
 For future orders, 'Standard' Microsoft devices can be supplied with factory settings to allow schools, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to select 'DfE Restricted' devices which will be set up with content filtering and MDM software before delivery.
