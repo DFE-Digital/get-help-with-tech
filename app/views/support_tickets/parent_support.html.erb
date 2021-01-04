@@ -1,0 +1,40 @@
+<% content_for :title, 'Contact your school, college or local authority for support' %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => guidance_page_path },
+                  {t('landing_pages.get_support.start') => support_ticket_path},
+                  'Contact your school, college or local authority for support',
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      Contact your school, college or local authority for support
+    </h1>
+
+    <p class="govuk-body">The Get help with technology scheme is open to schools, colleges and local authorities only.</p>
+
+    <p class="govuk-body">
+      Parents, carers and pupils cannot apply for devices through this scheme themselves.
+    </p>
+
+    <p class="govuk-body">
+      If you have received a device from your school, college or local authority and need help with it,
+      please contact the person who gave it to you. These guides may also be helpful to you:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a class="govuk-link" href="/devices/getting-started-with-your-microsoft-windows-device">Getting started with your Microsoft Windows device</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/devices/getting-started-with-your-google-chromebook">Getting started with your Google Chromebook</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/devices/4g-user-guidance">How to get started with your 4G wireless router</a>
+      </li>
+    </ul>
+  </div>
+</div>
