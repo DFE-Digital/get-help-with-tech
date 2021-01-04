@@ -13,6 +13,10 @@ The number of devices available to order through the service reflects the number
 
 We’ve allocated laptops and tablets in line with the data we’re seeing that suggests that most schools have smaller groups of children self-isolating at any one time, rather than closing fully. Schools are able to redistribute devices when children return from self-isolation. This more targeted approach will mean that as many schools and disadvantaged children as possible can benefit from receiving a device if their face-to-face education is disrupted.
 
+### Providing internet connectivity
+
+For information on getting internet access for disadvantaged children, read about [increasing mobile data allowances](/about-increasing-mobile-data) and [requesting 4G wireless routers](/how-to-request-4g-wireless-routers).
+
 ## How to query an allocation
 
 <div class="govuk-inset-text">
