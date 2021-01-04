@@ -16,7 +16,7 @@ class Support::SchoolsController < Support::BaseController
         end
       end
     elsif request.get?
-      @form = Support::NewUserSchoolForm.new(name_or_urn: params[:query])
+      @form = Support::SchoolSuggestionForm.new(name_or_urn: params[:query])
       if @form.valid?
         @schools = @form.matching_schools
         render json: @schools.as_json(only: %i[id name urn postcode town])

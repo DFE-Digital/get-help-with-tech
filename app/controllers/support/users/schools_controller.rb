@@ -9,11 +9,11 @@ class Support::Users::SchoolsController < Support::BaseController
       user: @user,
       possible_responsible_bodies: ResponsibleBody.gias_status_open.order(type: :asc, name: :asc),
     )
-    @user_school_form = Support::NewUserSchoolForm.new(user: @user)
+    @user_school_form = Support::SchoolSuggestionForm.new
   end
 
   def new
-    @form = Support::NewUserSchoolForm.new(user_school_params.merge(user: @user))
+    @form = Support::SchoolSuggestionForm.new(user_school_params)
     @schools = @form.matching_schools
   end
 
@@ -45,6 +45,6 @@ private
   end
 
   def user_school_params(opts = params)
-    opts.fetch('support_new_user_school_form').permit(:name_or_urn, :school_urn)
+    opts.fetch('support_school_suggestion_form').permit(:name_or_urn, :school_urn)
   end
 end

@@ -1,9 +1,9 @@
-class Support::NewUserSchoolForm
+class Support::SchoolSuggestionForm
   include ActiveModel::Model
 
   MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 50
 
-  attr_accessor :user, :name_or_urn, :school_urn
+  attr_accessor :name_or_urn, :school_urn
 
   validates :name_or_urn, length: { minimum: 3 }
 

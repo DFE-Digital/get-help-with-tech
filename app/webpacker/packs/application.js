@@ -16,8 +16,8 @@ initSelectAllNone();
 initResponsibleBodiesAutocomplete();
 initSchoolAutocomplete(
   {
-    input: "support-new-user-school-form-name-or-urn-field",
+    input: "support-school-suggestion-form-name-or-urn-field",
     path: "/support/schools/results",
-    hiddenFieldForURN: 'support_new_user_school_form_school_urn'
+    hiddenFieldForURN: 'support_school_suggestion_form_school_urn'
   }
 );

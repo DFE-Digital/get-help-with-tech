@@ -465,7 +465,7 @@ en:
               lte_allocation: Enter an allocation that’s greater than, or the same as, the current cap
             allocation:
               greater_than: Enter an allocation that’s non-negative
-        support/new_user_school_form:
+        support/school_suggestion_form:
           attributes:
             name_or_urn:
               too_short: Enter a school name that is at least %{count} characters
@@ -642,7 +642,7 @@ en:
       support_enable_orders_form:
         device_cap: How many devices can they order?
         router_cap: How many routers can they order?
-      support_new_user_school_form:
+      support_school_suggestion_form:
         name_or_urn: School name or URN
       support_user_responsible_body_form:
         name: Responsible body name
