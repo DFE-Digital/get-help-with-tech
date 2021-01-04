@@ -66,7 +66,7 @@ en:
       technical_support: Technical support
       devices:
         schools:
-          search: Search for schools by URN
+          search: Search for schools
           results: School search results
       users:
         search: Find responsible body or school users

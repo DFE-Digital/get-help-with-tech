@@ -19,8 +19,19 @@
     <%= form_with model: @search_form, url: results_support_schools_path do |f| %>
       <%= f.govuk_text_area :urns,
                             label: { text: 'URNs', size: 'm' },
-                            rows: 12 %>
+                            rows: 10 %>
 
+      <%= f.govuk_collection_select   :responsible_body_id,
+                                      @search_form.select_responsible_body_options,
+                                      :id,
+                                      :name,
+                                      label: { text: 'Responsible body' } %>
+
+      <%= f.govuk_collection_select   :order_state,
+                                      @search_form.select_order_state_options,
+                                      :value,
+                                      :label,
+                                      label: { text: 'Order state' } %>
       <%= f.govuk_submit 'Search' %>
     <% end %>
   </div>
