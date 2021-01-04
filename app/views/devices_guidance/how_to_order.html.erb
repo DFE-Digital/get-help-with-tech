@@ -267,6 +267,13 @@
                 </p>
               </div>
             <% end %>
+            <% if FeatureFlag.active?(:secondary_mass_testing_banner) %>
+              <div class="app-card govuk-!-margin-bottom-4">
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                  All secondary schools closed for mass testing, and all primary schools closed under the contingency framework can order laptops and tablets now.
+                </p>
+              </div>
+            <% end %>
             <p class="app-step-nav__paragraph">
               If face-to-face education at a school is disrupted due to coronavirus (such as a ‘bubble’ or year group being advised not to attend), schools can make us aware via the <%= link_to_ed_settings_form %> which is monitored daily.
             </p>
