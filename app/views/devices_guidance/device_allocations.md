@@ -11,8 +11,6 @@ The number of devices available to order through the service reflects the number
 * free school meals data
 * an estimate of the number of devices a school already has
 
-We’ve allocated laptops and tablets in line with the data we’re seeing that suggests that most schools have smaller groups of children self-isolating at any one time, rather than closing fully. Schools are able to redistribute devices when children return from self-isolation. This more targeted approach will mean that as many schools and disadvantaged children as possible can benefit from receiving a device if their face-to-face education is disrupted.
-
 ### Providing internet connectivity
 
 For information on getting internet access for disadvantaged children, read about [increasing mobile data allowances](/about-increasing-mobile-data) and [requesting 4G wireless routers](/how-to-request-4g-wireless-routers).
@@ -31,15 +29,12 @@ If the number of children unable to attend school and unable to access a device 
 
 We’ll ask you for some information about the situation, including the information listed below. Before querying your allocation, you should make sure that children cannot access a device privately, or by being lent a device already owned by your school.
 
-You can only request more devices when you are facing a disruption, not in advance.
-
 You’ll need to provide anonymised evidence that confirms:
 
 * the year groups of the pupils for whom you are requesting additional devices
 * how you’ve identified that these pupils are disadvantaged (such as whether pupils are pupil premium or in receipt of free school meals)
-* how you know that the pupils don't have access to a private device (for example, through phone calls to families or a survey you’ve conducted about device ownership)
+* how you know that the pupils do not have access to a private device (for example, through phone calls to families or a survey you’ve conducted about device ownership)
 * that all the devices your school or college has already, have been distributed
-
 
 ### If you’re applying for a local authority or academy trust, you need to tell us:
 
