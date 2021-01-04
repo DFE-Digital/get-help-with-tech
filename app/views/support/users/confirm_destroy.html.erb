@@ -1,0 +1,23 @@
+<%- title = t('page_titles.confirm_destroy_user') %>
+<%- content_for :before_content, govuk_link_to('Back', support_user_path(@user), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @user.full_name %></span>
+      <%= title %>
+    </h1>
+
+    <p class="govuk-body">
+      Deleting this user will revoke their access to the service. If you need to reinstate them after deletion, contact the GHWT technical support team.
+    </p>
+
+    <%= form_for @user, url: support_user_path(@user), method: :delete do |f| %>
+      <%= f.govuk_submit 'Yes, delete user', warning: true %>
+    <%- end %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Cancel', support_user_path(@user) %>
+    </p>
+  </div>
+</div>

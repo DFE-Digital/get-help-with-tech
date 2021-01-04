@@ -6,13 +6,12 @@
     "@rails/webpacker": ">=5.2.1",
     "accessible-autocomplete": "^2.0.3",
     "core-js": ">=3",
-    "govuk-frontend": ">=3.10.1",
-    "jquery": "3.5.1",
+    "govuk-frontend": ">=3.10.2",
     "serialize-javascript": ">=5.0.1",
     "set-value": ">=3.0.2"
   },
   "devDependencies": {
-    "webpack-dev-server": ">=3.11.0",
+    "webpack-dev-server": ">=3.11.1",
     "jest": "^26.6.3"
   },
   "jest": {

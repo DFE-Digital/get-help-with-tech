@@ -1,8 +1,46 @@
 class Support::UsersController < Support::BaseController
   SEARCH_RESULTS_LIMIT = 100
 
-  before_action :set_user, except: %i[search results]
+  before_action :set_user, except: %i[new create search results]
   before_action { authorize User }
+
+  def new
+    set_school_if_present
+    set_responsible_body_if_present
+
+    @form = Support::NewUserForm.new(
+      school: @school,
+      responsible_body: @responsible_body,
+    )
+    @user = User.new
+    authorize @user
+  end
+
+  def create
+    set_school_if_present
+    set_responsible_body_if_present
+
+    authorize User, :create?
+    if @school
+      @user = CreateUserService.invite_school_user(
+        user_params.merge(school_id: @school.id),
+      )
+    elsif @responsible_body
+      @user = CreateUserService.invite_responsible_body_user(
+        user_params.merge(responsible_body_id: @responsible_body.id),
+      )
+    end
+
+    if @user.persisted?
+      redirect_to support_user_path(@user)
+    else
+      @form = Support::NewUserForm.new(
+        school: @school,
+        responsible_body: @responsible_body,
+      )
+      render :new, status: :unprocessable_entity
+    end
+  end
 
   def show; end
 
@@ -37,26 +75,12 @@ class Support::UsersController < Support::BaseController
     @maximum_search_result_number_reached = (@results.size == SEARCH_RESULTS_LIMIT)
   end
 
-  def associated_organisations
-    @schools = @user.schools.order(:name)
-    @responsible_body = @user.responsible_body
-    @user_responsible_body_form = Support::UserResponsibleBodyForm.new(
-      user: @user,
-      possible_responsible_bodies: ResponsibleBody.gias_status_open.order(type: :asc, name: :asc),
-    )
-    @user_school_form = Support::NewUserSchoolForm.new(user: @user)
-  end
-
-  def update_responsible_body
-    @user.update!(responsible_body_id: responsible_body_params[:responsible_body])
-    flash[:success] = success_message
-    redirect_to associated_organisations_support_user_path(@user.id)
-  end
+  def confirm_destroy; end
 
   def destroy
     @user.update!(deleted_at: Time.zone.now)
 
-    flash[:success] = 'User has been deleted'
+    flash[:success] = 'You have deleted this user'
 
     return_params = params.fetch(:user, {}).permit(:school_urn, :responsible_body_id)
     if return_params[:responsible_body_id]
@@ -88,20 +112,22 @@ private
     params.require(:support_user_search_form).permit(:email_address_or_full_name)
   end
 
-  def responsible_body_params
-    params.require(:support_user_responsible_body_form).permit(:responsible_body)
+  def set_user
+    @user = User.not_deleted.find(params[:id])
+    authorize @user
   end
 
-  def success_message
-    if @user.responsible_body.present?
-      "#{@user.full_name} is now associated with #{@user.responsible_body.name}"
-    else
-      "#{@user.full_name} is no longer associated with a responsible body"
+  def set_school_if_present
+    if params[:school_urn]
+      @school = School.gias_status_open.find_by(urn: params[:school_urn])
+      authorize @school, :show?
     end
   end
 
-  def set_user
-    @user = User.find(params[:id])
-    authorize @user
+  def set_responsible_body_if_present
+    if params[:responsible_body_id]
+      @responsible_body = ResponsibleBody.gias_status_open.find(params[:responsible_body_id])
+      authorize @responsible_body, :show?
+    end
   end
 end

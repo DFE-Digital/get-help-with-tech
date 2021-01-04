@@ -22,7 +22,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
     end
 
     it 'renders results' do
-      post :results, params: { bulk_urn_search_form: { urns: "#{school.urn}\r\n#{another_school.urn}" } }
+      post :results, params: { school_search_form: { urns: "#{school.urn}\r\n#{another_school.urn}" } }
 
       expect(response).to be_successful
       expect(response).to render_template('results')

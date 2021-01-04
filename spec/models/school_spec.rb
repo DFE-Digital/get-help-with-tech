@@ -433,4 +433,21 @@ RSpec.describe School, type: :model do
       expect(schools.last.in_virtual_cap_pool?).to be false
     end
   end
+
+  describe '.matching_name_or_urn' do
+    it 'returns schools with the provided URN' do
+      matched_school = create(:school, urn: 123_456)
+      create(:school, urn: 123_458) # non-matching school
+
+      expect(School.matching_name_or_urn(123_456)).to eq([matched_school])
+    end
+
+    it 'returns schools which match the name partially or exactly' do
+      matched_school1 = create(:school, name: 'Southside')
+      matched_school2 = create(:school, name: 'Southside Primary')
+      create(:school, name: 'Northside') # non-matching school
+
+      expect(School.matching_name_or_urn('Southside')).to contain_exactly(matched_school1, matched_school2)
+    end
+  end
 end

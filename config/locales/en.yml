@@ -66,16 +66,18 @@ en:
       technical_support: Technical support
       devices:
         schools:
-          search: Search for schools by URN
+          search: Search for schools
           results: School search results
       users:
-        associated_organisations: Associated organisations
         search: Find responsible body or school users
         results: Users
+        new: Invite a new user
         schools:
-          index: Associate with a school
+          index: Update schools
+          new: Associate with a school
         responsible_bodies:
           index: Associate with a responsible body
+          edit: Update responsible body
       allocation:
         adjust_allocations_for_many_schools: Adjust allocations for many schools
     support_responsible_bodies: Responsible bodies
@@ -156,8 +158,8 @@ en:
       can_order_devices: Yes, give them access to the TechSource website
       can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
-    new_school_user: Invite a new user
     edit_user: Change user details
+    confirm_destroy_user: Are you sure you want to delete this user?
     school_user_welcome_wizard:
       welcome:
         title: "You’re signed in as %{school}"
@@ -253,6 +255,10 @@ en:
     support_and_maintenance:
       title: Support and maintenance
       description: Find out how to support your users, access additional support and deal with a faulty device.
+      audience: responsible_body_users
+    replace_a_faulty_device:
+      title: Replace a faulty device
+      description: Find out how to get a replacement for a faulty laptop, tablet or 4G wireless router, the cost to replace a damaged device, how to service and repair an iPad and other warranty details.
       audience: responsible_body_users
     safeguarding_for_device_users:
       title: Safeguarding for device users
@@ -639,6 +645,8 @@ en:
       support_user_responsible_body_form:
         name: Responsible body name
   banners:
+    secondary_mass_testing:
+      heading: All secondary schools closed for mass testing, and all primary schools closed under the contingency framework can order laptops and tablets now
     christmas:
       heading: No orders over Christmas
       content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Friday 18 December and we’ll then close ordering until Monday 4 January.

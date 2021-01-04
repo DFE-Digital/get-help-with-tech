@@ -36,13 +36,13 @@ class Support::UserSummaryListComponent < ViewComponent::Base
       {
         key: 'Responsible body',
         value: link_to_responsible_body_page_if_present,
-        change_path: associated_organisations_support_user_path(@user, anchor: 'responsible-body'),
+        change_path: edit_support_user_responsible_body_path(@user),
         action: 'responsible body',
       },
       {
         key: 'Schools',
         value: schools_list,
-        change_path: associated_organisations_support_user_path(@user, anchor: 'schools'),
+        change_path: support_user_schools_path(@user),
         action: 'schools',
       },
     ].map { |row| remove_change_link_if_editing_disallowed(row) }

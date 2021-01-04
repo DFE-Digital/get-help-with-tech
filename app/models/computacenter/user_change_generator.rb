@@ -46,7 +46,7 @@ private
   end
 
   def is_addition?
-    user.relevant_to_computacenter? && (last_change_for_user.nil? || last_change_for_user.type_of_update == 'Remove')
+    user.relevant_to_computacenter? && !user.soft_deleted? && (last_change_for_user.nil? || last_change_for_user.type_of_update == 'Remove')
   end
 
   def is_change?

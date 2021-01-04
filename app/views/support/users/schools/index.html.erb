@@ -1,6 +1,6 @@
 <%- title = t('page_titles.support.users.schools.index') %>
 <% content_for :title, title %>
-<% content_for :before_content, govuk_link_to('Back', associated_organisations_support_user_path(@user), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_link_to('Back', support_user_path(@user), class: 'govuk-back-link') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -13,15 +13,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="govuk-heading-m">
-      Schools matching <q><%= @form.name_or_urn %></q>
-    </h2>
-
+    <h2 id="schools" class="govuk-heading-l">Schools</h2>
     <%- if @schools.present? %>
       <table class="govuk-table schools">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Name and URN</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name and URN</th>
             <th scope="col" class="govuk-table__header">Responsible body</th>
             <th scope="col" class="govuk-table__header"></th>
           </tr>
@@ -39,18 +36,22 @@
                 <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
               </td>
               <td class="govuk-table__cell">
-                <%- if @user.school_ids.include?(school.id) %>
-                  (already associated)
-                <%- else %>
-                  <%= govuk_button_to('Associate', support_user_schools_path(urn: school.urn, id: @user.id), method: :post) %>
-                <%- end %>
+                <%= govuk_button_to('Remove', support_user_school_path(@user, urn: school.urn), method: :delete, form_class: 'form-inline')  %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+
     <%- else %>
-      <p class="govuk-body">(none matching)</p>
+      <p class="govuk-body">(none)</p>
+    <%- end %>
+
+    <%= form_for @user_school_form, url: new_support_user_school_path(@user), method: :get do |f| %>
+      <%= f.govuk_fieldset legend: { text: 'Associate with a school', size: 'm' } do %>
+        <%= f.govuk_text_field :name_or_urn, width: 'one-third' %>
+        <%= f.govuk_submit %>
+      <%- end %>
     <%- end %>
   </div>
 </div>

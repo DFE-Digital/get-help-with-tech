@@ -1,7 +1,7 @@
 module Computacenter
   module CapChangeNotifier
     def notify_computacenter_of_cap_changes?
-      Settings.computacenter.outgoing_api.endpoint.present?
+      Settings.computacenter.outgoing_api&.endpoint.present?
     end
 
     def notify_computacenter_by_email(school, device_type, new_cap_value)

@@ -94,7 +94,7 @@ See government advice on:
 * [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
 * [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
 
-## Requesting local admin and BIOS passwords to install your own software and settings
+## Getting local admin and BIOS passwords to install your own software and settings
 
 To install your own software or replace the mobile device management you will need to reset the device using the instructions below. This will remove all of the pre-installed configuration and software from the device.
 
@@ -102,7 +102,7 @@ You will need to do this for each device individually.
 
 It is possible to install some software on the devices without resetting them, but anything you try to install yourself may be lost when the device checks in with the MDM, which happens at regular intervals.
 
-### Who can request local admin and BIOS passwords to reset devices
+### Who can access local admin and BIOS passwords to reset devices
 
 Local admin and BIOS passwords are needed to reset devices to factory default settings and install new software.
 

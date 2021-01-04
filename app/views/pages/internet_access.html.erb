@@ -12,44 +12,48 @@
     </h1>
 
     <p class="govuk-body">
-      Schools, trusts and local authorities can now help children get online using 4G routers provided by the Department for Education.
+Schools, trusts and local authorities can help disadvantaged children get online using free mobile data increases or 4G wireless routers provided by the Department for Education. You can request this support if each of the following applies:  
     </p>
-
-    <h2 class="govuk-heading-l">
-      How to order 4G wireless routers
-    </h2>
-
-    <p class="govuk-body">
-      Schools in England can request more 4G wireless routers for disadvantaged or vulnerable children if each of the following applies:
-    </p>
-
+    
     <ul class="govuk-list govuk-list--bullet">
-      <li>
-        your school is experiencing disruption to face-to-face education
-      </li>
-      <li>
-        the disadvantaged or vulnerable children do not have access to the internet at home
-      </li>
-      <li>
-        your school has been invited to order devices
-      </li>
-    </ul>
-
-    <p class="govuk-body">
-      <%= govuk_link_to 'More about ordering 4G wireless routers', how_to_request_4g_wireless_routers_path %>
-    </p>
-
-    <h2 class="govuk-heading-l">
-      Increasing data allowances on mobile devices
+      <li>your school is experiencing disruption to face-to-face education</li>
+     <li>the disadvantaged children you’re responsible for do not have access to the internet at home</li>  
+      <li>your school has been invited to order laptops and tablets</li>
+    </ul>   
+    
+        <h2 class="govuk-heading-l">
+      Increasing data allowances on mobile phones
     </h2>
 
     <p class="govuk-body">
-      This scheme temporarily increases data allowances for mobile phone users on certain networks. This is so that children and young people can access remote education if their face-to-face education is disrupted.
+This scheme temporarily increases data allowances for mobile phone users on <%= govuk_link_to 'certain networks', about_increasing_mobile_data_path %>. This will allow other devices to connect to the internet via a mobile phone so children and young people can access remote education if their face-to-face education is disrupted.    </p>
+
+    <p class="govuk-body">
+This support is now available to all schools with children in years 3 to 11.
+    </p>
+    
+    <p class="govuk-body">
+      <%= govuk_link_to 'How to request a mobile data increase', about_increasing_mobile_data_path %>
+    </p>
+    
+    
+    <h2 class="govuk-heading-l">
+      4G wireless routers
+    </h2>
+
+    <p class="govuk-body">
+Schools, trusts and local authorities in England can request more 4G wireless routers for disadvantaged children in years 3 to 11 who are experiencing disruption to face-to-face education and do not have access to the internet at home.    </p>
+    
+    <p class="govuk-body">The process for ordering 4G wireless routers is different to that for ordering laptops and tablets. Routers may be dispatched separately to any laptops and tablets you order, and may arrive at a later date.
     </p>
 
     <p class="govuk-body">
-      <%= govuk_link_to 'More about increasing data allowances on children’s mobile devices', about_increasing_mobile_data_path %>
+      <%= govuk_link_to 'How to order 4G wireless routers', how_to_request_4g_wireless_routers_path %>
     </p>
+    
+    <p class="govuk-body">
+    If you've already received routers or are waiting for a delivery, please read the <%= link_to_devices_guidance_subpage 'guidance on preparing 4G routers', 'preparing-4g-wireless-routers' %> for information on technical support, security and data limits.
+</p>
 
     <h2 class="govuk-heading-l">
       Offering free access to BT wifi hotspots
@@ -64,15 +68,13 @@
     </p>
 
     <p class="govuk-body">
-      When we tested this scheme, we found the majority of users couldn’t get a reliable BT wifi connection. As such, we decided to close the pilot.
+      When we tested this scheme, we found the majority of users could not get a reliable BT wifi connection. As a result, we decided to close the pilot.
     </p>
 
     <p class="govuk-body">
-      Any vouchers already in use will continue to work until the end of December 2020.
+      Any vouchers already in use work until the end of December 2020.
     </p>
 
-    <p class="govuk-body">
-      <%= govuk_link_to 'More about BT wifi hotspots', about_bt_wifi_path %>
-    </p>
+ 
   </div>
 </div>

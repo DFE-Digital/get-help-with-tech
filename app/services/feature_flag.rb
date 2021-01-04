@@ -10,6 +10,8 @@ class FeatureFlag
     christmas_banner
     ordering_closed_for_christmas
     increased_allocations_banner
+    secondary_mass_testing_banner
+    ipad_stock_message
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
