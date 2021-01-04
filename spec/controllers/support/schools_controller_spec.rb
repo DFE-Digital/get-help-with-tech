@@ -21,11 +21,45 @@ RSpec.describe Support::SchoolsController, type: :controller do
       sign_in_as support_user
     end
 
-    it 'renders results' do
+    it 'renders HTML results when POSTing' do
       post :results, params: { school_search_form: { urns: "#{school.urn}\r\n#{another_school.urn}" } }
 
       expect(response).to be_successful
       expect(response).to render_template('results')
+    end
+
+    context 'GET (from a JS autocomplete)' do
+      it 'returns JSON results for a valid query string' do
+        # ensure schools exist
+        school
+        another_school
+
+        get :results, params: { query: 'Alpha' }, format: :json
+
+        expect(response).to be_successful
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+
+        body = JSON.parse(response.body)
+        expect(body).to eq([{
+          'id' => school.id,
+          'name' => school.name,
+          'urn' => school.urn,
+          'town' => school.town,
+          'postcode' => school.postcode,
+        }])
+      end
+
+      it 'returns an error when the query string is too short' do
+        get :results, params: { query: 'aa' }, format: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+
+        body = JSON.parse(response.body)
+        expect(body).to eq({
+          'errors' => ["'Name or urn' Enter a school name that is at least 3 characters"],
+        })
+      end
     end
   end
 
