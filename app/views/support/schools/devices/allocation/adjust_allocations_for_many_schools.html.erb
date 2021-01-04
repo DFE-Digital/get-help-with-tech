@@ -15,13 +15,14 @@
 
     <%- if @job.failures.present? %>
       <h3 class="govuk-heading-m"><%= @job.failures.count %> <%= 'failure'.pluralize(@job.failures.count) %></h3>
-      <table class="govuk-table">
+      <table class="govuk-table" id="allocation-errors">
         <thead>
           <tr class="govuk-table__row">
             <th class="govuk-table__header">URN</th>
             <th class="govuk-table__header">Error</th>
           </tr>
         </thead>
+        <tbody>
         <%- @job.failures.each do |failure| %>
           <%- urn = failure.record[:urn] %>
           <tr class="govuk-table__row" id="urn-<%= urn %>">
@@ -33,6 +34,7 @@
             </td>
           </tr>
         <%- end %>
+        </tbody>
       </table>
     <%- end %>
   </div>

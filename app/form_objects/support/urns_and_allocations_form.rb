@@ -15,7 +15,7 @@ class Support::UrnsAndAllocationsForm
     @parsed_list = urns_and_allocations.split("\r\n")
                                         .map(&:strip)
                                         .reject(&:blank?)
-                                        .map { |line| line.split(/[\s+,]/) }
+                                        .map { |line| line.split(/[\s,]+/) }
                                         .map { |urn, allocation| { urn: urn, allocation: allocation } }
   end
 
