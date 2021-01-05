@@ -58,5 +58,13 @@
 
       <p class="govuk-body">Use this section to see the background queues and jobs running on the service</p>
     <% end %>
+
+    <% if policy(:support).feature_flags? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'Feature flags', support_feature_flags_path %>
+      </h2>
+
+      <p class="govuk-body">Use this section to see the status of feature flags for the service</p>
+    <% end %>
   </div>
 </div>

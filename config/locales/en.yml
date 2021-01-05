@@ -64,6 +64,7 @@ en:
       home: Support
       schools: Schools
       technical_support: Technical support
+      feature_flags: Feature flags
       devices:
         schools:
           search: Search for schools
