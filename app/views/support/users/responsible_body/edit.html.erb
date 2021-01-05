@@ -31,7 +31,8 @@
           @user_responsible_body_form.select_responsible_body_options,
           :id,
           :name,
-          label: { text: 'Add user to a responsible body' }
+          label: { text: 'Add user to a responsible body' },
+          options: { include_blank: true }
           ) %>
       <%- end %>
       <%= f.govuk_submit 'Update' %>
