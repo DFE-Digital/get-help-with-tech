@@ -173,6 +173,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/schools', to: 'home#schools'
     get '/technical', to: 'home#technical_support', as: :technical_support
+    get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
       resources :users, only: %i[new create], controller: 'users'
