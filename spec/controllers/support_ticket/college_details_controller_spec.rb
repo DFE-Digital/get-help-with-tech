@@ -18,13 +18,13 @@ RSpec.describe SupportTicket::CollegeDetailsController, type: :controller do
   describe '#save' do
     it 'stores the data in session state' do
       session[:support_ticket] = {}
-      post :save, params: { support_ticket_college_details_form: { college_name: 'College 1', college_ukprn: '123456' } }
-      expect(session[:support_ticket]).to eq({ college_name: 'College 1', college_ukprn: '123456', school_name: 'College 1', school_unique_id: '123456' })
+      post :save, params: { support_ticket_college_details_form: { college_name: 'College 1', college_ukprn: '12345678' } }
+      expect(session[:support_ticket]).to eq({ college_name: 'College 1', college_ukprn: '12345678', school_name: 'College 1', school_unique_id: '12345678' })
     end
 
     it 'redirects to contact details page' do
       session[:support_ticket] = {}
-      post :save, params: { support_ticket_college_details_form: { college_name: 'College 1', college_ukprn: '123456' } }
+      post :save, params: { support_ticket_college_details_form: { college_name: 'College 1', college_ukprn: '12345678' } }
       expect(response).to redirect_to(support_ticket_contact_details_path)
     end
   end
