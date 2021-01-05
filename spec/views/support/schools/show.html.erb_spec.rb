@@ -36,7 +36,7 @@ RSpec.describe 'support/schools/show.html.erb' do
       it 'shows banners' do
         render
         expect(rendered).to include('No orders over Christmas')
-        expect(rendered).to include("Your allocation has increased to #{school.std_device_allocation.allocation} devices")
+        expect(rendered).to include("Your allocation has increased to #{pluralize(school.std_device_allocation.allocation, 'device')}")
       end
     end
   end

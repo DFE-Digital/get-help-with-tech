@@ -78,6 +78,8 @@ en:
         responsible_bodies:
           index: Associate with a responsible body
           edit: Update responsible body
+      allocation:
+        adjust_allocations_for_many_schools: Adjust allocations for many schools
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices

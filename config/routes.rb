@@ -185,6 +185,9 @@ Rails.application.routes.draw do
 
         get '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#collect_urns_to_allow_many_schools_to_order'
         patch '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#allow_ordering_for_many_schools', as: :allow_ordering_for_many_schools
+
+        get '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#collect_urns_and_allocations_for_many_schools'
+        patch '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#adjust_allocations_for_many_schools', as: :adjust_allocations_for_many_schools
       end
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'

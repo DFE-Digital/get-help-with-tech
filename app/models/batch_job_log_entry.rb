@@ -1,4 +1,6 @@
 class BatchJobLogEntry < ApplicationRecord
+  attr_accessor :record
+
   def self.status(run_id:)
     { success: 0, failure: 0 }.merge(
       where(run_id: run_id).group(:status).count.symbolize_keys,

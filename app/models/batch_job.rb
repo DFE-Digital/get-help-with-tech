@@ -44,11 +44,13 @@ private
 
   def success!(record)
     entry = find_or_create_job_log_entry!(record: record, status: 'success')
+    entry.record = record
     @successes << entry
   end
 
   def failure!(record:, error:)
     entry = find_or_create_job_log_entry!(record: record, status: 'failure', error: error)
+    entry.record = record
     @failures << entry
   end
 
