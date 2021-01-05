@@ -14,7 +14,7 @@ class Support::Users::SchoolsController < Support::BaseController
 
   def new
     @form = Support::SchoolSuggestionForm.new(user_school_params)
-    @schools = @form.matching_schools
+    @school_options = @form.matching_schools_options
   end
 
   def create
@@ -41,11 +41,11 @@ private
   end
 
   def set_school
-    @school = @user.schools.find_by(urn: params[:urn]) || School.gias_status_open.find_by(urn: params[:urn])
+    @school = @user.schools.find_by(urn: params[:urn]) || School.gias_status_open.find_by(urn: params[:urn] || user_school_params[:school_urn])
   end
 
   def user_school_params(opts = params)
-    opts.fetch('support_school_suggestion_form').permit(:name_or_urn, :school_urn)
+    opts.fetch('support_school_suggestion_form', {}).permit(:name_or_urn, :school_urn)
   end
 
   def update_schools_params

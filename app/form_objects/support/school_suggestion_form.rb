@@ -11,7 +11,23 @@ class Support::SchoolSuggestionForm
     school_by_urn.present? ? [school_by_urn] : schools_by_name_or_urn
   end
 
+  def matching_schools_options
+    matching_schools.map { |school| option_for(school) }
+  end
+
 private
+
+  def option_for(school)
+    meta_info = [school.urn, school.town, school.postcode]
+      .reject(&:blank?)
+      .compact
+      .join(', ')
+    OpenStruct.new(
+      id: school.id,
+      name: "#{school.name} (#{meta_info})",
+      urn: school.urn,
+    )
+  end
 
   def school_by_urn
     if @school_urn

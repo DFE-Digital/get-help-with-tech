@@ -8,49 +8,48 @@
       <span class="govuk-caption-xl"><%= @user.full_name %></span>
       <%= title %>
     </h1>
-  </div>
-</div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h2 class="govuk-heading-m">
-      Schools matching <q><%= @form.name_or_urn %></q>
-    </h2>
+    <p class="govuk-body">
+      You searched for “<%= @form.name_or_urn %>”.
+    </p>
 
-    <%- if @schools.present? %>
-      <table class="govuk-table schools">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Name and URN</th>
-            <th scope="col" class="govuk-table__header">Responsible body</th>
-            <th scope="col" class="govuk-table__header"></th>
-          </tr>
-        </thead>
+    <%- if @school_options.present? %>
+      <p class="govuk-body">
+        We found these schools which matched your search:
+      </p>
 
-        <tbody class="govuk-table__body">
-          <% @schools.each do |school| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">
-                <%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %>
-                <br>
-                <%= school.type_label %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
-              </td>
-              <td class="govuk-table__cell">
-                <%- if @user.school_ids.include?(school.id) %>
-                  (already associated)
-                <%- else %>
-                  <%= govuk_button_to('Associate', support_user_schools_path(urn: school.urn, id: @user.id), method: :post) %>
-                <%- end %>
-              </td>
-            </tr>
+      <%= form_for @form, url: support_user_schools_path(@user) do |f| %>
+        <%= f.govuk_radio_buttons_fieldset(:school_id, legend: nil) do %>
+          <% @school_options.each do |school| %>
+            <%= f.govuk_radio_button :school_urn, school.urn, label: { text: school.name } %>
           <% end %>
-        </tbody>
-      </table>
+        <% end %>
+        <%= f.govuk_submit 'Grant access' %>
+      <% end %>
     <%- else %>
-      <p class="govuk-body">(none matching)</p>
+      <p class="govuk-body">
+        There were no matches that <%= @user.full_name %> doesn’t already have access to.
+      </p>
     <%- end %>
+
+    <%- if @user.schools.any? %>
+      <p class="govuk-body">
+        <%= @user.full_name %> can already access:
+      </p>
+
+      <ul id="existing-schools" class="govuk-list govuk-list--bullet">
+        <% @user.schools.order(name: :asc).each do |school| %>
+          <li><%= school.name %></li>
+        <% end %>
+      </ul>
+    <%- end %>
+
+    <%= govuk_details(summary: 'Try another school') do %>
+      <%= form_for @form, url: new_support_user_school_path(@user), method: :get do |f| %>
+        <%= f.govuk_text_field :name_or_urn, width: 'two-thirds', hint: { text: 'Enter part of a school name or URN' } %>
+        <%= f.hidden_field :school_urn %>
+        <%= f.govuk_submit 'Search again' %>
+      <%- end %>
+    <% end %>
   </div>
 </div>
