@@ -13,7 +13,7 @@ class Support::Users::SchoolsController < Support::BaseController
   end
 
   def new
-    @form = Support::SchoolSuggestionForm.new(user_school_params)
+    @form = Support::SchoolSuggestionForm.new(user_school_params.merge(except: @user.schools))
     @school_options = @form.matching_schools_options
   end
 

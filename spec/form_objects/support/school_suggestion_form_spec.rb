@@ -31,4 +31,13 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
 
     expect(form.matching_schools).to contain_exactly(matching_school)
   end
+
+  it 'excludes specified schools from the results when that parameter is present' do
+    matching_school = create(:school, name: 'Southmead School', urn: 123_456)
+    excluded_school = create(:school, name: 'Southdean School', urn: 654_321)
+
+    form = Support::SchoolSuggestionForm.new(name_or_urn: 'South', except: [excluded_school])
+
+    expect(form.matching_schools).to contain_exactly(matching_school)
+  end
 end

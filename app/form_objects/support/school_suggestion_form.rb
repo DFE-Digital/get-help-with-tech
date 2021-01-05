@@ -3,12 +3,13 @@ class Support::SchoolSuggestionForm
 
   MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 50
 
-  attr_accessor :name_or_urn, :school_urn
+  attr_accessor :name_or_urn, :school_urn, :except
 
   validates :name_or_urn, length: { minimum: 3 }
 
   def matching_schools
-    school_by_urn.present? ? [school_by_urn] : schools_by_name_or_urn
+    schools = school_by_urn.presence || schools_by_name_or_urn
+    schools.where.not(id: ids_of_schools_to_exclude)
   end
 
   def matching_schools_options
@@ -31,7 +32,7 @@ private
 
   def school_by_urn
     if @school_urn
-      School.gias_status_open.find_by(urn: @school_urn)
+      School.gias_status_open.where(urn: @school_urn)
     end
   end
 
@@ -41,5 +42,9 @@ private
       .includes(:responsible_body)
       .order(:name)
       .limit(MAX_NUMBER_OF_SUGGESTED_SCHOOLS)
+  end
+
+  def ids_of_schools_to_exclude
+    @except&.map(&:id) || []
   end
 end

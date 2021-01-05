@@ -50,7 +50,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_see_a_message_telling_me_the_school_has_been_associated
   end
 
-  xscenario 'a support user cannot add a user to a school twice' do
+  scenario 'a support user cannot add a user to a school twice' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_schools_page
     and_i_enter_a_school_urn_that_the_user_already_has
