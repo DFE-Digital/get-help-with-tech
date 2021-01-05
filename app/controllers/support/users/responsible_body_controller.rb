@@ -10,7 +10,8 @@ class Support::Users::ResponsibleBodyController < Support::BaseController
   end
 
   def update
-    @user.update!(responsible_body_id: responsible_body_params[:responsible_body])
+    form = Support::UserResponsibleBodyForm.new(responsible_body_params)
+    @user.update!(responsible_body_id: form.new_responsible_body_id)
     flash[:success] = success_message
     redirect_to support_user_path(@user)
   end
@@ -18,7 +19,7 @@ class Support::Users::ResponsibleBodyController < Support::BaseController
 private
 
   def responsible_body_params
-    params.require(:support_user_responsible_body_form).permit(:responsible_body)
+    params.require(:support_user_responsible_body_form).permit(:responsible_body_id, :change)
   end
 
   def success_message
