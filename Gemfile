@@ -103,8 +103,6 @@ group :development, :test do
   gem 'rubocop-govuk', '>= 3.17.2'
   gem 'scss_lint-govuk'
 
-  gem 'travis'
-
   # Allow testing logging to logstash in development
   gem 'logstash-logger', '~> 0.26.1'
 
