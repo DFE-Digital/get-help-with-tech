@@ -34,7 +34,7 @@
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
     <p class="govuk-body">
-      Most devices will be delivered within 2 working days.
+      <%= render partial: 'shared/delivery_message' %>
     </p>
     <h3 class="govuk-heading-s">
       Ordering devices for more than one school

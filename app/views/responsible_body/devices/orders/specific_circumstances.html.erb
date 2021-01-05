@@ -11,7 +11,7 @@
 
     <p class="govuk-body">Now you’ve contacted us to <%= govuk_link_to 'request devices for specific circumstances', responsible_body_devices_request_devices_path %>, you can go ahead with your order. You cannot order a school’s full allocation yet because no school closures or groups of self-isolating children have been reported.</p>
 
-    <p class="govuk-body">We’re working hard to get devices delivered within 2 working days.</p>
+    <p class="govuk-body"><%= render partial: 'shared/delivery_message' %></p>
   </div>
 </div>
 <%= render partial: 'place_order_for_schools' %>
