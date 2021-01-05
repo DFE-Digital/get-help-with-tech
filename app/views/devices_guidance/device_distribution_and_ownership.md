@@ -34,7 +34,7 @@ LAs can transfer ownership of the devices to the children, families and young pe
 
 LAs should consider safeguarding when deciding whether to gift a device and involve relevant parties (such as social workers, schools and carers) in making the decision.
 
-[Guidance on safe internet use](Guidance on safe internet use) should be provided when devices are lent or gifted.
+[Guidance on safe internet use](https://www.saferinternet.org.uk/) should be provided when devices are lent or gifted.
 
 #### What to do if a child or young person no longer meets the criteria to have a device
 
