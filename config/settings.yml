@@ -103,3 +103,7 @@ logstash:
 
 support:
   performance_data_access_token: # bearer token for support performance data
+
+zendesk:
+  username:  # Zendesk user account details
+  token: # API Token generated from zendesk
