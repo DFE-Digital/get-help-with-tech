@@ -73,8 +73,8 @@ en:
         results: Users
         new: Invite a new user
         schools:
-          index: Update schools
-          new: Associate with a school
+          index: Update school access
+          new: Grant access to a school
         responsible_bodies:
           index: Associate with a responsible body
           edit: Update responsible body

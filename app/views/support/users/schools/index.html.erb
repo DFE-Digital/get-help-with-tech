@@ -8,48 +8,17 @@
       <span class="govuk-caption-xl"><%= @user.full_name %></span>
       <%= title %>
     </h1>
-  </div>
-</div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h2 id="schools" class="govuk-heading-l">Schools</h2>
     <%- if @schools.present? %>
-      <table class="govuk-table schools">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name and URN</th>
-            <th scope="col" class="govuk-table__header">Responsible body</th>
-            <th scope="col" class="govuk-table__header"></th>
-          </tr>
-        </thead>
-
-        <tbody class="govuk-table__body">
-          <% @schools.each do |school| %>
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">
-                <%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %>
-                <br>
-                <%= school.type_label %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= govuk_link_to school.responsible_body.name, support_responsible_body_path(id: school.responsible_body_id) %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= govuk_button_to('Remove', support_user_school_path(@user, urn: school.urn), method: :delete, form_class: 'form-inline')  %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-    <%- else %>
-      <p class="govuk-body">(none)</p>
+      <%= form_for @user, url: support_user_update_schools_path(@user) do |f| %>
+        <%= f.govuk_collection_check_boxes :school_ids, @schools, :id, :name, legend: nil %>
+        <%= f.govuk_submit 'Update' %>
+      <%- end %>
     <%- end %>
 
     <%= form_for @user_school_form, url: new_support_user_school_path(@user), method: :get do |f| %>
-      <%= f.govuk_fieldset legend: { text: 'Associate with a school', size: 'm' } do %>
-        <%= f.govuk_text_field :name_or_urn, width: 'one-third' %>
+      <%= f.govuk_fieldset legend: { text: 'Grant access to a school', size: 'm' } do %>
+        <%= f.govuk_text_field :name_or_urn, width: 'two-thirds' %>
         <%= f.hidden_field :school_urn %>
         <%= f.govuk_submit %>
       <%- end %>
