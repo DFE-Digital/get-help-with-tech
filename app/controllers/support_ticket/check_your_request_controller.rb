@@ -8,6 +8,8 @@ class SupportTicket::CheckYourRequestController < SupportTicket::BaseController
 
   def save
     if form.valid?
+      form.create_ticket
+      session[:support_ticket] = nil
       redirect_to next_step
     else
       render 'support_tickets/check_your_request'
@@ -20,7 +22,7 @@ private
     @form ||= SupportTicket::CheckYourRequestForm.new(ticket: session[:support_ticket])
   end
 
-  def check__params(opts = params)
+  def check_params(opts = params)
     opts.fetch(:support_ticket_support_details_form, {})
   end
 
