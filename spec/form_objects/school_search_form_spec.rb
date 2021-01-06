@@ -71,7 +71,7 @@ RSpec.describe SchoolSearchForm do
     let(:urns) { nil }
     let(:responsible_body_id) { nil }
     let(:order_state) { nil }
-    let(:form) { SchoolSearchForm.new(urns: urns, responsible_body_id: responsible_body_id, order_state: order_state) }
+    let(:form) { SchoolSearchForm.new(identifiers: urns, responsible_body_id: responsible_body_id, order_state: order_state) }
     let(:expected_timestamp) { Time.zone.now.utc.iso8601 }
 
     before do
@@ -103,8 +103,8 @@ RSpec.describe SchoolSearchForm do
     context 'when URNs are given' do
       let(:urns) { "101111\r\n101222\r\n101333\r\n" }
 
-      it 'includes (number of urns)-URNs' do
-        expect(form.csv_filename).to include('3-URNs')
+      it 'includes (number of urns)' do
+        expect(form.csv_filename).to include('3')
       end
     end
   end
