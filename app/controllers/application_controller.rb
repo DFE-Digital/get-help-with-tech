@@ -127,4 +127,12 @@ private
       schools_path
     end
   end
+
+  def show_parent_carer_pupil_banner?
+    @show_parent_carer_pupil_banner = if current_user.id.present?
+                                        false
+                                      else
+                                        true
+                                      end
+  end
 end

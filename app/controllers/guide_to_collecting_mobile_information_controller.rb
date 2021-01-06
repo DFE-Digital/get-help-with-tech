@@ -1,6 +1,7 @@
 class GuideToCollectingMobileInformationController < ApplicationController
   include Rails.application.routes.url_helpers
   before_action :set_guide_navigation
+  before_action :show_parent_carer_pupil_banner?
 
   def index; end
 
