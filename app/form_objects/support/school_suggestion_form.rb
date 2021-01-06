@@ -16,6 +16,14 @@ class Support::SchoolSuggestionForm
     matching_schools.map { |school| option_for(school) }
   end
 
+  def matching_schools_capped?
+    matching_schools.size == MAX_NUMBER_OF_SUGGESTED_SCHOOLS
+  end
+
+  def maximum_matching_schools
+    MAX_NUMBER_OF_SUGGESTED_SCHOOLS
+  end
+
 private
 
   def option_for(school)

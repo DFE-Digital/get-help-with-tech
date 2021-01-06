@@ -20,7 +20,9 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
 
     form = Support::SchoolSuggestionForm.new(name_or_urn: 'AA')
 
+    expect(form.maximum_matching_schools).to eq(2)
     expect(form.matching_schools.size).to eq(2)
+    expect(form.matching_schools_capped?).to be_truthy
   end
 
   it 'returns an exact match on the school URN when one is provided' do
