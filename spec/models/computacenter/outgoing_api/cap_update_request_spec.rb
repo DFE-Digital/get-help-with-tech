@@ -41,43 +41,6 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       expect(@network_call.with(body: expected_xml)).to have_been_requested
     end
 
-    context 'when the responsible_body is managing multiple chromebook domains', with_feature_flags: { virtual_caps: 'active' } do
-      subject(:request) { described_class.new(allocation_ids: [allocation_1.id, allocation_2.id]) }
-
-      before do
-        allocation_1.update!(cap: allocation_1.allocation, devices_ordered: 2)
-        allocation_2.update!(cap: allocation_2.allocation, devices_ordered: 3)
-
-        trust.update!(vcap_feature_flag: true)
-        school_1.create_preorder_information!(who_will_order_devices: 'responsible_body',
-                                              will_need_chromebooks: 'yes',
-                                              school_or_rb_domain: 'school_1.com',
-                                              recovery_email_address: 'school_1@gmail.com')
-        school_2.create_preorder_information!(who_will_order_devices: 'school',
-                                              will_need_chromebooks: 'no')
-
-        school_1.can_order!
-        school_2.can_order!
-        trust.add_school_to_virtual_cap_pools!(school_1)
-        trust.reload
-      end
-
-      it 'generates a correct body using devices_ordered for the cap amounts to force manual handling at TechSource' do
-        request.payload_id = '123456789'
-        request.timestamp = Time.new(2020, 9, 2, 15, 3, 35, '+02:00')
-        request.post!
-
-        expected_xml = <<~XML
-          <?xml version="1.0" encoding="UTF-8"?>
-          <CapAdjustmentRequest payloadID="123456789" dateTime="2020-09-02T15:03:35+02:00">
-            <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="98765432" capAmount="22"/>
-            <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="01234567" capAmount="11"/>
-          </CapAdjustmentRequest>
-        XML
-        expect(@network_call.with(body: expected_xml)).to have_been_requested
-      end
-    end
-
     context 'when the response status is success' do
       it 'returns an HTTP::Response object' do
         expect(request.post!).to be_a(HTTP::Response)

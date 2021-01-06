@@ -58,21 +58,10 @@ private
     records = SchoolDeviceAllocation.includes(school: :preorder_information).where(id: @allocation_ids)
 
     if records.present?
-      responsible_body = records.first.school.responsible_body
-
-      zero_caps = responsible_body.has_multiple_chromebook_domains_in_managed_schools?
-
       records = records.map do |allocation|
-        # It's possible that a devolved school will be within a responsible body that is centrally managing,
-        # in which case it's not necessary to adjust the cap down to force it into the manual queue.
-        cap = if zero_caps && allocation.school&.preorder_information&.responsible_body_will_order_devices?
-                allocation.raw_devices_ordered
-              else
-                allocation.computacenter_cap
-              end
         OpenStruct.new(cap_type: allocation.computacenter_cap_type,
                        ship_to: allocation.school.computacenter_reference,
-                       cap: cap)
+                       cap: allocation.computacenter_cap)
       end
     end
 
