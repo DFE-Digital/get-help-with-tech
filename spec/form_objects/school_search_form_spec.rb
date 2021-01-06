@@ -88,7 +88,7 @@ RSpec.describe SchoolSearchForm do
       let(:responsible_body_id) { 1234 }
 
       it 'includes RB-(responsible_body_id)' do
-        expect(form.csv_filename).to include("RB-1234")
+        expect(form.csv_filename).to include('RB-1234')
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe SchoolSearchForm do
       let(:order_state) { 'my_order_state' }
 
       it 'includes the order_state' do
-        expect(form.csv_filename).to include("my_order_state")
+        expect(form.csv_filename).to include('my_order_state')
       end
     end
 
