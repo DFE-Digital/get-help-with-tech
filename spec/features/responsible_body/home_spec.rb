@@ -86,20 +86,6 @@ RSpec.feature ResponsibleBody do
       end
     end
 
-    context 'with the MNO offer feature flag disabled' do
-      let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
-
-      before do
-        responsible_body.update!(in_connectivity_pilot: true)
-        schools[0].preorder_information.responsible_body_will_order_devices!
-      end
-
-      it 'does not show link to get extra data' do
-        visit responsible_body_home_path
-        expect(page).not_to have_link('Get internet access')
-      end
-    end
-
     context 'when the RB is a local authority' do
       it 'shows link to Manage local authority users' do
         visit responsible_body_home_path

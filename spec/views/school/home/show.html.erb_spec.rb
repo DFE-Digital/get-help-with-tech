@@ -9,22 +9,9 @@ RSpec.describe 'school/home/show.html.erb' do
     assign(:current_user, user)
   end
 
-  context 'when school mno_feature_flag is not enabled' do
-    it 'does not show Get internet access section' do
-      render
-      expect(rendered).not_to include('Get internet access')
-    end
-  end
-
-  context 'when school mno_feature_flag is enabled' do
-    before do
-      school.update(mno_feature_flag: true)
-    end
-
-    it 'does not show Get internet access section' do
-      render
-      expect(rendered).to include('Get internet access')
-    end
+  it 'always shows the Get internet access section' do
+    render
+    expect(rendered).to include('Get internet access')
   end
 
   describe 'Christmas banner' do

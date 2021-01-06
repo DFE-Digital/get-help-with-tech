@@ -6,7 +6,6 @@ RSpec.describe School::Internet::Mobile::ManualRequestsController, type: :contro
 
   context 'when authenticated' do
     before do
-      school.update!(mno_feature_flag: true)
       sign_in_as user
     end
 
