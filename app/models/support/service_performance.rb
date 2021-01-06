@@ -74,12 +74,4 @@ class Support::ServicePerformance
       .sort_by { |_k, v| v }
       .reverse
   end
-
-  # def mno_schools_count
-  #   @mno_schools_count ||= School.where(mno_feature_flag: true).count
-  # end
-  #
-  # def mno_schools
-  #   @mno_schools ||= School.where(mno_feature_flag: true).includes(:responsible_body)
-  # end
 end
