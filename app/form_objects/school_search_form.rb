@@ -44,7 +44,7 @@ class SchoolSearchForm
 
   def csv_filename
     tokens = %w[allocations]
-    tokens << "#{urns.count}-URNs" if urns.present?
+    tokens << "#{array_of_urns.count}-URNs" if urns.present?
     tokens << "RB-#{responsible_body_id}" if responsible_body_id.present?
     tokens << order_state if order_state.present?
     tokens << Time.zone.now.utc.iso8601
