@@ -2,25 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'support/schools/show.html.erb' do
   let(:school) { create(:school, :with_std_device_allocation, increased_allocations_feature_flag: true) }
+  let(:support_user) { create(:support_user) }
 
   before do
-    create(:support_user)
-
-    controller.singleton_class.class_eval do
-    protected
-
-      def policy(_klass)
-        OpenStruct.new(new?: true, edit?: true)
-      end
-      helper_method :policy
-
-      def current_user
-        User.where(is_support: true).first!
-      end
-      helper_method :current_user
-    end
-
+    enable_pundit(view, support_user)
     assign(:school, school)
+    assign(:current_user, support_user)
   end
 
   describe 'banners' do
