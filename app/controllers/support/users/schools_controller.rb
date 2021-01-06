@@ -14,7 +14,11 @@ class Support::Users::SchoolsController < Support::BaseController
 
   def new
     @form = Support::SchoolSuggestionForm.new(user_school_params.merge(except: @user.schools))
-    @school_options = @form.matching_schools_options
+    if @form.valid?
+      @school_options = @form.matching_schools_options
+    else
+      render :search_again, status: :unprocessable_entity
+    end
   end
 
   def create
