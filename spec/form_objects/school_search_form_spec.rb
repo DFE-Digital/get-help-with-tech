@@ -66,4 +66,46 @@ RSpec.describe SchoolSearchForm do
       end
     end
   end
+
+  describe '#csv_filename' do
+    let(:urns) { nil }
+    let(:responsible_body_id) { nil }
+    let(:order_state) { nil }
+    let(:form) { SchoolSearchForm.new(urns: urns, responsible_body_id: responsible_body_id, order_state: order_state) }
+    let(:expected_timestamp) { Time.zone.now.utc.iso8601 }
+
+    before do
+      Timecop.travel(Time.zone.local(2020, 11, 27, 23, 0, 0))
+    end
+
+    context 'when no search params were given' do
+      it 'returns allocations-(timestamp).csv' do
+        expect(form.csv_filename).to eq("allocations-#{expected_timestamp}.csv")
+      end
+    end
+
+    context 'when a responsible_body_id was given' do
+      let(:responsible_body_id) { 1234 }
+
+      it 'includes RB-(responsible_body_id)' do
+        expect(form.csv_filename).to include("RB-1234")
+      end
+    end
+
+    context 'when an order_state was given' do
+      let(:order_state) { 'my_order_state' }
+
+      it 'includes the order_state' do
+        expect(form.csv_filename).to include("my_order_state")
+      end
+    end
+
+    context 'when URNs are given' do
+      let(:urns) { "101111\r\n101222\r\n101333\r\n" }
+
+      it 'includes (number of urns)-URNs' do
+        expect(form.csv_filename).to include('3-URNs')
+      end
+    end
+  end
 end
