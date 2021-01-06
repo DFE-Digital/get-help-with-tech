@@ -2,11 +2,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <%= t('page_titles.sign_in') %>
-    </h1>
     <%= form_for @sign_in_token_form, url: sign_in_path, method: :POST do |f| %>
       <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-xl">
+        <%= t('page_titles.sign_in') %>
+      </h1>
+
+      <%= render partial: 'shared/banners/parents_carers_pupils' %>
 
       <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint: { text: 'Enter your email address, and we’ll send you a link to sign in.' } %>
 
