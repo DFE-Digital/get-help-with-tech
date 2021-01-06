@@ -586,6 +586,7 @@ en:
       time_only_with_zone: "%l:%M%P %Z"
   responsible_body:
     devices:
+      delivery_timeline: Most devices will be delivered to schools within 5 working days of an order being confirmed, subject to stock availability.
       who_will_order:
         update:
           success: We’ve saved your choice
