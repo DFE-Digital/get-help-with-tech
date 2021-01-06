@@ -13,7 +13,7 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
     }
   end
 
-  describe 'when in production and znedesk creditials are provided' do
+  describe 'when zendesk credentials are provided' do
     before do
       allow(Settings.zendesk).to receive(:username).and_return('Test User')
       allow(Settings.zendesk).to receive(:token).and_return('123456')
@@ -47,7 +47,7 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
     end
   end
 
-  describe 'when not in production and znedesk creditials are not provided' do
+  describe 'when zendesk credentials are not provided' do
     it 'does not call zendesk service' do
       allow(ZendeskService).to receive(:send!)
       described_class.new(ticket: mock_ticket).create_ticket

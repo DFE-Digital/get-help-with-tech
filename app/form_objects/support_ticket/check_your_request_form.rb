@@ -6,7 +6,7 @@ class SupportTicket::CheckYourRequestForm
   validates :ticket, presence: true
 
   def create_ticket
-    if Settings.zendesk.present? && Settings.zendesk.username.present? && Settings.zendesk.token.present?
+    if Settings.zendesk&.username.present? && Settings.zendesk&.token.present?
       ticket['subject'] = build_subject
       ZendeskService.send!(ticket)
     end

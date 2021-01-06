@@ -1,9 +1,16 @@
 class ZendeskService
   attr_accessor :ticket
 
+  CUSTOM_FIELD_IDS = {
+    contact_form: '360011490478',
+    user_type: '360011798678',
+    support_topics: '360011519218',
+    telephone_number: '360011762698',
+  }.freeze
+
   class << self
     def send!(ticket)
-      ZendeskService.new(ticket).send!
+      new(ticket).send!
     end
   end
 
@@ -20,10 +27,10 @@ class ZendeskService
         body: ticket['message'],
       },
       custom_fields: [
-        { id: '360011490478', value: 'contact_form' },
-        { id: '360011798678', value: ticket['user_type'] },
-        { id: '360011519218', value: ticket['support_topics'] },
-        { id: '360011762698', value: ticket['telephone_number'] },
+        { id: CUSTOM_FIELD_IDS[:contact_form], value: 'contact_form' },
+        { id: CUSTOM_FIELD_IDS[:user_type], value: ticket['user_type'] },
+        { id: CUSTOM_FIELD_IDS[:support_topics], value: ticket['support_topics'] },
+        { id: CUSTOM_FIELD_IDS[:telephone_number], value: ticket['telephone_number'] },
       ],
     )
   end
