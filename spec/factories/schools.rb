@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :school, class: 'CompulsorySchool' do
     factory :fe_school, class: 'FurtherEducationSchool' do
       responsible_body { nil }
-      ukprn { Faker::Number.number(digits: 8) }
+      ukprn { Faker::Number.unique.number(digits: 8) }
       urn { nil }
     end
 
