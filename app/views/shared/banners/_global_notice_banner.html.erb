@@ -1,20 +1,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          Important
-        </h2>
-      </div>
-
-      <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">
-          Parents, carers and pupils
-        </p>
-        <p class="govuk-notification-banner__body">
-          Parents, carers and pupils cannot apply for laptops, tablets or internet access. You should contact your school for help accessing remote education.
-        </p>
-      </div>
-    </div>
+    <%= render GovukComponent::NotificationBanner.new({ title: 'Important'}) do |component| %>
+      <%= component.slot(:heading, text: "Parents, carers and pupils") %>
+      <p class="govuk-notification-banner__body">
+        Parents, carers and pupils cannot apply for laptops, tablets or internet access. You should contact your school for help accessing remote education.
+      </p>
+    <% end %>
   </div>
 </div>
