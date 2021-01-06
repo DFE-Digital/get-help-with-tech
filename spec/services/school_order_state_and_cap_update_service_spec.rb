@@ -114,7 +114,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
-    context 'when a school is not in the virtual cap pool', with_feature_flags: { virtual_caps: 'active' } do
+    context 'when a school is not in the virtual cap pool' do
       before do
         responsible_body.update!(vcap_feature_flag: true)
       end
@@ -125,7 +125,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
-    context 'when a school is centrally managed and the school is not in the virtual cap pool', with_feature_flags: { virtual_caps: 'active' } do
+    context 'when a school is centrally managed and the school is not in the virtual cap pool' do
       before do
         school.preorder_information.responsible_body_will_order_devices!
         responsible_body.update!(vcap_feature_flag: true)
@@ -137,7 +137,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
-    context 'when a school that cannot order and is in the virtual cap pool is enabled for ordering', with_feature_flags: { virtual_caps: 'active' } do
+    context 'when a school that cannot order and is in the virtual cap pool is enabled for ordering' do
       let(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
       let(:router_allocation) { create(:school_device_allocation, :with_coms_allocation, allocation: 17, school: school) }
 
@@ -161,7 +161,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
-    context 'when a school that cannot order and is in the virtual cap pool is enabled for ordering when the responsible body does not have the feature enabled', with_feature_flags: { virtual_caps: 'active' } do
+    context 'when a school that cannot order and is in the virtual cap pool is enabled for ordering when the responsible body does not have the feature enabled' do
       let(:allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 7, school: school) }
 
       before do

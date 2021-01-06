@@ -97,7 +97,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_virtual_cap_feature_flags?
-    FeatureFlag.active?(:virtual_caps) && vcap_feature_flag?
+    vcap_feature_flag?
   end
 
   def has_virtual_cap_feature_flags_and_centrally_managed_schools?

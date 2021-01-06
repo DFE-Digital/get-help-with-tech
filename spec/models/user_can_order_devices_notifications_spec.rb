@@ -14,7 +14,9 @@ RSpec.describe UserCanOrderDevicesNotifications do
     end
   end
 
-  context 'when orders can be placed within a virtual cap', with_feature_flags: { virtual_caps: 'active' } do
+  context 'when orders can be placed within a virtual cap' do
+    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+    let(:preorder) { create(:preorder_information, :school_will_order, status: :rb_can_order) }
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
     let(:school) { create_schools_at_status(preorder_status: 'rb_can_order', responsible_body: responsible_body) }
     let(:user) { create(:trust_user, orders_devices: true, responsible_body: responsible_body) }

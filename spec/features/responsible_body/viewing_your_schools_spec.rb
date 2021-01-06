@@ -46,14 +46,14 @@ RSpec.feature 'Viewing your schools' do
     then_i_see_the_school_in_the_fully_open_schools_list
   end
 
-  scenario 'when virtual caps are enabled and the trust manages centrally', with_feature_flags: { virtual_caps: 'active' } do
+  scenario 'when the trust manages centrally' do
     given_there_are_schools_in_the_pool
     when_i_visit_the_your_schools_page
     then_i_see_the_order_devices_link
     then_i_see_the_summary_pooled_device_count_card
   end
 
-  scenario 'when virtual caps are enabled and the trust manages centrally but there is nothing to order', with_feature_flags: { virtual_caps: 'active' } do
+  scenario 'when the trust manages centrally but there is nothing to order' do
     given_there_are_schools_in_the_pool_that_cant_order
     when_i_visit_the_your_schools_page
     then_i_dont_see_the_order_devices_link

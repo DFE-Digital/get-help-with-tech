@@ -59,7 +59,7 @@ RSpec.feature 'Ordering via a school' do
     end
   end
 
-  context 'when the virtual_caps feature flag is active and responsible body does have the vcap_feature_flag enabled', with_feature_flags: { virtual_caps: 'active' } do
+  context 'when the responsible body does have the vcap_feature_flag enabled' do
     let(:rb) { create(:trust, :vcap_feature_flag, schools: [school, school_that_cannot_order_as_reopened]) }
 
     context 'when school has no devices to order' do

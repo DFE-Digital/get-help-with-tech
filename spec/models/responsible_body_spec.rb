@@ -430,7 +430,7 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_virtual_cap_feature_flags?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
-    context 'without any feature flags', with_feature_flags: { virtual_caps: 'inactive' } do
+    context 'without any feature flags' do
       before do
         responsible_body.update!(vcap_feature_flag: false)
       end
@@ -440,27 +440,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
 
-    context 'when global feature flag is enabled', with_feature_flags: { virtual_caps: 'active' } do
-      before do
-        responsible_body.update!(vcap_feature_flag: false)
-      end
-
-      it 'returns false' do
-        expect(responsible_body.has_virtual_cap_feature_flags?).to be false
-      end
-    end
-
-    context 'when responsible body flag is enabled', with_feature_flags: { virtual_caps: 'inactive' } do
-      before do
-        responsible_body.update!(vcap_feature_flag: true)
-      end
-
-      it 'returns false' do
-        expect(responsible_body.has_virtual_cap_feature_flags?).to be false
-      end
-    end
-
-    context 'when responsible body flag and global feature flag are enabled', with_feature_flags: { virtual_caps: 'active' } do
+    context 'when responsible body flag is enabled' do
       before do
         responsible_body.update!(vcap_feature_flag: true)
       end
@@ -484,7 +464,7 @@ RSpec.describe ResponsibleBody, type: :model do
         schools[3].update!(status: :closed)
       end
 
-      context 'without any feature flags', with_feature_flags: { virtual_caps: 'inactive' } do
+      context 'without any feature flags' do
         before do
           responsible_body.update!(vcap_feature_flag: false)
         end
@@ -494,27 +474,7 @@ RSpec.describe ResponsibleBody, type: :model do
         end
       end
 
-      context 'when global feature flag is enabled', with_feature_flags: { virtual_caps: 'active' } do
-        before do
-          responsible_body.update!(vcap_feature_flag: false)
-        end
-
-        it 'returns false' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
-        end
-      end
-
-      context 'when responsible body flag is enabled', with_feature_flags: { virtual_caps: 'inactive' } do
-        before do
-          responsible_body.update!(vcap_feature_flag: true)
-        end
-
-        it 'returns false' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
-        end
-      end
-
-      context 'when responsible body flag and global feature flag are enabled', with_feature_flags: { virtual_caps: 'active' } do
+      context 'when responsible body flag is enabled' do
         before do
           responsible_body.update!(vcap_feature_flag: true)
         end
@@ -522,10 +482,6 @@ RSpec.describe ResponsibleBody, type: :model do
         it 'returns true' do
           expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be true
         end
-      end
-
-      it 'returns false' do
-        expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
       end
     end
 
@@ -593,7 +549,7 @@ RSpec.describe ResponsibleBody, type: :model do
         schools[3].update!(status: :closed)
       end
 
-      context 'without any feature flags', with_feature_flags: { virtual_caps: 'inactive' } do
+      context 'without any feature flags' do
         before do
           responsible_body.update!(vcap_feature_flag: false)
         end
@@ -603,17 +559,7 @@ RSpec.describe ResponsibleBody, type: :model do
         end
       end
 
-      context 'when global feature flag is enabled', with_feature_flags: { virtual_caps: 'active' } do
-        before do
-          responsible_body.update!(vcap_feature_flag: false)
-        end
-
-        it 'returns false' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
-        end
-      end
-
-      context 'when responsible body flag is enabled', with_feature_flags: { virtual_caps: 'inactive' } do
+      context 'when responsible body flag is enabled' do
         before do
           responsible_body.update!(vcap_feature_flag: true)
         end
@@ -621,20 +567,6 @@ RSpec.describe ResponsibleBody, type: :model do
         it 'returns false' do
           expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
         end
-      end
-
-      context 'when responsible body flag and global feature flag are enabled', with_feature_flags: { virtual_caps: 'active' } do
-        before do
-          responsible_body.update!(vcap_feature_flag: true)
-        end
-
-        it 'returns true' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
-        end
-      end
-
-      it 'returns false' do
-        expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
       end
     end
   end
