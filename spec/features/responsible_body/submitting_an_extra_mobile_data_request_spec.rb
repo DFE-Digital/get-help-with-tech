@@ -14,7 +14,7 @@ RSpec.feature 'Submitting an extra mobile data request', type: :feature do
     end
   end
 
-  context 'signed in', with_feature_flags: { mno_offer: 'active' } do
+  context 'signed in' do
     let(:responsible_body) { create(:local_authority) }
     let(:user) { create(:local_authority_user, responsible_body: responsible_body) }
     let(:mobile_network) { create(:mobile_network) }

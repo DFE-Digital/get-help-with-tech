@@ -43,46 +43,44 @@ RSpec.feature ResponsibleBody do
       expect(page).to have_link('Get laptops and tablets')
     end
 
-    context 'with the MNO offer feature flag active', with_feature_flags: { mno_offer: 'active' } do
-      context 'with a responsible body managing at least 1 school centrally' do
-        let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    context 'with a responsible body managing at least 1 school centrally' do
+      let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
+      before do
+        schools[0].preorder_information.responsible_body_will_order_devices!
+      end
+
+      context 'with the in_connectivity_pilot flag set' do
         before do
-          schools[0].preorder_information.responsible_body_will_order_devices!
+          responsible_body.update!(in_connectivity_pilot: true)
         end
 
-        context 'with the in_connectivity_pilot flag set' do
-          before do
-            responsible_body.update!(in_connectivity_pilot: true)
-          end
-
-          it 'shows link to get extra data' do
-            visit responsible_body_home_path
-            expect(page).to have_link('Get internet access')
-          end
-        end
-
-        context 'with the in_connectivity_pilot flag not set' do
-          before do
-            responsible_body.update!(in_connectivity_pilot: false)
-          end
-
-          it 'does not show link to get extra data' do
-            visit responsible_body_home_path
-            expect(page).not_to have_link('Get internet access')
-          end
+        it 'shows link to get extra data' do
+          visit responsible_body_home_path
+          expect(page).to have_link('Get internet access')
         end
       end
 
-      context 'with a responsible body devolved to all schools' do
+      context 'with the in_connectivity_pilot flag not set' do
         before do
-          responsible_body.update!(in_connectivity_pilot: true)
+          responsible_body.update!(in_connectivity_pilot: false)
         end
 
         it 'does not show link to get extra data' do
           visit responsible_body_home_path
           expect(page).not_to have_link('Get internet access')
         end
+      end
+    end
+
+    context 'with a responsible body devolved to all schools' do
+      before do
+        responsible_body.update!(in_connectivity_pilot: true)
+      end
+
+      it 'does not show link to get extra data' do
+        visit responsible_body_home_path
+        expect(page).not_to have_link('Get internet access')
       end
     end
 
