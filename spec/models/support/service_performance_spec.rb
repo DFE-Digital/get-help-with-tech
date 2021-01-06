@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared/school_creator'
 
 RSpec.describe Support::ServicePerformance, type: :model do
   subject(:stats) { described_class.new }

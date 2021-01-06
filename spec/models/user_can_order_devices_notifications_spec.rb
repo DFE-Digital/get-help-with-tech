@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared/school_creator'
 
 RSpec.describe UserCanOrderDevicesNotifications do
   subject(:service) { described_class.new(user: user) }

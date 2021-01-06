@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared/school_creator'
 
 RSpec.describe ConfirmTechsourceAccountCreatedService do
   describe '#call' do
