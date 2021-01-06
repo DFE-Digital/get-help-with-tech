@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared/school_creator'
 
 RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_notifications: 'active' } do
   let(:order_state) { 'cannot_order' }
@@ -166,7 +165,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
     end
 
     context 'when school which is not ready changes from cannot_order to can lockdown order' do
-      # let!(:user) { create(:school_user, school: school) }
       let(:user) { school.users.first }
 
       before do
