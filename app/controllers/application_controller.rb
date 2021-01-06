@@ -129,10 +129,6 @@ private
   end
 
   def show_parent_carer_pupil_banner?
-    @show_parent_carer_pupil_banner = if current_user.id.present?
-                                        false
-                                      else
-                                        true
-                                      end
+    @show_parent_carer_pupil_banner = current_user&.new_record?
   end
 end
