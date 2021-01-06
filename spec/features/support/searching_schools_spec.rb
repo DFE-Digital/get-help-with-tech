@@ -78,7 +78,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
 
   def when_i_fill_in_some_urns
     data = schools.map(&:urn).append(bad_urn).join("\r\n")
-    search_page.urns.set data
+    search_page.identifiers.set data
   end
 
   def when_i_choose_an_order_state_and_responsible_body

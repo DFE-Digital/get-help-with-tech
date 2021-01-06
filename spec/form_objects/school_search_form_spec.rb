@@ -4,33 +4,33 @@ RSpec.describe SchoolSearchForm do
   let(:school) { create(:school) }
   let(:closed_school) { create(:school, status: :closed) }
 
-  describe '#array_of_urns' do
+  describe '#array_of_identifiers' do
     subject(:form) do
-      described_class.new(urns: "   123  \r\ \r\n456\r\n")
+      described_class.new(identifiers: "   123  \r\ \r\n456\r\n")
     end
 
-    it 'returns correct array of urns' do
-      expect(form.array_of_urns).to eql(%w[123 456])
+    it 'returns correct array of identifiers' do
+      expect(form.array_of_identifiers).to eql(%w[123 456])
     end
   end
 
-  describe '#missing_urns' do
+  describe '#missing_identifiers' do
     subject(:form) do
-      described_class.new(urns: "   #{school.urn}  \r\ \r\n456\r\n")
+      described_class.new(identifiers: "   #{school.urn}  \r\ \r\n456\r\n")
     end
 
-    it 'returns array of urns with no matches' do
-      expect(form.missing_urns).to eql(%w[456])
+    it 'returns array of identifiers with no matches' do
+      expect(form.missing_identifiers).to eql(%w[456])
     end
   end
 
   describe '#schools' do
-    context 'given urns' do
+    context 'given identifiers' do
       subject(:form) do
-        described_class.new(urns: "#{school.urn}\r\n#{closed_school.urn}\r\n")
+        described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n")
       end
 
-      it 'only includes schools matching those urns which are not closed' do
+      it 'only includes schools matching those identifiers which are not closed' do
         expect(form.schools.map(&:urn)).to eq([school.urn])
       end
     end
