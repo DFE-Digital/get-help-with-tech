@@ -8,12 +8,6 @@ RSpec.describe DeliveryAddress do
       it 'is generated' do
         expect(school.delivery_address.computacenter_identifier).to eql("#{school.ukprn}-A")
       end
-
-      it 'is sequential when further delivery addresses are added' do
-        school.delivery_addresses << (second_delivery_address = DeliveryAddress.new(attributes_for(:delivery_address)))
-
-        expect(second_delivery_address.computacenter_identifier).to eql("#{school.ukprn}-B")
-      end
     end
 
     context 'when school is not an FE institution' do

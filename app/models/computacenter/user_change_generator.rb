@@ -82,14 +82,11 @@ private
     }
   end
 
-  # user.effective_responsible_bodies => user.cc_account_orgs
-  # schools => delivery_addresses
-
   def school_names_attribute
     if user.is_a_single_academy_trust_user?
       ''
     else
-      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map(&:name).join('|')
+      user.user_schools.map { |us| us.school.delivery_address }.flatten.map(&:name).join('|')
     end
   end
 
@@ -97,7 +94,7 @@ private
     if user.is_a_single_academy_trust_user?
       ''
     else
-      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map(&:computacenter_identifier_otherwise_urn).join('|')
+      user.user_schools.map { |us| us.school.delivery_address }.flatten.map(&:computacenter_identifier_otherwise_urn).join('|')
     end
   end
 
@@ -105,7 +102,7 @@ private
     if user.is_a_single_academy_trust_user?
       ''
     else
-      user.user_schools.map { |us| us.school.delivery_addresses }.flatten.map(&:computacenter_reference).join('|')
+      user.user_schools.map { |us| us.school.delivery_address }.flatten.map(&:computacenter_reference).join('|')
     end
   end
 

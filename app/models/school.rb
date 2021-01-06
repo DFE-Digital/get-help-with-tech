@@ -86,10 +86,6 @@ class School < ApplicationRecord
     type == 'FurtherEducationSchool'
   end
 
-  def delivery_address
-    delivery_addresses.first
-  end
-
   def has_ordered?
     device_allocations.to_a.any? { |alloc| alloc.devices_ordered.positive? }
   end

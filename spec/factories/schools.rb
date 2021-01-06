@@ -13,9 +13,8 @@ FactoryBot.define do
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }
 
-    delivery_address do
-      association :delivery_address,
-                  school: instance
+    after(:build) do |school, _evaluator|
+      school.delivery_address ||= build(:delivery_address)
     end
 
     trait :with_preorder_information do
