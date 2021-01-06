@@ -26,11 +26,6 @@ class Support::SchoolsController < Support::BaseController
     end
   end
 
-  def results
-    @search_form = BulkSchoolSearchForm.new(search_params)
-    @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
-  end
-
   def show
     @school = School.where_urn_or_ukprn(params[:urn]).first!
     @users = policy_scope(@school.users).not_deleted
