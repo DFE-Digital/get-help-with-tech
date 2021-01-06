@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SchoolDataExporter, type: :model do
+  include StringUtils
+
   let(:school) { create(:school) }
   let(:filename) { Rails.root.join('tmp/school_test_data.csv') }
 
@@ -30,13 +32,13 @@ RSpec.describe SchoolDataExporter, type: :model do
       expect(rows.last).to eql(
         [
           school.responsible_body.computacenter_identifier,
-          "#{school.urn} #{school.name}",
-          '',
+          *split_string("#{school.urn} #{school.name}", limit: 35),
           school.delivery_address.address_1,
           school.delivery_address.address_2,
           school.delivery_address.address_3,
           school.delivery_address.town,
           school.delivery_address.postcode,
+          'New',
         ],
       )
     end

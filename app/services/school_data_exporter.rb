@@ -36,7 +36,7 @@ private
         school.delivery_address.address_3,
         school.delivery_address.town,
         school.delivery_address.postcode,
-        school.delivery_address.computacenter_change&.capitalize,
+        school.computacenter_change&.capitalize,
       ]
     end
   end
