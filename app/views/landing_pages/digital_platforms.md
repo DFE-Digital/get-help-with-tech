@@ -110,4 +110,4 @@ You can find more information about the programme and how schools are using digi
 
 [Free training and support to set up and use technology effectively](/EdTech-demonstrator-programme) is available through the EdTech Demonstrator Programme.
 
-If you have a question about this programme, please email COVID.TECHNOLOGY@education.gov.uk. We aim to respond within 3 working days.
+If you have a question about this programme, please email COVID.TECHNOLOGY@education.gov.uk. We aim to respond within 4 working days.
