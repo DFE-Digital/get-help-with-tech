@@ -14,7 +14,7 @@ Those providing support should be able to solve general IT problems (such as pas
 
 ## Support for local authorities, academy trusts and schools
 
-If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:DFE.COVID.TECHNOLOGY@education.gov.uk). We aim to respond within 4 working days.
+If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk). We aim to respond within 4 working days.
 
 ## Replacing a faulty device
 
