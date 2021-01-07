@@ -10,7 +10,7 @@ module PageObjects
     class SchoolsPage < PageObjects::BasePage
       sections :specific_circumstances_school_rows, SchoolRow, '#specific-circumstances-schools tbody tr'
       sections :ordering_school_rows, SchoolRow, '#ordering-schools tbody tr'
-      sections :fully_open_school_rows, SchoolRow, '#fully-open-schools tbody tr'
+      sections :cannot_order_yet_school_rows, SchoolRow, '#cannot-order-yet-schools tbody tr'
     end
   end
 end
