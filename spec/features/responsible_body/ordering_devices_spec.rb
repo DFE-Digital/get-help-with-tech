@@ -188,6 +188,6 @@ RSpec.feature 'Ordering devices' do
   end
 
   def then_i_see_that_i_will_be_able_to_order_soon
-    expect(page).to have_content('We’re opening orders for primary schools gradually, and will invite all to order by 22 January.')
+    expect(page).to have_content('We’re opening orders for primary schools gradually, and will invite all to order by 15 January.')
   end
 end
