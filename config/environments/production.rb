@@ -9,8 +9,9 @@ Rails.application.configure do
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
-  # Rake tasks automatically ignore this option for performance.
-  config.eager_load = true
+  # Rake tasks automatically ignore this option for performance..
+  .
+
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
@@ -25,9 +26,9 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # tell CDNs (and browsers) to cache static assets for 1hr by default
-  if ENV['STATIC_FILE_CACHE_TTL'].present?
+  if Settings.static_file_cache_ttl.present?
     config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=' + Settings.static_file_cache_ttl
+      '+' => 'public, max-age=' + Settings.static_file_cache_ttl
     }
   end
   # Compress CSS using a preprocessor.

@@ -2,3 +2,5 @@ hostname_for_urls: get-help-with-tech.education.gov.uk
 slack:
   event_notifications:
     channel: get-help-with-tech-notifications
+# Tell Cloudfront to cache all static assets for 1hr
+static_file_cache_ttl: 3600
