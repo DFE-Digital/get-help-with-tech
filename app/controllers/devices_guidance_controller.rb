@@ -1,4 +1,6 @@
 class DevicesGuidanceController < ApplicationController
+  before_action :show_parent_carer_pupil_banner?
+
   def index
     @responsible_body_pages = devices_guidance.pages_for(audience: :responsible_body_users)
     @device_user_pages = devices_guidance.pages_for(audience: :device_users)

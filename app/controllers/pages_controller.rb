@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_action :show_parent_carer_pupil_banner?, except: %i[accessibility privacy start]
+
   layout 'single_page', only: %i[accessibility privacy]
 
   def guidance; end
@@ -28,4 +30,6 @@ class PagesController < ApplicationController
   def general_privacy_notice; end
 
   def request_a_change; end
+
+  def internet_access; end
 end
