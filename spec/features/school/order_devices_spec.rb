@@ -42,14 +42,14 @@ RSpec.feature 'Order devices' do
     then_i_see_that_i_cannot_order_devices_yet
   end
 
-  context 'when it’s Christmas', with_feature_flags: { ordering_closed_for_christmas: 'active' } do
-    scenario 'when my school cannot order devices but I can' do
+  context 'when there’s a national lockdown', with_feature_flags: { schools_closed_for_national_lockdown: 'active' } do
+    scenario 'a school that cannot order devices yet' do
       given_the_school_cannot_order_devices
       given_i_can_order_devices
       given_i_am_signed_in_as_a_school_user
 
       when_i_visit_the_order_devices_page
-      then_i_see_that_i_cannot_order_devices_over_christmas
+      then_i_see_that_i_will_be_able_to_order_soon
     end
   end
 
@@ -138,8 +138,8 @@ RSpec.feature 'Order devices' do
     expect(page).to have_link('request devices for disadvantaged children')
   end
 
-  def then_i_see_that_i_cannot_order_devices_over_christmas
-    expect(page).to have_content('You cannot place orders over Christmas')
+  def then_i_see_that_i_will_be_able_to_order_soon
+    expect(page).to have_content('We’re opening orders for primary schools gradually, and will invite all to order by 22 January.')
   end
 
   def then_i_see_techsource_ready_soon

@@ -114,7 +114,7 @@ en:
       schools: The school will place their own orders
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
-    cannot_order_devices_over_christmas: You cannot place orders over Christmas
+    national_lockdown_school_cannot_order_yet: Your school cannot order devices yet
     school_home: Get devices for your school
     school_can_order_devices: Your school can order devices
     school_cannot_order_devices:
