@@ -1,5 +1,5 @@
 class Support::Users::SchoolsController < Support::BaseController
-  before_action :set_user, :set_school
+  before_action :set_user
   before_action { authorize User }
 
   def index
@@ -22,13 +22,22 @@ class Support::Users::SchoolsController < Support::BaseController
   end
 
   def create
-    @user_school = @user.user_schools.build(school_id: @school.id)
-    if @user_school.save
-      flash[:success] = "#{@user.full_name} is now associated with #{@school.name}"
+    @form = Support::SchoolSuggestionForm.new(user_school_params.merge(except: @user.schools))
+
+    if @form.invalid?
+      render :search_again, status: :unprocessable_entity
+    elsif @form.matching_schools.size == 1
+      school = @form.matching_schools.first
+      user_school = @user.user_schools.build(school_id: school.id)
+      if user_school.save
+        flash[:success] = "#{@user.full_name} is now associated with #{school.name}"
+      else
+        flash[:warning] = user_school.errors.full_messages.join("\n")
+      end
+      redirect_to support_user_path(@user)
     else
-      flash[:warning] = @user_school.errors.full_messages.join("\n")
+      redirect_to action: :new, support_school_suggestion_form: { name_or_urn: user_school_params[:name_or_urn] }
     end
-    redirect_to support_user_path(@user)
   end
 
   def update_schools
@@ -44,12 +53,8 @@ private
     authorize @user, :edit?
   end
 
-  def set_school
-    @school = @user.schools.find_by(urn: params[:urn]) || School.gias_status_open.find_by(urn: params[:urn] || user_school_params[:school_urn])
-  end
-
-  def user_school_params(opts = params)
-    opts.fetch('support_school_suggestion_form', {}).permit(:name_or_urn, :school_urn)
+  def user_school_params
+    params.fetch('support_school_suggestion_form', {}).permit(:name_or_urn, :school_urn)
   end
 
   def update_schools_params

@@ -9,8 +9,8 @@
       <%= title %>
     </h1>
 
-    <%= form_for @form, url: new_support_user_school_path(@user), method: :get do |f| %>
-    <%= f.govuk_error_summary %>
+    <%= form_for @form, url: support_user_schools_path(@user) do |f| %>
+      <%= f.govuk_error_summary %>
       <%= f.govuk_text_field :name_or_urn, width: 'two-thirds', hint: { text: 'Enter part of a school name or URN' } %>
       <%= f.hidden_field :school_urn %>
       <%= f.govuk_submit 'Search again' %>

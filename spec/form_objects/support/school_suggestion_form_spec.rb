@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Support::SchoolSuggestionForm, type: :model do
   subject(:form) { described_class.new }
 
+  it { is_expected.to validate_length_of(:name_or_urn).is_at_least(3).allow_blank }
+
   it 'returns a set of matching schools from a search string' do
     school1 = create(:school, name: 'Southmead School')
     school2 = create(:school, name: 'Southdean School')
