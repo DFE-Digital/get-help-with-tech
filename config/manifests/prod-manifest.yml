@@ -7,7 +7,7 @@ applications:
     health-check-http-endpoint: /healthcheck.json
     health-check-type: http
     health-check-invocation-timeout: 10
-    instances: 2
+    instances: 4
   - type: sidekiq
     disk_quota: 2G
     health-check-type: process
