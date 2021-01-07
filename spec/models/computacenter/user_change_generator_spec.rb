@@ -23,7 +23,6 @@ RSpec.describe Computacenter::UserChangeGenerator do
 
     before do
       create(:school_user, :relevant_to_computacenter, school: school)
-      school.reload
     end
 
     it 'generates a user change' do

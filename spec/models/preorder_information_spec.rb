@@ -34,7 +34,7 @@ RSpec.describe PreorderInformation, type: :model do
                will_need_chromebooks: nil)
       end
 
-      subject { preorder_information.reload.infer_status }
+      subject { preorder_information.infer_status }
 
       before do
         create(:school_user, school: preorder_information.school)
@@ -50,7 +50,7 @@ RSpec.describe PreorderInformation, type: :model do
                who_will_order_devices: :school)
       end
 
-      subject { preorder_information.reload.infer_status }
+      subject { preorder_information.infer_status }
 
       before do
         create(:school_user, school: preorder_information.school)
@@ -66,7 +66,7 @@ RSpec.describe PreorderInformation, type: :model do
                who_will_order_devices: :school)
       end
 
-      subject { preorder_information.reload.infer_status }
+      subject { preorder_information.infer_status }
 
       before do
         create(:school_user, school: preorder_information.school)
@@ -151,7 +151,7 @@ RSpec.describe PreorderInformation, type: :model do
         create(:preorder_information,
                :needs_chromebooks,
                school: school,
-               who_will_order_devices: 'school').reload.infer_status
+               who_will_order_devices: 'school').infer_status
       end
 
       context 'when there are devices available to order' do

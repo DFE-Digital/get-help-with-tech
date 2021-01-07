@@ -13,6 +13,11 @@ FactoryBot.define do
     phase { School.phases.values.sample }
     establishment_type { School.establishment_types.values.sample }
 
+    address_1 { Faker::Address.street_name }
+    address_2 { Faker::Address.secondary_address }
+    town { Faker::Address.city }
+    postcode { Faker::Address.postcode }
+
     trait :with_preorder_information do
       preorder_information { association :preorder_information, school: instance }
     end

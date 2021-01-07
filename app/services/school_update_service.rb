@@ -13,8 +13,7 @@ class SchoolUpdateService
 
   def create_school(staged_school)
     Rails.logger.info("Adding school #{staged_school.urn} #{staged_school.name} (#{staged_school.status})")
-    school = School.new(staged_school.staged_attributes)
-    school.save!
+    school = School.create!(staged_school.staged_attributes)
 
     unless school.responsible_body.who_will_order_devices.nil?
       school.create_preorder_information!(who_will_order_devices: school.responsible_body.who_will_order_devices.singularize)

@@ -147,7 +147,6 @@ RSpec.describe User, type: :model do
 
       before do
         create_list(:school_user, 3, :orders_devices, school: school)
-        school.reload
       end
 
       it 'validates that only 3 users can order devices for a school' do

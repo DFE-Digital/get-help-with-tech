@@ -33,14 +33,14 @@ RSpec.describe SchoolUpdateService, type: :model do
           urn: school_attrs[:urn],
           name: school_attrs[:name],
           responsible_body_id: local_authority.id,
-          phase: school_attrs[:phase],
-          establishment_type: school_attrs[:establishment_type],
-          status: school_attrs[:status],
           address_1: school_attrs[:address_1],
           address_2: school_attrs[:address_2],
           address_3: school_attrs[:address_3],
           town: school_attrs[:town],
           postcode: school_attrs[:postcode],
+          phase: school_attrs[:phase],
+          establishment_type: school_attrs[:establishment_type],
+          status: school_attrs[:status],
         )
       end
     end
@@ -55,14 +55,14 @@ RSpec.describe SchoolUpdateService, type: :model do
           urn: 103_001,
           name: staged_school.name,
           responsible_body_id: local_authority.id,
-          phase: staged_school.phase,
-          establishment_type: staged_school.establishment_type,
-          status: staged_school.status,
           address_1: staged_school.address_1,
           address_2: staged_school.address_2,
           address_3: staged_school.address_3,
           town: staged_school.town,
           postcode: staged_school.postcode,
+          phase: staged_school.phase,
+          establishment_type: staged_school.establishment_type,
+          status: staged_school.status,
         )
       end
     end
