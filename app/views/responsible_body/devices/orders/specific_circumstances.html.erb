@@ -11,7 +11,7 @@
 
     <p class="govuk-body">Now you’ve contacted us to <%= govuk_link_to 'request devices for specific circumstances', responsible_body_devices_request_devices_path %>, you can go ahead with your order.</p>
     <% if FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
-      <p class="govuk-body">You cannot order full allocations yet. We’re opening orders for primary schools gradually, and will invite all to order by 22 January.</p>
+      <p class="govuk-body">You cannot order full allocations yet. We’re opening orders for primary schools gradually, and will invite all to order by 15 January.</p>
       <p class="govuk-body">We’ll email you as soon as you can order full allocations.</p>
     <% else %>
       <p class="govuk-body">You cannot order a school’s full allocation yet because no school closures or groups of self-isolating children have been reported.</p>
