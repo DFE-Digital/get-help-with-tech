@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
-  get '/about-bt-wifi', to: 'pages#about_bt_wifi'
+  get '/about-bt-wifi', to: redirect('/internet-access#bt-wifi')
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
   get '/bt-wifi/suggested-email-to-schools', to: 'pages#suggested_email_to_schools'
