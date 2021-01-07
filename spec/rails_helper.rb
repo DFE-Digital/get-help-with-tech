@@ -39,6 +39,15 @@ Dir[Rails.root.join('spec/page_objects/**/*_page.rb')].sort.each { |f| require f
 require 'paper_trail/frameworks/rspec'
 
 RSpec.configure do |config|
+  # The next line was added in Dec 2020 because rspec-rails 4.0.2 is incompatible
+  # with Rails 6.1:
+  #
+  # https://github.com/rspec/rspec-rails/pull/2398
+  #
+  # It should be possible to remove this workaround soon after Rails 6.1.1 or
+  # a newer version of rspec-rails is released.
+  config.include(ActiveSupport::Testing::Assertions)
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
