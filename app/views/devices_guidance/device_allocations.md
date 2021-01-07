@@ -11,6 +11,8 @@ The number of devices available to order through the service reflects the number
 * free school meals data
 * an estimate of the number of devices a school already has
 
+Laptops and tablets will be available for further education providers to order in the 2021 spring term. We’ll contact these providers with more information during the term.
+
 ### Providing internet connectivity
 
 For information on getting internet access for disadvantaged children, read about [increasing mobile data allowances](/about-increasing-mobile-data) and [requesting 4G wireless routers](/how-to-request-4g-wireless-routers).
@@ -21,11 +23,9 @@ For information on getting internet access for disadvantaged children, read abou
   You can find out your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
 </div>
 
-You’ll be able to order your current allocation during term time when you report a closure or that more than 15 children are self-isolating through the [educational setting status form](https://form.education.gov.uk/service/educational-setting-status).
+> We’re currently prioritising delivering each school their current allocation to make sure they have devices to lend to pupils.
 
-If your school is supporting a disadvantaged child in any year group who has been advised not to attend school because they (or someone they live with) is clinically extremely vulnerable, you should request devices to lend to these children by emailing [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk).
-
-If the number of children unable to attend school and unable to access a device through other means is more than your allocation at that time (including if your school is fully closed), you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to request more.
+If the number of children unable to attend school and unable to access a device through other means is more than your allocation, you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to request more.
 
 We’ll ask you for some information about the situation, including the information listed below. Before querying your allocation, you should make sure that children cannot access a device privately, or by being lent a device already owned by your school.
 
