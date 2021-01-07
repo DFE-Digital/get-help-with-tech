@@ -33,11 +33,11 @@ RSpec.describe SchoolDataExporter, type: :model do
         [
           school.responsible_body.computacenter_identifier,
           *split_string("#{school.urn} #{school.name}", limit: 35),
-          school.delivery_address.address_1,
-          school.delivery_address.address_2,
-          school.delivery_address.address_3,
-          school.delivery_address.town,
-          school.delivery_address.postcode,
+          school.address_1,
+          school.address_2,
+          school.address_3,
+          school.town,
+          school.postcode,
           'New',
         ],
       )

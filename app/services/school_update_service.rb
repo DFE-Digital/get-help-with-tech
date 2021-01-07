@@ -14,7 +14,6 @@ class SchoolUpdateService
   def create_school(staged_school)
     Rails.logger.info("Adding school #{staged_school.urn} #{staged_school.name} (#{staged_school.status})")
     school = School.new(staged_school.staged_attributes)
-    school.build_delivery_address(staged_school.staged_delivery_address_attributes)
     school.save!
 
     unless school.responsible_body.who_will_order_devices.nil?
@@ -30,7 +29,6 @@ private
 
   def update_school(staged_school)
     staged_school.counterpart_school.update!(staged_school.staged_attributes)
-    staged_school.counterpart_school.delivery_address.update!(staged_school.staged_delivery_address_attributes)
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end

@@ -12,7 +12,6 @@ class School < ApplicationRecord
   has_many :user_schools
   has_many :users, through: :user_schools
   has_one :preorder_information
-  has_one :delivery_address
   has_many :email_audits
   has_many :extra_mobile_data_requests
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
@@ -80,6 +79,10 @@ class School < ApplicationRecord
 
   def self.requiring_a_new_computacenter_reference
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+  end
+
+  def ukprn_or_urn
+    ukprn || urn
   end
 
   def is_further_education?

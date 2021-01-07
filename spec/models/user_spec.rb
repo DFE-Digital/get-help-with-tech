@@ -378,9 +378,9 @@ RSpec.describe User, type: :model do
           expect(user_change.responsible_body).to eql(user.effective_responsible_body.name)
           expect(user_change.responsible_body_urn).to eql(user.effective_responsible_body.computacenter_identifier)
           expect(user_change.cc_sold_to_number).to eql(user.effective_responsible_body.computacenter_reference)
-          expect(user_change.school).to eql(user.school.delivery_address.name)
+          expect(user_change.school).to eql(user.school.name)
           expect(user_change.school_urn).to eql(user.school.urn.to_s)
-          expect(user_change.cc_ship_to_number).to eql(user.school.delivery_address.computacenter_reference)
+          expect(user_change.cc_ship_to_number).to eql(user.school.computacenter_reference)
           expect(user_change.updated_at_timestamp).to eql(user.created_at)
           expect(user_change.type_of_update).to eql('New')
           expect(user_change.original_email_address).to be_nil
@@ -416,8 +416,7 @@ RSpec.describe User, type: :model do
         end
 
         context 'when the school does not have a computacenter_reference' do
-          let(:delivery_address) { build(:delivery_address, computacenter_reference: nil) }
-          let(:school) { create(:school, delivery_address: delivery_address) }
+          let(:school) { create(:school, computacenter_reference: '') }
           let!(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'user@example.com', schools: [school]) }
 
           it 'does not create a UserChange' do
@@ -454,9 +453,9 @@ RSpec.describe User, type: :model do
           expect(user_change.responsible_body).to eql(school.name)
           expect(user_change.responsible_body_urn).to eql(school.computacenter_identifier)
           expect(user_change.cc_sold_to_number).to eql(school.computacenter_reference)
-          expect(user_change.school).to eql(user.school.delivery_address.name)
-          expect(user_change.school_urn).to eql("#{user.school.ukprn}-A")
-          expect(user_change.cc_ship_to_number).to eql(user.school.delivery_address.computacenter_reference)
+          expect(user_change.school).to eql(user.school.name)
+          expect(user_change.school_urn).to eql(user.school.ukprn.to_s)
+          expect(user_change.cc_ship_to_number).to eql(user.school.computacenter_reference)
           expect(user_change.updated_at_timestamp).to eql(user.created_at)
           expect(user_change.type_of_update).to eql('New')
           expect(user_change.original_email_address).to be_nil
@@ -680,18 +679,18 @@ RSpec.describe User, type: :model do
             perform_change!
             user_change = Computacenter::UserChange.last
 
-            expect(user_change.original_school).to eql(original_school.delivery_address.name)
+            expect(user_change.original_school).to eql(original_school.name)
             expect(user_change.original_school_urn).to eql(original_school.urn.to_s)
-            expect(user_change.original_cc_ship_to_number).to eql(original_school.delivery_address.computacenter_reference)
+            expect(user_change.original_cc_ship_to_number).to eql(original_school.computacenter_reference)
           end
 
           it 'stores correct current fields' do
             perform_change!
             user_change = Computacenter::UserChange.last
 
-            expect(user_change.school).to eql(other_school.delivery_address.name)
+            expect(user_change.school).to eql(other_school.name)
             expect(user_change.school_urn).to eql(other_school.urn.to_s)
-            expect(user_change.cc_ship_to_number).to eql(other_school.delivery_address.computacenter_reference)
+            expect(user_change.cc_ship_to_number).to eql(other_school.computacenter_reference)
           end
         end
 
@@ -760,9 +759,9 @@ RSpec.describe User, type: :model do
             perform_change!
             user_change = Computacenter::UserChange.last
 
-            expect(user_change.school).to eql(school.delivery_address.name)
+            expect(user_change.school).to eql(school.name)
             expect(user_change.school_urn).to eql(school.urn.to_s)
-            expect(user_change.cc_ship_to_number).to eql(school.delivery_address.computacenter_reference)
+            expect(user_change.cc_ship_to_number).to eql(school.computacenter_reference)
             expect(user_change.responsible_body).to eql(school.responsible_body.name)
           end
         end
@@ -819,18 +818,18 @@ RSpec.describe User, type: :model do
         it 'stores correct original fields' do
           perform_change!
           user_change = Computacenter::UserChange.last
-          expect(user_change.original_school).to eq(school.delivery_address.name)
+          expect(user_change.original_school).to eq(school.name)
           expect(user_change.original_school_urn).to eq(school.urn.to_s)
-          expect(user_change.original_cc_ship_to_number).to eq(school.delivery_address.computacenter_reference)
+          expect(user_change.original_cc_ship_to_number).to eq(school.computacenter_reference)
         end
 
         it 'stores the school fields as pipe-delimited lists' do
           perform_change!
           user_change = Computacenter::UserChange.last
 
-          expect(user_change.school).to eql("#{school.delivery_address.name}|#{other_school.delivery_address.name}")
+          expect(user_change.school).to eql("#{school.name}|#{other_school.name}")
           expect(user_change.school_urn).to eql("#{school.urn}|#{other_school.urn}")
-          expect(user_change.cc_ship_to_number).to eql("#{school.delivery_address.computacenter_reference}|#{other_school.delivery_address.computacenter_reference}")
+          expect(user_change.cc_ship_to_number).to eql("#{school.computacenter_reference}|#{other_school.computacenter_reference}")
         end
 
         context "when the user's schools each have a different responsible body" do
