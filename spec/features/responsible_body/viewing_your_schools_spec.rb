@@ -159,10 +159,10 @@ RSpec.feature 'Viewing your schools' do
 
   def then_i_see_the_school_in_the_fully_open_schools_list
     school = schools.third
-    expect(your_schools_page.fully_open_school_rows[0].title).to have_content(school.name)
-    expect(your_schools_page.fully_open_school_rows[0].who_will_order_devices).to have_content('School')
-    expect(your_schools_page.fully_open_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} #{'device'.pluralize(school.std_device_allocation.raw_allocation)}")
-    expect(your_schools_page.fully_open_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} #{'router'.pluralize(school.coms_device_allocation&.raw_allocation || 0)}")
+    expect(your_schools_page.cannot_order_yet_school_rows[0].title).to have_content(school.name)
+    expect(your_schools_page.cannot_order_yet_school_rows[0].who_will_order_devices).to have_content('School')
+    expect(your_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} #{'device'.pluralize(school.std_device_allocation.raw_allocation)}")
+    expect(your_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} #{'router'.pluralize(school.coms_device_allocation&.raw_allocation || 0)}")
   end
 
   def then_i_see_the_summary_pooled_device_count_card
