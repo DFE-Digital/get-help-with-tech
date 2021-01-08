@@ -5,13 +5,13 @@ Each iPad bundle contains:
 * 10” iPad with 32GB storage and a headphone port
 * USB charging cable
 * 3-point power adapter
-* protective sleeve
+* a lightly padded neoprene sleeve
 
 See the [full device specification](/devices/device-specification). 
  
-Each iPad will be sent to you with a simple protective sleeve. 
+The simple protective sleeve you receive is ideal for storing the device.
 
-The child or young person will need to take the device out of the sleeve to use it. You may want to consider purchasing more secure iPad cases, where appropriate.
+The child or young person will need to take the device out of the sleeve to use it, so you may want to consider purchasing rigid iPad cases for in-use protection.
 
 
 ## Find your Apple School Manager (ASM) Organisation ID 
@@ -84,7 +84,7 @@ If you need further assistance, contact [COVID.TECHNOLOGY@education.gov.uk](mail
 
 ## User guidance for iPads
 
-Apple provide easy-to-follow instructions in the box for users. What users can do on their iPads depends on how you have set up their device in Apple School Manager. 
+Apple provide easy-to-follow instructions in the box for users. What users can do on their iPads depends on how you have set them up in Apple School Manager. 
 
 See general [user guidance](https://support.apple.com/guide/ipad/turn-on-and-set-up-ipad995bb83d/ipados) on how to turn on and set up iPads.
 
