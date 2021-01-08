@@ -46,12 +46,12 @@
 <% if @schools[:ordering_schools].count.positive? %>
   <%= render partial: 'school_states_table', locals: { schools: @schools[:ordering_schools],
                                                        table_id: 'ordering-schools',
-                                                       heading: t('.ordering_schools_heading'),
-                                                       heading_text: t('.ordering_schools_heading_text') } %>
+                                                       heading: t('.ordering_schools_heading') } %>
 <%- end %>
 
 <% if @schools[:fully_open_schools].count.positive? %>
   <%= render partial: 'school_states_table', locals: { schools: @schools[:fully_open_schools],
-                                                       table_id: 'fully-open-schools',
-                                                       heading: t('.fully_open_schools_heading') } %>
+                                                       table_id: 'cannot-order-yet-schools',
+                                                       heading: t('.cannot_order_yet_schools_heading'),
+                                                       heading_text: t('.cannot_order_yet_schools_text') } %>
 <%- end %>

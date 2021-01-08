@@ -158,7 +158,8 @@ GHWT__SLACK__EVENT_NOTIFICATIONS__WEBHOOK_URL    | URL for the incoming webhook 
 GHWT__COMPUTACENTER__OUTGOING_API__ENDPOINT      | URL of the CapUpdateRequest API at TechSource | (nil)
 GHWT__COMPUTACENTER__OUTGOING_API__USERNAME      | Basic auth username to use for the TechSource CapUpdateRequest API | (nil)
 GHWT__COMPUTACENTER__OUTGOING_API__PASSWORD      | Basic auth password to use for the TechSource CapUpdateRequest API | (nil)
-
+GHWT__ZENDESK__USERNAME                          | Username for Zendesk account to be able to use the Zendesk API. Both Zendesk options need to set before Zendesk API can be used. | (nil)
+GHWT__ZENDESK__TOKEN                             | Token for Zendesk account to be able to use the Zendesk API.Both Zendesk options need to set before Zendesk API can be used. | (nil)
 
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.

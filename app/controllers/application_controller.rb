@@ -127,4 +127,8 @@ private
       schools_path
     end
   end
+
+  def show_parent_carer_pupil_banner?
+    @show_parent_carer_pupil_banner = current_user&.new_record?
+  end
 end

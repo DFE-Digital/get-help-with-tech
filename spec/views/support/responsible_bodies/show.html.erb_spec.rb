@@ -3,17 +3,10 @@ require 'rails_helper'
 RSpec.describe 'support/responsible_bodies/show.html.erb' do
   let(:responsible_body) { create(:trust) }
   let(:schools) { [create(:school, responsible_body: responsible_body)] }
+  let(:support_user) { create(:support_user) }
 
   before do
-    controller.singleton_class.class_eval do
-    protected
-
-      def policy(_klass)
-        OpenStruct.new(new?: true, edit?: true)
-      end
-      helper_method :policy
-    end
-
+    enable_pundit(view, support_user)
     assign(:responsible_body, responsible_body)
     assign(:schools, schools)
   end

@@ -249,33 +249,33 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def then_i_see_a_list_of_the_schools_i_am_responsible_for
     expect(page).to have_content('Your schools')
-    expect(responsible_body_schools_page.fully_open_school_rows[0].title)
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].title)
       .to have_content('Aardvark Primary School (456654) Primary school')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].title)
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].title)
       .to have_content('Zebra Secondary School (123321) Secondary school')
   end
 
   def then_i_see_a_list_of_the_academies_i_am_responsible_for
     expect(page).to have_content('Your schools')
-    expect(responsible_body_schools_page.fully_open_school_rows[0].title)
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].title)
       .to have_content('Koala Academy')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].title)
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].title)
       .to have_content('Pangolin Primary Academy')
   end
 
   def and_each_school_needs_a_contact
-    expect(responsible_body_schools_page.fully_open_school_rows[0].status).to have_content('Needs a contact')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].status).to have_content('Needs a contact')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].status).to have_content('Needs a contact')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].status).to have_content('Needs a contact')
   end
 
   def and_each_school_needs_information
-    expect(responsible_body_schools_page.fully_open_school_rows[0].status).to have_content('Needs information')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].status).to have_content('Needs information')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].status).to have_content('Needs information')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].status).to have_content('Needs information')
   end
 
   def and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
-    expect(responsible_body_schools_page.fully_open_school_rows[0].allocation).to have_content('42')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].allocation).to have_content('0')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content('42')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].allocation).to have_content('0')
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally
@@ -290,13 +290,13 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_the_list_shows_that_schools_will_place_all_orders
-    expect(responsible_body_schools_page.fully_open_school_rows[0].who_will_order_devices).to have_content('School')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].who_will_order_devices).to have_content('School')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].who_will_order_devices).to have_content('School')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].who_will_order_devices).to have_content('School')
   end
 
   def and_the_list_shows_that_the_responsible_body_will_place_all_orders
-    expect(responsible_body_schools_page.fully_open_school_rows[0].who_will_order_devices).to have_content('Local authority')
-    expect(responsible_body_schools_page.fully_open_school_rows[1].who_will_order_devices).to have_content('Local authority')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].who_will_order_devices).to have_content('Local authority')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].who_will_order_devices).to have_content('Local authority')
   end
 
   def when_i_click_on_the_first_school_name

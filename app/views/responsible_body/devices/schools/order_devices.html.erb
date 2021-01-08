@@ -11,7 +11,7 @@
     <%= render DeviceCountComponent.new(school: @school) %>
 
     <p class="govuk-body">Only order devices for children who cannot attend school and do not have access to a laptop or tablet.</p>
-    <p class="govuk-body">We’re working hard to get devices delivered within 2 working days.</p>
+    <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
     <% if @school&.std_device_allocation&.available_devices_count > 149 %>
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>

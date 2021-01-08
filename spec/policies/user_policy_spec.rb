@@ -3,7 +3,7 @@ require 'rails_helper'
 describe UserPolicy do
   subject(:policy) { described_class }
 
-  permissions :new?, :create?, :edit?, :update?, :destroy?, :associated_organisations?, :update_responsible_body? do
+  permissions :new?, :create?, :edit?, :update?, :destroy?, :confirm_destroy?, :update_schools? do
     it 'grants access to support users' do
       expect(policy).to permit(build(:support_user), :support)
     end

@@ -1,14 +1,10 @@
 <tr class="govuk-table__row" id="request-<%= extra_mobile_data_request.id %>">
   <td class="govuk-table__cell">
-    <div class="govuk-form-group govuk-!-margin-bottom-0">
-      <%= form.govuk_collection_check_boxes :extra_mobile_data_request_ids,
-      [OpenStruct.new(id: extra_mobile_data_request.id, label: '')],
-      :id,
-      :label,
-      small: false,
-      classes: 'all-none-item',
-      legend: { hidden: true } %>
-    </div>
+    <%= form.govuk_check_box :extra_mobile_data_request_ids,
+                             extra_mobile_data_request.id,
+                             multiple: true,
+                             label: { text: "Select #{extra_mobile_data_request.account_holder_name} request",
+                                      hidden: true } %>
   </td>
   <td class="govuk-table__cell">
     <%= extra_mobile_data_request.account_holder_name %>

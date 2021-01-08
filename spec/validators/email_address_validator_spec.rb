@@ -85,7 +85,7 @@ RSpec.describe EmailAddressValidator do
     it 'returns the correct error message' do
       model.email_address = 'foo'
       model.validate(:no_context)
-      expect(model.errors[:email_address]).to include(I18n.t!('activerecord.errors.models.user.attributes.email_address.invalid'))
+      expect(model.errors.added?(:email_address, :invalid)).to be_truthy
     end
   end
 end

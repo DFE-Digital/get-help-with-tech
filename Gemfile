@@ -33,6 +33,9 @@ gem 'paper_trail'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
+# Fuzzy school search
+gem 'pg_search'
+
 # Pry console is more resilient to readline issues that can stop
 # the arrow keys etc working
 gem 'pry-rails'
@@ -47,7 +50,7 @@ gem 'pundit'
 gem 'rack-throttle'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 6.0.3.1'
+gem 'rails', '~> 6.0.3.4'
 
 # Used for markdown rendering of guidance pages
 gem 'redcarpet'
@@ -78,6 +81,9 @@ gem 'notifications-ruby-client'
 # parsing XLSX spreadsheets for bulk extra data requests
 gem 'rubyXL'
 
+# Integrate with zendesk to create support tickets
+gem 'zendesk_api'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -91,7 +97,7 @@ group :development, :test do
   gem 'pry-byebug'
 
   # Testing framework
-  gem 'rspec-rails', '~> 4.0.1'
+  gem 'rspec-rails', '~> 4.0.2'
 
   # Stubbing web requests
   gem 'webmock'
@@ -99,8 +105,6 @@ group :development, :test do
   # GOV.UK interpretation of rubocop for linting Ruby
   gem 'rubocop-govuk', '>= 3.17.2'
   gem 'scss_lint-govuk'
-
-  gem 'travis'
 
   # Allow testing logging to logstash in development
   gem 'logstash-logger', '~> 0.26.1'
@@ -113,7 +117,7 @@ group :development do
   # log failed I18n lookups
   gem 'i18n-debug'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.4'
+  gem 'listen', '>= 3.0.5', '< 3.5'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -131,7 +135,7 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'
-  gem 'webdrivers', '~> 4.3'
+  gem 'webdrivers', '~> 4.4'
   gem 'shoulda-matchers', '~> 4.4'
   gem 'rails-controller-testing'
 end

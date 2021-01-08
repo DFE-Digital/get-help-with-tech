@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
-  get '/about-bt-wifi', to: 'pages#about_bt_wifi'
+  get '/about-bt-wifi', to: redirect('/internet-access#bt-wifi')
   get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
   get '/bt-wifi/privacy-notice', to: 'pages#bt_wifi_privacy_notice'
   get '/bt-wifi/suggested-email-to-schools', to: 'pages#suggested_email_to_schools'
@@ -44,6 +44,31 @@ Rails.application.routes.draw do
   post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
 
   resources :sessions, only: %i[create destroy]
+
+  namespace :support_ticket, path: '/get-support' do
+    get '/', to: 'base#start'
+    get '/describe-yourself', to: 'describe_yourself#new'
+    post '/describe-yourself', to: 'describe_yourself#save'
+    get '/school-details', to: 'school_details#new'
+    post '/school-details', to: 'school_details#save'
+    get '/academy-details', to: 'academy_details#new'
+    post '/academy-details', to: 'academy_details#save'
+    get '/local-authority-details', to: 'local_authority_details#new'
+    post '/local-authority-details', to: 'local_authority_details#save'
+    get '/college-details', to: 'college_details#new'
+    post '/college-details', to: 'college_details#save'
+    get '/contact-details', to: 'contact_details#new'
+    post '/contact-details', to: 'contact_details#save'
+    get '/support-needs', to: 'support_needs#new'
+    post '/support-needs', to: 'support_needs#save'
+    get '/support-details', to: 'support_details#new'
+    post '/support-details', to: 'support_details#save'
+    get '/check-your-request', to: 'check_your_request#new'
+    post '/check-your-request', to: 'check_your_request#save'
+
+    get '/parent-support', to: 'base#parent_support'
+    get '/thank-you', to: 'base#thank_you'
+  end
 
   get '/token/validate', to: 'sign_in_tokens#validate', as: :validate_sign_in_token
   delete '/token/validate', to: 'sign_in_tokens#destroy', as: :destroy_sign_in_token
@@ -148,21 +173,26 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/schools', to: 'home#schools'
     get '/technical', to: 'home#technical_support', as: :technical_support
+    get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
-      resources :users, only: %i[new create], controller: 'responsible_bodies/users'
+      resources :users, only: %i[new create], controller: 'users'
     end
     resources :schools, only: %i[show], param: :urn do
       collection do
         get 'search'
+        get 'results'
         post 'results'
 
         get '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#collect_urns_to_allow_many_schools_to_order'
         patch '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#allow_ordering_for_many_schools', as: :allow_ordering_for_many_schools
+
+        get '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#collect_urns_and_allocations_for_many_schools'
+        patch '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#adjust_allocations_for_many_schools', as: :adjust_allocations_for_many_schools
       end
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'
-      resources :users, only: %i[new create], controller: 'schools/users'
+      resources :users, only: %i[new create], controller: 'users'
 
       get '/devices/enable-orders', to: 'schools/devices/order_status#edit', as: :enable_orders
       get '/devices/enable-orders/confirm', to: 'schools/devices/order_status#confirm', as: :confirm_enable_orders
@@ -181,10 +211,11 @@ Rails.application.routes.draw do
         post 'results'
       end
       member do
-        get 'associated-organisations', as: :associated_organisations
-        patch 'responsible-body', to: 'users#update_responsible_body', as: :update_responsible_body
-        resources :schools, only: %i[index create destroy], as: :user_schools, controller: 'users/schools', param: :urn
+        get 'confirm-deletion', to: 'users#confirm_destroy'
       end
+      resources :schools, only: %i[index new create], controller: 'users/schools', param: :urn
+      patch 'schools', to: 'users/schools#update_schools', as: :update_schools
+      resource :responsible_body, only: %i[edit update], controller: 'users/responsible_body', path: 'responsible-body'
     end
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end

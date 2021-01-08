@@ -34,4 +34,62 @@ RSpec.describe Computacenter::UserChangeGenerator do
       expect(user_change.cc_ship_to_number).to eql('ABC')
     end
   end
+
+  describe '#is_addition?' do
+    subject(:generator) { described_class.new(user) }
+
+    context 'when the user is relevant_to_computacenter' do
+      let(:user) { create(:school_user, :relevant_to_computacenter) }
+
+      context 'and the user has not been soft_deleted' do
+        before do
+          user.update!(deleted_at: nil)
+        end
+
+        context 'and there is no existing UserChange for the user' do
+          before do
+            Computacenter::UserChange.where(user_id: user.id).delete_all
+          end
+
+          it 'returns true' do
+            expect(generator.send(:is_addition?)).to eq(true)
+          end
+        end
+
+        context 'and there is an existing UserChange for the user of type Remove' do
+          before do
+            Computacenter::UserChange.create(user: user, type_of_update: 'Remove')
+          end
+
+          it 'returns true' do
+            expect(generator.send(:is_addition?)).to eq(true)
+          end
+        end
+      end
+
+      context 'when the user has been soft_deleted' do
+        before do
+          user.update!(deleted_at: 1.day.ago)
+        end
+
+        context 'and there is an existing UserChange for the user of type Remove' do
+          before do
+            Computacenter::UserChange.create(user: user, type_of_update: 'Remove')
+          end
+
+          it 'returns false' do
+            expect(generator.send(:is_addition?)).to eq(false)
+          end
+        end
+      end
+    end
+
+    context 'when the user is not relevant_to_computacenter' do
+      let(:user) { create(:user, orders_devices: false) }
+
+      it 'returns false' do
+        expect(generator.send(:is_addition?)).to eq(false)
+      end
+    end
+  end
 end

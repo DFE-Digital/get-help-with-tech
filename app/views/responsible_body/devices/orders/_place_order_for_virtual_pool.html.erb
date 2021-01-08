@@ -3,22 +3,24 @@
 
     <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
 
-    <% if @schools_can_order.any? && @schools_can_order_for_specific_circumstances.any? %>
-      <p class="govuk-body govuk-!-margin-bottom-1">
-        The number of devices you can order is the remaining allocation of devices for:
-      </p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>approved requests <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %></li>
-        <li><%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time</li>
-      </ul>
-    <% elsif @schools_can_order.any? %>
-      <p class="govuk-body">
-        The number of devices you can order is the remaining allocation of devices for <%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time.
-      </p>
-    <% elsif @schools_can_order_for_specific_circumstances.any? %>
-      <p class="govuk-body">
-        The number of devices you can order is the remaining allocation of devices where a request <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %> has been approved.
-      </p>
+    <% unless FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
+      <% if @schools_can_order.any? && @schools_can_order_for_specific_circumstances.any? %>
+        <p class="govuk-body govuk-!-margin-bottom-1">
+          The number of devices you can order is the remaining allocation of devices for:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>approved requests <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %></li>
+          <li><%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time</li>
+        </ul>
+      <% elsif @schools_can_order.any? %>
+        <p class="govuk-body">
+          The number of devices you can order is the remaining allocation of devices for <%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time.
+        </p>
+      <% elsif @schools_can_order_for_specific_circumstances.any? %>
+        <p class="govuk-body">
+          The number of devices you can order is the remaining allocation of devices where a request <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %> has been approved.
+        </p>
+      <% end %>
     <% end %>
 
     <h2 class="govuk-heading-m">
@@ -34,7 +36,7 @@
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
     <p class="govuk-body">
-      Most devices will be delivered within 2 working days.
+      <%= t('responsible_body.devices.delivery_timeline') %>
     </p>
     <h3 class="govuk-heading-s">
       Ordering devices for more than one school

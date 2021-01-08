@@ -4,95 +4,16 @@ RSpec.describe School, type: :model do
   it { is_expected.to be_versioned }
 
   describe 'validating URN' do
-    let(:school) { subject }
-
-    context 'the URN is 6 digits' do
-      before do
-        school.urn = '123456'
-      end
-
-      it 'is valid' do
-        school.valid?
-        expect(school.errors).not_to have_key(:urn)
-      end
-    end
-
-    context 'the URN has more than 6 digits' do
-      before do
-        school.urn = '123456012'
-      end
-
-      it 'is not valid' do
-        school.valid?
-        expect(school.errors).to have_key(:urn)
-        expect(school.errors[:urn]).to include('The URN must be 6 digits')
-      end
-    end
-
-    context 'the URN has less than 6 digits' do
-      before do
-        school.urn = '1234'
-      end
-
-      it 'is not valid' do
-        school.valid?
-        expect(school.errors).to have_key(:urn)
-        expect(school.errors[:urn]).to include('The URN must be 6 digits')
-      end
-    end
-
-    context 'the URN contains non-numeric characters' do
-      before do
-        school.urn = '1234-Q'
-      end
-
-      it 'is not valid' do
-        school.valid?
-        expect(school.errors).to have_key(:urn)
-        expect(school.errors[:urn]).to include('The URN must be 6 digits')
-      end
-    end
-
-    context 'a URN is blank' do
-      before do
-        school.urn = nil
-      end
-
-      it 'is not valid' do
-        school.valid?
-        expect(school.errors).to have_key(:urn)
-        expect(school.errors[:urn]).to include('Enter the unique reference number')
-      end
-    end
+    it { is_expected.to allow_value('123456').for(:urn) }
+    it { is_expected.not_to allow_value('12345678').for(:urn) }
+    it { is_expected.not_to allow_value('1234').for(:urn) }
+    it { is_expected.not_to allow_value('1234-Q').for(:urn) }
+    it { is_expected.to validate_presence_of(:urn).with_message('Enter the unique reference number') }
   end
 
   describe 'validating name' do
-    context 'when a name is supplied' do
-      let(:school) { subject }
-
-      before do
-        school.name = 'Big School'
-      end
-
-      it 'is valid' do
-        school.valid?
-        expect(school.errors).not_to have_key(:name)
-      end
-    end
-
-    context 'when a name is not supplied' do
-      let(:school) { subject }
-
-      before do
-        school.name = nil
-      end
-
-      it 'is not valid' do
-        school.valid?
-        expect(school.errors).to have_key(:name)
-        expect(school.errors[:name]).to include('Enter the name of the establishment')
-      end
-    end
+    it { is_expected.to allow_value('Big School').for(:name) }
+    it { is_expected.to validate_presence_of(:name).with_message('Enter the name of the establishment') }
   end
 
   describe '#preorder_status_or_default' do
@@ -431,6 +352,23 @@ RSpec.describe School, type: :model do
 
     it 'returns false for a school outside the pool' do
       expect(schools.last.in_virtual_cap_pool?).to be false
+    end
+  end
+
+  describe '.matching_name_or_urn' do
+    it 'returns schools with the provided URN' do
+      matched_school = create(:school, urn: 123_456)
+      create(:school, urn: 123_458) # non-matching school
+
+      expect(School.matching_name_or_urn(123_456)).to eq([matched_school])
+    end
+
+    it 'returns schools which match the name partially or exactly' do
+      matched_school1 = create(:school, name: 'Southside')
+      matched_school2 = create(:school, name: 'Southside Primary')
+      create(:school, name: 'Northside') # non-matching school
+
+      expect(School.matching_name_or_urn('Southside')).to contain_exactly(matched_school1, matched_school2)
     end
   end
 end

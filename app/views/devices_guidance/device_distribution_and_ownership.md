@@ -34,7 +34,7 @@ LAs can transfer ownership of the devices to the children, families and young pe
 
 LAs should consider safeguarding when deciding whether to gift a device and involve relevant parties (such as social workers, schools and carers) in making the decision.
 
-[Guidance on safe internet use](Guidance on safe internet use) should be provided when devices are lent or gifted.
+[Guidance on safe internet use](https://www.saferinternet.org.uk/) should be provided when devices are lent or gifted.
 
 #### What to do if a child or young person no longer meets the criteria to have a device
 
@@ -66,11 +66,9 @@ However, if LAs have any concerns about lending or gifting a device to a child o
 
 LAs may also have valid reasons for retaining a pool of devices. For example, the LA may want to hold back some provision for future distribution to children and young people (for instance in anticipation of an increase in demand on children’s social care services).
 
-
-
 ## Distributing devices
 
-Laptops, tablets and 4G wireless routers will be delivered directly to schools or local authorities named in the order.  Read guidance on [how to order](/devices/how-to-order) for more information on the delivery process.
+Laptops, tablets and 4G wireless routers ordered from September 2020 will be delivered directly to schools or local authorities named in the order. Read guidance on [how to order laptops and tablets](/devices/how-to-order) or [4G wireless routers](/how-to-request-4g-wireless-routers) for more information on the delivery process. 
 
 Organisations are responsible for deciding how they deliver devices. For example, they can:
 
@@ -79,11 +77,11 @@ Organisations are responsible for deciding how they deliver devices. For example
 * arrange for schools to deliver them
 * use local organisations, such as those supporting care leavers
 
-All distribution and return of lent devices should be done in accordance with [social distancing guidelines](https://www.gov.uk/government/publications/staying-alert-and-safe-social-distancing), and any [social distancing guidelines relevant to your local area](https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19).
+All distribution and return of lent devices should be done in accordance with [social distancing guidelines relevant to your local area](https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19).
 
 ### Redistributing unused 4G wireless routers
 
-Local authorities and academy trusts can use the [Support Portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you should collect them and lend them to other children and young people who may have greater need.  The DfE is investigating options for extending data contracts on all 4G wireless routers that are being actively used.
+Local authorities and academy trusts can use the [Support Portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you may wish to collect them and lend them to other children and young people who may have greater need.
 
 
 ## Loan agreements

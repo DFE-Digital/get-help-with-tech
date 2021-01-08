@@ -55,17 +55,13 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
 private
 
   def get_allocation_data
-    records = SchoolDeviceAllocation.includes(:school).where(id: @allocation_ids)
+    records = SchoolDeviceAllocation.includes(school: :preorder_information).where(id: @allocation_ids)
 
     if records.present?
-      responsible_body = records.first.school.responsible_body
-
-      zero_caps = responsible_body.has_multiple_chromebook_domains_in_managed_schools?
-
       records = records.map do |allocation|
         OpenStruct.new(cap_type: allocation.computacenter_cap_type,
                        ship_to: allocation.school.computacenter_reference,
-                       cap: zero_caps ? allocation.raw_devices_ordered : allocation.computacenter_cap)
+                       cap: allocation.computacenter_cap)
       end
     end
 

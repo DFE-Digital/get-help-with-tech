@@ -8,7 +8,6 @@ en:
   page_titles:
     how_request_4g_routers: How to request 4G wireless routers
     choosing_help_with_internet_access: Choosing help with internet access
-    about_bt_wifi: Offering free access to BT wifi hotspots
     api_tokens: Your API tokens
     bt_wifi_privacy_notice: How we look after personal data for the BT wifi hotspot scheme
     about_increasing_mobile_data: Increasing data allowances on mobile devices to support disadvantaged children
@@ -50,7 +49,7 @@ en:
     internet_access: Get internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_how_to_order: "How and when to order laptops and tablets during coronavirus (COVID-19)"
+    devices_guidance_how_to_order: "How and when to order DfE laptops and tablets during coronavirus (COVID-19)"
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
@@ -64,18 +63,23 @@ en:
       home: Support
       schools: Schools
       technical_support: Technical support
+      feature_flags: Feature flags
       devices:
         schools:
-          search: Search for schools by URN
+          search: Search for schools
           results: School search results
       users:
-        associated_organisations: Associated organisations
         search: Find responsible body or school users
         results: Users
+        new: Invite a new user
         schools:
-          index: Associate with a school
+          index: Update school access
+          new: Grant access to a school
         responsible_bodies:
           index: Associate with a responsible body
+          edit: Update responsible body
+      allocation:
+        adjust_allocations_for_many_schools: Adjust allocations for many schools
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices
@@ -109,7 +113,7 @@ en:
       schools: The school will place their own orders
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
-    cannot_order_devices_over_christmas: You cannot place orders over Christmas
+    national_lockdown_school_cannot_order_yet: Your school cannot order devices yet
     school_home: Get devices for your school
     school_can_order_devices: Your school can order devices
     school_cannot_order_devices:
@@ -154,8 +158,8 @@ en:
       can_order_devices: Yes, give them access to the TechSource website
       can_order_devices_hint: This is where they’ll place orders.
       cannot_order_devices: 'No'
-    new_school_user: Invite a new user
     edit_user: Change user details
+    confirm_destroy_user: Are you sure you want to delete this user?
     school_user_welcome_wizard:
       welcome:
         title: "You’re signed in as %{school}"
@@ -191,6 +195,9 @@ en:
     your_schools: Your schools
     your_organisations: Your organisations
   landing_pages:
+    get_support:
+      start: Get support
+      describe_yourself: Which of these best describes you?
     get_support_guides:
       title: Get support guides for laptops, tablets and 4G wireless routers
     digital_platforms:
@@ -251,6 +258,10 @@ en:
     support_and_maintenance:
       title: Support and maintenance
       description: Find out how to support your users, access additional support and deal with a faulty device.
+      audience: responsible_body_users
+    replace_a_faulty_device:
+      title: Replace a faulty device
+      description: Find out how to get a replacement for a faulty laptop, tablet or 4G wireless router, the cost to replace a damaged device, how to service and repair an iPad and other warranty details.
       audience: responsible_body_users
     safeguarding_for_device_users:
       title: Safeguarding for device users
@@ -459,6 +470,10 @@ en:
               lte_allocation: Enter an allocation that’s greater than, or the same as, the current cap
             allocation:
               greater_than: Enter an allocation that’s non-negative
+        support/school_suggestion_form:
+          attributes:
+            name_or_urn:
+              too_short: Enter a school name that is at least %{count} characters
   activerecord:
     attributes:
       api_token:
@@ -570,15 +585,16 @@ en:
       time_only_with_zone: "%l:%M%P %Z"
   responsible_body:
     devices:
+      delivery_timeline: Most devices will be delivered to schools within 5 working days of an order being confirmed, subject to stock availability.
       who_will_order:
         update:
           success: We’ve saved your choice
       schools:
         index:
-          ordering_schools_heading: Schools reporting a closure or self-isolation group
-          ordering_schools_heading_text: When a school has reported either a closure or a group of 15 or more pupils self-isolating at the same time, you can order its allocation of devices or routers
+          ordering_schools_heading: Schools that can order
           specific_circumstances_heading: Schools with approved requests for specific circumstances
-          fully_open_schools_heading: Schools without a reported closure or self-isolating group
+          cannot_order_yet_schools_heading: Schools that cannot order yet
+          cannot_order_yet_schools_text: We’re opening orders for primary schools gradually, and will invite all to order by 13 January
         who_to_contact:
           create:
             failure: "Saved. We will email %{email_address} shortly"
@@ -632,14 +648,16 @@ en:
       support_enable_orders_form:
         device_cap: How many devices can they order?
         router_cap: How many routers can they order?
-      support_new_user_school_form:
+      support_school_suggestion_form:
         name_or_urn: School name or URN
       support_user_responsible_body_form:
         name: Responsible body name
   banners:
+    secondary_mass_testing:
+      heading: All secondary schools can order laptops and tablets now. We’ll invite all primary schools to order by 13 January at the latest, starting with the most disadvantaged areas in England.
     christmas:
       heading: No orders over Christmas
-      content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Thursday 17 December and we’ll then close ordering until Monday 4 January.
+      content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Friday 18 December and we’ll then close ordering until Monday 4 January.
       content_2: Deliveries will continue until 6pm on 18 December. Any outstanding deliveries will be dispatched from 4 January.
     increased_allocations:
       school:

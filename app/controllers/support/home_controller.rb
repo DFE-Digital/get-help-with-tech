@@ -4,4 +4,6 @@ class Support::HomeController < Support::BaseController
   def show; end
 
   def schools; end
+
+  def feature_flags; end
 end
