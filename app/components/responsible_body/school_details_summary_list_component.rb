@@ -48,7 +48,7 @@ private
         value: "The #{who.downcase} orders devices",
         action: 'who will order',
       }
-      unless responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?
+      unless responsible_body&.has_virtual_cap_feature_flags_and_centrally_managed_schools?
         detail.merge!(
           change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
         )
@@ -92,7 +92,7 @@ private
   end
 
   def display_devices_ordered_row?
-    !@school.responsible_body.has_virtual_cap_feature_flags? && @school.std_device_allocation&.devices_ordered.to_i.positive?
+    !@school.responsible_body&.has_virtual_cap_feature_flags? && @school.std_device_allocation&.devices_ordered.to_i.positive?
   end
 
   def display_router_allocation_row?
