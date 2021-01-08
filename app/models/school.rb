@@ -3,6 +3,7 @@ class School < ApplicationRecord
   include PgSearch::Model
 
   belongs_to :responsible_body
+
   has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
   has_one    :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
   has_one    :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
@@ -17,7 +18,6 @@ class School < ApplicationRecord
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
 
-  validates :urn, presence: true, format: { with: /\A\d{6}\z/ }
   validates :name, presence: true
 
   pg_search_scope :matching_name_or_urn, against: %i[name urn], using: { tsearch: { prefix: true } }
@@ -60,6 +60,9 @@ class School < ApplicationRecord
     closed: 'closed',
   }, _prefix: true
 
+  scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
+  scope :further_education, -> { where(type: 'FurtherEducationSchool') }
+
   after_update :maybe_generate_user_changes
 
   def self.that_will_order_devices
@@ -76,6 +79,14 @@ class School < ApplicationRecord
 
   def self.requiring_a_new_computacenter_reference
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+  end
+
+  def ukprn_or_urn
+    ukprn || urn
+  end
+
+  def is_further_education?
+    type == 'FurtherEducationSchool'
   end
 
   def has_ordered?
@@ -121,7 +132,7 @@ class School < ApplicationRecord
   def type_label
     if special_establishment_type?
       'Special school'
-    elsif !phase_not_applicable?
+    elsif phase && !phase_not_applicable?
       "#{phase.humanize.upcase_first} school"
     else
       ''
@@ -161,10 +172,6 @@ class School < ApplicationRecord
     end
   end
 
-  def to_param
-    urn.to_s
-  end
-
   def has_devices_available_to_order?
     device_allocations.any?(&:has_devices_available_to_order?)
   end
@@ -192,7 +199,7 @@ class School < ApplicationRecord
 private
 
   def maybe_generate_user_changes
-    users.each(&:generate_user_change_if_needed!)
+    user_schools.map(&:user).each(&:generate_user_change_if_needed!)
   end
 
   def set_computacenter_change

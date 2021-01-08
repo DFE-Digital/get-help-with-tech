@@ -14,11 +14,11 @@
       <%= title %>
     </h1>
 
-    <p class="govuk-body">Search for schools by entering their URNs. Use one line per URN.</p>
+    <p class="govuk-body">Search for schools by entering their URNs or UKPRNs. Use one line per identifier.</p>
 
     <%= form_with model: @search_form, url: results_support_schools_path do |f| %>
-      <%= f.govuk_text_area :urns,
-                            label: { text: 'URNs', size: 'm' },
+      <%= f.govuk_text_area :identifiers,
+                            label: { text: 'URNs or UKPRNs', size: 'm' },
                             rows: 10 %>
 
       <%= f.govuk_collection_select   :responsible_body_id,

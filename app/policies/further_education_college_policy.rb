@@ -1,0 +1,2 @@
+class FurtherEducationCollegePolicy < ResponsibleBodyPolicy
+end

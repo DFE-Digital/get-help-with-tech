@@ -48,6 +48,9 @@ module Computacenter::ResponsibleBodyUrns
         else
           "t#{companies_house_number.to_i}"
         end
+      when 'FurtherEducationCollege'
+        # potential n+1
+        schools.first&.ukprn
       when 'DfE'
         'DfE'
       end
@@ -57,7 +60,7 @@ module Computacenter::ResponsibleBodyUrns
       case type
       when 'LocalAuthority'
         local_authority_official_name
-      when 'Trust'
+      when 'Trust', 'FurtherEducationCollege'
         name
       when 'DfE'
         'Department for Education'

@@ -55,4 +55,10 @@ FactoryBot.define do
       organisation_type           { :multi_academy_trust }
     end
   end
+
+  factory :further_education_college, parent: :responsible_body, class: 'FurtherEducationCollege' do
+    type { 'FurtherEducationCollege' }
+    name { [Faker::App.unique.name, 'FE College'].join(' ') }
+    organisation_type { 'FurtherEducationSchool' }
+  end
 end

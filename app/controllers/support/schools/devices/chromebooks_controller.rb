@@ -28,7 +28,7 @@ class Support::Schools::Devices::ChromebooksController < Support::BaseController
 private
 
   def set_school
-    @school = School.find_by_urn(params[:school_urn])
+    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
     authorize @school, :show?
   end
 

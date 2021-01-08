@@ -28,7 +28,7 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
 private
 
   def find_school!
-    @school = @responsible_body.schools.find_by!(urn: params[:school_urn])
+    @school = @responsible_body.schools.where_urn_or_ukprn(params[:school_urn]).first!
   end
 
   def chromebook_params
