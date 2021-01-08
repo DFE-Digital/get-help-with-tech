@@ -27,7 +27,7 @@ private
 
   def render(csv, query)
     csv << headings
-    query.find_each do |rb|
+    query.each do |rb|
       csv << [
         rb.computacenter_identifier,
         *build_name_fields_for(rb),

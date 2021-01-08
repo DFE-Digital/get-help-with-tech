@@ -1,10 +1,11 @@
 class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseController
   before_action :set_responsible_body, except: :index
   after_action :verify_authorized
-  after_action :verify_policy_scoped, only: :index
 
   def index
     authorize ResponsibleBody
+    authorize School
+
     respond_to do |format|
       format.html do
         @responsible_bodies = fetch_responsible_bodies
@@ -46,10 +47,12 @@ private
   end
 
   def fetch_responsible_bodies
-    policy_scope(ResponsibleBody)
-      .gias_status_open
-      .merge(query_for_view_mode)
-      .order(ResponsibleBody.arel_table[:type].asc, ResponsibleBody.arel_table[:name].asc)
+    # policy_scope(ResponsibleBody)
+    #   .gias_status_open
+    #   .merge(query_for_view_mode)
+    #   .order(ResponsibleBody.arel_table[:type].asc, ResponsibleBody.arel_table[:name].asc)
+
+    Computacenter::Account.requiring_computacenter_reference
   end
 
   def view_mode
