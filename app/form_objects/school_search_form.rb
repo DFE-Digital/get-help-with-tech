@@ -21,7 +21,7 @@ class SchoolSearchForm
 
   def schools
     school_records = School.gias_status_open.includes(:responsible_body, :std_device_allocation)
-    school_records = school_records.where(urn: array_of_identifiers) if array_of_identifiers.present?
+    school_records = school_records.where("urn IN (?) OR ukprn in (?)", array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
     school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
     school_records = school_records.where(order_state: order_state) if order_state.present?
 
@@ -29,7 +29,7 @@ class SchoolSearchForm
   end
 
   def missing_identifiers
-    array_of_identifiers - schools.pluck(:urn).map(&:to_s)
+    array_of_identifiers - schools.pluck(:urn, :ukprn).flatten.compact.map(&:to_s)
   end
 
   def select_responsible_body_options
