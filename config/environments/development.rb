@@ -47,11 +47,6 @@ Rails.application.configure do
     end
   })
 
-  # restore default STDOUT logging format in rails s process as well as log/ file
-  STDOUT.sync = true
-  config.rails_semantic_logger.add_file_appender = true
-  config.semantic_logger.add_appender(io: STDOUT, level: config.log_level)
-
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Print deprecation notices to the Rails logger.
