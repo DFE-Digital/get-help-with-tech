@@ -27,7 +27,7 @@ You should be enrolled in Apple School Manager to order iPads. Find out [how to 
 
 ## Enrol DfE iPads in ASM using the reseller ID
 
-You need to enter the Computacenter reseller ID in Apple School Manager (ASM) before you can enrol the iPads in ASM to manage them.
+You need to enter the reseller ID in Apple School Manager (ASM) before you can enrol the iPads in ASM to manage them. Email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to find out your reseller ID.
 
 1. Go to https://school.apple.com
 2. Enter your ASM ID to login
@@ -35,7 +35,7 @@ You need to enter the Computacenter reseller ID in Apple School Manager (ASM) be
 4. Click ‘Device Management Settings’
 5. In the ‘Customer Numbers’ section in the right-hand pane tap ‘Edit’
 6. Select ‘Reseller Number’ from the drop down box
-7. Enter *892F050* and then click ‘Add’
+7. Enter your reseller ID and then click ‘Add’
 8. Once the number has been verified click ‘Done’
 
 
