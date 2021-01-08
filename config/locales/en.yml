@@ -594,7 +594,7 @@ en:
           ordering_schools_heading: Schools that can order
           specific_circumstances_heading: Schools with approved requests for specific circumstances
           cannot_order_yet_schools_heading: Schools that cannot order yet
-          cannot_order_yet_schools_text: We’re opening orders for primary schools gradually, and will invite all to order by 15 January
+          cannot_order_yet_schools_text: We’re opening orders for primary schools gradually, and will invite all to order by 13 January
         who_to_contact:
           create:
             failure: "Saved. We will email %{email_address} shortly"
@@ -654,7 +654,7 @@ en:
         name: Responsible body name
   banners:
     secondary_mass_testing:
-      heading: All secondary schools can order laptops and tablets now. We’ll invite all primary schools to order by 15 January at the latest, starting with the most disadvantaged areas in England.
+      heading: All secondary schools can order laptops and tablets now. We’ll invite all primary schools to order by 13 January at the latest, starting with the most disadvantaged areas in England.
     christmas:
       heading: No orders over Christmas
       content: You will not be able to place orders over the Christmas break. We’ll accept orders up until 4pm on Friday 18 December and we’ll then close ordering until Monday 4 January.
