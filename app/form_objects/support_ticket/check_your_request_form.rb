@@ -17,6 +17,10 @@ private
   def build_subject
     urn_or_ukprn = "(#{ticket['school_unique_id']}) " if ticket['school_unique_id'].present?
 
-    "ONLINE FORM - #{urn_or_ukprn}#{ticket['school_name']}"
+    if ticket['user_type'] == SupportTicket::DescribeYourselfForm::OPTIONS[:other_type_of_user]
+      'ONLINE FORM - Other'
+    else
+      "ONLINE FORM - #{urn_or_ukprn}#{ticket['school_name']}"
+    end
   end
 end

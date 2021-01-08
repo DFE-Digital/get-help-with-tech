@@ -34,6 +34,14 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
                                             'subject' => 'ONLINE FORM - School 1' })
       end
 
+      it 'set the email subject line to say "Other" if its not from school,LA,college, academy' do
+        allow(ZendeskService).to receive(:send!)
+        described_class.new(ticket: { 'user_type' => SupportTicket::DescribeYourselfForm::OPTIONS[:other_type_of_user] }).create_ticket
+        expect(ZendeskService).to have_received(:send!)
+                                    .with({ 'subject' => 'ONLINE FORM - Other',
+                                            'user_type' => SupportTicket::DescribeYourselfForm::OPTIONS[:other_type_of_user] })
+      end
+
       it 'sets the email subject line include name and URN/UKPRN' do
         allow(ZendeskService).to receive(:send!)
         described_class.new(ticket: { 'school_name' => 'School 1', 'school_unique_id' => '123456' }).create_ticket
