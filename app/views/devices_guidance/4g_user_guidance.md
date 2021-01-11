@@ -44,11 +44,11 @@ Children and families should raise any queries regarding 4G wireless routers wit
 
 ### For local authorities and trusts
 
-You can check the status of each router and if needed raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, please email [COVID.TECHNOLOGY@education.gov.uk](covid.technology@education.gov.uk).
+You can check the status of each router and if needed, raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, [please contact us](/get-support).
 
 ### For schools and colleges
 
-You will need to ask your trust or local authority to access the Support Portal on your behalf to check the status of a router or raise an issue. Email [COVID.TECHNOLOGY@education.gov.uk](covid.technology@education.gov.uk) if you’re unsure who to contact.
+You will need to ask your trust or local authority to access the Support Portal on your behalf to check the status of a router or raise an issue. [Contact us](/get-support) if you’re unsure who to contact.
 
 ## Staying safe online
 

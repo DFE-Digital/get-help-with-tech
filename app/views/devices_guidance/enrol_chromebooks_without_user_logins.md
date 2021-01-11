@@ -153,7 +153,7 @@ A top-level set of web apps and Chrome extensions can be force installed for all
 
 ## Enrolling Chromebooks
 
-Before you enrol your devices, please ensure that you have the correct number of Chrome licenses available in your domain by going to ‘Devices’ > ‘Chrome devices’ and click the ‘Upgrades’ button in the top right. If you do not have enough licenses for the number of devices you need to enrol and manage, please contact [COVID.technology@education.gov.uk](mailto:COVID.technology@education.gov.uk).
+Before you enrol your devices, please ensure that you have the correct number of Chrome licenses available in your domain by going to ‘Devices’ > ‘Chrome devices’ and click the ‘Upgrades’ button in the top right. If you do not have enough licenses for the number of devices you need to enrol and manage, [please contact us](/get-support).
 
 Follow these instructions to enrol your devices:
 

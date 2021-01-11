@@ -25,7 +25,7 @@ Before placing a request for a warranty replacement, you should check the device
 ### How to access the Support Portal
 
 Go to the [Support Portal](https://computacenterprod.service-now.com/dfe) and select '‘Raise a support request’ and select ‘Faulty device (school)’. You will need to enter the serial number for the faulty laptop or tablet.
-If you have any issues accessing or using the support portal, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with your order tracking number.
+If you have any issues accessing or using the support portal, [please contact us](/get-support) with your order tracking number.
 
 ## Cost of replacement Windows device or Google Chromebook
 
