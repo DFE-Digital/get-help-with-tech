@@ -2,14 +2,20 @@ import accessibleAutocomplete from "accessible-autocomplete";
 
 const initResponsibleBodiesAutocomplete = () => {
   try {
-    const id = "#support-user-responsible-body-form-responsible-body-id-field";
-    const responsibleBodiesSelect = document.querySelector(id);
-    if (!responsibleBodiesSelect) return;
+    const inputIds = [
+      "#support-user-responsible-body-form-responsible-body-id-field",
+      '#school-search-form-responsible-body-id-field'
+    ];
 
-    accessibleAutocomplete.enhanceSelectElement({
-      selectElement: responsibleBodiesSelect,
-      showAllValues: true,
-      confirmOnBlur: false
+    inputIds.forEach(inputId => {
+      const responsibleBodiesSelect = document.querySelector(inputId);
+      if (!responsibleBodiesSelect) return;
+
+      accessibleAutocomplete.enhanceSelectElement({
+        selectElement: responsibleBodiesSelect,
+        showAllValues: true,
+        confirmOnBlur: false
+      });
     });
   } catch (err) {
     console.error("Could not enhance responsible bodies select:", err);
