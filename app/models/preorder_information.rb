@@ -8,6 +8,9 @@ class PreorderInformation < ApplicationRecord
 
   validates :status, presence: true
 
+  before_save :check_and_update_status_if_necessary
+  after_touch :refresh_status!
+
   enum status: {
     needs_contact: 'needs_contact',
     needs_info: 'needs_info',
@@ -134,6 +137,12 @@ class PreorderInformation < ApplicationRecord
   end
 
 private
+
+  def check_and_update_status_if_necessary
+    if will_need_chromebooks_changed? || who_will_order_devices_changed?
+      self.status = infer_status
+    end
+  end
 
   def any_school_users?
     school&.users&.any?

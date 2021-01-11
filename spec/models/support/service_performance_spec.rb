@@ -54,34 +54,26 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed' do
     it 'counts the number of unique responsible bodies where there is at least one school with preorder information that is not in a "needs_(x)" status' do
       # these will count
-      rbs = create_list(:local_authority, 3)
-      schools = []
-      rbs.each do |rb|
-        schools << create(:school, responsible_body: rb)
-      end
-      create(:preorder_information, school: schools[0], status: 'school_will_be_contacted')
-      create(:preorder_information, school: schools[1], status: 'school_contacted')
-      create(:preorder_information, school: schools[0], status: 'ready')
+      create_schools_at_status(preorder_status: 'school_will_be_contacted')
+      create_schools_at_status(preorder_status: 'school_contacted')
+      create_schools_at_status(preorder_status: 'ready')
 
       # these won't count
-      trusts = create_list(:trust, 2)
-      school = create(:school, responsible_body: trusts[0])
-      create(:preorder_information, school: school, status: 'needs_info')
-      school1 = create(:school, responsible_body: trusts[1])
-      create(:preorder_information, school: school1, status: 'needs_contact')
+      create_schools_at_status(preorder_status: 'needs_info')
+      create_schools_at_status(preorder_status: 'needs_contact')
 
-      expect(stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed).to eq(2)
+      expect(stats.number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed).to eq(3)
     end
   end
 
   describe 'status-counting methods' do
     before do
-      create_list(:preorder_information, 5, status: 'needs_info')
-      create_list(:preorder_information, 2, status: 'needs_contact')
-      create_list(:preorder_information, 2, status: 'school_will_be_contacted')
-      create_list(:preorder_information, 2, status: 'school_contacted')
-      create_list(:preorder_information, 3, status: 'ready')
-      create_list(:preorder_information, 7, status: 'school_ready')
+      create_schools_at_status(preorder_status: 'needs_info', count: 5)
+      create_schools_at_status(preorder_status: 'needs_contact', count: 2)
+      create_schools_at_status(preorder_status: 'school_will_be_contacted', count: 2)
+      create_schools_at_status(preorder_status: 'school_contacted', count: 2)
+      create_schools_at_status(preorder_status: 'ready', count: 3)
+      create_schools_at_status(preorder_status: 'school_ready', count: 7)
     end
 
     describe 'preorder_information_counts_by_status' do

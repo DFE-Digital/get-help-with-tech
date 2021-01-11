@@ -87,7 +87,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
       before do
         stub_computacenter_outgoing_api_calls
-        school.std_device_allocation.update!(allocation: 103)
+        school.reload.std_device_allocation.update!(allocation: 103)
         WebMock.allow_net_connect!
         put_school_in_pool(responsible_body, school)
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)

@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe ConfirmTechsourceAccountCreatedService do
   describe '#call' do
     context 'with one email' do
-      let(:user) { create(:school_user, orders_devices: true) }
+      let(:school) { create_schools_at_status(preorder_status: 'school_can_order') }
+      let(:user) { create(:school_user, orders_devices: true, school: school) }
       let(:now) { Time.zone.now }
 
       subject(:service) { described_class.new(emails: [user.email_address]) }
@@ -25,9 +26,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
       context 'if there are devices orderable' do
         before do
-          create(:school_device_allocation, :with_std_allocation, cap: 3, allocation: 5, school: user.school)
-          create(:preorder_information, school: user.school, who_will_order_devices: 'school', status: :school_can_order)
-          user.school.update!(order_state: :can_order)
+          school.can_order!
         end
 
         it 'sends an email' do
@@ -45,6 +44,10 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
       end
 
       context 'if there are no devices orderable' do
+        before do
+          school.std_device_allocation.update!(cap: 10, allocation: 10, devices_ordered: 10)
+        end
+
         it 'does not send an email' do
           expect {
             service.call
