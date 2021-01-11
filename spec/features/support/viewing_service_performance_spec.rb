@@ -34,7 +34,6 @@ RSpec.feature 'Viewing service performance', type: :feature do
     rb = local_authority
     school_requester = create(:school_user)
     school = school_requester.school
-    school.update!(mno_feature_flag: true)
 
     create_list(:extra_mobile_data_request, 1,
                 status: :requested,

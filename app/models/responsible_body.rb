@@ -97,15 +97,15 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_virtual_cap_feature_flags?
-    FeatureFlag.active?(:virtual_caps) && vcap_feature_flag?
+    vcap_feature_flag?
   end
 
   def has_virtual_cap_feature_flags_and_centrally_managed_schools?
     has_virtual_cap_feature_flags? && has_centrally_managed_schools?
   end
 
-  def has_mno_feature_flags_and_centrally_managed_schools?
-    FeatureFlag.active?(:mno_offer) && in_connectivity_pilot? && has_centrally_managed_schools?
+  def in_connectivity_pilot_and_has_centrally_managed_schools?
+    in_connectivity_pilot? && has_centrally_managed_schools?
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?

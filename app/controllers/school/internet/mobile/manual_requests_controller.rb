@@ -1,6 +1,4 @@
 class School::Internet::Mobile::ManualRequestsController < School::BaseController
-  before_action { render_404_unless_school_in_mno_feature(@school) }
-
   def index
     @extra_mobile_data_requests = @current_user.extra_mobile_data_requests
   end

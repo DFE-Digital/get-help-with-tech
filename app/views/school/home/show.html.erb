@@ -22,38 +22,25 @@
       <li>access the Computacenter TechSource website to order devices</li>
     </ul>
 
-    <% if !@school.mno_feature_flag %>
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to t('page_titles.school_request_devices'), request_devices_school_path(@school) %>
-      </h2>
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to 'Get internet access', internet_school_path(@school) %>
+    </h2>
 
-      <p class="govuk-body">Use this section to request devices for children who:</p>
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>request extra data for mobile devices</li>
+      <li>request 4G wireless routers</li>
+    </ul>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>are shielding on official advice</li>
-        <li>cannot attend school because restrictions prevent them from going</li>
-      </ul>
-    <% else %>
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Get internet access', internet_school_path(@school) %>
-      </h2>
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.school_specific_circumstances'), specific_circumstances_school_path(@school) %>
+    </h2>
 
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>request extra data for mobile devices</li>
-        <li>request 4G wireless routers</li>
-      </ul>
-
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to t('page_titles.school_specific_circumstances'), specific_circumstances_school_path(@school) %>
-      </h2>
-
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>understand when children can get support</li>
-        <li>see what help they can get</li>
-      </ul>
-    <% end %>
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>understand when children can get support</li>
+      <li>see what help they can get</li>
+    </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>

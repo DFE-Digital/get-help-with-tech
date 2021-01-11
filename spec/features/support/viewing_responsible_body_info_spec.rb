@@ -37,7 +37,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     end
   end
 
-  context 'with virtual caps enabled', with_feature_flags: { virtual_caps: 'active' } do
+  context 'with virtual caps enabled' do
     context 'when some schools are centrally managed' do
       scenario 'DfE users see the centrally managed schools' do
         given_a_centrally_managed_responsible_body_with_users

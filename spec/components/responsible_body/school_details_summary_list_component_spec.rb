@@ -143,7 +143,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       expect(result.css('dl').text).not_to include('School contact')
     end
 
-    context 'when the responsible body has virtual caps enabled', with_feature_flags: { virtual_caps: 'active' } do
+    context 'when the responsible body has virtual caps enabled' do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
       let(:school) { create(:school, :primary, :academy, responsible_body: responsible_body) }
 
