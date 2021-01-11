@@ -8,7 +8,7 @@ RSpec.describe VirtualCapPool, type: :model do
 
   subject(:pool) { local_authority.virtual_cap_pools.std_device.create! }
 
-  describe '#add_school!' do
+  describe '#add_school!', with_feature_flags: { virtual_caps: 'active' } do
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
       allow(mock_request).to receive(:post!).and_return(response)
@@ -108,7 +108,7 @@ RSpec.describe VirtualCapPool, type: :model do
     end
   end
 
-  describe '#recalculate_caps!' do
+  describe '#recalculate_caps!', with_feature_flags: { virtual_caps: 'active' } do
     let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
     before do
@@ -174,7 +174,7 @@ RSpec.describe VirtualCapPool, type: :model do
     end
   end
 
-  describe '#has_school?' do
+  describe '#has_school?', with_feature_flags: { virtual_caps: 'active' } do
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
       allow(mock_request).to receive(:post!).and_return(response)

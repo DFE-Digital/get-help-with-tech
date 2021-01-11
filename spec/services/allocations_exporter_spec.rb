@@ -26,7 +26,7 @@ RSpec.describe AllocationsExporter, type: :model do
     end
   end
 
-  context 'when exporting schools in a virtual_cap_pool' do
+  context 'when exporting schools in a virtual_cap_pool', with_feature_flags: { virtual_caps: 'active' } do
     subject(:exporter) { described_class.new }
 
     let(:trust) { create(:trust, :multi_academy_trust, :vcap_feature_flag) }

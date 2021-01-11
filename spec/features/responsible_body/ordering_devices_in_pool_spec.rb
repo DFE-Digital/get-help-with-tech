@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering devices within a virtual pool' do
+RSpec.feature 'Ordering devices within a virtual pool', with_feature_flags: { virtual_caps: 'active' } do
   let(:responsible_body) { create(:trust, :manages_centrally) }
   let(:schools) { create_list(:school, 3, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }

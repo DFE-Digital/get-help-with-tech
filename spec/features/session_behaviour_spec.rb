@@ -9,7 +9,7 @@ RSpec.feature 'Session behaviour', type: :feature do
     expect(page).to have_text('Sign in')
   end
 
-  context 'with a participating mobile network' do
+  context 'with a participating mobile network', with_feature_flags: { mno_offer: 'active' } do
     let(:user) { create(:local_authority_user) }
     let(:participating_mobile_network) do
       create(:mobile_network)

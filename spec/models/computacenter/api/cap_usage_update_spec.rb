@@ -78,7 +78,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       end
     end
 
-    context 'if the devices_ordered update triggers a cap update' do
+    context 'if the devices_ordered update triggers a cap update', with_feature_flags: { virtual_caps: 'active' } do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
       let!(:school) { create(:school, :in_lockdown, preorder_information: preorder, computacenter_reference: '123456', responsible_body: responsible_body) }
 

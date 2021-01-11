@@ -81,7 +81,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       end
     end
 
-    context 'when school ordering centrally in virtual cap which is ready changes from cannot_order to can_order' do
+    context 'when school ordering centrally in virtual cap which is ready changes from cannot_order to can_order', with_feature_flags: { virtual_caps: 'active' } do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
       let(:school) do
         create(:school,

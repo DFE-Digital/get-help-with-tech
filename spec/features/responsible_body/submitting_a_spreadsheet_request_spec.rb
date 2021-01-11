@@ -14,7 +14,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
   end
 
-  context 'signed in' do
+  context 'signed in and the MNO offer is activated', with_feature_flags: { mno_offer: 'active' } do
     let(:responsible_body) { create(:local_authority) }
     let(:user) { create(:local_authority_user, responsible_body: responsible_body) }
     let(:mobile_network) { create(:mobile_network) }

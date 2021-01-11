@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ResponsibleBody::Internet::Mobile::ExtraDataRequestsController, type: :controller do
-  context 'when authenticated' do
+  context 'when authenticated', with_feature_flags: { mno_offer: 'active' } do
     let(:responsible_body) { create(:local_authority) }
     let(:local_authority_user) { create(:local_authority_user, responsible_body: responsible_body) }
     let(:mobile_network) { create(:mobile_network) }

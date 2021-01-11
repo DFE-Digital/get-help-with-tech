@@ -18,7 +18,7 @@ RSpec.describe DisplayAllocationsComponent, type: :component do
     put_school_in_pool(trust, another_school)
   end
 
-  context 'when in a virtual pool' do
+  context 'when in a virtual pool', with_feature_flags: { virtual_caps: 'active' } do
     before do
       put_school_in_pool(trust, school)
       school.reload
@@ -31,7 +31,7 @@ RSpec.describe DisplayAllocationsComponent, type: :component do
     end
   end
 
-  context 'when not in a virtual pool' do
+  context 'when not in a virtual pool', with_feature_flags: { virtual_caps: 'inactive' } do
     before do
       trust.update!(vcap_feature_flag: false)
     end

@@ -55,7 +55,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
 private
 
   def get_allocation_data
-    records = SchoolDeviceAllocation.includes(school: :preorder_information).where(id: @allocation_ids).order(:device_type, :id)
+    records = SchoolDeviceAllocation.includes(school: :preorder_information).where(id: @allocation_ids)
 
     if records.present?
       records = records.map do |allocation|

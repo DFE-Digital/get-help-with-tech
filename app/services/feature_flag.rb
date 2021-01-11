@@ -5,6 +5,8 @@ class FeatureFlag
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
+    mno_offer
+    virtual_caps
     christmas_banner
     increased_allocations_banner
     secondary_mass_testing_banner

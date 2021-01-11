@@ -6,6 +6,7 @@ RSpec.describe School::Internet::Mobile::ExtraDataRequestsController, type: :con
 
   context 'when authenticated' do
     before do
+      school.update!(mno_feature_flag: true)
       sign_in_as user
     end
 

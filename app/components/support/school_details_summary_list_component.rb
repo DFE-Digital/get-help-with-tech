@@ -2,7 +2,7 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
   def rows
     array = super
     array << headteacher_row if headteacher.present?
-    array.insert(array.find_index { |row| row[:key] == 'Can place orders?' }, mno_row)
+    array.insert(array.find_index { |row| row[:key] == 'Can place orders?' }, mno_row) if @school.mno_feature_flag?
     array.map { |row| remove_change_links_if_read_only(row) }
   end
 
