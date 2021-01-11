@@ -42,7 +42,7 @@ setup_paas_app: set_cf_target
 
 setup_cdn_route: set_cf_target
 	# tell it to forward all headers from Cloudfront, otherwise we only get Host
-	cf update-service $(APP_NAME)-$(env_stub)-cdn-route -c '{"headers": ["*"]}'
+	cf update-service $(APP_NAME)-$(env_stub)-cdn-route -c '{"headers": ["Content-Type", "Host", "Set-Cookie", "X-Forwarded-Host", "Authorization"]}'
 
 setup_paas_redis: set_cf_target
 	cf create-service redis $(redis_plan) $(APP_NAME)-$(env_stub)-redis
