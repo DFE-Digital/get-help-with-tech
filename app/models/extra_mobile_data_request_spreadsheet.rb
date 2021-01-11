@@ -1,12 +1,4 @@
 class ExtraMobileDataRequestSpreadsheet
-  DEFAULT_COLUMN_POSITIONS = {
-    account_holder_name: 0,
-    mobile_phone_number: 1,
-    mobile_network: 2,
-    pay_monthly_or_payg: 3,
-    has_someone_shared_the_privacy_statement_with_the_account_holder: 4,
-  }.freeze
-
   WORKSHEET_NAME = 'Extra mobile data requests'.freeze
 
   def initialize(spreadsheet_path)
@@ -87,7 +79,7 @@ private
 
   def column_value(name)
     column_name = name.to_sym
-    index = @headers[column_name] || DEFAULT_COLUMN_NAMES[column_name]
+    index = @headers[column_name]
     @current_row[index]&.value
   end
 end
