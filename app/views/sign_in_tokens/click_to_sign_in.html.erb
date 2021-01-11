@@ -1,15 +1,10 @@
-<%- i18n_key = (@current_user.is_school_user? || (@current_user.is_responsible_body_user? && !@current_user.is_a_single_academy_trust_user?)) ? :related_organisation : :standard %>
-<%- title = t(i18n_key, scope: %i[page_titles click_to_sign_in], organisation: @current_user.organisation_name) %>
-<%- content_for :title, title %>
+<%- picker = InterstitialPicker.new(user: @current_user) %>
+<%- content_for :title, title = picker.call.title %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <%= title %>
-    </h1>
-    <%- if @current_user.is_school_user? %>
-      <%= render partial: 'shared/school_user_welcome_text' %>
-    <%- end %>
+    <%= render partial: picker.call.partial, locals: { title: title } %>
+
     <p class="govuk-body">
       <%= form_with url: destroy_sign_in_token_path, method: 'delete' do |f| %>
         <%= hidden_field_tag :token, params[:token] %>

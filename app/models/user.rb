@@ -202,6 +202,25 @@ class User < ApplicationRecord
     deleted_at.present?
   end
 
+  def associated_schools
+    scope = School.gias_status_open.distinct
+
+    if school && responsible_body
+      scope = scope.joins(:responsible_body, user_schools: [:user])
+      scope = scope.where('user_schools.user_id = ? OR schools.responsible_body_id = ?', id, responsible_body.id)
+    elsif school
+      scope = scope.joins(user_schools: [:user])
+      scope = scope.where('user_schools.user_id = ?', id)
+    elsif responsible_body
+      scope = scope.joins(:responsible_body)
+      scope = scope.where('schools.responsible_body_id = ?', responsible_body.id)
+    else
+      scope = scope.none
+    end
+
+    scope
+  end
+
 private
 
   def cleansed_full_name
