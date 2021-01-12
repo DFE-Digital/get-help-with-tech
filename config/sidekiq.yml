@@ -18,3 +18,7 @@
     cron: '0 8 * * 1-5 Europe/London'  # every weekday at 8:00am
     queue: scheduler
     description: Notify MNOs of requests
+  DeleteOldSessionsJob:
+    cron: '0 * * * * Europe/London' # on the hour, every hour
+    queue: scheduler
+    description: Delete old sessions
