@@ -13,9 +13,7 @@ class SupportTicket::BaseController < ApplicationController
 
 private
 
-  def redirect_if_no_form_data_exists
-    return unless request.get?
-
+  def require_support_ticket_data!
     redirect_to support_ticket_path if session[:support_ticket].blank?
   end
 end

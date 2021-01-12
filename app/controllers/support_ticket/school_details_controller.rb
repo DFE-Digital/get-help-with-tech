@@ -1,5 +1,5 @@
 class SupportTicket::SchoolDetailsController < SupportTicket::BaseController
-  before_action :redirect_if_no_form_data_exists
+  before_action :require_support_ticket_data!, only: :new
 
   def new
     @form ||= SupportTicket::SchoolDetailsForm.new(set_params)
