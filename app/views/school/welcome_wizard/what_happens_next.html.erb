@@ -9,13 +9,11 @@
         <%= title %>
       </h1>
 
-      <p class="govuk-body">We’ll contact you as soon as you’re able to place orders.</p>
       <p class="govuk-body">You can continue to use this service to:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
         <li>check how many devices you can order</li>
         <li>add more users</li>
         <li>change your Chromebook settings</li>
-        <li>request devices for clinically vulnerable children who are shielding</li>
       </ul>
 
       <%= f.govuk_submit (@current_user.has_multiple_schools? ? 'Finish and go to school page' : 'Finish and go to homepage' ) %>
