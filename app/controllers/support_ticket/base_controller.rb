@@ -10,4 +10,12 @@ class SupportTicket::BaseController < ApplicationController
   def thank_you
     render 'support_tickets/thank_you'
   end
+
+private
+
+  def redirect_if_no_form_data_exists
+    return unless request.get?
+
+    redirect_to support_ticket_path if session[:support_ticket].blank?
+  end
 end

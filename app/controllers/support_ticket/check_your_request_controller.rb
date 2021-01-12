@@ -1,4 +1,6 @@
 class SupportTicket::CheckYourRequestController < SupportTicket::BaseController
+  before_action :redirect_if_no_form_data_exists
+
   def new
     @support_ticket = session[:support_ticket]
     @form = form

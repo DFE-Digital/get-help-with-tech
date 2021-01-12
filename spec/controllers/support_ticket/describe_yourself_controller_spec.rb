@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
   describe '#new' do
     before do
+      session[:support_ticket] = { user_type: '' }
       get :new
     end
 

@@ -1,4 +1,6 @@
 class SupportTicket::LocalAuthorityDetailsController < SupportTicket::BaseController
+  before_action :redirect_if_no_form_data_exists
+
   def new
     @form ||= SupportTicket::LocalAuthorityDetailsForm.new(set_params)
     render 'support_tickets/local_authority_details'
@@ -28,11 +30,9 @@ private
   end
 
   def set_params
-    if session[:support_ticket].present?
-      {
-        local_authority_name: session[:support_ticket]['local_authority_name'],
-      }
-    end
+    {
+      local_authority_name: session[:support_ticket]['local_authority_name'],
+    }
   end
 
   def next_step

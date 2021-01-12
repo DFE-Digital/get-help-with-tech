@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SupportTicket::CheckYourRequestController, type: :controller do
   describe '#new' do
     before do
-      get :new, session: { support_ticket: { hello: 'world' } }
+      session[:support_ticket] = { hello: 'world' }
+      get :new
     end
 
     it 'responds successfully' do

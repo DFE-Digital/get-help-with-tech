@@ -26,8 +26,6 @@ private
   def set_params
     if session[:support_ticket].present? && session[:support_ticket]['user_type'].present?
       { user_type: session[:support_ticket]['user_type'] }
-    else
-      { user_type: nil }
     end
   end
 

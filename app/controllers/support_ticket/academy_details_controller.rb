@@ -1,4 +1,6 @@
 class SupportTicket::AcademyDetailsController < SupportTicket::BaseController
+  before_action :redirect_if_no_form_data_exists
+
   def new
     @form ||= SupportTicket::AcademyDetailsForm.new(set_params)
     render 'support_tickets/academy_details'
@@ -28,11 +30,9 @@ private
   end
 
   def set_params
-    if session[:support_ticket].present?
-      {
-        academy_name: session[:support_ticket]['academy_name'],
-      }
-    end
+    {
+      academy_name: session[:support_ticket]['academy_name'],
+    }
   end
 
   def next_step
