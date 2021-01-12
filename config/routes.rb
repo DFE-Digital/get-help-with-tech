@@ -224,7 +224,6 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
-    get '/schools-that-can-order', to: 'closed_schools#index', as: :closed_schools
     resources :schools, only: %i[index edit update], path: '/school-changes', as: :school_changes, controller: 'school_changes'
     resources :responsible_bodies, only: %i[index edit update], path: '/responsible-body-changes', as: :responsible_body_changes, controller: 'responsible_body_changes'
     get '/techsource', to: 'techsource#new'
