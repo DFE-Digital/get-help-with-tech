@@ -232,7 +232,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_i_see_information_about_what_happens_next
     expect(page).to have_current_path(welcome_wizard_what_happens_next_school_path(urn: school.urn))
-    expect(page).to have_text('We’ll contact you as soon as you’re able to place orders')
+    expect(page).to have_text('check how many devices you can order')
   end
 
   def when_i_choose_yes_and_click_continue
