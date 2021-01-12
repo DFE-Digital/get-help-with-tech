@@ -11,7 +11,6 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -25,7 +24,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # tell CDNs (and browsers) to cache static assets for 1hr by default
-  if ENV['STATIC_FILE_CACHE_TTL'].present?
+  if Settings.static_file_cache_ttl.present?
     config.public_file_server.headers = {
       'Cache-Control' => 'public, max-age=' + Settings.static_file_cache_ttl
     }
