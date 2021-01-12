@@ -157,6 +157,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   context 'when in a virtual pool' do
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
     let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:school2) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
     let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
@@ -168,17 +169,24 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
       allocation
       school.preorder_information.responsible_body_will_order_devices!
+      school2.preorder_information.responsible_body_will_order_devices!
+      school2.device_allocations.std_device.create!(allocation: 200, cap: 100, devices_ordered: 50)
       responsible_body.add_school_to_virtual_cap_pools!(school)
-      responsible_body.std_device_pool.update!(allocation: 300, cap: 256, devices_ordered: 145)
+      responsible_body.add_school_to_virtual_cap_pools!(school2)
       allocation.reload
+    end
+
+    it 'performs validation on the local values' do
+      allocation.cap = 121
+      expect(allocation.valid?).to be false
     end
 
     it 'propagates changes up to the pool' do
       allocation.update!(allocation: 400, cap: 300, devices_ordered: 200)
       responsible_body.std_device_pool.reload
-      expect(responsible_body.std_device_pool.allocation).to eq(400)
-      expect(responsible_body.std_device_pool.cap).to eq(300)
-      expect(responsible_body.std_device_pool.devices_ordered).to eq(200)
+      expect(responsible_body.std_device_pool.allocation).to eq(600)
+      expect(responsible_body.std_device_pool.cap).to eq(400)
+      expect(responsible_body.std_device_pool.devices_ordered).to eq(250)
     end
 
     it 'receives cap updates from the pool' do

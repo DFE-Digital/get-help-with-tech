@@ -116,10 +116,4 @@ private
   def has_virtual_cap_feature_flags?
     school&.responsible_body&.has_virtual_cap_feature_flags? || false
   end
-
-  def cap_lte_allocation
-    if cap > allocation
-      errors.add(:cap, :lte_allocation, allocation: allocation)
-    end
-  end
 end
