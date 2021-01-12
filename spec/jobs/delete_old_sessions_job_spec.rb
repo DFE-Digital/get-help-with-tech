@@ -17,7 +17,6 @@ RSpec.describe DeleteOldSessionsJob do
       Session.create!(id: SecureRandom.uuid)
       Timecop.return
 
-
       Timecop.travel(30.minutes.ago)
       2.times do
         Session.create!(id: SecureRandom.uuid)
