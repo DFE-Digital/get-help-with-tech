@@ -5,7 +5,7 @@ class Support::SchoolSuggestionForm
 
   attr_accessor :name_or_urn, :school_urn, :except
 
-  validates :name_or_urn, length: { minimum: 3 }, allow_blank: true
+  validates :name_or_urn, length: { minimum: 3 }, unless: ->(form) { form.school_urn.present? }
 
   def matching_schools
     schools = school_by_urn.presence || schools_by_name_or_urn

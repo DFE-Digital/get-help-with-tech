@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe Support::SchoolSuggestionForm, type: :model do
   subject(:form) { described_class.new }
 
-  it { is_expected.to validate_length_of(:name_or_urn).is_at_least(3).allow_blank }
+  it { is_expected.to validate_length_of(:name_or_urn).is_at_least(3) }
+
+  it 'allows name_or_urn to be nil if school_urn is set' do
+    expect(described_class.new(school_urn: '123456')).to be_valid
+  end
 
   it 'returns a set of matching schools from a search string' do
     school1 = create(:school, name: 'Southmead School')
