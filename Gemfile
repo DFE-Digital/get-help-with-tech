@@ -136,7 +136,7 @@ group :test do
   gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'timecop'
   gem 'webdrivers', '~> 4.4'
-  gem 'shoulda-matchers', '~> 4.4'
+  gem 'shoulda-matchers', '~> 4.5'
   gem 'rails-controller-testing'
 end
 
