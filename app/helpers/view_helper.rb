@@ -123,7 +123,6 @@ module ViewHelper
       OpenStruct.new(
         value: '1',
         label: t('can_order_devices', scope: scope),
-        hint: t('can_order_devices_hint', scope: scope),
       ),
       OpenStruct.new(
         value: '0',
