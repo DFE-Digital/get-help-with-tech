@@ -5,8 +5,8 @@ class BulkUploadForm
   validates :upload, presence: true
   validate :appropriate_file_type, if: ->(form) { form.upload.present? }
 
-  def file
-    upload.tempfile
+  def spreadsheet
+    ExtraMobileDataRequestSpreadsheet.new(upload.tempfile.path)
   end
 
 private
