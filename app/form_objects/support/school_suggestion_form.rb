@@ -1,7 +1,7 @@
 class Support::SchoolSuggestionForm
   include ActiveModel::Model
 
-  MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 50
+  MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 20
 
   attr_accessor :name_or_urn, :school_urn, :except
 
