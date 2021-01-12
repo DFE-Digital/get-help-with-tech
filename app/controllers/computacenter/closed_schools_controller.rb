@@ -4,12 +4,7 @@ class Computacenter::ClosedSchoolsController < Computacenter::BaseController
     @total_count = query.that_can_order_now.count
     @specific_circumstances_count = query.can_order_for_specific_circumstances.count
     @closed_count = query.can_order.count
-
-    # the high number of items per page effectively turns off pagination
-    # this is done to validate an assumption that CC users will want to
-    # search within the page using Ctrl + F, in which case they need
-    # to see all the closed schools
-    @pagination, @schools = pagy(fetch_schools_for_view, items: 10_000)
+    @pagination, @schools = pagy(fetch_schools_for_view, items: 100)
   end
 
 private
