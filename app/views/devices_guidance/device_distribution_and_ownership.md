@@ -104,4 +104,4 @@ See the [guidance on preparing devices](/devices/preparing-chromebooks) for info
 
 The LA, trust and/or school should make clear to recipients of devices that it is unlawful for any device lent by an LA, trust or school to be sold by a child or their family. If a lent device is lost, stolen or sold, or where recall is not possible, LAs should follow any existing protocol they may have for lost, stolen or missing devices.
 
-Where an LA or trust has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should contact [COVID.TECHNOLOGY@education.gov.uk](covid.technology@education.gov.uk).
+Where an LA or trust has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should [contact us](/get-support).

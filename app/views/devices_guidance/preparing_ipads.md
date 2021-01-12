@@ -27,7 +27,7 @@ You should be enrolled in Apple School Manager to order iPads. Find out [how to 
 
 ## Enrol DfE iPads in ASM using the reseller ID
 
-You need to enter the reseller ID in Apple School Manager (ASM) before you can enrol the iPads in ASM to manage them. Email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) to get your reseller ID.
+You need to enter the reseller ID in Apple School Manager (ASM) before you can enrol the iPads in ASM to manage them. [Contact us](/get-support) to get your reseller ID.
 
 1. Go to https://school.apple.com
 2. Enter your ASM ID to login
@@ -79,7 +79,7 @@ Discover fun and simple activities highlighting iPad built-in features and apps.
 
 Go to [Apple service and repair](https://support.apple.com/en-gb/ipad/repair/service) to find out what to do if your device does not turn on when you receive it, develops a fault or is accidentally broken.
 
-If you need further assistance, contact [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.technology@education.gov.uk).
+If you need further assistance, [please contact us](/get-support).
 
 
 ## User guidance for iPads

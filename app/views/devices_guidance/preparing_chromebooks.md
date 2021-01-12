@@ -31,7 +31,7 @@ We will not actively monitor users' activity on the devices. Websites users visi
 
 If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to.
 
-You can report access to any inappropriate content that should not be allowed by Cisco Umbrella by emailing [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk).
+You can report access to any inappropriate content that should not be allowed by Cisco Umbrella by [contacting us](/get-support).
 
 Find out [how to access support](/devices/support-and-maintenance) to report Cisco Umbrella issues.
 

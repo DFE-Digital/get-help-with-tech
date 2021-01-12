@@ -14,7 +14,7 @@ Those providing support should be able to solve general IT problems (such as pas
 
 ## Support for local authorities, academy trusts and schools
 
-If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk). We aim to respond within 4 working days.
+If you work for a local authority, academy trust or school and need help with any of the devices provided by this programme, [please contact us](/get-support).
 
 ## Replacing a faulty device
 
@@ -39,14 +39,14 @@ Please review our [preparing 4G routers](/devices/preparing-4g-wireless-routers)
 
 ### If you receive a faulty 4G Wireless Router 
 
-If you receive a 4G wireless router that will not start, please check that it is fully charged. If it still won’t power-up, email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) with the order number and IMEI number on the device.
+If you receive a 4G wireless router that will not start, please check that it is fully charged. If it still won’t power-up, [contact us](/get-support) with the order number and IMEI number on the device.
 
 ### If you have technical issues with 4G wireless routers 
 
-If a 4G wireless router has powered-up but is experiencing technical issues, trusts and local authorities can check the status of each router and if needed raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, please email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk).
+If a 4G wireless router has powered-up but is experiencing technical issues, trusts and local authorities can check the status of each router and if needed raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, [please contact us](/get-support).
 
 It is important that users do not attempt to reset their device to try to resolve issues, as this will cause both the router and the SIM to stop workin.
-Schools and colleges will need to ask their trust or local authority to access the [Support Portal](https://computacenterprod.service-now.com/dfe) on their behalf. Email [COVID.TECHNOLOGY@education.gov.uk](mailto:covid.technology@education.gov.uk) if you’re unsure who to contact.
+Schools and colleges will need to ask their trust or local authority to access the [Support Portal](https://computacenterprod.service-now.com/dfe) on their behalf. [Contact us](/get-support) if you’re unsure who to contact.
 
 We can help you to:
  
