@@ -90,7 +90,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
     context 'with multiple pages of extra_mobile_data_requests' do
       before do
-        create_list(:extra_mobile_data_request, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+        create_list(:extra_mobile_data_request, 105, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
         click_on 'Your requests'
       end
 
