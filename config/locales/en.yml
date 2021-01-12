@@ -182,12 +182,12 @@ en:
       devices_you_can_order:
         title: You can order a range of laptops and tablets
       chromebooks:
-        title: Will your school’s order include Chromebooks?
+        title: Will you order Chromebooks?
         'yes': Yes, we will need Chromebooks
         'no': No, we do not need Chromebooks
         i_dont_know: I don’t know
         errors:
-          choice: Tell us whether your school will need Chromebooks
+          choice: Tell us whether you will need Chromebooks
       what_happens_next:
         title: What happens next
     techsource_unavailable: Sorry, TechSource is unavailable
