@@ -21,3 +21,11 @@ initSchoolAutocomplete(
     hiddenFieldForURN: 'support_school_suggestion_form_school_urn'
   }
 );
+
+initSchoolAutocomplete(
+  {
+    input: "support-school-suggestion-form-name-or-urn-field-error",
+    path: "/support/schools/results",
+    hiddenFieldForURN: 'support_school_suggestion_form_school_urn'
+  }
+);

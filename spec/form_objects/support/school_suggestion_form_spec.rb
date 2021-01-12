@@ -3,6 +3,12 @@ require 'rails_helper'
 RSpec.describe Support::SchoolSuggestionForm, type: :model do
   subject(:form) { described_class.new }
 
+  it { is_expected.to validate_length_of(:name_or_urn).is_at_least(3) }
+
+  it 'allows name_or_urn to be nil if school_urn is set' do
+    expect(described_class.new(school_urn: '123456')).to be_valid
+  end
+
   it 'returns a set of matching schools from a search string' do
     school1 = create(:school, name: 'Southmead School')
     school2 = create(:school, name: 'Southdean School')
@@ -20,7 +26,9 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
 
     form = Support::SchoolSuggestionForm.new(name_or_urn: 'AA')
 
+    expect(form.maximum_matching_schools).to eq(2)
     expect(form.matching_schools.size).to eq(2)
+    expect(form.matching_schools_capped?).to be_truthy
   end
 
   it 'returns an exact match on the school URN when one is provided' do
@@ -28,6 +36,15 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
     create(:school, name: 'Southdean School', urn: 654_321)
 
     form = Support::SchoolSuggestionForm.new(school_urn: '123456')
+
+    expect(form.matching_schools).to contain_exactly(matching_school)
+  end
+
+  it 'excludes specified schools from the results when that parameter is present' do
+    matching_school = create(:school, name: 'Southmead School', urn: 123_456)
+    excluded_school = create(:school, name: 'Southdean School', urn: 654_321)
+
+    form = Support::SchoolSuggestionForm.new(name_or_urn: 'South', except: [excluded_school])
 
     expect(form.matching_schools).to contain_exactly(matching_school)
   end

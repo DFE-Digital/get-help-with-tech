@@ -1,21 +1,46 @@
 class Support::SchoolSuggestionForm
   include ActiveModel::Model
 
-  MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 50
+  MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 20
 
-  attr_accessor :name_or_urn, :school_urn
+  attr_accessor :name_or_urn, :school_urn, :except
 
-  validates :name_or_urn, length: { minimum: 3 }
+  validates :name_or_urn, length: { minimum: 3 }, unless: ->(form) { form.school_urn.present? }
 
   def matching_schools
-    school_by_urn.present? ? [school_by_urn] : schools_by_name_or_urn
+    schools = school_by_urn.presence || schools_by_name_or_urn
+    schools.where.not(id: ids_of_schools_to_exclude)
+  end
+
+  def matching_schools_options
+    matching_schools.map { |school| option_for(school) }
+  end
+
+  def matching_schools_capped?
+    matching_schools.size == MAX_NUMBER_OF_SUGGESTED_SCHOOLS
+  end
+
+  def maximum_matching_schools
+    MAX_NUMBER_OF_SUGGESTED_SCHOOLS
   end
 
 private
 
+  def option_for(school)
+    meta_info = [school.urn, school.town, school.postcode]
+      .reject(&:blank?)
+      .compact
+      .join(', ')
+    OpenStruct.new(
+      id: school.id,
+      name: "#{school.name} (#{meta_info})",
+      urn: school.urn,
+    )
+  end
+
   def school_by_urn
     if @school_urn
-      School.gias_status_open.find_by(urn: @school_urn)
+      School.gias_status_open.where(urn: @school_urn)
     end
   end
 
@@ -25,5 +50,9 @@ private
       .includes(:responsible_body)
       .order(:name)
       .limit(MAX_NUMBER_OF_SUGGESTED_SCHOOLS)
+  end
+
+  def ids_of_schools_to_exclude
+    @except&.map(&:id) || []
   end
 end
