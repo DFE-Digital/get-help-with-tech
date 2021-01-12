@@ -361,9 +361,6 @@ en:
   errors:
     format:
       "'%{attribute}' %{message}"
-    bulk_upload_form:
-      theres_a_problem_with_that_spreadsheet: There’s a problem with that spreadsheet
-      select_a_spreadsheet_file: Select a spreadsheet file
     key_contact_upload_form:
       theres_a_problem_with_that_file: There’s a problem with that file
       select_a_csv_file: Select a CSV file
@@ -422,6 +419,12 @@ en:
   activemodel:
     errors:
       models:
+        bulk_upload_form:
+          attributes:
+            upload:
+              theres_a_problem_with_that_spreadsheet: There’s a problem with that spreadsheet
+              blank: Select a spreadsheet file
+              unsupported_file_type: Choose an ‘xlsx’ (Open XML format) Excel file
         responsible_body/devices/who_will_order_form:
           attributes:
             who_will_order:

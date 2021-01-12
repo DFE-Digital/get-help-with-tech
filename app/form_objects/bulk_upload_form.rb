@@ -1,7 +1,9 @@
 class BulkUploadForm
   include ActiveModel::Model
   attr_accessor :upload
-  validate :appropriate_file_chosen
+
+  validates :upload, presence: true
+  validate :appropriate_file_type, if: ->(form) { form.upload.present? }
 
   def file
     upload.tempfile
@@ -9,12 +11,12 @@ class BulkUploadForm
 
 private
 
-  def appropriate_file_chosen
-    if upload
-      Rails.logger.debug("Bulk upload content-type: #{upload.content_type}")
-      errors.add(:upload, I18n.t('errors.bulk_upload_form.theres_a_problem_with_that_spreadsheet')) unless upload.content_type == Mime::Type.lookup_by_extension(:xlsx)
-    else
-      errors.add(:upload, I18n.t('errors.bulk_upload_form.select_a_spreadsheet_file'))
-    end
+  def appropriate_file_type
+    Rails.logger.debug("Bulk upload content-type: #{upload.content_type}")
+    errors.add(:upload, :unsupported_file_type) unless xlsx_uploaded?
+  end
+
+  def xlsx_uploaded?
+    upload.content_type == Mime::Type.lookup_by_extension(:xlsx)
   end
 end
