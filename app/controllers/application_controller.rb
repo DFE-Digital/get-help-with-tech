@@ -125,4 +125,14 @@ private
   def show_parent_carer_pupil_banner?
     @show_parent_carer_pupil_banner = current_user&.new_record?
   end
+
+  # Log the user identification params to help debug intermittent issue
+  # [1277](https://trello.com/c/uIDcEmGH/1277-mno-bug-for-providers)
+  def append_info_to_payload(payload)
+    super
+    payload[:current_user_id] = @current_user&.id
+    payload[:session_user_id] = session[:user_id]
+    payload[:session_id] = session[:session_id]
+    payload[:request_id] = request.request_id
+  end
 end
