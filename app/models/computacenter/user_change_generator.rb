@@ -89,7 +89,7 @@ private
   def meta_attributes
     {
       user_id: user.id,
-      updated_at_timestamp: user.updated_at,
+      updated_at_timestamp: Time.zone.now.utc,
       type_of_update: type_of_update,
     }
   end

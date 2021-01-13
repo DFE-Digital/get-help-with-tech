@@ -327,6 +327,8 @@ RSpec.describe User, type: :model do
 
     context 'creating user' do
       context 'computacenter relevant' do
+        let(:expected_time) { 2.seconds.ago }
+
         it 'creates a Computacenter::UserChange of type new' do
           expect { create(:user, :relevant_to_computacenter) }.to change(Computacenter::UserChange, :count).by(1)
         end
@@ -337,7 +339,9 @@ RSpec.describe User, type: :model do
         end
 
         it 'persists correct data for RB user' do
+          Timecop.travel(expected_time)
           user = create(:trust_user, orders_devices: true)
+          Timecop.return
           user_change = Computacenter::UserChange.last
 
           expect(user_change.user_id).to eql(user.id)
@@ -351,7 +355,7 @@ RSpec.describe User, type: :model do
           expect(user_change.school).to be_blank
           expect(user_change.school_urn).to be_blank
           expect(user_change.cc_ship_to_number).to be_blank
-          expect(user_change.updated_at_timestamp).to eql(user.created_at)
+          expect(user_change.updated_at_timestamp).to be_within(1.second).of(expected_time)
           expect(user_change.type_of_update).to eql('New')
           expect(user_change.original_email_address).to be_nil
           expect(user_change.original_first_name).to be_blank
@@ -366,7 +370,10 @@ RSpec.describe User, type: :model do
         end
 
         it 'persists correct data for school user' do
+          Timecop.travel(expected_time)
           user = create(:school_user, orders_devices: true)
+          Timecop.return
+
           user_change = Computacenter::UserChange.last
 
           expect(user_change.user_id).to eql(user.id)
@@ -380,7 +387,7 @@ RSpec.describe User, type: :model do
           expect(user_change.school).to eql(user.school.name)
           expect(user_change.school_urn).to eql(user.school.urn.to_s)
           expect(user_change.cc_ship_to_number).to eql(user.school.computacenter_reference)
-          expect(user_change.updated_at_timestamp).to eql(user.created_at)
+          expect(user_change.updated_at_timestamp).to be_within(1.second).of(expected_time)
           expect(user_change.type_of_update).to eql('New')
           expect(user_change.original_email_address).to be_nil
           expect(user_change.original_first_name).to be_blank
