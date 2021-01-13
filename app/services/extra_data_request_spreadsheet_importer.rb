@@ -1,14 +1,13 @@
 class ExtraDataRequestSpreadsheetImporter
   attr_reader :summary
 
-  def initialize
+  def initialize(spreadsheet)
+    @spreadsheet = spreadsheet
     @summary = BulkUploadSummary.new
   end
 
-  def import!(spreadsheet_path, extra_fields: {})
-    spreadsheet = ExtraMobileDataRequestSpreadsheet.new(spreadsheet_path)
-
-    spreadsheet.requests.each do |extra_mobile_data_request|
+  def import!(extra_fields: {})
+    @spreadsheet.requests.each do |extra_mobile_data_request|
       extra_mobile_data_request.assign_attributes(extra_fields)
 
       if extra_mobile_data_request.invalid?
