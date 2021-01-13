@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_161018) do
+ActiveRecord::Schema.define(version: 2021_01_12_164816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,8 +202,8 @@ ActiveRecord::Schema.define(version: 2021_01_05_161018) do
     t.string "county"
     t.string "postcode"
     t.string "status", default: "open", null: false
-    t.boolean "vcap_feature_flag", default: false
     t.string "computacenter_change", default: "none", null: false
+    t.boolean "vcap_feature_flag", default: false
     t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
@@ -289,6 +289,8 @@ ActiveRecord::Schema.define(version: 2021_01_05_161018) do
     t.string "status", default: "open", null: false
     t.string "computacenter_change", default: "none", null: false
     t.boolean "increased_allocations_feature_flag", default: false
+    t.boolean "increased_sixth_form_feature_flag", default: false
+    t.boolean "increased_fe_feature_flag", default: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
