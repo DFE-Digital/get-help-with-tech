@@ -1,9 +1,12 @@
 class ExtraMobileDataRequestSpreadsheet
   WORKSHEET_NAME = 'Extra mobile data requests'.freeze
 
-  def initialize(spreadsheet_path)
-    @spreadsheet_path = spreadsheet_path
-  end
+  include ActiveModel::Model
+
+  attr_accessor :path
+
+  validate :spreadsheet_parseable
+  validate :expected_worksheet_present, if: ->(spreadsheet) { spreadsheet.parseable? }
 
   def requests
     row_hashes.map do |row_hash|
@@ -11,7 +14,19 @@ class ExtraMobileDataRequestSpreadsheet
     end
   end
 
+  def parseable?
+    spreadsheet.present?
+  end
+
 private
+
+  def spreadsheet_parseable
+    errors.add(:base, :cannot_parse) unless parseable?
+  end
+
+  def expected_worksheet_present
+    errors.add(:base, :cannot_find_expected_worksheet, worksheet_name: WORKSHEET_NAME) unless worksheet
+  end
 
   # Returns a collection of hashes mapping column name symbols to values:
   #
@@ -38,7 +53,13 @@ private
   end
 
   def extract_worksheet_from_spreadsheet
-    RubyXL::Parser.parse(@spreadsheet_path)[WORKSHEET_NAME]
+    spreadsheet[WORKSHEET_NAME]
+  end
+
+  def spreadsheet
+    RubyXL::Parser.parse(@path)
+  rescue StandardError
+    nil
   end
 
   # Returns a hash mapping the header column names (as symbols) to their column index

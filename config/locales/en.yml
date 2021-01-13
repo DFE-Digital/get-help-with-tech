@@ -425,6 +425,11 @@ en:
               theres_a_problem_with_that_spreadsheet: There’s a problem with that spreadsheet
               blank: Select a spreadsheet file
               unsupported_file_type: Choose an ‘xlsx’ (Open XML format) Excel file
+        extra_mobile_data_request_spreadsheet:
+          attributes:
+            base:
+              cannot_parse: Choose an ‘xlsx’ (Open XML format) Excel file
+              cannot_find_expected_worksheet: Upload a spreadsheet containing a sheet called ‘%{worksheet_name}’
         responsible_body/devices/who_will_order_form:
           attributes:
             who_will_order:
