@@ -96,7 +96,9 @@ LAs, academy trusts and schools could consider using loan agreements when they c
 
 ## Labelling or tagging devices
 
-Laptops, tablets and 4G wireless routers will not be tagged or labelled when they are delivered. LAs and trusts are responsible for implementing their own security and tracking methods.
+Laptops, tablets and 4G wireless routers will not be tagged or labelled when they are delivered. LAs and trusts are responsible for implementing their own security and tracking methods. 
+
+You will invalidate the warranty on your device if you use any permanent method of labelling or tagging the laptop or tablet.
 
 See the [guidance on preparing devices](/devices/preparing-chromebooks) for information on setting up mobile device management (MDM) and keeping records of devices.
 
