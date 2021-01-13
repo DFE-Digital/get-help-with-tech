@@ -89,9 +89,16 @@ RSpec.feature 'MNO Requests view', type: :feature do
     end
 
     context 'with multiple pages of extra_mobile_data_requests' do
+      original_pagination_value = Pagy::VARS[:items]
+
       before do
-        create_list(:extra_mobile_data_request, 105, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+        Pagy::VARS[:items] = 20
+        create_list(:extra_mobile_data_request, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
         click_on 'Your requests'
+      end
+
+      after do
+        Pagy::VARS[:items] = original_pagination_value
       end
 
       it 'shows pagination' do
