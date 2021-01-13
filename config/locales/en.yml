@@ -601,7 +601,7 @@ en:
           ordering_schools_heading: Schools that can order
           specific_circumstances_heading: Schools with approved requests for specific circumstances
           cannot_order_yet_schools_heading: Schools that cannot order yet
-          cannot_order_yet_schools_text: We’re opening orders for primary schools gradually, and will invite all to order by 13 January
+          cannot_order_yet_schools_text: Ordering will be opened for these schools as soon as possible.
         who_to_contact:
           create:
             failure: "Saved. We will email %{email_address} shortly"

@@ -17,9 +17,9 @@
     </h1>
 
     <% if FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
-      <p class="govuk-body">We’re opening orders for primary schools gradually, and will invite all to order by 13 January.</p>
+      <p class="govuk-body">Ordering will be opened for your school as soon as possible.</p>
 
-      <p class="govuk-body">We’ll email you as soon as you can place an order.</p>
+      <p class="govuk-body">We’ll email you when you can place an order.</p>
     <% else %>
       <p class="govuk-body"><%= t("page_titles.#{who_cannot_order}_cannot_order_devices.can_order_when") %></p>
 
