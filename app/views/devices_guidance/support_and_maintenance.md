@@ -1,6 +1,8 @@
 Local authorities (LAs), academy trusts, schools and colleges own the devices they receive, and will need to support their users. This should include solving general IT problems (such as password resets and installing software) so that the user can get the most benefit from their device.
 
->DfE cannot provide support with general IT requests. 
+<div class="govuk-inset-text">
+DfE cannot provide support with general IT requests.
+</div>
 
 LAs and academy trusts should provide support for schools, children, young people and families.
 
@@ -74,7 +76,9 @@ If a user reports that their router powers up but will not connect to the intern
 * the laptop or tablet they’re using can connect to the internet another way, for example by using free wifi or tethering it to a mobile phone
 * they can clear the cache on the web browser they’re using, then try to connect again
 
-> It’s important that users do not attempt to reset their router to try to resolve issues, as this will cause both the router and the SIM to stop working. 
+<div class="govuk-inset-text">
+It’s important that users do not attempt to reset their router to try to resolve issues, as this will cause both the router and the SIM to stop working.
+</div> 
 
 ## Checking 4G wireless router status
 
