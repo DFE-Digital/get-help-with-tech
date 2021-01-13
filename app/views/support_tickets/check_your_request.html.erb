@@ -49,7 +49,6 @@
          classes: "Name".to_s.downcase.gsub(/ /, "-"),
        ) %>
 
-      <% support_topics = @support_ticket["support_topics"].each{} %>
       <% component.slot(
          :row,
          key: "What do you need help with?",
