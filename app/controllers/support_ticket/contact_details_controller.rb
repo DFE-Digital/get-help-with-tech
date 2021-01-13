@@ -1,4 +1,6 @@
 class SupportTicket::ContactDetailsController < SupportTicket::BaseController
+  before_action :require_support_ticket_data!, only: :new
+
   def new
     @form ||= SupportTicket::ContactDetailsForm.new(set_params)
     render 'support_tickets/contact_details'
@@ -26,15 +28,11 @@ private
   end
 
   def set_params
-    if session[:support_ticket].present?
-      {
-        full_name: session[:support_ticket]['full_name'],
-        email_address: session[:support_ticket]['email_address'],
-        telephone_number: session[:support_ticket]['telephone_number'],
-      }
-    else
-      { full_name: nil, email_address: nil, telephone_number: nil }
-    end
+    {
+      full_name: session[:support_ticket]['full_name'],
+      email_address: session[:support_ticket]['email_address'],
+      telephone_number: session[:support_ticket]['telephone_number'],
+    }
   end
 
   def next_step

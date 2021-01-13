@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
   describe '#new' do
     before do
+      session[:support_ticket] = { user_type: '' }
       get :new
     end
 
@@ -12,6 +13,21 @@ RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
 
     it 'creates a form object' do
       expect(assigns(:form)).to be_instance_of(SupportTicket::DescribeYourselfForm)
+    end
+
+    it 'does not redirect to get support home page because its the first page in the wizard' do
+      expect(response).not_to redirect_to(support_ticket_path)
+    end
+
+    describe 'when attempting to access the page directly without using the wizard' do
+      before do
+        session[:support_ticket] = nil
+        get :new
+      end
+
+      it 'does not redirect to the get support home page' do
+        expect(response).not_to redirect_to(support_ticket_path)
+      end
     end
   end
 

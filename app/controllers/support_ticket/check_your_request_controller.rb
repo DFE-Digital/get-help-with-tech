@@ -1,4 +1,6 @@
 class SupportTicket::CheckYourRequestController < SupportTicket::BaseController
+  before_action :require_support_ticket_data!, only: :new
+
   def new
     @support_ticket = session[:support_ticket]
     @form = form

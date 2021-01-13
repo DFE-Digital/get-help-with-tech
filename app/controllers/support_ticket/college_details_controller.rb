@@ -1,4 +1,6 @@
 class SupportTicket::CollegeDetailsController < SupportTicket::BaseController
+  before_action :require_support_ticket_data!, only: :new
+
   def new
     @form ||= SupportTicket::CollegeDetailsForm.new(set_params)
     render 'support_tickets/college_details'
@@ -29,14 +31,10 @@ private
   end
 
   def set_params
-    if session[:support_ticket].present? && session[:support_ticket]['college_name'].present?
-      {
-        college_name: session[:support_ticket]['college_name'],
-        college_ukprn: session[:support_ticket]['college_ukprn'],
-      }
-    else
-      { college_name: nil, college_ukprn: nil }
-    end
+    {
+      college_name: session[:support_ticket]['college_name'],
+      college_ukprn: session[:support_ticket]['college_ukprn'],
+    }
   end
 
   def next_step

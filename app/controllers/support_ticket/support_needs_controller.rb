@@ -1,4 +1,6 @@
 class SupportTicket::SupportNeedsController < SupportTicket::BaseController
+  before_action :require_support_ticket_data!, only: :new
+
   def new
     @form ||= SupportTicket::SupportNeedsForm.new(set_params)
     render 'support_tickets/support_needs'
@@ -24,11 +26,9 @@ private
   end
 
   def set_params
-    if session[:support_ticket].present?
-      {
-        support_topics: session[:support_ticket]['support_topics'],
-      }
-    end
+    {
+      support_topics: session[:support_ticket]['support_topics'],
+    }
   end
 
   def next_step
