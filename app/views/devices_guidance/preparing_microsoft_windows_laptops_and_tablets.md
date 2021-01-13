@@ -35,12 +35,7 @@ A fix is expected to be released in early 2021 which will be automatically avail
 
 ### Security and antivirus
 
-Microsoft Windows devices include the following security and antivirus software:
-
-* Windows Information Protection
-* Windows Defender Credential/System Guard
-* Windows Defender Exploit Guard
-* Windows Defender Antivirus
+Microsoft Windows devices come with Windows Defender Antivirus.
 
 ### Education software
 
