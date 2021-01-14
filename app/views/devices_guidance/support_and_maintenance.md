@@ -61,7 +61,7 @@ Please see our guidance on [preparing Microsoft Windows devices](/devices/prepar
 
 Our [Apple iPad guidance](/devices/preparing-ipads#enrol-dfe-ipads-in-asm-using-the-reseller-id) provides instructions on how to find and use the reseller ID for your device.
 
-### Help with 4G wireless routers and data
+## Help with 4G wireless routers and data
 
 Please review our [preparing 4G routers](/devices/preparing-4g-wireless-routers) and [get started with your 4G wireless router guidance](/devices/4g-user-guidance) to see if your issue is covered before [contacting us](/get-support).
 
@@ -80,7 +80,7 @@ If a user reports that their router powers up but will not connect to the intern
 It’s important that users do not attempt to reset their router to try to resolve issues, as this will cause both the router and the SIM to stop working.
 </div> 
 
-## Checking 4G wireless router status
+### Checking 4G wireless router status
 
 Trusts and local authorities should use the [Support Portal](https://computacenterprod.service-now.com/dfe) to check the status of each router, and raise a support request if needed. Login details were provided when you placed your order, but if you’re unable to access the Support Portal, please [contact us](/get-support).
 
