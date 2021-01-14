@@ -86,9 +86,9 @@ RSpec.describe VirtualCapPool, type: :model do
         expect(pool.devices_ordered).to eq(21)
       end
 
-      it 'does not send or store a cap update against the allocation' do
+      it 'does send or store a cap update against the allocation' do
         pool.add_school!(non_ordering_school)
-        expect(non_ordering_school.std_device_allocation.cap_update_calls).not_to be_present
+        expect(non_ordering_school.std_device_allocation.cap_update_calls).to be_present
       end
     end
 
@@ -140,6 +140,20 @@ RSpec.describe VirtualCapPool, type: :model do
         expect(allocation.cap_update_calls).to be_present
         expect(allocation.cap_update_calls.last.request_body).to include('test-request')
         expect(allocation.cap_update_calls.last.response_body).to include('test-response')
+      end
+    end
+
+    it 'notifies computacenter regardless of the school status' do
+      schools.first.update!(order_state: 'can_order')
+      schools.last.update!(order_state: 'cannot_order')
+      pool.school_device_allocations.each do |allocation|
+        allocation.update!(devices_ordered: 100)
+        allocation.cap_update_calls.destroy_all
+      end
+      pool.recalculate_caps!
+      pool.school_device_allocations.each do |allocation|
+        allocation.reload
+        expect(allocation.cap_update_calls).to be_present
       end
     end
 

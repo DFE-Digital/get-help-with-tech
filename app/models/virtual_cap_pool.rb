@@ -57,7 +57,7 @@ private
   def notify_computacenter!
     if responsible_body.has_virtual_cap_feature_flags?
       if notify_computacenter_of_cap_changes?
-        allocation_ids = school_device_allocations.joins(:school).where(schools: { order_state: %w[can_order can_order_for_specific_circumstances] }).pluck(:id)
+        allocation_ids = school_device_allocations.pluck(:id)
         update_cap_on_computacenter!(allocation_ids)
       end
     else
