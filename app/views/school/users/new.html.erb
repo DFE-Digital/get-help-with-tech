@@ -14,11 +14,7 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
-    <p class="govuk-body">Invite someone in your school who:</p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-      <li>understands what devices are needed and who will get them</li>
-      <li>can configure devices or give technical information</li>
-    </ul>
+    <%= render partial: 'shared/invite_someone_who_can' %>
     <%= form_for @user, url: school_users_path(@school) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render partial: 'shared/school_user_form', locals: { form: f } %>
