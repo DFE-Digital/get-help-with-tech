@@ -77,6 +77,10 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     context 'for a landline phone number' do
       it { is_expected.not_to allow_value('0123456789').for(:device_phone_number) }
     end
+
+    context 'for non-UK numbers' do
+      it { is_expected.not_to allow_value('+49 1521 5678901').for(:device_phone_number) }
+    end
   end
 
   def mno_request_for_number(device_phone_number)
