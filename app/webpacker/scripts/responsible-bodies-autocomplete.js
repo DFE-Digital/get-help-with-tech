@@ -4,7 +4,8 @@ const initResponsibleBodiesAutocomplete = () => {
   try {
     const inputIds = [
       "#support-user-responsible-body-form-responsible-body-id-field",
-      '#school-search-form-responsible-body-id-field'
+      '#school-search-form-responsible-body-id-field',
+      '#support-ticket-academy-details-form-academy-name-field'
     ];
 
     inputIds.forEach(inputId => {
@@ -14,7 +15,9 @@ const initResponsibleBodiesAutocomplete = () => {
       accessibleAutocomplete.enhanceSelectElement({
         selectElement: responsibleBodiesSelect,
         showAllValues: true,
-        confirmOnBlur: false
+        confirmOnBlur: false,
+        dropdownArrow: () => '',
+        displayMenu: 'overlay'
       });
     });
   } catch (err) {
