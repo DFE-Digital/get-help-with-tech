@@ -68,3 +68,7 @@ $govuk-image-url-function: frontend-image-url;
     margin-bottom: 0;
   }
 }
+
+.app-no-wrap {
+  white-space: nowrap;
+}
