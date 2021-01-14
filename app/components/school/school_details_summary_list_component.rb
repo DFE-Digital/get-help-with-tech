@@ -43,7 +43,7 @@ private
 
   def type_of_school_row
     {
-      key: 'Type of school',
+      key: 'Setting',
       value: @school.type_label,
     }
   end
@@ -58,7 +58,7 @@ private
 
     detail_value = info.will_need_chromebooks.nil? ? 'Not yet known' : t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks])
     detail = {
-      key: 'Will your school need to order Chromebooks?',
+      key: 'Will you need to order Chromebooks?',
       value: detail_value,
     }
 
