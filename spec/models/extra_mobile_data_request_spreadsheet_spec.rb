@@ -26,7 +26,7 @@ RSpec.describe ExtraMobileDataRequestSpreadsheet, type: :model do
       )
       expect(requests[1]).to have_attributes(
         account_holder_name: 'Bill Jones',
-        device_phone_number: '07000222222',
+        device_phone_number: '07900222222',
         mobile_network: MobileNetwork.find_by(brand: 'O2'),
         contract_type: 'pay_as_you_go_payg',
         agrees_with_privacy_statement: true,
