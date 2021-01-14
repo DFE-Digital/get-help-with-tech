@@ -68,31 +68,33 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   describe 'validating device_phone_number' do
-    context 'a phone number that starts with 07' do
-      let(:request) { subject }
+    it { is_expected.to validate_presence_of(:device_phone_number) }
 
-      before do
-        request.device_phone_number = '077  125 92368'
-      end
-
-      it 'is valid' do
-        request.valid?
-        expect(request.errors).not_to(have_key(:device_phone_number))
-      end
+    context 'for a mobile phone number starting with 07' do
+      it { is_expected.to allow_value('077  125 92368').for(:device_phone_number) }
     end
 
-    context 'a phone number that does not start with 07' do
-      let(:request) { subject }
-
-      before do
-        request.device_phone_number = '=077  125 92368'
-      end
-
-      it 'is not valid' do
-        request.valid?
-        expect(request.errors).to(have_key(:device_phone_number))
-      end
+    context 'for a landline phone number' do
+      it { is_expected.not_to allow_value('0123456789').for(:device_phone_number) }
     end
+
+    context 'for non-UK numbers' do
+      it { is_expected.not_to allow_value('+49 1521 5678901').for(:device_phone_number) }
+    end
+  end
+
+  def mno_request_for_number(device_phone_number)
+    FactoryBot.create(:extra_mobile_data_request, device_phone_number: device_phone_number)
+  end
+
+  it 'normalises phone numbers to the national format without spaces' do
+    expect(mno_request_for_number('07 123 456 789').device_phone_number).to eq('07123456789')
+    expect(mno_request_for_number('0712345 6789').device_phone_number).to eq('07123456789')
+    expect(mno_request_for_number('+44 7712345678').device_phone_number).to eq('07712345678')
+  end
+
+  it 'normalises phone numbers without the leading zero to the national format without spaces' do
+    expect(mno_request_for_number('7123456789').device_phone_number).to eq('07123456789')
   end
 
   describe 'validating contract_type' do
