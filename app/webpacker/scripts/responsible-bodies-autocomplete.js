@@ -5,7 +5,10 @@ const initResponsibleBodiesAutocomplete = () => {
     const inputIds = [
       "#support-user-responsible-body-form-responsible-body-id-field",
       '#school-search-form-responsible-body-id-field',
-      '#support-ticket-academy-details-form-academy-name-field'
+      '#support-ticket-academy-details-form-academy-name-field',
+      '#support-ticket-academy-details-form-academy-name-field-error',
+      '#support-ticket-local-authority-details-form-local-authority-name-field',
+      '#support-ticket-local-authority-details-form-local-authority-name-field-error'
     ];
 
     inputIds.forEach(inputId => {
