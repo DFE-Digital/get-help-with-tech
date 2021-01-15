@@ -34,8 +34,10 @@ private
   end
 
   def contract_type
-    contract_type = @row_hash[:pay_monthly_or_payg]
-    contract_type.parameterize.gsub('-', '_') if contract_type
+    value = @row_hash[:pay_monthly_or_payg]
+      &.parameterize
+      &.gsub('-', '_')
+    value if ExtraMobileDataRequest.contract_types[value]
   end
 
   def agrees_with_privacy_statement
