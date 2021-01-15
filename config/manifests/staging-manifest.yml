@@ -20,3 +20,5 @@ applications:
     DOCKER_IMAGE_ID: ((docker_image_id))
     ENV: $HOME/.profile
     RAILS_LOG_TO_STDOUT: true
+    GHWT__HOSTNAME_FOR_URLS: staging-get-help-with-tech.education.gov.uk
+    GHWT__SERVICE_NAME_SUFFIX: (staging)

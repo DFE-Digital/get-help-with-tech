@@ -66,6 +66,7 @@ hostname_for_urls: http://localhost:3000
 sentry:
   dsn:
 
+service_name_suffix: 
 session_ttl_seconds: 3600
 
 # Sign-in tokens will expire after this many seconds
