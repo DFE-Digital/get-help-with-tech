@@ -212,7 +212,7 @@ en:
       audience: responsible_body_users
     device_allocations:
       title: Device allocations
-      description: Find out how we estimated device requirements for each school and how to query an allocation.
+      description: Find out how we estimated device requirements and how to query an allocation.
       audience: responsible_body_users
     how_to_order:
       title: How and when to order laptops and tablets
