@@ -1,3 +1,5 @@
+<h3 class="govuk-heading-s">Usign TechSource for the first time</h3>
+
 <p class="govuk-body">You need to place orders on a website called TechSource.</p>
 
 <p class="govuk-body">Use these details to sign in:</p>
@@ -8,7 +10,7 @@
 
 <% if local_assigns[:school_urn] %>
 <p class="govuk-body govuk-!-margin-bottom-7">
-  You’ll also need your school’s unique reference number (URN) when you place an order. It is: <%= local_assigns[:school_urn] %>
+  When you place an order you’ll need the unique reference number (URN) for <%= @school.name %>. It is: <%= local_assigns[:school_urn] %>
 </p>
 <% end %>
 
