@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ExtraMobileDataRequest, type: :model do
+  it { is_expected.to validate_presence_of(:mobile_network_id) }
+
+  it 'fails validation when the network is missing' do
+    request = build(:extra_mobile_data_request, mobile_network: nil)
+    expect(request).not_to be_valid
+  end
+
   describe 'to_csv' do
     let(:requests) { ExtraMobileDataRequest.all }
 
