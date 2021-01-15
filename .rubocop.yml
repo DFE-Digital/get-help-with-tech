@@ -148,3 +148,7 @@ Rake/Desc:
 
 RSpec/NestedGroups:
   Max: 5
+
+Rails/Output:
+  Exclude:
+    - 'app/services/importers/*'

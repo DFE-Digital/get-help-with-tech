@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_140815) do
     t.boolean "hide_mno", default: false
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
+    t.text "fe_type"
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"

@@ -9,65 +9,113 @@ module Importers
     end
 
     # UKPRN
-    # URN (if applicable)
-    # Provider name
-    # Provider type
-    # Contact name
-    # Contact email
-    # Contact phone
-    # Contact address (full)
-    # Main address line 1
-    # Main address line 2
-    # Main address line 3
-    # Main town / city
-    # Main county
-    # Main postcode
+    # URN
+    # Name
+    # ProvType
+    # Fmallocation
+    # Full Name
+    # Job Title
+    # First Name
+    # Last Name
+    # Email
+    # Business Phone
+    # Address Line 1 (Organisation) (Organisation)
+    # Address Line 2 (Organisation) (Organisation)
+    # Address Line 3 (Organisation) (Organisation)
+    # Town / City (Organisation) (Organisation)
+    # County (Organisation) (Organisation)
+    # Postcode (Organisation) (Organisation)
 
     def call
+      schools_found = 0
+      schools_created = 0
+      rbs_created = 0
+
       rows.each do |row|
-        school = School.find_by(ukprn: row['UKPRN'])
+        # TODO: we will want to skip certain rows for each import run as we do in batches
+        # next if row['ProvType'].underscore.gsub(' (spi)', '').gsub(' ', '_').gsub('&', 'and') == '???'
+
+        if row['URN'].present?
+          school = School.find_by(urn: row['URN'])
+
+          if school
+            school.update!(ukprn: row['UKPRN'])
+          else
+            school = School.find_by(ukprn: row['UKPRN'])
+          end
+        else
+          school = School.find_by(ukprn: row['UKPRN'])
+        end
 
         if school.nil?
           rb = FurtherEducationCollege.create!(
-            name: row['Provider name'],
+            name: row['Name'],
             organisation_type: 'FurtherEducationSchool',
             who_will_order_devices: 'responsible_body',
-            address_1: row['Main address line 1'],
-            address_2: row['Main address line 2'],
-            address_3: row['Main address line 3'],
-            town: row['Main town / city'],
-            county: row['Main county'],
-            postcode: row['Main postcode'],
+            address_1: row['Address Line 1'],
+            address_2: row['Address Line 2'],
+            address_3: row['Address Line 3'],
+            town: row['Town / City'],
+            county: row['County'],
+            postcode: row['Postcode'],
           )
 
           school = FurtherEducationSchool.create!(
             responsible_body: rb,
             ukprn: row['UKPRN'],
-            name: row['Provider name'],
-            address_1: row['Main address line 1'],
-            address_2: row['Main address line 2'],
-            address_3: row['Main address line 3'],
-            town: row['Main town / city'],
-            county: row['Main county'],
-            postcode: row['Main postcode'],
+            urn: row['URN'],
+            name: row['Name'],
+            fe_type: row['ProvType'].underscore.gsub(' (spi)', '').gsub(' ', '_').gsub('&', 'and'),
+            address_1: row['Address Line 1'],
+            address_2: row['Address Line 2'],
+            address_3: row['Address Line 3'],
+            town: row['Town / City'],
+            county: row['County'],
+            postcode: row['Postcode'],
           )
+          schools_created += 1
+        else
+          schools_found += 1
         end
 
-        contact = school.contacts.first_or_create!(
-          email_address: row['Contact email'],
-          full_name: row['Contact name'],
+        if school.responsible_body
+          if school.responsible_body.model_name.name == 'FurtherEducationCollege'
+            # good
+          else # delink
+            rb = FurtherEducationCollege.create!(
+              name: row['Name'],
+              organisation_type: 'FurtherEducationSchool',
+              who_will_order_devices: 'responsible_body',
+              address_1: row['Address Line 1'],
+              address_2: row['Address Line 2'],
+              address_3: row['Address Line 3'],
+              town: row['Town / City'],
+              county: row['County'],
+              postcode: row['Postcode'],
+            )
+            rbs_created += 1
+
+            school.update!(responsible_body: rb)
+          end
+        end
+
+        contact = school.contacts.find_or_create_by!(
+          email_address: row['Email'],
+          full_name: row['Full Name'],
           role: 'contact',
-          title: nil,
-          phone_number: row['Contact phone'],
+          title: row['Job Title'],
+          phone_number: row['Business phone'],
         )
 
-        next if school.preorder_information.present?
-
-        school.create_preorder_information!(
+        (school.preorder_information || school.build_preorder_information).update!(
           who_will_order_devices: 'responsible_body',
           school_contact: contact,
         )
       end
+
+      puts "schools found #{schools_found}"
+      puts "schools created #{schools_created}"
+      puts "rbs created #{rbs_created}"
     end
 
   private
