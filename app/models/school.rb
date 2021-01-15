@@ -185,6 +185,10 @@ class School < ApplicationRecord
     preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks?
   end
 
+  def show_mno?
+    !hide_mno?
+  end
+
 private
 
   def maybe_generate_user_changes
