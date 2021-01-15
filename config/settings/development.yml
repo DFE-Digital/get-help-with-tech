@@ -1,3 +1,4 @@
+service_name_suffix: (local)
 computacenter:
   outgoing_api:
     # Computacenter's dev endpoint
