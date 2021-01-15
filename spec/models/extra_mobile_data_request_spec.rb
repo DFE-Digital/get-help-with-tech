@@ -81,6 +81,13 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     context 'for non-UK numbers' do
       it { is_expected.not_to allow_value('+49 1521 5678901').for(:device_phone_number) }
     end
+
+    it 'skips validation when updating the record for an already invalid number' do
+      request = build(:extra_mobile_data_request, device_phone_number: '12345')
+        .tap { |record| record.save!(validate: false) }
+
+      expect(request.update(status: :complete)).to be_truthy
+    end
   end
 
   def mno_request_for_number(device_phone_number)
