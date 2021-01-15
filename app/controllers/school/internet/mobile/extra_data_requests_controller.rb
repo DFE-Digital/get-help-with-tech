@@ -1,4 +1,6 @@
 class School::Internet::Mobile::ExtraDataRequestsController < School::BaseController
+  before_action { not_found if @school.hide_mno? }
+
   def index
     @extra_mobile_data_requests = @school.extra_mobile_data_requests
   end

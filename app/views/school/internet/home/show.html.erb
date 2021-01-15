@@ -12,11 +12,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to 'Request extra data for mobile devices', extra_data_guidance_internet_mobile_school_path(@school) %>
-    </h2>
+    <% if @school.show_mno? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'Request extra data for mobile devices', extra_data_guidance_internet_mobile_school_path(@school) %>
+      </h2>
 
-    <%= render partial: 'shared/internet/mno_information' %>
+      <%= render partial: 'shared/internet/mno_information' %>
+    <% end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to 'Request 4G wireless routers', how_to_request_4g_wireless_routers_path %>

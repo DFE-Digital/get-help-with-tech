@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_12_164816) do
+ActiveRecord::Schema.define(version: 2021_01_15_140815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 2021_01_12_164816) do
     t.boolean "increased_allocations_feature_flag", default: false
     t.boolean "increased_sixth_form_feature_flag", default: false
     t.boolean "increased_fe_feature_flag", default: false
+    t.boolean "hide_mno", default: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"

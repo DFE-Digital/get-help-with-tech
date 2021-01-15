@@ -168,6 +168,16 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   describe 'extra mobile data' do
+    context 'when school is not using mno_feature' do
+      before do
+        allow(school).to receive(:show_mno?).and_return(false)
+      end
+
+      it 'does not display row' do
+        expect(result.text).not_to include('Extra mobile data requests')
+      end
+    end
+
     context 'when there are no requests' do
       let(:school) { build(:school) }
 
