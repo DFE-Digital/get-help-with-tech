@@ -14,7 +14,7 @@ class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBod
         render :summary
       rescue StandardError => e
         Rails.logger.error(e.message)
-        @upload_form.errors.add(:upload, I18n.t('errors.bulk_upload_form.theres_a_problem_with_that_spreadsheet'))
+        @upload_form.errors.add(:upload, :theres_a_problem_with_that_spreadsheet)
         render :new, status: :unprocessable_entity
       end
     else
