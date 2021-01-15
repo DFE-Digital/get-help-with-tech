@@ -26,7 +26,7 @@
           <h2 class="govuk-heading-l">Before you can order, we need more information</h2>
           <%= render partial: 'shared/chromebook_information_intro' %>
           <%= render partial: 'shared/chromebook_information_form', locals: {
-            legend_text: 'Will the school’s order include Chromebooks?',
+            legend_text: 'Will your order include Chromebooks?',
             url: responsible_body_devices_school_chromebooks_path(@school.urn),
             form_object: @chromebook_information_form } %>
         <%- end %>
@@ -40,6 +40,6 @@
 </div>
 
 <p class="govuk-body">
-  <%= govuk_link_to 'Return to list of schools', responsible_body_devices_schools_path %>
+  <%= govuk_link_to 'Return to list of schools and colleges', responsible_body_devices_schools_path %>
   <%= render ResponsibleBody::NextSchoolLinkComponent.new(current_school: @school, recordsets: @schools.values) %>
 </p>

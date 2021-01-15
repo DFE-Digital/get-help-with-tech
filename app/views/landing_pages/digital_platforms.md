@@ -79,7 +79,7 @@ Once your platform is set up, you can claim the following grant funding:
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Type of school</th>
+      <th scope="col" class="govuk-table__header">Setting</th>
       <th scope="col" class="govuk-table__header">Grant funding available</th>
     </tr>
   </thead>

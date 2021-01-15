@@ -129,7 +129,7 @@ private
 
   def school_type_row
     {
-      key: 'Type of school',
+      key: 'Setting',
       value: @school.type_label,
     }
   end
