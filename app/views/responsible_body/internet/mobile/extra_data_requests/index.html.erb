@@ -38,7 +38,7 @@
         <td class="govuk-table__cell"><%= emd_request.device_phone_number %></td>
         <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
         <td class="govuk-table__cell">
-          <%= render partial: 'shared/extra_mobile_data_request_status', locals: {extra_mobile_data_request: emd_request} %>
+          <%= render ExtraMobileDataRequestStatusComponent.new(extra_mobile_data_request: emd_request) %>
         </td>
       </tr>
     <%- end %>
