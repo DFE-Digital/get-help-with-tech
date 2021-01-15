@@ -14,7 +14,9 @@
 
     <h2 class="govuk-heading-m">How to order</h2>
 
-    <p class="govuk-body">Order your devices now. Do not delay.</p>
+
+    <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
+
     <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
 
     <% if @school&.std_device_allocation&.available_devices_count > 149 %>
@@ -25,7 +27,11 @@
       If you try to order more than <%= @school.std_device_allocation&.cap || 0 %> devices the order will be cancelled.
     </p>
 
-    <p class="govuk-body govuk">Your devices will be delivered to:</p>
+    <p class="govuk-body">Order your devices now. Do not delay.</p>
+
+    <h3 class="govuk-heading-s">Delivery address</p>
+
+    <p class="govuk-body">Your devices will be delivered to:</p>
     <p class="govuk-body">
       <%= @school.name %><br>
       <%= @school.address_1 %><br>
