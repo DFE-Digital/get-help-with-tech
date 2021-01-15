@@ -36,4 +36,12 @@ RSpec.describe ExtraMobileDataRequestRow, type: :model do
 
     expect(row.build_request.contract_type).to be_nil
   end
+
+  it 'builds an ExtraMobileDataRequest with a nil mobile network from an invalid network name in the input' do
+    invalid_input_data = valid_input_data.merge(mobile_network: 'invalid')
+
+    row = described_class.new(invalid_input_data)
+
+    expect(row.build_request.mobile_network).to be_nil
+  end
 end
