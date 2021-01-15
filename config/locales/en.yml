@@ -216,7 +216,7 @@ en:
       audience: responsible_body_users
     how_to_order:
       title: How and when to order laptops and tablets
-      description: Prepare to order laptops and tablets for disadvantaged children in certain year groups when schools are affected by disruption to face-to-face education due to coronavirus.
+      description: How to order laptops and tablets for disadvantaged children and young people during the pandemic.
       audience: responsible_body_users
     device_specification:
       title: Device options and specifications
@@ -226,6 +226,7 @@ en:
       title: Preparing Microsoft Windows laptops and tablets
       description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
       audience: responsible_body_users
+      family_guidance: hello world
     getting_started_with_your_microsoft_windows_device:
       title: Getting started with your Microsoft Windows device
       description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
