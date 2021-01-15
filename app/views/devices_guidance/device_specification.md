@@ -1,4 +1,4 @@
-When [placing an order](/start), schools, academy trusts and local authorities can choose (depending on availability) from:
+When [placing an order](/start), schools, colleges, further education providers, academy trusts and local authorities can choose (depending on availability) from:
 
 * Microsoft Windows laptops
 * Microsoft Windows tablets (with or without keyboards)
@@ -9,13 +9,13 @@ Read our [4G wireless router guidance](/devices/preparing-4g-wireless-routers) f
 
 All devices provided before September 2020 were delivered with [safeguarding and mobile device management (MDM) software](/devices/safeguarding-for-device-users) installed.
 
-For future orders, 'Standard' Microsoft devices can be supplied with factory settings to allow schools, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to select 'DfE Restricted' devices which will be set up with content filtering and MDM software before delivery.
+For future orders, 'Standard' Microsoft devices can be supplied with factory settings to allow schools, colleges, further education providers, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to select 'DfE Restricted' devices which will be set up with content filtering and MDM software before delivery.
 
 Find out more about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets).
 
-For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set devices up for a school.
+For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set up devices.
 
-If an education platform is not currently in use, schools, local authorities and academy trusts can [apply for DfE-funded support](/digital-platforms) to get and set up G Suite for Education or Office 365 Education.
+If an education platform is not currently in use, schools, colleges, local authorities and academy trusts can [apply for DfE-funded support](/digital-platforms) to get and set up G Suite for Education or Office 365 Education.
 
 ## Minimum specifications
 
@@ -26,8 +26,7 @@ If an education platform is not currently in use, schools, local authorities and
       <th scope="col" class="govuk-table__header">Microsoft Windows laptop</th>
       <th scope="col" class="govuk-table__header">Google Chromebook</th>
       <th scope="col" class="govuk-table__header">Microsoft Windows tablet</th>
-            <th scope="col" class="govuk-table__header">Apple iPad</th>
-
+      <th scope="col" class="govuk-table__header">Apple iPad</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -44,8 +43,7 @@ If an education platform is not currently in use, schools, local authorities and
       <td class="govuk-table__cell">Minimum 11&rdquo; screen</td>
       <td class="govuk-table__cell">Minimum 11&rdquo; touch screen</td>
       <td class="govuk-table__cell">10.2&rdquo; multi-touch screen</td>
-
-</tr>
+    </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Resolution</th>
       <td class="govuk-table__cell">HD (or better)</td>
@@ -128,7 +126,7 @@ If an education platform is not currently in use, schools, local authorities and
       <td class="govuk-table__cell">Windows 10 Pro Education</td>
       <td class="govuk-table__cell">Chrome OS</td>
       <td class="govuk-table__cell">Windows 10 Pro</td>
-        <td class="govuk-table__cell">iPad OS</td>
+      <td class="govuk-table__cell">iPad OS</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Bluetooth</th>
@@ -142,14 +140,14 @@ If an education platform is not currently in use, schools, local authorities and
       <td class="govuk-table__cell">Yes</td>
       <td class="govuk-table__cell">Yes</td>
       <td class="govuk-table__cell">Yes</td>
-        <td class="govuk-table__cell"> </td>
+      <td class="govuk-table__cell"> </td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Security</th>
       <td class="govuk-table__cell">TPM 2.0</td>
       <td class="govuk-table__cell">Google Security Chip H1</td>
       <td class="govuk-table__cell">TPM 2.0</td>
-        <td class="govuk-table__cell"> </td>
+      <td class="govuk-table__cell"> </td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Weight</th>
