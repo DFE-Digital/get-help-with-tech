@@ -24,7 +24,7 @@
     <% end %>
 
     <p class="govuk-body">
-      If you try to order more than <%= @school.std_device_allocation&.cap || 0 %> devices the order will be cancelled.
+      If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
     </p>
 
     <p class="govuk-body">Order your devices now. Do not delay.</p>
