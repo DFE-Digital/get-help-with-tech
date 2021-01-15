@@ -9,16 +9,16 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('landing_pages.get_support_guides.title') %>
+      <%= t('landing_pages.get_support_guides.title' ) %>
     </h1>
 
     <p class="govuk-body">Many vulnerable and disadvantaged children and young people in England do not have access to a laptop, tablet or internet connection. The Department for Education (DfE) is offering support to help children, young people and families access remote education and social care during coronavirus (COVID-19).</p>
 
-    <p class="govuk-body">The DfE is working with delivery partners to supply local authorities, academy trusts and schools with <%= govuk_link_to 'laptops, tablets and connectivity packages', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %>.</p>
+    <p class="govuk-body">The DfE is working with delivery partners to supply local authorities, academy trusts, further education providers and schools with <%= govuk_link_to 'laptops, tablets and connectivity packages', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %>.</p>
 
     <%= render partial: 'page_link_and_description', collection: @responsible_body_pages, as: :page %>
 
-    <h2 class="govuk-heading-l">Guidance to be shared with the children, families and young people using the devices</h2>
+    <h2 class="govuk-heading-l">Guidance to be shared with students and families using the devices</h2>
 
     <%= render partial: 'page_link_and_description', collection: @device_user_pages, as: :page %>
   </div>
