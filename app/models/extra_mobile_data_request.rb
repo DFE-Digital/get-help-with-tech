@@ -103,6 +103,14 @@ class ExtraMobileDataRequest < ApplicationRecord
     )
   end
 
+  def in_end_state?
+    complete? || cancelled?
+  end
+
+  def in_a_problem_state?
+    queried? || status.start_with?('problem')
+  end
+
 private
 
   def validate_school_or_rb_present
