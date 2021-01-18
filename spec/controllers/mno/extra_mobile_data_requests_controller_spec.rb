@@ -59,6 +59,22 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     end
     let(:extra_mobile_data_request_statusses) { extra_mobile_data_requests.map { |r| r.reload.status } }
 
+    context 'when no requests are selected' do
+      let(:params) do
+        {
+          mno_extra_mobile_data_requests_form: {
+            status: 'cancelled',
+          },
+        }
+      end
+
+      it 'does not throw an error' do
+        expect {
+          put :bulk_update, params: params
+        }.not_to raise_error
+      end
+    end
+
     context 'with extra_mobile_data_request_ids from the same MNO as the user' do
       let(:extra_mobile_data_requests) { [extra_mobile_data_request_1_for_mno, extra_mobile_data_request_2_for_mno] }
 
