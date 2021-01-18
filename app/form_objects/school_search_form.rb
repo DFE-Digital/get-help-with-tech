@@ -1,14 +1,14 @@
 class SchoolSearchForm
   include ActiveModel::Model
 
-  attr_accessor :urns, :responsible_body_id, :order_state
+  attr_accessor :identifiers, :responsible_body_id, :order_state
 
-  def array_of_urns
-    @array_of_urns ||= urns.to_s.split("\r\n").map(&:strip).reject(&:blank?)
+  def array_of_identifiers
+    @array_of_identifiers ||= identifiers.to_s.split("\r\n").map(&:strip).reject(&:blank?)
   end
 
   def request_count
-    array_of_urns.size
+    array_of_identifiers.size
   end
 
   def missing_count
@@ -21,15 +21,15 @@ class SchoolSearchForm
 
   def schools
     school_records = School.gias_status_open.includes(:responsible_body, :std_device_allocation)
-    school_records = school_records.where(urn: array_of_urns) if array_of_urns.present?
+    school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
     school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
     school_records = school_records.where(order_state: order_state) if order_state.present?
 
     @schools ||= school_records
   end
 
-  def missing_urns
-    array_of_urns - schools.pluck(:urn).map(&:to_s)
+  def missing_identifiers
+    array_of_identifiers - schools.pluck(:urn, :ukprn).flatten.compact.map(&:to_s)
   end
 
   def select_responsible_body_options
@@ -44,7 +44,7 @@ class SchoolSearchForm
 
   def csv_filename
     tokens = %w[allocations]
-    tokens << "#{array_of_urns.count}-URNs" if urns.present?
+    tokens << "#{array_of_identifiers.count}-URNs" if identifiers.present?
     tokens << "RB-#{responsible_body_id}" if responsible_body_id.present?
     tokens << order_state if order_state.present?
     tokens << Time.zone.now.utc.iso8601

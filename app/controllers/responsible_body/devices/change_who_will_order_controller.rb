@@ -25,7 +25,7 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
 private
 
   def set_school
-    @school = @responsible_body.schools.find_by!(urn: params[:school_urn])
+    @school = @responsible_body.schools.where_urn_or_ukprn(params[:school_urn]).first!
   end
 
   def who_will_order

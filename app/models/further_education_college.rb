@@ -1,0 +1,2 @@
+class FurtherEducationCollege < ResponsibleBody
+end

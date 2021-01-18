@@ -57,6 +57,10 @@ private
     params.fetch('support_school_suggestion_form', {}).permit(:name_or_urn, :school_urn)
   end
 
+  def set_school
+    @school = @user.schools.where_urn_or_ukprn(params[:urn]).first || School.gias_status_open.where_urn_or_ukprn(params[:urn]).first
+  end
+
   def update_schools_params
     params.require(:user).require(:school_ids).reject(&:blank?)
   end

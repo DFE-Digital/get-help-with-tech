@@ -44,7 +44,7 @@ class PreorderInformation < ApplicationRecord
     elsif school_will_order_devices? && any_school_users? && chromebook_information_complete?
       if school.can_order_devices_right_now?
         'school_can_order'
-      elsif (school.std_device_allocation&.devices_ordered || 0).positive?
+      elsif (school.std_device_allocation&.devices_ordered || 0).positive? # bug should do all device types
         'ordered'
       else
         'school_ready'
@@ -52,7 +52,7 @@ class PreorderInformation < ApplicationRecord
     elsif chromebook_information_complete?
       if orders_managed_centrally? && school.can_order_devices_right_now?
         'rb_can_order'
-      elsif orders_managed_centrally? && (school.std_device_allocation&.devices_ordered || 0).positive?
+      elsif orders_managed_centrally? && (school.std_device_allocation&.devices_ordered || 0).positive? # bug should do all device types
         'ordered'
       else
         'ready'
@@ -145,7 +145,7 @@ private
   end
 
   def any_school_users?
-    school&.users&.any?
+    school&.user_schools&.any?
   end
 
   def set_defaults

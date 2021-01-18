@@ -4,33 +4,33 @@ RSpec.describe SchoolSearchForm do
   let(:school) { create(:school) }
   let(:closed_school) { create(:school, status: :closed) }
 
-  describe '#array_of_urns' do
+  describe '#array_of_identifiers' do
     subject(:form) do
-      described_class.new(urns: "   123  \r\ \r\n456\r\n")
+      described_class.new(identifiers: "   123  \r\ \r\n456\r\n")
     end
 
-    it 'returns correct array of urns' do
-      expect(form.array_of_urns).to eql(%w[123 456])
+    it 'returns correct array of identifiers' do
+      expect(form.array_of_identifiers).to eql(%w[123 456])
     end
   end
 
-  describe '#missing_urns' do
+  describe '#missing_identifiers' do
     subject(:form) do
-      described_class.new(urns: "   #{school.urn}  \r\ \r\n456\r\n")
+      described_class.new(identifiers: "   #{school.urn}  \r\ \r\n456\r\n")
     end
 
-    it 'returns array of urns with no matches' do
-      expect(form.missing_urns).to eql(%w[456])
+    it 'returns array of identifiers with no matches' do
+      expect(form.missing_identifiers).to eql(%w[456])
     end
   end
 
   describe '#schools' do
-    context 'given urns' do
+    context 'given identifiers' do
       subject(:form) do
-        described_class.new(urns: "#{school.urn}\r\n#{closed_school.urn}\r\n")
+        described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n")
       end
 
-      it 'only includes schools matching those urns which are not closed' do
+      it 'only includes schools matching those identifiers which are not closed' do
         expect(form.schools.map(&:urn)).to eq([school.urn])
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe SchoolSearchForm do
     let(:urns) { nil }
     let(:responsible_body_id) { nil }
     let(:order_state) { nil }
-    let(:form) { SchoolSearchForm.new(urns: urns, responsible_body_id: responsible_body_id, order_state: order_state) }
+    let(:form) { SchoolSearchForm.new(identifiers: urns, responsible_body_id: responsible_body_id, order_state: order_state) }
     let(:expected_timestamp) { Time.zone.now.utc.iso8601 }
 
     before do
@@ -103,8 +103,8 @@ RSpec.describe SchoolSearchForm do
     context 'when URNs are given' do
       let(:urns) { "101111\r\n101222\r\n101333\r\n" }
 
-      it 'includes (number of urns)-URNs' do
-        expect(form.csv_filename).to include('3-URNs')
+      it 'includes (number of urns)' do
+        expect(form.csv_filename).to include('3')
       end
     end
   end

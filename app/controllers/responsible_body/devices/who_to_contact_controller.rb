@@ -44,7 +44,7 @@ private
   end
 
   def find_school!
-    @school = @responsible_body.schools.find_by!(urn: params[:school_urn])
+    @school = @responsible_body.schools.where_urn_or_ukprn(params[:school_urn]).first!
   end
 
   def who_to_contact_form_params

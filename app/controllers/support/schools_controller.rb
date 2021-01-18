@@ -27,13 +27,13 @@ class Support::SchoolsController < Support::BaseController
   end
 
   def show
-    @school = School.find_by!(urn: params[:urn])
+    @school = School.where_urn_or_ukprn(params[:urn]).first!
     @users = policy_scope(@school.users).not_deleted
     @email_audits = @school.email_audits.order(created_at: :desc)
   end
 
   def confirm_invitation
-    @school = School.find_by!(urn: params[:school_urn])
+    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
     @school_contact = @school.preorder_information&.school_contact
     if @school_contact.nil?
       flash[:warning] = I18n.t('support.schools.invite.no_school_contact', name: @school.name)
@@ -42,7 +42,7 @@ class Support::SchoolsController < Support::BaseController
   end
 
   def invite
-    school = School.find_by!(urn: params[:school_urn])
+    school = School.where_urn_or_ukprn(params[:school_urn]).first!
     success = school.invite_school_contact
     if success
       flash[:success] = I18n.t('support.schools.invite.success', name: school.name)
@@ -55,6 +55,6 @@ class Support::SchoolsController < Support::BaseController
 private
 
   def search_params
-    params.require(:school_search_form).permit(:urns, :responsible_body_id, :order_state)
+    params.require(:school_search_form).permit(:identifiers, :responsible_body_id, :order_state)
   end
 end

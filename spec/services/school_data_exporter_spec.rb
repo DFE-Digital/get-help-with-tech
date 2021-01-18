@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SchoolDataExporter, type: :model do
+  include StringUtils
+
   let(:school) { create(:school) }
   let(:filename) { Rails.root.join('tmp/school_test_data.csv') }
 
@@ -23,6 +25,22 @@ RSpec.describe SchoolDataExporter, type: :model do
     it 'includes a heading row and all of the Schools in the CSV file' do
       line_count = `wc -l "#{filename}"`.split.first.to_i
       expect(line_count).to eq(School.count + 1)
+    end
+
+    it 'exports data correctly' do
+      rows = CSV.read(filename)
+      expect(rows.last).to eql(
+        [
+          school.responsible_body.computacenter_identifier,
+          *split_string("#{school.urn} #{school.name}", limit: 35),
+          school.address_1,
+          school.address_2,
+          school.address_3,
+          school.town,
+          school.postcode,
+          'New',
+        ],
+      )
     end
   end
 

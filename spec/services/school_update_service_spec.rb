@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SchoolUpdateService, type: :model do
+  subject(:service) { described_class.new }
+
   describe 'importing schools from staging' do
-    let(:service) { subject }
     let!(:local_authority) { create(:local_authority, name: 'Camden') }
     let!(:school) { create(:school, urn: '103001', responsible_body: local_authority) }
 
@@ -49,6 +50,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
       it 'updates the existing school record' do
         service.update_schools
+
         expect(school.reload).to have_attributes(
           urn: 103_001,
           name: staged_school.name,
@@ -63,6 +65,20 @@ RSpec.describe SchoolUpdateService, type: :model do
           status: staged_school.status,
         )
       end
+    end
+  end
+
+  describe '#create_school' do
+    let!(:staged_school) { create(:staged_school, urn: 103_001, responsible_body_name: 'Camden') }
+
+    before do
+      create(:local_authority, name: 'Camden')
+    end
+
+    it 'creates school record' do
+      expect {
+        service.send(:create_school, staged_school)
+      }.to change(School, :count).by(1)
     end
   end
 end
