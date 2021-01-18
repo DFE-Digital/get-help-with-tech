@@ -93,12 +93,12 @@ module ViewHelper
       OpenStruct.new(
         id: 'schools',
         label: "Most schools and colleges will place their own orders#{' (recommended)' if show_recommendation}",
-        description: 'We’ll need contact details for each school',
+        description: 'We’ll need contact details for each school or college',
       ),
       OpenStruct.new(
         id: 'responsible_body',
         label: 'Most orders will be placed centrally',
-        description: 'You’ll need to place orders for schools and colleges and give technical information for any school or college that wants to order Chromebooks',
+        description: 'You’ll need to place orders for schools and colleges and give technical information for any that want to order Chromebooks',
       ),
     ]
   end
