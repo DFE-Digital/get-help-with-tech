@@ -15,6 +15,7 @@
   </p>
 <% else %>
   <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
+  <p class="govuk-body"><%= govuk_link_to t('page_titles.extra_mobile_data_requests_csv_update'), new_mno_extra_mobile_data_requests_csv_update_path %></p>
 
   <h2 class="govuk-heading-l govuk-!-margin-top-4">
     <%= pagy_info(@pagination, "requests").capitalize.html_safe %>

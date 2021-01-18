@@ -1,0 +1,74 @@
+<% title = t('page_titles.extra_mobile_data_requests_csv_update') %>
+<% content_for :title, title %>
+<% content_for :before_content, govuk_link_to('Back', mno_extra_mobile_data_requests_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+    <h2 class="govuk-heading-l">Upload CSV file</h2>
+    <div class="govuk-grid-row">
+      <%= form_for @upload_form,
+        url: mno_extra_mobile_data_requests_csv_update_index_path,
+        html: {
+          class: 'app-card govuk-!-margin-bottom-6',
+          multipart: true
+        } do |f| %>
+        <%= f.govuk_error_summary %>
+
+        <%= f.govuk_file_field :upload,
+          label: { text: 'CSV file', size: 'm' },
+          accept: Mime::Type.lookup_by_extension(:csv)
+        %>
+
+        <%= f.govuk_submit 'Upload and update requests' %>
+      <%- end %>
+
+      <h2 class="govuk-heading-l">Help updating the CSV</h2>
+        <p class="govuk-body">You can modify and re-upload your <%= govuk_link_to('CSV of requests', mno_extra_mobile_data_requests_path(format: :csv)) %>. Only changes to a request’s status will be processed.</p>
+
+      <h3 class="govuk-heading-m">Statuses you can use</h3>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header">Status</th>
+            <th class="govuk-table__header">Description</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">new</td>
+            <td class="govuk-table__cell">Request not processed yet</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">in_progress</td>
+            <td class="govuk-table__cell">Request is being processed</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">completed</td>
+            <td class="govuk-table__cell">Request processed successfully</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">problem_not_eligible</td>
+            <td class="govuk-table__cell">Account is not eligible</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">problem_no_account_with_number</td>
+            <td class="govuk-table__cell">No account with this number</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">problem_no_account_with_name</td>
+            <td class="govuk-table__cell">No account with this name</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">problem_invalid_number</td>
+            <td class="govuk-table__cell">Not a valid mobile number</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">problem</td>
+            <td class="govuk-table__cell">Request could not be processed but no reason specified</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
