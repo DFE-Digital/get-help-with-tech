@@ -16,7 +16,7 @@
     <%= l(extra_mobile_data_request.created_at, format: :short) %>
   </td>
   <td class="govuk-table__cell" class="request-status">
-    <%= render partial: 'shared/extra_mobile_data_request_status', locals: {extra_mobile_data_request: extra_mobile_data_request} %>
+    <%= render ExtraMobileDataRequestStatusComponent.new(extra_mobile_data_request: extra_mobile_data_request) %>
   </td>
   <td class="govuk-table__cell">
     <%- if extra_mobile_data_request.complete? || extra_mobile_data_request.cancelled? %>

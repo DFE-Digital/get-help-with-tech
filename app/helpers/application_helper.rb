@@ -16,17 +16,6 @@ module ApplicationHelper
     ]
   end
 
-  def extra_mobile_data_request_status_class(status)
-    {
-      requested: 'govuk-tag--blue',
-      in_progress: 'govuk-tag--yellow',
-      complete: 'govuk-tag--green',
-      queried: 'govuk-tag--red',
-      cancelled: 'govuk-tag--grey',
-      unavailable: 'govuk-tag--grey',
-    }[status.to_sym]
-  end
-
   def api_token_status_class(status)
     {
       active: 'govuk-tag--green',
