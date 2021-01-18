@@ -19,10 +19,10 @@
     <%= render ExtraMobileDataRequestStatusComponent.new(extra_mobile_data_request: extra_mobile_data_request) %>
   </td>
   <td class="govuk-table__cell">
-    <%- if extra_mobile_data_request.complete? || extra_mobile_data_request.cancelled? %>
+    <%- if extra_mobile_data_request.in_end_state? %>
       <%- # nothing to show %>
     <%- else %>
-      <%= govuk_link_to (extra_mobile_data_request.queried? ? 'Change problem' : 'Report a problem'), mno_extra_mobile_data_request_report_problem_path(extra_mobile_data_request) %>
+      <%= govuk_link_to (extra_mobile_data_request.in_a_problem_state? ? 'Change problem' : 'Report a problem'), mno_extra_mobile_data_request_report_problem_path(extra_mobile_data_request) %>
     <%- end %>
   </td>
 </tr>

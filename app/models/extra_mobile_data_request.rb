@@ -24,6 +24,11 @@ class ExtraMobileDataRequest < ApplicationRecord
     complete: 'complete',
     cancelled: 'cancelled',
     unavailable: 'unavailable',
+    problem_no_match_for_number: 'problem_no_match_for_number',
+    problem_not_eligible: 'problem_not_eligible',
+    problem_incorrect_phone_number: 'problem_incorrect_phone_number',
+    problem_no_match_for_account_name: 'problem_no_match_for_account_name',
+    problem_no_longer_on_network: 'problem_no_longer_on_network',
   }
 
   # These codes were worked out by the NHSx team & the MNOs,
@@ -96,6 +101,14 @@ class ExtraMobileDataRequest < ApplicationRecord
       device_phone_number: device_phone_number,
       mobile_network_id: mobile_network_id,
     )
+  end
+
+  def in_end_state?
+    complete? || cancelled?
+  end
+
+  def in_a_problem_state?
+    queried? || status.start_with?('problem')
   end
 
 private

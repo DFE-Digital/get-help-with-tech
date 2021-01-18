@@ -15,20 +15,22 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
         )
         @statuses = ExtraMobileDataRequest
           .translated_enum_values(:statuses)
-          .reject { |status| status.value.in?(%w[queried cancelled]) }
+          .reject { |status| status.value.in?(%w[queried cancelled unavailable]) }
       end
     end
   end
 
   def report_problem
     load_extra_mobile_data_request(params[:extra_mobile_data_request_id])
+    @options = problem_options
   end
 
   def update
     load_extra_mobile_data_request(params[:id])
-    @extra_mobile_data_request.update!(extra_mobile_data_request_params.merge(status: :queried))
+    @extra_mobile_data_request.update!(extra_mobile_data_request_params)
     redirect_to mno_extra_mobile_data_requests_path
   rescue ActiveModel::ValidationError, ActionController::ParameterMissing
+    @options = problem_options
     render :report_problem, status: :unprocessable_entity
   end
 
@@ -50,6 +52,14 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   end
 
 private
+
+  def problem_options
+    ExtraMobileDataRequest
+      .statuses
+      .keys
+      .select { |key| key.start_with?('problem') }
+      .map { |key| OpenStruct.new(value: key, label: I18n.t!(key, scope: %i[activerecord attributes extra_mobile_data_request problems])) }
+  end
 
   def extra_mobile_data_request_scope
     @mobile_network.extra_mobile_data_requests
@@ -97,9 +107,7 @@ private
     }[order_param]
   end
 
-  def extra_mobile_data_request_params(opts = params)
-    opts.require(:extra_mobile_data_request).permit(
-      :problem,
-    )
+  def extra_mobile_data_request_params
+    params.require(:extra_mobile_data_request).permit(:status)
   end
 end
