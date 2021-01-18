@@ -1,6 +1,6 @@
 ## How devices are allocated
 
-### Laptops and tablets for schools, colleges, <span class='app-no-wrap'>further education providers</span>, <span class='app-no-wrap'>academy trusts</span> and <span class='app-no-wrap'>local authorities</span>
+### Laptops and tablets for schools, colleges, <span class="app-no-wrap">further education providers</span>, <span class="app-no-wrap">academy trusts</span> and <span class="app-no-wrap">local authorities</span>
 
 <div class="govuk-inset-text">
   You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
