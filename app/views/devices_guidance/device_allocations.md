@@ -3,10 +3,12 @@
 ### Laptops and tablets for schools, colleges, <span class='app-no-wrap'>further education providers</span>, <span class='app-no-wrap'>academy trusts</span> and <span class='app-no-wrap'>local authorities</span>
 
 <div class="govuk-inset-text">
-  If you have an account, you can find out your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
+  You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
 </div>
 
-The number of devices available to order through the service reflects the number of laptops and tablets we estimate are needed by each school, college or further education provider. This calculation is based on:
+The number of devices available to order through the service reflects the number of laptops and tablets we estimate are needed by each school, college or further education provider.
+
+This calculation is based on:
 
 * free school meals data
 * free meals data for further education providers
@@ -20,13 +22,9 @@ For information on getting internet access for disadvantaged children in years 3
 
 ## How to query an allocation
 
-<div class="govuk-inset-text">
-  You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
-</div>
+You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
 
-> We’re prioritising delivering current allocations so that schools, colleges and further education providers have devices to lend.
-
-If the number of disadvantaged students unable to access face-to-face education and unable to access a device through other means is greater than your allocation, you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) to request more.
+If the number of disadvantaged students who are unable to access face-to-face education or a device through other means is greater than your allocation, you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) to request more.
 
 We’ll ask you for some information about the situation, including the information listed below. Before querying your allocation, you should make sure that pupils and students cannot access a device privately, or by being lent a device already owned by your school, college or further education provider.
 
