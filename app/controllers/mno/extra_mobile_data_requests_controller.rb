@@ -36,7 +36,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
     ExtraMobileDataRequest.transaction do
       new_attributes = { status: bulk_update_params[:status] }
       new_attributes[:problem] = nil unless bulk_update_params[:status] == 'queried'
-      ids = bulk_update_params[:extra_mobile_data_request_ids].reject(&:empty?)
+      ids = (bulk_update_params[:extra_mobile_data_request_ids] || []).reject(&:empty?)
       extra_mobile_data_request_scope
                .where('extra_mobile_data_requests.id IN (?)', ids)
                .update_all(new_attributes)
