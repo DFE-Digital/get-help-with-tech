@@ -489,11 +489,11 @@ en:
           revoked: Revoked
       extra_mobile_data_request:
         problems:
-          incorrect_phone_number: This is not a valid mobile number
-          no_match_for_number: We couldn’t find an account with this number
-          no_match_for_account_name: We couldn’t find an account with this name
-          not_eligible: This account is not eligible
-          no_longer_on_network: This account is no longer on our network
+          problem_incorrect_phone_number: This is not a valid mobile number
+          problem_no_match_for_number: We couldn’t find an account with this number
+          problem_no_match_for_account_name: We couldn’t find an account with this name
+          problem_not_eligible: This account is not eligible
+          problem_no_longer_on_network: This account is no longer on our network
         problem_tags:
           problem_incorrect_phone_number: Invalid number
           problem_no_match_for_number: Unknown number

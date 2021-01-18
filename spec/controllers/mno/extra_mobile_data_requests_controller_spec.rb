@@ -22,7 +22,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
         'in_progress',
         'complete',
         'unavailable',
-        'problem_another_reason',
+        'problem_no_longer_on_network',
         'problem_incorrect_phone_number',
         'problem_no_match_for_account_name',
         'problem_no_match_for_number',
@@ -36,7 +36,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       {
         id: extra_mobile_data_request_1_for_mno.id,
         extra_mobile_data_request: {
-          problem: 'no_match_for_number',
+          status: 'problem_no_match_for_number',
         },
       }
     end
@@ -44,8 +44,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     context 'for a request from an approved user' do
       it 'updates the status to queried' do
         patch :update, params: params
-        expect(extra_mobile_data_request_1_for_mno.reload.problem).to eq('no_match_for_number')
-        expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('queried')
+        expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('problem_no_match_for_number')
       end
     end
   end
