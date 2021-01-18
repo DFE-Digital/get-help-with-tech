@@ -29,7 +29,7 @@ RSpec.describe Computacenter::ResponsibleBodyUrns do
     subject(:model) { fe_klass.new }
 
     it 'returns first school ukprn' do
-      expect(model.computacenter_identifier).to be(12_345_678)
+      expect(model.computacenter_identifier).to eql('FE12345678')
     end
   end
 end

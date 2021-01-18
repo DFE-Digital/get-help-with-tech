@@ -50,7 +50,11 @@ module Computacenter::ResponsibleBodyUrns
         end
       when 'FurtherEducationCollege'
         # potential n+1
-        schools.first&.ukprn
+        if schools.first&.ukprn
+          "FE#{schools.first&.ukprn}"
+        else
+          ''
+        end
       when 'DfE'
         'DfE'
       end
