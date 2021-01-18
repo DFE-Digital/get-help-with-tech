@@ -6,8 +6,4 @@ class FurtherEducationSchool < School
   def urn
     ukprn
   end
-
-  def computacenter_identifier
-    "fe#{ukprn}"
-  end
 end
