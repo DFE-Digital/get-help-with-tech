@@ -82,5 +82,27 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         expect(page).to have_content(request.account_holder_name)
       end
     end
+
+    context 'when pagination occurs' do
+      around do |example|
+        original_pagination_value = Pagy::VARS[:items]
+        Pagy::VARS[:items] = 2
+        example.run
+        Pagy::VARS[:items] = original_pagination_value
+      end
+
+      scenario 'user can navigate between pages' do
+        visit extra_data_requests_internet_mobile_school_path(school)
+        expect(page).to have_content('Next page')
+        expect(page).to have_content('2 of 3')
+
+        click_on 'Next page'
+
+        expect(page).to have_content('Next page')
+        expect(page).to have_content('1 of 3')
+        expect(page).to have_content('Previous page')
+        expect(page).to have_content('3 of 3')
+      end
+    end
   end
 end

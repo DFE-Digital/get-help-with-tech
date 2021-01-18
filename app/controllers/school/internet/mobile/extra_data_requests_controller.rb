@@ -2,7 +2,7 @@ class School::Internet::Mobile::ExtraDataRequestsController < School::BaseContro
   before_action { not_found if @school.hide_mno? }
 
   def index
-    @extra_mobile_data_requests = @school.extra_mobile_data_requests.order(:created_at)
+    @pagination, @extra_mobile_data_requests = pagy(@school.extra_mobile_data_requests.order(:created_at)
   end
 
   def guidance; end
