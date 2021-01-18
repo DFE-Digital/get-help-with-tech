@@ -28,7 +28,7 @@ en:
         order_devices: Order devices now
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
-    responsible_body_devices_tell_us: Tell us who will order a school’s laptops and tablets
+    responsible_body_devices_tell_us: Tell us who will order laptops and tablets
     responsible_body_devices_request_devices: Request devices for specific circumstances
     responsible_body_internet_home: Get internet access
     responsible_body_users_index: Manage %{rb_type} users
@@ -105,7 +105,7 @@ en:
       multi_domain_chromebooks: Responsible bodies managing multiple Chromebook domains
     who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
-      schools: Each school will place their own orders
+      schools: Each school or college will place their own orders
       responsible_body: Orders will be placed centrally
     request_a_change: Contact our support team to request this change
     change_who_will_order: Who will place orders for laptops and tablets?
