@@ -10,7 +10,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders availability' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'All devices ordered'
+      expect(html).to include 'No devices left to order'
     end
 
     it 'renders state' do
@@ -89,7 +89,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders availability' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'All devices ordered'
+      expect(html).to include 'No devices left to order'
     end
 
     it 'renders state' do
