@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices within a virtual pool' do
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 3, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 4, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -59,6 +59,13 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     and_i_see_a_section_regarding_ordering_chromebooks
   end
 
+  scenario 'with no devices left to order' do
+    given_a_centrally_managed_school_within_a_pool_could_order_but_cannot_order_anymore
+    when_i_visit_the_order_devices_page
+    then_i_see_the_cannot_order_anymore_page
+    and_i_see_i_have_no_more_devices_to_order
+  end
+
   def given_i_am_signed_in_as_a_responsible_body_user
     sign_in_as user
   end
@@ -68,6 +75,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     PreorderInformation.where(school_id: responsible_body.schools).update_all(will_need_chromebooks: 'no')
     schools[0].preorder_information.responsible_body_will_order_devices!
     schools[1].preorder_information.responsible_body_will_order_devices!
+    schools[3].preorder_information.responsible_body_will_order_devices!
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
@@ -76,6 +84,14 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     schools[0].coms_device_allocation.update!(cap: 5, allocation: 10, devices_ordered: 2) # 3 left
 
     add_school_to_virtual_cap(school: schools[0])
+  end
+
+  def given_a_centrally_managed_school_within_a_pool_could_order_but_cannot_order_anymore
+    schools[3].can_order!
+    schools[3].std_device_allocation.update!(cap: 3, allocation: 20, devices_ordered: 3) # 2 left
+    schools[3].coms_device_allocation.update!(cap: 5, allocation: 10, devices_ordered: 5) # 3 left
+
+    add_school_to_virtual_cap(school: schools[3])
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
@@ -128,6 +144,10 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     expect(page).to have_css('h1', text: 'Order devices')
   end
 
+  def then_i_see_the_cannot_order_anymore_page
+    expect(page).to have_css('h1', text: 'You’ve ordered all the devices you can')
+  end
+
   def and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
     expect(page).to have_text('2 devices and 3 routers available to order')
   end
@@ -164,6 +184,11 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     expect(page).to have_text('remaining allocation of devices for:')
     expect(page).to have_text('approved requests for specific circumstances')
     expect(page).to have_text('schools that have reported a closure or 15')
+  end
+
+  def and_i_see_i_have_no_more_devices_to_order
+    expect(page).to have_text('No devices left to order')
+    expect(page).to have_text('You ordered 3 devices and 5 routers')
   end
 
   def and_i_do_not_see_a_section_on_ordering_chromebooks

@@ -1,0 +1,25 @@
+<%= render partial: 'heading' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= t('page_titles.order_devices.title') %></span>
+      You’ve ordered all the devices you can
+    </h1>
+
+    <%= render partial: 'shared/techsource_unavailable_banner' %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
+
+    <p class="govuk-body">We’ll contact you if you can place more orders.</p>
+
+    <% if @current_user.orders_devices? && @current_user.techsource_account_confirmed? %>
+      <p class="govuk-body"><%= link_to 'View your order history on TechSource', techsource_start_path %></p>
+    <% end %>
+  </div>
+</div>
