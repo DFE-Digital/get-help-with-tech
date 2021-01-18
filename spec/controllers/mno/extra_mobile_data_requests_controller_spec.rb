@@ -17,7 +17,17 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     it 'does not list "queried" and "cancelled" as possible statuses to transition a request into' do
       get :index
 
-      expect(assigns(:statuses).map(&:value)).to match_array(%w[requested in_progress complete unavailable])
+      expect(assigns(:statuses).map(&:value)).to contain_exactly(
+        'requested',
+        'in_progress',
+        'complete',
+        'unavailable',
+        'problem_another_reason',
+        'problem_incorrect_phone_number',
+        'problem_no_match_for_account_name',
+        'problem_no_match_for_number',
+        'problem_not_eligible',
+      )
     end
   end
 
