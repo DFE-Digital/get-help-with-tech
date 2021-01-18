@@ -10,7 +10,7 @@ Government-funded support is available for schools and colleges to get set up on
 You have until the end of March 2021 to register with this programme and claim your grant.
 
 ## What is a digital education platform?
-It's a place where teachers, students and pupils can continue learning through online virtual classrooms.
+It's a place where teachers, pupils and students can continue learning through online virtual classrooms.
 
 The platforms are purpose-built for remote learning in a way that a school or college website is not.
 
@@ -26,7 +26,7 @@ Teachers can:
 * develop structured file and folder storage for different users
 * use tools to support staff planning
 
-Using a digital education platform allows teachers, students and pupils to continue education if a school closes.
+Using a digital education platform allows teachers, pupils and students to continue education if a school closes.
 
 [The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/lead-your-approach/why-every-school-should-be-using-digital-education-platform/) has information on why you should make the move to a digital education platform, if you have not already. 
 
@@ -35,7 +35,7 @@ Using a digital education platform allows teachers, students and pupils to conti
 The funded support is for schools and colleges that:
 
 * do not have a digital education platform
-* have access to Office 365 Education or G Suite for Education, but are not yet set up to assign work and communicate with students and pupils
+* have access to Office 365 Education or G Suite for Education, but are not yet set up to assign work and communicate with pupils and students
 
 Support is available to state funded:
 
