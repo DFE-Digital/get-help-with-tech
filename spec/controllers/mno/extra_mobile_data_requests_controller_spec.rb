@@ -21,7 +21,6 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
         'requested',
         'in_progress',
         'complete',
-        'unavailable',
         'problem_no_longer_on_network',
         'problem_incorrect_phone_number',
         'problem_no_match_for_account_name',
