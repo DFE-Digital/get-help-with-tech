@@ -170,7 +170,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     end
 
     context 'when an existing request had a problem and the new status is also :queried' do
-      let!(:request_with_problem) { create(:extra_mobile_data_request, :with_problem, mobile_network: mno_user.mobile_network) }
+      let!(:request_with_problem) { create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network, status: :queried, problem: 'no_match_for_number') }
       let(:extra_mobile_data_requests) { [request_with_problem] }
       let(:valid_params) do
         {

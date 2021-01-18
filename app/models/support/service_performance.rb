@@ -74,4 +74,10 @@ class Support::ServicePerformance
       .sort_by { |_k, v| v }
       .reverse
   end
+
+  def total_extra_mobile_data_requests_with_problems(scope: ExtraMobileDataRequest)
+    scope
+      .where(status: :queried).or(scope.where('status like ?', 'problem%'))
+      .count
+  end
 end

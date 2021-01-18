@@ -24,7 +24,7 @@
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['cancelled'] || 0),
+                 count: (@stats.total_extra_mobile_data_requests_with_problems(scope: ExtraMobileDataRequest.from_responsible_bodies) || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['cancelled'] || 0),
                  label: 'not valid or cancelled',
                  colour: :red,
                  size: :reduced) %>
@@ -86,7 +86,7 @@
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['queried'] || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['cancelled'] || 0),
+                 count: (@stats.total_extra_mobile_data_requests_with_problems(scope: ExtraMobileDataRequest.from_schools) || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['cancelled'] || 0),
                  label: 'not valid or cancelled',
                  colour: :red,
                  size: :reduced) %>
