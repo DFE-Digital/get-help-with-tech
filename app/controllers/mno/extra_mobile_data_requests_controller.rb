@@ -22,6 +22,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
 
   def report_problem
     load_extra_mobile_data_request(params[:extra_mobile_data_request_id])
+    @options = problem_options
   end
 
   def update
@@ -29,6 +30,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
     @extra_mobile_data_request.update!(extra_mobile_data_request_params.merge(status: :queried))
     redirect_to mno_extra_mobile_data_requests_path
   rescue ActiveModel::ValidationError, ActionController::ParameterMissing
+    @options = problem_options
     render :report_problem, status: :unprocessable_entity
   end
 
@@ -50,6 +52,10 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   end
 
 private
+
+  def problem_options
+    ExtraMobileDataRequest.translated_enum_values(:problems)
+  end
 
   def extra_mobile_data_request_scope
     @mobile_network.extra_mobile_data_requests
