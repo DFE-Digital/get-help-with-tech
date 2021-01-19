@@ -39,7 +39,7 @@ If you’re not sure how to find this information, you should ask your IT suppor
 
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. [Find out more about Cisco Umbrella](/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
-If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education.
+If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education.</a>
   
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
 
