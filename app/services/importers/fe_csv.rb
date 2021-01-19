@@ -65,7 +65,7 @@ module Importers
             ukprn: row['UKPRN'],
             urn: row['URN'],
             name: row['Name'],
-            fe_type: row['ProvType'].underscore.gsub(' (spi)', '').gsub(' ', '_').gsub('&', 'and'),
+            fe_type: row['ProvType'].underscore.gsub(' (spi)', '').gsub(' ', '_').gsub('-', '_').gsub('&', 'and'),
             address_1: row['Address Line 1'],
             address_2: row['Address Line 2'],
             address_3: row['Address Line 3'],

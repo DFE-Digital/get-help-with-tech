@@ -1,25 +1,25 @@
-<h2 class="govuk-heading-l">This <%= @school.type_label.downcase.split.last %> has no allocation</h2>
+<h2 class="govuk-heading-l">This <%= @school.institution_type %> has no allocation</h2>
 
 <p class="govuk-body">They can still <%= govuk_link_to 'request devices for specific circumstances', responsible_body_devices_request_devices_path %>.</p>
 
 <p class="govuk-body">Reasons for a 0 allocation include:</p>
 <ul class="govuk-list govuk-list--bullet">
   <% if @school.increased_sixth_form_feature_flag? || @school.increased_fe_feature_flag? %>
-    <li>this <%= @school.type_label.downcase.split.last %> has no one in the eligible year groups</li>
+    <li>this <%= @school.institution_type %> has no one in the eligible year groups</li>
   <% else %>
     <li>the school has no children in the eligible year groups, years 3 to 11</li>
   <% end %>
   <li>there are very few pupils or students on free meals according to the most recent census data</li>
-  <li>there was not enough data to calculate an allocation – for example it’s a new <%= @school.type_label.downcase.split.last %></li>
+  <li>there was not enough data to calculate an allocation – for example it’s a new <%= @school.institution_type %></li>
 </ul>
 
 <%- if @school.preorder_information.needs_contact? || (@school.preorder_information.orders_managed_centrally? && !@school.preorder_information.chromebook_information_complete?) %>
   <h3 class="govuk-heading-m">We still need some information</h3>
 
-  <p class="govuk-body">If this <%= @school.type_label.downcase.split.last %> will order its own devices, we need to know who to contact.</p>
+  <p class="govuk-body">If this <%= @school.institution_type %> will order its own devices, we need to know who to contact.</p>
   <p class="govuk-body">If you are managing their orders centrally, we need to know if they will want Google Chromebooks.</p>
 <%- end %>
 
-<h3 class="govuk-heading-m">Tell us if this <%= @school.type_label.downcase.split.last %> needs an allocation</h3>
+<h3 class="govuk-heading-m">Tell us if this <%= @school.institution_type %> needs an allocation</h3>
 
 <p class="govuk-body">Send details to <%= ghwt_contact_mailto(subject: "A school (#{@school.name} #{@school.urn}) needs an allocation") %></p>
