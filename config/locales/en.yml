@@ -490,17 +490,17 @@ en:
           revoked: Revoked
       extra_mobile_data_request:
         problems:
-          incorrect_phone_number: This is not a valid mobile number
-          no_match_for_number: We couldn’t find an account with this number
-          no_match_for_account_name: We couldn’t find an account with this name
-          not_eligible: This account is not eligible
-          no_longer_on_network: This account is no longer on our network
+          problem_incorrect_phone_number: This is not a valid mobile number
+          problem_no_match_for_number: We couldn’t find an account with this number
+          problem_no_match_for_account_name: We couldn’t find an account with this name
+          problem_not_eligible: This account is not eligible
+          problem_no_longer_on_network: This account is no longer on our network
         problem_tags:
-          incorrect_phone_number: Invalid number
-          no_match_for_number: Unknown number
-          no_match_for_account_name: Unknown name
-          not_eligible: Not eligible
-          no_longer_on_network: Not on network
+          problem_incorrect_phone_number: Invalid number
+          problem_no_match_for_number: Unknown number
+          problem_no_match_for_account_name: Unknown name
+          problem_not_eligible: Not eligible
+          problem_no_longer_on_network: Not on network
         statuses:
           requested: Requested
           in_progress: In progress
@@ -508,6 +508,11 @@ en:
           complete: Complete
           cancelled: Cancelled
           unavailable: Unavailable
+          problem_no_match_for_number: Problem – No account with this number
+          problem_not_eligible: Problem – Not eligible
+          problem_incorrect_phone_number: Problem – Not a valid mobile number
+          problem_no_match_for_account_name: Problem – No account with this name
+          problem_no_longer_on_network: Problem – Not on network
       mobile_network:
         participation_in_pilots:
           participating: 'Offers data now'

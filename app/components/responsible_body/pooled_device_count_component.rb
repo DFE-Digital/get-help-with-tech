@@ -19,7 +19,7 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
         "#{allocation.available_devices_count} #{allocation.device_type_name.pluralize(allocation.available_devices_count)}"
       }.join(' and <br/>') + ' available to order'
     else
-      'All devices ordered'
+      'No devices left to order'
     end
   end
 

@@ -17,7 +17,16 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     it 'does not list "queried" and "cancelled" as possible statuses to transition a request into' do
       get :index
 
-      expect(assigns(:statuses).map(&:value)).to match_array(%w[requested in_progress complete unavailable])
+      expect(assigns(:statuses).map(&:value)).to contain_exactly(
+        'requested',
+        'in_progress',
+        'complete',
+        'problem_no_longer_on_network',
+        'problem_incorrect_phone_number',
+        'problem_no_match_for_account_name',
+        'problem_no_match_for_number',
+        'problem_not_eligible',
+      )
     end
   end
 
@@ -26,7 +35,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       {
         id: extra_mobile_data_request_1_for_mno.id,
         extra_mobile_data_request: {
-          problem: 'no_match_for_number',
+          status: 'problem_no_match_for_number',
         },
       }
     end
@@ -34,8 +43,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     context 'for a request from an approved user' do
       it 'updates the status to queried' do
         patch :update, params: params
-        expect(extra_mobile_data_request_1_for_mno.reload.problem).to eq('no_match_for_number')
-        expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('queried')
+        expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('problem_no_match_for_number')
       end
     end
   end
@@ -50,6 +58,22 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       }
     end
     let(:extra_mobile_data_request_statusses) { extra_mobile_data_requests.map { |r| r.reload.status } }
+
+    context 'when no requests are selected' do
+      let(:params) do
+        {
+          mno_extra_mobile_data_requests_form: {
+            status: 'cancelled',
+          },
+        }
+      end
+
+      it 'does not throw an error' do
+        expect {
+          put :bulk_update, params: params
+        }.not_to raise_error
+      end
+    end
 
     context 'with extra_mobile_data_request_ids from the same MNO as the user' do
       let(:extra_mobile_data_requests) { [extra_mobile_data_request_1_for_mno, extra_mobile_data_request_2_for_mno] }
@@ -146,7 +170,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     end
 
     context 'when an existing request had a problem and the new status is also :queried' do
-      let!(:request_with_problem) { create(:extra_mobile_data_request, :with_problem, mobile_network: mno_user.mobile_network) }
+      let!(:request_with_problem) { create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network, status: :queried, problem: 'no_match_for_number') }
       let(:extra_mobile_data_requests) { [request_with_problem] }
       let(:valid_params) do
         {

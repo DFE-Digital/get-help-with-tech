@@ -171,7 +171,7 @@ RSpec.feature 'Viewing your schools' do
     coms_count = responsible_body.coms_device_pool.cap - responsible_body.coms_device_pool.devices_ordered
     expected =
       if std_count == 0 && coms_count == 0
-        'All devices ordered'
+        'No devices left to order'
       else
         "#{std_count} #{'device'.pluralize(std_count)} and #{coms_count} #{'router'.pluralize(coms_count)} available to order"
       end

@@ -17,7 +17,9 @@
         Which local authority do you work for?
       </h1>
 
-      <%= f.govuk_text_field :local_authority_name, label: {text: 'Local authority name', size: 's'} %>
+      <%= f.govuk_collection_select :local_authority_name, @form.local_authority_list, :name, :name,
+                                    label: {text: 'Local authority name', size: 's'},
+                                    options: { include_blank: true } %>
 
       <%= f.govuk_submit 'Next' %>
     <% end %>
