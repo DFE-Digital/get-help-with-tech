@@ -4,13 +4,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= pluralize(@search_form.result_count, 'school') %> found
+      <%= pluralize(@search_form.result_count, 'organisation') %> found
     </h1>
 
     <% if @search_form.missing_identifiers.any? %>
       <div class="govuk-form-group--error">
         <p class="govuk-body">
-          No schools found for <%= pluralize(@search_form.missing_count, 'identifier') %>:
+          No organisations found for <%= pluralize(@search_form.missing_count, 'identifier') %>:
         </p>
 
         <ul class="govuk-list">

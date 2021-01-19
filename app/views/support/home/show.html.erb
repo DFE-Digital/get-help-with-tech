@@ -11,32 +11,32 @@
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>manage responsible bodies and their users</li>
-      <li>browse the schools managed by the responsible bodies</li>
+      <li>browse schools and colleges managed by the responsible bodies</li>
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to 'Find users', search_support_users_path %>
     </h2>
 
-    <p class="govuk-body">Use this section to find school and responsible body users by name or email address</p>
+    <p class="govuk-body">Use this section to find users by name or email address</p>
 
     <% if policy(School).edit? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Find and manage schools', support_schools_path %>
+        <%= govuk_link_to 'Find and manage schools, colleges and FE providers', support_schools_path %>
       </h2>
 
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>search for schools</li>
-        <li>enable orders for many schools</li>
-        <li>adjust allocations for many schools</li>
+        <li>search for schools, colleges and further education (FE) providers</li>
+        <li>enable orders for many schools, colleges and FE providers</li>
+        <li>adjust allocations for many schools, colleges and FE providers</li>
       </ul>
     <% else %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Find schools', support_schools_path %>
+        <%= govuk_link_to 'Find schools, colleges and FE providers', support_schools_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to search for schools.</p>
+      <p class="govuk-body">Use this section to search for schools, colleges and FE providers.</p>
     <% end %>
 
     <% if policy(Support::ServicePerformance).index? %>

@@ -61,15 +61,15 @@ en:
     general_privacy_notice: How we look after personal information as part of the Get help with technology programme
     support:
       home: Support
-      schools: Schools
+      schools: Schools, colleges and FE providers
       technical_support: Technical support
       feature_flags: Feature flags
       devices:
         schools:
-          search: Search for schools
+          search: Search for schools, colleges and FE providers
           results: School search results
       users:
-        search: Find responsible body or school users
+        search: Find users
         results: Users
         new: Invite a new user
         schools:
@@ -79,7 +79,7 @@ en:
           index: Associate with a responsible body
           edit: Update responsible body
       allocation:
-        adjust_allocations_for_many_schools: Adjust allocations for many schools
+        adjust_allocations_for_many_schools: Adjust allocations for many schools, colleges and FE providers
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices
@@ -90,7 +90,7 @@ en:
       std_device: Change device allocation
       coms_device: Change router allocation
     support_edit_chromebook_details: Will the school need to order Chromebooks?
-    support_bulk_allocation: Allow schools to order their full allocation
+    support_bulk_allocation: Allow schools, colleges and FE providers to order their full allocation
     support_bulk_allocation_result: Bulk allocation summary
     upload_key_contacts_file: Upload a CSV file of key contacts
     weve_processed_your_file: We’ve processed your file

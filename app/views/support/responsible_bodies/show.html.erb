@@ -40,29 +40,33 @@
     <% end %>
 
     <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
-      <h2 class="govuk-heading-l govuk-!-margin-top-9">Centrally managed schools</h2>
-      <p class="govuk-body"><%= @responsible_body.name %>:</p>
-      <ul id="responsible-body-centrally-managed-stats" class="govuk-list govuk-list--bullet">
-        <li>manages ordering for <%= centrally_managing_count_or_all_schools(responsible_body: @responsible_body) %> of its schools</li>
-        <li>has <%= what_to_order_allocation_list(allocations: @virtual_cap_pools) %> available to order right now</li>
-        <li>has ordered <%= what_to_order_state_list(allocations: @virtual_cap_pools) %></li>
-      </ul>
+      <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-l govuk-!-margin-top-9">Centrally managed schools and colleges</h2>
+            <p class="govuk-body"><%= @responsible_body.name %>:</p>
+            <ul id="responsible-body-centrally-managed-stats" class="govuk-list govuk-list--bullet">
+              <li>manages ordering for <%= centrally_managing_count_or_all_schools(responsible_body: @responsible_body) %> of its schools and colleges</li>
+              <li>has <%= what_to_order_allocation_list(allocations: @virtual_cap_pools) %> available to order right now</li>
+              <li>has ordered <%= what_to_order_state_list(allocations: @virtual_cap_pools) %> so far</li>
+            </ul>
+          </div>
+        </div>
     <% end %>
 
-    <h2 class="govuk-heading-l govuk-!-margin-top-9">Schools</h2>
+    <h2 class="govuk-heading-l govuk-!-margin-top-9">Schools and colleges</h2>
 
     <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           <p class="govuk-body">
-            For centrally managed schools, device allocations are combined. We only know how many devices <%= @responsible_body.name %> has ordered, not how many devices went to which school.
+            For centrally managed schools, device allocations are combined. We only know how many devices <%= @responsible_body.name %> has ordered, not how many devices went to which school or college.
           </p>
         </div>
       </div>
     <% end %>
 
     <table id="responsible-body-schools" class="govuk-table">
-      <caption class="govuk-table__caption govuk-visually-hidden">Schools</caption>
+      <caption class="govuk-table__caption govuk-visually-hidden">Schools and colleges</caption>
 
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">

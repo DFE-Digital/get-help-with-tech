@@ -16,7 +16,8 @@
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_text_area :urns_and_allocations,
-                            label: { text: 'Enter one school URN and one new allocation value per line, separated by commas or whitespace' },
+                            label: { text: 'URN and new allocation', size: 'm' },
+                            hint: { text: 'One URN and one new allocation value per line, separated by commas or whitespace. For example ‘654321, 50’' },
                             rows: 15 %>
 
       <%= f.govuk_submit 'Adjust allocations' %>

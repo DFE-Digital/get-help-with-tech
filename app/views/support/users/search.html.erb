@@ -13,9 +13,13 @@
       <%= title %>
     </h1>
 
+    <p class="govuk-body">
+      Search for responsible body, school, college or FE provider users by their email address or name.
+    </p>
+
     <%= form_with model: @search_form, url: results_support_users_path do |f| %>
       <%= f.govuk_text_field :email_address_or_full_name,
-                             label: { text: 'Enter an email address or name', size: 'm' } %>
+                             label: { text: 'Email address or name', size: 'm' } %>
 
       <%= f.govuk_submit 'Search' %>
     <% end %>
