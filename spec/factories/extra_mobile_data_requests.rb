@@ -11,8 +11,7 @@ FactoryBot.define do
     association :created_by_user, factory: :local_authority_user
 
     trait :with_problem do
-      status  { :queried }
-      problem { ExtraMobileDataRequest.problems.keys.sample }
+      status { ExtraMobileDataRequest.problem_statuses.sample }
     end
 
     trait :mno_not_participating do

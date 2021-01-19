@@ -31,6 +31,10 @@ class ExtraMobileDataRequest < ApplicationRecord
     problem_no_longer_on_network: 'problem_no_longer_on_network',
   }
 
+  def self.problem_statuses
+    statuses.keys.select { |k| k.start_with?('problem') }
+  end
+
   # These codes were worked out by the NHSx team & the MNOs,
   # during their previous work to support NHS workers.
   # If/when we add file import back from the MNOs, we'll probably
