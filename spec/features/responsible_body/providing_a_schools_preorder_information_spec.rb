@@ -43,7 +43,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_asks_me_if_the_school_will_need_chromebooks
-    expect(page).to have_content 'Will the school’s order include Chromebooks?'
+    expect(page).to have_content 'Will your order include Chromebooks?'
   end
 
   def when_i_choose_no_they_will_not_need_chromebooks
@@ -87,7 +87,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def it_shows_me_fields_for_domain_and_recovery_email_address
-    expect(page).to have_field('School or local authority domain')
+    expect(page).to have_field('School, local authority or college domain')
     expect(page).to have_field('Recovery email address')
   end
 
@@ -101,7 +101,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def when_i_provide_valid_entries_for_both_fields
-    fill_in 'School or local authority domain', with: 'somedomain.com'
+    fill_in 'School, local authority or college domain', with: 'somedomain.com'
     fill_in 'Recovery email address', with: 'someone@someotherdomain.com'
     click_on 'Save'
   end

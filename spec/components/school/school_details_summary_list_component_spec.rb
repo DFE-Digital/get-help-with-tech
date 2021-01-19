@@ -29,12 +29,12 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school type' do
-      expect(value_for_row(result, 'Type of school').text).to include('Primary school')
+      expect(value_for_row(result, 'Setting').text).to include('Primary school')
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(value_for_row(result, 'Will your school need to order Chromebooks?').text).to include('Yes')
-      expect(action_for_row(result, 'Will your school need to order Chromebooks?').text).to include('Change')
+      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('Yes')
+      expect(action_for_row(result, 'Will you need to order Chromebooks?').text).to include('Change')
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(action_for_row(result, 'Domain').text).to include('Change')
@@ -62,8 +62,8 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Will your school need to order Chromebooks?').text).to include('Yes')
-      expect(action_for_row(result, 'Will your school need to order Chromebooks?')).not_to be_present
+      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('Yes')
+      expect(action_for_row(result, 'Will you need to order Chromebooks?')).not_to be_present
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(action_for_row(result, 'Domain')).not_to be_present

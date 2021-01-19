@@ -208,13 +208,13 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def then_i_see_guidance_for_a_trust
-    expect(page).to have_content 'Decide if schools can order their own devices'
-    expect(page).to have_content 'If you let schools place orders you’ll'
+    expect(page).to have_content 'Decide if schools and colleges can order their own devices'
+    expect(page).to have_content 'If you let schools and colleges place orders you’ll'
   end
 
   def then_i_see_guidance_for_a_local_authority
-    expect(page).to have_content 'Decide if schools can order their own devices'
-    expect(page).to have_content 'We recommend letting schools place orders'
+    expect(page).to have_content 'Decide if schools and colleges can order their own devices'
+    expect(page).to have_content 'We recommend letting schools and colleges place orders'
   end
 
   def and_i_continue_through_the_guidance
@@ -223,19 +223,19 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_i_choose_ordering_through_schools_which_is_not_explicitly_recommended
-    choose 'Most schools will place their own orders'
+    choose 'Most schools and colleges will place their own orders'
   end
 
   def and_i_choose_ordering_through_schools_which_is_recommended
-    choose 'Most schools will place their own orders (recommended)'
+    choose 'Most schools and colleges will place their own orders (recommended)'
   end
 
   def and_i_continue_after_choosing_ordering_through_schools
     click_on 'Continue'
     expect(page).to have_http_status(:ok)
-    expect(page).to have_content('Each school will place their own orders')
+    expect(page).to have_content('Each school or college will place their own orders')
     expect(page).to have_content('We’ve saved your choice')
-    click_on 'Go to your list of schools'
+    click_on 'See your schools and colleges'
   end
 
   def and_i_choose_ordering_centrally
@@ -244,7 +244,7 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(page).to have_http_status(:ok)
     expect(page).to have_content('We’ve saved your choice')
     expect(page).to have_content('Orders will be placed centrally')
-    click_on 'Go to your list of schools'
+    click_on 'See your schools and colleges'
   end
 
   def then_i_see_a_list_of_the_schools_i_am_responsible_for
