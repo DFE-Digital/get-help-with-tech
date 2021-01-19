@@ -5,6 +5,12 @@ class ExtraMobileDataRequestStatusFile < CsvDataFile
     records(&block)
   end
 
+  def skip?(row)
+    row['ID'].blank? &&
+      row['Account holder name'].blank? &&
+      row['Device phone number'].blank?
+  end
+
 protected
 
   def extract_record(row)

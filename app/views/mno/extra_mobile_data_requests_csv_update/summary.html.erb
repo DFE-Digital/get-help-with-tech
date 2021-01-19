@@ -1,19 +1,19 @@
-<% content_for :title, t('page_titles.weve_processed_your_spreadsheet') %>
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', new_mno_extra_mobile_data_requests_csv_update_path class: 'govuk-back-link') %>
+  <%= govuk_link_to('Back', new_mno_extra_mobile_data_requests_csv_update_path, class: 'govuk-back-link') %>
 <% end %>
+<% content_for :title, t('page_titles.weve_processed_your_csv') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('page_titles.weve_processed_your_spreadsheet') %>
+      <%= t('page_titles.weve_processed_your_csv') %>
     </h1>
 
     <p class="govuk-body">We found <%= @summary.requests_count_text %> in your CSV:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li><%= @summary.unchanged_count_text %> were not changed</li>
-      <li><%= @summary.errors_count_text %> errors</li>
-      <li><%= @summary.updated_count_text %> updated successfully</li>
+      <li><%= @summary.unchanged_count_text %></li>
+      <li><%= @summary.errors_count_text %></li>
+      <li><%= @summary.updated_count_text %></li>
     </ul>
   </div>
 </div>
@@ -49,7 +49,7 @@
 <%- end %>
 
 <% if @summary.has_updated_requests? %>
-  <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= @summary.uploaded_section_heading_text %></h2>
+  <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= @summary.updated_section_heading_text %></h2>
   <table class="govuk-table requests-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -65,7 +65,7 @@
           <td class="govuk-table__cell"><%= row.id %></td>
           <td class="govuk-table__cell"><%= row.account_holder_name %></td>
           <td class="govuk-table__cell"><%= row.device_phone_number %></td>
-          <td class="govuk-table__cell"><%= row.status %></td>
+          <td class="govuk-table__cell"><%= render ExtraMobileDataRequestStatusComponent.new(extra_mobile_data_request: row) %></td>
         </tr>
       <%- end %>
     </tbody>

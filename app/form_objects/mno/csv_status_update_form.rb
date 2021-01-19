@@ -3,11 +3,11 @@ class Mno::CsvStatusUpdateForm
 
   attr_accessor :upload
 
-  validates :upload, presence: true
+  validates :upload, presence: { message: 'Select a CSV file' }
   validate :appropriate_file_type, :csv_file_valid, if: ->(form) { form.upload.present? }
 
   def csv
-    @csv ||= ExtraMobileDataRequestStatusFile.new(path: upload.tempfile.path)
+    @csv ||= ExtraMobileDataRequestStatusFile.new(upload.tempfile.path)
   end
 
 private
@@ -18,9 +18,7 @@ private
   end
 
   def csv_file_valid
-    if csv.invalid?
-      errors.copy!(csv.errors)
-    end
+    errors.add(:upload, 'File has no content') unless File.size?(upload.tempfile.path)
   end
 
   def csv_uploaded?

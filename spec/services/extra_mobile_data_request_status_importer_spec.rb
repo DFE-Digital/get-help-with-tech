@@ -20,7 +20,7 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
   let(:importer) { described_class.new(mobile_network: mno, datasource: datasource) }
 
   before do
-    create_extra_mobile_data_request_update_csv_file(filename, [attrs])
+    create_extra_mobile_data_request_update_csv_file(filename, attrs)
   end
 
   after do
@@ -29,18 +29,18 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
 
   context 'when a vaild status change is in the csv file' do
     let(:attrs) do
-      {
+      [{
         id: request.id,
         account_holder_name: request.account_holder_name,
         device_phone_number: request.device_phone_number,
         mobile_network_id: request.mobile_network_id,
         status: 'complete',
-      }
+      }]
     end
 
     it 'updates the status of the matching requests' do
       importer.import!
-    
+
       expect(request.reload.status).to eq('complete')
     end
 
@@ -55,19 +55,19 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
 
   context 'when no status changes are in the csv file' do
     let(:attrs) do
-      {
+      [{
         id: request.id,
         account_holder_name: request.account_holder_name,
         device_phone_number: request.device_phone_number,
         mobile_network_id: request.mobile_network_id,
-        status: request.status
-      }
+        status: request.status,
+      }]
     end
 
     it 'does not update the status of the matching requests' do
       importer.import!
-    
-      expect(request.reload.status).to eq 'requested'
+
+      expect(request.reload.status).to eq 'new'
     end
 
     it 'returns a summary of the import' do
@@ -81,19 +81,19 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
 
   context 'when the status changes contain invalid status' do
     let(:attrs) do
-      {
+      [{
         id: request.id,
         account_holder_name: request.account_holder_name,
         device_phone_number: request.device_phone_number,
         mobile_network_id: request.mobile_network_id,
         status: 'too_high',
-      }
+      }]
     end
 
     it 'does not update the status of the matching requests' do
       importer.import!
-    
-      expect(request.reload.status).to eq 'requested'
+
+      expect(request.reload.status).to eq 'new'
     end
 
     it 'returns a summary of the import' do
@@ -102,6 +102,52 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
       expect(summary.has_unchanged_requests?).to be false
       expect(summary.has_errors?).to be true
       expect(summary.errors.first[:error]).to eq ["'too_high' is not a valid status"]
+    end
+  end
+
+  context 'when the attributes do not match the original request' do
+    let(:requests) { create_list(:extra_mobile_data_request, 3, mobile_network: mno) }
+
+    let(:attrs) do
+      [{
+        id: requests[0].id,
+        account_holder_name: 'Geoffrey Falstaff',
+        device_phone_number: requests[0].device_phone_number,
+        mobile_network_id: requests[0].mobile_network_id,
+        status: 'in_progress',
+      },
+       {
+         id: requests[1].id,
+         account_holder_name: requests[1].account_holder_name,
+         device_phone_number: '07890123123',
+         mobile_network_id: requests[1].mobile_network_id,
+         status: 'in_progress',
+       },
+       {
+         id: 9_302_909,
+         account_holder_name: requests[2].account_holder_name,
+         device_phone_number: requests[2].device_phone_number,
+         mobile_network_id: requests[2].mobile_network_id,
+         status: 'in_progress',
+       }]
+    end
+
+    it 'does not update the status of the matching requests' do
+      importer.import!
+
+      requests.each do |request|
+        expect(request.reload.status).to eq 'new'
+      end
+    end
+
+    it 'returns a summary of the import' do
+      summary = importer.import!
+      expect(summary.has_updated_requests?).to be false
+      expect(summary.has_unchanged_requests?).to be false
+      expect(summary.has_errors?).to be true
+      expect(summary.errors.first[:error]).to eq ['Account holder does not match our records', "We expected #{requests[0].account_holder_name}"]
+      expect(summary.errors.second[:error]).to eq ['Phone number does not match our records', "We expected #{requests[1].device_phone_number}"]
+      expect(summary.errors.third[:error]).to eq ['We could not find this request']
     end
   end
 end

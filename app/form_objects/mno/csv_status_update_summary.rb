@@ -19,7 +19,11 @@ class Mno::CsvStatusUpdateSummary
   end
 
   def add_error_record(extra_mobile_data_request)
-    @errors << presenter(extra_mobile_data_request)
+    # to preserve incoming values these are a hash not a ExtraMobileDataRequest
+    error = extra_mobile_data_request
+    error[:error_message] = error[:error].join('<br/>').html_safe
+
+    @errors << OpenStruct.new(error)
   end
 
   def add_unchanged_record(extra_mobile_data_request)
@@ -43,7 +47,7 @@ class Mno::CsvStatusUpdateSummary
   end
 
   def updated_count_text
-    "#{updated_count} #{'was'.pluralize(updated_count)}"
+    "#{updated_count} #{'was'.pluralize(updated_count)} updated successfully"
   end
 
   def unchanged_count
@@ -51,7 +55,7 @@ class Mno::CsvStatusUpdateSummary
   end
 
   def unchanged_count_text
-    "#{unchanged_count} #{'was'.pluralize(unchanged_count)}"
+    "#{unchanged_count} #{'was'.pluralize(unchanged_count)} not changed"
   end
 
   def errors_count
@@ -59,15 +63,15 @@ class Mno::CsvStatusUpdateSummary
   end
 
   def errors_count_text
-    "#{errors_count} #{'contains'.pluralize(errors_count)}"
+    "#{errors_count} #{'contains'.pluralize(errors_count)} errors"
   end
 
   def errors_section_heading_text
     "#{errors_count} #{'request'.pluralize(errors_count)} #{'contains'.pluralize(errors_count)} errors"
   end
 
-  def uploaded_section_heading_text
-    "#{updated_count} #{'request'.pluralize(updated_count)} uploaded"
+  def updated_section_heading_text
+    "#{updated_count} #{'request'.pluralize(updated_count)} updated"
   end
 
 private
