@@ -72,14 +72,6 @@ session_ttl_seconds: 3600
 # Sign-in tokens will expire after this many seconds
 sign_in_token_ttl_seconds: 1800
 
-# Slack notifications
-slack:
-  event_notifications:
-    channel: get-help-with-tech-test
-    username: dfe_ghwt_slack_bot
-    webhook_url:
-  oauth_access_token:
-
 # how long CDNs and browsers should cache static assets for in production, in seconds.
 static_file_cache_ttl:
 

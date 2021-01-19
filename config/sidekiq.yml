@@ -3,7 +3,6 @@
 :queues:
   - default
   - mailers
-  - slack_messages
   - scheduler
 :schedule:
   StageGiasDataJob:

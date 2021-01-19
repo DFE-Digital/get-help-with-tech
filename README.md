@@ -76,7 +76,6 @@ All the above are run automatically on GitHub Actions when pushing a PR.
 ## Integrations
 
 [GOV.UK Notify](https://www.notifications.service.gov.uk/) for sending emails
-[Slack](https://api.slack.com/apps/A018NEABVNY/) for notifications of various significant events
 
 Computacenter TechSource - this app will post cap update requests to TechSource when we change the number of devices allocated to a school.
 
@@ -152,9 +151,6 @@ GHWT__THROTTLE__*                                |Request throttling limits, see
 GHWT__LOGSTASH__HOST                             | Hostname for where logstash should send logs                                                           | (nil)
 GHWT__LOGSTASH__PORT                             | Port for where logstash should send logs                                                               | (nil)
 GHWT__SENTRY__DSN                                | DSN (Client key) for Sentry.io error reporting | (nil)
-GHWT__SLACK__EVENT_NOTIFICATIONS__CHANNEL        | Slack channel to which notifications will be sent | get-help-with-tech-test
-GHWT__SLACK__EVENT_NOTIFICATIONS__USERNAME       | Username Slack messages will be posted as | dfe-ghwt-slack-bot
-GHWT__SLACK__EVENT_NOTIFICATIONS__WEBHOOK_URL    | URL for the incoming webhook which the Slack app will use for receiving messages from this application | (nil)
 GHWT__COMPUTACENTER__OUTGOING_API__ENDPOINT      | URL of the CapUpdateRequest API at TechSource | (nil)
 GHWT__COMPUTACENTER__OUTGOING_API__USERNAME      | Basic auth username to use for the TechSource CapUpdateRequest API | (nil)
 GHWT__COMPUTACENTER__OUTGOING_API__PASSWORD      | Basic auth password to use for the TechSource CapUpdateRequest API | (nil)
@@ -170,8 +166,8 @@ Certain aspects of app behaviour are governed by a minimal implementation of Fea
 These are activated by having an environment variable FEATURES_(flag name) set to 'active', for example:
 
 ```
-# start the rails server with slack notifications active
-FEATURES_slack_notifications=active bundle exec rails s
+# start the rails server with rate limiting active
+FEATURES_rate_limiting=active bundle exec rails s
 ```
 
 The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
@@ -189,13 +185,13 @@ cf env get-help-with-tech-prod | grep FEATURES
 cf set-env (app name) (environment variable name) (value)
 
 # For example:
-cf set-env get-help-with-tech-prod FEATURES_slack_notifications active
+cf set-env get-help-with-tech-prod FEATURES_rate_limiting active
 
 # To unset the var:
 cf unset-env (app name) (environment variable name)
 
 # For example:
-cf unset-env get-help-with-tech-prod FEATURES_slack_notifications
+cf unset-env get-help-with-tech-prod FEATURES_rate_limiting
 ```
 
 ## Operations

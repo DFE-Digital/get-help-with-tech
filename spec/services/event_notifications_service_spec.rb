@@ -1,36 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe EventNotificationsService do
-  let(:notifiable) { true }
   let(:event) do
-    instance_double(Event, notifiable?: notifiable, message: 'test message')
+    instance_double(Event, message: 'test message')
   end
 
   describe '.broadcast' do
     before do
       allow(EventNotificationsService).to receive(:log)
-      allow(EventNotificationsService).to receive(:send_slack_notification)
     end
 
     it 'logs the event' do
       EventNotificationsService.broadcast(event)
       expect(EventNotificationsService).to have_received(:log).with(event)
-    end
-
-    context 'when the event is notifiable' do
-      it 'sends a slack notification' do
-        EventNotificationsService.broadcast(event)
-        expect(EventNotificationsService).to have_received(:send_slack_notification).with(event)
-      end
-    end
-
-    context 'when the event is not notifiable' do
-      let(:notifiable) { false }
-
-      it 'does not send a slack notification' do
-        EventNotificationsService.broadcast(event)
-        expect(EventNotificationsService).not_to have_received(:send_slack_notification).with(event)
-      end
     end
   end
 

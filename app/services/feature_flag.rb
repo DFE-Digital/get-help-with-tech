@@ -1,7 +1,6 @@
 class FeatureFlag
   PERMANENT_SETTINGS = %i[
     rate_limiting
-    slack_notifications
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
