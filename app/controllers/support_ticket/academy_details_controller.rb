@@ -9,8 +9,8 @@ class SupportTicket::AcademyDetailsController < SupportTicket::BaseController
   def save
     if form.valid?
       session[:support_ticket].merge!({
-        academy_name: form.academy_name,
-        school_name: form.academy_name,
+        academy_name: form.academy_name.titleize,
+        school_name: form.academy_name.titleize,
         school_unique_id: '',
       })
       redirect_to next_step

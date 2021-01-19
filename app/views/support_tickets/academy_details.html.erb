@@ -17,7 +17,9 @@
         Which academy trust do you work for?
       </h1>
 
-      <%= f.govuk_text_field :academy_name, label: {text: 'Academy trust name', size: 's'} %>
+      <%= f.govuk_collection_select :academy_name, @form.multi_academy_trust_list, :name, :name,
+                                    label: {text: 'Academy trust name', size: 's'},
+                                    options: { include_blank: true }%>
 
       <%= f.govuk_submit 'Next' %>
     <% end %>
