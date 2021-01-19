@@ -31,6 +31,8 @@ class ExtraMobileDataRequest < ApplicationRecord
     problem_no_longer_on_network: 'problem_no_longer_on_network',
   }
 
+  scope :in_a_problem_state, -> { where('status like ?', 'problem%') }
+
   def self.problem_statuses
     statuses.keys.select { |k| k.start_with?('problem') }
   end
