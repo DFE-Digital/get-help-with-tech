@@ -8,18 +8,13 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-   <p class="govuk-body">Full support is only available when you use the <%= link_to_ed_settings_form %> to:</p>
+   <p class="govuk-body">All schools in England have been invited to order their allocation of laptops and tablets for pupils in years 3 to 11 who are most in need.</p> 
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>report a closure</li>
-      <li>tell us that more than 15 children are self-isolating</li>
-    </ul>
-
-    <p class="govuk-body">Partial support is available for specific circumstances.</p>
+   <p class="govuk-body">You may also be able to <%= govuk_link_to 'request mobile data increases or 4G wireless routers', internet_access_path(@school) %> for pupils who do not have a fixed broadband connection.</p>
 
     <h2 class="govuk-heading-m">Specific circumstances</h2>
 
-    <p class="govuk-body">You can get help immediately for disadvantaged children from any year group who:</p>
+    <p class="govuk-body">You can also request help for disadvantaged pupils from any year group who:</p>
     <%= render partial: 'shared/devices/who_to_request_for_list' %>
 
     <h2 class="govuk-heading-m">Help available</h2>
