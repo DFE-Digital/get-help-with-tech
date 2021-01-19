@@ -26,7 +26,7 @@ Teachers can:
 * develop structured file and folder storage for different users
 * use tools to support staff planning
 
-Using a digital education platform allows teachers, pupils and students to continue education if a school closes.
+Using a digital education platform allows teachers, pupils and students to continue education if a school or college closes.
 
 [The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/lead-your-approach/why-every-school-should-be-using-digital-education-platform/) has information on why you should make the move to a digital education platform, if you have not already. 
 

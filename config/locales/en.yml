@@ -233,7 +233,7 @@ en:
       audience: device_users
     preparing_chromebooks:
       title: Preparing Chromebooks
-      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts and schools.
+      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, further education providers and schools.
       audience: responsible_body_users
     getting_started_with_your_google_chromebook:
       title: Getting started with your Google Chromebook
