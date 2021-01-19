@@ -20,7 +20,6 @@ class ExtraMobileDataRequest < ApplicationRecord
   enum status: {
     requested: 'requested',
     in_progress: 'in_progress',
-    queried: 'queried',
     complete: 'complete',
     cancelled: 'cancelled',
     unavailable: 'unavailable',
@@ -114,7 +113,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def in_a_problem_state?
-    queried? || status.start_with?('problem')
+    status.start_with?('problem')
   end
 
 private
