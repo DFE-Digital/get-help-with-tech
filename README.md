@@ -102,11 +102,11 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 3. Run `make dev release` to build, push and deploy the Docker image to GOV.UK PaaS development instance
 4. Test on https://get-help-with-tech-dev.london.cloudapps.digital
 5. Run `make staging promote FROM=dev` to deploy the -dev image to staging
-7. Test on https://get-help-with-tech-staging.london.cloudapps.digital
+7. Test on https://staging-get-help-with-tech.education.gov.uk/
 8. Run `make prod promote FROM=staging` to deploy to production
-10. Test on https://get-help-with-tech-prod.london.cloudapps.digital
+10. Test on https://get-help-with-tech.education.gov.uk/
 
-The app should be available at https://get-help-with-tech-(dev|staging|prod).london.cloudapps.digital
+The app should be available at https://get-help-with-tech.education.gov.uk/
 
 ### If you need to rollback a release
 
