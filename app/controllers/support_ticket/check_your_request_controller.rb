@@ -2,7 +2,6 @@ class SupportTicket::CheckYourRequestController < SupportTicket::BaseController
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @support_ticket = session[:support_ticket]
     @form = form
     @school_details_path = school_details_path
     render 'support_tickets/check_your_request'
@@ -33,7 +32,7 @@ private
   end
 
   def school_details_path
-    case @support_ticket['user_type']
+    case @support_ticket.user_type
     when 'school_or_single_academy_trust'
       support_ticket_school_details_path
     when 'multi_academy_trust'
