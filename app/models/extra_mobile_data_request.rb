@@ -36,33 +36,6 @@ class ExtraMobileDataRequest < ApplicationRecord
     statuses.keys.select { |k| k.start_with?('problem') }
   end
 
-  # These codes were worked out by the NHSx team & the MNOs,
-  # during their previous work to support NHS workers.
-  # If/when we add file import back from the MNOs, we'll probably
-  # need to reference the numeric codes:
-  #
-  # code|problem
-  # ---|--------
-  # 001|incorrect_phone_number
-  # 002|no_match_for_number
-  # 003|no_match_for_account_name
-  # 006|not_eligible
-  # 007|no_longer_on_network
-  #
-  # The discontinuity from 003-006 is because codes 004 & 005
-  # are about mismatches on address / postcode, which we're not
-  # supplying
-  #
-  # Having said all that, we're actually storing the string keys
-  # for better comprehensibility
-  enum problem: {
-    incorrect_phone_number: 'incorrect_phone_number',
-    no_match_for_number: 'no_match_for_number',
-    no_match_for_account_name: 'no_match_for_account_name',
-    not_eligible: 'not_eligible',
-    no_longer_on_network: 'no_longer_on_network',
-  }
-
   enum contract_type: {
     pay_as_you_go_payg: 'pay_as_you_go_payg',
     pay_monthly: 'pay_monthly',
