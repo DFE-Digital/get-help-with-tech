@@ -37,7 +37,7 @@ RSpec.feature 'Submitting an extra mobile data request', type: :feature do
       click_on('Request extra data for mobile devices')
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
-      choose('Manually (entering details one at a time)')
+      choose('One at a time, using a form')
       click_on('Continue')
       expect(page).to have_text('Who needs the extra mobile data?')
     end
