@@ -17,12 +17,13 @@ private
 
   def mno_value
     description = [
-      "Requested: #{@school.extra_mobile_data_requests.requested.count}",
-      "In progress: #{@school.extra_mobile_data_requests.in_progress.count}",
+      "New: #{@school.extra_mobile_data_requests.new_status.count}",
+      "Requested: #{@school.extra_mobile_data_requests.requested_status.count}",
+      "In progress: #{@school.extra_mobile_data_requests.in_progress_status.count}",
       "With a problem: #{@school.extra_mobile_data_requests.in_a_problem_state.count}",
-      "Complete: #{@school.extra_mobile_data_requests.complete.count}",
-      "Cancelled: #{@school.extra_mobile_data_requests.cancelled.count}",
-      "Unavailable: #{@school.extra_mobile_data_requests.unavailable.count}",
+      "Complete: #{@school.extra_mobile_data_requests.complete_status.count}",
+      "Cancelled: #{@school.extra_mobile_data_requests.cancelled_status.count}",
+      "Unavailable: #{@school.extra_mobile_data_requests.unavailable_status.count}",
     ].join('<br>').html_safe
 
     govuk_details(summary: pluralize(@school.extra_mobile_data_requests.count, 'request'), description: description, classes: 'app-details-in-summary-list')

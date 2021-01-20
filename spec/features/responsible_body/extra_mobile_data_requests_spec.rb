@@ -43,7 +43,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
     before do
       @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: rb_user)
-      @requests.last.unavailable!
+      @requests.last.unavailable_status!
     end
 
     scenario 'the user can see their previous requests' do

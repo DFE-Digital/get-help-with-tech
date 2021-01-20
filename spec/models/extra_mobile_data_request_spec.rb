@@ -176,9 +176,9 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
         }.to change { ExtraMobileDataRequest.count }.by(1)
       end
 
-      it 'does not change the status from requested' do
+      it 'does not change the status from new' do
         request.save_and_notify_account_holder!
-        expect(request.requested?).to be true
+        expect(request.new_status?).to be true
       end
 
       it 'enqueues a job to message the account holder' do
@@ -200,7 +200,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
       it 'changes the status to unavailable' do
         request.save_and_notify_account_holder!
-        expect(request.unavailable?).to be true
+        expect(request.unavailable_status?).to be true
       end
 
       it 'enqueues a job to message the account holder' do

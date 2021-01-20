@@ -39,7 +39,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
 
     before do
       @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: user, school: school)
-      @requests.last.unavailable!
+      @requests.last.unavailable_status!
     end
 
     scenario 'the user can navigate to their previous requests from the home page' do
