@@ -10,7 +10,7 @@ private
 
   def mno_row
     {
-      key: 'Extra mobile data requests',
+      key: 'Mobile data requests',
       value: mno_value,
     }
   end
