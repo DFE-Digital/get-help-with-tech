@@ -12,7 +12,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['requested'] || 0,
+                 count: (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['requested'] || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_responsible_bodies)['new'] || 0),
                  label: 'new',
                  size: :reduced) %>
   </div>
@@ -74,7 +74,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['requested'] || 0,
+                 count: (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['requested'] || 0) + (@stats.extra_mobile_data_requests_by_status(scope: ExtraMobileDataRequest.from_schools)['new'] || 0),
                  label: 'new',
                  size: :reduced) %>
   </div>

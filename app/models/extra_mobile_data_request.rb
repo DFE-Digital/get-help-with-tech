@@ -18,6 +18,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   validate :validate_school_or_rb_present
 
   enum status: {
+    new: 'new',
     requested: 'requested',
     in_progress: 'in_progress',
     complete: 'complete',
@@ -28,7 +29,7 @@ class ExtraMobileDataRequest < ApplicationRecord
     problem_incorrect_phone_number: 'problem_incorrect_phone_number',
     problem_no_match_for_account_name: 'problem_no_match_for_account_name',
     problem_no_longer_on_network: 'problem_no_longer_on_network',
-  }
+  }, _suffix: true
 
   scope :in_a_problem_state, -> { where('status like ?', 'problem%') }
 
@@ -37,7 +38,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def self.statuses_available_to_mnos
-    statuses.keys - %w[cancelled unavailable]
+    statuses.keys - %w[cancelled unavailable requested]
   end
 
   enum contract_type: {
@@ -86,7 +87,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def in_end_state?
-    complete? || cancelled?
+    complete_status? || cancelled_status?
   end
 
   def in_a_problem_state?
@@ -105,10 +106,10 @@ private
   def update_status_from_mobile_network_participation
     participating = mobile_network.participating?
 
-    if requested? && !participating
+    if (requested_status? || new_status?) && !participating
       self.status = 'unavailable'
-    elsif unavailable? && participating
-      self.status = 'requested'
+    elsif (requested_status? || new_status?) && participating
+      self.status = 'new'
     end
   end
 
@@ -121,6 +122,6 @@ private
   end
 
   def set_defaults
-    self.status ||= :requested if new_record?
+    self.status ||= :new if new_record?
   end
 end

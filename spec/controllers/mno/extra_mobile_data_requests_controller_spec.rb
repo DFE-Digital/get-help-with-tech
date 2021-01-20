@@ -18,7 +18,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       get :index
 
       expect(assigns(:statuses).map(&:value)).to contain_exactly(
-        'requested',
+        'new',
         'in_progress',
         'complete',
         'problem_no_longer_on_network',

@@ -490,6 +490,10 @@ en:
           revoked: Revoked
       extra_mobile_data_request:
          status:
+           new:
+             tag_label: Requested
+             dropdown_label: Requested
+             description: Request not processed yet
            requested:
              tag_label: Requested
              dropdown_label: Requested
