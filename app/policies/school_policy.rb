@@ -13,6 +13,7 @@ class SchoolPolicy < SupportPolicy
   alias_method :results?, :readable?
   alias_method :invite?, :editable?
   alias_method :confirm_invitation?, :editable?
+  alias_method :history?, :editable?
 
   def update_computacenter_reference?
     user.is_computacenter?

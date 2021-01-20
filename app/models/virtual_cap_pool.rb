@@ -3,6 +3,8 @@ class VirtualCapPool < ApplicationRecord
   include DeviceType
   include DeviceCount
 
+  has_paper_trail
+
   belongs_to :responsible_body
   has_many :school_virtual_caps, dependent: :destroy
   has_many :school_device_allocations, through: :school_virtual_caps
