@@ -2,24 +2,28 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 1 } %>
 
-    <p class="govuk-body">This guide is for anyone who needs to explain the Department for Education’s pilot offer to increase mobile data allowances for children and young people.</p>
+    <p class="govuk-body">This guide is for anyone who needs to use the Department for Education’s service to request a mobile data increase for disadvantaged children and young people.</p>
 
     <p class="govuk-body">It helps you tell people what’s available and collect the information you need to submit.</p>
 
     <h3 class="govuk-heading-m" id="who-can-get-help">Who can get help</h3>
 
     <p class="govuk-body">
-      This scheme is open to children and young people who:
+      This scheme is open to children and young people in years 3 to 11 who:
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <%= render partial: 'shared/eligibility_points_across_bt_wifi_and_mno_offers' %>
       <li>have access to a mobile device that uses a participating network</li>
-      <li>are facing disruption to their face-to-face education, or have been advised not to attend school</li>
+      <li>are facing disruption to their face-to-face education</li>
     </ul>
+    
+    <p class="govuk-body">
+      If your request does not meet all of these criteria, you may be able to <%= govuk_link_to 'request a 4G wireless router', how_to_request_4g_wireless_routers_path %> instead. Find out more about <%= govuk_link_to 'choosing help with internet access', choosing_help_with_internet_access_path %>.
+    </p>
 
     <h3 class="govuk-heading-m" id="what-information-youll-need-to-collect">What information you’ll need to collect</h3>
 
-    <p class="govuk-body">To request extra mobile data, you will need to collect the following information:</p>
+    <p class="govuk-body">If you’re confident that a child meets all of the criteria listed above, you’ll need to collect the following information to request extra data for them:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>the account holder’s name</li>

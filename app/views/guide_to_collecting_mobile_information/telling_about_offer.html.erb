@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 3 } %>
 
-    <p class="govuk-body">What data someone will get depends on their mobile network. Some networks can’t offer data to Pay-as-you-go (PAYG) customers.</p>
+    <p class="govuk-body">What data someone will get depends on their mobile network. Some networks cannot offer data to Pay-as-you-go (PAYG) customers.</p>
 
     <p class="govuk-body">You should tell them:</p>
 
@@ -13,6 +13,8 @@
       <li>when their free data will end</li>
       <li>that this data can be used when tethering a mobile phone to another device for internet access</li>
     </ul>
+    
+     <p class="govuk-body">Offers are dependent on children and young people meeting all of the criteria <%= govuk_link_to 'listed in our guidance', guide_to_collecting_mobile_information_path %>. Requests will be unsuccessful if these criteria are not met.</p>
 
     <h3 class="govuk-heading-m" id="network-offers">Network offers</h3>
 
@@ -20,8 +22,9 @@
       <%= component.slot(:section, title: 'EE') do %>
         <p class="govuk-body">Be aware that until the end of January, it may take EE some time to process requests.</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get 20GB of additional data per month until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>The recipient will get unlimited data per month until 31 July 2021.</li>
+          <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
+          <li>The recipient must have been an EE customer for at least 3 months.</li>
           <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
         </ul>
       <% end %>
@@ -30,7 +33,8 @@
         <p class="govuk-body">Be aware that until the end of January, it may take O2 some time to process requests.</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>The recipient will get 40GB of additional data per month until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and Pay As You Go customers.</li>
+          <li>The offer is available to both Pay Monthly and active Pay As You Go customers.</li>
+          <li>The recipient must have been an O2 customer for at least 6 months.</li>
           <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
         </ul>
       <% end %>
@@ -47,7 +51,7 @@
       <%= component.slot(:section, title: 'SMARTY') do %>
         <ul class="govuk-list govuk-list--bullet">
           <li>The recipient will get unlimited data until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
           <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
           <li>SMARTY will aim to process the request within 14 days.</li>
         </ul>
@@ -65,7 +69,7 @@
       <%= component.slot(:section, title: 'Three') do %>
         <ul class="govuk-list govuk-list--bullet">
           <li>The recipient will get unlimited data until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and Pay-as-you-go customers.</li>
+          <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
           <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
           <li>Three will aim to process the request within 14 days.</li>
         </ul>
@@ -85,7 +89,7 @@
         <p class="govuk-body">Be aware that until the end of January, it may take Vodafone some time to process requests.</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>The recipient will get unlimited data until 31 July 2021.</li>
-          <li>The offer is available to both Pay monthly and Pay as you go customers. Pay as you go customers must have a Big Value Bundle worth £10 or above to be eligible.</li>
+          <li>The offer is available to both Pay monthly and active Pay as you go customers. Pay as you go customers must have a Big Value Bundle worth £10 or above to be eligible.</li>
           <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
         </ul>
       <% end %>

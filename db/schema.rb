@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_15_140815) do
+ActiveRecord::Schema.define(version: 2021_01_19_173825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,7 +143,6 @@ ActiveRecord::Schema.define(version: 2021_01_15_140815) do
     t.string "status", null: false
     t.integer "created_by_user_id"
     t.boolean "agrees_with_privacy_statement"
-    t.string "problem"
     t.integer "responsible_body_id"
     t.string "contract_type"
     t.bigint "school_id"

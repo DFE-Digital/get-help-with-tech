@@ -19,7 +19,7 @@ private
     description = [
       "Requested: #{@school.extra_mobile_data_requests.requested.count}",
       "In progress: #{@school.extra_mobile_data_requests.in_progress.count}",
-      "Queried: #{@school.extra_mobile_data_requests.queried.count}",
+      "With a problem: #{@school.extra_mobile_data_requests.in_a_problem_state.count}",
       "Complete: #{@school.extra_mobile_data_requests.complete.count}",
       "Cancelled: #{@school.extra_mobile_data_requests.cancelled.count}",
       "Unavailable: #{@school.extra_mobile_data_requests.unavailable.count}",
