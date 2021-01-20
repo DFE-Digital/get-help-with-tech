@@ -31,7 +31,7 @@ class Mno::CsvStatusUpdateSummary
   end
 
   def add_updated_record(extra_mobile_data_request)
-    @updated << presenter(extra_mobile_data_request)
+    @updated << extra_mobile_data_request
   end
 
   def requests_count
@@ -72,11 +72,5 @@ class Mno::CsvStatusUpdateSummary
 
   def updated_section_heading_text
     "#{updated_count} #{'request'.pluralize(updated_count)} updated"
-  end
-
-private
-
-  def presenter(extra_mobile_data_request)
-    ExtraMobileDataRequestPresenter.new(extra_mobile_data_request)
   end
 end
