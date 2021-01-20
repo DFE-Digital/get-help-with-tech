@@ -33,7 +33,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school type' do
-      expect(value_for_row(result, 'Type of school').text).to include('Primary school')
+      expect(value_for_row(result, 'Setting').text).to include('Primary school')
     end
 
     it 'renders the school details' do

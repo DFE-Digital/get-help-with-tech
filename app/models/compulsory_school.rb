@@ -4,4 +4,8 @@ class CompulsorySchool < School
   def to_param
     urn.to_s
   end
+
+  def institution_type
+    'school'
+  end
 end

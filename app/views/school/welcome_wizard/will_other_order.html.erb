@@ -13,11 +13,7 @@
         <%= title %>
       </h1>
 
-      <p class="govuk-body">Invite someone in your school who:</p>
-      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-        <li>understands what devices are needed and who will get them</li>
-        <li>can configure devices or give technical information</li>
-      </ul>
+      <%= render partial: 'shared/invite_someone_who_can' %>
 
       <%= f.govuk_error_summary %>
 

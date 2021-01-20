@@ -37,11 +37,17 @@ You need to sign in to the <a class="govuk-link" href="/start">Get help with tec
           
 If you’re not sure how to find this information, you should ask your IT support for help.
 
+For future orders, 'Standard' Microsoft devices can be supplied with factory settings to allow schools, colleges, further education providers, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to select 'DfE Restricted' devices which will be set up with content filtering and MDM software before delivery.
+
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. [Find out more about Cisco Umbrella](/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
 If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education.</a>
   
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
+
+For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set up devices.
+
+If an education platform is not currently in use, schools, colleges, local authorities and academy trusts can [apply for DfE-funded support](/digital-platforms) to get and set up G Suite for Education or Office 365 Education.
 
 [Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
 
@@ -61,7 +67,6 @@ Read more information about <a class="govuk-link" href="/devices/preparing-ipads
 
 [Find the technical specifications for Apple iPads](#minimum-specifications) in the table below.
 
-
 ## Minimum specifications
 
 <table class="govuk-table">
@@ -71,8 +76,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-ipads
       <th scope="col" class="govuk-table__header">Microsoft Windows laptop</th>
       <th scope="col" class="govuk-table__header">Google Chromebook</th>
       <th scope="col" class="govuk-table__header">Microsoft Windows tablet</th>
-            <th scope="col" class="govuk-table__header">Apple iPad</th>
-
+      <th scope="col" class="govuk-table__header">Apple iPad</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -89,8 +93,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-ipads
       <td class="govuk-table__cell">Minimum 11&rdquo; screen</td>
       <td class="govuk-table__cell">Minimum 11&rdquo; touch screen</td>
       <td class="govuk-table__cell">10.2&rdquo; multi-touch screen</td>
-
-</tr>
+    </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Resolution</th>
       <td class="govuk-table__cell">HD (or better)</td>
@@ -173,7 +176,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-ipads
       <td class="govuk-table__cell">Windows 10 Pro Education</td>
       <td class="govuk-table__cell">Chrome OS</td>
       <td class="govuk-table__cell">Windows 10 Pro</td>
-        <td class="govuk-table__cell">iPad OS</td>
+      <td class="govuk-table__cell">iPad OS</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Bluetooth</th>
@@ -187,14 +190,14 @@ Read more information about <a class="govuk-link" href="/devices/preparing-ipads
       <td class="govuk-table__cell">Yes</td>
       <td class="govuk-table__cell">Yes</td>
       <td class="govuk-table__cell">Yes</td>
-        <td class="govuk-table__cell"> </td>
+      <td class="govuk-table__cell"> </td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Security</th>
       <td class="govuk-table__cell">TPM 2.0</td>
       <td class="govuk-table__cell">Google Security Chip H1</td>
       <td class="govuk-table__cell">TPM 2.0</td>
-        <td class="govuk-table__cell"> </td>
+      <td class="govuk-table__cell"> </td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Weight</th>

@@ -8,4 +8,38 @@ RSpec.describe FurtherEducationSchool do
       expect(model.urn).to be(123)
     end
   end
+
+  describe '#institution_type' do
+    context 'fe_type is sixth_form_college' do
+      subject(:model) { described_class.new(fe_type: 'sixth_form_college') }
+
+      it 'returns college' do
+        expect(model.institution_type).to eql('college')
+      end
+    end
+
+    context 'fe_type is agricultural_and_horticultural_college' do
+      subject(:model) { described_class.new(fe_type: 'agricultural_and_horticultural_college') }
+
+      it 'returns college' do
+        expect(model.institution_type).to eql('college')
+      end
+    end
+
+    context 'fe_type is special_post_16_institution' do
+      subject(:model) { described_class.new(fe_type: 'special_post_16_institution') }
+
+      it 'returns institution' do
+        expect(model.institution_type).to eql('institution')
+      end
+    end
+
+    context 'fe_type is something else' do
+      subject(:model) { described_class.new(fe_type: '???') }
+
+      it 'returns organisation' do
+        expect(model.institution_type).to eql('organisation')
+      end
+    end
+  end
 end

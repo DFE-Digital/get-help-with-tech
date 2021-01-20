@@ -10,16 +10,22 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
-    <p class="govuk-body">Only order devices for children who cannot attend school and do not have access to a laptop or tablet.</p>
+    <h2 class="govuk-heading-m">How to order</h2>
+
+    <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
+
     <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
+
     <% if @school&.std_device_allocation&.available_devices_count > 149 %>
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
-    <p class="govuk-body">Ordering will close when the school reopens.</p>
 
-    <h2 class="govuk-heading-m">Before you start</h2>
-    <p class="govuk-body">It’s important to know how many devices you can order before you sign in. Please order only what you need. If you try to order more than you’ve been allocated, the order will be cancelled.</p>
+    <p class="govuk-body">
+      If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
+    </p>
 
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address } %>
+    <p class="govuk-body">Order your devices now. Do not delay.</p>
+
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
   </div>
 </div>

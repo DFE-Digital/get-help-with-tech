@@ -11,20 +11,20 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <h2 class="govuk-heading-m">Decide if schools can order their own devices</h2>
+    <h2 class="govuk-heading-m">Decide if schools and colleges can order their own devices</h2>
 
-    <p class="govuk-body">You can allow schools to order their own devices. Or you can manage some, or all, orders centrally.</p>
+    <p class="govuk-body">You can allow schools and colleges to order their own devices. Or you can manage some, or all, orders centrally.</p>
 
     <% if @responsible_body.is_a_trust? %>
-      <p class="govuk-body">If you let schools place orders you’ll need to nominate someone in each school for us to contact.</p>
+      <p class="govuk-body">If you let schools and colleges place orders you’ll need to nominate someone in each school or college for us to contact.</p>
       <p class="govuk-body">Each contact will be able to:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>manage who can order devices</li>
         <li>order devices themselves</li>
       </ul>
     <% else %>
-      <p class="govuk-body">We recommend letting schools place orders because it’s the quickest way to get help to those who need it.</p>
-      <p class="govuk-body">You’ll need to nominate someone in each school for us to contact.</p>
+      <p class="govuk-body">We recommend letting schools and colleges place orders because it’s the quickest way to get help to those who need it.</p>
+      <p class="govuk-body">You’ll need to nominate someone in each school or college for us to contact.</p>
 
       <p class="govuk-body">Each contact will be able to:</p>
       <ul class="govuk-list govuk-list--bullet">
@@ -32,24 +32,22 @@
         <li>order devices themselves</li>
       </ul>
 
-      <h2 class="govuk-heading-m">Help schools prepare for disruption</h2>
-
-      <p class="govuk-body">Give us contact details as soon as you can so we can help schools prepare to deliver remote education if they need to.</p>
     <% end %>
 
-    <h2 class="govuk-heading-m">Each school has their own allocation</h2>
+    <% unless FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
+      <h2 class="govuk-heading-m">Help schools and colleges prepare for disruption</h2>
 
-    <p class="govuk-body">Every school has its own allocation of laptops and tablets. Allocations are based on free school meal data and estimates of how many devices a school has already received.</p>
+      <p class="govuk-body">Give us contact details as soon as you can so we can help schools and colleges prepare to deliver remote education if they need to.</p>
 
-    <p class="govuk-body">Numbers will be reassessed at the time of ordering based on availability and the extent of coronavirus restrictions.</p>
+      <h2 class="govuk-heading-m">Each school and college has their own allocation</h2>
 
-    <h2 class="govuk-heading-m">A school’s full allocation can only be ordered when a closure is reported</h2>
+      <p class="govuk-body">Every school and college has its own allocation of laptops and tablets. Allocations are based on free meal data and estimates of how many devices the school or college has already received.</p>
 
-    <p class="govuk-body">We’ll contact people as soon as they’re able to place orders.</p>
+      <h2 class="govuk-heading-m">A school’s full allocation can only be ordered when a closure is reported</h2>
 
-    <p class="govuk-body">Schools can get devices earlier for specific circumstances. They can request devices at any time for disadvantaged children from any year group who:</p>
+      <p class="govuk-body">We’ll contact people as soon as they’re able to place orders.</p>
 
-    <%= render partial: 'shared/devices/who_to_request_for_list' %>
+    <% end %>
 
     <div class="govuk-!-margin-top-6">
       <%= govuk_button_link_to 'Continue', responsible_body_devices_who_will_order_edit_path %>

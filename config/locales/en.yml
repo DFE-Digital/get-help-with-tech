@@ -28,7 +28,7 @@ en:
         order_devices: Order devices now
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
-    responsible_body_devices_tell_us: Tell us who will order a school’s laptops and tablets
+    responsible_body_devices_tell_us: Tell us who will order laptops and tablets
     responsible_body_devices_request_devices: Request devices for specific circumstances
     responsible_body_internet_home: Get internet access
     responsible_body_users_index: Manage %{rb_type} users
@@ -36,7 +36,7 @@ en:
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
-    responsible_body_schools_list: Your schools
+    responsible_body_schools_list: Your schools and colleges
     requests_for_extra_mobile_data: Requests for extra mobile data
     suggested_email_to_schools: A suggested email for you to send to schools
     request_extra_mobile_data: Request extra data for mobile devices
@@ -105,7 +105,7 @@ en:
       multi_domain_chromebooks: Responsible bodies managing multiple Chromebook domains
     who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
-      schools: Each school will place their own orders
+      schools: Each school or college will place their own orders
       responsible_body: Orders will be placed centrally
     request_a_change: Contact our support team to request this change
     change_who_will_order: Who will place orders for laptops and tablets?
@@ -139,11 +139,11 @@ en:
           show:
             title: Get internet access
     school_order_devices: Order devices
-    school_order_devices_soon: Order devices soon
+    school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_request_devices: Request devices for specific circumstances
     school_specific_circumstances: Get help for specific circumstances
-    school_details: Check your school details
-    school_edit_chromebooks: Will your school need to order Chromebooks?
+    school_details: Check your organisation’s details
+    school_edit_chromebooks: Will you need to order Chromebooks?
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
     order_devices:
@@ -182,12 +182,12 @@ en:
       devices_you_can_order:
         title: You can order a range of laptops and tablets
       chromebooks:
-        title: Will your school’s order include Chromebooks?
+        title: Will you order Chromebooks?
         'yes': Yes, we will need Chromebooks
         'no': No, we do not need Chromebooks
         i_dont_know: I don’t know
         errors:
-          choice: Tell us whether your school will need Chromebooks
+          choice: Tell us whether you will need Chromebooks
       what_happens_next:
         title: What happens next
     techsource_unavailable: Sorry, TechSource is unavailable
@@ -212,11 +212,11 @@ en:
       audience: responsible_body_users
     device_allocations:
       title: Device allocations
-      description: Find out how we estimated device requirements for each school and how to query an allocation.
+      description: Find out how we estimated device requirements and how to query an allocation.
       audience: responsible_body_users
     how_to_order:
       title: How and when to order laptops and tablets
-      description: Prepare to order laptops and tablets for disadvantaged children in certain year groups when schools are affected by disruption to face-to-face education due to coronavirus.
+      description: How to order laptops and tablets for disadvantaged children and young people during the pandemic.
       audience: responsible_body_users
     device_specification:
       title: Device options and specifications
@@ -226,13 +226,14 @@ en:
       title: Preparing Microsoft Windows laptops and tablets
       description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
       audience: responsible_body_users
+      family_guidance: hello world
     getting_started_with_your_microsoft_windows_device:
       title: Getting started with your Microsoft Windows device
       description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
       audience: device_users
     preparing_chromebooks:
       title: Preparing Chromebooks
-      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts and schools.
+      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, further education providers and schools.
       audience: responsible_body_users
     getting_started_with_your_google_chromebook:
       title: Getting started with your Google Chromebook
@@ -596,16 +597,16 @@ en:
       time_only_with_zone: "%l:%M%P %Z"
   responsible_body:
     devices:
-      delivery_timeline: Most devices will be delivered to schools within 5 working days of an order being confirmed, subject to stock availability.
+      delivery_timeline: Most devices will be delivered within 5 working days of an order being confirmed, subject to stock availability.
       who_will_order:
         update:
           success: We’ve saved your choice
       schools:
         index:
-          ordering_schools_heading: Schools that can order
-          specific_circumstances_heading: Schools with approved requests for specific circumstances
-          cannot_order_yet_schools_heading: Schools that cannot order yet
-          cannot_order_yet_schools_text: Ordering will be opened for these schools as soon as possible.
+          ordering_schools_heading: Schools and colleges that can order
+          specific_circumstances_heading: Schools and colleges with approved requests for specific circumstances
+          cannot_order_yet_schools_heading: Schools and colleges that cannot order yet
+          cannot_order_yet_schools_text: Ordering will be opened for these schools and colleges as soon as possible.
         who_to_contact:
           create:
             failure: "Saved. We will email %{email_address} shortly"

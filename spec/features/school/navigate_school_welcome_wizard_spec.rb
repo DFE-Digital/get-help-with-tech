@@ -213,13 +213,13 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_im_asked_whether_my_school_will_order_chromebooks
     expect(page).to have_current_path(welcome_wizard_chromebooks_school_path(urn: @user.school.urn))
-    expect(page).to have_text('Will your school’s order include Chromebooks?')
+    expect(page).to have_text('Will the school need Chromebooks?')
   end
 
   def when_i_choose_yes_and_submit_the_chromebooks_form
     choose 'Yes, we will need Chromebooks'
     within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
-      fill_in "School or #{school.responsible_body.humanized_type} domain", with: 'example.com'
+      fill_in "School, #{school.responsible_body.humanized_type} or college domain registered for G Suite for Education", with: 'example.com'
       fill_in 'Recovery email address', with: 'admin@trust.com'
     end
     click_on 'Continue'
