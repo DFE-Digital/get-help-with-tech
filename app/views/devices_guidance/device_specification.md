@@ -37,17 +37,11 @@ You need to sign in to the <a class="govuk-link" href="/start">Get help with tec
           
 If you’re not sure how to find this information, you should ask your IT support for help.
 
-For future orders, 'Standard' Microsoft devices can be supplied with factory settings to allow schools, colleges, further education providers, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to select 'DfE Restricted' devices which will be set up with content filtering and MDM software before delivery.
-
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. [Find out more about Cisco Umbrella](/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
 If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education.</a>
   
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
-
-For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set up devices.
-
-If an education platform is not currently in use, schools, colleges, local authorities and academy trusts can [apply for DfE-funded support](/digital-platforms) to get and set up G Suite for Education or Office 365 Education.
 
 [Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
 
