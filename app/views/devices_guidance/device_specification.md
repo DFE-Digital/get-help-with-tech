@@ -1,21 +1,66 @@
-When [placing an order](/start), schools, academy trusts and local authorities can choose (depending on availability) from:
+When [placing an order](/start), schools, colleges, further education providers, academy trusts and local authorities (LAs) can choose (depending on availability) from:
 
 * Microsoft Windows laptops
 * Microsoft Windows tablets (with or without keyboards)
 * Google Chromebooks
 * Apple iPads
 
-Read our [4G wireless router guidance](/devices/preparing-4g-wireless-routers) for information on internet connectivity devices and data limits.
+You can find out if any types of device are temporarily out of stock by signing in to the [Get help with technology service](/start). The information is also available on the TechSource ordering website.
 
-All devices provided before September 2020 were delivered with [safeguarding and mobile device management (MDM) software](/devices/safeguarding-for-device-users) installed.
+We may need some technical information from you before you can order, so we recommend choosing the types of devices and settings you want before you’re invited to order.
 
-For future orders, 'Standard' Microsoft devices can be supplied with factory settings to allow schools, academy trusts and local authorities to apply their own management software. Alternatively, there’s an option to select 'DfE Restricted' devices which will be set up with content filtering and MDM software before delivery.
+## Microsoft Windows laptops and tablets
+          
+When you order you’ll be asked whether or not you want to have DfE settings installed.
+        
+#### Not having DfE settings installed
 
-Find out more about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets).
+These ‘DfE Standard’ devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
-For Google and Apple devices, we need the credentials described in the [order process guidance](/devices/how-to-order) to allow us to set devices up for a school.
+#### DfE settings installed
+                
+These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. Our guidance explains <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed">when these DfE restrictions will expire</a> and when your school, trust or LA will need to apply your own security settings.
 
-If an education platform is not currently in use, schools, local authorities and academy trusts can [apply for DfE-funded support](/digital-platforms) to get and set up G Suite for Education or Office 365 Education.
+Read more information about <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets">preparing Microsoft devices</a> for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
+
+All devices provided before September 2020 were delivered with safeguarding and mobile device management (MDM) software installed. You can <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed">find out when that software expires</a> in our guidance.
+
+[Find the technical specifications for Microsoft Windows laptops and tablets](#minimum-specifications) in the table below.
+
+     
+## Google Chromebooks
+
+You need to sign in to the <a class="govuk-link" href="/start">Get help with technology service</a> and provide the following information before you can order Google Chromebooks:
+         
+* the school’s Google domain for G Suite for Education
+* a recovery email address, which must be on a different domain to the school domain
+          
+If you’re not sure how to find this information, you should ask your IT support for help.
+
+A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. [Find out more about Cisco Umbrella](/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
+
+If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education.</a>
+  
+Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
+
+[Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
+
+## Apple iPads
+        
+During the ordering process, we’ll ask for your Apple School Manager (ASM) Organisation ID. We recommend you find this ID in advance to avoid any delay in ordering.
+
+It’s a 7 to 8 digit number that can be found by following these steps:
+
+1. Visit <a href="https://school.apple.com" class="govuk-link">https://school.apple.com</a> to sign in to Apple School Manager
+2. Click on ‘Settings’ in the bottom left-hand corner
+3. Click on ‘Enrolment Information’ in the ‘Institution Settings’ section. The Organisation ID (also known as an Apple School Manager ID) will be in the right-hand pane.
+
+If you have any problems finding this information, you should ask your IT support for help.
+
+Read more information about <a class="govuk-link" href="/devices/preparing-ipads">preparing Apple iPads for pupils</a>.
+
+[Find the technical specifications for Apple iPads](#minimum-specifications) in the table below.
+
 
 ## Minimum specifications
 
@@ -174,3 +219,7 @@ If an education platform is not currently in use, schools, local authorities and
     </tr>
   </tbody>
 </table>
+
+## 4G wireless routers
+
+Read our [4G wireless router guidance](/devices/preparing-4g-wireless-routers) for information on internet connectivity devices and data limits.
