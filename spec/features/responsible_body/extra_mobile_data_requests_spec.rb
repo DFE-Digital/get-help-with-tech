@@ -52,10 +52,15 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
       expect(page).to have_css('h1', text: 'Your requests')
 
       @requests.each do |request|
-        expect(page).to have_content(request.device_phone_number)
-        expect(page).to have_content(request.account_holder_name)
+        request_row = page.find("tr#request-#{request.id}")
+        expect(request_row).not_to be_nil
+        expect(request_row).to have_content(request.device_phone_number)
+        expect(request_row).to have_content(request.account_holder_name)
+        # govuk_date_and_time pads 12hr times which have single-digit hours with a leading space
+        # but Capybara's content methods treat multiple whitespace characters as one, like the browser does
+        expect(request_row).to have_content(request.created_at.to_s(:govuk_date_and_time).gsub(/  /, ' '))
       end
-      expect(page).to have_text('Requested').exactly(4).times
+      expect(page).to have_text('Requested').exactly(5).times
       expect(page).to have_text('Unavailable').once
     end
 

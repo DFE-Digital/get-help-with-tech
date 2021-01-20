@@ -2,7 +2,7 @@ class ResponsibleBody::Internet::Mobile::ExtraDataRequestsController < Responsib
   before_action { render_404_unless_responsible_body_has_centrally_managed_schools(@responsible_body) }
 
   def index
-    @extra_mobile_data_requests = @responsible_body.extra_mobile_data_requests
+    @extra_mobile_data_requests = @responsible_body.extra_mobile_data_requests.order(:created_at)
   end
 
   def guidance; end
