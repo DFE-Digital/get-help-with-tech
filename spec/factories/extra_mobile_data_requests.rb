@@ -3,7 +3,7 @@ FactoryBot.define do
     account_holder_name               { Faker::Name.name }
     device_phone_number               { '07123 456789' }
     agrees_with_privacy_statement     { true }
-    status                            { :requested }
+    status                            { :new }
     contract_type                     { :pay_as_you_go_payg }
     responsible_body                  { created_by_user&.responsible_body }
     association :mobile_network

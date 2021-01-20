@@ -18,7 +18,6 @@ private
   def mno_value
     description = [
       "New: #{@school.extra_mobile_data_requests.new_status.count}",
-      "Requested: #{@school.extra_mobile_data_requests.requested_status.count}",
       "In progress: #{@school.extra_mobile_data_requests.in_progress_status.count}",
       "With a problem: #{@school.extra_mobile_data_requests.in_a_problem_state.count}",
       "Complete: #{@school.extra_mobile_data_requests.complete_status.count}",

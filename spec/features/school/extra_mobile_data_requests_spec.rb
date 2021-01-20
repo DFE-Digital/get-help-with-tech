@@ -38,7 +38,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     let(:another_user_from_the_same_school) { create(:school_user, school: school) }
 
     before do
-      @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: user, school: school)
+      @requests = create_list(:extra_mobile_data_request, 5, status: 'new', created_by_user: user, school: school)
       @requests.last.unavailable_status!
     end
 

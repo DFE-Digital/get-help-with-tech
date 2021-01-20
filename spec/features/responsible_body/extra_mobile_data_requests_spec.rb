@@ -42,7 +42,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     let(:another_user_from_the_same_rb) { create(:user, responsible_body: responsible_body) }
 
     before do
-      @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: rb_user)
+      @requests = create_list(:extra_mobile_data_request, 5, status: 'new', created_by_user: rb_user)
       @requests.last.unavailable_status!
     end
 
