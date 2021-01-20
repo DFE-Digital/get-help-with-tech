@@ -343,7 +343,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def and_that_the_school_orders_devices
     expect(responsible_body_school_page.school_details).to have_content('Needs a contact')
-    expect(responsible_body_school_page.school_details).to have_content('The school orders devices')
+    expect(responsible_body_school_page.school_details).to have_content('The school or college orders devices')
   end
 
   def and_that_the_local_authority_orders_devices

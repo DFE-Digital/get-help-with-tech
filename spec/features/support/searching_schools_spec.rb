@@ -69,7 +69,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
 
   def when_i_follow_the_links_to_find_schools
     click_link 'Find and manage schools'
-    click_link 'Find schools'
+    click_link 'Find organisations'
   end
 
   def then_i_see_the_schools_search_page
@@ -100,11 +100,11 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   end
 
   def and_i_see_summary_count_string
-    expect(page).to have_content('2 schools found')
+    expect(page).to have_content('2 organisations found')
   end
 
   def and_i_see_one_error
-    expect(page).to have_content('No schools found for 1 identifier:')
+    expect(page).to have_content('No organisations found for 1 identifier:')
   end
 
   def and_i_see_results_with_schools(count)

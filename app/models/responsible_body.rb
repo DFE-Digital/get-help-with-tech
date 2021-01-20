@@ -86,7 +86,7 @@ class ResponsibleBody < ApplicationRecord
   def who_will_order_devices_label
     case who_will_order_devices
     when 'school'
-      'School'
+      'School or college'
     when 'responsible_body'
       humanized_type.capitalize
     end
