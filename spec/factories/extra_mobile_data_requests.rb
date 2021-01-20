@@ -4,7 +4,6 @@ FactoryBot.define do
     device_phone_number               { '07123 456789' }
     agrees_with_privacy_statement     { true }
     status                            { :requested }
-    problem                           { nil }
     contract_type                     { :pay_as_you_go_payg }
     responsible_body                  { created_by_user&.responsible_body }
     association :mobile_network

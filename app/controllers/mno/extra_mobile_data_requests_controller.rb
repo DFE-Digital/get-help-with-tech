@@ -15,7 +15,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
         )
         @statuses = ExtraMobileDataRequest
           .translated_enum_values(:statuses)
-          .reject { |status| status.value.in?(%w[queried cancelled unavailable]) }
+          .reject { |status| status.value.in?(%w[cancelled unavailable]) }
       end
     end
   end
@@ -37,7 +37,6 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   def bulk_update
     ExtraMobileDataRequest.transaction do
       new_attributes = { status: bulk_update_params[:status] }
-      new_attributes[:problem] = nil unless bulk_update_params[:status] == 'queried'
       ids = (bulk_update_params[:extra_mobile_data_request_ids] || []).reject(&:empty?)
       extra_mobile_data_request_scope
                .where('extra_mobile_data_requests.id IN (?)', ids)

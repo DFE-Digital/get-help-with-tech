@@ -503,7 +503,6 @@ en:
         statuses:
           requested: Requested
           in_progress: In progress
-          queried: Queried
           complete: Complete
           cancelled: Cancelled
           unavailable: Unavailable
