@@ -1,6 +1,7 @@
 class Mno::ExtraMobileDataRequestsCsvUpdateController < Mno::BaseController
   def new
     @upload_form = Mno::CsvStatusUpdateForm.new
+    @statuses_with_descriptions = statuses_with_descriptions
   end
 
   def create
@@ -14,9 +15,11 @@ class Mno::ExtraMobileDataRequestsCsvUpdateController < Mno::BaseController
       rescue StandardError => e
         Rails.logger.error(e.message)
         @upload_form.errors.add(:upload, :theres_a_problem_with_that_csv)
+        @statuses_with_descriptions = statuses_with_descriptions
         render :new, status: :unprocessable_entity
       end
     else
+      @statuses_with_descriptions = statuses_with_descriptions
       render :new, status: :unprocessable_entity
     end
   end
@@ -29,5 +32,19 @@ private
 
   def importer_for(csv)
     @importer ||= ExtraMobileDataRequestStatusImporter.new(mobile_network: @mobile_network, datasource: csv)
+  end
+
+  def statuses_with_descriptions
+    ExtraMobileDataRequest
+      .statuses_that_mno_users_can_use_in_csv_uploads
+      .collect do |status|
+        [
+          status,
+          I18n.t!(
+            "#{status}.description",
+            scope: %i[activerecord attributes extra_mobile_data_request status],
+          ),
+        ]
+      end
   end
 end

@@ -35,38 +35,12 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">new</td>
-            <td class="govuk-table__cell">Request not processed yet</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">in_progress</td>
-            <td class="govuk-table__cell">Request is being processed</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">completed</td>
-            <td class="govuk-table__cell">Request processed successfully</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">problem_not_eligible</td>
-            <td class="govuk-table__cell">Account is not eligible</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">problem_no_account_with_number</td>
-            <td class="govuk-table__cell">No account with this number</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">problem_no_account_with_name</td>
-            <td class="govuk-table__cell">No account with this name</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">problem_invalid_number</td>
-            <td class="govuk-table__cell">Not a valid mobile number</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">problem</td>
-            <td class="govuk-table__cell">Request could not be processed but no reason specified</td>
-          </tr>
+          <% @statuses_with_descriptions.each do |status, description| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= status %></td>
+              <td class="govuk-table__cell"><%= description %></td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

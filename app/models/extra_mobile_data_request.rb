@@ -40,6 +40,10 @@ class ExtraMobileDataRequest < ApplicationRecord
     statuses.keys - %w[new cancelled unavailable]
   end
 
+  def self.statuses_that_mno_users_can_use_in_csv_uploads
+    statuses.keys - %w[cancelled unavailable]
+  end
+
   enum contract_type: {
     pay_as_you_go_payg: 'pay_as_you_go_payg',
     pay_monthly: 'pay_monthly',
