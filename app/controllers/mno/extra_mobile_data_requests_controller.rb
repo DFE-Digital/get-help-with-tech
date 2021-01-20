@@ -63,7 +63,7 @@ private
 
   def mno_status_options
     ExtraMobileDataRequest
-      .statuses_available_to_mnos
+      .statuses_that_mno_users_can_assign
       .map do |status|
         OpenStruct.new(
           value: status,
