@@ -494,10 +494,6 @@ en:
              tag_label: Requested
              dropdown_label: Requested
              description: Request not processed yet
-           requested:
-             tag_label: Requested
-             dropdown_label: Requested
-             description: Request not processed yet
            in_progress:
              tag_label: In progress
              dropdown_label: In progress

@@ -120,7 +120,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe 'extra mobile data requests' do
     before do
       create_list(:extra_mobile_data_request, 5,
-                  mobile_network: create(:mobile_network, brand: '2nd Best'), status: :requested)
+                  mobile_network: create(:mobile_network, brand: '2nd Best'), status: :new)
       create_list(:extra_mobile_data_request, 2,
                   mobile_network: create(:mobile_network, brand: 'Thirdy'), status: :in_progress)
       create_list(:extra_mobile_data_request, 10, :with_problem,
@@ -136,7 +136,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
     describe '#extra_mobile_data_requests_by_status' do
       it 'returns the counts by status' do
         expect(stats.extra_mobile_data_requests_by_status).to include(
-          'requested' => 5,
+          'new' => 5,
           'in_progress' => 2,
         )
       end

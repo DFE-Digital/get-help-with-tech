@@ -19,7 +19,6 @@ class ExtraMobileDataRequest < ApplicationRecord
 
   enum status: {
     new: 'new',
-    requested: 'requested',
     in_progress: 'in_progress',
     complete: 'complete',
     cancelled: 'cancelled',
@@ -38,7 +37,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def self.statuses_available_to_mnos
-    statuses.keys - %w[cancelled unavailable requested]
+    statuses.keys - %w[cancelled unavailable]
   end
 
   enum contract_type: {
@@ -106,9 +105,9 @@ private
   def update_status_from_mobile_network_participation
     participating = mobile_network.participating?
 
-    if (requested_status? || new_status?) && !participating
+    if new_status? && !participating
       self.status = 'unavailable'
-    elsif (requested_status? || new_status?) && participating
+    elsif new_status? && participating
       self.status = 'new'
     end
   end
