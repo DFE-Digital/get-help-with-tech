@@ -13,9 +13,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
           extra_mobile_data_requests: @extra_mobile_data_requests,
           extra_mobile_data_request_ids: selected_extra_mobile_data_request_ids(@extra_mobile_data_requests, params),
         )
-        @statuses = ExtraMobileDataRequest
-          .translated_enum_values(:statuses)
-          .reject { |status| status.value.in?(%w[cancelled unavailable]) }
+        @statuses = mno_status_options
       end
     end
   end
@@ -54,10 +52,24 @@ private
 
   def problem_options
     ExtraMobileDataRequest
-      .statuses
-      .keys
-      .select { |key| key.start_with?('problem') }
-      .map { |key| OpenStruct.new(value: key, label: I18n.t!(key, scope: %i[activerecord attributes extra_mobile_data_request problems])) }
+      .problem_statuses
+      .map do |status|
+        OpenStruct.new(
+          value: status,
+          label: I18n.t!("#{status}.description", scope: %i[activerecord attributes extra_mobile_data_request status]),
+        )
+      end
+  end
+
+  def mno_status_options
+    ExtraMobileDataRequest
+      .statuses_available_to_mnos
+      .map do |status|
+        OpenStruct.new(
+          value: status,
+          label: I18n.t!("#{status}.dropdown_label", scope: %i[activerecord attributes extra_mobile_data_request status]),
+        )
+      end
   end
 
   def extra_mobile_data_request_scope

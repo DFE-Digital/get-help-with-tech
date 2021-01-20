@@ -18,10 +18,9 @@ class ExtraMobileDataRequestStatusComponent < ViewComponent::Base
   end
 
   def label
-    if @extra_mobile_data_request.status.start_with?('problem')
-      I18n.t!(@extra_mobile_data_request.status, scope: %i[activerecord attributes extra_mobile_data_request problem_tags])
-    else
-      @extra_mobile_data_request.translated_enum_value(:status)
-    end
+    I18n.t!(
+      "#{@extra_mobile_data_request.status}.tag_label",
+      scope: %i[activerecord attributes extra_mobile_data_request status],
+    )
   end
 end
