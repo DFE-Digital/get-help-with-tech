@@ -36,6 +36,10 @@ class ExtraMobileDataRequest < ApplicationRecord
     statuses.keys.select { |k| k.start_with?('problem') }
   end
 
+  def self.statuses_available_to_mnos
+    statuses.keys - %w[cancelled unavailable]
+  end
+
   enum contract_type: {
     pay_as_you_go_payg: 'pay_as_you_go_payg',
     pay_monthly: 'pay_monthly',
