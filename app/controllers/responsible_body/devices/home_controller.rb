@@ -4,8 +4,4 @@ class ResponsibleBody::Devices::HomeController < ResponsibleBody::BaseController
   end
 
   def tell_us; end
-
-  def request_devices
-    render 'shared/devices/request_devices'
-  end
 end

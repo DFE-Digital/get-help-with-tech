@@ -18,8 +18,4 @@ class School::DevicesController < School::BaseController
       render :cannot_order
     end
   end
-
-  def request_devices
-    render 'shared/devices/request_devices'
-  end
 end

@@ -133,7 +133,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     expect(page).to have_css('h1', text: 'Get laptops and tablets')
     expect(page).to have_link('Your schools')
     expect(page).to have_link('Order devices')
-    expect(page).to have_link('Request devices for specific circumstances')
   end
 
   def then_i_see_the_cannot_order_devices_yet_page

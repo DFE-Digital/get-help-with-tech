@@ -114,15 +114,11 @@ private
       {
         key: 'Can place orders?',
         value: 'No, as school has reopened',
-        action_path: responsible_body_devices_request_devices_path,
-        action: 'Request devices for specific circumstances',
       }
     else
       {
         key: 'Can place orders?',
         value: 'Not yet because no closure or group of self-isolating children has been reported'.html_safe,
-        action_path: responsible_body_devices_request_devices_path,
-        action: 'Request devices for specific circumstances',
       }
     end
   end

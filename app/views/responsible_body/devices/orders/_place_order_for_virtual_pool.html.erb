@@ -9,7 +9,7 @@
           The number of devices you can order is the remaining allocation of devices for:
         </p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>approved requests <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %></li>
+          <li>approved requests for specific circumstances</li>
           <li><%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time</li>
         </ul>
       <% elsif @schools_can_order.any? %>
@@ -18,7 +18,7 @@
         </p>
       <% elsif @schools_can_order_for_specific_circumstances.any? %>
         <p class="govuk-body">
-          The number of devices you can order is the remaining allocation of devices where a request <%= govuk_link_to 'for specific circumstances', responsible_body_devices_request_devices_path %> has been approved.
+          The number of devices you can order is the remaining allocation of devices where a request for specific circumstances has been approved.
         </p>
       <% end %>
     <% end %>
