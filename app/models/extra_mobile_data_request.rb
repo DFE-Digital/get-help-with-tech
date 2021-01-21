@@ -28,6 +28,7 @@ class ExtraMobileDataRequest < ApplicationRecord
     problem_incorrect_phone_number: 'problem_incorrect_phone_number',
     problem_no_match_for_account_name: 'problem_no_match_for_account_name',
     problem_no_longer_on_network: 'problem_no_longer_on_network',
+    problem_other: 'problem_other',
   }, _suffix: true
 
   scope :in_a_problem_state, -> { where('status like ?', 'problem%') }

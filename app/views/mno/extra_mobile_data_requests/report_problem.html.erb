@@ -12,11 +12,15 @@
     <%= form_for @extra_mobile_data_request, url: mno_extra_mobile_data_request_path(@extra_mobile_data_request) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <%= f.govuk_collection_radio_buttons :status,
-      @options,
-      :value,
-      :label %>
-
+      <%= f.govuk_radio_buttons_fieldset :status, legend: nil do %>
+        <% @specific_options.each do |option| %>
+          <%= f.govuk_radio_button :status, option.value, label: { text: option.label }, link_errors: true %>
+        <% end %>
+        <%= f.govuk_radio_divider %>
+        <% @other_option.each do |option| %>
+          <%= f.govuk_radio_button :status, option.value, label: { text: option.label }, link_errors: true %>
+        <% end %>
+      <% end %>
       <%= f.govuk_submit 'Report problem' %>
     <%- end %>
   </div>
