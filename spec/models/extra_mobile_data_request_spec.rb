@@ -99,7 +99,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
         model.mobile_network_id = existing_request.mobile_network_id
         model.valid?
-        expect(model.errors[:device_phone_number]).to include 'A request for this number has already been made'
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
         model.mobile_network_id = existing_request.mobile_network_id
         model.valid?
-        expect(model.errors[:device_phone_number]).to include 'A request for this number has already been made'
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
       end
     end
   end
