@@ -1,4 +1,4 @@
-class AllocationUpdater
+class PhilAllocationUpdater
   def initialize(school:, device_type:, value:)
     @school = school
     @device_type = device_type
@@ -26,7 +26,7 @@ private
   end
 
   def cap_service
-    @cap_service ||= SchoolOrderStateAndCapUpdateService.new(
+    @cap_service ||= PhilSchoolOrderStateAndCapUpdateService.new(
       school: school,
       order_state: school.order_state,
       std_device_cap: new_or_existing_std_device_cap,

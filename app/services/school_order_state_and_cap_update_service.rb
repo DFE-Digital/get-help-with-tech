@@ -1,4 +1,4 @@
-class SchoolOrderStateAndCapUpdateService
+class PhilSchoolOrderStateAndCapUpdateService
   include Computacenter::CapChangeNotifier
 
   attr_accessor :school, :order_state, :caps
@@ -41,7 +41,7 @@ class SchoolOrderStateAndCapUpdateService
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
-    SchoolCanOrderDevicesNotifications.new(school: school).call
+    # SchoolCanOrderDevicesNotifications.new(school: school).call
   end
 
 private
