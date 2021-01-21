@@ -1,6 +1,6 @@
-Subject to stock availability, the Department for Education (DfE) will send routers (either Huawei or D-Link) to trusts, local authorities or schools to distribute to disadvantaged children and families
+Subject to stock availability, the Department for Education (DfE) will send routers to trusts, local authorities or schools to distribute to disadvantaged children and families
 
-For both router types, users will find the following in the box:
+For all router types, users will find the following in the box:
 
 - 4G wireless router
 - battery (with approximately 25% charge)
@@ -32,6 +32,15 @@ If a user is directed to the Huawei site to log in with an admin password during
 ## Setting up a D-Link router
 
 - [Download step-by-step setup instructions](/devices/d-link-4g-wireless-router-user-guide.pdf) (PDF)
+
+The label inside the cover of each device contains the:
+
+- WiFi network name (SSID)
+- Password (this is case sensitive)
+
+## Setting up a TP-Link router
+
+- [Download step-by-step setup instructions](/devices/tp-link-4g-wireless-router-user-guide.pdf) (PDF)
 
 The label inside the cover of each device contains the:
 
