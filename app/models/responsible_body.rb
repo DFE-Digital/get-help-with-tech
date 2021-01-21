@@ -87,6 +87,8 @@ class ResponsibleBody < ApplicationRecord
     case who_will_order_devices
     when 'school'
       'School or college'
+    when 'schools'
+      'Schools or colleges'
     when 'responsible_body'
       humanized_type.capitalize
     end
