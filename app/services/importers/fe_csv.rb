@@ -19,12 +19,12 @@ module Importers
     # Last Name
     # Email
     # Business Phone
-    # Address Line 1 (Organisation) (Organisation)
-    # Address Line 2 (Organisation) (Organisation)
-    # Address Line 3 (Organisation) (Organisation)
-    # Town / City (Organisation) (Organisation)
-    # County (Organisation) (Organisation)
-    # Postcode (Organisation) (Organisation)
+    # Address Line 1
+    # Address Line 2
+    # Address Line 3
+    # Town / City
+    # County
+    # Postcode
 
     def call
       schools_found = 0
@@ -39,7 +39,7 @@ module Importers
           school = School.find_by(urn: row['URN'])
 
           if school
-            school.update!(ukprn: row['UKPRN'])
+            school.update!(ukprn: row['UKPRN'], type: 'FurtherEducationSchool')
           else
             school = School.find_by(ukprn: row['UKPRN'])
           end
@@ -65,7 +65,7 @@ module Importers
             ukprn: row['UKPRN'],
             urn: row['URN'],
             name: row['Name'],
-            fe_type: row['ProvType'].underscore.gsub(' (spi)', '').gsub(' ', '_').gsub('&', 'and'),
+            fe_type: row['ProvType'].underscore.gsub(' (spi)', '').gsub(' ', '_').gsub('-', '_').gsub('&', 'and'),
             address_1: row['Address Line 1'],
             address_2: row['Address Line 2'],
             address_3: row['Address Line 3'],

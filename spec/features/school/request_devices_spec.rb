@@ -13,7 +13,7 @@ RSpec.feature 'Request devices in special circumstances' do
       visit specific_circumstances_school_path(school)
       click_on 'Request devices for specific circumstances'
 
-      expect(page).to have_content('You can request devices at any time for disadvantaged children')
+      expect(page).to have_content('You can request devices at any time for disadvantaged pupils and students from any year group who')
     end
 
     scenario 'includes the intermediary specific circumstances page in breadcrumbs' do

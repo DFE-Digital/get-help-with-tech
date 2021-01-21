@@ -13,16 +13,16 @@ RSpec.feature 'View school details' do
       sign_in_as school_user
     end
 
-    context 'when I click on "Check your school details"' do
+    context 'when I click on "Check your organisation’s details"' do
       before do
-        click_on 'Check your school details'
+        click_on 'Check your organisation’s details'
       end
 
       it 'shows me my school details' do
         expect(page).to have_content(school_user.school.name)
-        expect(page).to have_content('Check your school details')
+        expect(page).to have_content('Check your organisation’s details')
         expect(page).to have_content('63 devices')
-        expect(page).to have_content("Will your school need to order Chromebooks?\nYes")
+        expect(page).to have_content("Will you need to order Chromebooks?\nYes")
       end
     end
   end

@@ -1,0 +1,64 @@
+<% content_for :title, "#{@school.name} – Support" %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    { t('page_titles.support_responsible_bodies') => support_responsible_bodies_path },
+    { @school.responsible_body.name => support_responsible_body_path(@school.responsible_body) },
+    @school.name,
+  ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.responsible_body.name %></span>
+      <%= @school.name %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-tabs">
+      <ul class="govuk-tabs__list">
+        <%= render TabComponent.new(
+          label: 'School',
+          path: support_school_history_path(view: 'school'),
+          selected: @view_mode.blank? || @view_mode == 'school')
+        %>
+        <%= render TabComponent.new(
+          label: 'Devices',
+          path: support_school_history_path(view: 'std_device'),
+          selected: @view_mode == 'std_device')
+        %>
+        <%= render TabComponent.new(
+          label: 'Dev. Caps',
+          path: support_school_history_path(view: 'caps'),
+          selected: @view_mode == 'caps')
+        %>
+        <%= render TabComponent.new(
+          label: 'Routers',
+          path: support_school_history_path(view: 'coms_device'),
+          selected: @view_mode == 'coms_device')
+        %>
+        <%= render TabComponent.new(
+          label: 'Devices (v-cap)',
+          path: support_school_history_path(view: 'std_device_pool'),
+          selected: @view_mode == 'std_device_pool')
+        %>
+        <%= render TabComponent.new(
+          label: 'Routers (v-cap)',
+          path: support_school_history_path(view: 'coms_device_pool'),
+          selected: @view_mode == 'coms_device_pool')
+        %>
+        <%= render TabComponent.new(
+          label: 'Ordered (CC)',
+          path: support_school_history_path(view: 'ordered'),
+          selected: @view_mode == 'ordered')
+        %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'history', locals: { object: @history_object } %>

@@ -13,9 +13,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
           extra_mobile_data_requests: @extra_mobile_data_requests,
           extra_mobile_data_request_ids: selected_extra_mobile_data_request_ids(@extra_mobile_data_requests, params),
         )
-        @statuses = ExtraMobileDataRequest
-          .translated_enum_values(:statuses)
-          .reject { |status| status.value.in?(%w[queried cancelled unavailable]) }
+        @statuses = mno_status_options
       end
     end
   end
@@ -37,7 +35,6 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   def bulk_update
     ExtraMobileDataRequest.transaction do
       new_attributes = { status: bulk_update_params[:status] }
-      new_attributes[:problem] = nil unless bulk_update_params[:status] == 'queried'
       ids = (bulk_update_params[:extra_mobile_data_request_ids] || []).reject(&:empty?)
       extra_mobile_data_request_scope
                .where('extra_mobile_data_requests.id IN (?)', ids)
@@ -55,10 +52,24 @@ private
 
   def problem_options
     ExtraMobileDataRequest
-      .statuses
-      .keys
-      .select { |key| key.start_with?('problem') }
-      .map { |key| OpenStruct.new(value: key, label: I18n.t!(key, scope: %i[activerecord attributes extra_mobile_data_request problems])) }
+      .problem_statuses
+      .map do |status|
+        OpenStruct.new(
+          value: status,
+          label: I18n.t!("#{status}.description", scope: %i[activerecord attributes extra_mobile_data_request status]),
+        )
+      end
+  end
+
+  def mno_status_options
+    ExtraMobileDataRequest
+      .statuses_that_mno_users_can_assign
+      .map do |status|
+        OpenStruct.new(
+          value: status,
+          label: I18n.t!("#{status}.dropdown_label", scope: %i[activerecord attributes extra_mobile_data_request status]),
+        )
+      end
   end
 
   def extra_mobile_data_request_scope

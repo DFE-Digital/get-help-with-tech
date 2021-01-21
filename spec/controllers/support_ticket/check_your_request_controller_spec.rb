@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SupportTicket::CheckYourRequestController, type: :controller do
   describe '#new' do
     before do
-      session[:support_ticket] = { hello: 'world' }
+      session[:support_ticket] = { full_name: 'My name' }
       get :new
     end
 
@@ -16,7 +16,7 @@ RSpec.describe SupportTicket::CheckYourRequestController, type: :controller do
     end
 
     it 'assigns the session data to a variable to play back all the details to the user' do
-      expect(assigns(:support_ticket)).to eq({ hello: 'world' })
+      expect(assigns(:support_ticket).full_name).to eq('My name')
     end
 
     it 'does not redirect to get support home page (using the wizard with existing data)' do

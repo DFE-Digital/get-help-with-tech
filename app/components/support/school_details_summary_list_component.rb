@@ -2,31 +2,10 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
   def rows
     array = super
     array << headteacher_row if headteacher.present?
-    array.insert(array.find_index { |row| row[:key] == 'Can place orders?' }, mno_row) if @school.show_mno?
     array.map { |row| remove_change_links_if_read_only(row) }
   end
 
 private
-
-  def mno_row
-    {
-      key: 'Extra mobile data requests',
-      value: mno_value,
-    }
-  end
-
-  def mno_value
-    description = [
-      "Requested: #{@school.extra_mobile_data_requests.requested.count}",
-      "In progress: #{@school.extra_mobile_data_requests.in_progress.count}",
-      "Queried: #{@school.extra_mobile_data_requests.queried.count}",
-      "Complete: #{@school.extra_mobile_data_requests.complete.count}",
-      "Cancelled: #{@school.extra_mobile_data_requests.cancelled.count}",
-      "Unavailable: #{@school.extra_mobile_data_requests.unavailable.count}",
-    ].join('<br>').html_safe
-
-    govuk_details(summary: pluralize(@school.extra_mobile_data_requests.count, 'request'), description: description, classes: 'app-details-in-summary-list')
-  end
 
   def who_will_order_row
     super.except(:change_path, :action, :action_path)

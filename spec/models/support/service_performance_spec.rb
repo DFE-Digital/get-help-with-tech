@@ -120,34 +120,31 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe 'extra mobile data requests' do
     before do
       create_list(:extra_mobile_data_request, 5,
-                  mobile_network: create(:mobile_network, brand: '2nd Best'), status: :requested)
+                  mobile_network: create(:mobile_network, brand: '2nd Best'), status: :new)
       create_list(:extra_mobile_data_request, 2,
                   mobile_network: create(:mobile_network, brand: 'Thirdy'), status: :in_progress)
-      create_list(:extra_mobile_data_request, 1,
-                  mobile_network: create(:mobile_network, brand: 'Lasty'), status: :queried)
       create_list(:extra_mobile_data_request, 10, :with_problem,
                   mobile_network: create(:mobile_network, brand: 'Top Telecom'))
     end
 
     describe '#total_extra_mobile_data_requests' do
       it 'returns the total number of requests' do
-        expect(stats.total_extra_mobile_data_requests).to eq(18)
+        expect(stats.total_extra_mobile_data_requests).to eq(17)
       end
     end
 
     describe '#extra_mobile_data_requests_by_status' do
       it 'returns the counts by status' do
         expect(stats.extra_mobile_data_requests_by_status).to include(
-          'requested' => 5,
+          'new' => 5,
           'in_progress' => 2,
-          'queried' => 1,
         )
       end
     end
 
     describe '#total_extra_mobile_data_requests_with_problems' do
-      it 'returns the counts of requests with problem statuses and queried requests' do
-        expect(stats.total_extra_mobile_data_requests_with_problems).to eq(11)
+      it 'returns the counts of requests with problem statuses' do
+        expect(stats.total_extra_mobile_data_requests_with_problems).to eq(10)
       end
     end
 
@@ -158,7 +155,6 @@ RSpec.describe Support::ServicePerformance, type: :model do
             ['Top Telecom', 10],
             ['2nd Best', 5],
             ['Thirdy', 2],
-            ['Lasty', 1],
           ],
         )
       end

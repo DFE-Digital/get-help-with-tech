@@ -54,7 +54,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
       end
 
       before do
-        create_list(:extra_mobile_data_request, 5, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+        create_list(:extra_mobile_data_request, 5, status: 'new', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
         click_on 'Your requests'
       end
 
@@ -93,7 +93,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
 
       before do
         Pagy::VARS[:items] = 20
-        create_list(:extra_mobile_data_request, 25, status: 'requested', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+        create_list(:extra_mobile_data_request, 25, status: 'new', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
         click_on 'Your requests'
       end
 

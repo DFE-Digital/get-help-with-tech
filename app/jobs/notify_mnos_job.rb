@@ -3,7 +3,7 @@ class NotifyMnosJob < ApplicationJob
 
   def perform
     users.each do |user|
-      number_of_new_requests = user.mobile_network.extra_mobile_data_requests.requested.where('created_at > ?', since_last_email_for_user(user)).count
+      number_of_new_requests = user.mobile_network.extra_mobile_data_requests.new_status.where('created_at > ?', since_last_email_for_user(user)).count
 
       if number_of_new_requests.positive?
         MnoMailer.notify_new_requests(user: user, number_of_new_requests: number_of_new_requests).deliver_now

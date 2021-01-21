@@ -94,4 +94,22 @@ RSpec.describe Support::SchoolsController, type: :controller do
       end
     end
   end
+
+  describe 'history' do
+    before do
+      sign_in_as create(:dfe_user)
+    end
+
+    it 'responds successfully' do
+      get :history, params: { school_urn: school.urn }
+      expect(response).to be_successful
+    end
+
+    it 'responds successfully with each view' do
+      %w[school std_device coms_device std_device_pool coms_device_pool caps ordered].each do |view|
+        get :history, params: { school_urn: school.urn, view: view }
+        expect(response).to be_successful
+      end
+    end
+  end
 end

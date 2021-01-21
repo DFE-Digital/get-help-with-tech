@@ -36,7 +36,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     school = school_requester.school
 
     create_list(:extra_mobile_data_request, 1,
-                status: :requested,
+                status: :new,
                 mobile_network: virgin,
                 responsible_body: rb,
                 created_by_user: rb_requester)

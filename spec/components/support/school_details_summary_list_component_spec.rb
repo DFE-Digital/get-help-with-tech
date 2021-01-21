@@ -33,7 +33,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school type' do
-      expect(value_for_row(result, 'Type of school').text).to include('Primary school')
+      expect(value_for_row(result, 'Setting').text).to include('Primary school')
     end
 
     it 'renders the school details' do
@@ -163,52 +163,6 @@ describe Support::SchoolDetailsSummaryListComponent do
 
       it 'shows Router allocation' do
         expect(result.text).to include('Router allocation')
-      end
-    end
-  end
-
-  describe 'extra mobile data' do
-    context 'when school is not using mno_feature' do
-      before do
-        allow(school).to receive(:show_mno?).and_return(false)
-      end
-
-      it 'does not display row' do
-        expect(result.text).not_to include('Extra mobile data requests')
-      end
-    end
-
-    context 'when there are no requests' do
-      let(:school) { build(:school) }
-
-      it 'shows Extra mobile data row with 0 requests' do
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('0 requests')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Requested: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('In progress: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Queried: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Complete: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Cancelled: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Unavailable: 0')
-      end
-    end
-
-    context 'when there are requests' do
-      let(:school) { create(:school) }
-
-      before do
-        school.extra_mobile_data_requests << create(:extra_mobile_data_request)
-        school.extra_mobile_data_requests << create(:extra_mobile_data_request)
-        school.extra_mobile_data_requests << create(:extra_mobile_data_request, status: 'complete')
-      end
-
-      it 'shows Extra mobile data row with 0 requests' do
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('3 requests')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Requested: 2')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('In progress: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Queried: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Complete: 1')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Cancelled: 0')
-        expect(value_for_row(result, 'Extra mobile data requests').text).to include('Unavailable: 0')
       end
     end
   end

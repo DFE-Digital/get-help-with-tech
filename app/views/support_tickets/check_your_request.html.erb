@@ -23,18 +23,17 @@
       <% component.slot(
          :row,
          key: "Which of these best describes you?",
-         value: SupportTicket::DescribeYourselfForm.new.selected_option_label(@support_ticket["user_type"]),
+         value: SupportTicket::DescribeYourselfForm.new.selected_option_label(@support_ticket.user_type),
          action: govuk_link_to("Change", support_ticket_describe_yourself_path),
          classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-"),
          )
       %>
 
-      <% unless [ 'parent_or_guardian_or_carer_or_pupil_or_care_leaver', 'other_type_of_user'].include?  @support_ticket["user_type"] %>
-
+      <% if !@support_ticket.requires_school? %>
         <% component.slot(
            :row,
            key: "Which school do you work for?",
-           value: "#{@support_ticket["school_name"]} (URN: #{ @support_ticket["school_unique_id"]})",
+           value: "#{@support_ticket.school_name} (URN: #{ @support_ticket.school_unique_id})",
            action: govuk_link_to("Change", @school_details_path),
            classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-"),
            )
@@ -44,7 +43,7 @@
       <% component.slot(
          :row,
          key: "How can we contact you?",
-         value: "#{ @support_ticket["full_name"]}<br>#{ @support_ticket["email_address"]}<br>#{ @support_ticket["telephone_number"]}".html_safe ,
+         value: "#{ @support_ticket.full_name}<br>#{ @support_ticket.email_address}<br>#{ @support_ticket.telephone_number}".html_safe ,
          action: govuk_link_to("Change", support_ticket_contact_details_path),
          classes: "Name".to_s.downcase.gsub(/ /, "-"),
        ) %>
@@ -53,7 +52,7 @@
          :row,
          key: "What do you need help with?",
          value: content_tag(:ul, :class => 'govuk-list govuk-list--bullet') do
-           @support_ticket["support_topics"].collect do |topic|
+           @support_ticket.support_topics.collect do |topic|
              content_tag(:li, SupportTicket::SupportNeedsForm.new.selected_option_label(topic))
            end.join.html_safe
          end ,
@@ -64,7 +63,7 @@
       <% component.slot(
          :row,
          key: "How can we help you?",
-         value: @support_ticket["message"] ,
+         value: @support_ticket.message ,
          action: govuk_link_to("Change", support_ticket_support_details_path),
          classes: "Name".to_s.downcase.gsub(/ /, "-"),
          ) %>

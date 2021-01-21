@@ -194,6 +194,8 @@ Rails.application.routes.draw do
       post '/invite', to: 'schools#invite'
       resources :users, only: %i[new create], controller: 'users'
 
+      get '/history', to: 'schools#history', as: :history
+
       get '/devices/enable-orders', to: 'schools/devices/order_status#edit', as: :enable_orders
       get '/devices/enable-orders/confirm', to: 'schools/devices/order_status#confirm', as: :confirm_enable_orders
       patch '/devices/enable-orders', to: 'schools/devices/order_status#update'

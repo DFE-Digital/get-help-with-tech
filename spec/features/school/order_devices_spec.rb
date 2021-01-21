@@ -143,7 +143,7 @@ RSpec.feature 'Order devices' do
   end
 
   def then_i_see_techsource_ready_soon
-    expect(page).to have_content('Your TechSource account will be ready soon')
+    expect(page).to have_content('be able to order once your TechSource account is ready')
   end
 
   def then_i_see_someone_else_will_order

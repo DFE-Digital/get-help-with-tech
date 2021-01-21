@@ -52,7 +52,44 @@ class Support::SchoolsController < Support::BaseController
     redirect_to support_responsible_body_path(school.responsible_body)
   end
 
+  def history
+    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
+    @history_object = object_for_view_mode
+  end
+
 private
+
+  def view_mode
+    @view_mode ||= parse_view_mode
+  end
+
+  def parse_view_mode
+    available = %w[school std_device coms_device std_device_pool coms_device_pool caps ordered]
+    mode = params[:view]
+    mode = 'all' unless mode.in?(available)
+    mode
+  end
+
+  def object_for_view_mode
+    case view_mode
+    when 'school'
+      @school
+    when 'std_device'
+      @school&.std_device_allocation
+    when 'coms_device'
+      @school&.coms_device_allocation
+    when 'std_device_pool'
+      @school.responsible_body&.std_device_pool
+    when 'coms_device_pool'
+      @school.responsible_body&.coms_device_pool
+    when 'caps'
+      @school&.std_device_allocation&.cap_update_calls
+    when 'ordered'
+      @school.devices_ordered_updates
+    else
+      @school
+    end
+  end
 
   def search_params
     params.require(:school_search_form).permit(:identifiers, :responsible_body_id, :order_state)

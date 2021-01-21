@@ -18,9 +18,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   validate :validate_school_or_rb_present
 
   enum status: {
-    requested: 'requested',
+    new: 'new',
     in_progress: 'in_progress',
-    queried: 'queried',
     complete: 'complete',
     cancelled: 'cancelled',
     unavailable: 'unavailable',
@@ -29,38 +28,17 @@ class ExtraMobileDataRequest < ApplicationRecord
     problem_incorrect_phone_number: 'problem_incorrect_phone_number',
     problem_no_match_for_account_name: 'problem_no_match_for_account_name',
     problem_no_longer_on_network: 'problem_no_longer_on_network',
-  }
+  }, _suffix: true
+
+  scope :in_a_problem_state, -> { where('status like ?', 'problem%') }
 
   def self.problem_statuses
     statuses.keys.select { |k| k.start_with?('problem') }
   end
 
-  # These codes were worked out by the NHSx team & the MNOs,
-  # during their previous work to support NHS workers.
-  # If/when we add file import back from the MNOs, we'll probably
-  # need to reference the numeric codes:
-  #
-  # code|problem
-  # ---|--------
-  # 001|incorrect_phone_number
-  # 002|no_match_for_number
-  # 003|no_match_for_account_name
-  # 006|not_eligible
-  # 007|no_longer_on_network
-  #
-  # The discontinuity from 003-006 is because codes 004 & 005
-  # are about mismatches on address / postcode, which we're not
-  # supplying
-  #
-  # Having said all that, we're actually storing the string keys
-  # for better comprehensibility
-  enum problem: {
-    incorrect_phone_number: 'incorrect_phone_number',
-    no_match_for_number: 'no_match_for_number',
-    no_match_for_account_name: 'no_match_for_account_name',
-    not_eligible: 'not_eligible',
-    no_longer_on_network: 'no_longer_on_network',
-  }
+  def self.statuses_that_mno_users_can_assign
+    statuses.keys - %w[new cancelled unavailable]
+  end
 
   enum contract_type: {
     pay_as_you_go_payg: 'pay_as_you_go_payg',
@@ -108,11 +86,11 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def in_end_state?
-    complete? || cancelled?
+    complete_status? || cancelled_status?
   end
 
   def in_a_problem_state?
-    queried? || status.start_with?('problem')
+    status.start_with?('problem')
   end
 
 private
@@ -127,10 +105,10 @@ private
   def update_status_from_mobile_network_participation
     participating = mobile_network.participating?
 
-    if requested? && !participating
+    if new_status? && !participating
       self.status = 'unavailable'
-    elsif unavailable? && participating
-      self.status = 'requested'
+    elsif new_status? && participating
+      self.status = 'new'
     end
   end
 
@@ -143,6 +121,6 @@ private
   end
 
   def set_defaults
-    self.status ||= :requested if new_record?
+    self.status ||= :new if new_record?
   end
 end

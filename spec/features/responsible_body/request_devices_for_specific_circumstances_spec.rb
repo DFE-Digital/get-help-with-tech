@@ -13,7 +13,7 @@ RSpec.feature 'Requesting devices for specific circumstances' do
     click_on 'Request devices for specific circumstances'
 
     expect(page).to have_text('Request devices for specific circumstances')
-    expect(page).to have_text('which schools need the devices')
+    expect(page).to have_text('which schools and colleges need the devices')
   end
 
   context 'when the user belongs to both the responsible body and a school' do
@@ -27,7 +27,7 @@ RSpec.feature 'Requesting devices for specific circumstances' do
       click_on 'Request devices for specific circumstances'
 
       expect(page).to have_text('Request devices for specific circumstances')
-      expect(page).to have_text('which schools need the devices')
+      expect(page).to have_text('which schools and colleges need the devices')
     end
   end
 end

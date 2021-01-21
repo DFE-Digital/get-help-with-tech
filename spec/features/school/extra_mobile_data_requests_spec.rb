@@ -38,8 +38,8 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     let(:another_user_from_the_same_school) { create(:school_user, school: school) }
 
     before do
-      @requests = create_list(:extra_mobile_data_request, 5, status: 'requested', created_by_user: user, school: school)
-      @requests.last.unavailable!
+      @requests = create_list(:extra_mobile_data_request, 5, status: 'new', created_by_user: user, school: school)
+      @requests.last.unavailable_status!
     end
 
     scenario 'the user can navigate to their previous requests from the home page' do
@@ -61,10 +61,13 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       expect(page).to have_css('h1', text: 'Your requests')
 
       @requests.each do |request|
-        expect(page).to have_content(request.device_phone_number)
-        expect(page).to have_content(request.account_holder_name)
+        request_row = page.find("tr#request-#{request.id}")
+        expect(request_row).not_to be_nil
+        expect(request_row).to have_content(request.device_phone_number)
+        expect(request_row).to have_content(request.account_holder_name)
+        expect(request_row).to have_content(request.created_at.to_date.to_s(:long_ordinal))
       end
-      expect(page).to have_text('Requested').exactly(4).times
+      expect(page).to have_text('Requested').exactly(5).times
       expect(page).to have_text('Unavailable').once
     end
 

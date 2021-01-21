@@ -14,11 +14,10 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
   end
 
   describe 'GET index' do
-    it 'does not list "queried" and "cancelled" as possible statuses to transition a request into' do
+    it 'only contains statuses that MNO users are allowed to transition a request into' do
       get :index
 
       expect(assigns(:statuses).map(&:value)).to contain_exactly(
-        'requested',
         'in_progress',
         'complete',
         'problem_no_longer_on_network',
@@ -41,7 +40,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
     end
 
     context 'for a request from an approved user' do
-      it 'updates the status to queried' do
+      it 'updates the status' do
         patch :update, params: params
         expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('problem_no_match_for_number')
       end
@@ -156,34 +155,6 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       it 'responds with :unprocessable_entity' do
         put :bulk_update, params: params_with_invalid_status
         expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-
-    context 'when an existing request had a problem and the new status is not :queried' do
-      let!(:request_with_problem) { create(:extra_mobile_data_request, :with_problem, mobile_network: mno_user.mobile_network) }
-      let(:extra_mobile_data_requests) { [request_with_problem] }
-
-      it 'clears out the problem field' do
-        put :bulk_update, params: valid_params
-        expect(request_with_problem.reload.problem).to be_nil
-      end
-    end
-
-    context 'when an existing request had a problem and the new status is also :queried' do
-      let!(:request_with_problem) { create(:extra_mobile_data_request, mobile_network: mno_user.mobile_network, status: :queried, problem: 'no_match_for_number') }
-      let(:extra_mobile_data_requests) { [request_with_problem] }
-      let(:valid_params) do
-        {
-          mno_extra_mobile_data_requests_form: {
-            extra_mobile_data_request_ids: extra_mobile_data_requests.pluck('id'),
-            status: 'queried',
-          },
-        }
-      end
-
-      it 'does not clear out the problem field' do
-        put :bulk_update, params: valid_params
-        expect(request_with_problem.reload.problem).not_to be_nil
       end
     end
   end

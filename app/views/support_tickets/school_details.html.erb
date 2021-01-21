@@ -18,7 +18,7 @@
       </h1>
 
       <%= f.govuk_text_field :school_name, label: {text: 'School name', size: 's'} %>
-      <%= f.govuk_text_field :school_urn,
+      <%= f.govuk_number_field :school_urn,
                              label: {text: 'School URN', size: 's'},
                              hint: { text: 'This 6-digit number helps us to locate your school. Find your <a href="https://get-information-schools.service.gov.uk/" target="_blank" rel="noopener noreferrer">URN</a>.'.html_safe },
                              width: 5 %>
