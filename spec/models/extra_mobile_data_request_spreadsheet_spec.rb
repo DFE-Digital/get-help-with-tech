@@ -9,7 +9,7 @@ RSpec.describe ExtraMobileDataRequestSpreadsheet, type: :model do
     end
   end
 
-  context 'for a valid spreadsheet' do
+  context 'for a valid spreadsheet produced by Excel' do
     let(:file_path) { file_fixture('extra-mobile-data-requests.xlsx') }
 
     it 'imports reads requests from a spreadsheet' do
@@ -51,6 +51,24 @@ RSpec.describe ExtraMobileDataRequestSpreadsheet, type: :model do
         mobile_network: MobileNetwork.find_by(brand: 'Three'),
         contract_type: 'pay_as_you_go_payg',
         agrees_with_privacy_statement: false,
+      )
+    end
+  end
+
+  context 'for a valid spreadsheet produced by Google Docs' do
+    let(:file_path) { file_fixture('extra-mobile-data-requests-google-docs.xlsx') }
+
+    it 'imports reads requests from a spreadsheet' do
+      requests = spreadsheet.requests
+
+      expect(requests.size).to eq(1)
+
+      expect(requests[0]).to have_attributes(
+        account_holder_name: 'Jane Smith',
+        device_phone_number: '07123456789',
+        mobile_network: MobileNetwork.find_by(brand: 'Virgin Mobile'),
+        contract_type: 'pay_monthly',
+        agrees_with_privacy_statement: true,
       )
     end
   end

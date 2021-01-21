@@ -13,10 +13,20 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
     end
   end
 
-  it 'imports valid requests from a spreadsheet' do
+  it 'imports valid requests from a spreadsheet created in Excel' do
     expect {
       importer.import!(extra_fields: { responsible_body: rb, created_by_user: user })
     }.to change { ExtraMobileDataRequest.count }.by(4)
+  end
+
+  context 'when importing a spreadsheet created in Google Docs' do
+    let(:file) { file_fixture('extra-mobile-data-requests-google-docs.xlsx') }
+
+    it 'imports valid requests' do
+      expect {
+        importer.import!(extra_fields: { responsible_body: rb, created_by_user: user })
+      }.to change { ExtraMobileDataRequest.count }.by(1)
+    end
   end
 
   it 'sets created_by_user' do
