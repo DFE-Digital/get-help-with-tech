@@ -68,6 +68,10 @@ class ResponsibleBody < ApplicationRecord
     type == 'LocalAuthority'
   end
 
+  def is_a_further_education_college?
+    type == 'FurtherEducationCollege'
+  end
+
   def next_school_sorted_ascending_by_name(school)
     schools
       .where('name > ?', school.name)

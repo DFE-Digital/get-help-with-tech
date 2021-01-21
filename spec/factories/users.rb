@@ -47,6 +47,12 @@ FactoryBot.define do
       orders_devices { true }
     end
 
+    factory :fe_college_user do
+      association :responsible_body, factory: %i[further_education_college in_connectivity_pilot]
+      school { build(:fe_school, responsible_body: responsible_body) }
+      orders_devices { true }
+    end
+
     factory :school_user do
       transient do
         school { build(:school) }
