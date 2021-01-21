@@ -105,12 +105,12 @@ en:
       multi_domain_chromebooks: Responsible bodies managing multiple Chromebook domains
     who_will_order: Who will place orders for laptops and tablets?
     who_will_order_show:
-      schools: Each school or college will place their own orders
+      school: Each school or college will place their own orders
       responsible_body: Orders will be placed centrally
     request_a_change: Contact our support team to request this change
     change_who_will_order: Who will place orders for laptops and tablets?
     change_who_will_order_edit:
-      schools: The school will place their own orders
+      school: The school will place their own orders
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     national_lockdown_school_cannot_order_yet: Your school cannot order devices yet

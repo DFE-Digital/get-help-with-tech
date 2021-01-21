@@ -79,7 +79,7 @@ class ResponsibleBody < ApplicationRecord
     update!(who_will_order_devices: who_will_order)
     schools.each do |school|
       school.preorder_information&.destroy!
-      school.create_preorder_information!(who_will_order_devices: who_will_order.singularize)
+      school.create_preorder_information!(who_will_order_devices: who_will_order)
     end
   end
 

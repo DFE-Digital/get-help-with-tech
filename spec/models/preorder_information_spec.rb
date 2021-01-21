@@ -191,7 +191,7 @@ RSpec.describe PreorderInformation, type: :model do
       let(:user) { create(:user) }
 
       before do
-        trust.update!(who_will_order_devices: 'schools')
+        trust.update!(who_will_order_devices: 'school')
         preorder_info.update!(who_will_order_devices: 'school', will_need_chromebooks: nil)
         preorder_info.refresh_status!
       end

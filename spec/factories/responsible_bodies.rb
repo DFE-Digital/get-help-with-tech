@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     trait :devolves_management do
-      who_will_order_devices      { 'schools' }
+      who_will_order_devices      { 'school' }
     end
 
     trait :vcap_feature_flag do
