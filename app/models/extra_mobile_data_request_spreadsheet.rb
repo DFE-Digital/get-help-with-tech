@@ -9,9 +9,9 @@ class ExtraMobileDataRequestSpreadsheet
   validate :expected_worksheet_present, if: ->(spreadsheet) { spreadsheet.parseable? }
 
   def requests
-    row_hashes.map do |row_hash|
-      ExtraMobileDataRequestRow.new(row_hash).build_request
-    end
+    row_hashes
+      .map { |row_hash| ExtraMobileDataRequestRow.new(row_hash).build_request }
+      .compact
   end
 
   def parseable?
