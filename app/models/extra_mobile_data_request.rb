@@ -107,7 +107,7 @@ private
 
   def validate_request_uniqueness
     scope = school_id.present? ? { school_id: school_id } : { responsible_body_id: responsible_body_id }
-    errors.add(:device_phone_number, 'duplicate request already made') if has_already_been_made?(scope)
+    errors.add(:device_phone_number, :duplicate) if has_already_been_made?(scope)
   end
 
   def update_status_from_mobile_network_participation
