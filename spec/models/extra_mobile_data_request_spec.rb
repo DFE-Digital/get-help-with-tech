@@ -74,6 +74,61 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
   end
 
+  describe 'validate request uniqueness' do
+    let(:school) { create(:school) }
+    let(:rb) { create(:trust) }
+
+    context 'when rb present' do
+      let(:existing_request) do
+        create(:extra_mobile_data_request, account_holder_name: 'Person', device_phone_number: '07123456788', responsible_body: rb)
+      end
+
+      subject(:model) { build(:extra_mobile_data_request, school: nil, responsible_body: existing_request.responsible_body) }
+
+      it 'is invalid' do
+        model.valid?
+        expect(model.errors[:device_phone_number]).to be_blank
+
+        model.account_holder_name = 'Person'
+        model.valid?
+        expect(model.errors[:device_phone_number]).to be_blank
+
+        model.device_phone_number = '07123456788'
+        model.valid?
+        expect(model.errors[:device_phone_number]).to be_blank
+
+        model.mobile_network_id = existing_request.mobile_network_id
+        model.valid?
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
+      end
+    end
+
+    context 'when school present' do
+      let(:existing_request) do
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456789', school: school)
+      end
+
+      subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, responsible_body: nil) }
+
+      it 'is invalid' do
+        model.valid?
+        expect(model.errors[:device_phone_number]).to be_blank
+
+        model.account_holder_name = 'Person 2'
+        model.valid?
+        expect(model.errors[:device_phone_number]).to be_blank
+
+        model.device_phone_number = '07123456789'
+        model.valid?
+        expect(model.errors[:device_phone_number]).to be_blank
+
+        model.mobile_network_id = existing_request.mobile_network_id
+        model.valid?
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
+      end
+    end
+  end
+
   describe 'validating device_phone_number' do
     it { is_expected.to validate_presence_of(:device_phone_number) }
 

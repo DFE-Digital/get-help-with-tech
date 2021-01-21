@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :extra_mobile_data_request, class: 'ExtraMobileDataRequest' do
     account_holder_name               { Faker::Name.name }
-    device_phone_number               { '07123 456789' }
+    device_phone_number               { Faker::Base.numerify('07891 ######') }
     agrees_with_privacy_statement     { true }
     status                            { :new }
     contract_type                     { :pay_as_you_go_payg }

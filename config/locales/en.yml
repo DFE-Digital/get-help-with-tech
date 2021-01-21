@@ -582,6 +582,7 @@ en:
             device_phone_number:
               blank: Enter a UK mobile number, like 07700 900999
               invalid: Enter a UK mobile number, like 07700 900999
+              duplicate: A request with these details has already been made
             contract_type:
               blank: Select whether the contract is pay monthly or pay as you go (PAYG)
             agrees_with_privacy_statement:
