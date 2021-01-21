@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:2.7.2-alpine3.12
 
 ARG APPNAME=get-help-with-tech
 
@@ -12,8 +12,7 @@ RUN apk add libxml2-dev libxslt-dev build-base postgresql-dev tzdata
 RUN wget https://data.iana.org/time-zones/tzdb/tzdata.zi -O /usr/share/zoneinfo/tzdata.zi && \
     /usr/sbin/zic -b fat /usr/share/zoneinfo/tzdata.zi
 
-RUN apk add yarn nodejs=12.20.1-r0
-RUN apk add postgresql-contrib libpq less
+RUN apk add nodejs yarn postgresql-contrib libpq less
 
 ENV RAILS_ROOT /var/www/${APPNAME}
 RUN mkdir -p $RAILS_ROOT
