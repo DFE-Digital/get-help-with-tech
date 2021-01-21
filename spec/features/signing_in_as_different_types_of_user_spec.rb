@@ -5,6 +5,8 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   let(:local_authority_school) { create(:school, :la_maintained, responsible_body: user.responsible_body) }
   let(:single_academy_trust) { create(:school, :single_academy_trust) }
   let(:single_academy_trust_user) { create(:user, :single_academy_trust_user) }
+  let(:fe_college_user) { create(:user, :fe_college_user) }
+
   let(:token) { user.generate_token! }
   let(:identifier) { user.sign_in_identifier(token) }
   let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
@@ -194,6 +196,19 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
   context 'as a single_academy_trust user' do
     let(:user) { create(:single_academy_trust_user, :has_not_seen_privacy_notice) }
+
+    scenario 'logging in for the first time' do
+      visit validate_token_url_for(user)
+      expect(page).to have_text("You’re signed in as #{user.school.name}")
+      click_on 'Continue'
+      expect(page).to have_text('Before you continue, please read the privacy notice.')
+      click_on 'Continue'
+      expect(page).to have_text('You’ve been allocated 0 laptops and tablets')
+    end
+  end
+
+  context 'as a fe college user' do
+    let(:user) { create(:fe_college_user, :has_not_seen_privacy_notice) }
 
     scenario 'logging in for the first time' do
       visit validate_token_url_for(user)

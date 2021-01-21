@@ -99,7 +99,7 @@ private
 
   def root_url_for_responsible_body(user)
     if user.is_school_user?
-      if user.is_a_single_academy_trust_user?
+      if user.is_a_single_school_user?
         school_root_url_for(user)
       else
         schools_path

@@ -84,6 +84,38 @@ RSpec.describe SignInTokensController, type: :controller do
         end
       end
     end
+
+    context 'when FE college user is associated with RB and school' do
+      let(:trust) { create(:further_education_college) }
+      let(:school) { create(:fe_school, responsible_body: trust) }
+      let(:user) do
+        create(:fe_college_user,
+               :who_has_requested_a_magic_link,
+               orders_devices: true,
+               responsible_body: trust,
+               school: school)
+      end
+
+      it 'redirects them to the school journey' do
+        delete :destroy, params: valid_token_params
+        expect(response).to redirect_to(home_school_path(school))
+      end
+
+      context 'when they have not accepted privacy policies' do
+        let(:user) do
+          create(:fe_college_user,
+                 :who_has_requested_a_magic_link,
+                 orders_devices: true,
+                 privacy_notice_seen_at: nil,
+                 school: school)
+        end
+
+        it 'redirects them to the privacy policy' do
+          delete :destroy, params: valid_token_params
+          expect(response).to redirect_to(privacy_notice_path)
+        end
+      end
+    end
   end
 
   describe 'GET #validate' do

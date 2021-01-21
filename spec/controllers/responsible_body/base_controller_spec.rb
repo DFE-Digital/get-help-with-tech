@@ -19,4 +19,17 @@ RSpec.describe ResponsibleBody::BaseController do
       expect(response).to be_forbidden
     end
   end
+
+  context 'when user is a fe college user' do
+    let(:user) { create(:fe_college_user) }
+
+    before do
+      sign_in_as user
+    end
+
+    it 'returns forbidden' do
+      get :index
+      expect(response).to be_forbidden
+    end
+  end
 end

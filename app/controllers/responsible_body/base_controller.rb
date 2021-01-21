@@ -11,7 +11,7 @@ private
   end
 
   def deny_single_academy_trust_user!
-    render 'errors/forbidden', status: :forbidden if @current_user.is_a_single_academy_trust_user?
+    render 'errors/forbidden', status: :forbidden if @current_user.is_a_single_school_user?
   end
 
   def require_rb_user!

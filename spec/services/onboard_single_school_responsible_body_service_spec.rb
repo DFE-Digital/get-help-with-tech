@@ -76,7 +76,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
 
     it 'adds all the RB users as school users' do
       User.all.each do |user|
-        expect(user.is_a_single_academy_trust_user?).to be_truthy
+        expect(user.is_a_single_school_user?).to be_truthy
         expect(user.school).to eq(school)
         expect(user.responsible_body).to eq(responsible_body)
       end
@@ -137,7 +137,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     it 'adds the headteacher as a single_academy_trust user who can order' do
       user = User.find_by!(email_address: @headteacher.email_address)
 
-      expect(user.is_a_single_academy_trust_user?).to be_truthy
+      expect(user.is_a_single_school_user?).to be_truthy
       expect(user.school).to eq(school)
       expect(user.responsible_body).to eq(responsible_body)
     end
@@ -157,7 +157,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     it 'adds the headteacher as a single_academy_trust user who can order under their lowercase email' do
       user = User.find_by!(email_address: 'jsmith@school.sch.uk')
 
-      expect(user.is_a_single_academy_trust_user?).to be_truthy
+      expect(user.is_a_single_school_user?).to be_truthy
       expect(user.school).to eq(school)
       expect(user.responsible_body).to eq(responsible_body)
     end
