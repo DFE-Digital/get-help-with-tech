@@ -491,8 +491,8 @@ en:
       extra_mobile_data_request:
          status:
            new:
-             tag_label: Requested
-             dropdown_label: Requested
+             tag_label: New
+             dropdown_label: New
              description: Request not processed yet
            in_progress:
              tag_label: In progress

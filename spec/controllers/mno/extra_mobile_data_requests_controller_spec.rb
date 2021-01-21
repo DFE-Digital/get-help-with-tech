@@ -14,11 +14,10 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
   end
 
   describe 'GET index' do
-    it 'does not "cancelled" and "unavailable" as possible statuses to transition a request into' do
+    it 'only contains statuses that MNO users are allowed to transition a request into' do
       get :index
 
       expect(assigns(:statuses).map(&:value)).to contain_exactly(
-        'new',
         'in_progress',
         'complete',
         'problem_no_longer_on_network',
