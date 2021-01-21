@@ -52,10 +52,13 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
       expect(page).to have_css('h1', text: 'Your requests')
 
       @requests.each do |request|
-        expect(page).to have_content(request.device_phone_number)
-        expect(page).to have_content(request.account_holder_name)
+        request_row = page.find("tr#request-#{request.id}")
+        expect(request_row).not_to be_nil
+        expect(request_row).to have_content(request.device_phone_number)
+        expect(request_row).to have_content(request.account_holder_name)
+        expect(request_row).to have_content(request.created_at.to_date.to_s(:long_ordinal))
       end
-      expect(page).to have_text('Requested').exactly(4).times
+      expect(page).to have_text('Requested').exactly(5).times
       expect(page).to have_text('Unavailable').once
     end
 
