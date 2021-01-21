@@ -37,11 +37,11 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
 
   def when_i_follow_links_to_enable_orders_for_many_schools
     click_link 'Find and manage schools'
-    click_link 'Enable orders for many schools'
+    click_link 'Enable orders for many organisations'
   end
 
   def then_i_see_the_full_allocations_page
-    expect(page).to have_selector('h1', text: 'Allow schools to order their full allocation')
+    expect(page).to have_selector('h1', text: 'Allow schools, colleges and FE providers to order their full allocation')
   end
 
   def when_i_navigate_to_the_full_allocations_page
@@ -49,12 +49,12 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   end
 
   def and_i_enter_my_school_urns
-    fill_in 'Enter one school URN per line', with: schools.map(&:urn).join("\r\n")
+    fill_in 'URNs', with: schools.map(&:urn).join("\r\n")
   end
 
   def and_i_enter_my_school_urns_with_bad_data
     data = schools.map(&:urn).append(bad_urn).join("\r\n")
-    fill_in 'Enter one school URN per line', with: data
+    fill_in 'URNs', with: data
   end
 
   def and_i_click_the_enable_full_allocations_button

@@ -33,7 +33,7 @@ RSpec.describe Support::UserSearchResultComponent do
     subject { described_class.new(user: unassociated_user, current_user: support_user) }
 
     it 'shows (no schools or responsible bodies) in the associations' do
-      expect(rendered_result_html).to include('(no schools or responsible bodies)')
+      expect(rendered_result_html).to include('No responsible bodies, schools, colleges or FE providers')
     end
   end
 

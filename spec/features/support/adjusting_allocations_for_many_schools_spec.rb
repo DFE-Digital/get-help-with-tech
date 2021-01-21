@@ -19,7 +19,7 @@ RSpec.describe 'Adjusting allocations for many schools' do
   scenario 'setting allocations for many schools' do
     given_i_am_logged_in_as_a_support_user
     and_i_click 'Find and manage schools'
-    and_i_click 'Adjust allocations for many schools'
+    and_i_click 'Adjust allocations for many organisations'
     then_i_see_a_form_to_enter_urns_and_allocations
 
     when_i_fill_in_the_form_with_2_valid_urns_and_allocations_separated_by_arbitrary_spaces_and_commas_plus_1_invalid_urn
