@@ -61,7 +61,7 @@ private
       request[:error] = ['No status provided']
       summary.add_error_record(request)
       false
-    elsif ExtraMobileDataRequest.statuses.include? status
+    elsif status.in?(ExtraMobileDataRequest.statuses_that_mno_users_can_use_in_csv_uploads)
       true
     else
       request[:error] = ["'#{status}' is not a valid status"]
