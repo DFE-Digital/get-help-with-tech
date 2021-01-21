@@ -81,7 +81,7 @@ private
   end
 
   def devolve_ordering_to_the_school
-    responsible_body.update_who_will_order_devices('schools')
+    responsible_body.update_who_will_order_devices('school')
   end
 
   def single_school_responsible_body?

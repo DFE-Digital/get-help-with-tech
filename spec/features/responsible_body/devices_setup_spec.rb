@@ -279,7 +279,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally
-    responsible_body.update!(who_will_order_devices: 'schools')
+    responsible_body.update!(who_will_order_devices: 'school')
     responsible_body.schools.each do |school|
       school.create_preorder_information!(who_will_order_devices: 'school')
     end

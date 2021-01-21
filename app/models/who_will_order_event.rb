@@ -18,6 +18,6 @@ private
   end
 
   def schools_will_order?
-    @params[:responsible_body].who_will_order_devices == 'schools'
+    @params[:responsible_body].who_will_order_devices == 'school'
   end
 end

@@ -10,7 +10,7 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
   def update
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
-      @school.preorder_information.change_who_will_order_devices!(@form.who_will_order.singularize)
+      @school.preorder_information.change_who_will_order_devices!(@form.who_will_order)
 
       flash[:success] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update])
       redirect_to responsible_body_devices_school_path(@school.urn)
@@ -29,8 +29,7 @@ private
   end
 
   def who_will_order
-    who = @school.preorder_information.who_will_order_devices
-    who == 'school' ? 'schools' : who
+    @school.preorder_information.who_will_order_devices
   end
 
   def who_will_order_params(opts = params)

@@ -3,5 +3,5 @@ class ResponsibleBody::Devices::WhoWillOrderForm
 
   attr_accessor :who_will_order
 
-  validates :who_will_order, inclusion: %w[responsible_body schools]
+  validates :who_will_order, inclusion: %w[responsible_body school]
 end

@@ -91,7 +91,7 @@ module ViewHelper
   def who_will_order_devices_options(show_recommendation: true)
     [
       OpenStruct.new(
-        id: 'schools',
+        id: 'school',
         label: "Most schools and colleges will place their own orders#{' (recommended)' if show_recommendation}",
         description: 'We’ll need contact details for each school or college',
       ),
@@ -107,8 +107,8 @@ module ViewHelper
     scope = 'page_titles.change_who_will_order_edit'
     [
       OpenStruct.new(
-        id: 'schools',
-        label: t('schools', scope: scope),
+        id: 'school',
+        label: t('school', scope: scope),
       ),
       OpenStruct.new(
         id: 'responsible_body',
