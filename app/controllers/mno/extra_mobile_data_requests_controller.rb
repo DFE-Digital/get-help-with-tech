@@ -20,7 +20,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
 
   def report_problem
     load_extra_mobile_data_request(params[:extra_mobile_data_request_id])
-    @options = problem_options
+    @specific_options, @other_option = problem_options
   end
 
   def update
@@ -28,7 +28,7 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
     @extra_mobile_data_request.update!(extra_mobile_data_request_params)
     redirect_to mno_extra_mobile_data_requests_path
   rescue ActiveModel::ValidationError, ActionController::ParameterMissing
-    @options = problem_options
+    @specific_options, @other_option = problem_options
     render :report_problem, status: :unprocessable_entity
   end
 
@@ -53,12 +53,15 @@ private
   def problem_options
     ExtraMobileDataRequest
       .problem_statuses
-      .map do |status|
-        OpenStruct.new(
-          value: status,
-          label: I18n.t!("#{status}.description", scope: %i[activerecord attributes extra_mobile_data_request status]),
-        )
-      end
+      .map { |status| option_for(status) }
+      .partition { |option| option.value != 'problem_other' }
+  end
+
+  def option_for(status)
+    OpenStruct.new(
+      value: status,
+      label: I18n.t!("#{status}.description", scope: %i[activerecord attributes extra_mobile_data_request status]),
+    )
   end
 
   def mno_status_options

@@ -532,6 +532,10 @@ en:
              tag_label: Not on network
              dropdown_label: Problem – Not on network
              description: This account is no longer on our network
+           problem_other:
+             tag_label: Other problem
+             dropdown_label: Problem – Other
+             description: Another reason
       mobile_network:
         participation_in_pilots:
           participating: 'Offers data now'
