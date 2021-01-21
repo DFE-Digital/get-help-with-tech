@@ -638,8 +638,8 @@ en:
         number_eligible_with_hotspot_access: Number who can see a BT hotspot
     extra_mobile_data_requests:
       new:
-        manual_submission: Manually (entering details one at a time)
-        bulk_submission: Using a spreadsheet
+        manual_submission: One at a time, using a form
+        bulk_submission: Many at once, using a spreadsheet
         pay_monthly: 'Pay monthly'
         pay_as_you_go_payg: 'Pay as you go (PAYG)'
       create:

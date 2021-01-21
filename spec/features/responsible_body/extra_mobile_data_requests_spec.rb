@@ -20,7 +20,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     expect(page).to have_http_status(:ok)
     click_on 'New request'
     expect(page).to have_css('h1', text: 'How would you like to submit information?')
-    choose 'Manually (entering details one at a time)'
+    choose 'One at a time, using a form'
     click_on 'Continue'
     expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
   end
@@ -33,7 +33,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     expect(page).to have_http_status(:ok)
     click_on 'New request'
     expect(page).to have_css('h1', text: 'How would you like to submit information?')
-    choose 'Using a spreadsheet'
+    choose 'Many at once, using a spreadsheet'
     click_on 'Continue'
     expect(page).to have_css('h1', text: 'Upload a spreadsheet of extra data requests')
   end
