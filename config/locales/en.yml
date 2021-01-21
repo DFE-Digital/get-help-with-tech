@@ -38,12 +38,14 @@ en:
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Your schools and colleges
     requests_for_extra_mobile_data: Requests for extra mobile data
+    extra_mobile_data_requests_csv_update: Update requests using a CSV
     suggested_email_to_schools: A suggested email for you to send to schools
     request_extra_mobile_data: Request extra data for mobile devices
     your_requests: Your requests
     how_would_you_like_to_submit_information: How would you like to submit information?
     upload_a_spreadsheet_of_extra_data_requests: Upload a spreadsheet of extra data requests
     weve_processed_your_spreadsheet: We’ve processed your spreadsheet
+    weve_processed_your_csv: We’ve processed your CSV
     guide_to_collecting_mobile_information: Guide to collecting mobile information
     start: Get help with technology
     internet_access: Get internet access

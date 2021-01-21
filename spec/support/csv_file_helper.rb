@@ -43,6 +43,17 @@ module CSVFileHelper
     link_type: 'LinkType',
   }.freeze
 
+  EXTRA_MOBILE_DATA_REQUEST_STATUS_UPDATE_ATTRS = {
+    id: 'ID',
+    account_holder_name: 'Account holder name',
+    device_phone_number: 'Device phone number',
+    created_at: 'Requested',
+    updated_at: 'Last updated',
+    mobile_network_id: 'Mobile network ID',
+    status: 'Status',
+    contract_type: 'Contract type',
+  }.freeze
+
   def create_school_csv_file(filename, array_of_hashes)
     create_csv_file(filename, SCHOOL_ATTRS.values, array_of_hashes)
   end
@@ -53,6 +64,11 @@ module CSVFileHelper
 
   def create_trust_csv_file(filename, array_of_hashes)
     attrs = TrustDataFile::ATTR_MAP
+    create_csv_file(filename, attrs.values, array_of_hashes, attrs)
+  end
+
+  def create_extra_mobile_data_request_update_csv_file(filename, array_of_hashes)
+    attrs = EXTRA_MOBILE_DATA_REQUEST_STATUS_UPDATE_ATTRS
     create_csv_file(filename, attrs.values, array_of_hashes, attrs)
   end
 
