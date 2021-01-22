@@ -17,7 +17,11 @@ RSpec.feature 'Ordering via a school' do
     school_that_cannot_order_as_reopened.update!(preorder_information: another_preorder, std_device_allocation: another_allocation)
   end
 
-  context 'when the responsible body does not the vcap_feature_flag enabled' do
+  context 'when the school is not in a virtual cap pool' do
+    before do
+      allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
+    end
+
     context 'when school has no devices to order' do
       scenario 'cannot order devices' do
         given_i_am_signed_in_as_rb_user
@@ -59,8 +63,10 @@ RSpec.feature 'Ordering via a school' do
     end
   end
 
-  context 'when the responsible body does have the vcap_feature_flag enabled' do
+  context 'when the school is in a virtual cap pool' do
     let(:rb) { create(:trust, :vcap_feature_flag, schools: [school, school_that_cannot_order_as_reopened]) }
+    let(:vcap_pool) { rb.virtual_cap_pools.create!(device_type: 'std_device') }
+    let(:vcap) { SchoolVirtualCap.create!(virtual_cap_pool: vcap_pool, school_device_allocation: school.std_device_allocation) }
 
     context 'when school has no devices to order' do
       scenario 'cannot order devices' do
@@ -87,6 +93,9 @@ RSpec.feature 'Ordering via a school' do
       before do
         school.update!(std_device_allocation: allocation, order_state: 'can_order')
         school.preorder_information.refresh_status!
+        stub_request(:post, 'http://computacenter.example.com/')
+         .to_return(status: 200, body: '', headers: {})
+        vcap
       end
 
       scenario 'I do not see the number of devices' do
