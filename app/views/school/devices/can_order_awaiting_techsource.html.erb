@@ -10,8 +10,13 @@
 
     <%= render partial: 'shared/techsource_unavailable_banner' %>
 
-    <p class="govuk-body">You’ll need to order devices using a website called TechSource.</p>
+    <p class="govuk-body">You’ll be able to order <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> soon.</p>
 
-    <p class="govuk-body">You cannot order devices until your TechSource account is ready. This should be in the next 24 hours. We’ll email you when you can order.</p>
+    <p class="govuk-body">Orders are placed on a website called TechSource, but your account is not ready yet. It should be ready in the next 24 hours.</p>
+
+    <p class="govuk-body">We’ll email you when you can order.</p>
+
+    <p class="govuk-body">In the meantime, it may be useful to check <a class="govuk-link" href="/devices/device-specification">device options and specifications</a>.</p>
+
   </div>
 </div>
