@@ -40,7 +40,7 @@
         <td class="govuk-table__cell"><%= emd_request.created_at.to_date.to_s(:long_ordinal) %></td>
         <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
         <td class="govuk-table__cell">
-          <%= render ExtraMobileDataRequestStatusComponent.new(extra_mobile_data_request: emd_request) %>
+          <%= render ExtraMobileDataRequestStatusComponent.new(status: emd_request.status) %>
         </td>
       </tr>
     <%- end %>
