@@ -5,6 +5,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
   let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let(:mobile_network) { create(:mobile_network) }
   let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+  let(:my_requests_page) { PageObjects::School::Internet::YourRequestsPage.new }
 
   before do
     school.preorder_information.responsible_body_will_order_devices!
@@ -49,17 +50,20 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     scenario 'the user can see their previous requests' do
       visit responsible_body_internet_mobile_extra_data_requests_path
 
-      expect(page).to have_css('h1', text: 'Your requests')
+      expect(my_requests_page.heading.text).to eq('Your requests')
 
       @requests.each do |request|
-        request_row = page.find("tr#request-#{request.id}")
+        request_row = my_requests_page.row_for(request)
         expect(request_row).not_to be_nil
         expect(request_row).to have_content(request.device_phone_number)
         expect(request_row).to have_content(request.account_holder_name)
         expect(request_row).to have_content(request.created_at.to_date.to_s(:long_ordinal))
       end
-      expect(page).to have_text('Requested').exactly(5).times
-      expect(page).to have_text('Unavailable').once
+
+      within my_requests_page.requests_table do
+        expect(page).to have_text('Requested').exactly(5).times
+        expect(page).to have_text('Unavailable').once
+      end
     end
 
     scenario 'another user from the same responsible body can also see the raised requests' do
