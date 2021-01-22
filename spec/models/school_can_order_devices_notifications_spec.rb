@@ -116,6 +116,41 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
       end
     end
 
+    context 'when school in virtual college which is ready changes from cannot_order to can_order' do
+      let(:responsible_body) { create(:further_education_college, :new_fe_wave) }
+      let(:school) do
+        create(:fe_school,
+               :with_std_device_allocation,
+               :with_preorder_information,
+               order_state: order_state,
+               responsible_body: responsible_body)
+      end
+
+      before do
+        school.preorder_information.update!(who_will_order_devices: 'responsible_body', will_need_chromebooks: 'no')
+        school.std_device_allocation.update!(cap: school.std_device_allocation.allocation, devices_ordered: 0)
+        school.update!(order_state: 'can_order')
+        school.reload
+      end
+
+      context 'user has confirmed techsource account' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 responsible_body: responsible_body,
+                 techsource_account_confirmed_at: 1.second.ago,
+                 orders_devices: true)
+        end
+
+        it 'notifies the user' do
+          expect(school.preorder_information.status).to eq('rb_can_order')
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_in_fe_college', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+      end
+    end
+
     context 'when a school that is ready changes status from specfic circumstances to lockdown' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order_for_specific_circumstances') }
 
