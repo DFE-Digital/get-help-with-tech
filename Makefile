@@ -1,6 +1,6 @@
 APP_NAME=get-help-with-tech
 REMOTE_DOCKER_IMAGE_NAME=dfedigital/get-help-with-tech
-PAAS_ORGANISATION=dfe-teacher-services
+PAAS_ORGANISATION=dfe
 PAAS_SPACE=get-help-with-tech
 
 .PHONY: dev staging prod
