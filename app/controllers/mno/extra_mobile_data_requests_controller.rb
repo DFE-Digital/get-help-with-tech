@@ -60,7 +60,7 @@ private
   def option_for(status)
     OpenStruct.new(
       value: status,
-      label: I18n.t!("#{status}.description", scope: %i[activerecord attributes extra_mobile_data_request status]),
+      label: I18n.t!("#{status}.mno_user_description", scope: %i[activerecord attributes extra_mobile_data_request status]),
     )
   end
 

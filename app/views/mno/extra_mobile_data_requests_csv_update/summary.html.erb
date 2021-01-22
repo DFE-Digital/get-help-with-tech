@@ -65,7 +65,7 @@
           <td class="govuk-table__cell"><%= row.id %></td>
           <td class="govuk-table__cell"><%= row.account_holder_name %></td>
           <td class="govuk-table__cell"><%= row.device_phone_number %></td>
-          <td class="govuk-table__cell"><%= render ExtraMobileDataRequestStatusComponent.new(extra_mobile_data_request: row) %></td>
+          <td class="govuk-table__cell"><%= render ExtraMobileDataRequestStatusComponent.new(status: row.status) %></td>
         </tr>
       <%- end %>
     </tbody>

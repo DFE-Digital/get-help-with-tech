@@ -1,11 +1,13 @@
 class ExtraMobileDataRequestStatusComponent < ViewComponent::Base
-  def initialize(extra_mobile_data_request:, viewer: :school_or_mno_user)
-    @extra_mobile_data_request = extra_mobile_data_request
+  attr_reader :status
+
+  def initialize(status:, viewer: :school_or_mno_user)
+    @status = status.to_sym
     @viewer = viewer
   end
 
   def colour
-    case @extra_mobile_data_request.status.to_sym
+    case @status
     when :new then 'blue'
     when :in_progress then 'yellow'
     when :complete then 'green'
@@ -14,19 +16,15 @@ class ExtraMobileDataRequestStatusComponent < ViewComponent::Base
     end
   end
 
-  def status
-    @extra_mobile_data_request.status
-  end
-
   def label
-    if @viewer == :school_or_mno_user && @extra_mobile_data_request.new_status?
+    if @viewer == :school_or_mno_user && @status == :new
       # This override only happens for one status and it felt better to put
       # the logic here rather than have separate `tag_status` values for MNO
       # and school/RB users in en.yml
       'Requested'
     else
       I18n.t!(
-        "#{@extra_mobile_data_request.status}.tag_label",
+        "#{@status}.tag_label",
         scope: %i[activerecord attributes extra_mobile_data_request status],
       )
     end

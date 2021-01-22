@@ -41,7 +41,7 @@ private
         [
           status,
           I18n.t!(
-            "#{status}.description",
+            "#{status}.mno_user_description",
             scope: %i[activerecord attributes extra_mobile_data_request status],
           ),
         ]
