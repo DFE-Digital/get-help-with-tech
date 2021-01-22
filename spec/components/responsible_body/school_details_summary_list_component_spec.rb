@@ -169,14 +169,30 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
     end
 
-    context 'when devices orders' do
+    context 'when devices_ordered > 0' do
       before do
         alloc = school.build_std_device_allocation(devices_ordered: 3, cap: 100, allocation: 100)
         alloc.save!
       end
 
-      it 'shows devices ordered row with count' do
-        expect(value_for_row(result, 'Devices ordered').text).to include('3 devices')
+      context 'when the school is not in a virtual_cap_pool' do
+        before do
+          allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
+        end
+
+        it 'shows devices ordered row with count' do
+          expect(value_for_row(result, 'Devices ordered').text).to include('3 devices')
+        end
+      end
+
+      context 'when the school is in a virtual_cap_pool' do
+        before do
+          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
+        end
+
+        it 'does not show devices ordered row' do
+          expect(result.text).not_to include('Devices ordered')
+        end
       end
     end
   end
