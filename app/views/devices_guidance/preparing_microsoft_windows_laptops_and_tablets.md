@@ -137,10 +137,11 @@ Suggested fixes for bugs and possible solutions to issues that may affect laptop
 
 ### Tactus Geobooks
 
-#### Audio issues
+#### Sound issues
 
 We are aware a number of users are facing difficulties using Tactus Geobooks, including issues with audio output. We have been informed by Tactus that the standard Windows update should resolve this but we are making additional solutions available:
-DfE Restricted devices
+
+##### DfE Restricted devices
 
 We are pushing audio drivers from Intune when devices are connected to the internet. If you have not used the device recently, connect it to the internet and let the drivers install which may resolve the issue.
 
