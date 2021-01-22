@@ -8,6 +8,6 @@ RSpec.describe 'support/home/feature_flags.html.erb' do
     page.load(rendered)
 
     expect(page.table['rate_limiting'].status).to eql('Active')
-    expect(page.table['slack_notifications'].status).to eql('Not active')
+    expect(page.table['christmas_banner'].status).to eql('Not active')
   end
 end

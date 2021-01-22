@@ -5,10 +5,6 @@ class Event
     self.params = params
   end
 
-  def notifiable?
-    FeatureFlag.active?(:slack_notifications)
-  end
-
   def message
     'an event happened'
   end

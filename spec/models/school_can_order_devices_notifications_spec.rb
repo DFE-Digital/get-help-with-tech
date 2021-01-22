@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_notifications: 'active' } do
+RSpec.describe SchoolCanOrderDevicesNotifications do
   let(:order_state) { 'cannot_order' }
   let(:contact) { create(:user) }
   let(:school) { create_schools_at_status(preorder_status: 'school_can_order') }
@@ -23,17 +23,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
           expect {
             service.call
           }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
-        end
-
-        it 'puts a message in Slack' do
-          expect {
-            service.call
-          }.to have_enqueued_job.on_queue('slack_messages').with(
-            username: 'dfe_ghwt_slack_bot',
-            channel: 'get-help-with-tech-test',
-            text: "[User can order event] We emailed a user to tell them that they can place orders for #{school.name}",
-            mrkdwn: true,
-          )
         end
       end
 
@@ -212,24 +201,6 @@ RSpec.describe SchoolCanOrderDevicesNotifications, with_feature_flags: { slack_n
         expect {
           service.call
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_but_action_needed', 'deliver_now', params: { user: user, school: school }, args: [])
-      end
-
-      context 'when the user has a techsource account' do
-        before do
-          user.update!(techsource_account_confirmed_at: 1.second.ago,
-                       orders_devices: true)
-        end
-
-        it 'puts a message in Slack' do
-          expect {
-            service.call
-          }.to have_enqueued_job.on_queue('slack_messages').with(
-            username: 'dfe_ghwt_slack_bot',
-            channel: 'get-help-with-tech-test',
-            text: "[User can order event] We emailed a user to tell them that action is needed before #{school.name} can place orders",
-            mrkdwn: true,
-          )
-        end
       end
     end
 

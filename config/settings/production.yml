@@ -1,4 +1,1 @@
 hostname_for_urls: get-help-with-tech.education.gov.uk
-slack:
-  event_notifications:
-    channel: get-help-with-tech-notifications
