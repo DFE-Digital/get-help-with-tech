@@ -19,6 +19,16 @@ class CanOrderDevicesMailer < ApplicationMailer
                           personalisation: personalisation)
   end
 
+  def user_can_order_in_fe_college
+    @user = params[:user]
+    @school = params[:school]
+
+    tracked_template_mail('can_order_in_fe_college',
+                          can_order_devices_in_fe_college_template_id,
+                          to: @user.email_address,
+                          personalisation: personalisation)
+  end
+
   def user_can_order_but_action_needed
     @user = params[:user]
     @school = params[:school]
@@ -72,7 +82,7 @@ private
   def personalisation
     {
       school: @school.name,
-      urn: @school.urn,
+      urn: @school.ukprn_or_urn,
     }
   end
 
@@ -90,6 +100,10 @@ private
 
   def can_order_devices_in_virtual_cap_template_id
     Settings.govuk_notify.templates.devices.can_order_devices_in_virtual_cap
+  end
+
+  def can_order_devices_in_fe_college_template_id
+    Settings.govuk_notify.templates.devices.can_order_devices_in_fe_college
   end
 
   def can_order_but_action_needed_template_id

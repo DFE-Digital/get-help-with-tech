@@ -60,5 +60,9 @@ FactoryBot.define do
     type { 'FurtherEducationCollege' }
     name { [Faker::App.unique.name, 'FE College'].join(' ') }
     organisation_type { 'FurtherEducationSchool' }
+
+    trait :new_fe_wave do
+      new_fe_wave { true }
+    end
   end
 end
