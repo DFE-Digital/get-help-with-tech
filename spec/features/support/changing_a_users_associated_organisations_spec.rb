@@ -94,7 +94,7 @@ RSpec.feature 'Changing users’ associated organisations' do
   def when_i_search_for_an_existing_user_by_email
     visit '/support'
     click_on 'Find users'
-    fill_in 'Enter an email address or name', with: responsible_body_user_with_multiple_schools.email_address
+    fill_in 'Email address or name', with: responsible_body_user_with_multiple_schools.email_address
     click_on 'Search'
   end
 

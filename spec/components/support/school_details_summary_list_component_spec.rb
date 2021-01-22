@@ -25,7 +25,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(value_for_row(result, 'Who will order?').text).to include('The school orders devices')
+      expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
     end
 
     it 'renders the school allocation' do

@@ -53,7 +53,7 @@ RSpec.feature 'Viewing responsible bodies in the support area', type: :feature d
     expect(first_row).to have_text('Coventry')
     expect(first_row).to have_text('2 users')
     expect(first_row).to have_text('1 user signed in')
-    expect(first_row).to have_text('Responsible body')
+    expect(first_row).to have_text('Local authority')
     expect(first_row).to have_text('0')
 
     second_row = responsible_bodies_page.responsible_body_rows[1]

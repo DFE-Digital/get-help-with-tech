@@ -27,7 +27,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('The school orders devices')
+      expect(result.css('.govuk-summary-list__row')[1].text).to include('The school or college orders devices')
     end
 
     it 'renders the school allocation' do

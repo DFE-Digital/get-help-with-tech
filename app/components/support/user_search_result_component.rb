@@ -27,7 +27,7 @@ class Support::UserSearchResultComponent < ViewComponent::Base
 private
 
   def no_organisations
-    '(no schools or responsible bodies)'
+    'No responsible bodies, schools, colleges or FE providers'
   end
 
   def organisation_link_or_text(organisation)
