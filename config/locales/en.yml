@@ -495,47 +495,58 @@ en:
            new:
              tag_label: New
              dropdown_label: New
-             description: Request not processed yet
+             mno_user_description: Request not processed yet
+             school_or_rb_user_description: Request has not been processed yet
            in_progress:
              tag_label: In progress
              dropdown_label: In progress
-             description: Request is being processed
+             mno_user_description: Request is being processed
+             school_or_rb_user_description: Network is currently processing this request
            complete:
              tag_label: Complete
              dropdown_label: Complete
-             description: Request processed successfully
+             mno_user_description: Request processed successfully
+             school_or_rb_user_description: Request succesful and offer activated
            cancelled:
              tag_label: Cancelled
              dropdown_label: Cancelled
-             description: Request has been cancelled
+             mno_user_description: Request has been cancelled
+             school_or_rb_user_description: Request has been cancelled
            unavailable:
              tag_label: Unavailable
              dropdown_label: Unavailable
-             description: Request is for a network that is unavailable
+             mno_user_description: Request is for a network that is unavailable
+             school_or_rb_user_description: This network is not supporting the offer yet
            problem_no_match_for_number:
              tag_label: Unknown number
              dropdown_label: Problem – No account with this number
-             description: We couldn’t find an account with this number
+             mno_user_description: We couldn’t find an account with this number
+             school_or_rb_user_description: No account was found with number given
            problem_not_eligible:
              tag_label: Not eligible
              dropdown_label: Problem – Not eligible
-             description: This account is not eligible
+             mno_user_description: This account is not eligible
+             school_or_rb_user_description: The network reported this request was not eligible
            problem_incorrect_phone_number:
              tag_label: Invalid number
              dropdown_label: Problem – Not a valid mobile number
-             description: This is not a valid mobile number
+             mno_user_description: This is not a valid mobile number
+             school_or_rb_user_description: The network reported this request had an invalid mobile number
            problem_no_match_for_account_name:
              tag_label: Unknown name
              dropdown_label: Problem – No account with this name
-             description: We couldn’t find an account with this name
+             mno_user_description: We couldn’t find an account with this name
+             school_or_rb_user_description: No account was found with name given
            problem_no_longer_on_network:
              tag_label: Not on network
              dropdown_label: Problem – Not on network
-             description: This account is no longer on our network
+             mno_user_description: This account is no longer on our network
+             school_or_rb_user_description: The network reported this account was now with a different network
            problem_other:
              tag_label: Other problem
              dropdown_label: Problem – Other
-             description: Another reason
+             mno_user_description: Another reason
+             school_or_rb_user_description: The network could not process this request but did not give a reason why
       mobile_network:
         participation_in_pilots:
           participating: 'Offers data now'

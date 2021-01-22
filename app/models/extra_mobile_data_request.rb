@@ -46,6 +46,10 @@ class ExtraMobileDataRequest < ApplicationRecord
     statuses.keys - %w[cancelled unavailable]
   end
 
+  def self.statuses_that_school_and_rb_users_can_see
+    statuses.keys - %w[cancelled]
+  end
+
   enum contract_type: {
     pay_as_you_go_payg: 'pay_as_you_go_payg',
     pay_monthly: 'pay_monthly',
