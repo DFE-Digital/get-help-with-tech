@@ -8,53 +8,55 @@ module Importers
       @path = path_to_csv
     end
 
-    # urn # 123456
-    # increase # +ve int
+    # ukprn # 123456
+    # total # allocation to set to
 
     def call
       rows.each do |row|
-        puts "processing #{row['urn']}, #{row['increase']}"
+        puts "processing #{row['ukprn']}, #{row['total']}"
 
-        urn = row['urn'].strip
-        increase = row['increase'].strip.to_i
+        ukprn = row['ukprn'].strip
+        total = row['total'].strip.to_i
 
-        school = School.includes(:std_device_allocation).find_by(urn: urn)
+        school = School.includes(:std_device_allocation).find_by(ukprn: ukprn)
 
         raise 'school not found' if school.nil?
 
-        school.update(increased_sixth_form_feature_flag: true)
-
-        current_value = school.std_device_allocation&.raw_allocation || 0
-        new_value = current_value + increase
-
-        service = PhilAllocationUpdater.new(school: school, device_type: 'std_device', value: new_value)
+        service = PhilAllocationUpdater.new(school: school, device_type: 'std_device', value: total)
         service.call
 
         service = PhilSchoolOrderStateAndCapUpdateService.new(school: school, order_state: 'can_order')
         service.update!
+
+        # TODO: suppress invite email
+        if school.users.blank?
+          school.invite_school_contact
+        end
       end
 
-      emails_with_urns.each do |array|
+      emails_with_ukprns.each do |array|
         puts "#{array[1]},#{array[0]}"
       end
     end
 
   private
 
-    def emails_with_urns
-      @emails_with_urns ||= schools.map do |school|
-        { school.urn => school.send(:device_ordering_organisation).users.where(deleted_at: nil).pluck(:email_address) }
+    def emails_with_ukprns
+      @emails_with_ukprns ||= schools.map do |school|
+        { school.ukprn => school.send(:device_ordering_organisation).users.where(deleted_at: nil).pluck(:email_address) }
       end.map do |a|
         a.values.flatten.map{|email| [a.keys.first, email]}.flatten
-      end.flatten.each_slice(2).to_a
+      end.flatten.each_slice(2).to_a.each do |array|
+        puts "#{array[1]},#{array[0]}"
+      end
     end
 
     def schools
-      @schools ||= School.where(urn: urns)
+      @schools ||= School.where(ukprn: ukprns)
     end
 
-    def urns
-      @urn ||= rows.map { |row| row['urn'] }
+    def ukprns
+      @ukprn ||= rows.map { |row| row['ukprn'] }
     end
 
     def rows
