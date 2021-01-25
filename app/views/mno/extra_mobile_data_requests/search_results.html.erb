@@ -4,14 +4,18 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= pagy_info(@pagination, "requests").capitalize.html_safe %> found
+      <% if @pagination.count.zero? %>
+        No requests found
+      <% else %>
+        <%= pagy_info(@pagination, "requests").capitalize.html_safe %> found
+      <% end %>
     </h1>
   </div>
 </div>
 
 <% if @extra_mobile_data_requests.any? %>
-  <%= govuk_button_link_to 'Download requests as CSV', mno_extra_mobile_data_requests_path(sort: params[:sort], dir: params[:dir], phone_numbers: params[:phone_numbers], format: :csv) %>
   <p class="govuk-body"><%= govuk_link_to t('page_titles.extra_mobile_data_requests_csv_update'), new_mno_extra_mobile_data_requests_csv_update_path %></p>
+  <%= govuk_button_link_to 'Download requests as CSV', mno_extra_mobile_data_requests_path(sort: params[:sort], dir: params[:dir], phone_numbers: params[:phone_numbers], format: :csv) %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

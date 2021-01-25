@@ -14,10 +14,10 @@
     (There are no matching requests at the moment)
   </p>
 <% else %>
-  <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
   <p class="govuk-body"><%= govuk_link_to t('page_titles.extra_mobile_data_requests_csv_update'), new_mno_extra_mobile_data_requests_csv_update_path %></p>
+  <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
 
-  <div class="app-card govuk-!-margin-bottom-4">
+  <div class="app-card govuk-!-margin-bottom-4 govuk-!-margin-top-2">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <%= form_for @find_requests_form, url: find_requests_mno_extra_mobile_data_requests_path, method: :put do |f| %>
@@ -28,15 +28,15 @@
               hint: { text: 'One per line' },
               label: { text: 'Telephone numbers', size: 's' },
               rows: 5 %>
-            <%= f.govuk_submit 'Find requests' %>
+            <%= f.govuk_submit 'Find requests', classes: 'govuk-!-margin-bottom-0' %>
           <%- end %>
         <%- end %>
       </div>
     </div>
   </div>
 
-  <h2 class="govuk-heading-l govuk-!-margin-top-4">
-    All requests (<%= @pagination.count %>)
+  <h2 class="govuk-heading-l govuk-!-margin-top-6">
+    All requests (<%= number_with_delimiter(@pagination.count, delimiter: ',') %>)
   </h2>
 
   <div class="govuk-grid-row">
