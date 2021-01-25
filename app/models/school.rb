@@ -81,6 +81,12 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
+  def human_for_school_type
+    I18n.t(school_type, scope: %i[activerecord attributes school school_type], default: 'Other')
+  rescue I18n::ArgumentError
+    'Other'
+  end
+
   def ukprn_or_urn
     ukprn || urn
   end
@@ -129,11 +135,11 @@ class School < ApplicationRecord
     std_device_allocation&.allocation.to_i.positive?
   end
 
-  def type_label
+  def school_type
     if special_establishment_type?
-      'Special school'
+      'special_school'
     elsif phase && !phase_not_applicable?
-      "#{phase.humanize.upcase_first} school"
+      "#{phase}_school"
     else
       ''
     end

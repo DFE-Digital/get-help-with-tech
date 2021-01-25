@@ -42,22 +42,4 @@ RSpec.describe FurtherEducationSchool do
       end
     end
   end
-
-  describe '#type_label' do
-    context 'fe_type is sixth_form_college' do
-      subject(:model) { described_class.new(fe_type: 'sixth_form_college') }
-
-      it 'returns Sixth Form College' do
-        expect(model.type_label).to eql('Sixth Form College')
-      end
-    end
-
-    context 'fe_type is something else' do
-      subject(:model) { described_class.new(fe_type: 'something_else') }
-
-      it 'returns Other' do
-        expect(model.type_label).to eql('Other')
-      end
-    end
-  end
 end

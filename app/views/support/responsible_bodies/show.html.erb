@@ -86,7 +86,7 @@
       <tbody class="govuk-table__body">
         <% @schools.each do |school| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.type_label %></td>
+            <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.human_for_school_type %></td>
             <td class="govuk-table__cell"><%= render SchoolPreorderStatusTagComponent.new(school: school) %></td>
             <%- device_allocations_data = school.std_device_allocation %>
             <td class="govuk-table__cell">
