@@ -17,8 +17,26 @@
   <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
   <p class="govuk-body"><%= govuk_link_to t('page_titles.extra_mobile_data_requests_csv_update'), new_mno_extra_mobile_data_requests_csv_update_path %></p>
 
+  <div class="app-card govuk-!-margin-bottom-4">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= form_for @find_requests_form, url: find_requests_mno_extra_mobile_data_requests_path, method: :put do |f| %>
+          <%= f.govuk_error_summary %>
+
+          <%= f.govuk_fieldset(legend: { text: 'Find requests by telephone number', size: 'l'}) do %>
+            <%= f.govuk_text_area :phone_numbers,
+              hint: { text: 'One per line' },
+              label: { text: 'Telephone numbers', size: 's' },
+              rows: 5 %>
+            <%= f.govuk_submit 'Find requests' %>
+          <%- end %>
+        <%- end %>
+      </div>
+    </div>
+  </div>
+
   <h2 class="govuk-heading-l govuk-!-margin-top-4">
-    <%= pagy_info(@pagination, "requests").capitalize.html_safe %>
+    All requests (<%= @pagination.count %>)
   </h2>
 
   <div class="govuk-grid-row">

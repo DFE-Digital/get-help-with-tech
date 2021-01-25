@@ -48,6 +48,8 @@ module ViewHelper
   end
 
   def sortable_extra_mobile_data_requests_table_header(title, value = title, opts = params)
+    phone_numbers = opts[:phone_numbers]
+
     if opts[:sort] == value.to_s
       if opts[:dir] == 'd'
         suffix = '▲'
@@ -56,9 +58,9 @@ module ViewHelper
         suffix = '▼'
         dir = 'd'
       end
-      safe_join([govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, dir: dir)), suffix], ' ')
+      safe_join([govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, dir: dir, phone_numbers: phone_numbers)), suffix], ' ')
     else
-      govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value))
+      govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, phone_numbers: phone_numbers))
     end
   end
 
