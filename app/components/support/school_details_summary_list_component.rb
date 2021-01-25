@@ -3,6 +3,7 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
     array = super
     array << headteacher_row if headteacher.present?
     array.map { |row| remove_change_links_if_read_only(row) }
+    array << { key: 'Address', value: @school.address_components }
   end
 
 private
