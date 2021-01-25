@@ -126,7 +126,6 @@ RSpec.feature 'Order devices' do
 
   def then_i_see_that_i_cannot_order_devices_yet
     expect(page).to have_content('You cannot order your full allocation yet')
-    expect(page).to have_link('request devices for disadvantaged children')
   end
 
   def then_i_see_that_i_cannot_order_as_school_reopened
@@ -135,7 +134,6 @@ RSpec.feature 'Order devices' do
 
   def then_i_see_that_the_school_cannot_order_devices_yet
     expect(page).to have_content('Your school cannot your full allocation yet')
-    expect(page).to have_link('request devices for disadvantaged children')
   end
 
   def then_i_see_that_i_will_be_able_to_order_soon

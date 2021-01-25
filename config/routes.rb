@@ -92,7 +92,6 @@ Rails.application.routes.draw do
     namespace :devices do
       get '/', to: 'home#show'
       get '/tell-us', to: 'home#tell_us'
-      get '/request-devices', to: 'home#request_devices'
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
@@ -135,8 +134,6 @@ Rails.application.routes.draw do
       get '/', to: 'school/home#show', as: :home
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
-      get '/request-devices', to: 'school/devices#request_devices'
-      get '/specific-circumstances', to: 'school/home#specific_circumstances'
       get '/order-devices', to: 'school/devices#order'
       get '/details', to: 'school/details#show', as: :details
       get '/chromebooks/edit', to: 'school/chromebooks#edit'

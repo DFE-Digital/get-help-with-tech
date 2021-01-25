@@ -29,7 +29,6 @@ en:
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
     responsible_body_devices_tell_us: Tell us who will order laptops and tablets
-    responsible_body_devices_request_devices: Request devices for specific circumstances
     responsible_body_internet_home: Get internet access
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
@@ -142,8 +141,6 @@ en:
             title: Get internet access
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
-    school_request_devices: Request devices for specific circumstances
-    school_specific_circumstances: Get help for specific circumstances
     school_details: Check your organisation’s details
     school_edit_chromebooks: Will you need to order Chromebooks?
     school_users: Manage users

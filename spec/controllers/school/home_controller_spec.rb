@@ -31,16 +31,4 @@ RSpec.describe School::HomeController do
       end
     end
   end
-
-  describe '#specific_circumstances' do
-    context 'when the given URN is one of the users schools' do
-      let(:urn) { user.schools.first.urn }
-
-      it 'shows the school home page' do
-        get :specific_circumstances, params: { urn: urn }
-        expect(controller).to render_template(:specific_circumstances)
-        expect(response).to have_http_status(:ok)
-      end
-    end
-  end
 end

@@ -153,16 +153,6 @@ RSpec.feature 'Setting up the devices ordering' do
       when_i_choose_no_they_will_not_need_chromebooks
       then_i_see_the_allocation_guidance_without_the_we_need_information_section
     end
-
-    scenario 'learning about requesting devices for specific circumstances' do
-      # the page is only visible when the responsible body has completed the 'who will order' wizard
-      responsible_body.update!(who_will_order_devices: :responsible_body)
-
-      click_on 'Get laptops and tablets'
-      click_on 'Request devices for specific circumstances'
-
-      expect(page).to have_content 'Request devices for specific circumstances'
-    end
   end
 
   context 'as a trust user' do

@@ -126,7 +126,6 @@ RSpec.feature 'Viewing your schools' do
     expect(page).to have_css('h1', text: 'Get laptops and tablets')
     expect(page).to have_link('Your schools')
     expect(page).to have_link('Order devices')
-    expect(page).to have_link('Request devices for specific circumstances')
   end
 
   def then_i_see_the_your_schools_page
