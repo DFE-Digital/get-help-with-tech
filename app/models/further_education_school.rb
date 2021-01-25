@@ -31,7 +31,7 @@ class FurtherEducationSchool < School
     when 'special_post_16_institution'
       'Post-16 Institution (SPI)'
     when '16_19_other'
-      '16-19 other'
+      '16 to 19 other'
     when 'local_authority'
       'Local Authority'
     when 'art_and_design_college'
