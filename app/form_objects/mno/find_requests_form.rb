@@ -17,6 +17,7 @@ private
 
   def parse_phone_numbers
     return [] if phone_numbers.blank?
+
     phone_numbers.split("\r\n").map(&:strip).reject(&:blank?).map { |num| Phonelib.parse(num).national(false) }
   end
 end

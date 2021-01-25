@@ -4,10 +4,7 @@ require 'shared/expect_download'
 RSpec.feature 'Find MNO Requests by telephone number', type: :feature do
   let(:local_authority_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
-  let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }
-  let(:user_from_other_mno) { create(:mno_user, name: 'Other MNO-User', organisation: 'Other MNO', mobile_network: other_mno) }
   let!(:extra_mobile_data_requests_for_mno) { create_list(:extra_mobile_data_request, 3, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
-  let!(:extra_mobile_data_request_for_other_mno) { create(:extra_mobile_data_request, account_holder_name: 'other mno extra_mobile_data_request', mobile_network: other_mno, created_by_user: local_authority_user) }
 
   scenario 'visiting Your requests' do
     given_i_am_signed_in_as_an_mno_user

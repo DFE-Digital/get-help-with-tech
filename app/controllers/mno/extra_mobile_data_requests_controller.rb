@@ -139,7 +139,7 @@ private
     form_params = params.fetch(:mno_find_requests_form, {}).permit(:phone_numbers)
     # once on the find requests page we could get sorting requests for the table of results
     form_params = params.permit(:phone_numbers) if form_params.empty?
-    
+
     form_params
   end
 
