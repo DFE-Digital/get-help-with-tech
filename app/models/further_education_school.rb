@@ -23,7 +23,7 @@ class FurtherEducationSchool < School
     when 'general_fe_and_tertiary'
       'General FE and Tertiary'
     when 'sixth_form_college'
-      'Sixth Form College'
+      'Sixth-form College'
     when 'independent_learning_provider'
       'Independent Learning Provider'
     when 'agricultural_and_horticultural_college'
