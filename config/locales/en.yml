@@ -430,6 +430,10 @@ en:
             base:
               cannot_parse: Choose an ‘xlsx’ (Open XML format) Excel file
               cannot_find_expected_worksheet: Upload a spreadsheet containing a sheet called ‘%{worksheet_name}’
+        mno/csv_status_update_form:
+          attributes:
+            upload:
+              theres_a_problem_with_that_csv: There’s a problem with that CSV
         responsible_body/devices/who_will_order_form:
           attributes:
             who_will_order:

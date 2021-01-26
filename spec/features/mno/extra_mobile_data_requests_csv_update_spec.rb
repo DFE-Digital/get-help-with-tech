@@ -22,12 +22,34 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     then_i_see_a_summary_page
   end
 
+  scenario 'submitting more that 50 updates' do
+    given_i_have_more_than_50_mobile_data_requests
+    given_i_am_signed_in_as_a_mno_user
+    when_i_visit_the_csv_update_page
+    and_i_select_my_large_csv_file
+    and_i_click_the_upload_and_update_requests_button
+    then_i_see_a_summary_page_with_the_first_50_of_my_updates
+  end
+
+  scenario 'submitting more that 50 updates with errors' do
+    given_i_have_more_than_50_mobile_data_requests
+    given_i_am_signed_in_as_a_mno_user
+    when_i_visit_the_csv_update_page
+    and_i_select_my_large_csv_file_with_errors
+    and_i_click_the_upload_and_update_requests_button
+    then_i_see_a_summary_page_with_the_first_50_errors_displayed
+  end
+
   def given_i_am_signed_in_as_a_mno_user
     sign_in_as mno_user
   end
 
   def given_i_have_some_mobile_data_requests
     @requests = create_list(:extra_mobile_data_request, 2, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
+  end
+
+  def given_i_have_more_than_50_mobile_data_requests
+    @requests = create_list(:extra_mobile_data_request, 52, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
   end
 
   def when_i_follow_the_csv_update_link
@@ -42,6 +64,22 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     attrs = requests_to_attrs
     attrs[0][:status] = 'in_progress'
     attrs[1][:status] = 'problem_no_match_for_number'
+
+    create_extra_mobile_data_request_update_csv_file(filename, attrs)
+    attach_file('CSV file', filename)
+  end
+
+  def and_i_select_my_large_csv_file
+    attrs = requests_to_attrs
+    attrs.each { |req| req[:status] = 'in_progress' }
+
+    create_extra_mobile_data_request_update_csv_file(filename, attrs)
+    attach_file('CSV file', filename)
+  end
+
+  def and_i_select_my_large_csv_file_with_errors
+    attrs = requests_to_attrs
+    attrs.each { |req| req[:status] = 'an_error' }
 
     create_extra_mobile_data_request_update_csv_file(filename, attrs)
     attach_file('CSV file', filename)
@@ -66,6 +104,34 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     row1 = "#{@requests[1].id} #{@requests[1].account_holder_name} #{@requests[1].device_phone_number} Unknown number"
     expect(page).to have_selector('tr', text: row0)
     expect(page).to have_selector('tr', text: row1)
+
+    remove_file(filename)
+  end
+
+  def then_i_see_a_summary_page_with_the_first_50_of_my_updates
+    expect(page).to have_selector('h1', text: 'We’ve processed your CSV')
+    expect(page).to have_text('0 were not changed')
+    expect(page).to have_text('0 contain errors')
+    expect(page).to have_text('52 were updated successfully')
+    expect(page).to have_text('Showing the first 50 of 52 updated requests')
+
+    within('#updates-table tbody') do
+      expect(all('tr').count).to eq(50)
+    end
+
+    remove_file(filename)
+  end
+
+  def then_i_see_a_summary_page_with_the_first_50_errors_displayed
+    expect(page).to have_selector('h1', text: 'We’ve processed your CSV')
+    expect(page).to have_text('0 were not changed')
+    expect(page).to have_text('52 contain errors')
+    expect(page).to have_text('0 were updated successfully')
+    expect(page).to have_text('Showing the first 50 of 52 requests containing errors')
+
+    within('#errors-table tbody') do
+      expect(all('tr').count).to eq(50)
+    end
 
     remove_file(filename)
   end

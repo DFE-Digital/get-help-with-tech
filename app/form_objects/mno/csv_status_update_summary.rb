@@ -1,4 +1,8 @@
 class Mno::CsvStatusUpdateSummary
+  include ActionView::Helpers::NumberHelper
+
+  DISPLAY_LIMIT = 50
+
   attr_reader :errors, :unchanged, :updated
   def initialize
     @errors = []
@@ -67,10 +71,26 @@ class Mno::CsvStatusUpdateSummary
   end
 
   def errors_section_heading_text
-    "#{errors_count} #{'request'.pluralize(errors_count)} #{'contains'.pluralize(errors_count)} errors"
+    if errors_count > DISPLAY_LIMIT
+      "Showing the first #{DISPLAY_LIMIT} of #{number_with_delimiter(errors_count)} requests containing errors"
+    else
+      "#{errors_count} #{'request'.pluralize(errors_count)} #{'contains'.pluralize(errors_count)} errors"
+    end
   end
 
   def updated_section_heading_text
-    "#{updated_count} #{'request'.pluralize(updated_count)} updated"
+    if updated_count > DISPLAY_LIMIT
+      "Showing the first #{DISPLAY_LIMIT} of #{number_with_delimiter(updated_count)} updated requests"
+    else
+      "#{updated_count} #{'request'.pluralize(updated_count)} updated"
+    end
+  end
+
+  def updated_display_limited
+    updated.take(DISPLAY_LIMIT)
+  end
+
+  def errors_display_limited
+    errors.take(DISPLAY_LIMIT)
   end
 end
