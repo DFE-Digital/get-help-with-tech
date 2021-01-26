@@ -82,9 +82,7 @@ class School < ApplicationRecord
   end
 
   def human_for_school_type
-    I18n.t(school_type, scope: %i[activerecord attributes school school_type], default: 'Other')
-  rescue I18n::ArgumentError
-    'Other'
+    I18n.t(school_type, scope: %i[activerecord attributes school school_type], default: [:other])
   end
 
   def ukprn_or_urn
@@ -140,8 +138,6 @@ class School < ApplicationRecord
       'special_school'
     elsif phase && !phase_not_applicable?
       "#{phase}_school"
-    else
-      ''
     end
   end
 
