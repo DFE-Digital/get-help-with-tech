@@ -561,6 +561,25 @@ en:
           school_will_be_contacted: School will be contacted
           school_ready: School ready
       school:
+        school_type:
+          # School
+          special_school: Special school
+          primary_school: Primary school
+          secondary_school: Secondary school
+          all_through_school: All through school
+          sixteen_plus_school: Sixteen plus school
+          nursery_school: Nursery school
+          # FurtherEducationSchool
+          general_fe_and_tertiary: General FE and Tertiary
+          sixth_form_college: Sixth-form College
+          independent_learning_provider: Independent Learning Provider
+          agricultural_and_horticultural_college: Agricultural & Horticultural College
+          special_post_16_institution: Post-16 Institution (SPI)
+          16_19_other: 16 to 19 other
+          local_authority: Local Authority
+          art_and_design_college: Art and Design College
+          higher_education_provider: Higher Education Provider
+          other: Other
         order_states:
           cannot_order: No, orders cannot be placed yet
           cannot_order_as_reopened: No, as school has reopened

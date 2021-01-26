@@ -126,7 +126,7 @@ private
   def school_type_row
     {
       key: 'Setting',
-      value: @school.type_label,
+      value: @school.human_for_school_type,
     }
   end
 

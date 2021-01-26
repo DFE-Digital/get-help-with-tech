@@ -17,4 +17,8 @@ class FurtherEducationSchool < School
       'organisation'
     end
   end
+
+  def school_type
+    fe_type
+  end
 end
