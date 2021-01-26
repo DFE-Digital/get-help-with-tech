@@ -23,7 +23,7 @@
   <div class="govuk-form-group--error">
     <p class="govuk-error-message">Fix the errors in your CSV and try uploading again</p>
 
-    <table class="govuk-table requests-table">
+    <table class="govuk-table requests-table" id="errors-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th class="govuk-table__header">ID</th>
@@ -33,7 +33,7 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @summary.errors.each do |row| %>
+        <% @summary.errors_display_limited.each do |row| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= row.id %></td>
             <td class="govuk-table__cell"><%= row.account_holder_name %></td>
@@ -50,7 +50,7 @@
 
 <% if @summary.has_updated_requests? %>
   <h2 class="govuk-heading-l govuk-!-margin-top-4"><%= @summary.updated_section_heading_text %></h2>
-  <table class="govuk-table requests-table">
+  <table class="govuk-table requests-table" id="updates-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header">ID</th>
@@ -60,7 +60,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <% @summary.updated.each do |row| %>
+      <% @summary.updated_display_limited.each do |row| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= row.id %></td>
           <td class="govuk-table__cell"><%= row.account_holder_name %></td>
