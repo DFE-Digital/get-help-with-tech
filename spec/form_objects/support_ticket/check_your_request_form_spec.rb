@@ -19,16 +19,50 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
       allow(Settings.zendesk).to receive(:token).and_return('123456')
     end
 
-    it 'calls the zendesk service to create a ticket in zendesk' do
-      allow(ZendeskService).to receive(:send!)
-      described_class.new(ticket: mock_ticket).create_ticket
-      expect(ZendeskService).to have_received(:send!)
+    describe '#create_ticket' do
+      it 'calls the zendesk service to create a ticket in zendesk' do
+        allow(ZendeskService).to receive(:send!).and_return( double ZendeskAPI::Request, id: 56789)
+        described_class.new(ticket: mock_ticket).create_ticket
+        expect(ZendeskService).to have_received(:send!)
+      end
+
+      it 'sets ticket_number instance variable' do
+        allow(ZendeskService).to receive(:send!).and_return(instance_double('ZendeskAPI::Request', id: 56_789))
+        form_object = described_class.new(ticket: mock_ticket)
+        form_object.create_ticket
+        expect(form_object.ticket_number).to eq(56_789)
+      end
+
+      it 'returns ticket_number created in zendesk' do
+        allow(ZendeskService).to receive(:send!).and_return(instance_double('ZendeskAPI::Request', id: 15_264))
+        form_object = described_class.new(ticket: mock_ticket)
+        expect(form_object.create_ticket).to eq(15_264)
+      end
+
+      describe 'when ZendeskService fails' do
+        # ZendeskAPI::Request.create! should return nil if there are any errors while trying to create zendesk ticket
+        it 'sets ticket_number instance variable to nil' do
+          allow(ZendeskService).to receive(:send!).and_return(nil)
+          form_object = described_class.new(ticket: mock_ticket)
+          form_object.create_ticket
+          expect(form_object.ticket_number).to be_nil
+        end
+
+        it 'returns nil' do
+          allow(ZendeskService).to receive(:send!).and_return(nil)
+          form_object = described_class.new(ticket: mock_ticket)
+          expect(form_object.create_ticket).to be_nil
+        end
+      end
     end
+
+
 
     context 'Subject' do
       it 'sets the email subject line to include just school name' do
         allow(ZendeskService).to receive(:send!)
-        described_class.new(ticket: { 'school_name' => 'School 1' }).create_ticket
+        form_object = described_class.new(ticket: { 'school_name' => 'School 1' })
+        form_object.create_ticket
         expect(ZendeskService).to have_received(:send!)
                                     .with({ 'school_name' => 'School 1',
                                             'subject' => 'ONLINE FORM - School 1' })
@@ -60,6 +94,18 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
       allow(ZendeskService).to receive(:send!)
       described_class.new(ticket: mock_ticket).create_ticket
       expect(ZendeskService).not_to have_received(:send!)
+    end
+
+
+    it 'sets ticket_number instance variable to a random 5 digit  number' do
+      form_object = described_class.new(ticket: mock_ticket)
+      form_object.create_ticket
+      expect(form_object.ticket_number).to be_between(10_000, 99_999)
+    end
+
+    it 'returns a random 5 digit number' do
+      ticket_number = described_class.new(ticket: mock_ticket).create_ticket
+      expect(ticket_number).to be_between(10000,99999)
     end
   end
 end
