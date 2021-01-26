@@ -1,6 +1,7 @@
 class Mno::ExtraMobileDataRequestsController < Mno::BaseController
   def index
-    @extra_mobile_data_requests = extra_mobile_data_request_scope.order(safe_order)
+    @find_requests_form = Mno::FindRequestsForm.new(find_requests_params)
+    @extra_mobile_data_requests = extra_mobile_data_request_search_scope.order(safe_order)
 
     respond_to do |format|
       format.csv do
@@ -14,6 +15,11 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
           extra_mobile_data_request_ids: selected_extra_mobile_data_request_ids(@extra_mobile_data_requests, params),
         )
         @statuses = mno_status_options
+        if @find_requests_form.phone_number_list.any?
+          render 'search_results'
+        else
+          render
+        end
       end
     end
   end
@@ -39,12 +45,30 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
       extra_mobile_data_request_scope
                .where('extra_mobile_data_requests.id IN (?)', ids)
                .update_all(new_attributes)
-      redirect_to mno_extra_mobile_data_requests_path
+      redirect_to mno_extra_mobile_data_requests_path(find_requests_params)
     rescue ActiveRecord::StatementInvalid, ArgumentError => e
       logger.error e
       flash[:error] = "I couldn't apply that update"
       render :index, status: :unprocessable_entity
       raise ActiveRecord::Rollback
+    end
+  end
+
+  def find_requests
+    @find_requests_form = Mno::FindRequestsForm.new(find_requests_params)
+    if @find_requests_form.phone_number_list.any?
+      redirect_to mno_extra_mobile_data_requests_path(find_requests_params)
+    else
+      @find_requests_form.phone_numbers = nil
+      @find_requests_form.valid?
+      @extra_mobile_data_requests = extra_mobile_data_request_search_scope.order(safe_order)
+      @pagination, @extra_mobile_data_requests = pagy(@extra_mobile_data_requests)
+      @extra_mobile_data_requests_form = Mno::ExtraMobileDataRequestsForm.new(
+        extra_mobile_data_requests: @extra_mobile_data_requests,
+        extra_mobile_data_request_ids: selected_extra_mobile_data_request_ids(@extra_mobile_data_requests, params),
+      )
+      @statuses = mno_status_options
+      render :index
     end
   end
 
@@ -79,6 +103,17 @@ private
     @mobile_network.extra_mobile_data_requests
   end
 
+  def extra_mobile_data_request_search_scope
+    base_scope = extra_mobile_data_request_scope
+    requested_numbers = @find_requests_form.phone_number_list
+
+    if requested_numbers.any?
+      # a search filter has been applied
+      base_scope = base_scope.where(device_phone_number: requested_numbers)
+    end
+    base_scope
+  end
+
   def load_extra_mobile_data_request(emdr_id)
     @extra_mobile_data_request = extra_mobile_data_request_scope.find(emdr_id)
   end
@@ -98,6 +133,14 @@ private
       :status,
       extra_mobile_data_request_ids: [],
     )
+  end
+
+  def find_requests_params
+    form_params = params.fetch(:mno_find_requests_form, {}).permit(:phone_numbers)
+    # once on the find requests page we could get sorting requests for the table of results
+    form_params = params.permit(:phone_numbers) if form_params.empty?
+
+    form_params
   end
 
   def safe_order(opts = params)

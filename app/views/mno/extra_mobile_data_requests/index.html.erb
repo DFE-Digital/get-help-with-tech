@@ -14,67 +14,35 @@
     (There are no matching requests at the moment)
   </p>
 <% else %>
-  <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
   <p class="govuk-body"><%= govuk_link_to t('page_titles.extra_mobile_data_requests_csv_update'), new_mno_extra_mobile_data_requests_csv_update_path %></p>
+  <%= govuk_button_link_to 'Download requests as CSV', sort: params[:sort], dir: params[:dir], format: :csv %>
 
-  <h2 class="govuk-heading-l govuk-!-margin-top-4">
-    <%= pagy_info(@pagination, "requests").capitalize.html_safe %>
+  <div class="app-card govuk-!-margin-bottom-4 govuk-!-margin-top-2">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= form_for @find_requests_form, url: find_requests_mno_extra_mobile_data_requests_path, method: :post do |f| %>
+          <%= f.govuk_error_summary %>
+
+          <%= f.govuk_fieldset(legend: { text: 'Find requests by telephone number', size: 'l'}) do %>
+            <%= f.govuk_text_area :phone_numbers,
+              hint: { text: 'One per line' },
+              label: { text: 'Telephone numbers', size: 's' },
+              rows: 5 %>
+            <%= f.govuk_submit 'Find requests', classes: 'govuk-!-margin-bottom-0' %>
+          <%- end %>
+        <%- end %>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="govuk-heading-l govuk-!-margin-top-6">
+    All requests (<%= number_with_delimiter(@pagination.count, delimiter: ',') %>)
   </h2>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= form_for @extra_mobile_data_requests_form, url: bulk_update_mno_extra_mobile_data_requests_path, method: :put do |f| %>
-        <table class="govuk-table" data-module="app-select-all-none">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header">
-                <div class="non-js-only">
-                  Select
-                  <br />
-                  <%= govuk_link_to 'all', mno_extra_mobile_data_requests_path(select: 'all') %>
-                  |
-                  <%= govuk_link_to 'none', mno_extra_mobile_data_requests_path(select: 'none') %>
-                </div>
-                <div class="js-only govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="all-rows" name="all-rows" type="checkbox" value="all-rows">
-                  <label class="govuk-label govuk-label--s govuk-checkboxes__label" for="all-rows"></label>
-                </div>
-              </th>
-              <th class="govuk-table__header">
-                <%= sortable_extra_mobile_data_requests_table_header('Account holder', :account_holder_name) %>
-              </th>
-              <th class="govuk-table__header govuk-table__header--numeric">
-                <%= sortable_extra_mobile_data_requests_table_header('Mobile number', :mobile_number) %>
-              </th>
-              <th class="govuk-table__header">
-                <%= sortable_extra_mobile_data_requests_table_header('Requested', :requested) %>
-              </th>
-              <th class="govuk-table__header">
-                <%= sortable_extra_mobile_data_requests_table_header('Status', :status) %>
-              </th>
-              <th class="govuk-table__header">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-            <%= render partial: 'extra_mobile_data_request', collection: @extra_mobile_data_requests, locals: {form: f} %>
-          </tbody>
-          <tfoot class="govuk-table__footer">
-            <td class="govuk-table__footer" colspan="7">
-            </td>
-          </tfoot>
-        </table>
-        <div class="govuk-body govuk-grid-row">
-          <div class="govuk-grid-column-one-half">
-            <div class="govuk-form-group govuk-!-margin-bottom-0 display-child-forms-inline">
-              <label for="mno-extra-mobile-data-requests-form-status-field" class="govuk-label">Set status of selected to</label>
-              <%= f.govuk_collection_select :status, @statuses, :value, :label, label: {text: ''} %>
-              <%= f.govuk_submit 'Update' %>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-half">
-            <%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>
-          </div>
-        </div>
+        <%= render partial: 'extra_mobile_data_requests_bulk_table', locals: { form: f, requests: @extra_mobile_data_requests, phone_numbers: @find_requests_form.phone_numbers, statuses: @statuses, pagination: @pagination } %>
       <% end %>
     </div>
   </div>
