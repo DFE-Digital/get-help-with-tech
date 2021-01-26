@@ -166,4 +166,15 @@ describe Support::SchoolDetailsSummaryListComponent do
       end
     end
   end
+
+  describe 'address' do
+    it 'is displayed' do
+      expect(result.text).to include(school.address_1.to_s)
+      expect(result.text).to include(school.address_2.to_s)
+      expect(result.text).to include(school.address_3.to_s)
+      expect(result.text).to include(school.town.to_s)
+      expect(result.text).to include(school.county.to_s)
+      expect(result.text).to include(school.postcode.to_s)
+    end
+  end
 end

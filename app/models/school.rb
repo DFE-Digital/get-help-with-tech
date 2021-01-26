@@ -180,8 +180,12 @@ class School < ApplicationRecord
     responsible_body.has_school_in_virtual_cap_pools?(self)
   end
 
+  def address_components
+    [address_1, address_2, address_3, town, county, postcode].reject(&:blank?)
+  end
+
   def address
-    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
+    address_components.join(', ')
   end
 
   def update_computacenter_reference!(new_value)
