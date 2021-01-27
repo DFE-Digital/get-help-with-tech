@@ -1,23 +1,38 @@
-<% content_for :title,  'Thank you for completing this form' %>
+<% content_for :title,  'Support request complete' %>
 
 <%- content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => guidance_page_path },
                   {t('landing_pages.get_support.start') => support_ticket_path},
-                  'Thank you for completing this form',
+                  'Support request sent',
                  ]) %>
 <% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+    <%=render GovukComponent::Panel.new(
+      title: 'Support request sent',
+      body: "Your reference number #{session[:support_ticket_number]}")
+    %>
+  </div>
+</div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-l">
-      Thank you for completing this form
-    </h1>
-    <p class="govuk-body">Our support team has received your request. If you do not receive an email from us within that time, please check your spam or junk folder.</p>
+    <h2 class="govuk-heading-m">
+      What happens next?
+    </h2>
 
-    <p class="govuk-body">We aim to respond within 5 working days.</p>
+    <p class="govuk-body">
+      Our support team has received your message. We aim to respond to you by email within 5 working days.
+      If you have not heard from us within that time, please check your spam or junk folder.
+    </p>
+    <p class="govuk-body">
+      We’re experiencing high demand at the moment. We know that 5 days is a bit of a long time to ask you to wait, but we appreciate your patience.
+    </p>
 
     <!-- @TODO TRACK LINK ? -->
-    <p class="govuk-body">Access further resources on
+    <p class="govuk-body">
+      Find further resources on
       <a href="https://get-help-with-tech.education.gov.uk/" rel="noreferrer noopener" target="_blank">Get help with technology</a>
     </p>
   </div>

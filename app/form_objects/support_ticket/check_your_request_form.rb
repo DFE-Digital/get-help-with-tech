@@ -1,15 +1,18 @@
 class SupportTicket::CheckYourRequestForm
   include ActiveModel::Model
 
-  attr_accessor :ticket
+  attr_accessor :ticket, :ticket_number
 
   validates :ticket, presence: true
 
   def create_ticket
     if Settings.zendesk&.username.present? && Settings.zendesk&.token.present?
       ticket['subject'] = build_subject
-      ZendeskService.send!(ticket)
+      @ticket_number = ZendeskService.send!(ticket)&.id
+    else
+      @ticket_number = rand(10_000..99_999)
     end
+    @ticket_number
   end
 
 private
