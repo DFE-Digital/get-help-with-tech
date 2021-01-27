@@ -8,7 +8,7 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
   let(:importer) { described_class.new(spreadsheet) }
 
   before do
-    ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
+    ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'SMARTY', 'Three'].each do |brand|
       create(:mobile_network, brand: brand)
     end
   end
@@ -16,7 +16,7 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
   it 'imports valid requests from a spreadsheet created in Excel' do
     expect {
       importer.import!(extra_fields: { responsible_body: rb, created_by_user: user })
-    }.to change { ExtraMobileDataRequest.count }.by(4)
+    }.to change { ExtraMobileDataRequest.count }.by(3)
   end
 
   context 'when importing a spreadsheet created in Google Docs' do
@@ -44,6 +44,6 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
   it 'queues a SMS notification for the valid request account holders' do
     expect {
       importer.import!(extra_fields: { responsible_body: rb, created_by_user: user })
-    }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(4).times
+    }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(3).times
   end
 end

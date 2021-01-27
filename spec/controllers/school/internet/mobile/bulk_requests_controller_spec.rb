@@ -32,10 +32,10 @@ RSpec.describe School::Internet::Mobile::BulkRequestsController, type: :controll
       end
 
       it 'sends an SMS to the account holder of each valid request in the spreadsheet' do
-        # file has 4 valid requests, 1 invalid
+        # file has 1 example, 3 valid requests, 1 invalid
         expect {
           post :create, params: request_data
-        }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(4).times
+        }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(3).times
       end
 
       it 'throws a catch-all error message if something unexpected goes wrong with the import' do
