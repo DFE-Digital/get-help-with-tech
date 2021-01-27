@@ -21,7 +21,7 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
 
     describe '#create_ticket' do
       it 'calls the zendesk service to create a ticket in zendesk' do
-        allow(ZendeskService).to receive(:send!).and_return( double ZendeskAPI::Request, id: 56789)
+        allow(ZendeskService).to receive(:send!).and_return(instance_double('ZendeskAPI::Request', id: 56_789))
         described_class.new(ticket: mock_ticket).create_ticket
         expect(ZendeskService).to have_received(:send!)
       end
@@ -55,8 +55,6 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
         end
       end
     end
-
-
 
     context 'Subject' do
       it 'sets the email subject line to include just school name' do
@@ -96,7 +94,6 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
       expect(ZendeskService).not_to have_received(:send!)
     end
 
-
     it 'sets ticket_number instance variable to a random 5 digit  number' do
       form_object = described_class.new(ticket: mock_ticket)
       form_object.create_ticket
@@ -105,7 +102,7 @@ RSpec.describe SupportTicket::CheckYourRequestForm do
 
     it 'returns a random 5 digit number' do
       ticket_number = described_class.new(ticket: mock_ticket).create_ticket
-      expect(ticket_number).to be_between(10000,99999)
+      expect(ticket_number).to be_between(10_000, 99_999)
     end
   end
 end

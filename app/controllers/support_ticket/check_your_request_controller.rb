@@ -8,11 +8,12 @@ class SupportTicket::CheckYourRequestController < SupportTicket::BaseController
   end
 
   def save
-    if form.valid?
-      form.create_ticket
+    if form.valid? && form.create_ticket
       session[:support_ticket] = nil
+      session[:support_ticket_number] = form.ticket_number
       redirect_to next_step
     else
+      flash[:warning] = 'There was a problem trying to log your request. Please try again.'
       render 'support_tickets/check_your_request'
     end
   end
