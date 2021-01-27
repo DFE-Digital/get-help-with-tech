@@ -10,6 +10,7 @@ class ExtraMobileDataRequestSpreadsheet
 
   def requests
     row_hashes
+      .reject { |row_hash| is_example_record?(row_hash) }
       .map { |row_hash| ExtraMobileDataRequestRow.new(row_hash).build_request }
       .compact
   end
@@ -26,6 +27,10 @@ private
 
   def expected_worksheet_present
     errors.add(:base, :cannot_find_expected_worksheet, worksheet_name: WORKSHEET_NAME) unless worksheet
+  end
+
+  def is_example_record?(row_hash)
+    row_hash[:account_holder_name] == 'Jane Smith' && row_hash[:mobile_phone_number] == '07123456789'
   end
 
   # Returns a collection of hashes mapping column name symbols to values:

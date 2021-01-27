@@ -15,43 +15,47 @@ RSpec.describe ExtraMobileDataRequestSpreadsheet, type: :model do
     it 'imports reads requests from a spreadsheet' do
       requests = spreadsheet.requests
 
-      expect(requests.size).to eq(5)
+      expect(requests.size).to eq(4)
 
       expect(requests[0]).to have_attributes(
-        account_holder_name: 'Jane Smith',
-        device_phone_number: '07123456789',
-        mobile_network: MobileNetwork.find_by(brand: 'Virgin Mobile'),
-        contract_type: 'pay_monthly',
-        agrees_with_privacy_statement: true,
-      )
-      expect(requests[1]).to have_attributes(
         account_holder_name: 'Bill Jones',
         device_phone_number: '07900222222',
         mobile_network: MobileNetwork.find_by(brand: 'O2'),
         contract_type: 'pay_as_you_go_payg',
         agrees_with_privacy_statement: true,
       )
-      expect(requests[2]).to have_attributes(
+      expect(requests[1]).to have_attributes(
         account_holder_name: 'Mary West',
         device_phone_number: '07111456789',
         mobile_network: MobileNetwork.find_by(brand: 'Tesco Mobile'),
         contract_type: 'pay_as_you_go_payg',
         agrees_with_privacy_statement: true,
       )
-      expect(requests[3]).to have_attributes(
+      expect(requests[2]).to have_attributes(
         account_holder_name: 'Arthur Radish',
         device_phone_number: '07722123123',
         mobile_network: MobileNetwork.find_by(brand: 'Virgin Mobile'),
         contract_type: 'pay_monthly',
         agrees_with_privacy_statement: true,
       )
-      expect(requests[4]).to have_attributes(
+      expect(requests[3]).to have_attributes(
         account_holder_name: 'Felicity Hamburger',
         device_phone_number: '07001234567',
         mobile_network: MobileNetwork.find_by(brand: 'Three'),
         contract_type: 'pay_as_you_go_payg',
         agrees_with_privacy_statement: false,
       )
+    end
+
+    it 'does not import the example record' do
+      requests = spreadsheet.requests
+
+      requests.each do |request|
+        expect(request).not_to have_attributes(
+          account_holder_name: 'Jane Smith',
+          device_phone_number: '07123456789',
+        )
+      end
     end
   end
 
@@ -64,12 +68,23 @@ RSpec.describe ExtraMobileDataRequestSpreadsheet, type: :model do
       expect(requests.size).to eq(1)
 
       expect(requests[0]).to have_attributes(
-        account_holder_name: 'Jane Smith',
-        device_phone_number: '07123456789',
-        mobile_network: MobileNetwork.find_by(brand: 'Virgin Mobile'),
+        account_holder_name: 'Arthur Hancock',
+        device_phone_number: '07712987123',
+        mobile_network: MobileNetwork.find_by(brand: 'SMARTY'),
         contract_type: 'pay_monthly',
         agrees_with_privacy_statement: true,
       )
+    end
+
+    it 'does not import the example record' do
+      requests = spreadsheet.requests
+
+      requests.each do |request|
+        expect(request).not_to have_attributes(
+          account_holder_name: 'Jane Smith',
+          device_phone_number: '07123456789',
+        )
+      end
     end
   end
 
