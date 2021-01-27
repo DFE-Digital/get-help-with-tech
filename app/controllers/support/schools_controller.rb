@@ -92,6 +92,11 @@ private
   end
 
   def search_params
-    params.require(:school_search_form).permit(:identifiers, :responsible_body_id, :order_state)
+    params.require(:school_search_form).permit(
+      :search_type,
+      :identifiers,
+      :responsible_body_id,
+      :order_state,
+    )
   end
 end

@@ -1,7 +1,7 @@
 class SchoolSearchForm
   include ActiveModel::Model
 
-  attr_accessor :identifiers, :responsible_body_id, :order_state
+  attr_accessor :search_type, :identifiers, :responsible_body_id, :order_state
 
   def array_of_identifiers
     @array_of_identifiers ||= identifiers.to_s.split("\r\n").map(&:strip).reject(&:blank?)
@@ -21,9 +21,15 @@ class SchoolSearchForm
 
   def schools
     school_records = School.gias_status_open.includes(:responsible_body, :std_device_allocation)
-    school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
-    school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
-    school_records = school_records.where(order_state: order_state) if order_state.present?
+
+    if search_type == 'multiple'
+      school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
+    elsif search_type == 'responsible_body_or_order_state'
+      school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
+      school_records = school_records.where(order_state: order_state) if order_state.present?
+    else
+      raise "Unexpected search type: #{search_type}"
+    end
 
     @schools ||= school_records
   end
