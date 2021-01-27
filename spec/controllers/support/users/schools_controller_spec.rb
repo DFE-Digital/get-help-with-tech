@@ -10,7 +10,7 @@ RSpec.describe Support::Users::SchoolsController, type: :controller do
 
   describe '#new' do
     it 'validates that the name or URN param is 3 characters or longer' do
-      get :new, params: { user_id: trust_user.id, support_school_suggestion_form: { name_or_urn: 'ab' } }
+      get :new, params: { user_id: trust_user.id, support_school_suggestion_form: { name_or_urn_or_ukprn: 'ab' } }
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response).to render_template(:search_again)
@@ -24,7 +24,7 @@ RSpec.describe Support::Users::SchoolsController, type: :controller do
     it 'grants user access to the school when the support agent provides a URN via the text box (no JS)' do
       get :create, params: {
         user_id: trust_user.id,
-        support_school_suggestion_form: { name_or_urn: school_to_add.urn.to_s },
+        support_school_suggestion_form: { name_or_urn_or_ukprn: school_to_add.urn.to_s },
       }
 
       expect(trust_user.schools.reload).to include(school_to_add)
@@ -49,7 +49,7 @@ RSpec.describe Support::Users::SchoolsController, type: :controller do
 
       get :create, params: {
         user_id: trust_user.id,
-        support_school_suggestion_form: { name_or_urn: 'ABC' },
+        support_school_suggestion_form: { name_or_urn_or_ukprn: 'ABC' },
       }
 
       expect(trust_user.schools.reload).to include(school_to_add)
@@ -63,16 +63,16 @@ RSpec.describe Support::Users::SchoolsController, type: :controller do
 
       get :create, params: {
         user_id: trust_user.id,
-        support_school_suggestion_form: { name_or_urn: 'school' },
+        support_school_suggestion_form: { name_or_urn_or_ukprn: 'school' },
       }
 
-      expect(response).to redirect_to(new_support_user_school_path(trust_user, 'support_school_suggestion_form[name_or_urn]' => 'school'))
+      expect(response).to redirect_to(new_support_user_school_path(trust_user, 'support_school_suggestion_form[name_or_urn_or_ukprn]' => 'school'))
     end
 
     it 'prompts to search again if the support agent enters a school name that is too short' do
       get :create, params: {
         user_id: trust_user.id,
-        support_school_suggestion_form: { name_or_urn: 'ab' },
+        support_school_suggestion_form: { name_or_urn_or_ukprn: 'ab' },
       }
 
       expect(response).to have_http_status(:unprocessable_entity)

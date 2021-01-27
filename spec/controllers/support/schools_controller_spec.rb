@@ -49,6 +49,27 @@ RSpec.describe Support::SchoolsController, type: :controller do
         }])
       end
 
+      context 'when FE school exists' do
+        let!(:school) { create(:fe_school) }
+
+        it 'returns the FE school when searching by UKPRN' do
+          get :results, params: { query: school.ukprn }, format: :json
+
+          expect(response).to be_successful
+          expect(response.content_type).to eq 'application/json; charset=utf-8'
+
+          body = JSON.parse(response.body)
+
+          expect(body).to eq([{
+            'id' => school.id,
+            'name' => school.name,
+            'urn' => school.urn,
+            'town' => school.town,
+            'postcode' => school.postcode,
+          }])
+        end
+      end
+
       it 'returns an error when the query string is too short' do
         get :results, params: { query: 'aa' }, format: :json
 
@@ -57,7 +78,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
         body = JSON.parse(response.body)
         expect(body).to eq({
-          'errors' => ["'Name or urn' Enter a school name that is at least 3 characters"],
+          'errors' => ["'Name or urn or ukprn' Enter a school name that is at least 3 characters"],
         })
       end
     end

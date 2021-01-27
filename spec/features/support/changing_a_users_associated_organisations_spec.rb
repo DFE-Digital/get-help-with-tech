@@ -155,12 +155,12 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def and_i_enter_a_partial_school_name_that_matches_only_one_school
-    fill_in 'School name or URN', with: other_school_1.name.first(3).downcase
+    fill_in 'School name, URN or UKPRN', with: other_school_1.name.first(3).downcase
     user_schools_page.submit_school_name_or_urn.click
   end
 
   def and_i_enter_a_partial_school_name_that_matches_multiple_schools
-    fill_in 'School name or URN', with: 'school'
+    fill_in 'School name, URN or UKPRN', with: 'school'
     user_schools_page.submit_school_name_or_urn.click
   end
 
@@ -183,7 +183,7 @@ RSpec.feature 'Changing users’ associated organisations' do
   end
 
   def and_i_enter_a_school_urn_that_the_user_already_has
-    fill_in 'School name or URN', with: trust_school_1.urn
+    fill_in 'School name, URN or UKPRN', with: trust_school_1.urn
     user_schools_page.submit_school_name_or_urn.click
   end
 

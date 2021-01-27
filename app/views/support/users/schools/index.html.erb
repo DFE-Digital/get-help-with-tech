@@ -18,7 +18,7 @@
 
     <%= form_for @user_school_form, url: support_user_schools_path(@user) do |f| %>
       <%= f.govuk_fieldset legend: { text: 'Grant access to a school', size: 'm' } do %>
-        <%= f.govuk_text_field :name_or_urn, width: 'two-thirds', hint: { text: 'Enter part of a school name or URN' } %>
+        <%= f.govuk_text_field :name_or_urn_or_ukprn, width: 'two-thirds', hint: { text: 'Enter part of a school name, URN or UKPRN' } %>
         <%= f.hidden_field :school_urn %>
         <%= f.govuk_submit %>
       <%- end %>

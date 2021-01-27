@@ -3,12 +3,12 @@ class Support::SchoolSuggestionForm
 
   MAX_NUMBER_OF_SUGGESTED_SCHOOLS = 20
 
-  attr_accessor :name_or_urn, :school_urn, :except
+  attr_accessor :name_or_urn_or_ukprn, :school_urn, :except
 
-  validates :name_or_urn, length: { minimum: 3 }, unless: ->(form) { form.school_urn.present? }
+  validates :name_or_urn_or_ukprn, length: { minimum: 3 }, unless: ->(form) { form.school_urn.present? }
 
   def matching_schools
-    schools = school_by_urn.presence || schools_by_name_or_urn
+    schools = school_by_urn.presence || schools_by_name_or_urn_or_ukprn
     schools.where.not(id: ids_of_schools_to_exclude)
   end
 
@@ -44,9 +44,9 @@ private
     end
   end
 
-  def schools_by_name_or_urn
+  def schools_by_name_or_urn_or_ukprn
     School
-      .matching_name_or_urn(@name_or_urn)
+      .matching_name_or_urn_or_ukprn(@name_or_urn_or_ukprn)
       .includes(:responsible_body)
       .order(:name)
       .limit(MAX_NUMBER_OF_SUGGESTED_SCHOOLS)

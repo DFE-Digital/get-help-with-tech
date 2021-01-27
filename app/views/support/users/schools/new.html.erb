@@ -10,7 +10,7 @@
     </h1>
 
     <p class="govuk-body">
-      You searched for “<%= @form.name_or_urn %>”.
+      You searched for “<%= @form.name_or_urn_or_ukprn %>”.
     </p>
 
     <%- if @school_options.present? %>
@@ -47,7 +47,7 @@
 
     <%= govuk_details(summary: 'Try another school') do %>
       <%= form_for @form, url: support_user_schools_path(@user) do |f| %>
-        <%= f.govuk_text_field :name_or_urn, width: 'two-thirds', hint: { text: 'Enter part of a school name or URN' } %>
+        <%= f.govuk_text_field :name_or_urn_or_ukprn, width: 'two-thirds', hint: { text: 'Enter part of a school name, URN or UKPRN' } %>
         <%= f.hidden_field :school_urn %>
         <%= f.govuk_submit 'Search again' %>
       <%- end %>

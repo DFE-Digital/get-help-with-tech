@@ -20,7 +20,7 @@ class School < ApplicationRecord
 
   validates :name, presence: true
 
-  pg_search_scope :matching_name_or_urn, against: %i[name urn], using: { tsearch: { prefix: true } }
+  pg_search_scope :matching_name_or_urn_or_ukprn, against: %i[name urn ukprn], using: { tsearch: { prefix: true } }
 
   before_create :set_computacenter_change
 
