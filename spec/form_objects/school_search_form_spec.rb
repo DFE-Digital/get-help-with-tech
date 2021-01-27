@@ -6,7 +6,7 @@ RSpec.describe SchoolSearchForm do
 
   describe '#array_of_identifiers' do
     subject(:form) do
-      described_class.new(identifiers: "   123  \r\ \r\n456\r\n")
+      described_class.new(identifiers: "   123  \r\ \r\n456\r\n", search_type: 'multiple')
     end
 
     it 'returns correct array of identifiers' do
@@ -16,7 +16,7 @@ RSpec.describe SchoolSearchForm do
 
   describe '#missing_identifiers' do
     subject(:form) do
-      described_class.new(identifiers: "   #{school.urn}  \r\ \r\n456\r\n")
+      described_class.new(identifiers: "   #{school.urn}  \r\ \r\n456\r\n", search_type: 'multiple')
     end
 
     it 'returns array of identifiers with no matches' do
@@ -27,7 +27,7 @@ RSpec.describe SchoolSearchForm do
   describe '#schools' do
     context 'given identifiers' do
       subject(:form) do
-        described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n")
+        described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n", search_type: 'multiple')
       end
 
       it 'only includes schools matching those identifiers which are not closed' do
@@ -40,7 +40,7 @@ RSpec.describe SchoolSearchForm do
       let!(:open_school_from_different_rb) { create(:school, responsible_body: create(:local_authority)) }
 
       subject(:form) do
-        described_class.new(responsible_body_id: school.responsible_body_id)
+        described_class.new(responsible_body_id: school.responsible_body_id, search_type: 'responsible_body_or_order_state')
       end
 
       it 'only includes schools matching that responsible_body_id which are not closed' do
@@ -58,7 +58,7 @@ RSpec.describe SchoolSearchForm do
       end
 
       subject(:form) do
-        described_class.new(order_state: 'can_order')
+        described_class.new(order_state: 'can_order', search_type: 'responsible_body_or_order_state')
       end
 
       it 'only includes schools matching that order_state which are not closed' do
@@ -71,7 +71,7 @@ RSpec.describe SchoolSearchForm do
     let(:urns) { nil }
     let(:responsible_body_id) { nil }
     let(:order_state) { nil }
-    let(:form) { SchoolSearchForm.new(identifiers: urns, responsible_body_id: responsible_body_id, order_state: order_state) }
+    let(:form) { SchoolSearchForm.new(identifiers: urns, responsible_body_id: responsible_body_id, order_state: order_state, search_type: 'multiple') }
     let(:expected_timestamp) { Time.zone.now.utc.iso8601 }
 
     before do

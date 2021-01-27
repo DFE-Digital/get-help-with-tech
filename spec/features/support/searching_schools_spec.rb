@@ -10,7 +10,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   let(:bad_urn) { '12492903' }
   let(:schools_who_can_order) { create_list(:school, 2, responsible_body: responsible_body, order_state: 'can_order') }
 
-  scenario 'happy journey' do
+  scenario 'support agent searches by multiple URNs' do
     given_i_am_signed_in_as_a_support_user
     when_i_follow_the_links_to_find_schools
     then_i_see_the_schools_search_page
@@ -26,7 +26,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     then_i_see_the_schools_search_page
   end
 
-  scenario 'searching by other criteria' do
+  scenario 'support agent searches by order state and responsible body' do
     given_i_am_signed_in_as_a_support_user
     and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     when_i_follow_the_links_to_find_schools
@@ -42,7 +42,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     then_i_see_the_schools_search_page
   end
 
-  scenario 'exporting allocations as csv' do
+  scenario 'support agent exports allocations as CSV' do
     given_i_am_signed_in_as_a_support_user
     and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     when_i_follow_the_links_to_find_schools
@@ -77,11 +77,13 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   end
 
   def when_i_fill_in_some_urns
+    search_page.search_by_urn_or_ukprn.choose
     data = schools.map(&:urn).append(bad_urn).join("\r\n")
     search_page.identifiers.set data
   end
 
   def when_i_choose_an_order_state_and_responsible_body
+    search_page.search_by_rb_or_order_state.choose
     select responsible_body.name, from: 'Responsible body'
     select 'They can order their full allocation because a closure or group of self-isolating children has been reported', from: 'Order state'
   end

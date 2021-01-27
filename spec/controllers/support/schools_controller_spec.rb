@@ -22,7 +22,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
     end
 
     it 'renders HTML results when POSTing' do
-      post :results, params: { school_search_form: { identifiers: "#{school.urn}\r\n#{another_school.urn}" } }
+      post :results, params: { school_search_form: { identifiers: "#{school.urn}\r\n#{another_school.urn}", search_type: 'multiple' } }
 
       expect(response).to be_successful
       expect(response).to render_template('results')
