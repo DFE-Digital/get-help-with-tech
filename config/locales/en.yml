@@ -483,7 +483,7 @@ en:
               greater_than: Enter an allocation that’s non-negative
         support/school_suggestion_form:
           attributes:
-            name_or_urn:
+            name_or_urn_or_ukprn:
               too_short: Enter a school name that is at least %{count} characters
   activerecord:
     attributes:
@@ -718,7 +718,7 @@ en:
         device_cap: How many devices can they order?
         router_cap: How many routers can they order?
       support_school_suggestion_form:
-        name_or_urn: School name or URN
+        name_or_urn_or_ukprn: School name, URN or UKPRN
       support_user_responsible_body_form:
         name: Responsible body name
   banners:

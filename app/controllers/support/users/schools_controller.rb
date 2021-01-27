@@ -36,7 +36,7 @@ class Support::Users::SchoolsController < Support::BaseController
       end
       redirect_to support_user_path(@user)
     else
-      redirect_to action: :new, support_school_suggestion_form: { name_or_urn: user_school_params[:name_or_urn] }
+      redirect_to action: :new, support_school_suggestion_form: { name_or_urn_or_ukprn: user_school_params[:name_or_urn_or_ukprn] }
     end
   end
 
@@ -54,7 +54,7 @@ private
   end
 
   def user_school_params
-    params.fetch('support_school_suggestion_form', {}).permit(:name_or_urn, :school_urn)
+    params.fetch('support_school_suggestion_form', {}).permit(:name_or_urn_or_ukprn, :school_urn)
   end
 
   def set_school

@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Support::SchoolSuggestionForm, type: :model do
   subject(:form) { described_class.new }
 
-  it { is_expected.to validate_length_of(:name_or_urn).is_at_least(3) }
+  it { is_expected.to validate_length_of(:name_or_urn_or_ukprn).is_at_least(3) }
 
-  it 'allows name_or_urn to be nil if school_urn is set' do
+  it 'allows name_or_urn_or_ukprn to be nil if school_urn is set' do
     expect(described_class.new(school_urn: '123456')).to be_valid
   end
 
@@ -14,7 +14,7 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
     school2 = create(:school, name: 'Southdean School')
     create(:school, name: 'Northfields School')
 
-    form = Support::SchoolSuggestionForm.new(name_or_urn: 'South')
+    form = Support::SchoolSuggestionForm.new(name_or_urn_or_ukprn: 'South')
 
     expect(form.matching_schools).to contain_exactly(school1, school2)
   end
@@ -24,7 +24,7 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
 
     create_list(:school, 4, name: 'AA School')
 
-    form = Support::SchoolSuggestionForm.new(name_or_urn: 'AA')
+    form = Support::SchoolSuggestionForm.new(name_or_urn_or_ukprn: 'AA')
 
     expect(form.maximum_matching_schools).to eq(2)
     expect(form.matching_schools.size).to eq(2)
@@ -44,7 +44,7 @@ RSpec.describe Support::SchoolSuggestionForm, type: :model do
     matching_school = create(:school, name: 'Southmead School', urn: 123_456)
     excluded_school = create(:school, name: 'Southdean School', urn: 654_321)
 
-    form = Support::SchoolSuggestionForm.new(name_or_urn: 'South', except: [excluded_school])
+    form = Support::SchoolSuggestionForm.new(name_or_urn_or_ukprn: 'South', except: [excluded_school])
 
     expect(form.matching_schools).to contain_exactly(matching_school)
   end
