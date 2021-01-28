@@ -30,15 +30,33 @@ RSpec.feature 'Change school Chromebook information' do
         expect(page).to have_field('No, we will not order Chromebooks')
       end
 
-      it 'shows fields for domain and recovery email when I choose Yes' do
-        choose('Yes, we will order Chromebooks')
-        expect(page).to have_field('School, local authority or college domain')
-        expect(page).to have_field('Recovery email address')
+      context 'when I choose Yes' do
+        before do
+          choose('Yes, we will order Chromebooks')
+        end
+
+        it 'shows a recovery email field' do
+          expect(page).to have_field('Recovery email address')
+        end
+
+        context 'and the school is a Further Education School' do
+          let(:school) { create(:fe_school, ) }
+
+          it 'shows the correct label for domain' do
+            expect(page).to have_field("#{school.institution_type.capitalize} email domain registered for G Suite for Education")
+          end
+        end
+
+        context 'when the school is not a Further Education School' do
+          it 'shows the correct label for domain' do
+            expect(page).to have_field('School or local authority email domain registered for G Suite for Education')
+          end
+        end
       end
 
       it 'shows an error when I do not supply valid information' do
         choose('Yes, we will order Chromebooks')
-        fill_in('School, local authority or college domain', with: '')
+        fill_in('School or local authority email domain registered for G Suite for Education', with: '')
         click_on 'Save'
         expect(page).to have_http_status(:unprocessable_entity)
         expect(page).to have_content('There is a problem')
@@ -46,7 +64,7 @@ RSpec.feature 'Change school Chromebook information' do
 
       it 'goes back to the school details page when I save valid information' do
         choose('Yes, we will order Chromebooks')
-        fill_in('School, local authority or college domain', with: 'some.domain.org')
+        fill_in('School or local authority email domain registered for G Suite for Education', with: 'some.domain.org')
         fill_in('Recovery email address', with: 'someone@someotherdomain.org')
         click_on 'Save'
         expect(page).to have_http_status(:ok)
