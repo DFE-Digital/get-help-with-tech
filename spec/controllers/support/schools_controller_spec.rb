@@ -28,6 +28,13 @@ RSpec.describe Support::SchoolsController, type: :controller do
       expect(response).to render_template('results')
     end
 
+    it 'renders an error page when POSTing an invalid form submission' do
+      post :results, params: { school_search_form: { search_type: 'unexpected' } }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to render_template('search')
+    end
+
     context 'GET (from a JS autocomplete)' do
       it 'returns JSON results for a valid query string' do
         # ensure schools exist

@@ -3,6 +3,11 @@ class SchoolSearchForm
 
   attr_accessor :search_type, :identifiers, :responsible_body_id, :order_state
 
+  validates :search_type, presence: true, inclusion: { in: %w[multiple responsible_body_or_order_state] }
+  validates :identifiers, presence: true, if: ->(form) { form.search_type == 'multiple' }
+  validate :responsible_body_or_order_state_present_when_search_type_responsible_body_or_order_state
+  validates :order_state, inclusion: { in: School.order_states }, allow_blank: true
+
   def array_of_identifiers
     @array_of_identifiers ||= identifiers.to_s.split("\r\n").map(&:strip).reject(&:blank?)
   end
@@ -55,5 +60,13 @@ class SchoolSearchForm
     tokens << order_state if order_state.present?
     tokens << Time.zone.now.utc.iso8601
     tokens.join('-') + '.csv'
+  end
+
+private
+
+  def responsible_body_or_order_state_present_when_search_type_responsible_body_or_order_state
+    if search_type == 'responsible_body_or_order_state' && [responsible_body_id, order_state].all?(&:blank?)
+      errors.add(:search_type, :rb_or_order_state_blank)
+    end
   end
 end

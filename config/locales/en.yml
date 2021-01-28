@@ -485,6 +485,13 @@ en:
           attributes:
             name_or_urn_or_ukprn:
               too_short: Enter a school name that is at least %{count} characters
+        school_search_form:
+          attributes:
+            search_type:
+              blank: Select how you would like to search for schools and colleges
+              rb_or_order_state_blank: Select at least a responsible body or an order state
+            identifiers:
+              blank: Enter at least one URN or UKPRN
   activerecord:
     attributes:
       api_token:

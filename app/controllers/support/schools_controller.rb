@@ -8,12 +8,16 @@ class Support::SchoolsController < Support::BaseController
   def results
     if request.post?
       @search_form = SchoolSearchForm.new(search_params)
-      @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
-      respond_to do |format|
-        format.html {}
-        format.csv do
-          send_data AllocationsExporter.new.export(@schools), filename: @search_form.csv_filename
+      if @search_form.valid?
+        @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
+        respond_to do |format|
+          format.html {}
+          format.csv do
+            send_data AllocationsExporter.new.export(@schools), filename: @search_form.csv_filename
+          end
         end
+      else
+        render :search, status: :unprocessable_entity
       end
     elsif request.get?
       @form = Support::SchoolSuggestionForm.new(name_or_urn_or_ukprn: params[:query])
