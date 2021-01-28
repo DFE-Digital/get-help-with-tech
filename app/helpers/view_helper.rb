@@ -176,6 +176,13 @@ module ViewHelper
     govuk_link_to 'DfE educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status'
   end
 
+  def chromebook_domain_label(school)
+    label = Array(school.institution_type.capitalize)
+    label << "or #{school.responsible_body.humanized_type}" unless school.is_a?(FurtherEducationSchool)
+    label << 'email domain registered for <span class="app-no-wrap">G Suite for Education</span>'
+    label.join(' ').html_safe
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

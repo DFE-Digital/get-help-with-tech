@@ -65,7 +65,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
       .follow_action_link
 
     choose 'Yes, we will order Chromebooks'
-    fill_in 'School, local authority or college domain', with: 'somedomain.com'
+    fill_in 'School or local authority', with: 'somedomain.com'
     fill_in 'Recovery email address', with: 'someone@someotherdomain.com'
     click_on 'Save'
   end
