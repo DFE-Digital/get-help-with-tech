@@ -60,6 +60,7 @@ RSpec.feature 'Change school Chromebook information' do
         click_on 'Save'
         expect(page).to have_http_status(:unprocessable_entity)
         expect(page).to have_content('There is a problem')
+        expect(page).to have_content('Enter an email domain registered for G Suite for Education')
       end
 
       it 'goes back to the school details page when I save valid information' do
