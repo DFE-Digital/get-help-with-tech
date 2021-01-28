@@ -25,7 +25,7 @@ class SchoolSearchForm
   end
 
   def schools
-    school_records = School.gias_status_open.includes(:responsible_body, :std_device_allocation)
+    school_records = School.includes(:responsible_body, :std_device_allocation)
 
     if search_type == 'multiple'
       school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
