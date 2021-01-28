@@ -434,6 +434,7 @@ en:
           attributes:
             upload:
               theres_a_problem_with_that_csv: There’s a problem with that CSV
+              unsupported_file_type: Choose a CSV file
         responsible_body/devices/who_will_order_form:
           attributes:
             who_will_order:
