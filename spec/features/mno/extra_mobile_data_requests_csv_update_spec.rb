@@ -5,6 +5,7 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
   let(:mno_user) { create(:mno_user) }
   let(:local_authority_user) { create(:local_authority_user) }
   let(:filename) { Rails.root.join('tmp/update_status.csv') }
+  let(:invalid_filename) { Rails.root.join('tmp/update_status.doc') }
 
   scenario 'navigating to the CSV update page' do
     given_i_have_some_mobile_data_requests
@@ -38,6 +39,15 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     and_i_select_my_large_csv_file_with_errors
     and_i_click_the_upload_and_update_requests_button
     then_i_see_a_summary_page_with_the_first_50_errors_displayed
+  end
+
+  scenario 'submitting an invalid file' do
+    given_i_have_some_mobile_data_requests
+    given_i_am_signed_in_as_a_mno_user
+    when_i_visit_the_csv_update_page
+    and_i_select_an_invalid_file
+    and_i_click_the_upload_and_update_requests_button
+    then_i_see_an_invalid_error
   end
 
   def given_i_am_signed_in_as_a_mno_user
@@ -83,6 +93,16 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
 
     create_extra_mobile_data_request_update_csv_file(filename, attrs)
     attach_file('CSV file', filename)
+  end
+
+  def and_i_select_an_invalid_file
+    File.write(invalid_filename, 'test')
+    attach_file('CSV file', invalid_filename)
+  end
+
+  def then_i_see_an_invalid_error
+    expect(page).to have_text('Choose a CSV file')
+    remove_file(invalid_filename)
   end
 
   def and_i_click_the_upload_and_update_requests_button
