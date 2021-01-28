@@ -27,4 +27,45 @@ RSpec.describe ChromebookInformationForm do
 
     expect(request).to have_been_made
   end
+
+  describe '#chromebook_domain_label' do
+    let(:school) { build(:school, :la_maintained) }
+    let(:form) { described_class.new(school: school) }
+
+    it 'starts with the capitalized institution_type' do
+      expect(form.chromebook_domain_label).to start_with('School')
+    end
+
+    it 'ends with email domain registered for <span class="app-no-wrap">G Suite for Education</span>' do
+      expect(form.chromebook_domain_label).to end_with('email domain registered for <span class="app-no-wrap">G Suite for Education</span>')
+    end
+
+    context 'when the school is not a FurtherEducationSchool' do
+      context 'and the responsible body is a local authority' do
+        it 'starts with School or local authority' do
+          expect(form.chromebook_domain_label).to start_with('School or local authority')
+        end
+      end
+
+      context 'and the responsible body is a trust' do
+        let(:school) { build(:school, :academy) }
+
+        it 'starts with School or local authority' do
+          expect(form.chromebook_domain_label).to start_with('School or trust')
+        end
+      end
+    end
+
+    context 'when the school is a FurtherEducationSchool' do
+      let(:school) { build(:fe_school, fe_type: 'sixth_form_college') }
+
+      it 'starts with College' do
+        expect(form.chromebook_domain_label).to start_with('College')
+      end
+
+      it 'does not include " or "' do
+        expect(form.chromebook_domain_label).not_to include(' or ')
+      end
+    end
+  end
 end

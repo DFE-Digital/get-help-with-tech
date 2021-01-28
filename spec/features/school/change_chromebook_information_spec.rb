@@ -40,7 +40,7 @@ RSpec.feature 'Change school Chromebook information' do
         end
 
         context 'and the school is a Further Education School' do
-          let(:school) { create(:fe_school, ) }
+          let(:school) { create(:fe_school) }
 
           it 'shows the correct label for domain' do
             expect(page).to have_field("#{school.institution_type.capitalize} email domain registered for G Suite for Education")

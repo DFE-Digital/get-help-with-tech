@@ -37,8 +37,8 @@ class ChromebookInformationForm
 
   def chromebook_domain_label
     label = Array(school.institution_type.capitalize)
-    label << "or #{school.responsible_body.humanized_type}" if !school.is_a?(FurtherEducationSchool)
-    label << "email domain registered for <span class=‘app-no-wrap’>G Suite for Education</span>"
+    label << "or #{school.responsible_body.humanized_type}" unless school.is_a?(FurtherEducationSchool)
+    label << 'email domain registered for <span class="app-no-wrap">G Suite for Education</span>'
     label.join(' ').html_safe
   end
 end
