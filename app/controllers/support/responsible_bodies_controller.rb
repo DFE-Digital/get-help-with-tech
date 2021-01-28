@@ -18,7 +18,6 @@ class Support::ResponsibleBodiesController < Support::BaseController
     @schools = @responsible_body
       .schools
       .includes(:device_allocations, :preorder_information)
-      .gias_status_open
       .order(name: :asc)
   end
 end

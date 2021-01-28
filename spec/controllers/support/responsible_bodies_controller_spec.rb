@@ -31,7 +31,7 @@ RSpec.describe Support::ResponsibleBodiesController, type: :controller do
     it 'excludes closed schools' do
       get :show, params: { id: rb.id }
       expect(assigns(:schools)).to include(school)
-      expect(assigns(:schools)).not_to include(closed_school)
+      expect(assigns(:schools)).to include(closed_school)
     end
   end
 end
