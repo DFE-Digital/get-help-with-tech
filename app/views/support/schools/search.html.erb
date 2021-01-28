@@ -11,6 +11,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @search_form, url: results_support_schools_path do |f| %>
+      <%= f.govuk_error_summary %>
       <%= f.govuk_radio_buttons_fieldset(:search_type, legend: { size: 'xl', text: title, tag: 'h1' }) do %>
         <%= f.govuk_radio_button :search_type, :multiple, label: { text: 'Search for multiple schools by URN or UKPRN' } do %>
           <%= f.govuk_text_area :identifiers,
