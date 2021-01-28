@@ -13,6 +13,14 @@ RSpec.describe SchoolSearchForm, type: :model do
     expect(described_class.new(search_type: 'multiple', identifiers: '')).not_to be_valid
   end
 
+  it 'validates the format of identifiers' do
+    expect(described_class.new(search_type: 'multiple', identifiers: '12345a')).not_to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: "123456\12345a")).not_to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: '123456')).to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: "12345678\n")).to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: "12345678\n123456")).to be_valid
+  end
+
   it 'validates the presence of either RB ID or order state when the search_type=responsible_body_or_order_state' do
     expect(described_class.new(search_type: 'responsible_body_or_order_state', responsible_body_id: nil, order_state: nil)).not_to be_valid
 
