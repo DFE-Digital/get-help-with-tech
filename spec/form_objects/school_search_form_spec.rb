@@ -1,8 +1,24 @@
 require 'rails_helper'
 
-RSpec.describe SchoolSearchForm do
-  let(:school) { create(:school) }
+RSpec.describe SchoolSearchForm, type: :model do
   let(:closed_school) { create(:school, status: :closed) }
+  let(:school) { create(:school) }
+
+  it { is_expected.to validate_presence_of(:search_type) }
+  it { is_expected.to validate_inclusion_of(:search_type).in_array(%w[multiple responsible_body_or_order_state]) }
+  it { is_expected.to validate_inclusion_of(:order_state).in_array(School.order_states.keys).allow_blank }
+
+  it 'validates the presence of identifiers when the search_type=multiple' do
+    expect(described_class.new(search_type: 'multiple', identifiers: nil)).not_to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: '')).not_to be_valid
+  end
+
+  it 'validates the presence of either RB ID or order state when the search_type=responsible_body_or_order_state' do
+    expect(described_class.new(search_type: 'responsible_body_or_order_state', responsible_body_id: nil, order_state: nil)).not_to be_valid
+
+    expect(described_class.new(search_type: 'responsible_body_or_order_state', responsible_body_id: school.responsible_body.id)).to be_valid
+    expect(described_class.new(search_type: 'responsible_body_or_order_state', order_state: 'can_order')).to be_valid
+  end
 
   describe '#array_of_identifiers' do
     subject(:form) do
