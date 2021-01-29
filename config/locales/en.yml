@@ -493,6 +493,7 @@ en:
               rb_or_order_state_blank: Select at least a responsible body or an order state
             identifiers:
               blank: Enter at least one URN or UKPRN
+              invalid: Enter URN or UKPRN in correct format
   activerecord:
     attributes:
       api_token:

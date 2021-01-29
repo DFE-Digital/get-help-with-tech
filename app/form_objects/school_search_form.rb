@@ -4,7 +4,7 @@ class SchoolSearchForm
   attr_accessor :search_type, :identifiers, :responsible_body_id, :order_state
 
   validates :search_type, presence: true, inclusion: { in: %w[multiple responsible_body_or_order_state] }
-  validates :identifiers, presence: true, if: ->(form) { form.search_type == 'multiple' }
+  validates :identifiers, presence: true, format: { with: /\A[\d\s]*\z/ }, if: ->(form) { form.search_type == 'multiple' }
   validate :responsible_body_or_order_state_present_when_search_type_responsible_body_or_order_state
   validates :order_state, inclusion: { in: School.order_states }, allow_blank: true
 
