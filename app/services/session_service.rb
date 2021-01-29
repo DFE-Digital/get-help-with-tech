@@ -3,6 +3,9 @@ class SessionService
   class TokenNotRecognised < StandardError; end
   class InvalidTokenAndIdentifierCombination < StandardError; end
 
+  DEFAULT_USER_TTL = 3600.seconds.freeze
+  SUPPORT_USER_TTL = 7200.seconds.freeze
+
   def self.send_magic_link_email!(email_address)
     if (user = find_user_by_lowercase_email(email_address))
       user.generate_token!
@@ -42,8 +45,16 @@ class SessionService
   def self.identify_user!(session)
     if is_signed_in?(session)
       user = User.find(session[:user_id])
-      update_session!(session[:session_id])
+      update_session!(session[:session_id], ttl_for_user(user))
       user
+    end
+  end
+
+  def self.ttl_for_user(user)
+    if user.is_support? || user.is_computacenter?
+      SUPPORT_USER_TTL
+    else
+      DEFAULT_USER_TTL
     end
   end
 
@@ -66,12 +77,12 @@ class SessionService
   end
 
   def self.create_session!(session_id:, user:)
-    Session.create!(id: session_id)
+    Session.create!(id: session_id, expires_at: Time.zone.now.utc + ttl_for_user(user))
     user.update_sign_in_count_and_timestamp!
   end
 
-  def self.update_session!(session_id)
-    Session.where(id: session_id).update_all(updated_at: Time.zone.now.utc)
+  def self.update_session!(session_id, ttl)
+    Session.where(id: session_id).update_all(updated_at: Time.zone.now.utc, expires_at: Time.zone.now.utc + ttl)
   end
 
   def self.destroy_session!(session_id)
