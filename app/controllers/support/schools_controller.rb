@@ -101,6 +101,8 @@ private
       :identifiers,
       :responsible_body_id,
       :order_state,
+      :name_or_identifier,
+      :identifier,
     )
   end
 end

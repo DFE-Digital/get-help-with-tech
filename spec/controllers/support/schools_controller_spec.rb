@@ -21,7 +21,14 @@ RSpec.describe Support::SchoolsController, type: :controller do
       sign_in_as support_user
     end
 
-    it 'renders HTML results when POSTing' do
+    it 'renders HTML results when POSTing a search for single school' do
+      post :results, params: { school_search_form: { identifier: school.urn, name_or_identifier: school.name, search_type: 'single' } }
+
+      expect(response).to be_successful
+      expect(response).to render_template('results')
+    end
+
+    it 'renders HTML results when POSTing a search for multiple schools' do
       post :results, params: { school_search_form: { identifiers: "#{school.urn}\r\n#{another_school.urn}", search_type: 'multiple' } }
 
       expect(response).to be_successful
