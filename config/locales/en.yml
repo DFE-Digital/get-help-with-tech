@@ -494,6 +494,8 @@ en:
             identifiers:
               blank: Enter at least one URN or UKPRN
               invalid: Enter URN or UKPRN in correct format
+            name_or_identifier:
+              blank: Enter at least one URN or UKPRN
   activerecord:
     attributes:
       api_token:
@@ -723,6 +725,8 @@ en:
     nudge_user_to_read_privacy_policy_event: We emailed a user asking them to sign in and read the privacy policy so that %{school} can place orders
   helpers:
     label:
+      school_search_form:
+        name_or_identifier: School name, URN or UKPRN
       support_enable_orders_form:
         device_cap: How many devices can they order?
         router_cap: How many routers can they order?

@@ -10,6 +10,18 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   let(:bad_urn) { '12492903' }
   let(:schools_who_can_order) { create_list(:school, 2, responsible_body: responsible_body, order_state: 'can_order') }
 
+  scenario 'support agent searches for a single school by name' do
+    given_i_am_signed_in_as_a_support_user
+    when_i_follow_the_links_to_find_schools
+    then_i_see_the_schools_search_page
+
+    when_i_fill_in_a_partial_name
+    and_i_submit
+    then_i_see_the_results_page
+    and_i_see_results_with_schools(1)
+    and_the_results_page_contains_one_school(schools.first)
+  end
+
   scenario 'support agent searches by multiple URNs' do
     given_i_am_signed_in_as_a_support_user
     when_i_follow_the_links_to_find_schools
@@ -76,8 +88,13 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     expect(search_page).to be_displayed
   end
 
+  def when_i_fill_in_a_partial_name
+    search_page.search_by_name_urn_or_ukprn.choose
+    search_page.name_or_identifier.set schools.first.urn
+  end
+
   def when_i_fill_in_some_urns
-    search_page.search_by_urn_or_ukprn.choose
+    search_page.search_by_multiple_urn_or_ukprns.choose
     data = schools.map(&:urn).append(bad_urn).join("\r\n")
     search_page.identifiers.set data
   end
@@ -112,6 +129,11 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   def and_i_see_results_with_schools(count)
     expect(results_page.has_results_table?).to be_truthy
     expect(results_page.results_table.schools.size).to eql(count)
+  end
+
+  def and_the_results_page_contains_one_school(school)
+    expect(results_page.has_results_table?).to be_truthy
+    expect(results_page.results_table.schools.first).to have_link(school.name, href: support_school_path(urn: school.urn))
   end
 
   def and_i_see_a_button_to_download_as_csv

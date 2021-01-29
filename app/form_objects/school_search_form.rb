@@ -1,10 +1,11 @@
 class SchoolSearchForm
   include ActiveModel::Model
 
-  attr_accessor :search_type, :identifiers, :responsible_body_id, :order_state
+  attr_accessor :search_type, :name_or_identifier, :identifier, :identifiers, :responsible_body_id, :order_state
 
-  validates :search_type, presence: true, inclusion: { in: %w[multiple responsible_body_or_order_state] }
+  validates :search_type, presence: true, inclusion: { in: %w[single multiple responsible_body_or_order_state] }
   validates :identifiers, presence: true, format: { with: /\A[\d\s]*\z/ }, if: ->(form) { form.search_type == 'multiple' }
+  validates :name_or_identifier, presence: true, if: ->(form) { form.search_type == 'single' }
   validate :responsible_body_or_order_state_present_when_search_type_responsible_body_or_order_state
   validates :order_state, inclusion: { in: School.order_states }, allow_blank: true
 
@@ -27,7 +28,9 @@ class SchoolSearchForm
   def schools
     school_records = School.includes(:responsible_body, :std_device_allocation)
 
-    if search_type == 'multiple'
+    if search_type == 'single'
+      school_records = school_records.matching_name_or_urn_or_ukprn(identifier.presence || name_or_identifier)
+    elsif search_type == 'multiple'
       school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
     elsif search_type == 'responsible_body_or_order_state'
       school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?

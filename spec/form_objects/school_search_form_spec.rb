@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe SchoolSearchForm, type: :model do
-  let(:closed_school) { create(:school, status: :closed) }
-  let(:school) { create(:school) }
+  let(:closed_school) { create(:school, name: 'Southbridge School', status: :closed) }
+  let(:school) { create(:school, name: 'Southside School') }
 
   it { is_expected.to validate_presence_of(:search_type) }
-  it { is_expected.to validate_inclusion_of(:search_type).in_array(%w[multiple responsible_body_or_order_state]) }
+  it { is_expected.to validate_inclusion_of(:search_type).in_array(%w[single multiple responsible_body_or_order_state]) }
   it { is_expected.to validate_inclusion_of(:order_state).in_array(School.order_states.keys).allow_blank }
 
   it 'validates the presence of identifiers when the search_type=multiple' do
@@ -26,6 +26,10 @@ RSpec.describe SchoolSearchForm, type: :model do
 
     expect(described_class.new(search_type: 'responsible_body_or_order_state', responsible_body_id: school.responsible_body.id)).to be_valid
     expect(described_class.new(search_type: 'responsible_body_or_order_state', order_state: 'can_order')).to be_valid
+  end
+
+  it 'validates the presence of name_or_identifier when the search_type=single' do
+    expect(described_class.new(search_type: 'single', name_or_identifier: nil)).not_to be_valid
   end
 
   describe '#array_of_identifiers' do
@@ -49,6 +53,52 @@ RSpec.describe SchoolSearchForm, type: :model do
   end
 
   describe '#schools' do
+    let(:fe_college) { create(:fe_school, name: 'Southsea Sixth Form') }
+
+    before do
+      school
+      closed_school
+      fe_college
+    end
+
+    context 'given a URN for a single school' do
+      subject(:form) do
+        described_class.new(identifier: school.urn, search_type: 'single')
+      end
+
+      it 'only includes that school' do
+        expect(form.schools).to eq([school])
+      end
+    end
+
+    context 'a single school search and given part of a school name' do
+      let(:school_where_name_does_not_match_search) { create(:school, name: 'Northbridge School') }
+
+      before do
+        school_where_name_does_not_match_search
+      end
+
+      subject(:form) do
+        described_class.new(name_or_identifier: 'south', search_type: 'single')
+      end
+
+      it 'only includes the schools where the name matches' do
+        # both the open and closed schools have 'South' in their name
+        expect(form.schools).to contain_exactly(school, fe_college, closed_school)
+      end
+    end
+
+    context 'a single school search and given a UKPRN' do
+      subject(:form) do
+        described_class.new(identifier: fe_college.ukprn, search_type: 'single')
+      end
+
+      it 'only includes the college matching the UKPRN' do
+        # both the open and closed schools have 'South' in their name
+        expect(form.schools).to eq([fe_college])
+      end
+    end
+
     context 'given identifiers' do
       subject(:form) do
         described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n", search_type: 'multiple')

@@ -29,3 +29,19 @@ initSchoolAutocomplete(
     hiddenFieldForURN: 'support_school_suggestion_form_school_urn'
   }
 );
+
+initSchoolAutocomplete(
+  {
+    input: "school-search-form-name-or-identifier-field",
+    path: "/support/schools/results",
+    hiddenFieldForURN: 'school_search_form_identifier'
+  }
+);
+
+initSchoolAutocomplete(
+  {
+    input: "school-search-form-name-or-identifier-field-error",
+    path: "/support/schools/results",
+    hiddenFieldForURN: 'school_search_form_identifier'
+  }
+);
