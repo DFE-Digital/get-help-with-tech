@@ -92,7 +92,7 @@ private
   end
 
   def display_devices_ordered_row?
-    !@school.in_virtual_cap_pool? && @school.std_device_allocation&.devices_ordered.to_i.positive?
+    (!@school.responsible_body.has_virtual_cap_feature_flags? || !@school.in_virtual_cap_pool?) && @school.std_device_allocation&.devices_ordered.to_i.positive?
   end
 
   def display_router_allocation_row?

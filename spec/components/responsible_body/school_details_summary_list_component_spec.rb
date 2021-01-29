@@ -178,6 +178,18 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       context 'when the school is not in a virtual_cap_pool' do
         before do
           allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
+          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
+        end
+
+        it 'shows devices ordered row with count' do
+          expect(value_for_row(result, 'Devices ordered').text).to include('3 devices')
+        end
+      end
+
+      context 'when the responsible body is not in the virtual cap' do
+        before do
+          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
+          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
         end
 
         it 'shows devices ordered row with count' do
@@ -188,6 +200,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       context 'when the school is in a virtual_cap_pool' do
         before do
           allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
+          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(true)
         end
 
         it 'does not show devices ordered row' do
