@@ -46,8 +46,8 @@ RSpec.describe SchoolSearchForm, type: :model do
         described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n", search_type: 'multiple')
       end
 
-      it 'only includes schools matching those identifiers which are not closed' do
-        expect(form.schools.map(&:urn)).to eq([school.urn])
+      it 'includes schools matching those identifiers' do
+        expect(form.schools.map(&:urn)).to eq([school.urn, closed_school.urn])
       end
     end
 
@@ -67,18 +67,18 @@ RSpec.describe SchoolSearchForm, type: :model do
 
     context 'given an order_state' do
       let!(:school_that_can_order) { create(:school, :in_lockdown) }
+      let!(:school_that_can_order_but_closed) { create(:school, :in_lockdown, status: :closed) }
 
       before do
         create(:school, :can_order_for_specific_circumstances)
-        create(:school, :in_lockdown, status: :closed)
       end
 
       subject(:form) do
         described_class.new(order_state: 'can_order', search_type: 'responsible_body_or_order_state')
       end
 
-      it 'only includes schools matching that order_state which are not closed' do
-        expect(form.schools.map(&:urn)).to eq([school_that_can_order.urn])
+      it 'only includes schools matching that order_state regardless of state' do
+        expect(form.schools.map(&:urn)).to eq([school_that_can_order.urn, school_that_can_order_but_closed.urn])
       end
     end
   end

@@ -4,7 +4,8 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
   let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
   let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
-  let(:school_contact) { School.find_by_name('Alpha School').contacts.first }
+  let(:school) { School.find_by_name('Alpha School') }
+  let(:school_contact) { school.contacts.first }
 
   scenario 'DfE users see school users' do
     given_a_responsible_body
@@ -90,6 +91,18 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     then_i_see_the_school_users_with_updated_details
   end
 
+  scenario 'DfE users can see that a school is permanently closed' do
+    given_a_responsible_body
+    and_it_has_a_school_with_users
+    and_the_school_is_closed
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_visit_the_responsible_body_page
+    and_i_visit_the_school_page
+
+    then_i_see_that_the_school_is_permanently_closed
+  end
+
   def given_a_responsible_body
     local_authority
   end
@@ -112,6 +125,10 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
                     responsible_body: local_authority)
     create(:school_user, school: school, full_name: 'James P. Sullivan', email_address: 'sully@alpha.sch.uk')
     create(:school_user, school: school, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk', privacy_notice_seen_at: nil)
+  end
+
+  def and_the_school_is_closed
+    school.update! status: :closed
   end
 
   def and_the_school_contact_is_already_a_user_on_another_school
@@ -164,6 +181,10 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
 
     expect(page).to have_text('Mike Wazowski')
     expect(page).to have_text('mike@alpha.sch.uk')
+  end
+
+  def then_i_see_that_the_school_is_permanently_closed
+    expect(page).to have_text('has permanently closed')
   end
 
   def then_i_see_the_school_users_who_have_seen_the_privacy_policy

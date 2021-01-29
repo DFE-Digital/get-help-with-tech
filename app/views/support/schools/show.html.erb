@@ -19,6 +19,16 @@
   </div>
 </div>
 
+<% if @school.gias_status_closed? %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      This <%= @school.institution_type %> has permanently closed
+    </strong>
+  </div>
+<% end %>
+
 <%= render Support::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @current_user) %>
 
 <%- if @school.show_mno? && @school.extra_mobile_data_requests.present? %>
