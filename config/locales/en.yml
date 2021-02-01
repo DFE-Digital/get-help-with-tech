@@ -452,9 +452,9 @@ en:
             phone_number:
               blank: Enter the contact’s telephone
         chromebook_information_form:
+          custom_errors:
+            will_need_chromebooks: Tell us whether the %{institution_type} will need Chromebooks
           attributes:
-            will_need_chromebooks:
-              blank: Tell us whether the school will need Chromebooks
             school_or_rb_domain:
               blank: Enter an email domain registered for G Suite for Education, like myschool.org.uk
               invalid: Enter an email domain registered for G Suite for Education, like myschool.org.uk

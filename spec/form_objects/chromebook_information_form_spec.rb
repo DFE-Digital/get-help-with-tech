@@ -1,30 +1,59 @@
 require 'rails_helper'
 
 RSpec.describe ChromebookInformationForm do
-  it 'handles whitespace in the email address' do
-    stub_request(:get, 'https://www.google.com/a/school.sch.uk/ServiceLogin')
-      .to_return(status: 200, body: '', headers: {})
-
-    form = described_class.new(will_need_chromebooks: 'yes',
-                               recovery_email_address: ' ab@c.com ',
-                               school_or_rb_domain: 'school.sch.uk')
-
-    form.validate
-
-    expect(form.errors[:recovery_email_address]).to be_blank
-    expect(form.recovery_email_address).to eq('ab@c.com')
+  let(:will_need_chromebooks) { 'yes' }
+  let(:recovery_email_address) { 'ab@c.com' }
+  let(:school_or_rb_domain) { 'school.sch.uk' }
+  let(:school) { instance_double(CompulsorySchool, institution_type: 'Educational foundation') }
+  let(:form) do
+    described_class.new(school: school,
+                        will_need_chromebooks: will_need_chromebooks,
+                        recovery_email_address: recovery_email_address,
+                        school_or_rb_domain: school_or_rb_domain)
   end
 
-  it 'handles whitespace in the school/RB domain' do
-    request = stub_request(:get, 'https://www.google.com/a/school.sch.uk/ServiceLogin')
+  let!(:request) do
+    stub_request(:get, 'https://www.google.com/a/school.sch.uk/ServiceLogin')
       .to_return(status: 200, body: '', headers: {})
+  end
 
-    form = described_class.new(will_need_chromebooks: 'yes',
-                               recovery_email_address: 'ab@c.com',
-                               school_or_rb_domain: ' school.sch.uk ')
+  context 'when the email address has whitespace' do
+    let(:recovery_email_address) { ' ab@c.com ' }
 
-    form.validate
+    it 'is valid' do
+      form.validate
+      expect(form.errors[:recovery_email_address]).to be_blank
+    end
 
-    expect(request).to have_been_made
+    it 'strips the whitespace' do
+      form.validate
+      expect(form.recovery_email_address).to eq('ab@c.com')
+    end
+  end
+
+  context 'when the school_or_rb_domain has whitespace' do
+    let(:school_or_rb_domain) { ' school.sch.uk ' }
+
+    it 'validates the corrected domain against Google' do
+      form.validate
+      expect(request).to have_been_made
+    end
+
+    it 'strips the whitespace' do
+      expect(form.school_or_rb_domain).to eql('school.sch.uk')
+    end
+  end
+
+  context 'when :will_need_chromebooks is blank' do
+    let(:will_need_chromebooks) { nil }
+
+    it 'is not valid' do
+      expect(form.valid?).to be_falsey
+    end
+
+    it 'has an error message including the schools institution_type' do
+      form.validate
+      expect(form.errors[:will_need_chromebooks]).to include('Tell us whether the Educational foundation will need Chromebooks')
+    end
   end
 end
