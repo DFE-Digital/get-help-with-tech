@@ -4,7 +4,7 @@ class ChromebookInformationForm
   attr_accessor :school, :will_need_chromebooks
   attr_reader :school_or_rb_domain, :recovery_email_address
 
-  validates :will_need_chromebooks, presence: { message: lambda(object, _) do
+  validates :will_need_chromebooks, presence: { message: lambda do |object, _|
                                                            I18n.t('activemodel.errors.models.chromebook_information_form.custom_errors.will_need_chromebooks', institution_type: object.school&.institution_type || 'school')
                                                          end }
 
