@@ -14,18 +14,20 @@
   <div class="govuk-grid-column-two-thirds">
     <% if @school.show_mno? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Request extra data for mobile devices', extra_data_guidance_internet_mobile_school_path(@school) %>
+        Extra data for mobile devices
       </h2>
-
       <%= render partial: 'shared/internet/mno_information' %>
+      <p class="govuk-body"><%= govuk_link_to 'Request extra data for mobile devices and check your requests', extra_data_guidance_internet_mobile_school_path(@school) %></p>
     <% end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to 'Request 4G wireless routers', how_to_request_4g_wireless_routers_path %>
+      4G wireless routers
     </h2>
 
-    <p class="govuk-body">If your school is facing disruption to education and you’ve been invited to order devices, you can request 4G wireless routers.</p>
+    <p class="govuk-body"><%= govuk_link_to 'Who is eligible and what you need to know to request 4G wireless routers', how_to_request_4g_wireless_routers_path %></p>
+    <p class="govuk-body"><a href="https://forms.gle/KmpWzVYR3gygAdRe6" class="govuk-link">Request a 4G wireless router</a></p>
   </div>
+
   <div class="govuk-grid-column-one-third">
     <div class="app-related">
       <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Guidance</h2>
@@ -34,4 +36,5 @@
       </p>
     </div>
   </div>
+
 </div>
