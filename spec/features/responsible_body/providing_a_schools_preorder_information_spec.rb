@@ -87,7 +87,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def it_shows_me_fields_for_domain_and_recovery_email_address
-    expect(page).to have_field('School, local authority or college domain')
+    expect(page).to have_field('School or local authority email domain registered for G Suite for Education')
     expect(page).to have_field('Recovery email address')
   end
 
@@ -101,7 +101,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def when_i_provide_valid_entries_for_both_fields
-    fill_in 'School, local authority or college domain', with: 'somedomain.com'
+    fill_in 'School or local authority email domain registered for G Suite for Education', with: 'somedomain.com'
     fill_in 'Recovery email address', with: 'someone@someotherdomain.com'
     click_on 'Save'
   end
