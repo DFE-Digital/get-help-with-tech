@@ -1,5 +1,5 @@
 <% show_allocations_banner = FeatureFlag.active?(:increased_allocations_banner) && @school.increased_allocations_feature_flag? %>
-<% if FeatureFlag.active?(:secondary_mass_testing_banner) || FeatureFlag.active?(:christmas_banner) || show_allocations_banner %>
+<% if FeatureFlag.active?(:secondary_mass_testing_banner) || show_allocations_banner %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= render NotificationBanner.new(title: 'Important') do |banner| %>
@@ -9,7 +9,7 @@
           </p>
         <% end %>
 
-        <% if FeatureFlag.active?(:secondary_mass_testing_banner) && (FeatureFlag.active?(:christmas_banner) || show_allocations_banner) %>
+        <% if FeatureFlag.active?(:secondary_mass_testing_banner) && show_allocations_banner %>
           <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
         <% end %>
 
@@ -19,20 +19,6 @@
           </p>
           <p class="govuk-body">
             <%= t('banners.increased_allocations.school.content') %>
-          </p>
-        <% end %>
-
-        <% if FeatureFlag.active?(:christmas_banner) && show_allocations_banner %>
-          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-        <% end %>
-
-        <% if FeatureFlag.active?(:christmas_banner) %>
-          <p class="govuk-notification-banner__heading"><%= t('banners.christmas.heading') %></p>
-          <p class="govuk-body">
-            <%= t('banners.christmas.content') %>
-          </p>
-          <p class="govuk-body">
-            <%= t('banners.christmas.content_2') %>
           </p>
         <% end %>
       <% end %>

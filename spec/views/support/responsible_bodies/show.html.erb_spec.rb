@@ -17,21 +17,19 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
         schools.each { |school| school.update!(increased_allocations_feature_flag: false) }
       end
 
-      it 'shows banners' do
+      it 'does not show banners' do
         render
-        expect(rendered).not_to include('No orders over Christmas')
         expect(rendered).not_to include('We’ve restored original device allocations')
       end
     end
 
-    context 'when feature flags enabled', with_feature_flags: { christmas_banner: 'active', increased_allocations_banner: 'active' } do
+    context 'when feature flags enabled', with_feature_flags: { increased_allocations_banner: 'active' } do
       before do
         schools.each { |school| school.update!(increased_allocations_feature_flag: true) }
       end
 
       it 'shows banners' do
         render
-        expect(rendered).to include('No orders over Christmas')
         expect(rendered).to include('We’ve restored original device allocations')
       end
     end
