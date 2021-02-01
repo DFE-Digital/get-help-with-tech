@@ -12,17 +12,15 @@ RSpec.describe 'support/schools/show.html.erb' do
 
   describe 'banners' do
     context 'when feature flags disabled' do
-      it 'shows banners' do
+      it 'does not show banners' do
         render
-        expect(rendered).not_to include('No orders over Christmas')
         expect(rendered).not_to include('Your allocation has increased to')
       end
     end
 
-    context 'when feature flags enabled', with_feature_flags: { christmas_banner: 'active', increased_allocations_banner: 'active' } do
+    context 'when feature flags enabled', with_feature_flags: { increased_allocations_banner: 'active' } do
       it 'shows banners' do
         render
-        expect(rendered).to include('No orders over Christmas')
         expect(rendered).to include("Your allocation has increased to #{pluralize(school.std_device_allocation.allocation, 'device')}")
       end
     end
