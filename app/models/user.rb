@@ -34,7 +34,7 @@ class User < ApplicationRecord
   scope :deleted, -> { where.not(deleted_at: nil) }
   scope :not_deleted, -> { where(deleted_at: nil) }
   scope :search_by_email_address_or_full_name, lambda { |search_term|
-    where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term}%", "%#{search_term}%")
+    where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term.strip}%", "%#{search_term.strip}%")
   }
 
   validates :full_name,

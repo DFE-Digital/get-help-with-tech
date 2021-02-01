@@ -1146,6 +1146,16 @@ RSpec.describe User, type: :model do
       expect(user_search('smith')).to eq([user])
       expect(user_search('bob')).to be_empty
     end
+
+    it 'ignores whitespace padding' do
+      user = create(:school_user, email_address: 'user@example.com', full_name: 'John Doe')
+      expect(user_search('  user@example.com  ')).to eq([user])
+      expect(user_search('user@example.com  ')).to eq([user])
+      expect(user_search('  user@example.com')).to eq([user])
+
+      expect(user_search('  John Doe  ')).to eq([user])
+      expect(user_search('  Doe  ')).to eq([user])
+    end
   end
 
   describe '.from_responsible_body_or_schools' do
