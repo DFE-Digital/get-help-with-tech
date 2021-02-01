@@ -178,7 +178,7 @@ module ViewHelper
 
   def chromebook_domain_label(school)
     label = Array(school.institution_type.capitalize)
-    label << "or #{school.responsible_body.humanized_type}" unless school.is_a?(FurtherEducationSchool)
+    label << "or #{school.responsible_body.humanized_type}" unless school.is_further_education?
     label << 'email domain registered for <span class="app-no-wrap">G Suite for Education</span>'
     label.join(' ').html_safe
   end
