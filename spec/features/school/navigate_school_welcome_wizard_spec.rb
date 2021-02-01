@@ -115,6 +115,37 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_school_home_page
   end
 
+  scenario 'filling in invalid chromebook information' do
+    given_my_school_has_an_unavailable_allocation
+    as_a_subsequent_school_user
+    when_i_sign_in_for_the_first_time
+    then_i_see_a_welcome_page_for_my_school
+
+    when_i_click_continue
+    then_i_see_a_privacy_notice
+
+    when_i_click_continue
+    then_i_see_the_allocation_for_my_school
+
+    when_i_click_continue
+    then_i_see_the_order_your_own_page
+
+    when_i_click_continue
+    then_i_see_information_about_devices_i_can_order
+
+    when_i_click_continue
+    then_im_asked_whether_my_school_will_order_chromebooks
+
+    when_i_choose_yes_and_submit_invalid_chromebooks_information
+    then_i_see_appropriate_error_messages
+
+    when_i_provide_valid_chromebooks_information
+    then_i_see_information_about_what_happens_next
+
+    when_i_click_to_finish_and_go_to_homepage
+    then_i_see_the_school_home_page
+  end
+
   scenario 'the wizard resumes where left off' do
     given_my_school_has_an_unavailable_allocation
     as_a_new_school_user
@@ -223,6 +254,28 @@ RSpec.feature 'Navigate school welcome wizard' do
       fill_in 'Recovery email address', with: 'admin@trust.com'
     end
     click_on 'Continue'
+  end
+
+  def when_i_choose_yes_and_submit_invalid_chromebooks_information
+    choose 'Yes, we will need Chromebooks'
+    within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
+      fill_in "School or #{school.responsible_body.humanized_type} email domain registered for G Suite for Education", with: ''
+      fill_in 'Recovery email address', with: ''
+    end
+    click_on 'Continue'
+  end
+
+  def when_i_provide_valid_chromebooks_information
+    within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
+      fill_in "School or #{school.responsible_body.humanized_type} email domain registered for G Suite for Education", with: 'example.com'
+      fill_in 'Recovery email address', with: 'admin@trust.com'
+    end
+    click_on 'Continue'
+  end
+
+  def then_i_see_appropriate_error_messages
+    expect(page).to have_text 'Enter an email domain registered for G Suite for Education, like myschool.org.uk'
+    expect(page).to have_text 'Enter an email address in the correct format, like name@example.com'
   end
 
   def when_i_choose_no_and_submit_the_chromebooks_form

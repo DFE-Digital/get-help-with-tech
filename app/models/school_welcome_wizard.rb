@@ -122,7 +122,7 @@ private
       errors.add(:will_need_chromebooks, I18n.t('chromebooks.errors.choice', scope: i18n_scope))
       false
     elsif chromebook_information.invalid?
-      errors.copy!(chromebook_information.errors)
+      errors.merge!(chromebook_information)
       false
     else
       update_preorder_information!(cb_params)
