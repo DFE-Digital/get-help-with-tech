@@ -89,13 +89,13 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
         mobile_network_id: requests[0].mobile_network_id,
         status: 'too_high',
       },
-      {
-        id: requests[1].id,
-        account_holder_name: requests[1].account_holder_name,
-        device_phone_number: requests[1].device_phone_number,
-        mobile_network_id: requests[1].mobile_network_id,
-        status: nil,
-      }]
+       {
+         id: requests[1].id,
+         account_holder_name: requests[1].account_holder_name,
+         device_phone_number: requests[1].device_phone_number,
+         mobile_network_id: requests[1].mobile_network_id,
+         status: nil,
+       }]
     end
 
     it 'does not update the status of the matching requests' do
