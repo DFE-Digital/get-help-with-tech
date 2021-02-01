@@ -27,4 +27,22 @@ RSpec.describe 'support/schools/show.html.erb' do
       end
     end
   end
+
+  describe 'when school#can_invite_users? is true' do
+    it 'shows Invite a new user button' do
+      allow(school).to receive(:can_invite_users?).and_return(true)
+
+      render
+      expect(rendered).to include('Invite a new user')
+    end
+  end
+
+  describe 'when school#can_invite_users? is false' do
+    it 'does not show Invite a new user button' do
+      allow(school).to receive(:can_invite_users?).and_return(false)
+
+      render
+      expect(rendered).not_to include('Invite a new user')
+    end
+  end
 end

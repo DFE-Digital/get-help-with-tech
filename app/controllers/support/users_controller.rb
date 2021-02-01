@@ -8,6 +8,8 @@ class Support::UsersController < Support::BaseController
     set_school_if_present
     set_responsible_body_if_present
 
+    deny_access_if_school_cannot_invite_users
+
     @form = Support::NewUserForm.new(
       school: @school,
       responsible_body: @responsible_body,
@@ -121,6 +123,12 @@ private
     if params[:school_urn]
       @school = School.gias_status_open.where_urn_or_ukprn(params[:school_urn]).first!
       authorize @school, :show?
+    end
+  end
+
+  def deny_access_if_school_cannot_invite_users
+    if @school && !@school.can_invite_users?
+      not_found
     end
   end
 

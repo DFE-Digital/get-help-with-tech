@@ -371,4 +371,32 @@ RSpec.describe School, type: :model do
       expect(School.matching_name_or_urn_or_ukprn('Southside')).to contain_exactly(matched_school1, matched_school2)
     end
   end
+
+  describe '#can_invite_users?' do
+    subject(:school) { build(:school, preorder_information: preorder) }
+
+    context 'RB orders' do
+      let(:preorder) { build(:preorder_information, :rb_will_order) }
+
+      it 'returns false' do
+        expect(school.can_invite_users?).to be_falsey
+      end
+    end
+
+    context 'school orders' do
+      let(:preorder) { build(:preorder_information, :school_will_order) }
+
+      it 'returns true' do
+        expect(school.can_invite_users?).to be_truthy
+      end
+    end
+
+    context 'we do not know who orders' do
+      let(:preorder) { nil }
+
+      it 'returns true' do
+        expect(school.can_invite_users?).to be_truthy
+      end
+    end
+  end
 end
