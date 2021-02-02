@@ -36,6 +36,18 @@ RSpec.describe Support::UsersController do
           get :new, params: { school_urn: school.urn }
         }.to be_forbidden_for(create(:computacenter_user))
       end
+
+      context 'when RB orders' do
+        before do
+          create(:preorder_information, :rb_will_order, school: school)
+        end
+
+        it 'does not allow school users to be added' do
+          sign_in_as support_user
+          get :new, params: { school_urn: school.urn }
+          expect(response).not_to be_successful
+        end
+      end
     end
   end
 

@@ -202,6 +202,12 @@ class School < ApplicationRecord
     !hide_mno?
   end
 
+  def can_invite_users?
+    return true if preorder_information.nil?
+
+    preorder_information.school_will_order_devices?
+  end
+
 private
 
   def maybe_generate_user_changes
