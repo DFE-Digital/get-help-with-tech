@@ -3,7 +3,12 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
     array = super
     array << headteacher_row if headteacher.present?
     array.map { |row| remove_change_links_if_read_only(row) }
-    array << { key: 'Address', value: @school.address_components }
+    array << {
+      key: 'Address',
+      value: @school.address_components,
+      action: 'Change <span class="govuk-visually-hidden">address</span>'.html_safe,
+      action_path: edit_support_school_addresses_path(school_urn: @school.urn)
+    }
   end
 
 private
