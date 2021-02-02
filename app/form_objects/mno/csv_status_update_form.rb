@@ -13,7 +13,7 @@ class Mno::CsvStatusUpdateForm
 private
 
   def appropriate_file_type
-    Rails.logger.debug("ExtraMobileDataRequestsCsvUpdate content-type: #{upload.content_type}")
+    Rails.logger.info("ExtraMobileDataRequestsCsvUpdate content-type: #{upload.content_type}")
     errors.add(:upload, :unsupported_file_type) unless csv_uploaded?
   end
 
