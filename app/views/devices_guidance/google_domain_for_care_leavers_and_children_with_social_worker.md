@@ -27,4 +27,4 @@ After completing the sign-up process, you’ll be given a 14-day trial of G Suit
 
 ## Fast-track approval
 
-Email [otrussell@google.com](mailto:otrussell@google.com) with your domain to get fast-tracked for approval (this process typically takes up to 14 days, but we can reduce to <24 hours).
+Email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with your domain to get fast-tracked for approval (this process typically takes up to 14 days, but we can reduce to <24 hours).
