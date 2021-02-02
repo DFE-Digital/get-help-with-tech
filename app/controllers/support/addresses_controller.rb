@@ -3,13 +3,17 @@ class Support::AddressesController < Support::BaseController
 
   def edit
     @school = School.where_urn_or_ukprn(params[:school_urn]).first!
+
+    authorize @school, :update_address?
   end
 
   def update
     @school = School.where_urn_or_ukprn(params[:school_urn]).first!
 
+    authorize @school, :update_address?
+
     if @school.update(school_params.merge(computacenter_change: 'amended'))
-      flash[:success] = "Address has been updated"
+      flash[:success] = 'Address has been updated'
       redirect_to support_school_path(urn: @school.urn)
     else
       render :edit

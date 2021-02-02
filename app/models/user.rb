@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   has_paper_trail
 
+  enum role: {
+    no: 'no',
+    third_line: 'third_line',
+  }, _suffix: true
+
   has_many :extra_mobile_data_requests, foreign_key: :created_by_user_id, inverse_of: :created_by_user, dependent: :destroy
   has_many :api_tokens, dependent: :destroy
   has_many :school_welcome_wizards, dependent: :destroy

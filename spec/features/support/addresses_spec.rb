@@ -1,14 +1,29 @@
 require 'rails_helper'
 
 RSpec.feature 'Updating addresses' do
-  let(:support_user) { create(:support_user) }
+  let(:support_user) { create(:support_user, role: 'third_line') }
   let(:school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:address_page) { PageObjects::Support::AddressPage.new }
 
   before do
-    school.update(computacenter_change: 'none')
+    school.update!(computacenter_change: 'none')
     sign_in_as support_user
+  end
+
+  context 'when user is not third line' do
+    let(:support_user) { create(:support_user) }
+
+    it 'does not show change address link' do
+      visit support_school_path(school.urn)
+      expect(school_page).not_to have_text 'Change address'
+    end
+
+    it 'cannot access change address form' do
+      address_page.load(urn: school.urn)
+      expect(school_page).to have_text 'Forbidden'
+      expect(school_page).not_to have_text 'Update an address'
+    end
   end
 
   describe 'visiting a school details page' do
