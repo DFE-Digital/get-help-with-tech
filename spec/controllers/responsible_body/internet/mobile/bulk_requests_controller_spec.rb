@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ResponsibleBody::Internet::Mobile::BulkRequestsController, type: :controller do
   let(:local_authority_user) { create(:local_authority_user) }
+  let(:filename) { Rails.root.join('tmp/update_requests.xlsx') }
 
   context 'when authenticated' do
     before do
@@ -34,6 +35,20 @@ RSpec.describe ResponsibleBody::Internet::Mobile::BulkRequestsController, type: 
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(assigns[:upload_form].errors.full_messages).to eq(["'Upload' There’s a problem with that spreadsheet"])
+      end
+
+      it 'accepts the standard content-type for xlsx' do
+        upload = Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+        post :create, params: { bulk_upload_form: { upload: upload } }
+        expect(response).to render_template(:summary)
+      end
+
+      it 'accepts Chromebooks content-type for xlsx' do
+        upload = Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), 'application/octet-stream')
+
+        post :create, params: { bulk_upload_form: { upload: upload } }
+        expect(response).to render_template(:summary)
       end
     end
   end
