@@ -1,0 +1,32 @@
+<%- title = t('page_titles.support.addresses.edit') %>
+<%- content_for :title, title_with_error_prefix(title, @school.errors.any?) %>
+<%- content_for :before_content do %>
+  <%= govuk_link_to('Back', support_school_path(@school), class: 'govuk-back-link') %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <% unless @school.computacenter_change == 'none' %>
+      <p class="govuk-body">
+        <strong class="govuk-tag govuk-tag--red">PENDING</strong> Computacenter still needs to update this address
+      </p>
+    <% end %>
+
+    <%= form_with model: @school, url: support_school_addresses_path, scope: :school do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_text_field :address_1, label: { text: 'Address line 1', size: 's' } %>
+      <%= f.govuk_text_field :address_2, label: { text: 'Address line 2', size: 's' } %>
+      <%= f.govuk_text_field :address_3, label: { text: 'Address line 3', size: 's' } %>
+      <%= f.govuk_text_field :town, label: { text: 'Town', size: 's' } %>
+      <%= f.govuk_text_field :county, label: { text: 'County', size: 's' } %>
+      <%= f.govuk_text_field :postcode, label: { text: 'Postcode', size: 's' } %>
+
+      <%= f.govuk_submit 'Save' %>
+    <%- end %>
+  </div>
+</div>

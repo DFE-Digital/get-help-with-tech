@@ -81,6 +81,8 @@ en:
           edit: Update responsible body
       allocation:
         adjust_allocations_for_many_schools: Adjust allocations for many schools, colleges and FE providers
+      addresses:
+        edit: Update address
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
     support_devices: Devices

@@ -18,4 +18,8 @@ class SchoolPolicy < SupportPolicy
   def update_computacenter_reference?
     user.is_computacenter?
   end
+
+  def update_address?
+    user.third_line_role?
+  end
 end
