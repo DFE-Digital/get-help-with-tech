@@ -48,6 +48,24 @@ RSpec.describe School::Internet::Mobile::BulkRequestsController, type: :controll
         expect(response).to have_http_status(:unprocessable_entity)
         expect(assigns[:upload_form].errors.full_messages).to eq(["'Upload' There’s a problem with that spreadsheet"])
       end
+
+      context 'with a standard content-type xls' do
+        let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+
+        it 'accepts the standard content-type for xlsx' do
+          post :create, params: request_data
+          expect(response).to render_template(:summary)
+        end
+      end
+
+      context 'with a Chromebook content-type xls' do
+        let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), 'application/octet-stream') }
+
+        it 'accepts Chromebooks content-type for xlsx' do
+          post :create, params: request_data
+          expect(response).to render_template(:summary)
+        end
+      end
     end
   end
 end
