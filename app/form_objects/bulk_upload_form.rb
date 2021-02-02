@@ -12,7 +12,7 @@ class BulkUploadForm
 private
 
   def appropriate_file_type
-    Rails.logger.debug("Bulk upload content-type: #{upload.content_type}")
+    Rails.logger.info("Bulk upload content-type: #{upload.content_type}")
     errors.add(:upload, :unsupported_file_type) unless xlsx_uploaded?
   end
 
