@@ -22,7 +22,7 @@ RSpec.feature 'Updating addresses' do
     it 'cannot access change address form' do
       address_page.load(urn: school.urn)
       expect(school_page).to have_text 'Forbidden'
-      expect(school_page).not_to have_text 'Update an address'
+      expect(school_page).not_to have_text 'Update address'
     end
   end
 
@@ -44,11 +44,7 @@ RSpec.feature 'Updating addresses' do
 
       it 'shows me a form to update the address' do
         expect(address_page).to be_displayed(urn: school.urn)
-        expect(address_page.h1.text).to eql('Update an address')
-      end
-
-      it 'shows Computacenter has address in sync' do
-        expect(address_page.text).to include('ACTIVE')
+        expect(address_page.h1.text).to eql('Update address')
       end
 
       context 'updating the address' do
