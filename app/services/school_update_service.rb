@@ -16,11 +16,24 @@ class SchoolUpdateService
     school = School.create!(staged_school.staged_attributes)
     unless school.responsible_body.who_will_order_devices.nil?
       school.create_preorder_information!(who_will_order_devices: school.responsible_body.who_will_order_devices.singularize)
-      school.device_allocations.create!(device_type: 'std_device', allocation: 0)
+      school.device_allocations.std_device.create!(allocation: 0)
+      school.device_allocations.coms_device.create!(allocation: 0)
     end
     school
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
+  end
+
+  def schools_that_need_to_be_added
+    DataStage::School.gias_status_open.where.not(urn: School.gias_status_open.select(:urn))
+  end
+
+  def schools_that_have_changes
+    []
+  end
+
+  def schools_that_need_to_be_closed
+    DataStage::School.gias_status_closed.where(urn: School.gias_status_open.select(:urn))
   end
 
 private

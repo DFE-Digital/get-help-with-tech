@@ -66,5 +66,13 @@
 
       <p class="govuk-body">Use this section to see the status of feature flags for the service</p>
     <% end %>
+
+    <% if policy(:support).gias_updates? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'GIAS updates', support_gias_updates_path %>
+      </h2>
+
+      <p class="govuk-body">Use this section to see and action changes to schools and trusts</p>
+    <% end %>
   </div>
 </div>
