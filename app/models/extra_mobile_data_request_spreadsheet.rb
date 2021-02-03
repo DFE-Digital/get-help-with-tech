@@ -48,7 +48,7 @@ private
 
       header_hash.keys.each_with_object({}) do |column_sym, memo|
         column_index = header_hash[column_sym]
-        memo[column_sym] = row[column_index]&.value
+        memo[column_sym] = cleanse(row[column_index]&.value)
       end
     }.compact
   end
@@ -76,6 +76,12 @@ private
         column_heading = cell.value.to_s.parameterize(separator: '_')
         memo[column_heading.to_sym] = cell.column
       end
+    end
+  end
+
+  def cleanse(value)
+    unless value.nil?
+      value.to_s.gsub(/\n/, '').squish.strip
     end
   end
 end
