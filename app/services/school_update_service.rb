@@ -28,10 +28,6 @@ class SchoolUpdateService
     DataStage::School.gias_status_open.where.not(urn: School.gias_status_open.select(:urn))
   end
 
-  def schools_that_have_changes
-    []
-  end
-
   def schools_that_need_to_be_closed
     DataStage::School.gias_status_closed.where(urn: School.gias_status_open.select(:urn))
   end
@@ -39,7 +35,7 @@ class SchoolUpdateService
 private
 
   def update_school(staged_school)
-    staged_school.counterpart_school.update!(staged_school.staged_attributes)
+    staged_school.counterpart_school.update!(staged_school.staged_attributes.merge(computacenter_change: 'amended'))
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end
