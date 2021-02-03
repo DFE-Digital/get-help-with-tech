@@ -3,7 +3,7 @@
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> did not recognise this number</h2>
 
-      <p>Check the following:</p>
+      <p class="govuk-body">Check the following:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>the number was typed correctly</li>
         <li>the correct mobile network was provided</li>
@@ -19,14 +19,14 @@
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> told us this account is not eligible</h2>
 
-      <p>This could be because:</p>
+      <p class="govuk-body">This could be because:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>they are a new <%= @extra_mobile_data_request.mobile_network.brand %> customer</li>
         <li>they do not meet <%= @extra_mobile_data_request.mobile_network.brand %>’s criteria</li>
         <li>they already have fixed line broadband at home</li>
       </ul>
 
-      <p>You can still:</p>
+      <p class="govuk-body">You can still:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>confirm this person needs internet access</li>
         <li>check if there’s another mobile account they could use</li>
@@ -37,7 +37,7 @@
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> did not recognise this name</h2>
 
-      <p>Check the following:</p>
+      <p class="govuk-body">Check the following:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>the correct account holder was given</li>
         <li>the name matches the name on the bill</li>
@@ -53,8 +53,8 @@
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> couldn’t process this request</h2>
 
-      <p>They did not give a reason why.</p>
-      <p>You can still:</p>
+      <p class="govuk-body">They did not give a reason why.</p>
+      <p class="govuk-body">You can still:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>confirm this person needs internet access</li>
         <li>check if there’s another mobile account they could use</li>
@@ -64,7 +64,7 @@
   <%- elsif @extra_mobile_data_request.unavailable_status? %>
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> is not offering data increases yet</h2>
-      <p>We cannot request an increase in data from a network that’s not participating in the offer.</p>
+      <p class="govuk-body">We cannot request an increase in data from a network that’s not participating in the offer.</p>
     </div>
   <%- end %>
 </div>
