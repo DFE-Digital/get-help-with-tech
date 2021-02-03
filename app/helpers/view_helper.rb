@@ -184,7 +184,7 @@ module ViewHelper
   end
 
   def mno_offer_details_partial(brand)
-    ['shared', 'mno_offer_details', '_' + brand].join('/')
+    ['shared', 'mno_offer_details', brand].join('/')
   end
 
   def participating_mobile_networks
