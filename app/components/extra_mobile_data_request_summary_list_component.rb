@@ -13,19 +13,19 @@ class ExtraMobileDataRequestSummaryListComponent < ViewComponent::Base
       },
       {
         key: 'Account holder',
-        value: @extra_mobile_data_request.account_holder_name
+        value: @extra_mobile_data_request.account_holder_name,
       },
       {
         key: 'Mobile number',
-        value: @extra_mobile_data_request.device_phone_number
+        value: @extra_mobile_data_request.device_phone_number,
       },
       {
         key: 'Mobile network',
-        value: @extra_mobile_data_request.mobile_network.brand
+        value: @extra_mobile_data_request.mobile_network.brand,
       },
       {
         key: 'Pay monthly or pay as you go',
-        value: I18n.t(@extra_mobile_data_request.contract_type, scope: %i[activerecord attributes extra_mobile_data_request contract_type])
+        value: I18n.t(@extra_mobile_data_request.contract_type, scope: %i[activerecord attributes extra_mobile_data_request contract_types]),
       },
     ]
   end

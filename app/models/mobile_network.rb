@@ -21,5 +21,4 @@ class MobileNetwork < ApplicationRecord
          .gsub(/^_+(.*)/, '\1')
          .gsub(/^(.*)_$/, '\1')
   end
-
 end

@@ -147,9 +147,9 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} did not recognise this number")
-          expect(page).to have_content("Check the following")
-          expect(page).to have_content("the number was typed correctly")
-          expect(page).to have_content("the correct mobile network was provided")
+          expect(page).to have_content('Check the following')
+          expect(page).to have_content('the number was typed correctly')
+          expect(page).to have_content('the correct mobile network was provided')
           expect(page).to have_link('Make new request')
         end
       end
@@ -163,9 +163,9 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} did not recognise this number")
-          expect(page).to have_content("Check the following")
-          expect(page).to have_content("the number was typed correctly")
-          expect(page).to have_content("the correct mobile network was provided")
+          expect(page).to have_content('Check the following')
+          expect(page).to have_content('the number was typed correctly')
+          expect(page).to have_content('the correct mobile network was provided')
           expect(page).to have_link('Make new request')
         end
       end
@@ -179,9 +179,9 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} did not recognise this name")
-          expect(page).to have_content("Check the following")
-          expect(page).to have_content("the correct account holder was given")
-          expect(page).to have_content("the name matches the name on the bill")
+          expect(page).to have_content('Check the following')
+          expect(page).to have_content('the correct account holder was given')
+          expect(page).to have_content('the name matches the name on the bill')
           expect(page).to have_link('Make new request')
         end
       end
@@ -197,7 +197,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
           expect(page).to have_content("#{request.mobile_network.brand} told us this account is not eligible")
           expect(page).to have_content("they are a new #{request.mobile_network.brand} customer")
           expect(page).to have_content("they do not meet #{request.mobile_network.brand}'s criteria")
-          expect(page).to have_content("they already have fixed line broadband at home")
+          expect(page).to have_content('they already have fixed line broadband at home')
           expect(page).to have_link('4G wireless router instead')
         end
       end
@@ -211,7 +211,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} couldn’t process this request")
-          expect(page).to have_content("They did not give a reason why")
+          expect(page).to have_content('They did not give a reason why')
           expect(page).to have_link('4G wireless router instead')
         end
       end
@@ -225,7 +225,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} is not offering data increases yet")
-          expect(page).to have_content("We cannot request an increase in data from a network that’s not participating in the offer.")
+          expect(page).to have_content('We cannot request an increase in data from a network that’s not participating in the offer.')
         end
       end
     end

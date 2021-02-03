@@ -505,7 +505,7 @@ en:
           active: Active
           revoked: Revoked
       extra_mobile_data_request:
-        contract_type:
+        contract_types:
           pay_monthly: Pay monthly
           pay_as_you_go_payg: Pay as you go (PAYG)
         status:
