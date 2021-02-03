@@ -8,8 +8,6 @@
 
 ### If it is not working within 3 days of receiving it
 
-We’ll send you a replacement device within 2 working days of returning a device.
-
 If a device will not start, please check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Please include your order number and the device serial number so that we can help you as quickly as possible.
 
 ### If a device stops working after 3 days
@@ -17,8 +15,6 @@ If a device will not start, please check it’s fully charged and plugged into t
 School, local authority and academy trust contacts can raise a support request on the [Support Portal](https://computacenterprod.service-now.com/dfe) from 4 January 2021 to request a replacement for a faulty device. 
 
 Requests for replacement devices from schools will be sent to the local authority or academy trust to be approved. The reason we ask for approval is because if the device has stopped working because a user has damaged the device, your local authority or academy trust will be charged for a replacement.
-
-Replacement devices will be provided within 2 working days (subject to your availability) of a request being approved by the local authority or academy trust.
 
 Before placing a request for a warranty replacement, you should check the device and attempt to resolve the issue. Software problems and physically damaged devices are not covered by the warranty replacement service. Information on 'How to triage a hardware fault' is available on the [Support Portal](https://computacenterprod.service-now.com/dfe).
 
