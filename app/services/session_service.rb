@@ -5,6 +5,7 @@ class SessionService
 
   DEFAULT_USER_TTL = 3600.seconds.freeze
   SUPPORT_USER_TTL = 7200.seconds.freeze
+  TTLS = [DEFAULT_USER_TTL, SUPPORT_USER_TTL].freeze
 
   def self.send_magic_link_email!(email_address)
     if (user = find_user_by_lowercase_email(email_address))
