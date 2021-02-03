@@ -24,7 +24,7 @@ class ExtraMobileDataRequestSummaryListComponent < ViewComponent::Base
         value: @extra_mobile_data_request.mobile_network.brand,
       },
       {
-        key: 'Pay monthly or pay as you go',
+        key: 'Pay Monthly or Pay-as-you-go',
         value: I18n.t(@extra_mobile_data_request.contract_type, scope: %i[activerecord attributes extra_mobile_data_request contract_types]),
       },
     ]
