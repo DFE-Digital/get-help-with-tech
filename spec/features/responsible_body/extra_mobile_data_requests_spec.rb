@@ -196,7 +196,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} told us this account is not eligible")
           expect(page).to have_content("they are a new #{request.mobile_network.brand} customer")
-          expect(page).to have_content("they do not meet #{request.mobile_network.brand}'s criteria")
+          expect(page).to have_content("they do not meet #{request.mobile_network.brand}’s criteria")
           expect(page).to have_content('they already have fixed line broadband at home')
           expect(page).to have_link('4G wireless router instead')
         end
