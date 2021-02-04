@@ -10,7 +10,7 @@ This calculation is based on:
 * free meals data for further education providers
 * an estimate of the number of devices a school or further education provider already has
 
-### Providing internet connectivity
+## Providing internet connectivity
 
 Our guidance explains your options for [getting internet access](https://get-help-with-tech.education.gov.uk/internet-access) for disadvantaged children and young people. This could be through:
 
