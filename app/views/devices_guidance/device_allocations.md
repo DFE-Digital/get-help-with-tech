@@ -1,12 +1,8 @@
 ## How devices are allocated
 
-### Laptops and tablets for schools, colleges, <span class="app-no-wrap">further education providers</span>, <span class="app-no-wrap">academy trusts</span> and <span class="app-no-wrap">local authorities</span>
+In February 2021, we allocated 300,000 more devices to support the pupils and students most in need.
 
-<div class="govuk-inset-text">
-  You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
-</div>
-
-The number of devices available to order through the service reflects the number of laptops and tablets we estimate are needed by each school, college or further education provider.
+The number of devices we’ve made available for you to order through the service reflects the number of laptops and tablets we estimate are needed by your school, college or further education provider.
 
 This calculation is based on:
 
@@ -16,17 +12,19 @@ This calculation is based on:
 
 ### Providing internet connectivity
 
-For information on getting internet access for disadvantaged children and young people, read about [requesting 4G wireless routers](/how-to-request-4g-wireless-routers).
+Our guidance explains your options for [getting internet access](https://get-help-with-tech.education.gov.uk/internet-access) for disadvantaged children and young people. This could be through:
 
-For information on getting internet access for disadvantaged children in years 3 to 11, read about [increasing mobile data allowances](/about-increasing-mobile-data). This is not currently available to 16 to 19 providers.
+* [increasing mobile data allowances](/about-increasing-mobile-data) for disadvantaged pupils in years 3 to 11 (not currently available to students in 16 to 19 further education)
 
-## How to query an allocation
+* [4G wireless routers](/how-to-request-4g-wireless-routers) for disadvantaged pupils in years 3 to 11, and disadvantaged and students in 16 to 19 further education 
+
+## How to request more devices
 
 You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
 
-If the number of disadvantaged students who are unable to access face-to-face education or a device through other means is greater than your allocation, you can email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) to request more.
+If you find that your allocation is substantially lower than your school needs, you can request more by [contacting us](https://get-help-with-tech.education.gov.uk/get-support). We cannot guarantee that we’ll be able to meet all requests however, as we need to distribute devices among a large number of schools and colleges in England.
 
-We’ll ask you for some information about the situation, including the information listed below. Before querying your allocation, you should make sure that pupils and students cannot access a device privately, or by being lent a device already owned by your school, college or further education provider.
+Before requesting more laptops and tablets, you should make sure that pupils and students cannot access a device privately, or by being lent a device already owned by your school, college or further education institution.
 
 You’ll need to provide anonymised evidence that confirms:
 
