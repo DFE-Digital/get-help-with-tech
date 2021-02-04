@@ -20,9 +20,9 @@ Our guidance explains your options for [getting internet access](https://get-hel
 
 ## How to request more devices
 
-You can see your current allocation by signing in to the <a class="govuk-link" href="/start">Get help with technology service</a>.
+You can see your current allocation by signing in to the [Get help with technology service](https://get-help-with-tech.education.gov.uk/sign-in).
 
-If you find that your allocation is substantially lower than your school needs, you can request more by [contacting us](https://get-help-with-tech.education.gov.uk/get-support). We cannot guarantee that we’ll be able to meet all requests, however, as we need to distribute devices among a large number of schools and colleges in England.
+If you find that your allocation is substantially lower than your school needs, you can request more devices by [contacting us](https://get-help-with-tech.education.gov.uk/get-support). We cannot guarantee that we’ll be able to meet all requests, as we need to distribute devices among a large number of schools and colleges in England.
 
 Before requesting more laptops and tablets, you should make sure that pupils and students cannot access a device privately, or by being lent a device already owned by your school, college or further education institution.
 
