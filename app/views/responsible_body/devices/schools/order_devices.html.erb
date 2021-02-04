@@ -10,6 +10,26 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
+    <h2 class="govuk-heading-m">
+      Before you order
+    </h2>
+    <p class="govuk-body">
+      Make sure you’re certain of what devices you need, as amending or cancelling an order will cause delays.
+    </p>
+    <p class="govuk-body">
+      It may help to:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= link_to_devices_guidance_subpage 'check device specifications', 'device-specification' %></li>
+      <li>
+        <% if @responsible_body.is_a_trust? %>
+          <%= govuk_link_to 'give someone else access so they can place orders', responsible_body_users_path %>
+        <% else %>
+          <%= govuk_link_to 'give someone else access so they can place orders', responsible_body_users_path %>
+        <% end %>
+      </li>
+    </ul>
+
     <h2 class="govuk-heading-m">How to order</h2>
 
     <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
@@ -23,8 +43,6 @@
     <p class="govuk-body">
       If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
     </p>
-
-    <p class="govuk-body">Order your devices now. Do not delay.</p>
 
     <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
   </div>
