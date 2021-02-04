@@ -183,6 +183,14 @@ module ViewHelper
     label.join(' ').html_safe
   end
 
+  def mno_offer_details_partial(brand)
+    ['shared', 'mno_offer_details', brand].join('/')
+  end
+
+  def participating_mobile_networks
+    MobileNetwork.where(participation_in_pilot: 'participating').order(:brand)
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

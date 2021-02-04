@@ -1,0 +1,27 @@
+<%- content_for :before_content do %>
+  <%= govuk_link_to('Back', responsible_body_internet_mobile_extra_data_requests_path, class: 'govuk-back-link') %>
+<% end %>
+<%- title = "#{@request.mobile_network.brand} request #{@request.device_phone_number.first(2)}...#{@request.device_phone_number.last(4)}" %>
+<% content_for :title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l"><%= @request.device_phone_number %></span>
+      <%= @request.account_holder_name %>
+    </h1>
+
+    <%= render ExtraMobileDataRequestStatusDetailsComponent.new(extra_mobile_data_request: @request, context: :responsible_body) %>
+
+    <h2 class="govuk-heading-m">Request details</h2>
+    <%= render ExtraMobileDataRequestSummaryListComponent.new(extra_mobile_data_request: @request) %>
+
+    <%- if @request.mobile_network.participating? %>
+      <%- offer = controller.render_to_string( partial: mno_offer_details_partial(@request.mobile_network.pathsafe_brand) ) rescue nil %>
+      <%- if offer.present? %>
+        <h2 class="govuk-heading-m"><%= @request.mobile_network.brand %> offer</h2>
+        <%= offer %>
+      <%- end %>
+    <%- end %>
+  </div>
+</div>

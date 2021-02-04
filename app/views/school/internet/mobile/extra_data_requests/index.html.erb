@@ -42,7 +42,7 @@
     <tbody class="govuk-table__body">
       <%- for emd_request in @extra_mobile_data_requests do %>
         <tr class="govuk-table__row" id="request-<%= emd_request.id %>">
-          <td class="govuk-table__cell"><%= emd_request.account_holder_name %></td>
+          <td class="govuk-table__cell"><%= govuk_link_to(emd_request.account_holder_name, extra_data_request_internet_mobile_school_path(@school, emd_request)) %></td>
           <td class="govuk-table__cell"><%= emd_request.device_phone_number %></td>
           <td class="govuk-table__cell"><%= emd_request.created_at.to_date.to_s(:long_ordinal) %></td>
           <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>

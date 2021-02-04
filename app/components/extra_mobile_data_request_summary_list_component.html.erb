@@ -1,0 +1,31 @@
+<div class="extra-mobile-data-request-summary-list">
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Status
+      </dt>
+      <dd class="govuk-summary-list__value" id="request-status">
+        <%= render ExtraMobileDataRequestStatusComponent.new( status: @extra_mobile_data_request.status ) %>
+      </dd>
+    </div>
+
+    <% rows.each do |row| %>
+      <div class="govuk-summary-list__row">
+        <% if row[:key] %>
+          <dt class="govuk-summary-list__key">
+            <%= row[:key] %>
+          </dt>
+        <% end %>
+        <dd class="govuk-summary-list__value">
+          <% if row[:value].is_a?(Array) %>
+            <% row[:value].each do |value| %><%= value %><br><% end %>
+          <% elsif row[:value].html_safe? %>
+            <%= row[:value] %>
+          <% else %>
+            <%= simple_format row[:value], class: 'govuk-body' %>
+          <% end %>
+        </dd>
+      </div>
+    <% end %>
+  </dl>
+</div>

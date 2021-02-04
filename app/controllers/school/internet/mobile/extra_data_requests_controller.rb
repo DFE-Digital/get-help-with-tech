@@ -26,6 +26,10 @@ class School::Internet::Mobile::ExtraDataRequestsController < School::BaseContro
     end
   end
 
+  def show
+    @request = @school.extra_mobile_data_requests.find(params[:id])
+  end
+
 private
 
   def submission_type_params

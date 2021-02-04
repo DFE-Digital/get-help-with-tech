@@ -1,0 +1,70 @@
+<div class="extra-mobile-data-request-status-details">
+  <%- if %w[problem_incorrect_phone_number problem_no_match_for_number problem_no_longer_on_network].include?(@extra_mobile_data_request.status) %>
+    <div class="govuk-inset-text">
+      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> did not recognise this number</h2>
+
+      <p class="govuk-body">Check the following:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the number was typed correctly</li>
+        <li>the correct mobile network was provided</li>
+      </ul>
+
+      <%- if @context == :school %>
+        <%= govuk_link_to('Make new request', extra_data_requests_type_internet_mobile_school_path(@extra_mobile_data_request.school)) %>
+      <%- else %>
+        <%= govuk_link_to('Make new request', responsible_body_internet_mobile_extra_data_requests_type_path) %>
+      <%- end %>
+    </div>
+  <%- elsif @extra_mobile_data_request.problem_not_eligible_status? %>
+    <div class="govuk-inset-text">
+      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> told us this account is not eligible</h2>
+
+      <p class="govuk-body">This could be because:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>they are a new <%= @extra_mobile_data_request.mobile_network.brand %> customer</li>
+        <li>they do not meet <%= @extra_mobile_data_request.mobile_network.brand %>’s criteria</li>
+        <li>they already have fixed line broadband at home</li>
+      </ul>
+
+      <p class="govuk-body">You can still:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>confirm this person needs internet access</li>
+        <li>check if there’s another mobile account they could use</li>
+        <li>request a <%= govuk_link_to('4G wireless router instead', how_to_request_4g_wireless_routers_path) %></li>
+      </ul>
+    </div>
+  <%- elsif @extra_mobile_data_request.problem_no_match_for_account_name_status? %>
+    <div class="govuk-inset-text">
+      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> did not recognise this name</h2>
+
+      <p class="govuk-body">Check the following:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the correct account holder was given</li>
+        <li>the name matches the name on the bill</li>
+      </ul>
+
+      <%- if @context == :school %>
+        <%= govuk_link_to('Make new request', extra_data_requests_type_internet_mobile_school_path(@extra_mobile_data_request.school)) %>
+      <%- else %>
+        <%= govuk_link_to('Make new request', responsible_body_internet_mobile_extra_data_requests_type_path) %>
+      <%- end %>
+    </div>
+  <%- elsif @extra_mobile_data_request.problem_other_status? %>
+    <div class="govuk-inset-text">
+      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> couldn’t process this request</h2>
+
+      <p class="govuk-body">They did not give a reason why.</p>
+      <p class="govuk-body">You can still:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>confirm this person needs internet access</li>
+        <li>check if there’s another mobile account they could use</li>
+        <li>request a <%= govuk_link_to('4G wireless router instead', how_to_request_4g_wireless_routers_path) %></li>
+      </ul>
+    </div>
+  <%- elsif @extra_mobile_data_request.unavailable_status? %>
+    <div class="govuk-inset-text">
+      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> is not offering data increases yet</h2>
+      <p class="govuk-body">We cannot request an increase in data from a network that’s not participating in the offer.</p>
+    </div>
+  <%- end %>
+</div>
