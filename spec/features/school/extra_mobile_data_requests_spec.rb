@@ -114,11 +114,15 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       let(:mno_without_view_template) { MobileNetwork.find_or_create_by(brand: 'Some Unknown Mobile', participation_in_pilot: 'participating') }
       let(:mno_with_view_template) { MobileNetwork.find_or_create_by(brand: 'BT Mobile', participation_in_pilot: 'participating') }
       let(:status) { 'new' }
-      let!(:request) { create(:extra_mobile_data_request, status: status, created_by_user: user, school: school, mobile_network: mno_with_view_template) }
+      let!(:request) { create(:extra_mobile_data_request, status: status, created_by_user: user, school: school, mobile_network: mno_with_view_template, device_phone_number: '07123 123456') }
 
       before do
         visit extra_data_requests_internet_mobile_school_path(school)
         click_on request.account_holder_name
+      end
+
+      it 'has a non-personally-identifying title' do
+        expect(page.title).to eq('BT Mobile request 07...3456 - Get help with technology - GOV.UK')
       end
 
       it 'shows the request details' do
