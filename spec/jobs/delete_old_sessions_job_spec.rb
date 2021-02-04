@@ -1,43 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe DeleteOldSessionsJob do
-  let(:job) { described_class.new }
+  subject(:job) { described_class.new }
 
   describe '#perform' do
-    before do
-      Timecop.travel(1.hour.ago)
-      Session.create!(id: SecureRandom.uuid)
-      Timecop.return
+    let!(:session1) { Session.create!(id: SecureRandom.uuid, expires_at: 4.hours.ago) }
+    let!(:session2) { Session.create!(id: SecureRandom.uuid, expires_at: 1.hour.ago) }
+    let!(:session3) { Session.create!(id: SecureRandom.uuid, expires_at: 30.minutes.from_now) }
+    let!(:session4) { Session.create!(id: SecureRandom.uuid, expires_at: 1.hour.from_now) }
 
-      Timecop.travel(5.hours.ago)
-      Session.create!(id: SecureRandom.uuid)
-      Timecop.return
+    let(:result) { job.perform }
 
-      Timecop.travel(1.day.ago)
-      Session.create!(id: SecureRandom.uuid)
-      Timecop.return
+    it 'deletes sessions expired by 2 hours' do
+      expect { result }.to change(Session, :count).by(-1)
 
-      Timecop.travel(30.minutes.ago)
-      2.times do
-        Session.create!(id: SecureRandom.uuid)
-      end
-      Timecop.return
-    end
-
-    context 'given an :older_than param' do
-      let(:result) { job.perform(older_than: 50.minutes.ago) }
-
-      it 'deletes only the sessions older than the given param' do
-        expect { result }.to change(Session, :count).by(-3)
-      end
-    end
-
-    context 'given no :older_than param' do
-      let(:result) { job.perform }
-
-      it 'deletes only the sessions older than 4 times session_ttl_seconds Setting' do
-        expect { result }.to change(Session, :count).by(-2)
-      end
+      expect(Session.find_by(id: session1.id)).to be_nil
+      expect(Session.find_by(id: session2.id)).to be_present
+      expect(Session.find_by(id: session3.id)).to be_present
+      expect(Session.find_by(id: session4.id)).to be_present
     end
   end
 end
