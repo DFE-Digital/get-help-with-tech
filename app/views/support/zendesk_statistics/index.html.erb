@@ -1,0 +1,14 @@
+<%- title = t('page_titles.support.zendesk_statistics') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ 'Support home' => support_home_path },
+                   title,
+                 ]) %>
+<% end %>
+
+
+<h1 class="govuk-heading-xl">
+  <%= title %>
+</h1>
+
+<%= render partial: 'macros' %>
