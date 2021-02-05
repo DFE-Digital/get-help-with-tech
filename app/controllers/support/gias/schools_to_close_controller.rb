@@ -1,4 +1,4 @@
-class Support::GiasUpdatesController < Support::BaseController
+class Support::Gias::SchoolsToCloseController < Support::BaseController
   before_action { authorize :support }
 
   def index
