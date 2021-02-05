@@ -4,6 +4,7 @@ RSpec.feature 'Google Analytics behaviour' do
   let(:consent) { nil }
   let(:tracking_id) { nil }
   let(:google_tag) { /<script [^>]*src="https:\/\/www.googletagmanager.com\/gtag\/js\?id=#{tracking_id}"/ }
+  let(:anonymize_ip_config) { /gtag\(\'config',[^\)]+'anonymize_ip': true[^\)]*\)/ }
 
   before do
     allow(Settings.google.analytics).to receive(:tracking_id).and_return(tracking_id)
@@ -19,6 +20,10 @@ RSpec.feature 'Google Analytics behaviour' do
 
       it 'renders the GA tag code' do
         expect(page.source).to match(google_tag)
+      end
+
+      it 'explicitly sets anonymize_ip to true' do
+        expect(page.source).to match(anonymize_ip_config)
       end
     end
 
