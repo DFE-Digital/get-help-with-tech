@@ -124,7 +124,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       fill_in 'Email address', with: 'unrecognised@example.com'
       click_on 'Continue'
 
-      expect(page).to have_text('We didn’t recognise that email address')
+      expect(page).to have_text('We did not recognise that email address')
     end
 
     scenario 'Entering an invalid email sends the user back to the sign-in page' do

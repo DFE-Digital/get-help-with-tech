@@ -7,7 +7,7 @@ Devices are being provided to help children and young people access social care 
 * families and care leavers to avoid social isolation
 * children and young people to access remote learning, including year 10 pupils with upcoming GCSE exams
 
-Local authorities (LAs), academy trusts and schools own the devices, and should consider including an acceptable use policy in loan agreements. Please see our [guidance on lending devices](/devices/distributing-devices) for more information.
+Local authorities (LAs), academy trusts and schools own the devices, and should consider including an acceptable use policy in loan agreements. See our [guidance on lending devices](/devices/distributing-devices) for more information.
 
 Parents and guardians should provide age-appropriate supervision for the internet use of the children and young people in their care (but LAs should be alert to cases where parents of children with a social worker may not be in a position to do this). They may find the following information helpful:
 
@@ -26,26 +26,21 @@ Cisco Umbrella will be pre-installed on devices ordered during the 2020 summer t
 
 Where Cisco Umbrella has been installed, content filtering has been set up to meet the needs of children and young people of all ages. You can choose to use your own content filtering solution to replace Cisco Umbrella to make it more relevant for your users’ needs.
 
-Please see our guidance on content filtering software for [Google Chromebooks](/devices/preparing-chromebooks) and [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
+See our guidance on content filtering software for [Google Chromebooks](/devices/preparing-chromebooks) and [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
 
-Updating your Microsoft mobile device management
-------------------------------------------------
+## Updating your Microsoft mobile device management
 
-'DfE Restricted' Microsoft Windows laptops and tablets can be supplied with security settings already configured and managed by DfE using Microsoft Intune.
+‘DfE Restricted’ Microsoft Windows laptops and tablets can be supplied with security settings already configured and managed by DfE using Microsoft Intune.
 
 You can lend the devices out to users straight away as the mobile device management (MDM) will be in place. After 30 September 2021, the MDM will expire and the devices will be unprotected.
 
 You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
-<div class="app-card govuk-!-margin-bottom-4">
-  <p class="govuk-body govuk-!-margin-bottom-0">
-    If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
-  </p>
-</div>
+If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
 
 You can choose to remove the DfE safeguarding software and replace it with your own, or you can distribute the devices without any content filtering and MDM installed.
 
-Please see our guidance on management of [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
+See our guidance on management of [Microsoft laptops and tablets](/devices/preparing-microsoft-windows-laptops-and-tablets) for more information.
 
 ## Antivirus and security software
 

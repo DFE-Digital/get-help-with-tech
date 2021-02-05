@@ -17,7 +17,7 @@ en:
     sign_in: Sign in
     check_your_email: Check your email
     cookie_preferences: Cookies
-    email_not_recognised: We didn’t recognise that email address
+    email_not_recognised: We did not recognise that email address
     token_is_valid_but_expired: The link you clicked has expired
     token_not_recognised: We didn’t recognise that link
     confirm: Check your answers before confirming
