@@ -32,14 +32,14 @@
           selected: @view_mode == 'std_device')
         %>
         <%= render TabComponent.new(
-          label: 'Dev. Caps',
-          path: support_school_history_path(view: 'caps'),
-          selected: @view_mode == 'caps')
-        %>
-        <%= render TabComponent.new(
           label: 'Routers',
           path: support_school_history_path(view: 'coms_device'),
           selected: @view_mode == 'coms_device')
+        %>
+        <%= render TabComponent.new(
+          label: 'Cap',
+          path: support_school_history_path(view: 'caps'),
+          selected: @view_mode == 'caps')
         %>
         <%= render TabComponent.new(
           label: 'Devices (v-cap)',
