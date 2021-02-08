@@ -1,6 +1,7 @@
 class SetAllUnavailableEmdrsToNewForParticipatingNetworks < ActiveRecord::Migration[6.1]
   def up
     reqs = ExtraMobileDataRequest.joins(:mobile_network)
+                                 .where.not(mobile_network: { brand: 'Three' })
                                  .where(status: 'unavailable')
                                  .where(mobile_network: { participation_in_pilot: 'participating' })
     # we're updating each one individually rather than in bulk,
