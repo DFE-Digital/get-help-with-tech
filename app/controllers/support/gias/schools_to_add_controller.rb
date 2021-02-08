@@ -1,5 +1,5 @@
 class Support::Gias::SchoolsToAddController < Support::BaseController
-  before_action { authorize :support }
+  before_action { authorize :gias }
   before_action :get_staged_school, only: [:show, :update]
 
   def index

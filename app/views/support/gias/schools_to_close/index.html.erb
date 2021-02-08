@@ -27,7 +27,7 @@
       <tbody class="govuk-table__body">
         <% @gias_info_form.closed_schools.each do |school| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= school.urn %></td>
+            <td class="govuk-table__cell"><%= govuk_link_to school.urn, support_gias_schools_to_close_path(school.urn) %></td>
             <td class="govuk-table__cell"><%= school.name %></td>
             <td class="govuk-table__cell"><%= school.responsible_body_name %></td>
           </tr>

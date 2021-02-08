@@ -179,6 +179,10 @@ class School < ApplicationRecord
     preorder_information.school_will_order_devices?
   end
 
+  def close!
+    update!(status: 'closed', computacenter_change: 'closed') unless gias_status_closed?
+  end
+
 private
 
   def maybe_generate_user_changes

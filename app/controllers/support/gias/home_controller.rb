@@ -1,5 +1,5 @@
 class Support::Gias::HomeController < Support::BaseController
-  before_action { authorize :support }
+  before_action { authorize :gias }
 
   def index
     @gias_info_form = Support::GiasInfoForm.new
