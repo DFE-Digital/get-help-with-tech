@@ -2,14 +2,21 @@ class Support::Gias::HomeController < Support::BaseController
   before_action { authorize :gias }
 
   def index
-    @gias_info_form = Support::GiasInfoForm.new
+    @new_schools_count = new_schools_count
+    @closed_schools_count = closed_schools_count
   end
 
-  def schools_to_add
-    @gias_info_form = Support::GiasInfoForm.new
+private
+
+  def new_schools_count
+    school_update_service.schools_that_need_to_be_added.count
   end
 
-  def schools_to_close
-    @gias_info_form = Support::GiasInfoForm.new
+  def closed_schools_count
+    school_update_service.schools_that_need_to_be_closed.count
+  end
+
+  def school_update_service
+    @school_update_service ||= SchoolUpdateService.new
   end
 end

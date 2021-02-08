@@ -18,7 +18,7 @@
     <%= form_for @school, url: support_gias_schools_to_close_path(urn: @school.urn) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render Support::Gias::SchoolDetailsComponent.new(school: @school) %>
-      <%= f.govuk_submit 'Close School' %>
+      <%= f.govuk_submit 'Close school' %>
     <%- end %>
   </div>
 </div>

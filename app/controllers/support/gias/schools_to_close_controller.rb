@@ -3,7 +3,7 @@ class Support::Gias::SchoolsToCloseController < Support::BaseController
   before_action :get_staged_school, only: %i[show update]
 
   def index
-    @gias_info_form = Support::GiasInfoForm.new
+    @closed_schools = closed_schools
   end
 
   def show; end
@@ -19,6 +19,10 @@ private
 
   def get_staged_school
     @school = DataStage::School.find_by(urn: params[:urn])
+  end
+
+  def closed_schools
+    school_update_service.schools_that_need_to_be_closed.order(urn: :asc)
   end
 
   def school_update_service

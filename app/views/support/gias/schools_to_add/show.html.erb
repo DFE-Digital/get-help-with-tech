@@ -30,7 +30,7 @@
       <%= f.govuk_error_summary %>
       <%= render Support::Gias::SchoolDetailsComponent.new(school: @school) %>
       <% unless @school.responsible_body.blank? %>
-        <%= f.govuk_submit 'Add School' %>
+        <%= f.govuk_submit 'Add school' %>
       <%- end %>
     <%- end %>
   </div>
