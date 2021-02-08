@@ -13,6 +13,20 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
+    <h2 class="govuk-heading-m">
+      Before you order
+    </h2>
+    <p class="govuk-body">
+      Make sure you’re certain of what devices you need, as amending or cancelling an order will cause delays.
+    </p>
+    <p class="govuk-body">
+      It may help to:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= link_to_devices_guidance_subpage 'check device specifications', 'device-specification' %></li>
+      <li><%= govuk_link_to 'give someone else access so they can place orders', school_users_path %></li>
+    </ul>
+
     <h2 class="govuk-heading-m">How to order</h2>
 
     <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
