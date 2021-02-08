@@ -3,6 +3,7 @@ require 'csv'
 module CSVFileHelper
   SCHOOL_ATTRS = {
     urn: 'URN',
+    ukprn: 'UKPRN',
     name: 'EstablishmentName',
     responsible_body: 'LA (name)',
     address_1: 'Street',

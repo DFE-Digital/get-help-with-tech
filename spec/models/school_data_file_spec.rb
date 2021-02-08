@@ -196,5 +196,52 @@ RSpec.describe SchoolDataFile, type: :model do
         )
       end
     end
+
+    context 'when an SPI (Special post 16 institution)' do
+      let(:attrs) do
+        {
+          urn: '121777',
+          ukprn: '10012814',
+          name: 'Henshaws College',
+          responsible_body: 'North Yorkshire',
+          address_1: 'Bogs Lane',
+          town: 'Harrogate',
+          county: 'North Yorkshire',
+          postcode: 'HG1 4ED',
+          status: 'Open',
+          type: 'Special post 16 institution',
+          trusts_flag: 'Not applicable',
+          trusts_name: '',
+          phase: 'Not applicable',
+          group_type: 'Other types',
+        }
+      end
+
+      around do |example|
+        create_school_csv_file(filename, [attrs])
+        example.run
+        remove_file(filename)
+      end
+
+      it 'retrieves the school data' do
+        schools = SchoolDataFile.new(filename).schools
+        expect(schools.first).to include(
+          urn: attrs[:urn],
+          ukprn: attrs[:ukprn],
+          name: attrs[:name],
+          responsible_body_name: attrs[:name].upcase,
+          address_1: attrs[:address_1],
+          address_2: nil,
+          address_3: nil,
+          town: attrs[:town],
+          county: attrs[:county],
+          postcode: attrs[:postcode],
+          fe_type: 'special_post_16_institution',
+          phase: 'phase_not_applicable',
+          establishment_type: 'other_type',
+          status: 'open',
+        )
+      end
+    end
   end
 end

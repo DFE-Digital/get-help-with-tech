@@ -11,7 +11,6 @@ class SchoolDataFile < CsvDataFile
     'Other independent special school',
     'Secure units',
     'Sixth form centres',
-    'Special post 16 institution',
     'Welsh establishment',
   ].freeze
 
@@ -24,6 +23,7 @@ protected
   def extract_record(row)
     {
       urn: row['URN'],
+      ukprn: row['UKPRN'],
       name: row['EstablishmentName'],
       responsible_body_name: find_responsible_body(row),
       address_1: row['Street'],
@@ -35,6 +35,7 @@ protected
       phase: phase(row),
       establishment_type: establishment_type(row),
       status: status(row),
+      fe_type: fe_type(row),
     }
   end
 
@@ -50,6 +51,8 @@ private
     # 5 - Single-academy trust
     if row['TrustSchoolFlag (code)'].in? %w[3 5]
       row['Trusts (name)']
+    elsif fe_type(row).present?
+      row['EstablishmentName'].upcase
     else
       row['LA (name)']
     end
@@ -87,6 +90,13 @@ private
     else
       Rails.logger.info("Other establishment type? '#{est_type}' (urn: #{row['URN']}")
       'other_type'
+    end
+  end
+
+  def fe_type(row)
+    case row['TypeOfEstablishment (name)']
+    when 'Special post 16 institution'
+      'special_post_16_institution'
     end
   end
 
