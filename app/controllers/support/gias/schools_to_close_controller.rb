@@ -1,13 +1,12 @@
 class Support::Gias::SchoolsToCloseController < Support::BaseController
   before_action { authorize :gias }
-  before_action :get_staged_school, only: [:show, :update]
+  before_action :get_staged_school, only: %i[show update]
 
   def index
     @gias_info_form = Support::GiasInfoForm.new
   end
 
-  def show
-  end
+  def show; end
 
   def update
     school = @school.counterpart_school

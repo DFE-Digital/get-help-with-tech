@@ -1,5 +1,4 @@
 class Support::Gias::SchoolDetailsComponent < ViewComponent::Base
-
   def initialize(school:, viewer: nil)
     @school = school
     @viewer = viewer
@@ -14,14 +13,16 @@ class Support::Gias::SchoolDetailsComponent < ViewComponent::Base
   end
 
 private
-  
+
   def urn_row
     row = { key: 'URN', value: @school.urn }
 
-    row.merge!({
-      action: 'View',
-      action_path: support_school_path(urn: @school.urn)
-    }) if @school.counterpart_school
+    if @school.counterpart_school
+      row.merge!({
+        action: 'View',
+        action_path: support_school_path(urn: @school.urn),
+      })
+    end
 
     row
   end
@@ -38,26 +39,30 @@ private
     awaiting = DataStage::School.gias_status_open.find_by(urn: urn)
 
     row = {
-      key: link.link_type.humanize
+      key: link.link_type.humanize,
     }
 
     row[:value] = if school
-      "#{school.name} (#{school.urn})"
-    elsif awaiting
-      "#{urn} (waiting to be added)"
-    else
-      "#{urn} (not on service)"
+                    "#{school.name} (#{school.urn})"
+                  elsif awaiting
+                    "#{urn} (waiting to be added)"
+                  else
+                    "#{urn} (not on service)"
+                  end
+
+    if school
+      row.merge!({
+        action: 'View',
+        action_path: support_school_path(urn: urn),
+      })
     end
 
-    row.merge!({
-      action: 'View',
-      action_path: support_school_path(urn: urn)
-    }) if school
-
-    row.merge!({
-      action: 'View',
-      action_path: support_gias_schools_to_add_path(urn: urn)
-    }) if awaiting
+    if awaiting
+      row.merge!({
+        action: 'View',
+        action_path: support_gias_schools_to_add_path(urn: urn),
+      })
+    end
 
     row
   end

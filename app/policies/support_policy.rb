@@ -7,16 +7,11 @@ class SupportPolicy < ApplicationPolicy
     user.is_support?
   end
 
-  def manage_gias_data?
-    user.third_line_role?
-  end
-
   alias_method :index?, :readable?
   alias_method :show?, :readable?
   alias_method :schools?, :readable?
   alias_method :technical_support?, :editable?
   alias_method :feature_flags?, :editable?
-  alias_method :gias_updates?, :manage_gias_data?
 
   alias_method :new?, :editable?
   alias_method :create?, :editable?

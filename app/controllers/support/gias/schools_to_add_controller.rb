@@ -1,23 +1,20 @@
 class Support::Gias::SchoolsToAddController < Support::BaseController
   before_action { authorize :gias }
-  before_action :get_staged_school, only: [:show, :update]
+  before_action :get_staged_school, only: %i[show update]
 
   def index
     @gias_info_form = Support::GiasInfoForm.new
   end
 
-  def show
-  end
+  def show; end
 
   def update
-    begin
-      new_school = school_update_service.create_school!(@school)
-      flash[:success] = "#{new_school.name} (#{new_school.urn}) added"
-      redirect_to support_gias_schools_to_add_index_path
-    rescue DataStage::Error => e
-      @school.errors.add(:base, e.message)
-      render :show
-    end
+    new_school = school_update_service.create_school!(@school)
+    flash[:success] = "#{new_school.name} (#{new_school.urn}) added"
+    redirect_to support_gias_schools_to_add_index_path
+  rescue DataStage::Error => e
+    @school.errors.add(:base, e.message)
+    render :show
   end
 
 private

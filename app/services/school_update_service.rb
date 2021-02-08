@@ -28,11 +28,11 @@ class SchoolUpdateService
   end
 
   def schools_that_need_to_be_added
-    DataStage::School.gias_status_open.where.not(urn: School.gias_status_open.select(:urn))
+    DataStage::School.gias_status_open.joins('left join schools s on (staged_schools.urn = s.urn)').where('s.urn is null')
   end
 
   def schools_that_need_to_be_closed
-    DataStage::School.gias_status_closed.where(urn: School.gias_status_open.select(:urn))
+    DataStage::School.gias_status_closed.joins('left join schools s on (staged_schools.urn = s.urn)').where("s.status='open'")
   end
 
 private
@@ -56,18 +56,17 @@ private
     predecessor.device_allocations.each do |allocation|
       alloc = allocation.raw_allocation
       ordered = allocation.raw_devices_ordered
-      cap = allocation.raw_cap
       spare_allocation = alloc - ordered
 
-      if spare_allocation > 0
-        SchoolDeviceAllocation.transaction do
-          school.device_allocations
-            .send(allocation.device_type).first
-            .update!(allocation: spare_allocation,
-                     cap: spare_allocation)
+      next unless spare_allocation.positive?
 
-          allocation.update!(allocation: ordered, cap: ordered)
-        end
+      SchoolDeviceAllocation.transaction do
+        school.device_allocations
+          .send(allocation.device_type).first
+          .update!(allocation: spare_allocation,
+                   cap: spare_allocation)
+
+        allocation.update!(allocation: ordered, cap: ordered)
       end
     end
   end
@@ -78,7 +77,7 @@ private
   end
 
   def responsible_body_exists!(responsible_body_name)
-    raise DataStage::Error.new("Cannot find responsible body '#{responsible_body_name}'") unless ResponsibleBody.find_by(name: responsible_body_name)
+    raise DataStage::Error, "Cannot find responsible body '#{responsible_body_name}'" unless ResponsibleBody.find_by(name: responsible_body_name)
   end
 
   def update_school(staged_school)

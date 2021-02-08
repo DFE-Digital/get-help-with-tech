@@ -68,17 +68,77 @@ RSpec.describe SchoolUpdateService, type: :model do
     end
   end
 
-  describe '#create_school' do
+  describe '#create_school!' do
     let!(:staged_school) { create(:staged_school, urn: 103_001, responsible_body_name: 'Camden') }
+    let(:local_authority) { create(:local_authority, name: 'Camden') }
 
     before do
-      create(:local_authority, name: 'Camden')
+      local_authority
     end
 
     it 'creates school record' do
       expect {
-        service.send(:create_school, staged_school)
+        service.create_school!(staged_school)
       }.to change(School, :count).by(1)
+    end
+
+    context 'when the responsible body has decided who will order' do
+      before do
+        local_authority.update!(who_will_order_devices: 'schools')
+      end
+
+      it 'sets up preorder information' do
+        school = service.create_school!(staged_school)
+        expect(school.preorder_information).not_to be_nil
+        expect(school.preorder_information.who_will_order_devices).to eq('school')
+      end
+    end
+
+    context 'when the responsible body has not decided who will order' do
+      before do
+        local_authority.update!(who_will_order_devices: nil)
+      end
+
+      it 'does not set up preorder information' do
+        school = service.create_school!(staged_school)
+        expect(school.preorder_information).to be_nil
+      end
+    end
+
+    context 'when there is an existing predecessor school' do
+      let(:old_staged_school) { create(:staged_school, urn: 100_001, responsible_body_name: 'Camden', status: 'closed') }
+      let!(:old_school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, name: old_staged_school.name, urn: old_staged_school.urn, responsible_body: local_authority) }
+      let(:school_link) { create(:staged_school_link, :predecessor, staged_school: staged_school, link_urn: old_staged_school.urn) }
+      let!(:users) { create_list(:school_user, 2, school: old_school) }
+
+      before do
+        school_link
+        old_school.std_device_allocation.update!(allocation: 100, cap: 100, devices_ordered: 90)
+        old_school.coms_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 8)
+      end
+
+      it 'closes the predecessor school' do
+        service.create_school!(staged_school)
+        expect(old_school.reload.status).to eq('closed')
+      end
+
+      it 'transfers any spare allocations from the predecessor and adjusts original values' do
+        school = service.create_school!(staged_school)
+        old_school.reload
+        expect(school.std_device_allocation.raw_allocation).to eq(10)
+        expect(school.coms_device_allocation.raw_allocation).to eq(2)
+        expect(old_school.std_device_allocation.raw_allocation).to eq(90)
+        expect(old_school.std_device_allocation.raw_cap).to eq(90)
+        expect(old_school.coms_device_allocation.raw_allocation).to eq(8)
+        expect(old_school.coms_device_allocation.raw_cap).to eq(8)
+      end
+
+      it 'moves users from the predecessor to the new school' do
+        school = service.create_school!(staged_school)
+        old_school.reload
+        expect(school.users).to match_array(users)
+        expect(old_school.users).to be_empty
+      end
     end
   end
 end

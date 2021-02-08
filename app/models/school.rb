@@ -1,6 +1,7 @@
 class School < ApplicationRecord
   has_paper_trail
-  include SchoolType, PgSearch::Model
+  include PgSearch::Model
+  include SchoolType
 
   belongs_to :responsible_body
 

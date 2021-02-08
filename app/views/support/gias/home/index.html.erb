@@ -14,13 +14,13 @@
     </h1>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to "Schools that need to be added (#{@gias_info_form.new_schools_count})", support_gias_schools_to_add_index_path %>
+      <%= govuk_link_to [t('page_titles.gias_schools_to_add'), "(#{@gias_info_form.new_schools_count})"].join(' '), support_gias_schools_to_add_index_path %>
     </h2>
 
     <p class="govuk-body">Use this section to manage adding new schools to the service</p>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to "Schools that need to be closed (#{@gias_info_form.closed_schools_count})", support_gias_schools_to_close_index_path %>
+      <%= govuk_link_to [t('page_titles.gias_schools_to_close'), "(#{@gias_info_form.closed_schools_count})"].join(' '), support_gias_schools_to_close_index_path %>
     </h2>
 
     <p class="govuk-body">Use this section to manage permanent school closures</p>

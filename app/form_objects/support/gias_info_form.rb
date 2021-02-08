@@ -10,18 +10,16 @@ class Support::GiasInfoForm
   end
 
   def closed_schools
-   school_update_service.schools_that_need_to_be_closed.order(urn: :asc)
+    school_update_service.schools_that_need_to_be_closed.order(urn: :asc)
   end
 
   def closed_schools_count
-   school_update_service.schools_that_need_to_be_closed.count
+    school_update_service.schools_that_need_to_be_closed.count
   end
 
-  def new_trusts
-  end
+  def new_trusts; end
 
-  def closed_trusts
-  end
+  def closed_trusts; end
 
 private
 
