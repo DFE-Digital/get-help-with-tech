@@ -6,7 +6,7 @@ Examples of this include disadvantaged children:
 
 * with no digital devices in their household
 * whose only available device is a smartphone
-* with a single device in their household that's being shared with more than one other family member
+* with a single device in their household that’s being shared with more than one other family member
 * who do not have access to the internet at home
 
 This offer applies to maintained schools, pupil referral units, academy trusts and hospital schools, as well as sixth-form colleges and further education providers which have enrolled 14 to 16-year-olds. They’ll receive an allocation of laptops and tablets to be used to support disadvantaged children if they do not have access to a digital device through other means.
@@ -20,9 +20,9 @@ Devices are currently available for:
 * disadvantaged children in years 3 to 11 who do not have access to a device and whose face-to-face education is disrupted 
 * disadvantaged children in any year group who have been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are clinically extremely vulnerable
 
-#### Find out [how we’ve calculated how many devices you can order](/devices/allocation-and-specification).
+[Find out how we’ve calculated how many devices you can order](/devices/allocation-and-specification).
 
-#### Find out [how to order laptops and tablets](/devices/how-to-order) and [get the internet](/internet-access).
+[Find out how to order laptops and tablets](/devices/how-to-order) and [get the internet](/internet-access).
 
 ## Laptops, tablets and 4G wireless routers provided during the 2020 summer term
 

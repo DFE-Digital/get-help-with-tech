@@ -16,7 +16,7 @@ Sign up for [G Suite for Education](https://edu.google.com/products/gsuite-for-e
 
 During the sign-up process, you’ll be asked to choose your [primary domain](https://support.google.com/a/answer/182080?hl=en&ref_topic=29190).
 
-* Choose a domain to which you have admin access (i.e. access to change DNS records).
+* Choose a domain to which you have admin access (for example, where you can change DNS records).
 * Recommended: You can buy a domain, if you don’t already have one, during the sign-up process. If you buy a domain, you won’t need to verify it in the next step.
 
 After completing the sign-up process, you’ll be given a 14-day trial of G Suite for Education (with a 10 user limit during the trial period).
@@ -27,4 +27,4 @@ After completing the sign-up process, you’ll be given a 14-day trial of G Suit
 
 ## Fast-track approval
 
-Email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with your domain to get fast-tracked for approval (this process typically takes up to 14 days, but we can reduce to <24 hours).
+Email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with your domain to get <span class="app-no-wrap">fast-tracked</span> for approval (this process typically takes up to 14 days, but we can reduce to less than 24 hours).

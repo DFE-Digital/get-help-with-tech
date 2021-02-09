@@ -2,7 +2,7 @@
 
 Each iPad bundle contains:
 
-* 10” iPad with 32GB storage and a headphone port
+* 10 inch iPad with 32GB storage and a headphone port
 * USB charging cable
 * 3-point power adapter
 * a lightly padded neoprene sleeve
@@ -79,7 +79,7 @@ Discover fun and simple activities highlighting iPad built-in features and apps.
 
 Go to [Apple service and repair](https://support.apple.com/en-gb/ipad/repair/service) to find out what to do if your device does not turn on when you receive it, develops a fault or is accidentally broken.
 
-If you need further assistance, [please contact us](/get-support).
+If you need further assistance, [contact us](/get-support).
 
 
 ## User guidance for iPads

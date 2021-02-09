@@ -5,7 +5,7 @@ For all router types, users will find the following in the box:
 - 4G wireless router
 - battery (with approximately 25% charge)
 - charging cable (micro-USB)
-- quick start guide(s)
+- quick start guides
 
 The router will have a SIM card inserted that provides 20GB of data per month which will reset on the first day of each month.
 
@@ -53,7 +53,7 @@ Children and families should raise any queries regarding 4G wireless routers wit
 
 ### For local authorities and trusts
 
-You can check the status of each router and if needed, raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, [please contact us](/get-support).
+You can check the status of each router and if needed, raise an issue via the [Support Portal](https://computacenterprod.service-now.com/dfe). Login details will have been provided when you placed your order, but if you’re unable to access, [contact us](/get-support).
 
 ### For schools and colleges
 
