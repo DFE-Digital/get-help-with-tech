@@ -422,6 +422,14 @@ en:
             rb_can_order: Responsible body can order
             school_can_order: School can order
             ordered: Responsible body has ordered
+    timeline:
+      field:
+        std_device_cap: Device cap
+        std_device_allocation: Device allocation
+        coms_device_cap: Router cap
+        coms_device_allocation: Router allocation
+        School_status: School status
+        School_order_state: School order state
   activemodel:
     errors:
       models:

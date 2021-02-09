@@ -29,38 +29,117 @@
   </div>
 <% end %>
 
-<%= render Support::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @current_user) %>
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Contents
+  </h2>
 
-<%- if @school.show_mno? && @school.extra_mobile_data_requests.present? %>
-  <h2 class="govuk-heading-l govuk-!-margin-top-9">Mobile data requests</h2>
-  <%= render Support::ExtraMobileDataRequestsSummaryListComponent.new(requests: @school.extra_mobile_data_requests) %>
-<%- end %>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#overview">
+        Overview
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#users">
+        Users
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#notifications">
+        Notifications
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#timeline">
+        Timeline
+      </a>
+    </li>
+  </ul>
 
-<h2 class="govuk-heading-l govuk-!-margin-top-9">Users</h2>
+  <div class="govuk-tabs__panel" id="overview">
+    <h2 class="govuk-heading-l">Overview</h2>
 
-<% if policy(User).new? && @school.can_invite_users? %>
-  <%= govuk_button_link_to 'Invite a new user', new_support_school_user_path(school_urn: @school.urn) %>
-<% end %>
+    <%= render Support::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @current_user) %>
 
-<% if @users.present? %>
-  <% @users.each do |user| %>
-    <div class="user">
-      <h3 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-2">
-        <%= govuk_link_to user.full_name, support_user_path(user) %>
-      </h3>
-      <p class="govuk-body">
-        <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_user_path(user) %>
-      </p>
-      <%= render Support::UserPreviewSummaryListComponent.new(user: user) %>
-    </div>
-  <% end %>
-<% else %>
-  <p class="govuk-body">None</p>
-<% end %>
+    <%- if @school.show_mno? && @school.extra_mobile_data_requests.present? %>
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Mobile data requests</h2>
+      <%= render Support::ExtraMobileDataRequestsSummaryListComponent.new(requests: @school.extra_mobile_data_requests) %>
+    <%- end %>
+  </div>
 
-<h2 class="govuk-heading-l govuk-!-margin-top-9">Notifications sent</h2>
-<% if @email_audits.present? %>
-  <%= render Support::EmailAuditListComponent.new(@email_audits) %>
-<% else %>
-  <p class="govuk-body">None</p>
-<% end %>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="users">
+    <h2 class="govuk-heading-l">Users</h2>
+
+    <% if policy(User).new? && @school.can_invite_users? %>
+      <%= govuk_button_link_to 'Invite a new user', new_support_school_user_path(school_urn: @school.urn) %>
+    <% end %>
+
+    <% if @users.present? %>
+      <% @users.each do |user| %>
+        <div class="user">
+          <h3 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-2">
+            <%= govuk_link_to user.full_name, support_user_path(user) %>
+          </h3>
+          <p class="govuk-body">
+            <%= govuk_link_to "Edit user<span class=\"govuk-visually-hidden\"> #{user.full_name}</span>".html_safe, edit_support_user_path(user) %>
+          </p>
+          <%= render Support::UserPreviewSummaryListComponent.new(user: user) %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="govuk-body">None</p>
+    <% end %>
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="notifications">
+    <h2 class="govuk-heading-l">Notifications</h2>
+
+    <% if @email_audits.present? %>
+      <%= render Support::EmailAuditListComponent.new(@email_audits) %>
+    <% else %>
+      <p class="govuk-body">None</p>
+    <% end %>
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="timeline">
+    <h2 class="govuk-heading-l">Timeline</h2>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Time</th>
+          <th scope="col" class="govuk-table__header">Field</th>
+          <th scope="col" class="govuk-table__header">From</th>
+          <th scope="col" class="govuk-table__header">To</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @timeline.changesets.each do |changeset| %>
+          <% changeset.changes.each_with_index do |(field, diffs), index| %>
+            <tr class="govuk-table__row">
+              <% if index.zero? %>
+                <td class="govuk-table__cell" rowspan="<%= changeset.size %>"><%= changeset.updated_at.to_s(:govuk_date_and_time) %></td>
+              <% end %>
+
+              <td class="govuk-table__cell"><%= t("#{changeset.item_type}_#{field}", scope: [:components, :timeline, :field]) %></td>
+
+              <% diffs.each do |diff| %>
+                <td class="govuk-table__cell">
+                  <span>
+                    <% if diff.present? %>
+                      <%= diff %>
+                    <% else %>
+                      Blank
+                    <% end %>
+                  </span>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
