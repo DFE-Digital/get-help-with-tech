@@ -1,6 +1,7 @@
 class School < ApplicationRecord
   has_paper_trail
   include PgSearch::Model
+  include SchoolType
 
   belongs_to :responsible_body
 
@@ -28,23 +29,6 @@ class School < ApplicationRecord
     open: 'open',
     closed: 'closed',
   }, _prefix: 'gias_status'
-
-  enum phase: {
-    primary: 'primary',
-    secondary: 'secondary',
-    all_through: 'all_through',
-    sixteen_plus: 'sixteen_plus',
-    nursery: 'nursery',
-    phase_not_applicable: 'phase_not_applicable',
-  }
-
-  enum establishment_type: {
-    academy: 'academy',
-    free: 'free',
-    local_authority: 'local_authority',
-    special: 'special',
-    other_type: 'other_type',
-  }, _suffix: true
 
   enum order_state: {
     cannot_order: 'cannot_order',
@@ -79,10 +63,6 @@ class School < ApplicationRecord
 
   def self.requiring_a_new_computacenter_reference
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
-  end
-
-  def human_for_school_type
-    I18n.t(school_type, scope: %i[activerecord attributes school school_type], default: [:other])
   end
 
   def ukprn_or_urn
@@ -131,14 +111,6 @@ class School < ApplicationRecord
 
   def has_std_device_allocation?
     std_device_allocation&.allocation.to_i.positive?
-  end
-
-  def school_type
-    if special_establishment_type?
-      'special_school'
-    elsif phase && !phase_not_applicable?
-      "#{phase}_school"
-    end
   end
 
   def headteacher_contact
@@ -206,6 +178,10 @@ class School < ApplicationRecord
     return true if preorder_information.nil?
 
     preorder_information.school_will_order_devices?
+  end
+
+  def close!
+    update!(status: 'closed', computacenter_change: 'closed') unless gias_status_closed?
   end
 
 private
