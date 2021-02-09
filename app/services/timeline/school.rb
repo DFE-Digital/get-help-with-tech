@@ -9,9 +9,10 @@ module Timeline
     end
 
     def changesets
-      @changesets ||= PaperTrail::Version
-        .includes(:item)
-        .where(item: [school, school.device_allocations])
+      @changesets ||= [school, school.device_allocations]
+        .flatten
+        .flat_map(&:versions)
+        .sort_by(&:created_at)
         .filter { |version| (version.changeset.symbolize_keys.keys & FIELDS).size.positive? }
         .map { |v| Changeset.new(item: v.item, changeset: v.changeset) }
     end
