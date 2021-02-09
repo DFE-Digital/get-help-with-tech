@@ -426,8 +426,10 @@ en:
       field:
         std_device_cap: Device cap
         std_device_allocation: Device allocation
+        std_device_devices_ordered: Devices ordered
         coms_device_cap: Router cap
         coms_device_allocation: Router allocation
+        coms_device_devices_ordered: Routers ordered
         School_status: School status
         School_order_state: School order state
   activemodel:
