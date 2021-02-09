@@ -15,7 +15,7 @@
     <%= form_for @form, url: allow_ordering_for_many_schools_support_schools_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
 
-      <p class="govuk-body">These schools, colleges or FE providers can place orders because they have reported a closure or a group of self-isolating pupils or students.</p>
+      <p class="govuk-body">These schools, colleges or FE institutions can place orders because they have reported a closure or a group of self-isolating pupils or students.</p>
 
       <%= f.govuk_text_area :school_urns,
                             label: { text: 'URNs', size: 'm' },
