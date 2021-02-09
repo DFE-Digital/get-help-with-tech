@@ -15,7 +15,7 @@ They may also be eligible to get internet access for disadvantaged children thro
 
 Laptops and tablets will be available for further education providers to order in the 2021 spring term. We’ll contact these providers with more information during the term.
 
-Devices are currently available for disadvantaged children and young people:
+Devices are [currently available](https://get-help-with-tech.education.gov.uk/devices/how-to-order) for disadvantaged children and young people:
 
 * in years 3 to 13 who do not have access to a device and whose face-to-face education is disrupted 
 * in years 1 to 13 who have been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
