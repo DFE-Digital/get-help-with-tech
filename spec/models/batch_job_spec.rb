@@ -76,7 +76,7 @@ RSpec.describe BatchJob do
       end
 
       it 'returns statistics on completion' do
-        result = job.process! { |_| puts 'processing record' }
+        result = job.process! { |_| 'processing record' }
         expect(result.keys).to include(:success, :failure, :number_of_records, :duration, :max_created_at, :min_created_at, :records_per_second, :time_per_record)
       end
     end
