@@ -1,4 +1,4 @@
-When [placing an order](/start), schools, colleges, further education providers, academy trusts and local authorities (LAs) can choose (depending on availability) from:
+When [placing an order](/start), schools, colleges, further education institutions, academy trusts and local authorities (LAs) can choose (depending on availability) from:
 
 * Microsoft Windows laptops
 * Microsoft Windows tablets (with or without keyboards)

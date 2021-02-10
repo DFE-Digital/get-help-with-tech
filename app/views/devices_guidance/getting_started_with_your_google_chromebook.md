@@ -13,7 +13,7 @@ If you’re using your own Wi-Fi to access the internet,  then connect using the
 
 You can start using your Chromebook once you’re connected to a Wi-Fi network. 
 
-For pupils and students, your school, college or further education provider will let you know which resources you should use. For care leavers, and children and families with a social worker, your local authority will let you know how you can use your Chromebook to get the services you need.
+For pupils and students, your school, college or further education institution will let you know which resources you should use. For care leavers, and children and families with a social worker, your local authority will let you know how you can use your Chromebook to get the services you need.
 
 ## Staying safe online
 
