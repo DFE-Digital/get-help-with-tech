@@ -2,15 +2,27 @@ class SupportTicket::ContactDetailsController < SupportTicket::BaseController
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @form ||= SupportTicket::ContactDetailsForm.new(set_params)
-    render 'support_tickets/contact_details'
+    if current_user.id.present?
+      session[:support_ticket].merge!({
+        full_name: helpers.sanitize(current_user.full_name),
+        email_address: helpers.sanitize(current_user.email_address),
+        telephone_number: helpers.sanitize(current_user.telephone),
+        user_profile_path: support_user_url(current_user.id),
+      })
+
+      redirect_to next_step
+    else
+      @form ||= SupportTicket::ContactDetailsForm.new(set_params)
+      render 'support_tickets/contact_details'
+    end
   end
 
   def save
     if form.valid?
       session[:support_ticket].merge!({ full_name: helpers.sanitize(form.full_name),
                                         email_address: helpers.sanitize(form.email_address),
-                                        telephone_number: helpers.sanitize(form.telephone_number) })
+                                        telephone_number: helpers.sanitize(form.telephone_number),
+                                        user_profile_path: nil })
       redirect_to next_step
     else
       render 'support_tickets/contact_details'
