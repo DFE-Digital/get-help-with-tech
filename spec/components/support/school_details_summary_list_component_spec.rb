@@ -8,9 +8,26 @@ describe Support::SchoolDetailsSummaryListComponent do
            email_address: 'davy.jones@school.sch.uk',
            phone_number: '12345')
   end
+
   let(:support_user) { build(:support_user) }
 
   subject(:result) { render_inline(described_class.new(school: school, viewer: support_user)) }
+
+  it 'does not show school name' do
+    expect(row_for_key(result, 'Name')).to be_nil
+  end
+
+  context 'when third line support user' do
+    let(:support_user) { build(:support_user, :third_line) }
+
+    it 'shows school name' do
+      expect(value_for_row(result, 'Name').text).to include(school.name)
+    end
+
+    it 'shows change link for school name' do
+      expect(action_for_row(result, 'Name').text).to include('Change school name')
+    end
+  end
 
   context 'when the school will place device orders' do
     before do

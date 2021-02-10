@@ -184,7 +184,7 @@ Rails.application.routes.draw do
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
       resources :users, only: %i[new create], controller: 'users'
     end
-    resources :schools, only: %i[show], param: :urn do
+    resources :schools, only: %i[show edit update], param: :urn do
       resource :addresses, only: %i[edit update], path: 'address'
 
       collection do
