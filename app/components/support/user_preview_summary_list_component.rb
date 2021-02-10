@@ -16,6 +16,10 @@ class Support::UserPreviewSummaryListComponent < ViewComponent::Base
         value: @user.telephone,
       },
       {
+        key: 'Privacy notice seen',
+        value: @user.privacy_notice_seen_at ? l(@user.privacy_notice_seen_at, format: :short) : 'No',
+      },
+      {
         key: 'Last sign in',
         value: @user.last_signed_in_at ? l(@user.last_signed_in_at, format: :short) : 'Never',
       },
@@ -34,7 +38,7 @@ private
 
   def can_order_devices_label
     if @user.relevant_to_computacenter? && @user.techsource_account_confirmed?
-      'Yes, TechSource account confirmed'
+      "Yes, TechSource account confirmed at #{l(@user.techsource_account_confirmed_at, format: :short)}"
     elsif @user.relevant_to_computacenter?
       'No, waiting for TechSource account'
     elsif @user.orders_devices? && !@user.seen_privacy_notice?
