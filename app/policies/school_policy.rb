@@ -22,4 +22,8 @@ class SchoolPolicy < SupportPolicy
   def update_address?
     user.third_line_role?
   end
+
+  def update_name?
+    user.third_line_role?
+  end
 end

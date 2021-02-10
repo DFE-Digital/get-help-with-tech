@@ -1,9 +1,9 @@
 class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetailsSummaryListComponent
   def rows
     array = super
+    array.prepend school_name_editable_row if SchoolPolicy.new(viewer, @school).update_name?
     array << headteacher_row if headteacher.present?
     array.map { |row| remove_change_links_if_read_only(row) }
-
     array << if SchoolPolicy.new(viewer, @school).update_address?
                address_editable_row
              else
@@ -12,6 +12,15 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
   end
 
 private
+
+  def school_name_editable_row
+    {
+      key: 'Name',
+      value: @school.name,
+      action: 'Change <span class="govuk-visually-hidden">school name</span>'.html_safe,
+      action_path: edit_support_school_path(@school),
+    }
+  end
 
   def address_read_only_row
     {
