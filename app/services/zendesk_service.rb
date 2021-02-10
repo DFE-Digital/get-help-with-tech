@@ -41,7 +41,7 @@ private
 
   def client
     @client ||= ZendeskAPI::Client.new do |config|
-      config.url = 'https://get-help-with-tech-education.zendesk.com/api/v2'
+      config.url = Settings.zendesk.url
       config.username = Settings.zendesk.username
       config.token = Settings.zendesk.token
       config.retry = true
