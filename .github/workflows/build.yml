@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: install libffi
-        run: apt-get install libffi libffi-dev
+        run: sudo apt-get install libffi libffi-dev
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Gemfile.lock cache
