@@ -159,7 +159,7 @@ RSpec.describe User, type: :model do
 
       it 'validates that only 3 users can order devices for a school' do
         expect(user.valid?).to be false
-        expect(user.errors.keys).to include(:orders_devices)
+        expect(user.errors.attribute_names).to include(:orders_devices)
       end
 
       it 'does not fail to update a user when there are 3 users that can order' do
