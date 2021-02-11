@@ -106,6 +106,8 @@ ActiveRecord::Schema.define(version: 2021_02_19_145448) do
     t.text "original_cc_ship_to_number"
     t.datetime "cc_import_api_timestamp"
     t.string "cc_import_api_transaction_id"
+    t.boolean "cc_rb_user"
+    t.boolean "original_cc_rb_user"
     t.index ["cc_import_api_timestamp"], name: "ix_cc_user_changes_timestamp"
     t.index ["cc_import_api_transaction_id"], name: "ix_cc_user_changes_cc_tx_id"
     t.index ["updated_at_timestamp"], name: "index_computacenter_user_changes_on_updated_at_timestamp"

@@ -79,6 +79,7 @@ private
       school: (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
       school_urn: (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
       cc_ship_to_number: cc_ship_to_number_list,
+      cc_rb_user: user.rb_level_access,
     }
   end
 

@@ -13,6 +13,7 @@ module Computacenter
       school
       school_urn
       cc_ship_to_number
+      cc_rb_user
     ].freeze
 
     enum type_of_update: { New: 0, Change: 1, Remove: 2 }
