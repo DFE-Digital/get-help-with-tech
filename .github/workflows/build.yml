@@ -48,6 +48,8 @@ jobs:
     steps:
       - name: install libffi
         run: sudo apt-get install libffi7 libffi-dev
+      - name: overwrite system Rake
+        run: gem pristine rake
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Gemfile.lock cache
