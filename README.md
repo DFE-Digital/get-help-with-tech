@@ -38,14 +38,12 @@ To perform manual releases, you will need:
 4. Run `bundle exec rails server` to launch the app on http://localhost:3000
 5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
-### Setting up some development data
+### Setting up local development data
 
-There are several tasks you can run to get schools and responsible bodies:
+These are the tasks that you will need to run to set up your local db:
 
-- Run `bundle exec rake import:responsible_bodies` to import local authorities and trusts
-- Run `bundle exec rake import:schools` to import schools into staging area
-- Then open up a rails console with `bundle exec rails c`
-- Run `service = SchoolUpdateService.new; DataStage::School.all.each { |staged| puts "importing #{staged.urn}..."; service.create_school!(staged) }` to convert staged schools into schools
+- Run `bundle exec rails db:seed` to insert mobile network operators
+- Run `bundle exec rails import:all` to import schools, responsible bodies and some personas accounts to test with. (NOTE: This can take some time to run but you will have feedback in terminal)
 
 ### Setting up GOV.UK Notify
 
