@@ -1,9 +1,6 @@
 <div class="govuk-inset-text">
   <p class="govuk-body">
-    If your laptop, Microsoft tablet or 4G wireless router develops a fault, we’ll arrange to replace it from 4 January 2021.
-  </p>
-  <p class="govuk-body">
-    <a class="govuk-link" href="https://get-help-with-tech.education.gov.uk/devices/replace-a-faulty-device/#apple-ipad-service-and-repair">Find out about iPad warranty</a>.
+   The service to request replacements of faulty devices is temporarily closed. We will restart this service on 22 February 2021.
   </p>
 </div>
 
@@ -77,6 +74,12 @@ If you do not include the original power charger with your returned device the a
 If you do not meet the courier collecting your faulty devices within 30 minutes of the agreed time the approver will be charged £81 per visit.
 
 ## Apple iPad service and repair
+
+### If it is not working within 3 days of receiving it
+
+If an iPad will not start, check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Include your order number so that we can help you as quickly as possible.
+
+### If a device stops working after 3 days
 
 Go to [Apple service and repair](https://support.apple.com/en-gb/ipad/repair/service) to report a faulty device, find out what to do if your device does not turn on when you receive it, or is accidentally broken.
 
