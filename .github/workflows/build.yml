@@ -9,7 +9,9 @@ name: Ruby
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - dependabot/bundler/rubyXL-3.4.17
   pull_request:
     branches: [ main ]
 
@@ -44,6 +46,8 @@ jobs:
       POSTGRES_PASSWORD: postgres
 
     steps:
+      - name: install libffi
+        run: apt-get install libffi libffi-dev
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Gemfile.lock cache
