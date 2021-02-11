@@ -14,6 +14,8 @@
 
     <p class="govuk-body">Now you’ve contacted us to request devices for specific circumstances, you can go ahead with your order. You cannot order your full allocation yet because no closures or groups of self-isolating children have been reported through the <%= link_to_ed_settings_form %>.</p>
 
+    <%= render partial: 'shared/stock_levels' %>
+
     <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
 
     <h2 class="govuk-heading-m">Before you start</h2>
