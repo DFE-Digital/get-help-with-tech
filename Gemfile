@@ -87,6 +87,10 @@ gem 'zendesk_api'
 # Validate and normalise phone numbers
 gem 'phonelib'
 
+# explicitly install rake, to avoid conflicts on github actions with
+# system-supplied version built on a different version of ffi
+gem 'rake'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
