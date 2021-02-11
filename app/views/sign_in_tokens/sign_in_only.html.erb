@@ -9,12 +9,12 @@
         <%= t('page_titles.sign_in') %>
       </h1>
 
-      <%= render partial: 'shared/banners/parents_carers_pupils' %>
+      <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint: { text: 'Enter your email address, and if you have an account, we’ll send you a link to sign in.' } %>
 
-      <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint: { text: 'Enter your email address, and we’ll send you a link to sign in.' } %>
-
-      <%= render GovukComponent::Details.new(summary: 'Change email address') do %>
-        <p>Contact <%= ghwt_contact_mailto(subject: 'Request access for another email address') %> to request access for a different email address.</p>
+      <%= render GovukComponent::Details.new(summary: 'Change email address for your account') do %>
+        <p>
+          A colleague with access to the service can update your email address for you. If a colleague cannot do this, you can <%= ghwt_contact_mailto(label: "contact us", subject: "Change my email address") %> to change it instead.
+        </p>
       <%- end %>
 
       <%= f.govuk_submit %>

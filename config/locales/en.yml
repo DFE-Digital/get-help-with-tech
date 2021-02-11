@@ -61,9 +61,8 @@ en:
     privacy: Privacy
     dfe_windows_privacy_notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
     general_privacy_notice: How we look after personal information as part of the Get help with technology programme
-    gias_updates: GIAS updates
-    gias_schools_to_add: Schools to be added
-    gias_schools_to_close: Schools to be closed
+    what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe: What to do if you cannot get laptops, tablets or internet access from DfE
+    how_to_access_the_get_help_with_technology_service: How to access the Get help with technology service
 
     support:
       home: Support
@@ -101,6 +100,9 @@ en:
     support_edit_chromebook_details: Will the school need to order Chromebooks?
     support_bulk_allocation: Allow schools, colleges and FE institutions to order their full allocation
     support_bulk_allocation_result: Bulk allocation summary
+    gias_updates: GIAS updates
+    gias_schools_to_add: Schools to be added
+    gias_schools_to_close: Schools to be closed
     upload_key_contacts_file: Upload a CSV file of key contacts
     weve_processed_your_file: We’ve processed your file
     computacenter:

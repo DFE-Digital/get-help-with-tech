@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get '/request-a-change', to: 'pages#request_a_change'
   get '/how-to-request-4g-wireless-routers', to: 'pages#how_request_4g_routers'
   get '/choosing-help-with-internet-access', to: 'pages#choosing_help_with_internet_access'
+  get '/what-to-do-if-you-cannot-get-laptops-tablets-or-internet-access-from-dfe', to: 'pages#what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe'
+  get '/how-to-access-the-get-help-with-technology-service', to: 'pages#how_to_access_the_get_help_with_technology_service'
 
   # redirects for moved guidance pages
   get '/pages/guidance', to: redirect('/')
