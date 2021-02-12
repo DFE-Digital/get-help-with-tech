@@ -14,10 +14,12 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
+    <%= render partial: 'shared/upcoming_allocation_increase_banner', locals: { school: @school } %>
+
     <p class="govuk-body">We’ll contact you if you can place more orders.</p>
 
     <% if @current_user.orders_devices? && @current_user.techsource_account_confirmed? %>
-      <p class="govuk-body"><%= link_to 'View your order history on TechSource', techsource_start_path %></p>
+      <p class="govuk-body"><%= govuk_link_to 'View your order history on TechSource', techsource_start_path %></p>
     <% end %>
   </div>
 </div>
