@@ -5,11 +5,11 @@ FactoryBot.define do
     units { 4 }
 
     trait :wants_laptops do
-      device_types { %w[ windows-laptop chromebook ] }
+      device_types { %w[windows-laptop chromebook] }
     end
 
     trait :wants_tablets do
-      device_types { %w[ windows-tablet android-tablet ipad ] }
+      device_types { %w[windows-tablet android-tablet ipad] }
     end
   end
 end
