@@ -9,9 +9,7 @@ name: Ruby
 
 on:
   push:
-    branches:
-      - main
-      - dependabot/bundler/rubyXL-3.4.17
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
