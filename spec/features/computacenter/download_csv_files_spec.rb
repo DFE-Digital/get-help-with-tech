@@ -19,6 +19,10 @@ RSpec.feature 'Download CSV files' do
       expect(page).to have_link('Download Chromebook details')
     end
 
+    it 'shows me a Download donated device reuqests link' do
+      expect(page).to have_link('Download donated device requests')
+    end
+
     describe 'clicking Download Chromebook details' do
       before do
         create_list(:preorder_information, 4, :needs_chromebooks)
@@ -55,6 +59,36 @@ RSpec.feature 'Download CSV files' do
         expect(csv[2]['Email']).to eq(user_change_3.email_address)
         expect(csv[2]['School']).to eq(user_change_3.school)
         expect(csv[2]['Original School']).to eq(user_change_3.original_school)
+      end
+    end
+
+    describe 'clicking Download donated device requests' do
+      before do
+        create_list(:donated_device_request, 4, :wants_laptops)
+      end
+
+      it 'downloads a CSV file' do
+        click_on 'Download donated device requests'
+        expect_download(content_type: 'text/csv')
+        expect(page.body).to include(DonatedDeviceRequestsExporter.headings.join(','))
+      end
+
+      it 'includes all the DonatedDeviceRequests in ascending id order' do
+        click_on 'Download donated device requests'
+        csv = CSV.parse(page.body, headers: true)
+
+        DonatedDeviceRequest.order(id: :asc).each_with_index do |request, i|
+          expect(request.id.to_s).to eq(csv[i]['id'])
+          expect(request.created_at.to_s).to eq(csv[i]['created_at'])
+          expect(request.school.urn.to_s).to eq(csv[i]['urn'])
+          expect(request.school.computacenter_reference).to eq(csv[i]['shipTo'])
+          expect(request.school.responsible_body.computacenter_reference).to eq(csv[i]['soldTo'])
+          expect(request.user.full_name).to eq(csv[i]['full_name'])
+          expect(request.user.email_address).to eq(csv[i]['email_address'])
+          expect(request.user.telephone).to eq(csv[i]['telephone_number'])
+          expect(request.device_types.join(',')).to eq(csv[i]['device_types'])
+          expect(request.units.to_s).to eq(csv[i]['units'])
+        end
       end
     end
   end

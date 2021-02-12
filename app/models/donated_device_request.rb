@@ -16,6 +16,6 @@ class DonatedDeviceRequest < ApplicationRecord
 private
 
   def validate_applicable_device_types
-    errors.add(:device_types, 'includes an invalid device type') if device_types.all? { |d| DEVICE_TYPES.include?(d) }
+    errors.add(:device_types, 'includes an invalid device type') unless device_types.all? { |d| DEVICE_TYPES.include?(d) }
   end
 end

@@ -47,8 +47,8 @@ private
         request.school.computacenter_reference,
         request.school.responsible_body.computacenter_reference,
         request.user.full_name,
-        request.user.telephone,
         request.user.email_address,
+        request.user.telephone,
         request.device_types.join(','),
         request.units,
       ]
