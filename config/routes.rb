@@ -154,6 +154,16 @@ Rails.application.routes.draw do
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
 
       scope module: :school do
+        namespace :donated_devices, path: '/donated-devices' do
+          get '/interest', to: 'interest#new'
+          post '/interest', to: 'interest#create'
+
+          get '/about-devices', to: 'interest#about'
+          get '/queue', to: 'interest#queue'
+          get '/interest-confirmation', to: 'interest#interest_confirmation'
+          post '/interest-confirmation', to: 'interest#interest_confirmation'
+        end
+
         namespace :internet do
           get '/', to: 'home#show'
 
