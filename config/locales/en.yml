@@ -145,6 +145,18 @@ en:
         home:
           show:
             title: Get internet access
+      donated_devices:
+        interest:
+          new:
+            title: Do you want donated devices?
+          not_interested:
+            title: You have not been opted in
+          about:
+            title: About donated devices
+          queue:
+            title: There’s a queue for these devices
+          interest_confirmation:
+            title: Are you still interested?
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details

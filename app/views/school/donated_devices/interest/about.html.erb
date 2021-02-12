@@ -1,0 +1,26 @@
+<%- title = t('page_titles.school.donated_devices.interest.about.title') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <h2 class="govuk-heading-m">Devices can vary</h2>
+    <p class="govuk-body">A variety of devices are being donated. The devices you could get might not be the same.</p>
+
+    <p class="govuk-body">Every device will meet the minimum requirements needed for remote learning.</p>
+    <h2 class="govuk-heading-m">
+      Configure at your own cost
+    </h2>
+  
+    <p class="govuk-body">Devices are provided with factory settings and you will need to configure them at your own cost before lending them to children and young people.</p>
+    <p class="govuk-body govuk-!-margin-bottom-7">You will need to purchase licences for any Google Chromebooks you receive.</p>    
+  
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', queue_donated_devices_school_path(@school) %>
+    </p>
+  </div>
+</div>

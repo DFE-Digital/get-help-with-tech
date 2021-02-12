@@ -1,0 +1,37 @@
+<%- title = t('page_titles.school.donated_devices.interest.new.title') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <h2 class="govuk-heading-m">The Daily Mail’s Computers For Kids scheme</h2>
+
+    <p class="govuk-body">Mail Force, a charity created by the Daily Mail, are running a Computers For Kids scheme.</p>
+
+    <p class="govuk-body">They are collecting:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>donations to buy new devices</li>
+      <li>used laptops donated by companies</li>
+    </ul>
+
+    <p class="govuk-body">These devices are being checked, refurbished if used, and distributed to schools and colleges by Computacenter.</p>
+
+    <p class="govuk-body">You can use this service to opt-in to receive these devices.</p>
+    <p class="govuk-body">This is not a Department for Education offer and no device support will be available. There’s no guarantee you’ll receive any devices.</p>
+  
+    <%= form_for @form, url: interest_donated_devices_school_path(@school), method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_collection_radio_buttons :device_interest,
+                                          DonatedDeviceInterestForm.device_interest_options,
+                                          :value,
+                                          :label,
+                                          legend: {size: 'm', text: 'Are you interested in this scheme?'} %>
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>
