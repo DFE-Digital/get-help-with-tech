@@ -40,6 +40,12 @@
 
     <p class="govuk-body">View details of responsible bodies that manage schools with mutliple Chromebook domains.</p>
 
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to 'Download donated device requests', computacenter_donated_device_requests_path(format: :csv) %>
+    </h2>
+
+    <p class="govuk-body">Download a CSV file of opt-in requests for Mail Force donated devices.</p>
+
     <% if policy(:support).readable? %>
       <h2 class="govuk-heading-m">
         <%= govuk_link_to 'Support home', support_home_path %>
