@@ -36,6 +36,7 @@ en:
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Your schools and colleges
+    donated_devices: Opt in to the Daily Mail’s donated devices scheme
     requests_for_extra_mobile_data: Requests for extra mobile data
     extra_mobile_data_requests_csv_update: Update requests using a CSV
     suggested_email_to_schools: A suggested email for you to send to schools
@@ -145,7 +146,14 @@ en:
         home:
           show:
             title: Get internet access
-      donated_devices:
+    school_order_devices: Order devices
+    school_order_devices_soon: You’ll be able to order once your TechSource account is ready
+    school_details: Check your organisation’s details
+    school_edit_chromebooks: Will you need to order Chromebooks?
+    school_users: Manage users
+    school_before_can_order: Before you can order, we need more information
+    donated_devices:
+      school:
         interest:
           new:
             title: Do you want donated devices?
@@ -176,12 +184,31 @@ en:
             title: Check your answers before confirming
           opted_in:
             title: Your school is opted in
+      responsible_body:
+        interest:
+          new:
+            title: Do your schools want donated devices?
+          not_interested:
+            title: You have not been opted in
+          about:
+            title: About donated devices
+          queue:
+            title: There’s a queue for these devices
+          interest_confirmation:
+            title: Are you still interested?
+          all_or_some_schools:
+            title: Which schools do you want to opt in?
+          device_types:
+            title: Which of these device types would you accept?
+            hint: Select all devices types that you would use.
+          how_many_devices:
+            title: How many devices do you want?      
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
     school_edit_chromebooks: Will you need to order Chromebooks?
     school_users: Manage users
-    school_before_can_order: Before you can order, we need more information
+    school_before_can_order: Before you can order, we need more information  
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet
