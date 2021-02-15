@@ -35,7 +35,7 @@
       <li>request 4G wireless routers</li>
     </ul>
 
-    <% if FeatureFlag.active?(:donated_devices) %>
+    <% if FeatureFlag.active?(:donated_devices) && @school.who_will_order_devices == 'school' %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to 'Opt in to the Daily Mail’s donated devices scheme', interest_donated_devices_school_path(@school) %>
       </h2>
