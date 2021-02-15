@@ -162,6 +162,10 @@ Rails.application.routes.draw do
           get '/queue', to: 'interest#queue'
           get '/interest-confirmation', to: 'interest#interest_confirmation'
           post '/interest-confirmation', to: 'interest#interest_confirmation'
+          get '/what-devices-do-you-want', to: 'interest#device_types'
+          post '/what-devices-do-you-want', to: 'interest#device_types'
+          get '/how-many-devices', to: 'interest#how_many_devices'
+          post '/how-many-devices', to: 'interest#how_many_devices'
         end
 
         namespace :internet do

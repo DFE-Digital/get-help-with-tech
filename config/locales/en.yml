@@ -157,6 +157,16 @@ en:
             title: There’s a queue for these devices
           interest_confirmation:
             title: Are you still interested?
+          device_types:
+            title: Which of these device types would you accept?
+            hint: Select all devices types that you would use.
+            device_labels:
+              windows: Microsoft Windows
+              android_tablet: Android tablets
+              chromebook: Google Chromebooks
+              ipad: Apple iPads
+          how_many_devices:
+            title: How many devices do you want?
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
