@@ -13,6 +13,8 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
+    <%= render partial: 'shared/stock_levels' %>
+
     <h2 class="govuk-heading-m">
       Before you order
     </h2>
@@ -27,6 +29,7 @@
       <li><%= govuk_link_to 'give someone else access so they can place orders', school_users_path %></li>
     </ul>
 
+
     <h2 class="govuk-heading-m">How to order</h2>
 
     <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
@@ -40,8 +43,6 @@
     <p class="govuk-body">
       If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
     </p>
-
-    <p class="govuk-body">Order your devices now. Do not delay.</p>
 
     <h3 class="govuk-heading-s">Delivery address</h3>
 
