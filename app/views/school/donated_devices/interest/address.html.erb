@@ -1,0 +1,42 @@
+<%-
+  scope = 'page_titles.school.donated_devices.interest.address'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <p class="govuk-body">
+      As the person opting in a school, your name, email address and telephone number will be associated with the delivery.
+    </p>
+    <p class="govuk-body">
+      Your name, email address and telephone number will be shared with Computacenter and Mail Force. <%= govuk_link_to 'Read about how we use your data in our privacy policy', privacy_path, target: '_blank' %>.
+    </p>
+    <p class="govuk-body">
+      When these devices are delivered they will be addressed to you.
+    </p>
+    <p class="govuk-body">
+      They will be delivered to:
+    </p>
+    <div class="govuk-inset-text">
+      <strong><%= current_user.full_name %></strong><br/>
+      <%= @school.name %></br>
+      <%= @school.address_components.join('<br/>').html_safe %>
+    </div>
+
+    <%= form_for @form, url: address_donated_devices_school_path(@school), method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+      <% @form.device_types.compact_blank.each do |dt| %>
+        <%= f.hidden_field :device_types, multiple: true, value: dt %>
+      <% end %>
+      <%= f.hidden_field :units %>
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>

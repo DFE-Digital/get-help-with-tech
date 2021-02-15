@@ -1,0 +1,47 @@
+<%-
+  scope = 'page_titles.school.donated_devices.interest.disclaimer'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <p class="govuk-body">
+      Computers For Kids is a Mail Force initiative. It’s separate from the Department for Education (DfE) and the Get Help with Technology programme.
+    </p>
+    <p class="govuk-body">
+    If you opt in to Computers for Kids, your details will be shared with Mail Force and its third party supplier.
+    </p>
+    <p class="govuk-body">
+    Devices will be allocated by the third party supplier on a first come, first served basis. These devices are refurbished by the third party supplier to industry standard security and safety regulations.
+    </p>
+    <p class="govuk-body">
+    School, colleges, trusts and responsible bodies need to make sure that devices are suitable for children and young people.
+The DfE does not provide any guarantee or warranty for the reliability, suitability or completeness of the devices, and/or related software, or third party service.
+    </p>
+    <h2 class="govuk-heading-m"><%= t('not_responsible', scope: scope) %></h2>
+    <p class="govuk-body">
+    The DfE is not responsible for the currency, security, availability, compatibility, suitability, reliability or freedom from damaging software, or for any other qualities or features of the devices, and/or related software, and third party service.
+    </p>
+    <p class="govuk-body">
+    It is also not responsible for any actions taken with the devices and/or related software, or how the devices are used.
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-7">
+    The DfE is not liable for any loss or damage that might come from the devices, and/or related software, or third party service.
+    </p>
+    <%= form_for @form, url: address_donated_devices_school_path(@school), method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+      <% @form.device_types.compact_blank.each do |dt| %>
+        <%= f.hidden_field :device_types, multiple: true, value: dt %>
+      <% end %>
+      <%= f.hidden_field :units %>
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>
