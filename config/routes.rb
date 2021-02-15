@@ -166,6 +166,10 @@ Rails.application.routes.draw do
           post '/what-devices-do-you-want', to: 'interest#device_types'
           get '/how-many-devices', to: 'interest#how_many_devices'
           post '/how-many-devices', to: 'interest#how_many_devices'
+          get '/address', to: 'interest#address'
+          post '/address', to: 'interest#address'
+          get '/disclaimer', to: 'interest#disclaimer'
+          post '/disclaimer', to: 'interest#disclaimer'
         end
 
         namespace :internet do

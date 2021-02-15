@@ -13,7 +13,9 @@
     <%= form_for @form, url: how_many_devices_donated_devices_school_path(@school), method: :post do |f| %>
       <%= f.govuk_error_summary %>
 
-      <%= f.hidden_field :device_types %>
+      <% @form.device_types.compact_blank.each do |dt| %>
+        <%= f.hidden_field :device_types, multiple: true, value: dt %>
+      <% end %>
 
       <%= f.govuk_collection_radio_buttons :units,
                                            @form.device_amount_options,

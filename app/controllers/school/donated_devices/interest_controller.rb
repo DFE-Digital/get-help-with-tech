@@ -49,12 +49,36 @@ class School::DonatedDevices::InterestController < School::BaseController
   end
 
   def how_many_devices
-    @form = DonatedDeviceSelectionForm.new(how_many_devices_params.merge(state: :select_units))
+    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_units))
     if request.post?
       if @form.valid?
-        # redirect_to how_many_devices_donated_devices_school_path(@school)
+        render 'address'
       else
         render :how_many_devices, status: :unprocessable_entity
+      end
+    end
+  end
+
+  def address
+    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_units))
+    if request.post?
+      if @form.valid?
+        render 'disclaimer'
+      else
+        # something mad has happened - start from scratch
+        redirect_to new_devices_donated_devices_school_path(@school)
+      end
+    end
+  end
+
+  def disclaimer
+    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_units))
+    if request.post?
+      if @form.valid?
+        render 'disclaimer'
+      else
+        # something mad has happened - start from scratch
+        redirect_to new_devices_donated_devices_school_path(@school)
       end
     end
   end
@@ -66,14 +90,8 @@ private
   end
 
   def device_types_params(opts = params)
-    opts.fetch(:donated_device_selection_form, {}).permit(:units, device_types: [])
-  end
-
-  def how_many_devices_params(opts = params)
-    parms = opts.fetch(:donated_device_selection_form, {}).permit(:units, :device_types)
-    if parms[:device_types].present?
-      parms[:device_types] = parms[:device_types].split(' ').compact_blank
-    end
+    parms = opts.fetch(:donated_device_selection_form, {}).permit(:units, device_types: [])
+    parms[:device_types].compact_blank! if parms[:device_types]&.respond_to?(:compact_blank!)
     parms
   end
 end
