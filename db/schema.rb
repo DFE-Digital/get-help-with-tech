@@ -130,8 +130,9 @@ ActiveRecord::Schema.define(version: 2021_02_17_114408) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "schools", default: [], array: true
-    t.integer "responsible_body_id"
+    t.bigint "responsible_body_id"
     t.string "status", default: "incomplete", null: false
+    t.index ["responsible_body_id"], name: "index_donated_device_requests_on_responsible_body_id"
     t.index ["user_id"], name: "index_donated_device_requests_on_user_id"
   end
 
