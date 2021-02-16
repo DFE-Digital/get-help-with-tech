@@ -25,18 +25,12 @@
       They will be delivered to:
     </p>
     <div class="govuk-inset-text">
-      <strong><%= current_user.full_name %></strong><br/>
-      <%= @school.name %></br>
-      <%= @school.address_components.join('<br/>').html_safe %>
+      <strong><%= @request.user.full_name %></strong><br/>
+      <%= @request.delivery_address %>
     </div>
 
-    <%= form_for @form, url: address_donated_devices_school_path(@school), method: :post do |f| %>
-      <%= f.govuk_error_summary %>
-      <% @form.device_types.compact_blank.each do |dt| %>
-        <%= f.hidden_field :device_types, multiple: true, value: dt %>
-      <% end %>
-      <%= f.hidden_field :units %>
-      <%= f.govuk_submit 'Continue' %>
-    <%- end %>
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', disclaimer_donated_devices_school_path(@school) %>
+    </p>
   </div>
 </div>

@@ -6,12 +6,28 @@ class DonatedDeviceRequest < ApplicationRecord
     ipad
   ].freeze
 
-  belongs_to :user
-  belongs_to :school
+  enum status: {
+    complete: 'complete',
+    incomplete: 'incomplete',
+    units_step: 'units_step',
+  }
 
-  validates :units, :device_types, presence: true
+  belongs_to :responsible_body
+  belongs_to :user
+  # belongs_to :school
+
+  validates :units, presence: { message: 'Tell us how many devices you want' }, if: ->() { units_step? || complete? }
   validates :device_types, presence: { message: 'Tell us which devices you want' }
+  validates :schools, presence: true
   validate :validate_applicable_device_types
+
+  def self.uncompleted
+    where.not(status: 'complete')
+  end
+
+  def self.for_school(school)
+    where("? = ANY(schools)", school.id)
+  end
 
 private
 

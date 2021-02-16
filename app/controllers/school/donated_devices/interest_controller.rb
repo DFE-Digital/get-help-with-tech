@@ -1,4 +1,6 @@
 class School::DonatedDevices::InterestController < School::BaseController
+  before_action :redirect_if_already_completed, except: :opted_in
+  before_action :find_request!, only: [:how_many_devices, :address, :disclaimer, :check_answers]
   def new
     @form = DonatedDeviceInterestForm.new
   end
@@ -37,11 +39,13 @@ class School::DonatedDevices::InterestController < School::BaseController
   end
 
   def device_types
-    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_devices))
+    find_or_build_request
+    
     if request.post?
-      if @form.valid?
-        render 'how_many_devices'
-        # redirect_to how_many_devices_donated_devices_school_path(@school)
+      @request.assign_attributes(donated_device_params)
+      if @request.valid?
+        @request.save!
+        redirect_to how_many_devices_donated_devices_school_path(@school)
       else
         render :device_types, status: :unprocessable_entity
       end
@@ -49,10 +53,13 @@ class School::DonatedDevices::InterestController < School::BaseController
   end
 
   def how_many_devices
-    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_units))
     if request.post?
-      if @form.valid?
-        render 'address'
+      if @request.update(donated_device_params.merge(status: 'units_step'))
+        @request.save!
+        # we temporarily use 'units_step' to trigger validation of the :units
+        # and then switch it back if valid
+        @request.incomplete!
+        redirect_to address_donated_devices_school_path(@school)
       else
         render :how_many_devices, status: :unprocessable_entity
       end
@@ -60,38 +67,67 @@ class School::DonatedDevices::InterestController < School::BaseController
   end
 
   def address
-    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_units))
-    if request.post?
-      if @form.valid?
-        render 'disclaimer'
-      else
-        # something mad has happened - start from scratch
-        redirect_to new_devices_donated_devices_school_path(@school)
-      end
-    end
   end
 
   def disclaimer
-    @form = DonatedDeviceSelectionForm.new(device_types_params.merge(state: :select_units))
+  end
+
+  def check_answers
     if request.post?
-      if @form.valid?
-        render 'disclaimer'
-      else
-        # something mad has happened - start from scratch
-        redirect_to new_devices_donated_devices_school_path(@school)
-      end
+      @request.complete!
+      redirect_to opted_in_donated_devices_school_path(@school)
     end
   end
 
+  def opted_in
+    @request = present(DonatedDeviceRequest.complete.for_school(@school).first)
+  end
+
 private
+
+  def find_or_build_request
+    ddr = DonatedDeviceRequest.incomplete.for_school(@school).first
+    ddr = build_donated_device_request if ddr.nil?
+    @request = present(ddr)
+  end
+
+  def find_request!
+    ddr = DonatedDeviceRequest.for_school(@school).first
+    if ddr.nil?
+      # send backto beginning if they've got here without a request being saved
+      flash[:error] = 'They was a problem with your request'
+      redirect_to interest_donated_devices_school_path(@school)
+    else
+      @request = present(ddr)
+      redirect_to opted_in_donated_devices_school_path(@school) if @request.complete?
+    end
+  end
+
+  def redirect_if_already_completed
+    if DonatedDeviceRequest.complete.for_school(@school).any?
+      redirect_to opted_in_donated_devices_school_path(@school)
+    end
+  end
+
+  def build_donated_device_request
+    parms = donated_device_params.merge(schools: [@school.id],
+                                        responsible_body: @school.responsible_body,
+                                        user: current_user,
+                                        status: 'incomplete')
+    DonatedDeviceRequest.new(parms)
+  end
 
   def device_interest_params(opts = params)
     opts.fetch(:donated_device_interest_form, {}).permit(:device_interest)
   end
 
-  def device_types_params(opts = params)
-    parms = opts.fetch(:donated_device_selection_form, {}).permit(:units, device_types: [])
+  def donated_device_params(opts = params)
+    parms = opts.fetch(:donated_device_request, {}).permit(:units, device_types: [])
     parms[:device_types].compact_blank! if parms[:device_types]&.respond_to?(:compact_blank!)
     parms
+  end
+
+  def present(donated_device_request)
+    DonatedDeviceRequestPresenter.new(donated_device_request)
   end
 end

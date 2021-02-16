@@ -35,13 +35,8 @@ The DfE does not provide any guarantee or warranty for the reliability, suitabil
     <p class="govuk-body govuk-!-margin-bottom-7">
     The DfE is not liable for any loss or damage that might come from the devices, and/or related software, or third party service.
     </p>
-    <%= form_for @form, url: address_donated_devices_school_path(@school), method: :post do |f| %>
-      <%= f.govuk_error_summary %>
-      <% @form.device_types.compact_blank.each do |dt| %>
-        <%= f.hidden_field :device_types, multiple: true, value: dt %>
-      <% end %>
-      <%= f.hidden_field :units %>
-      <%= f.govuk_submit 'Continue' %>
-    <%- end %>
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', check_answers_donated_devices_school_path(@school) %>
+    </p>
   </div>
 </div>

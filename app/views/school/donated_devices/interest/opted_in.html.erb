@@ -1,0 +1,29 @@
+<%-
+  scope = 'page_titles.school.donated_devices.interest.opted_in'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-8">
+      <h1 class="govuk-panel__title">
+        <%= title %>
+      </h1>
+      <p class="govuk-panel__body">
+        You’re in the queue to receive&nbsp;devices
+      </p>
+    </div>
+    <h2 class="govuk-heading-m">What happens next</h2>
+    <p class="govuk-body">
+      If it’s your turn in the queue, you’ll get an email confirmation and Computacenter will deliver your preferred devices to:
+    </p>
+    <div class="govuk-inset-text">
+      <strong><%= @request.user.full_name %></strong><br/>
+      <%= @request.delivery_address %>
+    </div>
+  </div>
+</div>

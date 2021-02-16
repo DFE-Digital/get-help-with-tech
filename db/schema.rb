@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_163619) do
+ActiveRecord::Schema.define(version: 2021_02_15_172441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,8 @@ ActiveRecord::Schema.define(version: 2021_02_11_163619) do
     t.text "original_cc_ship_to_number"
     t.datetime "cc_import_api_timestamp"
     t.string "cc_import_api_transaction_id"
+    t.boolean "cc_rb_user"
+    t.boolean "original_cc_rb_user"
     t.index ["cc_import_api_timestamp"], name: "ix_cc_user_changes_timestamp"
     t.index ["cc_import_api_transaction_id"], name: "ix_cc_user_changes_cc_tx_id"
     t.index ["updated_at_timestamp"], name: "index_computacenter_user_changes_on_updated_at_timestamp"
@@ -123,12 +125,13 @@ ActiveRecord::Schema.define(version: 2021_02_11_163619) do
 
   create_table "donated_device_requests", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "school_id", null: false
     t.text "device_types", default: [], array: true
     t.integer "units"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["school_id"], name: "index_donated_device_requests_on_school_id", unique: true
+    t.integer "schools", default: [], array: true
+    t.integer "responsible_body_id"
+    t.string "status", default: "incomplete", null: false
     t.index ["user_id"], name: "index_donated_device_requests_on_user_id"
   end
 
@@ -212,8 +215,8 @@ ActiveRecord::Schema.define(version: 2021_02_11_163619) do
     t.string "county"
     t.string "postcode"
     t.string "status", default: "open", null: false
-    t.boolean "vcap_feature_flag", default: false
     t.string "computacenter_change", default: "none", null: false
+    t.boolean "vcap_feature_flag", default: false
     t.boolean "new_fe_wave", default: false
     t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
@@ -302,10 +305,10 @@ ActiveRecord::Schema.define(version: 2021_02_11_163619) do
     t.boolean "increased_allocations_feature_flag", default: false
     t.boolean "increased_sixth_form_feature_flag", default: false
     t.boolean "increased_fe_feature_flag", default: false
-    t.boolean "hide_mno", default: false
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
     t.text "fe_type"
+    t.boolean "hide_mno", default: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
@@ -399,6 +402,7 @@ ActiveRecord::Schema.define(version: 2021_02_11_163619) do
     t.boolean "orders_devices"
     t.datetime "techsource_account_confirmed_at"
     t.datetime "deleted_at"
+    t.boolean "rb_level_access", default: false, null: false
     t.text "role", default: "no", null: false
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
