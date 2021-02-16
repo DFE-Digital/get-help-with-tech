@@ -22,6 +22,22 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
   end
 
+  context 'school.hide_mno is true' do
+    before do
+      school.update!(hide_mno: true)
+      create(:mobile_network, brand: 'giffgaff')
+    end
+
+    scenario 'do not show FE excluded MNOs' do
+      click_on 'Get internet access'
+      click_on 'Request extra data for mobile devices'
+      click_on 'New request'
+      choose 'One at a time, using a form'
+      click_on 'Continue'
+      expect(page).not_to have_selector 'label', text: 'giffgaff'
+    end
+  end
+
   scenario 'the user can navigate to the bulk upload form from the home page' do
     click_on 'Get internet access'
     click_on 'Request extra data for mobile devices'

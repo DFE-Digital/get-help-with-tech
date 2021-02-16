@@ -9,9 +9,12 @@
   <li>cannot afford additional data</li>
 </ul>
 
+<p class="govuk-body"><%= MobileNetwork.excluded_fe_networks.pluck(:brand).to_sentence(last_word_connector: ' and ') %> will not accept requests for students over the age of 16.</p>
+
 <p class="govuk-body">One of the following must also apply. They are children:</p>
+
 <ul class="govuk-list govuk-list--bullet">
-  <li>in years 3 to 11 and whose face-to-face education is disrupted</li>
+  <li>in years 3 to 13 and whose face-to-face education is disrupted</li>
   <li>who are <%= govuk_link_to 'clinically extremely vulnerable', 'https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19', target: '_blank', rel: 'noopener noreferrer' %> and need to shield on current official advice (this could be from a doctor or hospital consultant)</li>
   <li>who live in a household that’s been advised to shield because a family member is clinically extremely vulnerable</li>
   <li>who cannot attend school – even though theirs is open – because restrictions prevent it</li>

@@ -1,6 +1,4 @@
 class School::Internet::Mobile::ManualRequestsController < School::BaseController
-  before_action { not_found if @school.hide_mno? }
-
   def index
     @extra_mobile_data_requests = @current_user.extra_mobile_data_requests
   end
@@ -48,7 +46,7 @@ class School::Internet::Mobile::ManualRequestsController < School::BaseControlle
 private
 
   def get_participating_mobile_networks
-    @participating_mobile_networks = MobileNetwork.participating_in_pilot.order('LOWER(brand)')
+    @mobile_networks_for_school = @school.available_mobile_networks.order('LOWER(brand)')
   end
 
   def extra_mobile_data_request_params

@@ -15,16 +15,6 @@ RSpec.describe School::Internet::Mobile::ExtraDataRequestsController, type: :con
         expect(controller).to render_template(:index)
         expect(response).to have_http_status(:ok)
       end
-
-      context 'when school.hide_mno?' do
-        let(:school) { create(:school, hide_mno: true) }
-        let(:user) { create(:school_user, schools: [school]) }
-
-        it 'returns 404' do
-          get :new, params: { urn: school.urn }
-          expect(response).to be_not_found
-        end
-      end
     end
 
     describe '#guidance' do

@@ -9,18 +9,6 @@ RSpec.describe School::Internet::Mobile::BulkRequestsController, type: :controll
       sign_in_as user
     end
 
-    describe '#new' do
-      context 'when school.hide_mno?' do
-        let(:school) { create(:school, hide_mno: true) }
-        let(:user) { create(:school_user, schools: [school]) }
-
-        it 'returns 404' do
-          get :new, params: { urn: school.urn }
-          expect(response).to be_not_found
-        end
-      end
-    end
-
     describe '#create' do
       let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), Mime[:xlsx]) }
       let(:request_data) { { urn: school.urn, bulk_upload_form: { upload: upload } } }

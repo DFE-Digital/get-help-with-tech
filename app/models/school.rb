@@ -74,6 +74,18 @@ class School < ApplicationRecord
     type == 'FurtherEducationSchool'
   end
 
+  def available_mobile_networks
+    if hide_networks_not_supporting_fe?
+      MobileNetwork.fe_networks
+    else
+      MobileNetwork.participating
+    end
+  end
+
+  def hide_networks_not_supporting_fe?
+    hide_mno?
+  end
+
   def has_ordered?
     device_allocations.to_a.any? { |alloc| alloc.devices_ordered.positive? }
   end
@@ -169,10 +181,6 @@ class School < ApplicationRecord
 
   def chromebook_domain
     preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks?
-  end
-
-  def show_mno?
-    !hide_mno?
   end
 
   def can_invite_users?

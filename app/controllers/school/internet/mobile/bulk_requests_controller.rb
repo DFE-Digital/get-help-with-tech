@@ -1,6 +1,4 @@
 class School::Internet::Mobile::BulkRequestsController < School::BaseController
-  before_action { not_found if @school.hide_mno? }
-
   def new
     @upload_form = BulkUploadForm.new
   end

@@ -46,4 +46,34 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
       importer.import!(extra_fields: { responsible_body: rb, created_by_user: user })
     }.to have_enqueued_job(NotifyExtraMobileDataRequestAccountHolderJob).exactly(3).times
   end
+
+  context 'when school.hide_mno is true' do
+    let(:school) { create(:school, hide_mno: true) }
+    let(:spreadsheet) { OpenStruct.new(requests: requests) }
+
+    let(:requests) do
+      [
+        {
+          account_holder_name: 'John Doe',
+          mobile_phone_number: '07123456789',
+          mobile_network: MobileNetwork.fe_networks.sample.brand,
+          pay_monthly_or_payg: 'pay_monthly',
+          has_someone_shared_the_privacy_statement_with_the_account_holder: 'TRUE',
+        },
+        {
+          account_holder_name: 'John Doe',
+          mobile_phone_number: '07123456789',
+          mobile_network: MobileNetwork.excluded_fe_networks.sample.brand,
+          pay_monthly_or_payg: 'pay_monthly',
+          has_someone_shared_the_privacy_statement_with_the_account_holder: 'TRUE',
+        },
+      ].map { |hash| ExtraMobileDataRequestRow.new(hash).build_request }
+    end
+
+    it 'errors on excluded FE networks' do
+      importer.import!(extra_fields: { school: school })
+      expect(importer.summary.successful.size).to be(1)
+      expect(importer.summary.errors.size).to be(1)
+    end
+  end
 end
