@@ -36,7 +36,6 @@ en:
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Your schools and colleges
-    donated_devices: Opt in to the Daily Mail’s donated devices scheme
     requests_for_extra_mobile_data: Requests for extra mobile data
     extra_mobile_data_requests_csv_update: Update requests using a CSV
     suggested_email_to_schools: A suggested email for you to send to schools
@@ -153,6 +152,7 @@ en:
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
     donated_devices:
+      title: Opt in to the Daily Mail’s donated devices scheme
       school:
         interest:
           new:
