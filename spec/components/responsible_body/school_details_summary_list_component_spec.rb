@@ -210,6 +210,54 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
   end
 
+  describe 'routers ordered count' do
+    context 'when no routers ordered' do
+      it 'does not show routers ordered row' do
+        expect(result.text).not_to include('Routers ordered')
+      end
+    end
+
+    context 'when routers_ordered > 0' do
+      before do
+        alloc = school.build_coms_device_allocation(devices_ordered: 3, cap: 100, allocation: 100)
+        alloc.save!
+      end
+
+      context 'when the school is not in a virtual_cap_pool' do
+        before do
+          allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
+          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
+        end
+
+        it 'shows routers ordered row with count' do
+          expect(value_for_row(result, 'Routers ordered').text).to include('3 routers')
+        end
+      end
+
+      context 'when the responsible body is not in the virtual cap' do
+        before do
+          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
+          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
+        end
+
+        it 'shows routers ordered row with count' do
+          expect(value_for_row(result, 'Routers ordered').text).to include('3 routers')
+        end
+      end
+
+      context 'when the school is in a virtual_cap_pool' do
+        before do
+          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
+          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(true)
+        end
+
+        it 'does not show routers ordered row' do
+          expect(result.text).not_to include('Routers ordered')
+        end
+      end
+    end
+  end
+
   describe 'when school cannot_order_as_reopened' do
     let(:school) { build(:school, order_state: :cannot_order_as_reopened) }
 

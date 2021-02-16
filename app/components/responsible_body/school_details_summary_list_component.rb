@@ -17,8 +17,9 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
     array << preorder_status_row
     array << who_will_order_row
     array << device_allocation_row
-    array << router_allocation_row if display_router_allocation_row?
     array << devices_ordered_row if display_devices_ordered_row?
+    array << router_allocation_row if display_router_allocation_row?
+    array << routers_ordered_row if display_routers_ordered_row?
     array << order_status_row
     array << school_type_row
 
@@ -91,8 +92,19 @@ private
     }
   end
 
+  def routers_ordered_row
+    {
+      key: 'Routers ordered',
+      value: pluralize(@school.coms_device_allocation&.devices_ordered.to_i, 'router'),
+    }
+  end
+
   def display_devices_ordered_row?
     (!@school.responsible_body.has_virtual_cap_feature_flags? || !@school.in_virtual_cap_pool?) && @school.std_device_allocation&.devices_ordered.to_i.positive?
+  end
+
+  def display_routers_ordered_row?
+    (!@school.responsible_body.has_virtual_cap_feature_flags? || !@school.in_virtual_cap_pool?) && @school.coms_device_allocation&.devices_ordered.to_i.positive?
   end
 
   def display_router_allocation_row?
