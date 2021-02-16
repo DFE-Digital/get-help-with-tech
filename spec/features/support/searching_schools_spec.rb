@@ -34,8 +34,9 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     and_i_see_one_error
     and_i_see_results_with_schools(2)
 
-    when_i_click_on_perform_another_search
-    then_i_see_the_schools_search_page
+    and_i_see_a_button_to_download_as_csv
+    when_i_click_on_the_download_button
+    and_the_csv_contains_data_for_the_searched_schools
   end
 
   scenario 'support agent searches by order state and responsible body' do
@@ -147,6 +148,12 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   def then_i_download_a_csv
     expect_download(content_type: 'text/csv')
     expect(page.body).to include(AllocationsExporter.headings.join(','))
+  end
+
+  def and_the_csv_contains_data_for_the_searched_schools
+    rows = page.body.split("\n")
+    expect(rows.size).to eq(3)
+    expect(rows.map { |row| row.split(',').first }).to include('School URN', schools.first.urn.to_s, schools.last.urn.to_s)
   end
 
   def and_the_csv_contains_data_for_the_correct_schools
