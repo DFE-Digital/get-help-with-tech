@@ -50,6 +50,12 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
     then_see_that_i_cannot_opt_in_my_schools
   end
 
+  scenario 'RB that centrally managed but cannot see the donated device form from the home page without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
+    given_centrally_managed_school
+    and_i_navigate_to_the_devices_page
+    then_see_that_i_cannot_opt_in_my_schools
+  end
+
 private
 
   def given_devolved_school
