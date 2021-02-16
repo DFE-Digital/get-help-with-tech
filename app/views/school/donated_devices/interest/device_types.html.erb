@@ -10,11 +10,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_for @form, url: what_devices_do_you_want_donated_devices_school_path(@school), method: :post do |f| %>
+    <%= form_for @request, url: what_devices_do_you_want_donated_devices_school_path(@school), method: :post do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_collection_check_boxes :device_types,
-                                         @form.available_device_types,
+                                         @request.available_device_types,
                                          :id,
                                          :name,
                                          legend: {size: 'xl', text: title },

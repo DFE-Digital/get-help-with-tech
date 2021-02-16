@@ -170,6 +170,9 @@ Rails.application.routes.draw do
           post '/address', to: 'interest#address'
           get '/disclaimer', to: 'interest#disclaimer'
           post '/disclaimer', to: 'interest#disclaimer'
+          get '/check-answers', to: 'interest#check_answers'
+          post '/check-answers', to: 'interest#check_answers'
+          get 'opted-in', to: 'interest#opted_in'
         end
 
         namespace :internet do

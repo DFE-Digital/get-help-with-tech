@@ -1,16 +1,21 @@
 class DonatedDeviceSelectionForm
-  include ActiveModel::Model
+  # include ActiveModel::Model
 
   STATES = %i[
     select_devices
     select_units
   ].freeze
 
-  attr_accessor :state, :device_types, :units
+  # attr_accessor :state, :device_types, :units
+  attr_accessor :donated_device_request
 
   validates :device_types, presence: { message: 'Tell us which devices you want' }
   validates :units, presence: { message: 'Tell us how many devices you want' }, if: ->() { select_units? }
   validate :valid_devices_selected
+
+  def initialize(donated_device_request:)
+    @donated_device_request = donated_device_request
+  end
 
   def available_device_types
     DonatedDeviceRequest::DEVICE_TYPES.map do |dt|

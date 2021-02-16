@@ -172,6 +172,10 @@ en:
           disclaimer:
             title: Disclaimer
             not_responsible: What the DfE is not responsible for
+          check_answers:
+            title: Check your answers before confirming
+          opted_in:
+            title: Your school is opted in
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
