@@ -15,6 +15,33 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
     given_centrally_managed_school
     and_i_navigate_to_the_devices_page
     then_see_that_i_can_opt_in_my_schools
+
+    and_i_click_the_donated_devices_link
+    then_i_am_asked_if_i_am_interested_in_devices
+    and_i_indicate_that_i_am_interested
+
+    then_i_see_information_about_the_devices
+    and_then_i_continue_to_the_next_page
+
+    then_i_see_information_about_the_queue
+    and_then_i_continue_to_the_next_page
+
+    then_i_am_asked_if_i_am_still_interested
+    and_i_indicate_that_i_am_still_interested
+
+    # Now at: Which schools do you want to opt in?
+  end
+
+  scenario 'RB navigating to donated device form but declining interest' do
+    given_centrally_managed_school
+    and_i_navigate_to_the_devices_page
+    then_see_that_i_can_opt_in_my_schools
+
+    and_i_click_the_donated_devices_link
+    then_i_am_asked_if_i_am_interested_in_devices
+    and_i_indicate_that_i_am_not_interested
+
+    then_i_see_that_i_have_not_been_opted_in
   end
 
   scenario 'RB that has devolved schools cannot see the donated device form from the home page' do
@@ -38,11 +65,54 @@ private
     click_on 'Get laptops and tablets'
   end
 
+  def and_i_click_the_donated_devices_link
+    click_on 'Opt in to the Daily Mail’s donated devices scheme'
+  end
+
+  def and_i_indicate_that_i_am_interested
+    choose 'Yes, tell me more'
+    click_on 'Continue'
+  end
+
+  def and_i_indicate_that_i_am_not_interested
+    choose 'No, not at the moment'
+    click_on 'Continue'
+  end
+
+  def and_i_indicate_that_i_am_still_interested
+    choose 'Yes'
+    click_on 'Continue'
+  end
+
+  def and_then_i_continue_to_the_next_page
+    click_on 'Continue'
+  end
+
   def then_see_that_i_can_opt_in_my_schools
     expect(page).to have_content('Opt in to the Daily Mail’s donated devices scheme')
   end
 
   def then_see_that_i_cannot_opt_in_my_schools
     expect(page).not_to have_content('Opt in to the Daily Mail’s donated devices scheme')
+  end
+
+  def then_i_am_asked_if_i_am_interested_in_devices
+    expect(page).to have_content('Do your schools want donated devices')
+  end
+
+  def then_i_see_information_about_the_devices
+    expect(page).to have_content('About donated devices')
+  end
+
+  def then_i_see_information_about_the_queue
+    expect(page).to have_content('There’s a queue for these devices')
+  end
+
+  def then_i_see_that_i_have_not_been_opted_in
+    expect(page).to have_content('You have not been opted in')
+  end
+
+  def then_i_am_asked_if_i_am_still_interested
+    expect(page).to have_content('Are you still interested?')
   end
 end
