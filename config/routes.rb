@@ -111,6 +111,23 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace :donated_devices, path: '/donated-devices' do
+      get '/interest', to: 'interest#new'
+      post '/interest', to: 'interest#create'
+
+      get '/about-devices', to: 'interest#about'
+      get '/queue', to: 'interest#queue'
+      get '/interest-confirmation', to: 'interest#interest_confirmation'
+      post '/interest-confirmation', to: 'interest#interest_confirmation'
+      get '/all-or-some-schools', to: 'interest#all_or_some_schools'
+      post '/all-or-some-schools', to: 'interest#all_or_some_schools'
+
+      get '/what-devices-do-you-want', to: 'interest#device_types'
+      post '/what-devices-do-you-want', to: 'interest#device_types'
+      get '/how-many-devices', to: 'interest#how_many_devices'
+      post '/how-many-devices', to: 'interest#how_many_devices'
+    end
+
     namespace :internet do
       get '/', to: 'home#show'
       namespace :mobile, path: '/mobile' do
