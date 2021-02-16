@@ -32,7 +32,7 @@ private
   def delivery_details
     [
       "<strong>#{@donated_device_request.user.full_name}</strong>",
-      @donated_device_request.delivery_address
+      @donated_device_request.delivery_address,
     ].join('<br/>').html_safe
   end
 

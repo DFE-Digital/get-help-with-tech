@@ -10,7 +10,7 @@ class DonatedDeviceSelectionForm
   attr_accessor :donated_device_request
 
   validates :device_types, presence: { message: 'Tell us which devices you want' }
-  validates :units, presence: { message: 'Tell us how many devices you want' }, if: ->() { select_units? }
+  validates :units, presence: { message: 'Tell us how many devices you want' }, if: -> { select_units? }
   validate :valid_devices_selected
 
   def initialize(donated_device_request:)

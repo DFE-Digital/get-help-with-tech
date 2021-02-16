@@ -22,7 +22,7 @@ class DonatedDeviceRequestPresenter < SimpleDelegator
   end
 
   def delivery_address
-    [ school.name ].concat(school.address_components).join('<br/>').html_safe
+    [school.name].concat(school.address_components).join('<br/>').html_safe
   end
 
   def school

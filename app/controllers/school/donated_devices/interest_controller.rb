@@ -1,6 +1,6 @@
 class School::DonatedDevices::InterestController < School::BaseController
   before_action :redirect_if_already_completed, except: :opted_in
-  before_action :find_request!, only: [:how_many_devices, :address, :disclaimer, :check_answers]
+  before_action :find_request!, only: %i[how_many_devices address disclaimer check_answers]
   def new
     @form = DonatedDeviceInterestForm.new
   end
@@ -40,7 +40,7 @@ class School::DonatedDevices::InterestController < School::BaseController
 
   def device_types
     find_or_build_request
-    
+
     if request.post?
       @request.assign_attributes(donated_device_params)
       if @request.valid?
@@ -66,11 +66,9 @@ class School::DonatedDevices::InterestController < School::BaseController
     end
   end
 
-  def address
-  end
+  def address; end
 
-  def disclaimer
-  end
+  def disclaimer; end
 
   def check_answers
     if request.post?
