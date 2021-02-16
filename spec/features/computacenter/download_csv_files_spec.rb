@@ -63,8 +63,15 @@ RSpec.feature 'Download CSV files' do
     end
 
     describe 'clicking Download donated device requests' do
+      let(:trust) { create(:trust, :multi_academy_trust, :devolves_management) }
+      let(:schools) { create_list(:school, 4, responsible_body: trust) }
+      let(:school_with_incomplete_request) { create(:school, responsible_body: trust) }
+
       before do
-        create_list(:donated_device_request, 4, :wants_laptops)
+        schools.each do |school|
+          create(:donated_device_request, :wants_laptops, :complete, schools: [school.id], responsible_body: trust)
+        end
+        create(:donated_device_request, :wants_tablets, schools: [school_with_incomplete_request.id], responsible_body: trust)
       end
 
       it 'downloads a CSV file' do
@@ -73,16 +80,18 @@ RSpec.feature 'Download CSV files' do
         expect(page.body).to include(DonatedDeviceRequestsExporter.headings.join(','))
       end
 
-      it 'includes all the DonatedDeviceRequests in ascending id order' do
+      it 'includes all the completed DonatedDeviceRequests in ascending id order' do
         click_on 'Download donated device requests'
         csv = CSV.parse(page.body, headers: true)
 
-        DonatedDeviceRequest.order(id: :asc).each_with_index do |request, i|
+        DonatedDeviceRequest.complete.order(id: :asc).each_with_index do |request, i|
+          school = School.find(request.schools.first)
+          expect(school).not_to eq(school_with_incomplete_request)
           expect(request.id.to_s).to eq(csv[i]['id'])
           expect(request.created_at.to_s).to eq(csv[i]['created_at'])
-          expect(request.school.urn.to_s).to eq(csv[i]['urn'])
-          expect(request.school.computacenter_reference).to eq(csv[i]['shipTo'])
-          expect(request.school.responsible_body.computacenter_reference).to eq(csv[i]['soldTo'])
+          expect(school.urn.to_s).to eq(csv[i]['urn'])
+          expect(school.computacenter_reference).to eq(csv[i]['shipTo'])
+          expect(request.responsible_body.computacenter_reference).to eq(csv[i]['soldTo'])
           expect(request.user.full_name).to eq(csv[i]['full_name'])
           expect(request.user.email_address).to eq(csv[i]['email_address'])
           expect(request.user.telephone).to eq(csv[i]['telephone_number'])
