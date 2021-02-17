@@ -50,10 +50,10 @@
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header">Request ID</th>
+        <th class="govuk-table__header">Mobile Network</th>
         <th class="govuk-table__header">Account holder</th>
         <th class="govuk-table__header">Mobile number</th>
         <th class="govuk-table__header">Requested</th>
-        <th class="govuk-table__header">Mobile Network</th>
         <th class="govuk-table__header">Status</th>
       </tr>
     </thead>
@@ -61,8 +61,9 @@
       <%- for emd_request in @requests do %>
         <tr class="govuk-table__row" id="request-<%= emd_request.id %>">
           <td class="govuk-table__cell"><%= emd_request.id %></td>
-          <td class="govuk-table__cell"><%= redact(emd_request.account_holder_name, first: 1) %></td>
-          <td class="govuk-table__cell"><%= redact( emd_request.device_phone_number, last: 4 ) %></td>
+          <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
+          <td class="govuk-table__cell"><%= redact(emd_request.account_holder_name, first: 1, last: 1) %></td>
+          <td class="govuk-table__cell"><%= redact(emd_request.device_phone_number, first: 2, last: 4) %></td>
           <td class="govuk-table__cell">
             <%= emd_request.created_at.to_date.to_s(:long_ordinal) %>
             <br />by
@@ -71,7 +72,6 @@
             <%- else %>
               <%= govuk_link_to emd_request.responsible_body.name, support_responsible_body_path(emd_request.responsible_body_id) %>
             <%- end %>
-          <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
           <td class="govuk-table__cell">
             <%= render ExtraMobileDataRequestStatusComponent.new(status: emd_request.status) %>
           </td>
