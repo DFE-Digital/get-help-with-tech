@@ -227,6 +227,7 @@ Rails.application.routes.draw do
       patch 'schools', to: 'users/schools#update_schools', as: :update_schools
       resource :responsible_body, only: %i[edit update], controller: 'users/responsible_body', path: 'responsible-body'
     end
+    resources :extra_mobile_data_requests, only: %i[index show], path: 'extra-mobile-data-requests'
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 

@@ -39,6 +39,20 @@
       <p class="govuk-body">Use this section to search for schools, colleges and FE institutions.</p>
     <% end %>
 
+    <% if policy(ExtraMobileDataRequest).index? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'Find requests for extra mobile data', support_extra_mobile_data_requests_path %>
+      </h2>
+
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>search for requests for extra mobile data</li>
+        <li>view overall numbers of requests for extra mobile data</li>
+      </ul>
+    <%- else %>
+      <h2>FAIL</h2>
+    <% end %>
+
     <% if policy(Support::ServicePerformance).index? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to 'Service performance', support_service_performance_path %>
