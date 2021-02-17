@@ -13,4 +13,12 @@ class MobileNetwork < ApplicationRecord
   def self.participating_in_pilot
     participating
   end
+
+  def pathsafe_brand
+    brand.to_s
+         .downcase
+         .gsub(/[^a-z0-9]+/, '_')
+         .gsub(/^_+(.*)/, '\1')
+         .gsub(/^(.*)_$/, '\1')
+  end
 end

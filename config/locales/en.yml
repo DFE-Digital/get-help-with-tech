@@ -17,7 +17,7 @@ en:
     sign_in: Sign in
     check_your_email: Check your email
     cookie_preferences: Cookies
-    email_not_recognised: We didn’t recognise that email address
+    email_not_recognised: We did not recognise that email address
     token_is_valid_but_expired: The link you clicked has expired
     token_not_recognised: We didn’t recognise that link
     confirm: Check your answers before confirming
@@ -50,7 +50,7 @@ en:
     internet_access: Get internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_how_to_order: "How and when to order DfE laptops and tablets during coronavirus (COVID-19)"
+    devices_guidance_how_to_order: "How and when to order DfE laptops and tablets during the pandemic"
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
@@ -60,14 +60,18 @@ en:
     privacy: Privacy
     dfe_windows_privacy_notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
     general_privacy_notice: How we look after personal information as part of the Get help with technology programme
+    gias_updates: GIAS updates
+    gias_schools_to_add: Schools to be added
+    gias_schools_to_close: Schools to be closed
+
     support:
       home: Support
-      schools: Schools, colleges and FE providers
+      schools: Schools, colleges and FE institutions
       technical_support: Technical support
       feature_flags: Feature flags
       devices:
         schools:
-          search: Search for schools, colleges and FE providers
+          search: Search for schools, colleges and FE institutions
           results: School search results
       users:
         search: Find users
@@ -80,7 +84,7 @@ en:
           index: Associate with a responsible body
           edit: Update responsible body
       allocation:
-        adjust_allocations_for_many_schools: Adjust allocations for many schools, colleges and FE providers
+        adjust_allocations_for_many_schools: Adjust allocations for many schools, colleges and FE institutions
       addresses:
         edit: Update address
     support_responsible_bodies: Responsible bodies
@@ -93,7 +97,7 @@ en:
       std_device: Change device allocation
       coms_device: Change router allocation
     support_edit_chromebook_details: Will the school need to order Chromebooks?
-    support_bulk_allocation: Allow schools, colleges and FE providers to order their full allocation
+    support_bulk_allocation: Allow schools, colleges and FE institutions to order their full allocation
     support_bulk_allocation_result: Bulk allocation summary
     upload_key_contacts_file: Upload a CSV file of key contacts
     weve_processed_your_file: We’ve processed your file
@@ -234,7 +238,7 @@ en:
       audience: device_users
     preparing_chromebooks:
       title: Preparing Chromebooks
-      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, further education providers and schools.
+      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, schools and further education institutions.
       audience: responsible_body_users
     getting_started_with_your_google_chromebook:
       title: Getting started with your Google Chromebook
@@ -418,6 +422,16 @@ en:
             rb_can_order: Responsible body can order
             school_can_order: School can order
             ordered: Responsible body has ordered
+    timeline:
+      field:
+        std_device_cap: Device cap
+        std_device_allocation: Device allocation
+        std_device_devices_ordered: Devices ordered
+        coms_device_cap: Router cap
+        coms_device_allocation: Router allocation
+        coms_device_devices_ordered: Routers ordered
+        School_status: School status
+        School_order_state: School order state
   activemodel:
     errors:
       models:
@@ -505,62 +519,65 @@ en:
           active: Active
           revoked: Revoked
       extra_mobile_data_request:
-         status:
-           new:
-             tag_label: New
-             dropdown_label: New
-             mno_user_description: Request not processed yet
-             school_or_rb_user_description: Request has not been processed yet
-           in_progress:
-             tag_label: In progress
-             dropdown_label: In progress
-             mno_user_description: Request is being processed
-             school_or_rb_user_description: Network is currently processing this request
-           complete:
-             tag_label: Complete
-             dropdown_label: Complete
-             mno_user_description: Request processed successfully
-             school_or_rb_user_description: Request succesful and offer activated
-           cancelled:
-             tag_label: Cancelled
-             dropdown_label: Cancelled
-             mno_user_description: Request has been cancelled
-             school_or_rb_user_description: Request has been cancelled
-           unavailable:
-             tag_label: Unavailable
-             dropdown_label: Unavailable
-             mno_user_description: Request is for a network that is unavailable
-             school_or_rb_user_description: This network is not supporting the offer yet
-           problem_no_match_for_number:
-             tag_label: Unknown number
-             dropdown_label: Problem – No account with this number
-             mno_user_description: We couldn’t find an account with this number
-             school_or_rb_user_description: No account was found with number given
-           problem_not_eligible:
-             tag_label: Not eligible
-             dropdown_label: Problem – Not eligible
-             mno_user_description: This account is not eligible
-             school_or_rb_user_description: The network reported this request was not eligible
-           problem_incorrect_phone_number:
-             tag_label: Invalid number
-             dropdown_label: Problem – Not a valid mobile number
-             mno_user_description: This is not a valid mobile number
-             school_or_rb_user_description: The network reported this request had an invalid mobile number
-           problem_no_match_for_account_name:
-             tag_label: Unknown name
-             dropdown_label: Problem – No account with this name
-             mno_user_description: We couldn’t find an account with this name
-             school_or_rb_user_description: No account was found with name given
-           problem_no_longer_on_network:
-             tag_label: Not on network
-             dropdown_label: Problem – Not on network
-             mno_user_description: This account is no longer on our network
-             school_or_rb_user_description: The network reported this account was now with a different network
-           problem_other:
-             tag_label: Other problem
-             dropdown_label: Problem – Other
-             mno_user_description: Another reason
-             school_or_rb_user_description: The network could not process this request but did not give a reason why
+        contract_types:
+          pay_monthly: Pay monthly
+          pay_as_you_go_payg: Pay as you go (PAYG)
+        status:
+          new:
+            tag_label: New
+            dropdown_label: New
+            mno_user_description: Request not processed yet
+            school_or_rb_user_description: Request has not been processed yet
+          in_progress:
+            tag_label: In progress
+            dropdown_label: In progress
+            mno_user_description: Request is being processed
+            school_or_rb_user_description: Network is currently processing this request
+          complete:
+            tag_label: Complete
+            dropdown_label: Complete
+            mno_user_description: Request processed successfully
+            school_or_rb_user_description: Request succesful and offer activated
+          cancelled:
+            tag_label: Cancelled
+            dropdown_label: Cancelled
+            mno_user_description: Request has been cancelled
+            school_or_rb_user_description: Request has been cancelled
+          unavailable:
+            tag_label: Unavailable
+            dropdown_label: Unavailable
+            mno_user_description: Request is for a network that is unavailable
+            school_or_rb_user_description: This network is not supporting the offer yet
+          problem_no_match_for_number:
+            tag_label: Unknown number
+            dropdown_label: Problem – No account with this number
+            mno_user_description: We couldn’t find an account with this number
+            school_or_rb_user_description: No account was found with number given
+          problem_not_eligible:
+            tag_label: Not eligible
+            dropdown_label: Problem – Not eligible
+            mno_user_description: This account is not eligible
+            school_or_rb_user_description: The network reported this request was not eligible
+          problem_incorrect_phone_number:
+            tag_label: Invalid number
+            dropdown_label: Problem – Not a valid mobile number
+            mno_user_description: This is not a valid mobile number
+            school_or_rb_user_description: The network reported this request had an invalid mobile number
+          problem_no_match_for_account_name:
+            tag_label: Unknown name
+            dropdown_label: Problem – No account with this name
+            mno_user_description: We couldn’t find an account with this name
+            school_or_rb_user_description: No account was found with name given
+          problem_no_longer_on_network:
+            tag_label: Not on network
+            dropdown_label: Problem – Not on network
+            mno_user_description: This account is no longer on our network
+            school_or_rb_user_description: The network reported this account was now with a different network
+          problem_other:
+            tag_label: Other problem
+            dropdown_label: Problem – Other
+            mno_user_description: Another reason
+            school_or_rb_user_description: The network could not process this request but did not give a reason why
       mobile_network:
         participation_in_pilots:
           participating: 'Offers data now'

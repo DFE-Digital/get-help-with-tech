@@ -112,4 +112,4 @@ You can find more information about the programme and how schools and colleges a
 
 [Free training and support to set up and use technology effectively](/EdTech-demonstrator-programme) is available through the EdTech Demonstrator Programme.
 
-If you have a question about this programme, [please contact us](/get-support).
+If you have a question about this programme, [contact us](/get-support).

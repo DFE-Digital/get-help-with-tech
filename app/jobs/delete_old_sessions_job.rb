@@ -1,11 +1,9 @@
 class DeleteOldSessionsJob < ApplicationJob
   queue_as :default
 
-  def perform(args = {})
-    older_than = args[:older_than] || Time.zone.now.utc - Settings.session_ttl_seconds * 4
-    # We'll play safe & only delete sessions that are 4 times older than the ttl
-    sessions = Session.where('updated_at < ?', older_than)
-    logger.info "deleting #{sessions.count} sessions older than #{older_than.iso8601}"
+  def perform
+    sessions = Session.where('expires_at < ?', Time.zone.now.utc - 2.hours)
+    logger.info "deleting #{sessions.count} sessions expired by 2 hours"
     sessions.delete_all
   end
 end

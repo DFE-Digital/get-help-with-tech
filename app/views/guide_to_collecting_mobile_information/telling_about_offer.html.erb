@@ -13,7 +13,7 @@
       <li>when their free data will end</li>
       <li>that this data can be used when tethering a mobile phone to another device for internet access</li>
     </ul>
-    
+
      <div class="govuk-inset-text">
        The offers below are dependent on children and young people meeting all of the criteria <%= govuk_link_to 'listed in our guidance', guide_to_collecting_mobile_information_path %>. Requests will be unsuccessful if these criteria are not met.</p>
      </div>
@@ -21,103 +21,16 @@
     <h3 class="govuk-heading-m" id="network-offers">Network offers</h3>
 
     <%= render GovukComponent::Accordion.new(id: 'network-providers') do |component| %>
-        <%= component.slot(:section, title: 'BT Mobile') do %>
-        <p class="govuk-body">Be aware that until the end of February, it may take BT Mobile some time to process requests.</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get unlimited data per month until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and active Pay As You Go customers.</li>
-          <li>The recipient must have been a BT Mobile customer for at least 3 months.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-        </ul>
-      <% end %>
-  
-      <%= component.slot(:section, title: 'EE') do %>
-        <p class="govuk-body">Be aware that until the end of January, it may take EE some time to process requests.</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get unlimited data per month until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
-          <li>The recipient must have been an EE customer for at least 3 months.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-        </ul>
-      <% end %>
-  
-     <%= component.slot(:section, title: 'Lycamobile') do %>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get 20GB of additional data per month until 31 July 2021.</li>
-          <li>The offer is available for active Pay as you go customers with a Lycamobile SIM card. They must have had credit, and made and received calls, in each of the last 3 months.</li>
-          <li>The recipient must have an active £10, £15 or £20 bundle, which includes data.</li>
-          <li>The monthly data increase can only be given if the recipient continues to have an active £10, £15 or £20 bundle each month. If the qualifying bundle expires, Lycamobile will not provide additional mobile data.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>        
-        </ul>
-      <% end %>
-    
-      <%= component.slot(:section, title: 'O2') do %>
-        <p class="govuk-body">Be aware that until the end of January, it may take O2 some time to process requests.</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get 40GB of additional data per month until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and active Pay As You Go customers.</li>
-          <li>The recipient must have been an O2 customer for at least 6 months.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-        </ul>
-      <% end %>
-
-      <%= component.slot(:section, title: 'Sky Mobile') do %>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get 100GB of additional data.</li>
-          <li>The offer is available to Pay Monthly customers.</li>
-          <li>Sky Mobile customers will be able to see the data uplift in their piggybank.</li>
-          <li>Sky Mobile will aim to process the request within 14 days.</li>
-        </ul>
-      <% end %>
-
-      <%= component.slot(:section, title: 'SMARTY') do %>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get unlimited data until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-          <li>SMARTY will aim to process the request within 14 days.</li>
-        </ul>
-      <% end %>
-
-      <%= component.slot(:section, title: 'Tesco Mobile') do %>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get 20GB of additional data per month until 31 July 2021.</li>
-          <li>The offer is available to both pay monthly and active pay as you go customers.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-          <li>Tesco Mobile will aim to process the request within 14 days.</li>
-        </ul>
-      <% end %>
-
-      <%= component.slot(:section, title: 'Three') do %>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get unlimited data until 31 July 2021.</li>
-          <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-          <li>Three will aim to process the request within 14 days.</li>
-        </ul>
-      <% end %>
-
-      <%= component.slot(:section, title: 'Virgin Mobile') do %>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get 20GB of additional data per month until 31 July 2021.</li>
-          <li>The offer is only available to Pay Monthly customers. It’s not available to Pay-as-you-go customers.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-          <li>Virgin Mobile will aim to process the request within 14 days.</li>
-          <li>Wi-Fi hotspots are open to all existing customers, including those on Pay-as-you-go. Customers on Pay-as-you-go will need to have a minimum of £5 credit. Instructions to download the app and find their nearest hotspot can be found by going to <%= govuk_link_to 'www.virginmedia.com/wifiapp', 'https://www.virginmedia.com/shop/virgin-media-connect-app-mobile' %>.</li>
-        </ul>
-      <% end %>
-          
-      <%= component.slot(:section, title: 'Vodafone') do %>
-        <p class="govuk-body">Be aware that until the end of January, it may take Vodafone some time to process requests.</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>The recipient will get unlimited data until 31 July 2021.</li>
-          <li>The offer is available to both Pay monthly and active Pay as you go customers. Pay as you go customers must have a Big Value Bundle worth £10 or above to be eligible.</li>
-          <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
-        </ul>
-      <% end %>
-
-    <% end %>
-
+      <%- participating_mobile_networks.each do |mno| %>
+        <%= component.slot(:section, title: mno.brand) do %>
+          <%- begin %>
+            <%= render partial: mno_offer_details_partial(mno.pathsafe_brand) %>
+          <%- rescue ActionView::MissingTemplate => e %>
+            <%- logger.warn "Couldn't find view template for mobile_network #{mno.id} - #{mno.brand}" %>
+          <%- end %>
+        <% end %>
+      <%- end %>
+    <%- end %>
     <%= render partial: 'shared/guide_navigation' %>
   </div>
 </div>

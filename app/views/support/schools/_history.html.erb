@@ -1,8 +1,8 @@
 <% if object %>
   <% Array(object).each do |obj| %>
-    <h2 class="govuk-heading-m"><%= obj.created_at.to_s(:govuk_date_and_time) %></h2>
+    <h2 class="govuk-heading-m">Current state</h2>
     <div class="govuk-grid-row govuk-!-margin-top-4">
-      <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-column-full">
         <table class="govuk-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -28,7 +28,7 @@
   <% if object.respond_to?(:versions) && object.versions.any? %>
     <h2 class="govuk-heading-m">History</h2>
     <div class="govuk-grid-row govuk-!-margin-top-4">
-      <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-column-full">
         <table class="govuk-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -39,24 +39,28 @@
             </tr>
           </thead>
           <tbody class="govuk-table__body">
-            <% object.versions.each do |v| %>
-                  <% v.changeset.except(:updated_at, :created_at).each do |(field, changes)| %>
-                    <tr class="govuk-table__row">
-                      <td class="govuk-table__cell"><%= v.created_at.to_s(:govuk_date_and_time) %></td>
-                      <td class="govuk-table__cell"><%= field %></td>
-                      <% changes.each do |change| %>
-                        <td class="govuk-table__cell">
-                          <span class="govuk-tag govuk-tag--<%= cycle('grey', 'green') %>">
-                            <% if change.present? %>
-                              <%= change %>
-                            <% else %>
-                              Blank
-                            <% end %>
-                          </span>
-                        </td>
-                      <% end %>
-                    </tr>
+            <% (changesets = object.versions.map(&:changeset)).each do |original_changeset| %>
+              <% (changeset = original_changeset.except(:updated_at, :created_at)).each_with_index do |(field, changes), index| %>
+                <tr class="govuk-table__row">
+                  <% if index.zero? %>
+                    <td class="govuk-table__cell" rowspan="<%= changeset.size %>"><%= original_changeset[:updated_at][1].to_s(:govuk_date_and_time) %></td>
                   <% end %>
+
+                  <td class="govuk-table__cell"><%= field %></td>
+
+                  <% changes.each do |change| %>
+                    <td class="govuk-table__cell">
+                      <span class="govuk-tag govuk-tag--<%= cycle('grey', 'green') %>">
+                        <% if change.present? %>
+                          <%= change %>
+                        <% else %>
+                          Blank
+                        <% end %>
+                      </span>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>

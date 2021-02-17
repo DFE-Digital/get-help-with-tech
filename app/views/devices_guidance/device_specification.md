@@ -1,4 +1,4 @@
-When [placing an order](/start), schools, colleges, further education providers, academy trusts and local authorities (LAs) can choose (depending on availability) from:
+When [placing an order](/start), schools, colleges, further education institutions, academy trusts and local authorities (LAs) can choose (depending on availability) from:
 
 * Microsoft Windows laptops
 * Microsoft Windows tablets (with or without keyboards)
@@ -61,161 +61,171 @@ Read more information about <a class="govuk-link" href="/devices/preparing-ipads
 
 [Find the technical specifications for Apple iPads](#minimum-specifications) in the table below.
 
-## Minimum specifications
+</div>
 
-<table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"></th>
-      <th scope="col" class="govuk-table__header">Microsoft Windows laptop</th>
-      <th scope="col" class="govuk-table__header">Google Chromebook</th>
-      <th scope="col" class="govuk-table__header">Microsoft Windows tablet</th>
-      <th scope="col" class="govuk-table__header">Apple iPad</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Chassis type</th>
-      <td class="govuk-table__cell">Clamshell &ndash; Business grade</td>
-      <td class="govuk-table__cell">Clamshell &ndash; Education grade</td>
-      <td class="govuk-table__cell">Tablet</td>
-      <td class="govuk-table__cell">Tablet</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Minimum screen size</th>
-      <td class="govuk-table__cell">Minimum 11&rdquo; screen</td>
-      <td class="govuk-table__cell">Minimum 11&rdquo; screen</td>
-      <td class="govuk-table__cell">Minimum 11&rdquo; touch screen</td>
-      <td class="govuk-table__cell">10.2&rdquo; multi-touch screen</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Resolution</th>
-      <td class="govuk-table__cell">HD (or better)</td>
-      <td class="govuk-table__cell">HD</td>
-      <td class="govuk-table__cell">Minimum 1280 x 800</td>
-      <td class="govuk-table__cell">2160 x 1620</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Processor</th>
-      <td class="govuk-table__cell">Intel or AMD Integrated Graphics</td>
-      <td class="govuk-table__cell">Intel or AMD Integrated Graphics</td>
-      <td class="govuk-table__cell">Intel</td>
-      <td class="govuk-table__cell">Apple A10 Fusion – 64-bit</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Memory</th>
-      <td class="govuk-table__cell">Minimum 4GB</td>
-      <td class="govuk-table__cell">Minimum 4GB</td>
-      <td class="govuk-table__cell">Minimum 2GB</td>
-      <td class="govuk-table__cell">3GB</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Storage</th>
-      <td class="govuk-table__cell">Minimum 64GB</td>
-      <td class="govuk-table__cell">Minimum 16GB</td>
-      <td class="govuk-table__cell">Minimum 32GB</td>
-        <td class="govuk-table__cell">32GB</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Connectivity</th>
-      <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
-      <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
-      <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
-      <td class="govuk-table__cell">802.11a/b/g/n/ac</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Audio</th>
-      <td class="govuk-table__cell">Stereo speakers</td>
-      <td class="govuk-table__cell">Stereo speakers</td>
-      <td class="govuk-table__cell">Stereo speakers</td>
-      <td class="govuk-table__cell">Stereo speakers</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Ports</th>
-      <td class="govuk-table__cell">USB</td>
-      <td class="govuk-table__cell">USB</td>
-      <td class="govuk-table__cell">USB 3.0</td>
-      <td class="govuk-table__cell">Lightning and Smart Connector</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Input</th>
-      <td class="govuk-table__cell">Standard UK keyboard</td>
-      <td class="govuk-table__cell">Standard UK keyboard</td>
-      <td class="govuk-table__cell">N/A</td>
-      <td class="govuk-table__cell">N/A</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Video port</th>
-      <td class="govuk-table__cell">HDMI</td>
-      <td class="govuk-table__cell">Yes, through USB-C</td>
-      <td class="govuk-table__cell">Yes, through USB-C or mini HDMI depending on model</td>
-      <td class="govuk-table__cell"> </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Multimedia</th>
-      <td class="govuk-table__cell">Webcam</td>
-      <td class="govuk-table__cell">Webcam</td>
-      <td class="govuk-table__cell">Webcam</td>
-      <td class="govuk-table__cell">Rear and front cameras</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Audio ports</th>
-      <td class="govuk-table__cell">Headphone and microphone socket</td>
-      <td class="govuk-table__cell">Headphone and microphone socket</td>
-      <td class="govuk-table__cell">Headphone socket</td>
-      <td class="govuk-table__cell">Headphone socket</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Operating system</th>
-      <td class="govuk-table__cell">Windows 10 Pro Education</td>
-      <td class="govuk-table__cell">Chrome OS</td>
-      <td class="govuk-table__cell">Windows 10 Pro</td>
-      <td class="govuk-table__cell">iPad OS</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Bluetooth</th>
-      <td class="govuk-table__cell">Yes</td>
-      <td class="govuk-table__cell">Yes</td>
-      <td class="govuk-table__cell">Yes</td>
-      <td class="govuk-table__cell">Yes</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Encryption</th>
-      <td class="govuk-table__cell">Yes</td>
-      <td class="govuk-table__cell">Yes</td>
-      <td class="govuk-table__cell">Yes</td>
-      <td class="govuk-table__cell"> </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Security</th>
-      <td class="govuk-table__cell">TPM 2.0</td>
-      <td class="govuk-table__cell">Google Security Chip H1</td>
-      <td class="govuk-table__cell">TPM 2.0</td>
-      <td class="govuk-table__cell"> </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Weight</th>
-      <td class="govuk-table__cell">Maximum 1.8kg</td>
-      <td class="govuk-table__cell">Maximum 1.29kg</td>
-      <td class="govuk-table__cell">Maximum 750g</td>
-      <td class="govuk-table__cell">483g</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Battery life</th>
-      <td class="govuk-table__cell">7 hours</td>
-      <td class="govuk-table__cell">10 hours</td>
-      <td class="govuk-table__cell">9 hours</td>
-      <td class="govuk-table__cell">10 hours</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">PSU</th>
-      <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
-      <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
-      <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
-      <td class="govuk-table__cell">Charging via power adapter or USB to computer system</td>
-    </tr>
-  </tbody>
-</table>
+<div class="govuk-grid-column-full">
+
+  <h2 class="govuk-heading-l">
+    Minimum specification
+  </h2>
+
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-visually-hidden">Minimum specification</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-schools-table__column-20"></th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-20">Microsoft Windows laptop</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-20">Google Chromebook</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-20">Microsoft Windows tablet</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-20">Apple iPad</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Chassis type</th>
+        <td class="govuk-table__cell">Clamshell &ndash; Business grade</td>
+        <td class="govuk-table__cell">Clamshell &ndash; Education grade</td>
+        <td class="govuk-table__cell">Tablet</td>
+        <td class="govuk-table__cell">Tablet</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Minimum screen size</th>
+        <td class="govuk-table__cell">Minimum 11 inch screen</td>
+        <td class="govuk-table__cell">Minimum 11 inch screen</td>
+        <td class="govuk-table__cell">Minimum 11 inch touch screen</td>
+        <td class="govuk-table__cell">10.2 inch multi-touch screen</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Resolution</th>
+        <td class="govuk-table__cell">HD (or better)</td>
+        <td class="govuk-table__cell">HD</td>
+        <td class="govuk-table__cell">Minimum 1280 × 800</td>
+        <td class="govuk-table__cell">2160 × 1620</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Processor</th>
+        <td class="govuk-table__cell">Intel or AMD Integrated Graphics</td>
+        <td class="govuk-table__cell">Intel or AMD Integrated Graphics</td>
+        <td class="govuk-table__cell">Intel</td>
+        <td class="govuk-table__cell">Apple A10 Fusion – <span class="app-no-wrap">64-bit</span></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Memory</th>
+        <td class="govuk-table__cell">Minimum 4GB</td>
+        <td class="govuk-table__cell">Minimum 4GB</td>
+        <td class="govuk-table__cell">Minimum 2GB</td>
+        <td class="govuk-table__cell">3GB</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Storage</th>
+        <td class="govuk-table__cell">Minimum 64GB</td>
+        <td class="govuk-table__cell">Minimum 16GB</td>
+        <td class="govuk-table__cell">Minimum 32GB</td>
+          <td class="govuk-table__cell">32GB</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Connectivity</th>
+        <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
+        <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
+        <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
+        <td class="govuk-table__cell">802.11a/b/g/n/ac</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Audio</th>
+        <td class="govuk-table__cell">Stereo speakers</td>
+        <td class="govuk-table__cell">Stereo speakers</td>
+        <td class="govuk-table__cell">Stereo speakers</td>
+        <td class="govuk-table__cell">Stereo speakers</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Ports</th>
+        <td class="govuk-table__cell">USB</td>
+        <td class="govuk-table__cell">USB</td>
+        <td class="govuk-table__cell">USB 3.0</td>
+        <td class="govuk-table__cell">Lightning and Smart Connector</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Input</th>
+        <td class="govuk-table__cell">Standard UK keyboard</td>
+        <td class="govuk-table__cell">Standard UK keyboard</td>
+        <td class="govuk-table__cell">N/A</td>
+        <td class="govuk-table__cell">N/A</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Video port</th>
+        <td class="govuk-table__cell">HDMI</td>
+        <td class="govuk-table__cell">Yes, through USB-C</td>
+        <td class="govuk-table__cell">Yes, through USB-C or mini HDMI depending on model</td>
+        <td class="govuk-table__cell"> </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Multimedia</th>
+        <td class="govuk-table__cell">Webcam</td>
+        <td class="govuk-table__cell">Webcam</td>
+        <td class="govuk-table__cell">Webcam</td>
+        <td class="govuk-table__cell">Rear and front cameras</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Audio ports</th>
+        <td class="govuk-table__cell">Headphone and microphone socket</td>
+        <td class="govuk-table__cell">Headphone and microphone socket</td>
+        <td class="govuk-table__cell">Headphone socket</td>
+        <td class="govuk-table__cell">Headphone socket</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Operating system</th>
+        <td class="govuk-table__cell">Windows 10 Pro Education</td>
+        <td class="govuk-table__cell">Chrome OS</td>
+        <td class="govuk-table__cell">Windows 10 Pro</td>
+        <td class="govuk-table__cell">iPad OS</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Bluetooth</th>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">Yes</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Encryption</th>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell"> </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Security</th>
+        <td class="govuk-table__cell">TPM 2.0</td>
+        <td class="govuk-table__cell">Google Security Chip H1</td>
+        <td class="govuk-table__cell">TPM 2.0</td>
+        <td class="govuk-table__cell"> </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Weight</th>
+        <td class="govuk-table__cell">Maximum 1.8kg</td>
+        <td class="govuk-table__cell">Maximum 1.29kg</td>
+        <td class="govuk-table__cell">Maximum 750g</td>
+        <td class="govuk-table__cell">483g</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Battery life</th>
+        <td class="govuk-table__cell">7 hours</td>
+        <td class="govuk-table__cell">10 hours</td>
+        <td class="govuk-table__cell">9 hours</td>
+        <td class="govuk-table__cell">10 hours</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">PSU</th>
+        <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
+        <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
+        <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
+        <td class="govuk-table__cell">Charging via power adapter or USB to computer system</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="govuk-grid-column-two-thirds">
 
 ## 4G wireless routers
 

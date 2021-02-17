@@ -116,6 +116,7 @@ Rails.application.routes.draw do
       namespace :mobile, path: '/mobile' do
         get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
         get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
+        get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
         get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
         resources :manual_requests, only: %i[new create], path: '/manual'
         resources :bulk_requests, only: %i[new create], path: '/bulk'
@@ -159,6 +160,7 @@ Rails.application.routes.draw do
           namespace :mobile, path: '/mobile' do
             get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
             get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
+            get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
             get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
             resources :manual_requests, only: %i[new create], path: '/manual'
             resources :bulk_requests, only: %i[new create], path: '/bulk'
@@ -174,10 +176,15 @@ Rails.application.routes.draw do
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
+    namespace :gias do
+      get '/updates', to: 'home#index', as: :home
+      resources :schools_to_add, only: %i[index show update], param: :urn, path: '/schools-to-add'
+      resources :schools_to_close, only: %i[index show update], param: :urn, path: '/schools-to-close'
+    end
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
       resources :users, only: %i[new create], controller: 'users'
     end
-    resources :schools, only: %i[show], param: :urn do
+    resources :schools, only: %i[show edit update], param: :urn do
       resource :addresses, only: %i[edit update], path: 'address'
 
       collection do
@@ -227,6 +234,7 @@ Rails.application.routes.draw do
     get '/', to: 'home#show', as: :home
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
+    get '/donated-device-requests', to: 'donated_device_requests#index', as: :donated_device_requests
     resources :schools, only: %i[index edit update], path: '/school-changes', as: :school_changes, controller: 'school_changes'
     resources :responsible_bodies, only: %i[index edit update], path: '/responsible-body-changes', as: :responsible_body_changes, controller: 'responsible_body_changes'
     get '/techsource', to: 'techsource#new'

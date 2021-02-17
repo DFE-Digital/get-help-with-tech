@@ -1,0 +1,36 @@
+<%- title = t('page_titles.gias_schools_to_close') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    { t('page_titles.gias_updates') => support_gias_home_path },
+    title,
+  ]) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+  </div>
+</div>
+<table class="govuk-table" id="schools-to-close-table">
+  <thead class="govuk-table__head">
+    <tr>
+      <th class="govuk-table__header">URN</th>
+      <th class="govuk-table__header">Name</th>
+      <th class="govuk-table__header">RB Name</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @closed_schools.each do |school| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= govuk_link_to school.urn, support_gias_schools_to_close_path(school.urn) %></td>
+        <td class="govuk-table__cell"><%= school.name %></td>
+        <td class="govuk-table__cell"><%= school.responsible_body_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

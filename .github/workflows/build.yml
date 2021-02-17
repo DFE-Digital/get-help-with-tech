@@ -15,7 +15,6 @@ on:
 
 jobs:
   build_and_test:
-
     runs-on: ubuntu-latest
 
     # Service containers to run with `container-job`
@@ -46,6 +45,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup Gemfile.lock cache
         uses: actions/cache@v2
         with:
@@ -80,6 +80,15 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
+
+      # Workaround issue with parallel_tests requiring libffi6, with is not
+      # available on ubuntu-latest (20.04 only provides libffi7)
+      - name: pretend we have libffi6
+        run: |
+          cd /usr/lib/x86_64-linux-gnu/ &&
+          sudo ln -s ./libffi.so.7 ./libffi.so.6 &&
+          cd -
+
       - name: Install Node.js packages with yarn
         run: yarn --frozen-lockfile
 

@@ -118,7 +118,7 @@ You’ll then need to go into each section and configure the following policies:
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Pages to load on startup</th>
-      <td class="govuk-table__cell">Please configure a set of web pages that will be most useful to your users</td>
+      <td class="govuk-table__cell">Configure a set of web pages that will be most useful to your users</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">SafeSearch and Restricted mode</th>
@@ -153,13 +153,13 @@ A top-level set of web apps and Chrome extensions can be force installed for all
 
 ## Enrolling Chromebooks
 
-Before you enrol your devices, please ensure that you have the correct number of Chrome licenses available in your domain by going to ‘Devices’ > ‘Chrome devices’ and click the ‘Upgrades’ button in the top right. If you do not have enough licenses for the number of devices you need to enrol and manage, [please contact us](/get-support).
+Before you enrol your devices, ensure that you have the correct number of Chrome licenses available in your domain by going to ‘Devices’ > ‘Chrome devices’ and click the ‘Upgrades’ button in the top right. If you do not have enough licenses for the number of devices you need to enrol and manage, [contact us](/get-support).
 
 Follow these instructions to enrol your devices:
 
 1. Unbox multiple devices and turn on
 2. Connect to WiFi (open hotspot or ensure hostnames open on network)
-3. On login screen press ctrl + alt + e (or click ‘More options’ > ‘Enterprise Enrollment’)
+3. On login screen press ‘ctrl’ + ‘alt’ + ‘e’ (or click ‘More options’ > ‘Enterprise Enrollment’)
 4. Enter credentials on enrollment screen (use the role account you created earlier)
     1. Username: `XXXX@dfeschool.com`
     2. Password: `qqqqwwww`
@@ -172,11 +172,11 @@ The below content is taken from the [Cisco Umbrella Client Deployment Guide](htt
 
 ### Installation Guide
 
-There are three parts to this installation:
+There are 3 parts to this installation:
 
-* Installing the Cisco Umbrella Chromebook client extension on your Chromebooks
-* Installing the Cisco Umbrella Chromebook client application on your Chromebooks
-* \[Optional\] Installing Cisco Umbrella Root CA
+1. Installing the Cisco Umbrella Chromebook client extension on your Chromebooks
+2. Installing the Cisco Umbrella Chromebook client application on your Chromebooks
+3. (Optional) Installing Cisco Umbrella Root CA
 
 Details of the JSON configuration needed to install Cisco Umbrella Chromebook client application are available in the [Support Portal](https://computacenterprod.service-now.com/dfe). Search for 'Cisco Umbrella' within the 'How do I' section.
 
@@ -184,12 +184,12 @@ You can also find instructions for removing Umbrella Chromebook software in the 
 
 #### Prerequisites
 
-The Cisco Umbrella Chromebook client uses the ports below. Please make sure that:
+The Cisco Umbrella Chromebook client uses the ports below. Make sure that:
 
 * Port 53 (UDP) is accessible to [208.67.220.220](https://208.67.220.220) and [208.67.222.222](https://208.67.222.222) on your firewall
 * [https://registration.polaris.qq.opendns.com](https://registration.polaris.qq.opendns.com) is accessible from your device
 
-#### Part 1: Install the Cisco Umbrella Chromebook Client Extension
+<h4 class="govuk-heading-s" id="part-1-install-the-cisco-umbrella-chromebook-client-extension">Part 1: Install the Cisco Umbrella Chromebook Client Extension</h4>
 
 1. Log into [https://admin.google.com](https://admin.google.com).
 
@@ -233,7 +233,7 @@ The Cisco Umbrella Chromebook client uses the ports below. Please make sure that
 
 5. Select Save (top right). You have finished installing the Cisco Umbrella Chromebook client application.
 
-#### Part 3 \[Optional\] Installing Cisco Umbrella Root CA
+#### Part 3 (Optional) Installing Cisco Umbrella Root CA
 
 Cisco Umbrella highly recommends the following:
 
@@ -263,9 +263,9 @@ Follow these instructions to deploy the Cisco Umbrella Root CA to your Chrome de
 
 If you remove Cisco Umbrella, you are responsible for providing alternative safety software.
 
-To remove Cisco Umbrella from your Chrome devices, please follow the instructions below:
+To remove Cisco Umbrella from your Chrome devices, follow the instructions below:
 
-1. Follow steps 1 - 5 from [Part 1](#Part-1:-Install-the-Cisco-Umbrella-Chromebook-Client-Extension-of-this-guide)
+1. Follow steps 1 to 5 from [part 1 of this guide](#part-1-install-the-cisco-umbrella-chromebook-client-extension)
 2. Click on both the app and extension and click the bin icon in the right-hand sidebar.
 
     ![Screenshot showing Force Install](/devices/nouserlogins12.png)

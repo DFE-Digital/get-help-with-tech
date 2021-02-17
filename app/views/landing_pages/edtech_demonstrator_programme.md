@@ -34,7 +34,7 @@ It can also help those that would like support to develop their approach to remo
 
 ## How to apply for free training and support
 
-Please visit the EdTech Demonstrator website to [complete this form and register your interest](https://edtech-demonstrator.lgfl.net/register-your-interest). You’ll then be contacted to find out more about your needs. 
+Visit the EdTech Demonstrator website to [complete this form and register your interest](https://edtech-demonstrator.lgfl.net/register-your-interest). You’ll then be contacted to find out more about your needs. 
 
 ## The long-term benefits of the programme
 
@@ -45,6 +45,6 @@ Schools and colleges will receive facilitated support from demonstrators through
 You can [watch video testimonials](https://edtech-demonstrator.lgfl.net/about/how-it-works) from demonstrators and some of the schools and colleges they work with on the EdTech Demonstrator website.
 
 ## Contact us
-To apply for free training and support, please visit the EdTech Demonstrator website to [complete this form](https://edtech-demonstrator.lgfl.net/register-your-interest). 
+To apply for free training and support, visit the EdTech Demonstrator website to [complete this form](https://edtech-demonstrator.lgfl.net/register-your-interest). 
 
-If you have a question about the EdTech Demonstrator Programme please email EdTech.TEAM@education.gov.uk.
+If you have a question about the EdTech Demonstrator Programme email EdTech.TEAM@education.gov.uk.

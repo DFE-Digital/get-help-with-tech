@@ -22,21 +22,21 @@
 
     <% if policy(School).edit? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Find and manage schools, colleges and FE providers', support_schools_path %>
+        <%= govuk_link_to 'Find and manage schools, colleges and FE institutions', support_schools_path %>
       </h2>
 
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>search for schools, colleges and further education (FE) providers</li>
-        <li>enable orders for many schools, colleges and FE providers</li>
-        <li>adjust allocations for many schools, colleges and FE providers</li>
+        <li>search for schools, colleges and further education (FE) institutions</li>
+        <li>enable orders for many schools, colleges and FE institutions</li>
+        <li>adjust allocations for many schools, colleges and FE institutions</li>
       </ul>
     <% else %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to 'Find schools, colleges and FE providers', support_schools_path %>
+        <%= govuk_link_to 'Find schools, colleges and FE institutions', support_schools_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to search for schools, colleges and FE providers.</p>
+      <p class="govuk-body">Use this section to search for schools, colleges and FE institutions.</p>
     <% end %>
 
     <% if policy(Support::ServicePerformance).index? %>
@@ -65,6 +65,18 @@
       </h2>
 
       <p class="govuk-body">Use this section to see the status of feature flags for the service</p>
+    <% end %>
+
+    <% if policy(:gias).index? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'GIAS updates', support_gias_home_path %>
+      </h2>
+
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>add new schools</li>
+        <li>close schools</li>
+      </ul>
     <% end %>
   </div>
 </div>

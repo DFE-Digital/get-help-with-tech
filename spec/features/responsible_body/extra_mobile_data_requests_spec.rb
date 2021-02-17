@@ -99,5 +99,139 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
         expect(page).to have_content('3 of 3')
       end
     end
+
+    context 'when the user clicks on a requests account_holder_name' do
+      let(:mno_without_view_template) { MobileNetwork.find_or_create_by(brand: 'Some Unknown Mobile', participation_in_pilot: 'participating') }
+      let(:mno_with_view_template) { MobileNetwork.find_or_create_by(brand: 'BT Mobile', participation_in_pilot: 'participating') }
+      let(:status) { 'new' }
+      let!(:request) { create(:extra_mobile_data_request, status: status, created_by_user: rb_user, responsible_body: responsible_body, mobile_network: mno_with_view_template, device_phone_number: '07123 123456') }
+
+      before do
+        visit responsible_body_internet_mobile_extra_data_requests_path
+        click_on request.account_holder_name
+      end
+
+      it 'has a non-personally-identifying title' do
+        expect(page.title).to eq('BT Mobile request 07...3456 - Get help with technology - GOV.UK')
+      end
+
+      it 'shows the request details' do
+        expect(page).to have_css 'h1', text: request.account_holder_name
+        expect(page).to have_content 'Request details'
+      end
+
+      context 'when the request has a mobile network with an offer details partial template' do
+        it 'shows the offer details for the correct mobile network' do
+          expect(page).to have_content "#{request.mobile_network.brand} offer"
+        end
+      end
+
+      context 'when the request is for a mobile network which does not have an offer details partial template' do
+        let(:request) { create(:extra_mobile_data_request, status: 'new', created_by_user: rb_user, responsible_body: responsible_body, mobile_network: mno_without_view_template) }
+
+        it 'does not show offer details' do
+          expect(page).not_to have_content "#{request.mobile_network.brand} offer"
+        end
+      end
+
+      context 'when the request is complete' do
+        let(:status) { 'complete' }
+
+        it 'shows status complete' do
+          expect(page).to have_css('#request-status', text: 'Complete')
+        end
+      end
+
+      context 'when the request is problem_no_match_for_number' do
+        let(:status) { 'problem_no_match_for_number' }
+
+        it 'shows status unknown number' do
+          expect(page).to have_css('#request-status', text: 'Unknown number')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} did not recognise this number")
+          expect(page).to have_content('Check the following')
+          expect(page).to have_content('the number was typed correctly')
+          expect(page).to have_content('the correct mobile network was provided')
+          expect(page).to have_link('Make new request')
+        end
+      end
+
+      context 'when the request is problem_incorrect_phone_number' do
+        let(:status) { 'problem_incorrect_phone_number' }
+
+        it 'shows status invalid number' do
+          expect(page).to have_css('#request-status', text: 'Invalid number')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} did not recognise this number")
+          expect(page).to have_content('Check the following')
+          expect(page).to have_content('the number was typed correctly')
+          expect(page).to have_content('the correct mobile network was provided')
+          expect(page).to have_link('Make new request')
+        end
+      end
+
+      context 'when the request is problem_no_match_for_account_name' do
+        let(:status) { 'problem_no_match_for_account_name' }
+
+        it 'shows status unknown name' do
+          expect(page).to have_css('#request-status', text: 'Unknown name')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} did not recognise this name")
+          expect(page).to have_content('Check the following')
+          expect(page).to have_content('the correct account holder was given')
+          expect(page).to have_content('the name matches the name on the bill')
+          expect(page).to have_link('Make new request')
+        end
+      end
+
+      context 'when the request is problem_not_eligible' do
+        let(:status) { 'problem_not_eligible' }
+
+        it 'shows status not eligible' do
+          expect(page).to have_css('#request-status', text: 'Not eligible')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} told us this account is not eligible")
+          expect(page).to have_content("they are a new #{request.mobile_network.brand} customer")
+          expect(page).to have_content("they do not meet #{request.mobile_network.brand}’s criteria")
+          expect(page).to have_content('they already have fixed line broadband at home')
+          expect(page).to have_link('4G wireless router instead')
+        end
+      end
+
+      context 'when the request is problem_other' do
+        let(:status) { 'problem_other' }
+
+        it 'shows status other problem' do
+          expect(page).to have_css('#request-status', text: 'Other problem')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} couldn’t process this request")
+          expect(page).to have_content('They did not give a reason why')
+          expect(page).to have_link('4G wireless router instead')
+        end
+      end
+
+      context 'when the request is unavailable' do
+        let(:status) { 'unavailable' }
+
+        it 'shows status other problem' do
+          expect(page).to have_css('#request-status', text: 'Unavailable')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} is not offering data increases yet")
+          expect(page).to have_content('We cannot request an increase in data from a network that’s not participating in the offer.')
+        end
+      end
+    end
   end
 end

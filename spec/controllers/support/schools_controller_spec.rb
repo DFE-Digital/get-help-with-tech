@@ -147,4 +147,54 @@ RSpec.describe Support::SchoolsController, type: :controller do
       end
     end
   end
+
+  describe '#edit' do
+    before do
+      sign_in_as user
+    end
+
+    context 'when third_line' do
+      let(:user) { create(:support_user, :third_line) }
+
+      it 'is accessible' do
+        get :edit, params: { urn: school.urn }
+        expect(response).to be_successful
+      end
+    end
+
+    context 'when not third_line' do
+      let(:user) { create(:support_user) }
+
+      it 'is not accessible' do
+        get :edit, params: { urn: school.urn }
+        expect(response).not_to be_successful
+      end
+    end
+  end
+
+  describe '#update' do
+    before do
+      sign_in_as user
+    end
+
+    context 'when third_line' do
+      let(:user) { create(:support_user, :third_line) }
+
+      it 'update school name and redirects to school' do
+        patch :update, params: { urn: school.urn, school: { name: 'new name' } }
+        expect(school.reload.name).to eql('new name')
+        expect(response).to redirect_to(support_school_path(school))
+      end
+    end
+
+    context 'when not third_line' do
+      let(:user) { create(:support_user) }
+
+      it 'does not update school name' do
+        patch :update, params: { urn: school.urn, school: { name: 'new name' } }
+        expect(school.reload.name).not_to eql('new name')
+        expect(response).not_to be_successful
+      end
+    end
+  end
 end

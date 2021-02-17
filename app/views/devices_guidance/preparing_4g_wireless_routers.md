@@ -4,7 +4,7 @@ We recommend that trusts, local authorities and schools provide a printed copy o
 
 ### For local authorities and trusts
 
-You can check the status of each router and if needed, raise an issue via the [Support Portal](https://computacenterprod.service-now.com/). Login details will have been provided when you placed your order, but if you’re unable to access the Support Portal, [please contact us](/get-support).
+You can check the status of each router and if needed, raise an issue via the [Support Portal](https://computacenterprod.service-now.com/). Login details will have been provided when you placed your order, but if you’re unable to access the Support Portal, [contact us](/get-support).
 
 ### For schools and colleges
 

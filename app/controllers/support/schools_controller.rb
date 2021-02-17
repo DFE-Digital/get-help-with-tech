@@ -34,6 +34,7 @@ class Support::SchoolsController < Support::BaseController
     @school = School.where_urn_or_ukprn(params[:urn]).first!
     @users = policy_scope(@school.users).not_deleted
     @email_audits = @school.email_audits.order(created_at: :desc)
+    @timeline = Timeline::School.new(school: @school)
   end
 
   def confirm_invitation
@@ -59,6 +60,25 @@ class Support::SchoolsController < Support::BaseController
   def history
     @school = School.where_urn_or_ukprn(params[:school_urn]).first!
     @history_object = object_for_view_mode
+  end
+
+  def edit
+    authorize School, :update_name?
+
+    @school = School.where_urn_or_ukprn(params[:urn]).first!
+  end
+
+  def update
+    authorize School, :update_name?
+
+    @school = School.where_urn_or_ukprn(params[:urn]).first!
+
+    if @school.update(school_params)
+      flash[:success] = 'School has been updated'
+      redirect_to support_school_path(@school)
+    else
+      render :edit
+    end
   end
 
 private
@@ -104,5 +124,9 @@ private
       :name_or_identifier,
       :identifier,
     )
+  end
+
+  def school_params
+    params.require(:school).permit(:name)
   end
 end

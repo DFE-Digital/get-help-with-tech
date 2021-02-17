@@ -40,14 +40,15 @@
         %>
       <% end %>
 
-      <% component.slot(
-         :row,
-         key: "How can we contact you?",
-         value: "#{ @support_ticket.full_name}<br>#{ @support_ticket.email_address}<br>#{ @support_ticket.telephone_number}".html_safe ,
-         action: govuk_link_to("Change", support_ticket_contact_details_path),
-         classes: "Name".to_s.downcase.gsub(/ /, "-"),
-       ) %>
-
+      <% if current_user.id.nil? %>
+        <% component.slot(
+           :row,
+           key: "How can we contact you?",
+           value: "#{ @support_ticket.full_name}<br>#{ @support_ticket.email_address}<br>#{ @support_ticket.telephone_number}".html_safe ,
+           action: govuk_link_to("Change", support_ticket_contact_details_path),
+           classes: "Name".to_s.downcase.gsub(/ /, "-"),
+         ) %>
+      <% end %>
       <% component.slot(
          :row,
          key: "What do you need help with?",

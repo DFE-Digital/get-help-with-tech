@@ -1,0 +1,24 @@
+<% content_for :title, "Close #{@school.name} - Support" %>
+<%- content_for :before_content do %>
+  <%= breadcrumbs([
+    { 'Support home' => support_home_path },
+    { t('page_titles.gias_updates') => support_gias_home_path },
+    { t('page_titles.gias_schools_to_close') => support_gias_schools_to_close_index_path },
+    @school.name,
+  ]) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.responsible_body_name %></span>
+      <%= @school.name %>
+    </h1>
+
+    <%= form_for @school, url: support_gias_schools_to_close_path(urn: @school.urn) do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= render Support::Gias::SchoolDetailsComponent.new(school: @school) %>
+      <%= f.govuk_submit 'Close school' %>
+    <%- end %>
+  </div>
+</div>

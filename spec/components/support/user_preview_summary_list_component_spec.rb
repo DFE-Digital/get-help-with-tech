@@ -4,7 +4,7 @@ describe Support::UserPreviewSummaryListComponent do
   subject(:result) { render_inline(described_class.new(user: user)) }
 
   let(:user) do
-    build(:school_user, telephone: '12345')
+    build(:school_user, :has_seen_privacy_notice, telephone: '12345')
   end
 
   it 'displays the email address' do
@@ -15,13 +15,27 @@ describe Support::UserPreviewSummaryListComponent do
     expect(result.css('.govuk-summary-list__row')[1].text).to include('12345')
   end
 
+  it 'displays when privacy notice was seen' do
+    expect(result.css('.govuk-summary-list__row')[2].text).to include(user.privacy_notice_seen_at.strftime('%d'))
+  end
+
+  context 'when privacy notice has not been seen' do
+    let(:user) do
+      build(:school_user, :has_not_seen_privacy_notice, telephone: '12345')
+    end
+
+    it 'displays privacy notice as not seen' do
+      expect(result.css('.govuk-summary-list__row')[2].text).to include('No')
+    end
+  end
+
   context 'for a user who cannot order devices' do
     let(:user) do
       build(:school_user, telephone: '12345', orders_devices: false)
     end
 
     it 'displays the user as unable to order devices' do
-      expect(result.css('.govuk-summary-list__row')[4].text).to include('No')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('No')
     end
   end
 
@@ -31,7 +45,7 @@ describe Support::UserPreviewSummaryListComponent do
     end
 
     it 'displays the user as able to order devices once they sign in' do
-      expect(result.css('.govuk-summary-list__row')[4].text).to include('No, will get a TechSource account once they sign in')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('No, will get a TechSource account once they sign in')
     end
   end
 
@@ -45,7 +59,7 @@ describe Support::UserPreviewSummaryListComponent do
     end
 
     it "displays the user as able to order devices once it's confirmed that they have a TechSource account" do
-      expect(result.css('.govuk-summary-list__row')[4].text).to include('No, waiting for TechSource account')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('No, waiting for TechSource account')
     end
   end
 
@@ -59,7 +73,11 @@ describe Support::UserPreviewSummaryListComponent do
     end
 
     it 'displays the user as able to order devices' do
-      expect(result.css('.govuk-summary-list__row')[4].text).to include('Yes')
+      expect(result.css('.govuk-summary-list__row')[5].text).to include('Yes')
+    end
+
+    it 'displays the when the TechSource account was confirmed' do
+      expect(result.css('.govuk-summary-list__row')[5].text).to include(user.techsource_account_confirmed_at.strftime('%d'))
     end
   end
 end

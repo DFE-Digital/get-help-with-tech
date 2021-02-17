@@ -106,7 +106,7 @@ Your local authority, trust or school is responsible for keeping this informatio
 
 To log in to the [Support Portal](https://computacenterprod.service-now.com/dfe) for the first time, enter your email address and click ‘forgotten password’. If you’re authorised to access the support portal, you’ll receive an email with instructions on how to set up a password.
 
-If you do not have access to the portal but think you should, [please contact us](/get-support) and include the name of the school, local authority or trust that ordered the devices.
+If you do not have access to the portal but think you should, [contact us](/get-support) and include the name of the school, local authority or trust that ordered the devices.
 
 ### How to get local admin and BIOS passwords
 
@@ -281,7 +281,7 @@ We’ve illustrated these steps in our [user guidance](/devices/getting-started-
 
 Microsoft have identified a bug which causes laptops and tablets running the Windows 10 Pro Education 1909 operating system to appear as ‘non-activated’ when updating to version 2004. To avoid problems with devices supplied by DfE, Microsoft have applied a block to prevent this update taking place until the bug is resolved.
 
-A fix is expected to be released in early 2021 which will be automatically available to devices. For further information on this issue or if you have devices showing as unactivated, please see [Microsoft’s support page](https://support.microsoft.com/en-gb/help/4592045/windows-10-pro-education-device-fails-activation).
+A fix is expected to be released in early 2021 which will be automatically available to devices. For further information on this issue or if you have devices showing as unactivated, see [Microsoft’s support page](https://support.microsoft.com/en-gb/help/4592045/windows-10-pro-education-device-fails-activation).
 
 ## User guidance for young people and their carers
 
@@ -289,6 +289,6 @@ You can share this [user guide](/devices/getting-started-with-your-microsoft-win
 
 You may want to add contact information to this guidance for the person or team offering IT support to device users.
 
-If users find that the login is defaulting to the “.\localadmin” account and asking for a password, please [see the advice](#How-to-help-anyone-experiencing-problems-logging-in-to-Windows-devices) above.
+If users find that the login is defaulting to the “.\localadmin” account and asking for a password, [see the advice](#How-to-help-anyone-experiencing-problems-logging-in-to-Windows-devices) above.
 
 * [Microsoft devices: User guidance](/devices/getting-started-with-your-microsoft-windows-device)

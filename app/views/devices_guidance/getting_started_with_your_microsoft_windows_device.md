@@ -4,8 +4,8 @@ The guidance below applies to devices supplied with software and settings manage
 
 ### How to turn it on
 
-1.   Plug in your device to the mains, using the power supply and charger in the box.
-2.   Press the ‘On’ button.
+1.   Plug in your device to the mains, using the power supply and charger in the box
+2.   Press the ‘On’ button
 
 #### Log in
 
@@ -24,7 +24,7 @@ If you see a screen that says “.\\localadmin” and tells you that the usernam
 *   Press return
 *   You should see a screen that says “localuser”, and your desktop screen will automatically open
 
-If you have set a password that you’ve forgotten, you’ll need to ask your technical contact to reset it for you. If you’re not sure who that is, please ask the person or school that gave you the laptop or tablet.
+If you have set a password that you’ve forgotten, you’ll need to ask your technical contact to reset it for you. If you’re not sure who that is, ask the person or school that gave you the laptop or tablet.
 
 ![Screenshot of the login screen](/devices/getting-started-with-your-microsoft-windows-device3.png)
 
@@ -56,7 +56,7 @@ All Microsoft Windows devices registered to the DfE have safeguarding settings a
 
 This means you will not be able to use the laptop or tablet to access any inappropriate content.
 
-If you’re blocked from viewing something you think you need for your education, work or wellbeing, please get in touch with your school or local authority contact to let them know.
+If you’re blocked from viewing something you think you need for your education, work or wellbeing, get in touch with your school or local authority contact to let them know.
 
 
 If you’re worried that your child is accessing harmful content on any device, you can [find support and advice at GOV.UK](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19).

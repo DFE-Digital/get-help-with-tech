@@ -105,6 +105,10 @@ FactoryBot.define do
       email_address do
         full_name.downcase.gsub(' ', '.') + ['@digital.education.gov.uk', '@education.gov.uk'].sample
       end
+
+      trait :third_line do
+        role { 'third_line' }
+      end
     end
 
     factory :computacenter_user do

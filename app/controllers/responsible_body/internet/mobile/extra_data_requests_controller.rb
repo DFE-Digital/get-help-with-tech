@@ -26,6 +26,10 @@ class ResponsibleBody::Internet::Mobile::ExtraDataRequestsController < Responsib
     end
   end
 
+  def show
+    @request = @responsible_body.extra_mobile_data_requests.find(params[:id])
+  end
+
 private
 
   def submission_type_params

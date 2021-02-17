@@ -6,6 +6,7 @@ class ZendeskService
     user_type: '360011798678',
     support_topics: '360011519218',
     telephone_number: '360011762698',
+    user_profile_path: '360013507477',
   }.freeze
 
   class << self
@@ -31,6 +32,7 @@ class ZendeskService
         { id: CUSTOM_FIELD_IDS[:user_type], value: ticket['user_type'] },
         { id: CUSTOM_FIELD_IDS[:support_topics], value: ticket['support_topics'] },
         { id: CUSTOM_FIELD_IDS[:telephone_number], value: ticket['telephone_number'] },
+        { id: CUSTOM_FIELD_IDS[:user_profile_path], value: ticket['user_profile_path'] },
       ],
     )
   end

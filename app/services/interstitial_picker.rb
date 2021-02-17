@@ -6,17 +6,7 @@ class InterstitialPicker
   end
 
   def call
-    @call ||= if user.associated_schools.where(increased_sixth_form_feature_flag: true).any?(&:can_order_devices_right_now?)
-                OpenStruct.new(
-                  title: 'You can now order laptops and tablets for students in years 12 and 13',
-                  partial: 'interstitials/increased_sixth_form_allocation',
-                )
-              elsif user.associated_schools.where(increased_fe_feature_flag: true).any?(&:can_order_devices_right_now?)
-                OpenStruct.new(
-                  title: 'You can now order laptops and tablets for learners in further education',
-                  partial: 'interstitials/increased_fe_allocation',
-                )
-              elsif user.is_school_user?
+    @call ||= if user.is_school_user?
                 OpenStruct.new(
                   title: title_for_default,
                   partial: 'interstitials/school_user',

@@ -1,4 +1,6 @@
 class ExtraMobileDataRequest < ApplicationRecord
+  has_paper_trail
+
   after_initialize :set_defaults
   before_save :normalise_device_phone_number
 

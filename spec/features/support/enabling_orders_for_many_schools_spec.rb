@@ -41,7 +41,7 @@ RSpec.feature 'Allowing multiple schools to order their full allocation' do
   end
 
   def then_i_see_the_full_allocations_page
-    expect(page).to have_selector('h1', text: 'Allow schools, colleges and FE providers to order their full allocation')
+    expect(page).to have_selector('h1', text: 'Allow schools, colleges and FE institutions to order their full allocation')
   end
 
   def when_i_navigate_to_the_full_allocations_page

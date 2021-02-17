@@ -1,7 +1,5 @@
 <h3 class="govuk-heading-s">Using TechSource for the first time</h3>
 
-<p class="govuk-body">You need to place orders on a website called TechSource.</p>
-
 <p class="govuk-body">Use these details to sign in:</p>
 <ul class="govuk-list govuk-list--bullet<% unless local_assigns[:school_urn] %> govuk-!-margin-bottom-7<% end %>">
   <li>User ID: <%= local_assigns[:email_address] %></li>
@@ -12,16 +10,6 @@
 <p class="govuk-body govuk-!-margin-bottom-7">
   When you place an order you’ll need the unique reference number (URN) for <%= @school.name %>. It is: <%= local_assigns[:school_urn] %>
 </p>
-<% end %>
-
-<% if FeatureFlag.active?(:ipad_stock_message) %>
-  <div class="govuk-warning-text govuk-!-margin-top-7 govuk-!-margin-bottom-4">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive">Warning</span>
-      We have no iPads in stock. Stock will be available in February, but please choose other devices if you need them now.<br />
-    </strong>
-  </div>
 <% end %>
 
 <%= govuk_start_button_link_to('Start now', techsource_start_path, class: 'govuk-!-margin-bottom-3', target: '_blank') -%>

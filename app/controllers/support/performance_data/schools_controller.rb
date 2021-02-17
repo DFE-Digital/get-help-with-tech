@@ -30,7 +30,8 @@ private
               coms_device_allocation.allocation AS coms_allocation,
               coms_device_allocation.cap AS coms_cap,
               coms_device_allocation.devices_ordered AS coms_devices_ordered,
-              preorder_information.status AS preorder_info_status
+              preorder_information.status AS preorder_info_status,
+              COALESCE( preorder_information.who_will_order_devices, responsible_bodies.who_will_order_devices ) AS who_will_order_devices
 
       FROM    schools   INNER JOIN responsible_bodies
                                 ON responsible_bodies.id = schools.responsible_body_id

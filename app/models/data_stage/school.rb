@@ -1,5 +1,6 @@
 class DataStage::School < ApplicationRecord
   self.table_name = 'staged_schools'
+  include SchoolType
 
   has_many :school_links, dependent: :destroy, class_name: 'DataStage::SchoolLink',
                           foreign_key: :staged_school_id
@@ -19,29 +20,25 @@ class DataStage::School < ApplicationRecord
     closed: 'closed',
   }, _prefix: 'gias_status'
 
-  enum phase: {
-    primary: 'primary',
-    secondary: 'secondary',
-    all_through: 'all_through',
-    sixteen_plus: 'sixteen_plus',
-    nursery: 'nursery',
-    phase_not_applicable: 'phase_not_applicable',
-  }
-
-  enum establishment_type: {
-    academy: 'academy',
-    free: 'free',
-    local_authority: 'local_authority',
-    special: 'special',
-    other_type: 'other_type',
-  }, _suffix: true
-
   def responsible_body
     DataStage::ResponsibleBody.find_by_name(responsible_body_name)
   end
 
   def predecessors
     School.where(urn: school_links.any_predecessor.map(&:link_urn))
+  end
+
+  def predecessor
+    link = school_links.any_predecessor.order(created_at: :asc).last
+    School.find_by(urn: link.link_urn) unless link.nil?
+  end
+
+  def address_components
+    [address_1, address_2, address_3, town, county, postcode].reject(&:blank?)
+  end
+
+  def address
+    address_components.join(', ')
   end
 
   def staged_attributes

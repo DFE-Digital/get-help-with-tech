@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_111622) do
+ActiveRecord::Schema.define(version: 2021_02_17_114408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,17 @@ ActiveRecord::Schema.define(version: 2021_02_02_111622) do
     t.index ["name"], name: "index_data_update_records_on_name", unique: true
   end
 
+  create_table "donated_device_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "school_id", null: false
+    t.text "device_types", default: [], array: true
+    t.integer "units"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_donated_device_requests_on_school_id", unique: true
+    t.index ["user_id"], name: "index_donated_device_requests_on_user_id"
+  end
+
   create_table "email_audits", force: :cascade do |t|
     t.string "message_type", null: false
     t.string "template", null: false
@@ -201,8 +212,8 @@ ActiveRecord::Schema.define(version: 2021_02_02_111622) do
     t.string "county"
     t.string "postcode"
     t.string "status", default: "open", null: false
-    t.boolean "vcap_feature_flag", default: false
     t.string "computacenter_change", default: "none", null: false
+    t.boolean "vcap_feature_flag", default: false
     t.boolean "new_fe_wave", default: false
     t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
@@ -295,6 +306,7 @@ ActiveRecord::Schema.define(version: 2021_02_02_111622) do
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
     t.text "fe_type"
+    t.boolean "group_a_feature_flag", default: false, null: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
@@ -388,6 +400,7 @@ ActiveRecord::Schema.define(version: 2021_02_02_111622) do
     t.boolean "orders_devices"
     t.datetime "techsource_account_confirmed_at"
     t.datetime "deleted_at"
+    t.boolean "rb_level_access", default: false, null: false
     t.text "role", default: "no", null: false
     t.index "lower((email_address)::text)", name: "index_users_on_lower_email_address_unique", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"

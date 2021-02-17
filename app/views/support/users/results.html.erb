@@ -34,15 +34,44 @@
   </div>
 </div>
 
+<% if @results.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <ul class="govuk-list search-results">
+        <% @results.each do |user| %>
+          <li>
+            <%= render Support::UserSearchResultComponent.new(user: user, current_user: current_user) %>
+          </li>
+        <%- end %>
+      </ul>
+    </div>
+  </div>
+<%- end %>
+
+<% if @related_results.present? %>
+  <div class="govuk-grid-row govuk-!-margin-top-9">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">
+        Related users
+      </h2>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <ul class="govuk-list search-results">
+        <% @related_results.each do |user| %>
+          <li>
+            <%= render Support::UserSearchResultComponent.new(user: user, current_user: current_user) %>
+          </li>
+        <%- end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <ul class="govuk-list search-results">
-      <% @results.each do |user| %>
-        <li>
-          <%= render Support::UserSearchResultComponent.new(user: user, current_user: current_user) %>
-        </li>
-      <%- end %>
-    </ul>
     <p class="govuk-body">
       <%= govuk_link_to 'Search again', search_support_users_path %>
     </p>

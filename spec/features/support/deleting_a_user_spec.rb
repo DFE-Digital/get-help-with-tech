@@ -36,6 +36,6 @@ RSpec.feature 'Deleting users' do
     fill_in 'Email address', with: existing_user.email_address
     click_on 'Continue'
 
-    expect(page).to have_text('We didn’t recognise that email address')
+    expect(page).to have_text('We did not recognise that email address')
   end
 end

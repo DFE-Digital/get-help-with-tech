@@ -37,7 +37,7 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
       # remove any error message on mobile_network to stop it rendering a poorly-worded
       # default message in the error_summary that doesn't link to the right field
       # - it's ok, we have a better message in the validation on mobile_network_id
-      @extra_mobile_data_request.errors.messages.delete(:mobile_network)
+      @extra_mobile_data_request.errors.delete(:mobile_network)
       @extra_mobile_data_request = presenter(@extra_mobile_data_request)
       get_participating_mobile_networks
       render :new, status: :unprocessable_entity

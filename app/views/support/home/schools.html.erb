@@ -16,20 +16,20 @@
       <%= govuk_link_to 'Find organisations', search_support_schools_path %>
     </h2>
 
-    <p class="govuk-body">Use this section to find one or more school, college or FE provider by URN or UKPRN.</p>
+    <p class="govuk-body">Use this section to find one or more school, college or FE institution by URN or UKPRN.</p>
 
     <% if policy(School).edit? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to 'Enable orders for many organisations', devices_enable_orders_for_many_schools_support_schools_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to allow schools, colleges and FE providers to order their full allocation</p>
+      <p class="govuk-body">Use this section to allow schools, colleges and FE institutions to order their full allocation</p>
 
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to 'Adjust allocations for many organisations', devices_adjust_allocations_for_many_schools_support_schools_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to allow schools, colleges and FE providers to order their full allocation</p>
+      <p class="govuk-body">Use this section to allow schools, colleges and FE institutions to order their full allocation</p>
 
     <% end %>
   </div>

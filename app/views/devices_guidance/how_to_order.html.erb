@@ -9,12 +9,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">
+    <h1 class="govuk-heading-xl">
       <%= t('page_titles.devices_guidance_how_to_order') %>
     </h1>
 
-    <p class="govuk-body">
-      This guidance explains how to <a class="govuk-link" href="/start">order laptops and tablets</a> through the Get help with technology <service class=""></service>
+    <p class="govuk-body-l">
+      This guidance explains how to <a class="govuk-link" href="/start">order laptops and tablets</a> through the Get help with technology.
     </p>
 
     <p class="govuk-body">
@@ -50,7 +50,7 @@
             </ul>
 
             <p class="app-step-nav__paragraph">
-              Further education providers can place their own orders.
+              Further education institutions can place their own orders.
             </p>
 
             <p class="app-step-nav__paragraph">
@@ -112,7 +112,7 @@
                   Not having DfE settings installed
                 </h4>
                 <p class="app-step-nav__paragraph">
-                  These ‘DfE Standard’ devices are provided with factory settings. Schools, colleges, further education providers, trusts or LAs should configure them at their own cost before lending them to students. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
+                  These ‘DfE Standard’ devices are provided with factory settings. Schools, colleges, further education institutions, trusts or LAs should configure them at their own cost before lending them to students. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
                 </p>
               </li>
               <li>
@@ -137,8 +137,8 @@
              You need to sign in to the <a class="govuk-link" href="/start">Get help with technology service</a> and provide the following information before you can order Google Chromebooks:
             </p>
             <ul class="govuk-list govuk-list--bullet">
-              <li>the school, college or further education provider’s Google domain for G Suite for Education</li>
-              <li>a recovery email address, which must be on a different domain to the school, college or further education provider’s domain</li>
+              <li>the school, college or further education institution’s Google domain for G Suite for Education</li>
+              <li>a recovery email address, which must be on a different domain to the school, college or further education institution’s domain</li>
             </ul>
 
             <p class="app-step-nav__paragraph">
@@ -202,11 +202,7 @@
 
           <div class="app-step-nav__panel" id="step-panel-prepare-to-place-an-order-3">
             <p class="app-step-nav__paragraph">
-              All primary and secondary schools in England have been invited to order through the <a class="govuk-link" href="/start">Get help with technology service</a>.
-            </p>
-
-            <p class="app-step-nav__paragraph">
-              The majority of further education providers will have been invited to order by the end of January 2021.
+              All schools, colleges and eligible further education institutions in England have been invited to order through the <a class="govuk-link" href="/start">Get help with technology service</a>.
             </p>
 
             <h3 class="govuk-heading-s">
@@ -263,11 +259,15 @@
             </p>
 
             <p class="app-step-nav__paragraph">
-              All devices will be <a class="govuk-link" href="/devices/device-distribution-and-ownership">owned by the schools, colleges, further education providers or or academy trusts</a> that receive them. It is their responsibility to lend the devices to those who need them.
+              All devices will be owned by the schools, colleges, further education institutions or or academy trusts that receive them. It is their responsibility to lend the devices to those who need them.
             </p>
 
             <p class="app-step-nav__paragraph">
-              After receiving devices and preparing them for use by pupils and students, schools, colleges and further education providers can:
+              <%= govuk_link_to "Read more about who owns devices and how to distribute them" , devices_distributing_devices_path %>
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              After receiving devices and preparing them for use by pupils and students, schools, colleges and further education institutions can:
             </p>
 
             <ul class="govuk-list govuk-list--bullet">

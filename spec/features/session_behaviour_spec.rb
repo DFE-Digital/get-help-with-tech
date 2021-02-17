@@ -61,7 +61,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
 
-        Timecop.travel(Time.zone.now + Settings.session_ttl_seconds + 1) do
+        Timecop.travel(Time.zone.now + SessionService::DEFAULT_USER_TTL + 1) do
           click_on 'Back'
           expect(page).to have_text('Sign in')
         end
@@ -124,7 +124,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       fill_in 'Email address', with: 'unrecognised@example.com'
       click_on 'Continue'
 
-      expect(page).to have_text('We didn’t recognise that email address')
+      expect(page).to have_text('We did not recognise that email address')
     end
 
     scenario 'Entering an invalid email sends the user back to the sign-in page' do

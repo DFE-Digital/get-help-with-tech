@@ -8,6 +8,7 @@ RSpec.describe 'support/schools/show.html.erb' do
     enable_pundit(view, support_user)
     assign(:school, school)
     assign(:current_user, support_user)
+    assign(:timeline, Timeline::School.new(school: school))
   end
 
   describe 'banners' do
