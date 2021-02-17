@@ -16,7 +16,7 @@ Our guidance explains your options for [getting internet access](https://get-hel
 
 * [increasing mobile data allowances](/about-increasing-mobile-data) for disadvantaged pupils in years 3 to 11 (not currently available to students in 16 to 19 further education)
 
-* [4G wireless routers](/how-to-request-4g-wireless-routers) for disadvantaged pupils in years 3 to 13, and disadvantaged and students in 16 to 19 further education 
+* [4G wireless routers](/how-to-request-4g-wireless-routers) for disadvantaged pupils in years 3 to 11, and disadvantaged and students in 16 to 19 further education 
 
 ## How to request more devices
 
