@@ -15,11 +15,13 @@ They may also be eligible to get internet access for disadvantaged children thro
 
 Laptops and tablets will be available for further education providers to order in the 2021 spring term. We’ll contact these providers with more information during the term.
 
-Devices are [currently available](https://get-help-with-tech.education.gov.uk/devices/how-to-order) for disadvantaged children and young people:
+Devices are [currently available](https://get-help-with-tech.education.gov.uk/devices/how-to-order) for disadvantaged pupils and students:
 
-* in years 3 to 13 who do not have access to a device and whose face-to-face education is disrupted 
-* in years 1 to 13 who have been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
-* in years 1 to 13, and those in 16 to 19 education, attending a hospital school
+* in years 3 to 13 who do not have access to a device and whose face-to-face education is disrupted
+* aged 16 to 19 who receive free meals in further education
+* over the age of 19 with an education, health and care plan (EHCP) who also receive free meals 
+* in any year group who have been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
+* in any year group, including those in 16 to 19 education, attending a hospital school
 
 Find out [how we’ve calculated how many devices you can order](/devices/allocation-and-specification).
 
