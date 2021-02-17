@@ -65,6 +65,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       requests.each do |request|
         request_row = my_requests_page.row_for(request)
         expect(request_row).not_to be_nil
+        expect(request_row).to have_content(request.id)
         expect(request_row).to have_content(request.device_phone_number)
         expect(request_row).to have_content(request.account_holder_name)
         expect(request_row).to have_content(request.created_at.to_date.to_s(:long_ordinal))
@@ -128,6 +129,11 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       it 'shows the request details' do
         expect(page).to have_css 'h1', text: request.account_holder_name
         expect(page).to have_content 'Request details'
+      end
+
+      it 'shows the request ID' do
+        expect(page).to have_css 'h1', text: request.account_holder_name
+        expect(page).to have_content 'Request ID'
       end
 
       context 'when the request has a mobile network with an offer details partial template' do
