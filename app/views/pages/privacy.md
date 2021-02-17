@@ -10,10 +10,6 @@ Find out how the DfE may use, access and share the personal information of those
 
 Find out how the DfE may use the personal information of children, young people and families using Microsoft Intune mobile device management on Microsoft Windows laptops and tablets.
 
-### [Privacy notice for wifi hotspot scheme](/bt-wifi/privacy-notice)
-
-Find out how the DfE may use the personal information of children, young people and families using the BT wifi hotspot scheme.
-
 ### [Privacy notice for increasing mobile data scheme](/increasing-mobile-data/privacy-notice)
 
 Find out how the DfE may use the personal information of account holders of mobile devices accessing the Increasing mobile data scheme.
