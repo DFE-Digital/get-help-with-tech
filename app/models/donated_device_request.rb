@@ -17,7 +17,7 @@ class DonatedDeviceRequest < ApplicationRecord
   # belongs_to :school
 
   validates :units, presence: { message: 'Tell us how many devices you want' }, if: -> { units_step? || complete? }
-  validates :device_types, presence: { message: 'Tell us which devices you want' }
+  validates :device_types, presence: { message: 'Tell us which devices you will accept' }
   validates :schools, presence: true
   validate :validate_applicable_device_types
 

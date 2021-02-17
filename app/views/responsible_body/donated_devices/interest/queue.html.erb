@@ -1,11 +1,6 @@
 <%- title = t('page_titles.donated_devices.responsible_body.interest.queue.title') %>
 <%- content_for :title, title %>
-<%- content_for :before_content do %>
-  <% breadcrumbs([
-                   { "Home" => responsible_body_home_path },
-                   title
-                 ]) %>
-<% end %>
+<%- content_for :before_content, govuk_link_to('Back', responsible_body_donated_devices_about_devices_path, class: 'govuk-back-link') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
