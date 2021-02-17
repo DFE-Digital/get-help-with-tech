@@ -1,10 +1,13 @@
 <%-
-  scope = 'page_titles.donated_devices.school.interest.disclaimer'
+  scope = 'page_titles.donated_devices.responsible_body.interest.disclaimer'
   title = t('title', scope: scope)
 %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+  <% breadcrumbs([
+                   { "Home" => responsible_body_home_path },
+                   title
+                 ]) %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -36,7 +39,7 @@ The DfE does not provide any guarantee or warranty for the reliability, suitabil
     The DfE is not liable for any loss or damage that might come from the devices, and/or related software, or third party service.
     </p>
     <p class="govuk-body">
-      <%= govuk_button_link_to 'Continue', check_answers_donated_devices_school_path(@school) %>
+      <%= govuk_button_link_to 'Continue', responsible_body_donated_devices_check_answers_path %>
     </p>
   </div>
 </div>

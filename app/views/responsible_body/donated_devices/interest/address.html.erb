@@ -1,0 +1,39 @@
+<%-
+  scope = 'page_titles.donated_devices.responsible_body.interest.address'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+                   { "Home" => responsible_body_home_path },
+                   title
+                 ]) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <p class="govuk-body">
+      As the person opting in a school, your name, email address and telephone number will be associated with each delivery.
+    </p>
+    <p class="govuk-body">
+      Your name, email address and telephone number will be shared with Computacenter and Mail Force. <%= govuk_link_to 'Read about how we use your data in our privacy policy', privacy_path, target: '_blank' %>.
+    </p>
+    <p class="govuk-body">
+      When these devices are delivered they will be addressed to you.
+    </p>
+    <p class="govuk-body">
+      For example, for <%= @request.school.name %>
+    </p>
+    <div class="govuk-inset-text">
+      <strong><%= @request.user.full_name %></strong><br/>
+      <%= @request.delivery_address %>
+    </div>
+
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', responsible_body_donated_devices_disclaimer_path %>
+    </p>
+  </div>
+</div>

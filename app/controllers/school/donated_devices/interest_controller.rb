@@ -1,6 +1,7 @@
 class School::DonatedDevices::InterestController < School::BaseController
   before_action :redirect_if_already_completed, except: :opted_in
   before_action :find_request!, only: %i[how_many_devices address disclaimer check_answers]
+
   def new
     @form = DonatedDeviceInterestForm.new
   end
@@ -109,7 +110,7 @@ private
 
   def build_donated_device_request
     parms = donated_device_params.merge(schools: [@school.id],
-                                        responsible_body: @school.responsible_body,
+                                        # responsible_body: @school.responsible_body,
                                         user: current_user,
                                         status: 'incomplete')
     DonatedDeviceRequest.new(parms)

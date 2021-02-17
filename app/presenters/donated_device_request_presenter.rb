@@ -36,6 +36,6 @@ private
   end
 
   def device_label(device_type)
-    I18n.t(device_type.to_s.underscore, scope: 'page_titles.school.donated_devices.interest.device_types.device_labels')
+    I18n.t(device_type.to_s.underscore, scope: 'page_titles.donated_devices.device_labels')
   end
 end
