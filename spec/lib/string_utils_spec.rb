@@ -24,7 +24,7 @@ describe StringUtils do
   describe '#redact' do
     context 'given a string' do
       it 'returns an ellipsis' do
-        expect(test_class.redact('a long string')).to eq('...')
+        expect(test_class.redact('a long string')).to eq('…')
       end
 
       context 'and a redaction' do
@@ -35,12 +35,12 @@ describe StringUtils do
 
       context 'and a first: N param' do
         it 'returns the first N characters plus an ellipsis' do
-          expect(test_class.redact('a long string', first: 3)).to eq('a l...')
+          expect(test_class.redact('a long string', first: 3)).to eq('a l…')
         end
 
         context 'and a last: M param' do
           it 'returns the first N characters plus an ellipsis plus the last M characters' do
-            expect(test_class.redact('a long string', first: 1, last: 2)).to eq('a...ng')
+            expect(test_class.redact('a long string', first: 1, last: 2)).to eq('a…ng')
           end
 
           context 'and a redaction' do
@@ -53,7 +53,7 @@ describe StringUtils do
 
       context 'and a last: N param' do
         it 'returns an ellipsis plus the last N characters' do
-          expect(test_class.redact('a long string', last: 3)).to eq('...ing')
+          expect(test_class.redact('a long string', last: 3)).to eq('…ing')
         end
       end
 
