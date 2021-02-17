@@ -13,6 +13,31 @@
       <%= title %>
     </h1>
 
+    <%= govuk_details(summary: 'Search for requests') do %>
+
+      <%= form_for @form, method: :get, url: support_extra_mobile_data_requests_path, as: 'emdr_search' do |f| %>
+        <%= f.govuk_error_summary %>
+
+        <%= f.govuk_text_field :urn_or_ukprn, label: {text: 'School URN or UKPRN'}, size: 'm' %>
+        <%= f.govuk_collection_select   :rb_id,
+                                        @form.select_responsible_body_options,
+                                        :id,
+                                        :name,
+                                        label: { text: 'Responsible body' } %>
+        <%= f.govuk_collection_select   :mno_id,
+                                        @form.mobile_network_options,
+                                        :value,
+                                        :label,
+                                        label: { text: 'Mobile network' } %>
+        <%= f.govuk_collection_select   :status,
+                                        @form.status_options,
+                                        :value,
+                                        :label,
+                                        label: { text: 'Status' } %>
+        <%= f.govuk_submit 'Search' %>
+      <%- end %>
+    <%- end %>
+
     <% if @requests.any? %>
       <%= render partial: 'shared/internet/help_with_statuses', locals: { statuses_with_descriptions: @statuses_with_descriptions } %>
     <% end %>
@@ -55,4 +80,6 @@
     </tbody>
   </table>
   <%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>
+<%- else %>
+  <p class="govuk-body">No requests to display</p>
 <% end %>

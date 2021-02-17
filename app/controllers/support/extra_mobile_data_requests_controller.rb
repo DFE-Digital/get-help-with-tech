@@ -11,8 +11,8 @@ class Support::ExtraMobileDataRequestsController < Support::BaseController
 private
 
   def search_params
-    params.fetch(:search_form, {})
-          .permit(:request_id, :school_id, :rb_id, :mno_id, :status)
+    params.fetch(:emdr_search, {})
+          .permit(:request_id, :school_id, :urn_or_ukprn, :rb_id, :mno_id, :status)
   end
 
   def statuses_with_descriptions
