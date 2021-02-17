@@ -9,7 +9,7 @@ module StringUtils
     [words1.join(' '), (words2.join(' ')[0...limit])]
   end
 
-  def redact(string, first: 0, last: 0, redaction: '...')
+  def redact(string, first: 0, last: 0, redaction: '…')
     [string.first(first), string.last(last)].join(redaction)
   end
 end
