@@ -8,6 +8,10 @@ class ExtraMobileDataRequestSummaryListComponent < ViewComponent::Base
   def rows
     [
       {
+        key: 'Request ID',
+        value: @extra_mobile_data_request.id,
+      },
+      {
         key: 'Requested on',
         value: @extra_mobile_data_request.created_at.to_s(:govuk_date_and_time),
       },
