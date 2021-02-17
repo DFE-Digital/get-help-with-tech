@@ -42,12 +42,6 @@ describe StringUtils do
           it 'returns the first N characters plus an ellipsis plus the last M characters' do
             expect(test_class.redact('a long string', first: 1, last: 2)).to eq('a…ng')
           end
-
-          context 'and a redaction' do
-            it 'returns the first N characters plus the redaction plus the last M characters' do
-              expect(test_class.redact('a long string', first: 1, last: 2, redaction: '-REDACTED-')).to eq('a-REDACTED-ng')
-            end
-          end
         end
       end
 
@@ -57,6 +51,11 @@ describe StringUtils do
         end
       end
 
+      context 'with first N and last M params and a redaction' do
+        it 'returns the first N characters plus the redaction plus the last M characters' do
+          expect(test_class.redact('a long string', first: 1, last: 2, redaction: '-REDACTED-')).to eq('a-REDACTED-ng')
+        end
+      end
     end
   end
 end

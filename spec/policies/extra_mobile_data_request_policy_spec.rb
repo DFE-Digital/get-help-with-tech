@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe ExtraMobileDataRequestPolicy do
   subject(:policy) { described_class }
+
   let(:object) { build(:extra_mobile_data_request) }
 
   permissions :new?, :create?, :edit?, :update?, :destroy? do

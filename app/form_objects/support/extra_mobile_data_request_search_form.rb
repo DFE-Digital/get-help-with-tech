@@ -31,15 +31,15 @@ class Support::ExtraMobileDataRequestSearchForm
   end
 
   def mobile_network_options
-    MobileNetwork.where(id: ExtraMobileDataRequest.distinct(:mobile_network_id).pluck(:mobile_network_id)).map do |mno|
+    MobileNetwork.where(id: ExtraMobileDataRequest.distinct(:mobile_network_id).pluck(:mobile_network_id)).map { |mno|
       OpenStruct.new(value: mno.id, label: mno.brand)
-    end.prepend(OpenStruct.new(value: nil, label: '(all)'))
+    }.prepend(OpenStruct.new(value: nil, label: '(all)'))
   end
 
   def status_options
     ExtraMobileDataRequest.statuses
                           .keys
-                          .map { |k| OpenStruct.new(value: k, label: I18n.t(:dropdown_label, scope: [:activerecord, :attributes, :extra_mobile_data_request, :status, k]))}
+                          .map { |k| OpenStruct.new(value: k, label: I18n.t(:dropdown_label, scope: [:activerecord, :attributes, :extra_mobile_data_request, :status, k])) }
                           .prepend(OpenStruct.new(value: nil, label: '(all)'))
   end
 end
