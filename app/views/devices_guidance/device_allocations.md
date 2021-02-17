@@ -16,7 +16,7 @@ Our guidance explains your options for [getting internet access](https://get-hel
 
 * [increasing mobile data allowances](/about-increasing-mobile-data) for disadvantaged pupils in years 3 to 11 (not currently available to students in 16 to 19 further education)
 
-* [4G wireless routers](/how-to-request-4g-wireless-routers) for disadvantaged pupils in years 3 to 11, and disadvantaged and students in 16 to 19 further education 
+* [4G wireless routers](/how-to-request-4g-wireless-routers) for disadvantaged pupils in years 3 to 13, and disadvantaged and students in 16 to 19 further education 
 
 ## How to request more devices
 
@@ -45,6 +45,18 @@ You’ll need to provide anonymised evidence that confirms:
 * the number of additional devices required
 
 We’ll review your query and respond with a decision as soon as possible.
+
+## How to request devices for children and young people who are shielding or attending hospital school
+
+Devices can be requested at any time for disadvantaged pupils and students:
+
+* in any year group who have been advised to [shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
+* in any year group, including 16 to 19 education, attending a hospital school
+
+[Contact us](https://get-help-with-tech.education.gov.uk/get-support) to make a request. 
+
+Do not submit any personally identifiable information about pupils that we do not need to process your support query. If we receive a request that contains such information, we’ll ask you to resend it.
+
 
 ## Laptops, tablets and 4G wireless routers provided during the summer term 2020
 
