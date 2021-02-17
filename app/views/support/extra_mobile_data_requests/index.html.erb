@@ -65,7 +65,7 @@
           <td class="govuk-table__cell"><%= redact( emd_request.device_phone_number, last: 4 ) %></td>
           <td class="govuk-table__cell">
             <%= emd_request.created_at.to_date.to_s(:long_ordinal) %>
-            by
+            <br />by
             <%- if emd_request.school.present? %>
               <%= govuk_link_to "#{emd_request.school.name} (#{emd_request.school.urn})", support_school_path(urn: emd_request.school.urn) %>
             <%- else %>
