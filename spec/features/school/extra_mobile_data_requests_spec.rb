@@ -132,8 +132,8 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       end
 
       it 'shows the request ID' do
-        expect(page).to have_css 'h1', text: request.account_holder_name
         expect(page).to have_content 'Request ID'
+        expect(page).to have_content request.id
       end
 
       context 'when the request has a mobile network with an offer details partial template' do
