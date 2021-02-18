@@ -9,21 +9,25 @@ class DonatedDeviceRequest < ApplicationRecord
   enum status: {
     complete: 'complete',
     incomplete: 'incomplete',
+    opt_in_step: 'opt_in_step',
+    schools_step: 'schools_step',
     devices_step: 'devices_step',
     units_step: 'units_step',
   }
+
+  enum opt_in_choice: {
+    single_school: 'single_school',
+    some_schools: 'some_schools',
+    all_schools: 'all_schools',
+  }, _prefix: :opt_in
 
   belongs_to :responsible_body, optional: true
   belongs_to :user
 
   validate :units_are_present_and_in_range, if: -> { units_step? || complete? }
   validate :device_types_are_present_and_correct, if: -> { responsible_body.nil? || devices_step? || complete? }
-
-  validates :schools, presence: true
-
-  def self.uncompleted
-    where.not(status: 'complete')
-  end
+  validates :opt_in_choice, presence: { message: 'Tell us which schools or coleges you want to opt in' }, if: -> { opt_in_step? }
+  validates :schools, presence: { message: 'Tell us which schools or colleges you want to opt in' }, if: -> { responsible_body.nil? || schools_step? || complete? }
 
   def self.for_school(school)
     where('? = ANY(schools)', school.id)

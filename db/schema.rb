@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_114408) do
+ActiveRecord::Schema.define(version: 2021_02_17_133454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_114408) do
     t.integer "schools", default: [], array: true
     t.bigint "responsible_body_id"
     t.string "status", default: "incomplete", null: false
+    t.string "opt_in_choice"
     t.index ["responsible_body_id"], name: "index_donated_device_requests_on_responsible_body_id"
     t.index ["user_id"], name: "index_donated_device_requests_on_user_id"
   end

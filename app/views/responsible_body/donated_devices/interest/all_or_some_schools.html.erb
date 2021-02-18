@@ -6,14 +6,14 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= form_for @form, url: responsible_body_donated_devices_all_or_some_schools_path, method: :post do |f| %>
+    <%= form_for @request, url: responsible_body_donated_devices_all_or_some_schools_path, method: :post do |f| %>
       <%= f.govuk_error_summary %>
 
-      <%= f.govuk_collection_radio_buttons :scope,
-                                          ResponsibleBody::DonatedDeviceSchoolScopeForm.options,
-                                          :value,
-                                          :label,
-                                          legend: {size: 'm', text: '' } %>
+      <%= f.govuk_collection_radio_buttons :opt_in_choice,
+                                           @request.school_opt_in_options,
+                                           :value,
+                                           :label,
+                                           legend: {size: 'm', text: '' } %>
       <%= f.govuk_submit 'Continue' %>
     <%- end %>
   </div>

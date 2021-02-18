@@ -121,6 +121,8 @@ Rails.application.routes.draw do
       post '/interest-confirmation', to: 'interest#interest_confirmation'
       get '/all-or-some-schools', to: 'interest#all_or_some_schools'
       post '/all-or-some-schools', to: 'interest#all_or_some_schools'
+      get '/select-schools', to: 'interest#select_schools'
+      post '/select-schools', to: 'interest#select_schools'
 
       get '/what-devices-do-you-want', to: 'interest#device_types'
       post '/what-devices-do-you-want', to: 'interest#device_types'
@@ -129,6 +131,8 @@ Rails.application.routes.draw do
       get '/address', to: 'interest#address'
       get '/disclaimer', to: 'interest#disclaimer'
       get '/check-answers', to: 'interest#check_answers'
+      post '/check-answers', to: 'interest#check_answers'
+      get '/opted-in', to: 'interest#opted_in'
     end
 
     namespace :internet do
