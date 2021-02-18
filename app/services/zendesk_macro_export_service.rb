@@ -1,12 +1,16 @@
 require 'csv'
 
 class ZendeskMacroExportService
+  include ActionView::Helpers::SanitizeHelper
+
+  attr_reader :data, :message
+
   class << self
     delegate :send!, to: :new
   end
 
   def csv_generator
-    CSV.generate(headers: true) do |csv|
+    @data = CSV.generate(headers: true) do |csv|
       csv << ['Category',
               'Title',
               'Description',
@@ -22,6 +26,8 @@ class ZendeskMacroExportService
               'Remove tags']
 
       macro_collection.all! do |macro|
+        next if @valid == false
+
         if macro.active
           csv << [
             format_category(macro.title),
@@ -41,6 +47,11 @@ class ZendeskMacroExportService
         end
       end
     end
+    @valid = true if @valid.nil?
+  end
+
+  def valid?
+    @valid
   end
 
   def filename
@@ -58,17 +69,27 @@ class ZendeskMacroExportService
       config.url = Settings.zendesk.url
       config.username = Settings.zendesk.username
       config.token = Settings.zendesk.token
-      config.retry = true
     end
   end
 
 private
 
   def format_category(title)
-    title[1, title.index(']::') - 1].strip
+    return if title.nil? || @valid == false
+
+    category_format_lookup_index = title.index(']::')
+
+    if category_format_lookup_index.present?
+      title[1, category_format_lookup_index - 1].strip
+    else
+      @message = "Macro title `#{sanitize(title)}` is not in correct format eg:`[Category name]:: Title`. Please correct this in zendesk"
+      @valid = false
+    end
   end
 
   def format_title(title)
+    return if @valid == false
+
     title[title.index(']::') + 3, title.length].strip
   end
 
