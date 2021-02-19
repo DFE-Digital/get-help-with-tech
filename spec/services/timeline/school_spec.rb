@@ -36,7 +36,7 @@ RSpec.describe Timeline::School, versioning: true do
 
         expect(changeset).to be_a(Timeline::Changeset)
         expect(changeset.item).to eql(school)
-        expect(changeset.updated_at).to eql(school.updated_at)
+        expect(changeset.updated_at).to be_within(10.seconds).of(school.updated_at)
       end
     end
   end
