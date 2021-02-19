@@ -36,7 +36,7 @@ MobileNetwork.upsert_all(
     { brand: 'Fonome Mobile', host_network: 'O2', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Gamma Telecom', host_network: 'Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Gemini Mobile', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
-    { brand: 'giffgaff', host_network: 'O2', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
+    { brand: 'giffgaff', host_network: 'O2', participation_in_pilot: :yes, created_at: current_time, updated_at: current_time },
     { brand: 'Global', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Globalgig', host_network: 'Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'HP Mobile Connect', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
