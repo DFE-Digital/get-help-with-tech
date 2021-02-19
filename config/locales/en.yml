@@ -151,6 +151,75 @@ en:
     school_edit_chromebooks: Will you need to order Chromebooks?
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
+    donated_devices:
+      title: Opt in to the Daily Mail’s donated devices scheme
+      device_labels:
+        windows: Microsoft Windows
+        android_tablet: Android tablets
+        chromebook: Google Chromebooks
+        ipad: Apple iPads
+      school:
+        interest:
+          new:
+            title: Do you want donated devices?
+          not_interested:
+            title: You have not been opted in
+          about:
+            title: About donated devices
+          queue:
+            title: There’s a queue for these devices
+          interest_confirmation:
+            title: Are you still interested?
+          device_types:
+            title: Which of these device types would you accept?
+            hint: Select all devices types that you would use.
+          how_many_devices:
+            title: How many devices do you want?
+          address:
+            title: Your details will be shared and associated with the delivery
+          disclaimer:
+            title: Disclaimer
+            not_responsible: What the DfE is not responsible for
+          check_answers:
+            title: Check your answers before confirming
+          opted_in:
+            title: Your %{institution} is opted in
+      responsible_body:
+        interest:
+          new:
+            title: Do your schools and colleges want donated devices?
+          not_interested:
+            title: No schools or colleges have been opted in
+          about:
+            title: About donated devices
+          queue:
+            title: There’s a queue for these devices
+          interest_confirmation:
+            title: Are you still interested?
+          all_or_some_schools:
+            title: Which schools or colleges do you want to opt in?
+          select_schools:
+            title: Pick the schools or colleges you want to opt in
+          device_types:
+            title: Which of these device types would you accept?
+            hint: Select all devices types that you would use.
+          how_many_devices:
+            title: How many devices does each school or college want?      
+          address:
+            title: Your details will be shared and associated with each delivery
+          disclaimer:
+            title: Disclaimer
+            not_responsible: What the DfE is not responsible for
+          check_answers:
+            title: Check your answers before confirming
+          opted_in:
+            title: Schools and colleges are opted in
+    school_order_devices: Order devices
+    school_order_devices_soon: You’ll be able to order once your TechSource account is ready
+    school_details: Check your organisation’s details
+    school_edit_chromebooks: Will you need to order Chromebooks?
+    school_users: Manage users
+    school_before_can_order: Before you can order, we need more information  
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet

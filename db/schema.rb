@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_114408) do
+ActiveRecord::Schema.define(version: 2021_02_17_133454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,12 +123,15 @@ ActiveRecord::Schema.define(version: 2021_02_17_114408) do
 
   create_table "donated_device_requests", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "school_id", null: false
     t.text "device_types", default: [], array: true
     t.integer "units"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["school_id"], name: "index_donated_device_requests_on_school_id", unique: true
+    t.integer "schools", default: [], array: true
+    t.bigint "responsible_body_id"
+    t.string "status", default: "incomplete", null: false
+    t.string "opt_in_choice"
+    t.index ["responsible_body_id"], name: "index_donated_device_requests_on_responsible_body_id"
     t.index ["user_id"], name: "index_donated_device_requests_on_user_id"
   end
 
@@ -302,11 +305,11 @@ ActiveRecord::Schema.define(version: 2021_02_17_114408) do
     t.boolean "increased_allocations_feature_flag", default: false
     t.boolean "increased_sixth_form_feature_flag", default: false
     t.boolean "increased_fe_feature_flag", default: false
-    t.boolean "hide_mno", default: false
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
     t.text "fe_type"
     t.boolean "group_a_feature_flag", default: false, null: false
+    t.boolean "hide_mno", default: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"

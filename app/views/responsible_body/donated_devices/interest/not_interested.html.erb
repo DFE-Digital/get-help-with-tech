@@ -1,0 +1,20 @@
+<%- title = t('page_titles.donated_devices.responsible_body.interest.not_interested.title') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([
+                   { "Home" => responsible_body_home_path },
+                   title
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <p class="govuk-body">You can still opt in later if you change your mind.<p>
+    
+    <p class="govuk-body">
+      <%= govuk_link_to 'Return to your homepage', responsible_body_home_path %>
+    </p>
+  </div>
+</div>

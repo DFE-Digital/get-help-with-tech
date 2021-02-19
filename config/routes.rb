@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
   get '/privacy/general-privacy-notice', to: 'pages#general_privacy_notice'
+  get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice'
   get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
   get '/how-to-request-4g-wireless-routers', to: 'pages#how_request_4g_routers'
@@ -111,6 +112,30 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace :donated_devices, path: '/donated-devices' do
+      get '/interest', to: 'interest#new'
+      post '/interest', to: 'interest#create'
+
+      get '/about-devices', to: 'interest#about'
+      get '/queue', to: 'interest#queue'
+      get '/interest-confirmation', to: 'interest#interest_confirmation'
+      post '/interest-confirmation', to: 'interest#interest_confirmation'
+      get '/all-or-some-schools', to: 'interest#all_or_some_schools'
+      post '/all-or-some-schools', to: 'interest#all_or_some_schools'
+      get '/select-schools', to: 'interest#select_schools'
+      post '/select-schools', to: 'interest#select_schools'
+
+      get '/what-devices-do-you-want', to: 'interest#device_types'
+      post '/what-devices-do-you-want', to: 'interest#device_types'
+      get '/how-many-devices', to: 'interest#how_many_devices'
+      post '/how-many-devices', to: 'interest#how_many_devices'
+      get '/address', to: 'interest#address'
+      get '/disclaimer', to: 'interest#disclaimer'
+      get '/check-answers', to: 'interest#check_answers'
+      post '/check-answers', to: 'interest#check_answers'
+      get '/opted-in', to: 'interest#opted_in'
+    end
+
     namespace :internet do
       get '/', to: 'home#show'
       namespace :mobile, path: '/mobile' do
@@ -154,6 +179,27 @@ Rails.application.routes.draw do
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
 
       scope module: :school do
+        namespace :donated_devices, path: '/donated-devices' do
+          get '/interest', to: 'interest#new'
+          post '/interest', to: 'interest#create'
+
+          get '/about-devices', to: 'interest#about'
+          get '/queue', to: 'interest#queue'
+          get '/interest-confirmation', to: 'interest#interest_confirmation'
+          post '/interest-confirmation', to: 'interest#interest_confirmation'
+          get '/what-devices-do-you-want', to: 'interest#device_types'
+          post '/what-devices-do-you-want', to: 'interest#device_types'
+          get '/how-many-devices', to: 'interest#how_many_devices'
+          post '/how-many-devices', to: 'interest#how_many_devices'
+          get '/address', to: 'interest#address'
+          post '/address', to: 'interest#address'
+          get '/disclaimer', to: 'interest#disclaimer'
+          post '/disclaimer', to: 'interest#disclaimer'
+          get '/check-answers', to: 'interest#check_answers'
+          post '/check-answers', to: 'interest#check_answers'
+          get 'opted-in', to: 'interest#opted_in'
+        end
+
         namespace :internet do
           get '/', to: 'home#show'
 

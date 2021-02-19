@@ -12,6 +12,8 @@ class ResponsibleBody < ApplicationRecord
   has_one :std_device_pool, -> { std_device }, class_name: 'VirtualCapPool'
   has_one :coms_device_pool, -> { coms_device }, class_name: 'VirtualCapPool'
 
+  has_many :donated_device_requests, dependent: :destroy
+
   scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
 
   extend Computacenter::ResponsibleBodyUrns::ClassMethods

@@ -1,0 +1,27 @@
+<%- title = t('page_titles.donated_devices.responsible_body.interest.queue.title') %>
+<%- content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', responsible_body_donated_devices_about_devices_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+
+    <p class="govuk-body">We do not know how many devices will be donated. Opting a school or college into this offer will put them in a queue.</p>
+    <p class="govuk-body">Newly donated devices will be distributed to opted-in schools and colleges at the top of the queue.</p>
+    <p class="govuk-body">There’s no guarantee they will get any devices.</p>
+  
+
+    <h2 class="govuk-heading-m">You do not need to place an order</h2>
+
+    <p class="govuk-body">When it’s a school or college’s turn, their devices will be automatically delivered to them. Computacenter will email you beforehand.</p>
+    <p class="govuk-body">Donated devices are in addition to a school or college’s allocation.</p>
+  
+    <h2 class="govuk-heading-m">Delivery to schools and colleges</h2>
+    <p class="govuk-body">Devices must be delivered directly to each school or college. They cannot be sent to a central location.</p>
+
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', responsible_body_donated_devices_interest_confirmation_path %>
+    </p>
+  </div>
+</div>
