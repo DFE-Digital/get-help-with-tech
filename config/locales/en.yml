@@ -152,6 +152,8 @@ en:
     school_edit_chromebooks: Will you need to order Chromebooks?
     school_users: Manage users
     school_before_can_order: Before you can order, we need more information
+    donated_devices_complete:
+      title: Daily Mail donated devices scheme
     donated_devices:
       title: Opt in to the Daily Mail’s donated devices scheme
       device_labels:
@@ -177,7 +179,7 @@ en:
           how_many_devices:
             title: How many devices do you want?
           address:
-            title: Your details will be shared and associated with the delivery
+            title: How your details will be shared and associated with the delivery
           disclaimer:
             title: Disclaimer
             not_responsible: What the DfE is not responsible for
@@ -207,7 +209,7 @@ en:
           how_many_devices:
             title: How many devices does each school or college want?      
           address:
-            title: Your details will be shared and associated with each delivery
+            title: How your details will be shared and associated with each delivery
           disclaimer:
             title: Disclaimer
             not_responsible: What the DfE is not responsible for

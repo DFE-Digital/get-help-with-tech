@@ -36,15 +36,27 @@
     </ul>
 
     <% if FeatureFlag.active?(:donated_devices) && @school.who_will_order_devices == 'school' %>
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to t('page_titles.donated_devices.title'), interest_donated_devices_school_path(@school) %>
-      </h2>
+      <% if DonatedDeviceRequest.complete.for_school(@school).any? %>
+        <h2 class="govuk-heading-l govuk-!-font-size-27">
+          <%= govuk_link_to t('page_titles.donated_devices_complete.title'), interest_donated_devices_school_path(@school) %>
+        </h2>
 
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>opt in and be considered for devices donated through their scheme</li>
-        <li>set a preference for devices you want</li>
-      </ul>
+        <p class="govuk-body">Your school has opted in. Use this section to:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>check your delivery address and device preferences</li>
+          <li>read more about the scheme</li>
+        </ul>
+      <% else %>
+        <h2 class="govuk-heading-l govuk-!-font-size-27">
+          <%= govuk_link_to t('page_titles.donated_devices.title'), interest_donated_devices_school_path(@school) %>
+        </h2>
+
+        <p class="govuk-body">Use this section to:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>opt in and be considered for devices donated through their scheme</li>
+          <li>set a preference for devices you want</li>
+        </ul>
+      <% end %>
     <% end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
