@@ -1,5 +1,5 @@
 class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::BaseController
-  before_action :redirect_if_already_completed, except: %i[all_or_some_schools select_schools opted_in]
+  before_action :redirect_if_already_completed, except: %i[select_schools opted_in]
   before_action :find_request!, only: %i[select_schools device_types how_many_devices address disclaimer check_answers]
 
   def new
@@ -41,7 +41,6 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def all_or_some_schools
     @request = find_or_build_request
-    # @form = ResponsibleBody::DonatedDeviceSchoolScopeForm.new(school_scope_params)
     if request.post?
       last_status = @request.status
       @request.assign_attributes(donated_device_params.merge(status: 'opt_in_step'))
@@ -51,8 +50,6 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
           # add all schools
           @request.schools = all_centrally_managed_schools_ids
           @request.save!
-          # create request now
-          # create_request_for_all_schools
           if @request.complete?
             redirect_to responsible_body_donated_devices_opted_in_path
           else
@@ -106,9 +103,10 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def device_types
     if request.post?
+      last_status = @request.status
       @request.assign_attributes(donated_device_params.merge(status: 'devices_step'))
       if @request.valid?
-        @request.status = 'incomplete'
+        @request.status = last_status
         @request.save!
         redirect_to responsible_body_donated_devices_how_many_devices_path
       else
@@ -119,9 +117,10 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def how_many_devices
     if request.post?
+      last_status = @request.status
       @request.assign_attributes(donated_device_params.merge(status: 'units_step'))
       if @request.valid?
-        @request.status = 'incomplete'
+        @request.status = last_status
         @request.save!
         redirect_to responsible_body_donated_devices_address_path
       else
@@ -147,25 +146,25 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
 private
 
-  def create_request_for_all_schools
-    ddr = DonatedDeviceRequest.incomplete.for_responsible_body(@responsible_body).first
-
-    school_ids =  all_centrally_managed_schools_ids
-
-    if ddr.nil?
-      ddr = DonatedDeviceRequest.create!(schools: school_ids,
-                                         responsible_body: @responsible_body,
-                                         user: current_user,
-                                         opt_in_choice: 'all_schools',
-                                         status: 'incomplete')
-    else
-      ddr.update!(schools: school_ids,
-                  user: current_user,
-                  opt_in_choice: 'all_schools',
-                  status: 'incomplete')
-    end
-    ddr
-  end
+  # def create_request_for_all_schools
+  #   ddr = DonatedDeviceRequest.incomplete.for_responsible_body(@responsible_body).first
+  #
+  #   school_ids =  all_centrally_managed_schools_ids
+  #
+  #   if ddr.nil?
+  #     ddr = DonatedDeviceRequest.create!(schools: school_ids,
+  #                                        responsible_body: @responsible_body,
+  #                                        user: current_user,
+  #                                        opt_in_choice: 'all_schools',
+  #                                        status: 'incomplete')
+  #   else
+  #     ddr.update!(schools: school_ids,
+  #                 user: current_user,
+  #                 opt_in_choice: 'all_schools',
+  #                 status: 'incomplete')
+  #   end
+  #   ddr
+  # end
 
   def find_or_build_request
     ddr = DonatedDeviceRequest.for_responsible_body(@responsible_body).first
@@ -187,7 +186,6 @@ private
       redirect_to responsible_body_donated_devices_interest_path
     else
       @request = present(ddr)
-      # redirect_to responsible_body_donated_devices_opted_in_path if @request.complete?
     end
   end
 

@@ -1,7 +1,9 @@
-<%- title = t('page_titles.donated_devices.interest.not_interested.title') %>
+<%- title = t('page_titles.donated_devices.school.interest.not_interested.title') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+  <% breadcrumbs([{ 'Home' => home_school_path(@school) },
+                  'Donated devices',
+                 ]) %>
 <%- end %>
 
 <div class="govuk-grid-row">

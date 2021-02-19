@@ -183,7 +183,7 @@ en:
           check_answers:
             title: Check your answers before confirming
           opted_in:
-            title: Your school is opted in
+            title: Your %{institution} is opted in
       responsible_body:
         interest:
           new:

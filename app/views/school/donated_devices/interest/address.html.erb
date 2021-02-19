@@ -1,5 +1,5 @@
 <%-
-  scope = 'page_titles.school.donated_devices.interest.address'
+  scope = 'page_titles.donated_devices.school.interest.address'
   title = t('title', scope: scope)
 %>
 <%- content_for :title, title %>
@@ -11,7 +11,7 @@
       <%= title %>
     </h1>
     <p class="govuk-body">
-      As the person opting in a school, your name, email address and telephone number will be associated with the delivery.
+    As the person opting in a <%= @school.institution_type %>, your name, email address and telephone number will be associated with the delivery.
     </p>
     <p class="govuk-body">
       Your name, email address and telephone number will be shared with Computacenter and Mail Force. <%= govuk_link_to 'Read about how we use your data in our privacy policy', privacy_path, target: '_blank' %>.

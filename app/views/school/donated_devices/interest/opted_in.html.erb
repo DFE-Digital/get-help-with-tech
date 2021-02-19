@@ -1,10 +1,12 @@
 <%-
   scope = 'page_titles.donated_devices.school.interest.opted_in'
-  title = t('title', scope: scope)
+  title = t('title', scope: scope, institution: @school.institution_type)
 %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+  <% breadcrumbs([{ 'Home' => home_school_path(@school) },
+                  'Donated devices',
+                 ]) %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -25,5 +27,13 @@
       <strong><%= @request.user.full_name %></strong><br/>
       <%= @request.delivery_address %>
     </div>
+    <h2 class="govuk-heading-m">Accepted device types</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <% @request.selected_device_names.each do |device| %>
+        <li><%= device %></li>
+      <% end %>
+    </ul>
+    <h2 class="govuk-heading-m">Preferred number of devices</h2>
+    <p class="govuk-body"><%= @request.number_of_devices_selected %></p>
   </div>
 </div>

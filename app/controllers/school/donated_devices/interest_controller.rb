@@ -55,11 +55,11 @@ class School::DonatedDevices::InterestController < School::BaseController
 
   def how_many_devices
     if request.post?
-      if @request.update(donated_device_params.merge(status: 'units_step'))
+      last_status = @request.status
+      @request.assign_attributes(donated_device_params.merge(status: 'units_step'))
+      if @request.valid?
+        @request.status = last_status
         @request.save!
-        # we temporarily use 'units_step' to trigger validation of the :units
-        # and then switch it back if valid
-        @request.incomplete!
         redirect_to address_donated_devices_school_path(@school)
       else
         render :how_many_devices, status: :unprocessable_entity
@@ -110,7 +110,6 @@ private
 
   def build_donated_device_request
     parms = donated_device_params.merge(schools: [@school.id],
-                                        # responsible_body: @school.responsible_body,
                                         user: current_user,
                                         status: 'incomplete')
     DonatedDeviceRequest.new(parms)
