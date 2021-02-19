@@ -11,10 +11,24 @@
       <%= title %>
     </h1>
     <p class="govuk-body">
-    As the person opting in a <%= @school.institution_type %>, your name, email address and telephone number will be associated with the delivery.
+      We share with Computacenter the following information that you provide to us:
     </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the number of device types in which you have expressed an interest</li>
+      <li>your organisation’s name, address and URN (as available on <%= govuk_link_to 'Get Information About Schools', 'https://www.get-information-schools.service.gov.uk/', target: '_blank' %>).</li>
+    </ul>
     <p class="govuk-body">
-      Your name, email address and telephone number will be shared with Computacenter and Mail Force. <%= govuk_link_to 'Read about how we use your data in our privacy policy', privacy_path, target: '_blank' %>.
+      The above non-personal information is provided by Computacenter to Mail Force, who run the Computers for Kids scheme.
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>your name, email address and telephone number</li>
+    </ul>
+    <p class="govuk-body">
+      The above personal information is used by Computacenter to arrange delivery of devices to your organisation. It is not shared by DfE or Computacenter with Mail Force.
+    </p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Read more about how we use your data in our privacy policy', privacy_path, target: '_blank' %>.
     </p>
     <p class="govuk-body">
       When these devices are delivered they will be addressed to you.

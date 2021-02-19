@@ -69,9 +69,9 @@ RSpec.feature 'Download CSV files' do
 
       before do
         schools.each do |school|
-          create(:donated_device_request, :wants_laptops, :complete, schools: [school.id], responsible_body: trust)
+          create(:donated_device_request, :wants_laptops, :wants_full_amount, :complete, schools: [school.id], responsible_body: trust)
         end
-        create(:donated_device_request, :wants_tablets, schools: [school_with_incomplete_request.id], responsible_body: trust)
+        create(:donated_device_request, :wants_tablets, units: 2, schools: [school_with_incomplete_request.id], responsible_body: trust)
       end
 
       it 'downloads a CSV file' do
