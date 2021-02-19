@@ -103,7 +103,7 @@ private
   end
 
   def then_i_am_asked_if_i_am_interested_in_devices
-    expect(page).to have_content('Do your schools want donated devices')
+    expect(page).to have_content('Do your schools and colleges want donated devices')
   end
 
   def then_i_see_information_about_the_devices
@@ -115,7 +115,7 @@ private
   end
 
   def then_i_see_that_i_have_not_been_opted_in
-    expect(page).to have_content('You have not been opted in')
+    expect(page).to have_content('No schools or colleges have been opted in')
   end
 
   def then_i_am_asked_if_i_am_still_interested

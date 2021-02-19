@@ -37,7 +37,7 @@ class DonatedDeviceRequestPresenter < SimpleDelegator
 
   def number_of_devices_selected
     unless units.nil?
-      txt = [ "#{units * 5} devices" ]
+      txt = ["#{units * 5} devices"]
       txt << 'per school or college' unless responsible_body.nil?
       txt.join(' ')
     end

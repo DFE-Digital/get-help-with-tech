@@ -26,7 +26,7 @@ class DonatedDeviceRequest < ApplicationRecord
 
   validate :units_are_present_and_in_range, if: -> { units_step? || complete? }
   validate :device_types_are_present_and_correct, if: -> { responsible_body.nil? || devices_step? || complete? }
-  validates :opt_in_choice, presence: { message: 'Tell us which schools or coleges you want to opt in' }, if: -> { opt_in_step? }
+  validates :opt_in_choice, presence: { message: 'Tell us which schools or colleges you want to opt in' }, if: -> { opt_in_step? }
   validates :schools, presence: { message: 'Tell us which schools or colleges you want to opt in' }, if: -> { responsible_body.nil? || schools_step? || complete? }
 
   def self.for_school(school)
@@ -51,8 +51,8 @@ private
   end
 
   def device_types_are_present_and_correct
-    if device_types.nil? || device_types.empty?
-      errors.add(:device_types, 'Tell us which devices you want')
+    if device_types.blank?
+      errors.add(:device_types, 'Tell us which devices you will accept')
     else
       errors.add(:device_types, 'includes an invalid device type') unless device_types.all? { |d| DEVICE_TYPES.include?(d) }
     end
