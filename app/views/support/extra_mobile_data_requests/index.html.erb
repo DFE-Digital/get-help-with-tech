@@ -14,28 +14,7 @@
     </h1>
 
     <%= govuk_details(summary: 'Search for requests') do %>
-
-      <%= form_for @form, method: :get, url: support_extra_mobile_data_requests_path, as: 'emdr_search' do |f| %>
-        <%= f.govuk_error_summary %>
-
-        <%= f.govuk_text_field :urn_or_ukprn, label: {text: 'School URN or UKPRN'}, size: 'm' %>
-        <%= f.govuk_collection_select   :rb_id,
-                                        @form.select_responsible_body_options,
-                                        :id,
-                                        :name,
-                                        label: { text: 'Responsible body' } %>
-        <%= f.govuk_collection_select   :mno_id,
-                                        @form.mobile_network_options,
-                                        :value,
-                                        :label,
-                                        label: { text: 'Mobile network' } %>
-        <%= f.govuk_collection_select   :status,
-                                        @form.status_options,
-                                        :value,
-                                        :label,
-                                        label: { text: 'Status' } %>
-        <%= f.govuk_submit 'Search' %>
-      <%- end %>
+      <%= render partial: 'support/extra_mobile_data_requests/search_form' %>
     <%- end %>
 
     <% if @requests.any? %>
@@ -61,7 +40,7 @@
       <%- for emd_request in @requests do %>
         <tr class="govuk-table__row" id="request-<%= emd_request.id %>">
           <td class="govuk-table__cell"><%= emd_request.id %></td>
-          <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
+          <td class="govuk-table__cell brand"><%= emd_request.mobile_network.try(:brand) %></td>
           <td class="govuk-table__cell"><%= redact(emd_request.account_holder_name, first: 1, last: 1) %></td>
           <td class="govuk-table__cell"><%= redact(emd_request.device_phone_number, first: 2, last: 4) %></td>
           <td class="govuk-table__cell">

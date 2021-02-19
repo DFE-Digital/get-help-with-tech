@@ -16,6 +16,7 @@ class Support::ExtraMobileDataRequestSearchForm
   def requests(current_user)
     requests = ExtraMobileDataRequestPolicy::Scope.new(current_user, ExtraMobileDataRequest).resolve
     requests = requests.includes(:school).includes(:responsible_body).includes(:mobile_network)
+    requests = requests.where(id: @request_id) if @request_id.present?
     requests = requests.where(school_id: @school_id) if @school_id.present?
     requests = requests.joins(:school).where('schools.urn = ? OR schools.ukprn = ?', @urn_or_ukprn, @urn_or_ukprn) if @urn_or_ukprn.present?
     requests = requests.where(responsible_body_id: @rb_id) if @rb_id.present?
