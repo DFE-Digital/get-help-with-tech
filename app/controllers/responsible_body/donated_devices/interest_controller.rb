@@ -146,26 +146,6 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
 private
 
-  # def create_request_for_all_schools
-  #   ddr = DonatedDeviceRequest.incomplete.for_responsible_body(@responsible_body).first
-  #
-  #   school_ids =  all_centrally_managed_schools_ids
-  #
-  #   if ddr.nil?
-  #     ddr = DonatedDeviceRequest.create!(schools: school_ids,
-  #                                        responsible_body: @responsible_body,
-  #                                        user: current_user,
-  #                                        opt_in_choice: 'all_schools',
-  #                                        status: 'incomplete')
-  #   else
-  #     ddr.update!(schools: school_ids,
-  #                 user: current_user,
-  #                 opt_in_choice: 'all_schools',
-  #                 status: 'incomplete')
-  #   end
-  #   ddr
-  # end
-
   def find_or_build_request
     ddr = DonatedDeviceRequest.for_responsible_body(@responsible_body).first
     ddr = build_donated_device_request if ddr.nil?
@@ -182,7 +162,7 @@ private
     ddr = DonatedDeviceRequest.for_responsible_body(@responsible_body).first
     if ddr.nil?
       # send backto beginning if they've got here without a request being saved
-      flash[:error] = 'They was a problem with your request'
+      flash[:error] = 'There was a problem with your request'
       redirect_to responsible_body_donated_devices_interest_path
     else
       @request = present(ddr)

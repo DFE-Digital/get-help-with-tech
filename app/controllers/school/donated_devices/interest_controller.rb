@@ -94,7 +94,7 @@ private
     ddr = DonatedDeviceRequest.for_school(@school).first
     if ddr.nil?
       # send backto beginning if they've got here without a request being saved
-      flash[:error] = 'They was a problem with your request'
+      flash[:error] = 'There was a problem with your request'
       redirect_to interest_donated_devices_school_path(@school)
     else
       @request = present(ddr)

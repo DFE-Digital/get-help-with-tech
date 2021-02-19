@@ -40,8 +40,7 @@ private
   def render(csv, query)
     csv << self.class.headings
     query.find_each do |request|
-      request.schools.each do |school_id|
-        school = School.find(school_id)
+      School.where(id: request.schools).includes(:responsible_body).each do |school|
         csv << [
           request.id,
           request.created_at,
@@ -59,6 +58,6 @@ private
   end
 
   def donated_device_requests
-    DonatedDeviceRequest.complete.includes(:user, :responsible_body).order(:asc)
+    DonatedDeviceRequest.complete.includes(:user).order(:asc)
   end
 end
