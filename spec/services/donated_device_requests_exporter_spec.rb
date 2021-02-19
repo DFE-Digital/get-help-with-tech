@@ -30,7 +30,7 @@ RSpec.describe DonatedDeviceRequestsExporter, type: :model do
     it 'includes the request information in the CSV file' do
       CSV.read(filename, headers: true).each do |request|
         record = DonatedDeviceRequest.find(request['id'])
-        expect(record.school.created_at.to_s).to eq(request['created_at'])
+        expect(record.school.created_at).to be_within(1.second).of(request['created_at'].to_datetime)
         expect(record.school.urn.to_s).to eq(request['urn'])
         expect(record.school.computacenter_reference).to eq(request['shipTo'])
         expect(record.school.responsible_body.computacenter_reference).to eq(request['soldTo'])
