@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
   get '/privacy/general-privacy-notice', to: 'pages#general_privacy_notice'
+  get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice'
   get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
   get '/how-to-request-4g-wireless-routers', to: 'pages#how_request_4g_routers'
