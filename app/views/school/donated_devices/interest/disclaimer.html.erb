@@ -1,0 +1,60 @@
+<%-
+  scope = 'page_titles.donated_devices.school.interest.disclaimer'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', address_donated_devices_school_path(@school), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <p class="govuk-body">
+      Computers For Kids is an initiative run by the Mail Force charity. It’s separate from, and not associated with, the Get help with technology programme run by the Department for Education (DfE).
+    </p>
+
+    <p class="govuk-body">
+    If you have any queries relating to the Computers For Kids initiative, you should direct these to Mail Force or its third party supplier.
+    </p>
+    <p class="govuk-body">
+    For details of how we share your information when you opt in for Computers For Kids, please see our privacy notice.
+    </p>
+    <p class="govuk-body">
+    School, colleges, trusts and responsible bodies must make sure that devices and/or related software are suitable for children and young people.  The DfE does not provide any guarantee or warranty for the reliability, suitability or completeness of the devices, and/or related software, or third party service. This includes the Computers For Kids initiative itself.
+    </p>
+    <h2 class="govuk-heading-m"><%= t('not_responsible', scope: scope) %></h2>
+    <p class="govuk-body">
+    The DfE is not responsible for the currency, security, availability, compatibility, suitability, reliability or freedom from damaging software, or for any other qualities or features of the devices, and/or related software provided to you. Where our site contains links to third party resources, these are for information only. The DfE has no control over the content of these sites.
+    </p>
+    <p class="govuk-body">
+    It is also not responsible for the results of any actions taken with the devices and/or related software, or how the devices are used.
+    </p>
+    <p class="govuk-body">
+    The DfE is not liable under any circumstances for any loss or damage that might come from the use of the devices, and/or related software, or third party service.
+    </p>
+    <p class="govuk-body">
+    This includes:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>loss or corruption of data or information</li>
+      <li>any loss arising from licensing of software or third party claims relating to this</li>
+      <li>loss of reputation</li>
+    </ul>
+    <p class="govuk-body">
+    This applies whether such loss is direct, indirect, consequential or foreseeable, arises in the normal course, or you advised us that it might happen.
+    </p>
+    <p class="govuk-body">
+    It excludes any losses which cannot be excluded or limited under applicable law.
+    </p>
+    <p class="govuk-body">
+    This disclaimer may be updated from time to time by DfE, and will be deemed to have been accepted by you through your continued use of the opt-in option described.
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-7">
+    Any dispute or claim between DfE and schools arising from, or connected with, the opt-in arrangement will be resolved by appropriate officers within DfE and senior representatives of the relevant school.
+    </p>
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', check_answers_donated_devices_school_path(@school) %>
+    </p>
+  </div>
+</div>

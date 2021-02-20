@@ -35,6 +35,18 @@
       <li>request 4G wireless routers</li>
     </ul>
 
+    <% if FeatureFlag.active?(:donated_devices) && @school.who_will_order_devices == 'school' %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to t('page_titles.donated_devices.title'), interest_donated_devices_school_path(@school) %>
+      </h2>
+
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>opt in and be considered for devices donated through their scheme</li>
+        <li>set a preference for devices you want</li>
+      </ul>
+    <% end %>
+
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
     </h2>

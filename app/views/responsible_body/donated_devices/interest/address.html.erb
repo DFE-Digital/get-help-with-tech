@@ -1,0 +1,48 @@
+<%-
+  scope = 'page_titles.donated_devices.responsible_body.interest.address'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', responsible_body_donated_devices_how_many_devices_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <p class="govuk-body">
+      We share with Computacenter the following information that you provide to us:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the number of device types in which you have expressed an interest</li>
+      <li>your organisation’s name, address and URN (as available on <%= govuk_link_to 'Get Information About Schools', 'https://www.get-information-schools.service.gov.uk/', target: '_blank' %>).</li>
+    </ul>
+    <p class="govuk-body">
+      The above non-personal information is provided by Computacenter to Mail Force, who run the Computers for Kids scheme.
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>your name, email address and telephone number</li>
+    </ul>
+    <p class="govuk-body">
+      The above personal information is used by Computacenter to arrange delivery of devices to your organisation. It is not shared by DfE or Computacenter with Mail Force.
+    </p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Read more about how we use your data in our privacy policy', privacy_path, target: '_blank' %>.
+    </p>
+    <p class="govuk-body">
+      When these devices are delivered they will be addressed to you.
+    </p>
+    <p class="govuk-body">
+      For example, for <%= @request.school.name %>
+    </p>
+    <div class="govuk-inset-text">
+      <strong><%= @request.user.full_name %></strong><br/>
+      <%= @request.delivery_address %>
+    </div>
+
+    <p class="govuk-body">
+      <%= govuk_button_link_to 'Continue', responsible_body_donated_devices_disclaimer_path %>
+    </p>
+  </div>
+</div>

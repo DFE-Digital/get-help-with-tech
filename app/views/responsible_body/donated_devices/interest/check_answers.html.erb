@@ -1,0 +1,21 @@
+<%-
+  scope = 'page_titles.donated_devices.responsible_body.interest.check_answers'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', responsible_body_donated_devices_disclaimer_path, class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%= form_for @request, url: responsible_body_donated_devices_check_answers_path, method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= render DonatedDeviceRequestSummaryListComponent.new(donated_device_request: @request) %>
+      <%= f.govuk_submit 'Confirm and opt in', classes: 'govuk-link govuk-!-display-none-print' %>
+    <%- end %>
+  </div>
+</div>

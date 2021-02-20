@@ -8,6 +8,7 @@ class FeatureFlag
     secondary_mass_testing_banner
     schools_closed_for_national_lockdown
     half_term_delivery_suspension
+    donated_devices
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze

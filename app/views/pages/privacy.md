@@ -6,6 +6,10 @@ These privacy notices tell you how personal information may be used as part of t
 
 Find out how the DfE may use, access and share the personal information of those working for local authorities, academy trusts and schools on the Get help with technology programme.
 
+### [Privacy notice for the Computers for Kids initiative](/privacy/computers-for-kids-privacy-notice)
+
+Find out how the DfE may use and share the personal information of those working for local authorities, academy trusts and schools, colleges and further education institutions participating in the Computers for Kids initiative
+
 ### [Privacy notice for end users of Microsoft Windows devices](/privacy/dfe-windows-privacy-notice)
 
 Find out how the DfE may use the personal information of children, young people and families using Microsoft Intune mobile device management on Microsoft Windows laptops and tablets.

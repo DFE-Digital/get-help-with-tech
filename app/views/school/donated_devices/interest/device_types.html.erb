@@ -1,0 +1,23 @@
+<%-
+  scope = 'page_titles.donated_devices.school.interest.device_types'
+  title = t('title', scope: scope)
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content, govuk_link_to('Back', interest_confirmation_donated_devices_school_path(@school), class: 'govuk-back-link') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_for @request, url: what_devices_do_you_want_donated_devices_school_path(@school), method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_collection_check_boxes :device_types,
+                                         @request.available_device_types,
+                                         :id,
+                                         :name,
+                                         legend: {size: 'xl', text: title },
+                                         hint: {size: 'm', text: t('hint', scope: scope) } %>
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>

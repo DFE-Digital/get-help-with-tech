@@ -40,22 +40,24 @@ private
   def render(csv, query)
     csv << self.class.headings
     query.find_each do |request|
-      csv << [
-        request.id,
-        request.created_at,
-        request.school.urn,
-        request.school.computacenter_reference,
-        request.school.responsible_body.computacenter_reference,
-        request.user.full_name,
-        request.user.email_address,
-        request.user.telephone,
-        request.device_types.join(','),
-        request.units,
-      ]
+      School.where(id: request.schools).includes(:responsible_body).each do |school|
+        csv << [
+          request.id,
+          request.created_at,
+          school.urn,
+          school.computacenter_reference,
+          school.responsible_body.computacenter_reference,
+          request.user.full_name,
+          request.user.email_address,
+          request.user.telephone,
+          request.device_types.join(','),
+          request.units,
+        ]
+      end
     end
   end
 
   def donated_device_requests
-    DonatedDeviceRequest.all.includes(:user, school: :responsible_body).order(:asc)
+    DonatedDeviceRequest.complete.includes(:user).order(:asc)
   end
 end
