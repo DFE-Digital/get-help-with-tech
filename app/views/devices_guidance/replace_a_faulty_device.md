@@ -1,9 +1,3 @@
-<div class="govuk-inset-text">
-  <p class="govuk-body">
-   The service to request replacements of faulty devices is temporarily closed. We will restart this service on 22 February 2021.
-  </p>
-</div>
-
 ## Replace a faulty Google Chromebook or Microsoft device
 
 ### If it is not working within 3 days of receiving it
