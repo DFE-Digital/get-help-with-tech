@@ -20,4 +20,42 @@ describe StringUtils do
       expect(result).to eq(['banana pineapple strawberry', ''])
     end
   end
+
+  describe '#redact' do
+    context 'given a string' do
+      it 'returns an ellipsis' do
+        expect(test_class.redact('a long string')).to eq('…')
+      end
+
+      context 'and a redaction' do
+        it 'returns the redaction' do
+          expect(test_class.redact('a long string', redaction: '___XXX___')).to eq('___XXX___')
+        end
+      end
+
+      context 'and a first: N param' do
+        it 'returns the first N characters plus an ellipsis' do
+          expect(test_class.redact('a long string', first: 3)).to eq('a l…')
+        end
+
+        context 'and a last: M param' do
+          it 'returns the first N characters plus an ellipsis plus the last M characters' do
+            expect(test_class.redact('a long string', first: 1, last: 2)).to eq('a…ng')
+          end
+        end
+      end
+
+      context 'and a last: N param' do
+        it 'returns an ellipsis plus the last N characters' do
+          expect(test_class.redact('a long string', last: 3)).to eq('…ing')
+        end
+      end
+
+      context 'with first N and last M params and a redaction' do
+        it 'returns the first N characters plus the redaction plus the last M characters' do
+          expect(test_class.redact('a long string', first: 1, last: 2, redaction: '-REDACTED-')).to eq('a-REDACTED-ng')
+        end
+      end
+    end
+  end
 end

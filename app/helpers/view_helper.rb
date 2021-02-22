@@ -1,4 +1,8 @@
+require 'string_utils'
+
 module ViewHelper
+  include StringUtils
+
   def ghwt_contact_mailto(subject: nil, label: 'COVID.TECHNOLOGY@education.gov.uk')
     mail_to_url = [
       'mailto:COVID.TECHNOLOGY@education.gov.uk',
