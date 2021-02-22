@@ -37,7 +37,7 @@ private
 
   def read_file
     csv = download_to_temp_file_if_needed(@csv_uri)
-    CSV.foreach(csv, headers: true, encoding: 'CP1252') do |row|
+    CSV.foreach(csv, headers: true) do |row|
       next if skip?(row)
 
       yield row
