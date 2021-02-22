@@ -45,6 +45,13 @@ class SignInTokensController < ApplicationController
 
     if @sign_in_token_form.email_is_user?
       token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
+
+      if ENV['HEROKU'] == 'heroku'
+        user = User.find_by(email_address: @sign_in_token_form.email_address)
+        identifier = user.sign_in_identifier(user.sign_in_token)
+        flash[:success] = validate_sign_in_token_url(token: token, identifier: identifier)
+      end
+
       redirect_to sent_token_path(token: token)
     else
       redirect_to email_not_recognised_path
