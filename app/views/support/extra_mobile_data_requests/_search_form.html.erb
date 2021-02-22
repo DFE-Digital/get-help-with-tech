@@ -1,6 +1,6 @@
 <%= form_for @form, method: :get, url: support_extra_mobile_data_requests_path, as: 'emdr_search' do |f| %>
   <%= f.govuk_error_summary %>
-  <p class="govuk-body">All fields are optional - you can fill in as many or as few as you like.</p>
+  <p class="govuk-body">Search by 1 or more piece of information.</p>
   <%= f.govuk_text_field :request_id, label: {text: 'Request ID'}, size: 'm', width: 'one-quarter' %>
   <%= f.govuk_text_field :urn_or_ukprn, label: {text: 'School URN or UKPRN'}, size: 'm', width: 'one-quarter' %>
   <%= f.govuk_collection_select   :rb_id,
