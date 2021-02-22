@@ -33,7 +33,7 @@ RSpec.describe DonatedDeviceRequestsExporter, type: :model do
       CSV.read(filename, headers: true).each do |request|
         record = DonatedDeviceRequest.find(request['id'])
         school = School.find(record.schools.first)
-        expect(record.created_at.to_s).to be_within(1.second).of(request['created_at'].to_datetime)
+        expect(record.created_at.utc).to be_within(1.second).of(Time.zone.parse(request['created_at']).utc)
         expect(school.urn.to_s).to eq(request['urn'])
         expect(school.computacenter_reference).to eq(request['shipTo'])
         expect(school.responsible_body.computacenter_reference).to eq(request['soldTo'])
