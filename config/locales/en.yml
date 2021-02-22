@@ -30,7 +30,7 @@ en:
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops and tablets
     responsible_body_devices_tell_us: Tell us who will order laptops and tablets
-    responsible_body_internet_home: Get internet access
+    responsible_body_internet_home: Internet access
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
@@ -63,6 +63,9 @@ en:
     general_privacy_notice: How we look after personal information as part of the Get help with technology programme
     what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe: What to do if you cannot get laptops, tablets or internet access from DfE
     how_to_access_the_get_help_with_technology_service: How to access the Get help with technology service
+
+    guides_for_guardians_and_parents: Guides for parents, guardians, pupils and students
+
 
     support:
       home: Support
@@ -279,7 +282,7 @@ en:
       start: Get support
       describe_yourself: Which of these best describes you?
     get_support_guides:
-      title: Get support guides for laptops, tablets and 4G wireless routers
+      title: Laptops and tablets
     digital_platforms:
       title: Get funding and support to set up a digital education platform
     edtech_demonstrator_programme:
@@ -307,9 +310,8 @@ en:
       title: Preparing Microsoft Windows laptops and tablets
       description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
       audience: responsible_body_users
-      family_guidance: hello world
     getting_started_with_your_microsoft_windows_device:
-      title: Getting started with your Microsoft Windows device
+      title: How to get started with your Microsoft Windows device
       description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
       audience: device_users
     preparing_chromebooks:
@@ -317,7 +319,7 @@ en:
       description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, schools and further education institutions.
       audience: responsible_body_users
     getting_started_with_your_google_chromebook:
-      title: Getting started with your Google Chromebook
+      title: How to get started with your Google Chromebook
       description: User guidance for Google Chromebooks to share with children, young people and their carers.
       audience: device_users
     preparing_ipads:
