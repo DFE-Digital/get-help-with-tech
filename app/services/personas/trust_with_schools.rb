@@ -10,7 +10,7 @@ private
 
   def school_one
     @school_one ||= trust.schools.find_or_create_by!(name: 'George School') do |s|
-      s.urn = (School.maximum(:urn) || 0) + 1
+      s.urn = (School.maximum(:urn) || 99_999) + 1
       s.address_1 = '27 Northumberland Street'
       s.town = 'Newcastle'
       s.county = 'Tyne and Wear'
