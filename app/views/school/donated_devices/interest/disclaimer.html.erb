@@ -11,7 +11,9 @@
       <%= title %>
     </h1>
 
-    <%= render partial: 'shared/donated_devices_disclaimer', locals: { i18n_scope: scope } %>
+    <%= render partial: 'shared/donated_devices_disclaimer',
+      locals: { i18n_scope: scope,
+                privacy_notice_link: address_donated_devices_school_path(@school) } %>
 
     <p class="govuk-body">
       <%= govuk_button_link_to 'Continue', check_answers_donated_devices_school_path(@school) %>
