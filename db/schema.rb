@@ -305,7 +305,6 @@ ActiveRecord::Schema.define(version: 2021_02_19_145448) do
     t.boolean "increased_allocations_feature_flag", default: false
     t.boolean "increased_sixth_form_feature_flag", default: false
     t.boolean "increased_fe_feature_flag", default: false
-    t.boolean "hide_mno", default: false
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
     t.text "fe_type"
