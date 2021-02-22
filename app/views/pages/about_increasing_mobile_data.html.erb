@@ -25,46 +25,37 @@
       <li>cannot afford additional data for their devices </li>
       <li>are experiencing disruption to their face-to-face education</li>
     </ul>
-    
+
     <p class="govuk-body">Schools, trusts and local authorities can also make requests for children and young people who meet the criteria above, and are:</p>
-    
+
     <ul class="govuk-list govuk-list--bullet">
       <li>in any year group up to year 11 and have been advised to <a class="govuk-link" href="https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19">shield</a> because they (or someone they live with) are <a class="govuk-link" href="https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev">clinically extremely vulnerable</a></li>
       <li>in any year group up to year 11 attending a hospital school</li>
     </ul>
-    
+
     <p class="govuk-body">Mobile data increases are currently not available for:</a>
-  
+
   <ul class="govuk-list govuk-list--bullet">
       <li>children who typically receive home education (also known as 'elective home education' or 'home schooling’)</li>
       <li>care leavers who are not attending school or further education</li>
       <li>students in further education</li>
     </ul>
-  
+
   <h2 class="govuk-heading-l">Which mobile networks can increase data</h2>
 
     <p class="govuk-body">Children with access to a mobile phone on one of the following networks might be able to benefit:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>BT Mobile</li>
-      <li>EE</li>
-      <li>iD Mobile</li>
-      <li>Lycamobile</li>
-      <li>O2</li>
-      <li>Sky Mobile</li>
-      <li>SMARTY</li>
-      <li>Tesco Mobile</li>
-      <li>Three</li>
-      <li>Virgin Mobile</li>
-      <li>Vodafone</li>
+      <%- participating_mobile_networks.each do |mno| %>
+        <li><%= mno.brand %></li>
+      <%- end %>
     </ul>
 
     <p class="govuk-body">Other providers will join the scheme at a later stage.</p>
-    
 
     <h2 class="govuk-heading-l">How to request a mobile data increase</h2>
-  
-    <p class="govuk-body">Requests can only be made by someone who’s been <%= govuk_link_to 'nominated to order devices through the Get help with technology service', start_path %>.</p> 
+
+    <p class="govuk-body">Requests can only be made by someone who’s been <%= govuk_link_to 'nominated to order devices through the Get help with technology service', start_path %>.</p>
 
     <p class="govuk-body">For each request, we need to know:</p>
 
