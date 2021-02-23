@@ -2,7 +2,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   has_paper_trail
 
   after_initialize :set_defaults
-  before_save :normalise_device_phone_number
+  before_validation :normalise_device_phone_number
 
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network, optional: true # set to optional as we already validate on the presence of mobile_network_id and we don't want duplicate validation errors
