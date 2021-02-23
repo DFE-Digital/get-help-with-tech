@@ -128,6 +128,27 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
         expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
       end
     end
+
+    context 'when the device_phone_number is not normalised' do
+      let(:existing_request) do
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456789', school: school)
+      end
+
+      subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, mobile_network_id: existing_request.mobile_network_id, account_holder_name: existing_request.account_holder_name, responsible_body: nil, device_phone_number: '07123 456 789') }
+
+      before do
+        model.mobile_network_id = existing_request.mobile_network_id
+      end
+
+      it 'is invalid' do
+        expect(model.valid?).to be_falsey
+      end
+
+      it 'detects the existing record with the normalised phone number' do
+        model.valid?
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
+      end
+    end
   end
 
   describe 'validating device_phone_number' do
