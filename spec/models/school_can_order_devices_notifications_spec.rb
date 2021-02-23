@@ -264,5 +264,84 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_support_school_can_order_but_no_one_contacted', 'deliver_now', params: { school: school }, args: [])
       end
     end
+
+    context 'when a school can order routers' do
+      let(:preorder) { create(:preorder_information, :school_will_order, will_need_chromebooks: 'no') }
+      let(:school) { create(:school, :with_std_device_allocation, :with_coms_device_allocation, preorder_information: preorder, order_state: :can_order) }
+      let!(:user) do
+        create(:school_user,
+               school: school,
+               techsource_account_confirmed_at: 1.second.ago,
+               orders_devices: true)
+      end
+
+      before do
+        school.coms_device_allocation.increment!(:cap)
+        school.reload.preorder_information.refresh_status!
+      end
+
+      it 'sends notification they can order routers' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers', 'deliver_now', params: { school: school, user: user }, args: [])
+      end
+    end
+
+    context 'when an school in virtual cap can order routers' do
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let(:school) do
+        create(:school,
+               :with_std_device_allocation,
+               :with_coms_device_allocation,
+               :with_preorder_information,
+               order_state: 'can_order',
+               responsible_body: responsible_body)
+      end
+
+      before do
+        school.preorder_information.update!(who_will_order_devices: 'responsible_body', will_need_chromebooks: 'no')
+        school.coms_device_allocation.increment!(:cap)
+        school.reload
+      end
+
+      context 'user has confirmed techsource account' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 responsible_body: responsible_body,
+                 techsource_account_confirmed_at: 1.second.ago,
+                 orders_devices: true)
+        end
+
+        it 'sends notification they can order routers' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers_in_virtual_cap', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+      end
+    end
+
+    context 'when an FESchool can order routers' do
+      let(:preorder) { create(:preorder_information, :school_will_order, will_need_chromebooks: 'no') }
+      let(:school) { create(:fe_school, :with_std_device_allocation, :with_coms_device_allocation, preorder_information: preorder, order_state: :can_order) }
+      let!(:user) do
+        create(:school_user,
+               school: school,
+               techsource_account_confirmed_at: 1.second.ago,
+               orders_devices: true)
+      end
+
+      before do
+        school.responsible_body.update!(new_fe_wave: true)
+        school.coms_device_allocation.increment!(:cap)
+        school.reload.preorder_information.refresh_status!
+      end
+
+      it 'sends notification they can order routers' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers_in_fe_college', 'deliver_now', params: { school: school, user: user }, args: [])
+      end
+    end
   end
 end

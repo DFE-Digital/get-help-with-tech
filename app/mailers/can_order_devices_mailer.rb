@@ -29,6 +29,36 @@ class CanOrderDevicesMailer < ApplicationMailer
                           personalisation: personalisation)
   end
 
+  def user_can_order_routers
+    @user = params[:user]
+    @school = params[:school]
+
+    tracked_template_mail('can_order_routers',
+                          can_order_routers_devices_template_id,
+                          to: @user.email_address,
+                          personalisation: personalisation)
+  end
+
+  def user_can_order_routers_in_virtual_cap
+    @user = params[:user]
+    @school = params[:school]
+
+    tracked_template_mail('can_order_routers_in_virtual_cap',
+                          can_order_routers_in_virtual_cap_template_id,
+                          to: @user.email_address,
+                          personalisation: personalisation)
+  end
+
+  def user_can_order_routers_in_fe_college
+    @user = params[:user]
+    @school = params[:school]
+
+    tracked_template_mail('can_order_routers_in_fe_college',
+                          can_order_routers_in_fe_college_template_id,
+                          to: @user.email_address,
+                          personalisation: personalisation)
+  end
+
   def user_can_order_but_action_needed
     @user = params[:user]
     @school = params[:school]
@@ -112,5 +142,17 @@ private
 
   def notify_support_school_can_order_but_no_one_contacted_template_id
     Settings.govuk_notify.templates.devices.notify_support_school_can_order_but_no_one_contacted
+  end
+
+  def can_order_routers_devices_template_id
+    Settings.govuk_notify.templates.devices.can_order_routers
+  end
+
+  def can_order_routers_in_virtual_cap_template_id
+    Settings.govuk_notify.templates.devices.can_order_routers_in_virtual_cap
+  end
+
+  def can_order_routers_in_fe_college_template_id
+    Settings.govuk_notify.templates.devices.can_order_routers_in_fe_college
   end
 end

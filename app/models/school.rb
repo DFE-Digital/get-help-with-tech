@@ -105,6 +105,10 @@ class School < ApplicationRecord
     is_eligible_to_order? && has_devices_available_to_order?
   end
 
+  def can_order_routers_only_right_now?
+    is_eligible_to_order? && !std_device_allocation&.has_devices_available_to_order? && coms_device_allocation&.has_devices_available_to_order?
+  end
+
   def all_devices_ordered?
     is_eligible_to_order? && !has_devices_available_to_order?
   end

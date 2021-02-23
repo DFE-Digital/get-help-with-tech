@@ -49,10 +49,20 @@ private
     elsif status?('rb_can_order', 'school_can_order', school: school) && user.orders_devices? && !user.seen_privacy_notice?
       :nudge_user_to_read_privacy_policy
     elsif status?('rb_can_order', school: school) && school.responsible_body.has_virtual_cap_feature_flags? && user.in?(school.order_users_with_active_techsource_accounts)
-      :user_can_order_in_virtual_cap
+      if school.can_order_routers_only_right_now?
+        :user_can_order_routers_in_virtual_cap
+      else
+        :user_can_order_in_virtual_cap
+      end
     elsif status?('ready', 'school_ready', 'rb_can_order', 'school_can_order', school: school) && user.in?(school.order_users_with_active_techsource_accounts)
       if school.responsible_body.new_fe_wave?
-        :user_can_order_in_fe_college
+        if school.can_order_routers_only_right_now?
+          :user_can_order_routers_in_fe_college
+        else
+          :user_can_order_in_fe_college
+        end
+      elsif school.can_order_routers_only_right_now?
+        :user_can_order_routers
       else
         :user_can_order
       end
