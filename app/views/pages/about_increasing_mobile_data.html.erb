@@ -18,7 +18,7 @@
 
     <h2 class="govuk-heading-l">Who can get help</h2>
 
-    <p class="govuk-body">Schools, trusts and local authorities (ordering for maintained schools) in England can request mobile data increases for disadvantaged children and young people in years 3 to 11 who are not able to attend school due to national lockdown restrictions. They must meet all 3 of these criteria:</p>
+    <p class="govuk-body">Schools, colleges, further education institutions, trusts, and local authorities in England can request mobile data increases for disadvantaged pupils and students in years 3 to 13 and students in further education who are with a <%= govuk_link_to 'participating network', guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %>. They must meet all 3 of these criteria:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>do not have fixed broadband at home</li>
@@ -26,11 +26,11 @@
       <li>are experiencing disruption to their face-to-face education</li>
     </ul>
 
-    <p class="govuk-body">Schools, trusts and local authorities can also make requests for children and young people who meet the criteria above, and are:</p>
+    <p class="govuk-body">Schools, colleges, further education institutions, trusts, and local authorities can also make requests for children and young people who meet the criteria above, and are:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>in any year group up to year 11 and have been advised to <a class="govuk-link" href="https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19">shield</a> because they (or someone they live with) are <a class="govuk-link" href="https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev">clinically extremely vulnerable</a></li>
-      <li>in any year group up to year 11 attending a hospital school</li>
+      <li>in any year group and have been advised to <a class="govuk-link" href="https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19">shield</a> because they (or someone they live with) are <a class="govuk-link" href="https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev">clinically extremely vulnerable</a></li>
+      <li>in any year group attending a hospital school</li>
     </ul>
 
     <p class="govuk-body">Mobile data increases are currently not available for:</a>
@@ -38,12 +38,11 @@
   <ul class="govuk-list govuk-list--bullet">
       <li>children who typically receive home education (also known as 'elective home education' or 'home schooling’)</li>
       <li>care leavers who are not attending school or further education</li>
-      <li>students in further education</li>
     </ul>
 
   <h2 class="govuk-heading-l">Which mobile networks can increase data</h2>
 
-    <p class="govuk-body">Children with access to a mobile phone on one of the following networks might be able to benefit:</p>
+    <p class="govuk-body">Pupils and students with access to a mobile phone on one of the following networks might be able to benefit:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <%- participating_mobile_networks.each do |mno| %>
@@ -51,7 +50,13 @@
       <%- end %>
     </ul>
 
-    <p class="govuk-body">Other providers will join the scheme at a later stage.</p>
+    <p class="govuk-body">
+      Other providers will join the scheme at a later stage. We recommend you take a <%= govuk_link_to 'look at the further details on offers from each provider to understand what is available', guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %>.
+    </p>
+
+    <p class="govuk-body">
+      Note that O2 and giffgaff are not supporting requests for students in further education.
+    </p>
 
     <h2 class="govuk-heading-l">How to request a mobile data increase</h2>
 
@@ -68,22 +73,22 @@
 
     <p class="govuk-body">There’s an <%= govuk_link_to 'online guide to help you gather mobile information', guide_to_collecting_mobile_information_path %>.</p>
 
-    <p class="govuk-body">Schools, trusts and local authorities need to <a class="govuk-link" href="/start">submit mobile information through our online service</a>. Each provider will vary in how quickly they process requests.</p>
+    <p class="govuk-body">Schools, colleges, further education institutions, trusts and local authorities need to <a class="govuk-link" href="/start">submit mobile information to the DfE</a>. Each provider will vary in how quickly they process requests.</p>
 
-    <p class="govuk-body">Once a network provider has completed a data increase, they’ll send a text message to the account holder. It’s also possible to check the status of requests through our online service.</p>
+    <p class="govuk-body">Once a network provider has completed a data increase, they’ll send a text message to the account holder if they have opted to receive SMS alerts from their provider. It’s also possible to check the status of requests through our online service.</p>
 
     <h2 class="govuk-heading-l">
       Another option for increasing internet access
     </h2>
 
-    <p class="govuk-body">If increasing mobile data is not a suitable option for some children, or if a request for additional data is unsuccessful, schools can also <%= govuk_link_to 'request 4G wireless routers', how_to_request_4g_wireless_routers_path %>. Find out more about <%= govuk_link_to 'choosing help with internet access', choosing_help_with_internet_access_path %>.</p>
+    <p class="govuk-body">If increasing mobile data is not a suitable option for some children, or if a request for additional data is unsuccessful, schools, colleges and further education institutions can also <%= govuk_link_to 'request 4G wireless routers', how_to_request_4g_wireless_routers_path %>. Find out more about <%= govuk_link_to 'choosing help with internet access', choosing_help_with_internet_access_path %>.</p>
 
     <h2 class="govuk-heading-l">
       If you have questions
     </h2>
 
     <p class="govuk-body">
-      If you have any questions, email <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk">COVID.TECHNOLOGY@education.gov.uk</a> using the subject line ‘Increasing data allowances’.
+      If you have any questions, email <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk?subject=Increasing data allowances">COVID.TECHNOLOGY@education.gov.uk</a> using the subject line ‘Increasing data allowances’.
     </p>
   </div>
 </div>

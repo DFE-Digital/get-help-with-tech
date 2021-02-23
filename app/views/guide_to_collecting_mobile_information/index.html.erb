@@ -9,13 +9,25 @@
     <h3 class="govuk-heading-m" id="who-can-get-help">Who can get help</h3>
 
     <p class="govuk-body">
-      This scheme is open to children and young people in years 3 to 11 who:
+      This scheme is open to:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>school pupils in years 3 to 11</li>
+      <li>students in years 12 to 13 and further education</li>
+    </ul>
+
+    <p class="govuk-body">
+      It’s only available to those who:
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <%= render partial: 'shared/eligibility_points_across_bt_wifi_and_mno_offers' %>
       <li>have access to a mobile device that uses a participating network</li>
       <li>are facing disruption to their face-to-face education</li>
     </ul>
+
+    <p class="govuk-body">
+      Some providers have extra conditions and not all of them support requests for students in years 12 and 13, or for students in further education. <%= govuk_link_to 'Check the network offers',guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %> before making a request.
+    </p>
     
     <p class="govuk-body">
       If your request does not meet all of these criteria, you may be able to <%= govuk_link_to 'request a 4G wireless router', how_to_request_4g_wireless_routers_path %> instead. Find out more about <%= govuk_link_to 'choosing help with internet access', choosing_help_with_internet_access_path %>.
