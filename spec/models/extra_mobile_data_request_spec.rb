@@ -141,7 +141,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
 
       it 'is invalid' do
-        expect(model.valid?).to eql(false)
+        expect(model.valid?).to be_falsey
       end
 
       it 'detects the existing record with the normalised phone number' do
