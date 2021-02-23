@@ -46,7 +46,7 @@ class SignInTokensController < ApplicationController
     if @sign_in_token_form.email_is_user?
       token = SessionService.send_magic_link_email!(@sign_in_token_form.email_address)
 
-      if ENV['HEROKU'] == 'heroku'
+      if FeatureFlag.active?(:display_sign_in_token_links)
         user = User.find_by(email_address: @sign_in_token_form.email_address)
         identifier = user.sign_in_identifier(user.sign_in_token)
         flash[:success] = validate_sign_in_token_url(token: token, identifier: identifier)

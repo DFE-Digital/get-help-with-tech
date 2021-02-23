@@ -45,6 +45,14 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     click_on 'Continue'
     expect(page).to have_content 'Check your email'
     expect(page).not_to have_content('Sign out')
+    expect(page).not_to have_content('/token/validate?identifier=')
+  end
+
+  scenario 'when feature display_sign_in_token_links is active', with_feature_flags: { display_sign_in_token_links: 'active' } do
+    visit sign_in_path
+    fill_in('Email address', with: user.email_address)
+    click_on 'Continue'
+    expect(page).to have_content('/token/validate?identifier=')
   end
 
   context 'as a user who belongs to a responsible body' do
