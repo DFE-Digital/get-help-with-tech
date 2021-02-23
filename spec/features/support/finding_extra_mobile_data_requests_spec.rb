@@ -83,4 +83,20 @@ RSpec.describe 'Finding ExtraMobileDataRequests in support' do
       end
     end
   end
+
+  context 'as a computacenter_user' do
+    before do
+      sign_in_as computacenter_user
+    end
+
+    context 'when I visit support home' do
+      before do
+        visit support_home_path
+      end
+
+      it 'does not show me a link for Extra mobile data requests' do
+        expect(page).not_to have_link 'Find requests for extra mobile data'
+      end
+    end
+  end
 end
