@@ -1,0 +1,2 @@
+class LaFundedPlacePolicy < SchoolPolicy
+end
