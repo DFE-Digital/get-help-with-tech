@@ -1,7 +1,7 @@
 {
   "name": "get-help-with-tech",
   "scripts": {
-    "postdeploy": "RAILS_ENV=production bundle exec rake db:schema:load db:seed"
+    "postdeploy": "RAILS_ENV=production bundle exec rake db:schema:load db:seed db:personas"
   },
   "env": {
     "LANG": {
@@ -23,10 +23,14 @@
   "formation": {
     "web": {
       "quantity": 1
+    },
+    "worker": {
+      "quantity": 1
     }
   },
   "addons": [
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "heroku-redis"
   ],
   "buildpacks": [
     {
