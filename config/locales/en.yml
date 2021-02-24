@@ -70,6 +70,7 @@ en:
       schools: Schools, colleges and FE institutions
       technical_support: Technical support
       feature_flags: Feature flags
+      zendesk_statistics: Zendesk statistics
       devices:
         schools:
           search: Search for schools, colleges and FE institutions

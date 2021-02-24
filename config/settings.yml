@@ -70,7 +70,7 @@ hostname_for_urls: http://localhost:3000
 sentry:
   dsn:
 
-service_name_suffix: 
+service_name_suffix:
 
 # Sign-in tokens will expire after this many seconds
 sign_in_token_ttl_seconds: 1800
@@ -101,5 +101,6 @@ support:
   performance_data_access_token: # bearer token for support performance data
 
 zendesk:
+  url: 'https://get-help-with-tech-education.zendesk.com/api/v2'
   username:  # Zendesk user account details
   token: # API Token generated from zendesk

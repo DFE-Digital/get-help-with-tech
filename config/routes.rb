@@ -228,6 +228,8 @@ Rails.application.routes.draw do
       resources :schools_to_add, only: %i[index show update], param: :urn, path: '/schools-to-add'
       resources :schools_to_close, only: %i[index show update], param: :urn, path: '/schools-to-close'
     end
+    get '/zendesk-statistics', to: 'zendesk_statistics#index', as: :zendesk_statistics
+    get '/zendesk-statistics/macros', to: 'zendesk_statistics#macros', as: :zendesk_macros
     resources :responsible_bodies, only: %i[index show], path: '/responsible-bodies' do
       resources :users, only: %i[new create], controller: 'users'
     end

@@ -12,6 +12,7 @@ class SupportPolicy < ApplicationPolicy
   alias_method :schools?, :readable?
   alias_method :technical_support?, :editable?
   alias_method :feature_flags?, :editable?
+  alias_method :macros?, :readable?
 
   alias_method :new?, :editable?
   alias_method :create?, :editable?

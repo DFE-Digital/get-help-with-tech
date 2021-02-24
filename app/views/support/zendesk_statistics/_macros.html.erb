@@ -1,0 +1,18 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to( 'Get information about macros', support_zendesk_macros_path(format: "csv"))%>
+    </h2>
+
+    <p class="govuk-body">
+      Export this information in CSV format which can be imported into Google Sheets or some other third-party application for further analysis.
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>List of all active macros</li>
+      <li>Usage information broken down into the last 1 hour, 24hours, 7 days & 30 days.</li>
+      <li>Created/updated timestamps</li>
+      <li>Which tags are set/removed and completed replaced when a specific macro is used</li>
+    </ul>
+  </div>
+</div>
