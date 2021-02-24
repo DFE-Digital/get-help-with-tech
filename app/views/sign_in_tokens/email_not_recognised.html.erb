@@ -6,19 +6,20 @@
       <%= t('page_titles.email_not_recognised') %>
     </h1>
     <p class="govuk-body">
-      We did not recognise the email address you entered.
-      You may have mistyped it, or you may not have access.
+      If you mistyped your email address, <%= govuk_link_to 'try to sign in again', sign_in_path %>.
     </p>
-    <p class="govuk-body">
-      <%= govuk_button_link_to 'Try again', sign_in_path %>
-    </p>
-    <p class="govuk-body">
-      If you think your email address is correct and you should have access,
-      you can <%= govuk_link_to "contact our support team", support_ticket_path %>.
+
+    <h2 class="govuk-heading-m">
+      How to access this service to order laptops, tablets and internet connectivity
+    </h2>
+    <p class="govuk-body govuk-!-margin-bottom-6">
+      This service is for schools, colleges, <span class="app-no-wrap">FE institutions</span>, trusts and local authority education teams only. If you work for one of these institutions, <%= govuk_link_to 'find out how to get access', how_to_access_the_get_help_with_technology_service_path %>.
     </p>
     <h2 class="govuk-heading-m">
-      Parents, carers, pupils and students
+      Help for parents, pupils, social care workers, independent schools, and schools outside of England
     </h2>
-    <p class="govuk-body">Parents, carers, pupils and students do not have access to this service. You should contact your school, college or further education institution for help accessing remote education.</p>
+    <p class="govuk-body">
+      You cannot use this service to request support. <%= govuk_link_to 'Find out what to do if you cannot get laptops, tablets or internet access from DfE.', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path %>
+    </p>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<% content_for :title, t('page_titles.how_to_access_the_get_help_with_technology_service') %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Get help with technology" => guidance_page_path },
+                  t('page_titles.how_to_access_the_get_help_with_technology_service'),
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.how_to_access_the_get_help_with_technology_service') %>
+    </h1>
+    <p class="govuk-body">
+      You need to be invited to use this service by DfE, or someone from your <span class="app-no-wrap">state-funded</span> school, college, FE institution, trust or local authority education team who has access.
+    </p>
+    <p class="govuk-body">
+      People with access to the service can invite colleagues to use it by <span class="app-no-wrap"><%= govuk_link_to 'signing in', sign_in_path %></span> and selecting ‘Manage users’.
+    </p>
+    <p class="govuk-body">
+      If you’re not sure which colleagues can give you access, <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk?subject=Access to get help with tehcnology">contact us</a>.
+    </p>
+    <p class="govuk-body">
+      You cannot access this service with your DfE Sign-in account.
+    </p>
+  </div>
+</div>
+
