@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe 'associations' do
+    it { is_expected.to have_many(:email_audits).dependent(:destroy) }
+  end
+
   describe '#is_mno_user?' do
     it 'is true when the user is from an MNO participating in the pilot' do
       user = build(:user, mobile_network: build(:mobile_network))
