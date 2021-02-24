@@ -89,6 +89,10 @@ class User < ApplicationRecord
     school.present?
   end
 
+  def la_funded_user?
+    schools.la_funded_place.any?
+  end
+
   def has_multiple_schools?
     schools.size > 1
   end
@@ -191,7 +195,14 @@ class User < ApplicationRecord
   end
 
   def welcome_wizard_for(school)
-    school_welcome_wizards.find_by_school_id(school.id)
+    wizard = school_welcome_wizards.find_by_school_id(school.id)
+    return wizard if wizard
+
+    if school.la_funded_place?
+      school_welcome_wizards.create!(school: school, step: 'complete')
+    else
+      school_welcome_wizards.create!(school: school)
+    end
   end
 
   def schools_i_order_for

@@ -17,6 +17,7 @@ module SchoolType
       local_authority: 'local_authority',
       special: 'special',
       other_type: 'other_type',
+      la_funded_place: 'la_funded_place',
     }, _suffix: true
 
     def human_for_school_type

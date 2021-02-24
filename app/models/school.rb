@@ -46,6 +46,7 @@ class School < ApplicationRecord
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
+  scope :la_funded_place, -> { where(type: 'LaFundedPlace') }
 
   after_update :maybe_generate_user_changes
 
@@ -71,6 +72,10 @@ class School < ApplicationRecord
 
   def is_further_education?
     type == 'FurtherEducationSchool'
+  end
+
+  def la_funded_place?
+    type == 'LaFundedPlace'
   end
 
   def available_mobile_networks
