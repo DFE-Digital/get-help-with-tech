@@ -161,4 +161,26 @@ RSpec.describe ViewHelper do
       end
     end
   end
+
+  describe '#link_to_urn_otherwise_urn' do
+    context 'when school exists' do
+      before do
+        create(:school, urn: 123_456)
+      end
+
+      it 'renders link to school' do
+        output = helper.link_to_urn_otherwise_urn(123_456)
+        doc = Nokogiri::HTML(output)
+
+        expect(doc.css('a').attribute('href').value).to eql('/support/schools/123456')
+        expect(doc.css('a').text).to eql('123456')
+      end
+    end
+
+    context 'when school does not exist' do
+      it 'renders text' do
+        expect(helper.link_to_urn_otherwise_urn(123_456)).to be(123_456)
+      end
+    end
+  end
 end

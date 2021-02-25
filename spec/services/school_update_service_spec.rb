@@ -108,11 +108,13 @@ RSpec.describe SchoolUpdateService, type: :model do
     context 'when there is an existing predecessor school' do
       let(:old_staged_school) { create(:staged_school, urn: 100_001, responsible_body_name: 'Camden', status: 'closed') }
       let!(:old_school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, name: old_staged_school.name, urn: old_staged_school.urn, responsible_body: local_authority) }
+      let(:old_school_link) { create(:staged_school_link, staged_school: old_staged_school, link_urn: staged_school.urn) }
       let(:school_link) { create(:staged_school_link, :predecessor, staged_school: staged_school, link_urn: old_staged_school.urn) }
       let!(:users) { create_list(:school_user, 2, school: old_school) }
 
       before do
         school_link
+        old_school_link
         old_school.std_device_allocation.update!(allocation: 100, cap: 100, devices_ordered: 90)
         old_school.coms_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 8)
       end
@@ -138,6 +140,17 @@ RSpec.describe SchoolUpdateService, type: :model do
         old_school.reload
         expect(school.users).to match_array(users)
         expect(old_school.users).to be_empty
+      end
+
+      it 'creates school_links on new school' do
+        school = service.create_school!(staged_school)
+        expect(school.school_links.count).to be(1)
+      end
+
+      it 'creates school_links on old school' do
+        service.create_school!(staged_school)
+        old_school.reload
+        expect(old_school.school_links.count).to be(1)
       end
     end
   end
