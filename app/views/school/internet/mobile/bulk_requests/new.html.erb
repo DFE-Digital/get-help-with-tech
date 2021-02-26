@@ -28,6 +28,15 @@
       label: { text: 'Pick a spreadsheet file', size: 'm' },
       accept: Mime::Type.lookup_by_extension(:xlsx)
     %>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        <%= MobileNetwork.excluded_fe_networks.pluck(:brand).to_sentence(last_word_connector: ' and ') %> will not accept requests for students over the age of 16
+      </strong>
+    </div>
+
     <%= f.govuk_submit 'Upload requests' %>
   <%- end %>
 </div>

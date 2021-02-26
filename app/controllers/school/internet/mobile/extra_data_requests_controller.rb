@@ -1,6 +1,4 @@
 class School::Internet::Mobile::ExtraDataRequestsController < School::BaseController
-  before_action { not_found if @school.hide_mno? }
-
   def index
     @pagination, @extra_mobile_data_requests = pagy(@school.extra_mobile_data_requests.order(:created_at))
     @statuses_with_descriptions = statuses_with_descriptions

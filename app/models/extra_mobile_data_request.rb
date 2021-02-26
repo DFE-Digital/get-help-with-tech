@@ -19,6 +19,7 @@ class ExtraMobileDataRequest < ApplicationRecord
 
   validate :validate_school_or_rb_present
   validate :validate_request_uniqueness, on: :create
+  validate :validate_network_permits_fe
 
   enum status: {
     new: 'new',
@@ -108,6 +109,12 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
 private
+
+  def validate_network_permits_fe
+    if school&.hide_mno? && MobileNetwork.excluded_fe_networks.include?(mobile_network)
+      errors.add(:mobile_network, "#{mobile_network.brand} do not accept requests for students over the age of 16")
+    end
+  end
 
   def validate_school_or_rb_present
     if school_id.blank? && responsible_body_id.blank?
