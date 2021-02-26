@@ -19,4 +19,17 @@ RSpec.feature 'View pages', type: :feature do
     expect(page).to have_http_status(:ok)
     expect(page).to have_selector 'h1', text: 'How to request 4G wireless routers'
   end
+
+  routes = Rails.application.routes.routes.routes.filter { |r| r.defaults[:controller] == 'pages' }.map { |r| r.path.spec.to_s }
+  routes.shift
+  routes.map! { |r| r[0..-11] }
+
+  routes.each do |route|
+    scenario "viewing #{route}" do
+      visit route
+
+      expect(page).to have_http_status(:ok)
+      expect(page).to have_selector 'h1'
+    end
+  end
 end
