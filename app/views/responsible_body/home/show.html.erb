@@ -1,11 +1,16 @@
 <%= render partial: 'shared/banners/responsible_body' %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl"><%= @responsible_body.name %></span>
       <%= t('page_titles.responsible_body_home') %>
     </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to 'Get laptops and tablets', responsible_body_devices_path %>
@@ -46,4 +51,5 @@
       <li>set up accounts for your <%= @responsible_body.humanized_type %> to order devices</li>
     </ul>
   </div>
+  <%= render partial: 'shared/link_to_survey' %>
 </div>

@@ -7,11 +7,15 @@
 <%= render partial: 'shared/banners/school' %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
     </h2>
@@ -78,4 +82,5 @@
       <li>set which accounts can use TechSource and use the <span class="app-no-wrap">Support Portal</span></li>
     </ul>
   </div>
+  <%= render partial: 'shared/link_to_survey' %>
 </div>

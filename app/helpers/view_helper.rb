@@ -181,6 +181,10 @@ module ViewHelper
     end
   end
 
+  def user_feedback_link
+    govuk_link_to 'Complete a survey', 'https://docs.google.com/forms/d/e/1FAIpQLSd9g4jlGTXM6FLOxgfyEIoAWZuhAweL7A6kx5qhDYpwguznAg/viewform?usp=sf_link'
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

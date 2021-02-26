@@ -60,16 +60,13 @@
       </div>
     </header>
     <div class="govuk-width-container">
-      <div class="govuk-phase-banner">
-        <p class="govuk-phase-banner__content">
-          <strong class="govuk-tag govuk-phase-banner__content__tag">
-            alpha
-          </strong>
-          <span class="govuk-phase-banner__text">
-            This is a new service – your <%= ghwt_contact_mailto(label: "feedback", subject: "Feedback") %> will help us to improve it.
-          </span>
-        </p>
-      </div>
+      <%= render GovukComponent::PhaseBanner.new(phase: 'Alpha') do
+        if current_user.persisted? && (current_user.is_responsible_body_user? || current_user.is_school_user?)
+          "#{t('user_feedback')} – #{user_feedback_link}".html_safe
+        else
+          "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
+        end
+      end %>
       <%= content_for(:before_content) %>
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <%= render partial: "shared/banners/global_notice_banner" if @show_parent_carer_pupil_banner %>
@@ -88,6 +85,7 @@
                 <a class="govuk-footer__link" href="<%= support_ticket_path %>">
                   Contact us
                 </a>
+
               </li>
               <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link" href="<%= accessibility_path %>">
