@@ -55,7 +55,7 @@
     </p>
 
     <p class="govuk-body">
-      Note that O2 and giffgaff are not supporting requests for students in further education.
+      Note that <%= MobileNetwork.excluded_fe_networks.pluck(:brand).to_sentence(last_word_connector: ' and ') %> are not currently supporting requests for students in further education.
     </p>
 
     <h2 class="govuk-heading-l">How to request a mobile data increase</h2>
@@ -67,7 +67,7 @@
     <ul class="govuk-list govuk-list--bullet">
       <li>the name of the mobile phone account holder</li>
       <li>the number of the mobile device</li>
-      <li>the mobile network of that device (for example Three)</li>
+      <li>the mobile network of that device (for example EE)</li>
       <li>whether they pay monthly or pay as they go</li>
     </ul>
 
