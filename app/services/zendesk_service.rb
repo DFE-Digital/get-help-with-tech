@@ -1,5 +1,5 @@
 class ZendeskService
-  attr_accessor :ticket
+  attr_accessor :support_ticket
 
   CUSTOM_FIELD_IDS = {
     contact_form: '360011490478',
@@ -10,29 +10,29 @@ class ZendeskService
   }.freeze
 
   class << self
-    def send!(ticket)
-      new(ticket).send!
+    def send!(support_ticket)
+      new(support_ticket).send!
     end
   end
 
-  def initialize(ticket)
-    @ticket = ticket
+  def initialize(support_ticket)
+    @support_ticket = support_ticket
   end
 
   def send!
     ZendeskAPI::Request.create!(
       client,
-      requester: { email: ticket['email_address'], name: ticket['full_name'] },
-      subject: ticket['subject'],
+      requester: { email: support_ticket.email_address, name: support_ticket.full_name },
+      subject: support_ticket.subject,
       comment: {
-        body: ticket['message'],
+        body: support_ticket.message,
       },
       custom_fields: [
         { id: CUSTOM_FIELD_IDS[:contact_form], value: 'contact_form' },
-        { id: CUSTOM_FIELD_IDS[:user_type], value: ticket['user_type'] },
-        { id: CUSTOM_FIELD_IDS[:support_topics], value: ticket['support_topics'] },
-        { id: CUSTOM_FIELD_IDS[:telephone_number], value: ticket['telephone_number'] },
-        { id: CUSTOM_FIELD_IDS[:user_profile_path], value: ticket['user_profile_path'] },
+        { id: CUSTOM_FIELD_IDS[:user_type], value: support_ticket.user_type },
+        { id: CUSTOM_FIELD_IDS[:support_topics], value: support_ticket.support_topics },
+        { id: CUSTOM_FIELD_IDS[:telephone_number], value: support_ticket.telephone_number },
+        { id: CUSTOM_FIELD_IDS[:user_profile_path], value: support_ticket.user_profile_path },
       ],
     )
   end

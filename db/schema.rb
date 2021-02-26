@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_145448) do
+ActiveRecord::Schema.define(version: 2021_02_25_165034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -374,6 +374,30 @@ ActiveRecord::Schema.define(version: 2021_02_19_145448) do
     t.index ["status"], name: "index_staged_trusts_on_status"
   end
 
+  create_table "support_tickets", force: :cascade do |t|
+    t.bigint "user_id"
+    t.text "session_id", null: false
+    t.text "user_type"
+    t.text "user_profile_path"
+    t.text "full_name"
+    t.text "email_address"
+    t.text "telephone_number"
+    t.text "school_name"
+    t.text "school_unique_id"
+    t.text "school_urn"
+    t.text "academy_name"
+    t.text "college_name"
+    t.text "college_ukprn"
+    t.text "local_authority_name"
+    t.text "support_topics", default: [], array: true
+    t.text "message"
+    t.text "zendesk_ticket_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_support_tickets_on_session_id"
+    t.index ["user_id"], name: "index_support_tickets_on_user_id"
+  end
+
   create_table "user_schools", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "school_id"
@@ -447,5 +471,6 @@ ActiveRecord::Schema.define(version: 2021_02_19_145448) do
   add_foreign_key "school_virtual_caps", "virtual_cap_pools"
   add_foreign_key "school_welcome_wizards", "users", column: "invited_user_id"
   add_foreign_key "schools", "responsible_bodies"
+  add_foreign_key "support_tickets", "users"
   add_foreign_key "virtual_cap_pools", "responsible_bodies"
 end

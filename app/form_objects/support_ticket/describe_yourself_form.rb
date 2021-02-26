@@ -26,4 +26,10 @@ class SupportTicket::DescribeYourselfForm
   def selected_option_label(selected_value)
     OPTIONS[selected_value.to_sym]
   end
+
+  def to_params
+    {
+      user_type: user_type,
+    }
+  end
 end

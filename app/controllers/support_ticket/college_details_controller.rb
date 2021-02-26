@@ -2,18 +2,21 @@ class SupportTicket::CollegeDetailsController < SupportTicket::BaseController
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @form ||= SupportTicket::CollegeDetailsForm.new(set_params)
+    @form ||= SupportTicket::CollegeDetailsForm.new(existing_params)
     render 'support_tickets/college_details'
   end
 
   def save
-    if form.valid?
-      session[:support_ticket].merge!({
-        college_name: form.college_name,
-        college_ukprn: form.college_ukprn,
-        school_name: form.college_name,
-        school_unique_id: form.college_ukprn,
-      })
+    @form ||= SupportTicket::CollegeDetailsForm.new(college_details_params)
+
+    if @form.valid?
+      support_ticket.update!(
+        college_name: @form.college_name,
+        college_ukprn: @form.college_ukprn,
+        school_name: @form.college_name,
+        school_unique_id: @form.college_ukprn,
+      )
+
       redirect_to next_step
     else
       render 'support_tickets/college_details'
@@ -22,18 +25,14 @@ class SupportTicket::CollegeDetailsController < SupportTicket::BaseController
 
 private
 
-  def form
-    @form ||= SupportTicket::CollegeDetailsForm.new(college_details_params)
+  def college_details_params
+    params.require(:support_ticket_college_details_form).permit(:college_name, :college_ukprn)
   end
 
-  def college_details_params(opts = params)
-    opts.fetch(:support_ticket_college_details_form, {}).permit(:college_name, :college_ukprn)
-  end
-
-  def set_params
+  def existing_params
     {
-      college_name: session[:support_ticket]['college_name'],
-      college_ukprn: session[:support_ticket]['college_ukprn'],
+      college_name: support_ticket.college_name,
+      college_ukprn: support_ticket.college_ukprn,
     }
   end
 

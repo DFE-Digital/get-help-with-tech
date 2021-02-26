@@ -2,13 +2,15 @@ class SupportTicket::SupportDetailsController < SupportTicket::BaseController
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @form ||= SupportTicket::SupportDetailsForm.new(set_params)
+    @form ||= SupportTicket::SupportDetailsForm.new(existing_params)
     render 'support_tickets/support_details'
   end
 
   def save
-    if form.valid?
-      session[:support_ticket].merge!({ message: form.message })
+    @form ||= SupportTicket::SupportDetailsForm.new(support_details_params)
+
+    if @form.valid?
+      support_ticket.update!(message: @form.message)
       redirect_to next_step
     else
       render 'support_tickets/support_details'
@@ -17,17 +19,13 @@ class SupportTicket::SupportDetailsController < SupportTicket::BaseController
 
 private
 
-  def form
-    @form ||= SupportTicket::SupportDetailsForm.new(support_details_params)
+  def support_details_params
+    params.require(:support_ticket_support_details_form).permit(:message)
   end
 
-  def support_details_params(opts = params)
-    opts.fetch(:support_ticket_support_details_form, {}).permit(:message)
-  end
-
-  def set_params
+  def existing_params
     {
-      message: session[:support_ticket]['message'],
+      message: support_ticket.message,
     }
   end
 

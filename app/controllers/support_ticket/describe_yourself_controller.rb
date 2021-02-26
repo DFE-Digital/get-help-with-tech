@@ -1,12 +1,14 @@
 class SupportTicket::DescribeYourselfController < SupportTicket::BaseController
   def new
-    @form ||= SupportTicket::DescribeYourselfForm.new(set_params)
+    @form ||= SupportTicket::DescribeYourselfForm.new(form_params)
     render 'support_tickets/describe_yourself'
   end
 
   def save
-    if form.valid?
-      session[:support_ticket] = { user_type: form.user_type }
+    @form ||= SupportTicket::DescribeYourselfForm.new(describe_yourself_params)
+
+    if @form.valid?
+      support_ticket.update!(@form.to_params)
       redirect_to next_step
     else
       render 'support_tickets/describe_yourself'
@@ -15,22 +17,16 @@ class SupportTicket::DescribeYourselfController < SupportTicket::BaseController
 
 private
 
-  def form
-    @form ||= SupportTicket::DescribeYourselfForm.new(describe_yourself_params)
+  def describe_yourself_params
+    params.require(:support_ticket_describe_yourself_form).permit(:user_type)
   end
 
-  def describe_yourself_params(opts = params)
-    opts.fetch(:support_ticket_describe_yourself_form, {}).permit(:user_type)
-  end
-
-  def set_params
-    if session[:support_ticket].present? && session[:support_ticket]['user_type'].present?
-      { user_type: session[:support_ticket]['user_type'] }
-    end
+  def form_params
+    { user_type: support_ticket.user_type }
   end
 
   def next_step
-    case form.user_type
+    case @form.user_type
     when 'school_or_single_academy_trust'
       support_ticket_school_details_path
     when 'multi_academy_trust'

@@ -2,17 +2,20 @@ class SupportTicket::LocalAuthorityDetailsController < SupportTicket::BaseContro
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @form ||= SupportTicket::LocalAuthorityDetailsForm.new(set_params)
+    @form ||= SupportTicket::LocalAuthorityDetailsForm.new(existing_params)
     render 'support_tickets/local_authority_details'
   end
 
   def save
-    if form.valid?
-      session[:support_ticket].merge!({
-        local_authority_name: form.local_authority_name,
-        school_name: form.local_authority_name,
+    @form ||= SupportTicket::LocalAuthorityDetailsForm.new(local_authority_details_params)
+
+    if @form.valid?
+      support_ticket.update!(
+        local_authority_name: @form.local_authority_name,
+        school_name: @form.local_authority_name,
         school_unique_id: '',
-      })
+      )
+
       redirect_to next_step
     else
       render 'support_tickets/local_authority_details'
@@ -21,17 +24,13 @@ class SupportTicket::LocalAuthorityDetailsController < SupportTicket::BaseContro
 
 private
 
-  def form
-    @form ||= SupportTicket::LocalAuthorityDetailsForm.new(local_authority_details_params)
+  def local_authority_details_params
+    params.require(:support_ticket_local_authority_details_form).permit(:local_authority_name)
   end
 
-  def local_authority_details_params(opts = params)
-    opts.fetch(:support_ticket_local_authority_details_form, {}).permit(:local_authority_name)
-  end
-
-  def set_params
+  def existing_params
     {
-      local_authority_name: session[:support_ticket]['local_authority_name'],
+      local_authority_name: support_ticket.local_authority_name,
     }
   end
 

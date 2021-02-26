@@ -1,6 +1,4 @@
 class SupportTicket::BaseController < ApplicationController
-  before_action :set_support_ticket
-
   def start
     render 'support_tickets/start'
   end
@@ -16,12 +14,10 @@ class SupportTicket::BaseController < ApplicationController
 private
 
   def require_support_ticket_data!
-    redirect_to support_ticket_path if session[:support_ticket].blank?
+    redirect_to support_ticket_path unless support_ticket.started?
   end
 
-  def set_support_ticket
-    return unless session[:support_ticket]
-
-    @support_ticket = SupportTicket.new(params: session[:support_ticket])
+  def support_ticket
+    @support_ticket ||= SupportTicket.find_or_create_by!(session_id: session.id.to_s)
   end
 end
