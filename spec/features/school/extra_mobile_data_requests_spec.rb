@@ -238,6 +238,21 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
+      context 'when the request is problem_duplicate' do
+        let(:status) { 'problem_duplicate' }
+
+        it 'shows status duplicate' do
+          expect(page).to have_css('#request-status', text: 'Duplicate request')
+        end
+
+        it 'shows a panel with more info about the problem' do
+          expect(page).to have_content("#{request.mobile_network.brand} told us this is a duplicate request")
+          expect(page).to have_content('the correct account holder was given')
+          expect(page).to have_content('the number was typed correctly')
+          expect(page).to have_content('the correct mobile network was provided')
+        end
+      end
+
       context 'when the request is problem_other' do
         let(:status) { 'problem_other' }
 

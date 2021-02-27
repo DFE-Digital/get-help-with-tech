@@ -49,6 +49,17 @@
         <%= govuk_link_to('Make new request', responsible_body_internet_mobile_extra_data_requests_type_path) %>
       <%- end %>
     </div>
+    <%- elsif @extra_mobile_data_request.problem_duplicate_status? %>
+      <div class="govuk-inset-text">
+        <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> told us this is a duplicate request</h2>
+
+        <p class="govuk-body">Check the following:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the correct account holder was given</li>
+          <li>the number was typed correctly</li>
+          <li>the correct mobile network was provided</li>
+        </ul>
+      </div>
   <%- elsif @extra_mobile_data_request.problem_other_status? %>
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> couldn’t process this request</h2>

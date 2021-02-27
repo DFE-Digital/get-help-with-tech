@@ -25,6 +25,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
         'problem_no_match_for_account_name',
         'problem_no_match_for_number',
         'problem_not_eligible',
+        'problem_duplicate',
         'problem_other',
       )
     end
