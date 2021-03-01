@@ -117,3 +117,21 @@ logs: set_cf_target
 
 logs-recent: set_cf_target
 	cf logs --recent $(APP_NAME)-$(env_stub)
+
+setup_scp_params: set_cf_target
+	$(eval export PROCESS ?= 'sidekiq')
+	$(eval export INSTANCE ?= '0')
+	$(eval export sshpass = $(shell (cf ssh-code)))
+	$(eval export app_guid = $(shell (cf app $(APP_NAME)-$(env_stub) --guid)))
+	$(eval export process_guid=$(shell (cf curl /v3/apps/$(app_guid)/processes | jq -r '.resources | map(select(.type == "$(PROCESS)") | .guid)[$(INSTANCE)]')))
+	@echo "\n\n*** Enter ${sshpass} at the password prompt (this is a one-time-only password) ***\n"
+
+download: setup_scp_params
+	@test ${REMOTE_PATH} || (echo ">> REMOTE_PATH is not set (${REMOTE_PATH})- please use make (env) download REMOTE_PATH=(some path to download from) LOCAL_PATH=(path to download to) PROCESS=(process name - defaults to sidekiq) INSTANCE=(instance number - defaults to 0)"; exit 1)
+	@test ${LOCAL_PATH} || (echo ">> FROM is not set (${FROM})- please use make (env) download REMOTE_PATH=(some path to download from) LOCAL_PATH=(path to download to) PROCESS=(process name - defaults to sidekiq) INSTANCE=(instance number - defaults to 0)"; exit 1)
+	scp -P 2222 -o StrictHostKeyChecking=no -o User=cf:${process_guid}/0 ssh.london.cloud.service.gov.uk:$(REMOTE_PATH) $(LOCAL_PATH)
+
+upload: setup_scp_params
+	@test ${REMOTE_PATH} || (echo ">> REMOTE_PATH is not set (${REMOTE_PATH})- please use make (env) upload REMOTE_PATH=(remote path to upload to) LOCAL_PATH=(local path to upload from) PROCESS=(process name - defaults to sidekiq) INSTANCE=(instance number - defaults to 0)"; exit 1)
+	@test ${LOCAL_PATH} || (echo ">> FROM is not set (${FROM})- please use make (env) upload REMOTE_PATH=(remote path to upload to) LOCAL_PATH=(local path to upload from) PROCESS=(process name - defaults to sidekiq) INSTANCE=(instance number - defaults to 0)"; exit 1)
+	scp -P 2222 -o StrictHostKeyChecking=no -o User=cf:${process_guid}/0 $(LOCAL_PATH) ssh.london.cloud.service.gov.uk:$(REMOTE_PATH)
