@@ -28,10 +28,14 @@ RSpec.describe Support::ResponsibleBodiesController, type: :controller do
       sign_in_as user
     end
 
-    it 'excludes closed schools' do
+    it 'includes open schools in the schools collection' do
       get :show, params: { id: rb.id }
-      expect(assigns(:schools)).to include(school)
-      expect(assigns(:schools)).to include(closed_school)
+      expect(assigns(:schools)).to match_array [school]
+    end
+
+    it 'includes closed schools in the closed_schools collection' do
+      get :show, params: { id: rb.id }
+      expect(assigns(:closed_schools)).to match_array [closed_school]
     end
   end
 end

@@ -22,6 +22,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
       then_i_can_see_the_users_assigned_to_that_responsible_body
       and_i_can_see_the_schools_managed_by_that_responsible_body
+      and_i_can_see_the_closed_schools_managed_by_that_responsible_body
     end
 
     scenario 'Computacenter users see the on-boarded responsible bodies and stats about them' do
@@ -34,6 +35,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
       then_i_only_see_the_users_assigned_to_that_responsible_body_who_have_seen_the_privacy_notice
       and_i_can_see_the_schools_managed_by_that_responsible_body
+      and_i_can_see_the_closed_schools_managed_by_that_responsible_body
     end
   end
 
@@ -49,6 +51,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
         and_i_can_see_a_mix_of_centrally_managed_and_devolved_schools_by_that_responsible_body
         and_i_see_details_of_some_of_the_centrally_managed_schools_in_the_responsible_body
+        and_i_can_see_the_closed_schools_in_the_responsible_body
       end
 
       scenario 'Computacenter users see the centrally managed schools' do
@@ -62,6 +65,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
         then_i_only_see_the_users_assigned_to_that_responsible_body_who_have_seen_the_privacy_notice
         and_i_can_see_a_mix_of_centrally_managed_and_devolved_schools_by_that_responsible_body
         and_i_see_details_of_some_of_the_centrally_managed_schools_in_the_responsible_body
+        and_i_can_see_the_closed_schools_in_the_responsible_body
       end
     end
 
@@ -76,6 +80,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
         and_i_can_see_the_schools_that_are_all_centrally_managed_by_that_responsible_body
         and_i_see_details_of_all_the_centrally_managed_schools_in_the_responsible_body
+        and_i_can_see_the_closed_schools_in_the_responsible_body
       end
 
       scenario 'Computacenter users see the centrally managed schools' do
@@ -89,6 +94,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
         then_i_only_see_the_users_assigned_to_that_responsible_body_who_have_seen_the_privacy_notice
         and_i_can_see_the_schools_that_are_all_centrally_managed_by_that_responsible_body
         and_i_see_details_of_all_the_centrally_managed_schools_in_the_responsible_body
+        and_i_can_see_the_closed_schools_in_the_responsible_body
       end
     end
   end
@@ -150,6 +156,17 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
            urn: 123_456,
            name: 'Beta Secondary School',
            responsible_body: local_authority)
+
+    closed = create(:school, :secondary,
+                    :with_std_device_allocation, :with_coms_device_allocation,
+                    urn: 111_222,
+                    name: 'The Closed Institute',
+                    status: 'closed',
+                    responsible_body: local_authority)
+    closed.std_device_allocation.update!(allocation: 10, cap: 2, devices_ordered: 2)
+    closed.coms_device_allocation.update!(allocation: 4, cap: 4, devices_ordered: 4)
+    create(:preorder_information, :school_will_order, school: closed)
+    closed.users << create(:user)
   end
 
   def and_it_has_some_centrally_managed_schools
@@ -172,8 +189,21 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     )
     alpha.can_order!
 
+    closed = create(:school, :secondary,
+                    :with_std_device_allocation, :with_coms_device_allocation,
+                    urn: 111_222,
+                    name: 'The Closed Institute',
+                    responsible_body: local_authority_managing_centrally)
+    closed.std_device_allocation.update!(allocation: 10, cap: 2, devices_ordered: 2)
+    closed.coms_device_allocation.update!(allocation: 4, cap: 4, devices_ordered: 0)
+    create(:preorder_information, :rb_will_order, school: closed)
+    closed.can_order!
+
     local_authority_managing_centrally.add_school_to_virtual_cap_pools!(alpha)
+    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(closed)
     local_authority_managing_centrally.calculate_virtual_caps!
+
+    closed.gias_status_closed!
 
     # Devolved:
     beta = create(:school, :secondary,
@@ -233,11 +263,23 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
       devices_ordered: 0,
     )
 
+    closed = create(:school, :secondary,
+                    :with_std_device_allocation, :with_coms_device_allocation,
+                    urn: 111_222,
+                    name: 'The Closed Institute',
+                    responsible_body: local_authority_managing_centrally)
+    closed.std_device_allocation.update!(allocation: 10, cap: 2, devices_ordered: 2)
+    closed.coms_device_allocation.update!(allocation: 4, cap: 4, devices_ordered: 0)
+    create(:preorder_information, :rb_will_order, school: closed)
+
     alpha.can_order!
     beta.can_order!
+    closed.can_order!
     local_authority_managing_centrally.add_school_to_virtual_cap_pools!(alpha)
     local_authority_managing_centrally.add_school_to_virtual_cap_pools!(beta)
+    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(closed)
 
+    closed.gias_status_closed!
     local_authority_managing_centrally.calculate_virtual_caps!
   end
 
@@ -314,6 +356,25 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     expect(second_row).to have_text('School')
   end
 
+  def and_i_can_see_the_closed_schools_managed_by_that_responsible_body
+    expect(responsible_body_page.closed_school_rows.size).to eq(1)
+
+    first_row = responsible_body_page.closed_school_rows[0]
+    expect(first_row).to have_text('The Closed Institute (111222)')
+    expect(first_row).to have_text('Not applicable')
+    # devices
+    expect(first_row).to have_text('10 allocated')
+    expect(first_row).to have_text('2 caps')
+    expect(first_row).to have_text('2 ordered')
+    # dongles
+    expect(first_row).to have_text('4 allocated')
+    expect(first_row).to have_text('4 caps')
+    expect(first_row).to have_text('4 ordered')
+    expect(first_row).to have_text('School or college')
+    # users
+    expect(first_row).to have_text('1 user')
+  end
+
   # some:
   def and_i_can_see_a_mix_of_centrally_managed_and_devolved_schools_by_that_responsible_body
     expect(responsible_body_page.school_rows.size).to eq(2)
@@ -350,8 +411,27 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     stats = responsible_body_page.centrally_managed_stats
 
     expect(stats[0]).to have_text('manages ordering for 1 of 2 of its schools')
-    expect(stats[1]).to have_text('has 2 devices and 2 routers available')
-    expect(stats[2]).to have_text('has ordered 1 device and 0 routers')
+    expect(stats[1]).to have_text('has 2 devices and 6 routers available')
+    expect(stats[2]).to have_text('has ordered 3 devices and 0 routers')
+  end
+
+  def and_i_can_see_the_closed_schools_in_the_responsible_body
+    expect(responsible_body_page.closed_school_rows.size).to eq(1)
+
+    first_row = responsible_body_page.closed_school_rows[0]
+    expect(first_row).to have_text('The Closed Institute (111222)')
+    expect(first_row).to have_text('In pool')
+    # devices
+    expect(first_row).to have_text('10 allocated')
+    expect(first_row).to have_text('2 caps')
+    expect(first_row).to have_text('2 ordered')
+    # dongles
+    expect(first_row).to have_text('4 allocated')
+    expect(first_row).to have_text('4 caps')
+    expect(first_row).to have_text('0 ordered')
+    expect(first_row).to have_text('Trust')
+    # users
+    expect(first_row).to have_text('No users')
   end
 
   # all:
@@ -389,7 +469,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     stats = responsible_body_page.centrally_managed_stats
 
     expect(stats[0]).to have_text('manages ordering for all of its schools')
-    expect(stats[1]).to have_text('has 4 devices and 4 routers available')
-    expect(stats[2]).to have_text('has ordered 2 devices and 0 routers')
+    expect(stats[1]).to have_text('has 4 devices and 8 routers available')
+    expect(stats[2]).to have_text('has ordered 4 devices and 0 routers')
   end
 end
