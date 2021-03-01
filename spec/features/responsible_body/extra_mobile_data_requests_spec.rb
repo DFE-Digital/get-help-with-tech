@@ -235,7 +235,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
         end
 
         it 'shows a panel with more info about the problem' do
-          expect(page).to have_content("#{request.mobile_network.brand} couldn’t process this request")
+          expect(page).to have_content("#{request.mobile_network.brand} could not process this request")
           expect(page).to have_content('They did not give a reason why')
           expect(page).to have_link('4G wireless router instead')
         end

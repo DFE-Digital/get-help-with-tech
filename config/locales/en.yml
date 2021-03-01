@@ -627,7 +627,7 @@ en:
           problem_no_match_for_number:
             tag_label: Unknown number
             dropdown_label: Problem – No account with this number
-            mno_user_description: We couldn’t find an account with this number
+            mno_user_description: We could not find an account with this number
             school_or_rb_user_description: No account was found with number given
           problem_not_eligible:
             tag_label: Not eligible
@@ -642,7 +642,7 @@ en:
           problem_no_match_for_account_name:
             tag_label: Unknown name
             dropdown_label: Problem – No account with this name
-            mno_user_description: We couldn’t find an account with this name
+            mno_user_description: We could not find an account with this name
             school_or_rb_user_description: No account was found with name given
           problem_no_longer_on_network:
             tag_label: Not on network
