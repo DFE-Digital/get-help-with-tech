@@ -70,6 +70,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
   end
   schools.each do |school|
     school.reload
+    school.preorder_information.refresh_status!
     expect(school.preorder_information.status).to eq(preorder_status)
   end
   schools.count == 1 ? schools.first : schools
