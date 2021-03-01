@@ -209,7 +209,7 @@ en:
             title: Which of these device types would you accept?
             hint: Select all devices types that you would use.
           how_many_devices:
-            title: How many devices does each school or college want?      
+            title: How many devices does each school or college want?
           address:
             title: How your details will be shared and associated with each delivery
           disclaimer:
@@ -224,7 +224,7 @@ en:
     school_details: Check your organisation’s details
     school_edit_chromebooks: Will you need to order Chromebooks?
     school_users: Manage users
-    school_before_can_order: Before you can order, we need more information  
+    school_before_can_order: Before you can order, we need more information
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet
@@ -625,7 +625,7 @@ en:
           problem_no_match_for_number:
             tag_label: Unknown number
             dropdown_label: Problem – No account with this number
-            mno_user_description: We couldn’t find an account with this number
+            mno_user_description: We could not find an account with this number
             school_or_rb_user_description: No account was found with number given
           problem_not_eligible:
             tag_label: Not eligible
@@ -640,13 +640,18 @@ en:
           problem_no_match_for_account_name:
             tag_label: Unknown name
             dropdown_label: Problem – No account with this name
-            mno_user_description: We couldn’t find an account with this name
+            mno_user_description: We could not find an account with this name
             school_or_rb_user_description: No account was found with name given
           problem_no_longer_on_network:
             tag_label: Not on network
             dropdown_label: Problem – Not on network
             mno_user_description: This account is no longer on our network
             school_or_rb_user_description: The network reported this account was now with a different network
+          problem_duplicate:
+            tag_label: Duplicate request
+            dropdown_label: Problem – Duplicate request
+            mno_user_description: This is a duplicate of another request
+            school_or_rb_user_description: The network reported this was a duplicate request
           problem_other:
             tag_label: Other problem
             dropdown_label: Problem – Other
