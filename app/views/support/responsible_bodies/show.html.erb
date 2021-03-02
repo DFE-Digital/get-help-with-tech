@@ -132,8 +132,6 @@
             </thead>
             <tbody class="govuk-table__body">
               <% @closed_schools.each do |school| %>
-                <%- school_in_virtual_pool = @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
-
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.human_for_school_type %></td>
                   <td class="govuk-table__cell">
