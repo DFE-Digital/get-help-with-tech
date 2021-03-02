@@ -38,7 +38,11 @@ module Computacenter
     end
 
     def computacenter_attributes
-      attributes.symbolize_keys.select { |k, _| CSV_ATTRIBUTES.include?(k) }
+      cc_attrs = attributes.symbolize_keys
+
+      cc_attrs.except!(:cc_rb_user, :original_cc_rb_user) unless FeatureFlag.active?(:rb_level_access_notification)
+
+      cc_attrs.select { |k, _| CSV_ATTRIBUTES.include?(k) }
     end
 
     def add_original_fields_from(change)

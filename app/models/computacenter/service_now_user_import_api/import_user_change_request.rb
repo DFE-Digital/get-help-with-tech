@@ -47,7 +47,7 @@ module Computacenter
       end
 
       def construct_body
-        {
+        body = {
           u_email: user_change.email_address,
           u_type_of_update: user_change.type_of_update,
           u_cc_sold_to_number: user_change.cc_sold_to_number,
@@ -62,7 +62,6 @@ module Computacenter
           u_telephone: user_change.telephone,
           u_timestamp_of_update: user_change.updated_at_timestamp.utc.iso8601,
           u_time_of_update: user_change.updated_at_timestamp.utc.strftime('%R %z'),
-          u_rb_user: user_change.cc_rb_user,
           u_original_email: user_change.original_email_address,
           u_original_cc_sold_to_number: user_change.original_cc_sold_to_number,
           u_original_first_name: user_change.original_first_name,
@@ -73,8 +72,16 @@ module Computacenter
           u_original_school: user_change.original_school,
           u_original_school_urn: user_change.original_school_urn,
           u_original_telephone: user_change.original_telephone,
-          u_original_rb_user: user_change.original_cc_rb_user,
-        }.to_json
+        }
+
+        if FeatureFlag.active?(:rb_level_access_notification)
+          body.merge!({
+            u_rb_user: user_change.cc_rb_user,
+            u_original_rb_user: user_change.original_cc_rb_user,
+          })
+        end
+
+        body.to_json
       end
 
       def setting(name)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest do
+RSpec.shared_examples 'a user change request' do |feature_flags|
   let(:user_change) { create(:user_change, :school_user) }
   let(:request) { described_class.new(user_change: user_change) }
 
@@ -26,43 +26,13 @@ RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest d
   end
   let(:mock_status) { instance_double(HTTP::Response::Status, code: 200, success?: true) }
   let(:mock_response) { instance_double(HTTP::Response, status: mock_status, body: response_body) }
-  let(:expected_json) do
-    {
-      u_email: user_change.email_address,
-      u_type_of_update: user_change.type_of_update,
-      u_cc_sold_to_number: user_change.cc_sold_to_number,
-      u_first_name: user_change.first_name,
-      u_last_name: user_change.last_name,
-      u_responsible_body: user_change.responsible_body,
-      u_responsible_body_urn: user_change.responsible_body_urn,
-      u_cc_ship_to_number: user_change.cc_ship_to_number,
-      u_date_of_update: user_change.updated_at_timestamp.utc.strftime('%d/%m/%Y'),
-      u_school: user_change.school,
-      u_school_urn: user_change.school_urn,
-      u_telephone: user_change.telephone,
-      u_timestamp_of_update: user_change.updated_at_timestamp.utc.iso8601,
-      u_time_of_update: user_change.updated_at_timestamp.utc.strftime('%R %z'),
-      u_rb_user: user_change.cc_rb_user,
-      u_original_email: user_change.original_email_address,
-      u_original_cc_sold_to_number: user_change.original_cc_sold_to_number,
-      u_original_first_name: user_change.original_first_name,
-      u_original_last_name: user_change.original_last_name,
-      u_original_responsible_body: user_change.original_responsible_body,
-      u_original_responsible_body_urn: user_change.original_responsible_body_urn,
-      u_original_cc_ship_to_number: user_change.original_cc_ship_to_number,
-      u_original_school: user_change.original_school,
-      u_original_school_urn: user_change.original_school_urn,
-      u_original_telephone: user_change.original_telephone,
-      u_original_rb_user: user_change.original_cc_rb_user,
-    }.to_json
-  end
 
   before do
     allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return 'http://example.com/import/table'
     stub_request(:post, Settings.computacenter.service_now_user_import_api.endpoint).to_return(status: 201, body: response_body)
   end
 
-  describe '#post!' do
+  describe '#post!', with_feature_flags: feature_flags do
     it 'POSTs the body to the endpoint using Basic Auth' do
       allow(HTTP).to receive(:basic_auth).and_return(HTTP)
       allow(HTTP).to receive(:post).and_return(mock_response)
@@ -191,4 +161,47 @@ RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest d
       end
     end
   end
+
+  def expected_json
+    attrs = {
+      u_email: user_change.email_address,
+      u_type_of_update: user_change.type_of_update,
+      u_cc_sold_to_number: user_change.cc_sold_to_number,
+      u_first_name: user_change.first_name,
+      u_last_name: user_change.last_name,
+      u_responsible_body: user_change.responsible_body,
+      u_responsible_body_urn: user_change.responsible_body_urn,
+      u_cc_ship_to_number: user_change.cc_ship_to_number,
+      u_date_of_update: user_change.updated_at_timestamp.utc.strftime('%d/%m/%Y'),
+      u_school: user_change.school,
+      u_school_urn: user_change.school_urn,
+      u_telephone: user_change.telephone,
+      u_timestamp_of_update: user_change.updated_at_timestamp.utc.iso8601,
+      u_time_of_update: user_change.updated_at_timestamp.utc.strftime('%R %z'),
+      u_original_email: user_change.original_email_address,
+      u_original_cc_sold_to_number: user_change.original_cc_sold_to_number,
+      u_original_first_name: user_change.original_first_name,
+      u_original_last_name: user_change.original_last_name,
+      u_original_responsible_body: user_change.original_responsible_body,
+      u_original_responsible_body_urn: user_change.original_responsible_body_urn,
+      u_original_cc_ship_to_number: user_change.original_cc_ship_to_number,
+      u_original_school: user_change.original_school,
+      u_original_school_urn: user_change.original_school_urn,
+      u_original_telephone: user_change.original_telephone,
+    }
+
+    if FeatureFlag.active?(:rb_level_access_notification)
+      attrs.merge!({
+        u_rb_user: user_change.cc_rb_user,
+        u_original_rb_user: user_change.original_cc_rb_user,
+      })
+    end
+
+    attrs.to_json
+  end
+end
+
+RSpec.describe Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest do
+  it_behaves_like 'a user change request', { rb_level_access_notification: 'active' }
+  it_behaves_like 'a user change request', { rb_level_access_notification: 'inactive' }
 end

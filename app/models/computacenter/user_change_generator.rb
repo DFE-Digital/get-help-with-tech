@@ -67,7 +67,7 @@ private
   end
 
   def computacenter_attributes
-    {
+    cc_attrs = {
       first_name: user.first_name,
       last_name: user.last_name,
       email_address: user.email_address,
@@ -79,8 +79,15 @@ private
       school: (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
       school_urn: (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
       cc_ship_to_number: cc_ship_to_number_list,
-      cc_rb_user: user.rb_level_access,
     }
+
+    if FeatureFlag.active?(:rb_level_access_notification)
+      cc_attrs.merge!({
+        cc_rb_user: user.rb_level_access,
+      })
+    end
+
+    cc_attrs
   end
 
   def cc_ship_to_number_list
