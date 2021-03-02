@@ -10,6 +10,7 @@ class FeatureFlag
     schools_closed_for_national_lockdown
     half_term_delivery_suspension
     donated_devices
+    rb_level_access_notification
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze

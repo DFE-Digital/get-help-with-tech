@@ -1,9 +1,9 @@
 class CreateUserService
   def self.invite_responsible_body_user(user_params = {})
     if user_exists?(user_params)
-      invite_existing_user_to_responsible_body!(user_params)
+      invite_existing_user_to_responsible_body!(user_params.merge({ rb_level_access: true }))
     else
-      invite_new_user_to_responsible_body!(user_params)
+      invite_new_user_to_responsible_body!(user_params.merge({ rb_level_access: true }))
     end
   end
 
