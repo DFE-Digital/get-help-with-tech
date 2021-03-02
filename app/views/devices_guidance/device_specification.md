@@ -5,7 +5,7 @@ When [placing an order](/start), schools, colleges, further education institutio
 
 You can find out if any types of device are out of stock by signing in to the [Get help with technology service](/start). The information is also available on the TechSource ordering website.
 
-Apple iPads and Microsoft Windows laptops are now permanently out of stock. For information on setting up and managing devices you've already received, [see our guidance](/devices).
+Apple iPads and Microsoft Windows tablets are now permanently out of stock. For information on setting up and managing tablets you've already received, [see our guidance](/devices).
 
 ## Before you order
 
