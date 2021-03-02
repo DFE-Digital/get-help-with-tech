@@ -149,6 +149,24 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
         expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
       end
     end
+
+    context 'when there is an existing request with everything the same except contract_type' do
+      let(:existing_request) do
+        create(:extra_mobile_data_request, account_holder_name: 'Person', device_phone_number: '07123456788', responsible_body: rb, contract_type: 'pay_as_you_go_payg')
+      end
+
+      subject(:model) do
+        build(:extra_mobile_data_request, device_phone_number: existing_request.device_phone_number,
+                                          account_holder_name: existing_request.account_holder_name,
+                                          mobile_network_id: existing_request.mobile_network_id,
+                                          responsible_body: existing_request.responsible_body,
+                                          contract_type: 'pay_monthly')
+      end
+
+      it 'is valid' do
+        expect(model.valid?).to be_truthy
+      end
+    end
   end
 
   describe 'validating device_phone_number' do
