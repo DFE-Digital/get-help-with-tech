@@ -287,7 +287,7 @@ RSpec.describe Support::UsersController do
   describe '#destroy' do
     let(:responsible_body) { create(:local_authority) }
     let(:school) { create(:school) }
-    let(:existing_user) { create(:local_authority_user) }
+    let(:existing_user) { create(:local_authority_user, orders_devices: true) }
 
     context 'for support users' do
       before do
@@ -297,6 +297,12 @@ RSpec.describe Support::UsersController do
       it 'sets user deleted_at timestamp' do
         delete :destroy, params: { id: existing_user.id }
         expect(existing_user.reload.deleted_at).to be_present
+      end
+
+      it 'marks the user as being no longer able to order' do
+        expect {
+          delete :destroy, params: { id: existing_user.id }
+        }.to change { existing_user.reload.orders_devices }.from(true).to(false)
       end
 
       it 'redirects back to the RB page when called from the responsible body area' do
