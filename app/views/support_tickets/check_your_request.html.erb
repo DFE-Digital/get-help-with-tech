@@ -17,6 +17,7 @@
 
   </div>
 </div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= render GovukComponent::SummaryList.new do |component| %>
@@ -29,7 +30,7 @@
          )
       %>
 
-      <% if !@support_ticket.requires_school? %>
+      <% if @support_ticket.requires_school? %>
         <% component.slot(
            :row,
            key: "Which school do you work for?",
@@ -49,6 +50,7 @@
            classes: "Name".to_s.downcase.gsub(/ /, "-"),
          ) %>
       <% end %>
+
       <% component.slot(
          :row,
          key: "What do you need help with?",
@@ -68,7 +70,6 @@
          action: govuk_link_to("Change", support_ticket_support_details_path),
          classes: "Name".to_s.downcase.gsub(/ /, "-"),
          ) %>
-
     <% end %>
 
     <div class="govuk-form-group">
@@ -76,6 +77,5 @@
         <%= f.govuk_submit 'Submit', prevent_double_click: false %>
       <% end %>
     </div>
-
   </div>
 </div>

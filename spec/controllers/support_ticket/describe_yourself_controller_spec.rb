@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
   describe '#new' do
     before do
-      session[:support_ticket] = { user_type: '' }
       get :new
     end
 
@@ -21,7 +20,6 @@ RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
 
     describe 'when attempting to access the page directly without using the wizard' do
       before do
-        session[:support_ticket] = nil
         get :new
       end
 
@@ -32,9 +30,10 @@ RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
   end
 
   describe '#save' do
-    it 'stores the selected usser type in session state' do
+    it 'stores the selected user type in support ticket' do
       post :save, params: { support_ticket_describe_yourself_form: { user_type: 'local_authority' } }
-      expect(session[:support_ticket]).to eq({ user_type: 'local_authority' })
+      support_ticket = SupportTicket.find_by(session_id: session.id.to_s)
+      expect(support_ticket.user_type).to eq('local_authority')
     end
 
     it 'redirects to academy details page' do

@@ -2,17 +2,20 @@ class SupportTicket::AcademyDetailsController < SupportTicket::BaseController
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @form ||= SupportTicket::AcademyDetailsForm.new(set_params)
+    @form ||= SupportTicket::AcademyDetailsForm.new(existing_params)
     render 'support_tickets/academy_details'
   end
 
   def save
-    if form.valid?
-      session[:support_ticket].merge!({
-        academy_name: form.academy_name.titleize,
-        school_name: form.academy_name.titleize,
+    @form ||= SupportTicket::AcademyDetailsForm.new(academy_details_params)
+
+    if @form.valid?
+      support_ticket.update!(
+        academy_name: @form.academy_name.titleize,
+        school_name: @form.academy_name.titleize,
         school_unique_id: '',
-      })
+      )
+
       redirect_to next_step
     else
       render 'support_tickets/academy_details'
@@ -21,17 +24,13 @@ class SupportTicket::AcademyDetailsController < SupportTicket::BaseController
 
 private
 
-  def form
-    @form ||= SupportTicket::AcademyDetailsForm.new(academy_details_params)
+  def academy_details_params
+    params.require(:support_ticket_academy_details_form).permit(:academy_name)
   end
 
-  def academy_details_params(opts = params)
-    opts.fetch(:support_ticket_academy_details_form, {}).permit(:academy_name)
-  end
-
-  def set_params
+  def existing_params
     {
-      academy_name: session[:support_ticket]['academy_name'],
+      academy_name: support_ticket.academy_name,
     }
   end
 

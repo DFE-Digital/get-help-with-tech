@@ -1,41 +1,28 @@
-class SupportTicket
-  def initialize(params:)
-    @params = ActiveSupport::HashWithIndifferentAccess.new(params)
-  end
-
-  def user_type
-    @params.fetch(:user_type, 'other_type_of_user')
-  end
-
-  def school_name
-    @params.fetch(:school_name, '')
-  end
-
-  def school_unique_id
-    @params.fetch(:school_unique_id, '')
-  end
-
-  def full_name
-    @params.fetch(:full_name, '')
-  end
-
-  def email_address
-    @params.fetch(:email_address, '')
-  end
-
-  def telephone_number
-    @params.fetch(:telephone_number, '')
-  end
-
-  def support_topics
-    @params.fetch(:support_topics, [])
-  end
-
-  def message
-    @params.fetch(:message, '')
-  end
+class SupportTicket < ApplicationRecord
+  attr_accessor :ticket_number
 
   def requires_school?
     %w[parent_or_guardian_or_carer_or_pupil_or_care_leaver other_type_of_user].exclude? user_type
+  end
+
+  def started?
+    user_type.present?
+  end
+
+  def subject
+    if user_type == 'other_type_of_user'
+      'ONLINE FORM - Other'
+    else
+      urn_or_ukprn = "(#{school_unique_id}) " if school_unique_id.present?
+      "ONLINE FORM - #{urn_or_ukprn}#{school_name}"
+    end
+  end
+
+  def submit_to_zendesk
+    self.ticket_number = if Settings.zendesk&.username.present? && Settings.zendesk&.token.present?
+                           ZendeskService.send!(self)&.id
+                         else
+                           Kernel.rand(10_000..99_999)
+                         end
   end
 end

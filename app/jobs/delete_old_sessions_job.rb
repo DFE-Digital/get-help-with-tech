@@ -4,6 +4,6 @@ class DeleteOldSessionsJob < ApplicationJob
   def perform
     sessions = Session.where('expires_at < ?', Time.zone.now.utc - 2.hours)
     logger.info "deleting #{sessions.count} sessions expired by 2 hours"
-    sessions.delete_all
+    sessions.destroy_all
   end
 end
