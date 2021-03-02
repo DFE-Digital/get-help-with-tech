@@ -24,6 +24,9 @@ class Support::ResponsibleBodiesController < Support::BaseController
       .schools
       .gias_status_closed
       .includes(:device_allocations, :preorder_information)
+      .left_outer_joins(:user_schools)
+      .select('schools.*, count(user_schools.id) AS user_count')
+      .group('schools.id')
       .order(name: :asc)
   end
 end

@@ -163,7 +163,7 @@
                     <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>
                   </td>
                   <td class="govuk-table__cell">
-                    <%- user_count = school.users.count %>
+                    <%- user_count = school.user_count %>
                     <%- if user_count.positive? %>
                       <%= govuk_tag text: "#{user_count} #{'user'.pluralize(user_count)}", colour: 'yellow' %>
                     <%- else %>
