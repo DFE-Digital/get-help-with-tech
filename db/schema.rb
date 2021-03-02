@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_145448) do
+ActiveRecord::Schema.define(version: 2021_02_25_165034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,6 +256,15 @@ ActiveRecord::Schema.define(version: 2021_02_19_145448) do
     t.index ["created_by_user_id"], name: "index_school_device_allocations_on_created_by_user_id"
     t.index ["last_updated_by_user_id"], name: "index_school_device_allocations_on_last_updated_by_user_id"
     t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
+  end
+
+  create_table "school_links", force: :cascade do |t|
+    t.bigint "school_id"
+    t.text "link_type", null: false
+    t.integer "urn"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_school_links_on_school_id"
   end
 
   create_table "school_virtual_caps", force: :cascade do |t|

@@ -24,6 +24,8 @@ class SchoolUpdateService
       predecessor.close!
     end
 
+    add_school_links(staged_school, school)
+
     school
   end
 
@@ -36,6 +38,21 @@ class SchoolUpdateService
   end
 
 private
+
+  def add_school_links(staged_school, school)
+    staged_school.school_links.each do |link|
+      school.school_links.find_or_create_by!(urn: link.link_urn, link_type: link.link_type)
+
+      other_datastage_school = DataStage::School.find_by(urn: link.link_urn)
+      other_school = School.find_by(urn: link.link_urn)
+
+      next unless other_datastage_school && other_school
+
+      other_datastage_school.school_links.each do |other_link|
+        other_school.school_links.find_or_create_by(urn: other_link.link_urn, link_type: other_link.link_type)
+      end
+    end
+  end
 
   def find_predecessor(staged_school)
     last_link = staged_school.school_links.any_predecessor.order(created_at: :asc).last

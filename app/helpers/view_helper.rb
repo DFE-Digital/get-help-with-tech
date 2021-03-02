@@ -195,6 +195,14 @@ module ViewHelper
     MobileNetwork.where(participation_in_pilot: 'participating').order(:brand)
   end
 
+  def link_to_urn_otherwise_urn(urn)
+    if School.exists?(urn: urn)
+      link_to urn, support_school_path(urn)
+    else
+      urn
+    end
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

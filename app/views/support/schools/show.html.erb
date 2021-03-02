@@ -55,6 +55,11 @@
         Timeline
       </a>
     </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#related">
+        Related schools (<%= @school.school_links.count %>)
+      </a>
+    </li>
   </ul>
 
   <div class="govuk-tabs__panel" id="overview">
@@ -141,5 +146,33 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+
+  <div class="govuk-tabs__panel" id="related">
+    <h2 class="govuk-heading-l">Related schools</h2>
+
+    <% if @school.school_links.present? %>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">URN</th>
+            <th scope="col" class="govuk-table__header">Relation</th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @school.school_links.each do |school_link| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= link_to_urn_otherwise_urn(school_link.urn) %></td>
+              <td class="govuk-table__cell"><%= SchoolLink.translate_enum_value(:link_type, school_link.link_type) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="govuk-body">
+        There are no related schools
+      </p>
+    <% end %>
   </div>
 </div>
