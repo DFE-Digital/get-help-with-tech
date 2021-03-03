@@ -7,27 +7,7 @@
       <%= t('page_titles.order_devices.you_cannot_order_yet') %>
     </h1>
 
-    <% if FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
-      <p class="govuk-body">Ordering will be opened as soon as possible.</p>
-
-      <p class="govuk-body">We’ll email you when you can place an order.</p>
-    <% else %>
-      <p class="govuk-body">You can order a school’s full allocation when:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <% t('pages.order_devices.can_order_full_allocation_when_list').each do |li| %>
-          <li><%= li %></li>
-        <% end %>
-      </ul>
-
-      <p class="govuk-body">We’ll contact you about placing orders if a school reports disruption through the <%= link_to_ed_settings_form %>.</p>
-
-      <% school_count = @responsible_body.schools.that_are_centrally_managed.count %>
-      <p class="govuk-body">None of the <%= govuk_link_to "#{school_count} #{'school'.pluralize(school_count)} you will be placing orders for", responsible_body_devices_schools_path %> <%= 'has'.pluralize(school_count) %> reported disruption.</p>
-
-      <% if @responsible_body.has_schools_that_can_order_devices_now? %>
-        <%= render partial: 'some_schools_can_order' %>
-      <%- end %>
-    <% end %>
+    <p class="govuk-body">Ordering will be opened as soon as possible.</p>
+    <p class="govuk-body">We’ll email you when you can place an order.</p>
   </div>
 </div>

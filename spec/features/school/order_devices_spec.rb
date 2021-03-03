@@ -42,15 +42,13 @@ RSpec.feature 'Order devices' do
     then_i_see_that_i_cannot_order_devices_yet
   end
 
-  context 'when there’s a national lockdown', with_feature_flags: { schools_closed_for_national_lockdown: 'active' } do
-    scenario 'a school that cannot order devices yet' do
-      given_the_school_cannot_order_devices
-      given_i_can_order_devices
-      given_i_am_signed_in_as_a_school_user
+  scenario 'a school that cannot order devices yet' do
+    given_the_school_cannot_order_devices
+    given_i_can_order_devices
+    given_i_am_signed_in_as_a_school_user
 
-      when_i_visit_the_order_devices_page
-      then_i_see_that_i_will_be_able_to_order_soon
-    end
+    when_i_visit_the_order_devices_page
+    then_i_see_that_i_will_be_able_to_order_soon
   end
 
   scenario 'when my school cannot order devices and I cannot order devices' do
@@ -125,7 +123,7 @@ RSpec.feature 'Order devices' do
   end
 
   def then_i_see_that_i_cannot_order_devices_yet
-    expect(page).to have_content('You cannot order your full allocation yet')
+    expect(page).to have_content('You cannot order devices yet')
   end
 
   def then_i_see_that_i_cannot_order_as_school_reopened
@@ -133,7 +131,7 @@ RSpec.feature 'Order devices' do
   end
 
   def then_i_see_that_the_school_cannot_order_devices_yet
-    expect(page).to have_content('Your school cannot your full allocation yet')
+    expect(page).to have_content('Your school cannot order devices yet')
   end
 
   def then_i_see_that_i_will_be_able_to_order_soon

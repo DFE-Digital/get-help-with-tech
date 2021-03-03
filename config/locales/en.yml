@@ -123,15 +123,12 @@ en:
       school: The school will place their own orders
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
-    national_lockdown_school_cannot_order_yet: Your school cannot order devices yet
     school_home: Get devices for your school
     school_can_order_devices: Your school can order devices
     school_cannot_order_devices:
-      title: Your school cannot your full allocation yet
-      can_order_when: 'Your school can order your full allocation when:'
+      title: Your school cannot order devices yet
     school_user_cannot_order_devices:
-      title: You cannot order your full allocation yet
-      can_order_when: 'You can order your full allocation when:'
+      title: You cannot order devices yet
     school:
       devices:
         cannot_order_as_cap_reached:

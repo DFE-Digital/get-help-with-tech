@@ -2,27 +2,6 @@
   <div class="govuk-grid-column-two-thirds">
 
     <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
-
-    <% unless FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
-      <% if @schools_can_order.any? && @schools_can_order_for_specific_circumstances.any? %>
-        <p class="govuk-body govuk-!-margin-bottom-1">
-          The number of devices you can order is the remaining allocation of devices for:
-        </p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>approved requests for specific circumstances</li>
-          <li><%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time</li>
-        </ul>
-      <% elsif @schools_can_order.any? %>
-        <p class="govuk-body">
-          The number of devices you can order is the remaining allocation of devices for <%= govuk_link_to "schools that have reported a closure".html_safe, responsible_body_devices_schools_path %> or 15 or more pupils self-isolating at the same time.
-        </p>
-      <% elsif @schools_can_order_for_specific_circumstances.any? %>
-        <p class="govuk-body">
-          The number of devices you can order is the remaining allocation of devices where a request for specific circumstances has been approved.
-        </p>
-      <% end %>
-    <% end %>
-
     <%= render partial: 'shared/stock_levels' %>
 
     <h2 class="govuk-heading-m">
