@@ -29,7 +29,6 @@
       <li><%= govuk_link_to 'give someone else access so they can place orders', school_users_path %></li>
     </ul>
 
-
     <h2 class="govuk-heading-m">How to order</h2>
 
     <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
@@ -61,7 +60,7 @@
       <%= @school.postcode %><br>
     </p>
 
-    <p class="govuk-body">If you need to change your delivery address, contact <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk">COVID.TECHNOLOGY@education.gov.uk</a>.</p>
+    <p class="govuk-body">If you need to change your delivery address, <%= govuk_link_to "contact us", support_ticket_path %>.</p>
 
     <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
   </div>

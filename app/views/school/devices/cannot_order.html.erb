@@ -30,16 +30,16 @@
       </ul>
 
       <p class="govuk-body">We’ll contact you about placing orders if you report disruption through the <%= link_to_ed_settings_form %>.</p>
+    <% end %>
 
-      <% unless @current_user.orders_devices? %>
-        <h2 class="govuk-heading-m">
-          You won’t be able to place orders yourself
-        </h2>
+    <% unless @current_user.orders_devices? %>
+      <h2 class="govuk-heading-m">
+        You will not be able to place orders yourself
+      </h2>
 
-        <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
+      <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
 
-        <p class="govuk-body"><%= govuk_link_to "Go to manage users to see who can place orders, or give yourself access", school_users_path(@school) %>.</p>
-      <% end %>
+      <p class="govuk-body"><%= govuk_link_to "Go to Manage users to see who can place orders, or give yourself access", school_users_path(@school) %>.</p>
     <% end %>
   </div>
 </div>
