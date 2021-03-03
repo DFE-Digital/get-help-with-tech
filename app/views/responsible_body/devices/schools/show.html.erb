@@ -13,9 +13,14 @@
       <%- end %>
     <%- else %>
       <%- if @school.has_std_device_allocation? %>
+        <%
+          show_action = @school.preorder_information.orders_managed_centrally? && (@school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap)
+          they_ordered_prefix = !@school.preorder_information.orders_managed_centrally?
+        %>
         <%= render DeviceCountComponent.new(
           school: @school,
-          show_action: @school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap,
+          show_action: show_action,
+          they_ordered_prefix: they_ordered_prefix,
           action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
       <% else %>
         <%= render partial: 'shared/school_without_allocation' %>
