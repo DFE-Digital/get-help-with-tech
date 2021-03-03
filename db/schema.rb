@@ -320,7 +320,6 @@ ActiveRecord::Schema.define(version: 2021_03_02_150630) do
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
     t.text "fe_type"
-    t.boolean "group_a_feature_flag", default: false, null: false
     t.boolean "hide_mno", default: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
