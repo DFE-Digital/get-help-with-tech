@@ -176,10 +176,6 @@ module ViewHelper
     end
   end
 
-  def link_to_ed_settings_form
-    govuk_link_to 'DfE educational settings status form', 'https://form.education.gov.uk/service/educational-setting-status'
-  end
-
   def chromebook_domain_label(school)
     label = Array(school.institution_type.capitalize)
     label << "or #{school.responsible_body.humanized_type}" unless school.is_further_education?
