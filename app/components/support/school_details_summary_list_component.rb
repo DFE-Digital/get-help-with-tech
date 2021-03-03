@@ -75,7 +75,7 @@ private
 
   def headteacher_row
     {
-      key: headteacher.title.present? ? headteacher.title.upcase_first : 'Headteacher',
+      key: 'Headteacher',
       value: headteacher_lines.map { |line| h(line) }.join('<br>').html_safe,
     }
   end
