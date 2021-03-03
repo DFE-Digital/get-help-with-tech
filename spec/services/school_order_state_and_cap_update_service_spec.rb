@@ -144,6 +144,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       before do
         allocation
         router_allocation
+        school.device_allocations.reload
         responsible_body.update!(vcap_feature_flag: true)
         add_school_to_pool_without_side_affects(responsible_body, school)
         responsible_body.virtual_cap_pools.each(&:recalculate_caps!)
@@ -208,6 +209,8 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
                  allocation: 7,
                  cap: 3,
                  devices_ordered: 1)
+
+          school.device_allocations.reload
           school.can_order!
         end
 

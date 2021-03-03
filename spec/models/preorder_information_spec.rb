@@ -130,7 +130,13 @@ RSpec.describe PreorderInformation, type: :model do
       end
 
       context 'when all devices have been ordered' do
-        let(:allocation) { create(:school_device_allocation, :fully_ordered) }
+        let(:allocation) { create(:school_device_allocation, :with_std_allocation, :fully_ordered) }
+
+        it { is_expected.to eq('ordered') }
+      end
+
+      context 'when some devices have been ordered' do
+        let(:allocation) { create(:school_device_allocation, :with_coms_allocation, devices_ordered: 5) }
 
         it { is_expected.to eq('ordered') }
       end
@@ -193,7 +199,6 @@ RSpec.describe PreorderInformation, type: :model do
       before do
         trust.update!(who_will_order_devices: 'school')
         preorder_info.update!(who_will_order_devices: 'school', will_need_chromebooks: nil)
-        preorder_info.refresh_status!
       end
 
       it 'responds to setting a contact' do
@@ -240,8 +245,9 @@ RSpec.describe PreorderInformation, type: :model do
         school.users << user
         preorder_info.update!(will_need_chromebooks: 'no')
         expect(preorder_info.status).to eq('school_ready')
-
         school.std_device_allocation.update!(devices_ordered: 2)
+        school.device_allocations.reload
+        preorder_info.refresh_status!
         expect(preorder_info.status).to eq('ordered')
       end
 
@@ -270,6 +276,8 @@ RSpec.describe PreorderInformation, type: :model do
       it 'responds to changing the device allocation' do
         expect(preorder_info.status).to eq('ready')
         school.std_device_allocation.update!(devices_ordered: 2)
+        school.device_allocations.reload
+        preorder_info.refresh_status!
         expect(preorder_info.status).to eq('ordered')
       end
 
