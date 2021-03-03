@@ -210,7 +210,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       click_on 'Continue'
       expect(page).to have_text('Before you continue, please read the privacy notice.')
       click_on 'Continue'
-      expect(page).to have_text('You’ve been allocated 0 laptops and tablets')
+      expect(page).to have_text('You’ve been allocated 0 laptops')
     end
   end
 
@@ -223,7 +223,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       click_on 'Continue'
       expect(page).to have_text('Before you continue, please read the privacy notice.')
       click_on 'Continue'
-      expect(page).to have_text('You’ve been allocated 0 laptops and tablets')
+      expect(page).to have_text('You’ve been allocated 0 laptops')
     end
   end
 

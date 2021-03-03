@@ -239,7 +239,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_i_see_information_about_devices_i_can_order
     expect(page).to have_current_path(welcome_wizard_devices_you_can_order_school_path(urn: @user.school.urn))
-    expect(page).to have_text('You can order a range of laptops and tablets')
+    expect(page).to have_text('You can order different types of laptops')
   end
 
   def then_im_asked_whether_my_school_will_order_chromebooks
