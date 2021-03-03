@@ -38,6 +38,12 @@ class AllocationsExporter
       'Pool devices allocation',
       'Pool devices cap',
       'Pool devices ordered',
+      'Routers allocation',
+      'Routers cap',
+      'Routers ordered',
+      'Pool routers allocation',
+      'Pool routers cap',
+      'Pool routers ordered',
     ].freeze
   end
 
@@ -60,6 +66,12 @@ private
         (school.in_virtual_cap_pool? ? school.std_device_allocation&.allocation : nil),
         (school.in_virtual_cap_pool? ? school.std_device_allocation&.cap : nil),
         (school.in_virtual_cap_pool? ? school.std_device_allocation&.devices_ordered : nil),
+        school.coms_device_allocation&.raw_allocation,
+        school.coms_device_allocation&.raw_cap,
+        school.coms_device_allocation&.raw_devices_ordered,
+        (school.in_virtual_cap_pool? ? school.coms_device_allocation&.allocation : nil),
+        (school.in_virtual_cap_pool? ? school.coms_device_allocation&.cap : nil),
+        (school.in_virtual_cap_pool? ? school.coms_device_allocation&.devices_ordered : nil),
       ]
     end
   end
@@ -69,6 +81,6 @@ private
   end
 
   def schools
-    School.all.includes(:responsible_body, :std_device_allocation).order(urn: :asc)
+    School.all.includes(:responsible_body, :std_device_allocation, :coms_device_allocation).order(urn: :asc)
   end
 end
