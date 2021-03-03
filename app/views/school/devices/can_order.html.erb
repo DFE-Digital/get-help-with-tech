@@ -22,13 +22,8 @@
       Make sure you’re certain of what devices you need, as amending or cancelling an order will cause delays.
     </p>
     <p class="govuk-body">
-      It may help to:
+      You can <%= govuk_link_to 'give someone else access so they can place orders', school_users_path %>.
     </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= link_to_devices_guidance_subpage 'check device specifications', 'device-specification' %></li>
-      <li><%= govuk_link_to 'give someone else access so they can place orders', school_users_path %></li>
-    </ul>
-
 
     <h2 class="govuk-heading-m">How to order</h2>
 
@@ -61,7 +56,7 @@
       <%= @school.postcode %><br>
     </p>
 
-    <p class="govuk-body">If you need to change your delivery address, contact <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk">COVID.TECHNOLOGY@education.gov.uk</a>.</p>
+    <p class="govuk-body">If you need to change your delivery address, <%= govuk_link_to "contact us", support_ticket_path %>.</p>
 
     <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
   </div>
