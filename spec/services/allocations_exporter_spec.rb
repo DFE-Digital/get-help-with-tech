@@ -40,6 +40,9 @@ RSpec.describe AllocationsExporter, type: :model do
       create(:preorder_information, :rb_will_order, school: schools.last)
       create(:school_device_allocation, device_type: 'std_device', school: schools.first, allocation: 20, cap: 20, devices_ordered: 10)
       create(:school_device_allocation, device_type: 'std_device', school: schools.last, allocation: 25, cap: 5, devices_ordered: 5)
+
+      create(:school_device_allocation, device_type: 'coms_device', school: schools.first, allocation: 21, cap: 21, devices_ordered: 11)
+      create(:school_device_allocation, device_type: 'coms_device', school: schools.last, allocation: 26, cap: 6, devices_ordered: 6)
       trust.add_school_to_virtual_cap_pools!(schools.last)
       trust.add_school_to_virtual_cap_pools!(schools.first)
     end
@@ -51,6 +54,13 @@ RSpec.describe AllocationsExporter, type: :model do
       expect(csv[0]['Pool devices allocation'].to_i).to eq(45)
       expect(csv[0]['Pool devices cap'].to_i).to eq(25)
       expect(csv[0]['Pool devices ordered'].to_i).to eq(15)
+
+      expect(csv[0]['Routers allocation'].to_i).to eq(21)
+      expect(csv[0]['Routers cap'].to_i).to eq(21)
+      expect(csv[0]['Routers ordered'].to_i).to eq(11)
+      expect(csv[0]['Pool routers allocation'].to_i).to eq(47)
+      expect(csv[0]['Pool routers cap'].to_i).to eq(27)
+      expect(csv[0]['Pool routers ordered'].to_i).to eq(17)
     end
   end
 end
