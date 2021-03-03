@@ -45,7 +45,7 @@
         <td class="govuk-table__cell"><%= emd_request.id %></td>
         <td class="govuk-table__cell"><%= govuk_link_to(emd_request.account_holder_name, responsible_body_internet_mobile_extra_data_request_path(emd_request)) %></td>
         <td class="govuk-table__cell"><%= emd_request.device_phone_number %></td>
-        <td class="govuk-table__cell"><%= emd_request.created_at.to_date.to_s(:long_ordinal) %></td>
+        <td class="govuk-table__cell"><%= emd_request.created_at.to_date.to_s(:govuk_date_short) %></td>
         <td class="govuk-table__cell"><%= emd_request.mobile_network.try(:brand) %></td>
         <td class="govuk-table__cell">
           <%= render ExtraMobileDataRequestStatusComponent.new(status: emd_request.status) %>
