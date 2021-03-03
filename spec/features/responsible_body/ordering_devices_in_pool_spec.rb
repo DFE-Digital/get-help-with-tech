@@ -20,8 +20,8 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     then_i_see_the_cannot_order_devices_yet_page
   end
 
-  scenario 'a centrally managed school that can order for local restrictions' do
-    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+  scenario 'a centrally managed school that can order full allocation' do
+    given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
@@ -38,8 +38,8 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
-  scenario 'centrally managed schools that can order for local restrictions and specific circumstances' do
-    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+  scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+    given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
@@ -50,7 +50,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
 
   scenario 'centrally managed schools with multiple Chromebook domains that can order' do
     given_there_are_multiple_chromebook_domains_being_managed
-    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+    given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_a_section_regarding_ordering_chromebooks
@@ -75,7 +75,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     schools[3].preorder_information.responsible_body_will_order_devices!
   end
 
-  def given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+  def given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     schools[0].can_order!
     schools[0].std_device_allocation.update!(cap: 3, allocation: 20, devices_ordered: 1) # 2 left
     schools[0].coms_device_allocation.update!(cap: 5, allocation: 10, devices_ordered: 2) # 3 left

@@ -34,15 +34,15 @@ RSpec.feature 'Ordering devices' do
     then_i_see_the_order_for_specific_circumstances_page
   end
 
-  scenario 'a centrally managed school can order for local restrictions' do
-    given_a_centrally_managed_school_can_order_for_local_restrictions
+  scenario 'a centrally managed school can order full allocation' do
+    given_a_centrally_managed_school_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_1_school_that_i_need_to_place_orders_for
   end
 
-  scenario 'centrally managed schools that can order for local restrictions and specific circumstances' do
-    given_a_centrally_managed_school_can_order_for_local_restrictions
+  scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+    given_a_centrally_managed_school_can_order_full_allocation
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
@@ -68,7 +68,7 @@ RSpec.feature 'Ordering devices' do
     schools[1].std_device_allocation.update!(cap: 4, allocation: 8)
   end
 
-  def given_a_centrally_managed_school_can_order_for_local_restrictions
+  def given_a_centrally_managed_school_can_order_full_allocation
     schools[2].can_order!
     schools[2].std_device_allocation.update!(cap: 7, allocation: 7)
   end
