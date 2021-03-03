@@ -97,6 +97,7 @@ class ExtraMobileDataRequest < ApplicationRecord
         account_holder_name: account_holder_name,
         device_phone_number: device_phone_number,
         mobile_network_id: mobile_network_id,
+        contract_type: contract_type,
       }.merge(extra_conditions),
     )
   end
