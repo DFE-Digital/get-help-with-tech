@@ -115,6 +115,64 @@
           </tbody>
         </table>
 
+        <% if @closed_schools.any? %>
+          <h2 class="govuk-heading-l govuk-!-margin-top-9">Closed schools and colleges</h2>
+          <table id="responsible-body-closed-schools" class="govuk-table">
+            <caption class="govuk-table__caption govuk-visually-hidden">Closed schools and colleges</caption>
+
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name and URN</th>
+                <th scope="col" class="govuk-table__header">Virtual caps</th>
+                <th scope="col" class="govuk-table__header">Devices</th>
+                <th scope="col" class="govuk-table__header">Routers</th>
+                <th scope="col" class="govuk-table__header">Who is ordering</th>
+                <th scope="col" class="govuk-table__header">Users</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <% @closed_schools.each do |school| %>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.human_for_school_type %></td>
+                  <td class="govuk-table__cell">
+                    <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
+                      <% if @responsible_body.has_school_in_virtual_cap_pools?(school) %>
+                        <%= govuk_tag text: 'In pool', colour: 'red' %>
+                      <%- else %>
+                        <%= govuk_tag text: 'Not in pool', colour: 'green' %>
+                      <%- end %>
+                    <%- else %>
+                      <%= govuk_tag text: 'Not applicable', colour: 'grey' %>
+                    <%- end %>
+                  </td>
+                  <%- device_allocations_data = school.std_device_allocation %>
+                  <td class="govuk-table__cell">
+                    <%= device_allocations_data&.raw_allocation.to_i %> allocated<br>
+                    <%= device_allocations_data&.raw_cap || 0 %> caps<br>
+                    <%= device_allocations_data&.raw_devices_ordered || 0 %> ordered
+                  </td>
+                  <%- dongles_allocations_data = school.coms_device_allocation %>
+                  <td class="govuk-table__cell">
+                    <%= dongles_allocations_data&.raw_allocation.to_i %> allocated<br>
+                    <%= dongles_allocations_data&.raw_cap || 0 %> caps<br>
+                    <%= dongles_allocations_data&.raw_devices_ordered || 0 %> ordered
+                  </td>
+                  <td class="govuk-table__cell">
+                    <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>
+                  </td>
+                  <td class="govuk-table__cell">
+                    <%- user_count = school.user_count %>
+                    <%- if user_count.positive? %>
+                      <%= govuk_tag text: "#{user_count} #{'user'.pluralize(user_count)}", colour: 'yellow' %>
+                    <%- else %>
+                      <%= govuk_tag text: 'No users', colour: 'green' %>
+                    <%- end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <%- end %>
       </div>
 
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="users">

@@ -17,7 +17,16 @@ class Support::ResponsibleBodiesController < Support::BaseController
     @users = policy_scope(@responsible_body.users).not_deleted.order('last_signed_in_at desc nulls last, updated_at desc')
     @schools = @responsible_body
       .schools
+      .gias_status_open
       .includes(:device_allocations, :preorder_information)
+      .order(name: :asc)
+    @closed_schools = @responsible_body
+      .schools
+      .gias_status_closed
+      .includes(:device_allocations, :preorder_information)
+      .left_outer_joins(:user_schools)
+      .select('schools.*, count(user_schools.id) AS user_count')
+      .group('schools.id')
       .order(name: :asc)
   end
 end

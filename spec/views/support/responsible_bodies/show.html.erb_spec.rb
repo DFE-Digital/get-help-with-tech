@@ -9,6 +9,7 @@ RSpec.describe 'support/responsible_bodies/show.html.erb' do
     enable_pundit(view, support_user)
     assign(:responsible_body, responsible_body)
     assign(:schools, schools)
+    assign(:closed_schools, [])
   end
 
   describe 'banners' do
