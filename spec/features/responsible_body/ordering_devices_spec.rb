@@ -122,11 +122,11 @@ RSpec.feature 'Ordering devices' do
   end
 
   def and_i_follow_the_get_laptops_and_tablets_link
-    click_link 'Get laptops and tablets'
+    click_link 'Get laptops'
   end
 
   def then_i_see_the_get_laptops_and_tablets_page
-    expect(page).to have_css('h1', text: 'Get laptops and tablets')
+    expect(page).to have_css('h1', text: 'Get laptops')
     expect(page).to have_link('Your schools')
     expect(page).to have_link('Order devices')
   end

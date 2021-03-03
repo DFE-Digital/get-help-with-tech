@@ -209,7 +209,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def and_i_continue_through_the_guidance
     click_on 'Continue'
-    expect(page).to have_content 'Who will place orders for laptops and tablets?'
+    expect(page).to have_content 'Who will place orders for laptops?'
   end
 
   def and_i_choose_ordering_through_schools_which_is_not_explicitly_recommended
@@ -408,7 +408,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def then_i_am_prompted_to_choose_who_orders_devices_for_the_school
-    expect(page).to have_content('Who will place orders for laptops and tablets?')
+    expect(page).to have_content('Who will place orders for laptops?')
   end
 
   def when_i_select_the_school_to_order_devices

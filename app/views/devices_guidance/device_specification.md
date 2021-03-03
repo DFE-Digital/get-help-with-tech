@@ -1,15 +1,17 @@
 When [placing an order](/start), schools, colleges, further education institutions, academy trusts and local authorities (LAs) can choose (depending on availability) from:
 
 * Microsoft Windows laptops
-* Microsoft Windows tablets (with or without keyboards)
 * Google Chromebooks
-* Apple iPads
 
-You can find out if any types of device are temporarily out of stock by signing in to the [Get help with technology service](/start). The information is also available on the TechSource ordering website.
+You can find out if any types of device are out of stock by signing in to the [Get help with technology service](/start). The information is also available on the TechSource ordering website.
+
+Apple iPads and Microsoft Windows tablets are now permanently out of stock. For information on setting up and managing tablets you've already received, [see our guidance](/devices).
+
+## Before you order
 
 We may need some technical information from you before you can order, so we recommend choosing the types of devices and settings you want before you’re invited to order.
 
-## Microsoft Windows laptops and tablets
+## Microsoft Windows laptops
           
 When you order you’ll be asked whether or not you want to have DfE settings installed.
         
@@ -25,7 +27,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-micro
 
 All devices provided before September 2020 were delivered with safeguarding and mobile device management (MDM) software installed. You can <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed">find out when that software expires</a> in our guidance.
 
-[Find the technical specifications for Microsoft Windows laptops and tablets](#minimum-specifications) in the table below.
+[Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
      
 ## Google Chromebooks
@@ -44,22 +46,6 @@ If the school you’re ordering for does not currently use an education platform
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
 
 [Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
-
-## Apple iPads
-        
-During the ordering process, we’ll ask for your Apple School Manager (ASM) Organisation ID. We recommend you find this ID in advance to avoid any delay in ordering.
-
-It’s a 7 to 8 digit number that can be found by following these steps:
-
-1. Visit <a href="https://school.apple.com" class="govuk-link">https://school.apple.com</a> to sign in to Apple School Manager
-2. Click on ‘Settings’ in the bottom left-hand corner
-3. Click on ‘Enrolment Information’ in the ‘Institution Settings’ section. The Organisation ID (also known as an Apple School Manager ID) will be in the right-hand pane.
-
-If you have any problems finding this information, you should ask your IT support for help.
-
-Read more information about <a class="govuk-link" href="/devices/preparing-ipads">preparing Apple iPads for pupils</a>.
-
-[Find the technical specifications for Apple iPads](#minimum-specifications) in the table below.
 
 </div>
 

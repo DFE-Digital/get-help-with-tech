@@ -27,8 +27,8 @@ en:
       devices:
         order_devices: Order devices now
     responsible_body_home: Get help with technology
-    responsible_body_devices_home: Get laptops and tablets
-    responsible_body_devices_tell_us: Tell us who will order laptops and tablets
+    responsible_body_devices_home: Get laptops
+    responsible_body_devices_tell_us: Tell us who will order laptops
     responsible_body_internet_home: Get internet access
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
@@ -49,7 +49,7 @@ en:
     internet_access: Get internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_how_to_order: "How and when to order DfE laptops and tablets during the pandemic"
+    devices_guidance_how_to_order: "How and when to order DfE laptops during coronavirus (COVID-19)"
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
@@ -113,12 +113,12 @@ en:
       responsible_body_changes: Changes to responsible bodies
       responsible_body_changes_edit: Verify the responsible body details
       multi_domain_chromebooks: Responsible bodies managing multiple Chromebook domains
-    who_will_order: Who will place orders for laptops and tablets?
+    who_will_order: Who will place orders for laptops?
     who_will_order_show:
       school: Each school or college will place their own orders
       responsible_body: Orders will be placed centrally
     request_a_change: Contact our support team to request this change
-    change_who_will_order: Who will place orders for laptops and tablets?
+    change_who_will_order: Who will place orders for laptops?
     change_who_will_order_edit:
       school: The school will place their own orders
       responsible_body: Orders will be placed centrally
@@ -177,7 +177,7 @@ en:
             title: Are you still interested?
           device_types:
             title: Which of these device types would you accept?
-            hint: Select all devices types that you would use.
+            hint: Select all device types that you would use.
           how_many_devices:
             title: How many devices do you want?
           address:
@@ -244,7 +244,7 @@ en:
       privacy:
         title: Privacy notice
       allocation:
-        title: "You’ve been allocated %{allocation} laptops and tablets"
+        title: "You’ve been allocated %{allocation} laptops"
       order_your_own:
         school:
           title: Ordering devices during school disruption
@@ -259,7 +259,7 @@ en:
         errors:
           will_other_order: Tell us whether you need to add someone
       devices_you_can_order:
-        title: You can order a range of laptops and tablets
+        title: You can order different types of laptops
       chromebooks:
         title: Will you order Chromebooks?
         'yes': Yes, we will need Chromebooks
@@ -294,8 +294,8 @@ en:
       description: Find out how we estimated device requirements and how to query an allocation.
       audience: responsible_body_users
     how_to_order:
-      title: How and when to order laptops and tablets
-      description: How to order laptops and tablets for disadvantaged children and young people during the pandemic.
+      title: How and when to order laptops
+      description: How to order laptops for disadvantaged children and young people during coronavirus (COVID-19).
       audience: responsible_body_users
     device_specification:
       title: Device options and specifications
@@ -541,7 +541,7 @@ en:
               too_short: Enter an email address that is at least %{count} characters
               invalid: Enter an email address in the correct format, like name@example.com
             phone_number:
-              blank: Enter the contact’s telephone
+              blank: Enter the contact’s telephone number
         chromebook_information_form:
           custom_errors:
             will_need_chromebooks: Tell us whether the %{institution_type} will need Chromebooks
@@ -851,7 +851,7 @@ en:
         name: Responsible body name
   banners:
     secondary_mass_testing:
-      heading: All secondary schools can order laptops and tablets now. We’ll invite all primary schools to order by 13 January at the latest, starting with the most disadvantaged areas in England.
+      heading: All secondary schools can order laptops now. We’ll invite all primary schools to order by 13 January at the latest, starting with the most disadvantaged areas in England.
     increased_allocations:
       school:
         heading:
