@@ -31,24 +31,7 @@
         <li>manage who can order devices</li>
         <li>order devices themselves</li>
       </ul>
-
     <% end %>
-
-    <% unless FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
-      <h2 class="govuk-heading-m">Help schools and colleges prepare for disruption</h2>
-
-      <p class="govuk-body">Give us contact details as soon as you can so we can help schools and colleges prepare to deliver remote education if they need to.</p>
-
-      <h2 class="govuk-heading-m">Each school and college has their own allocation</h2>
-
-      <p class="govuk-body">Every school and college has its own allocation of laptops and tablets. Allocations are based on free meal data and estimates of how many devices the school or college has already received.</p>
-
-      <h2 class="govuk-heading-m">A school’s full allocation can only be ordered when a closure is reported</h2>
-
-      <p class="govuk-body">We’ll contact people as soon as they’re able to place orders.</p>
-
-    <% end %>
-
     <div class="govuk-!-margin-top-6">
       <%= govuk_button_link_to 'Continue', responsible_body_devices_who_will_order_edit_path %>
     </div>

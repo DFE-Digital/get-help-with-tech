@@ -7,7 +7,6 @@ class FeatureFlag
   TEMPORARY_FEATURE_FLAGS = %i[
     increased_allocations_banner
     secondary_mass_testing_banner
-    schools_closed_for_national_lockdown
     half_term_delivery_suspension
     donated_devices
     rb_level_access_notification

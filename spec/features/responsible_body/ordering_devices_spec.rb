@@ -19,15 +19,13 @@ RSpec.feature 'Ordering devices' do
     then_i_see_the_cannot_order_devices_yet_page
   end
 
-  context 'when there’s a national lockdown', with_feature_flags: { schools_closed_for_national_lockdown: 'active' } do
-    scenario 'a responsible body that cannot order devices yet' do
-      when_i_visit_the_responsible_body_home_page
-      and_i_follow_the_get_laptops_and_tablets_link
-      then_i_see_the_get_laptops_and_tablets_page
+  scenario 'a responsible body that cannot order devices yet' do
+    when_i_visit_the_responsible_body_home_page
+    and_i_follow_the_get_laptops_and_tablets_link
+    then_i_see_the_get_laptops_and_tablets_page
 
-      when_i_follow_the_order_devices_link
-      then_i_see_that_i_will_be_able_to_order_soon
-    end
+    when_i_follow_the_order_devices_link
+    then_i_see_that_i_will_be_able_to_order_soon
   end
 
   scenario 'a centrally managed school can order for specific circumstances' do
@@ -36,41 +34,19 @@ RSpec.feature 'Ordering devices' do
     then_i_see_the_order_for_specific_circumstances_page
   end
 
-  scenario 'a centrally managed school can order for local restrictions' do
-    given_a_centrally_managed_school_can_order_for_local_restrictions
+  scenario 'a centrally managed school can order full allocation' do
+    given_a_centrally_managed_school_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_1_school_that_i_need_to_place_orders_for
   end
 
-  scenario 'centrally managed schools that can order for local restrictions and specific circumstances' do
-    given_a_centrally_managed_school_can_order_for_local_restrictions
+  scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+    given_a_centrally_managed_school_can_order_full_allocation
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_2_schools_that_i_need_to_place_orders_for
-  end
-
-  scenario 'a school that orders can order for specific circumstances' do
-    given_a_school_that_will_order_devices_can_order_for_specific_circumstances
-    when_i_visit_the_order_devices_page
-    then_i_see_the_cannot_order_devices_yet_page
-    and_i_see_that_1_school_can_place_their_own_order_for_specific_circumstances
-  end
-
-  scenario 'a school that orders can order for local restrictions' do
-    given_a_school_that_will_order_devices_can_order_for_local_restrictions
-    when_i_visit_the_order_devices_page
-    then_i_see_the_cannot_order_devices_yet_page
-    and_i_see_that_1_school_can_place_their_own_order_for_local_restrictions
-  end
-
-  scenario 'schools that order can order for local restrictions and specific circumstances' do
-    given_a_school_that_will_order_devices_can_order_for_local_restrictions
-    given_a_school_that_will_order_devices_can_order_for_specific_circumstances
-    when_i_visit_the_order_devices_page
-    then_i_see_the_cannot_order_devices_yet_page
-    and_i_see_that_2_schools_can_place_their_own_orders
   end
 
   def given_i_am_signed_in_as_a_responsible_body_user
@@ -92,19 +68,9 @@ RSpec.feature 'Ordering devices' do
     schools[1].std_device_allocation.update!(cap: 4, allocation: 8)
   end
 
-  def given_a_centrally_managed_school_can_order_for_local_restrictions
+  def given_a_centrally_managed_school_can_order_full_allocation
     schools[2].can_order!
     schools[2].std_device_allocation.update!(cap: 7, allocation: 7)
-  end
-
-  def given_a_school_that_will_order_devices_can_order_for_specific_circumstances
-    schools[3].can_order_for_specific_circumstances!
-    schools[3].std_device_allocation.update!(cap: 2, allocation: 23)
-  end
-
-  def given_a_school_that_will_order_devices_can_order_for_local_restrictions
-    schools[4].can_order!
-    schools[4].std_device_allocation.update!(cap: 23, allocation: 23)
   end
 
   def when_i_visit_the_responsible_body_home_page
@@ -133,22 +99,6 @@ RSpec.feature 'Ordering devices' do
 
   def then_i_see_the_cannot_order_devices_yet_page
     expect(page).to have_css('h1', text: 'You cannot order devices yet')
-  end
-
-  def and_i_see_that_1_school_can_place_their_own_order_for_specific_circumstances
-    expect(page).to have_css('h2', text: 'Some schools can place their own orders')
-    expect(page).to have_text('1 school can order devices for specific circumstances because their request has been approved.')
-  end
-
-  def and_i_see_that_1_school_can_place_their_own_order_for_local_restrictions
-    expect(page).to have_css('h2', text: 'Some schools can place their own orders')
-    expect(page).to have_text('1 school can order their full allocation')
-  end
-
-  def and_i_see_that_2_schools_can_place_their_own_orders
-    expect(page).to have_css('h2', text: 'Some schools can place their own orders')
-    expect(page).to have_text('1 school can order their full allocation')
-    expect(page).to have_text('1 school can order devices for specific circumstances because their request has been approved.')
   end
 
   def then_i_see_the_order_for_specific_circumstances_page

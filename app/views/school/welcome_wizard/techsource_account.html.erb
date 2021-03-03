@@ -11,11 +11,8 @@
 
       <p class="govuk-body">You will need to place orders on a website called TechSource, which is run by Computacenter.</p>
 
-      <% if FeatureFlag.active?(:schools_closed_for_national_lockdown) %>
-        <p class="govuk-body">We will create a TechSource account for you. You’ll get an email with instructions about your account when it is ready.</p>
-      <% else %>
-        <p class="govuk-body">We will create a TechSource account for you. You’ll get an email with instructions about your account when your school can place orders.</p>
-      <% end %>
+      <p class="govuk-body">We will create a TechSource account for you. You’ll get an email with instructions about your account when it is ready.</p>
+
       <%= f.govuk_submit 'Continue' %>
     <%- end %>
   </div>

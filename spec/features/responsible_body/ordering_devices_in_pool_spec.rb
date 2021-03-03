@@ -20,13 +20,12 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     then_i_see_the_cannot_order_devices_yet_page
   end
 
-  scenario 'a centrally managed school that can order for local restrictions' do
-    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+  scenario 'a centrally managed school that can order full allocation' do
+    given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
-    and_is_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
-    and_i_see_where_my_allocation_has_come_from_for_the_1_school_in_local_restrictions
+    and_i_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
@@ -35,25 +34,23 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_1_school_with_specific_circumstances_that_i_need_to_place_orders_for
-    and_is_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
-    and_i_see_where_my_allocation_has_come_from_for_the_1_school_with_specific_circumstances
+    and_i_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
-  scenario 'centrally managed schools that can order for local restrictions and specific circumstances' do
-    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+  scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+    given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_2_schools_that_i_need_to_place_orders_for
     and_i_see_2_schools_that_i_have_already_placed_orders_for
-    and_i_see_where_my_allocation_has_come_from_for_the_2_schools
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
   scenario 'centrally managed schools with multiple Chromebook domains that can order' do
     given_there_are_multiple_chromebook_domains_being_managed
-    given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+    given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_a_section_regarding_ordering_chromebooks
@@ -78,7 +75,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     schools[3].preorder_information.responsible_body_will_order_devices!
   end
 
-  def given_a_centrally_managed_school_within_a_pool_can_order_for_local_restrictions
+  def given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     schools[0].can_order!
     schools[0].std_device_allocation.update!(cap: 3, allocation: 20, devices_ordered: 1) # 2 left
     schools[0].coms_device_allocation.update!(cap: 5, allocation: 10, devices_ordered: 2) # 3 left
@@ -151,7 +148,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     expect(page).to have_text('2 devices and 3 routers available to order')
   end
 
-  def and_is_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
+  def and_i_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
     expect(page).to have_text('You ordered 1 devices and 2 routers')
   end
 
@@ -159,7 +156,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     expect(page).to have_text('2 devices and 0 routers available to order')
   end
 
-  def and_is_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
+  def and_i_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
     expect(page).to have_text('You ordered 1 devices and 0 routers')
   end
 
@@ -169,20 +166,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
 
   def and_i_see_2_schools_that_i_have_already_placed_orders_for
     expect(page).to have_text('You ordered 2 devices and 2 routers')
-  end
-
-  def and_i_see_where_my_allocation_has_come_from_for_the_1_school_in_local_restrictions
-    expect(page).to have_text('remaining allocation of devices for schools that have reported a closure or')
-  end
-
-  def and_i_see_where_my_allocation_has_come_from_for_the_1_school_with_specific_circumstances
-    expect(page).to have_text('remaining allocation of devices where a request for specific circumstances')
-  end
-
-  def and_i_see_where_my_allocation_has_come_from_for_the_2_schools
-    expect(page).to have_text('remaining allocation of devices for:')
-    expect(page).to have_text('approved requests for specific circumstances')
-    expect(page).to have_text('schools that have reported a closure or 15')
   end
 
   def and_i_see_i_have_no_more_devices_to_order
