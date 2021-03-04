@@ -70,6 +70,10 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
       ].map { |hash| ExtraMobileDataRequestRow.new(hash).build_request }
     end
 
+    before do
+      MobileNetwork.all.sample.update(excluded_fe_network: true)
+    end
+
     it 'errors on excluded FE networks' do
       importer.import!(extra_fields: { school: school })
       expect(importer.summary.successful.size).to be(1)

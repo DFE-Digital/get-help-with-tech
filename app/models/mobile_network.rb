@@ -14,8 +14,8 @@ class MobileNetwork < ApplicationRecord
     participating
   end
 
-  scope :excluded_fe_networks, -> { where(brand: %w[giffgaff O2]) }
-  scope :fe_networks, -> { participating.where.not(id: excluded_fe_networks.pluck(:id)) }
+  scope :excluded_fe_networks, -> { where(excluded_fe_network: true) }
+  scope :fe_networks, -> { participating.where(excluded_fe_network: false) }
 
   def pathsafe_brand
     brand.to_s

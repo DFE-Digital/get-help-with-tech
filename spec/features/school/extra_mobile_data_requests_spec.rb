@@ -25,7 +25,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
   context 'school.hide_mno is true' do
     before do
       school.update!(hide_mno: true)
-      create(:mobile_network, brand: 'giffgaff')
+      create(:mobile_network, brand: 'giffgaff', excluded_fe_network: true)
     end
 
     scenario 'do not show FE excluded MNOs' do
