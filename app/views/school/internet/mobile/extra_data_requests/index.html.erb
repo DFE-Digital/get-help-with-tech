@@ -16,11 +16,11 @@
       <%= title %>
     </h1>
 
-    <p class="govuk-body">
-      <%= govuk_button_link_to 'New request',
-        extra_data_requests_type_internet_mobile_school_path(@school)
-      %>
-    </p>
+    <%= govuk_button_link_to 'New request',
+      extra_data_requests_type_internet_mobile_school_path(@school)
+    %>
+
+    <p class="govuk-body">To contact us about a request, give us the request IDs. Do not include names and phone numbers in your email.</p>
 
     <% if @extra_mobile_data_requests.any? %>
       <%= render partial: 'shared/internet/help_with_statuses', locals: { statuses_with_descriptions: @statuses_with_descriptions } %>
