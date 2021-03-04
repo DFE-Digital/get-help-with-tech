@@ -3,10 +3,11 @@ class DeviceCountComponent < ViewComponent::Base
 
   attr_reader :school, :action, :show_action
 
-  def initialize(school:, show_action: true, action: {})
+  def initialize(school:, show_action: true, they_ordered_prefix: false, action: {})
     @school = school
     @action = action
     @show_action = show_action
+    @they_ordered_prefix = they_ordered_prefix
   end
 
   def availablility_string
@@ -34,7 +35,9 @@ class DeviceCountComponent < ViewComponent::Base
   end
 
   def state_prefix
-    if @school.cannot_order_as_reopened?
+    if @they_ordered_prefix
+      'They have ordered '
+    elsif @school.cannot_order_as_reopened?
       'You ordered '
     else
       'You’ve ordered '
