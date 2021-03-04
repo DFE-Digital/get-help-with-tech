@@ -61,7 +61,7 @@
     </header>
     <div class="govuk-width-container">
       <%= render GovukComponent::PhaseBanner.new(phase: 'Alpha') do
-        if current_user.persisted? && (current_user.is_responsible_body_user? || current_user.is_school_user?)
+        if SessionService.is_signed_in?(session) && (current_user.is_responsible_body_user? || current_user.is_school_user?)
           "#{t('user_feedback')} – #{user_feedback_link}".html_safe
         else
           "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
