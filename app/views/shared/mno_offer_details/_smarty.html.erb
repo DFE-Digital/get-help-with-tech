@@ -1,11 +1,6 @@
-<% brand = 'SMARTY' %>
-
 <ul class="govuk-list govuk-list--bullet">
   <li>The recipient will get unlimited data until 31 July 2021.</li>
   <li>The offer is available to both Pay Monthly and active Pay-as-you-go customers.</li>
   <li>A text message will be sent to the nominated device once the additional data has been added to the account.</li>
   <li>SMARTY will aim to process the request within 14 days.</li>
-  <% if MobileNetwork.excluded_fe_networks.where(brand: brand).exists? %>
-    <li><% brand %> will not accept requests for students over the age of 16.</li>
-  <% end %>
 </ul>
