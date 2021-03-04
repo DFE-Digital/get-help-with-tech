@@ -58,7 +58,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
         expect(request_row).to have_content(request.id)
         expect(request_row).to have_content(request.device_phone_number)
         expect(request_row).to have_content(request.account_holder_name)
-        expect(request_row).to have_content(request.created_at.to_date.to_s(:long_ordinal))
+        expect(request_row).to have_content(request.created_at.to_date.to_s(:govuk_date_short))
       end
 
       within my_requests_page.requests_table do

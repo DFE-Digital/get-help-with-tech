@@ -13,7 +13,7 @@
     <%= extra_mobile_data_request.device_phone_number %>
   </td>
   <td class="govuk-table__cell">
-    <%= l(extra_mobile_data_request.created_at, format: :short) %>
+    <time datetime="<%=extra_mobile_data_request.created_at.to_s %>"><%= extra_mobile_data_request.created_at.to_s(:govuk_date_short) %></time>
   </td>
   <td class="govuk-table__cell" class="request-status">
     <%= render ExtraMobileDataRequestStatusComponent.new(status: extra_mobile_data_request.status, viewer: :mno_user) %>
