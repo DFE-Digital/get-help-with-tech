@@ -15,12 +15,11 @@
       <%= f.govuk_text_field :account_holder_name, label: {size: 'm', text: 'Account holder name'}, hint: { text: 'The account holder for a pay monthly contract must be over 18. There’s no minimum age for Pay-as-you-go customers.' } %>
       <%= f.govuk_text_field :device_phone_number, label: {size: 'm', text: 'Mobile phone number'}, hint: { text: 'This should start with 07 and have 11 digits' } %>
 
-      <%= f.govuk_radio_buttons_fieldset(:mobile_network_id, legend: {size: 'm', text: 'Mobile network'}, hint: { text: 'Only networks participating in the service are listed' }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:mobile_network_id, legend: {size: 'm', text: 'Mobile network'}, hint: { text: "Only networks participating in the service are listed.<br />#{MobileNetwork.excluded_fe_networks.pluck(:brand).to_sentence(last_word_connector: ' and ')} will not accept requests for students over the age of 16.".html_safe }) do %>
         <%- for mobile_network in @participating_mobile_networks do %>
           <%= f.govuk_radio_button :mobile_network_id,
                                    mobile_network.id,
-                                   label: { text: mobile_network.brand },
-                                   hint: { text: participation_description(mobile_network) } %>
+                                   label: { text: mobile_network.brand } %>
         <%- end %>
       <%- end %>
 

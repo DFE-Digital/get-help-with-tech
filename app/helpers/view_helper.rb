@@ -68,24 +68,6 @@ module ViewHelper
     end
   end
 
-  def participation_description(mobile_network)
-    [
-      mobile_network.translated_enum_value(:participation_in_pilot),
-      # TODO: uncomment this when we've added the supports_payg field
-      # mobile_network.supports_payg? ? '' : 'Does not support Pay-as-you-go customers.'
-    ].join('. ')
-  end
-
-  def mobile_network_options(mobile_networks)
-    mobile_networks.map do |network|
-      OpenStruct.new(
-        id: network.id,
-        label: network.brand,
-        description: participation_description(network),
-      )
-    end
-  end
-
   def humanized_seconds(seconds)
     ActiveSupport::Duration.build(seconds).inspect
   end
