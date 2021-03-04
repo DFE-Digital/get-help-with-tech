@@ -1,12 +1,12 @@
 ## Replace a faulty Google Chromebook or Microsoft device
 
-### If it is not working within 3 days of receiving it
+### If it's not working within 3 days of receiving it
 
 If a device will not start, check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Include your order number and the device serial number so that we can help you as quickly as possible.
 
 ### If a device stops working after 3 days
 
-School, local authority and academy trust contacts can raise a support request on the [Support Portal](https://computacenterprod.service-now.com/dfe) to request a replacement for a faulty device. 
+School, local authority and academy trust contacts can raise a request on the [Support Portal](https://computacenterprod.service-now.com/dfe) to get a replacement for a faulty device.
 
 Requests for replacement devices from schools will be sent to the local authority or academy trust to be approved. The reason we ask for approval is because if the device has stopped working because a user has damaged the device, your local authority or academy trust will be charged for a replacement.
 
@@ -69,7 +69,7 @@ If you do not meet the courier collecting your faulty devices within 30 minutes 
 
 ## Apple iPad service and repair
 
-### If it is not working within 3 days of receiving it
+### If it's not working within 3 days of receiving it
 
 If an iPad will not start, check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Include your order number so that we can help you as quickly as possible.
 
