@@ -152,6 +152,35 @@ RSpec.describe SchoolUpdateService, type: :model do
         old_school.reload
         expect(old_school.school_links.count).to be(1)
       end
+
+      context 'when the predecessor is in a virtual cap pool' do
+        let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
+        let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
+
+        before do
+          allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
+          allow(mock_request).to receive(:post!).and_return(response)
+
+          rb = old_school.responsible_body
+          rb.update!(vcap_feature_flag: true, who_will_order_devices: 'responsible_body')
+          old_school.preorder_information.update!(who_will_order_devices: 'responsible_body')
+          old_school.can_order!
+          rb.add_school_to_virtual_cap_pools!(old_school)
+        end
+
+        it 'does not transfer any spare allocation or adjust the original values' do
+          school = service.create_school!(staged_school)
+          old_school.reload
+          expect(old_school.in_virtual_cap_pool?).to be true
+
+          expect(school.std_device_allocation.raw_allocation).to eq(0)
+          expect(school.coms_device_allocation.raw_allocation).to eq(0)
+          expect(old_school.std_device_allocation.raw_allocation).to eq(100)
+          expect(old_school.std_device_allocation.raw_cap).to eq(100)
+          expect(old_school.coms_device_allocation.raw_allocation).to eq(10)
+          expect(old_school.coms_device_allocation.raw_cap).to eq(10)
+        end
+      end
     end
   end
 end
