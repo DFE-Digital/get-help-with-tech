@@ -55,9 +55,7 @@ private
         action: 'View',
         action_path: support_school_path(urn: urn),
       })
-    end
-
-    if awaiting
+    elsif awaiting
       row.merge!({
         action: 'View',
         action_path: support_gias_schools_to_add_path(urn: urn),
