@@ -1,0 +1,33 @@
+<%- title = t('page_titles.support.email_audits.index') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= govuk_link_to('Back', support_home_path, class: 'govuk-back-link') %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Recipient</th>
+          <th scope="col" class="govuk-table__header">Message type</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @email_audits.each do |audit| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= audit.email_address %></th>
+            <th scope="row" class="govuk-table__header"><%= audit.message_type %></th>
+            <td class="govuk-table__cell"><%= audit.govuk_notify_status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

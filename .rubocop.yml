@@ -98,6 +98,14 @@ RSpec/PredicateMatcher:
 RSpec/DescribeClass:
   Enabled: false
 
+RSpec/VariableDefinition:
+  Exclude:
+    - spec/mailers/log_email_delivery_observer_spec.rb
+
+RSpec/VariableName:
+  Exclude:
+    - spec/mailers/log_email_delivery_observer_spec.rb
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/system/support_interface/daily_report_spec.rb'

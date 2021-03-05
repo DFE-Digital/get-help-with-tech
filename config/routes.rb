@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get '/start', to: 'pages#start'
 
+  resource :notify_callbacks, only: [:create]
+
   get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
@@ -277,6 +279,7 @@ Rails.application.routes.draw do
       resource :responsible_body, only: %i[edit update], controller: 'users/responsible_body', path: 'responsible-body'
     end
     resources :extra_mobile_data_requests, only: %i[index show], path: 'extra-mobile-data-requests'
+    resources :email_audits, only: [:index], path: 'email-audits'
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 

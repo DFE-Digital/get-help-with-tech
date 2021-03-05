@@ -63,6 +63,15 @@
       </ul>
     <% end %>
 
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to 'Email audits', support_email_audits_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>view emails the service has recently sent</li>
+    </ul>
+
     <% if policy(:support).technical_support? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to 'Technical support', support_technical_support_path %>
