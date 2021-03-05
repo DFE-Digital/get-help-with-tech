@@ -82,6 +82,19 @@ RSpec.describe SchoolUpdateService, type: :model do
       }.to change(School, :count).by(1)
     end
 
+    context 'when the responsible body name has to be mapped' do
+      let!(:mapped_la) { create(:local_authority, name: 'City of Bristol') }
+
+      before do
+        staged_school.update!(responsible_body_name: 'Bristol, City of')
+      end
+
+      it 'looks up the name to find the correct responsible body' do
+        school = service.create_school!(staged_school)
+        expect(school.responsible_body).to eq(mapped_la)
+      end
+    end
+
     context 'when the responsible body has decided who will order' do
       before do
         local_authority.update!(who_will_order_devices: 'schools')

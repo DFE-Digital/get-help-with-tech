@@ -12,7 +12,7 @@ class SchoolUpdateService
   end
 
   def create_school!(staged_school)
-    responsible_body_exists!(staged_school.responsible_body_name)
+    responsible_body_exists!(staged_school)
 
     school = School.create!(staged_school.staged_attributes)
     setup_preorder_information(school)
@@ -93,8 +93,8 @@ private
     predecessor.user_schools.destroy_all
   end
 
-  def responsible_body_exists!(responsible_body_name)
-    raise DataStage::Error, "Cannot find responsible body '#{responsible_body_name}'" unless ResponsibleBody.find_by(name: responsible_body_name)
+  def responsible_body_exists!(staged_school)
+    raise DataStage::Error, "Cannot find responsible body '#{staged_school.responsible_body_name}'" if staged_school.responsible_body.blank?
   end
 
   def update_school(staged_school)
