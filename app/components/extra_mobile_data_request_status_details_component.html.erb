@@ -24,6 +24,8 @@
         <li>they are a new <%= @extra_mobile_data_request.mobile_network.brand %> customer</li>
         <li>they do not meet <%= @extra_mobile_data_request.mobile_network.brand %>’s criteria</li>
         <li>they already have fixed line broadband at home</li>
+        <li>they already receive unlimited data</li>
+        <li>they have a mobile broadband account</li>
       </ul>
 
       <p class="govuk-body">You can still:</p>
@@ -64,7 +66,8 @@
     <div class="govuk-inset-text">
       <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> could not process this request</h2>
 
-      <p class="govuk-body">They did not give a reason why.</p>
+      <p class="govuk-body"><%= @extra_mobile_data_request.mobile_network.brand %> could not process this request because some of the information was not recognised. You should check all details are correct, including the network the number is with. Also check that the account does not already receive unlimited data. Please submit a new request if any details need to be updated.</p>
+
       <p class="govuk-body">You can still:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>confirm this person needs internet access</li>
@@ -74,7 +77,7 @@
     </div>
   <%- elsif @extra_mobile_data_request.unavailable_status? %>
     <div class="govuk-inset-text">
-      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> is not offering data increases yet</h2>
+      <h2 class="govuk-heading-m"><%= @extra_mobile_data_request.mobile_network.brand %> is not offering data increases</h2>
       <p class="govuk-body">We cannot request an increase in data from a network that’s not participating in the offer.</p>
     </div>
   <%- end %>
