@@ -1,4 +1,4 @@
 <% techsource = Computacenter::TechSource.new %>
 <% if techsource.warn_users_about_upcoming_maintenance_window? %>
-  <%= render GovukComponent::Warning.new( text: techsource.maintenance_message) %>
+  <%= render GovukComponent::Warning.new(text: "The TechSource website will be closed for maintenance on #{techsource.next_maintenance[:maintenance_on_date].strftime('%A %-d %B')}. You can order devices when it reopens on #{techsource.next_maintenance[:reopened_on_date].strftime('%A %-d %B')}.") %>
 <%- end %>
