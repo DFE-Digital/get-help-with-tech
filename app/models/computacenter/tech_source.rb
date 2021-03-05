@@ -1,9 +1,9 @@
 class Computacenter::TechSource
   NEXT_MAINTENANCE = {
-    window_start: Time.zone.local(2020, 12, 12, 9, 0, 0),
-    window_end: Time.zone.local(2020, 12, 12, 17, 0, 0),
-    maintenance_on_date: Date.new(2020, 12, 12),
-    reopened_on_date: Date.new(2020, 12, 13),
+    window_start: Time.zone.local(2021, 3, 6, 9, 0, 0),
+    window_end: Time.zone.local(2021, 3, 6, 12, 0, 0),
+    maintenance_on_date: Date.new(2021, 2, 6),
+    reopened_on_date: Date.new(2021, 3, 6),
   }.freeze
 
   def next_maintenance
@@ -23,5 +23,13 @@ class Computacenter::TechSource
   def unavailable?
     now = Time.zone.now
     now >= next_maintenance[:window_start] && now <= next_maintenance[:window_end]
+  end
+
+  def maintenance_message
+    formatted_time_start = NEXT_MAINTENANCE[:window_start].strftime('%k:%M%P')
+    formatted_time_end = NEXT_MAINTENANCE[:window_end].strftime('%k:%M%P')
+    formatted_date = NEXT_MAINTENANCE[:maintenance_on_date].strftime('%A %-d %B')
+
+    "The TechSource website will not be available between #{formatted_time_start} and #{formatted_time_end} on #{formatted_date} due to planned maintenance."
   end
 end
