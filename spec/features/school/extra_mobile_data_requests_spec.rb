@@ -262,7 +262,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} could not process this request")
-          expect(page).to have_content('They did not give a reason why')
+          expect(page).to have_content('confirm this person needs internet access')
           expect(page).to have_link('4G wireless router instead')
         end
       end
@@ -275,7 +275,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
 
         it 'shows a panel with more info about the problem' do
-          expect(page).to have_content("#{request.mobile_network.brand} is not offering data increases yet")
+          expect(page).to have_content("#{request.mobile_network.brand} is not offering data increases")
           expect(page).to have_content('We cannot request an increase in data from a network that’s not participating in the offer.')
         end
       end
