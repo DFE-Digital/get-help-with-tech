@@ -10,30 +10,30 @@ RSpec.feature 'Accessing the donated devices area as a school user', type: :feat
   end
 
   scenario 'devolved school can navigate to donated device form from the home page' do
-    given_devolved_school
+    given_i_have_a_devolved_school
     and_i_navigate_to_the_home_page
-    then_see_that_i_can_opt_in
+    then_i_see_that_i_can_opt_in
   end
 
   scenario 'centrally managed school cannot see the donated device form from the home page' do
-    given_centrally_managed_school
+    given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_home_page
-    then_see_that_i_cannot_opt_in
+    then_i_see_that_i_cannot_opt_in
   end
 
   scenario 'school cannot see donated device form from homepage without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
-    given_centrally_managed_school
+    given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_home_page
-    then_see_that_i_cannot_opt_in
+    then_i_see_that_i_cannot_opt_in
   end
 
 private
 
-  def given_devolved_school
+  def given_i_have_a_devolved_school
     school.preorder_information.update!(who_will_order_devices: 'school')
   end
 
-  def given_centrally_managed_school
+  def given_i_have_a_centrally_managed_school
     school.preorder_information.update!(who_will_order_devices: 'responsible_body')
   end
 
@@ -41,11 +41,11 @@ private
     visit home_school_path(school)
   end
 
-  def then_see_that_i_can_opt_in
+  def then_i_see_that_i_can_opt_in
     expect(page).to have_content('Opt in to the Daily Mail’s donated devices scheme')
   end
 
-  def then_see_that_i_cannot_opt_in
+  def then_i_see_that_i_cannot_opt_in
     expect(page).not_to have_content('Opt in to the Daily Mail’s donated devices scheme')
   end
 end
