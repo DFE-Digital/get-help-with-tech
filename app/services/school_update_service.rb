@@ -70,20 +70,23 @@ private
   end
 
   def move_remaining_allocations(school, predecessor)
-    predecessor.device_allocations.each do |allocation|
-      alloc = allocation.raw_allocation
-      ordered = allocation.raw_devices_ordered
-      spare_allocation = alloc - ordered
+    rb = predecessor.responsible_body
+    unless rb.has_virtual_cap_feature_flags? && rb.has_school_in_virtual_cap_pools?(predecessor)
+      predecessor.device_allocations.each do |allocation|
+        alloc = allocation.raw_allocation
+        ordered = allocation.raw_devices_ordered
+        spare_allocation = alloc - ordered
 
-      next unless spare_allocation.positive?
+        next unless spare_allocation.positive?
 
-      SchoolDeviceAllocation.transaction do
-        school.device_allocations
-          .send(allocation.device_type).first
-          .update!(allocation: spare_allocation,
-                   cap: spare_allocation)
+        SchoolDeviceAllocation.transaction do
+          school.device_allocations
+            .send(allocation.device_type).first
+            .update!(allocation: spare_allocation,
+                     cap: spare_allocation)
 
-        allocation.update!(allocation: ordered, cap: ordered)
+          allocation.update!(allocation: ordered, cap: ordered)
+        end
       end
     end
   end
