@@ -20,6 +20,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   validate :validate_school_or_rb_present
   validate :validate_request_uniqueness, on: :create
   validate :validate_network_permits_fe
+  validate :validate_not_example_number
 
   enum status: {
     new: 'new',
@@ -111,6 +112,12 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
 private
+
+  def validate_not_example_number
+    if device_phone_number == '07123456789'
+      errors.add(:device_phone_number, '07123456789 is the example number and will not be added')
+    end
+  end
 
   def validate_network_permits_fe
     if school&.hide_mno? && MobileNetwork.excluded_fe_networks.include?(mobile_network)

@@ -55,14 +55,14 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
       [
         {
           account_holder_name: 'John Doe',
-          mobile_phone_number: '07123456789',
+          mobile_phone_number: '07123456780',
           mobile_network: MobileNetwork.fe_networks.sample.brand,
           pay_monthly_or_payg: 'pay_monthly',
           has_someone_shared_the_privacy_statement_with_the_account_holder: 'TRUE',
         },
         {
           account_holder_name: 'John Doe',
-          mobile_phone_number: '07123456789',
+          mobile_phone_number: '07123456781',
           mobile_network: MobileNetwork.excluded_fe_networks.sample.brand,
           pay_monthly_or_payg: 'pay_monthly',
           has_someone_shared_the_privacy_statement_with_the_account_holder: 'TRUE',
