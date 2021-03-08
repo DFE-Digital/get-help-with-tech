@@ -30,6 +30,15 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
   end
 
+  describe 'validates device_phone_number is not the example number' do
+    subject(:model) { described_class.new(device_phone_number: '07123456789') }
+
+    it 'is not valid' do
+      expect(model.valid?).to be_falsey
+      expect(model.errors[:device_phone_number]).to be_present
+    end
+  end
+
   describe 'validate RB or school must be present' do
     let(:school) { create(:school) }
     let(:rb) { create(:trust) }
@@ -106,7 +115,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
     context 'when school present' do
       let(:existing_request) do
-        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456789', school: school)
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
       end
 
       subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, responsible_body: nil) }
@@ -119,7 +128,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
         model.valid?
         expect(model.errors[:device_phone_number]).to be_blank
 
-        model.device_phone_number = '07123456789'
+        model.device_phone_number = '07123456780'
         model.valid?
         expect(model.errors[:device_phone_number]).to be_blank
 
@@ -131,10 +140,10 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
     context 'when the device_phone_number is not normalised' do
       let(:existing_request) do
-        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456789', school: school)
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
       end
 
-      subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, mobile_network_id: existing_request.mobile_network_id, account_holder_name: existing_request.account_holder_name, responsible_body: nil, device_phone_number: '07123 456 789') }
+      subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, mobile_network_id: existing_request.mobile_network_id, account_holder_name: existing_request.account_holder_name, responsible_body: nil, device_phone_number: '07123 456 780') }
 
       before do
         model.mobile_network_id = existing_request.mobile_network_id
@@ -197,13 +206,13 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   it 'normalises phone numbers to the national format without spaces' do
-    expect(mno_request_for_number('07 123 456 789').device_phone_number).to eq('07123456789')
-    expect(mno_request_for_number('0712345 6789').device_phone_number).to eq('07123456789')
+    expect(mno_request_for_number('07 123 456 780').device_phone_number).to eq('07123456780')
+    expect(mno_request_for_number('0712345 6780').device_phone_number).to eq('07123456780')
     expect(mno_request_for_number('+44 7712345678').device_phone_number).to eq('07712345678')
   end
 
   it 'normalises phone numbers without the leading zero to the national format without spaces' do
-    expect(mno_request_for_number('7123456789').device_phone_number).to eq('07123456789')
+    expect(mno_request_for_number('7123456780').device_phone_number).to eq('07123456780')
   end
 
   describe 'validating contract_type' do
