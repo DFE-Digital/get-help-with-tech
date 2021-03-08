@@ -4,19 +4,19 @@ RSpec.describe ResponsibleBody::Internet::Mobile::BulkRequestsController, type: 
   let(:local_authority_user) { create(:local_authority_user) }
   let(:filename) { Rails.root.join('tmp/update_requests.xlsx') }
 
-  context 'when authenticated' do
+  describe '#create' do
+    let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), Mime[:xlsx]) }
+    let(:request_data) { { bulk_upload_form: { upload: upload } } }
+
     before do
-      sign_in_as local_authority_user
+      ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
+        create(:mobile_network, brand: brand)
+      end
     end
 
-    describe 'create' do
-      let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), Mime[:xlsx]) }
-      let(:request_data) { { bulk_upload_form: { upload: upload } } }
-
+    context 'when authenticated' do
       before do
-        ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
-          create(:mobile_network, brand: brand)
-        end
+        sign_in_as local_authority_user
       end
 
       it 'sends an SMS to the account holder of each valid request in the spreadsheet' do
@@ -49,6 +49,20 @@ RSpec.describe ResponsibleBody::Internet::Mobile::BulkRequestsController, type: 
 
         post :create, params: { bulk_upload_form: { upload: upload } }
         expect(response).to render_template(:summary)
+      end
+    end
+
+    context 'when support user impersonating' do
+      let(:support_user) { create(:support_user) }
+
+      before do
+        sign_in_as support_user
+        impersonate local_authority_user
+      end
+
+      it 'returns forbidden' do
+        post :create, params: request_data
+        expect(response).to be_forbidden
       end
     end
   end

@@ -17,6 +17,8 @@ class ResponsibleBody::Internet::Mobile::ManualRequestsController < ResponsibleB
                                              responsible_body: @current_user.responsible_body),
     )
 
+    authorize @extra_mobile_data_request, policy_class: ResponsibleBody::BasePolicy
+
     if @extra_mobile_data_request.valid?
       if params[:confirm]
         # clear the stashed params once the user has confirmed them

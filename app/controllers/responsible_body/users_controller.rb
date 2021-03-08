@@ -10,6 +10,8 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
   end
 
   def create
+    authorize CreateUserService, policy_class: ResponsibleBody::BasePolicy
+
     @rb_user = CreateUserService.invite_responsible_body_user(
       user_params.merge(responsible_body_id: @responsible_body.id),
     )
@@ -30,6 +32,9 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
 
   def update
     @rb_user = @responsible_body.users.find(params[:id])
+
+    authorize @rb_user, policy_class: ResponsibleBody::BasePolicy
+
     if @rb_user.update(user_params)
       redirect_to responsible_body_users_path
     else

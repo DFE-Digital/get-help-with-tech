@@ -4,6 +4,8 @@ class ResponsibleBody::Internet::Mobile::BulkRequestsController < ResponsibleBod
   end
 
   def create
+    authorize BulkUploadForm, policy_class: ResponsibleBody::BasePolicy
+
     @upload_form = BulkUploadForm.new(upload_form_params)
 
     if @upload_form.valid?

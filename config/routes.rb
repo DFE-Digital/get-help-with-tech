@@ -223,6 +223,7 @@ Rails.application.routes.draw do
     get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
     get '/performance/mno-requests', to: 'service_performance#mno_requests', format: :csv
+    resource :impersonate, only: %i[create destroy]
     namespace :gias do
       get '/updates', to: 'home#index', as: :home
       resources :schools_to_add, only: %i[index show update], param: :urn, path: '/schools-to-add'

@@ -3,20 +3,19 @@ require 'rails_helper'
 RSpec.describe School::Internet::Mobile::BulkRequestsController, type: :controller do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
+  let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), Mime[:xlsx]) }
+  let(:request_data) { { urn: school.urn, bulk_upload_form: { upload: upload } } }
 
-  context 'when authenticated' do
-    before do
-      sign_in_as user
+  before do
+    ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
+      create(:mobile_network, brand: brand)
     end
+  end
 
-    describe '#create' do
-      let(:upload) { Rack::Test::UploadedFile.new(file_fixture('extra-mobile-data-requests.xlsx'), Mime[:xlsx]) }
-      let(:request_data) { { urn: school.urn, bulk_upload_form: { upload: upload } } }
-
+  describe '#create' do
+    context 'when authenticated' do
       before do
-        ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
-          create(:mobile_network, brand: brand)
-        end
+        sign_in_as user
       end
 
       it 'sends an SMS to the account holder of each valid request in the spreadsheet' do
@@ -53,6 +52,20 @@ RSpec.describe School::Internet::Mobile::BulkRequestsController, type: :controll
           post :create, params: request_data
           expect(response).to render_template(:summary)
         end
+      end
+    end
+
+    context 'when support user impersonating' do
+      let(:support_user) { create(:support_user) }
+
+      before do
+        sign_in_as support_user
+        impersonate user
+      end
+
+      it 'returns forbidden' do
+        post :create, params: request_data
+        expect(response).to be_forbidden
       end
     end
   end

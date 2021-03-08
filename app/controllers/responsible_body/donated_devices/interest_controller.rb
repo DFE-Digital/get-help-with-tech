@@ -9,6 +9,8 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
   def create
     @form = DonatedDeviceInterestForm.new(device_interest_params)
 
+    authorize @form, policy_class: ResponsibleBody::DonatedDevicePolicy
+
     if @form.valid?
       if @form.interested?
         redirect_to responsible_body_donated_devices_about_devices_path(@school)
@@ -26,7 +28,10 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def interest_confirmation
     @form = DonatedDeviceInterestForm.new(device_interest_params)
+
     if request.post?
+      authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
+
       if @form.valid?
         if @form.interested?
           redirect_to responsible_body_donated_devices_all_or_some_schools_path
@@ -41,7 +46,10 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def all_or_some_schools
     @request = find_or_build_request
+
     if request.post?
+      authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
+
       if request_valid_for_status?(status: 'opt_in_step')
         if @request.opt_in_all_schools?
           @request.schools = all_centrally_managed_schools_ids
@@ -60,6 +68,8 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def select_schools
     if request.post?
+      authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
+
       if request_valid_for_status?(status: 'schools_step', request_params: get_params_with_chosen_schools)
         if @request.schools_that_have_not_already_been_selected.count.zero?
           @request.opt_in_choice = 'all_schools'
@@ -76,6 +86,8 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def device_types
     if request.post?
+      authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
+
       if request_valid_for_status?(status: 'devices_step')
         @request.save!
         redirect_to responsible_body_donated_devices_how_many_devices_path
@@ -87,6 +99,8 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def how_many_devices
     if request.post?
+      authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
+
       if request_valid_for_status?(status: 'units_step')
         @request.save!
         redirect_to responsible_body_donated_devices_address_path
@@ -102,6 +116,7 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def check_answers
     if request.post?
+      authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
       @request.complete!
       redirect_to responsible_body_donated_devices_opted_in_path
     end

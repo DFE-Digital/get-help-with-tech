@@ -7,6 +7,8 @@ class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::BaseCo
   end
 
   def create
+    authorize ResponsibleBody::Devices::WhoToContactForm, policy_class: ResponsibleBody::BasePolicy
+
     create_or_update
   end
 
@@ -17,6 +19,8 @@ class ResponsibleBody::Devices::WhoToContactController < ResponsibleBody::BaseCo
   end
 
   def update
+    authorize ResponsibleBody::Devices::WhoToContactForm, policy_class: ResponsibleBody::BasePolicy
+
     create_or_update
   end
 

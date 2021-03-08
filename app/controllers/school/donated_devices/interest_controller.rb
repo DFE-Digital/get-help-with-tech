@@ -9,6 +9,8 @@ class School::DonatedDevices::InterestController < School::BaseController
   def create
     @form = DonatedDeviceInterestForm.new(device_interest_params)
 
+    authorize DonatedDeviceInterestForm, policy_class: School::DonatedDevicePolicy
+
     if @form.valid?
       if @form.interested?
         redirect_to about_devices_donated_devices_school_path(@school)
@@ -26,7 +28,10 @@ class School::DonatedDevices::InterestController < School::BaseController
 
   def interest_confirmation
     @form = DonatedDeviceInterestForm.new(device_interest_params)
+
     if request.post?
+      authorize @form, policy_class: School::DonatedDevicePolicy
+
       if @form.valid?
         if @form.interested?
           redirect_to what_devices_do_you_want_donated_devices_school_path(@school)
@@ -43,6 +48,8 @@ class School::DonatedDevices::InterestController < School::BaseController
     find_or_build_request
 
     if request.post?
+      authorize @request, policy_class: School::DonatedDevicePolicy
+
       @request.assign_attributes(donated_device_params)
       if @request.valid?
         @request.save!
@@ -55,6 +62,7 @@ class School::DonatedDevices::InterestController < School::BaseController
 
   def how_many_devices
     if request.post?
+      authorize @request, policy_class: School::DonatedDevicePolicy
       last_status = @request.status
       @request.assign_attributes(donated_device_params.merge(status: 'units_step'))
       if @request.valid?
@@ -73,6 +81,7 @@ class School::DonatedDevices::InterestController < School::BaseController
 
   def check_answers
     if request.post?
+      authorize @request, policy_class: School::DonatedDevicePolicy
       @request.complete!
       redirect_to opted_in_donated_devices_school_path(@school)
     end

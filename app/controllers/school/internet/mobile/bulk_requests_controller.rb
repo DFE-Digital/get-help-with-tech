@@ -4,6 +4,8 @@ class School::Internet::Mobile::BulkRequestsController < School::BaseController
   end
 
   def create
+    authorize ExtraMobileDataRequest, policy_class: School::BasePolicy
+
     @upload_form = BulkUploadForm.new(upload_form_params)
 
     if @upload_form.valid?

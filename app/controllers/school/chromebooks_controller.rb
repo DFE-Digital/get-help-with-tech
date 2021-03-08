@@ -13,6 +13,9 @@ class School::ChromebooksController < School::BaseController
     @chromebook_information_form = ChromebookInformationForm.new(
       { school: @school }.merge(chromebook_params),
     )
+
+    authorize @chromebook_information_form, policy_class: School::BasePolicy
+
     if @chromebook_information_form.valid?
       @preorder_info.update_chromebook_information_and_status!(chromebook_params)
       flash[:success] = t(:success, scope: %w[school chromebooks])

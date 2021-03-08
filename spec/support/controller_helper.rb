@@ -8,6 +8,10 @@ module ControllerHelper
     create_session_id!
     controller.send(:save_user_to_session!, user)
   end
+
+  def impersonate(user)
+    session[:impersonated_user_id] = user.id
+  end
 end
 
 RSpec.configure do |c|

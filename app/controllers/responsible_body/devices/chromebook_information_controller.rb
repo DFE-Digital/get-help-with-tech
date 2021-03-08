@@ -12,6 +12,8 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
   end
 
   def update
+    authorize ChromebookInformationForm.new, policy_class: ResponsibleBody::BasePolicy
+
     @preorder_info = @school.preorder_information
     @chromebook_information_form = ChromebookInformationForm.new(
       { school: @school }.merge(chromebook_params),

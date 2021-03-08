@@ -5,6 +5,8 @@ class School::WelcomeWizardController < School::BaseController
   def next_step
     current_step = params.fetch(:step, @wizard.step)
 
+    authorize @wizard, policy_class: School::WelcomeWizardPolicy
+
     # clear_user_sign_in_token!
     if @wizard.update_step!(wizard_params, current_step)
       redirect_to next_step_path

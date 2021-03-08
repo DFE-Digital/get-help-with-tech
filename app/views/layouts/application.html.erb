@@ -69,6 +69,20 @@
             "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
           end
         end %>
+
+        <% if impersonated_user %>
+          <%= render NotificationBanner.new(title: 'Important', classes: 'govuk-!-margin-top-2 govuk-!-margin-bottom-1') do |banner| %>
+            <p class="govuk-notification-banner__heading">
+              You are impersonating <%= link_to impersonated_user.full_name, support_user_path(impersonated_user) %> (<%= impersonated_user.email_address %>)
+            </p>
+
+            <%= govuk_button_to('Stop impersonating',
+                                support_impersonate_path,
+                                method: :delete,
+                                class: 'govuk-!-margin-bottom-1') %>
+          <% end %>
+        <% end %>
+
         <%= content_for(:before_content) %>
       </div>
     </div>
