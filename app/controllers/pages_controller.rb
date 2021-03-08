@@ -13,7 +13,9 @@ class PagesController < ApplicationController
     end
   end
 
-  def home_page; end
+  def home_page
+    @show_parent_carer_pupil_banner = false
+  end
 
   def about_increasing_mobile_data; end
 
