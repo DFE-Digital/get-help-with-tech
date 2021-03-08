@@ -100,7 +100,7 @@ group :development, :test do
   gem 'pry-byebug'
 
   # Testing framework
-  gem 'rspec-rails', '~> 4.0.2'
+  gem 'rspec-rails', '~> 4.1.0'
 
   # Stubbing web requests
   gem 'webmock'
