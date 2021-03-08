@@ -30,7 +30,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
   end
 
-  describe 'validates example number' do
+  describe 'validates device_phone_number is not the example number' do
     subject(:model) { described_class.new(device_phone_number: '07123456789') }
 
     it 'is not valid' do
