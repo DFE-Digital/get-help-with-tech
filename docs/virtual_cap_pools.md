@@ -6,9 +6,9 @@ Before virtual cap pools were implemented, each school would have a `SchoolDevic
 
 The `cap` values are sent automatically to Computacenter so that they are able to control the amount available for the school to order via Techsource.  The `devices_ordered` values are updated by Computacenter once a school has placed an order.
 
-For a responsible body with many centrally managed schools, there became a need to be able to control where devices were delivered in order to facilitate centralised IT management for the organisation.
+In Techsource, users can order devices only for schools they are associated with. When devices have been ordered for a school, the devices are delivered to that school's address. This works fine for most schools, especially those devolved schools which are managing their own devices.  However, some responsible bodies that manage their schools centrally needed the abilty to have devices sent to a central location rather than directly to individual schools. Typically this was to facilitate the installation, configuration and distribution of the devices from a centralised IT office.
 
-Virtual cap pools provide the means to group together device and/or router allocations for centrally managed schools within a responsible body.  The `cap` values for all the schools in a pool are summed together. Each school then takes this value and subtracts the local `devices_ordered` amount to determine how many devices are available to order at that school and this is then sent to Computacenter.  This enables the full amount of available devices across all the centrally managed schools to be ordered for any single school, i.e. the responsible body can order all of their devices to be delivered to a single location, if desired.
+The solution to this for centrally managed schools was to provide a virtual cap pool as means to group together device and/or router allocations within a responsible body and enable the full amount available to be ordered for, and therefore delivered to, any of the organisation's schools.
 
 ## Implementation
 
