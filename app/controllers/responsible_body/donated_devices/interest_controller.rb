@@ -42,19 +42,12 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
   def all_or_some_schools
     @request = find_or_build_request
     if request.post?
-      last_status = @request.status
-      @request.assign_attributes(donated_device_params.merge(status: 'opt_in_step'))
-      if @request.valid?
-        @request.status = last_status
+      if request_valid_for_status?(status: 'opt_in_step')
         if @request.opt_in_all_schools?
-          # add all schools
           @request.schools = all_centrally_managed_schools_ids
           @request.save!
-          if @request.complete?
-            redirect_to responsible_body_donated_devices_opted_in_path
-          else
-            redirect_to responsible_body_donated_devices_what_devices_do_you_want_path
-          end
+
+          redirect_to responsible_body_donated_devices_what_devices_do_you_want_path
         else
           @request.save!
           redirect_to responsible_body_donated_devices_select_schools_path
@@ -67,34 +60,14 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def select_schools
     if request.post?
-      last_status = @request.status
-      parms = donated_device_params
-
-      if parms[:opt_in_choice] == 'all_schools'
-        parms[:schools] = all_centrally_managed_schools_ids
-      else
-        parms[:opt_in_choice] = 'some_schools'
-
-        if @request.complete?
-          parms[:schools] += @request.schools
-        end
-      end
-
-      @request.assign_attributes(parms.merge(status: 'schools_step'))
-      if @request.valid?
-        @request.status = last_status
-
+      if request_valid_for_status?(status: 'schools_step', request_params: get_params_with_chosen_schools)
         if @request.schools_that_have_not_already_been_selected.count.zero?
           @request.opt_in_choice = 'all_schools'
         end
 
         @request.save!
 
-        if @request.complete?
-          redirect_to responsible_body_donated_devices_opted_in_path
-        else
-          redirect_to responsible_body_donated_devices_what_devices_do_you_want_path
-        end
+        redirect_to responsible_body_donated_devices_what_devices_do_you_want_path
       else
         render :select_schools, status: :unprocessable_entity
       end
@@ -103,10 +76,7 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def device_types
     if request.post?
-      last_status = @request.status
-      @request.assign_attributes(donated_device_params.merge(status: 'devices_step'))
-      if @request.valid?
-        @request.status = last_status
+      if request_valid_for_status?(status: 'devices_step')
         @request.save!
         redirect_to responsible_body_donated_devices_how_many_devices_path
       else
@@ -117,10 +87,7 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
 
   def how_many_devices
     if request.post?
-      last_status = @request.status
-      @request.assign_attributes(donated_device_params.merge(status: 'units_step'))
-      if @request.valid?
-        @request.status = last_status
+      if request_valid_for_status?(status: 'units_step')
         @request.save!
         redirect_to responsible_body_donated_devices_address_path
       else
@@ -187,12 +154,35 @@ private
     parms
   end
 
+  def get_params_with_chosen_schools(opts = donated_device_params)
+    if opts[:opt_in_choice] == 'all_schools'
+      opts[:schools] = all_centrally_managed_schools_ids
+    else
+      opts[:opt_in_choice] = 'some_schools'
+
+      # are we adding more schools to our completed request?
+      if @request.complete?
+        opts[:schools] += @request.schools
+      end
+    end
+    opts
+  end
+
   def all_centrally_managed_schools_ids
     @responsible_body.schools
       .gias_status_open
       .that_are_centrally_managed
       .order(id: :asc)
       .pluck(:id)
+  end
+
+  def request_valid_for_status?(status:, request_params: donated_device_params)
+    last_status = @request.status
+    @request.assign_attributes(request_params.merge(status: status))
+
+    valid = @request.valid?
+    @request.status = last_status if valid
+    valid
   end
 
   def redirect_if_already_completed

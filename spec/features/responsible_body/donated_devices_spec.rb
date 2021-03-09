@@ -12,9 +12,9 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
   end
 
   scenario 'RB that centrally manages schools can navigate to donated device form from the home page' do
-    given_centrally_managed_school
+    given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_devices_page
-    then_see_that_i_can_opt_in_my_schools
+    then_i_see_that_i_can_opt_in_my_schools
 
     and_i_click_the_donated_devices_link
     then_i_am_asked_if_i_am_interested_in_devices
@@ -33,9 +33,9 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
   end
 
   scenario 'RB navigating to donated device form but declining interest' do
-    given_centrally_managed_school
+    given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_devices_page
-    then_see_that_i_can_opt_in_my_schools
+    then_i_see_that_i_can_opt_in_my_schools
 
     and_i_click_the_donated_devices_link
     then_i_am_asked_if_i_am_interested_in_devices
@@ -45,24 +45,24 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
   end
 
   scenario 'RB that has devolved schools cannot see the donated device form from the home page' do
-    given_devolved_school
+    given_i_have_a_devolved_school
     and_i_navigate_to_the_devices_page
-    then_see_that_i_cannot_opt_in_my_schools
+    then_i_see_that_i_cannot_opt_in_my_schools
   end
 
   scenario 'RB that centrally managed but cannot see the donated device form from the home page without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
-    given_centrally_managed_school
+    given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_devices_page
-    then_see_that_i_cannot_opt_in_my_schools
+    then_i_see_that_i_cannot_opt_in_my_schools
   end
 
 private
 
-  def given_devolved_school
+  def given_i_have_a_devolved_school
     school.preorder_information.update!(who_will_order_devices: 'school')
   end
 
-  def given_centrally_managed_school
+  def given_i_have_a_centrally_managed_school
     school.preorder_information.update!(who_will_order_devices: 'responsible_body')
   end
 
@@ -94,11 +94,11 @@ private
     click_on 'Continue'
   end
 
-  def then_see_that_i_can_opt_in_my_schools
+  def then_i_see_that_i_can_opt_in_my_schools
     expect(page).to have_content('Opt in to the Daily Mail’s donated devices scheme')
   end
 
-  def then_see_that_i_cannot_opt_in_my_schools
+  def then_i_see_that_i_cannot_opt_in_my_schools
     expect(page).not_to have_content('Opt in to the Daily Mail’s donated devices scheme')
   end
 
