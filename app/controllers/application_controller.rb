@@ -58,7 +58,7 @@ private
   end
 
   def render_404_unless_responsible_body_has_centrally_managed_schools(responsible_body)
-    unless responsible_body.in_connectivity_pilot_and_has_centrally_managed_schools?
+    unless responsible_body.has_connectivity_feature_flags?
       render 'errors/not_found', status: :not_found and return
     end
   end

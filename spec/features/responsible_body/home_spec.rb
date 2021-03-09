@@ -73,7 +73,9 @@ RSpec.feature ResponsibleBody do
       end
     end
 
-    context 'with a responsible body devolved to all schools' do
+    context 'with a trust devolved to all schools' do
+      let(:responsible_body) { create(:trust) }
+
       before do
         responsible_body.update!(in_connectivity_pilot: true)
       end
@@ -81,6 +83,17 @@ RSpec.feature ResponsibleBody do
       it 'does not show link to get extra data' do
         visit responsible_body_home_path
         expect(page).not_to have_link('Get internet access')
+      end
+    end
+
+    context 'with a local authority devolved to all schools' do
+      before do
+        responsible_body.update!(in_connectivity_pilot: true)
+      end
+
+      it 'shows link to get extra data' do
+        visit responsible_body_home_path
+        expect(page).to have_link('Get internet access')
       end
     end
 

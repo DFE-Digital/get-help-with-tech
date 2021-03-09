@@ -24,7 +24,7 @@
       <li>opt in schools and colleges to the Daily Mail’s donated devices scheme</li>
     </ul>
 
-    <%- if @responsible_body.in_connectivity_pilot_and_has_centrally_managed_schools? %>
+    <%- if @responsible_body.has_connectivity_feature_flags? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
         <%= govuk_link_to t('page_titles.responsible_body_internet_home'), responsible_body_internet_path %>
       </h2>

@@ -112,8 +112,8 @@ class ResponsibleBody < ApplicationRecord
     has_virtual_cap_feature_flags? && has_centrally_managed_schools?
   end
 
-  def in_connectivity_pilot_and_has_centrally_managed_schools?
-    in_connectivity_pilot? && has_centrally_managed_schools?
+  def has_connectivity_feature_flags?
+    in_connectivity_pilot? && (has_centrally_managed_schools? || is_a_local_authority?)
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?
