@@ -7,7 +7,7 @@ Government-funded support is available for schools and colleges to get set up on
 
 [The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/feature-comparison-g-suite-education-and-office-365-education/?marker=content-body) provides feature comparison and case studies on how schools are making the most of these platforms, to help you make the most appropriate choice for your school.
 
-You have until the end of March 2021 to register with this programme and claim your grant.
+The programme has been extended for a further 12 months. This means you now have until the end of March 2022 to register and claim your grant.
 
 ## What is a digital education platform?
 It's a place where teachers, pupils and students can continue learning through online virtual classrooms.
