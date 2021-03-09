@@ -65,22 +65,22 @@ private
 
   def not_signed_in_links
     [
-      NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
+      # NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
       NavLinkComponent.new(title: 'Sign in', url: sign_in_path),
     ]
   end
 
   def responsible_body_links
     [
-      NavLinkComponent.new(title: 'Home', url: responsible_body_home_path),
-      NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
+      NavLinkComponent.new(title: 'My account', url: responsible_body_home_path),
+      # NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
     ]
   end
 
   def school_links
     [
-      NavLinkComponent.new(title: 'Home', url: schools_path),
-      NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
+      NavLinkComponent.new(title: 'My account', url: schools_path),
+      # NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
     ]
   end
 end

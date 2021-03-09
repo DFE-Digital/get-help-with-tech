@@ -13,7 +13,9 @@ class PagesController < ApplicationController
     end
   end
 
-  def home_page; end
+  def home_page; 
+      render :layout => 'home_page_layout'
+  end
 
   def about_increasing_mobile_data; end
 
