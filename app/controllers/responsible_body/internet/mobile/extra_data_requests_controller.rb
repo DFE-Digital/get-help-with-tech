@@ -1,5 +1,5 @@
 class ResponsibleBody::Internet::Mobile::ExtraDataRequestsController < ResponsibleBody::BaseController
-  before_action { render_404_unless_responsible_body_has_centrally_managed_schools(@responsible_body) }
+  before_action { render_404_unless_responsible_body_has_connectivity_feature_flags(@responsible_body) }
 
   def index
     @pagination, @extra_mobile_data_requests = pagy(@responsible_body.extra_mobile_data_requests.order(:created_at))
