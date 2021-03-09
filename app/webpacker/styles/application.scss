@@ -81,6 +81,7 @@ $govuk-image-url-function: frontend-image-url;
   @media (max-width: 768px) {
     @include govuk-responsive-margin(6, "top");
   }
+}
 
 .app-masthead {
   position: relative;
@@ -125,7 +126,6 @@ $govuk-image-url-function: frontend-image-url;
       }
       margin-right: 20px;
     }
-
     .app-masthead-text {
       margin-top: 11px;
     }
