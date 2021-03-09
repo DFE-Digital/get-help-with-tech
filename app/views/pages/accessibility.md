@@ -12,7 +12,7 @@ Throughout most of the service, users should be able to:
 
 ## What to do if you cannot access parts of this service
 
-If you need information in a different format, such as an accessible PDF, large print, easy read or an audio recording or braille, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and we’ll respond to you within 5 working days.
+If you need information in a different format, such as an accessible PDF, large print, easy read or an audio recording or braille, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) and we’ll respond to you within 3 working days.
 
 [AbilityNet](https://mcmw.abilitynet.org.uk/) has advice on making your device easier to use if you have a disability. They also have a free helpline: 0800 048 7642 and you can also email [enquiries@abilitynet.org.uk](mailto:enquiries@abilitynet.org.uk).
 

@@ -102,4 +102,4 @@ We cannot increase data limits if a pupil has used 20GB within a month. Advise t
 
 ## How to contact DfE for help
 
-If you work for a local authority, academy trust, school or college and need help with any of the devices provided by this programme, [contact us](/get-support). We aim to respond within 5 working days.
+If you work for a local authority, academy trust, school or college and need help with any of the devices provided by this programme, [contact us](/get-support). 
