@@ -65,7 +65,6 @@ private
 
   def not_signed_in_links
     [
-      NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
       NavLinkComponent.new(title: 'Sign in', url: sign_in_path),
     ]
   end
