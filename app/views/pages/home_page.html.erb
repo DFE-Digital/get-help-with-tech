@@ -1,17 +1,9 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      Get help with technology
-    </h1>
+<% content_for :body_class, "app-start-page" %>
+<% content_for :start_page_banner do %>
+  <%= render StartPageBanner::View.new %>
+<% end %>
 
-    <p class="govuk-body">
-      Information for local authorities, academy trusts, schools, colleges and <span class="app-no-wrap">further education institutions</span> about the devices, internet access
-      and support available to provide remote education and access to social care during
-      coronavirus (COVID-19).
-    </p>
-  </div>
-</div>
-<div class="govuk-grid-row govuk-!-margin-top-6">
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
       <%= govuk_link_to "Get laptops", devices_how_to_order_path %>

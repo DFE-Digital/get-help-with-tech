@@ -22,7 +22,7 @@
     <%= yield(:head) %>
   </head>
 
-  <body class="govuk-template__body">
+  <body class="govuk-template__body  <%= yield :body_class %>">
     <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
@@ -59,21 +59,27 @@
         </div>
       </div>
     </header>
-    <div class="govuk-width-container">
-      <%= render GovukComponent::PhaseBanner.new(phase: 'Alpha') do
-        if SessionService.is_signed_in?(session) && (current_user.is_responsible_body_user? || current_user.is_school_user?)
-          "#{t('user_feedback')} – #{user_feedback_link}".html_safe
-        else
-          "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
-        end
-      end %>
-      <%= content_for(:before_content) %>
-      <main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="app-phase-banner">
+      <div class="govuk-width-container">
+
+        <%= render GovukComponent::PhaseBanner.new(phase: 'Alpha') do
+          if SessionService.is_signed_in?(session) && (current_user.is_responsible_body_user? || current_user.is_school_user?)
+            "#{t('user_feedback')} – #{user_feedback_link}".html_safe
+          else
+            "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
+          end
+        end %>
+        <%= content_for(:before_content) %>
+      </div>
+    </div>
+    <main class="govuk-main-wrapper " id="main-content" role="main">
+      <%= yield :start_page_banner %>
+      <div class="govuk-width-container">
         <%= render partial: "shared/banners/global_notice_banner" if @show_parent_carer_pupil_banner %>
         <%= render partial: 'shared/flash_message' %>
         <%= content_for?(:content) ? yield(:content) : yield %>
-      </main>
-    </div>
+      </div>
+    </main>
 
     <footer class="govuk-footer " role="contentinfo">
       <div class="govuk-width-container ">
