@@ -137,11 +137,6 @@ en:
             title: Your school has ordered all the devices it can
           user:
             title: You’ve ordered all the devices you can
-        cannot_order_as_reopened:
-          school:
-            title: Your school has reopened and ordering has closed
-          user:
-            title: Your school has reopened and ordering has closed
       internet:
         home:
           show:
@@ -710,7 +705,6 @@ en:
           other: Other
         order_states:
           cannot_order: No, orders cannot be placed yet
-          cannot_order_as_reopened: No, as school has reopened
           can_order_for_specific_circumstances: They can place orders for specific circumstances
           can_order: They can order their full allocation because a closure or group of self-isolating children has been reported
       school_device_allocation:

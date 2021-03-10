@@ -122,11 +122,6 @@ private
         key: 'Can place orders?',
         value: 'Yes, for specific circumstances',
       }
-    elsif @school.cannot_order_as_reopened?
-      {
-        key: 'Can place orders?',
-        value: 'No, as school has reopened',
-      }
     else
       {
         key: 'Can place orders?',

@@ -148,17 +148,4 @@ RSpec.describe DeviceCountComponent, type: :component do
       expect(html).to include 'ordered 1 of 3 devices and 2 of 5 routers'
     end
   end
-
-  context 'when school cannot_order_as_reopened' do
-    let(:school) { School.new(device_allocations: [allocation], order_state: 'cannot_order_as_reopened') }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
-
-    subject(:component) { described_class.new(school: school) }
-
-    it 'does not show availability' do
-      html = render_inline(component).to_html
-
-      expect(html).not_to include 'All devices ordered'
-    end
-  end
 end

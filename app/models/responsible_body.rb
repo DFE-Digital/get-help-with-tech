@@ -232,7 +232,7 @@ class ResponsibleBody < ApplicationRecord
     {
       ordering_schools: schools_by_name.can_order,
       specific_circumstances_schools: schools_by_name.can_order_for_specific_circumstances,
-      fully_open_schools: schools_by_name.where(order_state: %w[cannot_order cannot_order_as_reopened]),
+      fully_open_schools: schools_by_name.cannot_order,
     }
   end
 
