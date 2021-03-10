@@ -103,7 +103,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 'Signing in as a recognised user sends a magic link email' do
       visit '/'
-      click_on 'Sign in'
+      find('.govuk-header__link', text: 'Sign in').click
       expect(page).to have_text('Email address')
 
       clear_emails
@@ -118,7 +118,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 'Entering an unrecognised email address shows an informative message' do
       visit '/'
-      click_on 'Sign in'
+      find('.govuk-header__link', text: 'Sign in').click
       expect(page).to have_text('Email address')
 
       fill_in 'Email address', with: 'unrecognised@example.com'
@@ -129,7 +129,7 @@ RSpec.feature 'Session behaviour', type: :feature do
 
     scenario 'Entering an invalid email sends the user back to the sign-in page' do
       visit '/'
-      click_on 'Sign in'
+      find('.govuk-header__link', text: 'Sign in').click
       expect(page).to have_text('Email address')
 
       clear_emails

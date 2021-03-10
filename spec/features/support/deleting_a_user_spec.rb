@@ -32,7 +32,7 @@ RSpec.feature 'Deleting users' do
   def and_the_user_cannot_sign_into_the_service
     click_on 'Sign out'
 
-    click_on 'Sign in'
+    find('.govuk-header__link', text: 'Sign in').click
     fill_in 'Email address', with: existing_user.email_address
     click_on 'Continue'
 
