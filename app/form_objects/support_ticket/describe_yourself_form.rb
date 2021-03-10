@@ -10,8 +10,8 @@ class SupportTicket::DescribeYourselfForm
     multi_academy_trust: 'I work for a multi-academy trust',
     local_authority: 'I work for a local authority',
     college: 'I work for a college',
-    parent_or_guardian_or_carer_or_pupil_or_care_leaver: "I'm a parent, guardian, pupil or care leaver",
-    other_type_of_user: "I'm none of the above",
+    parent_or_guardian_or_carer_or_pupil_or_care_leaver: 'I’m a parent, guardian, pupil or care leaver',
+    other_type_of_user: 'I’m none of the above',
   }.freeze
 
   def describe_yourself_options

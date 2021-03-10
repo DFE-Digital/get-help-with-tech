@@ -17,7 +17,7 @@ class DonatedDeviceInterestForm
   def self.confirmation_interest_options
     [
       OpenStruct.new(value: 'yes', label: 'Yes'),
-      OpenStruct.new(value: 'no', label: "No, I'm not interested"),
+      OpenStruct.new(value: 'no', label: 'No, I’m not interested'),
     ]
   end
 

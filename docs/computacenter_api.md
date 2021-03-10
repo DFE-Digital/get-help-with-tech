@@ -37,7 +37,7 @@ First, sign in to the user interface:
 1. Login to the interface by visiting the site in a web browser, and clicking
 'Sign in' from the top navigation bar
 2. Enter your email address - this must end with `@computacenter.com` - and
-if you have a user account setup, we'll email you a 'magic link'
+if you have a user account setup, we’ll email you a 'magic link'
 3. Click on this magic link to sign in
 
 Next, click on 'API tokens' from the top navigation bar. You'll see any
