@@ -13,18 +13,6 @@ RSpec.describe School::DevicesController do
   end
 
   describe '#order' do
-    context 'when school state is cannot_order_as_reopened' do
-      let(:school) do
-        create(:school,
-               order_state: :cannot_order_as_reopened)
-      end
-
-      it 'renders cannot_order_as_reopened' do
-        get :order, params: { urn: school.urn }
-        expect(controller).to render_template('school/devices/cannot_order_as_reopened')
-      end
-    end
-
     context 'when school state is can_order' do
       let(:school) do
         create(:school,

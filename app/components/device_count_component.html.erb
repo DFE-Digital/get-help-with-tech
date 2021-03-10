@@ -1,9 +1,7 @@
 <div class="app-card app-card__order">
-  <% if show_availability? %>
-    <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
-      <%= availablility_string.html_safe -%>
-    </h2>
-  <% end %>
+  <h2 class="govuk-panel__title govuk-!-font-size-36 govuk-!-margin-bottom-2">
+    <%= availablility_string.html_safe -%>
+  </h2>
 
   <div class="govuk-panel__body govuk-!-font-size-24">
     <%= ordered_string -%>

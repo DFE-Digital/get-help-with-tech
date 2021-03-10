@@ -14,7 +14,6 @@
 
       <%= f.govuk_radio_buttons_fieldset :order_state, legend: nil do %>
         <%= f.govuk_radio_button :order_state, 'cannot_order', label: { text: School.translate_enum_value(:order_states, 'cannot_order') }, link_errors: true %>
-        <%= f.govuk_radio_button :order_state, 'cannot_order_as_reopened', label: { text: School.translate_enum_value(:order_states, 'cannot_order_as_reopened') }, link_errors: true %>
         <%= f.govuk_radio_button :order_state, 'can_order_for_specific_circumstances', label: { text: School.translate_enum_value(:order_states, 'can_order_for_specific_circumstances') } do %>
           <%= f.govuk_number_field :device_cap, width: 3 %>
           <%= f.govuk_number_field :router_cap, width: 3 %>

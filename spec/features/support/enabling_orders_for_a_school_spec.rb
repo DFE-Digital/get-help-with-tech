@@ -46,17 +46,6 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_computacenter_device_cap_for_the_school_matches_the_devices_ordered
   end
 
-  scenario 'Marking a school as having reopened' do
-    @school = a_school_with_a_device_allocation_that_can_order
-
-    when_i_navigate_to_the_school_page_in_support
-    and_i_stop_the_school_from_ordering_devices_as_reopened
-    and_i_confirm_the_changes
-
-    then_i_see_a_confirmation_that_the_school_cannot_order
-    and_computacenter_device_cap_for_the_school_matches_the_devices_ordered
-  end
-
   scenario 'Correcting a mistake at the confirmation stage' do
     when_i_navigate_to_the_school_page_in_support
     and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 5)
@@ -157,18 +146,6 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     expect(enable_orders_confirm_page).to be_displayed
     expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
     expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'No, orders cannot be placed yet'
-  end
-
-  def and_i_stop_the_school_from_ordering_devices_as_reopened
-    click_on 'Change whether they can place orders'
-    expect(enable_orders_page.yes).to be_checked
-
-    enable_orders_page.no_school_reopened.choose
-    enable_orders_page.continue.click
-
-    expect(enable_orders_confirm_page).to be_displayed
-    expect(enable_orders_confirm_page).to have_text 'Check your answers and confirm'
-    expect(enable_orders_confirm_page.can_order_devices_row).to have_text 'No, as school has reopened'
   end
 
   def and_i_confirm_the_changes
