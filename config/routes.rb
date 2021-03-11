@@ -81,7 +81,6 @@ Rails.application.routes.draw do
     resources :extra_mobile_data_requests, only: %i[index show edit update], path: '/extra-mobile-data-requests' do
       put 'bulk-update', to: 'extra_mobile_data_requests#bulk_update', on: :collection
       get 'report-a-problem', to: 'extra_mobile_data_requests#report_problem', as: :report_problem
-      post 'find-requests', to: 'extra_mobile_data_requests#find_requests', on: :collection
     end
     resources :extra_mobile_data_requests_csv_update, only: %i[new create], path: '/extra-mobile-data-requests-csv-update'
   end
