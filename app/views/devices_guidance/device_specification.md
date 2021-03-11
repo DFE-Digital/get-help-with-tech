@@ -12,15 +12,15 @@ Apple iPads and Microsoft Windows tablets are now permanently out of stock. For 
 We may need some technical information from you before you can order, so we recommend choosing the types of devices and settings you want before you’re invited to order.
 
 ## Microsoft Windows laptops
-          
+
 When you order you’ll be asked whether or not you want to have DfE settings installed.
-        
+
 #### Not having DfE settings installed
 
 These ‘DfE Standard’ devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
 #### DfE settings installed
-                
+
 These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. Our guidance explains <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed">when these DfE restrictions will expire</a> and when your school, trust or LA will need to apply your own security settings.
 
 Read more information about <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets">preparing Microsoft devices</a> for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
@@ -29,20 +29,20 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 [Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
-     
+
 ## Google Chromebooks
 
 You need to sign in to the <a class="govuk-link" href="/start">Get help with technology service</a> and provide the following information before you can order Google Chromebooks:
-         
+
 * the school’s Google domain for G Suite for Education
 * a recovery email address, which must be on a different domain to the school domain
-          
+
 If you’re not sure how to find this information, you should ask your IT support for help.
 
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. [Find out more about Cisco Umbrella](/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
-If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education.</a>
-  
+If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education</a>.
+
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
 
 [Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.

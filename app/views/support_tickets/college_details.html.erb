@@ -12,17 +12,16 @@
     <%= form_for @form, url: support_ticket_college_details_path do |f| %>
       <%= f.govuk_error_summary "There’s a problem" %>
 
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Get support</span>
+      <h1 class="govuk-heading-xl">
         Which college do you work for?
       </h1>
 
       <%= f.govuk_text_field :college_name, label: {text: 'College name', size: 's'} %>
       <%= f.govuk_number_field :college_ukprn,
                              label: {text: 'College UKPRN', size: 's'},
-                             hint: { text: 'This 8-digit number helps us to locate your college. Find your <a href="https://get-information-schools.service.gov.uk/" target="_blank" rel="noopener noreferrer">UKPRN</a>.'.html_safe },
+                             hint: { text: 'This 8-digit number helps us to locate your college. <a href="https://get-information-schools.service.gov.uk/" target="_blank" rel="noopener noreferrer">Find your UKPRN</a>.'.html_safe },
                              width: 5 %>
-      <%= f.govuk_submit 'Next'%>
+      <%= f.govuk_submit 'Continue' %>
     <% end %>
   </div>
 </div>

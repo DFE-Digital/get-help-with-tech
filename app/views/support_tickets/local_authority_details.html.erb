@@ -12,8 +12,7 @@
     <%= form_for @form, url: support_ticket_local_authority_details_path do |f| %>
       <%= f.govuk_error_summary "There’s a problem" %>
 
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">Get support</span>
+      <h1 class="govuk-heading-xl">
         Which local authority do you work for?
       </h1>
 
@@ -21,7 +20,7 @@
                                     label: {text: 'Local authority name', size: 's'},
                                     options: { include_blank: true } %>
 
-      <%= f.govuk_submit 'Next'%>
+      <%= f.govuk_submit 'Continue' %>
     <% end %>
   </div>
 </div>

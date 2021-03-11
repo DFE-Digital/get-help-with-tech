@@ -1,25 +1,18 @@
-<% content_for :title, 'Check your answers, then submit your request' %>
+<% content_for :title, 'Check your answers before submitting your request' %>
 
 <%- content_for :before_content do %>
   <% breadcrumbs([{ "Get help with technology" => guidance_page_path },
                   {t('landing_pages.get_support.start') => support_ticket_path},
-                  'Check your answers, then submit your request',
+                  'Check your answers',
                  ]) %>
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-
-    <h1 class="govuk-heading-l">
-      <span class="govuk-caption-l">Get support</span>
-      Check your answers, then submit your request
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Check your answers before submitting your request
     </h1>
 
-  </div>
-</div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
     <%= render GovukComponent::SummaryList.new do |component| %>
       <% component.slot(
          :row,
@@ -74,7 +67,7 @@
 
     <div class="govuk-form-group">
       <%= form_for @form, url: support_ticket_check_your_request_path do |f| %>
-        <%= f.govuk_submit 'Submit'%>
+        <%= f.govuk_submit 'Submit request' %>
       <% end %>
     </div>
   </div>
