@@ -25,13 +25,13 @@ RSpec.describe PrivacyNoticeController do
       it 'does not add timestamp to privacy_notice_seen_at of impersonated user' do
         expect {
           post :seen
-        }.not_to change { school_user.reload.privacy_notice_seen_at }
+        }.not_to(change { school_user.reload.privacy_notice_seen_at })
       end
 
       it 'does not change their own privacy_notice_seen_at' do
         expect {
           post :seen
-        }.not_to change { support_user.reload.privacy_notice_seen_at }
+        }.not_to(change { support_user.reload.privacy_notice_seen_at })
       end
 
       it 'returns forbidden' do
