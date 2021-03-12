@@ -34,7 +34,7 @@ private
 
   def check_computacenter_user_impersonation
     if User.find(params[:impersonated_user_id]).is_computacenter?
-      flash[:warning] = 'You cannot impersonate a computacenter user'
+      flash[:warning] = 'You cannot impersonate a Computacenter user'
       redirect_to(root_url_for(current_user))
     end
   end
