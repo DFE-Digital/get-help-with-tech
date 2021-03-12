@@ -18,6 +18,10 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
         if @find_requests_form.phone_number_list.any?
           render 'search_results'
         else
+          if is_a_search_request?
+            @find_requests_form.phone_numbers = nil
+            @find_requests_form.valid?
+          end
           render
         end
       end
@@ -51,24 +55,6 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
       flash[:error] = "I couldn't apply that update"
       render :index, status: :unprocessable_entity
       raise ActiveRecord::Rollback
-    end
-  end
-
-  def find_requests
-    @find_requests_form = Mno::FindRequestsForm.new(find_requests_params)
-    if @find_requests_form.phone_number_list.any?
-      redirect_to mno_extra_mobile_data_requests_path(find_requests_params)
-    else
-      @find_requests_form.phone_numbers = nil
-      @find_requests_form.valid?
-      @extra_mobile_data_requests = extra_mobile_data_request_search_scope.order(safe_order)
-      @pagination, @extra_mobile_data_requests = pagy(@extra_mobile_data_requests)
-      @extra_mobile_data_requests_form = Mno::ExtraMobileDataRequestsForm.new(
-        extra_mobile_data_requests: @extra_mobile_data_requests,
-        extra_mobile_data_request_ids: selected_extra_mobile_data_request_ids(@extra_mobile_data_requests, params),
-      )
-      @statuses = mno_status_options
-      render :index
     end
   end
 
@@ -162,6 +148,10 @@ private
       'requested' => :created_at,
       'status' => :status,
     }[order_param]
+  end
+
+  def is_a_search_request?
+    params.fetch(:commit, '') == 'Find requests'
   end
 
   def extra_mobile_data_request_params
