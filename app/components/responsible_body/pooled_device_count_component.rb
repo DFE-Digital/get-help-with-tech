@@ -13,7 +13,7 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
     "#{responsible_body.name} has:"
   end
 
-  def availablility_string
+  def availability_string
     if @responsible_body.has_devices_available_to_order?
       allocations.map { |allocation|
         "#{allocation.available_devices_count} #{allocation.device_type_name.pluralize(allocation.available_devices_count)}"
