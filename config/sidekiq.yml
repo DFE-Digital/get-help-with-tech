@@ -5,6 +5,10 @@
   - mailers
   - scheduler
 :schedule:
+  UpdateRemainingDevicesJob:
+    cron: '55 23 * * * Europe/London'  # every day at 11:55pm
+    queue: scheduler
+    description: Store daily total for remaining devices
   StageGiasDataJob:
     cron: '15 5 * * * Europe/London'  # every day at 5:15am
     queue: scheduler

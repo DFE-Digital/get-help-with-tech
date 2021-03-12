@@ -198,6 +198,16 @@ ActiveRecord::Schema.define(version: 2021_03_15_133757) do
     t.index ["status"], name: "index_preorder_information_on_status"
   end
 
+  create_table "remaining_device_counts", force: :cascade do |t|
+    t.datetime "date_of_count", null: false
+    t.integer "remaining_from_devolved_schools", null: false
+    t.integer "remaining_from_managed_schools", null: false
+    t.integer "total_remaining", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date_of_count"], name: "index_remaining_device_counts_on_date_of_count"
+  end
+
   create_table "responsible_bodies", force: :cascade do |t|
     t.string "type", null: false
     t.string "name", null: false
