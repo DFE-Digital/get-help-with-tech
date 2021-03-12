@@ -5,18 +5,18 @@ private
 
   def require_school_user!
     if SessionService.is_signed_in?(session)
-      render 'errors/forbidden', status: :forbidden unless @current_user.is_school_user?
+      render 'errors/forbidden', status: :forbidden unless impersonated_or_current_user.is_school_user?
     else
       redirect_to_sign_in
     end
   end
 
   def set_school
-    @school = @current_user.schools.where_urn_or_ukprn(params[:urn].to_i).first!
+    @school = impersonated_or_current_user.schools.where_urn_or_ukprn(params[:urn].to_i).first!
   end
 
   def require_completed_welcome_wizard!
-    unless @current_user.welcome_wizard_for(@school)&.complete? || params[:controller] == 'school/welcome_wizard'
+    unless impersonated_or_current_user.welcome_wizard_for(@school)&.complete? || params[:controller] == 'school/welcome_wizard'
       redirect_to welcome_wizard_allocation_school_path(@school)
     end
   end

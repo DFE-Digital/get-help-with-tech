@@ -45,30 +45,78 @@ RSpec.describe ResponsibleBody::UsersController do
   end
 
   describe '#create' do
-    before do
-      sign_in_as rb_user
+    context 'as rb user' do
+      before do
+        sign_in_as rb_user
+      end
+
+      def perform_create!
+        post :create, params: {
+          id: local_authority.id,
+          user: {
+            full_name: 'John Doe',
+            email_address: 'john.doe@example.com',
+            phone_number: '020 1',
+          },
+        }
+      end
+
+      it 'creates a user record' do
+        expect { perform_create! }.to change(User, :count).by(1)
+      end
+
+      it 'sets user with orders_devices as true' do
+        perform_create!
+
+        user = User.last
+        expect(user.orders_devices).to be_truthy
+      end
     end
 
-    def perform_create!
-      post :create, params: {
-        id: local_authority.id,
-        user: {
-          full_name: 'John Doe',
-          email_address: 'john.doe@example.com',
-          phone_number: '020 1',
-        },
-      }
+    context 'support user impersonating' do
+      let(:support_user) { create(:support_user) }
+
+      before do
+        sign_in_as support_user
+        impersonate rb_user
+      end
+
+      it 'returns forbidden' do
+        post :create, params: {
+          id: local_authority.id,
+          user: {
+            full_name: 'John Doe',
+            email_address: 'john.doe@example.com',
+            phone_number: '020 1',
+          },
+        }
+
+        expect(response).to be_forbidden
+      end
     end
+  end
 
-    it 'creates a user record' do
-      expect { perform_create! }.to change(User, :count).by(1)
-    end
+  describe '#update' do
+    context 'support user impersonating' do
+      let(:support_user) { create(:support_user) }
 
-    it 'sets user with orders_devices as true' do
-      perform_create!
+      before do
+        sign_in_as support_user
+        impersonate rb_user
+      end
 
-      user = User.last
-      expect(user.orders_devices).to be_truthy
+      it 'returns forbidden' do
+        put :update, params: {
+          id: rb_user_2.id,
+          user: {
+            full_name: 'John Doe',
+            email_address: 'john.doe@example.com',
+            phone_number: '020 1',
+          },
+        }
+
+        expect(response).to be_forbidden
+      end
     end
   end
 end

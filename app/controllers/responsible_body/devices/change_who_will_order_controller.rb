@@ -8,6 +8,8 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
   end
 
   def update
+    authorize ResponsibleBody::Devices::WhoWillOrderForm, policy_class: ResponsibleBody::BasePolicy
+
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
       @school.preorder_information.change_who_will_order_devices!(@form.who_will_order)
@@ -32,7 +34,7 @@ private
     @school.preorder_information.who_will_order_devices
   end
 
-  def who_will_order_params(opts = params)
-    opts.require(:responsible_body_devices_who_will_order_form).permit(:who_will_order)
+  def who_will_order_params
+    params.require(:responsible_body_devices_who_will_order_form).permit(:who_will_order)
   end
 end

@@ -8,7 +8,10 @@ class School::UsersController < School::BaseController
   end
 
   def create
+    authorize User, policy_class: School::BasePolicy
+
     @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id, orders_devices: true))
+
     if @user.persisted?
       redirect_to school_users_path(@school)
     else
@@ -23,6 +26,8 @@ class School::UsersController < School::BaseController
 
   def update
     @user = @school.users.find(params[:id])
+
+    authorize @user, policy_class: School::BasePolicy
 
     if @user.update(user_params)
       flash[:success] = t(:success, scope: %w[school users])

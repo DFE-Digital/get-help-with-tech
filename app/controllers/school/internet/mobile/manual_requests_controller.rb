@@ -16,6 +16,8 @@ class School::Internet::Mobile::ManualRequestsController < School::BaseControlle
       extra_mobile_data_request_params.merge(created_by_user: @current_user),
     )
 
+    authorize @extra_mobile_data_request, policy_class: School::BasePolicy
+
     if @extra_mobile_data_request.valid?
       if params[:confirm]
         # clear the stashed params once the user has confirmed them

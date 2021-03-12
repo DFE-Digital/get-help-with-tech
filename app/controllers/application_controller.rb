@@ -27,8 +27,21 @@ private
     @current_user ||= (SessionService.identify_user!(session) || User.new)
   end
 
+  def impersonated_user
+    @impersonated_user = if session[:impersonated_user_id].blank?
+                           nil
+                         else
+                           User.find_by(id: session[:impersonated_user_id])
+                         end
+  end
+  helper_method :impersonated_user
+
   attr_reader :current_user
   helper_method :current_user
+
+  def impersonated_or_current_user
+    impersonated_user || current_user
+  end
 
   def save_user_to_session!(user = @current_user)
     # prevent duplicate key errors if they're already signed_in

@@ -6,6 +6,8 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::BaseCo
   end
 
   def update
+    authorize ResponsibleBody::Devices::WhoWillOrderForm, policy_class: ResponsibleBody::BasePolicy
+
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
       ResponsibleBody.transaction do
@@ -28,7 +30,7 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::BaseCo
 
 private
 
-  def who_will_order_params(opts = params)
-    opts.require(:responsible_body_devices_who_will_order_form).permit(:who_will_order)
+  def who_will_order_params
+    params.require(:responsible_body_devices_who_will_order_form).permit(:who_will_order)
   end
 end

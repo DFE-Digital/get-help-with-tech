@@ -14,8 +14,17 @@
 
     <%= render Support::UserSummaryListComponent.new(user: @user, viewer: @current_user) %>
 
+    <% if ImpersonationPolicy.new(current_user, @user).create? %>
+      <%= govuk_button_to('Impersonate user',
+                          support_impersonate_path,
+                          params: {
+                            impersonated_user_id: @user.id,
+                          },
+                          method: :post)  %>
+    <% end %>
+
     <p class="govuk-body">
-      <% if policy(@user).destroy? %>
+      <% if UserPolicy.new(current_user, @user).destroy? %>
         <%= govuk_link_to 'Delete this user', confirm_deletion_support_user_path(@user) %>
       <% end %>
     </p>

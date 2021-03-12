@@ -4,7 +4,9 @@ class PrivacyNoticeController < ApplicationController
   def show; end
 
   def seen
-    @current_user.seen_privacy_notice!
-    redirect_to root_url_for(@current_user)
+    authorize impersonated_or_current_user, policy_class: PrivacyNoticePolicy
+
+    impersonated_or_current_user.seen_privacy_notice!
+    redirect_to root_url_for(impersonated_or_current_user)
   end
 end
