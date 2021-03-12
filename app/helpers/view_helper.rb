@@ -175,7 +175,7 @@ module ViewHelper
 
   def link_to_urn_otherwise_urn(urn)
     if School.exists?(urn: urn)
-      link_to urn, support_school_path(urn)
+      govuk_link_to urn, support_school_path(urn)
     else
       urn
     end
