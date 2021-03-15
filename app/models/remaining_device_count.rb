@@ -14,9 +14,13 @@ class RemainingDeviceCount < ApplicationRecord
     }
   end
 
+  def self.most_recent
+    find_by(date_of_count: select('max(date_of_count)'))
+  end
+
 private
-  
+
   def calculate_total
-    self.total_remaining = remaining_from_devolved_schools + remaining_from_managed_schools
+    self.total_remaining = (remaining_from_devolved_schools || 0) + (remaining_from_managed_schools || 0)
   end
 end

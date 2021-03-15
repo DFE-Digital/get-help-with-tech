@@ -222,6 +222,7 @@ Rails.application.routes.draw do
     get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
     get '/performance/mno-requests', to: 'service_performance#mno_requests', format: :csv
+    get '/performance/remaining-device-counts', to: 'remaining_device_counts#index', format: :csv
     resource :impersonate, only: %i[create destroy]
     namespace :gias do
       get '/updates', to: 'home#index', as: :home
@@ -261,9 +262,11 @@ Rails.application.routes.draw do
       get '/devices/chromebooks/edit', to: 'schools/devices/chromebooks#edit'
       patch '/devices/chromebooks', to: 'schools/devices/chromebooks#update'
     end
+
     namespace :performance_data, path: 'performance-data' do
       resources :schools, only: :index
     end
+
     resources :users, only: %i[show edit update destroy] do
       collection do
         get 'search'
