@@ -159,6 +159,27 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
 
+    context 'when the account_holder_name is different but the normalised name exists' do
+      let(:existing_request) do
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
+      end
+
+      subject(:model) { existing_request.dup }
+
+      before do
+        model.account_holder_name = ' person  2'
+      end
+
+      it 'is invalid' do
+        expect(model.valid?).to be_falsey
+      end
+
+      it 'detects the existing record with the normalised name' do
+        model.valid?
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
+      end
+    end
+
     context 'when there is an existing request with everything the same except contract_type' do
       let(:existing_request) do
         create(:extra_mobile_data_request, account_holder_name: 'Person', device_phone_number: '07123456788', responsible_body: rb, contract_type: 'pay_as_you_go_payg')
