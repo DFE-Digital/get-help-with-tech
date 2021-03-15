@@ -200,20 +200,56 @@ Some service steps can only be carried out using the Rails console. To get to th
 
 ### Running the Rails console
 
-Log on to the container with:
-```
+Log on to the first instance of the sidekiq container with:
+
+```sh
 make (env) ssh
 ```
 
-Once you have a prompt on the container, you'll need to run this command - this will launch a subshell with the correct environment variables and in the app's root directory:
-```
-./setup_env_for_rails_app
-```
+If you want to ssh to a particular process and/or particular instance, you can be specific as follows:
 
+```sh
+make (env) ssh PROCESS=(web|sidekiq) INSTANCE=(0|1|...)
+```  
+
+Both parameters are optional.
+PROCESS defaults to sidekiq, to prevent any possibility of using too much memory in the console and accidentally getting the web container restarted by the hosts' monitoring.
+INSTANCE defaults to 0.
+
+Once you have a prompt on the container, you'll be in a subshell with the Rails app's environment variables, and in the app's root directory:
 In this subshell, you can then launch the console in the normal way:
-```
+
+```sh
 bundle exec rails c
 ```
+
+Note that the log messages you see will be in structured JSON format, for aggregation to Kibana via Logstash.
+For clarity, you might want to `unset RAILS_LOG_TO_STDOUT` before launching the console.
+
+### Transferring files to/from the deployed containers
+
+Files can be uploaded/downloaded as follows:
+
+```sh
+make (env) upload LOCAL_PATH=/some/local/file/path REMOTE_PATH=/some/remote/path PROCESS=(web|sidekiq) INSTANCE=(0|1|...)
+make (env) download LOCAL_PATH=/some/local/file/path REMOTE_PATH=/some/remote/path PROCESS=(web|sidekiq) INSTANCE=(0|1|...)
+```
+
+The PROCESS and INSTANCE parameters follow the same conventions as for `make (env) ssh` - defaulting to instance 0 of the sidekiq process.
+
+You will be prompted for a password for the connection - this is a one-time-only password, generated on-demand via the GOV.UK PaaS platform.
+The output just above the prompt will tell you what the password is for this session - you should see a message like this:
+
+```
+Connecting to 'sidekiq' instance '0'
+
+*** Enter iWonl545qf at the password prompt (this is a one-time-only password) ***
+
+scp -P 2222 -o StrictHostKeyChecking=no -o User=cf:(...) ssh.london.cloud.service.gov.uk:/tmp/test.txt /tmp/
+cf:(....)@ssh.london.cloud.service.gov.uk's password:
+```
+
+Just copy-and-paste the given password into the prompt, and the transfer will begin.
 
 ### Viewing Logs
 

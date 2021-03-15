@@ -24,7 +24,8 @@ prod:
 	@true
 
 .PHONY: require_env_stub build push deploy setup_paas_env setup_paas_db setup_paas_app promote ssh \
-				logs logs-recent remote-docker-tags push-tag rollback-to timestamp-latest
+				logs logs-recent remote-docker-tags push-tag rollback-to timestamp-latest setup_ssh_params \
+				setup_scp_params
 
 require_env_stub:
 	@test ${env_stub} || (echo ">> env_stub is not set (${env_stub})- please use make dev|staging|prod (task)"; exit 1)
@@ -108,9 +109,9 @@ promote:
 	docker tag $(REMOTE_DOCKER_IMAGE_NAME)-$(FROM) $(APP_NAME)-$(env_stub)
 	make $(env_stub) push deploy
 
-ssh: set_cf_target
+ssh: set_cf_target setup_ssh_params
 	@echo "\nTo get a Rails console, run: \nunset RAILS_LOG_TO_STDOUT\nbundle exec rails c\n\n" && \
-		cf $(CF_V3_PREFIX)ssh $(APP_NAME)-$(env_stub)
+		cf $(CF_V3_PREFIX)ssh $(APP_NAME)-$(env_stub) --process $(PROCESS) -i $(INSTANCE)
 
 logs: set_cf_target
 	cf logs $(APP_NAME)-$(env_stub)
@@ -118,7 +119,12 @@ logs: set_cf_target
 logs-recent: set_cf_target
 	cf logs --recent $(APP_NAME)-$(env_stub)
 
-setup_scp_params: set_cf_target
+setup_ssh_params:
+	$(eval export PROCESS ?= 'sidekiq')
+	$(eval export INSTANCE ?= '0')
+	@echo "\nConnecting to $(PROCESS) instance $(INSTANCE)"
+
+setup_scp_params: set_cf_target setup_ssh_params
 	$(eval export PROCESS ?= 'sidekiq')
 	$(eval export INSTANCE ?= '0')
 	$(eval export sshpass = $(shell (cf ssh-code)))
