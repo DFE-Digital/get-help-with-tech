@@ -236,6 +236,47 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     expect(mno_request_for_number('7123456780').device_phone_number).to eq('07123456780')
   end
 
+  describe 'normalising account_holder_name' do
+    subject(:request) { described_class.new(account_holder_name: account_holder_name) }
+
+    before do
+      request.normalise_name
+    end
+
+    context 'given a name with spaces' do
+      let(:account_holder_name) { '  A NNA P urna ' }
+
+      it 'removes all the spaces' do
+        expect(request.normalised_name).to eq('annapurna')
+      end
+    end
+
+    context 'given an account_holder_name with mixed case' do
+      let(:account_holder_name) { 'ANNA NG' }
+
+      it 'normalises to all lower case' do
+        expect(request.normalised_name).to eq('annang')
+      end
+    end
+
+    context 'given a name with punctuation' do
+      let(:account_holder_name) { 'Mr. Miles Cholmondley-Warner Esq.' }
+
+      it 'removes all the spaces' do
+        expect(request.normalised_name).to eq('mrmilescholmondleywarneresq')
+      end
+    end
+
+    context 'given a name with non-ASCII characters' do
+      let(:account_holder_name) { 'MĀREK Buzkēvičš'}
+
+      it 'retains and correctly downcases all non-ASCII characters' do
+        expect(request.normalised_name).to eq('mārekbuzkēvičš')
+      end
+    end
+
+  end
+
   describe 'validating contract_type' do
     context 'when a new record' do
       let(:request) { subject }
