@@ -196,9 +196,7 @@ cf unset-env get-help-with-tech-prod FEATURES_rate_limiting
 
 ## Operations
 
-Some service steps can only be carried out using the Rails console. To get to the console on GOV.UK PaaS:
-
-### Running the Rails console
+### Connecting to the deployed containers
 
 Log on to the first instance of the sidekiq container with:
 
@@ -216,6 +214,9 @@ Both parameters are optional.
 PROCESS defaults to sidekiq, to prevent any possibility of using too much memory in the console and accidentally getting the web container restarted by the hosts' monitoring.
 INSTANCE defaults to 0.
 
+### Running the Rails console
+
+Some service steps can only be carried out using the Rails console. To get to the console on GOV.UK PaaS, first `ssh` as above.
 Once you have a prompt on the container, you'll be in a subshell with the Rails app's environment variables, and in the app's root directory:
 In this subshell, you can then launch the console in the normal way:
 
