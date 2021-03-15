@@ -8,7 +8,7 @@ class RemainingDevicesCalculator
   end
 
   def remaining_from_devolved_schools
-    remaining_amount_for(School.that_will_order_devices)
+    remaining_amount_for(School.gias_status_open.that_will_order_devices)
   end
 
   def remaining_from_managed_schools
