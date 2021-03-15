@@ -244,7 +244,7 @@ The output just above the prompt will tell you what the password is for this ses
 ```
 Connecting to 'sidekiq' instance '0'
 
-*** Enter iWonl545qf at the password prompt (this is a one-time-only password) ***
+*** Enter (some hex string) at the password prompt (this is a one-time-only password) ***
 
 scp -P 2222 -o StrictHostKeyChecking=no -o User=cf:(...) ssh.london.cloud.service.gov.uk:/tmp/test.txt /tmp/
 cf:(....)@ssh.london.cloud.service.gov.uk's password:
