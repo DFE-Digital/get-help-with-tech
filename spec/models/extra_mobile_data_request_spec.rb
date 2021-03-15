@@ -268,13 +268,12 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
 
     context 'given a name with non-ASCII characters' do
-      let(:account_holder_name) { 'MĀREK Buzkēvičš'}
+      let(:account_holder_name) { 'MĀREK Buzkēvičš' }
 
       it 'retains and correctly downcases all non-ASCII characters' do
         expect(request.normalised_name).to eq('mārekbuzkēvičš')
       end
     end
-
   end
 
   describe 'validating contract_type' do
