@@ -1,6 +1,6 @@
 ## Ordering devices for schools, colleges, academy trusts and local authorities from September 2020
 
-In the event of a disruption to face-to-face education at schools or colleges due to coronavirus (COVID-19), DfE can provide support to help disadvantaged children and young people who are otherwise unable to access remote education.
+DfE is providing support to help disadvantaged children and young people who are otherwise unable to access remote education.
 
 Examples of this include disadvantaged children:
 
@@ -13,7 +13,7 @@ This offer applies to maintained schools, pupil referral units, academy trusts a
 
 They may also be eligible to get internet access for disadvantaged children through [increased mobile phone data allowances](/about-increasing-mobile-data) or [4G wireless routers](/how-to-request-4g-wireless-routers).
 
-Laptops and tablets will be available for further education institutions to order in the 2021 spring term. We’ll contact these institutions with more information during the term.
+Laptops and tablets were made available for further education institutions to order in the 2021 spring term.
 
 Devices are [currently available](https://get-help-with-tech.education.gov.uk/devices/how-to-order) for disadvantaged pupils and students:
 
@@ -29,7 +29,7 @@ Devices are [currently available](https://get-help-with-tech.education.gov.uk/de
 
 ## Laptops, tablets and 4G wireless routers provided during the 2020 summer term
 
-DfE has already provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19) to local authorities and academy trusts during the 2020 summer term. 
+DfE provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19) to local authorities and academy trusts during the 2020 summer term. 
 
 These are being distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
 
@@ -53,3 +53,8 @@ These digital devices will help:
 * children, young people, families and care leavers to access the online services they need to protect their wellbeing
 * families and care leavers to avoid social isolation
 * children and young people to access remote learning, including year 10 pupils in the 2019 to 2020 academic year
+
+## What to do if you cannot get laptops, tablets or internet access from DfE
+
+Parents, pupils, social care workers and schools that are not eligible for the Get help with technology programme can [find information about support available from other sources](/what-to-do-if-you-cannot-get-laptops-tablets-or-internet-access-from-dfe) in our guidance.
+
