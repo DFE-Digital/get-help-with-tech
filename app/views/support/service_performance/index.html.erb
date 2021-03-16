@@ -13,13 +13,21 @@
 </h1>
 
 <%= govuk_tabs(title: 'Contents') do |component| %>
+  <% component.slot(:tab, title: 'Service') do %>
+    <%= render partial: 'sign_ins' %>
+  <% end %>
+
   <% component.slot(:tab, title: 'Devices') do %>
     <%= render partial: 'responsible_body_sign_ins' %>
 
     <%= render partial: 'preorder_information' %>
   <% end %>
 
-  <% component.slot(:tab, title: 'Connectivity') do %>
+  <% component.slot(:tab, title: 'MNO') do %>
+    <%= render partial: 'mobile_data_requests' %>
+  <% end %>
+
+  <% component.slot(:tab, title: 'Routers') do %>
     <%= render partial: 'mobile_data_requests' %>
   <% end %>
 <%- end %>

@@ -1,0 +1,14 @@
+<h2 class="govuk-heading-l">Sign-ins</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+      count: @stats.responsible_body_users_signed_in_at_least_once,
+      label: t(:users_signed_in, scope: %i[support service_performance], count: @stats.responsible_body_users_signed_in_at_least_once)) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: @stats.number_of_different_responsible_bodies_signed_in,
+                 label: t(:responsible_bodies, scope: %i[support service_performance], count: @stats.number_of_different_responsible_bodies_signed_in)) %>
+  </div>
+</div>

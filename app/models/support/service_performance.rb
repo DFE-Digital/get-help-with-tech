@@ -1,4 +1,14 @@
 class Support::ServicePerformance
+  def devolved_school_users_that_have_signed_in_at_least_once
+    User
+      .where(responsible_body: nil)
+      .signed_in_at_least_once
+      .joins(:schools)
+      .merge(School.that_will_order_devices)
+      .distinct
+      .count
+  end
+
   def responsible_body_users_signed_in_at_least_once
     User
       .where.not(responsible_body: nil)
