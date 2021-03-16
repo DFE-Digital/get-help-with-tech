@@ -36,6 +36,14 @@ RSpec.describe CanOrderDevicesMailer, type: :mailer do
       }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
 
+    it 'passes email_audit id as reference to notify' do
+      described_class.with(user: user, school: school).user_can_order.deliver_now
+
+      audit = EmailAudit.last
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.header['reference'].value).to eql(audit.id.to_s)
+    end
+
     context 'when user is deleted' do
       let(:user) { create(:school_user, deleted_at: 1.second.ago) }
 

@@ -139,12 +139,15 @@ ActiveRecord::Schema.define(version: 2021_03_15_133757) do
 
   create_table "email_audits", force: :cascade do |t|
     t.string "message_type", null: false
-    t.string "template", null: false
+    t.string "template"
     t.string "email_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.bigint "school_id"
+    t.text "govuk_notify_id"
+    t.text "govuk_notify_status"
+    t.index ["govuk_notify_id"], name: "index_email_audits_on_govuk_notify_id"
     t.index ["message_type"], name: "index_email_audits_on_message_type"
     t.index ["school_id"], name: "index_email_audits_on_school_id"
     t.index ["user_id"], name: "index_email_audits_on_user_id"

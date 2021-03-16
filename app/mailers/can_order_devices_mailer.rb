@@ -100,13 +100,13 @@ class CanOrderDevicesMailer < ApplicationMailer
 private
 
   def tracked_template_mail(message_type, template_id, mail_params = {})
-    EmailAudit.create!(message_type: message_type,
-                       template: template_id,
-                       email_address: @user.email_address,
-                       user: @user,
-                       school: @school)
+    audit = EmailAudit.create!(message_type: message_type,
+                               template: template_id,
+                               email_address: @user.email_address,
+                               user: @user,
+                               school: @school)
 
-    template_mail(template_id, mail_params)
+    template_mail(template_id, mail_params.merge(reference: audit.id))
   end
 
   def personalisation

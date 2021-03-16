@@ -87,6 +87,8 @@ en:
         adjust_allocations_for_many_schools: Adjust allocations for many schools, colleges and FE institutions
       addresses:
         edit: Update address
+      email_audits:
+        index: Email audits
     support_extra_mobile_data_requests: Requests for extra mobile data
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
