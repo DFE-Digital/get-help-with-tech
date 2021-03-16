@@ -159,6 +159,27 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
 
+    context 'when the account_holder_name is different but the normalised name exists' do
+      let(:existing_request) do
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
+      end
+
+      subject(:model) { existing_request.dup }
+
+      before do
+        model.account_holder_name = ' person  2'
+      end
+
+      it 'is invalid' do
+        expect(model.valid?).to be_falsey
+      end
+
+      it 'detects the existing record with the normalised name' do
+        model.valid?
+        expect(model.errors[:device_phone_number]).to include 'A request with these details has already been made'
+      end
+    end
+
     context 'when there is an existing request with everything the same except contract_type' do
       let(:existing_request) do
         create(:extra_mobile_data_request, account_holder_name: 'Person', device_phone_number: '07123456788', responsible_body: rb, contract_type: 'pay_as_you_go_payg')
@@ -213,6 +234,46 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
   it 'normalises phone numbers without the leading zero to the national format without spaces' do
     expect(mno_request_for_number('7123456780').device_phone_number).to eq('07123456780')
+  end
+
+  describe 'normalising account_holder_name' do
+    subject(:request) { described_class.new(account_holder_name: account_holder_name) }
+
+    before do
+      request.normalise_name
+    end
+
+    context 'given a name with spaces' do
+      let(:account_holder_name) { '  A NNA P urna ' }
+
+      it 'removes all the spaces' do
+        expect(request.normalised_name).to eq('annapurna')
+      end
+    end
+
+    context 'given an account_holder_name with mixed case' do
+      let(:account_holder_name) { 'ANNA NG' }
+
+      it 'normalises to all lower case' do
+        expect(request.normalised_name).to eq('annang')
+      end
+    end
+
+    context 'given a name with punctuation' do
+      let(:account_holder_name) { 'Mr. Miles Cholmondley-Warner Esq.' }
+
+      it 'removes all the spaces' do
+        expect(request.normalised_name).to eq('mrmilescholmondleywarneresq')
+      end
+    end
+
+    context 'given a name with non-ASCII characters' do
+      let(:account_holder_name) { 'MĀREK Buzkēvičš' }
+
+      it 'retains and correctly downcases all non-ASCII characters' do
+        expect(request.normalised_name).to eq('mārekbuzkēvičš')
+      end
+    end
   end
 
   describe 'validating contract_type' do
