@@ -15,6 +15,7 @@
 <%= govuk_tabs(title: 'Contents') do |component| %>
   <% component.slot(:tab, title: 'Service') do %>
     <%= render partial: 'sign_ins' %>
+    <%= render partial: 'who_orders' %>
   <% end %>
 
   <% component.slot(:tab, title: 'Devices') do %>

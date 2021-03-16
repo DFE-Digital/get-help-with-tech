@@ -1,11 +1,45 @@
 class Support::ServicePerformance
-  def devolved_school_users_that_have_signed_in_at_least_once
-    User
-      .where(responsible_body: nil)
+  def percentage_of_devolved_schools_that_have_signed_in
+    (number_of_devolved_schools_that_have_signed_in * 100.0 / number_of_devolved_schools).round
+  end
+
+  def number_of_devolved_schools_that_have_signed_in
+    @number_of_devolved_schools_that_have_signed_in ||= School
+      .gias_status_open
+      .that_will_order_devices
+      .joins(user_schools: :user)
+      .where('users.sign_in_count > 0')
+      .count('DISTINCT(schools.id)')
+  end
+
+  def number_of_devolved_schools
+    @number_of_devolved_schools ||= School
+      .gias_status_open
+      .that_will_order_devices
+      .count
+  end
+
+  def number_of_centrally_managed_schools
+    @number_of_centrally_managed_schools ||= School
+      .gias_status_open
+      .that_are_centrally_managed
+      .count
+  end
+
+  def percentage_of_responsible_bodies_that_have_signed_in
+    (number_of_responsible_bodies_that_have_signed_in * 100.0 / number_of_responsible_bodies).round
+  end
+
+  def number_of_responsible_bodies_that_have_signed_in
+    @number_of_responsible_bodies_that_have_signed_in ||= User
+      .where.not(responsible_body: nil)
       .signed_in_at_least_once
-      .joins(:schools)
-      .merge(School.that_will_order_devices)
-      .distinct
+      .count('DISTINCT(responsible_body_id)')
+  end
+
+  def number_of_responsible_bodies
+    @number_of_responsible_bodies ||= ResponsibleBody
+      .gias_status_open
       .count
   end
 

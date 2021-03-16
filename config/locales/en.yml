@@ -388,6 +388,14 @@ en:
       update:
         success: We’ve saved the new allocation
     service_performance:
+      devolved_schools_that_have_signed_in_html: of devolved schools signed in<br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_signed_in_html: of responsible bodies signed in<br/>(%{amount} out of %{total})
+      devolved_schools:
+        one: school orders their own devices
+        other: schools order their own devices
+      centrally_managed_schools:
+        one: school is managed centrally
+        other: schools are managed centrally
       requests:
         one: request
         other: requests
