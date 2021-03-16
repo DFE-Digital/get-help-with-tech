@@ -1,7 +1,7 @@
 require Rails.root.join('lib/constraints/require_dfe_user_constraint')
 
 Rails.application.routes.draw do
-  root 'pages#home_page', as: :guidance_page
+  root 'pages#home_page'
 
   get '/start', to: 'pages#start'
 
