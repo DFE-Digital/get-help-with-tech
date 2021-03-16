@@ -10,7 +10,7 @@ class DeviceCountComponent < ViewComponent::Base
     @they_ordered_prefix = they_ordered_prefix
   end
 
-  def availablility_string
+  def availability_string
     if school.has_devices_available_to_order?
       allocations.map { |allocation|
         "#{allocation.available_devices_count} #{allocation.device_type_name.pluralize(allocation.available_devices_count)}"
