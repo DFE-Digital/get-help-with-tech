@@ -16,9 +16,9 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         wizard.allocation!
       end
 
-      it 'moves to the order_your_own step' do
+      it 'moves to the devices_you_can_order step' do
         wizard.update_step!
-        expect(wizard.order_your_own?).to be true
+        expect(wizard.devices_you_can_order?).to be true
       end
 
       context 'has devices available to order' do
@@ -45,11 +45,11 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
     end
 
-    context 'when the step is order_your_own and user orders devices' do
+    context 'when the step is allocation and user orders devices' do
       let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }
 
       before do
-        wizard.order_your_own!
+        wizard.allocation!
       end
 
       it 'moves to the techsource_account step' do
@@ -58,12 +58,12 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
     end
 
-    context 'when the step is order_your_own and user is not the only school user' do
+    context 'when the step is allocation and user is not the only school user' do
       let(:additional_school_user) { create(:school_user, :new_visitor, school: school_user.school) }
 
       before do
         additional_school_user
-        wizard.order_your_own!
+        wizard.allocation!
       end
 
       it 'moves to the devices_you_can_order step' do

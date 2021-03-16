@@ -6,7 +6,6 @@ class SchoolWelcomeWizard < ApplicationRecord
 
   enum step: {
     allocation: 'allocation',
-    order_your_own: 'order_your_own',
     techsource_account: 'techsource_account',
     will_other_order: 'will_other_order',
     devices_you_can_order: 'devices_you_can_order',
@@ -32,11 +31,7 @@ class SchoolWelcomeWizard < ApplicationRecord
         else
           devices_you_can_order!
         end
-      else
-        order_your_own!
-      end
-    when 'order_your_own'
-      if user_orders_devices?
+      elsif user_orders_devices?
         techsource_account!
       else
         devices_you_can_order!

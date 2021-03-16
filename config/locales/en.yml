@@ -238,11 +238,6 @@ en:
         title: Privacy notice
       allocation:
         title: "You’ve been allocated %{allocation} laptops"
-      order_your_own:
-        school:
-          title: Ordering devices during school disruption
-        school_user:
-          title: Ordering devices during school disruption
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:
