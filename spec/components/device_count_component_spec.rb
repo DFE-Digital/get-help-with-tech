@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe DeviceCountComponent, type: :component do
   context 'when no devices available' do
     let(:school) { School.new(device_allocations: [allocation]) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
+    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 1) }
 
     subject(:component) { described_class.new(school: school) }
 
@@ -16,7 +16,28 @@ RSpec.describe DeviceCountComponent, type: :component do
     it 'renders state' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'ordered 0 of 0 devices'
+      expect(html).to include 'ordered 1 of 1 device'
+    end
+  end
+
+  context 'when zero allocation present' do
+    let(:school) { School.new(device_allocations: [allocation1, allocation2]) }
+    let(:allocation1) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
+    let(:allocation2) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 1) }
+
+    subject(:component) { described_class.new(school: school) }
+
+    it 'renders availability' do
+      html = render_inline(component).to_html
+
+      expect(html).not_to include '0 devices'
+      expect(html).to include '1 device available'
+    end
+
+    it 'does not render zero allocation' do
+      html = render_inline(component).to_html
+
+      expect(html).not_to include 'ordered 0 of 0 device'
     end
   end
 

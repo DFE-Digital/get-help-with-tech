@@ -3,9 +3,11 @@
     <%= availability_string.html_safe -%>
   </h2>
 
-  <div class="govuk-panel__body govuk-!-font-size-24">
-    <%= ordered_string -%>
-  </div>
+  <% if non_zero_allocations.any? %>
+    <div class="govuk-panel__body govuk-!-font-size-24">
+      <%= ordered_string -%>
+    </div>
+  <% end %>
 
   <% if show_action && action.present? %>
     <%= govuk_button_link_to action.first[0], action.first[1], class: 'govuk-!-margin-top-4 govuk-!-margin-bottom-1' %>

@@ -12,7 +12,7 @@ class DeviceCountComponent < ViewComponent::Base
 
   def availability_string
     if school.has_devices_available_to_order?
-      allocations.map { |allocation|
+      non_zero_allocations.map { |allocation|
         "#{allocation.available_devices_count} #{allocation.device_type_name.pluralize(allocation.available_devices_count)}"
       }.join(' and <br/>') + ' available' + availability_suffix
     else
@@ -24,7 +24,7 @@ class DeviceCountComponent < ViewComponent::Base
     if school.can_order_for_specific_circumstances? && school.has_ordered?
       'You cannot order your full allocation yet'
     else
-      state_prefix + allocations.map { |allocation|
+      state_prefix + non_zero_allocations.map { |allocation|
         "#{allocation.devices_ordered} of #{allocation.cap} #{allocation.device_type_name.pluralize(allocation.cap)}"
       }.join(' and ')
     end
@@ -49,7 +49,7 @@ private
     end
   end
 
-  def allocations
-    school.device_allocations
+  def non_zero_allocations
+    school.device_allocations.reject { |alloc| alloc.cap.zero? }
   end
 end
