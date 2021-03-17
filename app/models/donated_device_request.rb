@@ -37,6 +37,10 @@ class DonatedDeviceRequest < ApplicationRecord
     where(responsible_body: responsible_body)
   end
 
+  def mark_as_complete!
+    update!(status: 'complete', completed_at: Time.zone.now)
+  end
+
 private
 
   def units_are_present_and_in_range

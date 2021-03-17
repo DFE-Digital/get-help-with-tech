@@ -86,4 +86,16 @@ RSpec.describe DonatedDeviceRequest, type: :model do
       expect(request.errors[:units]).to be_present
     end
   end
+
+  describe '#mark_as_complete' do
+    let(:school) { create(:school) }
+
+    subject(:model) { build(:donated_device_request, :wants_laptops, :opt_in_all, :wants_full_amount, schools: [school.id]) }
+
+    it 'sets status as complete and completed_at stamp' do
+      model.mark_as_complete!
+      expect(model.status).to eql('complete')
+      expect(model.completed_at).to be_within(10.seconds).of(Time.zone.now)
+    end
+  end
 end
