@@ -28,6 +28,7 @@ FactoryBot.define do
 
     trait :complete do
       status { 'complete' }
+      completed_at { Time.zone.now }
     end
   end
 end

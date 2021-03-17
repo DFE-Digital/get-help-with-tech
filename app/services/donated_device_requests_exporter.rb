@@ -43,7 +43,7 @@ private
       School.where(id: request.schools).includes(:responsible_body).each do |school|
         csv << [
           request.id,
-          request.created_at,
+          request.completed_at,
           school.urn,
           school.computacenter_reference,
           school.responsible_body.computacenter_reference,
@@ -58,6 +58,6 @@ private
   end
 
   def donated_device_requests
-    DonatedDeviceRequest.complete.includes(:user).order(:asc)
+    DonatedDeviceRequest.complete.includes(:user).order(completed_at: :asc)
   end
 end
