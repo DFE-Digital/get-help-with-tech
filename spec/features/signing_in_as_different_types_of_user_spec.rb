@@ -34,7 +34,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     scenario 'visiting start page when already signed in redirects user to home page' do
       sign_in_as user
       visit start_path
-      expect(page).to have_current_path(responsible_body_home_path)
+      expect(page).to have_current_path(root_path)
       expect(page).to have_text 'Get help with technology'
     end
   end
