@@ -1,3 +1,2 @@
-<% home_page_link = @current_user&.is_responsible_body_user? ? responsible_body_home_path : "/" %>
-<%= link_to t('service_name'), home_page_link, class: "govuk-header__link govuk-header__link--service-name" %>
+<%= link_to t('service_name'), root_path, class: "govuk-header__link govuk-header__link--service-name" %>
 <%= Settings.service_name_suffix %>
