@@ -22,6 +22,7 @@
                  colour: :orange) %>
   </div>
 </div>
+
 <h3 class="govuk-heading-m govuk-!-margin-top-7">Devices remaining by day (last 7 days)</h3>
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -98,20 +99,59 @@
   </div>
   <div class="govuk-grid-column-one-third">
     <%= render Support::PercentageTileComponent.new(
-                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_fully_ordered),
-                 label: t(:devolved_schools_that_have_fully_ordered_html,
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_partially_ordered),
+                 label: t(:devolved_schools_that_have_partially_ordered_html,
                           scope: i18n_scope,
-                          amount: @stats.number_of_devolved_schools_that_have_fully_ordered,
+                          amount: @stats.number_of_devolved_schools_that_have_partially_ordered,
                           total: @stats.number_of_devolved_schools),
+                 colour: :orange) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_not_ordered),
+                 label: t(:devolved_schools_that_have_not_ordered_html,
+                          scope: i18n_scope,
+                          amount: @stats.number_of_devolved_schools_that_have_not_ordered,
+                          total: @stats.number_of_devolved_schools),
+                 colour: :red) %>
+  </div>
+</div>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Responsible bodies</h3>
+<div class="govuk-!-margin-bottom-4">
+  <%= render Support::TileComponent.new(
+               count: humanized_number(@stats.number_of_responsible_bodies_managing_centrally),
+               label: t(:responsible_bodies_managing_centrally_html,
+                        scope: i18n_scope,
+                        school_count: @stats.number_of_centrally_managed_schools),
+                        colour: :blue) %>
+</div>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered),
+                 label: t(:responsible_bodies_that_have_fully_ordered_html,
+                          scope: i18n_scope,
+                          amount: @stats.number_of_responsible_bodies_managing_centrally_that_have_fully_ordered,
+                          total: @stats.number_of_responsible_bodies_managing_centrally),
                  colour: :green) %>
   </div>
   <div class="govuk-grid-column-one-third">
     <%= render Support::PercentageTileComponent.new(
-                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_fully_ordered),
-                 label: t(:devolved_schools_that_have_fully_ordered_html,
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered),
+                 label: t(:responsible_bodies_that_have_partially_ordered_html,
                           scope: i18n_scope,
-                          amount: @stats.number_of_devolved_schools_that_have_fully_ordered,
-                          total: @stats.number_of_devolved_schools),
-                 colour: :green) %>
+                          amount: @stats.number_of_responsible_bodies_managing_centrally_that_have_partially_ordered,
+                          total: @stats.number_of_responsible_bodies_managing_centrally),
+                 colour: :orange) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered),
+                 label: t(:responsible_bodies_that_have_not_ordered_html,
+                          scope: i18n_scope,
+                          amount: @stats.number_of_responsible_bodies_managing_centrally_that_have_not_ordered,
+                          total: @stats.number_of_responsible_bodies_managing_centrally),
+                 colour: :red) %>
   </div>
 </div>

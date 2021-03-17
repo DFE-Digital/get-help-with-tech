@@ -21,6 +21,22 @@ class SchoolDeviceAllocation < ApplicationRecord
     where(device_type: device_type)
   end
 
+  def self.has_fully_ordered
+    where('devices_ordered > 0 AND cap = devices_ordered')
+  end
+
+  def self.has_partially_ordered
+    where('devices_ordered > 0 AND cap > devices_ordered')
+  end
+
+  def self.has_not_ordered
+    where(devices_ordered: 0)
+  end
+
+  def self.has_not_fully_ordered
+    where('cap > devices_ordered')
+  end
+
   def self.by_computacenter_device_type(cc_device_type)
     by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type))
   end

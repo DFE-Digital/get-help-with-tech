@@ -45,13 +45,40 @@ class Support::ServicePerformance
       .gias_status_open
       .that_will_order_devices
       .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.std_device)
-      .where('school_device_allocations.cap > school_device_allocations.devices_ordered')
+      .merge(SchoolDeviceAllocation.std_device.has_fully_ordered)
+      .count
+  end
+
+  def number_of_devolved_schools_that_have_partially_ordered
+    @number_of_devolved_schools_that_have_partially_ordered ||=
+      School
+      .gias_status_open
+      .that_will_order_devices
+      .joins(:device_allocations)
+      .merge(SchoolDeviceAllocation.std_device.has_partially_ordered)
+      .count
+  end
+
+  def number_of_devolved_schools_that_have_not_ordered
+    @number_of_devolved_schools_that_have_not_ordered ||=
+      School
+      .gias_status_open
+      .that_will_order_devices
+      .joins(:device_allocations)
+      .merge(SchoolDeviceAllocation.std_device.has_not_ordered)
       .count
   end
 
   def percentage_of_devolved_schools_that_have_fully_ordered
     (number_of_devolved_schools_that_have_fully_ordered * 100.0 / number_of_devolved_schools).round
+  end
+
+  def percentage_of_devolved_schools_that_have_partially_ordered
+    (number_of_devolved_schools_that_have_partially_ordered * 100.0 / number_of_devolved_schools).round
+  end
+
+  def percentage_of_devolved_schools_that_have_not_ordered
+    (number_of_devolved_schools_that_have_not_ordered * 100.0 / number_of_devolved_schools).round
   end
 
   def percentage_of_responsible_bodies_that_have_signed_in
@@ -69,6 +96,51 @@ class Support::ServicePerformance
     @number_of_responsible_bodies ||= ResponsibleBody
       .gias_status_open
       .count
+  end
+
+  def number_of_responsible_bodies_managing_centrally
+    @number_of_responsible_bodies_managing_centrally ||= School
+      .gias_status_open
+      .that_are_centrally_managed
+      .count('DISTINCT(responsible_body_id)')
+  end
+
+  def number_of_responsible_bodies_managing_centrally_that_have_fully_ordered
+    number_of_responsible_bodies_managing_centrally - number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered
+  end
+
+  def number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered
+    @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered ||= School
+      .gias_status_open
+      .that_are_centrally_managed
+      .joins(:device_allocations)
+      .merge(SchoolDeviceAllocation.std_device.has_not_fully_ordered)
+      .count('DISTINCT(responsible_body_id)')
+  end
+
+  def number_of_responsible_bodies_managing_centrally_that_have_partially_ordered
+    @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered ||= School
+      .gias_status_open
+      .that_are_centrally_managed
+      .joins(:device_allocations)
+      .merge(SchoolDeviceAllocation.std_device.has_partially_ordered)
+      .count('DISTINCT(responsible_body_id)')
+  end
+
+  def number_of_responsible_bodies_managing_centrally_that_have_not_ordered
+    number_of_responsible_bodies_managing_centrally - number_of_responsible_bodies_managing_centrally_that_have_fully_ordered - number_of_responsible_bodies_managing_centrally_that_have_partially_ordered
+  end
+
+  def percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered
+    (number_of_responsible_bodies_managing_centrally_that_have_fully_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
+  end
+
+  def percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered
+    (number_of_responsible_bodies_managing_centrally_that_have_partially_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
+  end
+
+  def percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered
+    (number_of_responsible_bodies_managing_centrally_that_have_not_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
   end
 
   def responsible_body_users_signed_in_at_least_once

@@ -416,6 +416,10 @@ en:
       devolved_schools_that_have_fully_ordered_html: ordered their full allocation<br/>(%{amount} out of %{total})
       devolved_schools_that_have_partially_ordered_html: ordered but have devices left<br/>(%{amount} out of %{total})
       devolved_schools_that_have_not_ordered_html: have not ordered<br/>(%{amount} out of %{total})
+      responsible_bodies_managing_centrally_html: responsible bodies managing orders centrally<br/>on behalf of %{school_count} schools
+      responsible_bodies_that_have_fully_ordered_html: ordered their full allocation<br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_partially_ordered_html: ordered but have devices left<br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_not_ordered_html: have not ordered<br/>(%{amount} out of %{total})
       decision_made:
         one: school has had a decision made about who will place orders
         other: schools have had a decision made about who will place orders
