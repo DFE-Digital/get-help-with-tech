@@ -4,6 +4,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   after_initialize :set_defaults
   before_validation :normalise_device_phone_number, :normalise_name
 
+  after_save :record_completion_if_needed!
+
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :mobile_network, optional: true # set to optional as we already validate on the presence of mobile_network_id and we don't want duplicate validation errors
   belongs_to :responsible_body, optional: true
@@ -161,5 +163,9 @@ private
 
   def set_defaults
     self.status ||= :new if new_record?
+  end
+
+  def record_completion_if_needed!
+    ReportableEvent.create!(record: self, event_name: 'completion') if complete_status? && saved_change_to_status?
   end
 end
