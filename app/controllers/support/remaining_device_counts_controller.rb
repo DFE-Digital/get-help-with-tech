@@ -12,7 +12,7 @@ class Support::RemainingDeviceCountsController < Support::BaseController
 private
 
   def file_date
-    RemainingDeviceCount.most_recent.date_of_count.strftime('%Y%m%d')
+    (RemainingDeviceCount.most_recent&.date_of_count || Time.zone.now).strftime('%Y%m%d')
   end
 
   def service
