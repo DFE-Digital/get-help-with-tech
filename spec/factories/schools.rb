@@ -22,6 +22,14 @@ FactoryBot.define do
       preorder_information { association :preorder_information, school: instance }
     end
 
+    trait :manages_orders do
+      association :preorder_information, :school_will_order
+    end
+
+    trait :centrally_managed do
+      association :preorder_information, :rb_will_order
+    end
+
     trait :with_headteacher_contact do
       after :create do |school|
         school.contacts << create(:school_contact, :headteacher)
