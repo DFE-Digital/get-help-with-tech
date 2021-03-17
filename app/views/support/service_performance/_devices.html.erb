@@ -1,0 +1,117 @@
+<h2 class="govuk-heading-l">Devices</h2>
+<%- i18n_scope = 'support.devices_performance' %>
+
+<div class="govuk-!-margin-bottom-4">
+  <%= render Support::TileComponent.new(
+               count: humanized_number(@stats.total_devices_available),
+               label: t(:total_devices_available, scope: i18n_scope),
+               colour: :blue) %>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: humanized_number(@stats.total_devices_ordered),
+                 label: t(:total_devices_ordered, scope: i18n_scope),
+                 colour: :green) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: humanized_number(@stats.total_devices_remaining),
+                 label: t(:total_devices_remaining, scope: i18n_scope),
+                 colour: :orange) %>
+  </div>
+</div>
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Devices remaining by day (last 7 days)</h3>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">Date</th>
+      <th class="govuk-table__header govuk-table__header--numeric">Total remaining</th>
+      <th class="govuk-table__header govuk-table__header--numeric">Remaining from:<br>Schools ordering their own</th>
+      <th class="govuk-table__header govuk-table__header--numeric">Remaining from:<br>RBs ordering centrally</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">10 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">95,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">85,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,000</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">9 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">95,200</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">85,200</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,000</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">8 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">7 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">6 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">5 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">4 March 2021</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
+    </tr>
+  </tbody>
+</table>
+<p class="govuk-body"><%= govuk_link_to 'Download CSV of all dates', '#' %></p>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Schools</h3>
+<div class="govuk-!-margin-bottom-4">
+  <%= render Support::TileComponent.new(
+               count: humanized_number(@stats.number_of_devolved_schools),
+               label: t(:devolved_schools, scope: i18n_scope),
+               colour: :blue) %>
+</div>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_fully_ordered),
+                 label: t(:devolved_schools_that_have_fully_ordered_html,
+                          scope: i18n_scope,
+                          amount: @stats.number_of_devolved_schools_that_have_fully_ordered,
+                          total: @stats.number_of_devolved_schools),
+                 colour: :green) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_fully_ordered),
+                 label: t(:devolved_schools_that_have_fully_ordered_html,
+                          scope: i18n_scope,
+                          amount: @stats.number_of_devolved_schools_that_have_fully_ordered,
+                          total: @stats.number_of_devolved_schools),
+                 colour: :green) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_fully_ordered),
+                 label: t(:devolved_schools_that_have_fully_ordered_html,
+                          scope: i18n_scope,
+                          amount: @stats.number_of_devolved_schools_that_have_fully_ordered,
+                          total: @stats.number_of_devolved_schools),
+                 colour: :green) %>
+  </div>
+</div>

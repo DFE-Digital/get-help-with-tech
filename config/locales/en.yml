@@ -409,6 +409,13 @@ en:
         one: responsible body has given all the information needed for at least one school
         other: responsible bodies have given all the information needed for at least one school
     devices_performance:
+      total_devices_available: total devices available
+      total_devices_ordered: devices shipped
+      total_devices_remaining: remaining
+      devolved_schools: devolved schools
+      devolved_schools_that_have_fully_ordered_html: ordered their full allocation<br/>(%{amount} out of %{total})
+      devolved_schools_that_have_partially_ordered_html: ordered but have devices left<br/>(%{amount} out of %{total})
+      devolved_schools_that_have_not_ordered_html: have not ordered<br/>(%{amount} out of %{total})
       decision_made:
         one: school has had a decision made about who will place orders
         other: schools have had a decision made about who will place orders

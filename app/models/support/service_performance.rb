@@ -26,6 +26,34 @@ class Support::ServicePerformance
       .count
   end
 
+  def total_devices_available
+    # SchoolDeviceAllocation.std_device.sum(:allocation)
+    1_302_110
+  end
+
+  def total_devices_ordered
+    SchoolDeviceAllocation.std_device.sum(:devices_ordered)
+  end
+
+  def total_devices_remaining
+    SchoolDeviceAllocation.std_device.sum('allocation - devices_ordered')
+  end
+
+  def number_of_devolved_schools_that_have_fully_ordered
+    @number_of_devolved_schools_that_have_fully_ordered ||=
+      School
+      .gias_status_open
+      .that_will_order_devices
+      .joins(:device_allocations)
+      .merge(SchoolDeviceAllocation.std_device)
+      .where('school_device_allocations.cap > school_device_allocations.devices_ordered')
+      .count
+  end
+
+  def percentage_of_devolved_schools_that_have_fully_ordered
+    (number_of_devolved_schools_that_have_fully_ordered * 100.0 / number_of_devolved_schools).round
+  end
+
   def percentage_of_responsible_bodies_that_have_signed_in
     (number_of_responsible_bodies_that_have_signed_in * 100.0 / number_of_responsible_bodies).round
   end
