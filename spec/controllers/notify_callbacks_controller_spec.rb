@@ -46,6 +46,10 @@ RSpec.describe NotifyCallbacksController do
         expect {
           post :create, params: payload, format: :json
         }.to change { EmailAudit.count }.by(1)
+
+        audit = EmailAudit.last
+
+        expect(audit.email_address).to eql(user.email_address)
       end
 
       context 'when we do not have the email address' do
