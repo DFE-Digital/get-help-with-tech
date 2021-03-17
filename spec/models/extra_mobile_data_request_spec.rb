@@ -375,4 +375,57 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
       end
     end
   end
+
+  context 'updating a request' do
+    let(:reportable_event) { ReportableEvent.last }
+
+    context 'that is not already complete' do
+      let(:request) { create(:extra_mobile_data_request, status: 'in_progress') }
+
+      context 'to complete' do
+        let(:updating_the_request) { request.update!(status: 'complete') }
+
+        it 'adds a ReportableEvent with the correct parameters' do
+          expect { updating_the_request }.to change(ReportableEvent, :count).by(1)
+          expect(reportable_event).to have_attributes(event_name: 'completion', record_type: 'ExtraMobileDataRequest', record_id: request.id)
+          expect(reportable_event.event_time).to be_within(1.second).of(Time.zone.now.utc)
+        end
+      end
+
+      context 'to a status which is not complete' do
+        let(:updating_the_request) { request.update!(status: 'problem_other') }
+
+        it 'does not add a ReportableEvent' do
+          expect { updating_the_request }.not_to change(ReportableEvent, :count)
+        end
+      end
+    end
+
+    context 'that is already complete' do
+      let(:request) { create(:extra_mobile_data_request, status: 'complete') }
+
+      context 'without changing the status from complete' do
+        let(:updating_the_request) { request.update!(status: 'complete', account_holder_name: request.account_holder_name + '_') }
+
+        it 'does not add a ReportableEvent' do
+          request
+          expect { updating_the_request }.not_to change(ReportableEvent, :count)
+        end
+      end
+    end
+  end
+
+  context 'saving a new request' do
+    let(:reportable_event) { ReportableEvent.last }
+
+    context 'that is complete' do
+      let(:saving_the_request) { create(:extra_mobile_data_request, status: 'in_progress') }
+
+      it 'adds a ReportableEvent with the correct parameters' do
+        expect { saving_the_request }.to change(ReportableEvent, :count).by(1)
+        expect(reportable_event).to have_attributes(event_name: 'completion', record_type: 'ExtraMobileDataRequest', record_id: request.id)
+        expect(reportable_event.event_time).to be_within(1.second).of(Time.zone.now.utc)
+      end
+    end
+  end
 end
