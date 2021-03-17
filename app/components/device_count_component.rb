@@ -49,10 +49,6 @@ private
     end
   end
 
-  def allocations
-    school.device_allocations
-  end
-
   def non_zero_allocations
     school.device_allocations.reject { |alloc| alloc.cap.zero? }
   end
