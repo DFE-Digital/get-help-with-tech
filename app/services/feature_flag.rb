@@ -5,8 +5,6 @@ class FeatureFlag
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
-    increased_allocations_banner
-    secondary_mass_testing_banner
     half_term_delivery_suspension
     donated_devices
     rb_level_access_notification

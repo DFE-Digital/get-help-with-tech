@@ -485,62 +485,6 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
 
-    describe '#has_increased_allocation_feature_flags?' do
-      subject(:responsible_body) { create(:trust) }
-
-      let(:school) { create(:school, responsible_body: responsible_body) }
-
-      context 'when some schools had their allocations increased' do
-        before do
-          school.update! increased_allocations_feature_flag: true
-        end
-
-        context 'without any feature flags', with_feature_flags: { increased_allocations_banner: 'inactive' } do
-          before do
-            school.update! increased_allocations_feature_flag: false
-          end
-
-          it 'returns false' do
-            expect(responsible_body.has_increased_allocation_feature_flags?).to be false
-          end
-        end
-
-        context 'when global feature flag is enabled', with_feature_flags: { increased_allocations_banner: 'active' } do
-          before do
-            school.update! increased_allocations_feature_flag: false
-          end
-
-          it 'returns false' do
-            expect(responsible_body.has_increased_allocation_feature_flags?).to be false
-          end
-        end
-
-        context 'when school feature flag is enabled', with_feature_flags: { increased_allocations_banner: 'inactive' } do
-          before do
-            school.update! increased_allocations_feature_flag: true
-          end
-
-          it 'returns false' do
-            expect(responsible_body.has_increased_allocation_feature_flags?).to be false
-          end
-        end
-
-        context 'when responsible body flag and global feature flag are enabled', with_feature_flags: { increased_allocations_banner: 'active' } do
-          before do
-            school.update! increased_allocations_feature_flag: true
-          end
-
-          it 'returns true' do
-            expect(responsible_body.has_increased_allocation_feature_flags?).to be true
-          end
-        end
-
-        it 'returns false' do
-          expect(responsible_body.has_increased_allocation_feature_flags?).to be false
-        end
-      end
-    end
-
     context 'when no schools are centrally managed' do
       before do
         schools[0].preorder_information.school_will_order_devices!

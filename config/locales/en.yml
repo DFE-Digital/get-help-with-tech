@@ -837,16 +837,3 @@ en:
         name_or_urn_or_ukprn: School name, URN or UKPRN
       support_user_responsible_body_form:
         name: Responsible body name
-  banners:
-    secondary_mass_testing:
-      heading: All secondary schools can order laptops now. We’ll invite all primary schools to order by 13 January at the latest, starting with the most disadvantaged areas in England.
-    increased_allocations:
-      school:
-        heading:
-          zero: Your allocation has increased to 0 devices
-          one: Your allocation has increased to 1 device
-          other: Your allocation has increased to %{count} devices
-        content: As international stocks of laptops and tablets have increased, we’ve restored your allocation to what it was before October half term.
-      responsible_body:
-        heading: We’ve restored original device allocations
-        content: As international stocks of laptops and tablets have increased, we’ve restored allocations to what they were before October half term.
