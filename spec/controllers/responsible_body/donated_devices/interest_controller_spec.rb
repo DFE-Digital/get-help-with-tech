@@ -34,4 +34,21 @@ RSpec.describe ResponsibleBody::DonatedDevices::InterestController do
       end
     end
   end
+
+  describe '#check_answers' do
+    let(:user) { create(:trust_user) }
+    let(:rb) { user.responsible_body }
+    let(:device_request) { create(:donated_device_request, :wants_laptops, :opt_in_all, :wants_full_amount, user: user, responsible_body: rb, schools: rb.schools.pluck(:id)) }
+
+    before do
+      create(:school, responsible_body: rb)
+      device_request
+      sign_in_as user
+    end
+
+    it 'sets completed_at' do
+      post :check_answers, params: { id: rb.id }
+      expect(device_request.reload.completed_at).to be_within(10.seconds).of(Time.zone.now)
+    end
+  end
 end

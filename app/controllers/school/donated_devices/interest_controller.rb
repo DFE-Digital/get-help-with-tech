@@ -82,7 +82,7 @@ class School::DonatedDevices::InterestController < School::BaseController
   def check_answers
     if request.post?
       authorize @request, policy_class: School::DonatedDevicePolicy
-      @request.complete!
+      @request.mark_as_complete!
       redirect_to opted_in_donated_devices_school_path(@school)
     end
   end

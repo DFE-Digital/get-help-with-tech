@@ -117,7 +117,7 @@ class ResponsibleBody::DonatedDevices::InterestController < ResponsibleBody::Bas
   def check_answers
     if request.post?
       authorize @request, policy_class: ResponsibleBody::DonatedDevicePolicy
-      @request.complete!
+      @request.mark_as_complete!
       redirect_to responsible_body_donated_devices_opted_in_path
     end
   end
