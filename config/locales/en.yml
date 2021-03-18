@@ -420,6 +420,20 @@ en:
       responsible_bodies_that_have_fully_ordered_html: ordered their full allocation<br/>(%{amount} out of %{total})
       responsible_bodies_that_have_partially_ordered_html: ordered but have devices left<br/>(%{amount} out of %{total})
       responsible_bodies_that_have_not_ordered_html: have not ordered<br/>(%{amount} out of %{total})
+      devolved_schools_extra_mobile_requests_html: devolved schools<br/>(out of %{total})
+      responsible_bodies_extra_mobile_requests_html: responsible bodies managing orders centrally<br/>(out of %{total}, and on behalf of %{school_count} schools)
+    routers_performance:
+      total_routers_available: total routers available
+      total_routers_ordered: routers shipped
+      total_routers_remaining: routers remaining
+      devolved_schools: schools that have a router allocation 
+      devolved_schools_that_have_fully_ordered_routers_html: ordered their full allocation<br/>(%{amount} out of %{total})
+      devolved_schools_that_have_partially_ordered_routers_html: ordered but have routers left<br/>(%{amount} out of %{total})
+      devolved_schools_that_have_not_ordered_routers_html: have not ordered<br/>(%{amount} out of %{total})
+      responsible_bodies_managing_centrally: responsible bodies managing centrally have a school with a router allocation
+      responsible_bodies_that_have_fully_ordered_html: ordered their full allocation<br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_partially_ordered_html: ordered but have routers left<br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_not_ordered_html: have not ordered<br/>(%{amount} out of %{total})
       decision_made:
         one: school has had a decision made about who will place orders
         other: schools have had a decision made about who will place orders

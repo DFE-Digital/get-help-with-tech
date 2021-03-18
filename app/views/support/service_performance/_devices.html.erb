@@ -34,51 +34,17 @@
     </tr>
   </thead>
   <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">10 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">95,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">85,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,000</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">9 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">95,200</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">85,200</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,000</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">8 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">7 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">6 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">5 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">4 March 2021</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">96,100</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">86,000</td>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10,100</td>
-    </tr>
+    <% @stats.unclaimed_devices_by_day.each do |row| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= row.date_of_count.strftime('%d %B %Y') %></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric"><%= humanized_number(row.total_remaining) %></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric"><%= humanized_number(row.remaining_from_devolved_schools) %></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric"><%= humanized_number(row.remaining_from_managed_schools) %></td>
+      </tr>
+    <%- end %>
   </tbody>
 </table>
-<p class="govuk-body"><%= govuk_link_to 'Download CSV of all dates', '#' %></p>
+<p class="govuk-body"><%= govuk_link_to 'Download CSV of all dates', support_performance_remaining_device_counts_path(format: :csv) %></p>
 
 <h3 class="govuk-heading-m govuk-!-margin-top-7">Schools</h3>
 <div class="govuk-!-margin-bottom-4">
