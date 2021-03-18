@@ -38,5 +38,10 @@ module GovukRailsBoilerplate
     config.active_model.i18n_customize_full_message = true
 
     config.time_zone = 'London'
+
+    # disable client-side XSS Auditors, as they have been removed from most
+    # modern browsers because they can cause additional vulnerabilities
+    # (see https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#x-xss-protection-header)
+    config.action_dispatch.default_headers['X-XSS-Protection'] = '0'
   end
 end
