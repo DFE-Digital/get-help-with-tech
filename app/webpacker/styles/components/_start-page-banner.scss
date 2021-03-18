@@ -16,6 +16,10 @@
     color: govuk-colour("white");
   }
 
+  .govuk-phase-banner__text .govuk-link:focus {
+    color: govuk-colour('black');
+  }
+
   .govuk-tag {
     color: govuk-colour("white");
     border: 1px solid govuk-colour("light-blue");
@@ -29,6 +33,10 @@
 
   .govuk-link {
     color: govuk-colour("white");
+  }
+
+  .govuk-link:focus {
+    color: govuk-colour('black');
   }
 
   @include govuk-media-query($from: tablet) {
