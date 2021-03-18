@@ -10,14 +10,14 @@ RSpec.feature 'View pages', type: :feature do
     when_i_visit_the_home_page
     and_i_click_on_free_training_and_free_support_link
     then_i_should_see_the_edtech_programme_page
-    and_the_page_title_should_be_set(@edtech_landing_page, 'Get free training and support to set up and use technology effectively')
+    and_the_page_title_should_be_set(@edtech_landing_page, 'Training and support for remote education')
   end
 
   scenario 'user would like to find out hot to get a digital platform setup' do
     when_i_visit_the_home_page
     and_i_click_on_get_funding_to_setup_platforms_link
     then_i_should_see_the_digital_platforms_page
-    and_the_page_title_should_be_set(@digital_platforms_page, 'Get funding and support to set up a digital education platform')
+    and_the_page_title_should_be_set(@digital_platforms_page, 'Digital education platforms')
   end
 
   scenario 'user is a parent,carer or student would like to find out how to use their device' do
