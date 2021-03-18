@@ -42,6 +42,7 @@ MobileNetwork.upsert_all(
     { brand: 'HP Mobile Connect', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'i3 Mobile', host_network: 'Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'iD Mobile', host_network: 'Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
+    { brand: 'IQ Mobile', host_network: 'EE', participation_in_pilot: :yes, created_at: current_time, updated_at: current_time },
     { brand: 'JOi Telecom', host_network: 'Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Jump', host_network: 'O2, Vodafone, EE, Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Just Utilities', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
