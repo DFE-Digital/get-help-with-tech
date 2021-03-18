@@ -22,7 +22,7 @@
       <tbody class="govuk-table__body">
         <% @email_audits.each do |audit| %>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><%= audit.email_address %></th>
+            <th scope="row" class="govuk-table__header"><%= govuk_link_to audit.email_address, support_user_path(audit.user_id) %></th>
             <th scope="row" class="govuk-table__header"><%= audit.message_type %></th>
             <td class="govuk-table__cell"><%= audit.govuk_notify_status %></td>
           </tr>
