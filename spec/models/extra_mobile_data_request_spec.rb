@@ -419,12 +419,20 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     let(:reportable_event) { ReportableEvent.last }
 
     context 'that is complete' do
-      let(:saving_the_request) { create(:extra_mobile_data_request, status: 'in_progress') }
+      let(:saving_the_request) { create(:extra_mobile_data_request, status: 'complete') }
 
       it 'adds a ReportableEvent with the correct parameters' do
         expect { saving_the_request }.to change(ReportableEvent, :count).by(1)
-        expect(reportable_event).to have_attributes(event_name: 'completion', record_type: 'ExtraMobileDataRequest', record_id: request.id)
+        expect(reportable_event).to have_attributes(event_name: 'completion', record_type: 'ExtraMobileDataRequest', record_id: saving_the_request.id)
         expect(reportable_event.event_time).to be_within(1.second).of(Time.zone.now.utc)
+      end
+    end
+
+    context 'that is not complete' do
+      let(:saving_the_request) { create(:extra_mobile_data_request, status: 'new') }
+
+      it 'does not add a ReportableEvent' do
+        expect { saving_the_request }.not_to change(ReportableEvent, :count)
       end
     end
   end
