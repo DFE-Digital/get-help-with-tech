@@ -71,13 +71,13 @@ private
 
   def responsible_body_links
     [
-      NavLinkComponent.new(title: 'Home', url: responsible_body_home_path),
+      NavLinkComponent.new(title: 'Your account', url: responsible_body_home_path),
     ]
   end
 
   def school_links
     [
-      NavLinkComponent.new(title: 'Home', url: schools_path),
+      NavLinkComponent.new(title: 'Your account', url: schools_path),
     ]
   end
 end
