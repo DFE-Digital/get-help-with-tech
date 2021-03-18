@@ -213,6 +213,17 @@ ActiveRecord::Schema.define(version: 2021_03_18_095416) do
     t.index ["date_of_count"], name: "index_remaining_device_counts_on_date_of_count"
   end
 
+  create_table "reportable_events", force: :cascade do |t|
+    t.string "event_name"
+    t.string "record_type"
+    t.bigint "record_id"
+    t.datetime "event_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_name", "event_time", "record_type", "record_id"], name: "ix_re_name_time_type_id"
+    t.index ["record_type", "record_id", "event_name", "event_time"], name: "ix_re_type_id_name_time"
+  end
+
   create_table "responsible_bodies", force: :cascade do |t|
     t.string "type", null: false
     t.string "name", null: false
