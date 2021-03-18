@@ -14,7 +14,7 @@ private
       .std_device
       .joins(school: :preorder_information)
       .where(preorder_information: { who_will_order_devices: 'school' })
-      .where(school: { status: 'open'})
+      .where(school: { status: 'open' })
       .sum('cap - devices_ordered')
   end
 
