@@ -272,6 +272,9 @@ en:
       title: Get funding and support to set up a digital education platform
     edtech_demonstrator_programme:
       title: Get free training and support to set up and use technology effectively
+    guides_parents_carers_students:
+      title: Guides for parents, guardians, pupils and students
+      details: Get help guides to share with the children, young people and carers using the laptops, tablets and 4G wireless routers provided by DfE.
   cookie_preferences:
     success: Your cookie preferences have been saved
   devices_guidance:
@@ -296,17 +299,17 @@ en:
       description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
       audience: responsible_body_users
     getting_started_with_your_microsoft_windows_device:
-      title: Getting started with your Microsoft Windows device
+      title: How to get started with your Microsoft Windows laptop or tablet
       description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
-      audience: device_users
+      audience: parents_carers_students
     preparing_chromebooks:
       title: Preparing Chromebooks
       description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, schools and further education institutions.
       audience: responsible_body_users
     getting_started_with_your_google_chromebook:
-      title: Getting started with your Google Chromebook
+      title: How to get started with your Google Chromebook
       description: User guidance for Google Chromebooks to share with children, young people and their carers.
-      audience: device_users
+      audience: parents_carers_students
     preparing_ipads:
       title: Preparing iPads
       description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
@@ -318,7 +321,7 @@ en:
     4g_user_guidance:
       title: How to get started with your 4G wireless router
       description: User guidance for 4G wireless routers to share with children, young people and their carers.
-      audience: device_users
+      audience: parents_carers_students
     device_distribution_and_ownership:
       title: Device ownership and distribution
       description: Guidance on who owns devices, and information on insuring devices, asset management and loan agreements.

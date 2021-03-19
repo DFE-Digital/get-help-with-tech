@@ -20,6 +20,13 @@ RSpec.feature 'View pages', type: :feature do
     and_the_page_title_should_be_set(@digital_platforms_page, 'Get funding and support to set up a digital education platform')
   end
 
+  scenario 'user is a parent,carer or student would like to find out how to use their device' do
+    when_i_visit_the_home_page
+    and_i_click_on_guides_for_parents_link
+    then_i_should_see_the_guides_for_parents_carers_students_page
+    and_the_page_title_should_be_set(@guides_parents_carers_students_page, 'Guides for parents, guardians, pupils and students')
+  end
+
 private
 
   def when_i_visit_the_home_page
@@ -39,6 +46,10 @@ private
     @home_page.digital_platforms_page_link.click
   end
 
+  def and_i_click_on_guides_for_parents_link
+    @home_page.guides_parents_carers_students_link.click
+  end
+
   def then_i_should_see_the_edtech_programme_page
     @edtech_landing_page ||= PageObjects::LandingPages::EdtechDemonstratorProgrammePage.new
     expect(@edtech_landing_page).to be_displayed
@@ -47,6 +58,11 @@ private
   def then_i_should_see_the_digital_platforms_page
     @digital_platforms_page ||= PageObjects::LandingPages::DigitalPlatformsPage.new
     expect(@digital_platforms_page).to be_displayed
+  end
+
+  def then_i_should_see_the_guides_for_parents_carers_students_page
+    @guides_parents_carers_students_page ||= PageObjects::GuidesForParentsCarersStudents::IndexPage.new
+    expect(@guides_parents_carers_students_page).to be_displayed
   end
 
   def and_the_page_title_should_be_set(current_page, title)
