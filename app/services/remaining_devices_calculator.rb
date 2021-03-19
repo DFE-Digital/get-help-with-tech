@@ -7,22 +7,22 @@ class RemainingDevicesCalculator
     ).tap(&:valid?)
   end
 
+private
+
   def remaining_from_devolved_schools
-    remaining_amount_for(School.gias_status_open.that_will_order_devices)
+    SchoolDeviceAllocation
+      .std_device
+      .joins(school: :preorder_information)
+      .where(preorder_information: { who_will_order_devices: 'school' })
+      .where(school: { status: 'open' })
+      .sum('cap - devices_ordered')
   end
 
   def remaining_from_managed_schools
-    remaining_amount_for(School.that_are_centrally_managed)
-  end
-
-private
-
-  def remaining_amount_for(school_ordering_type)
     SchoolDeviceAllocation
       .std_device
-      .joins(:school)
-      .merge(school_ordering_type)
-      .where('devices_ordered < cap')
+      .joins(school: :preorder_information)
+      .where(preorder_information: { who_will_order_devices: 'responsible_body' })
       .sum('cap - devices_ordered')
   end
 end
