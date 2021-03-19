@@ -68,6 +68,25 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
         end
       end
+
+      context 'school has opted out but would have received notification' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 techsource_account_confirmed_at: 1.second.ago,
+                 orders_devices: true)
+        end
+
+        before do
+          school.update(opted_out_of_comms_at: 1.day.ago)
+        end
+
+        it 'does not notify the user' do
+          expect {
+            service.call
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+      end
     end
 
     context 'when school ordering centrally in virtual cap which is ready changes from cannot_order to can_order' do

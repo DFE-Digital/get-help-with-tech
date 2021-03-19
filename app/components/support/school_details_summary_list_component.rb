@@ -9,9 +9,27 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
              else
                address_read_only_row
              end
+    array << receiving_communications_row
   end
 
 private
+
+  def receiving_communications_row
+    {
+      key: 'Receiving communications',
+      value: receiving_communications_value,
+      action: 'Change <span class="govuk-visually-hidden">communications preference</span>'.html_safe,
+      action_path: edit_support_school_opt_out_path(@school),
+    }
+  end
+
+  def receiving_communications_value
+    if @school.opted_out_of_comms_at
+      'No, opted out of receiving communications as they do not want their remaining allocation'
+    else
+      'Yes, receiving communications'
+    end
+  end
 
   def school_name_editable_row
     {

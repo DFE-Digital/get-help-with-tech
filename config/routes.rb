@@ -238,6 +238,10 @@ Rails.application.routes.draw do
     resources :schools, only: %i[show edit update], param: :urn do
       resource :addresses, only: %i[edit update], path: 'address'
 
+      scope module: 'schools' do
+        resource :opt_out, only: %i[edit update], path: 'opt-out'
+      end
+
       collection do
         get 'search'
         get 'results'
@@ -249,6 +253,7 @@ Rails.application.routes.draw do
         get '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#collect_urns_and_allocations_for_many_schools'
         patch '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#adjust_allocations_for_many_schools', as: :adjust_allocations_for_many_schools
       end
+
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation
       post '/invite', to: 'schools#invite'
       resources :users, only: %i[new create], controller: 'users'
