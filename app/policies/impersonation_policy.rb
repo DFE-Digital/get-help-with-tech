@@ -1,9 +1,13 @@
 class ImpersonationPolicy < ApplicationPolicy
   def create?
-    user.third_line_role?
+    return false if user.is_computacenter?
+
+    user.is_support?
   end
 
   def destroy?
-    user.third_line_role?
+    return false if user.is_computacenter?
+
+    user.is_support?
   end
 end

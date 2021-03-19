@@ -2,17 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'support/users/show.html.erb' do
   let(:support_user) { create(:support_user) }
-  let(:third_line_support_user) { create(:support_user, role: 'third_line') }
+  let(:computacenter_user) { create(:computacenter_user, is_support: true) }
   let(:user) { create(:school_user) }
 
   around do |example|
     without_partial_double_verification { example.run }
   end
 
-  context 'when support user' do
+  context 'when computacenter user' do
     before do
-      allow(view).to receive(:current_user).and_return(support_user)
-      assign(:current_user, support_user)
+      allow(view).to receive(:current_user).and_return(computacenter_user)
+      assign(:current_user, computacenter_user)
       assign(:user, user)
     end
 
@@ -22,10 +22,10 @@ RSpec.describe 'support/users/show.html.erb' do
     end
   end
 
-  context 'when third line support user' do
+  context 'when support user' do
     before do
-      allow(view).to receive(:current_user).and_return(third_line_support_user)
-      assign(:current_user, third_line_support_user)
+      allow(view).to receive(:current_user).and_return(support_user)
+      assign(:current_user, support_user)
       assign(:user, user)
     end
 
