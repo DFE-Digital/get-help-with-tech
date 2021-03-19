@@ -1,8 +1,8 @@
 <%- title = t('page_titles.responsible_body_devices_tell_us') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([
-                   { "Home" => responsible_body_home_path },
+  <% breadcrumbs([ { "Home" => root_path },
+                   { "Your account" => responsible_body_home_path },
                    title,
                  ]) %>
 <% end %>
