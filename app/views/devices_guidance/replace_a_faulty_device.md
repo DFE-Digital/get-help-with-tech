@@ -1,3 +1,7 @@
+<div class="govuk-inset-text">
+We'll be closing the service enabling you to request replacements for faulty laptops and tablets at 4pm on 24 March 2021. Requests made before this date will still be processed. All laptops and tablets came with a 12-month manufacturer’s warranty. If you need a replacement after 24 March 2021, you'll need to go through the manufacturer’s warranty process.
+</div>
+
 ## Replace a faulty Google Chromebook or Microsoft device
 
 ### If it's not working within 3 days of receiving it
