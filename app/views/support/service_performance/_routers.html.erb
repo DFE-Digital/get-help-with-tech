@@ -71,11 +71,11 @@
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-one-third">
     <%= render Support::PercentageTileComponent.new(
-                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered),
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers),
                  label: t(:responsible_bodies_that_have_fully_ordered_html,
                           scope: i18n_scope,
-                          amount: @stats.number_of_responsible_bodies_managing_centrally_that_have_fully_ordered,
-                          total: @stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation),
+                          amount: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers),
+                          total: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation)),
                  colour: :green) %>
   </div>
   <div class="govuk-grid-column-one-third">
@@ -89,11 +89,11 @@
   </div>
   <div class="govuk-grid-column-one-third">
     <%= render Support::PercentageTileComponent.new(
-                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered),
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers),
                  label: t(:responsible_bodies_that_have_not_ordered_html,
                           scope: i18n_scope,
-                          amount: @stats.number_of_responsible_bodies_managing_centrally_that_have_not_ordered,
-                          total: @stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation),
+                          amount: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers),
+                          total: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation)),
                  colour: :red) %>
   </div>
 </div>

@@ -195,6 +195,23 @@ class Support::ServicePerformance
       .count('DISTINCT(responsible_body_id)')
   end
 
+  def number_of_responsible_bodies_managing_centrally_that_have_not_ordered
+    number_of_responsible_bodies_managing_centrally - number_of_responsible_bodies_managing_centrally_that_have_fully_ordered - number_of_responsible_bodies_managing_centrally_that_have_partially_ordered
+  end
+
+  def number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers
+    number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation - number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers
+  end
+
+  def number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers
+    @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers ||= School
+      .gias_status_open
+      .that_are_centrally_managed
+      .joins(:device_allocations)
+      .merge(SchoolDeviceAllocation.coms_device.has_not_fully_ordered)
+      .count('DISTINCT(responsible_body_id)')
+  end
+
   def number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers
     @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers ||= School
       .gias_status_open
@@ -204,8 +221,9 @@ class Support::ServicePerformance
       .count('DISTINCT(responsible_body_id)')
   end
 
-  def number_of_responsible_bodies_managing_centrally_that_have_not_ordered
-    number_of_responsible_bodies_managing_centrally - number_of_responsible_bodies_managing_centrally_that_have_fully_ordered - number_of_responsible_bodies_managing_centrally_that_have_partially_ordered
+  def number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers
+    @number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers ||=
+      number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation - number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers - number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers
   end
 
   def number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation
@@ -230,8 +248,16 @@ class Support::ServicePerformance
     (number_of_responsible_bodies_managing_centrally_that_have_not_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
   end
 
+  def percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers
+    (number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+  end
+
   def percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers
     (number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+  end
+
+  def percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers
+    (number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
   end
 
   def unclaimed_devices_by_day
