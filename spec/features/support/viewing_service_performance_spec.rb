@@ -61,8 +61,8 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   def given_there_devolved_schools_and_centrally_managed_schools
-    devolved_schools = create_list(:school, 2, :manages_orders)
-    managed_schools = create_list(:school, 4, :centrally_managed)
+    create_list(:school, 2, :manages_orders)
+    create_list(:school, 4, :centrally_managed)
   end
 
   def given_there_are_available_shipped_and_remaining_devices
@@ -105,7 +105,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     virgin = create(:mobile_network, brand: 'Virgin')
     rb = create(:local_authority, :in_connectivity_pilot)
     rb_requester = create(:user, responsible_body: rb)
-    managed_schools = create_list(:school, 3, :centrally_managed)
+    create_list(:school, 3, :centrally_managed)
     schools = create_list(:school, 3, :manages_orders)
     school_requester = create(:user)
     schools[0].users << school_requester
