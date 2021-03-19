@@ -1,15 +1,34 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing service performance', type: :feature do
-  let(:local_authority) { create(:local_authority) }
-
-  scenario 'DfE users see service stats about responsible body user engagement' do
-    given_there_have_been_sign_ins_from_responsible_body_and_mno_users
+  scenario 'DfE users see service stats about sign-ins and who orders' do
+    given_there_have_been_sign_ins_from_users_of_devolved_schools_and_responsible_bodies
 
     when_i_sign_in_as_a_dfe_user
     and_i_follow_links_to_the_service_performance_page
 
-    then_i_see_stats_about_responsible_body_user_engagement
+    then_i_see_sign_in_stats_about_devolved_schools_and_responsible_bodies
+  end
+
+  scenario 'DfE users see service stats about who orders' do
+    given_there_devolved_schools_and_centrally_managed_schools
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_follow_links_to_the_service_performance_page
+
+    then_i_see_stats_about_who_orders
+  end
+
+  scenario 'DfE users see service stats about devices' do
+    given_there_are_available_shipped_and_remaining_devices
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_follow_links_to_the_service_performance_page
+    and_i_select_the_devices_tab
+
+    then_i_see_stats_about_devices
+    then_i_see_stats_about_devolved_schools_devices
+    then_i_see_stats_about_responsible_bodies_managed_schools_devices
   end
 
   scenario 'DfE users see service stats about extra mobile data requests' do
@@ -17,23 +36,79 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
     when_i_sign_in_as_a_dfe_user
     and_i_follow_links_to_the_service_performance_page
+    and_i_select_the_mno_tab
 
     then_i_see_stats_about_extra_mobile_data_requests
   end
 
-  def given_there_have_been_sign_ins_from_responsible_body_and_mno_users
-    create(:mno_user, :signed_in_before)
-    create_list(:local_authority_user, 2, :signed_in_before, responsible_body: local_authority)
+  scenario 'DfE users see service stats about routers' do
+    given_there_are_available_shipped_and_remaining_routers
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_follow_links_to_the_service_performance_page
+    and_i_select_the_routers_tab
+
+    then_i_see_stats_about_routers
+    then_i_see_stats_about_devolved_schools_routers
+    then_i_see_stats_about_responsible_bodies_managed_schools_routers
+  end
+
+  def given_there_have_been_sign_ins_from_users_of_devolved_schools_and_responsible_bodies
+    devolved_schools = create_list(:school, 10, :manages_orders)
+    responsible_bodies = [create_list(:local_authority, 5, :manages_centrally), create_list(:trust, 5, :manages_centrally)].flatten
+    devolved_schools[0..1].each { |s| s.users << create(:user, :signed_in_before) }
+    responsible_bodies[0..2].each { |rb| create(:user, :signed_in_before, responsible_body: rb) }
+  end
+
+  def given_there_devolved_schools_and_centrally_managed_schools
+    devolved_schools = create_list(:school, 2, :manages_orders)
+    managed_schools = create_list(:school, 4, :centrally_managed)
+  end
+
+  def given_there_are_available_shipped_and_remaining_devices
+    devolved_schools = create_list(:school, 5, :manages_orders, :with_std_device_allocation)
+    managed_schools = create_list(:school, 5, :centrally_managed, :with_std_device_allocation)
+
+    devolved_schools[0].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
+    devolved_schools[1].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    devolved_schools[2].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    devolved_schools[3].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    devolved_schools[4].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+
+    managed_schools[0].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
+    managed_schools[1].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
+    managed_schools[2].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    managed_schools[3].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+    managed_schools[4].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+  end
+
+  def given_there_are_available_shipped_and_remaining_routers
+    devolved_schools = create_list(:school, 5, :manages_orders, :with_coms_device_allocation)
+    managed_schools = create_list(:school, 5, :centrally_managed, :with_coms_device_allocation)
+
+    devolved_schools[0].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
+    devolved_schools[1].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    devolved_schools[2].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    devolved_schools[3].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    devolved_schools[4].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+
+    managed_schools[0].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
+    managed_schools[1].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
+    managed_schools[2].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
+    managed_schools[3].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+    managed_schools[4].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
   end
 
   def given_some_extra_mobile_data_requests_have_been_made
     ee = create(:mobile_network, brand: 'EE')
     three = create(:mobile_network, brand: 'Three')
     virgin = create(:mobile_network, brand: 'Virgin')
-    rb_requester = create(:user, responsible_body: local_authority)
-    rb = local_authority
-    school_requester = create(:school_user)
-    school = school_requester.school
+    rb = create(:local_authority, :in_connectivity_pilot)
+    rb_requester = create(:user, responsible_body: rb)
+    managed_schools = create_list(:school, 3, :centrally_managed)
+    schools = create_list(:school, 3, :manages_orders)
+    school_requester = create(:user)
+    schools[0].users << school_requester
 
     create_list(:extra_mobile_data_request, 1,
                 status: :new,
@@ -48,7 +123,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     create_list(:extra_mobile_data_request, 4,
                 status: :complete,
                 mobile_network: three,
-                school: school,
+                school: schools[0],
                 created_by_user: school_requester)
     create_list(:extra_mobile_data_request, 1,
                 status: :cancelled,
@@ -65,27 +140,108 @@ RSpec.feature 'Viewing service performance', type: :feature do
     click_link 'Service performance'
   end
 
-  def then_i_see_stats_about_extra_mobile_data_requests
-    expect(page).to have_text('5 requests')
-    expect(page).to have_text('1 new')
-    expect(page).to have_text('3 in progress')
-    expect(page).to have_text('1 not valid or cancelled')
-    expect(page).to have_text('0 completed')
-
-    expect(page).to have_text('EE 3')
-    expect(page).to have_text('Virgin 2')
-
-    expect(page).to have_text('4 requests')
-    expect(page).to have_text('0 new')
-    expect(page).to have_text('0 in progress')
-    expect(page).to have_text('0 not valid or cancelled')
-    expect(page).to have_text('4 completed')
-
-    expect(page).to have_text('Three 4')
+  def and_i_select_the_devices_tab
+    click_on 'Devices'
   end
 
-  def then_i_see_stats_about_responsible_body_user_engagement
-    expect(page).to have_text('2 responsible body users have signed in')
-    expect(page).to have_text('1 responsible body')
+  def and_i_select_the_mno_tab
+    click_on 'MNO'
+  end
+
+  def and_i_select_the_routers_tab
+    click_on 'Routers'
+  end
+
+  def then_i_see_sign_in_stats_about_devolved_schools_and_responsible_bodies
+    within('#service') do
+      expect(page).to have_selector('h2', text: 'Sign-ins')
+      expect(page).to have_text('20% of devolved schools signed in (2 out of 10)')
+      expect(page).to have_text('15% of responsible bodies signed in (3 out of 20)')
+    end
+  end
+
+  def then_i_see_stats_about_who_orders
+    within('#service') do
+      expect(page).to have_selector('h2', text: 'Who orders')
+      expect(page).to have_text('2 schools order their own devices')
+      expect(page).to have_text('4 schools are managed centrally')
+    end
+  end
+
+  def then_i_see_stats_about_devices
+    within('#devices') do
+      expect(page).to have_selector('h2', text: 'Devices')
+      expect(page).to have_text('300 total devices available')
+      expect(page).to have_text('130 devices shipped')
+      expect(page).to have_text('170 remaining')
+    end
+  end
+
+  def then_i_see_stats_about_devolved_schools_devices
+    within('#devices') do
+      expect(page).to have_selector('h3', text: 'Schools')
+      expect(page).to have_text('5 devolved schools')
+      expect(page).to have_text('20% ordered their full allocation (1 out of 5)')
+      expect(page).to have_text('60% ordered but have devices left (3 out of 5)')
+      expect(page).to have_text('20% have not ordered (1 out of 5)')
+    end
+  end
+
+  def then_i_see_stats_about_responsible_bodies_managed_schools_devices
+    within('#devices') do
+      expect(page).to have_selector('h3', text: 'Responsible bodies')
+      expect(page).to have_text('5 responsible bodies managing orders centrally on behalf of 5 schools')
+      expect(page).to have_text('40% ordered their full allocation (2 out of 5)')
+      expect(page).to have_text('20% ordered but have devices left (1 out of 5)')
+      expect(page).to have_text('40% have not ordered (2 out of 5)')
+    end
+  end
+
+  def then_i_see_stats_about_extra_mobile_data_requests
+    within('#mno') do
+      expect(page).to have_selector('h2', text: 'Mobile data requests')
+      expect(page).to have_text('9 requests')
+      expect(page).to have_text('1 new')
+      expect(page).to have_text('3 in progress')
+      expect(page).to have_text('1 not valid')
+      expect(page).to have_text('4 completed')
+
+      expect(page).to have_text('EE 0 3 0 0 3')
+      expect(page).to have_text('Virgin 1 0 0 1 2')
+      expect(page).to have_text('Three 0 0 4 0 4')
+
+      expect(page).to have_selector('h3', text: 'Who has made requests')
+      expect(page).to have_text('1 devolved schools (out of 3)')
+      expect(page).to have_text('1 responsible bodies managing orders centrally (out of 3, and on behalf of 3 schools)')
+    end
+  end
+
+  def then_i_see_stats_about_routers
+    within('#routers') do
+      expect(page).to have_selector('h2', text: 'Routers')
+      expect(page).to have_text('300 total routers available')
+      expect(page).to have_text('130 routers shipped')
+      expect(page).to have_text('170 routers remaining')
+    end
+  end
+
+  def then_i_see_stats_about_devolved_schools_routers
+    within('#routers') do
+      expect(page).to have_selector('h3', text: 'Schools')
+      expect(page).to have_text('5 schools that have a router allocation')
+      expect(page).to have_text('20% ordered their full allocation (1 out of 5)')
+      expect(page).to have_text('60% ordered but have routers left (3 out of 5)')
+      expect(page).to have_text('20% have not ordered (1 out of 5)')
+    end
+  end
+
+  def then_i_see_stats_about_responsible_bodies_managed_schools_routers
+    within('#routers') do
+      expect(page).to have_selector('h3', text: 'Responsible bodies')
+      expect(page).to have_text('5 responsible bodies managing centrally have a school with a router allocation')
+      expect(page).to have_text('40% ordered their full allocation (2 out of 5)')
+      expect(page).to have_text('20% ordered but have routers left (1 out of 5)')
+      expect(page).to have_text('40% have not ordered (2 out of 5)')
+    end
   end
 end

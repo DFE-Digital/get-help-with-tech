@@ -1,10 +1,15 @@
 class Support::ServicePerformance
   def percentage_of_devolved_schools_that_have_signed_in
-    (number_of_devolved_schools_that_have_signed_in * 100.0 / number_of_devolved_schools).round
+    if number_of_devolved_schools.positive?
+      (number_of_devolved_schools_that_have_signed_in * 100.0 / number_of_devolved_schools).round
+    else
+      0
+    end
   end
 
   def number_of_devolved_schools_that_have_signed_in
-    @number_of_devolved_schools_that_have_signed_in ||= School
+    @number_of_devolved_schools_that_have_signed_in ||=
+      School
       .gias_status_open
       .that_will_order_devices
       .joins(user_schools: :user)
@@ -13,62 +18,51 @@ class Support::ServicePerformance
   end
 
   def number_of_devolved_schools
-    @number_of_devolved_schools ||= School
+    @number_of_devolved_schools ||=
+      School
       .gias_status_open
       .that_will_order_devices
       .count
   end
 
   def number_of_centrally_managed_schools
-    @number_of_centrally_managed_schools ||= School
+    @number_of_centrally_managed_schools ||=
+      School
       .gias_status_open
       .that_are_centrally_managed
       .count
   end
 
   def total_devices_available
-    # SchoolDeviceAllocation.std_device.sum(:allocation)
-    1_302_110
-  end
-
-  def total_routers_available
-    SchoolDeviceAllocation.coms_device.sum(:allocation)
+    SchoolDeviceAllocation.std_device.sum(:allocation)
   end
 
   def total_devices_ordered
     SchoolDeviceAllocation.std_device.sum(:devices_ordered)
   end
 
-  def total_routers_ordered
-    SchoolDeviceAllocation.coms_device.sum(:devices_ordered)
-  end
-
   def total_devices_remaining
     SchoolDeviceAllocation.std_device.sum('allocation - devices_ordered')
+  end
+
+  def total_routers_available
+    SchoolDeviceAllocation.coms_device.sum(:allocation)
+  end
+
+  def total_routers_ordered
+    SchoolDeviceAllocation.coms_device.sum(:devices_ordered)
   end
 
   def total_routers_remaining
     SchoolDeviceAllocation.coms_device.sum('allocation - devices_ordered')
   end
 
-  # def number_of_devolved_schools_that_have_fully_ordered
-  #   @number_of_devolved_schools_that_have_fully_ordered ||=
-  #     School
-  #     .gias_status_open
-  #     .that_will_order_devices
-  #     .joins(:device_allocations)
-  #     .merge(SchoolDeviceAllocation.std_device.has_fully_ordered)
-  #     .count
-  # end
-
+  #
+  # devolved schools - devices
+  #
   def number_of_devolved_schools_that_have_fully_ordered
     @number_of_devolved_schools_that_have_fully_ordered ||=
       number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.std_device.has_fully_ordered)
-  end
-
-  def number_of_devolved_schools_that_have_fully_ordered_routers
-    @number_of_devolved_schools_that_have_fully_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.has_fully_ordered)
   end
 
   def number_of_devolved_schools_that_have_partially_ordered
@@ -76,14 +70,46 @@ class Support::ServicePerformance
       number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.std_device.has_partially_ordered)
   end
 
-  def number_of_devolved_schools_that_have_partially_ordered_routers
-    @number_of_devolved_schools_that_have_partially_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.has_partially_ordered)
-  end
-
   def number_of_devolved_schools_that_have_not_ordered
     @number_of_devolved_schools_that_have_not_ordered ||=
       number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.std_device.has_not_ordered)
+  end
+
+  def percentage_of_devolved_schools_that_have_fully_ordered
+    if number_of_devolved_schools.positive?
+      (number_of_devolved_schools_that_have_fully_ordered * 100.0 / number_of_devolved_schools).round
+    else
+      0
+    end
+  end
+
+  def percentage_of_devolved_schools_that_have_partially_ordered
+    if number_of_devolved_schools.positive?
+      (number_of_devolved_schools_that_have_partially_ordered * 100.0 / number_of_devolved_schools).round
+    else
+      0
+    end
+  end
+
+  def percentage_of_devolved_schools_that_have_not_ordered
+    if number_of_devolved_schools.positive?
+      (number_of_devolved_schools_that_have_not_ordered * 100.0 / number_of_devolved_schools).round
+    else
+      0
+    end
+  end
+
+  #
+  # devolved schools - routers
+  #
+  def number_of_devolved_schools_that_have_fully_ordered_routers
+    @number_of_devolved_schools_that_have_fully_ordered_routers ||=
+      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.has_fully_ordered)
+  end
+
+  def number_of_devolved_schools_that_have_partially_ordered_routers
+    @number_of_devolved_schools_that_have_partially_ordered_routers ||=
+      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.has_partially_ordered)
   end
 
   def number_of_devolved_schools_that_have_not_ordered_routers
@@ -96,89 +122,79 @@ class Support::ServicePerformance
       number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('allocation > 0'))
   end
 
+  def percentage_of_devolved_schools_that_have_fully_ordered_routers
+    if number_of_devolved_schools_that_have_a_router_allocation.positive?
+      (number_of_devolved_schools_that_have_fully_ordered_routers * 100.0 / number_of_devolved_schools_that_have_a_router_allocation).round
+    else
+      0
+    end
+  end
+
+  def percentage_of_devolved_schools_that_have_partially_ordered_routers
+    if number_of_devolved_schools_that_have_a_router_allocation.positive?
+      (number_of_devolved_schools_that_have_partially_ordered_routers * 100.0 / number_of_devolved_schools_that_have_a_router_allocation).round
+    else
+      0
+    end
+  end
+
+  def percentage_of_devolved_schools_that_have_not_ordered_routers
+    if number_of_devolved_schools_that_have_a_router_allocation.positive?
+      (number_of_devolved_schools_that_have_not_ordered_routers * 100.0 / number_of_devolved_schools_that_have_a_router_allocation).round
+    else
+      0
+    end
+  end
+
   def number_of_devolved_schools_that_have(scope:)
-      School
-      .gias_status_open
-      .that_will_order_devices
-      .joins(:device_allocations)
-      .merge(scope)
-      .count
+    School
+    .gias_status_open
+    .that_will_order_devices
+    .joins(:device_allocations)
+    .merge(scope)
+    .count
   end
 
-  # def number_of_devolved_schools_that_have_partially_ordered
-  #   @number_of_devolved_schools_that_have_partially_ordered ||=
-  #     School
-  #     .gias_status_open
-  #     .that_will_order_devices
-  #     .joins(:device_allocations)
-  #     .merge(SchoolDeviceAllocation.std_device.has_partially_ordered)
-  #     .count
-  # end
-
-  # def number_of_devolved_schools_that_have_not_ordered
-  #   @number_of_devolved_schools_that_have_not_ordered ||=
-  #     School
-  #     .gias_status_open
-  #     .that_will_order_devices
-  #     .joins(:device_allocations)
-  #     .merge(SchoolDeviceAllocation.std_device.has_not_ordered)
-  #     .count
-  # end
-
-  def percentage_of_devolved_schools_that_have_fully_ordered
-    (number_of_devolved_schools_that_have_fully_ordered * 100.0 / number_of_devolved_schools).round
-  end
-
-  def percentage_of_devolved_schools_that_have_partially_ordered
-    (number_of_devolved_schools_that_have_partially_ordered * 100.0 / number_of_devolved_schools).round
-  end
-
-  def percentage_of_devolved_schools_that_have_not_ordered
-    (number_of_devolved_schools_that_have_not_ordered * 100.0 / number_of_devolved_schools).round
-  end
-
+  #
+  # responsible bodies
+  #
   def percentage_of_responsible_bodies_that_have_signed_in
     (number_of_responsible_bodies_that_have_signed_in * 100.0 / number_of_responsible_bodies).round
   end
 
-  def percentage_of_devolved_schools_that_have_fully_ordered_routers
-    (number_of_devolved_schools_that_have_fully_ordered_routers * 100.0 / number_of_devolved_schools_that_have_a_router_allocation).round
-  end
-
-  def percentage_of_devolved_schools_that_have_partially_ordered_routers
-    (number_of_devolved_schools_that_have_partially_ordered_routers * 100.0 / number_of_devolved_schools_that_have_a_router_allocation).round
-  end
-
-  def percentage_of_devolved_schools_that_have_not_ordered_routers
-    (number_of_devolved_schools_that_have_not_ordered_routers * 100.0 / number_of_devolved_schools_that_have_a_router_allocation).round
-  end
-
   def number_of_responsible_bodies_that_have_signed_in
-    @number_of_responsible_bodies_that_have_signed_in ||= User
+    @number_of_responsible_bodies_that_have_signed_in ||=
+      User
       .where.not(responsible_body: nil)
       .signed_in_at_least_once
       .count('DISTINCT(responsible_body_id)')
   end
 
   def number_of_responsible_bodies
-    @number_of_responsible_bodies ||= ResponsibleBody
+    @number_of_responsible_bodies ||=
+      ResponsibleBody
       .gias_status_open
       .count
   end
 
   def number_of_responsible_bodies_managing_centrally
-    @number_of_responsible_bodies_managing_centrally ||= School
+    @number_of_responsible_bodies_managing_centrally ||=
+      School
       .gias_status_open
       .that_are_centrally_managed
       .count('DISTINCT(responsible_body_id)')
   end
 
+  #
+  # responsible bodies - centrally managed devices
+  #
   def number_of_responsible_bodies_managing_centrally_that_have_fully_ordered
     number_of_responsible_bodies_managing_centrally - number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered
   end
 
   def number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered
-    @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered ||= School
+    @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered ||=
+      School
       .gias_status_open
       .that_are_centrally_managed
       .joins(:device_allocations)
@@ -187,7 +203,8 @@ class Support::ServicePerformance
   end
 
   def number_of_responsible_bodies_managing_centrally_that_have_partially_ordered
-    @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered ||= School
+    @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered ||=
+      School
       .gias_status_open
       .that_are_centrally_managed
       .joins(:device_allocations)
@@ -199,12 +216,40 @@ class Support::ServicePerformance
     number_of_responsible_bodies_managing_centrally - number_of_responsible_bodies_managing_centrally_that_have_fully_ordered - number_of_responsible_bodies_managing_centrally_that_have_partially_ordered
   end
 
+  def percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered
+    if number_of_responsible_bodies_managing_centrally.positive?
+      (number_of_responsible_bodies_managing_centrally_that_have_fully_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
+    else
+      0
+    end
+  end
+
+  def percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered
+    if number_of_responsible_bodies_managing_centrally.positive?
+      (number_of_responsible_bodies_managing_centrally_that_have_partially_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
+    else
+      0
+    end
+  end
+
+  def percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered
+    if number_of_responsible_bodies_managing_centrally.positive?
+      (number_of_responsible_bodies_managing_centrally_that_have_not_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
+    else
+      0
+    end
+  end
+
+  #
+  # responsible bodies - centrally managed routers
+  #
   def number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers
     number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation - number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers
   end
 
   def number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers
-    @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers ||= School
+    @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers ||=
+      School
       .gias_status_open
       .that_are_centrally_managed
       .joins(:device_allocations)
@@ -213,7 +258,8 @@ class Support::ServicePerformance
   end
 
   def number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers
-    @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers ||= School
+    @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers ||=
+      School
       .gias_status_open
       .that_are_centrally_managed
       .joins(:device_allocations)
@@ -236,30 +282,33 @@ class Support::ServicePerformance
       .count('DISTINCT(responsible_body_id)')
   end
 
-  def percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered
-    (number_of_responsible_bodies_managing_centrally_that_have_fully_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
-  end
-
-  def percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered
-    (number_of_responsible_bodies_managing_centrally_that_have_partially_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
-  end
-
-  def percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered
-    (number_of_responsible_bodies_managing_centrally_that_have_not_ordered * 100.0 / number_of_responsible_bodies_managing_centrally).round
-  end
-
   def percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers
-    (number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+    if number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation.positive?
+      (number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+    else
+      0
+    end
   end
 
   def percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers
-    (number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+    if number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation.positive?
+      (number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+    else
+      0
+    end
   end
 
   def percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers
-    (number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+    if number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation.positive?
+      (number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers * 100.0 / number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation).round
+    else
+      0
+    end
   end
 
+  #
+  # unclaimed devices
+  #
   def unclaimed_devices_by_day
     [RemainingDevicesCalculator.new.current_unclaimed_totals] + RemainingDeviceCount.order(date_of_count: :desc).first(6)
   end
@@ -351,17 +400,17 @@ class Support::ServicePerformance
   def extra_mobile_data_requests_by_mobile_network_brand_and_status(scope: ExtraMobileDataRequest)
     data = scope
       .joins(:mobile_network)
-      .group("mobile_networks.brand", "CASE when status like 'problem_%' or status = 'cancelled' or status = 'unavailable' then 'problem' else status end")
+      .group('mobile_networks.brand', "CASE when status like 'problem_%' or status = 'cancelled' or status = 'unavailable' then 'problem' else status end")
       .count
 
-    # put statuses under the brand
-    result = data.inject({}) do |h, (k,v)|
+    # put statuses and counts under the brand
+    result = data.each_with_object({}) do |(k, v), h|
       h[k[0]] = {} if h[k[0]].nil?
       h[k[0]][k[1]] = v
-      h
     end
-    result.each { |k,v| v['total'] = v.values.sum }
-    result.sort_by { |_k,v| v['total'] }.reverse
+    # calculate the totals
+    result.each { |_k, v| v['total'] = v.values.sum }
+    result.sort_by { |_k, v| v['total'] }.reverse
   end
 
   def total_extra_mobile_data_requests_with_problems(scope: ExtraMobileDataRequest)

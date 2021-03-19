@@ -5,7 +5,7 @@
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-full">
     <%= render Support::TileComponent.new(
-                 count: @stats.total_extra_mobile_data_requests,
+                 count: humanized_number(@stats.total_extra_mobile_data_requests),
                  label: t(:requests, scope: %i[support service_performance], count: @stats.total_extra_mobile_data_requests),
                  colour: :blue) %>
   </div>
@@ -14,27 +14,27 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status['new'] || 0,
+                 count: humanized_number(@stats.extra_mobile_data_requests_by_status['new'] || 0),
                  label: 'new',
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status['in_progress'] || 0,
+                 count: humanized_number(@stats.extra_mobile_data_requests_by_status['in_progress'] || 0),
                  label: 'in progress',
                  colour: :orange,
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: (@stats.total_extra_mobile_data_requests_with_problems || 0) + (@stats.extra_mobile_data_requests_by_status['cancelled'] || 0),
+                 count: humanized_number((@stats.total_extra_mobile_data_requests_with_problems || 0) + (@stats.extra_mobile_data_requests_by_status['cancelled'] || 0)),
                  label: 'not valid',
                  colour: :red,
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.extra_mobile_data_requests_by_status['complete'] || 0,
+                 count: humanized_number(@stats.extra_mobile_data_requests_by_status['complete'] || 0),
                  label: 'completed',
                  colour: :green,
                  size: :reduced) %>
@@ -60,7 +60,7 @@
         <td class="govuk-table__cell"><%= row[0] %></td>
         <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[1]['new'] || 0 %></td>
         <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[1]['in_progress'] || 0 %></td>
-        <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[1]['completed'] || 0 %></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[1]['complete'] || 0 %></td>
         <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[1]['problem'] || 0 %></td>
         <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[1]['total'] || 0 %></td>
       </tr>
