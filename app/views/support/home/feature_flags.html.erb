@@ -1,8 +1,9 @@
 <%- title = t('page_titles.support.feature_flags') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ 'Support home' => support_home_path },
-                   title,
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Support home' => support_home_path },
+                  title,
                  ]) %>
 <% end %>
 

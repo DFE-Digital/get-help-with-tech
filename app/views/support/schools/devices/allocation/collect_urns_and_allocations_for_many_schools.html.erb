@@ -1,7 +1,7 @@
 <%- title = t('page_titles.support.allocation.adjust_allocations_for_many_schools') %>
 <% content_for :title, title %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
+  <%= breadcrumbs([{ "Home" => root_path },
     { 'Support home' => support_home_path },
     { t('page_titles.support.schools.home') => support_schools_path },
     title,
