@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'X-XSS-Protection header' do
-  it 'should be set to 0' do
+  it 'is set to 0' do
     visit '/'
     expect(response_headers['X-XSS-Protection']).to eql('0')
   end
