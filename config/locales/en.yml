@@ -65,7 +65,10 @@ en:
 
     support:
       home: Support
-      schools: Schools, colleges and FE institutions
+      schools:
+        home: Schools, colleges and FE institutions
+        opt_outs:
+          edit: Change communication preference
       technical_support: Technical support
       feature_flags: Feature flags
       zendesk_statistics: Zendesk statistics
@@ -89,9 +92,6 @@ en:
         edit: Update address
       email_audits:
         index: Email audits
-      schools:
-        opt_outs:
-          edit: Change communication preference
     support_extra_mobile_data_requests: Requests for extra mobile data
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
