@@ -1,0 +1,31 @@
+<%- title = t('page_titles.support.schools.opt_outs.edit') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= govuk_link_to('Back', support_school_path(@school), class: 'govuk-back-link') %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= title %>
+    </h1>
+
+    <div class="govuk-body">
+      By opting outing of communications a user from the school has expressed that they no longer wish to use the remainder of their allocation. This will prevent us from sending any further updates to them about unclaimed devices.
+    </div>
+
+    <%= form_with model: Support::OptOutForm.new(school: @school), url: support_school_opt_out_path, method: :put, scope: :school do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <% opt_out_options = [OpenStruct.new(id: 1, name: 'Opt out and no longer receive communications'),
+                            OpenStruct.new(id: 0, name: 'Opt in and receive communcations')] %>
+
+      <%= f.govuk_collection_radio_buttons :opt_out, opt_out_options, :id, :name,
+        legend: { text: 'Opt school out of further notifications' }
+      %>
+
+      <%= f.govuk_submit 'Save' %>
+    <%- end %>
+  </div>
+</div>

@@ -349,6 +349,7 @@ ActiveRecord::Schema.define(version: 2021_03_19_142213) do
     t.integer "ukprn"
     t.text "fe_type"
     t.boolean "hide_mno", default: false
+    t.datetime "opted_out_of_comms_at"
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"

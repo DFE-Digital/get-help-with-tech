@@ -196,6 +196,18 @@ class School < ApplicationRecord
     update!(status: 'closed', computacenter_change: 'closed') unless gias_status_closed?
   end
 
+  def opt_out!
+    update!(opted_out_of_comms_at: Time.zone.now)
+  end
+
+  def opt_in!
+    update!(opted_out_of_comms_at: nil)
+  end
+
+  def opted_out?
+    !!opted_out_of_comms_at
+  end
+
 private
 
   def maybe_generate_user_changes

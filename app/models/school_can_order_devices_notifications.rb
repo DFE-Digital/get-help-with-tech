@@ -42,6 +42,8 @@ private
   end
 
   def what_message_to_send(school, user)
+    return if school.opted_out?
+
     if status?(nil, 'needs_contact', school: school) && user.in?(school.responsible_body.users)
       :nudge_rb_to_add_school_contact
     elsif status?('needs_info', 'school_contacted', school: school) && user.in?(school.organisation_users)
