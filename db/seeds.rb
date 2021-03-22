@@ -16,7 +16,7 @@ MobileNetwork.upsert_all(
     { brand: 'Anywhere Care Ownfone (formerly Age UK Ownfone)', host_network: 'Vodafone', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'AlwaysOnline Wireless', host_network: 'Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Anywhere Sim', host_network: 'O2, Vodafone, EE, Three', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
-    { brand: 'Asda Mobile', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
+    { brand: 'Asda Mobile', host_network: 'EE', participation_in_pilot: :yes, created_at: current_time, updated_at: current_time },
     { brand: 'Auracall Travel Talk', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'Axis Telecom', host_network: 'EE', participation_in_pilot: :no, created_at: current_time, updated_at: current_time },
     { brand: 'BT Mobile', host_network: 'EE', participation_in_pilot: :yes, created_at: current_time, updated_at: current_time },
