@@ -60,9 +60,9 @@ This information is for:
 * parents and carers
 
 ### How we use your personal information
-The Get Help with Technology programme is run by the Department for Education (DfE). This privacy notice explains how it will use your personal information.
+The Get help with technology programme is run by the Department for Education (DfE). This privacy notice explains how it will use your personal information.
 
-As part of the Get Help with Technology programme we need to be able to:
+As part of the Get help with technology programme we need to be able to:
 
 * keep children safe whilst they are online
 * locate, disable and delete data from the laptop that is on loan, if it is lost
