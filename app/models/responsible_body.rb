@@ -109,15 +109,11 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_connectivity_feature_flags?
-    in_connectivity_pilot? && (has_centrally_managed_schools? || is_a_local_authority?)
+    has_centrally_managed_schools? || is_a_local_authority?
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?
     schools.gias_status_open.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
-  end
-
-  def self.in_connectivity_pilot
-    where(in_connectivity_pilot: true)
   end
 
   def self.chosen_who_will_order

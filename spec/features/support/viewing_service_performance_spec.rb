@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing service performance', type: :feature do
-  let(:local_authority) { create(:local_authority, :in_connectivity_pilot) }
+  let(:local_authority) { create(:local_authority) }
 
   scenario 'DfE users see service stats about responsible body user engagement' do
     given_there_have_been_sign_ins_from_responsible_body_and_mno_users

@@ -22,7 +22,6 @@ RSpec.feature 'Submitting an extra mobile data request', type: :feature do
 
     before do
       school.preorder_information.responsible_body_will_order_devices!
-      responsible_body.update!(in_connectivity_pilot: true)
 
       mobile_network
       sign_in_as user
