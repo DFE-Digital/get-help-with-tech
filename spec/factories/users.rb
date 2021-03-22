@@ -34,21 +34,21 @@ FactoryBot.define do
     end
 
     factory :local_authority_user do
-      association :responsible_body, factory: %i[local_authority in_connectivity_pilot]
+      association :responsible_body, factory: %i[local_authority]
     end
 
     factory :trust_user do
-      association :responsible_body, factory: %i[trust in_connectivity_pilot]
+      association :responsible_body, factory: %i[trust]
     end
 
     factory :single_academy_trust_user do
-      association :responsible_body, factory: %i[trust single_academy_trust in_connectivity_pilot]
+      association :responsible_body, factory: %i[trust single_academy_trust]
       school { build(:school, :academy, responsible_body: responsible_body) }
       orders_devices { true }
     end
 
     factory :fe_college_user do
-      association :responsible_body, factory: %i[further_education_college in_connectivity_pilot]
+      association :responsible_body, factory: %i[further_education_college]
       school { build(:fe_school, responsible_body: responsible_body) }
       orders_devices { true }
     end

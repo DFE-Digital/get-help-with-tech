@@ -9,7 +9,6 @@ RSpec.describe ResponsibleBody::Internet::Mobile::ExtraDataRequestsController, t
 
     before do
       school.preorder_information.responsible_body_will_order_devices!
-      responsible_body.update!(in_connectivity_pilot: true)
       sign_in_as local_authority_user
     end
 

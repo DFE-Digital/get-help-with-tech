@@ -3,10 +3,6 @@ FactoryBot.define do
     computacenter_reference { Faker::Number.number(digits: 8) }
     status                  { 'open' }
 
-    trait :in_connectivity_pilot do
-      in_connectivity_pilot       { true }
-    end
-
     trait :manages_centrally do
       who_will_order_devices      { 'responsible_body' }
     end

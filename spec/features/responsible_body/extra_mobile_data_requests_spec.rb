@@ -9,7 +9,6 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
 
   before do
     school.preorder_information.responsible_body_will_order_devices!
-    responsible_body.update!(in_connectivity_pilot: true)
     sign_in_as rb_user
   end
 

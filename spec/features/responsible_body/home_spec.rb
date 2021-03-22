@@ -50,35 +50,14 @@ RSpec.feature ResponsibleBody do
         schools[0].preorder_information.responsible_body_will_order_devices!
       end
 
-      context 'with the in_connectivity_pilot flag set' do
-        before do
-          responsible_body.update!(in_connectivity_pilot: true)
-        end
-
-        it 'shows link to get extra data' do
-          visit responsible_body_home_path
-          expect(page).to have_link('Get internet access')
-        end
-      end
-
-      context 'with the in_connectivity_pilot flag not set' do
-        before do
-          responsible_body.update!(in_connectivity_pilot: false)
-        end
-
-        it 'does not show link to get extra data' do
-          visit responsible_body_home_path
-          expect(page).not_to have_link('Get internet access')
-        end
+      it 'shows link to get extra data' do
+        visit responsible_body_home_path
+        expect(page).to have_link('Get internet access')
       end
     end
 
     context 'with a trust devolved to all schools' do
       let(:responsible_body) { create(:trust) }
-
-      before do
-        responsible_body.update!(in_connectivity_pilot: true)
-      end
 
       it 'does not show link to get extra data' do
         visit responsible_body_home_path
@@ -87,10 +66,6 @@ RSpec.feature ResponsibleBody do
     end
 
     context 'with a local authority devolved to all schools' do
-      before do
-        responsible_body.update!(in_connectivity_pilot: true)
-      end
-
       it 'shows link to get extra data' do
         visit responsible_body_home_path
         expect(page).to have_link('Get internet access')
