@@ -1,9 +1,9 @@
-When [placing an order](/start), schools, colleges, further education institutions, academy trusts and local authorities (LAs) can choose (depending on availability) from:
+When [placing an order](/), schools, colleges, further education institutions, academy trusts and local authorities (LAs) can choose (depending on availability) from:
 
 * Microsoft Windows laptops
 * Google Chromebooks
 
-You can find out if any types of device are out of stock by signing in to the [Get help with technology service](/start). The information is also available on the TechSource ordering website.
+You can find out if any types of device are out of stock by [signing in to the Get help with technology service](/sign-in). The information is also available on the TechSource ordering website.
 
 Apple iPads and Microsoft Windows tablets are now permanently out of stock. For information on setting up and managing tablets you've already received, [see our guidance](/devices).
 
@@ -29,10 +29,9 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 [Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
-
 ## Google Chromebooks
 
-You need to sign in to the <a class="govuk-link" href="/start">Get help with technology service</a> and provide the following information before you can order Google Chromebooks:
+You need to [sign in to the Get help with technology service](/sign-in) and give the following information before you can order Google Chromebooks:
 
 * the school’s Google domain for G Suite for Education
 * a recovery email address, which must be on a different domain to the school domain
