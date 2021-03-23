@@ -55,7 +55,7 @@ It includes a checklist with project milestones, best practices for deployment s
 
 You can contact the Education Team at Apple directly to help guide and support you so that you can maximise the use of your iPads.
 
-Email [uk\_edu\_enquiries@group.apple.com](mailto:uk_edu_enquiries@group.apple.com) using the subject “DfE - Get Help with Technology Programme”.
+Email [uk\_edu\_enquiries@group.apple.com](mailto:uk_edu_enquiries@group.apple.com) using the subject “DfE - Get help with technology programme”.
 
 Apple also provide guidance and online events to help you use iPad features:
 

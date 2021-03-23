@@ -133,7 +133,7 @@ For guidance on how to do this:
 
 ## Troubleshooting
 
-Suggested fixes for bugs and possible solutions to issues that may affect laptops and tablets delivered as part of the Get Help with Technology programme.
+Suggested fixes for bugs and possible solutions to issues that may affect laptops and tablets delivered as part of the Get help with technology programme.
 
 ### Tactus Geobooks
 
