@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class LocalAuthoritiesInEnglandRegister
-  URL = 'https://local-authority-eng.register.gov.uk/records.json?page-size=5000'.freeze
+  URL = 'https://webarchive.nationalarchives.gov.uk/20210122124652/https://local-authority-eng.register.gov.uk/records.json?page-size=5000'.freeze
 
   # we believe that
   # - combined authorities
