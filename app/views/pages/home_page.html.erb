@@ -22,7 +22,7 @@
     </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-service-section="digital-platforms">
-      <%= govuk_link_to "Digital education platforms", digital_platforms_landing_page_path %>
+      <%= govuk_link_to t('landing_pages.digital_platforms.title'), digital_platforms_landing_page_path %>
     </h2>
 
     <p class="govuk-body">
@@ -30,7 +30,8 @@
     </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-service-section="edtech">
-      <%= govuk_link_to "Traning and support for remote education", edtech_demonstrator_programme_landing_page_path %>
+      <%= govuk_link_to t('landing_pages.edtech_demonstrator_programme.title') ,
+                        edtech_demonstrator_programme_landing_page_path %>
     </h2>
 
     <p class="govuk-body">
@@ -38,10 +39,11 @@
     </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to "Guides for parents, carers, pupils and students", guides_for_guardians_and_students_home_path %>
+      <%= govuk_link_to  t('landing_pages.guides_parents_carers_students.title') ,
+                         guides_for_parents_carers_and_students_path %>
     </h2>
-    <p class="govuk-body govuk-!-margin-bottom-6">
-      How to use DfE provided laptops, tablets or 4G wireless routers.
+    <p class="govuk-body govuk-!-margin-bottom-2">
+      <%= t('landing_pages.guides_parents_carers_students.details') %>
     </p>
   </div>
 
