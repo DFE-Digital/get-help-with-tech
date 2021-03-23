@@ -15,6 +15,7 @@
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Recipient</th>
           <th scope="col" class="govuk-table__header">Message type</th>
+          <th scope="col" class="govuk-table__header">Sent at</th>
           <th scope="col" class="govuk-table__header">Status</th>
         </tr>
       </thead>
@@ -24,6 +25,7 @@
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"><%= govuk_link_to audit.email_address, support_user_path(audit.user_id) %></th>
             <th scope="row" class="govuk-table__header"><%= audit.message_type %></th>
+            <th scope="row" class="govuk-table__header"><%= l audit.created_at, format: :short %></th>
             <td class="govuk-table__cell"><%= audit.govuk_notify_status %></td>
           </tr>
         <% end %>
