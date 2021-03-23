@@ -5,6 +5,7 @@ module ControllerHelper
   end
 
   def sign_in_as(user)
+    session.clear
     create_session_id!
     controller.send(:save_user_to_session!, user)
   end
