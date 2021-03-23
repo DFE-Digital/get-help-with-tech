@@ -15,6 +15,7 @@ class PagesController < ApplicationController
 
   def home_page
     @show_parent_carer_pupil_banner = false
+      render :layout => 'home_page_layout'
   end
 
   def about_increasing_mobile_data; end

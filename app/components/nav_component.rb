@@ -77,7 +77,8 @@ private
 
   def school_links
     [
-      NavLinkComponent.new(title: 'Your account', url: schools_path),
+      NavLinkComponent.new(title: 'My account', url: schools_path),
+      # NavLinkComponent.new(title: 'Guidance', url: guidance_page_path),
     ]
   end
 end

@@ -11,70 +11,89 @@
       <%= t('page_titles.internet_access') %>
     </h1>
 
-    <p class="govuk-body">
-      Schools, colleges, further education institutions, trusts and local authorities can help disadvantaged pupils and students get online using free mobile data increases or 4G wireless routers provided by the Department for Education. You can request this support if each of the following applies:
+    <p class="govuk-body-l">
+      Get internet access for disadvantaged pupils and students when <span class="app-no-wrap">face-to-face</span> education is disrupted.
     </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-     <li>there’s disruption to face-to-face education</li>
-     <li>disadvantaged children and young people do not have access to the internet at home</li>
-     <li>your organisation has been invited to order laptops and tablets</li>
+    <h2 class="govuk-heading-l govuk-!-margin-top-7">
+      Increase mobile data
+    </h2>
+    <p class="govuk-body">
+      Temporarily increases data allowances for mobile phone users on some networks to allow pupils and students to access remote learning.
+    </p>
+
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Before you make a request
+    </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to 'Who can get their mobile data increased', about_increasing_mobile_data_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'How to request a mobile data increase', about_increasing_mobile_data_path %>
+      </li>
     </ul>
 
-    <h2 class="govuk-heading-l">
-      Increasing data allowances on mobile phones
-    </h2>
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Request mobile data
+    </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to request mobile data</a>
+      </li>
+    </ul>
 
-    <p class="govuk-body">
-      This scheme temporarily increases data allowances for mobile phone users on <%= govuk_link_to 'certain networks', about_increasing_mobile_data_path %>. This will allow other devices to connect to the internet via a mobile phone so children and young people can access remote education if their face-to-face education is disrupted.
-    </p>
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      View your mobile data requests
+    </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to view your requests</a>
+      </li>
+    </ul>
 
-    <p class="govuk-body">
-      This support is now available to all schools pupils in years 3 to 13 and students in further education who are with a participating network.
-    </p>
-
-    <p class="govuk-body">
-      <%= govuk_link_to 'How to request a mobile data increase', about_increasing_mobile_data_path %>
-    </p>
-
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-l govuk-!-margin-top-7">
       4G wireless routers
     </h2>
-
     <p class="govuk-body">
-      Schools, colleges, further education institutions, trusts and local authorities in England can request 4G wireless routers for disadvantaged pupils and students who are experiencing disruption to face-to-face education and do not have fixed broadband or access to the internet at home.
+      4G wireless routers for disadvantaged pupils and students who do not have fixed broadband or access to the internet at home.
     </p>
 
-    <p class="govuk-body">
-      The process for ordering 4G wireless routers is different to that for ordering laptops and tablets. Routers may be dispatched separately to any laptops and tablets you order, and may arrive at a later date.
-    </p>
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Before you make a request
+    </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to 'Who can get a 4G wireless router', about_increasing_mobile_data_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'How to request a mobile data increase', about_increasing_mobile_data_path %>
+      </li>
+    </ul>
 
-    <p class="govuk-body">
-      <%= govuk_link_to 'How to order 4G wireless routers', how_to_request_4g_wireless_routers_path %>
-    </p>
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Request 4G wireless routers
+    </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to request 4G wireless routers</a>
+      </li>
+    </ul>
 
-    <p class="govuk-body">
-      If you’ve already received routers or are waiting for a delivery, please read the <%= govuk_link_to 'guidance on preparing 4G routers', devices_guidance_subpage_path('preparing-4g-wireless-routers') %> for information on technical support, security and data limits.
-    </p>
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Managing 4G wireless routers
+    </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to 'How to setup a 4G wireless router', about_increasing_mobile_data_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'Support and maintanence', about_increasing_mobile_data_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'Replace a faulty 4G wireless router', about_increasing_mobile_data_path %>
+      </li>
+    </ul>
 
-    <h2 class="govuk-heading-l" id="bt-wifi">
-      Offering free access to BT wifi hotspots
-    </h2>
-
-    <p class="govuk-body">
-      This pilot has now closed.
-    </p>
-
-    <p class="govuk-body">
-      BT created 10,000 hotspot log-ins that could be activated through name/password combinations. If children and young people lived in range of a BT hotspot, their school offered them log-in details for free.
-    </p>
-
-    <p class="govuk-body">
-      When we tested this scheme, we found the majority of users could not get a reliable BT wifi connection. As a result, we decided to close the pilot.
-    </p>
-
-    <p class="govuk-body">
-      All BT vouchers distributed expired at the end of December 2020.
-    </p>
   </div>
 </div>

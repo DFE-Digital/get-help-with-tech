@@ -22,7 +22,7 @@
     <%= yield(:head) %>
   </head>
 
-  <body class="govuk-template__body  <%= yield :body_class %>">
+  <body class="govuk-template__body">
     <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
@@ -59,20 +59,47 @@
         </div>
       </div>
     </header>
-    <div class="govuk-width-container">
-      <%= render GovukComponent::PhaseBanner.new(phase: 'Alpha') do
-        if SessionService.is_signed_in?(session) && (current_user.is_responsible_body_user? || current_user.is_school_user?)
-          "#{t('user_feedback')} – #{user_feedback_link}".html_safe
-        else
-          "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
-        end
-      end %>
       <%= content_for(:before_content) %>
-      <main class="govuk-main-wrapper " id="main-content" role="main">
-        <%= render partial: 'shared/flash_message' %>
-        <%= content_for?(:content) ? yield(:content) : yield %>
-      </div>
-    </main>
+      <main class="" id="main-content" role="main">
+        <div class="app-masthead">
+          <div class="govuk-width-container">
+            <div class="govuk-phase-banner app-masthead-phase-banner">
+            <p class="govuk-phase-banner__content">
+              <strong class="govuk-tag govuk-phase-banner__content__tag">
+                alpha
+              </strong>
+              <span class="govuk-phase-banner__text">
+                This is a new service – your <%= ghwt_contact_mailto(label: "feedback", subject: "Feedback") %> will help us to improve it.
+              </span>
+            </p>
+          </div>
+            <div class="govuk-main-wrapper">
+              <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                  <h1 class="govuk-heading-xl">
+                    Get help with technology
+                  </h1>
+                  <p class="govuk-body-l">
+                    Help for education providers to get laptops and tablets, internet access and support to provide <span class="app-no-wrap">remote education</span> during the <span class="app-no-wrap">coronavirus (COVID-19)</span> pandemic.
+                  </p>
+                  <div class="app-masthead-button-container govuk-body">
+                    <%= app_masthead_button_link_to 'Sign in', sign_in_path %> 
+                    <span class="app-masthead-text">
+                      to order laptops or tablets, request internet access or add people to your organisation.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-width-container">
+          <div class="govuk-main-wrapper">
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </div>
+        </div>
+      </main>
+    </div>
 
     <footer class="govuk-footer " role="contentinfo">
       <div class="govuk-width-container ">
@@ -84,7 +111,6 @@
                 <a class="govuk-footer__link" href="<%= support_ticket_path %>">
                   Contact us
                 </a>
-
               </li>
               <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link" href="<%= accessibility_path %>">

@@ -82,5 +82,62 @@ $govuk-image-url-function: frontend-image-url;
   @media (max-width: 768px) {
     @include govuk-responsive-margin(6, "top");
   }
+}
 
+.app-masthead {
+  position: relative;
+  left: 0;
+  width: 100%;
+  background-color: $govuk-brand-colour;
+  margin-top: -10px;
+
+  .govuk-main-wrapper {
+    padding-bottom: 10px;
+  }
+
+  h1, p, .app-masthead-text { 
+    color: white;
+  }
+  .app-masthead-phase-banner {
+    border-color: white;
+    .govuk-phase-banner__content {
+      color: white;
+      .govuk-phase-banner__text {
+        a {
+          color: white;
+          &:hover {
+            color: #e8f1f8;
+          }
+        }
+      }
+    }
+    .govuk-phase-banner__content__tag {
+      background-color: white;
+      color: $govuk-brand-colour;
+    }
+  }
+  .app-masthead-button-container {
+    display: flex;
+    .app-masthead-button {
+      background-color: white;
+      color: $govuk-brand-colour !important;
+      white-space: nowrap;
+      &:hover {
+        background-color: #e8f1f8;
+      }
+      margin-right: 20px;
+    }
+    .app-masthead-text {
+      margin-top: 11px;
+    }
+  }
+}
+
+.app-sign-in-call-out {
+  display: inline-block;
+  padding: 10px 20px 10px 16px;
+  border-left: 4px solid govuk-colour("dark-grey");
+  background-color: govuk-colour("light-grey");
+  font-weight: bold;
+  text-decoration: none;
 }
