@@ -103,7 +103,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     ee = create(:mobile_network, brand: 'EE')
     three = create(:mobile_network, brand: 'Three')
     virgin = create(:mobile_network, brand: 'Virgin')
-    rb = create(:local_authority, :in_connectivity_pilot)
+    rb = create(:local_authority)
     rb_requester = create(:user, responsible_body: rb)
     create_list(:school, 3, :centrally_managed)
     schools = create_list(:school, 3, :manages_orders)
