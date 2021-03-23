@@ -11,87 +11,87 @@
       <%= t('page_titles.internet_access') %>
     </h1>
 
-    <p class="govuk-body">
-      How to request internet access support for disadvantaged pupils in <span class="app-no-wrap">years 3 to 13</span>, and students in further education.
+    <p class="govuk-body-l">
+      Get internet access for disadvantaged pupils and students when <span class="app-no-wrap">face-to-face</span> education is disrupted.
     </p>
 
-    <h2 class="govuk-heading-l">
-      Extra mobile data
+    <h2 class="govuk-heading-l govuk-!-margin-top-7">
+      Increase mobile data
     </h2>
-
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      This scheme temporarily increases data allowances for mobile phone users on certain networks,
-      if they do not have access to broadband at home.
+    <p class="govuk-body">
+      Temporarily increases data allowances for mobile phone users on some networks to allow pupils and students to access remote learning.
     </p>
 
-    <h3 class="govuk-heading-m">
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
       Before you make a request
     </h3>
-
-    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+    <ul class="govuk-list govuk-list--spaced">
       <li>
-        <%= govuk_link_to 'Find out who can get extra mobile data and how to go about it.', about_increasing_mobile_data_path %>
+        <%= govuk_link_to 'Who can get their mobile data increased', about_increasing_mobile_data_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'How to request a mobile data increase', about_increasing_mobile_data_path %>
       </li>
     </ul>
 
-    <h3 class="govuk-heading-m">
-      Request for extra mobile data
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Request mobile data
     </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to request mobile data</a>
+      </li>
+    </ul>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= govuk_link_to "Sign in to make a request", sign_in_path, class: "app-emphasis-link" %>
-    </p>
-
-    <h3 class="govuk-heading-m">
-      View your extra mobile data requests
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      View your mobile data requests
     </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to view your requests</a>
+      </li>
+    </ul>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= govuk_link_to "Sign in view your requests", sign_in_path, class: "app-emphasis-link" %>
-    </p>
-
-
-
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-l govuk-!-margin-top-7">
       4G wireless routers
     </h2>
-
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      You can request a router for disadvantaged pupils and students who do not have access to the internet at home,
-      and cannot get a mobile data increase.
+    <p class="govuk-body">
+      4G wireless routers for disadvantaged pupils and students who do not have fixed broadband or access to the internet at home.
     </p>
 
-    <h3 class="govuk-heading-m">
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
       Before you make a request
     </h3>
-
-    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+    <ul class="govuk-list govuk-list--spaced">
       <li>
-        <%= govuk_link_to 'Find out who can get a 4G wireless router and how to go about it.', how_to_request_4g_wireless_routers_path %>
+        <%= govuk_link_to 'Who can get a 4G wireless router', about_increasing_mobile_data_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'How to request a mobile data increase', about_increasing_mobile_data_path %>
       </li>
     </ul>
 
-    <h3 class="govuk-heading-m">
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
       Request 4G wireless routers
     </h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to request 4G wireless routers</a>
+      </li>
+    </ul>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= govuk_link_to "Sign in to make a request", sign_in_path, class: "app-emphasis-link" %>
-    </p>
-
-    <h3 class="govuk-heading-m">
-      Manage 4G wireless routers
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      Managing 4G wireless routers
     </h3>
-
-    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+    <ul class="govuk-list govuk-list--spaced">
       <li>
-        <%= govuk_link_to 'Setup guide', '/devices/preparing-4g-wireless-routers' %>
+        <%= govuk_link_to 'How to setup a 4G wireless router', about_increasing_mobile_data_path %>
       </li>
       <li>
-        <%= govuk_link_to 'Technical support', '/devices/support-and-maintenance#help-with-4g-wireless-routers-and-data' %>
+        <%= govuk_link_to 'Support and maintanence', about_increasing_mobile_data_path %>
       </li>
       <li>
-        <%= govuk_link_to 'Guidance for pupils and students', '/devices/4g-user-guidance' %>
+        <%= govuk_link_to 'Replace a faulty 4G wireless router', about_increasing_mobile_data_path %>
       </li>
     </ul>
   </div>

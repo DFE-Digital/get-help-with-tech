@@ -12,14 +12,69 @@
       <%= t('landing_pages.get_support_guides.title' ) %>
     </h1>
 
-    <p class="govuk-body">Many vulnerable and disadvantaged children and young people in England do not have access to a laptop, tablet or internet connection. The Department for Education (DfE) is offering support to help children, young people and families access remote education and social care during the pandemic.</p>
-
-    <p class="govuk-body">
-      The DfE is working with delivery partners to supply local authorities, academy trusts and schools
-      with <%= govuk_link_to 'laptops and connectivity packages', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %>.
+    <p class="govuk-body-l">
+      Order, setup and mantain laptops and tablets for disadvantaged pupils and students when <span class="app-no-wrap">face-to-face</span> education is disrupted.
     </p>
 
-    <%= render partial: 'page_link_and_description', collection: @responsible_body_pages, as: :page %>
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">
+      Before your order
+    </h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= link_to_devices_guidance_subpage 'Who is eligible for devices and why the DfE is providing them', 'about_the_offer' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'How devices are allocated', 'device_allocations' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'What devices are available', 'device_specification' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'Who owns the devices and how to distribute them', 'device_distribution_and_ownership' %>
+      </li>
+    </ul>
 
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">
+      How to order
+    </h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <a href='/sign-in' class='govuk-link govuk-body app-sign-in-call-out'>Sign in to order devices</a>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Managing devices
+    </h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to 'TechSource support portal', 'https://computacenterprod.service-now.com/dfe' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'Safeguarding devices', 'safeguarding-for-device-users' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'How to setup and maintain Windows laptops and tablets', 'preparing_microsoft_windows_laptops_and_tablets' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'How to setup and maintain Google Chromebooks', 'preparing_chromebooks' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'How to setup and maintain Apple iPads', 'preparing_ipads' %>
+      </li>
+      <li>
+        <%= link_to_devices_guidance_subpage 'Replace a faulty device', 'replace_a_faulty-device' %>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">
+      Software and digital tools
+    </h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= link_to_devices_guidance_subpage 'How to set up a Google domain for care leavers', 'google_domain_for_care_leavers_and_children_with_social_worker' %>
+      </li>
+    </ul>
   </div>
 </div>
+
