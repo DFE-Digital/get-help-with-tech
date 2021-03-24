@@ -185,6 +185,14 @@ module ViewHelper
     govuk_link_to 'Complete a survey', 'https://docs.google.com/forms/d/e/1FAIpQLSd9g4jlGTXM6FLOxgfyEIoAWZuhAweL7A6kx5qhDYpwguznAg/viewform?usp=sf_link'
   end
 
+  def humanized_number(value)
+    if value > 999_999
+      number_to_human(value, format: '%n%u', precision: 2, significant: false, strip_insignificant_zeros: false, units: { million: 'm' })
+    else
+      number_with_delimiter(value)
+    end
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

@@ -1,0 +1,20 @@
+<h2 class="govuk-heading-l">Sign-ins</h2>
+<%- i18n_scope = 'support.service_performance' %>
+<div class="govuk-grid-row govuk-!-margin-bottom-8">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::PercentageTileComponent.new(
+      percentage: @stats.percentage_of_devolved_schools_that_have_signed_in,
+      label: t(:devolved_schools_that_have_signed_in_html,
+               scope: i18n_scope,
+               amount: number_with_delimiter(@stats.number_of_devolved_schools_that_have_signed_in),
+               total: number_with_delimiter(@stats.number_of_devolved_schools))) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::PercentageTileComponent.new(
+      percentage: @stats.percentage_of_responsible_bodies_that_have_signed_in,
+      label: t(:responsible_bodies_that_have_signed_in_html,
+               scope: i18n_scope,
+               amount: number_with_delimiter(@stats.number_of_responsible_bodies_that_have_signed_in),
+               total: number_with_delimiter(@stats.number_of_responsible_bodies))) %>
+  </div>
+</div>

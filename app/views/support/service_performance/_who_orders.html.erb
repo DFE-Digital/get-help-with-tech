@@ -1,0 +1,14 @@
+<h2 class="govuk-heading-l">Who orders</h2>
+<%- i18n_scope = 'support.service_performance' %>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+      count: @stats.number_of_devolved_schools,
+      label: t(:devolved_schools, scope: i18n_scope, count: @stats.number_of_devolved_schools)) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+      count: @stats.number_of_centrally_managed_schools,
+      label: t(:centrally_managed_schools, scope: i18n_scope, count: @stats.number_of_centrally_managed_schools)) %>
+  </div>
+</div>
