@@ -1,3 +1,5 @@
+This guidance is written with reference to iPads provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information about [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+
 ## What you get
 
 Each iPad bundle contains:
@@ -59,28 +61,15 @@ Email [uk\_edu\_enquiries@group.apple.com](mailto:uk_edu_enquiries@group.apple.c
 
 Apple also provide guidance and online events to help you use iPad features:
 
-### Quick Guides for Learning with Apple 
-From managing schedules and screen time to building a story, these guides help create productive learning environments by making the most of iPad and Mac built-in features.
-
-[Download the Quick Guides for Learning with Apple](https://education-static.apple.com/learning-with-apple/apple-quick-guides.pdf)
-
-### Education Online Event Series 
-Events for UK leaders, teachers and IT staff.  Explore the potential of technology for teaching and learning and how Apple supports with products and programmes for education.
-
-[View all events in the series](https://events.apple.com/content/events/emeia/gb/en/default.html?token=7ZjTgsSqK5CjU9XqowzkH2rQJd12N7I94OWog7qfI1O4kJjfxRCtZLPSfb_QRfID8Pvjeyy_HgFJBlBfMlFHrKWaG6hsWMRImRg8RqQQoYQ&a=1&l=e)
- 
-### 30 Time-Saving Tips for Teachers 
-Discover fun and simple activities highlighting iPad built-in features and apps.  Designed for teachers, these tips can help save time on many tasks teachers do daily.
-
-[Download 30 Time-Saving Tips for Teachers](https://education-static.apple.com/geo/uk/education/2020/tips-for-teachers/ipad-teacher-activities.pdf)
-
+* [Quick Guides for Learning with Apple](https://education-static.apple.com/learning-with-apple/apple-quick-guides.pdf) - From managing schedules and screen time to building a story, these guides help create productive learning environments by making the most of iPad and Mac built-in features.
+* [Education Online Events](https://events.apple.com/content/events/emeia/gb/en/default.html?token=7ZjTgsSqK5CjU9XqowzkH2rQJd12N7I94OWog7qfI1O4kJjfxRCtZLPSfb_QRfID8Pvjeyy_HgFJBlBfMlFHrKWaG6hsWMRImRg8RqQQoYQ&a=1&l=e) - Events for UK leaders, teachers and IT staff. Explore the potential of technology for teaching and learning and how Apple supports with products and programmes for education.
+* [Time-Saving Tips for Teachers](https://education-static.apple.com/geo/uk/education/2020/tips-for-teachers/ipad-teacher-activities.pdf) - Discover fun and simple activities highlighting iPad built-in features and apps.  Designed for teachers, these tips can help save time on many tasks teachers do daily.
 
 ## What to do with a faulty iPad
 
 Go to [Apple service and repair](https://support.apple.com/en-gb/ipad/repair/service) to find out what to do if your device does not turn on when you receive it, develops a fault or is accidentally broken.
 
 If you need further assistance, [contact us](/get-support).
-
 
 ## User guidance for iPads
 
