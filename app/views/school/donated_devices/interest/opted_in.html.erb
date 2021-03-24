@@ -4,7 +4,8 @@
 %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ 'Home' => home_school_path(@school) },
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Your account' => home_school_path(@school) },
                   'Donated devices',
                  ]) %>
 <%- end %>

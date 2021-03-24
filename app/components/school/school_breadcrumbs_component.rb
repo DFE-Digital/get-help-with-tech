@@ -27,7 +27,8 @@ class School::SchoolBreadcrumbsComponent < ViewComponent::Base
 
   def single_school_scope
     [
-      { 'Home' => home_school_path(school) },
+      { 'Home' => root_path },
+      { 'Your account' => home_school_path(school) },
     ]
   end
 

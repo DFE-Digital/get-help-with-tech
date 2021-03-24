@@ -1,7 +1,8 @@
 <%- title = t('page_titles.donated_devices.school.interest.not_interested.title') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ 'Home' => home_school_path(@school) },
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Your account' => home_school_path(@school) },
                   'Donated devices',
                  ]) %>
 <%- end %>
@@ -11,7 +12,7 @@
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
     <p class="govuk-body">You can still opt in later if you change your mind.<p>
-    
+
     <p class="govuk-body">
       <%= govuk_link_to 'Return to your homepage', home_school_path %>
     </p>

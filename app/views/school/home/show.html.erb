@@ -1,6 +1,6 @@
 <%- title = @school.name %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs(school: @school, user: @current_user, items: title) %>
+  <%- school_breadcrumbs(school: @school, user: @current_user, items: 'Your account') %>
 <%- end %>
 <%- content_for :title, title %>
 

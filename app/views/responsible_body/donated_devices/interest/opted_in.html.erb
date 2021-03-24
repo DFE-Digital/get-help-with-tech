@@ -4,10 +4,10 @@
 %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([
-    { 'Home' => responsible_body_home_path },
-    { "#{t('page_titles.responsible_body_devices_home')}" => responsible_body_devices_path },
-    'Donated devices',
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Your account' => responsible_body_home_path },
+                  { "#{t('page_titles.responsible_body_devices_home')}" => responsible_body_devices_path },
+                  'Donated devices',
   ]) %>
 <% end %>
 

@@ -1,6 +1,6 @@
 <% content_for :title, "#{@user.full_name} – Support" %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
+  <%= breadcrumbs([{ "Home" => root_path },
     { 'Support home' => support_home_path },
     @user.full_name,
   ]) %>
