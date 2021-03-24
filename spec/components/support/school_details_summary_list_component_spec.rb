@@ -194,4 +194,36 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(result.text).to include(school.postcode.to_s)
     end
   end
+
+  describe 'computacenter soldTo' do
+    it 'returns RB computacenter_reference' do
+      expect(value_for_row(result, 'Computacenter SoldTo').text).to include(school.responsible_body.computacenter_reference)
+    end
+
+    context 'when not set' do
+      before do
+        school.responsible_body.update(computacenter_reference: nil)
+      end
+
+      it 'returns placeholder copy' do
+        expect(value_for_row(result, 'Computacenter SoldTo').text).to include('Not present')
+      end
+    end
+  end
+
+  describe 'computacenter shipTo' do
+    it 'returns school computacenter_reference' do
+      expect(value_for_row(result, 'Computacenter ShipTo').text).to include(school.computacenter_reference)
+    end
+
+    context 'when not set' do
+      before do
+        school.update(computacenter_reference: nil)
+      end
+
+      it 'returns placeholder copy' do
+        expect(value_for_row(result, 'Computacenter ShipTo').text).to include('Not present')
+      end
+    end
+  end
 end

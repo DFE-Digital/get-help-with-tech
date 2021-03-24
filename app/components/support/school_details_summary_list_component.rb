@@ -9,10 +9,26 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
              else
                address_read_only_row
              end
+    array << sold_to_row
+    array << ship_to_row
     array << receiving_communications_row
   end
 
 private
+
+  def sold_to_row
+    {
+      key: 'Computacenter SoldTo',
+      value: @school.responsible_body.computacenter_reference || 'Not present',
+    }
+  end
+
+  def ship_to_row
+    {
+      key: 'Computacenter ShipTo',
+      value: @school.computacenter_reference || 'Not present',
+    }
+  end
 
   def receiving_communications_row
     {
