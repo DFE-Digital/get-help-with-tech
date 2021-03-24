@@ -3,6 +3,8 @@ When ordering Microsoft devices, a selection can be made between:
 * not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
 * having DfE settings installed - these 'DfE Restricted' devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
 
+If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+
 ## Preparing laptops and tablets ordered without DfE settings installed
 
 If you order devices after September 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. These 'Standard' devices will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
@@ -10,6 +12,8 @@ If you order devices after September 2020, you have the option to receive them w
 This allows devices to be configured to your own standards with your preferred software and settings, and without the limitations imposed by DfE configured devices. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
 
 You will be responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices – such as content filtering, antivirus software and mobile device management – to avoid risks to the children and young people in your care.
+
+Read our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device).
 
 ## Preparing laptops and tablets ordered with DfE settings installed
 
@@ -61,7 +65,7 @@ You can lend the devices to users straight away as the MDM and content filtering
 
 ## Reconfigure your devices
 
-You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#requesting-local-admin-and-bios-passwords-to-install-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
+You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#getting-local-admin-and-bios-passwords-to-install-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
@@ -77,11 +81,12 @@ It is up to you to decide whether it’s appropriate to remove the DfE safeguard
 
 When you lend the devices to users, it’s important to underline that parents and guardians should supervise the internet use of children and young people in their care. Local authorities should be alert to cases where parents or guardians of children with a social worker may not be in a position to do this.
 
-See government advice on:
+The following advice is available to help keep children safe online:
 
-* [safeguarding](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which signposts parents to trusted providers and includes detailed advice on keeping children safe online (this includes information on home filters, age appropriate parental controls, the risks of platforms and apps, and how to have age appropriate conversations with children about online safety)
-* [support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online), which outlines resources to help keep children safe from different risks online and where to go to receive support and advice
-* [support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online), which includes information on security and privacy settings
+* [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) - guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children – both online and offline.
+* [Safeguarding and remote education during coronavirus](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) - guidance to help you understand safeguarding procedures when planning remote education strategies and teaching remotely.
+* [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - resources to help keep children safe from different risks online, and where to go to receive support and advice.
+* [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) - information on security and privacy settings.
 
 ## Getting local admin and BIOS passwords to install your own software and settings
 
@@ -289,6 +294,6 @@ You can share this [user guide](/devices/getting-started-with-your-microsoft-win
 
 You may want to add contact information to this guidance for the person or team offering IT support to device users.
 
-If users find that the login is defaulting to the “.\localadmin” account and asking for a password, [see the advice](#How-to-help-anyone-experiencing-problems-logging-in-to-Windows-devices) above.
+If users find that the login is defaulting to the “.\localadmin” account and asking for a password, see the advice above.
 
 * [Microsoft devices: User guidance](/devices/getting-started-with-your-microsoft-windows-device)
