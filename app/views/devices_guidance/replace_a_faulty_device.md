@@ -1,87 +1,33 @@
-<div class="govuk-inset-text">
-We'll be closing the service enabling you to request replacements for faulty laptops and tablets at 4pm on 24 March 2021. Requests made before this date will still be processed. All laptops and tablets came with a 12-month manufacturer’s warranty. If you need a replacement after 24 March 2021, you'll need to go through the manufacturer’s warranty process.
-</div>
+## If it's not working within 3 days of receiving it
 
-## Replace a faulty Google Chromebook or Microsoft device
-
-### If it's not working within 3 days of receiving it
+We’ll send you a replacement device within 2 working days of returning a device.
 
 If a device will not start, check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Include your order number and the device serial number so that we can help you as quickly as possible.
 
-### If a device stops working after 3 days
+## If a device stops working after 3 days
 
-School, local authority and academy trust contacts can raise a request on the [Support Portal](https://computacenterprod.service-now.com/dfe) to get a replacement for a faulty device.
+All devices supplied by the Get help with technology programme came with a 12-month manufacturer’s warranty. If you encounter a fault, please refer to the manual supplied with the device or the manufacturer’s website for information on how to make a claim.
 
-Requests for replacement devices from schools will be sent to the local authority or academy trust to be approved. The reason we ask for approval is because if the device has stopped working because a user has damaged the device, your local authority or academy trust will be charged for a replacement.
+* [Acer](https://www.acer.com/ac/en/GB/content/support)
+* [Apple](https://support.apple.com/en-gb/ipad/repair/service)
+* [Asus](https://www.asus.com/uk/support/warranty-status-inquiry/)
+* [Dell](https://www.dell.com/support/home/en-uk?app=warranty)
+* [Dynabook](https://support.dynabook.com/warranty)
+* [HP](https://support.hp.com/gb-en/checkwarranty)
+* [Lenovo](https://pcsupport.lenovo.com/uk/en/warrantylookup#/)
+* [Microsoft](https://docs.microsoft.com/en-gb/surface/)
+* [Tactus Geo](https://geo-computers.com/support/)
+* [Samsung](https://www.samsung.com/uk/support/warranty/)
 
-Before placing a request for a warranty replacement, you should check the device and attempt to resolve the issue. Software problems and physically damaged devices are not covered by the warranty replacement service. Information on ‘How to triage a hardware fault’ is available on the [Support Portal](https://computacenterprod.service-now.com/dfe).
+If you’re looking to replace restricted Windows laptops or tablets that came with DfE settings pre-installed, please be aware that replacements from the manufacturer will come with standard factory settings.
 
-### How to access the Support Portal
+It is your responsibility to ensure these devices are safely set up for users. Refer to our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) for steps to take regarding applying appropriate safeguarding and security settings.
 
-Go to the [Support Portal](https://computacenterprod.service-now.com/dfe) and select ‘Raise a support request’ and select ‘Faulty device (school)’. You will need to enter the serial number for the faulty laptop or tablet.
+## Outstanding device replacement requests
 
-If you have any issues accessing or using the support portal, [contact us](/get-support) with your order tracking number.
+Before 24 March 2021, it was possible to request a replacement for a faulty device through the [Support Portal](https://computacenterprod.service-now.com/dfe). If you have an outstanding request, please access the Support Portal to see progress. You can also find details of any costs that may be incurred if a device is returned with a fault that’s not covered by the manufacturer’s warranty.
 
-## Cost of replacement Windows device or Google Chromebook
-
-Your faulty laptop or tablet will be replaced free of charge if the device is returned, on time, in a complete state and the fault was not caused by a user. 
-
-Local authorities or academy trusts approving schools’ requests will be charged in certain situations, as follows. These costs include courier charges but exclude VAT.
-
-### Faults not covered by the manufacturer’s warranty
-
-If a device is returned with a fault that’s not covered by the manufacturer’s warranty you’ll be charged £220 for the repair. These faults are not covered by the warranty:
-
-* any software faults
-* defects caused by normal wear and tear including the fair wear of consumable parts, such as parts that require periodic replacement (e.g. batteries)
-* breaks, tears, scratches, dents, scratched or faded covers or plastics and broken ports or any other cosmetic damage
-* defective or discoloured keyboards or keycaps if the damages are caused by fluids, dirt, missing keys, broken plastic parts or improper use
-* damage caused by use with another product
-* use of the device other than for its normal intended use, including, without limitation, failure to use the device in accordance with its user's manual
-* damage caused by use of incorrect line voltages, use of incorrect fuses or improper or insufficient ventilation
-* damage caused by accident, abuse, contamination, misuse, viruses, liquid contact, fire, earthquake, improper or inadequate maintenance or calibration, negligence to the device or other external causes
-* environmental damages and/or defects resulting from smoke, dust, dirt, carbon black or other external influences
-* faults caused by a device being modified to alter functionality or capability without the written permission of the manufacturer
-* the serial number has been removed, damaged, rendered defective or made illegible
-* modification of the device including defects caused by use of parts not manufactured and/or sold by the manufacturer
-* improper installation of third-party products (e.g. memory cards)
-* displays that show breaks, scratches, dents, liquids, or any other damage 
-* minor pixel defects of LCD displays
-* damages resulting from improper transportation or packing when returning the device
-* issues resulting from parts intended for one device having been installed in another device of different make or model
-* damages caused by services/repairs or other modifications to the device
-* damages caused by self-repair or by performing an exchange of Non-CRU parts defective hardware components (e.g. hard drive) that result from misuse
-* the loss of, or damage to, any program, data or removable storage media and/or any software program, whether provided with the device or installed subsequently
-
-See the full list of warranty exclusions in the [Support Portal](https://computacenterprod.service-now.com/dfe) in the ‘How to request a warranty replacement’ article, along with information on ‘How to triage hardware issues’.
-
-### Returns where no fault is found
-
-If you return a device and no fault is found, or return a device that was not allocated by DfE the approver will be charged £108 per device for handling plus:
-
-* £208.29 for a replacement Windows laptop device
-* £154.40 for a replacement Windows tablet device
-* £235.62 for a replacement Chromebook
-
-### Returns without the power charger
-
-If you do not include the original power charger with your returned device the approver will be charged up to £35 per replacement.
-
-### Missing the collection
-
-If you do not meet the courier collecting your faulty devices within 30 minutes of the agreed time the approver will be charged £81 per visit.
-
-## Apple iPad service and repair
-
-### If it's not working within 3 days of receiving it
-
-If an iPad will not start, check it’s fully charged and plugged into the mains. If you still cannot start the device, email [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk) with ‘Device won’t start’ in the subject line. Include your order number so that we can help you as quickly as possible.
-
-### If a device stops working after 3 days
-
-Go to [Apple service and repair](https://support.apple.com/en-gb/ipad/repair/service) to report a faulty device, find out what to do if your device does not turn on when you receive it, or is accidentally broken.
-
-Apple iPads come with a 12-month manufacturer’s warranty that will expire within 12 months of when you received the device.
+[Contact us](/get-support) if you have any queries related to an existing device replacement request.
 
 ## 4G wireless router faults
 
