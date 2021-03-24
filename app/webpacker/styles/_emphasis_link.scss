@@ -1,0 +1,12 @@
+.app-emphasis-link {
+  display: inline-block;
+  padding: 10px 20px 10px 16px;
+  border-left: 4px solid govuk-colour("dark-grey");
+  background-color: govuk-colour("light-grey");
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.app-emphasis-link:focus {
+  border-left-color: $govuk-focus-colour;
+}
