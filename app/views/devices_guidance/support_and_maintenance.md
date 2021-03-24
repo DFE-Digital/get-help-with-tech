@@ -20,8 +20,6 @@ These help guides can be shared with the children and young people using the dev
 The [Support Portal](https://computacenterprod.service-now.com/dfe) provides the information you need to manage the laptops, tablets and 4G wireless routers you receive from us. This includes:
 
 * BIOS and local admin passwords needed to reset and add software to [DfE Restricted Microsoft Windows devices](/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed)
-* how to raise a request to [replace a faulty device](/devices/replace-a-faulty-device) you’ve received from us
-* charges for replacing a device if the repair is not covered by the manufacturer’s warranty
 * how to request a 4G router SIM to be unbarred or reactivated
 * how to give someone else access to the Support Portal
 
@@ -50,9 +48,10 @@ Use the [Get help with technology service](/sign-in) to give colleagues access t
 
 ## Reporting a faulty device
 
-If your laptop, Microsoft Windows tablet or 4G wireless router develops a fault, we’ll arrange to replace it.
+If your laptop or tablet arrives with a fault, we’ll arrange to replace it. If it develops a fault later, it will be covered by a 12-month manufacturer’s warranty.
 
-[Find out how to get a replacement for a faulty device](/devices/replace-a-faulty-device), the cost to replace a damaged device, how to service and repair an Apple iPad, and other warranty details.
+* Find out [how to get a replacement for a faulty laptop or tablet](/devices/replace-a-faulty-device)
+* Find out [what to do If you have a faulty 4G wireless router](/devices/support-and-maintenance#help-with-4g-wireless-routers-and-data)
 
 ## Replacing DfE settings on Microsoft Windows devices
 
