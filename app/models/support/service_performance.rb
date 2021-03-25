@@ -34,7 +34,7 @@ class Support::ServicePerformance
   end
 
   def total_devices_available
-    SchoolDeviceAllocation.std_device.sum(:allocation)
+    SchoolDeviceAllocation.std_device.sum(:cap)
   end
 
   def total_devices_ordered
@@ -42,11 +42,11 @@ class Support::ServicePerformance
   end
 
   def total_devices_remaining
-    SchoolDeviceAllocation.std_device.sum('allocation - devices_ordered')
+    SchoolDeviceAllocation.std_device.sum('cap - devices_ordered')
   end
 
   def total_routers_available
-    SchoolDeviceAllocation.coms_device.sum(:allocation)
+    SchoolDeviceAllocation.coms_device.sum(:cap)
   end
 
   def total_routers_ordered
@@ -54,7 +54,7 @@ class Support::ServicePerformance
   end
 
   def total_routers_remaining
-    SchoolDeviceAllocation.coms_device.sum('allocation - devices_ordered')
+    SchoolDeviceAllocation.coms_device.sum('cap - devices_ordered')
   end
 
   #
@@ -114,12 +114,12 @@ class Support::ServicePerformance
 
   def number_of_devolved_schools_that_have_not_ordered_routers
     @number_of_devolved_schools_that_have_not_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('allocation > 0 AND devices_ordered = 0'))
+      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('cap > 0 AND devices_ordered = 0'))
   end
 
   def number_of_devolved_schools_that_have_a_router_allocation
     @number_of_devolved_schools_that_have_a_router_allocation ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('allocation > 0'))
+      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('cap > 0'))
   end
 
   def percentage_of_devolved_schools_that_have_fully_ordered_routers
@@ -278,7 +278,7 @@ class Support::ServicePerformance
       .gias_status_open
       .that_are_centrally_managed
       .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.coms_device.where('allocation > 0'))
+      .merge(SchoolDeviceAllocation.coms_device.where('cap > 0'))
       .count('DISTINCT(responsible_body_id)')
   end
 
