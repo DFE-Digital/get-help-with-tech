@@ -1,18 +1,14 @@
+GIT
+  remote: https://github.com/asmega/canonical-rails.git
+  revision: 1b9426229dfa5136326f5ce4963e8e8d1cb3b23c
+  ref: 1b9426229dfa5136326f5ce4963e8e8d1cb3b23c
+  specs:
+    canonical-rails (0.2.11)
+      railties (>= 4.1, < 6.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (6.1.3)
-      actionpack (= 6.1.3)
-      activesupport (= 6.1.3)
-      nio4r (~> 2.0)
-      websocket-driver (>= 0.6.1)
-    actionmailbox (6.1.3)
-      actionpack (= 6.1.3)
-      activejob (= 6.1.3)
-      activerecord (= 6.1.3)
-      activestorage (= 6.1.3)
-      activesupport (= 6.1.3)
-      mail (>= 2.7.1)
     actionmailer (6.1.3)
       actionpack (= 6.1.3)
       actionview (= 6.1.3)
@@ -27,12 +23,6 @@ GEM
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
-    actiontext (6.1.3)
-      actionpack (= 6.1.3)
-      activerecord (= 6.1.3)
-      activestorage (= 6.1.3)
-      activesupport (= 6.1.3)
-      nokogiri (>= 1.8.5)
     actionview (6.1.3)
       activesupport (= 6.1.3)
       builder (~> 3.1)
@@ -47,13 +37,6 @@ GEM
     activerecord (6.1.3)
       activemodel (= 6.1.3)
       activesupport (= 6.1.3)
-    activestorage (6.1.3)
-      actionpack (= 6.1.3)
-      activejob (= 6.1.3)
-      activerecord (= 6.1.3)
-      activesupport (= 6.1.3)
-      marcel (~> 0.3.1)
-      mimemagic (~> 0.3.2)
     activesupport (6.1.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
@@ -80,8 +63,6 @@ GEM
       bundler (>= 1.2.0, < 3)
       thor (>= 0.18, < 2)
     byebug (11.1.3)
-    canonical-rails (0.2.11)
-      rails (>= 4.1, < 6.2)
     capybara (3.35.3)
       addressable
       mini_mime (>= 0.1.3)
@@ -180,8 +161,9 @@ GEM
       raabro (~> 1.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    govuk-components (1.1.4)
-      rails (>= 6.0)
+    govuk-components (1.1.5)
+      activemodel (>= 6.0)
+      railties (>= 6.0)
       view_component (~> 2.20)
     govuk_design_system_formbuilder (2.2.0)
       actionview (>= 5.2)
@@ -223,13 +205,10 @@ GEM
       activesupport (>= 5.2.4.3)
       notifications-ruby-client (~> 5.1)
       rack (>= 2.1.4)
-    marcel (0.3.3)
-      mimemagic (~> 0.3.2)
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.1104)
-    mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
     minitest (5.14.4)
@@ -278,21 +257,6 @@ GEM
     rack-throttle (0.7.0)
       bundler (>= 1.0.0)
       rack (>= 1.0.0)
-    rails (6.1.3)
-      actioncable (= 6.1.3)
-      actionmailbox (= 6.1.3)
-      actionmailer (= 6.1.3)
-      actionpack (= 6.1.3)
-      actiontext (= 6.1.3)
-      actionview (= 6.1.3)
-      activejob (= 6.1.3)
-      activemodel (= 6.1.3)
-      activerecord (= 6.1.3)
-      activestorage (= 6.1.3)
-      activesupport (= 6.1.3)
-      bundler (>= 1.15.0)
-      railties (= 6.1.3)
-      sprockets-rails (>= 2.0.0)
     rails-controller-testing (1.0.5)
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
@@ -420,13 +384,6 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (4.0.2)
-      concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
-    sprockets-rails (3.2.2)
-      actionpack (>= 4.0)
-      activesupport (>= 4.0)
-      sprockets (>= 3.0.0)
     thor (1.1.0)
     thwait (0.2.0)
       e2mmap
@@ -458,9 +415,6 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
-    websocket-driver (0.7.3)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.4.2)
@@ -475,13 +429,20 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionmailer (~> 6.1.3)
+  actionpack (~> 6.1.3)
+  actionview (~> 6.1.3)
+  activejob (~> 6.1.3)
+  activemodel (~> 6.1.3)
+  activerecord (~> 6.1.3)
+  activesupport (~> 6.1.3)
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
   brakeman
   bundle-audit
   byebug
-  canonical-rails
+  canonical-rails!
   capybara (~> 3.35)
   capybara-email
   climate_control
@@ -492,7 +453,7 @@ DEPENDENCIES
   faker
   fakeredis
   foreman
-  govuk-components (>= 0.8.0)
+  govuk-components (>= 1.1.5)
   govuk_design_system_formbuilder
   http
   i18n-debug
@@ -512,9 +473,9 @@ DEPENDENCIES
   puma (~> 5.2)
   pundit
   rack-throttle
-  rails (~> 6.1.3)
   rails-controller-testing
   rails_semantic_logger
+  railties (~> 6.1.3)
   redcarpet
   rspec-rails (~> 5.0.1)
   rubocop-govuk (>= 3.17.2)

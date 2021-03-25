@@ -26,7 +26,7 @@ RSpec.describe SessionService do
     it 'sets expires_at' do
       described_class.create_session!(session_id: session_id, user: user)
       session = Session.find(session_id)
-      expect(session.expires_at).to be_within(10.seconds).of(Time.zone.now + 2.hours)
+      expect(session.expires_at.utc).to be_within(10.seconds).of(Time.zone.now.utc + 2.hours)
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.describe SessionService do
       ttl = 3.days
       described_class.update_session!(session.id, ttl)
       session.reload
-      expect(session.expires_at).to be_within(10.seconds).of(Time.zone.now + ttl)
+      expect(session.expires_at.utc).to be_within(10.seconds).of(Time.zone.now.utc + ttl)
     end
   end
 end
