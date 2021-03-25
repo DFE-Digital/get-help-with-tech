@@ -98,7 +98,7 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
 
   def then_it_sends_an_email_to_the_user(user)
     email = ActionMailer::Base.deliveries.last
-    expect(email.to_addresses.map(&:address)).to include(user.email_address)
+    expect(email.to_addrs).to include(user.email_address)
   end
 
   def then_it_does_not_send_an_email_to_the_user

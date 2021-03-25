@@ -6,8 +6,17 @@ ruby File.read('.ruby-version').chomp
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+gem 'activesupport', '~> 6.1.3'
+gem 'activejob', '~> 6.1.3'
+gem 'actionpack', '~> 6.1.3'
+gem 'actionview', '~> 6.1.3'
+gem 'activemodel', '~> 6.1.3'
+gem 'activerecord', '~> 6.1.3'
+gem 'actionmailer', '~> 6.1.3'
+gem 'railties', '~> 6.1.3'
+
 # Canonical meta tag
-gem 'canonical-rails'
+gem 'canonical-rails', git: 'https://github.com/asmega/canonical-rails.git', ref: '1b9426229dfa5136326f5ce4963e8e8d1cb3b23c'
 gem 'dotenv-rails'
 # Having Faker here rather than in dev/test lets us still create
 # fake data in the deployed Docker container
@@ -15,7 +24,7 @@ gem 'faker'
 # Manage multiple processes i.e. web server and webpack
 gem 'foreman'
 gem 'govuk_design_system_formbuilder'
-gem 'govuk-components', '>=0.8.0'
+gem 'govuk-components', '>=1.1.5'
 
 gem 'http'
 
@@ -48,9 +57,6 @@ gem 'pundit'
 
 # Rate-limiting
 gem 'rack-throttle'
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.3'
 
 # Used for markdown rendering of guidance pages
 gem 'redcarpet'
