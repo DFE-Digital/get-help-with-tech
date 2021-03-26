@@ -48,9 +48,11 @@ class Mno::ExtraMobileDataRequestsController < Mno::BaseController
       ids = (bulk_update_params[:extra_mobile_data_request_ids] || []).reject(&:empty?)
       extra_mobile_data_request_scope
                .where('extra_mobile_data_requests.id IN (?)', ids)
-               .update_all(new_attributes)
+               .each do |req|
+        req.update!(new_attributes)
+      end
       redirect_to mno_extra_mobile_data_requests_path(find_requests_params)
-    rescue ActiveRecord::StatementInvalid, ArgumentError => e
+    rescue ActiveRecord::RecordInvalid, ArgumentError => e
       logger.error e
       flash[:error] = "I couldn't apply that update"
       render :index, status: :unprocessable_entity
