@@ -2,7 +2,7 @@
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs(items: [
-      { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
+      { t('page_titles.internet_access')  => internet_school_path(@school) },
       { t('page_titles.request_extra_mobile_data') => extra_data_guidance_internet_mobile_school_path(@school) },
       title
     ],

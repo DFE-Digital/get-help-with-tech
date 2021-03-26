@@ -142,10 +142,6 @@ en:
             title: Your school has ordered all the devices it can
           user:
             title: You’ve ordered all the devices you can
-      internet:
-        home:
-          show:
-            title: Get internet access
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details

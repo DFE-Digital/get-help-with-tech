@@ -10,7 +10,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
   end
 
   scenario 'the user can navigate to the manual request form from the home page' do
-    click_on 'Get internet access'
+    click_on 'Internet access'
     click_on 'Request extra data for mobile devices'
 
     expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
@@ -29,7 +29,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     end
 
     scenario 'do not show FE excluded MNOs' do
-      click_on 'Get internet access'
+      click_on 'Internet access'
       click_on 'Request extra data for mobile devices'
       click_on 'New request'
       choose 'One at a time, using a form'
@@ -39,7 +39,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
   end
 
   scenario 'the user can navigate to the bulk upload form from the home page' do
-    click_on 'Get internet access'
+    click_on 'Internet access'
     click_on 'Request extra data for mobile devices'
 
     expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
@@ -60,7 +60,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     end
 
     scenario 'the user can navigate to their previous requests from the home page' do
-      click_on 'Get internet access'
+      click_on 'Internet access'
       click_on 'Request extra data for mobile devices'
 
       expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
