@@ -13,7 +13,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
   end
 
   scenario 'the user can navigate to the manual request form from the responsible body home page' do
-    click_on 'Get internet access'
+    click_on 'Internet access'
     click_on 'Request extra data for mobile devices'
 
     expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
@@ -26,7 +26,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
   end
 
   scenario 'the user can navigate to the bulk upload form from the responsible body home page' do
-    click_on 'Get internet access'
+    click_on 'Internet access'
     click_on 'Request extra data for mobile devices'
 
     expect(page).to have_css('h1', text: 'Request extra data for mobile devices')

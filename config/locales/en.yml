@@ -30,7 +30,6 @@ en:
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops
     responsible_body_devices_tell_us: Tell us who will order laptops
-    responsible_body_internet_home: Get internet access
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?

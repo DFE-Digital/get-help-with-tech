@@ -32,7 +32,7 @@ RSpec.feature 'Submitting an extra mobile data request', type: :feature do
 
     scenario 'Navigating to the form' do
       visit responsible_body_home_path
-      click_on('Get internet access')
+      click_on('Internet access')
       click_on('Request extra data for mobile devices')
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
