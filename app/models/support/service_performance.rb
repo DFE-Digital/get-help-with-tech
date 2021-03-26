@@ -34,27 +34,42 @@ class Support::ServicePerformance
   end
 
   def total_devices_available
-    SchoolDeviceAllocation.std_device.sum(:allocation)
+    sum_allocation(device_type: 'std_device', sum_expression: 'cap')
   end
 
   def total_devices_ordered
-    SchoolDeviceAllocation.std_device.sum(:devices_ordered)
+    sum_allocation(device_type: 'std_device', sum_expression: 'devices_ordered')
   end
 
   def total_devices_remaining
-    SchoolDeviceAllocation.std_device.sum('allocation - devices_ordered')
+    sum_allocation(device_type: 'std_device', sum_expression: 'cap - devices_ordered')
   end
 
   def total_routers_available
-    SchoolDeviceAllocation.coms_device.sum(:allocation)
+    sum_allocation(device_type: 'coms_device', sum_expression: 'cap')
   end
 
   def total_routers_ordered
-    SchoolDeviceAllocation.coms_device.sum(:devices_ordered)
+    sum_allocation(device_type: 'coms_device', sum_expression: 'devices_ordered')
   end
 
   def total_routers_remaining
-    SchoolDeviceAllocation.coms_device.sum('allocation - devices_ordered')
+    sum_allocation(device_type: 'coms_device', sum_expression: 'cap - devices_ordered')
+  end
+
+  def sum_allocation(device_type:, sum_expression:)
+    devolved = SchoolDeviceAllocation
+      .where(device_type: device_type)
+      .joins(school: :preorder_information)
+      .merge(School.gias_status_open)
+      .where(preorder_information: { who_will_order_devices: 'school' })
+      .sum(sum_expression)
+    managed = SchoolDeviceAllocation
+      .where(device_type: device_type)
+      .joins(school: :preorder_information)
+      .where(preorder_information: { who_will_order_devices: 'responsible_body' })
+      .sum(sum_expression)
+    devolved + managed
   end
 
   #
@@ -114,12 +129,12 @@ class Support::ServicePerformance
 
   def number_of_devolved_schools_that_have_not_ordered_routers
     @number_of_devolved_schools_that_have_not_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('allocation > 0 AND devices_ordered = 0'))
+      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('cap > 0 AND devices_ordered = 0'))
   end
 
   def number_of_devolved_schools_that_have_a_router_allocation
     @number_of_devolved_schools_that_have_a_router_allocation ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('allocation > 0'))
+      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('cap > 0'))
   end
 
   def percentage_of_devolved_schools_that_have_fully_ordered_routers
@@ -278,7 +293,7 @@ class Support::ServicePerformance
       .gias_status_open
       .that_are_centrally_managed
       .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.coms_device.where('allocation > 0'))
+      .merge(SchoolDeviceAllocation.coms_device.where('cap > 0'))
       .count('DISTINCT(responsible_body_id)')
   end
 
