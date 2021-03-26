@@ -30,13 +30,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       expect(page).to have_current_path(responsible_body_home_path)
       expect(page).to have_text 'Get help with technology'
     end
-
-    scenario 'visiting start page when already signed in redirects user to home page' do
-      sign_in_as user
-      visit start_path
-      expect(page).to have_current_path(responsible_body_home_path)
-      expect(page).to have_text 'Get help with technology'
-    end
   end
 
   scenario 'supplying a valid email sends a token' do

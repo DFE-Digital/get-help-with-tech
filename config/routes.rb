@@ -3,8 +3,6 @@ require Rails.root.join('lib/constraints/require_dfe_user_constraint')
 Rails.application.routes.draw do
   root 'pages#home_page'
 
-  get '/start', to: 'pages#start'
-
   resource :notify_callbacks, only: [:create]
 
   get '/guides-for-parents-carers-and-students', to: 'guides_for_parents_carers_students#index'
@@ -28,6 +26,7 @@ Rails.application.routes.draw do
 
   # redirects for moved guidance pages
   get '/pages/guidance', to: redirect('/')
+  get '/start', to: redirect('/')
   get '/devices/choosing-devices', to: redirect('/devices/device-allocations')
   get '/devices/allocation-and-specification', to: redirect('/devices/device-allocations')
   get '/devices/distributing-devices', to: redirect('/devices/device-distribution-and-ownership')
