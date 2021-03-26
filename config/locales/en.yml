@@ -35,6 +35,7 @@ en:
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
+    edit_responsible_body_user: Edit user
     responsible_body_schools_list: Your schools and colleges
     requests_for_extra_mobile_data: Requests for extra mobile data
     extra_mobile_data_requests_csv_update: Update requests using a CSV
@@ -319,7 +320,7 @@ en:
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
-      audience: responsible_body_users
+      audience: to_be_removed
     4g_user_guidance:
       title: How to get started with your 4G wireless router
       description: User guidance for 4G wireless routers to share with children, young people and their carers.
@@ -425,7 +426,7 @@ en:
       total_routers_available: total routers available
       total_routers_ordered: routers shipped
       total_routers_remaining: routers remaining
-      devolved_schools: schools that have a router allocation 
+      devolved_schools: schools that have a router allocation
       devolved_schools_that_have_fully_ordered_routers_html: ordered their full allocation <br/>(%{amount} out of %{total})
       devolved_schools_that_have_partially_ordered_routers_html: ordered but have routers left <br/>(%{amount} out of %{total})
       devolved_schools_that_have_not_ordered_routers_html: have not ordered <br/>(%{amount} out of %{total})
