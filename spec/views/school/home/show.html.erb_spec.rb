@@ -10,7 +10,7 @@ RSpec.describe 'school/home/show.html.erb' do
   end
 
   it 'always shows the Get internet access section' do
-    render
+    render template: subject, locals: { impersonated_or_current_user: user }
     expect(rendered).to include('Get internet access')
   end
 end

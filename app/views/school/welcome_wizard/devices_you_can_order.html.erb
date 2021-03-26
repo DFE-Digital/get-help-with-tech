@@ -5,7 +5,7 @@
     <%= form_for @wizard, url: welcome_wizard_school_path(step: @wizard.step) do |f| %>
       <%= f.hidden_field :step %>
       <h1 class="govuk-heading-xl">
-        <%- if @current_user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
+        <%- if impersonated_or_current_user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
         <%= title %>
       </h1>
 

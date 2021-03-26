@@ -5,7 +5,7 @@
       { t('page_titles.school.internet.home.show.title') => internet_school_path(@school) },
       title
     ],
-    user: @current_user,
+    user: impersonated_or_current_user,
     school: @school) %>
 <% end %>
 

@@ -56,6 +56,6 @@
       </p>
     <%- end %>
 
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address } %>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: impersonated_or_current_user.email_address } %>
   </div>
 </div>

@@ -1,9 +1,9 @@
-<%- who_cannot_order = @current_user.orders_devices? ? 'school_user' : 'school' %>
+<%- who_cannot_order = impersonated_or_current_user.orders_devices? ? 'school_user' : 'school' %>
 <%- title = t("page_titles.#{who_cannot_order}_cannot_order_devices.title") %>
 
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: 'Order devices', school: @school, user: @current_user %>
+  <%- school_breadcrumbs items: 'Order devices', school: @school, user: impersonated_or_current_user %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -16,7 +16,7 @@
     <p class="govuk-body">Ordering will be opened for your school as soon as possible.</p>
     <p class="govuk-body">We’ll email you when you can place an order.</p>
 
-    <% unless @current_user.orders_devices? %>
+    <% unless impersonated_or_current_user.orders_devices? %>
       <h2 class="govuk-heading-m">
         You will not be able to place orders yourself
       </h2>

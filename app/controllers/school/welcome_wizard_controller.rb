@@ -32,7 +32,7 @@ class School::WelcomeWizardController < School::BaseController
 private
 
   def set_wizard
-    @wizard = @current_user.welcome_wizard_for(@school) || @current_user.school_welcome_wizards.create!(school: @school)
+    @wizard = impersonated_or_current_user.welcome_wizard_for(@school) || impersonated_or_current_user.school_welcome_wizards.create!(school: @school)
   end
 
   def resume_wizard
