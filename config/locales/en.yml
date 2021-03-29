@@ -851,6 +851,8 @@ en:
         name: Name
         name_hint: Must be unique, and between 2 and 64 characters long
         create: Generate
+      destroy:
+        success: API token has been deleted
     sold_to:
       update:
         success: "Sold To reference for %{name} is %{sold_to}"
