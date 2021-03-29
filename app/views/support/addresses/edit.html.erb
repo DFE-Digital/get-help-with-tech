@@ -1,7 +1,7 @@
 <%- title = t('page_titles.support.addresses.edit') %>
 <%- content_for :title, title_with_error_prefix(title, @school.errors.any?) %>
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', support_school_path(@school), class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: support_school_path(@school)) %>
 <%- end %>
 
 <div class="govuk-grid-row">

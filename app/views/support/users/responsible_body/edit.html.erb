@@ -1,6 +1,6 @@
 <%- title = t('page_titles.support.users.responsible_bodies.edit') %>
 <% content_for :title, title %>
-<%- content_for :before_content, govuk_link_to('Back', support_user_path(@user), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_user_path(@user)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

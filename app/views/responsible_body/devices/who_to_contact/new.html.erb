@@ -1,4 +1,4 @@
-<%- content_for :before_content, govuk_link_to('Back', responsible_body_devices_schools_path, class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_devices_schools_path) %>
 <%- content_for :title, @school.name %>
 
 <div class="govuk-grid-row">

@@ -3,7 +3,7 @@
   title = t('title', scope: scope)
 %>
 <%- content_for :title, title %>
-<%- content_for :before_content, govuk_link_to('Back', how_many_devices_donated_devices_school_path(@school), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: how_many_devices_donated_devices_school_path(@school)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
