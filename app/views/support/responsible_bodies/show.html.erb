@@ -13,34 +13,8 @@
       <%= @responsible_body.name %>
     </h1>
 
-    <div class="govuk-tabs" data-module="govuk-tabs">
-      <h2 class="govuk-tabs__title">
-        Contents
-      </h2>
-
-      <ul class="govuk-tabs__list">
-        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-          <a class="govuk-tabs__tab" href="#schools-colleges">
-            Schools and colleges
-          </a>
-        </li>
-
-        <li class="govuk-tabs__list-item">
-          <a class="govuk-tabs__tab" href="#users">
-            Users
-          </a>
-        </li>
-
-        <%- if @responsible_body.extra_mobile_data_requests.present? %>
-          <li class="govuk-tabs__list-item">
-            <a class="govuk-tabs__tab" href="#mobile-data-requests">
-              Mobile data requests
-            </a>
-          </li>
-        <%- end %>
-      </ul>
-
-      <div class="govuk-tabs__panel" id="schools-colleges">
+    <%= render GovukComponent::Tabs.new(title: 'Contents') do |component| %>
+      <% component.slot(:tab, title: 'Schools and colleges') do %>
         <h2 class="govuk-heading-l">Schools and colleges</h2>
 
         <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
@@ -170,10 +144,10 @@
               <% end %>
             </tbody>
           </table>
-        <%- end %>
-      </div>
+        <% end %>
+      <% end %>
 
-      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="users">
+      <% component.slot(:tab, title: 'Users') do %>
         <h2 class="govuk-heading-l">Users</h2>
 
         <% if policy(User).new? %>
@@ -197,15 +171,15 @@
         <% else %>
           <p class="govuk-body">None</p>
         <% end %>
-      </div>
+      <% end %>
 
       <%- if @responsible_body.extra_mobile_data_requests.present? %>
-        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="mobile-data-requests">
+        <% component.slot(:tab, title: 'Mobile data requests') do %>
           <h2 class="govuk-heading-l">Mobile data requests</h2>
 
           <%= render Support::ExtraMobileDataRequestsSummaryListComponent.new(requests: @responsible_body.extra_mobile_data_requests) %>
-        </div>
-      <%- end %>
-    </div>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
 </div>

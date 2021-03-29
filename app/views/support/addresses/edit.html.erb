@@ -12,7 +12,7 @@
 
     <% unless @school.computacenter_change == 'none' %>
       <p class="govuk-body">
-        <strong class="govuk-tag govuk-tag--red">PENDING</strong> Computacenter still needs to update this address
+        <%= govuk_tag text: 'PENDING', colour: 'red' %> Computacenter still needs to update this address
       </p>
     <% end %>
 
