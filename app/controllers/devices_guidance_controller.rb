@@ -3,7 +3,8 @@ class DevicesGuidanceController < ApplicationController
 
   def index
     @responsible_body_pages = devices_guidance.pages_for(audience: :responsible_body_users)
-    @device_user_pages = devices_guidance.pages_for(audience: :device_users)
+    @setup_guide_pages = devices_guidance.pages_for(audience: :setup_guide_pages)
+    @manage_devices_pages = devices_guidance.pages_for(audience: :manage_devices_pages)
   end
 
   def subpage
