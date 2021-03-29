@@ -52,7 +52,7 @@ RSpec.feature ResponsibleBody do
 
       it 'shows link to get extra data' do
         visit responsible_body_home_path
-        expect(page).to have_link('Internet access')
+        expect(page).to have_link('Get internet access')
       end
     end
 
@@ -61,14 +61,14 @@ RSpec.feature ResponsibleBody do
 
       it 'does not show link to get extra data' do
         visit responsible_body_home_path
-        expect(page).not_to have_link('Internet access')
+        expect(page).not_to have_link('Get internet access')
       end
     end
 
     context 'with a local authority devolved to all schools' do
       it 'shows link to get extra data' do
         visit responsible_body_home_path
-        expect(page).to have_link('Internet access')
+        expect(page).to have_link('Get internet access')
       end
     end
 

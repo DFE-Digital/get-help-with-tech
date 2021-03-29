@@ -11,6 +11,6 @@ RSpec.describe 'school/home/show.html.erb' do
 
   it 'always shows the Get internet access section' do
     render
-    expect(rendered).to include('Internet access')
+    expect(rendered).to include('Get internet access')
   end
 end
