@@ -44,9 +44,10 @@ RSpec.describe Support::ImpersonatesController do
       expect(session[:impersonated_user_id]).to be_blank
     end
 
-    it 'redirects to support user start page' do
+    it 'redirects to support the user page' do
+      session[:impersonated_user_id] = impersonated_user.id
       delete :destroy
-      expect(response).to redirect_to('/support')
+      expect(response).to redirect_to("/support/users/#{impersonated_user.id}")
     end
   end
 end

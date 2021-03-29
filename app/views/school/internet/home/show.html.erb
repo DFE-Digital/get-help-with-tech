@@ -1,7 +1,7 @@
 <%- title = t('page_titles.school.internet.home.show.title') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+  <%- school_breadcrumbs items: title, school: @school, user: impersonated_or_current_user %>
 <%- end %>
 
 <div class="govuk-grid-row">

@@ -44,6 +44,6 @@
       If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
     </p>
 
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: impersonated_or_current_user.email_address, school_urn: @school.urn } %>
   </div>
 </div>

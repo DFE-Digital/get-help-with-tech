@@ -1,7 +1,7 @@
 <%- title = t('page_titles.school_order_devices') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+  <%- school_breadcrumbs items: title, school: @school, user: impersonated_or_current_user %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -21,6 +21,6 @@
     <h2 class="govuk-heading-m">Before you start</h2>
     <p class="govuk-body">It’s important to know how many devices you can order before you sign in. Please order only what you need. If you try to order more than you’ve been allocated, the order will be cancelled.</p>
 
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: impersonated_or_current_user.email_address, school_urn: @school.urn } %>
   </div>
 </div>

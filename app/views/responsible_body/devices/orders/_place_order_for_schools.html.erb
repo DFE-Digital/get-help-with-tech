@@ -29,6 +29,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m">Help signing in to TechSource</h2>
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address } %>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: impersonated_or_current_user.email_address } %>
   </div>
 </div>

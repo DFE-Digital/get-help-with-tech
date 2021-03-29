@@ -42,6 +42,7 @@ private
   def impersonated_or_current_user
     impersonated_user || current_user
   end
+  helper_method :impersonated_or_current_user
 
   def save_user_to_session!(user = @current_user)
     # prevent duplicate key errors if they're already signed_in
