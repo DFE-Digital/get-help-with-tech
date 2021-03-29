@@ -179,7 +179,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    http-parser (1.2.1)
+    http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
@@ -456,6 +456,7 @@ DEPENDENCIES
   govuk-components (>= 1.1.5)
   govuk_design_system_formbuilder
   http
+  http-parser (~> 1.2.3)
   i18n-debug
   listen (>= 3.0.5, < 3.6)
   logstash-logger (~> 0.26.1)

@@ -15,6 +15,9 @@ gem 'activerecord', '~> 6.1.3'
 gem 'actionmailer', '~> 6.1.3'
 gem 'railties', '~> 6.1.3'
 
+# Allows development on M1 Apple Silicon
+gem 'http-parser', '~> 1.2.3'
+
 # Canonical meta tag
 gem 'canonical-rails', git: 'https://github.com/asmega/canonical-rails.git', ref: '1b9426229dfa5136326f5ce4963e8e8d1cb3b23c'
 gem 'dotenv-rails'
