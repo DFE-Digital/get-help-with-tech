@@ -212,12 +212,6 @@ en:
             title: Check your answers before confirming
           opted_in:
             title: Schools and colleges are opted in
-    school_order_devices: Order devices
-    school_order_devices_soon: You’ll be able to order once your TechSource account is ready
-    school_details: Check your organisation’s details
-    school_edit_chromebooks: Will you need to order Chromebooks?
-    school_users: Manage users
-    school_before_can_order: Before you can order, we need more information
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet
