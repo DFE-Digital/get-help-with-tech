@@ -236,7 +236,8 @@ en:
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:
-        title: Do you need to give someone else access?
+        title: You can invite someone else to order
+        question: Do you need to give someone else access?
         yes_label: Yes, I need to add someone
         no_label: No, not at the moment
         errors:
