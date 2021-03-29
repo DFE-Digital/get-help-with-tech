@@ -3,6 +3,90 @@ require 'rails_helper'
 RSpec.describe PreorderInformation, type: :model do
   it { is_expected.to be_versioned }
 
+  describe 'can_change_who_will_order_devices?' do
+    context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'returns false' do
+        expect(school.preorder_information.can_change_who_will_order_devices?).to be false
+      end
+    end
+
+    context 'when the school is centrally managed and the responsible body does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'returns true' do
+        expect(school.preorder_information.can_change_who_will_order_devices?).to be true
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
+
+      it 'returns true' do
+        expect(school.preorder_information.can_change_who_will_order_devices?).to be true
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
+
+      it 'returns true' do
+        expect(school.preorder_information.can_change_who_will_order_devices?).to be true
+      end
+    end
+  end
+
+  describe 'change_who_will_order_devices!' do
+    context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'returns raises an error' do
+        expect { school.preorder_information.change_who_will_order_devices!('school') }.to raise_error(VirtualCapPoolError)
+      end
+    end
+
+    context 'when the school is centrally managed and the responsible body does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'changes who can order' do
+        school.preorder_information.change_who_will_order_devices!('school')
+        expect(school.preorder_information.reload.who_will_order_devices).to eq('school')
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :manages_orders, :can_order, :with_std_device_allocation, responsible_body: local_authority) }
+
+      it 'changes who can order' do
+        school.preorder_information.change_who_will_order_devices!('responsible_body')
+        expect(school.preorder_information.reload.who_will_order_devices).to eq('responsible_body')
+      end
+
+      it 'adds the school to the virtual cap pool' do
+        school.preorder_information.change_who_will_order_devices!('responsible_body')
+        expect(school.reload.in_virtual_cap_pool?).to be true
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
+
+      it 'changes who can order' do
+        school.preorder_information.change_who_will_order_devices!('responsible_body')
+        expect(school.preorder_information.reload.who_will_order_devices).to eq('responsible_body')
+      end
+    end
+  end
+
   describe 'status' do
     context 'when the school orders devices and the school contact is missing' do
       subject do

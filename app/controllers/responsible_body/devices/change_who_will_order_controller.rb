@@ -1,5 +1,5 @@
 class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::BaseController
-  before_action :set_school
+  before_action :check_school_can_change_who_will_order
 
   def edit
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(
@@ -25,6 +25,13 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
   end
 
 private
+
+  def check_school_can_change_who_will_order
+    set_school
+    if @school.preorder_information
+      not_found unless @school.preorder_information.can_change_who_will_order_devices?
+    end
+  end
 
   def set_school
     @school = @responsible_body.schools.where_urn_or_ukprn(params[:school_urn]).first!

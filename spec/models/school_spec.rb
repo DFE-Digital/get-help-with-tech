@@ -334,11 +334,12 @@ RSpec.describe School, type: :model do
   end
 
   describe '#in_virtual_cap_pool?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
     let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     before do
+      stub_computacenter_outgoing_api_calls
       first_school = schools.first
       first_school.preorder_information.responsible_body_will_order_devices!
       first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)

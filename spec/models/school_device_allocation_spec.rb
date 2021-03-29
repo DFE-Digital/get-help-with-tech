@@ -228,14 +228,6 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
         expected = pool.cap - pool.devices_ordered + allocation.raw_devices_ordered
         expect(allocation.computacenter_cap).to eq(expected)
       end
-
-      context 'without RB feature flag' do
-        let(:responsible_body) { create(:trust, :manages_centrally) }
-
-        it 'returns the raw cap' do
-          expect(allocation.computacenter_cap).to eq(allocation.raw_cap)
-        end
-      end
     end
   end
 end

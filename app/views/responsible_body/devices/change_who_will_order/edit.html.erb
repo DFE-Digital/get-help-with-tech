@@ -5,6 +5,18 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @form, url: responsible_body_devices_school_change_who_will_order_path(@school.urn), method: :patch do |f| %>
       <%= f.govuk_error_summary %>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        <span class="govuk-caption-xl"><%= @school.name %></span>
+        <%= t('page_titles.change_who_will_order') %>
+      </h1>
+      <% if @school.responsible_body.has_virtual_cap_feature_flags? %>
+        <p class="govuk-body">
+        If you choose to manage ordering for this <%= @school.institution_type %>, its device allocation will be added to the total allocation of all the schools and colleges you manage.
+        </p>
+        <p class="govuk-body">
+        You cannot transfer management of ordering back to the <%= @school.institution_type %> after making it centrally managed.
+        </p>
+      <%- end %>
       <%- # this hidden field prevents ActionController::ParameterMissing errors
           # if the user clicks submit without selecting anything,
           # and therefore we don't actually get any params %>
@@ -13,14 +25,8 @@
                                             change_who_will_order_devices_options,
                                             :id,
                                             :label,
-                                            legend: -> do %>
-                                              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                                                <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-4">
-                                                  <span class="govuk-caption-xl"><%= @school.name %></span>
-                                                  <%= t('page_titles.change_who_will_order') %>
-                                                </h1>
-                                              </legend>
-                                            <% end %>
+                                            legend: { text: '' }
+                                            %>
       <%= f.govuk_submit %>
     <%- end %>
   </div>

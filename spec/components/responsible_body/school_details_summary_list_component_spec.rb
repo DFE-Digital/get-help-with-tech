@@ -147,9 +147,26 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
       let(:school) { create(:school, :primary, :academy, responsible_body: responsible_body) }
 
-      it 'confirms that fact but does not allow changes' do
-        expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
-        expect(action_for_row(result, 'Who will order?')).to be_nil
+      context 'when the school manages orders' do
+        before do
+          school.preorder_information.update!(who_will_order_devices: 'school')
+        end
+
+        it 'confirms that fact and allow changes' do
+          expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
+          expect(action_for_row(result, 'Who will order?').text).to include('Change')
+        end
+      end
+
+      context 'when the school is centrally managed' do
+        before do
+          school.preorder_information.update!(who_will_order_devices: 'responsible_body')
+        end
+
+        it 'confirms that fact but does not allow changes' do
+          expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
+          expect(action_for_row(result, 'Who will order?')).to be_nil
+        end
       end
     end
   end
