@@ -60,6 +60,7 @@ class SignInTokensController < ApplicationController
 
   def sent
     @current_user = User.where(sign_in_token: params[:token]).first
+    render(:token_not_recognised, status: :bad_request) unless @current_user.present?
   end
 
   def hide_nav_menu?
