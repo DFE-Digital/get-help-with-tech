@@ -1,3 +1,3 @@
-Raven.configure do |config|
+Sentry.init do |config|
   config.dsn = Settings.sentry.dsn
 end

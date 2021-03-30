@@ -96,7 +96,7 @@ private
       support_home_path
     else
       # this should not happen - so let's tell Sentry
-      Raven.capture_message(
+      Sentry.capture_message(
         "couldn't figure out root_url_for user",
         logger: 'logger',
         extra: {

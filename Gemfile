@@ -65,7 +65,9 @@ gem 'rack-throttle'
 gem 'redcarpet'
 
 # Error emails via Sentry
-gem 'sentry-raven'
+gem 'sentry-ruby'
+gem 'sentry-rails'
+gem 'sentry-sidekiq'
 
 # Job queue
 gem 'sidekiq'
