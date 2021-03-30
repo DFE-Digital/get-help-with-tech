@@ -92,4 +92,26 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
       expect(page).to have_link('Request a new sign-in link', href: sign_in_path)
     end
   end
+
+  describe 'going directly to the token sent page' do
+    context 'with a valid session' do
+      let(:user) { create(:school_user) }
+
+      before do
+        sign_in_as(user)
+      end
+
+      context 'but an invalid token (bug #1798)' do
+        it 'does not throw an error' do
+          expect { visit sent_token_path(token: 'something_that_does_not_exist') }.not_to raise_error
+        end
+
+        it 'renders token_not_recognised with status :bad_request' do
+          visit sent_token_path(token: 'something_that_does_not_exist')
+          expect(page).to have_content('We didn’t recognise that link')
+          expect(page).to have_http_status(:bad_request)
+        end
+      end
+    end
+  end
 end
