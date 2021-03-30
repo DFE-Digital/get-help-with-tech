@@ -13,14 +13,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-8">
-      <h1 class="govuk-panel__title">
-        <%= title %>
-      </h1>
-      <div class="govuk-panel__body">
-        They are in the queue to receive&nbsp;devices
-      </div>
-    </div>
+    <%= govuk_panel(title: title,
+                    body: 'They are in the queue to receive&nbsp;devices'.html_safe,
+                    classes: 'govuk-!-margin-bottom-8'
+                   ) %>
+
     <h2 class="govuk-heading-m">What happens next</h2>
     <p class="govuk-body">
       If it’s their turn in the queue, you’ll get an email confirmation and Computacenter will deliver devices directly to the school or college.

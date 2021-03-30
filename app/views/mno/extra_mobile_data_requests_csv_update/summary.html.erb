@@ -1,5 +1,5 @@
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', new_mno_extra_mobile_data_requests_csv_update_path, class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: new_mno_extra_mobile_data_requests_csv_update_path) %>
 <% end %>
 <% content_for :title, t('page_titles.weve_processed_your_csv') %>
 

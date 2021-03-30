@@ -1,4 +1,4 @@
-<%- content_for :before_content, govuk_link_to('Back', support_school_path(@school.urn), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_path(@school.urn)) %>
 <%- title = t('page_titles.support_order_status.enable_orders') %>
 <%- content_for :title, title %>
 

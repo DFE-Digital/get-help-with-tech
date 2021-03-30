@@ -1,6 +1,6 @@
 <% title = t('page_titles.computacenter.multi_domain_chromebooks') %>
 <% content_for :title, title %>
-<% content_for :before_content, govuk_link_to('Back', computacenter_home_path, class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_back_link(text: 'Back', href: computacenter_home_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

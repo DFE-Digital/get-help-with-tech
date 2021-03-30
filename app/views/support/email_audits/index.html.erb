@@ -1,7 +1,7 @@
 <%- title = t('page_titles.support.email_audits.index') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', support_home_path, class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: support_home_path) %>
 <%- end %>
 
 <div class="govuk-grid-row">

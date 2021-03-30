@@ -1,4 +1,4 @@
-<% content_for :before_content, govuk_link_to('Back', responsible_body_internet_mobile_extra_data_requests_type_path, class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_internet_mobile_extra_data_requests_type_path) %>
 <% content_for :title, title_with_error_prefix(t('page_titles.upload_a_spreadsheet_of_extra_data_requests'), @upload_form.errors.any?) %>
 <div class="govuk-grid-row">
   <%= form_for @upload_form,

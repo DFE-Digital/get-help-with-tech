@@ -1,4 +1,4 @@
-<%- content_for :before_content, govuk_link_to('Back', new_internet_mobile_manual_request_path(@school), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: new_internet_mobile_manual_request_path(@school)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

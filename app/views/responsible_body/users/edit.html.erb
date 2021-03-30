@@ -1,6 +1,6 @@
 <%- title = t('page_titles.edit_responsible_body_user') %>
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', responsible_body_users_path, class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: responsible_body_users_path) %>
 <% end %>
 <%- content_for :title, title_with_error_prefix(title, @rb_user.errors.any?) %>
 

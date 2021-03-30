@@ -17,7 +17,7 @@ The platforms are purpose-built for remote learning in a way that a school or co
 Teachers can:
 
 * communicate with pupils and students and deliver lessons via video calls
-* record virtual lessons 
+* record virtual lessons
 * set tasks
 * let pupils and students work together through supervised group calls
 * give personalised feedback via video or within shared documents
@@ -28,7 +28,7 @@ Teachers can:
 
 Using a digital education platform allows teachers, pupils and students to continue education if a school or college closes.
 
-[The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/lead-your-approach/why-every-school-should-be-using-digital-education-platform/) has information on why you should make the move to a digital education platform, if you have not already. 
+[The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/lead-your-approach/why-every-school-should-be-using-digital-education-platform/) has information on why you should make the move to a digital education platform, if you have not already.
 
 ## Who can apply
 
@@ -64,15 +64,15 @@ Trusts and sponsors can apply on behalf of their schools and colleges.
 
 ## What happens after you apply
 
-A member from either Google or Microsoft will receive your request. They’ll confirm if you’re eligible for the programme and, if so, they’ll assign you to an IT supplier. 
+A member from either Google or Microsoft will receive your request. They’ll confirm if you’re eligible for the programme and, if so, they’ll assign you to an IT supplier.
 
-Your IT supplier will contact you within 2 days to agree a day and time to start the process of setting up the platform for your school or college. 
+Your IT supplier will contact you within 2 days to agree a day and time to start the process of setting up the platform for your school or college.
 
-It will take only a few days to install your platform if you respond quickly to the IT supplier’s requests to agree to the scope of work, and share user data and any other relevant information. 
+It will take only a few days to install your platform if you respond quickly to the IT supplier’s requests to agree to the scope of work, and share user data and any other relevant information.
 
 ## How to claim your grant funding
 
-After you complete your support request form, you'll receive an email from the DfE Digital Infrastructure Payments team with details on how to claim your grant. 
+After you complete your support request form, you'll receive an email from the DfE Digital Infrastructure Payments team with details on how to claim your grant.
 
 Once your platform is set up, you can claim the following grant funding:
 

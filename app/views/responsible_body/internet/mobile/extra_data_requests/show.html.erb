@@ -1,5 +1,5 @@
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', responsible_body_internet_mobile_extra_data_requests_path, class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: responsible_body_internet_mobile_extra_data_requests_path) %>
 <% end %>
 <%- title = "#{@request.mobile_network.brand} request #{@request.device_phone_number.first(2)}...#{@request.device_phone_number.last(4)}" %>
 <% content_for :title, title %>

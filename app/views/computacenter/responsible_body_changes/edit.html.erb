@@ -1,6 +1,6 @@
-<%- content_for :before_content, govuk_link_to('Back', computacenter_responsible_body_changes_path, class: 'govuk-back-link') %>
 <%- title = t('page_titles.computacenter.responsible_body_changes_edit') %>
 <%- content_for :title, title %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: computacenter_responsible_body_changes_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">

@@ -1,6 +1,6 @@
 <%- title = t('page_titles.donated_devices.school.interest.interest_confirmation.title') %>
 <%- content_for :title, title %>
-<%- content_for :before_content, govuk_link_to('Back', queue_donated_devices_school_path(@school), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: queue_donated_devices_school_path(@school)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

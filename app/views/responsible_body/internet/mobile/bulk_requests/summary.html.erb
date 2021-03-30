@@ -1,6 +1,6 @@
 <% content_for :title, t('page_titles.weve_processed_your_spreadsheet') %>
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', new_responsible_body_internet_mobile_bulk_request_path, class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: new_responsible_body_internet_mobile_bulk_request_path) %>
 <% end %>
 
 <div class="govuk-grid-row">

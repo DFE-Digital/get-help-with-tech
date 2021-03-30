@@ -1,4 +1,4 @@
-<%- content_for :before_content, govuk_link_to('Back', responsible_body_devices_who_will_order_edit_path, class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_devices_who_will_order_edit_path) %>
 
 <%- title = t(@responsible_body.who_will_order_devices.to_sym, scope: %i[page_titles who_will_order_show]) %>
 <%- content_for :title, title %>
