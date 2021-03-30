@@ -13,7 +13,7 @@ class Computacenter::API::BaseController < ApplicationController
 private
 
   def identify_user!
-    @current_user = APIToken.active.find_by(token: bearer_token)&.user
+    @current_user = (APIToken.active.find_by(token: bearer_token)&.user || User.new)
   end
 
   def bearer_token
