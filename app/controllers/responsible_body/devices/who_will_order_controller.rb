@@ -1,5 +1,6 @@
 class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::BaseController
   def edit
+    authorize ResponsibleBody::Devices::WhoWillOrderForm, policy_class: ResponsibleBody::BasePolicy
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(
       who_will_order: @responsible_body.who_will_order_devices,
     )

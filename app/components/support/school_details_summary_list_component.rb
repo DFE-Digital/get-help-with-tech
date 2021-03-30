@@ -73,7 +73,14 @@ private
   end
 
   def who_will_order_row
-    super.except(:change_path, :action, :action_path)
+    rb_row = super
+
+    if rb_row[:action] == 'Decide who will order'
+      rb_row.except!(:action, :action_path)
+    elsif rb_row.key?(:change_path)
+      rb_row[:change_path] = support_school_devices_change_who_will_order_path(school_urn: @school.urn)
+    end
+    rb_row
   end
 
   def device_allocation_row

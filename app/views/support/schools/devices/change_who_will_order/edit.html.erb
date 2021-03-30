@@ -1,0 +1,2 @@
+<% content_for :before_content, govuk_link_to('Back', support_school_path(@school.urn), class: 'govuk-back-link') %>
+<%= render partial: 'shared/change_who_will_order', locals: { form: @form, form_url: support_school_devices_change_who_will_order_path(@school.urn), school: @school } %>
