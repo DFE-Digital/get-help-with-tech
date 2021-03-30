@@ -50,7 +50,7 @@ private
         action: 'who will order',
       }
 
-      if @school.preorder_information.can_change_who_will_order_devices?
+      if @school.preorder_information&.can_change_who_will_order_devices?
         detail.merge!(
           change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
         )
