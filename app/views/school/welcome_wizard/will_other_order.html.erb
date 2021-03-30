@@ -17,7 +17,7 @@
 
       <%= f.govuk_error_summary %>
 
-      <%= f.govuk_radio_buttons_fieldset :invite_user, legend: nil do %>
+      <%= f.govuk_radio_buttons_fieldset :invite_user, legend: {text: t(:question, scope: scope)} do %>
         <%= f.govuk_radio_button :invite_user,
                                  'yes',
                                  label: { text: t(:yes_label, scope: scope) } do %>
