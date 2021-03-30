@@ -20,3 +20,4 @@ applications:
     DOCKER_IMAGE_ID: ((docker_image_id))
     ENV: $HOME/.profile
     RAILS_LOG_TO_STDOUT: true
+    SERVICE_ENV: production

@@ -22,3 +22,4 @@ applications:
     RAILS_LOG_TO_STDOUT: true
     GHWT__HOSTNAME_FOR_URLS: staging-get-help-with-tech.education.gov.uk
     GHWT__SERVICE_NAME_SUFFIX: (staging)
+    SERVICE_ENV: staging
