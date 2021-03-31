@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'layouts/multipage_guide.html.erb' do
+RSpec.describe 'layouts/guidance_pages.html.erb' do
   context 'when page has noindex set to true' do
     it 'has meta tag noindex' do
       assign(:page, OpenStruct.new(page_id: 'google_domain_for_care_leavers_and_children_with_social_worker', noindex: true))
