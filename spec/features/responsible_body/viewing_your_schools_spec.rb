@@ -149,7 +149,7 @@ RSpec.feature 'Viewing your schools' do
   end
 
   def then_i_see_text_about_managing_centrally_being_irreversible
-    expect(page).to have_text('You cannot transfer management of ordering back to the school after making it centrally managed')
+    expect(page).to have_text('You will not be able to transfer back ordering responsibility to the school once you’ve decided to do it this way')
   end
 
   def then_i_dont_see_change_links_for_who_will_order

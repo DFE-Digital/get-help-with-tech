@@ -95,11 +95,11 @@ RSpec.feature 'Changing who will order devices for a school' do
   end
 
   def then_i_do_not_see_content_warning_that_the_change_is_irreversible
-    expect(page).not_to have_text('You cannot transfer management of ordering back to the school after making it centrally managed.')
+    expect(page).not_to have_text('You will not be able to transfer back ordering responsibility to the school once you’ve decided to do it this way')
   end
 
   def then_i_see_content_warning_that_the_change_is_irreversible
-    expect(page).to have_text('You cannot transfer management of ordering back to the school after making it centrally managed.')
+    expect(page).to have_text('You will not be able to transfer back ordering responsibility to the school once you’ve decided to do it this way')
   end
 
   def then_the_who_will_order_details_show_that_the_school_orders_in_the_support_console
