@@ -1,6 +1,6 @@
 ## About the programme
 
-The [EdTech Demonstrator programme](https://edtech-demonstrator.lgfl.net/home) launched in 2019 to offer peer-to-peer support on the effective use of technology in education. It currently focuses on helping schools and colleges to provide remote and blended education. 
+The [EdTech Demonstrator programme](https://edtech-demonstrator.lgfl.net/home) launched in 2019 to offer peer-to-peer support on the effective use of technology in education. It currently focuses on helping schools and colleges to provide remote and face-to-face education. 
 
 The programme is tailored to the needs of each school or college, but will include training and support through:
 
