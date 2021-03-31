@@ -13,17 +13,13 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   validates_with CapAndAllocationValidator
 
-  def self.can_order_std_devices_now
-    by_device_type('std_device').where('cap > devices_ordered')
-  end
-
-  def self.by_device_type(device_type)
-    where(device_type: device_type)
-  end
-
-  def self.by_computacenter_device_type(cc_device_type)
-    by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type))
-  end
+  scope :has_fully_ordered, -> { where('devices_ordered > 0 AND cap = devices_ordered') }
+  scope :has_partially_ordered, -> { where('devices_ordered > 0 AND cap > devices_ordered') }
+  scope :has_not_ordered, -> { where(devices_ordered: 0) }
+  scope :has_not_fully_ordered, -> { where('cap > devices_ordered') }
+  scope :by_device_type, ->(device_type) { where(device_type: device_type) }
+  scope :can_order_std_devices_now, -> { by_device_type('std_device').where('cap > devices_ordered') }
+  scope :by_computacenter_device_type, ->(cc_device_type) { by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type)) }
 
   def computacenter_cap
     # value to pass to computacenter

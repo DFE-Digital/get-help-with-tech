@@ -206,7 +206,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def then_i_see_the_will_other_order_page
     expect(page).to have_current_path(welcome_wizard_will_other_order_school_path(urn: @user.school.urn))
-    expect(page).to have_text('Do you need to give someone else access?')
+    expect(page).to have_text('You can invite someone else to order')
   end
 
   def when_i_choose_yes_and_submit_the_form

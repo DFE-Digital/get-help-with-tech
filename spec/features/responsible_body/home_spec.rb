@@ -24,7 +24,7 @@ RSpec.feature ResponsibleBody do
     scenario 'visiting the page shows a :forbidden error' do
       visit responsible_body_home_path
 
-      expect(page).to have_content("You're not allowed to do that")
+      expect(page).to have_content('You’re not allowed to do that')
       expect(page).to have_http_status(:forbidden)
     end
   end

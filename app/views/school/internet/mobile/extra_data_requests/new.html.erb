@@ -1,5 +1,5 @@
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', extra_data_guidance_internet_mobile_school_path(@school), class: 'govuk-back-link') %>
+  <%= govuk_back_link(text: 'Back', href: extra_data_guidance_internet_mobile_school_path(@school)) %>
 <% end %>
 
 <% content_for :title, title_with_error_prefix(t('page_titles.how_would_you_like_to_submit_information'), @submission_type.errors.any?) %>

@@ -1,6 +1,6 @@
 <% content_for :title, "Add #{@school.name} - Support" %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
+  <%= breadcrumbs([{ "Home" => root_path },
     { 'Support home' => support_home_path },
     { t('page_titles.gias_updates') => support_gias_home_path },
     { t('page_titles.gias_schools_to_add') => support_gias_schools_to_add_index_path },

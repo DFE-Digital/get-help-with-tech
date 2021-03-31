@@ -6,9 +6,9 @@
 
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([
-                   { "Home" => responsible_body_home_path },
-                   title ,
+  <% breadcrumbs([{ "Home" => root_path },
+                  { "Your account" => responsible_body_home_path },
+                  title ,
                  ]) %>
 <% end %>
 

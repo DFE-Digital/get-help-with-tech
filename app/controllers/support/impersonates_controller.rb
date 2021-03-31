@@ -11,9 +11,9 @@ class Support::ImpersonatesController < Support::BaseController
   end
 
   def destroy
-    session.delete(:impersonated_user_id)
+    impersonated_user_id = session.delete(:impersonated_user_id)
 
-    redirect_to root_url_for(current_user)
+    redirect_to support_user_path(impersonated_user_id)
   end
 
 private

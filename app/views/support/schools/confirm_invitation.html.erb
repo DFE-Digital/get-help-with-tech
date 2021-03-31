@@ -1,5 +1,5 @@
 <% content_for :title, "Invite #{@school.name} – Support" %>
-<%- content_for :before_content, govuk_link_to('Back', support_responsible_body_path(@school.responsible_body), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_responsible_body_path(@school.responsible_body)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

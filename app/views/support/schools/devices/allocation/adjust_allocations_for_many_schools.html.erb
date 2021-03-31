@@ -1,6 +1,6 @@
 <%- title = t('page_titles.support.allocation.adjust_allocations_for_many_schools') %>
 <% content_for :title, title %>
-<%- content_for :before_content, govuk_link_to('Back', adjust_allocations_for_many_schools_support_schools_path, class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: adjust_allocations_for_many_schools_support_schools_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">

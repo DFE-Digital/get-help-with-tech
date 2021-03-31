@@ -1,16 +1,7 @@
-<%= content_for :title, @title  %>
+<%= content_for :title, @title %>
 
 <%- content_for :before_content do %>
-  <div class="govuk-breadcrumbs ">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <%= link_to "Get help with technology", root_path, class: 'govuk-breadcrumbs__link' %>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <%= @title %>
-      </li>
-    </ol>
-  </div>
+  <%= govuk_breadcrumbs(breadcrumbs: { 'Home' => root_path, @title => nil }) %>
 <% end %>
 
 <% content_for :content do %>

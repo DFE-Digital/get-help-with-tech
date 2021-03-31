@@ -1,5 +1,5 @@
 <% content_for :title, t('page_titles.responsible_body.devices.order_devices') %>
-<% content_for :before_content, govuk_link_to('Back', responsible_body_devices_school_path(urn: @school.urn), class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_devices_school_path(urn: @school.urn)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -44,6 +44,6 @@
       If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
     </p>
 
-    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: @current_user.email_address, school_urn: @school.urn } %>
+    <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: impersonated_or_current_user.email_address, school_urn: @school.urn } %>
   </div>
 </div>

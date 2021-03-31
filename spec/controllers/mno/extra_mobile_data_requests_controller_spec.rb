@@ -32,11 +32,12 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
   end
 
   describe 'PATCH update' do
+    let(:new_status) { 'problem_no_match_for_number' }
     let(:params) do
       {
         id: extra_mobile_data_request_1_for_mno.id,
         extra_mobile_data_request: {
-          status: 'problem_no_match_for_number',
+          status: new_status,
         },
       }
     end
@@ -46,15 +47,26 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
         patch :update, params: params
         expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('problem_no_match_for_number')
       end
+
+      context 'which sets the status to complete' do
+        let(:new_status) { 'complete' }
+
+        it 'records a ReportableEvent with the right attributes' do
+          expect {
+            patch :update, params: params
+          }.to change { ReportableEvent.where(event_name: 'completion', record_type: 'ExtraMobileDataRequest', record_id: params[:id]).count }.by(1)
+        end
+      end
     end
   end
 
   describe 'PUT /bulk_update' do
+    let(:new_status) { 'cancelled' }
     let(:valid_params) do
       {
         mno_extra_mobile_data_requests_form: {
           extra_mobile_data_request_ids: extra_mobile_data_requests.pluck('id'),
-          status: 'cancelled',
+          status: new_status,
         },
       }
     end
@@ -64,7 +76,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       let(:params) do
         {
           mno_extra_mobile_data_requests_form: {
-            status: 'cancelled',
+            status: new_status,
           },
         }
       end
@@ -89,6 +101,16 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
       it 'redirects_to extra_mobile_data_requests index' do
         put :bulk_update, params: valid_params
         expect(response).to redirect_to(mno_extra_mobile_data_requests_path)
+      end
+
+      context 'and status complete' do
+        let(:new_status) { 'complete' }
+
+        it 'records a ReportableEvent for each request' do
+          expect {
+            put :bulk_update, params: valid_params
+          }.to change { ReportableEvent.where(event_name: 'completion', record_type: 'ExtraMobileDataRequest').count }.by(extra_mobile_data_requests.count)
+        end
       end
     end
 

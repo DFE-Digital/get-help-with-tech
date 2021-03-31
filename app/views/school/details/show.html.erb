@@ -1,5 +1,5 @@
 <%- content_for :before_content do %>
-  <%= govuk_link_to('Back', home_school_path, class: 'govuk-back-link') %>
+  <%- school_breadcrumbs(school: @school, user: impersonated_or_current_user, items: t('page_titles.school_details')) %>
 <% end %>
 <% content_for :title, t('page_titles.school_details') %>
 

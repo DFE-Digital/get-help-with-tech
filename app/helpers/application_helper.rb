@@ -16,10 +16,10 @@ module ApplicationHelper
     ]
   end
 
-  def api_token_status_class(status)
+  def api_token_status_colour(status)
     {
-      active: 'govuk-tag--green',
-      revoked: 'govuk-tag--grey',
+      active: 'green',
+      revoked: 'red',
     }[status.to_sym]
   end
 end

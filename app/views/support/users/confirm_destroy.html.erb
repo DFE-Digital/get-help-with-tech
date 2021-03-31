@@ -1,5 +1,5 @@
 <%- title = t('page_titles.confirm_destroy_user') %>
-<%- content_for :before_content, govuk_link_to('Back', support_user_path(@user), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_user_path(@user)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

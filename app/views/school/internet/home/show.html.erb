@@ -1,45 +1,8 @@
-<%- title = t('page_titles.school.internet.home.show.title') %>
+<%- title = t('page_titles.signed_in_internet_access')  %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: title, school: @school, user: @current_user %>
+  <%- school_breadcrumbs items: title, school: @school, user: impersonated_or_current_user %>
 <%- end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= title %></h1>
-  </div>
-</div>
+<%= render partial: 'shared/internet/home', locals: { is_rb: false, title: title } %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      Extra data for mobile devices
-    </h2>
-    <%= render partial: 'shared/internet/mno_information' %>
-    <p class="govuk-body">
-      <%= govuk_link_to 'Request extra data for mobile devices', extra_data_guidance_internet_mobile_school_path(@school) %>
-    </p>
-    <p class="govuk-body">
-      <%= govuk_link_to 'Check your requests', extra_data_requests_internet_mobile_school_path(@school) %>
-    </p>
-
-    <h2 class="govuk-heading-l govuk-!-font-size-27 govuk-!-margin-top-6">
-      4G wireless routers
-    </h2>
-    <p class="govuk-body">
-      You can request 4G wireless routers for children and young people who do not have internet access at home and whose <span class="app-no-wrap">face-to-face education</span> has been disrupted. This option might also be suitable for those who cannot get a mobile data increase.
-    </p>
-    <p class="govuk-body"><%= govuk_link_to 'What you need to know to request 4G wireless routers', how_to_request_4g_wireless_routers_path %></p>
-    <p class="govuk-body"><%= govuk_link_to 'Request a 4G wireless router', 'https://forms.gle/LE1hi2FAKdedUvCz6' %></p>
-  </div>
-
-  <div class="govuk-grid-column-one-third">
-    <div class="app-related">
-      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Guidance</h2>
-      <p class="govuk-body">
-        <%= govuk_link_to 'Choosing help with internet access', choosing_help_with_internet_access_path %>
-      </p>
-    </div>
-  </div>
-
-</div>

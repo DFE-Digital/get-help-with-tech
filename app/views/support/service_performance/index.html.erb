@@ -1,7 +1,7 @@
 <%- title = t('page_titles.service_performance') %>
 <% content_for :title, title %>
 <%- content_for :before_content do %>
-  <%= breadcrumbs([
+  <%= breadcrumbs([{ "Home" => root_path },
     { 'Support home' => support_home_path },
     title,
   ]) %>
@@ -13,13 +13,20 @@
 </h1>
 
 <%= govuk_tabs(title: 'Contents') do |component| %>
-  <% component.slot(:tab, title: 'Devices') do %>
-    <%= render partial: 'responsible_body_sign_ins' %>
-
-    <%= render partial: 'preorder_information' %>
+  <% component.slot(:tab, title: 'Service') do %>
+    <%= render partial: 'sign_ins' %>
+    <%= render partial: 'who_orders' %>
   <% end %>
 
-  <% component.slot(:tab, title: 'Connectivity') do %>
+  <% component.slot(:tab, title: 'Devices') do %>
+    <%= render partial: 'devices' %>
+  <% end %>
+
+  <% component.slot(:tab, title: 'MNO') do %>
     <%= render partial: 'mobile_data_requests' %>
+  <% end %>
+
+  <% component.slot(:tab, title: 'Routers') do %>
+    <%= render partial: 'routers' %>
   <% end %>
 <%- end %>

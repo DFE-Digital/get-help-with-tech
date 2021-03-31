@@ -38,7 +38,7 @@ describe Mno::ExtraMobileDataRequestsCsvUpdateController, type: :controller do
     end
 
     it 'accepts a valid CSV file in Windows-1252 character encoding' do
-      upload = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/extra-mobile-data-request-utf8.csv'), 'application/vnd.ms-excel')
+      upload = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/extra-mobile-data-request-windows-1252.csv'), 'application/vnd.ms-excel')
 
       post :create, params: { mno_csv_status_update_form: { upload: upload } }
       expect(response).to render_template(:summary)

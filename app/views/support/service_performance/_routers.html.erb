@@ -1,0 +1,99 @@
+<h2 class="govuk-heading-l">Routers</h2>
+<%- i18n_scope = 'support.routers_performance' %>
+
+<div class="govuk-!-margin-bottom-4">
+  <%= render Support::TileComponent.new(
+               count: humanized_number(@stats.total_routers_available),
+               label: t(:total_routers_available, scope: i18n_scope),
+               colour: :blue) %>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: humanized_number(@stats.total_routers_ordered),
+                 label: t(:total_routers_ordered, scope: i18n_scope),
+                 colour: :green) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: humanized_number(@stats.total_routers_remaining),
+                 label: t(:total_routers_remaining, scope: i18n_scope),
+                 colour: :orange) %>
+  </div>
+</div>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Schools</h3>
+<div class="govuk-!-margin-bottom-4">
+  <%= render Support::TileComponent.new(
+               count: humanized_number(@stats.number_of_devolved_schools_that_have_a_router_allocation),
+               label: t(:devolved_schools, scope: i18n_scope),
+               colour: :blue) %>
+</div>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_fully_ordered_routers),
+                 label: t(:devolved_schools_that_have_fully_ordered_routers_html,
+                          scope: i18n_scope,
+                          amount: humanized_number(@stats.number_of_devolved_schools_that_have_fully_ordered_routers),
+                          total: humanized_number(@stats.number_of_devolved_schools_that_have_a_router_allocation)),
+                 colour: :green) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_partially_ordered_routers),
+                 label: t(:devolved_schools_that_have_partially_ordered_routers_html,
+                          scope: i18n_scope,
+                          amount: humanized_number(@stats.number_of_devolved_schools_that_have_partially_ordered_routers),
+                          total: humanized_number(@stats.number_of_devolved_schools_that_have_a_router_allocation)),
+                 colour: :orange) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_devolved_schools_that_have_not_ordered_routers),
+                 label: t(:devolved_schools_that_have_not_ordered_routers_html,
+                          scope: i18n_scope,
+                          amount: humanized_number(@stats.number_of_devolved_schools_that_have_not_ordered_routers),
+                          total: humanized_number(@stats.number_of_devolved_schools_that_have_a_router_allocation)),
+                 colour: :red) %>
+  </div>
+</div>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-7">Responsible bodies</h3>
+<div class="govuk-!-margin-bottom-4">
+  <%= render Support::TileComponent.new(
+               count: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation),
+               label: t(:responsible_bodies_managing_centrally,
+                        scope: i18n_scope),
+                        colour: :blue) %>
+</div>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers),
+                 label: t(:responsible_bodies_that_have_fully_ordered_html,
+                          scope: i18n_scope,
+                          amount: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_fully_ordered_routers),
+                          total: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation)),
+                 colour: :green) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers),
+                 label: t(:responsible_bodies_that_have_partially_ordered_html,
+                          scope: i18n_scope,
+                          amount: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers),
+                          total: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation)),
+                 colour: :orange) %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render Support::PercentageTileComponent.new(
+                 percentage: humanized_number(@stats.percentage_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers),
+                 label: t(:responsible_bodies_that_have_not_ordered_html,
+                          scope: i18n_scope,
+                          amount: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_not_ordered_routers),
+                          total: humanized_number(@stats.number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation)),
+                 colour: :red) %>
+  </div>
+</div>

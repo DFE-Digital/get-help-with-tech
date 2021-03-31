@@ -223,6 +223,6 @@ RSpec.feature 'Managing GIAS updates to schools from the support area', type: :f
 
   def then_i_see_a_forbidden_message
     expect(page).to have_text('Forbidden')
-    expect(page).to have_text("You're not allowed to do that")
+    expect(page).to have_text('You’re not allowed to do that')
   end
 end

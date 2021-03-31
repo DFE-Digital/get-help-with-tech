@@ -16,8 +16,8 @@
 }
 
 .app-card--green {
-  background: govuk-colour("green");
-  color: govuk-colour("white");
+  color: govuk-shade(govuk-colour("green"), 20);
+  background: govuk-tint(govuk-colour("green"), 80);
 }
 
 .app-card--yellow {
@@ -31,6 +31,11 @@
 .app-card--red {
   color: govuk-shade(govuk-colour("red"), 30);
   background: govuk-tint(govuk-colour("red"), 80);
+}
+
+.app-card--orange {
+  color: govuk-shade(govuk-colour("orange"), 55);
+  background: govuk-tint(govuk-colour("orange"), 70);
 }
 
 .app-card--white {

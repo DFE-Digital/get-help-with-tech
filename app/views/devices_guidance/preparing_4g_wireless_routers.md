@@ -8,7 +8,7 @@ You can check the status of each router and if needed, raise an issue via the [
 
 ### For schools and colleges
 
-You will need to ask your trust or local authority to access the [Support Portal](https://computacenterprod.service-now.com/) on your behalf to check the status of a router or raise an issue. [Contact us](/get-support) if you’re unsure who to contact.
+You can check the status of each router in the [Support Portal](https://computacenterprod.service-now.com/). If you need to raise an issue, you will need to ask your trust or local authority to do this on your behalf. [Contact us](/get-support) if you’re unsure who to contact.
 
 ### For young people and families
 

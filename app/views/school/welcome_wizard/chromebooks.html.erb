@@ -6,7 +6,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%- if @current_user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
+      <%- if impersonated_or_current_user.has_multiple_schools? %><span class="govuk-caption-l"><%= @school.name %></span><%- end %>
       <%= title %>
     </h1>
 

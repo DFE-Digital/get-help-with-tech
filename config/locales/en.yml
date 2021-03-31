@@ -30,7 +30,6 @@ en:
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get laptops
     responsible_body_devices_tell_us: Tell us who will order laptops
-    responsible_body_internet_home: Get internet access
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Will the school need Chromebooks?
@@ -47,7 +46,8 @@ en:
     weve_processed_your_csv: We’ve processed your CSV
     guide_to_collecting_mobile_information: Guide to collecting mobile information
     start: Get help with technology
-    internet_access: Get internet access
+    internet_access: Internet access
+    signed_in_internet_access: Get internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
     devices_guidance_how_to_order: "How and when to order DfE laptops during coronavirus (COVID-19)"
@@ -91,7 +91,7 @@ en:
       addresses:
         edit: Update address
       email_audits:
-        index: Email audits
+        index: Recent emails with delivery issues
     support_extra_mobile_data_requests: Requests for extra mobile data
     support_responsible_bodies: Responsible bodies
     support_school_contacts_edit: Edit school contact
@@ -142,10 +142,6 @@ en:
             title: Your school has ordered all the devices it can
           user:
             title: You’ve ordered all the devices you can
-      internet:
-        home:
-          show:
-            title: Get internet access
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
@@ -217,12 +213,6 @@ en:
             title: Check your answers before confirming
           opted_in:
             title: Schools and colleges are opted in
-    school_order_devices: Order devices
-    school_order_devices_soon: You’ll be able to order once your TechSource account is ready
-    school_details: Check your organisation’s details
-    school_edit_chromebooks: Will you need to order Chromebooks?
-    school_users: Manage users
-    school_before_can_order: Before you can order, we need more information
     order_devices:
       title: Order devices
       you_cannot_order_yet: You cannot order devices yet
@@ -246,7 +236,8 @@ en:
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:
-        title: Do you need to give someone else access?
+        title: You can invite someone else to order
+        question: Do you need to give someone else access?
         yes_label: Yes, I need to add someone
         no_label: No, not at the moment
         errors:
@@ -301,6 +292,10 @@ en:
       title: Preparing Microsoft Windows laptops and tablets
       description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
       audience: responsible_body_users
+    preparing_a_standard_windows_device:
+      title: Preparing standard Microsoft Windows laptops and tablets
+      description: When you receive a standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
+      audience: technical_staff_doing_device_setup # won't appear in the index
     getting_started_with_your_microsoft_windows_device:
       title: How to get started with your Microsoft Windows laptop or tablet
       description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
@@ -320,7 +315,7 @@ en:
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
-      audience: responsible_body_users
+      audience: to_be_removed
     4g_user_guidance:
       title: How to get started with your 4G wireless router
       description: User guidance for 4G wireless routers to share with children, young people and their carers.
@@ -335,11 +330,11 @@ en:
       audience: responsible_body_users
     replace_a_faulty_device:
       title: Replace a faulty device
-      description: Find out how to get a replacement for a faulty laptop, tablet or 4G wireless router, the cost to replace a damaged device, how to service and repair an iPad and other warranty details.
+      description: Find out what to do if a laptop, tablet or 4G wireless router you’ve received from us is not working.
       audience: responsible_body_users
     safeguarding_for_device_users:
       title: Safeguarding for device users
-      description: Information on content filtering, privacy policies and mobile device management to ensure devices are used appropriately by young people and families.
+      description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
       audience: responsible_body_users
     enrol_chromebooks_with_user_logins:
       title: Enrol Chromebooks and add Cisco Umbrella with user logins
@@ -388,6 +383,14 @@ en:
       update:
         success: We’ve saved the new allocation
     service_performance:
+      devolved_schools_that_have_signed_in_html: of devolved schools signed in <br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_signed_in_html: of responsible bodies signed in <br/>(%{amount} out of %{total})
+      devolved_schools:
+        one: school orders their own devices
+        other: schools order their own devices
+      centrally_managed_schools:
+        one: school is managed centrally
+        other: schools are managed centrally
       requests:
         one: request
         other: requests
@@ -401,6 +404,31 @@ en:
         one: responsible body has given all the information needed for at least one school
         other: responsible bodies have given all the information needed for at least one school
     devices_performance:
+      total_devices_available: total devices available
+      total_devices_ordered: devices shipped
+      total_devices_remaining: remaining
+      devolved_schools: devolved schools
+      devolved_schools_that_have_fully_ordered_html: ordered their full allocation <br/>(%{amount} out of %{total})
+      devolved_schools_that_have_partially_ordered_html: ordered but have devices left <br/>(%{amount} out of %{total})
+      devolved_schools_that_have_not_ordered_html: have not ordered <br/>(%{amount} out of %{total})
+      responsible_bodies_managing_centrally_html: responsible bodies managing orders centrally <br/>on behalf of %{school_count} schools
+      responsible_bodies_that_have_fully_ordered_html: ordered their full allocation <br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_partially_ordered_html: ordered but have devices left <br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_not_ordered_html: have not ordered <br/>(%{amount} out of %{total})
+      devolved_schools_extra_mobile_requests_html: devolved schools <br/>(out of %{total})
+      responsible_bodies_extra_mobile_requests_html: responsible bodies managing orders centrally <br/>(out of %{total}, and on behalf of %{school_count} schools)
+    routers_performance:
+      total_routers_available: total routers available
+      total_routers_ordered: routers shipped
+      total_routers_remaining: routers remaining
+      devolved_schools: schools that have a router allocation
+      devolved_schools_that_have_fully_ordered_routers_html: ordered their full allocation <br/>(%{amount} out of %{total})
+      devolved_schools_that_have_partially_ordered_routers_html: ordered but have routers left <br/>(%{amount} out of %{total})
+      devolved_schools_that_have_not_ordered_routers_html: have not ordered <br/>(%{amount} out of %{total})
+      responsible_bodies_managing_centrally: responsible bodies managing centrally have a school with a router allocation
+      responsible_bodies_that_have_fully_ordered_html: ordered their full allocation <br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_partially_ordered_html: ordered but have routers left <br/>(%{amount} out of %{total})
+      responsible_bodies_that_have_not_ordered_html: have not ordered <br/>(%{amount} out of %{total})
       decision_made:
         one: school has had a decision made about who will place orders
         other: schools have had a decision made about who will place orders
@@ -814,6 +842,8 @@ en:
         name: Name
         name_hint: Must be unique, and between 2 and 64 characters long
         create: Generate
+      destroy:
+        success: API token has been deleted
     sold_to:
       update:
         success: "Sold To reference for %{name} is %{sold_to}"

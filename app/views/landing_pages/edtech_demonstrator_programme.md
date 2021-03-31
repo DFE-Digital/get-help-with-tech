@@ -28,23 +28,23 @@ Demonstrators are [schools and colleges](https://edtech-demonstrator.lgfl.net/de
 ## Who the programme is for
 Any publicly funded school or college in England can apply for support from an EdTech Demonstrator. Independent schools and training providers are not eligible for the scheme.
 
-The programme offers support to schools and colleges who are setting up a [new online learning platform](/digital-platforms). 
+The programme offers support to schools and colleges who are setting up a [new online learning platform](/digital-platforms).
 
 It can also help those that would like support to develop their approach to remote learning to improve learner outcomes, engagement and wellbeing.
 
 ## How to apply for free training and support
 
-Visit the EdTech Demonstrator website to [complete this form and register your interest](https://edtech-demonstrator.lgfl.net/register-your-interest). You’ll then be contacted to find out more about your needs. 
+Visit the EdTech Demonstrator website to [complete this form and register your interest](https://edtech-demonstrator.lgfl.net/register-your-interest). You’ll then be contacted to find out more about your needs.
 
 ## The long-term benefits of the programme
 
 The EdTech Demonstrator programme is funded by the DfE until the end of March 2021.
 
-Schools and colleges will receive facilitated support from demonstrators through continuous professional development (CPD). 
+Schools and colleges will receive facilitated support from demonstrators through continuous professional development (CPD).
 
 You can [watch video testimonials](https://edtech-demonstrator.lgfl.net/about/how-it-works) from demonstrators and some of the schools and colleges they work with on the EdTech Demonstrator website.
 
 ## Contact us
-To apply for free training and support, visit the EdTech Demonstrator website to [complete this form](https://edtech-demonstrator.lgfl.net/register-your-interest). 
+To apply for free training and support, visit the EdTech Demonstrator website to [complete this form](https://edtech-demonstrator.lgfl.net/register-your-interest).
 
 If you have a question about the EdTech Demonstrator Programme email EdTech.TEAM@education.gov.uk.

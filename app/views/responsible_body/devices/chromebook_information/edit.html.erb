@@ -1,7 +1,6 @@
 <%- title = t('page_titles.responsible_body_devices_chromebooks') %>
 <%- content_for :title, title %>
-<% content_for :before_content, govuk_link_to('Back', responsible_body_devices_school_path(urn: @school.urn), class: 'govuk-back-link') %>
-
+<% content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_devices_school_path(urn: @school.urn)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

@@ -1,7 +1,8 @@
 <% title = t('page_titles.computers_for_kids_privacy_notice') %>
 <% content_for :title, title %>
 <% content_for :before_content do %>
-  <% breadcrumbs([{ "Privacy" => privacy_path },
+  <% breadcrumbs([{ "Home" => root_path },
+                  { "Privacy" => privacy_path },
                   title,
                  ]) %>
 <% end %>

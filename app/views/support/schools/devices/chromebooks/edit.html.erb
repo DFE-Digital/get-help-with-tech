@@ -1,6 +1,6 @@
 <%- title = t('page_titles.support_edit_chromebook_details') %>
 <%- content_for :title, title %>
-<% content_for :before_content, govuk_link_to('Back', support_school_path(@school.urn), class: 'govuk-back-link') %>
+<% content_for :before_content, govuk_back_link(text: 'Back', href: support_school_path(@school.urn)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

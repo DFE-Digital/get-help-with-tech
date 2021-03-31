@@ -1,12 +1,12 @@
 <%- title = t('page_titles.invite_school_user.title') %>
 <%- content_for :title, title_with_error_prefix(title, @user.errors.any?) %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs( items: [
-                            { t('page_titles.school_users') => school_users_path(@school) },
-                            title,
-                          ],
-                          school: @school,
-                          user: @current_user ) %>
+  <%- school_breadcrumbs(items: [
+                           { t('page_titles.school_users') => school_users_path(@school) },
+                           title,
+                         ],
+                         school: @school,
+                         user: impersonated_or_current_user) %>
 <%- end %>
 
 <div class="govuk-grid-row">

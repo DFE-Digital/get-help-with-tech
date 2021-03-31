@@ -44,6 +44,10 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
       expect(request.reload.status).to eq('complete')
     end
 
+    it 'records a ReportableEvent with the right attributes for each completion' do
+      expect { importer.import! }.to change(ReportableEvent.where(record_type: 'ExtraMobileDataRequest', event_name: 'completion'), :count).from(0).to(1)
+    end
+
     it 'returns a summary of the import' do
       summary = importer.import!
       expect(summary.has_updated_requests?).to be true

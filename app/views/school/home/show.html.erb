@@ -1,6 +1,6 @@
 <%- title = @school.name %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs(school: @school, user: @current_user, items: title) %>
+  <%- school_breadcrumbs(school: @school, user: impersonated_or_current_user, items: 'Your account') %>
 <%- end %>
 <%- content_for :title, title %>
 
@@ -25,7 +25,7 @@
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to 'Get internet access', internet_school_path(@school) %>
+      <%= govuk_link_to t('page_titles.signed_in_internet_access') , internet_school_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>

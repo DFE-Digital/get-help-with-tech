@@ -23,11 +23,11 @@ FactoryBot.define do
     end
 
     trait :manages_orders do
-      association :preorder_information, :school_will_order
+      preorder_information { association :preorder_information, :school_will_order, school: instance }
     end
 
     trait :centrally_managed do
-      association :preorder_information, :rb_will_order
+      preorder_information { association :preorder_information, :rb_will_order, school: instance }
     end
 
     trait :with_headteacher_contact do

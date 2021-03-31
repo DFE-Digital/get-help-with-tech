@@ -1,6 +1,6 @@
 <%- title = t('page_titles.donated_devices.responsible_body.interest.all_or_some_schools.title') %>
 <%- content_for :title, title %>
-<%- content_for :before_content, govuk_link_to('Back', responsible_body_donated_devices_interest_confirmation_path, class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_donated_devices_interest_confirmation_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

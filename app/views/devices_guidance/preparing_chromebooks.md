@@ -1,4 +1,8 @@
+<div class="govuk-inset-text">
 The person who placed a Chromebook order will receive an email from deal-fulfillment@google.com including important information regarding device setup. We suggest this email is forwarded to the technical contact responsible for preparing Chromebooks.
+</div>
+
+This guidance is written with reference to Chromebooks provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## How to enrol Chromebooks
 

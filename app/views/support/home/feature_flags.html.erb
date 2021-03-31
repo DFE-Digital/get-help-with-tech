@@ -1,8 +1,9 @@
 <%- title = t('page_titles.support.feature_flags') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ 'Support home' => support_home_path },
-                   title,
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Support home' => support_home_path },
+                  title,
                  ]) %>
 <% end %>
 
@@ -25,9 +26,9 @@
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"><%= feature %></th>
             <% if FeatureFlag.active?(feature) %>
-              <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Active</strong></td>
+              <td class="govuk-table__cell"><%= govuk_tag(text: 'Active', colour: 'green') %></td>
             <% else %>
-              <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Not active</strong></td>
+              <td class="govuk-table__cell"><%= govuk_tag(text: 'Not active', colour: 'red') %></td>
             <% end %>
           </tr>
         <% end %>

@@ -1,5 +1,5 @@
 <%- pass_through_params = {support_enable_orders_form: {order_state: @form.order_state, device_cap: @form.device_cap}} %>
-<%- content_for :before_content, govuk_link_to('Back', support_school_devices_enable_orders_path({school_urn: @school.urn}.merge(pass_through_params)), class: 'govuk-back-link') %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_devices_enable_orders_path({school_urn: @school.urn}.merge(pass_through_params))) %>
 <%- title = t('page_titles.support_order_status.confirm_enable_orders') %>
 <%- content_for :title, title %>
 
