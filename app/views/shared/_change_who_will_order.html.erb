@@ -10,10 +10,10 @@
       </h1>
       <% if school.responsible_body.has_virtual_cap_feature_flags? %>
         <p class="govuk-body">
-        If you choose to manage ordering for this <%= school.institution_type %>, its device allocation will be added to the total allocation of all the schools and colleges you manage.
+        If you choose to order for this <%= school.institution_type %>, its device allocation will be added to the total for all the schools and colleges you manage (because you are managing centrally).
         </p>
-        <p class="govuk-body">
-        You cannot transfer management of ordering back to the <%= school.institution_type %> after making it centrally managed.
+        <p class="govuk-body govuk-!-margin-bottom-6">
+        You will not be able to transfer back ordering responsibility to the <%= school.institution_type %> once you’ve decided to do it this way.
         </p>
       <%- end %>
       <%- # this hidden field prevents ActionController::ParameterMissing errors
