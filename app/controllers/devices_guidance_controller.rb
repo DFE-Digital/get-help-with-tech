@@ -2,9 +2,9 @@ class DevicesGuidanceController < ApplicationController
   before_action :show_parent_carer_pupil_banner?
 
   def index
-    @responsible_body_pages = devices_guidance.pages_for(audience: :responsible_body_users)
-    @setup_guide_pages = devices_guidance.pages_for(audience: :setup_guide_pages)
-    @manage_devices_pages = devices_guidance.pages_for(audience: :manage_devices_pages)
+    @before_you_order_pages = devices_guidance.pages_for(guidance_section: :before_you_order_pages)
+    @setup_guide_pages = devices_guidance.pages_for(guidance_section: :setup_guide_pages)
+    @manage_devices_pages = devices_guidance.pages_for(guidance_section: :manage_devices_pages)
   end
 
   def subpage
@@ -29,7 +29,7 @@ private
         path: devices_guidance_subpage_path(subpage_slug: page_id.to_s.dasherize),
         title: page_metadata[:title],
         description: page_metadata[:description],
-        audience: page_metadata[:audience],
+        guidance_section: page_metadata[:guidance_section],
         noindex: page_metadata[:noindex],
       }
     end

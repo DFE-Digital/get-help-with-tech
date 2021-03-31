@@ -10,21 +10,21 @@ RSpec.describe MultipartGuidance, type: :model do
         path: '/guide/overview',
         title: 'Overview',
         description: 'The overview of the guide',
-        audience: 'usergroup_1',
+        guidance_section: 'usergroup_1',
       },
       {
         page_id: :second_page,
         path: '/guide/second-page',
         title: 'Another page',
         description: 'More details',
-        audience: 'usergroup_1',
+        guidance_section: 'usergroup_1',
       },
       {
         page_id: :third_page,
         path: '/guide/third-page',
         title: 'Last page',
         description: 'Finally',
-        audience: 'usergroup_2',
+        guidance_section: 'usergroup_2',
       },
     ]
   end
@@ -81,10 +81,10 @@ RSpec.describe MultipartGuidance, type: :model do
   end
 
   describe '#pages_for' do
-    it 'filters the pages by audience' do
-      expect(guidance.pages_for(audience: :usergroup_1).map(&:page_id)).to eq(%i[overview second_page])
+    it 'filters the pages by guidance_section' do
+      expect(guidance.pages_for(guidance_section: :usergroup_1).map(&:page_id)).to eq(%i[overview second_page])
 
-      expect(guidance.pages_for(audience: :usergroup_2).map(&:page_id)).to eq(%i[third_page])
+      expect(guidance.pages_for(guidance_section: :usergroup_2).map(&:page_id)).to eq(%i[third_page])
     end
   end
 end
