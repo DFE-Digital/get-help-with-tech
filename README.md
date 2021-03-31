@@ -34,7 +34,7 @@ There are several tasks you can run to get schools and responsible bodies:
 - Run `bundle exec rake import:responsible_bodies` to import local authorities and trusts
 - Run `bundle exec rake import:schools` to import schools into staging area
 - Then open up a rails console with `bundle exec rails c`
-- Run `service = SchoolUpdateService.new; DataStage::School.all.each { |staged| puts "importing #{staged.urn}..."; service.send(:create_school!, staged) }` to convert staged schools into schools
+- Run `service = SchoolUpdateService.new; DataStage::School.all.each { |staged| puts "importing #{staged.urn}..."; service.create_school!(staged) }` to convert staged schools into schools
 
 ### Setting up GOV.UK Notify
 
