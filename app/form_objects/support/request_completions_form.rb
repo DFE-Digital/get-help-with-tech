@@ -3,7 +3,7 @@ class Support::RequestCompletionsForm
 
   attr_accessor :from, :to
 
-  def initialize(params={})
+  def initialize(params = {})
     @from = Chronic.parse params[:from]
     @to = Chronic.parse params[:to]
   end

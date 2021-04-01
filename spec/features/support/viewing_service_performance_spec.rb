@@ -148,7 +148,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def given_there_are_some_completion_events
     create_list(:reportable_event, 4, :extra_mobile_data_request_completion, event_time: 2.weeks.ago)
-    create_list(:reportable_event, 2, :extra_mobile_data_request_completion, event_time: 1.weeks.ago)
+    create_list(:reportable_event, 2, :extra_mobile_data_request_completion, event_time: 1.week.ago)
     create_list(:reportable_event, 1, :extra_mobile_data_request_completion, event_time: 2.hours.ago)
   end
 
@@ -167,7 +167,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def then_i_see_the_correct_number
     within('#mno') do
-      expect(page).to have_text "2 requests completed"
+      expect(page).to have_text '2 requests completed'
     end
   end
 

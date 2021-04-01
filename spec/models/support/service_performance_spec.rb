@@ -164,9 +164,9 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#extra_mobile_data_request_completions' do
     before do
       create_list(:reportable_event, 4, :extra_mobile_data_request_completion, event_time: 2.weeks.ago)
-      create_list(:reportable_event, 2, :extra_mobile_data_request_completion, event_time: 1.weeks.ago)
+      create_list(:reportable_event, 2, :extra_mobile_data_request_completion, event_time: 1.week.ago)
       create_list(:reportable_event, 1, :extra_mobile_data_request_completion, event_time: 2.hours.ago)
-      create_list(:reportable_event, 3, :extra_mobile_data_request_completion, event_time: Time.now.utc + 2.hours)
+      create_list(:reportable_event, 3, :extra_mobile_data_request_completion, event_time: Time.zone.now.utc + 2.hours)
     end
 
     context 'given no params' do
