@@ -160,4 +160,37 @@ RSpec.describe Support::ServicePerformance, type: :model do
       end
     end
   end
+
+  describe '#extra_mobile_data_request_completions' do
+    before do
+      create_list(:reportable_event, 4, :extra_mobile_data_request_completion, event_time: 2.weeks.ago)
+      create_list(:reportable_event, 2, :extra_mobile_data_request_completion, event_time: 1.weeks.ago)
+      create_list(:reportable_event, 1, :extra_mobile_data_request_completion, event_time: 2.hours.ago)
+      create_list(:reportable_event, 3, :extra_mobile_data_request_completion, event_time: Time.now.utc + 2.hours)
+    end
+
+    context 'given no params' do
+      it 'returns the total number of completions regardless of time' do
+        expect(stats.extra_mobile_data_request_completions).to eq(10)
+      end
+    end
+
+    context 'given a datetime as from:' do
+      it 'returns the total number of completions after the given datetime' do
+        expect(stats.extra_mobile_data_request_completions(from: 10.days.ago)).to eq(6)
+      end
+
+      context 'given a datetime as to:' do
+        it 'returns the total number of completions between the given datetimes' do
+          expect(stats.extra_mobile_data_request_completions(from: 10.days.ago, to: 2.minutes.ago)).to eq(3)
+        end
+      end
+    end
+
+    context 'given a datetime as to:' do
+      it 'returns the total number of completions before the given datetime' do
+        expect(stats.extra_mobile_data_request_completions(to: 10.days.ago)).to eq(4)
+      end
+    end
+  end
 end
