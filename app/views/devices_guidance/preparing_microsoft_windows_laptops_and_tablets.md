@@ -57,7 +57,7 @@ Microsoft Windows devices come with a web-filtering service called Cisco Umbrell
 
 The web-filtering settings are designed to make the devices safe to use and suitable for a wide range of users, from pre-school children up to care leavers.
 
-This filtering should not prevent legitimate use of the devices. You can [access support](/devices/support-and-maintenance) to report instances where legitimate use is blocked.
+This filtering should not prevent legitimate use of the devices. [Contact us](/get-support) to report instances where legitimate use is blocked.
 
 The first time the device connects to a new network, there will be a short delay before the content filtering starts to work. This usually takes less than 15 seconds but could take up to 2.5 minutes. During this time, users may be able to access any website without restriction while Cisco Umbrella registers the new device and checks network ports. DfE is working with Cisco to reduce this delay. Any updates made to support this will be deployed to the devices automatically.
 
