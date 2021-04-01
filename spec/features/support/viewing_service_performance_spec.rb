@@ -154,7 +154,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def then_i_see_the_number_of_completions_up_to_the_current_date
     within('#mno') do
-      expect(page).to have_text "7 requests completed up to now"
+      expect(page).to have_text "7 requests completed up to #{Time.zone.now.utc.to_s(:govuk_date_and_time)}"
     end
   end
 
@@ -173,7 +173,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def and_i_see_the_dates_i_entered_in_govuk_format
     within('#mno') do
-      expect(page).to have_text "requests completed between #{(Time.zone.now.utc - 10.days).to_date.to_s(:govuk_date_and_time)} and #{(Time.zone.now.utc - 2.days).to_date.to_s(:govuk_date_and_time)} "
+      expect(page).to have_text "requests completed between #{(Time.zone.now.utc - 10.days).to_s(:govuk_date_and_time)} and #{(Time.zone.now.utc - 2.days).to_s(:govuk_date_and_time)} "
     end
   end
 

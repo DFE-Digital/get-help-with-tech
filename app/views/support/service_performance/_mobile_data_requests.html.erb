@@ -41,6 +41,28 @@
   </div>
 </div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h3 class="govuk-heading-m govuk-!-margin-top-7">
+      <%= @stats.extra_mobile_data_request_completions(from: @completion_date_form.from, to: @completion_date_form.to) %>
+      requests completed
+      <%= @completion_date_form.dates_description %>
+    </h3>
+    <%= govuk_details(summary: 'Calculate completions for different dates') do %>
+      <p class="govuk-body">
+        Both fields are optional. You can enter dates and times in any format supported by <%= govuk_link_to 'Chronic', 'https://github.com/mojombo/chronic#examples' %>
+      </p>
+      <%- uri = URI.parse(request.url) %>
+      <%- uri.fragment = 'mno' %>
+      <%= form_for @completion_date_form, as: 'completions', url: uri.to_s, method: :get do |f| %>
+        <%= f.govuk_text_field :from, width: 'one-quarter', label: {text: 'From'} %>
+        <%= f.govuk_text_field :to, width: 'one-quarter', label: {text: 'To'} %>
+        <%= f.govuk_submit 'Calculate' %>
+      <%- end %>
+    <%- end %>
+  </div>
+</div>
+
 <h3 class="govuk-heading-m govuk-!-margin-top-7">Requests by network</h3>
 <table class="govuk-table govuk-!-margin-top-4">
   <thead class="govuk-table__head">
