@@ -41,6 +41,20 @@ RSpec.feature 'Viewing service performance', type: :feature do
     then_i_see_stats_about_extra_mobile_data_requests
   end
 
+  scenario 'DfE users can query for completions between given dates' do
+    given_there_are_some_completion_events
+
+    when_i_sign_in_as_a_dfe_user
+    and_i_follow_links_to_the_service_performance_page
+    and_i_select_the_mno_tab
+    then_i_see_the_number_of_completions_up_to_the_current_date
+
+    when_i_enter_from_and_to_dates
+    and_click_calculate
+    then_i_see_the_correct_number
+    and_i_see_the_dates_i_entered_in_govuk_format
+  end
+
   scenario 'DfE users see service stats about routers' do
     given_there_are_available_shipped_and_remaining_routers
 
@@ -130,6 +144,37 @@ RSpec.feature 'Viewing service performance', type: :feature do
                 mobile_network: virgin,
                 responsible_body: rb,
                 created_by_user: rb_requester)
+  end
+
+  def given_there_are_some_completion_events
+    create_list(:reportable_event, 4, :extra_mobile_data_request_completion, event_time: 2.weeks.ago)
+    create_list(:reportable_event, 2, :extra_mobile_data_request_completion, event_time: 1.weeks.ago)
+    create_list(:reportable_event, 1, :extra_mobile_data_request_completion, event_time: 2.hours.ago)
+  end
+
+  def then_i_see_the_number_of_completions_up_to_the_current_date
+    within('#mno') do
+      expect(page).to have_text "7 requests completed up to now"
+    end
+  end
+
+  def when_i_enter_from_and_to_dates
+    within('#mno') do
+      fill_in 'From date/time', with: (Time.zone.now.utc - 10.days).to_date.iso8601
+      fill_in 'To date/time', with: '2 days ago'
+    end
+  end
+
+  def then_i_see_the_correct_number
+    within('#mno') do
+      expect(page).to have_text "2 requests completed"
+    end
+  end
+
+  def and_i_see_the_dates_i_entered_in_govuk_format
+    within('#mno') do
+      expect(page).to have_text "requests completed between #{(Time.zone.now.utc - 10.days).to_date.to_s(:govuk_date_and_time)} and #{(Time.zone.now.utc - 2.days).to_date.to_s(:govuk_date_and_time)} "
+    end
   end
 
   def when_i_sign_in_as_a_dfe_user
