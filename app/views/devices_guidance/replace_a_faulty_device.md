@@ -31,4 +31,4 @@ Before 24 March 2021, it was possible to request a replacement for a faulty devi
 
 ## 4G wireless router faults
 
-Separate guidance is available explaining [what to do if you have technical issues with a 4G wireless router](https://get-help-with-tech.education.gov.uk/devices/support-and-maintenance#help-with-4g-wireless-routers-and-data).
+Separate guidance is available explaining [what to do if you have technical issues with a 4G wireless router](/devices/resolve-issues-with-4g-wireless-routers).
