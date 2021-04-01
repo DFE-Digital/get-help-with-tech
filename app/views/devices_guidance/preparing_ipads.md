@@ -1,4 +1,4 @@
-This guidance is written with reference to iPads provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information about [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+this guidance is written with reference to iPads provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information about [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## What you get
 
