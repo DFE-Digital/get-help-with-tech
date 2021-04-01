@@ -304,7 +304,11 @@ en:
 
     replace_a_faulty_device:
       title: Replace faulty devices
-      description: Find out what to do if a laptop, tablet or 4G wireless router you’ve received from us is not working.
+      description: Find out what to do if a laptop or tablet you’ve received from us is not working.
+      guidance_section: manage_devices_pages
+    resolve_issues_with_4g_wireless_routers:
+      title: Resolve issues with 4G wireless routers
+      description: Find out what to do if you're having issues getting your 4G wireless router connected to the internet.
       guidance_section: manage_devices_pages
     support_and_maintenance:
       title: Access technical support
