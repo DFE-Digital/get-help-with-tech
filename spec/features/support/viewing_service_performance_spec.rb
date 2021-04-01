@@ -154,15 +154,20 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def then_i_see_the_number_of_completions_up_to_the_current_date
     within('#mno') do
-      expect(page).to have_text "7 requests completed up to #{Time.zone.now.utc.to_s(:govuk_date_and_time)}"
+      expect(page).to have_text "7 requests completed up to #{Time.zone.now.utc.to_s(:govuk_date_and_time)}".gsub(/(\s)+/, '\1')
     end
   end
 
   def when_i_enter_from_and_to_dates
     within('#mno') do
-      fill_in 'From date/time', with: (Time.zone.now.utc - 10.days).to_date.iso8601
-      fill_in 'To date/time', with: '2 days ago'
+      find( 'summary', text: 'Calculate completions for different dates' ).click
+      fill_in 'From', with: (Time.zone.now.utc - 10.days).to_date.iso8601
+      fill_in 'To', with: '2 days ago'
     end
+  end
+
+  def and_click_calculate
+    click_on('Calculate')
   end
 
   def then_i_see_the_correct_number
@@ -173,7 +178,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
 
   def and_i_see_the_dates_i_entered_in_govuk_format
     within('#mno') do
-      expect(page).to have_text "requests completed between #{(Time.zone.now.utc - 10.days).to_s(:govuk_date_and_time)} and #{(Time.zone.now.utc - 2.days).to_s(:govuk_date_and_time)} "
+      expect(page).to have_text "requests completed between #{(Time.zone.now.utc - 10.days).to_date.to_s(:govuk_date)} at 12:00pm and #{(Time.zone.now - 2.days).to_s(:govuk_date_and_time)}"
     end
   end
 
