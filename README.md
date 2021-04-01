@@ -19,6 +19,10 @@ For performing releases:
 - a bash-compatible shell (bash, or Mac OS/X)
 - [jq](https://github.com/stedolan/jq) (only required for listing remote Docker tags, not required for normal releases)
 
+For generating Entity Relationship Diagrams:
+
+- Graphviz
+
 ## Setting up the app in development
 
 1. Run `bundle install` to install the gem dependencies
@@ -72,6 +76,13 @@ bundle exec brakeman
 ```
 
 All the above are run automatically on GitHub Actions when pushing a PR.
+
+## Generating an Entity Relationship Diagram
+
+The `rails-erd` gem uses Graphviz to draw diagrams of the ActiveRecord models and their relationships.
+You can run it at any time using:
+
+`bundle exec rails erd`
 
 ## Integrations
 
