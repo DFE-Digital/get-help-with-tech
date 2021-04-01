@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :identify_user!
+  before_action :set_sentry_user
   before_action :set_paper_trail_whodunnit
 
   include Pagy::Backend
@@ -25,6 +26,10 @@ private
 
   def identify_user!
     @current_user ||= (SessionService.identify_user!(session) || User.new)
+  end
+
+  def set_sentry_user
+    Sentry.set_user(id: current_user&.id)
   end
 
   def impersonated_user
@@ -96,7 +101,7 @@ private
       support_home_path
     else
       # this should not happen - so let's tell Sentry
-      Raven.capture_message(
+      Sentry.capture_message(
         "couldn't figure out root_url_for user",
         logger: 'logger',
         extra: {

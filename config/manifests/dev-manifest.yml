@@ -21,3 +21,4 @@ applications:
     ENV: $HOME/.profile
     RAILS_LOG_TO_STDOUT: true
     GHWT__SERVICE_NAME_SUFFIX: (dev)
+    SERVICE_ENV: development
