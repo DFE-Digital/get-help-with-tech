@@ -12,14 +12,41 @@
       <%= t('landing_pages.get_support_guides.title' ) %>
     </h1>
 
-    <p class="govuk-body">Many vulnerable and disadvantaged children and young people in England do not have access to a laptop, tablet or internet connection. The Department for Education (DfE) is offering support to help children, young people and families access remote education and social care during the pandemic.</p>
-
     <p class="govuk-body">
-      The DfE is working with delivery partners to supply local authorities, academy trusts and schools
-      with <%= govuk_link_to 'laptops and connectivity packages', 'https://www.gov.uk/guidance/get-help-with-technology-for-remote-education-during-coronavirus-covid-19' %>.
+      How to choose, order, and safely set up laptops and tablets for pupils in <span class="app-no-wrap">years 3 to 13</span>,
+      and students in further education. You can also find out how to get help with faulty devices.
     </p>
 
-    <%= render partial: 'page_link_and_description', collection: @responsible_body_pages, as: :page %>
+    <h2 class="govuk-heading-m">
+      Before you order
+    </h2>
 
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <%= render partial: 'page_link_and_description', collection: @before_you_order_pages, as: :page %>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      How to order
+    </h2>
+
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      <%= govuk_link_to "Sign in to order devices", sign_in_path, class: "app-emphasis-link" %>
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Once you’ve received your order
+    </h2>
+
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <%= render partial: 'page_link_and_description', collection: @setup_guide_pages, as: :page %>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Managing devices
+    </h2>
+
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <%= render partial: 'page_link_and_description', collection: @manage_devices_pages, as: :page %>
+    </ul>
   </div>
 </div>

@@ -273,69 +273,69 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: About the offer
+      title: Who can get laptops and tablets, and why DfE is providing them
       description: Find out who is eligible for devices and why the DfE is providing them.
-      audience: responsible_body_users
+      guidance_section: before_you_order_pages
     device_allocations:
-      title: Device allocations
+      title: How laptops and tablets are allocated
       description: Find out how we estimated device requirements and how to query an allocation.
-      audience: responsible_body_users
-    how_to_order:
-      title: How and when to order laptops
-      description: How to order laptops for disadvantaged children and young people during coronavirus (COVID-19).
-      audience: responsible_body_users
+      guidance_section: before_you_order_pages
     device_specification:
-      title: Device options and specifications
+      title: Choose the most suitable type of device and IT settings
       description: Get the technical specifications of the laptops and tablets we offer. This information can help you and your IT support to make the right choice of device and settings for your needs.
-      audience: responsible_body_users
+      guidance_section: before_you_order_pages
+    device_distribution_and_ownership:
+      title: Who owns the devices, and how to distribute them to children and young people
+      description: Guidance on who owns devices, and information on insuring devices, asset management and loan agreements.
+      guidance_section: before_you_order_pages
+
     preparing_microsoft_windows_laptops_and_tablets:
-      title: Preparing Microsoft Windows laptops and tablets
+      title: Windows laptops and tablets setup guide
       description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
-      audience: responsible_body_users
+      guidance_section: setup_guide_pages
+    preparing_chromebooks:
+      title: Google Chromebooks setup guide
+      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, schools and further education institutions.
+      guidance_section: setup_guide_pages
+    preparing_ipads:
+      title: Apple iPads setup guide
+      description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
+      guidance_section: setup_guide_pages
+
+    replace_a_faulty_device:
+      title: Replace faulty devices
+      description: Find out what to do if a laptop, tablet or 4G wireless router you’ve received from us is not working.
+      guidance_section: manage_devices_pages
+    support_and_maintenance:
+      title: Access technical support
+      description: Find out how to support your users and get the help you need with laptops, tablets and 4G wireless routers.
+      guidance_section: manage_devices_pages
+    safeguarding_for_device_users:
+      title: Safeguarding devices
+      description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
+      guidance_section: manage_devices_pages
+
     preparing_a_standard_windows_device:
       title: Preparing standard Microsoft Windows laptops and tablets
       description: When you receive a standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
-      audience: technical_staff_doing_device_setup # won't appear in the index
+      guidance_section: technical_staff_doing_device_setup # won't appear in the index
     getting_started_with_your_microsoft_windows_device:
       title: How to get started with your Microsoft Windows laptop or tablet
       description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
-      audience: parents_carers_students
-    preparing_chromebooks:
-      title: Preparing Chromebooks
-      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, schools and further education institutions.
-      audience: responsible_body_users
+      guidance_section: parents_carers_students
     getting_started_with_your_google_chromebook:
       title: How to get started with your Google Chromebook
       description: User guidance for Google Chromebooks to share with children, young people and their carers.
-      audience: parents_carers_students
-    preparing_ipads:
-      title: Preparing iPads
-      description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
-      audience: responsible_body_users
-    preparing_4g_wireless_routers:
-      title: Preparing 4G routers
-      description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
-      audience: to_be_removed
+      guidance_section: parents_carers_students
     4g_user_guidance:
       title: How to get started with your 4G wireless router
       description: User guidance for 4G wireless routers to share with children, young people and their carers.
-      audience: parents_carers_students
-    device_distribution_and_ownership:
-      title: Device ownership and distribution
-      description: Guidance on who owns devices, and information on insuring devices, asset management and loan agreements.
-      audience: responsible_body_users
-    support_and_maintenance:
-      title: Get help with your devices
-      description: Find out how to support your users and get the help you need with laptops, tablets and 4G wireless routers.
-      audience: responsible_body_users
-    replace_a_faulty_device:
-      title: Replace a faulty device
-      description: Find out what to do if a laptop, tablet or 4G wireless router you’ve received from us is not working.
-      audience: responsible_body_users
-    safeguarding_for_device_users:
-      title: Safeguarding for device users
-      description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
-      audience: responsible_body_users
+      guidance_section: parents_carers_students
+
+    preparing_4g_wireless_routers:
+      title: Preparing 4G routers
+      description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
+
     enrol_chromebooks_with_user_logins:
       title: Enrol Chromebooks and add Cisco Umbrella with user logins
       description: Find out how to enrol Google Chromebooks so you can manage them remotely, and how to add Cisco Umbrella to make them secure for families and children who are associated with a school.
@@ -345,9 +345,9 @@ en:
       description: Find out how to enrol Google Chromebooks so you can remotely manage them and how to add Cisco Umbrella to make them secure for families of preschool aged children with a social worker and care leavers who aren’t associated with a school.
       audience: technical_staff_doing_device_setup # won't appear in the index
     google_domain_for_care_leavers_and_children_with_social_worker:
-      title: Set up a Google domain for care leavers
+      title: How to set up a Google domain for care leavers
       description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
-      audience: responsible_body_users
+      audience: software_and_digital_tools_pages
       noindex: true
   guide_to_collecting_mobile_information:
     overview: Overview

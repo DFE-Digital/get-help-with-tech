@@ -10,8 +10,10 @@ class MultipartGuidance
     @pages
   end
 
-  def pages_for(audience:)
-    all_pages.select { |page| page.audience.to_sym == audience.to_sym }
+  def pages_for(guidance_section:)
+    all_pages.select do |page|
+      page.guidance_section.to_sym == guidance_section.to_sym if page.guidance_section.present?
+    end
   end
 
   def find_by_slug(page_slug)

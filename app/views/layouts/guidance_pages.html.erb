@@ -8,7 +8,7 @@
 <% end %>
 
 <%- content_for :before_content do %>
-  <% if @page.audience == 'parents_carers_students' %>
+  <% if @page.guidance_section == 'parents_carers_students' %>
     <% breadcrumbs([{ "Home" => root_path },
                     { t('landing_pages.guides_parents_carers_students.title') => guides_for_parents_carers_and_students_path },
                     @page.title,
@@ -38,7 +38,6 @@
 
       <%= yield %>
 
-      <%= render partial: 'shared/guide_navigation' %>
     </div>
   </div>
 <% end %>

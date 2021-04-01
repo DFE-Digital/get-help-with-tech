@@ -2,16 +2,15 @@ class DevicesGuidanceController < ApplicationController
   before_action :show_parent_carer_pupil_banner?
 
   def index
-    @responsible_body_pages = devices_guidance.pages_for(audience: :responsible_body_users)
-    @device_user_pages = devices_guidance.pages_for(audience: :device_users)
+    @before_you_order_pages = devices_guidance.pages_for(guidance_section: :before_you_order_pages)
+    @setup_guide_pages = devices_guidance.pages_for(guidance_section: :setup_guide_pages)
+    @manage_devices_pages = devices_guidance.pages_for(guidance_section: :manage_devices_pages)
   end
 
   def subpage
     if valid_subpage_slug?
       @page = devices_guidance.find_by_slug(params[:subpage_slug])
-      @next_page = { text: @page.next.title, path: @page.next.path } if @page.next.present?
-      @prev_page = { text: @page.previous.title, path: @page.previous.path } if @page.previous.present?
-      render @page.page_id, layout: 'multipage_guide'
+      render @page.page_id, layout: 'guidance_pages'
     else
       not_found
     end
@@ -30,7 +29,7 @@ private
         path: devices_guidance_subpage_path(subpage_slug: page_id.to_s.dasherize),
         title: page_metadata[:title],
         description: page_metadata[:description],
-        audience: page_metadata[:audience],
+        guidance_section: page_metadata[:guidance_section],
         noindex: page_metadata[:noindex],
       }
     end
