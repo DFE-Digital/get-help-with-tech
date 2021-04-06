@@ -141,10 +141,6 @@ private
     end
   end
 
-  def show_parent_carer_pupil_banner?
-    @show_parent_carer_pupil_banner = current_user&.new_record?
-  end
-
   # Log the user identification params to help debug intermittent issue
   # [1277](https://trello.com/c/uIDcEmGH/1277-mno-bug-for-providers)
   def append_info_to_payload(payload)
