@@ -304,11 +304,7 @@ en:
 
     replace_a_faulty_device:
       title: Replace faulty devices
-      description: Find out what to do if a laptop, tablet or 4G wireless router you’ve received from us is not working.
-      guidance_section: manage_devices_pages
-    support_and_maintenance:
-      title: Access technical support
-      description: Find out how to support your users and get the help you need with laptops, tablets and 4G wireless routers.
+      description: Find out what to do if a laptop or tablet you’ve received from us is not working.
       guidance_section: manage_devices_pages
     safeguarding_for_device_users:
       title: Safeguarding devices
@@ -335,6 +331,9 @@ en:
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
+    resolve_issues_with_4g_wireless_routers:
+      title: Resolve issues with 4G wireless routers
+      description: Find out what to do if you're having issues getting your 4G wireless router connected to the internet.
 
     enrol_chromebooks_with_user_logins:
       title: Enrol Chromebooks and add Cisco Umbrella with user logins

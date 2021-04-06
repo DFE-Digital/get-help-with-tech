@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get '/devices/choosing-devices', to: redirect('/devices/device-allocations')
   get '/devices/allocation-and-specification', to: redirect('/devices/device-allocations')
   get '/devices/distributing-devices', to: redirect('/devices/device-distribution-and-ownership')
+  get '/devices/support-and-maintenance', to: redirect('/devices', status: 301)
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
 

@@ -37,8 +37,6 @@ If you decide not to use Cisco Umbrella, or you continue using the Chromebooks o
 
 You can report access to any inappropriate content that should not be allowed by Cisco Umbrella by [contacting us](/get-support).
 
-Find out [how to access support](/devices/support-and-maintenance) to report Cisco Umbrella issues.
-
 ## Software
 
 Chromebooks come with Chrome OS. This manages:
