@@ -2,6 +2,7 @@ class FeatureFlag
   PERMANENT_SETTINGS = %i[
     rate_limiting
     display_sign_in_token_links
+    show_component_previews
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
