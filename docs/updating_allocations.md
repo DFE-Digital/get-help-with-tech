@@ -67,4 +67,22 @@ A school's URN acts as its ID.
 At `http://localhost:3000/support/schools/results` (but host updated to production 
 environment), paste in URNs then click `Download allocations as CSV` to get a CSV file. 
 
-There's also a make command to download it securely: `make download ssh` (not sure what needs to be done here).
+### Export 'All Allocations' via the production console
+
+From your terminal:
+
+```make prod ssh```
+
+Once connected, start the rails console:
+
+```bundle exec rails c```
+
+Export all allocations to CSV using the AllocationsExporter from app/services/allocations_exporter.rb:
+
+```AllocationsExporter.new('all_allocations.csv').export```
+
+Exit the rails console and the ssh session if you are done with them.
+
+Use ```make <env> download``` to download the exported CSV:
+
+```make prod download LOCAL_PATH=/Users/me/Downloads/GHWT REMOTE_PATH=/var/www/get-help-with-tech/all_allocations.csv```
