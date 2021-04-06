@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-  before_action :show_parent_carer_pupil_banner?, except: %i[accessibility privacy]
-
   layout 'single_page', only: %i[accessibility privacy]
 
   def guidance; end

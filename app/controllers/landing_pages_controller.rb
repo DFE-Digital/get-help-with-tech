@@ -1,6 +1,4 @@
 class LandingPagesController < ApplicationController
-  before_action :show_parent_carer_pupil_banner?
-
   layout 'page_with_toc'
 
   def digital_platforms

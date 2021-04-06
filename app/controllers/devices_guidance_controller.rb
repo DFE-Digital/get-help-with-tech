@@ -1,6 +1,4 @@
 class DevicesGuidanceController < ApplicationController
-  before_action :show_parent_carer_pupil_banner?
-
   def index
     @before_you_order_pages = devices_guidance.pages_for(guidance_section: :before_you_order_pages)
     @setup_guide_pages = devices_guidance.pages_for(guidance_section: :setup_guide_pages)

@@ -88,7 +88,6 @@
           <% end %>
         <% end %>
 
-        <%= render partial: "shared/banners/global_notice_banner" if @show_parent_carer_pupil_banner %>
         <%= render partial: 'shared/flash_message' %>
         <%= content_for?(:content) ? yield(:content) : yield %>
       </div>
