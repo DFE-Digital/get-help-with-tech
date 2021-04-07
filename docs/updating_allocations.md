@@ -86,3 +86,16 @@ Exit the rails console and the ssh session if you are done with them.
 Use ```make <env> download``` to download the exported CSV:
 
 ```make prod download LOCAL_PATH=/Users/me/Downloads/GHWT REMOTE_PATH=/var/www/get-help-with-tech/all_allocations.csv```
+
+#### Example export of a subset of allocations
+
+First build the list of schools that represent the subset:
+
+```
+allocations = SchoolDeviceAllocation.has_not_fully_ordered.includes(:school).where(school: { type: 'FurtherEducationSchool' })
+schools = School.where(id: allocations.pluck(:school_id))
+```
+
+Pass the collection of schools to the export method of the AllocationsExporter:
+
+```AllocationsExporter.new("fe_unused_allocations.csv").export(schools)```
