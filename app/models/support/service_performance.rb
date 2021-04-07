@@ -404,6 +404,13 @@ class Support::ServicePerformance
       .reverse
   end
 
+  def extra_mobile_data_request_completions(from: nil, to: nil)
+    scope = ReportableEvent.where(event_name: 'completion', record_type: 'ExtraMobileDataRequest')
+    scope = scope.where('event_time >= ?', from) if from.present?
+    scope = scope.where('event_time <= ?', to) if to.present?
+    scope.count
+  end
+
   def number_of_devolved_schools_that_have_made_extra_mobile_data_requests
     ExtraMobileDataRequest.from_schools.count('DISTINCT(school_id)')
   end

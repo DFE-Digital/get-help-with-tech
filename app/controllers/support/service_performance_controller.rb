@@ -3,6 +3,7 @@ class Support::ServicePerformanceController < Support::BaseController
 
   def index
     skip_policy_scope
+    @completion_date_form = Support::RequestCompletionsForm.new(performance_params)
     @stats = Support::ServicePerformance.new
   end
 
@@ -14,5 +15,11 @@ class Support::ServicePerformanceController < Support::BaseController
     now = Time.zone.now
 
     send_file exporter.path, filename: "mno-requests-#{now.strftime('%Y')}-#{now.strftime('%m')}-#{now.strftime('%d')}.csv", type: 'text/csv'
+  end
+
+private
+
+  def performance_params
+    params.fetch(:completions, {}).permit(:from, :to)
   end
 end

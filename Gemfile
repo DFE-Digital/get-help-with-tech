@@ -20,6 +20,7 @@ gem 'http-parser', '~> 1.2.3'
 
 # Canonical meta tag
 gem 'canonical-rails', git: 'https://github.com/asmega/canonical-rails.git', ref: '1b9426229dfa5136326f5ce4963e8e8d1cb3b23c'
+gem 'chronic'
 gem 'dotenv-rails'
 # Having Faker here rather than in dev/test lets us still create
 # fake data in the deployed Docker container
