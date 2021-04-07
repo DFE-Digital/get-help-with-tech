@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render partial: 'shared/techsource_unavailable_banner' %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
 
     <p class="govuk-body">You’ll be able to order <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> soon.</p>
 
