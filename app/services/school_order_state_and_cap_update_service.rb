@@ -2,6 +2,7 @@ class SchoolOrderStateAndCapUpdateService
   include Computacenter::CapChangeNotifier
 
   attr_accessor :school, :order_state, :caps
+  attr_reader :disable_user_notifications
 
   def initialize(school:, order_state:, std_device_cap: nil, coms_device_cap: nil)
     @school = school
@@ -10,6 +11,7 @@ class SchoolOrderStateAndCapUpdateService
       { device_type: 'std_device', cap: std_device_cap },
       { device_type: 'coms_device', cap: coms_device_cap },
     ]
+    @disable_user_notifications = false
   end
 
   def update!
@@ -41,7 +43,11 @@ class SchoolOrderStateAndCapUpdateService
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
-    SchoolCanOrderDevicesNotifications.new(school: school).call
+    SchoolCanOrderDevicesNotifications.new(school: school).call unless disable_user_notifications
+  end
+
+  def disable_user_notifications!
+    @disable_user_notifications = true
   end
 
 private
