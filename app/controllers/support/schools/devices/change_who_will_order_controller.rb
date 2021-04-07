@@ -1,5 +1,6 @@
-class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::BaseController
+class Support::Schools::Devices::ChangeWhoWillOrderController < Support::BaseController
   before_action :check_school_can_change_who_will_order
+  before_action { authorize @school }
 
   def edit
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(
@@ -8,14 +9,12 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
   end
 
   def update
-    authorize ResponsibleBody::Devices::WhoWillOrderForm, policy_class: ResponsibleBody::BasePolicy
-
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
       @school.preorder_information.change_who_will_order_devices!(@form.who_will_order)
 
       flash[:success] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update])
-      redirect_to responsible_body_devices_school_path(@school.urn)
+      redirect_to support_school_path(@school.urn)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +33,7 @@ private
   end
 
   def set_school
-    @school = @responsible_body.schools.where_urn_or_ukprn(params[:school_urn]).first!
+    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
   end
 
   def who_will_order

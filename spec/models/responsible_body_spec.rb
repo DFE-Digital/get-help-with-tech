@@ -297,11 +297,12 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#add_school_to_virtual_cap_pools' do
-    subject(:responsible_body) { create(:trust, :manages_centrally) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
     let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     before do
+      stub_computacenter_outgoing_api_calls
       schools.each do |s|
         s.preorder_information.responsible_body_will_order_devices!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
@@ -327,11 +328,12 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#calculate_virtual_caps!' do
-    subject(:responsible_body) { create(:trust, :manages_centrally) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
     let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     before do
+      stub_computacenter_outgoing_api_calls
       schools.each do |s|
         s.preorder_information.responsible_body_will_order_devices!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
@@ -353,11 +355,12 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_school_in_virtual_cap_pools?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
     let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 
     before do
+      stub_computacenter_outgoing_api_calls
       first_school = schools.first
       first_school.preorder_information.responsible_body_will_order_devices!
       first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
@@ -375,7 +378,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_devices_available_to_order?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
     let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
 

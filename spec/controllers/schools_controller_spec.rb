@@ -26,7 +26,7 @@ RSpec.describe SchoolsController do
       it 'shows list of schools' do
         get :index
         expect(response).to be_successful
-        expect(assigns(:schools)).to eq(multi_school_user.schools)
+        expect(assigns(:schools)).to match_array(multi_school_user.schools)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe SchoolsController do
       it 'shows list of schools' do
         get :index
         expect(response).to be_successful
-        expect(assigns(:schools)).to eq(multi_school_user.schools)
+        expect(assigns(:schools)).to match_array(multi_school_user.schools)
       end
     end
   end

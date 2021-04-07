@@ -66,10 +66,23 @@ class PreorderInformation < ApplicationRecord
     update!(status: infer_status)
   end
 
+  def can_change_who_will_order_devices?
+    !(who_will_order_devices == 'responsible_body' && school.responsible_body.has_virtual_cap_feature_flags?)
+  end
+
   def change_who_will_order_devices!(who)
-    self.who_will_order_devices = who
-    self.status = infer_status
-    save!
+    if can_change_who_will_order_devices?
+      self.who_will_order_devices = who
+      self.status = infer_status
+      save!
+      if school.responsible_body.can_school_be_added_to_virtual_cap_pools?(school)
+        school.responsible_body.add_school_to_virtual_cap_pools!(school)
+      end
+      true
+    else
+      # school cannot manage orders because it is being centrally managed in a pool
+      raise VirtualCapPoolError, "#{school.name} (#{school.urn}) cannot be devolved because it is in a virtual cap pool"
+    end
   end
 
   def who_will_order_devices_label

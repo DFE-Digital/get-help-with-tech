@@ -49,7 +49,8 @@ private
         value: "The #{who.downcase} orders devices",
         action: 'who will order',
       }
-      unless responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?
+
+      if @school.preorder_information&.can_change_who_will_order_devices?
         detail.merge!(
           change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
         )

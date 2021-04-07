@@ -268,6 +268,8 @@ Rails.application.routes.draw do
       patch '/devices/allocation', to: 'schools/devices/allocation#update'
       get '/devices/chromebooks/edit', to: 'schools/devices/chromebooks#edit'
       patch '/devices/chromebooks', to: 'schools/devices/chromebooks#update'
+      get '/devices/change-who-will-order', to: 'schools/devices/change_who_will_order#edit'
+      patch '/devices/change-who-will-order', to: 'schools/devices/change_who_will_order#update'
     end
 
     namespace :performance_data, path: 'performance-data' do
