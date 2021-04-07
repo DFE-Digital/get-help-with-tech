@@ -79,13 +79,13 @@ Once connected, start the rails console:
 
 Export all allocations to CSV using the AllocationsExporter from app/services/allocations_exporter.rb:
 
-```AllocationsExporter.new('all_allocations.csv').export```
+```AllocationsExporter.new('tmp/all_allocations.csv').export```
 
 Exit the rails console and the ssh session if you are done with them.
 
 Use ```make <env> download``` to download the exported CSV:
 
-```make prod download LOCAL_PATH=/Users/me/Downloads/GHWT REMOTE_PATH=/var/www/get-help-with-tech/all_allocations.csv```
+```make prod download LOCAL_PATH=/tmp/GHWT REMOTE_PATH=/var/www/get-help-with-tech/tmp/all_allocations.csv```
 
 #### Example export of a subset of allocations
 
@@ -98,4 +98,4 @@ schools = School.where(id: allocations.pluck(:school_id))
 
 Pass the collection of schools to the export method of the AllocationsExporter:
 
-```AllocationsExporter.new("fe_unused_allocations.csv").export(schools)```
+```AllocationsExporter.new("tmp/fe_unused_allocations.csv").export(schools)```
