@@ -79,7 +79,7 @@ Once connected, start the rails console:
 
 Export all allocations to CSV using the AllocationsExporter from app/services/allocations_exporter.rb:
 
-```AllocationsExporter.new('tmp/all_allocations.csv').export```
+```AllocationsExporter.new('/tmp/all_allocations.csv').export```
 
 Exit the rails console and the ssh session if you are done with them.
 
