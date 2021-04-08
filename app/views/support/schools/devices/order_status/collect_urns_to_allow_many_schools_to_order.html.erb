@@ -12,17 +12,30 @@
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= form_for @form, url: allow_ordering_for_many_schools_support_schools_path, method: :patch do |f| %>
+    <%= form_for @form, url: allow_ordering_for_many_schools_support_schools_path, method: :patch, multipart: true do |f| %>
       <%= f.govuk_error_summary %>
 
-      <p class="govuk-body">These schools, colleges or FE institutions can place orders because they have reported a closure or a group of self-isolating pupils or students.</p>
+      <p class="govuk-body">
+        Download the <%= govuk_link_to 'example CSV', '/examples/allocation-upload.csv' %> and populate with schools along with their updated allocation and whether not they can order
+      </p>
 
-      <%= f.govuk_text_area :school_urns,
-                            label: { text: 'URNs', size: 'm' },
-                            hint: { text: 'Enter one URN per line' },
-                            rows: 15 %>
+      <%= f.govuk_file_field :upload,
+                             label: { text: 'CSV', size: 'm' },
+                             hint: { text: 'Upload CSV' } %>
 
-      <%= f.govuk_submit 'Enable full allocations' %>
+      <% send_notification_options = [
+          OpenStruct.new(id: true, name: 'Yes'),
+          OpenStruct.new(id: false, name: 'No'),
+      ] %>
+
+    <%= f.govuk_collection_radio_buttons :send_notification,
+          send_notification_options,
+          :id,
+          :name,
+          legend: { text: 'Send user notifications?' },
+          hint: { text: 'If yes, users will receive automated messages from the service. Otherwise users will not receive automated messages from the service.' } %>
+
+      <%= f.govuk_submit 'Upload allocations' %>
     <%- end %>
 
   </div>

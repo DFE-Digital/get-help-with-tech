@@ -173,11 +173,11 @@ module ViewHelper
     MobileNetwork.where(participation_in_pilot: 'participating').order(:brand)
   end
 
-  def link_to_urn_otherwise_urn(urn)
-    if School.exists?(urn: urn)
-      govuk_link_to urn, support_school_path(urn)
+  def link_to_urn_or_ukprn_otherwise_identifier(identifier)
+    if School.exists?(['urn = ? or ukprn = ?', identifier, identifier])
+      govuk_link_to identifier, support_school_path(identifier)
     else
-      urn
+      identifier
     end
   end
 

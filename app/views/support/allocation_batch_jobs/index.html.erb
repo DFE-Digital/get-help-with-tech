@@ -1,0 +1,29 @@
+<%- title = t('page_titles.support.allocation_batch_jobs.index') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Support home' => support_home_path },
+                  { t('page_titles.support.technical_support') => support_technical_support_path },
+                  title,
+                 ]) %>
+<% end %>
+
+<h1 class="govuk-heading-xl">Allocation batch jobs</h1>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Batch ID</th>
+      <th scope="col" class="govuk-table__header">Created at</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @batches.each do |batch| %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><%= link_to batch.batch_id, support_allocation_batch_job_path(batch.batch_id) %></th>
+        <td class="govuk-table__cell"><%= batch.created_at.to_s(:govuk_date_short) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

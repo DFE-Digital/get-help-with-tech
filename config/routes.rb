@@ -223,6 +223,7 @@ Rails.application.routes.draw do
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
+    resources :allocation_batch_jobs, only: %i[index show], path: 'allocation-batch-jobs'
     get '/performance/mno-requests', to: 'service_performance#mno_requests', format: :csv
     get '/performance/remaining-device-counts', to: 'remaining_device_counts#index', format: :csv
     resource :impersonate, only: %i[create destroy]
@@ -250,9 +251,6 @@ Rails.application.routes.draw do
 
         get '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#collect_urns_to_allow_many_schools_to_order'
         patch '/devices/enable-orders/for-many-schools', to: 'schools/devices/order_status#allow_ordering_for_many_schools', as: :allow_ordering_for_many_schools
-
-        get '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#collect_urns_and_allocations_for_many_schools'
-        patch '/devices/adjust-allocations/for-many-schools', to: 'schools/devices/allocation#adjust_allocations_for_many_schools', as: :adjust_allocations_for_many_schools
       end
 
       get '/invite', to: 'schools#confirm_invitation', as: :confirm_invitation

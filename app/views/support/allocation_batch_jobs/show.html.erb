@@ -1,0 +1,39 @@
+<%- title = t('page_titles.support.allocation_batch_jobs.show') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  { 'Support home' => support_home_path },
+                  { t('page_titles.support.technical_support') => support_technical_support_path },
+                  { t('page_titles.support.allocation_batch_jobs.index') => support_allocation_batch_jobs_path },
+                  title,
+                 ]) %>
+<% end %>
+
+<span class="govuk-caption-xl"><%= @jobs.first.batch_id %></span>
+<h1 class="govuk-heading-xl">Allocation batch job</h1>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">URN</th>
+      <th scope="col" class="govuk-table__header">UKPRN</th>
+      <th scope="col" class="govuk-table__header">Allocation delta</th>
+      <th scope="col" class="govuk-table__header">Order state</th>
+      <th scope="col" class="govuk-table__header">Send notification?</th>
+      <th scope="col" class="govuk-table__header">Processed?</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @jobs.each do |job| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier job.urn %></td>
+        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier job.ukprn %></td>
+        <td class="govuk-table__cell"><%= job.allocation_delta %></td>
+        <td class="govuk-table__cell"><%= job.order_state %></td>
+        <td class="govuk-table__cell"><%= job.send_notification %></td>
+        <td class="govuk-table__cell"><%= job.processed %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -14,6 +14,10 @@ class SchoolOrderStateAndCapUpdateService
     @disable_user_notifications = false
   end
 
+  def call
+    update!
+  end
+
   def update!
     update_order_state!(order_state)
 
