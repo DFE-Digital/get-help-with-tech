@@ -102,32 +102,6 @@ school.hide_mno = true
  opted_out_of_comms_at: nil>
 ```
 
-Use can add a login, for yourself, in the production server.
-Here is a user on production:
-```ruby
-=> #<User:0x00007fb121ffeb08
- id: 25127,
- full_name: "John Smith",
- email_address: "john.smith@digital.education.gov.uk",
- created_at: Tue, 13 Oct 2020 10:37:44.694049000 BST +01:00,
- updated_at: Wed, 07 Apr 2021 11:17:04.757254000 BST +01:00,
- sign_in_token: nil,
- mobile_network_id: nil,
- sign_in_token_expires_at: nil,
- responsible_body_id: nil,
- sign_in_count: 183,
- last_signed_in_at: Wed, 07 Apr 2021 11:17:04.733147000 BST +01:00,
- telephone: nil,
- is_support: true,
- is_computacenter: false,
- privacy_notice_seen_at: Tue, 13 Oct 2020 10:37:41.668350000 BST +01:00,
- orders_devices: nil,
- techsource_account_confirmed_at: nil,
- deleted_at: nil,
- role: "third_line",
- rb_level_access: false>
-```
-
 ## Change Allocation
 
 ### Through the web interface
