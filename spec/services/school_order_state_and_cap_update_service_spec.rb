@@ -281,6 +281,14 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         expect { service.update! }.not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
       end
     end
+
+    context 'when #disable_user_notifications! called first' do
+      it 'does not send any notifications' do
+        service.disable_user_notifications!
+        service.update!
+        expect(notifications).not_to have_received(:call)
+      end
+    end
   end
 end
 
