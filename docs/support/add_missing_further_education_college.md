@@ -7,8 +7,18 @@ cf login --sso
 make prod ssh
 unset RAILS_LOG_TO_STDOUT
 bundle exec rails c
+```
+
+Look to see if the school already exists using it's ukprn.
+
+```ruby
 [1] pry(main)> School.find_by ukprn: 10019293
 => nil
+```
+
+If it does not exist then first create a responsible body, in this case a FurtherEducationCollege
+
+```ruby
 rb = FurtherEducationCollege.new
 rb.name = 'ASPHALEIA LIMITED'
 [13] pry(main)> FurtherEducationCollege.pluck(:organisation_type).uniq
@@ -47,6 +57,11 @@ rb.postcode = ...
  vcap_feature_flag: false,
  computacenter_change: "none",
  new_fe_wave: true>
+```
+
+Then add the actual school, FurtherEducationSchool
+
+```ruby
 school = FurtherEducationSchool.new(responsible_body: rb)
 school.name = ...
 school.address_1 = ...
@@ -88,12 +103,12 @@ school.hide_mno = true
 ```
 
 Use can add a login, for yourself, in the production server.
-Here is Phil's user on production:
+Here is a user on production:
 ```ruby
 => #<User:0x00007fb121ffeb08
  id: 25127,
- full_name: "Phil Lee",
- email_address: "phil.lee@digital.education.gov.uk",
+ full_name: "John Smith",
+ email_address: "john.smith@digital.education.gov.uk",
  created_at: Tue, 13 Oct 2020 10:37:44.694049000 BST +01:00,
  updated_at: Wed, 07 Apr 2021 11:17:04.757254000 BST +01:00,
  sign_in_token: nil,
@@ -113,9 +128,12 @@ Here is Phil's user on production:
  rb_level_access: false>
 ```
 
+## Change Allocation
+
+### Through the web interface
+
 - in web interface find school
 - change allocation to specified number
 - on school invite user
 - set name, email and yes can order devices
-- on school change `Can they place orders?` to `They can order their full allocation because a closure or group of self-isolating children has been reported` 
-```
+- on school change `Can they place orders?` to `They can order their full allocation because a closure or group of self-isolating children has been reported`
