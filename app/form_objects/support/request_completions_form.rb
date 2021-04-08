@@ -16,7 +16,7 @@ class Support::RequestCompletionsForm
         "since #{@from.to_s(:govuk_date_and_time)}"
       end
     else
-      "up to #{(@to || Time.zone.now.utc).to_s(:govuk_date_and_time)}"
+      "up to #{(@to || Time.zone.now).to_s(:govuk_date_and_time)}"
     end
   end
 end
