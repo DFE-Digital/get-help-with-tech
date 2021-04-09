@@ -11,7 +11,7 @@ RSpec.describe Computacenter::TechSourceMaintenanceBannerComponent, type: :compo
         Timecop.travel(Time.zone.parse('4 Jan 2021 15:00'))
       end
 
-      specify { expect(described_class.new.message).to eq('The TechSource website will be closed for maintenance on Monday 4 January 09:00am. You can order devices when it reopens on Monday 4 January 10:00pm.') }
+      specify { expect(described_class.new.message).to eq('The TechSource website will be closed for maintenance on <span class="app-no-wrap">Monday 4 January 09:00am.</span> You can order devices when it reopens on <span class="app-no-wrap">Monday 4 January 10:00pm.</span>') }
     end
   end
 

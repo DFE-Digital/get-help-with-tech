@@ -3,7 +3,7 @@ class Computacenter::TechSourceMaintenanceBannerComponent < ViewComponent::Base
   DATE_TIME_FORMAT = '%A %-d %B %I:%M%P'.freeze
 
   def message
-    "The TechSource website will be closed for maintenance on #{MAINTENANCE_WINDOW.first.strftime(DATE_TIME_FORMAT)}. You can order devices when it reopens on #{MAINTENANCE_WINDOW.last.strftime(DATE_TIME_FORMAT)}."
+    "The TechSource website will be closed for maintenance on <span class=\"app-no-wrap\">#{MAINTENANCE_WINDOW.first.strftime(DATE_TIME_FORMAT)}.</span> You can order devices when it reopens on <span class=\"app-no-wrap\">#{MAINTENANCE_WINDOW.last.strftime(DATE_TIME_FORMAT)}.</span>".html_safe
   end
 
   def render?
