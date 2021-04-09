@@ -161,7 +161,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
   def when_i_enter_from_and_to_dates
     within('#mno') do
       find('summary', text: 'Calculate completions for different dates').click
-      fill_in 'From', with: (Time.zone.now.utc - 10.days).to_date.iso8601
+      fill_in 'From', with: (Time.zone.now - 10.days).to_date.iso8601
       fill_in 'To', with: '2 days ago'
     end
   end
