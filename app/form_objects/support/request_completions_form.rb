@@ -4,6 +4,7 @@ class Support::RequestCompletionsForm
   attr_accessor :from, :to
 
   def initialize(params = {})
+    Chronic.time_class = Time.zone
     @from = Chronic.parse params[:from]
     @to = Chronic.parse params[:to]
   end
