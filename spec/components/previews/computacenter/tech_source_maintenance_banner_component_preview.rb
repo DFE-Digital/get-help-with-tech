@@ -1,11 +1,12 @@
-Computacenter::TechSourceMaintenanceBannerComponent.class_eval do
-  def render?
-    true
-  end
-end
-
 class Computacenter::TechSourceMaintenanceBannerComponentPreview < ViewComponent::Preview
   def displaying_notice
-    render(Computacenter::TechSourceMaintenanceBannerComponent.new)
+    @component = Computacenter::TechSourceMaintenanceBannerComponent.new
+    @component.class_eval do
+      def render?
+        true
+      end
+    end
+
+    render(@component)
   end
 end
