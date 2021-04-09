@@ -37,6 +37,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
       end
 
       it 'renders the unavailable page' do
+        stub_const('Computacenter::TechSource::MAINTENANCE_WINDOW', Time.zone.local(2020, 11, 28, 7, 0, 0)..Time.zone.local(2020, 11, 28, 14, 0, 0))
         get 'start'
         expect(response).to render_template('unavailable')
         expect(response).to have_http_status(:ok)

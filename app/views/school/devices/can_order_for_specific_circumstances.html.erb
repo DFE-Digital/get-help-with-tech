@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render partial: 'shared/techsource_unavailable_banner' %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
 
     <%= render DeviceCountComponent.new(school: @school) %>
 

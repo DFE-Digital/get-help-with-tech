@@ -6,15 +6,6 @@ RSpec.feature 'TechSource availability for responsible body' do
   let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: local_authority) }
   let(:techsource) { Computacenter::TechSource.new }
 
-  before do
-    stub_const('Computacenter::TechSource::NEXT_MAINTENANCE', {
-      window_start: Time.zone.local(2020, 11, 28, 7, 0, 0),
-      window_end: Time.zone.local(2020, 11, 28, 23, 0, 0),
-      maintenance_on_date: Date.new(2020, 11, 28),
-      reopened_on_date: Date.new(2020, 11, 29),
-    })
-  end
-
   after do
     Timecop.return
   end
@@ -69,27 +60,35 @@ RSpec.feature 'TechSource availability for responsible body' do
   end
 
   def given_it_is_well_before_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 11, 20, 23, 0, 0))
+    Timecop.travel(Time.zone.parse('20 Nov 2020 23:00'))
+    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def given_it_is_less_than_2_days_before_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 11, 27, 23, 0, 0))
+    Timecop.travel(Time.zone.parse('2 Dec 2020 23:00'))
+    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def given_it_is_during_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 11, 28, 8, 0, 0))
+    Timecop.travel(Time.zone.parse('3 Dec 2020 09:01'))
+    downtime = Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00')
+    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', downtime)
+    # Below line is needed to stub out the models version of thw MAINTENANCE_WINDOW because this is used for the redirect
+    # journey to the "unavailable" page and they need to be for the same period
+    stub_const('Computacenter::TechSource::MAINTENANCE_WINDOW', downtime)
   end
 
   def given_it_is_after_the_techsource_maintenance_window
-    Timecop.travel(Time.zone.local(2020, 11, 29, 3, 1, 0))
+    Timecop.travel(Time.zone.parse('4 Dec 2020 23:00'))
+    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def then_i_see_a_warning_notice
-    expect(page).to have_text('The TechSource website will be closed for maintenance on Saturday 28 November. You can order devices when it reopens on Sunday 29 November.')
+    expect(page).to have_selector('[data-module="app-tech-source-maintenance-banner"]')
   end
 
   def then_i_do_not_see_a_warning_notice
-    expect(page).not_to have_text('The TechSource website will be closed for maintenance on Saturday 28 November. You can order devices when it reopens on Sunday 29 November.')
+    expect(page).to have_no_selector('[data-module="app-tech-source-maintenance-banner"]')
   end
 
   def when_i_click_the_start_now_button
