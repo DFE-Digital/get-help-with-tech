@@ -12,12 +12,16 @@ class Support::RequestCompletionsForm
   def dates_description
     if @from.present?
       if @to.present?
-        "between #{@from.localtime.to_s(:govuk_date_and_time)} and #{@to.localtime.to_s(:govuk_date_and_time)}"
+        "between #{format_datetime(@from)} and #{format_datetime(@to)}"
       else
-        "since #{@from.localtime.to_s(:govuk_date_and_time)}"
+        "since #{format_datetime(@from)}"
       end
     else
-      "up to #{(@to || Time.zone.now).localtime.to_s(:govuk_date_and_time)}"
+      "up to #{format_datetime(@to || Time.zone.now)}"
     end
+  end
+
+  def format_datetime(d)
+    d.localtime.to_s(:govuk_date_and_time)
   end
 end
