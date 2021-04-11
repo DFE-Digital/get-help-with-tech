@@ -6,10 +6,6 @@ RSpec.feature 'TechSource availability for responsible body' do
   let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: local_authority) }
   let(:techsource) { Computacenter::TechSource.new }
 
-  after do
-    Timecop.return
-  end
-
   scenario 'well before the techsource maintenance window' do
     given_it_is_well_before_the_techsource_maintenance_window
     given_i_am_signed_in_as_a_la_user

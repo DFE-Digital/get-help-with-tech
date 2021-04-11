@@ -32,10 +32,6 @@ RSpec.describe TechsourceLauncherController, type: :controller do
         sign_in_as user
       end
 
-      after do
-        Timecop.return
-      end
-
       it 'renders the unavailable page' do
         stub_const('Computacenter::TechSource::MAINTENANCE_WINDOW', Time.zone.local(2020, 11, 28, 7, 0, 0)..Time.zone.local(2020, 11, 28, 14, 0, 0))
         get 'start'
@@ -48,10 +44,6 @@ RSpec.describe TechsourceLauncherController, type: :controller do
       before do
         Timecop.travel(Time.zone.local(2020, 11, 29, 3, 1, 0))
         sign_in_as user
-      end
-
-      after do
-        Timecop.return
       end
 
       it 'redirects to techsource' do

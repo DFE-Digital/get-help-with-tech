@@ -10,10 +10,6 @@ RSpec.feature 'TechSource availability for school' do
            full_name: 'AAA Smith')
   end
 
-  after do
-    Timecop.return
-  end
-
   scenario 'well before the techsource maintenance window' do
     given_it_is_well_before_the_techsource_maintenance_window
     given_i_am_signed_in_as_a_school_user
