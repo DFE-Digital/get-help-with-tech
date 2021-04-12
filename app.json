@@ -18,6 +18,12 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
+    },
+    "FEATURES_show_component_previews": {
+      "value": "active"
+    },
+    "FEATURES_display_sign_in_token_links": {
+      "value": "active"
     }
   },
   "formation": {

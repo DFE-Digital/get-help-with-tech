@@ -6,7 +6,7 @@
       <%= t('page_titles.order_devices.title') %>
     </h1>
 
-    <%= render partial: 'shared/techsource_unavailable_banner' %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
   </div>
 </div>

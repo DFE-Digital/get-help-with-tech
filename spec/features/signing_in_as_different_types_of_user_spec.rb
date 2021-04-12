@@ -65,8 +65,8 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
         scenario 'it redirects to Your organisations' do
           sign_in_as user
-          expect(page).to have_text 'Your organisations'
-          expect(page).to have_link user.schools[0].name
+          expect(page).to have_text 'Choose the organisation you want to view'
+          expect(page).to have_link user.schools.first.name
           expect(page).to have_link user.responsible_body.name
         end
       end

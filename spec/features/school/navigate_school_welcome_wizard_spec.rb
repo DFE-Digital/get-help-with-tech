@@ -11,6 +11,16 @@ RSpec.feature 'Navigate school welcome wizard' do
     allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
   end
 
+  scenario 'step through wizard as LA Funded Place' do
+    as_a_new_la_funded_user
+    when_i_sign_in_for_the_first_time
+    then_i_state_funded_interstitial
+    when_i_click_continue
+    then_i_see_privacy_policy
+    when_i_click_continue
+    then_i_see_homepage
+  end
+
   scenario 'step through the wizard as the first user for a school that has available allocation' do
     given_my_school_has_an_available_allocation
     as_a_new_school_user
@@ -160,6 +170,11 @@ RSpec.feature 'Navigate school welcome wizard' do
     @user = create(:school_user, :new_visitor, :has_not_seen_privacy_notice, school: school, orders_devices: true)
   end
 
+  def as_a_new_la_funded_user
+    @school = create(:la_funded_place, std_device_allocation: available_allocation)
+    @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school)
+  end
+
   def as_a_subsequent_school_user
     @user = create_list(:school_user, 2, :new_visitor, :has_not_seen_privacy_notice, school: school).last
   end
@@ -170,6 +185,18 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def when_i_sign_in_for_the_first_time
     visit validate_token_url_for(@user)
+  end
+
+  def then_i_state_funded_interstitial
+    expect(page).to have_text('Get laptops and internet access for state-funded pupils at independent settings')
+  end
+
+  def then_i_see_privacy_policy
+    expect(page).to have_text('Before you continue, please read the privacy notice.')
+  end
+
+  def then_i_see_homepage
+    expect(page).to have_text('place orders access the Computacenter TechSource website to order devices')
   end
 
   def then_i_see_a_welcome_page_for_my_school

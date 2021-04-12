@@ -16,17 +16,18 @@ class LocalAuthority < ResponsibleBody
 
   validates :organisation_type, presence: true
 
-  def la_funded_places
-    schools.la_funded_places_establishment_type.first
+  def la_funded_place
+    schools.la_funded_place_establishment_type&.first
   end
 
   def create_la_funded_places!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
-    return unless la_funded_places.nil?
+    return unless la_funded_place.nil?
+
     attrs = {
       responsible_body: self,
       urn: urn,
       name: 'LA Funded Places',
-      establishment_type: 'la_funded_places',
+      establishment_type: 'la_funded_place',
       address_1: address_1,
       address_2: address_2,
       address_3: address_3,

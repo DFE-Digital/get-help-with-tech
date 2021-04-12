@@ -6,12 +6,17 @@ FactoryBot.define do
       urn { nil }
     end
 
+    factory :la_funded_place, class: 'LaFundedPlace' do
+      association :responsible_body, factory: :local_authority
+      establishment_type { 'la_funded_place' }
+    end
+
     association :responsible_body, factory: %i[local_authority trust].sample
     urn { Faker::Number.unique.number(digits: 6) }
     sequence(:name) { |n| "#{Faker::Educator.secondary_school}-#{n}" }
     computacenter_reference { Faker::Number.number(digits: 8) }
     phase { School.phases.values.sample }
-    establishment_type { School.establishment_types.values.sample }
+    establishment_type { (School.establishment_types.values - %w[la_funded_place]).sample }
 
     address_1 { Faker::Address.street_name }
     address_2 { Faker::Address.secondary_address }

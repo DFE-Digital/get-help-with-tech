@@ -46,5 +46,6 @@ module GovukRailsBoilerplate
 
     config.view_component.preview_paths << "#{Rails.root}/spec/components/previews"
     config.view_component.preview_controller = "ComponentPreviewController"
+    config.view_component.show_previews = (ENV['FEATURES_show_component_previews'] == 'active')
   end
 end

@@ -406,8 +406,8 @@ class Support::ServicePerformance
 
   def extra_mobile_data_request_completions(from: nil, to: nil)
     scope = ReportableEvent.where(event_name: 'completion', record_type: 'ExtraMobileDataRequest')
-    scope = scope.where('event_time >= ?', from) if from.present?
-    scope = scope.where('event_time <= ?', to) if to.present?
+    scope = scope.where('event_time >= ?', from.utc) if from.present?
+    scope = scope.where('event_time <= ?', to.utc) if to.present?
     scope.count
   end
 
