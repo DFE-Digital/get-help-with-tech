@@ -43,7 +43,7 @@ FactoryBot.define do
 
     factory :single_academy_trust_user do
       association :responsible_body, factory: %i[trust single_academy_trust]
-      school { build(:school, :academy, responsible_body: responsible_body) }
+      schools { build_list(:school, 1, :academy, responsible_body: responsible_body) }
       orders_devices { true }
     end
 
@@ -71,7 +71,6 @@ FactoryBot.define do
       trait :new_visitor do
         after(:create) do |user|
           user.school_welcome_wizards&.destroy_all
-          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school)
         end
       end
 
@@ -85,6 +84,23 @@ FactoryBot.define do
         after(:create) do |user|
           user.school_welcome_wizards&.destroy_all
           user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school, step: 'techsource_account')
+        end
+      end
+    end
+
+    factory :la_funded_place_user do
+      transient do
+        school { build(:la_funded_place) }
+      end
+      after(:build) do |user, evaluator|
+        user.schools << evaluator.school if user.schools.empty? && evaluator.school.present?
+      end
+
+      orders_devices { true }
+
+      trait :new_visitor do
+        after(:create) do |user|
+          user.school_welcome_wizards&.destroy_all
         end
       end
     end
