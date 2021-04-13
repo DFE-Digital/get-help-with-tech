@@ -477,7 +477,6 @@ DEPENDENCIES
   govuk-components (>= 1.1.5)
   govuk_design_system_formbuilder
   http
-  http-parser (~> 1.2.3)
   i18n-debug
   listen (>= 3.0.5, < 3.6)
   logstash-logger (~> 0.26.1)
