@@ -27,7 +27,7 @@ The label inside the cover of each device contains the:
 - WiFi network name (SSID)
 - Password (WIFI KEY - this is case sensitive)
 
-If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out how to resolve technical issues.
+If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out [how to resolve technical issues](#technical-support).
 
 ## Setting up a D-Link router
 
