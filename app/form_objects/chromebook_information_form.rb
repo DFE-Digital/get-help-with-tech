@@ -8,7 +8,7 @@ class ChromebookInformationForm
                                                            I18n.t('activemodel.errors.models.chromebook_information_form.custom_errors.will_need_chromebooks', institution_type: object.school&.institution_type || 'school')
                                                          end }
 
-  with_options if: :will_need_chromebooks? do |condition|
+  with_options if: :will_need_chromebooks_and_is_not_a_la_funded_school? do |condition|
     condition.validates :recovery_email_address,
                         presence: true,
                         email_address: true
@@ -34,6 +34,18 @@ class ChromebookInformationForm
   def recovery_email_address_cannot_be_same_domain_as_school_or_rb
     if recovery_email_address&.ends_with?(school_or_rb_domain)
       errors.add(:recovery_email_address, :cannot_be_same_domain_as_school_or_rb)
+    end
+  end
+
+  def will_need_chromebooks_and_is_not_a_la_funded_school?
+    if will_need_chromebooks?
+      if school.respond_to?(:la_funded_place?)
+        !school.la_funded_place?
+      else
+        true
+      end
+    else
+      false
     end
   end
 end

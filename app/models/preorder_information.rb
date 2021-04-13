@@ -109,7 +109,14 @@ class PreorderInformation < ApplicationRecord
     will_need_chromebooks == 'yes'
   end
 
+  def will_not_need_chromebooks?
+    will_need_chromebooks == 'no'
+  end
+
   def chromebook_information_complete?
+    # do not want to hold them up being able to order
+    return true if school&.la_funded_place_establishment_type?
+
     if will_need_chromebooks == 'yes'
       school_or_rb_domain.present? && recovery_email_address.present?
     else

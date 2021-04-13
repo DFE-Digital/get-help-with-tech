@@ -83,7 +83,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_choose_yes_they_will_need_chromebooks
-    choose 'Yes, we will order Chromebooks'
+    choose 'Yes, we’ll order Chromebooks'
   end
 
   def it_shows_me_fields_for_domain_and_recovery_email_address

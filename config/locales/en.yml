@@ -62,6 +62,11 @@ en:
     general_privacy_notice: How we look after personal information as part of the Get help with technology programme
     what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe: What to do if you cannot get laptops, tablets or internet access from DfE
     how_to_access_the_get_help_with_technology_service: How to access the Get help with technology service
+    iss_home: Get laptops and internet access
+    iss_order_devices: Get laptops
+    iss_details: Check your details
+    iss_laptop_types: Find out what type of laptop pupils need
+    iss_chromebooks: Will your order include Google Chromebooks?
 
     support:
       home: Support
@@ -703,8 +708,10 @@ en:
           predecessor_split_school: Predecessor - Split School
       preorder_information:
         will_need_chromebooks:
-          "yes": Yes, we will order Chromebooks
+          'yes': Yes, we’ll order Chromebooks
           'no': No, we will not order Chromebooks
+          i_dont_know: I don’t know
+          im_not_sure: I’m not sure
         status:
           needs_contact: Needs a contact
           needs_info: Needs information

@@ -372,4 +372,45 @@ RSpec.describe PreorderInformation, type: :model do
       end
     end
   end
+
+  describe '#chromebook_information_complete?' do
+    context 'la funded places' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:la_funded_place, :centrally_managed, responsible_body: local_authority) }
+
+      subject(:preorder_info) { school.preorder_information }
+
+      context 'when chromebooks needed' do
+        before do
+          preorder_info.update!(will_need_chromebooks: 'yes',
+                                school_or_rb_domain: 'school.org',
+                                recovery_email_address: 'school@example.com')
+        end
+
+        it 'does not require a G Suite domain' do
+          preorder_info.school_or_rb_domain = nil
+          expect(preorder_info.chromebook_information_complete?).to be true
+        end
+
+        it 'does not require a recovery email address' do
+          preorder_info.recovery_email_address = nil
+          expect(preorder_info.chromebook_information_complete?).to be true
+        end
+      end
+
+      context 'when no chromebooks needed' do
+        it 'returns true' do
+          preorder_info.update!(will_need_chromebooks: 'no')
+          expect(preorder_info.chromebook_information_complete?).to be true
+        end
+      end
+
+      context 'when we do not know if chromebooks are needed' do
+        it 'returns true' do
+          preorder_info.update!(will_need_chromebooks: nil)
+          expect(preorder_info.chromebook_information_complete?).to be true
+        end
+      end
+    end
+  end
 end

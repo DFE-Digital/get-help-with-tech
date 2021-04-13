@@ -64,7 +64,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
       .school_details['Ordering Chromebooks?']
       .follow_action_link
 
-    choose 'Yes, we will order Chromebooks'
+    choose 'Yes, we’ll order Chromebooks'
     fill_in 'School or local authority', with: 'somedomain.com'
     fill_in 'Recovery email address', with: 'someone@someotherdomain.com'
     click_on 'Save'
@@ -80,7 +80,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
   end
 
   def then_the_chromebook_details_are_updated_in_the_support_console
-    expect(school_details_page.school_details['Ordering Chromebooks?'].value).to eq('Yes, we will order Chromebooks')
+    expect(school_details_page.school_details['Ordering Chromebooks?'].value).to eq('Yes, we’ll order Chromebooks')
     expect(school_details_page.school_details['Domain'].value).to eq('somedomain.com')
     expect(school_details_page.school_details['Recovery email'].value).to eq('someone@someotherdomain.com')
   end

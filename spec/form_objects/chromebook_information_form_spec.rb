@@ -56,4 +56,27 @@ RSpec.describe ChromebookInformationForm do
       expect(form.errors[:will_need_chromebooks]).to include('Tell us whether the Educational foundation will need Chromebooks')
     end
   end
+
+  context 'LA school' do
+    let(:school) { create(:la_funded_place) }
+
+    let(:form) do
+      described_class.new(school: school,
+                          will_need_chromebooks: will_need_chromebooks)
+    end
+
+    context 'when :will_need_chromebooks is blank' do
+      let(:will_need_chromebooks) { nil }
+
+      it 'is not valid' do
+        expect(form.valid?).to be_falsey
+      end
+
+      it 'has an error message including the schools institution_type' do
+        form.validate
+        # TODO: update message
+        expect(form.errors[:will_need_chromebooks]).to include('Tell us whether the funded_places will need Chromebooks')
+      end
+    end
+  end
 end

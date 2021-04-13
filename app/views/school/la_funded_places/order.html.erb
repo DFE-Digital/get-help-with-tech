@@ -1,0 +1,112 @@
+<%- title = t('page_titles.school_order_devices') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: impersonated_or_current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      How to order
+    </h1>
+
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render partial: 'shared/half_term_delivery_suspension' %>
+
+    <h2 class="govuk-heading-m">
+      These laptops are currently in stock:
+    </h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        Google Chromebooks
+      </li>
+      <li>
+        Standard Windows laptops
+      </li>
+      <li>
+        DfE Restricted Windows laptops — low stock, delivery may take longer than 5 working days
+      </li>
+    </ul>
+    <p class="govuk-body">
+    <%= govuk_link_to 'It’s important to check you’re ordering the best type of laptop for each pupil.', laptop_types_school_path(@school) %>
+    </p>
+
+    <h2 class="govuk-heading-m">Chromebooks</h2>
+
+    <% if @school.preorder_information.will_need_chromebooks? %>
+      <p class="govuk-body">
+        You’ve told us you’ll order Chromebooks –&nbsp;
+        <%= govuk_link_to funded_chromebooks_school_path(@school) do %>
+          Change <span class="govuk-visually-hidden">Chromebook preference</span>
+        <% end %>
+      </p>
+      <div class="govuk-inset-text">
+        <p class="govuk-body">
+          After you place your order you’ll get an email asking for:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            the domain the school has registered for G Suite for Education, for example ‘school.co.uk’
+          </li>
+          <li>
+            a recovery email address. This should be on a separate domain to the one registered for G Suite for Education. For example, if the domain registered for G Suite for Education is ‘school.com’, the recovery email cannot be ‘recovery@school.com’
+          </li>
+        </ul>
+        <p class="govuk-body">
+          The school’s IT support should be able to give you this information.
+        </p>
+      </div>
+    <% elsif @school.preorder_information.will_not_need_chromebooks? %>
+      <p class="govuk-body">
+        You have told us you will not order Chromebooks –&nbsp;
+        <%= govuk_link_to funded_chromebooks_school_path(@school) do %>
+          Change <span class="govuk-visually-hidden">Chromebook preference</span>
+        <%- end %>
+      </p>
+    <% else %>
+      <div class="govuk-inset-text">
+        <p class="govuk-body">
+          <strong>
+            You have not told us if you plan to order Google Chromebooks
+          </strong>
+        </p>
+        <p class="govuk-body">
+          If you order Chromebooks without letting us know first, they’ll be delivered without safeguarding settings and access to G Suite for Education.
+        </p>
+        <%= govuk_link_to 'Tell us if you’ll order Google Chromebooks', funded_chromebooks_school_path(@school) %>
+      </div>
+    <% end %>
+
+    <h2 class="govuk-heading-m">Your laptops will be delivered to:</h2>
+    <p class="govuk-body">
+      <%= @school.address_components.join('<br>').html_safe %>
+    </p>
+    <p class="govuk-body">
+      <%= govuk_link_to 'Contact us to change your delivery address.', support_ticket_path %>
+    </p>
+    <h2 class="govuk-heading-m">Information for your order</h2>
+    <p class="govuk-body">
+      You’ll place your order on a website called TechSource.
+    </p>
+    <p class="govuk-body">
+      When you’re asked for a URN, use ‘<strong><%= @school.techsource_urn %></strong>’.
+    </p>
+    <p class="govuk-body">
+    <% devices_available = @school.std_device_allocation.devices_available_to_order %>
+    If you place an order for more than <%= "#{devices_available} #{'laptop'.pluralize(devices_available)}" %>, your order will be cancelled.
+    </p>
+    <p class="govuk-body">
+      You can order all of your laptops at once, or place multiple orders.
+    </p>
+
+    <%# instead of partial shared/start_ordering_on_techsource %>
+    <h2 class="govuk-heading-m">How to sign in to TechSource for the first time</h2>
+    <p class="govuk-body">Use these details to sign in:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>User ID: <%= current_user.email_address %></li>
+      <li>Password: Use the ‘Forgotten password’ link to set a password the first time you sign in</li>
+    </ul>
+    <%= govuk_start_button_link_to('Start now', techsource_start_path, class: 'govuk-!-margin-bottom-3', target: '_blank') -%>
+    <p class="govuk-body-s">on TechSource in a new window</p>
+  </div>
+</div>

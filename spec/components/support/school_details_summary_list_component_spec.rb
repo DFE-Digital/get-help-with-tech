@@ -58,7 +58,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we will order Chromebooks')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we’ll order Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -100,7 +100,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details and allows them to be edited' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we will order Chromebooks')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we’ll order Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
 
@@ -127,7 +127,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details and allows them to be edited' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we will order Chromebooks')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we’ll order Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
 

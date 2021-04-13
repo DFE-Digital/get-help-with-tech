@@ -1,0 +1,76 @@
+<%- title = t('page_titles.iss_order_devices') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: title, school: @school, user: impersonated_or_current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render partial: 'shared/half_term_delivery_suspension' %>
+
+    <%= render DeviceCountComponent.new(school: @school) %>
+
+    <p class="govuk-body">
+    You’ve been allocated <%= "#{@school.std_device_allocation&.cap} #{'laptop'.pluralize(@school.std_device_allocation.cap) }" %>.
+    </p>
+    <%= govuk_details summary: 'How your allocation has been calculated' do %>
+      <p class="govuk-body">
+      Your allocation estimate is based on the data <%= @school.responsible_body.name %> submitted in the latest published alternative provision census (2020).
+      </p>
+      <p class="govuk-body">
+      We’ve allocated one laptop for each pupil in years 3 to 11 that <%= @school.responsible_body.name %> reported as having a state-funded place at an independent setting, and also being eligible for free school meals.
+      </p>
+      <p class="govuk-body">
+      You can request internet access for these pupils if they need it too.
+      </p>
+      <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
+      <p class="govuk-body">
+      Tell us how many pupils <%= @school.responsible_body.name %> funds who:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          have a place at an independent special setting, or independent alternative provision
+        </li>
+        <li>
+          are eligible for free school meals
+        </li>
+        <li>
+          do not have access to a suitable device for remote education, and for use in face-to-face learning
+        </li>
+      </ul>
+      <p class="govuk-body">
+      Do not send any personal information, like names of pupils or dates of birth.
+      </p>
+      <p class="govuk-body">
+      Email this information to <%= ghwt_contact_mailto %>.
+      </p>
+    <% end %>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-6">
+      Before you order
+    </h2>
+    <p class="govuk-body">
+    We recommend checking with schools, families or pupils as soon as possible to find out which device type and IT settings would be most suitable.
+    </p>
+    <p class="govuk-body">
+      <%= govuk_link_to 'Check what types of laptop are available', laptop_types_school_path(@school) %>
+    </p>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-6">
+      Ownership and responsibility
+    </h2>
+    <p class="govuk-body">
+    <%= @school.responsible_body.name %> will own these laptops and is responsible for:
+    </p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+      <li>making sure laptops have appropriate safety and security measures installed and maintained – <%= link_to_devices_guidance_subpage 'read about laptop safeguarding', 'safeguarding-for-device-users' %></li>
+      <li>fixing any technical issues –&nbsp; <%= link_to_devices_guidance_subpage 'read about how to organise repairs', 'replace-a-faulty-device' %></li>
+      <li>distributing the laptops safely –&nbsp; <%= link_to_devices_guidance_subpage 'read about how to get devices to pupils', 'device-distribution-and-ownership', {}, anchor: 'distributing-devices' %>
+      <li>redistributing the laptops if pupils move school or leave education</li>
+    </ul>
+    <%= govuk_link_to 'Continue', order_laptops_school_path(@school), button: true %>
+  </div>
+</div>
