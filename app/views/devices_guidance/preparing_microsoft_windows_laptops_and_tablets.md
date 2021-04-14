@@ -1,6 +1,8 @@
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
-   If you’re experiencing problems with your device, please see our guidance on [resolving issues with laptops and tablets](/devices/resolve-issues-with-laptops-and-tablets) or find out [how to replace a fauly device](/devices/replace-a-faulty-device).
+    If you’re experiencing problems with your device, please see our guidance on
+    <a href="/devices/resolve-issues-with-laptops-and-tablets" class="govuk-link">resolving issues with laptops and tablets</a> 
+    or find out <a href="/devices/replace-a-faulty-device" class="govuk-link app-no-wrap">how to replace a faulty device</a>.
   </p>
 </div>
 
