@@ -61,7 +61,7 @@
     </header>
     <div class="app-phase-banner">
       <div class="govuk-width-container">
-        <%= render GovukComponent::PhaseBanner.new(phase: 'Alpha') do
+        <%= render GovukComponent::PhaseBanner.new(phase_tag: {text: 'Alpha'}) do
           if SessionService.is_signed_in?(session) && (current_user&.is_responsible_body_user? || current_user&.is_school_user?)
             "#{t('user_feedback')} – #{user_feedback_link}".html_safe
           else
