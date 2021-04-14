@@ -1,0 +1,51 @@
+---
+name: Promote container between environments
+
+on:
+  workflow_dispatch:
+    inputs:
+      from:
+        description: 'Promote from environment'
+        required: true
+        default: 'dev'
+      to:
+        description: 'To environment'
+        required: true
+        default: 'staging'
+
+jobs:
+  promote-container-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Install CloudFoundry CLI
+        shell: bash
+        id: install-cf-cli
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf7-cli
+
+      - name: Login to GOV.UK PaaS
+        shell: bash
+        env:
+          CF_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          CF_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          cf api https://api.london.cloud.service.gov.uk
+          cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
+
+      - name: Promote the build
+        shell: bash
+        id: promote-build
+        run: |
+          make ${{ github.event.inputs.to }} promote FROM=${{ github.event.inputs.from }}
