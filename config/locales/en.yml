@@ -331,9 +331,11 @@ en:
     preparing_4g_wireless_routers:
       title: Preparing 4G routers
       description: Find out how 4G wireless routers are secured, how much data users get, how long the contract is and records you should keep.
+      guidance_section: internet_access
     resolve_issues_with_4g_wireless_routers:
       title: Resolve issues with 4G wireless routers
       description: Find out what to do if you're having issues getting your 4G wireless router connected to the internet.
+      guidance_section: internet_access
 
     enrol_chromebooks_with_user_logins:
       title: Enrol Chromebooks and add Cisco Umbrella with user logins
