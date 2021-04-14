@@ -47,5 +47,8 @@ jobs:
       - name: Promote the build
         shell: bash
         id: promote-build
+        env:
+          CF_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          CF_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           make ${{ github.event.inputs.to }} promote FROM=${{ github.event.inputs.from }}
