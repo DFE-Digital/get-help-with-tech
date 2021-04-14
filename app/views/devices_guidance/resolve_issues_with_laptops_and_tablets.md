@@ -3,7 +3,7 @@
 Some users with Windows devices with DfE settings applied may experience a bug that makes it difficualt for them to log in to their laptops and tablets.
 Users may find that the login is defaulting to the .\localadmin account and asking for a password, which they will not have.
 
-To fix this issue, laptop users will need to change the username in the login box from ".\localadmin" to ".\localuser" (the dot and backslash are part of the username)/.
+To fix this issue, laptop users will need to change the username in the login box from ".\localadmin" to ".\localuser" (the dot and backslash are part of the username).
 
 * If a local user password has been set, enter the password and press 'Return'
 * If no local user password has been set, leave the password blank and press 'Return'
