@@ -45,4 +45,7 @@ jobs:
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
 
       - name: Promote the build
+        shell: bash
+        id: promote-build
+        run: |
           make ${{ github.event.inputs.to }} promote FROM=${{ github.event.inputs.from }}
