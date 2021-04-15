@@ -41,11 +41,11 @@ private
       school_name: @school.name,
       urn: @school.urn,
       new_cap_value: @new_cap_value,
-      ship_to_number: @school.computacenter_reference,
+      ship_to_number: @school.computacenter_reference || 'Not set',
       responsible_body_name: @school.responsible_body.name,
       responsible_body_type: @school.responsible_body.humanized_type,
       responsible_body_reference: @school.responsible_body.computacenter_identifier,
-      sold_to_number: @school.responsible_body.computacenter_reference,
+      sold_to_number: @school.responsible_body.computacenter_reference || 'Not set',
     }
   end
 
