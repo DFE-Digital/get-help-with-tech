@@ -162,5 +162,48 @@ RSpec.describe AllocationJob do
         end
       end
     end
+
+    context 'when school is part of virtual cap pool' do
+      let(:batch_job) { create(:allocation_batch_job, urn: school1.urn, allocation_delta: '3', order_state: 'can_order') }
+
+      let(:rb) do
+        create(:trust,
+               :manages_centrally,
+               :vcap_feature_flag)
+      end
+
+      let(:school1) { rb.schools.first }
+      let(:school2) { rb.schools.last }
+
+      before do
+        create_list(:school, 2,
+                    :centrally_managed,
+                    responsible_body: rb)
+
+        create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, school: school1)
+        create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, school: school2)
+
+        rb.add_school_to_virtual_cap_pools!(school1)
+        rb.add_school_to_virtual_cap_pools!(school2)
+
+        batch_job
+      end
+
+      it 'updates the allocation' do
+        expect {
+          described_class.perform_now(batch_job)
+        }.to change { school1.std_device_allocation.reload.raw_allocation }.by(3)
+      end
+
+      it 'updates the cap to match allocation' do
+        described_class.perform_now(batch_job)
+
+        sum = school1.std_device_allocation.reload.raw_cap + school2.std_device_allocation.reload.raw_cap
+        expect(school1.std_device_allocation.cap).to eql(sum)
+        expect(school2.std_device_allocation.cap).to eql(sum)
+
+        expect(school1.std_device_allocation.raw_cap).to eql(school1.std_device_allocation.raw_allocation)
+      end
+    end
   end
 end

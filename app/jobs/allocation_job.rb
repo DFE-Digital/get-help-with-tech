@@ -6,10 +6,10 @@ class AllocationJob < ApplicationJob
     order_state = allocation_batch_job.order_state
     current_allocation = school.std_device_allocation
 
-    current_allocation_value = current_allocation&.allocation || 0
+    current_allocation_value = current_allocation&.raw_allocation || 0
     new_allocation_value = current_allocation_value + allocation_batch_job.allocation_delta
 
-    current_cap_value = current_allocation&.cap || 0
+    current_cap_value = current_allocation&.raw_cap || 0
     new_cap_value = current_cap_value + allocation_batch_job.allocation_delta
 
     disable_user_notifications = !allocation_batch_job.send_notification
