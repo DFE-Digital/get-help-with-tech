@@ -1,3 +1,11 @@
+<div class="app-card govuk-!-margin-bottom-4">
+  <p class="govuk-body govuk-!-margin-bottom-0">
+    If you’re experiencing problems with your device, please see our guidance on
+    <a href="/devices/resolve-issues-with-laptops-and-tablets" class="govuk-link">resolving issues with laptops and tablets</a> 
+    or find out <a href="/devices/replace-a-faulty-device" class="govuk-link app-no-wrap">how to replace a faulty device</a>.
+  </p>
+</div>
+
 When ordering Microsoft devices, a selection can be made between:
 
 * not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
@@ -134,159 +142,6 @@ For guidance on how to do this:
 2. Click on the ‘How do I?’ section
 
 3. Select ‘How to reset your Microsoft Windows device to default factory settings’ and follow the instructions to use local admin and BIOS passwords to reset your devices
-
-
-## Troubleshooting
-
-Suggested fixes for bugs and possible solutions to issues that may affect laptops and tablets delivered as part of the Get help with technology programme.
-
-### Tactus Geobooks
-
-#### Sound issues
-
-We are aware a number of users are facing difficulties using Tactus Geobooks, including issues with audio output. We have been informed by Tactus that the standard Windows update should resolve this but we are making additional solutions available:
-
-##### DfE Restricted devices
-
-We are pushing audio drivers from Intune when devices are connected to the internet. If you have not used the device recently, connect it to the internet and let the drivers install which may resolve the issue.
-
-##### Standard / vanilla devices
-
-Download the driver for your device from the Tactus website and either include them in your Images or install the drivers using the install.cmd included in the drivers file. [Download audio drivers](https://geo-computers.zendesk.com/hc/en-us/articles/360016119557-GeoBook1E-Drivers).
-
-#### PXE Boot
-
-We are aware of a number of schools wishing to re-image the Tactus Geobooks using PXE boot and that they are experiencing difficulties due to there being no RJ54 ethernet port.
-
-We do not promote or recommend any device manufacturer over any other, however the following USB to RJ45 adapters have been tested by our delivery partner.
-
-<table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"></th>
-        <th colspan="2">USB Adapter</th>
-    <th colspan="2">GE109</th>
-    <th colspan="2">GE114</th>   
-  </tr>
-</thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
-       Manufacturer</td>
-    <td class="govuk-table__cell">Model</td>
-    <td class="govuk-table__cell">USB Type</td>
-    <td class="govuk-table__cell">Detected</td>
-    <td class="govuk-table__cell">PXE</td>
-    <td class="govuk-table__cell">Detected</td>
-    <td class="govuk-table__cell">PXE</td>
-  </tr>
-  <tr class="govuk-table__row">
-    <td class="govuk-table__cell">Belkin</td>
-    <td class="govuk-table__cell">F4U047bt</td>
-    <td class="govuk-table__cell">A</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Fail</td>
-    <td class="govuk-table__cell">Fail</td>
-  </tr>
-  <tr class="govuk-table__row">
-    <td class="govuk-table__cell">Belkin</td>
-    <td class="govuk-table__cell">B2B048</td>
-    <td class="govuk-table__cell">A</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Fail</td>
-    <td class="govuk-table__cell">Fail</td>
-  </tr>
-  <tr class="govuk-table__row">
-    <td class="govuk-table__cell">Belkin</td>
-    <td class="govuk-table__cell">INC001bt</td>
-    <td class="govuk-table__cell">C</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Fail</td>
-    <td class="govuk-table__cell">Fail</td>
-  </tr>
-  <tr class="govuk-table__row">
-    <td class="govuk-table__cell">Dell</td>
-    <td class="govuk-table__cell">0YX2FJ</td>
-    <td class="govuk-table__cell">A</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Fail</td>
-    <td class="govuk-table__cell">Fail</td>
-  </tr>
-  <tr class="govuk-table__row">
-    <td class="govuk-table__cell">StarTech</td>
-    <td class="govuk-table__cell">USB31000S</td>
-    <td class="govuk-table__cell">A</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-  </tr>
-  <tr class="govuk-table__row">
-        <td class="govuk-table__cell">StarTech</td>
-    <td class="govuk-table__cell">US1GC30B</td>
-    <td class="govuk-table__cell">C</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Pass</td>
-    <td class="govuk-table__cell">Fail</td>
-    <td class="govuk-table__cell">Fail</td>
-  </tr>
-</tbody>
-</table>
-
-### DynaBook Satellite Pro E10-G-101
-
-#### Sound issues
-
-##### DfE Restricted devices
-
-We are pushing audio drivers from Intune when the devices are connected to the internet. If you have not used the device recently, connect it to the internet and let the drivers install which may resolve your issue.
-
-##### Standard / vanilla devices
-
-You can manually download updated audio drivers. [Download audio drivers](https://uk.dynabook.com/support/drivers/laptops/).
-
-### How to help anyone experiencing problems logging in to Windows devices
-
-Some users with Windows device, which have been pre-installed with DfE settings, may experience a bug that makes it harder for them to log in to their laptops and tablets.
-
-Users may find that the login is defaulting to the ‘.\localadmin' account and asking for a password, which they do not have.
-
-We’ve identified a fix for this bug. The end users – young people, children or their families – will need to:
-
-* [follow the steps](#if-no-local-user-password-has-been-set) below to apply the .\localuser workaround and log in to the device
-* connect the device to the internet so it can receive the fix update – leave the device turned on, plugged in to the mains and connected to the internet for at least 3 hours for the fix to be applied
-* restart the device – if the fix has been successful, the device should automatically login as “localuser”. If the user has previously set up a password they will need to enter it. If the device does not login automatically or the username is not “localuser” at the login prompt, then the fix has not been applied and the user may need to repeat the process
-
-
-#### If no local user password has been set
-
-* Click "OK"
-* Change the username in the upper box from “.\localadmin” to “.\localuser” (it’s important to include the “.” dot and “\” backslash)
-* Do not enter a password
-* Press return
-* This should log you in as the local user
-
-#### If a local user password has been set
-
-* Click "OK"
-* Change the username in the upper box from “.\localadmin” to “.\localuser” (it’s important to include the “.” dot and “\” backslash)
-* Enter the password you have set
-* Press return
-* This should log you in as the local user
-
-If a user has set a password for “.\localuser” that they’ve forgotten, you’ll need to sign in to the “.\localadmin” account and reset their password using the "User Accounts" settings in the Control Panel.
-
-We’ve illustrated these steps in our [user guidance](/devices/getting-started-with-your-microsoft-windows-device), which you can share with anyone using your Microsoft devices.
-
-### Issue with updating Windows
-
-Microsoft have identified a bug which causes laptops and tablets running the Windows 10 Pro Education 1909 operating system to appear as ‘non-activated’ when updating to version 2004. To avoid problems with devices supplied by DfE, Microsoft have applied a block to prevent this update taking place until the bug is resolved.
-
-A fix is expected to be released in early 2021 which will be automatically available to devices. For further information on this issue or if you have devices showing as unactivated, see [Microsoft’s support page](https://support.microsoft.com/en-gb/help/4592045/windows-10-pro-education-device-fails-activation).
 
 ## User guidance for young people and their carers
 
