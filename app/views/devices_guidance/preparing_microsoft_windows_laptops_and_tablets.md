@@ -9,7 +9,7 @@
 When ordering Microsoft devices, a selection can be made between:
 
 * not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
-* having DfE settings installed - these 'DfE Restricted' devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
+* having DfE settings installed - these 'DfE Restricted' devices have temporary safeguarding settings installed - content filtering and mobile device management (MDM) software - which you’ll need to replace when they expire on 30 September 2021. You’ll need to reset these devices before you can apply new settings, or download some types of software. You'll be reliant on DfE for technical support.
 
 If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
