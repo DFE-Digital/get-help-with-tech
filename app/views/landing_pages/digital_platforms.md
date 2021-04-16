@@ -2,8 +2,8 @@
 
 Government-funded support is available for schools and colleges to get set up on one of two free-to-use digital education platforms. You can choose to use either:
 
-* G Suite for Education (Google Classroom)
-* Office 365 Education (Microsoft Teams)
+* Google Workspace for Education Fundamentals (formerly G Suite for Education)
+* Microsoft 365 Education (formerly Office 365 Education)
 
 [The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/feature-comparison-g-suite-education-and-office-365-education/?marker=content-body) provides feature comparison and case studies on how schools are making the most of these platforms, to help you make the most appropriate choice for your school.
 
@@ -35,7 +35,7 @@ Using a digital education platform allows teachers, pupils and students to conti
 The funded support is for schools and colleges that:
 
 * do not have a digital education platform
-* have access to Office 365 Education or G Suite for Education, but are not yet set up to assign work and communicate with pupils and students
+* have access to Microsoft 365 Education or Google Workspace for Education Fundamentals, but are not yet set up to assign work and communicate with pupils and students
 
 Support is available to state funded:
 
