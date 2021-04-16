@@ -57,7 +57,7 @@ RSpec.describe ZendeskMacroExportService, type: :model do
             'Accept' => 'application/json',
             'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Authorization' => 'Basic Og==',
-            'User-Agent' => 'ZendeskAPI Ruby 1.28.0',
+            'User-Agent' => 'ZendeskAPI Ruby 1.29.0',
           },
         )
         .to_return(status: 200, body: '', headers: {})
@@ -78,7 +78,7 @@ RSpec.describe ZendeskMacroExportService, type: :model do
                 'Accept' => 'application/json',
                 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Authorization' => 'Basic Og==',
-                'User-Agent' => 'ZendeskAPI Ruby 1.28.0',
+                'User-Agent' => 'ZendeskAPI Ruby 1.29.0',
               },
             )
             .to_return(status: 200, body: '', headers: {})
