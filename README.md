@@ -4,14 +4,21 @@ An app to host content and forms for the "Get Help With Tech" COVID-19 response 
 
 ## Prerequisites
 
-For running the app:
+### For running the app:
 
 - [Ruby](.ruby-version)
 - PostgreSQL
 - NodeJS >= 12.18.x
 - Yarn >= 1.22.x
 
-For performing releases:
+### For performing releases:
+
+There are two ways to perform a release -
+
+1. Using the 'Promote container' workflow in Github, for which you only need write access to this repository
+2. Manually, from your terminal command prompt.
+
+To perform manual releases, you will need:
 
 - Docker
 - CloudFoundry CLI >= v7.0
@@ -19,7 +26,7 @@ For performing releases:
 - a bash-compatible shell (bash, or Mac OS/X)
 - [jq](https://github.com/stedolan/jq) (only required for listing remote Docker tags, not required for normal releases)
 
-For generating Entity Relationship Diagrams:
+### For generating Entity Relationship Diagrams:
 
 - Graphviz
 
@@ -94,9 +101,23 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 
 [Computacenter API](/docs/computacenter_api.md)
 
-## Deploying on GOV.UK PaaS
 
-### Prerequisites
+## Deploying
+
+In the normal flow of things, the simplest way to perform a release is by using the Github Actions we have set up on this repository.
+
+Merging a Pull Request to `main` will automatically run the tests and perform a release to the 'dev' environment.
+Once this has completed (you can check the currently deployed commit SHA from http://get-help-with-tec-dev.london.cloudapps.digital/healthcheck.json, and make sure it matches 'main'), you can then promote that image from `dev` to `staging`, and then from `staging` to `prod` as follows:
+
+1. Click the 'Actions' tab
+2. Under 'Workflows' on the left, click 'Promote container between environments'
+3. In the blue header, click 'Run workflow', fill in the from and to environments and then click the green 'Run workflow' button (see screenshot below)
+
+ ![Screenshot of the user interface for promoting a container between environments](docs/images/promote-workflow-screenshot.png)
+
+### Deploying manually on GOV.UK PaaS
+
+#### Prerequisites
 
 - Your department, agency or team has a GOV.UK PaaS account
 - You have a personal account granted by your organisation manager
@@ -105,7 +126,7 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 - You have an account on https://hub.docker.com/ that is a member of the dfedigital organisation
 - You have the environment variables `CF_DOCKER_USERNAME` and `CF_DOCKER_PASSWORD` set to the values of your Docker Hub account
 
-### The deployment process
+#### The manual deployment process
 
 1. [Sign in to Cloud Foundry](https://docs.cloud.service.gov.uk/get_started.html#sign-in-to-cloud-foundry) (using either your GOV.UK PaaS account or single sign-on, once you've enabled it for your account)
 2. Run `docker login` to log in to Docker Hub
