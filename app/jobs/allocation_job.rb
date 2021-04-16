@@ -28,7 +28,11 @@ class AllocationJob < ApplicationJob
       service.disable_user_notifications! if disable_user_notifications
       service.call
 
-      allocation_batch_job.update!(processed: true)
+      if disable_user_notifications
+        allocation_batch_job.update!(processed: true)
+      else
+        allocation_batch_job.update!(processed: true, sent_notification: true)
+      end
     end
   end
 end

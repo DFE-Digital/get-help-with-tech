@@ -26,6 +26,12 @@ RSpec.describe AllocationJob do
 
         expect(mock_service).to have_received(:disable_user_notifications!)
       end
+
+      it 'does not update sent_notification flag' do
+        expect {
+          described_class.perform_now(batch_job)
+        }.not_to change { batch_job.reload.sent_notification }.from(false)
+      end
     end
 
     context 'when send_notification is true' do
@@ -47,6 +53,12 @@ RSpec.describe AllocationJob do
         )
 
         expect(mock_service).not_to have_received(:disable_user_notifications!)
+      end
+
+      it 'updates sent_notification flag' do
+        expect {
+          described_class.perform_now(batch_job)
+        }.to change { batch_job.reload.sent_notification }.from(false).to(true)
       end
     end
 
@@ -88,7 +100,7 @@ RSpec.describe AllocationJob do
         it 'marks job as processed' do
           described_class.perform_now(batch_job)
 
-          expect(batch_job.reload.processed?).to be_truthy
+          expect(batch_job.reload).to be_processed
         end
       end
 
@@ -110,7 +122,7 @@ RSpec.describe AllocationJob do
         it 'marks job as processed' do
           described_class.perform_now(batch_job)
 
-          expect(batch_job.reload.processed?).to be_truthy
+          expect(batch_job.reload).to be_processed
         end
       end
     end
@@ -136,7 +148,7 @@ RSpec.describe AllocationJob do
         it 'marks job as processed' do
           described_class.perform_now(batch_job)
 
-          expect(batch_job.reload.processed?).to be_truthy
+          expect(batch_job.reload).to be_processed
         end
       end
 
@@ -158,7 +170,7 @@ RSpec.describe AllocationJob do
         it 'marks job as processed' do
           described_class.perform_now(batch_job)
 
-          expect(batch_job.reload.processed?).to be_truthy
+          expect(batch_job.reload).to be_processed
         end
       end
     end

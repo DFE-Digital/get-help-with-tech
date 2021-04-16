@@ -20,6 +20,7 @@
       <th scope="col" class="govuk-table__header">Allocation delta</th>
       <th scope="col" class="govuk-table__header">Order state</th>
       <th scope="col" class="govuk-table__header">Send notification?</th>
+      <th scope="col" class="govuk-table__header">Sent notification?</th>
       <th scope="col" class="govuk-table__header">Processed?</th>
     </tr>
   </thead>
@@ -32,8 +33,11 @@
         <td class="govuk-table__cell"><%= job.allocation_delta %></td>
         <td class="govuk-table__cell"><%= job.order_state %></td>
         <td class="govuk-table__cell"><%= job.send_notification %></td>
+        <td class="govuk-table__cell"><%= job.sent_notification %></td>
         <td class="govuk-table__cell"><%= job.processed %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= govuk_button_to('Send notifications', send_notifications_support_allocation_batch_job_path(id: @jobs.first.batch_id)) %>

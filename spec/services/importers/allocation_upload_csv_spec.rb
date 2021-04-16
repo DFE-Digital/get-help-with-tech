@@ -38,6 +38,7 @@ RSpec.describe Importers::AllocationUploadCsv do
 
       expect(record.batch_id).to be_present
       expect(record.send_notification).to be_truthy
+      expect(record.sent_notification).to be_falsey
       expect(record.processed).to be_falsey
     end
 
@@ -59,6 +60,7 @@ RSpec.describe Importers::AllocationUploadCsv do
 
         expect(record.batch_id).to be_present
         expect(record.send_notification).to be_falsey
+        expect(record.sent_notification).to be_falsey
         expect(record.processed).to be_falsey
       end
     end

@@ -223,7 +223,11 @@ Rails.application.routes.draw do
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/feature-flags', to: 'home#feature_flags', as: :feature_flags
     get '/performance', to: 'service_performance#index', as: :service_performance
-    resources :allocation_batch_jobs, only: %i[index show], path: 'allocation-batch-jobs'
+    resources :allocation_batch_jobs, only: %i[index show], path: 'allocation-batch-jobs' do
+      member do
+        post :send_notifications, path: 'send-notifications'
+      end
+    end
     get '/performance/mno-requests', to: 'service_performance#mno_requests', format: :csv
     get '/performance/remaining-device-counts', to: 'remaining_device_counts#index', format: :csv
     resource :impersonate, only: %i[create destroy]

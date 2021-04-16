@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_123002) do
     t.integer "allocation_delta", null: false
     t.text "order_state"
     t.boolean "send_notification", default: true, null: false
+    t.boolean "sent_notification", default: false, null: false
     t.boolean "processed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
