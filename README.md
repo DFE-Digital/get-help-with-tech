@@ -113,7 +113,7 @@ Once this has completed (you can check the currently deployed commit SHA from ht
 2. Under 'Workflows' on the left, click 'Promote container between environments'
 3. In the blue header, click 'Run workflow', fill in the from and to environments and then click the green 'Run workflow' button (see screenshot below)
 
- ![alt text](docs/images/promote-workflow-screenshot.png)
+ ![Screenshot of the user interface for promoting a container between environments](docs/images/promote-workflow-screenshot.png)
 
 ### Deploying manually on GOV.UK PaaS
 
