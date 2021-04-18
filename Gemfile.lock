@@ -190,6 +190,8 @@ GEM
       i18n (< 2)
     inflection (1.0.0)
     jwt (2.2.2)
+    launchy (2.5.0)
+      addressable (~> 2.7)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -475,6 +477,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   http
   i18n-debug
+  launchy
   listen (>= 3.0.5, < 3.6)
   logstash-logger (~> 0.26.1)
   mail-notify
