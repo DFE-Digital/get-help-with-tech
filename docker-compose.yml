@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+    env_file:
+      - .env_docker_development/development/database
+      - .env_docker_development/development/web
+
+  redis:
+    image: redis
+
+  webpack_dev_server:
+    build: .
+    command: ./bin/webpack-dev-server
+    ports:
+      - 3035:3035
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+    env_file:
+      - .env_docker_development/development/web
+      - .env_docker_development/development/database
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+
+  database:
+    image: postgres
+    env_file:
+      - .env_docker_development/development/database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+  gem_cache:

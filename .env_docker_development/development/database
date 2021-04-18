@@ -1,0 +1,3 @@
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=some-long-secure-password
+POSTGRES_DB=get-help-with-tech_development
