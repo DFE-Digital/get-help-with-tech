@@ -7,4 +7,5 @@
 ./public/packs
 .byebug_history
 .git
+.gitignore
 node_modules
