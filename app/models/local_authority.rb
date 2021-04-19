@@ -16,9 +16,7 @@ class LocalAuthority < ResponsibleBody
 
   validates :organisation_type, presence: true
 
-  def la_funded_place
-    schools.la_funded_place_establishment_type.first
-  end
+  has_one :la_funded_place, foreign_key: 'responsible_body_id'
 
   def create_la_funded_places!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
     return if la_funded_place.present?
