@@ -148,10 +148,11 @@ group :test do
   gem 'climate_control'
   gem 'database_cleaner-active_record'
   gem 'fakeredis', require: 'fakeredis/rspec'
+  gem 'launchy'
+  gem 'rails-controller-testing'
+  gem 'shoulda-matchers', '~> 4.5'
   gem 'timecop'
   gem 'webdrivers', '~> 4.6'
-  gem 'shoulda-matchers', '~> 4.5'
-  gem 'rails-controller-testing'
 end
 
 group :development, :test do
