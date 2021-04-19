@@ -19,7 +19,10 @@ When decreasing numbers, the cap can't exceed the allocation (validated by model
 
 The team might be asked how many devices we have unallocated (typically computers rather than routers).
 
-`SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:cap) - SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:devices_ordered)`
+```ruby
+SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:cap) - SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:devices_ordered) # for computers
+SchoolDeviceAllocation.by_device_type(:coms_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:cap) - SchoolDeviceAllocation.by_device_type(:coms_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:devices_ordered) # for routers (coms_device isn't a typo)
+```
 
 ## Relevant code
 
@@ -45,20 +48,30 @@ To get into the production console:
 
 `make prod ssh`
 
-In the console, grab the school first, then:
+In the console, grab the school first, then something like:
 
-`school.std_device_allocation.update(cap: 10, allocation: 10)`
-`SchoolOrderStateAndCapUpdateService.new(school: school, order_state: :can_order).update!`
+```ruby
+school.std_device_allocation.update(cap: 10, allocation: 10) # for computers
+school.coms_device_allocation.update(cap: 10, allocation: 10) # for routers (coms_device_allocation isn't a typo)
+SchoolOrderStateAndCapUpdateService.new(school: school, order_state: :can_order).update!
+```
 
 The last line above will send out e-mails reflecting the change. 
 
 ## Changing the cap/allocation for multiple schools
 
-To avoid large numbers of e-mails being sent, you might want to use a modified version of
-the update method above to ensure e-mails aren't sent.
+When changing the numbers for a large number of schools at once (as is the usual
+case), it takes time for Computacenter to process such a large change. Instead it's
+preferable to change the numbers within our app and wait for Computacenter to let us 
+know that all the numbers have been changed within their system, before communicating to
+our app's users that they can begin to make orders which are within the new caps
+and allocations.
+
+To avoid large numbers of e-mails being sent, you can run a modified version of
+the update method called above.
 
 For changes to multiple schools, the approach is to copy the data from the spreadsheet
-then get it into some Ruby data structure to iterate over in the console.
+then get it into a Ruby data structure to iterate over in the console.
 
 ## Generating reports
 
