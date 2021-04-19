@@ -302,6 +302,32 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     end
   end
 
+  describe 'updating the hashable fields' do
+    subject(:req) { create(:extra_mobile_data_request, account_holder_name: 'old name', device_phone_number: '07777111222') }
+
+    describe 'updating the account_holder_name' do
+      it 'updates the hashed_account_holder_name' do
+        expect { req.update!(account_holder_name: 'some new value') }.to change{ req.hashed_account_holder_name }.to(Digest::MD5.hexdigest('some new value'))
+      end
+
+      it 'updates the hashed_normalised_name' do
+        expect { req.update!(account_holder_name: 'Some New Value') }.to change(req, :hashed_normalised_name).to(Digest::MD5.hexdigest('somenewvalue'))
+      end
+    end
+
+    describe 'updating the device_phone_number' do
+      it 'updates the hashed_device_phone_number' do
+        expect { req.update!(device_phone_number: '07777888999') }.to change(req, :hashed_device_phone_number).to(Digest::MD5.hexdigest('07777888999'))
+      end
+
+      context 'when device_phone_number is nil' do
+        it 'updates the hashed_device_phone_number to nil' do
+          expect { req.update!(device_phone_number: nil) }.to change(req, :hashed_device_phone_number).to(nil)
+        end
+      end
+    end
+  end
+
   describe '#notify_account_holder_later' do
     let(:rb) { create(:trust) }
     let(:request) { build(:extra_mobile_data_request, responsible_body: rb, mobile_network: create(:mobile_network)) }
