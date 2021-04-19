@@ -21,7 +21,7 @@ These ‘DfE Standard’ devices are provided with factory settings. Your school
 
 #### DfE settings installed
 
-These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. Our guidance explains <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed">when these DfE restrictions will expire</a> and when your school, trust or LA will need to apply your own security settings.
+These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021, <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices">read our guidance on how to reset devices and apply your own security settings to make them safe for pupils and students to use</a>.
 
 Read more information about <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets">preparing Microsoft devices</a> for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
 

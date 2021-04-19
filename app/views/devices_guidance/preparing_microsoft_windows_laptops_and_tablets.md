@@ -9,7 +9,7 @@
 When ordering Microsoft devices, a selection can be made between:
 
 * not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
-* having DfE settings installed - these 'DfE Restricted' devices are not configurable, with limitations on downloading certain software and changing the strict content filters that may prevent some browsers and conferencing tools from functioning. You will be reliant on DfE for technical support.
+* having DfE settings installed - these 'DfE Restricted' devices have temporary safeguarding settings installed - content filtering and mobile device management (MDM) software - which you’ll need to replace before they expire on 30 September 2021. You’ll need to reset these devices before you can apply new settings, or download some types of software. You'll be reliant on DfE for technical support.
 
 If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
@@ -73,11 +73,13 @@ You can lend the devices to users straight away as the MDM and content filtering
 
 ## Reconfigure your devices
 
+>DfE safeguarding settings expire on 30 September 2021. You need to reset devices and apply your own settings before that date to ensure they're safe for children and young people to use.
+
 You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#getting-local-admin-and-bios-passwords-to-install-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
-    If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it is your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
+    If you remove the MDM and content filtering provided by DfE or continue using the devices after 30 September 2021 once the software expires, it's your responsibility to safeguard the young people in your care. Once the software has been removed, or expired, DfE will no longer support these devices.
   </p>
 </div>
 
