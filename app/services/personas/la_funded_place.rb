@@ -2,6 +2,7 @@ class Personas::LaFundedPlace
   def call
     la
     la_funded_place
+    la_funded_place_allocation
     la_user
     la_funded_place_user
   end
@@ -20,6 +21,10 @@ private
     @la_funded_place.preorder_information || @la_funded_place.build_preorder_information(who_will_order_devices: 'school').save!
 
     @la_funded_place
+  end
+
+  def la_funded_place_allocation
+    @la_funded_place_allocation ||= la_funded_place.std_device_allocation || la_funded_place.create_std_device_allocation!(allocation: 200, cap: 200)
   end
 
   def la_funded_place_user
@@ -45,5 +50,7 @@ private
     unless @la_user.schools.include?(la_funded_place)
       @la_user.schools << la_funded_place
     end
+
+    @la_user
   end
 end

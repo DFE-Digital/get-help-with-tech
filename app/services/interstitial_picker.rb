@@ -6,12 +6,12 @@ class InterstitialPicker
   end
 
   def call
-    @call ||= if user.la_funded_user? && user.is_responsible_body_user?
+    @call ||= if user.la_funded_user? && user.is_responsible_body_user? && user.responsible_body.la_funded_place&.device_allocations&.can_order_std_devices_now.present?
                 OpenStruct.new(
                   title: 'Laptops and internet access for state-funded pupils in independent settings',
                   partial: 'interstitials/la_funded_rb_user',
                 )
-              elsif user.la_funded_user?
+              elsif user.la_funded_user? && user.schools.la_funded_place.first&.device_allocations&.can_order_std_devices_now.present?
                 OpenStruct.new(
                   title: 'Get laptops for state-funded pupils at independent settings',
                   partial: 'interstitials/la_funded_user',
