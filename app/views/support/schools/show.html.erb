@@ -123,7 +123,7 @@
         <tbody class="govuk-table__body">
           <% @school.school_links.each do |school_link| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= link_to_urn_otherwise_urn(school_link.urn) %></td>
+              <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier(school_link.urn) %></td>
               <td class="govuk-table__cell"><%= SchoolLink.translate_enum_value(:link_type, school_link.link_type) %></td>
             </tr>
           <% end %>

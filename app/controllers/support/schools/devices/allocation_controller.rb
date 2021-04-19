@@ -1,5 +1,5 @@
 class Support::Schools::Devices::AllocationController < Support::BaseController
-  before_action :set_school_and_allocation, except: %i[collect_urns_and_allocations_for_many_schools adjust_allocations_for_many_schools]
+  before_action :set_school_and_allocation
 
   def edit
     @form = Support::AllocationForm.new(allocation: @allocation.raw_allocation, school_allocation: @allocation)
@@ -20,18 +20,6 @@ class Support::Schools::Devices::AllocationController < Support::BaseController
     end
   end
 
-  def collect_urns_and_allocations_for_many_schools
-    authorize School, :edit?
-    @form = Support::UrnsAndAllocationsForm.new
-  end
-
-  def adjust_allocations_for_many_schools
-    authorize School, :edit?
-    @form = Support::UrnsAndAllocationsForm.new(urns_and_allocations_form_params)
-    @form.parse_urns_and_allocations!
-    @job = @form.process!
-  end
-
 private
 
   def device_type
@@ -48,10 +36,6 @@ private
 
   def allocation_params
     params.fetch(:support_allocation_form, {}).permit(:allocation)
-  end
-
-  def urns_and_allocations_form_params
-    params.fetch(:support_urns_and_allocations_form, {}).permit(:urns_and_allocations)
   end
 
   def update_service

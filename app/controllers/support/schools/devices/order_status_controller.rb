@@ -55,8 +55,12 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
     @form = Support::BulkAllocationForm.new(restriction_params)
 
     if @form.valid?
-      @summary = allocation_service.unlock!(@form.urn_list)
-      render :summary
+      importer = Importers::AllocationUploadCsv.new(
+        path_to_csv: @form.upload.path,
+        send_notification: @form.send_notification,
+      )
+      importer.call
+      redirect_to support_allocation_batch_job_path(importer.batch_id)
     else
       render :collect_urns_to_allow_many_schools_to_order, status: :unprocessable_entity
     end
@@ -90,10 +94,6 @@ private
   end
 
   def restriction_params
-    params.require(:support_bulk_allocation_form).permit(:school_urns)
-  end
-
-  def allocation_service
-    @allocation_service ||= BulkAllocationService.new
+    params.require(:support_bulk_allocation_form).permit(:upload, :send_notification)
   end
 end

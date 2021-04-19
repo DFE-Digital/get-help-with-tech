@@ -65,6 +65,9 @@ en:
 
     support:
       home: Support
+      allocation_batch_jobs:
+        index: Bulk allocation update jobs
+        show: Bulk allocation update job
       schools:
         home: Schools, colleges and FE institutions
         opt_outs:
@@ -86,8 +89,6 @@ en:
         responsible_bodies:
           index: Associate with a responsible body
           edit: Update responsible body
-      allocation:
-        adjust_allocations_for_many_schools: Adjust allocations for many schools, colleges and FE institutions
       addresses:
         edit: Update address
       email_audits:
@@ -103,7 +104,7 @@ en:
       std_device: Change device allocation
       coms_device: Change router allocation
     support_edit_chromebook_details: Will the school need to order Chromebooks?
-    support_bulk_allocation: Allow schools, colleges and FE institutions to order their full allocation
+    support_bulk_allocation: Bulk upload allocation updates
     support_bulk_allocation_result: Bulk allocation summary
     gias_updates: GIAS updates
     gias_schools_to_add: Schools to be added
