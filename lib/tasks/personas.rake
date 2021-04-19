@@ -3,5 +3,6 @@ namespace :db do
   task personas: :environment do
     Personas::SupportUser.new.call
     Personas::TrustWithSchools.new.call
+    Personas::LaFundedPlace.new.call
   end
 end
