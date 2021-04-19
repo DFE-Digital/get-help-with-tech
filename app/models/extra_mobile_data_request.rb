@@ -11,6 +11,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   belongs_to :responsible_body, optional: true
   belongs_to :school, optional: true
 
+  has_many :completion_events, -> { where(event_name: 'completion').order(event_time: :asc) }, as: :record, class_name: 'ReportableEvent'
+
   validates :status, presence: true
   validates :account_holder_name, presence: true
   validates :device_phone_number, presence: true, phone: { types: [:mobile], countries: [:gb] }, on: :create

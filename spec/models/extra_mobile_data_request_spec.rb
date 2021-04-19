@@ -307,7 +307,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
     describe 'updating the account_holder_name' do
       it 'updates the hashed_account_holder_name' do
-        expect { req.update!(account_holder_name: 'some new value') }.to change{ req.hashed_account_holder_name }.to(Digest::MD5.hexdigest('some new value'))
+        expect { req.update!(account_holder_name: 'some new value') }.to change(req, :hashed_account_holder_name).to(Digest::MD5.hexdigest('some new value'))
       end
 
       it 'updates the hashed_normalised_name' do
