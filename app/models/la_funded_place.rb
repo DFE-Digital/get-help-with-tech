@@ -1,10 +1,6 @@
 class LaFundedPlace < CompulsorySchool
   def institution_type
-    'funded_places'
-  end
-
-  def name
-    'State-funded pupils in independent settings'
+    'local authority'
   end
 
   def techsource_urn

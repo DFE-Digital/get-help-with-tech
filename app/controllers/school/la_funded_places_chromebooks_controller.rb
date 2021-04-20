@@ -5,6 +5,7 @@ class School::LaFundedPlacesChromebooksController < School::BaseController
       will_need_chromebooks: @school.preorder_information&.will_need_chromebooks,
       school_or_rb_domain: @school.preorder_information&.school_or_rb_domain,
       recovery_email_address: @school.preorder_information&.recovery_email_address,
+      will_need_chromebooks_message: custom_error_message,
     )
   end
 
@@ -21,6 +22,7 @@ class School::LaFundedPlacesChromebooksController < School::BaseController
       flash[:success] = t(:success, scope: %w[school chromebooks])
       redirect_to order_laptops_school_path(@school)
     else
+      @chromebook_information_form.will_need_chromebooks_message = custom_error_message
       render :edit, status: :unprocessable_entity
     end
   end
@@ -35,5 +37,9 @@ private
     params.fetch(:chromebook_information_form, {}).permit(
       :will_need_chromebooks,
     )
+  end
+
+  def custom_error_message
+    'Tell us if pupils will need Chromebooks'
   end
 end
