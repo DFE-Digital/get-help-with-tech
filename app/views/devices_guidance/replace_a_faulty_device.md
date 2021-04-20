@@ -1,4 +1,4 @@
-## If it's not working within 3 days of receiving it
+## If a device is not working within 3 days of receiving it
 
 We’ll send you a replacement device within 2 working days of returning a device.
 
@@ -19,15 +19,17 @@ All devices supplied by the Get help with technology programme came with a 12-mo
 * [Tactus Geo](https://geo-computers.com/support/)
 * [Samsung](https://www.samsung.com/uk/support/warranty/)
 
+Depending on the manufacturer’s warranty process, you may be required to pay courier costs when returning faulty devices.
+
 If you’re looking to replace restricted Windows laptops or tablets that came with DfE settings pre-installed, please be aware that replacements from the manufacturer will come with standard factory settings.
 
 It is your responsibility to ensure these devices are safely set up for users. Refer to our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) for steps to take regarding applying appropriate safeguarding and security settings.
 
 ## Outstanding device replacement requests
 
-Before 24 March 2021, it was possible to request a replacement for a faulty device through the [Support Portal](https://computacenterprod.service-now.com/dfe). If you have an outstanding request, please access the Support Portal to see progress. You can also find details of any costs that may be incurred if a device is returned with a fault that’s not covered by the manufacturer’s warranty.
+If you reported a faulty device through the [Support Portal](https://computacenterprod.service-now.com/dfe) before 24 March 2021, you will have received an email explaining how to order a replacement.
 
-[Contact us](/get-support) if you have any queries related to an existing device replacement request.
+Log into the Support Portal to check the progress of your order, or [contact us](/get-support) if you have any queries related to a device replacement request.
 
 ## 4G wireless router faults
 
