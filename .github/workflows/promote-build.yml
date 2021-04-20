@@ -5,11 +5,11 @@ on:
   workflow_dispatch:
     inputs:
       from:
-        description: 'Promote from environment'
+        description: 'Promote from environment (`dev` or `staging`)'
         required: true
         default: 'dev'
       to:
-        description: 'To environment'
+        description: 'To environment (`staging` or `prod`)'
         required: true
         default: 'staging'
 
