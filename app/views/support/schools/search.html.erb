@@ -32,17 +32,20 @@
                                 rows: 10 %>
         <% end %>
         <%= f.govuk_radio_button :search_type, :responsible_body_or_order_state, label: { text: 'Search by responsible body or order state' } do %>
-          <%= f.govuk_collection_select   :responsible_body_id,
-                                          @search_form.select_responsible_body_options,
-                                          :id,
-                                          :name,
-                                          label: { text: 'Responsible body' } %>
+          <%= f.govuk_collection_select :responsible_body_id,
+                                        @search_form.select_responsible_body_options,
+                                        :id,
+                                        :name,
+                                        label: { text: 'Responsible body' },
+                                        data: {
+                                          autocomplete_rb: true,
+                                        } %>
 
-          <%= f.govuk_collection_select   :order_state,
-                                          @search_form.select_order_state_options,
-                                          :value,
-                                          :label,
-                                          label: { text: 'Order state' } %>
+          <%= f.govuk_collection_select :order_state,
+                                        @search_form.select_order_state_options,
+                                        :value,
+                                        :label,
+                                        label: { text: 'Order state' } %>
         <% end %>
       <% end %>
 

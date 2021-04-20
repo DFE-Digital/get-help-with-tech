@@ -13,7 +13,11 @@ initAll();
 initWarnOnUnsavedChanges();
 
 initSelectAllNone();
-initResponsibleBodiesAutocomplete();
+initResponsibleBodiesAutocomplete(
+  {
+    input: "[data-autocomplete-rb]",
+  }
+);
 initSchoolAutocomplete(
   {
     input: "[data-autocomplete-school]",

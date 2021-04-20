@@ -19,8 +19,10 @@
               @user_responsible_body_form.select_responsible_body_options,
               :id,
               :name,
-              label: { text: 'New responsible body' }
-              ) %>
+              label: { text: 'New responsible body' },
+              data: {
+                autocomplete_rb: true,
+              }) %>
           <% end %>
           <%= f.govuk_radio_button :change, 'remove', label: { text: 'Remove user from responsible body' }, link_errors: true %>
         <% end %>
@@ -32,8 +34,10 @@
           :id,
           :name,
           label: { text: 'Add user to a responsible body' },
-          options: { include_blank: true }
-          ) %>
+          options: { include_blank: true },
+          data: {
+            autocomplete_rb: true,
+          }) %>
       <%- end %>
       <%= f.govuk_submit 'Update' %>
     <% end %>
