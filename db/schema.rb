@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_123002) do
+ActiveRecord::Schema.define(version: 2021_04_16_132319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,12 @@ ActiveRecord::Schema.define(version: 2021_04_07_123002) do
     t.string "contract_type"
     t.bigint "school_id"
     t.string "normalised_name"
+    t.string "hashed_account_holder_name"
+    t.string "hashed_normalised_name"
+    t.string "hashed_device_phone_number"
+    t.index ["hashed_account_holder_name"], name: "index_extra_mobile_data_requests_on_hashed_account_holder_name"
+    t.index ["hashed_device_phone_number"], name: "index_extra_mobile_data_requests_on_hashed_device_phone_number"
+    t.index ["hashed_normalised_name"], name: "index_extra_mobile_data_requests_on_hashed_normalised_name"
     t.index ["mobile_network_id", "status", "created_at"], name: "index_emdr_on_mobile_network_id_and_status_and_created_at"
     t.index ["normalised_name"], name: "index_extra_mobile_data_requests_on_normalised_name"
     t.index ["responsible_body_id"], name: "index_extra_mobile_data_requests_on_responsible_body_id"

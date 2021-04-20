@@ -2,7 +2,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   has_paper_trail
 
   after_initialize :set_defaults
-  before_validation :normalise_device_phone_number, :normalise_name
+  before_validation :normalise_device_phone_number, :normalise_name, :update_hashes
 
   after_save :record_completion_if_needed!
 
@@ -10,6 +10,8 @@ class ExtraMobileDataRequest < ApplicationRecord
   belongs_to :mobile_network, optional: true # set to optional as we already validate on the presence of mobile_network_id and we don't want duplicate validation errors
   belongs_to :responsible_body, optional: true
   belongs_to :school, optional: true
+
+  has_many :completion_events, -> { where(event_name: 'completion').order(event_time: :asc) }, as: :record, class_name: 'ReportableEvent'
 
   validates :status, presence: true
   validates :account_holder_name, presence: true
@@ -167,5 +169,11 @@ private
 
   def record_completion_if_needed!
     ReportableEvent.create!(record: self, event_name: 'completion') if complete_status? && saved_change_to_status?
+  end
+
+  def update_hashes
+    self.hashed_account_holder_name = account_holder_name.nil? ? nil : Digest::MD5.hexdigest(account_holder_name)
+    self.hashed_normalised_name = normalised_name.nil? ? nil : Digest::MD5.hexdigest(normalised_name)
+    self.hashed_device_phone_number = device_phone_number.nil? ? nil : Digest::MD5.hexdigest(device_phone_number)
   end
 end

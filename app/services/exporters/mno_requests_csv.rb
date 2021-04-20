@@ -10,8 +10,12 @@ class Exporters::MnoRequestsCsv
     school_name
     responsible_body_id
     responsible_body_name
+    hashed_account_holder_name
+    hashed_normalised_name
+    hashed_device_phone_number
     status
     contract_type
+    first_completed_at
     created_at
     created_at_date
     updated_at
@@ -31,8 +35,12 @@ class Exporters::MnoRequestsCsv
           request.school&.name,
           request.responsible_body_id,
           request.responsible_body&.name,
+          request.hashed_account_holder_name,
+          request.hashed_normalised_name,
+          request.hashed_device_phone_number,
           request.status,
           request.contract_type,
+          request.completion_events.first&.event_time,
           request.created_at,
           request.created_at.strftime('%d/%m/%Y'),
           request.updated_at,
