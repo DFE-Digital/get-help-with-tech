@@ -107,7 +107,7 @@ Computacenter TechSource - this app will post cap update requests to TechSource 
 In the normal flow of things, the simplest way to perform a release is by using the Github Actions we have set up on this repository.
 
 Merging a Pull Request to `main` will automatically run the tests and perform a release to the 'dev' environment.
-Once this has completed (you can check the currently deployed commit SHA from http://get-help-with-tec-dev.london.cloudapps.digital/healthcheck.json, and make sure it matches 'main'), you can then promote that image from `dev` to `staging`, and then from `staging` to `prod` as follows:
+Once this has completed (you can check the currently deployed commit SHA from http://get-help-with-tech-dev.london.cloudapps.digital/healthcheck.json, and make sure it matches 'main'), you can then promote that image from `dev` to `staging`, and then from `staging` to `prod` as follows:
 
 1. Click the 'Actions' tab
 2. Under 'Workflows' on the left, click 'Promote container between environments'
