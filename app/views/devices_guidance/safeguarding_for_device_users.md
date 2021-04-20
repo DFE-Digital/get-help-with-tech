@@ -20,18 +20,18 @@ Information is available for each device type explaining what safeguarding softw
 * [Apple iPads](/devices/preparing-ipads)
 * [4G wireless routers](/devices/preparing-4g-wireless-routers#router-security)
 
-## Safeguarding and security settings for donated devices
+## Safeguarding and security settings for pre-owned or donated devices
 
-New or refurbished laptops and tablets provided through reputable local and national device donation schemes can help supplement the allocation of laptops and tablets from DfE.
+New and refurbished laptops and tablets that have been purchased or donated can help supplement the allocation of laptops and tablets from DfE.
 
 If you receive devices for your school or college through donations, you’re responsible for ensuring they are prepared so they are appropriate for use.
 
-Information we have produced on content filtering, privacy policies and mobile device management is also relevant to new or pre-owned donated devices delivered through refurbishment schemes. We recommend you follow our guidance on [preparing a Windows device](/devices/preparing-a-standard-windows-device), [Chromebook](/devices/preparing-chromebooks) or [iPad](/devices/preparing-ipads) before lending a new or donated device that arrives with factory settings to a child or young person. 
+Information we have produced on content filtering, privacy policies and mobile device management is also relevant to any new and pre-owned devices. We recommend you follow our guidance on [preparing a Windows device](/devices/preparing-a-standard-windows-device), [Chromebook](/devices/preparing-chromebooks) or [iPad](/devices/preparing-ipads) before lending a device to a child or young person. 
 
-The following information, which relates to donated and refurbished devices, will help you make decisions on how to set up and manage these devices.
+The following information will help you make decisions on how to set up and manage these devices.
 
 * [Erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) - guidance from the National Centre for Cyber Security (NCSC) covering protecting personal data, how to erase data before donating, avoiding unsupported devices, and good cyber practice.
-* [Maintaining portable electrical equipment](https://www.hse.gov.uk/pubns/books/hsg107.htm) - guidance from the Health and Safety Executive (HSE) covering legal responsibilities around ensuring electrical equipment is maintained and portable appliance testing (PAT).
+* [Maintaining portable electrical equipment](https://www.hse.gov.uk/pubns/books/hsg107.htm) - guidance from the Health and Safety Executive (HSE) covering legal responsibilities around ensuring electrical equipment is maintained and [portable appliance testing (PAT)](https://www.hse.gov.uk/electricity/faq-portable-appliance-testing.htm).
 
 ## Safeguarding resources for schools, colleges, parents and carers
 
