@@ -1,12 +1,12 @@
 class ChromebookInformationForm
   include ActiveModel::Model
 
-  attr_accessor :school, :will_need_chromebooks, :will_need_chromebooks_message
+  attr_accessor :school, :will_need_chromebooks
+  attr_writer :will_need_chromebooks_message
   attr_reader :school_or_rb_domain, :recovery_email_address
 
   validates :will_need_chromebooks, presence: { message: lambda do |object, _|
-                                                            object.will_need_chromebooks_message
-                                                           # I18n.t('activemodel.errors.models.chromebook_information_form.custom_errors.will_need_chromebooks', institution_type: object.school&.institution_type || 'school')
+                                                           object.will_need_chromebooks_message
                                                          end }
 
   with_options if: :will_need_chromebooks_and_is_not_a_la_funded_school? do |condition|
