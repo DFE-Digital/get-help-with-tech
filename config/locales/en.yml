@@ -68,7 +68,7 @@ en:
       details: Check your details
       laptop_types: Find out what type of laptop pupils need
       chromebooks: Will your order include Google Chromebooks?
-
+      will_need_chromebooks_error: Tell us if pupils will need Chromebooks?
     support:
       home: Support
       schools:

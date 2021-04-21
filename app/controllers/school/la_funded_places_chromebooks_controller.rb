@@ -40,6 +40,6 @@ private
   end
 
   def custom_error_message
-    'Tell us if pupils will need Chromebooks'
+    I18n.t('page_titles.iss.will_need_chromebooks_error')
   end
 end
