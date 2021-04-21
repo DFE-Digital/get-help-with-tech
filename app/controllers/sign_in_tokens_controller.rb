@@ -49,7 +49,7 @@ class SignInTokensController < ApplicationController
       if FeatureFlag.active?(:display_sign_in_token_links)
         user = User.find_by(email_address: @sign_in_token_form.email_address)
         identifier = user.sign_in_identifier(user.sign_in_token)
-        flash[:success] = validate_sign_in_token_url(token: token, identifier: identifier)
+        flash[:sign_in_link] = "<a href='#{validate_sign_in_token_url(token: token, identifier: identifier)}'>Click to sign-in</a>"
       end
 
       redirect_to sent_token_path(token: token)
