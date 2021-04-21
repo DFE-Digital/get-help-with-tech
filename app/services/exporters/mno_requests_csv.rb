@@ -63,6 +63,6 @@ private
   end
 
   def requests
-    @requests ||= ExtraMobileDataRequest.includes(:mobile_network, :school, :responsible_body)
+    @requests ||= ExtraMobileDataRequest.includes(:mobile_network, :school, :responsible_body, :completion_events)
   end
 end
