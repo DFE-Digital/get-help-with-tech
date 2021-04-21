@@ -11,7 +11,14 @@
 
     <%= form_for @form, url: support_user_schools_path(@user) do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.govuk_text_field :name_or_urn_or_ukprn, width: 'two-thirds', hint: { text: 'Enter part of a school name, URN or UKPRN' } %>
+      <%= f.govuk_text_field :name_or_urn_or_ukprn,
+        width: 'two-thirds',
+        hint: { text: 'Enter part of a school name, URN or UKPRN' },
+        data: {
+          autocomplete_school: true,
+          autocomplete_school_path: '/support/schools/results',
+          autocomplete_school_hidden_field: 'support_school_suggestion_form_school_urn',
+        } %>
       <%= f.hidden_field :school_urn %>
       <%= f.govuk_submit 'Search again' %>
     <%- end %>

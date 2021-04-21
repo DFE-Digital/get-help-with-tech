@@ -31,9 +31,14 @@ export const request = endpoint => {
   };
 };
 
-const initSchoolAutocomplete = ({input, path, hiddenFieldForURN}) => {
-  const $hiddenFieldForURN = document.getElementById(hiddenFieldForURN);
-  const $input = document.getElementById(input);
+const initSchoolAutocomplete = ({input}) => {
+  const $input = document.querySelector(input);
+
+  if ($input === null) {
+    return
+  }
+
+  const $hiddenFieldForURN = document.getElementById($input.dataset.autocompleteSchoolHiddenField);
   const inputValueTemplate = result => (typeof result === "string" ? result : result && result.name);
   const suggestionTemplate = result =>
     typeof result === "string" ? result : result && `${result.name} (${result.urn}, ${result.town}, ${result.postcode})`;
@@ -52,7 +57,7 @@ const initSchoolAutocomplete = ({input, path, hiddenFieldForURN}) => {
         name: $input.name,
         defaultValue: $input.value,
         minLength: 3,
-        source: request(path),
+        source: request($input.dataset.autocompleteSchoolPath),
         templates: {
           inputValue: inputValueTemplate,
           suggestion: suggestionTemplate

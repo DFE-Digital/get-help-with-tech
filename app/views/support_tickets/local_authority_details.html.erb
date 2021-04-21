@@ -17,8 +17,11 @@
       </h1>
 
       <%= f.govuk_collection_select :local_authority_name, @form.local_authority_list, :name, :name,
-                                    label: {text: 'Local authority name', size: 's'},
-                                    options: { include_blank: true } %>
+                                    label: { text: 'Local authority name', size: 's' },
+                                    options: { include_blank: true },
+                                    data: {
+                                      autocomplete_rb: true,
+                                    } %>
 
       <%= f.govuk_submit 'Continue' %>
     <% end %>

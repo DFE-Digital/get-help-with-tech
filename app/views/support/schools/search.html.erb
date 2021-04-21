@@ -14,7 +14,13 @@
       <%= f.govuk_error_summary %>
       <%= f.govuk_radio_buttons_fieldset(:search_type, legend: { size: 'xl', text: title, tag: 'h1' }) do %>
         <%= f.govuk_radio_button :search_type, :single, label: { text: 'Search by name, URN or UKPRN' } do %>
-          <%= f.govuk_text_field :name_or_identifier, hint: { text: 'Enter part of a school name, URN or UKPRN' } %>
+          <%= f.govuk_text_field :name_or_identifier,
+                                 hint: { text: 'Enter part of a school name, URN or UKPRN' },
+                                 data: {
+                                   autocomplete_school: true,
+                                   autocomplete_school_path: '/support/schools/results',
+                                   autocomplete_school_hidden_field: 'school_search_form_identifier',
+                                 } %>
           <%= f.hidden_field :identifier %>
         <% end %>
         <%= f.govuk_radio_button :search_type, :multiple, label: { text: 'Search for multiple schools by URN or UKPRN' } do %>
@@ -26,17 +32,20 @@
                                 rows: 10 %>
         <% end %>
         <%= f.govuk_radio_button :search_type, :responsible_body_or_order_state, label: { text: 'Search by responsible body or order state' } do %>
-          <%= f.govuk_collection_select   :responsible_body_id,
-                                          @search_form.select_responsible_body_options,
-                                          :id,
-                                          :name,
-                                          label: { text: 'Responsible body' } %>
+          <%= f.govuk_collection_select :responsible_body_id,
+                                        @search_form.select_responsible_body_options,
+                                        :id,
+                                        :name,
+                                        label: { text: 'Responsible body' },
+                                        data: {
+                                          autocomplete_rb: true,
+                                        } %>
 
-          <%= f.govuk_collection_select   :order_state,
-                                          @search_form.select_order_state_options,
-                                          :value,
-                                          :label,
-                                          label: { text: 'Order state' } %>
+          <%= f.govuk_collection_select :order_state,
+                                        @search_form.select_order_state_options,
+                                        :value,
+                                        :label,
+                                        label: { text: 'Order state' } %>
         <% end %>
       <% end %>
 
