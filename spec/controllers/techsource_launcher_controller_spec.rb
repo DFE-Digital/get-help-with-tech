@@ -37,6 +37,7 @@ RSpec.describe TechsourceLauncherController, type: :controller do
         get 'start'
         expect(response).to render_template('unavailable')
         expect(response).to have_http_status(:ok)
+        expect(assigns(:available_at)).to eq('Saturday 28 November 02:00pm')
       end
     end
 
