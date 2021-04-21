@@ -37,7 +37,7 @@ class LocalAuthority < ResponsibleBody
     }.reverse_merge(extra_args)
 
     funded_place = LaFundedPlace.create!(attrs)
-    funded_place.create_preorder_information!(who_will_order_devices: 'responsible_body')
+    funded_place.create_preorder_information!(who_will_order_devices: 'school')
     funded_place.device_allocations.std_device.create!(allocation: device_allocation)
     funded_place.device_allocations.coms_device.create!(allocation: router_allocation)
     funded_place

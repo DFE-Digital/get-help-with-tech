@@ -39,15 +39,7 @@ class ChromebookInformationForm
   end
 
   def will_need_chromebooks_and_is_not_a_la_funded_school?
-    if will_need_chromebooks?
-      if school.respond_to?(:la_funded_place?)
-        !school.la_funded_place?
-      else
-        true
-      end
-    else
-      false
-    end
+    will_need_chromebooks? && !school.la_funded_place?
   end
 
   def will_need_chromebooks_message

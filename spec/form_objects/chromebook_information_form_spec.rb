@@ -4,7 +4,11 @@ RSpec.describe ChromebookInformationForm do
   let(:will_need_chromebooks) { 'yes' }
   let(:recovery_email_address) { 'ab@c.com' }
   let(:school_or_rb_domain) { 'school.sch.uk' }
-  let(:school) { instance_double(CompulsorySchool, institution_type: 'Educational foundation') }
+  let(:school) do
+    instance_double(CompulsorySchool,
+                    institution_type: 'Educational foundation',
+                    la_funded_place?: false)
+  end
   let(:form) do
     described_class.new(school: school,
                         will_need_chromebooks: will_need_chromebooks,

@@ -114,7 +114,8 @@ class PreorderInformation < ApplicationRecord
   end
 
   def chromebook_information_complete?
-    # do not want to hold them up being able to order
+    # if we remove the '&' it breaks 400+ specs as this is called by infer_status
+    # via callbacks
     return true if school&.la_funded_place_establishment_type?
 
     if will_need_chromebooks == 'yes'

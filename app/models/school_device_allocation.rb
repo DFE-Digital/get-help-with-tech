@@ -89,11 +89,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def devices_available_to_order
-    if has_virtual_cap_feature_flags? && is_in_virtual_cap_pool?
-      cap - devices_ordered
-    else
-      raw_cap - raw_devices_ordered
-    end
+    cap - devices_ordered
   end
 
   def is_in_virtual_cap_pool?

@@ -1,4 +1,4 @@
-<%- title = t('page_titles.iss_home') %>
+<%- title = t('page_titles.iss.home') %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs(school: @school, user: impersonated_or_current_user, items: 'Your account') %>
 <%- end %>
@@ -16,7 +16,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.iss_order_devices'), order_devices_school_path(@school) %>
+      <%= govuk_link_to t('page_titles.iss.order_devices'), order_devices_school_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>
@@ -37,7 +37,7 @@
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.iss_details'), details_school_path(@school) %>
+      <%= govuk_link_to t('page_titles.iss.details'), details_school_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>

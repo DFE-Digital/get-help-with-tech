@@ -1,9 +1,9 @@
 class LaFundedPlace < CompulsorySchool
   def institution_type
-    'local authority'
+    'local_authority'
   end
 
   def techsource_urn
-    "iss #{responsible_body.name.downcase}"
+    "iss-#{responsible_body.name}".parameterize
   end
 end
