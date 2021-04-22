@@ -24,6 +24,8 @@ SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schoo
 SchoolDeviceAllocation.by_device_type(:coms_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:cap) - SchoolDeviceAllocation.by_device_type(:coms_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:devices_ordered) # for routers (coms_device isn't a typo)
 ```
 
+Generating the comprehensive "all allocations" report is described in more detail at `docs/reporting_allocations.md`.
+
 ## Relevant code
 
 * `school_device_allocation.rb`
@@ -80,7 +82,18 @@ A school's URN acts as its ID.
 At `http://localhost:3000/support/schools/results` (but host updated to production 
 environment), paste in URNs then click `Download allocations as CSV` to get a CSV file. 
 
+### Working with allocations from within the Web app
+
+https://github.com/DFE-Digital/get-help-with-tech/pull/1540 describes a merged pull request which
+shows how to work with allocations from the Web interface. This removes the need to paste code into
+the console and modify it manually to not send notifications to service users until a later time (when
+Computacenter have manually acknowledged their system is up-to-date with the latest allocations
+and caps, and thus new orders will succeed).
+
 ### Export 'All Allocations' via the production console
+
+(This is no longer necessary given the Web interface provided above but seeing the code might be
+useful to new starters.)
 
 From your terminal:
 
