@@ -62,7 +62,8 @@ You can then login with your new support user, check the rails logs for the magi
 
 ## Running specs
 ```
-bundle exec rspec
+bundle exec rake parallel:setup
+bundle exec rake # runs rspec and other code checks
 ```
 
 ## Linting
