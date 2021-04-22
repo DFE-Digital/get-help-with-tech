@@ -59,12 +59,12 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
     <caption class="govuk-table__caption govuk-visually-hidden">Minimum specification</caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header app-schools-table__column-20"></th>
-        <th scope="col" class="govuk-table__header app-schools-table__column-20">Microsoft Windows laptop</th>
-        <th scope="col" class="govuk-table__header app-schools-table__column-20">Google Chromebook</th>
-        <th scope="col" class="govuk-table__header app-schools-table__column-20">Microsoft Windows tablet</th>
-        <th scope="col" class="govuk-table__header app-schools-table__column-20">Apple iPad</th>
-        <th scope="col" class="govuk-table__header app-schools-table__column-20">Dell Latitude 5300 series Microsoft Windows laptop</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-16"></th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-16">Microsoft Windows laptop</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-16">Google Chromebook</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-16">Microsoft Windows tablet</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-16">Apple iPad</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-16">Dell Latitude 5300 series Microsoft Windows laptop</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">

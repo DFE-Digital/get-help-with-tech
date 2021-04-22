@@ -38,12 +38,12 @@ $govuk-image-url-function: frontend-image-url;
   border-bottom: 1px solid $govuk-border-colour;
 }
 
-.app-schools-table__column-40 {
-  width: 40%;
-}
+$sizes: 40, 20, 16;
 
-.app-schools-table__column-20 {
-  width: 20%;
+@each $size in $sizes {
+  .app-schools-table__column-#{$size} {
+    width: $size + unquote('%');
+  }
 }
 
 .search-results {
