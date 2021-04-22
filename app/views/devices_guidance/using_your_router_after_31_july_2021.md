@@ -19,7 +19,9 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Open a web browser and type [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen. 
 
-1. Enter the [device login password](Richard to provide) and click ‘log in’.
+1. Enter the device login password provided by the user researcher and click ‘log in’. 
+    
+    The password is case sensitive and contains a mixture of upper and lower case letters. You may find it easier to copy and paste the password.
 
 1. Once connected, you’ll be asked to read and accept the privacy notice and user agreement.    
 
@@ -43,7 +45,7 @@ You’ll get a notification once the installation is finished.
 
 ## Check your router has been reset 
 
-Connect your laptop or tablet to the router (read our [Huawei router setup guide](/devices/4g-user-guidance#setting-up-a-huawei-router)). Once connected, open a web browser and enter http://192.168.8.1 in the address bar to get to the Huawei login screen.
+Connect your laptop or tablet to the router (read our [Huawei router setup guide](/devices/4g-user-guidance#setting-up-a-huawei-router)). Once connected, open a web browser and enter [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen.
 
 <div class="app-card govuk-!-margin-bottom-4">
   <p class="govuk-body govuk-!-margin-bottom-0">
