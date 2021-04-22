@@ -88,6 +88,10 @@ class SchoolDeviceAllocation < ApplicationRecord
     self[:allocation]
   end
 
+  def devices_available_to_order
+    cap - devices_ordered
+  end
+
   def is_in_virtual_cap_pool?
     school_virtual_cap.present?
   end

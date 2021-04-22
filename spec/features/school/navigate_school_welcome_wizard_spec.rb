@@ -18,7 +18,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     when_i_click_continue
     then_i_see_privacy_policy
     when_i_click_continue
-    then_i_see_homepage
+    then_i_see_the_la_funded_places_homepage
   end
 
   scenario 'step through the wizard as the first user for a school that has available allocation' do
@@ -195,8 +195,8 @@ RSpec.feature 'Navigate school welcome wizard' do
     expect(page).to have_text('Before you continue, please read the privacy notice.')
   end
 
-  def then_i_see_homepage
-    expect(page).to have_text('place orders access the Computacenter TechSource website to order devices')
+  def then_i_see_the_la_funded_places_homepage
+    expect(page).to have_selector('h1', text: 'Get laptops and internet access')
   end
 
   def then_i_see_a_welcome_page_for_my_school

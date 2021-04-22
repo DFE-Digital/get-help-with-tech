@@ -177,6 +177,11 @@ Rails.application.routes.draw do
       get '/what-happens-next', to: 'school/welcome_wizard#what_happens_next', as: :welcome_wizard_what_happens_next
       patch '/next(/:step)', to: 'school/welcome_wizard#next_step', as: :welcome_wizard
       patch '/prev', to: 'school/welcome_wizard#previous_step', as: :welcome_wizard_previous
+      get '/get-laptops', to: 'school/la_funded_places#show', as: :get_laptops
+      get '/order-laptops', to: 'school/la_funded_places#order', as: :order_laptops
+      get '/funded-pupils-chromebooks/edit', to: 'school/la_funded_places_chromebooks#edit', as: :funded_chromebooks
+      patch '/funded-pupils-chromebooks', to: 'school/la_funded_places_chromebooks#update', as: :update_funded_chromebooks
+      get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
 
       scope module: :school do

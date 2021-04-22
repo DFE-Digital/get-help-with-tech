@@ -1,0 +1,60 @@
+<%- title = t('page_titles.iss.home') %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs(school: @school, user: impersonated_or_current_user, items: 'Your account') %>
+<%- end %>
+<%- content_for :title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
+    <span class="govuk-caption-xl">State-funded pupils in independent schools and  alternative provision</span>
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.iss.order_devices'), order_devices_school_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>see how many laptops you’ve been allocated</li>
+      <li>place orders on the TechSource website</li>
+    </ul>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.signed_in_internet_access') , internet_school_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>request extra data for mobile devices</li>
+      <li>check the status of your data requests</li>
+      <li>request 4G wireless routers</li>
+    </ul>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.iss.details'), details_school_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>review your allocation</li>
+      <li>change your Chromebook settings</li>
+    </ul>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to give others:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>access to this service</li>
+      <li>access to the TechSource website (where they’ll place orders)</li>
+    </ul>
+  </div>
+  <%= render partial: 'shared/link_to_survey' %>
+</div>

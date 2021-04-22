@@ -38,8 +38,11 @@ module ViewHelper
     "#{t('page_titles.error_prefix') if error}#{title}"
   end
 
-  def link_to_devices_guidance_subpage(body, slug, html_options = {})
-    govuk_link_to body, devices_guidance_subpage_path(subpage_slug: slug), html_options
+  def link_to_devices_guidance_subpage(body, slug, html_options = {}, path_options = {})
+    opts = {
+      subpage_slug: slug,
+    }.merge(path_options)
+    govuk_link_to body, devices_guidance_subpage_path(opts), html_options
   end
 
   def breadcrumbs(items)

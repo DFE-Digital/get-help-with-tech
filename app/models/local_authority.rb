@@ -19,12 +19,12 @@ class LocalAuthority < ResponsibleBody
   has_one :la_funded_place, foreign_key: 'responsible_body_id'
 
   def create_la_funded_places!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
-    return if la_funded_place.present?
+    return la_funded_place if la_funded_place.present?
 
     attrs = {
       responsible_body: self,
       urn: urn,
-      name: 'LA Funded Places',
+      name: 'State-funded pupils in independent special schools and alternative provision',
       establishment_type: 'la_funded_place',
       address_1: address_1,
       address_2: address_2,
@@ -34,10 +34,10 @@ class LocalAuthority < ResponsibleBody
       postcode: postcode,
     }.reverse_merge(extra_args)
 
-    funded_places = LaFundedPlace.create!(attrs)
-    funded_places.create_preorder_information!(who_will_order_devices: 'responsible_body', will_need_chromebooks: 'no')
-    funded_places.device_allocations.std_device.create!(allocation: device_allocation)
-    funded_places.device_allocations.coms_device.create!(allocation: router_allocation)
-    funded_places
+    funded_place = LaFundedPlace.create!(attrs)
+    funded_place.create_preorder_information!(who_will_order_devices: 'school')
+    funded_place.device_allocations.std_device.create!(allocation: device_allocation)
+    funded_place.device_allocations.coms_device.create!(allocation: router_allocation)
+    funded_place
   end
 end

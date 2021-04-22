@@ -109,7 +109,15 @@ class PreorderInformation < ApplicationRecord
     will_need_chromebooks == 'yes'
   end
 
+  def will_not_need_chromebooks?
+    will_need_chromebooks == 'no'
+  end
+
   def chromebook_information_complete?
+    # if we remove the '&' it breaks 400+ specs as this is called by infer_status
+    # via callbacks
+    return true if school&.la_funded_place_establishment_type?
+
     if will_need_chromebooks == 'yes'
       school_or_rb_domain.present? && recovery_email_address.present?
     else

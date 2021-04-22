@@ -88,7 +88,7 @@ RSpec.feature 'Download CSV files' do
           school = School.find(request.schools.first)
           expect(school).not_to eq(school_with_incomplete_request)
           expect(request.id.to_s).to eq(csv[i]['id'])
-          expect(request.created_at.to_s).to eq(csv[i]['created_at'])
+          expect(request.created_at).to be_within(2.seconds).of(Time.zone.parse(csv[i]['created_at']))
           expect(school.urn.to_s).to eq(csv[i]['urn'])
           expect(school.computacenter_reference).to eq(csv[i]['shipTo'])
           expect(request.responsible_body.computacenter_reference).to eq(csv[i]['soldTo'])

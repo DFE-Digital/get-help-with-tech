@@ -1,0 +1,44 @@
+<%-
+  title = t('page_titles.iss.chromebooks')
+  scope = 'activerecord.attributes.preorder_information.will_need_chromebooks'
+%>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%- school_breadcrumbs items: [ { t('page_titles.iss.order_devices') => order_devices_school_path(@school)}, title], school: @school, user: impersonated_or_current_user %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+    <%= form_for @chromebook_information_form, url: update_funded_chromebooks_school_path(@school), method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <p class="govuk-body">
+        We need to know this so we can apply the right settings to the laptops you order. You can change your answer later.
+      </p>
+
+      <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: {text: ""} ) do %>
+        <%= f.govuk_radio_button(:will_need_chromebooks,
+                                 'yes',
+                                 label: { text: t(:yes, scope: scope) }) do %>
+          <p class="govuk-body">
+            When you order you’ll receive an email asking you to provide relevant Google Workspace for Education Fundementals (formerly G Suite for Education) license information.
+          </p>
+        <%- end %>
+        <%= f.govuk_radio_button  :will_need_chromebooks,
+                                  'no',
+                                  label: { text: t(:no, scope: scope) } %>
+        <%= f.govuk_radio_button(:will_need_chromebooks,
+                                 'i_dont_know',
+                                 label: { text: t(:im_not_sure, scope: scope) }) do %>
+          <p class="govuk-body">
+            If you order Chromebooks without letting us know first, they’ll be delivered unsecured, without access to Google Workspace for Education Fundementals (formerly G Suite for Education).
+          </p>
+        <%- end %>
+      <%- end %>
+      <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>
