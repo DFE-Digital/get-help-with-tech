@@ -69,6 +69,7 @@ en:
       laptop_types: Find out what type of laptop pupils need
       chromebooks: Will your order include Google Chromebooks?
       will_need_chromebooks_error: Tell us if pupils will need Chromebooks?
+      how_to_order: How to order
     support:
       home: Support
       schools:
@@ -254,7 +255,7 @@ en:
         title: Will you order Chromebooks?
         'yes': Yes, we will need Chromebooks
         'no': No, we do not need Chromebooks
-        i_dont_know: I don’t know
+        i_dont_know: I do not know
         errors:
           choice: Tell us whether you will need Chromebooks
       what_happens_next:

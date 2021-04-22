@@ -24,7 +24,7 @@
                                  'yes',
                                  label: { text: t(:yes, scope: scope) }) do %>
           <p class="govuk-body">
-            When you order you’ll be contacted by email for G Suite for Education license information.
+            When you order you’ll receive an email asking you to provide relevant Google Workspace for Education Fundementals (formerly G Suite for Education) license information.
           </p>
         <%- end %>
         <%= f.govuk_radio_button  :will_need_chromebooks,
@@ -34,7 +34,7 @@
                                  'i_dont_know',
                                  label: { text: t(:im_not_sure, scope: scope) }) do %>
           <p class="govuk-body">
-            If you order Chromebooks without letting us know first, they’ll be delivered without safeguarding settings and access to G Suite for Education.
+            If you order Chromebooks without letting us know first, they’ll be delivered unsecured, without access to Google Workspace for Education Fundementals (formerly G Suite for Education).
           </p>
         <%- end %>
       <%- end %>

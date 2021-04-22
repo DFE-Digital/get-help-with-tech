@@ -1,4 +1,4 @@
-<%- title = t('page_titles.school_order_devices') %>
+<%- title = t('page_titles.iss.how_to_order') %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs items: title, school: @school, user: impersonated_or_current_user %>
@@ -7,7 +7,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      How to order
+      <%= title %>
     </h1>
 
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
@@ -46,10 +46,10 @@
         </p>
         <ul class="govuk-list govuk-list--bullet">
           <li>
-            the domain the school has registered for G Suite for Education, for example ‘school.co.uk’
+            the domain the school has registered for Google Workspace for Education Fundementals (formerly G Suite for Education), for example ‘school.co.uk’
           </li>
           <li>
-            a recovery email address. This should be on a separate domain to the one registered for G Suite for Education. For example, if the domain registered for G Suite for Education is ‘school.com’, the recovery email cannot be ‘recovery@school.com’
+            a recovery email address. This should be on a separate domain to the one registered for Google Workspace for Education Fundementals. For example, if the domain registered for Google Workspace for Education Fundementals is ‘school.com’, the recovery email cannot be ‘recovery@school.com’
           </li>
         </ul>
         <p class="govuk-body">
@@ -71,7 +71,7 @@
           </strong>
         </p>
         <p class="govuk-body">
-          If you order Chromebooks without letting us know first, they’ll be delivered without safeguarding settings and access to G Suite for Education.
+          If you order Chromebooks without letting us know first, they’ll be delivered unsecured, without access to the Google Workspace for Education Fundementals (formerly G Suite for Education).
         </p>
         <%= govuk_link_to 'Tell us if you’ll order Google Chromebooks', funded_chromebooks_school_path(@school) %>
       </div>
