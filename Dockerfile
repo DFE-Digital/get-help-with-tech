@@ -5,7 +5,7 @@ RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
   apt-transport-https
 
 # Ensure we install an up-to-date version of Node
-RUN curl -sL https://deb.nodesource.com/setup_current.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 # Ensure latest packages for Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
