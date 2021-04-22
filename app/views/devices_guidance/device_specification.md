@@ -2,6 +2,7 @@ When [placing an order](/), schools, colleges, further education institutions, a
 
 * Microsoft Windows laptops
 * Google Chromebooks
+* Higher-specification laptops
 
 You can find out if any types of device are out of stock by [signing in to the Get help with technology service](/sign-in). The information is also available on the TechSource ordering website.
 
@@ -63,6 +64,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <th scope="col" class="govuk-table__header app-schools-table__column-20">Google Chromebook</th>
         <th scope="col" class="govuk-table__header app-schools-table__column-20">Microsoft Windows tablet</th>
         <th scope="col" class="govuk-table__header app-schools-table__column-20">Apple iPad</th>
+        <th scope="col" class="govuk-table__header app-schools-table__column-20">Dell Latitude 5300 series Microsoft Windows laptop</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -72,6 +74,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Clamshell &ndash; Education grade</td>
         <td class="govuk-table__cell">Tablet</td>
         <td class="govuk-table__cell">Tablet</td>
+        <td class="govuk-table__cell">Clamshell privacy shutter</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Minimum screen size</th>
@@ -79,6 +82,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Minimum 11 inch screen</td>
         <td class="govuk-table__cell">Minimum 11 inch touch screen</td>
         <td class="govuk-table__cell">10.2 inch multi-touch screen</td>
+        <td class="govuk-table__cell">13.3” non-touch</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Resolution</th>
@@ -86,6 +90,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">HD</td>
         <td class="govuk-table__cell">Minimum 1280 × 800</td>
         <td class="govuk-table__cell">2160 × 1620</td>
+        <td class="govuk-table__cell">HD (1366 x 768) anti-glare</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Processor</th>
@@ -93,6 +98,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Intel or AMD Integrated Graphics</td>
         <td class="govuk-table__cell">Intel</td>
         <td class="govuk-table__cell">Apple A10 Fusion – <span class="app-no-wrap">64-bit</span></td>
+        <td class="govuk-table__cell">Intel Core i5-8265U processor with Integrated Intel UHD 620 graphics</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Memory</th>
@@ -100,13 +106,15 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Minimum 4GB</td>
         <td class="govuk-table__cell">Minimum 2GB</td>
         <td class="govuk-table__cell">3GB</td>
+        <td class="govuk-table__cell">8GB, 1x8GB, DDR4 Non-ECC</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Storage</th>
         <td class="govuk-table__cell">Minimum 64GB</td>
         <td class="govuk-table__cell">Minimum 16GB</td>
         <td class="govuk-table__cell">Minimum 32GB</td>
-          <td class="govuk-table__cell">32GB</td>
+        <td class="govuk-table__cell">32GB</td>
+        <td class="govuk-table__cell">128GB PCle NVMe Class 35 Solid State drive</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Connectivity</th>
@@ -114,6 +122,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
         <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
         <td class="govuk-table__cell">802.11a/b/g/n/ac</td>
+        <td class="govuk-table__cell">Intel Dual Band wireless AC 9560 (802.11ac) 2x2, Bluetooth 5.0</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Audio</th>
@@ -121,6 +130,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Stereo speakers</td>
         <td class="govuk-table__cell">Stereo speakers</td>
         <td class="govuk-table__cell">Stereo speakers</td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Ports</th>
@@ -128,6 +138,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">USB</td>
         <td class="govuk-table__cell">USB 3.0</td>
         <td class="govuk-table__cell">Lightning and Smart Connector</td>
+        <td class="govuk-table__cell">MicroSD card reader</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Input</th>
@@ -135,13 +146,15 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Standard UK keyboard</td>
         <td class="govuk-table__cell">N/A</td>
         <td class="govuk-table__cell">N/A</td>
+        <td class="govuk-table__cell">Non-backlight single point standard UK keyboard</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Video port</th>
         <td class="govuk-table__cell">HDMI</td>
         <td class="govuk-table__cell">Yes, through USB-C</td>
         <td class="govuk-table__cell">Yes, through USB-C or mini HDMI depending on model</td>
-        <td class="govuk-table__cell"> </td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Multimedia</th>
@@ -149,6 +162,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Webcam</td>
         <td class="govuk-table__cell">Webcam</td>
         <td class="govuk-table__cell">Rear and front cameras</td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Audio ports</th>
@@ -156,6 +170,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Headphone and microphone socket</td>
         <td class="govuk-table__cell">Headphone socket</td>
         <td class="govuk-table__cell">Headphone socket</td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Operating system</th>
@@ -163,6 +178,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Chrome OS</td>
         <td class="govuk-table__cell">Windows 10 Pro</td>
         <td class="govuk-table__cell">iPad OS</td>
+        <td class="govuk-table__cell">Windows 10 Pro (64 Bit), English, Dutch, French, German, Italian</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Bluetooth</th>
@@ -170,20 +186,23 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Yes</td>
         <td class="govuk-table__cell">Yes</td>
         <td class="govuk-table__cell">Yes</td>
+        <td class="govuk-table__cell">Wireless Drivers for Intel 9560 + Bluetooth 5.0</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Encryption</th>
         <td class="govuk-table__cell">Yes</td>
         <td class="govuk-table__cell">Yes</td>
         <td class="govuk-table__cell">Yes</td>
-        <td class="govuk-table__cell"> </td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Security</th>
         <td class="govuk-table__cell">TPM 2.0</td>
         <td class="govuk-table__cell">Google Security Chip H1</td>
         <td class="govuk-table__cell">TPM 2.0</td>
-        <td class="govuk-table__cell"> </td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Weight</th>
@@ -191,6 +210,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Maximum 1.29kg</td>
         <td class="govuk-table__cell">Maximum 750g</td>
         <td class="govuk-table__cell">483g</td>
+        <td class="govuk-table__cell"></td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Battery life</th>
@@ -198,6 +218,7 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">10 hours</td>
         <td class="govuk-table__cell">9 hours</td>
         <td class="govuk-table__cell">10 hours</td>
+        <td class="govuk-table__cell">Express-charge battery</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">PSU</th>
@@ -205,12 +226,22 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
         <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
         <td class="govuk-table__cell">Fitted with UK 3-pin plug as standard</td>
         <td class="govuk-table__cell">Charging via power adapter or USB to computer system</td>
+        <td class="govuk-table__cell"></td>
       </tr>
     </tbody>
   </table>
 </div>
 
 <div class="govuk-grid-column-two-thirds">
+
+## Higher specification laptops
+
+All higher-specification Windows laptops are Dell Latitude 5300 series supplied with the manufacturer’s default Windows 10 ‘Out-of-the-Box Experience’ only. It is not possible to order them with DfE software and settings. They come with a Windows 10 Pro licence, instead of the standard Windows Education licence. These laptops ship with Dell Latitude 5300 factory settings and include manufacturer support until April 2023.
+
+You’re responsible for ensuring appropriate [safeguarding and security settings](/devices/safeguarding-for-device-users) are applied to these laptops before distributing them to your students. This may include installing and configuring content filtering, device management and anti-virus solutions.
+We do not include sleeves or protective cases. If you need these, you’ll have to source them separately. With each laptop order, you’ll receive 5 headsets with microphones.
+
+To order, look for ‘Persona I - Higher-spec Windows laptops’ in TechSource.
 
 ## 4G wireless routers
 
