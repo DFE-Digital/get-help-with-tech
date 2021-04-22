@@ -213,6 +213,10 @@ class School < ApplicationRecord
     !!opted_out_of_comms_at
   end
 
+  def can_notify_computacenter?
+    computacenter_reference.present?
+  end
+
 private
 
   def maybe_generate_user_changes
