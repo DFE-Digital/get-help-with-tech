@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:2.7.2
 
 # Allow apt to work with https-based sources
 RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
@@ -8,7 +8,7 @@ RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 # Ensure latest packages for Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
   tee /etc/apt/sources.list.d/yarn.list
 
