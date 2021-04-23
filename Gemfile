@@ -161,7 +161,3 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'simplecov'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-# This is needed for review apps on Heroku to build
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

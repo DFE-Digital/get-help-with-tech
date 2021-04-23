@@ -515,7 +515,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   timecop
-  tzinfo-data
   web-console (>= 3.3.0)
   webdrivers (~> 4.6)
   webmock
