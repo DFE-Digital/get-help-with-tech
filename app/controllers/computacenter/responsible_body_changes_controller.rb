@@ -86,6 +86,7 @@ private
   end
 
   def update_sold_to
-    @responsible_body.update!(computacenter_reference: @form.sold_to, computacenter_change: 'none')
+    ComputacenterReferenceUpdater.new.update_sold_to!(@responsible_body, @form.sold_to, computacenter_change: 'none')
+    # @responsible_body.update!(computacenter_reference: @form.sold_to, computacenter_change: 'none')
   end
 end

@@ -39,11 +39,7 @@ class SchoolOrderStateAndCapUpdateService
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
-    # Also if the school cannot notify computacenter then the cap updates will not have been sent so
-    # we would not want to tell the users they can order yet
-    if school.can_notify_computacenter?
-      SchoolCanOrderDevicesNotifications.new(school: school).call unless disable_user_notifications
-    end
+    notify_school_by_email(school) unless disable_user_notifications
   end
 
   def disable_user_notifications!

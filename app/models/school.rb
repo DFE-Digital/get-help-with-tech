@@ -26,6 +26,13 @@ class School < ApplicationRecord
 
   before_create :set_computacenter_change
 
+  enum computacenter_change: {
+    none: 'none',
+    new: 'new',
+    amended: 'amended',
+    closed: 'closed',
+  }, _prefix: true
+
   enum status: {
     open: 'open',
     closed: 'closed',
@@ -36,13 +43,6 @@ class School < ApplicationRecord
     can_order_for_specific_circumstances: 'can_order_for_specific_circumstances',
     can_order: 'can_order',
   }
-
-  enum computacenter_change: {
-    none: 'none',
-    new: 'new',
-    amended: 'amended',
-    closed: 'closed',
-  }, _prefix: true
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }

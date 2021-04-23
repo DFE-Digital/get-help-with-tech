@@ -20,7 +20,6 @@ class VirtualCapPool < ApplicationRecord
 
   def recalculate_caps!
     Rails.logger.info("***=== recalculating caps ===*** pool-id: #{id}")
-
     self.cap = school_device_allocations.sum(:cap)
     self.devices_ordered = school_device_allocations.sum(:devices_ordered)
     self.allocation = school_device_allocations.sum(:allocation)
@@ -57,13 +56,9 @@ private
   end
 
   def notify_computacenter!
-    if responsible_body.has_virtual_cap_feature_flags?
-      if notify_computacenter_of_cap_changes?
-        allocation_ids = school_device_allocations.pluck(:id)
-        update_cap_on_computacenter!(allocation_ids)
-      end
-    else
-      Rails.logger.info("VirtualCapPool #{id}: (not) Notifying CC of changes (cap: #{cap}, devices_ordered: #{devices_ordered})")
+    if responsible_body.has_virtual_cap_feature_flags? && notify_computacenter_of_cap_changes?
+      allocation_ids = school_device_allocations.select { |sda| sda.school.can_notify_computacenter? }.map(&:id)
+      update_cap_on_computacenter!(allocation_ids)
     end
   end
 end
