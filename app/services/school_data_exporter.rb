@@ -56,7 +56,8 @@ private
   end
 
   def build_name_fields_for(school)
-    split_string("#{school.urn} #{school.name}", limit: 35)
+    urn = school.la_funded_place? ? school.techsource_urn : school.urn
+    split_string("#{urn} #{school.name}", limit: 35)
   end
 
   def schools

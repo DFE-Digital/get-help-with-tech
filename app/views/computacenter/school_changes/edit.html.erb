@@ -5,7 +5,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-4">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl"><%= "#{@school.name} (#{@school.urn})" %></span>
+      <span class="govuk-caption-xl"><%= "#{@school.name} (#{@school.la_funded_place? ? @school.techsource_urn : @school.urn})" %></span>
       <%= title %>
     </h1>
 

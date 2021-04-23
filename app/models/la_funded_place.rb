@@ -4,6 +4,6 @@ class LaFundedPlace < CompulsorySchool
   end
 
   def techsource_urn
-    "iss-#{responsible_body.name}".parameterize
+    "ISS_#{responsible_body.gias_id}"
   end
 end

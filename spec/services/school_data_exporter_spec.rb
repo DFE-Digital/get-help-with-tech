@@ -70,4 +70,30 @@ RSpec.describe SchoolDataExporter, type: :model do
       expect(found).to be true
     end
   end
+
+  context 'when exporting LA funded places' do
+    let(:local_authority) { create(:local_authority) }
+    let!(:school) { create(:la_funded_place, responsible_body: local_authority) }
+
+    before do
+      exporter.export_schools
+    end
+
+    after do
+      remove_file(filename)
+    end
+
+    it 'uses the techsource urn' do
+      data = CSV.parse(File.read(filename), headers: true)
+      expect(data.count).to eq(School.count)
+
+      found = false
+      data.each do |row|
+        if row['School URN + School Name'].start_with?(school.techsource_urn)
+          found = true
+        end
+      end
+      expect(found).to be true
+    end
+  end
 end
