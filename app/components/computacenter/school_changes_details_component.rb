@@ -25,9 +25,10 @@ private
   end
 
   def school_rows
+    urn = school.la_funded_place? ? school.techsource_urn : school.urn
     [{
       key: 'School URN',
-      value: school.urn,
+      value: urn,
     },
      {
        key: 'School name',
