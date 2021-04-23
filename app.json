@@ -1,7 +1,7 @@
 {
   "name": "get-help-with-tech",
   "scripts": {
-    "postdeploy": "RAILS_ENV=production bundle exec rake db:schema:load db:seed db:personas"
+    "postdeploy": "RAILS_ENV=production bundle exec rake db:schema:load db:seed import:personas"
   },
   "env": {
     "LANG": {
