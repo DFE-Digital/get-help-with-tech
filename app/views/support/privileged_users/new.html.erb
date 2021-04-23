@@ -1,0 +1,29 @@
+<% title = t('page_titles.support.privileged_users.new') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= govuk_back_link(text: 'Back', href: support_privileged_users_path) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%= form_with model: @form_object, url: support_privileged_users_path do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_text_field :full_name, required: true, label: { text: 'Full name', size: 'm' } %>
+      <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 'm' } %>
+
+      <% privileges = [
+        OpenStruct.new(id: 'support', name: 'Support'),
+        OpenStruct.new(id: 'computacenter', name: 'Computacenter'),
+      ] %>
+
+      <%= f.govuk_collection_check_boxes :privileges, privileges, :id, :name, legend: { text: "Which privileges should be granted?" } %>
+
+      <%= f.govuk_submit 'Create account' %>
+    <%- end %>
+  </div>
+</div>

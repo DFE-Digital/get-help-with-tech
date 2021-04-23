@@ -1,0 +1,37 @@
+<%- title = t('page_titles.support.privileged_users.show') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= govuk_back_link(text: 'Back', href: support_privileged_users_path) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%=
+      render GovukComponent::SummaryList.new do |component|
+        component.slot(
+          :row,
+          key: 'Email',
+          value: @user.email_address,
+        )
+
+        component.slot(
+          :row,
+          key: 'Last sign in',
+          value: @user.last_signed_in_at&.to_s(:govuk_date_short) || 'Never'
+        )
+
+        component.slot(
+          :row,
+          key: 'Privileges',
+          value: @user.privileges.map{|p| p.to_s.humanize}.join('<br>').html_safe
+        )
+      end
+    %>
+
+    <%= govuk_button_to 'Revoke all privileges', support_privileged_user_path(@user), class: 'govuk-button--warning', method: :delete %>
+  </div>
+</div>

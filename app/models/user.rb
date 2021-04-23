@@ -236,6 +236,17 @@ class User < ApplicationRecord
     scope
   end
 
+  def privileges
+    array = []
+
+    array << :support_user if is_support?
+    array << :third_line_support_user if third_line_role?
+    array << :computacenter_user if is_computacenter?
+    array << :mno_user if is_mno_user?
+
+    array
+  end
+
 private
 
   def cleansed_full_name
