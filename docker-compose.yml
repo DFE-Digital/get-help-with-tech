@@ -10,17 +10,14 @@ services:
       - .:/usr/src/app
       - gem_cache:/gems
     env_file:
-      - .env_docker_development/development/database
       - .env_docker_development/development/web
-
-  redis:
-    image: redis
+      - .env_docker_development/development/database
 
   webpack_dev_server:
     build: .
     command: ./bin/webpack-dev-server
     ports:
-      - 3035:3035
+      - "3035:3035"
     volumes:
       - .:/usr/src/app
       - gem_cache:/gems
@@ -29,6 +26,9 @@ services:
       - .env_docker_development/development/database
     environment:
       - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+
+  redis:
+    image: redis
 
   database:
     image: postgres
