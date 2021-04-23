@@ -141,6 +141,16 @@ group :development do
   # Gives a better error view with a web console
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  # performance profiling
+  gem 'rack-mini-profiler'
+
+  # For memory profiling add ?pp=profile-memory to the URL of any request
+  gem 'memory_profiler'
+
+  # For call-stack profiling flamegraphs add ?pp=flamegraph to the URL of any request
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 group :test do
@@ -157,6 +167,7 @@ end
 
 group :development, :test do
   gem 'brakeman'
+  gem 'bullet'
   gem 'bundle-audit'
   gem 'factory_bot_rails'
   gem 'simplecov'
