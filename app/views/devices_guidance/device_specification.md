@@ -234,15 +234,6 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
 
 <div class="govuk-grid-column-two-thirds">
 
-## Higher specification laptops
-
-All higher-specification Windows laptops are Dell Latitude 5300 series supplied with the manufacturer’s default Windows 10 ‘Out-of-the-Box Experience’ only. It is not possible to order them with DfE software and settings. They come with a Windows 10 Pro licence, instead of the standard Windows Education licence. These laptops ship with Dell Latitude 5300 factory settings and include manufacturer support until April 2023.
-
-You’re responsible for ensuring appropriate [safeguarding and security settings](/devices/safeguarding-for-device-users) are applied to these laptops before distributing them to your students. This may include installing and configuring content filtering, device management and anti-virus solutions.
-We do not include sleeves or protective cases. If you need these, you’ll have to source them separately. With each laptop order, you’ll receive 5 headsets with microphones.
-
-To order, look for ‘Persona I - Higher-spec Windows laptops’ in TechSource.
-
 ## 4G wireless routers
 
 Read our [4G wireless router guidance](/devices/preparing-4g-wireless-routers) for information on internet connectivity devices and data limits.
