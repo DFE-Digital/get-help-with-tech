@@ -72,6 +72,10 @@ en:
       how_to_order: How to order
     support:
       home: Support
+      privileged_users:
+        index: Privileged users
+        show: Edit privileged user
+        new: Add privileged user
       allocation_batch_jobs:
         index: Bulk allocation update jobs
         show: Bulk allocation update job

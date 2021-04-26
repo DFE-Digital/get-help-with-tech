@@ -62,6 +62,18 @@
       </ul>
     <% end %>
 
+    <% if policy(:PrivilegedUser).index? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to 'Privileged users', support_privileged_users_path %>
+      </h2>
+
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>see privileged users</li>
+        <li>add or remove privileged users</li>
+      </ul>
+    <% end %>
+
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to 'Email audits', support_email_audits_path %>
     </h2>

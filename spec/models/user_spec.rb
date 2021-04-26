@@ -1180,4 +1180,22 @@ RSpec.describe User, type: :model do
       expect(User.from_responsible_body_or_schools).to be_empty
     end
   end
+
+  describe '#privileges' do
+    subject(:model) do
+      User.new(
+        is_support: true,
+        role: 'third_line',
+        is_computacenter: true,
+        mobile_network: build(:mobile_network),
+      )
+    end
+
+    it 'returns correct privileges' do
+      expect(model.privileges).to include(:support_user)
+      expect(model.privileges).to include(:third_line_support_user)
+      expect(model.privileges).to include(:computacenter_user)
+      expect(model.privileges).to include(:mno_user)
+    end
+  end
 end

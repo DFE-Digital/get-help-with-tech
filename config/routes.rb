@@ -224,6 +224,7 @@ Rails.application.routes.draw do
 
   namespace :support do
     get '/', to: 'home#show', as: :home
+    resources :privileged_users, only: %i[index show destroy new create], path: 'privileged-users'
     get '/schools', to: 'home#schools'
     get '/technical', to: 'home#technical_support', as: :technical_support
     get '/feature-flags', to: 'home#feature_flags', as: :feature_flags

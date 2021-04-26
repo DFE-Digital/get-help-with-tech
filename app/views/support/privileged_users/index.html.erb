@@ -1,0 +1,81 @@
+<%- title = t('page_titles.support.privileged_users.index') %>
+<%- content_for :title, title %>
+<%- content_for :before_content do %>
+  <%= govuk_back_link(text: 'Back', href: support_home_path) %>
+<%- end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+
+    <%= govuk_link_to('Add privileged user', new_support_privileged_user_path, button: true) %>
+
+    <h2 class="govuk-heading-l">
+      Support users
+    </h2>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Email</th>
+          <th scope="col" class="govuk-table__header">Last sign in</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @support_users.each do |user| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= link_to user.email_address, support_privileged_user_path(user) %></th>
+            <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_s(:govuk_date_short) || 'Never' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-l">
+      Computacenter users
+    </h2>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Email</th>
+          <th scope="col" class="govuk-table__header">Last sign in</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @computacenter_users.each do |user| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= link_to user.email_address, support_privileged_user_path(user) %></th>
+            <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_s(:govuk_date_short) || 'Never' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-l">
+      MNO users
+    </h2>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Email</th>
+          <th scope="col" class="govuk-table__header">Last sign in</th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <% @mno_users.each do |user| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= link_to user.email_address, support_privileged_user_path(user) %></th>
+            <td class="govuk-table__cell"><%= user.last_signed_in_at&.to_s(:govuk_date_short) || 'Never' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
