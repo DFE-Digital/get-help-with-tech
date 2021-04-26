@@ -1,70 +1,70 @@
 ## Who owns the devices
 
-Ownership of devices is transferred from the Department for Education (DfE) to the local authorities (LAs), academy trusts, schools, colleges and further education (FE) institutions who receive them at the point of delivery.
+Ownership of laptops, tablets and 4G wireless routers is transferred from the DfE to the local authorities (LAs), academy trusts, schools, colleges and further education (FE) institutions that receive them at the point of delivery.
 
-### Devices for education: children and young people in schools and FE institutions
+We expect organisations to decide how best to make devices available to disadvantaged children and young people so they can access remote education, face-to-face learning, and online social care when needed.
 
-<div class="govuk-inset-text">
-  <p class="govuk-body">This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for disadvantaged:</p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>year 10s in the 2020 summer term and those given to LAs, academy trusts, schools, colleges and further education institutions</li>
-    <li>children and students after September 2020</li>
-  </ul>
-</div>
+As device owners, these organisations can choose how and when to temporarily lend or permanently give them to children and young people in need, or to other organisations. 
 
-The school, college, further education institution, trust or LA should retain ownership and lend the devices to those children and young people who need them. This gives them the ability to re-allocate the devices where required, for example, when different groups of pupils or students are required to <span class="app-no-wrap">self-isolate</span> at different times.
+## Options for lending or giving devices to children, young people and other organisations
 
-LAs and trusts may choose to transfer ownership to schools and colleges.
+You must consider safeguarding when making your decision. For example, we do not recommend giving DfE Restricted Windows devices to children and young people without considering [what will happen when the temporary content filtering and mobile device management settings expire on 30 September 2021](https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices). 
 
-### Devices for social care: care leavers, children and families with a social worker
+[Guidance on safe internet use](https://www.saferinternet.org.uk/) should be provided when devices are lent or given to people and organisations.
 
-<div class="govuk-inset-text">
-    This guidance is about laptops, tablets and 4G wireless routers given to LAs and academy trusts for care leavers, children and families with a social worker during the 2020 summer term.
-</div>
+#### Option 1: Lending devices to children and young people
 
-Ownership of devices is transferred from DfE to the local authorities (LAs) who receive them at the point of delivery.
+LAs, trusts, schools, colleges and FE institutions should consider retaining ownership and management of the devices, and lending them to children, families and young people. 
 
-Ideally, LAs should retain ownership and management of the devices and lend them to children, families and young people. This means that the device can be actively managed and can be reallocated where possible and necessary. LAs can also choose to transfer ownership to schools to manage them.
+The benefits are:
 
-LAs can transfer ownership of the devices to the children, families and young people themselves in situations where the young person, family or child needs a different approach (for example, you may wish to gift laptops, tablets and 4G wireless routers to care leavers).
+* [safeguarding device settings](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users), such as content filtering and mobile device management (MDM), can be maintained
+* children and young people can access IT support from the device owner if needed
+* devices can be redistributed to other children and young people as needs change
 
-LAs should consider safeguarding when deciding whether to gift a device and involve relevant parties (such as social workers, schools and carers) in making the decision.
+#### Option 2: Permanently giving devices to other organisations
 
-[Guidance on safe internet use](https://www.saferinternet.org.uk/) should be provided when devices are lent or gifted.
+LAs, trusts, schools, colleges and FE institutions can choose to give devices to other organisations, such as a school. The new owner can then decide how to distribute them to children and young people in need.
 
-#### What to do if a child or young person no longer meets the criteria to have a device
+LAs that have been allocated devices for state-funded pupils in independent special schools and alternative provision can give devices to those settings. You should make sure that DfE devices will only be distributed to their state-funded pupils as a condition of your agreement to transfer ownership to them.
 
-There will be circumstances where a child or young person no longer meets the criteria under which a device was provided, for example, they no longer receive support from a social worker.
+#### Option 3: Permanently giving devices to children and young people
 
-LAs and trusts will have decided to provide a device based on their assessment of need and consideration of safeguarding concerns for that individual child or young person. LAs, trusts or the school (that the device has been gifted to) are best placed to identify if a device should be recalled or if the child or young person should retain it.
+LAs, trusts, schools, colleges and FE institutions can choose to give devices to children, young people and families, where appropriate. This may include giving devices to care leavers.
 
-##### If a child or young person has moved to another area
+Before making this decision, you should consider:
 
-Where a device has been lent to a child that moves to live under the remit of another LA, the original LA can decide whether to recall the device or to pass on the management of the device to a child or young person’s school or another LA (with their agreement). This should be negotiated with the new LA or school.
+* [safeguarding](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users) - relevant parties (such as social workers, schools or carers) should be involved in making this decision
+* online safety if device settings expire - for example, [we do not recommend gifting DfE Restricted Windows devices before replacing their temporary safeguarding and management settings](https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed)
+* how IT support will be provided - you should [let the recipient know how to get help if their device develops a fault](https://get-help-with-tech.education.gov.uk/devices/replace-a-faulty-device) (DfE cannot provide ongoing IT support)  
 
-##### If a child or young person has changed school
+## What to do if circumstances change for children and young people
 
-If a device has been gifted to a school and the child changes school, we would encourage a conversation between the releasing school, the new school and the LA about ongoing use, ownership and management of the device.  
+### If a child or young person no longer meets the eligibility criteria to have a device
 
-If the device is going to the child’s new school, the previous school should uninstall any software it has added to the device, unless licences are transferred with the device, and make it clear what actions it has taken so that the new school can consider what steps it needs to take following receipt of the device.  
+There will be circumstances where a child or young person no longer meets the criteria under which a device was provided. For example, they may no longer receive support from a social worker.
 
-#### Retaining devices
+If this happens, the LA, trust, school, college or FE institution that owns the device should assess the needs of the child or young person, including safeguarding. They can then  decide whether to let the recipient continue using the device, or ask them to return it.   
 
-LAs can decide how best to meet the needs of vulnerable children and young people. We anticipate LAs and trusts will safely distribute devices to children and young people that need them as soon as it is manageable to do so.
+If a device has been permanently given to a child or young person, it's their property.
 
 
-However, if LAs have any concerns about lending or gifting a device to a child or young person due to safeguarding reasons, LAs can use their judgement about next steps. LAs may decide that the device should:
+### If a child or young person moves to another educational setting
 
-* not be given to that child or young person and that other forms of contact are more appropriate
-* be used only in supervised contexts (with the social worker or with the support of the school)
-* be managed by the school
-* be used for other children or young people who would benefit from it, outside the eligible groups
+Children and young people may be given devices by one educational setting, then move to another. If this happens, the settings can decide to transfer device ownership between them.
 
-LAs may also have valid reasons for retaining a pool of devices. For example, the LA may want to hold back some provision for future distribution to children and young people (for instance in anticipation of an increase in demand on children’s social care services).
+If this is agreed, the educational setting that owns the device should uninstall any software it has added, unless licences are being transferred too. They should let the new educational setting know what changes have been made, so that the device can be set up and secured appropriately again.
 
-## Distributing devices
+### If a care leaver or child with a social worker moves to another area
 
-Laptops, tablets and 4G wireless routers ordered from September 2020 will be delivered directly to schools, colleges, further education institutions or LAs named in the order. Read guidance on [how to order laptops and tablets](/devices/how-to-order) or [4G wireless routers](/how-to-request-4g-wireless-routers) for more information on the delivery process. 
+If an LA has given a child or young person a device and that person moves area, the LA can:
+
+* discuss transferring ownership of the device with the new LA, a relevant educational setting, or to the child or care leaver themself (if it’s safe and appropriate to do so)
+* asking the child or young person to return the device so that it can be redistributed within the LA
+
+## How to distribute devices
+
+Laptops, tablets and 4G wireless routers ordered from September 2020 will be delivered directly to schools, colleges, further education institutions or LAs named in the order. Read guidance on [how to order laptops and tablets](https://get-help-with-tech.education.gov.uk/devices/how-to-order) or [4G wireless routers](https://get-help-with-tech.education.gov.uk/how-to-request-4g-wireless-routers) for more information on the delivery process.
 
 Organisations are responsible for deciding how they deliver devices. For example, they can:
 
@@ -75,9 +75,22 @@ Organisations are responsible for deciding how they deliver devices. For example
 
 All distribution and return of lent devices should be done in accordance with [social distancing guidelines relevant to your local area](https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19).
 
+### Deciding how to distribute devices
+
+LAs, trusts, schools, colleges and FE institutions can decide how best to meet the needs of vulnerable children and young people. We anticipate these organisations will safely distribute devices to people who need them as soon as possible.
+
+Your organisation is best placed to review the needs of the people in your care. If you have any concerns about lending or giving a device to a child or young person due to safeguarding reasons, you can use your judgement about next steps. For example, you may decide that the device should:
+
+* not be given to that child or young person because other forms of contact are more appropriate
+* only be used in supervised contexts (with a social worker, or support of an educational setting)
+* be managed by an educational setting
+* be used for other children or young people who would benefit from it, outside of eligible groups
+
 ### Redistributing unused 4G wireless routers
 
 LAs, academy trusts, schools, colleges and further education institutions can use the [Support Portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you may wish to collect them and lend them to other children and young people who may have greater need.
+
+All SIM cards will remain active until 31 July 2021. Guidance will be made available explaining how to use routers with alternative data packages. 
 
 
 ## Loan agreements
@@ -92,9 +105,9 @@ LAs, academy trusts, schools, colleges and further education institutions could 
 
 ## Labelling or tagging devices
 
-Laptops, tablets and 4G wireless routers will not be tagged or labelled when they are delivered. Schools, colleges, further education institutions, LAs and trusts are responsible for implementing their own security and tracking methods. 
+Laptops, tablets and 4G wireless routers will not be tagged or labelled when they're delivered. Schools, colleges, further education institutions, LAs and trusts are responsible for implementing their own security and tracking methods. 
 
-You will invalidate the warranty on your device if you use any permanent method of labelling or tagging the laptop or tablet.
+You may invalidate the warranty on your device if you use any permanent method of labelling or tagging the laptop or tablet.
 
 See the [guidance on preparing devices](/devices/preparing-chromebooks) for information on setting up mobile device management (MDM) and keeping records of devices.
 
@@ -102,4 +115,4 @@ See the [guidance on preparing devices](/devices/preparing-chromebooks) for info
 
 The LA, trust, school or further education institution should make clear to recipients of devices that it is unlawful for any lent device to be sold by a student or their family. If a lent device is lost, stolen or sold, or where recall is not possible, organisations should follow any existing protocol they may have for lost, stolen or missing devices.
 
-Where an LA, trust, school, college or further education provide has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should [contact us](/get-support).
+Where an LA, trust, school, college or further education provider has a safeguarding concern relating to a device that they suspect has been lost, stolen or sold they should [contact us](/get-support).
