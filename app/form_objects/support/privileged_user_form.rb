@@ -8,7 +8,7 @@ class Support::PrivilegedUserForm
                             format: { with: /\A.*@computacenter.com|.*@digital.education.gov.uk|.*@education.gov.uk\z/,
                                       message: 'Email address must be end with @computacenter.com, @digital.education.gov.uk or @education.gov.uk' }
   validate :validate_email_not_taken
-  validate :validate_atleast_one_privilege
+  validate :validate_at_least_one_privilege
   validate :validate_acceptable_privileges
 
   def create_user!
@@ -31,7 +31,7 @@ private
     end
   end
 
-  def validate_atleast_one_privilege
+  def validate_at_least_one_privilege
     if privileges.reject(&:blank?).empty?
       errors.add :privileges, :at_least_one, message: 'Select at least one privilege to apply'
     end
