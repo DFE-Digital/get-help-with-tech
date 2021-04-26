@@ -4,7 +4,7 @@ class School::DevicesController < School::BaseController
       if impersonated_or_current_user.has_an_active_techsource_account? && @school.can_order_for_specific_circumstances?
         render :can_order_for_specific_circumstances
       elsif impersonated_or_current_user.has_an_active_techsource_account? && @school.can_order?
-        if @school.la_funded_place?
+        if @school.la_funded_provision?
           redirect_to get_laptops_school_path(@school)
         else
           render :can_order

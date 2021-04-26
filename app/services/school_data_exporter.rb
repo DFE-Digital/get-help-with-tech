@@ -56,11 +56,10 @@ private
   end
 
   def build_name_fields_for(school)
-    urn = school.la_funded_place? ? school.techsource_urn : school.urn
-    split_string("#{urn} #{school.name}", limit: 35)
+    split_string("#{school.urn} #{school.name}", limit: 35)
   end
 
   def schools
-    School.all.includes(:responsible_body).order(urn: :asc)
+    School.all.includes(:responsible_body).order(urn: :asc, ukprn: :asc, provision_urn: :asc)
   end
 end

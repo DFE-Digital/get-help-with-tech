@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe InterstitialPicker do
   describe '#call' do
     context 'when LA user + LA funded place user' do
-      let(:school) { create :la_funded_place, std_device_allocation: allocation }
+      let(:school) { create :iss_provision, std_device_allocation: allocation }
       let(:user) { create :user, schools: [school], responsible_body: la }
       let(:service) { described_class.new(user: user) }
       let(:la) { school.responsible_body }
@@ -26,7 +26,7 @@ RSpec.describe InterstitialPicker do
     end
 
     context 'when LA funded place user' do
-      let(:school) { create :la_funded_place, std_device_allocation: allocation }
+      let(:school) { create :iss_provision, std_device_allocation: allocation }
       let(:user) { create :user, schools: [school] }
       let(:service) { described_class.new(user: user) }
 

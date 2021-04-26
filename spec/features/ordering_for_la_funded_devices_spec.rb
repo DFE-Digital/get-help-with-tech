@@ -82,8 +82,8 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def given_there_is_an_independent_settings_school
-    @school = create(:la_funded_place, :can_order, :with_preorder_information)
-    @school.preorder_information.update!(who_will_order_devices: 'responsible_body')
+    @school = create(:iss_provision, :can_order, :with_preorder_information)
+    @school.preorder_information.update!(who_will_order_devices: 'school')
   end
 
   def given_i_am_signed_in_as_an_independent_settings_school_user

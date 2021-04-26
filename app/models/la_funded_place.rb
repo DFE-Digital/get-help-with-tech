@@ -1,9 +1,20 @@
-class LaFundedPlace < CompulsorySchool
-  def institution_type
-    'local_authority'
+class LaFundedPlace < School
+  validates :provision_urn, presence: true
+
+  enum provision_type: {
+    iss: 'iss',
+    scl: 'scl',
+  }, _suffix: 'provision'
+
+  def urn
+    provision_urn
   end
 
-  def techsource_urn
-    "ISS_#{responsible_body.gias_id}"
+  def to_param
+    provision_urn
+  end
+
+  def institution_type
+    'local_authority'
   end
 end

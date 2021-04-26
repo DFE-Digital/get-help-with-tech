@@ -12,7 +12,7 @@ private
   end
 
   def set_school
-    @school = impersonated_or_current_user.schools.where_urn_or_ukprn(params[:urn].to_i).first!
+    @school = impersonated_or_current_user.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
   end
 
   def require_completed_welcome_wizard!

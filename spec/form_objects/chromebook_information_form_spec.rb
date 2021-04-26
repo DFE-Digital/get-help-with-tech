@@ -7,7 +7,7 @@ RSpec.describe ChromebookInformationForm do
   let(:school) do
     instance_double(CompulsorySchool,
                     institution_type: 'Educational foundation',
-                    la_funded_place?: false)
+                    la_funded_provision?: false)
   end
   let(:form) do
     described_class.new(school: school,
@@ -62,7 +62,7 @@ RSpec.describe ChromebookInformationForm do
   end
 
   context 'LA school' do
-    let(:school) { create(:la_funded_place) }
+    let(:school) { create(:iss_provision) }
 
     let(:form) do
       described_class.new(school: school,

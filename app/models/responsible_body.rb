@@ -35,6 +35,10 @@ class ResponsibleBody < ApplicationRecord
 
   after_update :maybe_generate_user_changes
 
+  def active_schools
+    schools.gias_status_open.excluding_la_funded_provisions
+  end
+
   def calculate_virtual_caps!
     virtual_cap_pools.each(&:recalculate_caps!)
   end
@@ -53,6 +57,7 @@ class ResponsibleBody < ApplicationRecord
   def can_school_be_added_to_virtual_cap_pools?(school)
     has_virtual_cap_feature_flags? &&
       school.responsible_body_id == id &&
+      !school.la_funded_provision? &&
       school.preorder_information&.responsible_body_will_order_devices? &&
       school.device_allocations.any? &&
       !has_school_in_virtual_cap_pools?(school)
@@ -87,7 +92,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def next_school_sorted_ascending_by_name(school)
-    schools
+    active_schools
       .where('name > ?', school.name)
       .order(name: :asc)
       .first
@@ -95,7 +100,7 @@ class ResponsibleBody < ApplicationRecord
 
   def update_who_will_order_devices(who_will_order)
     update!(who_will_order_devices: who_will_order)
-    schools.each do |school|
+    active_schools.each do |school|
       school.preorder_information&.destroy!
       school.create_preorder_information!(who_will_order_devices: who_will_order)
     end
@@ -125,7 +130,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?
-    schools.gias_status_open.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
+    active_schools.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
   end
 
   def self.chosen_who_will_order
@@ -134,14 +139,15 @@ class ResponsibleBody < ApplicationRecord
 
   def self.with_at_least_one_preorder_information_completed
     where(
-      'EXISTS(
+      "EXISTS(
         SELECT  preorder_information.id
         FROM    preorder_information
                           INNER JOIN schools
                                   ON schools.id = preorder_information.school_id
         WHERE   schools.responsible_body_id = responsible_bodies.id
+          AND   schools.type <> 'LaFundedPlace'
           AND   preorder_information.status NOT IN (?)
-      )', %w[needs_info needs_contact]
+      )", %w[needs_info needs_contact]
     )
   end
 
@@ -179,6 +185,7 @@ class ResponsibleBody < ApplicationRecord
           FROM  schools INNER JOIN preorder_information
                                 ON preorder_information.school_id = schools.id
           WHERE schools.responsible_body_id = responsible_bodies.id
+            AND schools.type <> 'LaFundedPlace'
             AND preorder_information.status NOT IN ('needs_info', 'needs_contact')
         ) AS completed_preorder_info_count
       ",
@@ -195,6 +202,7 @@ class ResponsibleBody < ApplicationRecord
               WHERE s.status='open'
               AND p.who_will_order_devices='responsible_body'
               AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
+              AND s.type <> 'LaFundedPlace'
             ) AS t1
             GROUP BY t1.rb_id HAVING COUNT(*) > 1
           )
@@ -207,30 +215,29 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def is_ordering_for_all_schools?
-    schools.gias_status_open.count == schools.gias_status_open.that_are_centrally_managed.count
+    active_schools.count == active_schools.that_are_centrally_managed.count
   end
 
   def has_centrally_managed_schools?
-    schools.gias_status_open.that_are_centrally_managed.any?
+    active_schools.that_are_centrally_managed.any?
   end
 
   def has_centrally_managed_schools_that_can_order_now?
-    schools.gias_status_open.that_are_centrally_managed.that_can_order_now.any?
+    active_schools.that_are_centrally_managed.that_can_order_now.any?
   end
 
   def has_schools_that_can_order_devices_now?
-    schools.gias_status_open.that_will_order_devices.that_can_order_now.any?
+    active_schools.that_will_order_devices.that_can_order_now.any?
   end
 
   def has_any_schools_that_can_order_now?
-    schools.gias_status_open.that_can_order_now.any?
+    active_schools.that_can_order_now.any?
   end
 
   def schools_by_order_status
-    schools_by_name = schools
+    schools_by_name = active_schools
       .includes(:preorder_information)
       .includes(:std_device_allocation)
-      .gias_status_open
       .order(name: :asc)
 
     {

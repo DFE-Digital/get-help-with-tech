@@ -90,7 +90,7 @@ FactoryBot.define do
 
     factory :la_funded_place_user do
       transient do
-        school { build(:la_funded_place) }
+        school { build(:iss_provision) }
       end
       after(:build) do |user, evaluator|
         user.schools << evaluator.school if user.schools.empty? && evaluator.school.present?

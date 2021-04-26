@@ -79,7 +79,9 @@
 
     <h2 class="govuk-heading-m">Your laptops will be delivered to:</h2>
     <p class="govuk-body">
-      <%= @school.address_components.join('<br>').html_safe %>
+      <% @school.address_components.each do |address_line| %>
+        <%= address_line %><br/>
+      <% end -%>
     </p>
     <p class="govuk-body">
       <%= govuk_link_to 'Contact us to change your delivery address.', support_ticket_path %>
@@ -90,7 +92,7 @@
       You’ll place your order on a website called TechSource.
     </p>
     <p class="govuk-body">
-      When you’re asked for a URN, use ‘<strong><%= @school.techsource_urn %></strong>’.
+      When you’re asked for a URN, use ‘<strong><%= @school.urn %></strong>’.
     </p>
     <p class="govuk-body">
     <% devices_available = @school.std_device_allocation.devices_available_to_order %>

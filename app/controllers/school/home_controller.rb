@@ -1,7 +1,7 @@
 class School::HomeController < School::BaseController
   def show
     @allocation = @school.std_device_allocation&.allocation || 0
-    if @school.la_funded_place?
+    if @school.la_funded_provision?
       render 'show_la_funded_place'
     else
       render

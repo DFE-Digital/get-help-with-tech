@@ -36,7 +36,7 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
 private
 
   def set_school
-    @school = School.gias_status_open.where_urn_or_ukprn(params[:id]).first!
+    @school = School.gias_status_open.where_urn_or_ukprn_or_provision_urn(params[:id]).first!
     authorize @school, :show?
   end
 
