@@ -18,6 +18,7 @@ module SchoolType
       special: 'special',
       other_type: 'other_type',
       la_funded_place: 'la_funded_place',
+      social_care_provision: 'social_care_provision',
     }, _suffix: true
 
     def human_for_school_type

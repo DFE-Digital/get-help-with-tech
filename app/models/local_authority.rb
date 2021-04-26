@@ -17,6 +17,7 @@ class LocalAuthority < ResponsibleBody
   validates :organisation_type, presence: true
 
   has_one :la_funded_place, foreign_key: 'responsible_body_id'
+  has_one :social_care_provision, foreign_key: 'responsible_body_id'
 
   def create_la_funded_places!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
     return la_funded_place if la_funded_place.present?
@@ -39,5 +40,28 @@ class LocalAuthority < ResponsibleBody
     funded_place.device_allocations.std_device.create!(allocation: device_allocation)
     funded_place.device_allocations.coms_device.create!(allocation: router_allocation)
     funded_place
+  end
+
+  def create_social_care_provision!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
+    return social_care_provision if social_care_provision.present?
+
+    attrs = {
+      responsible_body: self,
+      urn: urn,
+      name: 'Care leavers',
+      establishment_type: 'social_care_provision',
+      address_1: address_1,
+      address_2: address_2,
+      address_3: address_3,
+      town: town,
+      county: county,
+      postcode: postcode,
+    }.reverse_merge(extra_args)
+
+    school = SocialCareProvision.create!(attrs)
+    school.create_preorder_information!(who_will_order_devices: 'school')
+    school.device_allocations.std_device.create!(allocation: device_allocation)
+    school.device_allocations.coms_device.create!(allocation: router_allocation)
+    school
   end
 end
