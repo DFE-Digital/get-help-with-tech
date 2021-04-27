@@ -29,9 +29,18 @@
       How to order
     </h2>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= govuk_link_to "Sign in to order devices", sign_in_path, class: "app-emphasis-link" %>
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li>
+        <%= govuk_link_to 'How to order laptops and internet access for state schools, colleges and FE institutions', devices_how_to_order_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'How to get devices for state-funded pupils in independent special schools and alternative provision', devices_how_to_order_laptops_for_independent_special_schools_path %>
+      </li>
+      <li>
+        <%= govuk_link_to 'How to get devices for social care leavers', devices_how_to_order_laptops_for_social_care_leavers_path %>
+      </li>
+      <li><%= govuk_link_to "Sign in to order devices", sign_in_path, class: "app-emphasis-link" %></li>
+    </ul>
 
     <h2 class="govuk-heading-m">
       Once you’ve received your order
