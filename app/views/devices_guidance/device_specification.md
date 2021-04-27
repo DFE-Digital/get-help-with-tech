@@ -34,7 +34,7 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
-### Ordering Chromebooks for state-funded schools, colleges or further education institutions:
+### Ordering Chromebooks for state-funded schools, colleges or further education institutions
 
 You need to [sign in to the Get help with technology service](/sign-in) and give the following information before you can order Google Chromebooks:
 
