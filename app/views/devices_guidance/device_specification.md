@@ -51,8 +51,8 @@ You’ll be asked if you want to order Google Chromebooks when you [sign in to t
 
 After you place your order, we’ll email and ask you to provide the following information for each pupil’s educational setting:
 
-* the educational setting’s Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education)
-* a recovery email address, which must be on a different domain to the educational setting’s domain
+* the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example 'school.co.uk'
+* a recovery email address, which must be on a different domain to the educational setting's domain - for example, if the registered domain is ‘school.co.uk’, the recovery email cannot be ‘recovery@school.co.uk’
 
 You need to provide this information as soon as possible so that we can apply the right education licenses, and the Chromebooks can be secured. If a Google Chromebook is not enrolled into a Google Workspace for Education domain it cannot be managed remotely, and it will not be possible to apply security settings to keep users safe online.
 
