@@ -17,7 +17,7 @@ All devices supplied by the Get help with technology programme came with a 12-mo
 * [Lenovo](https://pcsupport.lenovo.com/uk/en/warrantylookup#/)
 * [Microsoft](https://docs.microsoft.com/en-gb/surface/)
 * [Tactus Geo](https://geo-computers.com/support/)
-* [Samsung](https://www.samsung.com/uk/support/warranty/)
+* [Samsung](https://www.samsung.com/uk/business/support/)
 
 Depending on the manufacturer’s warranty process, you may be required to pay courier costs when returning faulty devices.
 
