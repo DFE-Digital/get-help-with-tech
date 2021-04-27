@@ -32,16 +32,39 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 ## Google Chromebooks
 
+A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
+
+### Ordering Chromebooks for state-funded schools, colleges or further education institutions:
+
 You need to [sign in to the Get help with technology service](/sign-in) and give the following information before you can order Google Chromebooks:
 
-* the school’s Google domain for G Suite for Education
-* a recovery email address, which must be on a different domain to the school domain
+* the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education)
+* a recovery email address, which must be on a different domain to the educational setting's domain
 
 If you’re not sure how to find this information, you should ask your IT support for help.
 
-A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. [Find out more about Cisco Umbrella](/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
+If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either Google Workspace for Education Fundamentals or Microsoft 365 Education</a>.
 
-If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either G Suite for Education or Office 365 Education</a>.
+### Ordering Chromebooks for LA-funded pupils in independent special schools or alternative provision
+
+You’ll be asked if you want to order Google Chromebooks when you [sign in to the Get help with technology service](https://get-help-with-tech.education.gov.uk/sign-in). You should answer ‘Yes’.
+
+After you place your order, we’ll email and ask you to provide the following information for each pupil’s educational setting:
+
+* the educational setting’s Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education)
+* a recovery email address, which must be on a different domain to the educational setting’s domain
+
+You need to provide this information as soon as possible so that we can apply the right education licenses, and the Chromebooks can be secured. If a Google Chromebook is not enrolled into a Google Workspace for Education domain it cannot be managed remotely, and it will not be possible to apply security settings to keep users safe online.
+
+### Ordering Chromebooks for care leavers
+
+If you’re ordering for a care leaver in education, you’ll follow the same steps listed above for LA-funded pupils in independent special schools or alternative provision.
+
+If you’re ordering for a care leaver who is not in education, and you cannot provide Google Workspace for Education details for them, you can choose to:
+
+* order a Windows laptop instead
+* [set up and manage a Google domain](https://get-help-with-tech.education.gov.uk/devices/google-domain-for-care-leavers-and-children-with-social-worker)
+* distribute the device unsecured - [read our guidance on safeguarding before making this choice](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users)
 
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
 
