@@ -38,8 +38,8 @@ A web-filtering solution called Cisco Umbrella is included free of charge until 
 
 You need to [sign in to the Get help with technology service](/sign-in) and give the following information before you can order Google Chromebooks:
 
-* the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education)
-* a recovery email address, which must be on a different domain to the educational setting's domain
+* the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example 'school.co.uk'
+* a recovery email address, which must be on a different domain to the educational setting's domain - for example, if the registered domain is ‘school.co.uk’, the recovery email cannot be ‘recovery@school.co.uk’
 
 If you’re not sure how to find this information, you should ask your IT support for help.
 
