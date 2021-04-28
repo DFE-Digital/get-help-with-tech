@@ -93,6 +93,14 @@ class User < ApplicationRecord
     schools.la_funded_provision.any?
   end
 
+  def iss_provision_user?
+    schools.iss_provision.any?
+  end
+
+  def scl_provision_user?
+    schools.scl_provision.any?
+  end
+
   def has_multiple_schools?
     schools.size > 1
   end
