@@ -1,16 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe ResponsibleBody, type: :model do
-  subject(:local_authority) { create(:local_authority) }
+  subject(:responsible_body) { create(:local_authority) }
+
+  describe '#active_schools' do
+    let!(:schools) { create(:school, responsible_body: responsible_body) }
+    let(:closed_schools) { create(:school, status: 'closed', responsible_body: responsible_body) }
+    let(:la_funded_place) { create(:iss_provision, responsible_body: responsible_body) }
+
+    before do
+      closed_schools
+      la_funded_place
+    end
+
+    it 'returns my list of schools' do
+      expect(responsible_body.active_schools).to match_array(schools)
+    end
+  end
 
   describe '#next_school_sorted_ascending_by_name' do
     it 'allows navigating down a list of alphabetically-sorted schools' do
-      zebra = create(:school, name: 'Zebra', responsible_body: local_authority)
-      aardvark = create(:school, name: 'Aardvark', responsible_body: local_authority)
-      tiger = create(:school, name: 'Tiger', responsible_body: local_authority)
+      zebra = create(:school, name: 'Zebra', responsible_body: responsible_body)
+      aardvark = create(:school, name: 'Aardvark', responsible_body: responsible_body)
+      tiger = create(:school, name: 'Tiger', responsible_body: responsible_body)
 
-      expect(local_authority.next_school_sorted_ascending_by_name(aardvark)).to eq(tiger)
-      expect(local_authority.next_school_sorted_ascending_by_name(tiger)).to eq(zebra)
+      expect(responsible_body.next_school_sorted_ascending_by_name(aardvark)).to eq(tiger)
+      expect(responsible_body.next_school_sorted_ascending_by_name(tiger)).to eq(zebra)
+    end
+
+    it 'does not include LaFundedPlaces' do
+      zebra = create(:school, name: 'Zebra', responsible_body: responsible_body)
+      aardvark = create(:school, name: 'Aardvark', responsible_body: responsible_body)
+      tiger = create(:school, name: 'Tiger', responsible_body: responsible_body)
+      create(:iss_provision, responsible_body: responsible_body, name: 'Snake')
+
+      expect(responsible_body.next_school_sorted_ascending_by_name(aardvark)).to eq(tiger)
+      expect(responsible_body.next_school_sorted_ascending_by_name(tiger)).to eq(zebra)
     end
   end
 
@@ -70,8 +95,6 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#is_ordering_for_schools?' do
-    subject(:responsible_body) { create(:trust) }
-
     let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     context 'when some schools are centrally managed' do
@@ -100,8 +123,6 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_centrally_managed_schools_that_can_order_now?' do
-    subject(:responsible_body) { create(:trust) }
-
     let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     context 'when some schools are centrally managed' do
@@ -133,6 +154,19 @@ RSpec.describe ResponsibleBody, type: :model do
 
         it 'returns false' do
           expect(responsible_body.has_centrally_managed_schools_that_can_order_now?).to be false
+        end
+      end
+
+      context 'when LA funded places are present' do
+        let(:la_funded_place) { create(:iss_provision, :centrally_managed, :with_std_device_allocation, responsible_body: responsible_body) }
+
+        before do
+          schools.each(&:cannot_order!)
+          la_funded_place.can_order!
+        end
+
+        it 'does not include the LA funded place' do
+          expect(responsible_body).not_to have_centrally_managed_schools_that_can_order_now
         end
       end
     end
@@ -168,6 +202,19 @@ RSpec.describe ResponsibleBody, type: :model do
 
         it 'returns false' do
           expect(responsible_body.has_centrally_managed_schools_that_can_order_now?).to be false
+        end
+      end
+
+      context 'when LA funded places are present' do
+        let(:la_funded_place) { create(:iss_provision, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body) }
+
+        before do
+          schools.each(&:cannot_order!)
+          la_funded_place.can_order!
+        end
+
+        it 'does not include the LA funded place' do
+          expect(responsible_body).not_to have_centrally_managed_schools_that_can_order_now
         end
       end
     end
@@ -206,8 +253,6 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_schools_that_can_order_devices_now?' do
-    subject(:responsible_body) { create(:trust) }
-
     let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     context 'when some schools that will order are able to order devices' do
@@ -239,12 +284,22 @@ RSpec.describe ResponsibleBody, type: :model do
       it 'returns false' do
         expect(responsible_body.has_schools_that_can_order_devices_now?).to be false
       end
+
+      context 'when LA funded places are present' do
+        let(:la_funded_place) { create(:iss_provision, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body) }
+
+        before do
+          la_funded_place.can_order!
+        end
+
+        it 'does not include the LA funded place' do
+          expect(responsible_body).not_to have_schools_that_can_order_devices_now
+        end
+      end
     end
   end
 
   describe '#has_any_schools_that_can_order_now?' do
-    subject(:responsible_body) { create(:trust) }
-
     let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     context 'when some centrally managed schools are able to order devices' do
@@ -292,6 +347,19 @@ RSpec.describe ResponsibleBody, type: :model do
 
       it 'returns false' do
         expect(responsible_body.has_any_schools_that_can_order_now?).to be false
+      end
+    end
+
+    context 'when LA funded places are present' do
+      let(:la_funded_place) { create(:iss_provision, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body) }
+
+      before do
+        schools.each(&:cannot_order!)
+        la_funded_place.can_order!
+      end
+
+      it 'does not include the LA funded place' do
+        expect(responsible_body).not_to have_any_schools_that_can_order_now
       end
     end
   end

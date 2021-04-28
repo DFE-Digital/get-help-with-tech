@@ -10,15 +10,12 @@ class Personas::LaFundedPlace
 private
 
   def la_funded_place
-    @la_funded_place ||= la.la_funded_place || la.create_la_funded_place!(name: 'LA funded place') do |s|
-      s.urn = (School.maximum(:urn) || 800_000) + 1
-      s.address_1 = '14 High Street'
-      s.town = 'Cambridge'
-      s.county = 'Cambridgeshire'
-      s.postcode = 'CB1 0BE'
-    end
-
-    @la_funded_place.preorder_information || @la_funded_place.build_preorder_information(who_will_order_devices: 'school').save!
+    @la_funded_place ||= la.la_funded_provision || la.create_iss_provision!(extra_args: {
+      address_1: '14 High Street',
+      town: 'Cambridge',
+      county: 'Cambridgeshire',
+      postcode: 'CB1 0BE',
+    })
 
     @la_funded_place
   end
@@ -38,6 +35,7 @@ private
     @la ||= LocalAuthority.find_or_create_by!(name: 'Cambridgeshire') do |rb|
       rb.organisation_type = 'county'
       rb.who_will_order_devices = 'responsible_body'
+      rb.gias_id = '873'
     end
   end
 

@@ -73,7 +73,7 @@ RSpec.describe SchoolDataExporter, type: :model do
 
   context 'when exporting LA funded places' do
     let(:local_authority) { create(:local_authority) }
-    let!(:school) { create(:la_funded_place, responsible_body: local_authority) }
+    let!(:school) { create(:iss_provision, responsible_body: local_authority) }
 
     before do
       exporter.export_schools
@@ -83,13 +83,13 @@ RSpec.describe SchoolDataExporter, type: :model do
       remove_file(filename)
     end
 
-    it 'uses the techsource urn' do
+    it 'uses the LA funded place urn' do
       data = CSV.parse(File.read(filename), headers: true)
       expect(data.count).to eq(School.count)
 
       found = false
       data.each do |row|
-        if row['School URN + School Name'].start_with?(school.techsource_urn)
+        if row['School URN + School Name'].start_with?(school.provision_urn)
           found = true
         end
       end

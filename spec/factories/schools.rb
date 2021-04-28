@@ -6,9 +6,20 @@ FactoryBot.define do
       urn { nil }
     end
 
-    factory :la_funded_place, class: 'LaFundedPlace' do
+    factory :iss_provision, class: 'LaFundedPlace' do
       association :responsible_body, factory: :local_authority
       establishment_type { 'la_funded_place' }
+      name { 'State-funded pupils in independent special schools and alternative provision' }
+      provision_type { 'iss' }
+      provision_urn { "ISS#{responsible_body.gias_id}" }
+    end
+
+    factory :scl_provision, class: 'LaFundedPlace' do
+      association :responsible_body, factory: :local_authority
+      establishment_type { 'la_funded_place' }
+      name { 'Care leavers' }
+      provision_type { 'scl' }
+      provision_urn { "SCL#{responsible_body.gias_id}" }
     end
 
     association :responsible_body, factory: %i[local_authority trust].sample

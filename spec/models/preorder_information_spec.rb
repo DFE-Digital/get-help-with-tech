@@ -376,7 +376,7 @@ RSpec.describe PreorderInformation, type: :model do
   describe '#chromebook_information_complete?' do
     context 'la funded places' do
       let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
-      let(:school) { create(:la_funded_place, :centrally_managed, responsible_body: local_authority) }
+      let(:school) { create(:iss_provision, :centrally_managed, responsible_body: local_authority) }
 
       subject(:preorder_info) { school.preorder_information }
 

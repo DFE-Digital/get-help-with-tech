@@ -16,15 +16,39 @@ class LocalAuthority < ResponsibleBody
 
   validates :organisation_type, presence: true
 
-  has_one :la_funded_place, foreign_key: 'responsible_body_id'
+  has_many :la_funded_provisions, foreign_key: 'responsible_body_id', class_name: 'LaFundedPlace'
+  has_one :iss_provision, -> { iss_provision }, foreign_key: 'responsible_body_id', class_name: 'LaFundedPlace'
+  has_one :scl_provision, -> { scl_provision }, foreign_key: 'responsible_body_id', class_name: 'LaFundedPlace'
 
-  def create_la_funded_places!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
-    return la_funded_place if la_funded_place.present?
+  def create_iss_provision!(device_allocation: 0, router_allocation: 0, extra_args: {})
+    create_provision!(urn: "ISS#{gias_id}",
+                      name: 'State-funded pupils in independent special schools and alternative provision',
+                      provision_type: :iss,
+                      device_allocation: device_allocation,
+                      router_allocation: router_allocation,
+                      extra_args: extra_args)
+  end
+
+  def create_scl_provision!(device_allocation: 0, router_allocation: 0, extra_args: {})
+    create_provision!(urn: "SCL#{gias_id}",
+                      name: 'Care leavers',
+                      provision_type: :scl,
+                      device_allocation: device_allocation,
+                      router_allocation: router_allocation,
+                      extra_args: extra_args)
+  end
+
+private
+
+  def create_provision!(urn:, name:, provision_type:, device_allocation: 0, router_allocation: 0, extra_args: {})
+    existing_provision = la_funded_provisions.find_by(provision_type: provision_type)
+    return existing_provision unless existing_provision.nil?
 
     attrs = {
       responsible_body: self,
-      urn: urn,
-      name: 'State-funded pupils in independent special schools and alternative provision',
+      provision_urn: urn,
+      name: name,
+      provision_type: provision_type,
       establishment_type: 'la_funded_place',
       address_1: address_1,
       address_2: address_2,
@@ -32,12 +56,17 @@ class LocalAuthority < ResponsibleBody
       town: town,
       county: county,
       postcode: postcode,
-    }.reverse_merge(extra_args)
+    }.merge(extra_args)
 
-    funded_place = LaFundedPlace.create!(attrs)
-    funded_place.create_preorder_information!(who_will_order_devices: 'school')
-    funded_place.device_allocations.std_device.create!(allocation: device_allocation)
-    funded_place.device_allocations.coms_device.create!(allocation: router_allocation)
-    funded_place
+    provision = LaFundedPlace.create!(attrs)
+    provision.create_preorder_information!(who_will_order_devices: 'school')
+    provision.device_allocations.std_device.create!(allocation: device_allocation)
+    provision.device_allocations.coms_device.create!(allocation: router_allocation)
+    add_rb_users_to_provision(provision)
+    provision
+  end
+
+  def add_rb_users_to_provision(provision)
+    users.each { |u| provision.users << u }
   end
 end

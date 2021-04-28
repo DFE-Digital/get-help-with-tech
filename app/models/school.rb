@@ -45,8 +45,12 @@ class School < ApplicationRecord
   }, _prefix: true
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
+  scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier) }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
-  scope :la_funded_place, -> { where(type: 'LaFundedPlace') }
+  scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
+  scope :iss_provision, -> { where(type: 'LaFundedPlace', provision_type: 'iss') }
+  scope :scl_provision, -> { where(type: 'LaFundedPlace', provision_type: 'scl') }
+  scope :excluding_la_funded_provisions, -> { where.not(type: 'LaFundedPlace') }
 
   after_update :maybe_generate_user_changes
 
@@ -74,7 +78,7 @@ class School < ApplicationRecord
     type == 'FurtherEducationSchool'
   end
 
-  def la_funded_place?
+  def la_funded_provision?
     type == 'LaFundedPlace'
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_132319) do
+ActiveRecord::Schema.define(version: 2021_04_26_150053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -369,8 +369,11 @@ ActiveRecord::Schema.define(version: 2021_04_16_132319) do
     t.text "fe_type"
     t.boolean "hide_mno", default: false
     t.datetime "opted_out_of_comms_at"
+    t.string "provision_urn"
+    t.string "provision_type"
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
+    t.index ["provision_urn"], name: "index_schools_on_provision_urn", unique: true
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
     t.index ["type", "id"], name: "index_schools_on_type_and_id"
     t.index ["type"], name: "index_schools_on_type"

@@ -90,7 +90,7 @@ class User < ApplicationRecord
   end
 
   def la_funded_user?
-    schools.la_funded_place.any?
+    schools.la_funded_provision.any?
   end
 
   def has_multiple_schools?
@@ -198,7 +198,7 @@ class User < ApplicationRecord
     wizard = school_welcome_wizards.find_by_school_id(school.id)
     return wizard if wizard
 
-    if school.la_funded_place?
+    if school.la_funded_provision?
       school_welcome_wizards.create!(school: school, step: 'complete')
     else
       school_welcome_wizards.create!(school: school)
