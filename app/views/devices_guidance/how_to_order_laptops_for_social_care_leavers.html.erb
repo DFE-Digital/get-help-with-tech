@@ -1,0 +1,209 @@
+<% content_for :devices_service, true %>
+<% content_for :title, 'Order laptops and get internet access for care leavers' %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  "Get laptops",
+                 ]) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Order laptops and get internet access for care leavers
+    </h1>
+    <p class="govuk-body">
+      This guidance explains which care leavers are eligible to receive laptops, and how local authorities (LAs) can place
+      orders through the Department for Education’s Get help with technology service.
+    </p>
+
+    <p class="govuk-body">
+      Care leavers cannot order directly.
+    </p>
+
+    <p class="govuk-body">
+      We recommend that you get set up to order as soon as possible to make sure you receive your preferred choice of laptops.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Which care leavers are eligible for this support
+    </h2>
+
+    <p class="govuk-body">
+      DfE is providing these to support care leavers your LA is responsible for, who:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>are aged between 16 and 25 years old</li>
+      <li>do not have access to a laptop or tablet from your LA, or any other source</li>
+    </ul>
+
+    <p class="govuk-body">
+      LAs can <%= govuk_link_to 'request 4G wireless routers for eligible care leavers', how_to_request_4g_wireless_routers_path %>
+      without fixed broadband too.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      How to get laptops and internet access
+    </h2>
+
+    <h3 class="govuk-heading-m">
+      1. Check your local authority’s laptop allocation
+    </h3>
+
+
+    <p class="govuk-body">
+      DfE has asked each LA to nominate one or more staff members to order laptops and request internet access for care leavers.
+    </p>
+
+    <p class="govuk-body">
+      If you’ve been nominated to order, we’ll email your LA’s estimated laptop allocation to you. If you have not received
+      this email, <%= govuk_link_to 'contact us', support_ticket_path %>.
+    </p>
+
+    <p class="govuk-body">
+      Allocation estimates are based on each local authority's share of the overall care leaver population.
+    </p>
+
+    <p class="govuk-body">
+      You can also request 4G wireless routers for these care leavers if they do not have a fixed broadband connection.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Tell us if your allocation is wrong
+    </h4>
+    <p class="govuk-body">
+      If your estimated allocation is wrong, <%= govuk_link_to 'contact us', support_ticket_path %> and let us know how
+      many laptops you currently need for eligible care leavers. Do not include any personal data, such as their names or
+      dates of birth.
+    </p>
+
+    <p class="govuk-body">
+      We cannot guarantee that we’ll be able to meet all requests for more laptops. We encourage you to order your
+      current allocation anyway so that you can begin distributing devices. We’ll contact you once we’ve reviewed your request.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      2. Check what care leavers need
+    </h3>
+
+    <p class="govuk-body">
+      We recommend working with your care leavers and IT team as soon as possible to find out the following information.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Laptops
+    </h4>
+
+    <p class="govuk-body">To order laptops, you need to find out which:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        eligible care leavers do not have access to a laptop or tablet
+      </li>
+      <li>
+        <%= govuk_link_to "type of laptop and IT settings are most suitable for each care leaver", 'device-specification' %>
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      See <%= govuk_link_to 'step 6', '#step-6' %> to find out about safeguarding responsibilities, laptop ownership and providing IT support.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Internet access
+    </h4>
+
+    <p class="govuk-body">
+      To request internet access, you need to find out which eligible care leavers do not have fixed broadband.
+    </p>
+
+    <p class="govuk-body">
+      You do not need to complete this step before moving on to step 3.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      3. Complete and submit your contact details form
+    </h3>
+
+    <p class="govuk-body">
+      We need some information from you to set up your Get help with technology service account, even if you’ve
+      used the service before. You’ll place your orders using this account.
+    </p>
+
+    <p class="govuk-body">
+      If you’ve been nominated to order for your LA, you’ll receive an email with a link to an online form. You need to use that form to tell us:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        your full name
+      </li>
+      <li>
+        your local authority's name and 3-digit code
+      </li>
+      <li>
+        the delivery address we should send your laptops to (all devices will be delivered to the same location at your local authority)
+      </li>
+      <li>
+        the person we should contact when we deliver your laptops
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      If you’ve been nominated to order but have not received an email with a link to the form, <%= govuk_link_to 'contact us', support_ticket_path %>.
+    </p>
+
+    <p class="govuk-body">
+      Once you’ve completed and submitted your form, it will take up to 5 working days for us to set up your account.
+      We’ll let you know as soon as you can sign in and order.
+    </p>
+
+    <h4 class="govuk-heading-m">
+      4. Order laptops and request internet access
+    </h4>
+
+    <p class="govuk-body">
+      Once you complete steps 1 to 3 and your ordering account is set up, you’ll receive an email to let you know.
+    </p>
+
+    <p class="govuk-body">
+      You can then sign in to the Get help with technology service to order laptops. You can also request internet access
+      for eligible care leavers.
+    </p>
+
+    <p class="govuk-body">
+      You can order all of your allocation at once, or place multiple orders.
+    </p>
+
+    <h4 class="govuk-heading-m">
+      5. Receive laptops
+    </h4>
+
+    <p class="govuk-body">
+      All of your laptops will be delivered to the local authority address you provided in your contact details form.
+    </p>
+
+    <p class="govuk-body">
+      Most deliveries will arrive within 5 working days after you place your order.
+    </p>
+
+
+    <h4 class="govuk-heading-m" id="step-6">
+      6. Laptop ownership, safeguarding and providing IT support
+    </h4>
+
+    <p class="govuk-body">
+      Your LA will own these laptops when they're delivered to you. You'll be responsible for making sure they have <%= govuk_link_to 'appropriate safety
+      and security measures installed and maintained', 'safeguarding-for-device-users' %>.
+    </p>
+    <p class="govuk-body">
+      Your LA can decide whether to temporarily lend or permanently give devices to care leavers.
+    </p>
+    <p class="govuk-body">
+      <%= govuk_link_to 'Find out about options for lending or giving devices to children, young people and other organisations','device-distribution-and-ownership#who-owns-the-devices' %>.
+    </p>
+
+  </div>
+</div>
