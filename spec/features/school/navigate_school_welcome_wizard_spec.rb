@@ -188,7 +188,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_the_state_funded_interstitial
-    expect(page).to have_text('Get laptops and internet access for state-funded pupils at independent settings')
+    expect(page).to have_text('funds to attend independent special schools or independent alternative provision')
   end
 
   def then_i_see_privacy_policy

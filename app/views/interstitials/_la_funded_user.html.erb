@@ -1,20 +1,16 @@
 <h1 class="govuk-heading-xl">
-  Get laptops and internet access for <span class="app-no-wrap">state-funded</span> pupils at independent settings
+  Laptops and internet access are available for more children and young people
 </h1>
+
 <p class="govuk-body">
-  Laptops are available for state-funded pupils that <%= @current_user.school.responsible_body.name %> funds to attend independent special schools or independent alternative provision.
+  Laptops and internet access are now available for:
 </p>
-<p class="govuk-body">
-  Use this service to:
-</p>
+
 <ul class="govuk-list govuk-list--bullet">
-  <li>
-    check you’ve been allocated the correct number of laptops
-  </li>
-  <li>
-    place orders for laptops
-  </li>
-  <li>
-    request internet access for eligible pupils
-  </li>
+  <li>state-funded pupils that <%= @current_user.effective_responsible_body.name %> funds to attend independent special schools or independent alternative provision</li>
+  <li>care leavers aged 16 to 25</li>
 </ul>
+
+<p class="govuk-body">
+  We’ve asked your LA to nominate people to place orders for these children and young people. If you received an email telling you that you’ve been nominated, you can place orders now.
+</p>
