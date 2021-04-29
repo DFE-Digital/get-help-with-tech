@@ -26,7 +26,7 @@ The benefits are:
 
 LAs, trusts, schools, colleges and FE institutions can choose to give devices to other organisations, such as a school. The new owner can then decide how to distribute them to children and young people in need.
 
-LAs that have been allocated devices for state-funded pupils in independent special schools and alternative provision can give devices to those settings. You should make sure that DfE devices will only be distributed to their state-funded pupils as a condition of your agreement to transfer ownership to them.
+LAs that have been allocated [devices for state-funded pupils in independent special schools and alternative provision](devices/how-to-order-laptops-for-independent-special-schools) can give devices to those settings. You should make sure that DfE devices will only be distributed to their state-funded pupils as a condition of your agreement to transfer ownership to them.
 
 #### Option 3: Permanently giving devices to children and young people
 
