@@ -16,6 +16,9 @@ Rails.application.config.content_security_policy do |policy|
 
   # Specify URI for violation reports
   # policy.report_uri "/csp-violation-report-endpoint"
+
+  # Workaround for rack mini profiler CSP error in development
+  policy.script_src :self, :https, :unsafe_eval if Rails.env.development?
 end
 
 # If you are using UJS then enable automatic nonce generation

@@ -57,6 +57,9 @@ GEM
       msgpack (~> 1.0)
     brakeman (5.0.1)
     builder (3.2.4)
+    bullet (6.1.4)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     bundle-audit (0.1.0)
       bundler-audit
     bundler-audit (0.7.0.1)
@@ -157,6 +160,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    flamegraph (0.9.5)
     foreman (0.87.2)
     fugit (1.3.9)
       et-orbi (~> 1.1, >= 1.1.8)
@@ -210,6 +214,7 @@ GEM
       activesupport (>= 5.2.4.3)
       notifications-ruby-client (~> 5.1)
       rack (>= 2.1.4)
+    memory_profiler (0.9.14)
     method_source (1.0.0)
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
@@ -252,6 +257,8 @@ GEM
     raabro (1.3.3)
     racc (1.5.2)
     rack (2.2.3)
+    rack-mini-profiler (1.0.2)
+      rack (>= 1.2.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -403,6 +410,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
+    stackprof (0.2.12)
     thor (1.1.0)
     thwait (0.2.0)
       e2mmap
@@ -414,6 +422,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
+    uniform_notifier (1.14.1)
     view_component (2.30.0)
       activesupport (>= 5.0.0, < 7.0)
     web-console (4.1.0)
@@ -459,6 +468,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap (>= 1.1.0)
   brakeman
+  bullet
   bundle-audit
   byebug
   canonical-rails!
@@ -472,6 +482,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   fakeredis
+  flamegraph
   foreman
   govuk-components (>= 1.1.5)
   govuk_design_system_formbuilder
@@ -481,6 +492,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.6)
   logstash-logger (~> 0.26.1)
   mail-notify
+  memory_profiler
   nokogiri
   notifications-ruby-client
   pagy
@@ -493,6 +505,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 5.2)
   pundit
+  rack-mini-profiler
   rack-throttle
   rails-controller-testing
   rails-erd
@@ -514,6 +527,7 @@ DEPENDENCIES
   site_prism
   spring
   spring-watcher-listen (~> 2.0.0)
+  stackprof
   timecop
   web-console (>= 3.3.0)
   webdrivers (~> 4.6)
