@@ -125,6 +125,16 @@ RSpec.describe AllocationJob do
           expect(batch_job.reload).to be_processed
         end
       end
+
+      context 'reducing allocation' do
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
+
+        it 'reduces allocation' do
+          expect {
+            described_class.perform_now(batch_job)
+          }.to change { school.std_device_allocation.reload.allocation }.by(-1)
+        end
+      end
     end
 
     context 'for school that can order' do
@@ -173,6 +183,16 @@ RSpec.describe AllocationJob do
           expect(batch_job.reload).to be_processed
         end
       end
+
+      context 'reducing allocation' do
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
+
+        it 'reduces allocation' do
+          expect {
+            described_class.perform_now(batch_job)
+          }.to change { school.std_device_allocation.reload.allocation }.by(-1)
+        end
+      end
     end
 
     context 'when school is part of virtual cap pool' do
@@ -215,6 +235,16 @@ RSpec.describe AllocationJob do
         expect(school2.std_device_allocation.cap).to eql(sum)
 
         expect(school1.std_device_allocation.raw_cap).to eql(school1.std_device_allocation.raw_allocation)
+      end
+
+      context 'reducing allocation' do
+        let(:batch_job) { create(:allocation_batch_job, urn: school1.urn, allocation_delta: '-1', order_state: 'can_order') }
+
+        it 'reduces allocation' do
+          expect {
+            described_class.perform_now(batch_job)
+          }.to change { school1.std_device_allocation.reload.raw_allocation }.by(-1)
+        end
       end
     end
   end
