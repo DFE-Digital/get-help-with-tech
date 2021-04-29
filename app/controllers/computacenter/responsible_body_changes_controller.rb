@@ -25,7 +25,7 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
     @form = Computacenter::SoldToForm.new(sold_to_params.merge(responsible_body: @responsible_body))
 
     if @form.valid?
-      update_sold_to
+      Computacenter::SoldToShipToUpdater.new(@responsible_body).update_sold_to!(@form.sold_to)
       flash[:success] = t(:success, scope: %i[computacenter sold_to update], name: @responsible_body.name,
                                     sold_to: @responsible_body.computacenter_reference)
       redirect_to computacenter_responsible_body_changes_path
@@ -83,10 +83,5 @@ private
 
   def sold_to_params
     params.require(:computacenter_sold_to_form).permit(:sold_to, :change_sold_to)
-  end
-
-  def update_sold_to
-    ComputacenterReferenceUpdater.new.update_sold_to!(@responsible_body, @form.sold_to, computacenter_change: 'none')
-    # @responsible_body.update!(computacenter_reference: @form.sold_to, computacenter_change: 'none')
   end
 end

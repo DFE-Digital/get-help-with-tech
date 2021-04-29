@@ -40,9 +40,10 @@ module Computacenter
       raise
     end
 
-  def notify_school_by_email(school)
-    # If the school cannot notify computacenter then the cap updates will not have been sent so
-    # we would not want to tell the users they can order yet
-    SchoolCanOrderDevicesNotifications.new(school: school).call if school.can_notify_computacenter?
+    def notify_school_by_email(school)
+      # If the school cannot notify computacenter then the cap updates will not have been sent so
+      # we would not want to tell the users they can order yet
+      SchoolCanOrderDevicesNotifications.new(school: school).call if school.can_notify_computacenter?
+    end
   end
 end

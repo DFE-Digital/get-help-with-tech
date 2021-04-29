@@ -183,10 +183,6 @@ class School < ApplicationRecord
     address_components.join(', ')
   end
 
-  def update_computacenter_reference!(new_value)
-    update!(computacenter_reference: new_value, computacenter_change: 'none')
-  end
-
   def chromebook_domain
     preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks?
   end
@@ -214,7 +210,7 @@ class School < ApplicationRecord
   end
 
   def can_notify_computacenter?
-    computacenter_reference.present?
+    computacenter_reference.present? && responsible_body.computacenter_reference.present?
   end
 
 private
