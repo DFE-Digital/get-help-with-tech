@@ -22,7 +22,7 @@ private
 
   def update_caps!(school)
     if school.can_notify_computacenter?
-      update_cap_on_computacenter!(school.device_allocations.pluck(:id)) 
+      update_cap_on_computacenter!(school.device_allocations.pluck(:id))
     end
   end
 

@@ -5,7 +5,6 @@ RSpec.describe Computacenter::SoldToShipToUpdater do
   let(:school) { create(:school, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body, computacenter_reference: nil) }
 
   describe '#update_sold_to!' do
-
     subject(:updater) { described_class.new(responsible_body) }
 
     before do
@@ -27,6 +26,7 @@ RSpec.describe Computacenter::SoldToShipToUpdater do
         stub_computacenter_outgoing_api_calls
         school.update!(computacenter_reference: '80000001')
       end
+
       it 'sends cap updates for its schools' do
         updater.update_sold_to!('12345678')
         expect(school.reload.std_device_allocation.cap_update_request_timestamp).to be_within(2.seconds).of(Time.zone.now)
@@ -35,7 +35,6 @@ RSpec.describe Computacenter::SoldToShipToUpdater do
   end
 
   describe '#update_ship_to!' do
-
     subject(:updater) { described_class.new(school) }
 
     it 'updates the computacenter_reference' do
