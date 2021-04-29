@@ -3,7 +3,7 @@ module Computacenter::ResponsibleBodyUrns
     def requiring_a_new_computacenter_reference
       gias_status_open
         .where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
-        .joins(:schools)
+        .includes(:schools)
         .distinct
     end
 

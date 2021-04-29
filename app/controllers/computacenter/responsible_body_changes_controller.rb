@@ -67,7 +67,7 @@ private
     when 'new'
       ResponsibleBody.requiring_a_new_computacenter_reference.where.not(computacenter_change: :amended)
     when 'amended'
-      ResponsibleBody.requiring_a_new_computacenter_reference.where(computacenter_change: :amended)
+      ResponsibleBody.gias_status_open.where(computacenter_change: :amended)
     when 'all'
       ResponsibleBody.requiring_a_new_computacenter_reference
     end
