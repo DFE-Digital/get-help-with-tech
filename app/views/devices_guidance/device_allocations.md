@@ -1,7 +1,5 @@
 ## How devices are allocated
 
-In February 2021, we allocated 300,000 more devices to support the pupils and students most in need.
-
 The number of devices we’ve made available for you to order through the service reflects the number of laptops and tablets we estimate are needed by your school, college or further education institution.
 
 This calculation is based on:
@@ -9,6 +7,10 @@ This calculation is based on:
 * free school meals data
 * free meals data for further education institutions
 * an estimate of the number of devices a school or further education institution already has
+
+[Find out about allocations for care leavers](/devices/how-to-order-laptops-for-social-care-leavers)
+
+[Find out about allocations for state-funded pupils in years 3 to 11 in independent special schools or alternative provision](devices/how-to-order-laptops-for-independent-special-schools)
 
 ## Providing internet connectivity
 

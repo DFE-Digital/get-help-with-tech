@@ -13,19 +13,24 @@ This offer applies to maintained schools, pupil referral units, academy trusts a
 
 They may also be eligible to get internet access for disadvantaged children through [increased mobile phone data allowances](/about-increasing-mobile-data) or [4G wireless routers](/how-to-request-4g-wireless-routers).
 
-Laptops and tablets were made available for further education institutions to order in the 2021 spring term.
+## Devices for disadvantaged pupils and students
 
-Devices are [currently available](https://get-help-with-tech.education.gov.uk/devices/how-to-order) for disadvantaged pupils and students:
+These are currently available for pupils and students:
 
 * in years 3 to 13 who do not have access to a device and whose face-to-face education is disrupted
 * aged 16 to 19 who receive free meals in further education
 * over the age of 19 with an education, health and care plan (EHCP) who also receive free meals 
 * in any year group who have been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) are [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
 * in any year group, including those in 16 to 19 education, attending a hospital school
+* in years 3 to 11 with [state-funded places in independent special schools or alternative provision](/devices/how-to-order-laptops-for-independent-special-schools), who are eligible for free school meals
 
 [Find out how we’ve calculated how many devices you can order](/devices/allocation-and-specification).
 
 [Find out how to order laptops and tablets](/devices/how-to-order) and [get the internet](/internet-access).
+
+## Devices for social care leavers
+
+Local authorities can [find out how to order laptops and get internet access for eligible care leavers](/devices/how-to-order-laptops-for-social-care-leavers).
 
 ## Laptops, tablets and 4G wireless routers provided during the 2020 summer term
 

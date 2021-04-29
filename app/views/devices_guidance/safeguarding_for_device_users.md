@@ -33,9 +33,9 @@ The following information will help you make decisions on how to set up and mana
 * [Erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) - guidance from the National Centre for Cyber Security (NCSC) covering protecting personal data, how to erase data before donating, avoiding unsupported devices, and good cyber practice.
 * [Maintaining portable electrical equipment](https://www.hse.gov.uk/pubns/books/hsg107.htm) - guidance from the Health and Safety Executive (HSE) covering legal responsibilities around ensuring electrical equipment is maintained and [portable appliance testing (PAT)](https://www.hse.gov.uk/electricity/faq-portable-appliance-testing.htm).
 
-## Safeguarding resources for schools, colleges, parents and carers
+## Safeguarding resources for schools, colleges, families, carers, and young people
 
-The resources below include detailed guidance for schools and colleges on safe remote education, virtual lessons, and live streaming, as well as information to support parents and carers to help them keep their children safe online.
+The resources below include detailed guidance for schools and colleges on safe remote education, virtual lessons, and live streaming. There's also information on how to make sure children and young people are safe online.
 
 * [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) - guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children – both online and offline.
 * [Safeguarding and remote education during coronavirus](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) - guidance to help you understand safeguarding procedures when planning remote education strategies and teaching remotely.
