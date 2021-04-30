@@ -2,13 +2,13 @@ class Support::AddressesController < Support::BaseController
   before_action { authorize School }
 
   def edit
-    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
+    @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
 
     authorize @school, :update_address?
   end
 
   def update
-    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
+    @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
 
     authorize @school, :update_address?
 

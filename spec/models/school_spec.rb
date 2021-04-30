@@ -356,12 +356,12 @@ RSpec.describe School, type: :model do
     end
   end
 
-  describe '#matching_name_or_urn_or_ukprn' do
+  describe '#matching_name_or_urn_or_ukprn_or_provision_urn' do
     it 'returns schools with the provided URN' do
       matched_school = create(:school, urn: 123_456)
       create(:school, urn: 123_458) # non-matching school
 
-      expect(School.matching_name_or_urn_or_ukprn(123_456)).to eq([matched_school])
+      expect(School.matching_name_or_urn_or_ukprn_or_provision_urn(123_456)).to eq([matched_school])
     end
 
     it 'returns schools which match the name partially or exactly' do
@@ -369,7 +369,14 @@ RSpec.describe School, type: :model do
       matched_school2 = create(:school, name: 'Southside Primary')
       create(:school, name: 'Northside') # non-matching school
 
-      expect(School.matching_name_or_urn_or_ukprn('Southside')).to contain_exactly(matched_school1, matched_school2)
+      expect(School.matching_name_or_urn_or_ukprn_or_provision_urn('Southside')).to contain_exactly(matched_school1, matched_school2)
+    end
+
+    it 'returns LaFundedPlaces matching the provided URN' do
+      matched_school = create(:iss_provision, provision_urn: 'ISS999')
+      create(:school, urn: 123_458) # non-matching school
+
+      expect(School.matching_name_or_urn_or_ukprn_or_provision_urn('ISS999')).to eq([matched_school])
     end
   end
 

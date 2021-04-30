@@ -58,7 +58,7 @@ private
   end
 
   def set_school
-    @school = @user.schools.where_urn_or_ukprn(params[:urn]).first || School.gias_status_open.where_urn_or_ukprn(params[:urn]).first
+    @school = @user.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first || School.gias_status_open.where_urn_or_ukprn_or_provision_urn(params[:urn]).first
   end
 
   def update_schools_params

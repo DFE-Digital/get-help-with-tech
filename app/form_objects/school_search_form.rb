@@ -29,7 +29,7 @@ class SchoolSearchForm
     school_records = School.includes(:responsible_body, :std_device_allocation)
 
     if search_type == 'single'
-      school_records = school_records.matching_name_or_urn_or_ukprn(identifier.presence || name_or_identifier)
+      school_records = school_records.matching_name_or_urn_or_ukprn_or_provision_urn(identifier.presence || name_or_identifier)
     elsif search_type == 'multiple'
       school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
     elsif search_type == 'responsible_body_or_order_state'

@@ -19,7 +19,7 @@ class Support::Schools::OptOutsController < Support::BaseController
 private
 
   def set_school
-    @school ||= School.where_urn_or_ukprn(params[:school_urn]).first!
+    @school ||= School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
   end
 
   def form_params

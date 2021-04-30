@@ -46,7 +46,7 @@ private
 
   def schools_by_name_or_urn_or_ukprn
     School
-      .matching_name_or_urn_or_ukprn(@name_or_urn_or_ukprn)
+      .matching_name_or_urn_or_ukprn_or_provision_urn(@name_or_urn_or_ukprn)
       .includes(:responsible_body)
       .order(:name)
       .limit(MAX_NUMBER_OF_SUGGESTED_SCHOOLS)
