@@ -135,6 +135,27 @@ RSpec.describe AllocationJob do
           }.to change { school.std_device_allocation.reload.allocation }.by(-1)
         end
       end
+
+      context 'maintain part of allocation if already ordered' do
+        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-100', order_state: 'cannot_order') }
+
+        it 'reduces allocation to match ordered' do
+          described_class.perform_now(batch_job)
+          expect(school.std_device_allocation.reload.allocation).to eq(school.std_device_allocation.devices_ordered)
+        end
+      end
+
+      context 'maintain allocation if already ordered' do
+        let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
+
+        it 'does not update the allocation' do
+          expect {
+            described_class.perform_now(batch_job)
+          }.not_to change(school.std_device_allocation.reload, :allocation)
+        end
+      end
     end
 
     context 'for school that can order' do
@@ -193,6 +214,27 @@ RSpec.describe AllocationJob do
           }.to change { school.std_device_allocation.reload.allocation }.by(-1)
         end
       end
+
+      context 'maintain part of allocation if already ordered' do
+        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-100', order_state: 'cannot_order') }
+
+        it 'reduces allocation to match ordered' do
+          described_class.perform_now(batch_job)
+          expect(school.std_device_allocation.reload.allocation).to eq(school.std_device_allocation.devices_ordered)
+        end
+      end
+
+      context 'maintain allocation if already ordered' do
+        let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
+
+        it 'does not update the allocation' do
+          expect {
+            described_class.perform_now(batch_job)
+          }.not_to change(school.std_device_allocation.reload, :allocation)
+        end
+      end
     end
 
     context 'when school is part of virtual cap pool' do
@@ -244,6 +286,27 @@ RSpec.describe AllocationJob do
           expect {
             described_class.perform_now(batch_job)
           }.to change { school1.std_device_allocation.reload.raw_allocation }.by(-1)
+        end
+      end
+
+      context 'maintain part of allocation if already ordered' do
+        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-100', order_state: 'cannot_order') }
+
+        it 'reduces allocation to match ordered' do
+          described_class.perform_now(batch_job)
+          expect(school.std_device_allocation.reload.allocation).to eq(school.std_device_allocation.devices_ordered)
+        end
+      end
+
+      context 'maintain allocation if already ordered' do
+        let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
+
+        it 'does not update the allocation' do
+          expect {
+            described_class.perform_now(batch_job)
+          }.not_to change(school.std_device_allocation.reload, :allocation)
         end
       end
     end
