@@ -7,17 +7,18 @@ class AllocationJob < ApplicationJob
     current_allocation = school.std_device_allocation
 
     current_allocation_value = current_allocation&.raw_allocation || 0
-    new_allocation_value = current_allocation_value + allocation_batch_job.allocation_delta
+    devices_ordered = current_allocation&.devices_ordered || 0
+    new_allocation_value = [current_allocation_value + allocation_batch_job.allocation_delta, devices_ordered].max
 
     current_cap_value = current_allocation&.raw_cap || 0
-    new_cap_value = current_cap_value + allocation_batch_job.allocation_delta
+    new_cap_value = [current_cap_value + allocation_batch_job.allocation_delta, devices_ordered].max
 
     disable_user_notifications = !allocation_batch_job.send_notification
 
     allocation = SchoolDeviceAllocation.find_or_initialize_by(school: school, device_type: 'std_device')
 
     ActiveRecord::Base.transaction do
-      allocation.update!(allocation: new_allocation_value)
+      allocation.update!(allocation: new_allocation_value, cap: new_cap_value)
 
       service = SchoolOrderStateAndCapUpdateService.new(
         school: school,

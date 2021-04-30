@@ -74,6 +74,14 @@ FactoryBot.define do
       std_device_allocation { association :school_device_allocation, :with_std_allocation, school: instance }
     end
 
+    trait :with_std_device_allocation_fully_ordered do
+      std_device_allocation { association :school_device_allocation, :with_std_allocation, :fully_ordered, school: instance }
+    end
+
+    trait :with_std_device_allocation_partially_ordered do
+      std_device_allocation { association :school_device_allocation, :with_std_allocation, :partially_ordered, school: instance }
+    end
+
     trait :with_coms_device_allocation do
       coms_device_allocation { association :school_device_allocation, :with_coms_allocation, school: instance }
     end

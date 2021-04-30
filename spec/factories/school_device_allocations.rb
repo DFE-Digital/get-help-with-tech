@@ -32,5 +32,11 @@ FactoryBot.define do
       cap { 100 }
       devices_ordered { 100 }
     end
+
+    trait :partially_ordered do
+      allocation { 100 }
+      cap { 100 }
+      devices_ordered { Faker::Number.within(range: 20..80) }
+    end
   end
 end
