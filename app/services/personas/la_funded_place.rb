@@ -5,12 +5,13 @@ class Personas::LaFundedPlace
     la_funded_place_allocation
     la_user
     la_funded_place_user
+    la_funded_place_enable_ordering
   end
 
 private
 
   def la_funded_place
-    @la_funded_place ||= la.la_funded_provision || la.create_iss_provision!(extra_args: {
+    @la_funded_place ||= la.iss_provision || la.create_iss_provision!(extra_args: {
       address_1: '14 High Street',
       town: 'Cambridge',
       county: 'Cambridgeshire',
@@ -21,7 +22,7 @@ private
   end
 
   def la_funded_place_allocation
-    @la_funded_place_allocation ||= la_funded_place.std_device_allocation || la_funded_place.create_std_device_allocation!(allocation: 200, cap: 200)
+    @la_funded_place_allocation ||= la_funded_place.std_device_allocation
   end
 
   def la_funded_place_user
@@ -50,5 +51,11 @@ private
     end
 
     @la_user
+  end
+
+  def la_funded_place_enable_ordering
+    @la_funded_place.can_order!
+    @la_funded_place.std_device_allocation.update!(allocation: 100, cap: 100)
+    @la_funded_place.coms_device_allocation.update!(allocation: 100, cap: 100)
   end
 end
