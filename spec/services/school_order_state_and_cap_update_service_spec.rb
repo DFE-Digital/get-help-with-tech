@@ -243,20 +243,44 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         raise 'Outgoing CC API endpoint not set' if Settings.computacenter.outgoing_api.endpoint.blank?
       end
 
-      it 'notifies the computacenter API' do
-        service.update!
-        expect(mock_request).to have_received(:post!).twice
+      context 'when the school has a ship-to reference' do
+        it 'notifies the computacenter API' do
+          service.update!
+          expect(mock_request).to have_received(:post!).twice
+        end
+
+        it 'records timestamp and payload_id on the allocation' do
+          service.update!
+          allocation.reload
+          expect(allocation.cap_update_request_timestamp).not_to be_nil
+          expect(allocation.cap_update_request_payload_id).not_to be_nil
+        end
+
+        it 'sends an email to computacenter' do
+          expect { service.update! }.to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change).once
+        end
       end
 
-      it 'records timestamp and payload_id on the allocation' do
-        service.update!
-        allocation.reload
-        expect(allocation.cap_update_request_timestamp).not_to be_nil
-        expect(allocation.cap_update_request_payload_id).not_to be_nil
-      end
+      context 'when the school does not have a ship-to reference' do
+        before do
+          school.update!(computacenter_reference: nil)
+        end
 
-      it 'sends an email to computacenter' do
-        expect { service.update! }.to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change).once
+        it 'does not send cap updates to computacenter' do
+          service.update!
+          expect(mock_request).not_to have_received(:post!)
+        end
+
+        it 'does not record timestamp and payload_id on the allocation' do
+          service.update!
+          allocation.reload
+          expect(allocation.cap_update_request_timestamp).to be_nil
+          expect(allocation.cap_update_request_payload_id).to be_nil
+        end
+
+        it 'does not send an email to computacenter' do
+          expect { service.update! }.not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+        end
       end
     end
 

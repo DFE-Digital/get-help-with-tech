@@ -34,19 +34,34 @@ RSpec.describe VirtualCapPool, type: :model do
         expect(pool.devices_ordered).to eq(11)
       end
 
-      it 'notifies computacenter of changes' do
-        pool.add_school!(schools.first)
-        schools.first.reload
-        expect(schools.first.std_device_allocation.cap_update_request_payload_id).to eq('123456789')
+      context 'when a school has a ship-to reference' do
+        it 'notifies computacenter of changes' do
+          pool.add_school!(schools.first)
+          schools.first.reload
+          expect(schools.first.std_device_allocation.cap_update_request_payload_id).to eq('123456789')
+        end
+
+        it 'stores the request and response against the allocation' do
+          pool.add_school!(schools.first)
+          allocation = schools.first.std_device_allocation
+          expect(allocation.cap_update_calls).to be_present
+          expect(allocation.cap_update_calls.last.failure).to be false
+          expect(allocation.cap_update_calls.last.request_body).to include('test-request')
+          expect(allocation.cap_update_calls.last.response_body).to include('test-response')
+        end
       end
 
-      it 'stores the request and response against the allocation' do
-        pool.add_school!(schools.first)
-        allocation = schools.first.std_device_allocation
-        expect(allocation.cap_update_calls).to be_present
-        expect(allocation.cap_update_calls.last.failure).to be false
-        expect(allocation.cap_update_calls.last.request_body).to include('test-request')
-        expect(allocation.cap_update_calls.last.response_body).to include('test-response')
+      context 'when a school does not have a ship-to reference' do
+        before do
+          schools.first.update!(computacenter_reference: nil)
+        end
+
+        it 'does not send cap updates to computacenter' do
+          pool.add_school!(schools.first)
+          school = schools.first.reload
+          expect(school.std_device_allocation.cap_update_calls).not_to be_present
+          expect(school.std_device_allocation.cap_update_request_payload_id).to be nil
+        end
       end
     end
 
@@ -78,6 +93,7 @@ RSpec.describe VirtualCapPool, type: :model do
         non_ordering_school.preorder_information.responsible_body_will_order_devices!
         non_ordering_school.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
         schools.each { |s| pool.add_school!(s) }
+        pool.reload
       end
 
       it 'adds the allocation values to the pool' do

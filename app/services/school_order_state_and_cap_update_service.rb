@@ -23,18 +23,10 @@ class SchoolOrderStateAndCapUpdateService
 
     caps.each do |cap|
       allocation = update_cap!(cap[:device_type], cap[:cap])
-      if notify_computacenter_of_cap_changes?
-        if responsible_body_has_virtual_caps_enabled?
-          # don't send updates as they will happen when the pool is updated and the caps adjusted
-          unless allocation.is_in_virtual_cap_pool?
-            update_cap_on_computacenter!(allocation.id)
-            notify_computacenter_by_email(school, allocation.device_type, allocation.cap)
-          end
-        else
-          update_cap_on_computacenter!(allocation.id)
-          notify_computacenter_by_email(school, allocation.device_type, allocation.cap)
-        end
-      end
+      # don't send updates as they will happen when the pool is updated and the caps adjusted
+      next if responsible_body_has_virtual_caps_enabled? && allocation.is_in_virtual_cap_pool?
+
+      update_and_notify_computacenter!(allocation)
     end
 
     # ensure the updates are picked up
@@ -47,7 +39,7 @@ class SchoolOrderStateAndCapUpdateService
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
-    SchoolCanOrderDevicesNotifications.new(school: school).call unless disable_user_notifications
+    notify_school_by_email(school) unless disable_user_notifications
   end
 
   def disable_user_notifications!
@@ -71,6 +63,13 @@ private
     allocation.cap = allocation.cap_implied_by_order_state(order_state: school.order_state, given_cap: cap)
     allocation.save!
     allocation
+  end
+
+  def update_and_notify_computacenter!(allocation)
+    if school.can_notify_computacenter? && notify_computacenter_of_cap_changes?
+      update_cap_on_computacenter!(allocation.id)
+      notify_computacenter_by_email(school, allocation.device_type, allocation.cap)
+    end
   end
 
   def add_school_to_virtual_cap_pool_if_eligible

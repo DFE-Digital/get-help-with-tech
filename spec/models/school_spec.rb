@@ -400,4 +400,28 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#can_notify_computacenter?' do
+    subject(:school) { build(:school) }
+
+    context 'when computacenter have set a ship-to reference' do
+      before do
+        school.computacenter_reference = '87654321'
+      end
+
+      it 'returns true' do
+        expect(school.can_notify_computacenter?).to be true
+      end
+    end
+
+    context 'when computacenter have not set a ship-to reference' do
+      before do
+        school.computacenter_reference = nil
+      end
+
+      it 'returns false' do
+        expect(school.can_notify_computacenter?).to be false
+      end
+    end
+  end
 end

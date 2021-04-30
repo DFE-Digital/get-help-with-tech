@@ -26,6 +26,13 @@ class School < ApplicationRecord
 
   before_create :set_computacenter_change
 
+  enum computacenter_change: {
+    none: 'none',
+    new: 'new',
+    amended: 'amended',
+    closed: 'closed',
+  }, _prefix: true
+
   enum status: {
     open: 'open',
     closed: 'closed',
@@ -36,13 +43,6 @@ class School < ApplicationRecord
     can_order_for_specific_circumstances: 'can_order_for_specific_circumstances',
     can_order: 'can_order',
   }
-
-  enum computacenter_change: {
-    none: 'none',
-    new: 'new',
-    amended: 'amended',
-    closed: 'closed',
-  }, _prefix: true
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier) }
@@ -187,10 +187,6 @@ class School < ApplicationRecord
     address_components.join(', ')
   end
 
-  def update_computacenter_reference!(new_value)
-    update!(computacenter_reference: new_value, computacenter_change: 'none')
-  end
-
   def chromebook_domain
     preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks?
   end
@@ -215,6 +211,10 @@ class School < ApplicationRecord
 
   def opted_out?
     !!opted_out_of_comms_at
+  end
+
+  def can_notify_computacenter?
+    computacenter_reference.present? && responsible_body.computacenter_reference.present?
   end
 
 private

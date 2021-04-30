@@ -58,6 +58,7 @@ RSpec.feature 'Administering school changes' do
     end
 
     def given_i_am_signed_in_as_a_computacenter_user
+      stub_computacenter_outgoing_api_calls
       sign_in_as user
     end
 
