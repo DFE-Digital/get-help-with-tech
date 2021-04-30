@@ -410,7 +410,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    stackprof (0.2.12)
+    stackprof (0.2.16)
     thor (1.1.0)
     thwait (0.2.0)
       e2mmap
