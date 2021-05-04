@@ -29,20 +29,24 @@
         <% end %>
       </p>
       <div class="govuk-inset-text">
-        <p class="govuk-body">
-          After you place your order you’ll get an email asking for:
-        </p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>
-            the domain the school has registered for Google Workspace for Education Fundementals (formerly G Suite for Education), for example ‘school.co.uk’
-          </li>
-          <li>
-            a recovery email address. This should be on a separate domain to the one registered for Google Workspace for Education Fundementals. For example, if the domain registered for Google Workspace for Education Fundementals is ‘school.com’, the recovery email cannot be ‘recovery@school.com’
-          </li>
-        </ul>
-        <p class="govuk-body">
-          The school’s IT support should be able to give you this information.
-        </p>
+        <% if @school.social_care_leaver? %>
+          <%= render 'chromebook_ordering_for_care_leavers' %>
+        <% else %>
+          <p class="govuk-body">
+            After you place your order you’ll get an email asking for:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              the domain the school has registered for Google Workspace for Education Fundamentals (formerly G Suite for Education), for example ‘school.co.uk’
+            </li>
+            <li>
+              a recovery email address. This should be on a separate domain to the one registered for Google Workspace for Education Fundamentals. For example, if the domain registered for Google Workspace for Education Fundamentals is ‘school.com’, the recovery email cannot be ‘recovery@school.com’
+            </li>
+          </ul>
+          <p class="govuk-body">
+            The school’s IT support should be able to give you this information.
+          </p>
+        <% end %>
       </div>
     <% elsif @school.preorder_information.will_not_need_chromebooks? %>
       <p class="govuk-body">
@@ -59,7 +63,17 @@
           </strong>
         </p>
         <p class="govuk-body">
-          If you order Chromebooks without letting us know first, they’ll be delivered unsecured, without access to the Google Workspace for Education Fundementals (formerly G Suite for Education).
+          <% if @school.social_care_leaver? %>
+            If you order Chromebooks without letting us know first, they’ll be
+            delivered without being enrolled into a Google Workspace for
+            Education domain. This means they cannot be managed remotely, and
+            it will not be possible to apply security settings to keep users safe
+            online.
+          <% else %>
+            If you order Chromebooks without letting us know first, they’ll be
+            delivered unsecured, without access to the Google Workspace for
+            Education Fundamentals (formerly G Suite for Education).
+          <% end %>
         </p>
         <%= govuk_link_to 'Tell us if you’ll order Google Chromebooks', funded_chromebooks_school_path(@school) %>
       </div>

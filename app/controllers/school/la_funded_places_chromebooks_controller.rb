@@ -40,6 +40,10 @@ private
   end
 
   def custom_error_message
-    I18n.t('page_titles.iss.will_need_chromebooks_error')
+    if @school.independent_special_school?
+      I18n.t('page_titles.iss.will_need_chromebooks_error')
+    else
+      I18n.t('page_titles.scl.will_need_chromebooks_error')
+    end
   end
 end

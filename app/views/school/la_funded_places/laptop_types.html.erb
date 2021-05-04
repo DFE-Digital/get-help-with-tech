@@ -1,4 +1,9 @@
-<%- title = t('page_titles.iss.laptop_types') %>
+<% if @school.social_care_leaver? %>
+  <%- title = t('page_titles.scl.laptop_types') %>
+<% else %>
+  <%- title = t('page_titles.iss.laptop_types') %>
+<% end %>
+
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs items: [ { t('page_titles.iss.order_devices') => order_devices_school_path(@school)}, title], school: @school, user: impersonated_or_current_user %>
@@ -9,9 +14,11 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
-    <p class="govuk-body">
-      We recommend checking with your IT team, schools, families or pupils as soon as possible to find out which device type and IT settings would be most suitable.
-    </p>
+    <% if @school.independent_special_school? %>
+      <p class="govuk-body">
+        We recommend checking with your IT team, schools, families or pupils as soon as possible to find out which device type and IT settings would be most suitable.
+      </p>
+    <% end %>
     <p class="govuk-body">
       Depending on availability, you can choose from:
     </p>
@@ -19,20 +26,28 @@
       Standard Windows laptops
     </h2>
     <p class="govuk-body">
-      You’ll be responsible for arranging and maintaining safeguarding measures, like content filtering.
+      You’ll be responsible for arranging and maintaining safeguarding measures,
+      like content filtering.
     </p>
     <h2 class="govuk-heading-s">
       DfE Restricted Windows laptops
     </h2>
     <p class="govuk-body">
-      These have temporary safeguarding settings installed — content filtering and mobile device management software — which you’ll need to replace before they expire on 30 September 2021. You’ll need to reset these devices before you can apply new settings, or download some types of software.
+      These have temporary safeguarding settings installed — content filtering and
+      mobile device management software — which you’ll need to replace before
+      they expire on 30 September 2021. You’ll need to reset these devices
+      before you can apply new settings, or download some types of software.
     </p>
     <h2 class="govuk-heading-s">
       Google Chromebooks
     </h2>
-    <p class="govuk-body">
-      You’ll need to provide us with the relevant school’s email domain for Google Workspace for Education Fundementals (formerly <span class="app-no-wrap">G Suite for Education</span>), and a recovery email address.
-    </p>
+    <% if @school.social_care_leaver? %>
+      <%= render 'chromebook_ordering_for_care_leavers' %>
+    <% else %>
+      <p class="govuk-body">
+        You’ll need to provide us with the relevant school’s email domain for Google Workspace for Education Fundamentals (formerly <span class="app-no-wrap">G Suite for Education</span>), and a recovery email address.
+      </p>
+    <% end %>
     <p class="govuk-body">
       <%= govuk_link_to 'See detailed laptop specifications', devices_guidance_subpage_path(subpage_slug: 'device-specification') %>
     </p>
