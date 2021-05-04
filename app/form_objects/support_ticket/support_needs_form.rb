@@ -8,7 +8,7 @@ class SupportTicket::SupportNeedsForm
   OPTIONS = {
     'laptops_and_tablets' => 'Laptops and tablets',
     '4g_wireless_routers_and_internet_access' => '4G wireless routers and internet access',
-    'digital_education_platforms' => 'Digital education platforms (G Suite for Education or Office 365 Education)',
+    'digital_education_platforms' => 'Digital education platforms (Google Workspace for Education Fundamentals or Microsoft 365 Education)',
     'technology_training_and_support' => 'Technology training and support for schools and colleges',
     'something_else' => 'Something else',
   }.freeze
