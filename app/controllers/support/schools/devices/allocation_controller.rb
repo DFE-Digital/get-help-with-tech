@@ -28,7 +28,7 @@ private
   helper_method :device_type
 
   def set_school_and_allocation
-    @school = School.where_urn_or_ukprn(params[:school_urn]).first!
+    @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
     authorize @school, :show?
     @allocation = SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: device_type)
     authorize @allocation

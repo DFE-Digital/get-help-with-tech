@@ -22,7 +22,7 @@ class School < ApplicationRecord
 
   validates :name, presence: true
 
-  pg_search_scope :matching_name_or_urn_or_ukprn, against: %i[name urn ukprn], using: { tsearch: { prefix: true } }
+  pg_search_scope :matching_name_or_urn_or_ukprn_or_provision_urn, against: %i[name urn ukprn provision_urn], using: { tsearch: { prefix: true } }
 
   before_create :set_computacenter_change
 
@@ -45,7 +45,7 @@ class School < ApplicationRecord
   }
 
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
-  scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier) }
+  scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
   scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
   scope :iss_provision, -> { where(type: 'LaFundedPlace', provision_type: 'iss') }

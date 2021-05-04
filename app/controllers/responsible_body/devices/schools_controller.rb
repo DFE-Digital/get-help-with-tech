@@ -4,7 +4,7 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseControl
   def index; end
 
   def show
-    @school = @responsible_body.schools.where_urn_or_ukprn(params[:urn]).first!
+    @school = @responsible_body.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
     if @school.preorder_information.needs_contact?
       redirect_to responsible_body_devices_school_who_to_contact_path(@school.urn)
     elsif @school.preorder_information.orders_managed_centrally?
@@ -13,7 +13,7 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseControl
   end
 
   def order_devices
-    @school = @responsible_body.schools.where_urn_or_ukprn(params[:urn]).first!
+    @school = @responsible_body.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
   end
 
 private

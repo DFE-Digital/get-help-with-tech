@@ -114,7 +114,7 @@ private
 
   def set_school_if_present
     if params[:school_urn]
-      @school = School.gias_status_open.where_urn_or_ukprn(params[:school_urn]).first!
+      @school = School.gias_status_open.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
       authorize @school, :show?
     end
   end

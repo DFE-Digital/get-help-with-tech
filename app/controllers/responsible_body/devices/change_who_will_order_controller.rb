@@ -34,7 +34,7 @@ private
   end
 
   def set_school
-    @school = @responsible_body.schools.where_urn_or_ukprn(params[:school_urn]).first!
+    @school = @responsible_body.schools.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
   end
 
   def who_will_order
