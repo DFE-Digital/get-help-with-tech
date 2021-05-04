@@ -45,9 +45,9 @@ Microsoft Windows devices come with Windows Defender Antivirus.
 
 ### Education software
 
-Microsoft Windows devices do not have Office 365 applications installed, but school-aged children will be able to use Office 365 online if you or their school have an active subscription. A child or young person not in school (such as a care leaver) can make use of their own preferred online system.
+Microsoft Windows devices do not have Microsoft 365 (formerly Office 365) applications installed, but school-aged children will be able to use Microsoft 365 online if you or their school have an active subscription. A child or young person not in school (such as a care leaver) can make use of their own preferred online system.
 
-Schools can [apply for government funding to get set up on Office 365 Education](/digital-platforms). Office 365 Education includes Microsoft Word, Excel and Powerpoint as well as many mobile device management features.
+Schools can [apply for government funding to get set up on Microsoft 365 Education](/digital-platforms). Microsoft 365 Education includes Microsoft Word, Excel and Powerpoint as well as many mobile device management features.
 
 ## Mobile device management
 
