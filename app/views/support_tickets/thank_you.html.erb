@@ -34,6 +34,6 @@
     </p>
   </div>
   <% if current_user.persisted? %>
-    <%= render partial: 'shared/link_to_survey' %>
+    <%= render(LinkToSurveyComponent.new(organisation: @school)) %>
   <% end %>
 </div>

@@ -17,45 +17,87 @@
       You’ve been allocated <%= "#{@school.std_device_allocation.cap} #{'laptop'.pluralize(@school.std_device_allocation.cap)}" %>.
     </p>
     <%= govuk_details summary: 'How your allocation has been calculated' do %>
-      <p class="govuk-body">
-        Your allocation estimate is based on the data <%= @school.responsible_body.name %>
-        submitted in the latest published alternative provision census (2020).
-      </p>
-      <p class="govuk-body">
-        We’ve allocated one laptop for each pupil in years 3 to 11 that
-        <%= @school.responsible_body.name %> reported as having a state-funded
-        place at an independent special school or alternative provision, and also being eligible for free school meals.
-      </p>
-      <p class="govuk-body">
-        You can request internet access for these pupils if they need it too.
-      </p>
-      <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
-      <p class="govuk-body">
-        Tell us how many pupils <%= @school.responsible_body.name %> funds who:
-      </p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>
-          have a place at an independent special setting, or independent alternative provision
-        </li>
-        <li>
-          are eligible for free school meals
-        </li>
-        <li>
-          do not have access to a suitable device for remote education, and for use in face-to-face learning
-        </li>
-      </ul>
-      <p class="govuk-body">
-        Do not send any personal information, like names of pupils or dates of birth.
-      </p>
-      <p class="govuk-body">
-        Email this information to <%= ghwt_contact_mailto %>.
-      </p>
+      <% if @school.social_care_leaver? %>
+        <p class="govuk-body">
+          This allocation estimate is based on your LA’s individual care leaver
+          population since August 2020.
+        </p>
+        <p class="govuk-body">
+          You can request internet access for these care leavers if they need it
+          too.
+        </p>
+        <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
+        <p class="govuk-body">
+          Tell us how many care leavers your LA is responsible for
+          who:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            are aged 16 to 25
+          </li>
+          <li>
+            do not have access to a laptop or tablet from any other source
+          </li>
+        </ul>
+        <p class="govuk-body">
+          Do not send any personal information, like names of care leavers or
+          dates of birth.
+        </p>
+        <p class="govuk-body">
+          Email this information to <%= ghwt_contact_mailto %>.
+        </p>
+        <p class="govuk-body">
+          We cannot guarantee that we’ll be able to meet all requests for more
+          laptops. We encourage you to order your current allocation anyway so
+          that you can begin distributing devices. We’ll contact you once we’ve
+          reviewed your request.
+        </p>
+      <% else %>
+        <p class="govuk-body">
+          Your allocation estimate is based on the data <%= @school.responsible_body.name %>
+          submitted in the latest published alternative provision census (2020).
+        </p>
+        <p class="govuk-body">
+          We’ve allocated one laptop for each pupil in years 3 to 11 that
+          <%= @school.responsible_body.name %> reported as having a state-funded
+          place at an independent special school or alternative provision, and also being eligible for free school meals.
+        </p>
+        <p class="govuk-body">
+          You can request internet access for these pupils if they need it too.
+        </p>
+        <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
+        <p class="govuk-body">
+          Tell us how many pupils <%= @school.responsible_body.name %> funds who:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            have a place at an independent special setting, or independent alternative provision
+          </li>
+          <li>
+            are eligible for free school meals
+          </li>
+          <li>
+            do not have access to a suitable device for remote education, and for use in face-to-face learning
+          </li>
+        </ul>
+        <p class="govuk-body">
+          Do not send any personal information, like names of pupils or dates of birth.
+        </p>
+        <p class="govuk-body">
+          Email this information to <%= ghwt_contact_mailto %>.
+        </p>
+      <% end %>
     <% end %>
 
     <h2 class="govuk-heading-m govuk-!-margin-top-6">Before you order</h2>
     <p class="govuk-body">
-      We recommend checking with your IT team, schools, families or pupils as soon as possible
-      to find out which device type and IT settings would be most suitable.
+      <% if @school.social_care_leaver? %>
+        We recommend that you work with your IT team to decide which device type
+        and IT settings will be best for care leavers to use.
+      <% else %>
+        We recommend checking with your IT team, schools, families or pupils as soon as possible
+        to find out which device type and IT settings would be most suitable.
+      <% end %>
     </p>
     <p class="govuk-body">
       <%= govuk_link_to 'Check what types of laptop are available', laptop_types_school_path(@school) %>
@@ -65,12 +107,21 @@
     <p class="govuk-body">
       <%= @school.responsible_body.name %> will own these laptops and is responsible for:
     </p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
-      <li>making sure laptops have appropriate safety and security measures installed and maintained – <%= link_to_devices_guidance_subpage 'read about laptop safeguarding', 'safeguarding-for-device-users' %></li>
-      <li>fixing any technical issues –&nbsp; <%= link_to_devices_guidance_subpage 'read about how to organise repairs', 'replace-a-faulty-device' %></li>
-      <li>distributing the laptops safely –&nbsp; <%= link_to_devices_guidance_subpage 'read about how to get devices to pupils', 'device-distribution-and-ownership', {}, anchor: 'distributing-devices' %>
-      <li>redistributing the laptops if pupils move school or leave education</li>
-    </ul>
+    <% if @school.social_care_leaver? %>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+        <li>deciding whether to temporarily lend or permanently gift devices to care leavers &ndash; <%= link_to_devices_guidance_subpage 'read about ownership', 'device-distribution-and-ownership' %></li>
+        <li>making sure laptops have appropriate safety and security measures installed and maintained &ndash; <%= link_to_devices_guidance_subpage 'read about laptop safeguarding', 'safeguarding-for-device-users' %></li>
+        <li>fixing any technical issues &ndash; <%= link_to_devices_guidance_subpage 'read about how to organise repairs', 'replace-a-faulty-device' %></li>
+        <li>distributing the laptops safely &ndash; <%= link_to_devices_guidance_subpage 'read about how to get devices to care leavers', 'device-distribution-and-ownership', {}, anchor: 'distributing-devices' %>
+      </ul>
+    <% else %>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+        <li>making sure laptops have appropriate safety and security measures installed and maintained &ndash; <%= link_to_devices_guidance_subpage 'read about laptop safeguarding', 'safeguarding-for-device-users' %></li>
+        <li>fixing any technical issues &ndash; <%= link_to_devices_guidance_subpage 'read about how to organise repairs', 'replace-a-faulty-device' %></li>
+        <li>distributing the laptops safely &ndash; <%= link_to_devices_guidance_subpage 'read about how to get devices to pupils', 'device-distribution-and-ownership', {}, anchor: 'distributing-devices' %>
+        <li>redistributing the laptops if pupils move school or leave education</li>
+      </ul>
+    <% end %>
     <%= govuk_link_to 'Continue', order_laptops_school_path(@school), button: true %>
   </div>
 </div>
