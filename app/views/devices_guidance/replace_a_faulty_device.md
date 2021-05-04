@@ -12,7 +12,7 @@ All devices supplied by the Get help with technology programme came with a 12-mo
 * [Apple](https://support.apple.com/en-gb/ipad/repair/service)
 * [Asus](https://www.asus.com/uk/support/warranty-status-inquiry/)
 * [Dell](https://www.dell.com/support/home/en-uk?app=warranty)
-* [Dynabook](https://support.dynabook.com/warranty)
+* [Dynabook](https://support.dynabook.com/warranty) (or call 0333 222 7444)
 * [HP](https://support.hp.com/gb-en/checkwarranty) (or call 0207 660 0403)
 * [Lenovo](https://pcsupport.lenovo.com/uk/en/warrantylookup#/)
 * [Microsoft](https://docs.microsoft.com/en-gb/surface/)
