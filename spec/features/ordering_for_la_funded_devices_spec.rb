@@ -92,7 +92,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def given_i_am_on_the_independent_settings_school_page
-    expect(page).to have_selector('.govuk-caption-xl', text: 'State-funded pupils in independent schools and alternative provision')
+    expect(page).to have_selector('.govuk-caption-xl', text: 'State-funded pupils in independent special schools and alternative provision')
     expect(page).to have_selector('h1', text: 'Get laptops and internet access')
   end
 
