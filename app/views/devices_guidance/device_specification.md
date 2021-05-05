@@ -2,7 +2,6 @@ When [placing an order](/), schools, colleges, further education institutions, a
 
 * Microsoft Windows laptops
 * Google Chromebooks
-* Higher-specification laptops
 
 You can find out if any types of device are out of stock by [signing in to the Get help with technology service](/sign-in). The information is also available on the TechSource ordering website.
 
@@ -16,11 +15,11 @@ We may need some technical information from you before you can order, so we reco
 
 When you order you’ll be asked whether or not you want to have DfE settings installed.
 
-#### Not having DfE settings installed
+#### Not having DfE settings installed (temporarily out of stock)
 
 These ‘DfE Standard’ devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
-#### DfE settings installed
+#### DfE settings installed (in stock)
 
 These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021, <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices">read our guidance on how to reset devices and apply your own security settings to make them safe for pupils and students to use</a>.
 
@@ -30,7 +29,7 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 [Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
-## Google Chromebooks
+## Google Chromebooks (in stock)
 
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
