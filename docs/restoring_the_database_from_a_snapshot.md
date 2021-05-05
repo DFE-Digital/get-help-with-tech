@@ -44,6 +44,8 @@ This will return a GUID, like:
 
 where `(guid)` is the GUID found in step 3, and `(datetime)` is the point in time, for example `2020-04-01 13:00:00`
 
+### Start the restore process
+
 5. Trigger the creation of a new service by running:
 
 `cf create-service postgres (plan) (new service name) -c '(json)'`
@@ -59,7 +61,7 @@ When it returns `status: create succeeded` then the new database service is read
 
 6. Un-bind the existing database service from the app
 
-This will take a few seconds to run, but *WILL CAUSE DOWNTIME FROM THIS POINT UNTIL STEP 8. IS COMPLETE*
+This will take a few seconds to run, but _WILL CAUSE DOWNTIME FROM THIS POINT UNTIL STEP 8. IS COMPLETE_
 
 `cf unbind-service get-help-with-tech-(env) get-help-with-tech-(env)-db`
 
@@ -72,6 +74,8 @@ where `(new service name)` is the unique name for the restored database service 
 8. Restage the app to force the construction of a new DATABASE_URL
 
 `cf restage get-help-with-tech-(env)`
+
+### Make the change permanent
 
 This may take up to a minute or so, but *once this is complete, the service will be back online.*
 
