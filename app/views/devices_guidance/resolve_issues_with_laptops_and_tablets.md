@@ -20,7 +20,7 @@ You can [contact us](/get-support) if this issue persists after completing these
 
 Some users have reported issues with the audio output of their devices. Windows updates have been released which should resolve this, but we are making additional solutions available.
 
-### DfE restricted devices
+### DfE Restricted devices
 
 Audio drivers will be installed via Microsoft Intune the next time the device is connected to the internet.
 
