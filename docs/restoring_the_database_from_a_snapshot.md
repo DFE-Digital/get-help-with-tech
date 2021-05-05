@@ -54,11 +54,13 @@ where:
 `(json)` is the JSON from step 4
 
 This will take 5-10 minutes to run. You can check the progress with `cf service (new service name) | grep status:`
+
 When it returns `status: create succeeded` then the new database service is ready to use.
 
 6. Un-bind the existing database service from the app
 
 This will take a few seconds to run, but *WILL CAUSE DOWNTIME FROM THIS POINT UNTIL STEP 8. IS COMPLETE*
+
 `cf unbind-service get-help-with-tech-(env) get-help-with-tech-(env)-db`
 
 7. Bind the newly-restored database service to the app
@@ -75,4 +77,4 @@ This may take up to a minute or so, but *once this is complete, the service will
 
 9. Edit the database service name in `config/manifests/(env)-manifest` to the new database service name
 
-10. Submit the change from step 9 as a pull request 
+10. Submit the change from step 9 as a pull request
