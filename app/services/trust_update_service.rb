@@ -1,7 +1,7 @@
 class TrustUpdateService
-  def update_trusts
+  def update_trusts(last_update: nil)
     # look at the trusts that have changed since the last update
-    last_update = DataStage::DataUpdateRecord.last_update_for(:trusts)
+    last_update ||= DataStage::DataUpdateRecord.last_update_for(:trusts)
 
     # simple updates for trusts that are open
     DataStage::Trust.updated_since(last_update).gias_status_open.each do |staged_trust|
