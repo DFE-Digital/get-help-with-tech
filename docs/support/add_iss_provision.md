@@ -86,6 +86,14 @@ la.save
 
 The supplier will receive the information on the new school and add their references in the portal.
 
+Once the supplier reference has been set we should set the school status to ``can_order``.
+
+````ruby
+lafp.update(order_state: 'can_order')
+````
+
+There is no bang (!) after ``update``, but this persists the update without the need for ``.save``.
+
 ### Invitation to order
 
 Once the ISS has been properly configured and the supplier has added their references we can send the emails inviting the users to order.
