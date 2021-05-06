@@ -13,20 +13,8 @@
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
-    <h2 class="govuk-heading-m">
-      These laptops are currently in stock:
-    </h2>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        Google Chromebooks
-      </li>
-      <li>
-        Standard Windows laptops
-      </li>
-      <li>
-        DfE Restricted Windows laptops — low stock, delivery may take longer than 5 working days
-      </li>
-    </ul>
+    <%= render partial: 'shared/stock_levels' %>
+    
     <p class="govuk-body">
       <%= govuk_link_to 'It’s important to check you’re ordering the best type of laptop for each pupil.', laptop_types_school_path(@school) %>
     </p>

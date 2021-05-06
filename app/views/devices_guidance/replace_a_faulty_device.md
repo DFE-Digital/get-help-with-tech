@@ -21,7 +21,7 @@ All devices supplied by the Get help with technology programme came with a 12-mo
 
 Depending on the manufacturer’s warranty process, you may be required to pay courier costs when returning faulty devices.
 
-If you’re looking to replace restricted Windows laptops or tablets that came with DfE settings pre-installed, please be aware that replacements from the manufacturer will come with standard factory settings.
+If you’re looking to replace Restricted Windows laptops or tablets that came with DfE settings pre-installed, please be aware that replacements from the manufacturer will come with standard factory settings.
 
 It is your responsibility to ensure these devices are safely set up for users. Refer to our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) for steps to take regarding applying appropriate safeguarding and security settings.
 
