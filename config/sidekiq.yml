@@ -17,6 +17,10 @@
     cron: '30 5 * * * Europe/London' # every day at 5:30am
     queue: scheduler
     description: Stage GIAS trust data
+  ApplyStagedAttributeChangesToTrustsJob:
+    cron: '0 6 * * * Europe/London' # every day at 6:00am
+    queue: scheduler
+    description: Apply staged attribute changes to trusts
   NotifyMnosJob:
     cron: '0 8 * * 1-5 Europe/London'  # every weekday at 8:00am
     queue: scheduler
