@@ -55,15 +55,22 @@ You can also check the specs [here](https://github.com/DFE-Digital/get-help-with
 
 ## Post creation
 
-### Mising LocalAutority contact details
-
 Ensure that you have the ``la`` and ``lafp`` set correctly:
 
 ````ruby
 urn=845;la=LocalAuthority.find_by_gias_id("#{urn}");lafp=School.find_by_provision_urn("ISS#{urn}")
 ````
 
-Copy the address details from the LaFundedPlace that you just added:
+### Adding allocations
+
+````ruby
+lafp.std_device_allocation.update!(allocation: 58, cap:58)
+lafp.coms_device_allocation.update!(allocation: 18, cap:18)
+````
+
+### Mising LocalAutority contact details
+
+The supplier will see the delivery details of the LocalAuthority. If the LocalAuthority does not have an address set then copy the address details from the LaFundedPlace that you just added:
 
 ````ruby
 la.address_1=lafp.address_1;la.address_2=lafp.address_2;la.address_3=lafp.address_3;la.town=lafp.town;la.county=lafp.county;la.postcode=lafp.postcode;la
@@ -82,3 +89,11 @@ The supplier will receive the information on the new school and add their refere
 ### Invitation to order
 
 Once the ISS has been properly configured and the supplier has added their references we can send the emails inviting the users to order.
+
+#### Invite to order checklist
+
+* ISS is created?
+* Allocations have been added?
+* LocalAuthority has delivery address?
+* Supplier has added references?
+* When all above are TRUE it is OK to send invites
