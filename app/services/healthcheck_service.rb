@@ -1,5 +1,5 @@
 class HealthcheckService
-  SERVICES = %i[db].freeze
+  SERVICES = %i[db redis].freeze
 
   def self.run
     all_services_status = services_status
@@ -39,6 +39,7 @@ class HealthcheckService
   def self.status_of(service)
     case service
     when :db then db_status
+    when :redis then redis_status
     end
   rescue StandardError
     'DOWN'
@@ -46,6 +47,11 @@ class HealthcheckService
 
   def self.db_status
     ExtraMobileDataRequest.maximum(:created_at)
+    'UP'
+  end
+
+  def self.redis_status
+    Sidekiq.redis_info['redis_version']
     'UP'
   end
 end
