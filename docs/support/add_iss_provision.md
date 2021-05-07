@@ -6,19 +6,19 @@ The ISS Provision aka LaFundedPlace < School will have the name "State-funded pu
 
 ## Create the ISS Provision
 
-First locate the ```Local authority code```
+First locate the "Local authority code"
 
 In the rails console find the LocalAuthority:
 
-````ruby
+```ruby
 la = LocalAuthority.find_by_gias_id(845)
-````
+```
 
 Create the ISS provison for the LocalAuthority that you found and assign the new ISS aka LaFundedPlace that is created it to a variable:
 
-````ruby
+```ruby
 lafp = la.create_iss_provision!
-````
+```
 
 Here is the method:
 [def create_iss_provision!](https://github.com/DFE-Digital/get-help-with-tech/blob/05a30daf5e09475b2d6cccedd5178e11a028647b/app/models/local_authority.rb#L23-L30) This will return the ISS if it already exists.
@@ -27,29 +27,29 @@ Here is the method:
 
 Complete the contact details:
 
-````ruby
+```ruby
 lafp.address_1='123 Fake Street'
 lafp.address_2="Dummy Crescent"
 lafp.town='Townsville'
 lafp.county='Sussex'
 lafp.postcode='BN1 2AA'
 lafp.phone_number='0123 456 78'
-````
+```
 
 And save!
 
-````ruby
+```ruby
 lafp.save
-````
+```
 
 ## Users
 
 The users associated with the LocalAuthority aka the ResponsibleBody will automatically be associated with the new LaFundedPlace aka ISS. You can check by comparing the following counts:
 
-````ruby
+```ruby
 lafp.users.count
 lafp.responsible_body.users.count
-````
+```
 
 You can also check the specs [here](https://github.com/DFE-Digital/get-help-with-tech/blob/05a30daf5e09475b2d6cccedd5178e11a028647b/spec/models/local_authority_spec.rb#L6)
 
@@ -57,30 +57,30 @@ You can also check the specs [here](https://github.com/DFE-Digital/get-help-with
 
 Ensure that you have the ``la`` and ``lafp`` set correctly:
 
-````ruby
+```ruby
 urn=845;la=LocalAuthority.find_by_gias_id("#{urn}");lafp=School.find_by_provision_urn("ISS#{urn}")
-````
+```
 
 ### Adding allocations
 
-````ruby
+```ruby
 lafp.std_device_allocation.update!(allocation: 58, cap:58)
 lafp.coms_device_allocation.update!(allocation: 18, cap:18)
-````
+```
 
 ### Mising LocalAutority contact details
 
 The supplier will see the delivery details of the LocalAuthority. If the LocalAuthority does not have an address set then copy the address details from the LaFundedPlace that you just added:
 
-````ruby
+```ruby
 la.address_1=lafp.address_1;la.address_2=lafp.address_2;la.address_3=lafp.address_3;la.town=lafp.town;la.county=lafp.county;la.postcode=lafp.postcode;la
-````
+```
 
 Review and save!
 
-````ruby
+```ruby
 la.save
-````
+```
 
 ### Supplier references
 
@@ -88,9 +88,9 @@ The supplier will receive the information on the new school and add their refere
 
 Once the supplier reference has been set we should set the school status to ``can_order``.
 
-````ruby
+```ruby
 lafp.update(order_state: 'can_order')
-````
+```
 
 There is no bang (!) after ``update``, but this persists the update without the need for ``.save``.
 
