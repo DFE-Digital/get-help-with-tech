@@ -35,7 +35,7 @@ RUN chown deploy:deploy /home/deploy/.profile
 COPY --chown=deploy:deploy Gemfile Gemfile.lock .ruby-version ./
 ARG BUNDLE_FLAGS="--jobs 2"
 RUN bundle config set no-cache 'true'
-RUN bundle config set without 'development test'
+RUN bundle config set without 'development'
 RUN bundle install
 RUN bundle package --all
 
