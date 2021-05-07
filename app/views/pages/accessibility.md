@@ -32,4 +32,4 @@ This website is compliant with the [Web Content Accessibility Guidelines version
 
 ## We’ll continue to improve accessibility
 
-This statement was prepared on 27 August 2020. We’ll continue to test the accessibility of this pilot service as it develops over the summer.
+This statement was prepared on 27 August 2020. We’ll continue to test the accessibility of this service as it develops.
