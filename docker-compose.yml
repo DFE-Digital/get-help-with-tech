@@ -9,6 +9,11 @@ services:
     volumes:
       - .:/usr/src/app
       - gem_cache:/gems
+    environment:
+      DATABASE_HOST: database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: some-long-secure-password
+      POSTGRES_DB: get-help-with-tech_development
 
   webpack_dev_server:
     build: .
@@ -28,6 +33,10 @@ services:
     image: postgres
     volumes:
       - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: some-long-secure-password
+      POSTGRES_DB: get-help-with-tech_development
 
 volumes:
   db_data:
