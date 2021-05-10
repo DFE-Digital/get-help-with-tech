@@ -51,7 +51,7 @@ gem 'pg_search'
 gem 'pry-rails'
 
 # Use Puma as the app server
-gem 'puma', '~> 5.2'
+gem 'puma', '~> 5.3'
 
 # Use Pundit for authorisation
 gem 'pundit'
