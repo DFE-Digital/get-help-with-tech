@@ -68,6 +68,10 @@ govuk_notify:
 # Hostname used for generating URLs in emails
 hostname_for_urls: http://localhost:3000
 
+huawei:
+  devices:
+    password: secret
+
 sentry:
   dsn:
 

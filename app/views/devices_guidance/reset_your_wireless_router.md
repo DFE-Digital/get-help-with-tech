@@ -1,6 +1,6 @@
 ## If you have a Huawei router  
 
-To continue using your Huawei router, you must reset your router before 16 July 2021 and insert a different SIM card
+To continue using your Huawei router, you must reset your router before 16 July 2021 and insert a different SIM card.
 
 If you do not do this, you’ll be unable to use another SIM card when the data runs out.
 

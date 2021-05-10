@@ -33,12 +33,7 @@
         <%= govuk_link_to t('page_titles.signed_in_internet_access') , responsible_body_internet_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>request extra data for mobile devices</li>
-        <li>check the status of your data requests</li>
-        <li>request 4G wireless routers</li>
-      </ul>
+      <%= render 'shared/get_internet_access_section_description' %>
     <%- end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">

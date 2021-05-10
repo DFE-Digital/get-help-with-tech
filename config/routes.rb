@@ -142,6 +142,8 @@ Rails.application.routes.draw do
 
     namespace :internet do
       get '/', to: 'home#show'
+      get '/router-password', to: 'huawei_router_passwords#new'
+
       namespace :mobile, path: '/mobile' do
         get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
         get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
@@ -210,6 +212,7 @@ Rails.application.routes.draw do
 
         namespace :internet do
           get '/', to: 'home#show'
+          get '/router-password', to: 'huawei_router_passwords#new'
 
           namespace :mobile, path: '/mobile' do
             get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
