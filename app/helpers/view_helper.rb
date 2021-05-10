@@ -42,7 +42,7 @@ module ViewHelper
     opts = {
       subpage_slug: slug,
     }.merge(path_options)
-    govuk_link_to body, devices_guidance_subpage_path(opts), html_options
+    govuk_link_to body, devices_guidance_subpage_path(**opts), **html_options
   end
 
   def breadcrumbs(items)
