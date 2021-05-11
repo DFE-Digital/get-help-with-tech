@@ -10,7 +10,7 @@ Using another SIM card will remove the content filters. Read our [safeguarding g
 
 It will take between 5 and 10 minutes to reset your router. You should read all the steps before you begin.
 
-You’ll need your Huawei router and the router’s wifi network name and password — you can find these on a label under the back cover of your router.
+You’ll need your Huawei router and the router’s wifi network name and password - you can find these on a label under the back cover of your router.
 
 You’ll also need a laptop, tablet or mobile phone.
 
@@ -34,17 +34,17 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Once connected, you’ll be asked to read and accept the privacy notice and user agreement.
 
-1. Choose whether you want overnight updates — we recommend you select ‘Enable and continue’.
+1. Choose whether you want overnight updates - we recommend you select ‘Enable and continue’.
 
-1. You’ll be asked if you want to change your wifi name and password — we recommend you keep the ones you have.
+1. You’ll be asked if you want to change your wifi name and password - we recommend you keep the ones you have.
 
-1. Choose a new device login password — this should be at least 8 characters and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’. You should now be on the router settings homepage.
+1. Choose a new device login password - this should be at least 8 characters and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’. You should now be on the router settings homepage.
 
 1. You should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update’.
 
   ![Screenshot of new version reminder. Heading ‘New version reminder’. Your current version (for example 10.0.2.1). The new version you can use (for example 11.0.1.2. ). Warning text ‘During this update, the device may disconnect from the internet. The device must remain connected to a power source in order to prevent any damage. Bengin update?’. A button labelled ‘Update’.](/devices/huawei-update-version.png)
 
-Once the update has downloaded it will begin to install automatically — this should take approximately 5 minutes. Router lights may turn on and off during this time.
+Once the update has downloaded it will begin to install automatically - this should take approximately 5 minutes. Router lights may turn on and off during this time.
 
 You’ll get a notification once the installation is finished.
 
@@ -62,7 +62,7 @@ The SIM card supplied with the router will provide data until 31 July 2021. You 
 
 If you are unable to access the router settings:
 
-- check if you’ve entered the device login password correctly — this is the one you chose when you reset your router and is different to your wifi password
+- check if you’ve entered the device login password correctly - this is the one you chose when you reset your router and is different to your wifi password
 
 - make sure you have installed and downloaded the software update to reset your router
 
