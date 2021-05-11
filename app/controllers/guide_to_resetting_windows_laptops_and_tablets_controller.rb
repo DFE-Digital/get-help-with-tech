@@ -38,23 +38,23 @@ private
         text: t('guide_to_resetting_windows_laptops_and_tablets.get_local_admin_and_bios_passwords'),
         path: guide_to_resetting_windows_laptops_and_tablets_get_local_admin_and_bios_passwords_path,
       },
-      { 
+      {
         text: t('guide_to_resetting_windows_laptops_and_tablets.reset_the_bios_password'),
         path: guide_to_resetting_windows_laptops_and_tablets_reset_the_bios_password_path,
       },
-      { 
+      {
         text: t('guide_to_resetting_windows_laptops_and_tablets.unlock_recovery_mode'),
         path: guide_to_resetting_windows_laptops_and_tablets_unlock_recovery_mode_path,
       },
-      { 
+      {
         text: t('guide_to_resetting_windows_laptops_and_tablets.reset_the_device'),
         path: guide_to_resetting_windows_laptops_and_tablets_reset_the_device_path,
       },
-      { 
+      {
         text: t('guide_to_resetting_windows_laptops_and_tablets.apply_your_own_settings'),
         path: guide_to_resetting_windows_laptops_and_tablets_apply_your_own_settings_path,
       },
-      { 
+      {
         text: t('guide_to_resetting_windows_laptops_and_tablets.additional_support'),
         path: guide_to_resetting_windows_laptops_and_tablets_additional_support_path,
       },
