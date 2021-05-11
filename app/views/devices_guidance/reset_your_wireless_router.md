@@ -68,7 +68,7 @@ If you are unable to access the router settings:
 
 - [contact us](/get-support) if you’re still having difficulties
 
-##If you have a <span class="app-no-wrap">TP-Link</span> or <span class="app-no-wrap">D-Link</span> router 
+##If you have a TP-Link or D-Link router 
 
 
 If you have a TP-Link or D-Link router, you can reset your router and insert another SIM card at any time. If you choose to do this before 31 July 2021, your router will no longer receive data from DfE.
