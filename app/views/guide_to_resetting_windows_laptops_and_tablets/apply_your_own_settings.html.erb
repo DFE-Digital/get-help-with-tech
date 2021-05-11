@@ -1,10 +1,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render partial: 'guide_contents', locals: { index: 1 } %>
+    <%= render partial: 'guide_contents', locals: { index: 6 } %>
 
     <p class="govuk-body">After resetting devices, you should apply your own security settings and set up content filtering to ensure they’re safe for users.</p>
     
-    <p class="govuk-body">For more information on how to do this, read our guidance on <%= govuk_link_to 'preparing standard Microsoft Windows laptops and tablets', 'preparing_a_standard_windows_device_path' %>.</p>
+    <p class="govuk-body">
+      For more information on how to do this, read our guidance on <%= link_to_devices_guidance_subpage 'preparing standard Microsoft Windows laptops and tablets', 'preparing-microsoft-windows-laptops-and-tablets' %>
+    </p>
     
     <p class="govuk-body">Guidance on <%= govuk_link_to 'Keeping Children Safe in Education', 'https://www.gov.uk/government/publications/keeping-children-safe-in-education--2' %> provides online safety resources, including:</p>
     
