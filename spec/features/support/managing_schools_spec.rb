@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Managing schools from the support area', type: :feature do
+RSpec.describe 'Managing schools from the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
   let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
   let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
   let(:school) { School.find_by_name('Alpha School') }
   let(:school_contact) { school.contacts.first }
 
-  scenario 'DfE users see school users' do
+  it 'DfE users see school users' do
     given_a_responsible_body
     and_it_has_a_school_with_users
 
@@ -18,7 +18,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     then_i_see_the_school_users
   end
 
-  scenario 'Computacenter users can only see school users who have seen the privacy notice' do
+  it 'Computacenter users can only see school users who have seen the privacy notice' do
     given_a_responsible_body
     and_it_has_a_school_with_users
 
@@ -30,7 +30,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_dont_see_the_school_users_who_have_not_seen_the_privacy_policy
   end
 
-  scenario 'DfE users invite school contacts to prepare for ordering devices' do
+  it 'DfE users invite school contacts to prepare for ordering devices' do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
 
@@ -43,7 +43,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_can_no_longer_invite_the_school
   end
 
-  scenario 'DfE user invites school contact who is already a user on another school' do
+  it 'DfE user invites school contact who is already a user on another school' do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
     and_the_school_contact_is_already_a_user_on_another_school
@@ -57,7 +57,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_can_no_longer_invite_the_school
   end
 
-  scenario 'DfE user invites school contact who is already a user on a responsible_body' do
+  it 'DfE user invites school contact who is already a user on a responsible_body' do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
     and_the_school_contact_is_already_a_user_on_the_responsible_body
@@ -71,7 +71,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_can_no_longer_invite_the_school
   end
 
-  scenario 'DfE users can update school user details' do
+  it 'DfE users can update school user details' do
     given_a_responsible_body
     and_it_has_a_school_with_users
 
@@ -91,7 +91,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     then_i_see_the_school_users_with_updated_details
   end
 
-  scenario 'DfE users can see that a school is permanently closed' do
+  it 'DfE users can see that a school is permanently closed' do
     given_a_responsible_body
     and_it_has_a_school_with_users
     and_the_school_is_closed

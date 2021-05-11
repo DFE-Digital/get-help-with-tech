@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature ResponsibleBody do
+RSpec.describe ResponsibleBody do
   let(:sign_in_page) { PageObjects::SignInPage.new }
   let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
 
@@ -9,7 +9,7 @@ RSpec.feature ResponsibleBody do
   let(:mno_user) { create(:mno_user) }
 
   context 'not signed-in' do
-    scenario 'visiting the page redirects to sign-in' do
+    it 'visiting the page redirects to sign-in' do
       visit responsible_body_home_path
 
       expect(sign_in_page).to be_displayed
@@ -21,7 +21,7 @@ RSpec.feature ResponsibleBody do
       sign_in_as mno_user
     end
 
-    scenario 'visiting the page shows a :forbidden error' do
+    it 'visiting the page shows a :forbidden error' do
       visit responsible_body_home_path
 
       expect(page).to have_content('You’re not allowed to do that')

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.feature 'Managing GIAS updates to schools from the support area', type: :feature do
+RSpec.describe 'Managing GIAS updates to schools from the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
 
-  scenario 'Third-line support users can see the GIAS updates' do
+  it 'Third-line support users can see the GIAS updates' do
     when_i_sign_in_as_a_third_line_support_user
     and_i_visit_the_support_page
     then_i_see_a_link_to_the_gias_updates
   end
 
-  scenario 'Third-line support users can navigate to the schools to add list' do
+  it 'Third-line support users can navigate to the schools to add list' do
     given_there_are_schools_to_add
     when_i_sign_in_as_a_third_line_support_user
     and_i_visit_the_support_page
@@ -18,7 +18,7 @@ RSpec.feature 'Managing GIAS updates to schools from the support area', type: :f
     then_i_see_the_list_of_schools_to_add
   end
 
-  scenario 'Third-line support users can add a school' do
+  it 'Third-line support users can add a school' do
     given_there_are_schools_to_add
     when_i_sign_in_as_a_third_line_support_user
     when_i_visit_the_schools_to_add_page
@@ -28,7 +28,7 @@ RSpec.feature 'Managing GIAS updates to schools from the support area', type: :f
     then_i_see_the_updated_list_of_schools_to_add
   end
 
-  scenario 'Third-line support users can navigate to the schools to close list' do
+  it 'Third-line support users can navigate to the schools to close list' do
     given_there_are_schools_to_close
     when_i_sign_in_as_a_third_line_support_user
     and_i_visit_the_support_page
@@ -37,7 +37,7 @@ RSpec.feature 'Managing GIAS updates to schools from the support area', type: :f
     then_i_see_the_list_of_schools_to_close
   end
 
-  scenario 'Third-line support users can close a school' do
+  it 'Third-line support users can close a school' do
     given_there_are_schools_to_close
     when_i_sign_in_as_a_third_line_support_user
     when_i_visit_the_schools_to_close_page
@@ -47,34 +47,34 @@ RSpec.feature 'Managing GIAS updates to schools from the support area', type: :f
     then_i_see_the_updated_list_of_schools_to_close
   end
 
-  scenario 'Non-third-line support users cannot see the GIAS updates' do
+  it 'Non-third-line support users cannot see the GIAS updates' do
     when_i_sign_in_as_a_support_user
     and_i_visit_the_support_page
     then_i_do_not_see_a_link_to_the_gias_updates
   end
 
-  scenario 'Non-third-line support users cannot navigate to the schools to add list' do
+  it 'Non-third-line support users cannot navigate to the schools to add list' do
     given_there_are_schools_to_add
     when_i_sign_in_as_a_support_user
     when_i_visit_the_schools_to_add_page
     then_i_see_a_forbidden_message
   end
 
-  scenario 'Non-third-line support users cannot add a school' do
+  it 'Non-third-line support users cannot add a school' do
     given_there_are_schools_to_add
     when_i_sign_in_as_a_support_user
     when_i_visit_a_school_to_be_added_page
     then_i_see_a_forbidden_message
   end
 
-  scenario 'Non-third-line support users cannot navigate to the schools to close list' do
+  it 'Non-third-line support users cannot navigate to the schools to close list' do
     given_there_are_schools_to_close
     when_i_sign_in_as_a_support_user
     when_i_visit_the_schools_to_close_page
     then_i_see_a_forbidden_message
   end
 
-  scenario 'Non-third-line support users cannot close a school' do
+  it 'Non-third-line support users cannot close a school' do
     given_there_are_schools_to_close
     when_i_sign_in_as_a_support_user
     when_i_visit_a_school_to_be_closed_page

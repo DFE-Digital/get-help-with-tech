@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :feature do
+RSpec.describe 'Reporting a problem with an ExtraMobileDataRequest', type: :feature do
   let(:mno_user) { create(:mno_user) }
 
   context 'signed in as an MNO user' do
@@ -16,7 +16,7 @@ RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :featu
         visit mno_extra_mobile_data_requests_path
       end
 
-      scenario 'clicking "Report a problem" shows the "Report a problem" form' do
+      it 'clicking "Report a problem" shows the "Report a problem" form' do
         within("#request-#{requests.first.id}") do
           click_on('Report a problem')
         end
@@ -24,7 +24,7 @@ RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :featu
         expect(page).to have_content('Report a problem')
       end
 
-      scenario 'submitting the form without choosing a problem returns an error' do
+      it 'submitting the form without choosing a problem returns an error' do
         within("#request-#{requests.first.id}") do
           click_on('Report a problem')
         end
@@ -34,7 +34,7 @@ RSpec.feature 'Reporting a problem with an ExtraMobileDataRequest', type: :featu
         expect(page).to have_http_status(:unprocessable_entity)
       end
 
-      scenario 'choosing a problem and submitting the form updates the status of the request' do
+      it 'choosing a problem and submitting the form updates the status of the request' do
         within("#request-#{requests.first.id}") do
           click_on('Report a problem')
         end

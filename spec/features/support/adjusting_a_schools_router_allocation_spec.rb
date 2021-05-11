@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Adjusting a schools router allocation' do
+RSpec.describe 'Adjusting a schools router allocation' do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school, order_state: :cannot_order) }
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Computacenter confirming TechSource accounts' do
-  scenario 'when school user + school can order devices' do
+  it 'when school user + school can order devices' do
     given_school_exists_that_can_order_devices
     and_school_user_awaiting_techsource_confirmation
     and_a_computacenter_user_exists
@@ -15,7 +15,7 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
     then_an_email_audit_entry_is_present
   end
 
-  scenario 'when rb user + rbs schools can order devices' do
+  it 'when rb user + rbs schools can order devices' do
     given_rb_exists_that_can_order_devices
     and_rb_user_awaiting_techsource_confirmation
     and_a_computacenter_user_exists
@@ -25,7 +25,7 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
     then_it_sends_an_email_to_the_user(@rb_user)
   end
 
-  scenario 'when school user + school cannot order devices' do
+  it 'when school user + school cannot order devices' do
     given_school_exists_that_cannot_order_devices
     and_school_user_awaiting_techsource_confirmation
     and_a_computacenter_user_exists

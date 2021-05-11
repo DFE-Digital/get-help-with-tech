@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'View school details' do
+RSpec.describe 'View school details' do
   let(:school_user) { create(:school_user, full_name: 'AAA Smith') }
 
   before do

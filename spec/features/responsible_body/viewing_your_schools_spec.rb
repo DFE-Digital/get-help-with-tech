@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing your schools' do
+RSpec.describe 'Viewing your schools' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
@@ -15,7 +15,7 @@ RSpec.feature 'Viewing your schools' do
     given_my_order_information_is_up_to_date
   end
 
-  scenario 'navigate to your schools page' do
+  it 'navigate to your schools page' do
     when_i_visit_the_responsible_body_home_page
     and_i_follow_the_get_laptops_and_tablets_link
     then_i_see_the_get_laptops_and_tablets_page
@@ -25,49 +25,49 @@ RSpec.feature 'Viewing your schools' do
     then_i_dont_see_the_order_devices_link
   end
 
-  scenario 'see a school that is able to fully order' do
+  it 'see a school that is able to fully order' do
     given_a_school_can_order
     when_i_visit_the_your_schools_page
     then_i_dont_see_the_order_devices_link
     then_i_see_the_school_in_the_schools_reporting_closure_list
   end
 
-  scenario 'see a school that is able to order for specific circumstances' do
+  it 'see a school that is able to order for specific circumstances' do
     given_a_school_can_order_for_specific_circumstances
     when_i_visit_the_your_schools_page
     then_i_dont_see_the_order_devices_link
     then_i_see_the_school_in_the_schools_with_approved_requests_list
   end
 
-  scenario 'see a schools that is fully open' do
+  it 'see a schools that is fully open' do
     given_a_school_is_fully_open
     when_i_visit_the_your_schools_page
     then_i_dont_see_the_order_devices_link
     then_i_see_the_school_in_the_fully_open_schools_list
   end
 
-  scenario 'when the trust manages centrally' do
+  it 'when the trust manages centrally' do
     given_there_are_schools_in_the_pool
     when_i_visit_the_your_schools_page
     then_i_see_the_order_devices_link
     then_i_see_the_summary_pooled_device_count_card
   end
 
-  scenario 'when the trust manages centrally but there is nothing to order' do
+  it 'when the trust manages centrally but there is nothing to order' do
     given_there_are_schools_in_the_pool_that_cant_order
     when_i_visit_the_your_schools_page
     then_i_dont_see_the_order_devices_link
     then_i_see_the_summary_pooled_device_count_card
   end
 
-  scenario 'when the trust manages centrally and wants to devolve a school' do
+  it 'when the trust manages centrally and wants to devolve a school' do
     given_there_are_schools_in_the_pool
     when_i_visit_the_your_schools_page
     and_i_select_a_centrally_managed_school
     then_i_dont_see_change_links_for_who_will_order
   end
 
-  scenario 'when the trust manages centrally and wants to manage a devolved a school' do
+  it 'when the trust manages centrally and wants to manage a devolved a school' do
     when_i_visit_the_your_schools_page
     and_i_select_a_devolved_school
     when_i_click_the_change_who_will_order_link

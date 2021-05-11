@@ -1,14 +1,14 @@
 require 'rails_helper'
 require 'shared/filling_in_forms'
 
-RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature do
+RSpec.describe 'Submitting a bulk ExtraMobileDataRequest request', type: :feature do
   context 'not signed in' do
     it 'does not show the link in the nav' do
       visit '/'
       expect(page).not_to have_text('Tell us who needs more data')
     end
 
-    scenario 'visiting the form directly should redirect to sign_in' do
+    it 'visiting the form directly should redirect to sign_in' do
       visit new_responsible_body_internet_mobile_bulk_request_path
       expect(page).to have_current_path(sign_in_path)
     end
@@ -30,7 +30,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
         .to_return(status: 201, body: '{}')
     end
 
-    scenario 'submitting the form with a valid file shows a summary page' do
+    it 'submitting the form with a valid file shows a summary page' do
       visit responsible_body_internet_mobile_extra_data_requests_path
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
@@ -45,7 +45,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
       expect(page).to have_text('We’ve processed your spreadsheet')
     end
 
-    scenario 'submitting the form without making a choice shows errors' do
+    it 'submitting the form without making a choice shows errors' do
       visit new_responsible_body_internet_mobile_bulk_request_path
       click_on 'Upload requests'
       expect(page.status_code).not_to eq(200)

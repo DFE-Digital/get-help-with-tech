@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the donated devices area as a school user', type: :feature, with_feature_flags: { donated_devices: 'active' } do
+RSpec.describe 'Accessing the donated devices area as a school user', type: :feature, with_feature_flags: { donated_devices: 'active' } do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
 
@@ -9,19 +9,19 @@ RSpec.feature 'Accessing the donated devices area as a school user', type: :feat
     sign_in_as user
   end
 
-  scenario 'devolved school can navigate to donated device form from the home page' do
+  it 'devolved school can navigate to donated device form from the home page' do
     given_i_have_a_devolved_school
     and_i_navigate_to_the_home_page
     then_i_see_that_i_can_opt_in
   end
 
-  scenario 'centrally managed school cannot see the donated device form from the home page' do
+  it 'centrally managed school cannot see the donated device form from the home page' do
     given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_home_page
     then_i_see_that_i_cannot_opt_in
   end
 
-  scenario 'school cannot see donated device form from homepage without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
+  it 'school cannot see donated device form from homepage without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
     given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_home_page
     then_i_see_that_i_cannot_opt_in

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Updating addresses' do
+RSpec.describe 'Updating addresses' do
   let(:support_user) { create(:support_user, role: 'third_line') }
   let(:school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }

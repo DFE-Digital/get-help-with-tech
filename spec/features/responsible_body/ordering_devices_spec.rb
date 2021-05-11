@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering devices' do
+RSpec.describe 'Ordering devices' do
   let(:responsible_body) { create(:local_authority) }
   let(:schools) { create_list(:school, 6, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
@@ -10,7 +10,7 @@ RSpec.feature 'Ordering devices' do
     given_my_order_information_is_up_to_date
   end
 
-  scenario 'navigate to order devices page' do
+  it 'navigate to order devices page' do
     when_i_visit_the_responsible_body_home_page
     and_i_follow_the_get_laptops_and_tablets_link
     then_i_see_the_get_laptops_and_tablets_page
@@ -19,7 +19,7 @@ RSpec.feature 'Ordering devices' do
     then_i_see_the_cannot_order_devices_yet_page
   end
 
-  scenario 'a responsible body that cannot order devices yet' do
+  it 'a responsible body that cannot order devices yet' do
     when_i_visit_the_responsible_body_home_page
     and_i_follow_the_get_laptops_and_tablets_link
     then_i_see_the_get_laptops_and_tablets_page
@@ -28,20 +28,20 @@ RSpec.feature 'Ordering devices' do
     then_i_see_that_i_will_be_able_to_order_soon
   end
 
-  scenario 'a centrally managed school can order for specific circumstances' do
+  it 'a centrally managed school can order for specific circumstances' do
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_for_specific_circumstances_page
   end
 
-  scenario 'a centrally managed school can order full allocation' do
+  it 'a centrally managed school can order full allocation' do
     given_a_centrally_managed_school_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
     and_i_see_1_school_that_i_need_to_place_orders_for
   end
 
-  scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+  it 'centrally managed schools that can order for specific circumstances and full allocation' do
     given_a_centrally_managed_school_can_order_full_allocation
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page

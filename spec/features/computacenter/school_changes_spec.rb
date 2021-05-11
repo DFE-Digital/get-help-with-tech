@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Administering school changes' do
+RSpec.describe 'Administering school changes' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
     let!(:new_schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
@@ -13,31 +13,31 @@ RSpec.feature 'Administering school changes' do
       given_i_am_signed_in_as_a_computacenter_user
     end
 
-    scenario 'navigate to school changes page' do
+    it 'navigate to school changes page' do
       when_i_visit_the_home_page
       and_i_click_the_changes_to_schools_link
       then_i_see_the_list_of_all_changed_schools
     end
 
-    scenario 'view new schools' do
+    it 'view new schools' do
       when_i_visit_the_changes_to_schools_page
       and_i_click_on_the_new_schools_tab
       then_i_see_the_list_of_new_schools
     end
 
-    scenario 'view amended schools' do
+    it 'view amended schools' do
       when_i_visit_the_changes_to_schools_page
       and_i_click_on_the_amended_schools_tab
       then_i_see_the_list_of_amended_schools
     end
 
-    scenario 'download csv file' do
+    it 'download csv file' do
       when_i_visit_the_changes_to_schools_page
       and_i_click_the_download_csv_link
       then_it_downloads_the_changed_schools_as_a_csv_file
     end
 
-    scenario 'update a Ship To reference' do
+    it 'update a Ship To reference' do
       when_i_visit_the_changes_to_schools_page
       then_i_see_the_list_of_all_changed_schools
       when_i_click_the_verify_link_for_a_school
@@ -47,7 +47,7 @@ RSpec.feature 'Administering school changes' do
       then_i_see_an_updated_list_of_all_changed_schools
     end
 
-    scenario 'update a Ship To reference with bad data' do
+    it 'update a Ship To reference with bad data' do
       when_i_visit_the_changes_to_schools_page
       then_i_see_the_list_of_all_changed_schools
       when_i_click_the_verify_link_for_a_school

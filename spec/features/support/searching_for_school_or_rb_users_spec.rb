@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Searching for school or RB users' do
+RSpec.describe 'Searching for school or RB users' do
   let(:search_page) { PageObjects::Support::Users::SearchPage.new }
   let(:results_page) { PageObjects::Support::Users::ResultsPage.new }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:support_user) { create(:support_user) }
   let(:computacenter_user) { create(:computacenter_user, is_support: true) }
 
-  scenario 'finding a user by their name or email address' do
+  it 'finding a user by their name or email address' do
     given_i_am_signed_in_as_a_support_user
     and_there_are_school_and_responsible_body_users
 
@@ -22,7 +22,7 @@ RSpec.feature 'Searching for school or RB users' do
     and_i_can_navigate_to_the_support_page_for_their_school
   end
 
-  scenario 'Computacenter user can only find users who have seen the privacy notice' do
+  it 'Computacenter user can only find users who have seen the privacy notice' do
     given_i_am_signed_in_as_a_computacenter_user
     and_there_are_school_and_responsible_body_users
 
@@ -37,7 +37,7 @@ RSpec.feature 'Searching for school or RB users' do
     and_i_can_navigate_to_the_support_page_for_their_school
   end
 
-  scenario 'users with no associated organisations are still shown in the results' do
+  it 'users with no associated organisations are still shown in the results' do
     given_i_am_signed_in_as_a_support_user
     and_there_is_a_user_with_no_associations
 

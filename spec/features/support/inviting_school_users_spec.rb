@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Inviting school users' do
+RSpec.describe 'Inviting school users' do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school) }
   let(:other_school) { create(:school) }
@@ -12,7 +12,7 @@ RSpec.feature 'Inviting school users' do
     create(:preorder_information, school: school, who_will_order_devices: 'school')
   end
 
-  scenario 'support invites new school user' do
+  it 'support invites new school user' do
     given_i_am_signed_in_as_a_support_user
     when_i_visit_the_school_page
     and_i_click_the_invite_a_new_user_button
@@ -25,7 +25,7 @@ RSpec.feature 'Inviting school users' do
     and_the_school_is_shown_as_contacted
   end
 
-  scenario 'support invites user to a school who already exists on another school' do
+  it 'support invites user to a school who already exists on another school' do
     given_i_am_signed_in_as_a_support_user
     and_there_is_an_existing_user_on_another_school
     when_i_visit_the_school_page

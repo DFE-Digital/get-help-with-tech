@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Setting up the devices ordering' do
+RSpec.describe 'Setting up the devices ordering' do
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
   let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
@@ -36,7 +36,7 @@ RSpec.feature 'Setting up the devices ordering' do
       sign_in_as local_authority_user
     end
 
-    scenario 'devolving device ordering mostly to schools' do
+    it 'devolving device ordering mostly to schools' do
       when_i_follow_the_get_devices_link
       then_i_see_guidance_for_a_local_authority
       and_i_continue_through_the_guidance
@@ -68,7 +68,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_the_school_contact_has_been_invited_to_the_service
     end
 
-    scenario 'devolving device ordering mostly centrally' do
+    it 'devolving device ordering mostly centrally' do
       when_i_follow_the_get_devices_link
       then_i_see_guidance_for_a_local_authority
       and_i_continue_through_the_guidance
@@ -84,14 +84,14 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_see_a_link_to_change_who_orders_devices
     end
 
-    scenario 'submitting the form without choosing an option shows an error' do
+    it 'submitting the form without choosing an option shows an error' do
       visit responsible_body_devices_who_will_order_edit_path
       click_on 'Continue'
       expect(page).to have_http_status(:unprocessable_entity)
       expect(page).to have_content('There is a problem')
     end
 
-    scenario 'changing the settings for each school after making the choice about who will order' do
+    it 'changing the settings for each school after making the choice about who will order' do
       given_the_responsible_body_has_decided_to_order_centrally
       when_i_visit_the_responsible_body_homepage
       when_i_follow_the_get_devices_link
@@ -119,7 +119,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
     end
 
-    scenario 'when the school has no headteacher contact (bug #537)' do
+    it 'when the school has no headteacher contact (bug #537)' do
       given_there_is_a_school_with_no_headteacher
       when_i_follow_the_get_devices_link
       and_i_continue_through_the_guidance
@@ -133,7 +133,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_the_status_reflects_that_the_school_has_been_contacted
     end
 
-    scenario 'when the school has no standard device allocation' do
+    it 'when the school has no standard device allocation' do
       given_there_is_a_school_with_no_standard_device_allocation
       when_i_follow_the_get_devices_link
       and_i_continue_through_the_guidance
@@ -171,7 +171,7 @@ RSpec.feature 'Setting up the devices ordering' do
       sign_in_as trust_user
     end
 
-    scenario 'devolving device ordering mostly to schools' do
+    it 'devolving device ordering mostly to schools' do
       when_i_follow_the_get_devices_link
       then_i_see_guidance_for_a_trust
       and_i_continue_through_the_guidance
@@ -180,7 +180,7 @@ RSpec.feature 'Setting up the devices ordering' do
       then_i_see_a_list_of_the_academies_i_am_responsible_for
     end
 
-    scenario 'devolving device ordering mostly centrally' do
+    it 'devolving device ordering mostly centrally' do
       when_i_follow_the_get_devices_link
       then_i_see_guidance_for_a_trust
       and_i_continue_through_the_guidance

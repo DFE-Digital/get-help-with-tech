@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing service performance', type: :feature do
-  scenario 'DfE users see service stats about sign-ins and who orders' do
+RSpec.describe 'Viewing service performance', type: :feature do
+  it 'DfE users see service stats about sign-ins and who orders' do
     given_there_have_been_sign_ins_from_users_of_devolved_schools_and_responsible_bodies
 
     when_i_sign_in_as_a_dfe_user
@@ -10,7 +10,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     then_i_see_sign_in_stats_about_devolved_schools_and_responsible_bodies
   end
 
-  scenario 'DfE users see service stats about who orders' do
+  it 'DfE users see service stats about who orders' do
     given_there_devolved_schools_and_centrally_managed_schools
 
     when_i_sign_in_as_a_dfe_user
@@ -19,7 +19,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     then_i_see_stats_about_who_orders
   end
 
-  scenario 'DfE users see service stats about devices' do
+  it 'DfE users see service stats about devices' do
     given_there_are_available_shipped_and_remaining_devices
 
     when_i_sign_in_as_a_dfe_user
@@ -31,7 +31,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     then_i_see_stats_about_responsible_bodies_managed_schools_devices
   end
 
-  scenario 'DfE users see service stats about extra mobile data requests' do
+  it 'DfE users see service stats about extra mobile data requests' do
     given_some_extra_mobile_data_requests_have_been_made
 
     when_i_sign_in_as_a_dfe_user
@@ -41,7 +41,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     then_i_see_stats_about_extra_mobile_data_requests
   end
 
-  scenario 'DfE users can query for completions between given dates' do
+  it 'DfE users can query for completions between given dates' do
     given_there_are_some_completion_events
 
     when_i_sign_in_as_a_dfe_user
@@ -55,7 +55,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     and_i_see_the_dates_i_entered_in_govuk_format
   end
 
-  scenario 'DfE users see service stats about routers' do
+  it 'DfE users see service stats about routers' do
     given_there_are_available_shipped_and_remaining_routers
 
     when_i_sign_in_as_a_dfe_user

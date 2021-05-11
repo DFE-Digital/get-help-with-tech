@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'Deleting users' do
+RSpec.describe 'Deleting users' do
   let(:support_user) { create(:support_user) }
   let(:existing_user) { create(:school_user) }
 
-  scenario 'support deletes an existing user' do
+  it 'support deletes an existing user' do
     given_i_am_signed_in_as_a_support_user
     when_i_visit_an_existing_users_page
     and_i_delete_the_user

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'Collecting mobile information guide pages', type: :feature do
-  scenario 'First guide page should be an overview with a contents list' do
+RSpec.describe 'Collecting mobile information guide pages', type: :feature do
+  it 'First guide page should be an overview with a contents list' do
     visit '/guide-to-collecting-mobile-information'
     expect(page).to have_selector 'h1', text: I18n.t('page_titles.guide_to_collecting_mobile_information')
     expect(page).to have_selector 'h2', text: 'Contents'
@@ -9,7 +9,7 @@ RSpec.feature 'Collecting mobile information guide pages', type: :feature do
     expect(page).to have_selector 'h2', text: I18n.t('guide_to_collecting_mobile_information.overview')
   end
 
-  scenario 'Next and previous page should take you through guide' do
+  it 'Next and previous page should take you through guide' do
     visit '/guide-to-collecting-mobile-information'
     click_on('Next')
     expect(page).to have_selector 'h2', text: I18n.t('guide_to_collecting_mobile_information.asking_for_network')
@@ -21,7 +21,7 @@ RSpec.feature 'Collecting mobile information guide pages', type: :feature do
     expect(page).not_to have_selector 'a', text: I18n.t('guide_to_collecting_mobile_information.overview')
   end
 
-  scenario 'Contents list takes you to any page in the guide' do
+  it 'Contents list takes you to any page in the guide' do
     visit '/guide-to-collecting-mobile-information'
     click_on(I18n.t('guide_to_collecting_mobile_information.privacy'))
     expect(page).to have_selector 'h2', text: I18n.t('guide_to_collecting_mobile_information.privacy')

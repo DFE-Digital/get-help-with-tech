@@ -3,6 +3,7 @@ class ExtraMobileDataSubmissionForm
 
   SUBMISSION_TYPES = %w[manual bulk].freeze
   attr_accessor :submission_type
+
   validates :submission_type, inclusion: { in: SUBMISSION_TYPES, message: I18n.t('errors.extra_mobile_data_submission_form.select_how_you_would_like_to_submit_information') }
 
   def manual?

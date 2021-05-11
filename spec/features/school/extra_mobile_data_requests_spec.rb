@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature do
+RSpec.describe 'Accessing the extra mobile data requests area as a school user', type: :feature do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
   let(:my_requests_page) { PageObjects::School::Internet::YourRequestsPage.new }
@@ -9,7 +9,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     sign_in_as user
   end
 
-  scenario 'the user can navigate to the manual request form from the home page' do
+  it 'the user can navigate to the manual request form from the home page' do
     click_on 'Get internet access'
     click_on 'Request extra data for mobile devices'
 
@@ -28,7 +28,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       create(:mobile_network, brand: 'giffgaff', excluded_fe_network: true)
     end
 
-    scenario 'do not show FE excluded MNOs' do
+    it 'do not show FE excluded MNOs' do
       click_on 'Get internet access'
       click_on 'Request extra data for mobile devices'
       click_on 'New request'
@@ -38,7 +38,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     end
   end
 
-  scenario 'the user can navigate to the bulk upload form from the home page' do
+  it 'the user can navigate to the bulk upload form from the home page' do
     click_on 'Get internet access'
     click_on 'Request extra data for mobile devices'
 
@@ -59,7 +59,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       requests.last.unavailable_status!
     end
 
-    scenario 'the user can navigate to their previous requests from the home page' do
+    it 'the user can navigate to their previous requests from the home page' do
       click_on 'Get internet access'
       click_on 'Request extra data for mobile devices'
 
@@ -72,7 +72,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       expect(page).to have_http_status(:ok)
     end
 
-    scenario 'the user can see their previous requests' do
+    it 'the user can see their previous requests' do
       visit extra_data_requests_internet_mobile_school_path(school)
       expect(my_requests_page).to be_displayed
 
@@ -93,7 +93,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       end
     end
 
-    scenario 'another user from the same school can also see the raised requests' do
+    it 'another user from the same school can also see the raised requests' do
       sign_out
       sign_in_as another_user_from_the_same_school
 
@@ -113,7 +113,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         Pagy::VARS[:items] = original_pagination_value
       end
 
-      scenario 'user can navigate between pages' do
+      it 'user can navigate between pages' do
         visit extra_data_requests_internet_mobile_school_path(school)
         expect(page).to have_content('Next page')
         expect(page).to have_content('2 of 3')

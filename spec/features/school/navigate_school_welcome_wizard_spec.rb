@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Navigate school welcome wizard' do
+RSpec.describe 'Navigate school welcome wizard' do
   let(:available_allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 100, cap: 50) }
   let(:unavailable_allocation) { create(:school_device_allocation, :with_std_allocation) }
   let(:school_with_unavailable_allocation) { create(:school, :with_preorder_information, std_device_allocation: unavailable_allocation) }
@@ -11,7 +11,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
   end
 
-  scenario 'step through wizard as LA Funded Place' do
+  it 'step through wizard as LA Funded Place' do
     as_a_new_la_funded_user
     when_i_sign_in_for_the_first_time
     then_i_see_the_state_funded_interstitial
@@ -21,7 +21,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_la_funded_places_homepage
   end
 
-  scenario 'step through the wizard as the first user for a school that has available allocation' do
+  it 'step through the wizard as the first user for a school that has available allocation' do
     given_my_school_has_an_available_allocation
     as_a_new_school_user
     when_i_sign_in_for_the_first_time
@@ -37,7 +37,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_techsource_account_page
   end
 
-  scenario 'step through the wizard as the first user for a school' do
+  it 'step through the wizard as the first user for a school' do
     given_my_school_has_an_unavailable_allocation
     as_a_new_school_user
     when_i_sign_in_for_the_first_time
@@ -68,7 +68,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_school_home_page
   end
 
-  scenario 'step through wizard as subsequent user when the chromebooks question has been answered yes/no' do
+  it 'step through wizard as subsequent user when the chromebooks question has been answered yes/no' do
     given_my_school_has_an_unavailable_allocation
     as_a_subsequent_school_user
     when_the_chromebooks_question_has_already_been_answered
@@ -91,7 +91,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_school_home_page
   end
 
-  scenario 'step through wizard as subsequent user when the chromebooks question has not been answered yes/no' do
+  it 'step through wizard as subsequent user when the chromebooks question has not been answered yes/no' do
     given_my_school_has_an_unavailable_allocation
     as_a_subsequent_school_user
     when_i_sign_in_for_the_first_time
@@ -116,7 +116,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_school_home_page
   end
 
-  scenario 'filling in invalid chromebook information' do
+  it 'filling in invalid chromebook information' do
     given_my_school_has_an_unavailable_allocation
     as_a_subsequent_school_user
     when_i_sign_in_for_the_first_time
@@ -144,7 +144,7 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_school_home_page
   end
 
-  scenario 'the wizard resumes where left off' do
+  it 'the wizard resumes where left off' do
     given_my_school_has_an_unavailable_allocation
     as_a_new_school_user
     when_i_sign_in_for_the_first_time

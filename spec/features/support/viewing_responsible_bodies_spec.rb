@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing responsible bodies in the support area', type: :feature do
+RSpec.describe 'Viewing responsible bodies in the support area', type: :feature do
   let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
 
-  scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
+  it 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_are_responsible_bodies_that_have_users
 
     when_i_sign_in_as_a_dfe_user
@@ -12,7 +12,7 @@ RSpec.feature 'Viewing responsible bodies in the support area', type: :feature d
     then_i_can_see_the_responsible_bodies
   end
 
-  scenario 'Computacenter users see the on-boarded responsible bodies and stats about them' do
+  it 'Computacenter users see the on-boarded responsible bodies and stats about them' do
     given_there_are_responsible_bodies_that_have_users
 
     when_i_sign_in_as_a_computacenter_user

@@ -1,5 +1,5 @@
 class Computacenter::TechSource
-  MAINTENANCE_WINDOW = (Time.zone.parse('1 May 2021 10:00am')..Time.zone.parse('1 May 2021 6:00pm')).freeze
+  MAINTENANCE_WINDOW = (Time.zone.parse('1 May 2021 10:00am')..Time.zone.parse('1 May 2021 6:00pm'))
 
   def url
     Settings.computacenter.techsource_url

@@ -1,9 +1,7 @@
 module Computacenter
   module ServiceNowUserImportAPI
     class ImportUserChangeRequest
-      attr_accessor :endpoint, :username, :password
-      attr_accessor :timestamp, :logger, :response
-      attr_accessor :user_change
+      attr_accessor :endpoint, :username, :password, :timestamp, :logger, :response, :user_change
 
       def initialize(args = {})
         @endpoint       = args[:endpoint] || setting(:endpoint)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing responsible body information in the support area', type: :feature do
+RSpec.describe 'Viewing responsible body information in the support area', type: :feature do
   let(:local_authority) { create(:local_authority, :devolves_management, name: 'Coventry') }
   let(:local_authority_managing_centrally) { create(:trust, :manages_centrally, :vcap_feature_flag, name: 'Manchester') }
 
@@ -12,7 +12,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
   end
 
   context 'when no schools are centrally managed' do
-    scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
+    it 'DfE users see the on-boarded responsible bodies and stats about them' do
       given_a_responsible_body_with_users
       and_it_has_some_schools
 
@@ -25,7 +25,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
       and_i_can_see_the_closed_schools_managed_by_that_responsible_body
     end
 
-    scenario 'Computacenter users see the on-boarded responsible bodies and stats about them' do
+    it 'Computacenter users see the on-boarded responsible bodies and stats about them' do
       given_a_responsible_body_with_users
       and_it_has_some_schools
 
@@ -41,7 +41,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
   context 'with virtual caps enabled' do
     context 'when some schools are centrally managed' do
-      scenario 'DfE users see the centrally managed schools' do
+      it 'DfE users see the centrally managed schools' do
         given_a_centrally_managed_responsible_body_with_users
         and_it_has_some_centrally_managed_schools
 
@@ -54,7 +54,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
         and_i_can_see_the_closed_schools_in_the_responsible_body
       end
 
-      scenario 'Computacenter users see the centrally managed schools' do
+      it 'Computacenter users see the centrally managed schools' do
         given_a_centrally_managed_responsible_body_with_users
         and_it_has_some_centrally_managed_schools
 
@@ -70,7 +70,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     end
 
     context 'when all schools are centrally managed' do
-      scenario 'DfE users see the centrally managed schools' do
+      it 'DfE users see the centrally managed schools' do
         given_a_centrally_managed_responsible_body_with_users
         and_it_has_all_centrally_managed_schools
 
@@ -83,7 +83,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
         and_i_can_see_the_closed_schools_in_the_responsible_body
       end
 
-      scenario 'Computacenter users see the centrally managed schools' do
+      it 'Computacenter users see the centrally managed schools' do
         given_a_centrally_managed_responsible_body_with_users
         and_it_has_all_centrally_managed_schools
 

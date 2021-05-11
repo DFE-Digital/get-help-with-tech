@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Searching for schools by URNs and other criteria' do
+RSpec.describe 'Searching for schools by URNs and other criteria' do
   let(:search_page) { PageObjects::Support::School::SearchPage.new }
   let(:results_page) { PageObjects::Support::School::ResultsPage.new }
   let(:support_user) { create(:support_user) }
@@ -10,7 +10,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   let(:bad_urn) { '12492903' }
   let(:schools_who_can_order) { create_list(:school, 2, responsible_body: responsible_body, order_state: 'can_order') }
 
-  scenario 'support agent searches for a single school by name' do
+  it 'support agent searches for a single school by name' do
     given_i_am_signed_in_as_a_support_user
     when_i_follow_the_links_to_find_schools
     then_i_see_the_schools_search_page
@@ -22,7 +22,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     and_the_results_page_contains_one_school(schools.first)
   end
 
-  scenario 'support agent searches by multiple URNs' do
+  it 'support agent searches by multiple URNs' do
     given_i_am_signed_in_as_a_support_user
     when_i_follow_the_links_to_find_schools
     then_i_see_the_schools_search_page
@@ -39,7 +39,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     and_the_csv_contains_data_for_the_searched_schools
   end
 
-  scenario 'support agent searches by order state and responsible body' do
+  it 'support agent searches by order state and responsible body' do
     given_i_am_signed_in_as_a_support_user
     and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     when_i_follow_the_links_to_find_schools
@@ -55,7 +55,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     then_i_see_the_schools_search_page
   end
 
-  scenario 'support agent exports allocations as CSV' do
+  it 'support agent exports allocations as CSV' do
     given_i_am_signed_in_as_a_support_user
     and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     when_i_follow_the_links_to_find_schools

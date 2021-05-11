@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Enabling orders for a school from the support area' do
+RSpec.describe 'Enabling orders for a school from the support area' do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:enable_orders_page) { PageObjects::Support::Schools::Devices::EnableOrdersPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
@@ -13,7 +13,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_i_sign_in_as_a_support_user
   end
 
-  scenario 'Enabling a school to place orders for their full allocation' do
+  it 'Enabling a school to place orders for their full allocation' do
     when_i_navigate_to_the_school_page_in_support
     and_i_allow_the_school_to_order_their_full_allocation_of_devices
     and_i_confirm_the_changes
@@ -24,7 +24,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_the_school_order_users_have_been_informed_that_they_can_order
   end
 
-  scenario 'Enabling a school to place orders for specific circustances' do
+  it 'Enabling a school to place orders for specific circustances' do
     when_i_navigate_to_the_school_page_in_support
     and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 2, number_of_routers: 3)
     and_i_confirm_the_changes
@@ -35,7 +35,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_the_school_order_users_have_been_informed_that_they_can_order
   end
 
-  scenario 'A school cannot order any longer' do
+  it 'A school cannot order any longer' do
     @school = a_school_with_a_device_allocation_that_can_order
 
     when_i_navigate_to_the_school_page_in_support
@@ -46,7 +46,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     and_computacenter_device_cap_for_the_school_matches_the_devices_ordered
   end
 
-  scenario 'Correcting a mistake at the confirmation stage' do
+  it 'Correcting a mistake at the confirmation stage' do
     when_i_navigate_to_the_school_page_in_support
     and_i_allow_the_school_to_order_devices_for_specific_circumstances(number_of_devices: 5)
     and_i_change_the_number_of_devices
@@ -54,7 +54,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
     then_i_see_my_previously_entered_value_for_specific_circumstances(number_of_devices: 5)
   end
 
-  scenario 'The Computacenter cap update fails' do
+  it 'The Computacenter cap update fails' do
     given_the_school_has_already_ordered_more_devices_than_their_proposed_cap
 
     when_i_navigate_to_the_school_page_in_support

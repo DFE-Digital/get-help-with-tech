@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Changing who will order devices for a school' do
+RSpec.describe 'Changing who will order devices for a school' do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
 
   before do
@@ -8,7 +8,7 @@ RSpec.feature 'Changing who will order devices for a school' do
     given_i_sign_in_as_a_support_user
   end
 
-  scenario 'setting school will order devices when responsible body does not have vcap feature flag' do
+  it 'setting school will order devices when responsible body does not have vcap feature flag' do
     given_a_responsible_body_without_virtual_caps_enabled
     given_a_school_that_is_centrally_managed
 
@@ -20,7 +20,7 @@ RSpec.feature 'Changing who will order devices for a school' do
     then_the_who_will_order_details_show_that_the_school_orders_in_the_support_console
   end
 
-  scenario 'setting responsible body will order devices when responsible body does not have vcap feature flag' do
+  it 'setting responsible body will order devices when responsible body does not have vcap feature flag' do
     given_a_responsible_body_without_virtual_caps_enabled
     given_a_school_that_manages_orders
 
@@ -32,7 +32,7 @@ RSpec.feature 'Changing who will order devices for a school' do
     then_the_who_will_order_details_show_that_the_responsible_body_orders_in_the_support_console
   end
 
-  scenario 'setting school will order devices when responsible body has vcap feature flag' do
+  it 'setting school will order devices when responsible body has vcap feature flag' do
     given_a_responsible_body_with_virtual_caps_enabled
     given_a_school_that_is_centrally_managed
 
@@ -40,7 +40,7 @@ RSpec.feature 'Changing who will order devices for a school' do
     then_i_cannot_see_the_change_link_for_who_will_order
   end
 
-  scenario 'setting responsible body will order devices when responsible body has vcap feature flag' do
+  it 'setting responsible body will order devices when responsible body has vcap feature flag' do
     given_a_responsible_body_with_virtual_caps_enabled
     given_a_school_that_manages_orders
 

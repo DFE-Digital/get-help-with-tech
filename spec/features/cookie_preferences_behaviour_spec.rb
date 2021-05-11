@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Cookie preferences', type: :feature do
+RSpec.describe 'Cookie preferences', type: :feature do
   describe 'banner behaviour' do
     context 'when no preference has been set' do
       before do

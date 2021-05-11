@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Setting up the devices ordering' do
+RSpec.describe 'Setting up the devices ordering' do
   let(:responsible_body) { create(:local_authority, who_will_order_devices: 'responsible_body') }
   let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let!(:school) { create(:school, :la_maintained, :with_preorder_information, responsible_body: responsible_body) }
@@ -12,7 +12,7 @@ RSpec.feature 'Setting up the devices ordering' do
     visit responsible_body_devices_schools_path
   end
 
-  scenario 'when the responsible_body will order devices' do
+  it 'when the responsible_body will order devices' do
     when_i_click_on_a_school_that_has_no_chromebook_information
     it_tells_me_the_local_authority_will_order_devices
     and_asks_me_if_the_school_will_need_chromebooks

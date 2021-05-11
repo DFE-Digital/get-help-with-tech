@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'Google Analytics behaviour' do
+RSpec.describe 'Google Analytics behaviour' do
   let(:consent) { nil }
   let(:tracking_id) { nil }
   let(:google_tag) { /<script [^>]*src="https:\/\/www.googletagmanager.com\/gtag\/js\?id=#{tracking_id}"/ }
-  let(:anonymize_ip_config) { /gtag\(\'config',[^\)]+'anonymize_ip': true[^\)]*\)/ }
+  let(:anonymize_ip_config) { /gtag\('config',[^)]+'anonymize_ip': true[^)]*\)/ }
 
   before do
     allow(Settings.google.analytics).to receive(:tracking_id).and_return(tracking_id)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Download CSV files' do
+RSpec.describe 'Download CSV files' do
   let(:user) { create(:computacenter_user) }
 
   context 'signed in as a Computacenter user' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering for LA-funded devices', type: :feature do
+RSpec.describe 'Ordering for LA-funded devices', type: :feature do
   before do
     given_there_is_an_independent_settings_school
     given_i_am_signed_in_as_an_independent_settings_school_user
@@ -10,7 +10,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   context 'when laptops are available' do
     before { given_i_have_not_ordered_all_my_laptops }
 
-    scenario 'ordering laptops when I need Chromebooks' do
+    it 'ordering laptops when I need Chromebooks' do
       when_i_click_on_get_laptops
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
@@ -23,7 +23,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
       then_i_see_how_to_sign_in_to_techsource
     end
 
-    scenario 'ordering laptops when I do not need Chromebooks' do
+    it 'ordering laptops when I do not need Chromebooks' do
       when_i_click_on_get_laptops
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
@@ -36,7 +36,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
       then_i_see_how_to_sign_in_to_techsource
     end
 
-    scenario 'ordering laptops when I am not sure I need Chromebooks' do
+    it 'ordering laptops when I am not sure I need Chromebooks' do
       when_i_click_on_get_laptops
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
@@ -49,7 +49,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
       then_i_see_how_to_sign_in_to_techsource
     end
 
-    scenario 'ordering laptops when a choice has already been made on Chromebooks' do
+    it 'ordering laptops when a choice has already been made on Chromebooks' do
       given_i_have_already_confirmed_that_i_will_order_chromebooks
       when_i_click_on_get_laptops
       then_i_see_i_have_laptops_remaining
@@ -60,7 +60,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
       then_i_see_how_to_sign_in_to_techsource
     end
 
-    scenario 'ordering laptops when I previously was not sure I needed Chromebooks' do
+    it 'ordering laptops when I previously was not sure I needed Chromebooks' do
       given_i_have_already_answered_that_i_was_not_sure_that_i_will_order_chromebooks
       when_i_click_on_get_laptops
       then_i_see_i_have_laptops_remaining
@@ -75,7 +75,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   context 'when there are no laptops left to order' do
     before { given_i_have_ordered_all_of_my_laptops }
 
-    scenario 'ordering laptops when no laptops left to order' do
+    it 'ordering laptops when no laptops left to order' do
       when_i_click_on_get_laptops
       then_i_see_i_have_no_laptops_remaining
     end

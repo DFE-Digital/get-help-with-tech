@@ -1,19 +1,19 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Find MNO Requests by telephone number', type: :feature do
+RSpec.describe 'Find MNO Requests by telephone number', type: :feature do
   let(:local_authority_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
   let!(:extra_mobile_data_requests_for_mno) { create_list(:extra_mobile_data_request, 3, mobile_network: mno_user.mobile_network, created_by_user: local_authority_user) }
 
-  scenario 'visiting Your requests' do
+  it 'visiting Your requests' do
     given_i_am_signed_in_as_an_mno_user
     and_i_click_on_the_your_requests_link
     then_i_see_my_list_of_requests
     and_i_see_a_form_to_find_requests_by_telephone_number
   end
 
-  scenario 'finding requests by telephone number' do
+  it 'finding requests by telephone number' do
     given_i_am_signed_in_as_an_mno_user
     and_i_click_on_the_your_requests_link
     when_i_enter_the_phone_numbers_of_the_requests_i_want_to_find
@@ -21,7 +21,7 @@ RSpec.feature 'Find MNO Requests by telephone number', type: :feature do
     then_i_see_a_list_of_requests_matching_those_phone_numbers
   end
 
-  scenario 'mass selecting the matching requests' do
+  it 'mass selecting the matching requests' do
     given_i_am_signed_in_as_an_mno_user
     and_i_click_on_the_your_requests_link
     when_i_enter_the_phone_numbers_of_the_requests_i_want_to_find
@@ -37,7 +37,7 @@ RSpec.feature 'Find MNO Requests by telephone number', type: :feature do
     and_none_of_the_checkboxes_are_selected
   end
 
-  scenario 'sorting the list of matching requests' do
+  it 'sorting the list of matching requests' do
     given_i_am_signed_in_as_an_mno_user
     and_i_click_on_the_your_requests_link
     when_i_enter_the_phone_numbers_of_the_requests_i_want_to_find
@@ -53,7 +53,7 @@ RSpec.feature 'Find MNO Requests by telephone number', type: :feature do
     and_sort_order_is_reversed
   end
 
-  scenario 'updating selected matching requests' do
+  it 'updating selected matching requests' do
     given_i_am_signed_in_as_an_mno_user
     and_i_click_on_the_your_requests_link
     when_i_enter_the_phone_numbers_of_the_requests_i_want_to_find

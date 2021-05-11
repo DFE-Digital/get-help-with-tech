@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Manage school users' do
+RSpec.describe 'Manage school users' do
   let(:school_user) { create(:school_user, full_name: 'AAA Smith') }
   let(:user_from_same_school) { create(:school_user, full_name: 'ZZZ Jones', school: school_user.school) }
   let(:new_school_user) { build(:school_user, full_name: 'BBB Brown', school: school_user.school) }
@@ -17,13 +17,13 @@ RSpec.feature 'Manage school users' do
     sign_in_as school_user
   end
 
-  scenario 'viewing the list of school users who can order devices' do
+  it 'viewing the list of school users who can order devices' do
     when_i_follow_the_link_to_manage_who_can_order_devices
     then_i_see_a_list_of_users_for_my_school
     and_i_dont_see_users_from_other_schools
   end
 
-  scenario 'adding a new school user' do
+  it 'adding a new school user' do
     when_i_follow_the_link_to_manage_who_can_order_devices
     and_i_click_the_link_to_invite_a_new_user
     then_i_see_the_form_to_invite_a_new_user
@@ -33,7 +33,7 @@ RSpec.feature 'Manage school users' do
     then_i_see_an_updated_list_of_users_for_my_school
   end
 
-  scenario 'editing a school user' do
+  it 'editing a school user' do
     when_i_follow_the_link_to_manage_who_can_order_devices
     and_i_click_the_link_to_change_a_user_from_the_same_school
     then_i_see_a_form_populated_with_the_users_details
@@ -43,7 +43,7 @@ RSpec.feature 'Manage school users' do
     then_i_see_the_updated_details_for_the_user
   end
 
-  scenario 'adding a school user who is already on another school' do
+  it 'adding a school user who is already on another school' do
     when_i_follow_the_link_to_manage_who_can_order_devices
     and_i_click_the_link_to_invite_a_new_user
     then_i_see_the_form_to_invite_a_new_user
@@ -54,7 +54,7 @@ RSpec.feature 'Manage school users' do
     and_i_see_that_user_in_the_list_of_users_for_my_school
   end
 
-  scenario 'adding a school user who is already on the system as a Responsible Body user' do
+  it 'adding a school user who is already on the system as a Responsible Body user' do
     when_i_follow_the_link_to_manage_who_can_order_devices
     and_i_click_the_link_to_invite_a_new_user
     then_i_see_the_form_to_invite_a_new_user

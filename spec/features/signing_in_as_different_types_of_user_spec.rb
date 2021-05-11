@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Signing-in as different types of user', type: :feature do
+RSpec.describe 'Signing-in as different types of user', type: :feature do
   let(:user) { create(:local_authority_user) }
   let(:local_authority_school) { create(:school, :la_maintained, responsible_body: user.responsible_body) }
   let(:single_academy_trust) { create(:school, :single_academy_trust) }
@@ -16,7 +16,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return(nil)
   end
 
-  scenario 'clicking sign in shows option to sign in' do
+  it 'clicking sign in shows option to sign in' do
     visit sign_in_path
     expect(page).to have_content('Sign in')
   end
@@ -24,7 +24,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'user has already signed in' do
     let(:user) { create(:local_authority_user, :has_seen_privacy_notice) }
 
-    scenario 'visiting sign in when already signed in redirects user to home page' do
+    it 'visiting sign in when already signed in redirects user to home page' do
       sign_in_as user
       visit sign_in_path
       expect(page).to have_current_path(responsible_body_home_path)
@@ -32,7 +32,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  scenario 'supplying a valid email sends a token' do
+  it 'supplying a valid email sends a token' do
     visit sign_in_path
     fill_in('Email address', with: user.email_address)
     click_on 'Continue'
@@ -41,7 +41,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     expect(page).not_to have_content('/token/validate?identifier=')
   end
 
-  scenario 'when feature display_sign_in_token_links is active', with_feature_flags: { display_sign_in_token_links: 'active' } do
+  it 'when feature display_sign_in_token_links is active', with_feature_flags: { display_sign_in_token_links: 'active' } do
     visit sign_in_path
     fill_in('Email address', with: user.email_address)
     click_on 'Continue'
@@ -52,7 +52,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     context 'who has already seen the privacy notice' do
       let(:user) { create(:local_authority_user, :has_seen_privacy_notice, orders_devices: true) }
 
-      scenario 'it redirects to the responsible body homepage' do
+      it 'redirects to the responsible body homepage' do
         sign_in_as user
         expect(page).to have_current_path(responsible_body_home_path)
         expect(page).to have_text 'Get help with technology'
@@ -63,7 +63,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
           user.schools << local_authority_school
         end
 
-        scenario 'it redirects to Your organisations' do
+        it 'redirects to Your organisations' do
           sign_in_as user
           expect(page).to have_text 'Choose the organisation you want to view'
           expect(page).to have_link user.schools.first.name
@@ -75,7 +75,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     context 'who has not seen the privacy notice' do
       let(:user) { create(:local_authority_user, :has_not_seen_privacy_notice) }
 
-      scenario 'it redirects to the privacy notice page' do
+      it 'redirects to the privacy notice page' do
         sign_in_as user
         expect(page).to have_current_path(privacy_notice_path)
         expect(page).to have_text 'Privacy notice'
@@ -89,7 +89,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     context 'who has not seen the privacy notice' do
       let(:user) { create(:school_user, :has_not_seen_privacy_notice) }
 
-      scenario 'it redirects to the privacy notice page' do
+      it 'redirects to the privacy notice page' do
         sign_in_as user
         expect(page).to have_current_path(privacy_notice_path)
         expect(page).to have_text 'Privacy notice'
@@ -97,7 +97,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
 
     context 'when the user has only one school' do
-      scenario 'it redirects to the school homepage' do
+      it 'redirects to the school homepage' do
         sign_in_as user
         expect(page).to have_current_path(home_school_path(user.school))
         expect(page).to have_text user.school.name
@@ -111,7 +111,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
         user.schools << other_school
       end
 
-      scenario 'it takes them to Your schools' do
+      it 'takes them to Your schools' do
         visit validate_token_url_for(user)
         click_on 'Continue'
         expect(page).to have_text 'Your schools'
@@ -126,7 +126,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     let(:school) { create(:school, preorder_information: preorder) }
     let(:user) { create(:school_user, school: school) }
 
-    scenario 'it redirects to the before you can order page' do
+    it 'redirects to the before you can order page' do
       sign_in_as user
       expect(page).to have_current_path(before_you_can_order_school_path(school))
       expect(page).to have_text 'Before you can order'
@@ -139,13 +139,13 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a school user who has not done any of the welcome wizard' do
     let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice) }
 
-    scenario 'it shows the welcome wizard welcome text on the interstitial page' do
+    it 'shows the welcome wizard welcome text on the interstitial page' do
       visit validate_token_url_for(user)
       expect(page).to have_text "You’re signed in as #{user.school.name}"
       expect(page).to have_text 'You can use the ‘Get help with technology’ service to:'
     end
 
-    scenario 'clicking on Sign in shows them the privacy notice' do
+    it 'clicking on Sign in shows them the privacy notice' do
       visit validate_token_url_for(user)
       expect(page).to have_text "You’re signed in as #{user.school.name}"
       click_on 'Continue'
@@ -187,7 +187,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a school user who has only done part of the welcome wizard' do
     let(:user) { create(:school_user, :has_partially_completed_wizard) }
 
-    scenario 'clicking on Sign in takes them to their next step' do
+    it 'clicking on Sign in takes them to their next step' do
       visit validate_token_url_for(user)
       click_on 'Continue'
       expect(page).to have_text 'You will need to place orders on a website called TechSource'
@@ -197,7 +197,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a single_academy_trust user' do
     let(:user) { create(:single_academy_trust_user, :has_not_seen_privacy_notice) }
 
-    scenario 'logging in for the first time' do
+    it 'logging in for the first time' do
       visit validate_token_url_for(user)
       expect(page).to have_text("You’re signed in as #{user.school.name}")
       click_on 'Continue'
@@ -210,7 +210,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a fe college user' do
     let(:user) { create(:fe_college_user, :has_not_seen_privacy_notice) }
 
-    scenario 'logging in for the first time' do
+    it 'logging in for the first time' do
       visit validate_token_url_for(user)
       expect(page).to have_text("You’re signed in as #{user.school.name}")
       click_on 'Continue'
@@ -223,7 +223,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a support user' do
     let(:user) { create(:dfe_user) }
 
-    scenario 'it redirects to internet service performance' do
+    it 'redirects to internet service performance' do
       sign_in_as user
       expect(page).to have_current_path(support_home_path)
       expect(page).to have_text 'Support'
@@ -232,7 +232,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     context 'who is also attached to a responsible body (for demo purposes)' do
       let(:user) { create(:local_authority_user, is_support: true) }
 
-      scenario 'it redirects to the responsible body homepage' do
+      it 'redirects to the responsible body homepage' do
         sign_in_as user
         expect(page).to have_current_path(responsible_body_home_path)
         expect(page).to have_text 'Get help with technology'
@@ -243,7 +243,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a mobile network operator' do
     let(:user) { create(:mno_user) }
 
-    scenario 'it redirects to Your Requests' do
+    it 'redirects to Your Requests' do
       sign_in_as user
       expect(page).to have_current_path(mno_extra_mobile_data_requests_path)
       expect(page).to have_text 'Your requests'
@@ -253,7 +253,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
   context 'as a computacenter operator' do
     let(:user) { create(:computacenter_user) }
 
-    scenario 'it redirects to the computacenter home page' do
+    it 'redirects to the computacenter home page' do
       sign_in_as user
       expect(page).to have_current_path(computacenter_home_path)
       expect(page).to have_text 'TechSource'

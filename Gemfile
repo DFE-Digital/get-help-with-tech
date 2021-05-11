@@ -115,7 +115,7 @@ group :development, :test do
   gem 'webmock'
 
   # GOV.UK interpretation of rubocop for linting Ruby
-  gem 'rubocop-govuk', '>= 3.17.2'
+  gem 'rubocop-govuk', '~> 4.0.0.pre.1'
   gem 'scss_lint-govuk'
 
   # Allow testing logging to logstash in development

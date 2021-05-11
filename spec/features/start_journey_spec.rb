@@ -1,26 +1,26 @@
 require 'rails_helper'
 
-RSpec.feature 'View pages', type: :feature do
-  scenario 'Root URL should be the home page' do
+RSpec.describe 'View pages', type: :feature do
+  it 'Root URL should be the home page' do
     when_i_visit_the_home_page
     then_i_should_see_the_service_name
   end
 
-  scenario 'user would like to find out about free training and free support' do
+  it 'user would like to find out about free training and free support' do
     when_i_visit_the_home_page
     and_i_click_on_free_training_and_free_support_link
     then_i_should_see_the_edtech_programme_page
     and_the_page_title_should_be_set(@edtech_landing_page, 'Training and support for remote and face-to-face education')
   end
 
-  scenario 'user would like to find out hot to get a digital platform setup' do
+  it 'user would like to find out hot to get a digital platform setup' do
     when_i_visit_the_home_page
     and_i_click_on_get_funding_to_setup_platforms_link
     then_i_should_see_the_digital_platforms_page
     and_the_page_title_should_be_set(@digital_platforms_page, 'Digital education platforms')
   end
 
-  scenario 'user is a parent,carer or student would like to find out how to use their device' do
+  it 'user is a parent,carer or student would like to find out how to use their device' do
     when_i_visit_the_home_page
     and_i_click_on_guides_for_parents_link
     then_i_should_see_the_guides_for_parents_carers_students_page

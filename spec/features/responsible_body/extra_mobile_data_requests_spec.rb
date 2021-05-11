@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the extra mobile data requests area as a responsible body user', type: :feature do
+RSpec.describe 'Accessing the extra mobile data requests area as a responsible body user', type: :feature do
   let(:responsible_body) { create(:local_authority) }
   let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let(:mobile_network) { create(:mobile_network) }
@@ -12,7 +12,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     sign_in_as rb_user
   end
 
-  scenario 'the user can navigate to the manual request form from the responsible body home page' do
+  it 'the user can navigate to the manual request form from the responsible body home page' do
     click_on 'Get internet access'
     click_on 'Request extra data for mobile devices'
 
@@ -25,7 +25,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
     expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
   end
 
-  scenario 'the user can navigate to the bulk upload form from the responsible body home page' do
+  it 'the user can navigate to the bulk upload form from the responsible body home page' do
     click_on 'Get internet access'
     click_on 'Request extra data for mobile devices'
 
@@ -46,7 +46,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
       @requests.last.unavailable_status!
     end
 
-    scenario 'the user can see their previous requests' do
+    it 'the user can see their previous requests' do
       visit responsible_body_internet_mobile_extra_data_requests_path
 
       expect(my_requests_page.heading.text).to eq('Your requests')
@@ -66,7 +66,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
       end
     end
 
-    scenario 'another user from the same responsible body can also see the raised requests' do
+    it 'another user from the same responsible body can also see the raised requests' do
       sign_out
       sign_in_as another_user_from_the_same_rb
 
@@ -86,7 +86,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a responsible bo
         Pagy::VARS[:items] = original_pagination_value
       end
 
-      scenario 'user can navigate between pages' do
+      it 'user can navigate between pages' do
         visit responsible_body_internet_mobile_extra_data_requests_path
         expect(page).to have_content('Next page')
         expect(page).to have_content('2 of 3')

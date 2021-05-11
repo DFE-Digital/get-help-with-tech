@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Editing a school’s Chromebook details from the support area' do
+RSpec.describe 'Editing a school’s Chromebook details from the support area' do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
 
   before do
@@ -8,7 +8,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
     given_i_sign_in_as_a_support_user_with_access_to_the_computacenter_area
   end
 
-  scenario 'setting Chromebook information' do
+  it 'setting Chromebook information' do
     given_a_school_with_preorder_information
     and_the_school_does_not_have_chromebook_information_specified
 
@@ -19,7 +19,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
     and_the_chromebook_details_are_updated_in_the_computacenter_chromebook_details_feed
   end
 
-  scenario 'removing Chromebook information' do
+  it 'removing Chromebook information' do
     given_a_school_with_preorder_information
     and_the_school_has_chromebook_information_specified
 

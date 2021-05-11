@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Updating addresses' do
+RSpec.describe 'Updating addresses' do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
@@ -9,7 +9,7 @@ RSpec.feature 'Updating addresses' do
     sign_in_as support_user
   end
 
-  scenario 'opting out a school' do
+  it 'opting out a school' do
     given_a_school_that_is_opted_in
     when_support_user_visits_school_page
     then_they_see('Yes, receiving communications')
@@ -24,7 +24,7 @@ RSpec.feature 'Updating addresses' do
     and_they_see('No, opted out of receiving communications')
   end
 
-  scenario 'opting in a school' do
+  it 'opting in a school' do
     given_a_school_that_is_opted_out
     when_support_user_visits_school_page
     then_they_see('No, opted out of receiving communications')

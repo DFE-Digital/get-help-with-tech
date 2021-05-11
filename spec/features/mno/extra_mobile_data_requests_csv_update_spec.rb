@@ -1,20 +1,20 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Update MNO Requests via CSV', type: :feature do
+RSpec.describe 'Update MNO Requests via CSV', type: :feature do
   let(:mno_user) { create(:mno_user) }
   let(:local_authority_user) { create(:local_authority_user) }
   let(:filename) { Rails.root.join('tmp/update_status.csv') }
   let(:invalid_filename) { Rails.root.join('tmp/update_status.doc') }
 
-  scenario 'navigating to the CSV update page' do
+  it 'navigating to the CSV update page' do
     given_i_have_some_mobile_data_requests
     given_i_am_signed_in_as_a_mno_user
     when_i_follow_the_csv_update_link
     then_i_see_a_form_to_upload_a_csv_file
   end
 
-  scenario 'submitting a CSV with status updates' do
+  it 'submitting a CSV with status updates' do
     given_i_have_some_mobile_data_requests
     given_i_am_signed_in_as_a_mno_user
     when_i_visit_the_csv_update_page
@@ -23,7 +23,7 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     then_i_see_a_summary_page
   end
 
-  scenario 'submitting more that 50 updates' do
+  it 'submitting more that 50 updates' do
     given_i_have_more_than_50_mobile_data_requests
     given_i_am_signed_in_as_a_mno_user
     when_i_visit_the_csv_update_page
@@ -32,7 +32,7 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     then_i_see_a_summary_page_with_the_first_50_of_my_updates
   end
 
-  scenario 'submitting more that 50 updates with errors' do
+  it 'submitting more that 50 updates with errors' do
     given_i_have_more_than_50_mobile_data_requests
     given_i_am_signed_in_as_a_mno_user
     when_i_visit_the_csv_update_page
@@ -41,7 +41,7 @@ RSpec.feature 'Update MNO Requests via CSV', type: :feature do
     then_i_see_a_summary_page_with_the_first_50_errors_displayed
   end
 
-  scenario 'submitting an invalid file' do
+  it 'submitting an invalid file' do
     given_i_have_some_mobile_data_requests
     given_i_am_signed_in_as_a_mno_user
     when_i_visit_the_csv_update_page

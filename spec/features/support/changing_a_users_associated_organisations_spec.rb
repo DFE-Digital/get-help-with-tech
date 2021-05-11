@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Changing users’ associated organisations' do
+RSpec.describe 'Changing users’ associated organisations' do
   let(:support_user) { create(:dfe_user) }
   let(:computacenter_support_user) { create(:computacenter_user) }
   let(:school_user) { create(:school_user) }
@@ -16,7 +16,7 @@ RSpec.feature 'Changing users’ associated organisations' do
   let(:user_schools_page) { PageObjects::Support::Users::SchoolsPage.new }
   let(:matching_schools_page) { PageObjects::Support::Users::MatchingSchoolsPage.new }
 
-  scenario 'a Computacenter support user cannot change a user’s organisations' do
+  it 'a Computacenter support user cannot change a user’s organisations' do
     given_i_am_logged_in_as_a_computacenter_support_user
     when_i_search_for_an_existing_user_by_email
     then_i_see_their_associated_organisations
@@ -24,7 +24,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_do_not_see_a_link_to_change_their_associated_organisations
   end
 
-  scenario 'a support agent removes a user from a school' do
+  it 'a support agent removes a user from a school' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_schools_page
     and_i_remove_the_first_school
@@ -32,7 +32,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_see_a_message_telling_me_the_schools_have_been_updated
   end
 
-  scenario 'a support agent removes a user from a responsible body' do
+  it 'a support agent removes a user from a responsible body' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_support_page
     and_i_start_changing_the_responsible_body
@@ -41,7 +41,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_see_a_message_telling_me_the_responsible_body_has_been_removed
   end
 
-  scenario 'a support agent adds a user to a school by partially matching on the school name (when there is a single match)' do
+  it 'a support agent adds a user to a school by partially matching on the school name (when there is a single match)' do
     given_i_am_logged_in_as_a_support_user
     and_there_are_schools_in_the_system
     when_i_visit_a_users_schools_page
@@ -50,7 +50,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_see_a_message_telling_me_the_school_has_been_associated
   end
 
-  scenario 'a support agent adds a user to a school by partially matching on the school name (when there are multiple matches)' do
+  it 'a support agent adds a user to a school by partially matching on the school name (when there are multiple matches)' do
     given_i_am_logged_in_as_a_support_user
     and_there_are_schools_in_the_system
     when_i_visit_a_users_schools_page
@@ -61,7 +61,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_see_a_message_telling_me_the_school_has_been_associated
   end
 
-  scenario 'a support user cannot add a user to a school twice' do
+  it 'a support user cannot add a user to a school twice' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_schools_page
     and_i_enter_a_school_urn_that_the_user_already_has
@@ -69,7 +69,7 @@ RSpec.feature 'Changing users’ associated organisations' do
     and_i_am_not_able_to_associate_the_school
   end
 
-  scenario 'a support agent moves the user to a different responsible body' do
+  it 'a support agent moves the user to a different responsible body' do
     given_i_am_logged_in_as_a_support_user
     when_i_visit_a_users_support_page
     and_i_start_changing_the_responsible_body

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'Administering responsible body changes' do
+RSpec.describe 'Administering responsible body changes' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
     let!(:new_trusts) { create_list(:trust, 2, :with_schools) }
@@ -13,31 +13,31 @@ RSpec.feature 'Administering responsible body changes' do
       given_i_am_signed_in_as_a_computacenter_user
     end
 
-    scenario 'navigate to responsible body changes page' do
+    it 'navigate to responsible body changes page' do
       when_i_visit_the_home_page
       and_i_click_the_changes_to_responsible_bodies_link
       then_i_see_the_list_of_all_changed_responsible_bodies
     end
 
-    scenario 'view new responsible bodies' do
+    it 'view new responsible bodies' do
       when_i_visit_the_changes_to_responsible_bodies_page
       and_i_click_on_the_new_responsible_bodies_tab
       then_i_see_the_list_of_new_responsible_bodies
     end
 
-    scenario 'view amended responsible_bodies' do
+    it 'view amended responsible_bodies' do
       when_i_visit_the_changes_to_responsible_bodies_page
       and_i_click_on_the_amended_responsible_bodies_tab
       then_i_see_the_list_of_amended_responsible_bodies
     end
 
-    scenario 'download csv file' do
+    it 'download csv file' do
       when_i_visit_the_changes_to_responsible_bodies_page
       and_i_click_the_download_csv_link
       then_it_downloads_the_changed_responsible_bodies_as_a_csv_file
     end
 
-    scenario 'update a Sold To reference' do
+    it 'update a Sold To reference' do
       when_i_visit_the_changes_to_responsible_bodies_page
       then_i_see_the_list_of_all_changed_responsible_bodies
       when_i_click_the_verify_link_for_a_responsible_body
@@ -47,7 +47,7 @@ RSpec.feature 'Administering responsible body changes' do
       then_i_see_an_updated_list_of_all_changed_responsible_bodies
     end
 
-    scenario 'update a Sold To reference with bad data' do
+    it 'update a Sold To reference with bad data' do
       when_i_visit_the_changes_to_responsible_bodies_page
       then_i_see_the_list_of_all_changed_responsible_bodies
       when_i_click_the_verify_link_for_a_responsible_body

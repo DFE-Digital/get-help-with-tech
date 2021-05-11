@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature, with_feature_flags: { donated_devices: 'active' } do
+RSpec.describe 'Accessing the donated devices area as an RB user', type: :feature, with_feature_flags: { donated_devices: 'active' } do
   let(:user) { create(:trust_user) }
   let(:responsible_body) { user.responsible_body }
   let(:school) { create(:school, :with_preorder_information, responsible_body: responsible_body) }
@@ -11,7 +11,7 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
     sign_in_as user
   end
 
-  scenario 'RB that centrally manages schools can navigate to donated device form from the home page' do
+  it 'RB that centrally manages schools can navigate to donated device form from the home page' do
     given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_devices_page
     then_i_see_that_i_can_opt_in_my_schools
@@ -32,7 +32,7 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
     # Now at: Which schools do you want to opt in?
   end
 
-  scenario 'RB navigating to donated device form but declining interest' do
+  it 'RB navigating to donated device form but declining interest' do
     given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_devices_page
     then_i_see_that_i_can_opt_in_my_schools
@@ -44,13 +44,13 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
     then_i_see_that_i_have_not_been_opted_in
   end
 
-  scenario 'RB that has devolved schools cannot see the donated device form from the home page' do
+  it 'RB that has devolved schools cannot see the donated device form from the home page' do
     given_i_have_a_devolved_school
     and_i_navigate_to_the_devices_page
     then_i_see_that_i_cannot_opt_in_my_schools
   end
 
-  scenario 'RB that centrally managed but cannot see the donated device form from the home page without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
+  it 'RB that centrally managed but cannot see the donated device form from the home page without feature flag', with_feature_flags: { donated_devices: 'inactive' } do
     given_i_have_a_centrally_managed_school
     and_i_navigate_to_the_devices_page
     then_i_see_that_i_cannot_opt_in_my_schools

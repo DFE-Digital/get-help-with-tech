@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'MNO Requests view', type: :feature do
+RSpec.describe 'MNO Requests view', type: :feature do
   let(:local_authority_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
   let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }
@@ -19,14 +19,14 @@ RSpec.feature 'MNO Requests view', type: :feature do
         click_on 'Your requests'
       end
 
-      scenario 'shows only requests from my MNO' do
+      it 'shows only requests from my MNO' do
         expect(page).to have_content('Requests for extra mobile data')
         expect(page).to have_content(mno_user.mobile_network.brand)
         expect(page).to have_content(extra_mobile_data_request_for_mno.account_holder_name)
         expect(page).not_to have_content(extra_mobile_data_request_for_other_mno.account_holder_name)
       end
 
-      scenario 'clicking Select All selects all checkboxes' do
+      it 'clicking Select All selects all checkboxes' do
         click_on 'all'
 
         all('input[name="mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]"]').each do |e|
@@ -34,7 +34,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
         end
       end
 
-      scenario 'clicking Select None de-selects all checkboxes' do
+      it 'clicking Select None de-selects all checkboxes' do
         check('mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]')
         click_on 'none'
 
@@ -58,7 +58,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
         click_on 'Your requests'
       end
 
-      scenario 'clicking on a header sorts by that column' do
+      it 'clicking on a header sorts by that column' do
         click_on 'Account holder'
         expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(:account_holder_name).pluck(:id))
 
@@ -66,7 +66,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
         expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(:created_at).pluck(:id))
       end
 
-      scenario 'clicking on a header twice sorts by that column in reverse order' do
+      it 'clicking on a header twice sorts by that column in reverse order' do
         click_on 'Account holder'
         expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(:account_holder_name).pluck(:id))
 
@@ -74,7 +74,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
         expect(rendered_ids).to eq(mno_extra_mobile_data_requests.order(account_holder_name: :desc).pluck(:id))
       end
 
-      scenario 'updating selected extra_mobile_data_requests to a status applies that status' do
+      it 'updating selected extra_mobile_data_requests to a status applies that status' do
         all('input[name="mno_extra_mobile_data_requests_form[extra_mobile_data_request_ids][]"]').first(3).each(&:check)
         select('In progress', from: 'Set status of selected to')
         click_on('Update')
@@ -82,7 +82,7 @@ RSpec.feature 'MNO Requests view', type: :feature do
         expect(all('.extra_mobile_data_request-status').last(2)).to all(have_no_content('In progress'))
       end
 
-      scenario 'clicking Download as CSV downloads a CSV file' do
+      it 'clicking Download as CSV downloads a CSV file' do
         click_on 'Download requests as CSV'
         expect_download(content_type: 'text/csv')
       end

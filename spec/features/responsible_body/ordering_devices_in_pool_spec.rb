@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering devices within a virtual pool' do
+RSpec.describe 'Ordering devices within a virtual pool' do
   let(:responsible_body) { create(:trust, :manages_centrally) }
   let(:schools) { create_list(:school, 4, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
@@ -11,7 +11,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     given_my_order_information_is_up_to_date
   end
 
-  scenario 'navigate to order devices page' do
+  it 'navigate to order devices page' do
     when_i_visit_the_responsible_body_home_page
     and_i_follow_the_get_laptops_and_tablets_link
     then_i_see_the_get_laptops_and_tablets_page
@@ -20,7 +20,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     then_i_see_the_cannot_order_devices_yet_page
   end
 
-  scenario 'a centrally managed school that can order full allocation' do
+  it 'a centrally managed school that can order full allocation' do
     given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
@@ -29,7 +29,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
-  scenario 'a centrally managed school that can order for specific circumstances' do
+  it 'a centrally managed school that can order for specific circumstances' do
     given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
@@ -38,7 +38,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
-  scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+  it 'centrally managed schools that can order for specific circumstances and full allocation' do
     given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
@@ -48,7 +48,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
-  scenario 'centrally managed schools with multiple Chromebook domains that can order' do
+  it 'centrally managed schools with multiple Chromebook domains that can order' do
     given_there_are_multiple_chromebook_domains_being_managed
     given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
@@ -56,7 +56,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     and_i_see_a_section_regarding_ordering_chromebooks
   end
 
-  scenario 'with no devices left to order' do
+  it 'with no devices left to order' do
     given_a_centrally_managed_school_within_a_pool_could_order_but_cannot_order_anymore
     when_i_visit_the_order_devices_page
     then_i_see_the_cannot_order_anymore_page

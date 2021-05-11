@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Managing ResponsibleBody users' do
+RSpec.describe 'Managing ResponsibleBody users' do
   let!(:rb_user) { create(:local_authority_user, full_name: 'AAA Smith') }
   let!(:rb_user_2) { create(:local_authority_user, full_name: 'ZZZ Jones', responsible_body: rb_user.responsible_body) }
   let(:user_from_other_rb) { create(:trust_user) }

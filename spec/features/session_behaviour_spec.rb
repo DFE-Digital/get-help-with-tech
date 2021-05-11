@@ -2,8 +2,8 @@ require 'rails_helper'
 require 'shared/filling_in_forms'
 require 'support/sidekiq'
 
-RSpec.feature 'Session behaviour', type: :feature do
-  scenario 'new visitor has sign in link' do
+RSpec.describe 'Session behaviour', type: :feature do
+  it 'new visitor has sign in link' do
     visit '/'
 
     expect(page).to have_text('Sign in')
@@ -26,7 +26,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         sign_in_as user
       end
 
-      scenario 'the user can submit a valid form' do
+      it 'the user can submit a valid form' do
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
@@ -34,14 +34,14 @@ RSpec.feature 'Session behaviour', type: :feature do
         expect(page).to have_text('Check your answers')
       end
 
-      scenario 'user session is preserved across requests' do
+      it 'user session is preserved across requests' do
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
         expect(page).to have_button('Sign out')
       end
 
-      scenario 'clicking "Sign out" signs the user out' do
+      it 'clicking "Sign out" signs the user out' do
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
@@ -56,7 +56,7 @@ RSpec.feature 'Session behaviour', type: :feature do
         sign_in_as user
       end
 
-      scenario 'visiting with a valid but expired session logs the user out' do
+      it 'visiting with a valid but expired session logs the user out' do
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
@@ -80,18 +80,18 @@ RSpec.feature 'Session behaviour', type: :feature do
       visit validate_token_url
     end
 
-    scenario 're-using the same magic-link redirects to the home page for user' do
+    it 're-using the same magic-link redirects to the home page for user' do
       visit validate_token_url
       click_on 'Continue'
       expect(page).to have_current_path(responsible_body_home_path)
     end
 
-    scenario 'using a new magic link redirects to the home page for user' do
+    it 'using a new magic link redirects to the home page for user' do
       sign_in_as(user)
       expect(page).to have_current_path(responsible_body_home_path)
     end
 
-    scenario 'using a magic link from a different user signs in as the different user' do
+    it 'using a magic link from a different user signs in as the different user' do
       visit other_user_magic_link
       click_on 'Continue'
       expect(page).to have_content(other_user.email_address)
@@ -101,7 +101,7 @@ RSpec.feature 'Session behaviour', type: :feature do
   context 'with a valid user' do
     let(:valid_user) { create(:local_authority_user) }
 
-    scenario 'Signing in as a recognised user sends a magic link email' do
+    it 'Signing in as a recognised user sends a magic link email' do
       visit '/'
       find('.govuk-header__link', text: 'Sign in').click
       expect(page).to have_text('Email address')
@@ -116,7 +116,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       expect(page).to have_text('Check your email')
     end
 
-    scenario 'Entering an unrecognised email address shows an informative message' do
+    it 'Entering an unrecognised email address shows an informative message' do
       visit '/'
       find('.govuk-header__link', text: 'Sign in').click
       expect(page).to have_text('Email address')
@@ -127,7 +127,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       expect(page).to have_text('We did not recognise that email address')
     end
 
-    scenario 'Entering an invalid email sends the user back to the sign-in page' do
+    it 'Entering an invalid email sends the user back to the sign-in page' do
       visit '/'
       find('.govuk-header__link', text: 'Sign in').click
       expect(page).to have_text('Email address')

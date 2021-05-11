@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.feature 'Managing responsible body users in the support area', type: :feature do
+RSpec.describe 'Managing responsible body users in the support area', type: :feature do
   let(:local_authority) { create(:local_authority, name: 'Coventry') }
   let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }
   let(:invite_new_user_page) { PageObjects::Support::Users::InviteNewUserPage.new }
   let(:edit_user_page) { PageObjects::Support::Users::EditUserPage.new }
 
-  scenario 'DfE users see the on-boarded responsible bodies and stats about them' do
+  it 'DfE users see the on-boarded responsible bodies and stats about them' do
     given_there_is_a_responsible_body_with_users
 
     when_i_sign_in_as_a_dfe_user
@@ -20,7 +20,7 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
     then_i_can_see_the_responsible_body_with_new_users_as_well
   end
 
-  scenario 'Computacenter users see the on-boarded responsible bodies and stats about them' do
+  it 'Computacenter users see the on-boarded responsible bodies and stats about them' do
     given_there_is_a_responsible_body_with_users
 
     when_i_sign_in_as_a_computacenter_user
@@ -29,7 +29,7 @@ RSpec.feature 'Managing responsible body users in the support area', type: :feat
     and_i_only_see_the_users_who_have_seen_the_privacy_policy
   end
 
-  scenario 'DfE users can update on-boarded responsible body users' do
+  it 'DfE users can update on-boarded responsible body users' do
     given_there_is_a_responsible_body_with_users
 
     when_i_sign_in_as_a_dfe_user

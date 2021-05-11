@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'Order devices' do
+RSpec.describe 'Order devices' do
   include ViewHelper
 
   let(:school) { create(:school, :with_std_device_allocation) }
 
-  scenario 'when my school can order devices and I can order devices' do
+  it 'when my school can order devices and I can order devices' do
     given_the_school_can_order_devices
     given_i_can_order_devices
     given_i_am_signed_in_as_a_school_user
@@ -15,7 +15,7 @@ RSpec.feature 'Order devices' do
     and_i_see_a_link_to_techsource
   end
 
-  scenario 'when my school can order devices and I am awaiting my TechSource account' do
+  it 'when my school can order devices and I am awaiting my TechSource account' do
     given_the_school_can_order_devices
     given_i_am_awaiting_my_techsource_account
     given_i_am_signed_in_as_a_school_user
@@ -24,7 +24,7 @@ RSpec.feature 'Order devices' do
     then_i_see_techsource_ready_soon
   end
 
-  scenario 'when my school can order devices but I cannot order devices' do
+  it 'when my school can order devices but I cannot order devices' do
     given_the_school_can_order_devices
     given_i_cannot_order_devices
     given_i_am_signed_in_as_a_school_user
@@ -33,7 +33,7 @@ RSpec.feature 'Order devices' do
     then_i_see_someone_else_will_order
   end
 
-  scenario 'when my school cannot order devices but I can' do
+  it 'when my school cannot order devices but I can' do
     given_the_school_cannot_order_devices
     given_i_can_order_devices
     given_i_am_signed_in_as_a_school_user
@@ -42,7 +42,7 @@ RSpec.feature 'Order devices' do
     then_i_see_that_i_cannot_order_devices_yet
   end
 
-  scenario 'a school that cannot order devices yet' do
+  it 'a school that cannot order devices yet' do
     given_the_school_cannot_order_devices
     given_i_can_order_devices
     given_i_am_signed_in_as_a_school_user
@@ -51,7 +51,7 @@ RSpec.feature 'Order devices' do
     then_i_see_that_i_will_be_able_to_order_soon
   end
 
-  scenario 'when my school cannot order devices and I cannot order devices' do
+  it 'when my school cannot order devices and I cannot order devices' do
     given_the_school_cannot_order_devices
     given_i_cannot_order_devices
     given_i_am_signed_in_as_a_school_user
