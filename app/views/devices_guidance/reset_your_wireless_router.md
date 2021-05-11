@@ -26,6 +26,10 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Get your Huawei login password.
 
+    <a href="/sign-in" class="govuk-link app-emphasis-link">
+      Sign in to see your Huawei router password
+    </a>
+
     Enter your password on the Huawei login screen and click ‘Log in’.
 
 1. Once connected, you’ll be asked to read and accept the privacy notice and user agreement.
@@ -38,9 +42,7 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. You should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update’.
 
-<div class="govuk-!-width-two-thirds">
   ![Screenshot of new version reminder. Heading ‘New version reminder’. Your current version (for example 10.0.2.1). The new version you can use (for example 11.0.1.2. ). Warning text ‘During this update, the device may disconnect from the internet. The device must remain connected to a power source in order to prevent any damage. Bengin update?’. A button labelled ‘Update’.](/devices/huawei-update-version.png)
-</div>
 
 Once the update has downloaded it will begin to install automatically — this should take approximately 5 minutes. Router lights may turn on and off during this time.
 
