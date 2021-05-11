@@ -2,9 +2,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 1 } %>
 
-    <h3 class="govuk-heading-m">
-      additional_support
-    </h3>
+    <p class="govuk-body"><%= govuk_link_to 'Contact us', 'get_support_path' %> if you have any queries related to taking control of devices, applying your own settings or software licenses.</p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
