@@ -2,9 +2,27 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 1 } %>
 
+    <p class="govuk-body">To enable the recovery partition, log out as a local user and log in as the administrator.</p>
+    
     <h3 class="govuk-heading-m">
-      unlock_recovery_mode
+      Administrator login details
     </h3>
+    
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Username: .\localadmin</li>
+      <li>Password: The admin user password retrieved through <%= govuk_link_to 'step 2', get_local_admin_and_bios_passwords_path %> of this guide</li>
+    </ul>
+    
+    <p class="govuk-body">Once logged in as administrator:</p>
+    
+    <ol class="govuk-list govuk-list--number">
+    <li>Open the Windows start menu and type ‘cmd’ into the search box</li>
+    <li>Right-click on ‘Command prompt’ and click ‘Run as administrator’</li>
+    <li>If asked ‘Do you want to allow this app to make changes to your device?’, select ‘Yes’</li>
+    <li>Within the command prompt window, type ‘reagentc /enable’ and press ‘Enter’ - after several seconds the output should say ‘Operation Successful’</li>
+    <li>Type ‘reagentc /boottore’ and press ‘Enter’ - after several seconds the output should say ‘Operation Successful’</li>
+    <li>To check the status of the recovery partition, type ‘reagentc /info’ and press ‘Enter’ - after several seconds the output should say ‘Enabled’</li>
+    </ol>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
