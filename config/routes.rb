@@ -50,7 +50,6 @@ Rails.application.routes.draw do
   get '/guide-to-resetting-windows-laptops-and-tablets/apply_your_own_settings', to: 'guide_to_resetting_windows_laptops_and_tablets#apply_your_own_settings'
   get '/guide-to-resetting-windows-laptops-and-tablets/additional_support', to: 'guide_to_resetting_windows_laptops_and_tablets#additional_support'
 
-
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
   get '/devices/how-to-order-laptops-for-social-care-leavers', to: 'devices_guidance#how_to_order_laptops_for_social_care_leavers'
