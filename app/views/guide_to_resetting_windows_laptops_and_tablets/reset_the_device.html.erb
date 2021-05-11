@@ -2,27 +2,48 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 1 } %>
 
-    <p class="govuk-body">To enable the recovery partition, log out as a local user and log in as the administrator.</p>
+    <p class="govuk-body">Your device is now ready to be reset to factory settings. This will usually take between 40 and 60 minutes.</p>
     
     <h3 class="govuk-heading-m">
-      Administrator login details
+      Enter recovery mode
     </h3>
     
+    <p class="govuk-body">Open the Windows Start menu and click the power button. While holding down ‘Shift’ click ‘Restart’.</p>
+    
+    <p class="govuk-body">The device should restart to a blue recovery mode screen.</p>
+
+    <p class="govuk-body">If the above method isn’t successful, try pressing and holding the following keys while your device is booting:</p>
+    
     <ul class="govuk-list govuk-list--bullet">
-      <li>Username: .\localadmin</li>
-      <li>Password: The admin user password retrieved through <%= govuk_link_to 'step 2', get_local_admin_and_bios_passwords_path %> of this guide</li>
+      <li>Acer - F2</li>
+      <li>ASUS - F9</li>
+      <li>Dell - F8</li>
+      <li>Dynabook - 0 (zero)</li>
+      <li>HP - F11</li>
+      <li>Lenovo - FN+F11 at the same time</li>
     </ul>
     
-    <p class="govuk-body">Once logged in as administrator:</p>
+    <p class="govuk-body">Consult the manufacturer’s guidance for specific instructions if the methods above don’t work.</p>
     
-    <ol class="govuk-list govuk-list--number">
-    <li>Open the Windows start menu and type ‘cmd’ into the search box</li>
-    <li>Right-click on ‘Command prompt’ and click ‘Run as administrator’</li>
-    <li>If asked ‘Do you want to allow this app to make changes to your device?’, select ‘Yes’</li>
-    <li>Within the command prompt window, type ‘reagentc /enable’ and press ‘Enter’ - after several seconds the output should say ‘Operation Successful’</li>
-    <li>Type ‘reagentc /boottore’ and press ‘Enter’ - after several seconds the output should say ‘Operation Successful’</li>
-    <li>To check the status of the recovery partition, type ‘reagentc /info’ and press ‘Enter’ - after several seconds the output should say ‘Enabled’</li>
-    </ol>
+        <h3 class="govuk-heading-m">
+      Perform a factory reset
+    </h3>
+    
+    <p class="govuk-body">From the recovery mode menu:</p>
+    
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Select ‘Troubleshoot’ and click ‘Reset this PC’ - if you’re asked where to reinstall Windows, select ‘Local Reinstall’</li>
+      <li>Select ‘Remove everything’ - your screen may go blank for a short period after this</li>
+      <li>When asked if you want to keep this PC set up for your workspace, select ‘No’</li>
+      <li>Select ‘Clean the drive fully’ and click ‘Reset’ when prompted</li>
+    </ul>
+    
+    <p class="govuk-body">The device will now enter the reset process - this usually takes between 40 and 60 minutes.</p>
+    
+    <p class="govuk-body">If you cannot complete these steps, the BIOS password process may not have been completed correctly. Revisit <%= govuk_link_to 'step 2', get_local_admin_and_bios_passwords_path %> of this guide, or <%= govuk_link_to 'contact us', 'get_support_path' %> if you require additional support.
+</p>
+    
+    <p class="govuk-body">The reset is complete when you see either the Windows setup screen or a black screen with white text asking if you wish to remove the TPM (Trusted Platform Module). This is up to your organisation’s preferences and not part of our reset guidance.</p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
