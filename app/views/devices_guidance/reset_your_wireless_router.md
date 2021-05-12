@@ -1,6 +1,6 @@
 ## If you have a Huawei router  
 
-To continue using your Huawei router, you must reset your router before 16 July 2021 and insert a different SIM card
+To continue using your Huawei router, you must reset your router before 16 July 2021 and insert a different SIM card.
 
 If you do not do this, you’ll be unable to use another SIM card when the data runs out.
 
@@ -10,7 +10,7 @@ Using another SIM card will remove the content filters. Read our [safeguarding g
 
 It will take between 5 and 10 minutes to reset your router. You should read all the steps before you begin.
 
-You’ll need your Huawei router and the router’s wifi network name and password — you can find these on a label under the back cover of your router.
+You’ll need your Huawei router and the router’s wifi network name and password, you can find these on a label under the back cover of your router.
 
 You’ll also need a laptop, tablet or mobile phone.
 
@@ -20,31 +20,32 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Connect your laptop, tablet or mobile phone to the router through the wireless network or the USB cable. (If you have problems connecting, you can read our [Huawei router setup guide](/devices/4g-user-guidance#setting-up-a-huawei-router)).
 
-1. Open a web browser and type [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen. If the page is blocked you may need to add 192.168.8.1 and 192.168.9.1 to your allow list.
+1. Open a web browser and type [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen. If the page is blocked by your organisation‘s web filtering, you may need to add `192.168.8.1` and `192.168.9.1` to your IP address allow list.
 
     ![Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in.](/devices/huawei-router-log-in.png)
 
 1. Get your Huawei login password.
 
     <a href="/sign-in" class="govuk-link app-emphasis-link">
-      Sign in to see your Huawei router password
+      Sign in to see your password
     </a>
 
     Enter your password on the Huawei login screen and click ‘Log in’.
 
 1. Once connected, you’ll be asked to read and accept the privacy notice and user agreement.
 
-1. Choose whether you want overnight updates — we recommend you select ‘Enable and continue’.
+1. Choose whether you want overnight updates. We recommend you select ‘Enable and continue’.
 
-1. You’ll be asked if you want to change your wifi name and password — we recommend you keep the ones you have.
+1. You’ll be asked if you want to change your wifi name and password, we recommend you keep the ones you have.
 
-1. Choose a new device login password — this should be at least 8 characters and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’. You should now be on the router settings homepage.
+1. Once the update has downloaded it will begin to install automatically. This should take around 5 minutes. Router lights may turn on and off during this time.  
+   You should now be on the router settings homepage.
 
-1. You should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update’.
+1. You should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update‘.
 
-  ![Screenshot of new version reminder. Heading ‘New version reminder’. Your current version (for example 10.0.2.1). The new version you can use (for example 11.0.1.2. ). Warning text ‘During this update, the device may disconnect from the internet. The device must remain connected to a power source in order to prevent any damage. Bengin update?’. A button labelled ‘Update’.](/devices/huawei-update-version.png)
+![Screenshot of new version reminder. Heading ‘New version reminder’. Your current version (for example 10.0.2.1). The new version you can use (for example 11.0.1.2. ). Warning text ‘During this update, the device may disconnect from the internet. The device must remain connected to a power source in order to prevent any damage. Bengin update?’. A button labelled ‘Update’.](/devices/huawei-update-version.png)
 
-Once the update has downloaded it will begin to install automatically — this should take approximately 5 minutes. Router lights may turn on and off during this time.
+Once the update has downloaded it will begin to install automatically - this should take approximately 5 minutes. Router lights may turn off and on during this time.
 
 You’ll get a notification once the installation is finished.
 
@@ -60,9 +61,9 @@ Enter the new device login password that you chose and click ‘Log in’. If yo
 
 The SIM card supplied with the router will provide data until 31 July 2021. You can replace this with an alternative SIM card at any time.
 
-If you are unable to access the router settings:
+If you are unable to access the router settings, you should:
 
-- check if you’ve entered the device login password correctly — this is the one you chose when you reset your router and is different to your wifi password
+- check if you’ve entered the device login password correctly - this is the one you chose when you reset your router and is different to your wifi password
 
 - make sure you have installed and downloaded the software update to reset your router
 
@@ -70,10 +71,9 @@ If you are unable to access the router settings:
 
 ##If you have a TP-Link or D-Link router 
 
-
 If you have a TP-Link or D-Link router, you can reset your router and insert another SIM card at any time. If you choose to do this before 31 July 2021, your router will no longer receive data from DfE.
 
-Using another SIM card will remove the content filters. Read our [safeguarding guidance](devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
+Resetting the router will remove the content filters. Read our [safeguarding guidance](devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
 
 ### Before you start
 
