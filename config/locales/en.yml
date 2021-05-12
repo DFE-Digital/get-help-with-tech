@@ -45,7 +45,7 @@ en:
     weve_processed_your_spreadsheet: We’ve processed your spreadsheet
     weve_processed_your_csv: We’ve processed your CSV
     guide_to_collecting_mobile_information: Guide to collecting mobile information
-    guide_to_resetting_windows_laptops_and_tablets: Guide to resetting windows laptops and tablets
+    guide_to_resetting_windows_laptops_and_tablets: Guide to resetting Windows laptops and tablets
     start: Get help with technology
     internet_access: Internet access
     signed_in_internet_access: Get internet access
@@ -335,8 +335,8 @@ en:
 
   guide_to_resetting_windows_laptops_and_tablets:
     before_you_start: Before you start
-    get_local_admin_and_bios_passwords: Get local admin and bios passwords
-    reset_the_bios_password: Reset the bios password
+    get_local_admin_and_bios_passwords: Get local admin and BIOS passwords
+    reset_the_bios_password: Reset the BIOS password
     unlock_recovery_mode: Unlock recovery mode
     reset_the_device: Reset the device
     apply_your_own_settings: Apply your own settings
