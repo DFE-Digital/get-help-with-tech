@@ -332,15 +332,6 @@ en:
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
       guidance_section: manage_devices_pages
 
-  guide_to_resetting_windows_laptops_and_tablets:
-    before_you_start: Before you start
-    get_local_admin_and_bios_passwords: Get local admin and BIOS passwords
-    reset_the_bios_password: Reset the BIOS password
-    unlock_recovery_mode: Unlock recovery mode
-    reset_the_device: Reset the device
-    apply_your_own_settings: Apply your own settings
-    additional_support: Additional support
-
     preparing_a_standard_windows_device:
       title: Preparing standard Microsoft Windows laptops and tablets
       description: When you receive a standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
@@ -386,6 +377,14 @@ en:
     telling_about_offer: Telling them about their offer
     privacy: Explaining our privacy policy
     asking_for_account_holder: Asking for account holder name and mobile number
+  guide_to_resetting_windows_laptops_and_tablets:
+    before_you_start: Before you start
+    get_local_admin_and_bios_passwords: Get local admin and BIOS passwords
+    reset_the_bios_password: Reset the BIOS password
+    unlock_recovery_mode: Unlock recovery mode
+    reset_the_device: Reset the device
+    apply_your_own_settings: Apply your own settings
+    additional_support: Additional support
   school:
     chromebooks:
       success: We’ve saved your choices
