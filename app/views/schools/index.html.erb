@@ -8,15 +8,13 @@
     <p class="govuk-body">You have access to manage ordering on behalf of more than one organisation.</p>
     <p class="govuk-body">Select which one you want to view:</p>
 
-    <%- @schools.each do |school| %>
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to school.name, home_school_path(school) %>
-      </h2>
-    <%- end %>
-    <%- if impersonated_or_current_user.responsible_body.present? %>
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to impersonated_or_current_user.responsible_body.name, responsible_body_home_path %>
-      </h2>
-    <%- end %>
+    <ul class="govuk-list">
+      <%- if impersonated_or_current_user.responsible_body.present? %>
+        <li>
+          <%= govuk_link_to impersonated_or_current_user.responsible_body.name, responsible_body_home_path %>
+        </li>
+      <%- end %>
+      <%= render Organisation::OrganisationComponent.with_collection(@schools) %>
+    </ul>
   </div>
 </div>

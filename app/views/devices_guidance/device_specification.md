@@ -48,28 +48,34 @@ If the school you’re ordering for does not currently use an education platform
 
 You’ll be asked if you want to order Google Chromebooks when you [sign in to the Get help with technology service](https://get-help-with-tech.education.gov.uk/sign-in). You should answer ‘Yes’.
 
-After you place your order, we’ll email and ask you to provide the following information for each pupil’s educational setting:
+After you order you’ll get an email asking if you want us to supply Chrome Education Upgrades (Chromebook licenses). An educational setting will need a license to enrol the device in their Google Admin console. This gives them options to manage and secure the device.
+
+Reply to the email you receive to request licenses. You'll need to provide the following information for each pupil’s educational setting:
 
 * the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example 'school.co.uk'
-* a recovery email address, which must be on a different domain to the educational setting's domain - for example, if the registered domain is ‘school.co.uk’, the recovery email cannot be ‘recovery@school.co.uk’
+* a recovery email address, which must be on a different domain to the educational setting's domain - for example, if the registered domain is 'school.co.uk', the recovery email cannot be 'recovery@school.co.uk'
 
-You need to provide this information as soon as possible so that we can apply the right education licenses, and the Chromebooks can be secured. If a Google Chromebook is not enrolled into a Google Workspace for Education domain it cannot be managed remotely, and it will not be possible to apply security settings to keep users safe online.
+The educational setting's IT support should be able to give you this.
+
+Alternatively, your LA can choose to [set up and manage a Google domain](https://get-help-with-tech.education.gov.uk/devices/google-domain-for-care-leavers-and-children-with-social-worker).
+
+If you do not request licenses, your Chromebooks will be delivered with factory settings. Cisco Umbrella web filtering will not be installed. Your LA, or the education setting you lend or give the devices to, will be responsible for [installing safeguarding and security settings](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) before they’re distributed to pupils. 
 
 ### Ordering Chromebooks for care leavers
 
-If you’re ordering for a care leaver in education, you’ll follow the same steps listed above for LA-funded pupils in independent special schools or alternative provision.
+You’ll be asked if you want to order Google Chromebooks when you [sign in to the Get help with technology service](https://get-help-with-tech.education.gov.uk/sign-in). You should answer ‘Yes’. 
+
+If a care leaver is in education, their educational setting will need a Chrome Education Upgrade (Chromebook license) to enrol the device in their Google Admin console (if they have one). To request a license, follow the steps listed above for LA-funded pupils in independent special schools or alternative provision.
 
 If you’re ordering for a care leaver who is not in education, and you cannot provide Google Workspace for Education details for them, you can choose to:
 
 * order a Windows laptop instead
 * [set up and manage a Google domain](https://get-help-with-tech.education.gov.uk/devices/google-domain-for-care-leavers-and-children-with-social-worker)
-* distribute the device unsecured - [read our guidance on safeguarding before making this choice](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users)
+* distribute the device unsecured - [read our guidance on your safeguarding responsibilities before making this choice](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users)
 
 Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
 
 [Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
-
-</div>
 
 <div class="govuk-grid-column-full">
 
@@ -253,8 +259,6 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
     </tbody>
   </table>
 </div>
-
-<div class="govuk-grid-column-two-thirds">
 
 ## 4G wireless routers
 

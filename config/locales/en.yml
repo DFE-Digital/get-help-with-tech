@@ -68,8 +68,11 @@ en:
       details: Check your details
       laptop_types: Find out what type of laptop pupils need
       chromebooks: Will your order include Google Chromebooks?
-      will_need_chromebooks_error: Tell us if pupils will need Chromebooks?
+      will_need_chromebooks_error: Tell us if pupils will need Chromebooks
       how_to_order: How to order
+    scl:
+      laptop_types: Choose what type of laptop care leavers need
+      will_need_chromebooks_error: Tell us if social care leavers will need Chromebooks
     support:
       home: Support
       privileged_users:

@@ -90,6 +90,22 @@ RSpec.describe School, type: :model do
     end
   end
 
+  describe 'independent_special_school?' do
+    let(:independent_special_school) { build(:iss_provision) }
+    let(:social_care_leaver) { build(:scl_provision) }
+
+    specify { expect(independent_special_school).to be_an_independent_special_school }
+    specify { expect(social_care_leaver).not_to be_an_independent_special_school }
+  end
+
+  describe 'social_care_leaver?' do
+    let(:social_care_leaver) { build(:scl_provision) }
+    let(:independent_special_school) { build(:iss_provision) }
+
+    specify { expect(social_care_leaver).to be_a_social_care_leaver }
+    specify { expect(independent_special_school).not_to be_a_social_care_leaver }
+  end
+
   describe '#has_std_device_allocation?' do
     let(:school) { create(:school) }
 

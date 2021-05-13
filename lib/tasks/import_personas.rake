@@ -5,5 +5,6 @@ namespace :import do
     Personas::SupportUser.new.call
     Personas::TrustWithSchools.new.call
     Personas::LaFundedPlace.new.call
+    Personas::SclProvisionedUser.new.call
   end
 end

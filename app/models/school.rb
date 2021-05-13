@@ -82,6 +82,14 @@ class School < ApplicationRecord
     type == 'LaFundedPlace'
   end
 
+  def independent_special_school?
+    provision_type == 'iss'
+  end
+
+  def social_care_leaver?
+    provision_type == 'scl'
+  end
+
   def available_mobile_networks
     if hide_networks_not_supporting_fe?
       MobileNetwork.fe_networks
