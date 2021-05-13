@@ -1,5 +1,6 @@
 class BulkUploadSummary
   attr_reader :errors, :existing, :successful
+
   def initialize
     @errors = []
     @existing = []

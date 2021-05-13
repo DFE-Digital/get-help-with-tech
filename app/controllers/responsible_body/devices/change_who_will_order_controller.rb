@@ -28,8 +28,8 @@ private
 
   def check_school_can_change_who_will_order
     set_school
-    if @school.preorder_information
-      not_found unless @school.preorder_information.can_change_who_will_order_devices?
+    if @school.preorder_information && !@school.preorder_information.can_change_who_will_order_devices?
+      not_found
     end
   end
 

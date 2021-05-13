@@ -1,6 +1,8 @@
 class SessionService
   class TokenValidButExpired < StandardError; end
+
   class TokenNotRecognised < StandardError; end
+
   class InvalidTokenAndIdentifierCombination < StandardError; end
 
   DEFAULT_USER_TTL = 3600.seconds.freeze

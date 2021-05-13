@@ -1,8 +1,7 @@
 require 'nokogiri'
 
 class Computacenter::OutgoingAPI::CapUpdateRequest
-  attr_accessor :endpoint, :username, :password, :allocation_ids, :timestamp
-  attr_accessor :body, :payload_id, :response, :logger
+  attr_accessor :endpoint, :username, :password, :allocation_ids, :timestamp, :body, :payload_id, :response, :logger
 
   def initialize(args = {})
     @endpoint       = args[:endpoint] || setting(:endpoint)

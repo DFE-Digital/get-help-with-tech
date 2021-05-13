@@ -1,5 +1,6 @@
 class Computacenter::API::Schema
   attr_accessor :schema
+
   delegate :validate, to: :schema
 
   def initialize(schema_name)

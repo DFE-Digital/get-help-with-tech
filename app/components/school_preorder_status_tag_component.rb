@@ -29,7 +29,7 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
 
 private
 
-  attr_reader :viewer
+  attr_reader :viewer, :school
 
   def status
     @status ||= school.preorder_status_or_default
@@ -51,6 +51,4 @@ private
 
     hash.fetch(viewer.class.to_s.underscore, :default)
   end
-
-  attr_reader :school
 end
