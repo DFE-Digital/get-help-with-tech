@@ -20,7 +20,7 @@ en:
     cookie_preferences: Cookies
     email_not_recognised: We did not recognise that email address
     token_is_valid_but_expired: The link you clicked has expired
-    token_not_recognised: We didn’t recognise that link
+    token_not_recognised: We did not recognise that link
     confirm: Check your answers before confirming
     new_user: Create an account
     error_prefix: "Error: "
@@ -261,11 +261,11 @@ en:
         title: You can order different types of laptops
       chromebooks:
         title: Will you order Chromebooks?
-        'yes': Yes, we will need Chromebooks
+        'yes': Yes, we'll need Chromebooks
         'no': No, we do not need Chromebooks
         i_dont_know: I do not know
         errors:
-          choice: Tell us whether you will need Chromebooks
+          choice: Tell us whether you'll need Chromebooks
       what_happens_next:
         title: What happens next
     techsource_unavailable: Sorry, TechSource is unavailable
@@ -331,8 +331,8 @@ en:
       guidance_section: manage_devices_pages
 
     preparing_a_standard_windows_device:
-      title: Preparing standard Microsoft Windows laptops and tablets
-      description: When you receive a standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
+      title: Preparing Standard Microsoft Windows laptops and tablets
+      description: When you receive a Standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
       guidance_section: technical_staff_doing_device_setup # won't appear in the index
     getting_started_with_your_microsoft_windows_device:
       title: How to get started with your Microsoft Windows laptop or tablet

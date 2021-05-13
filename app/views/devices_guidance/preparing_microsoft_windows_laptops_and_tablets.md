@@ -8,22 +8,22 @@
 
 When ordering Microsoft devices, a selection can be made between:
 
-* not having DfE settings installed - these 'Standard' devices can be configured with your preferred safeguarding software and brought into your existing device management framework
-* having DfE settings installed - these 'DfE Restricted' devices have temporary safeguarding settings installed - content filtering and mobile device management (MDM) software - which you’ll need to replace before they expire on 30 September 2021. You’ll need to reset these devices before you can apply new settings, or download some types of software. You'll be reliant on DfE for technical support.
+* not having DfE settings installed - these 'Standard' Windows devices can be configured with your preferred safeguarding software and brought into your existing device management framework
+* having DfE settings installed - these 'DfE Restricted' Windows devices have temporary safeguarding settings installed - content filtering and mobile device management (MDM) software - which you’ll need to replace before they expire on 30 September 2021. You’ll need to reset these devices before you can apply new settings, or download some types of software. You'll be reliant on DfE for technical support.
 
 If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
-## Preparing laptops and tablets ordered without DfE settings installed
+## Preparing Standard Windows laptops and tablets ordered without DfE settings installed
 
 If you order devices after September 2020, you have the option to receive them without DfE [safeguarding settings](/devices/safeguarding-for-device-users) installed prior to delivery. These 'Standard' devices will have the manufacturer’s factory settings as they would arrive if purchased from a retailer.
 
 This allows devices to be configured to your own standards with your preferred software and settings, and without the limitations imposed by DfE configured devices. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
 
-You will be responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices – such as content filtering, antivirus software and mobile device management – to avoid risks to the children and young people in your care.
+You'll be responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices – such as content filtering, antivirus software and mobile device management – to avoid risks to the children and young people in your care.
 
-Read our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device).
+Read our guidance on [preparing a Standard Windows device](/devices/preparing-a-standard-windows-device).
 
-## Preparing laptops and tablets ordered with DfE settings installed
+## Preparing DfE Restricted Windows laptops and tablets ordered with DfE settings installed
 
 The following guidance applies only to devices ordered in the 2020 summer term, and those ordered after September 2020 where you have selected 'DfE Restricted' devices which have software and settings installed prior to delivery.
 
@@ -73,7 +73,7 @@ You can lend the devices to users straight away as the MDM and content filtering
 
 ## Reconfigure your devices
 
->DfE safeguarding settings expire on 30 September 2021. You need to reset devices and apply your own settings before that date to ensure they're safe for children and young people to use.
+DfE safeguarding settings expire on 30 September 2021. You need to reset devices and apply your own settings before that date to ensure they're safe for children and young people to use.
 
 You can take control of the devices at any time by restoring them to [factory settings and applying your own remote management solution](/devices/preparing-microsoft-windows-laptops-and-tablets#getting-local-admin-and-bios-passwords-to-install-your-own-software-and-settings). This will restore the machine to its original state without any DfE software or settings, and it will no longer be enrolled in the DfE device management system.
 

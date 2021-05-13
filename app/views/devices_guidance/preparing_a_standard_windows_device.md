@@ -1,8 +1,8 @@
-This guidance is written with reference to standard Windows devices provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+This guidance is written with reference to Standard Windows devices provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## Re-image or factory reset the device
 
-When you get a device, you need to prepare it to ensure it’s safely set up for users. It’s important to get your device into a ‘known state’ so that you are familiar with the software and settings and can confidently support users.
+When you get a device, you need to prepare it to make sure it’s safely set up for users. It’s important to get your device into a ‘known state’ so that you're familiar with the software and settings and can confidently support users.
 
 The following methods can be used to do this.
 
@@ -12,14 +12,14 @@ This is the recommended route as it will bring the device in line with other dev
  
 ### Install a clean version of Windows 10
 
-Standard Windows devices come with Windows 10 already installed. If it does need to be reinstalled in future and you don’t have a pre-prepared image, Windows 10 can be installed via:
+Standard Windows devices come with Windows 10 already installed. If it does need to be reinstalled in future and you do not have a pre-prepared image, Windows 10 can be installed via:
  
 * USB - If installing from a USB, the USB stick should be wiped and formatted before loading the Windows 10 installer onto it to confirm the USB stick is clean. Find out [how to install Windows 10 and boot from a USB](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/install-windows-from-a-usb-flash-drive).
 * DVD - Find out [how to install Windows 10 and boot from a DVD](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-from-a-dvd).
  
 ### Perform a factory reset
 
-If you don’t have your own image or a USB or DVD to boot from, you should reset the device to factory settings.
+If you do not have your own image or a USB or DVD to boot from, you should reset the device to factory settings.
  
 You’ll need to do this for each device individually.
 
@@ -75,4 +75,4 @@ If your school does not already have device management in place, we would not re
 
 ## Set up content filtering
 
-You are responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices to avoid risks to the children and young people in your care.
+You're responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices to avoid risks to the children and young people in your care.
