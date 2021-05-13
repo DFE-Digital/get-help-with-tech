@@ -328,6 +328,11 @@ en:
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
       guidance_section: manage_devices_pages
 
+    guide_to_resetting_windows_laptops_and_tablets:
+      title:  Guide to resetting windows laptops and tablets
+      description:  Foo
+      guidance_section:  manage_devices_pages
+
   guide_to_resetting_windows_laptops_and_tablets:
     before_you_start: Before you start
     get_local_admin_and_bios_passwords: Get local admin and bios passwords
