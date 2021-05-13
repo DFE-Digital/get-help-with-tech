@@ -315,6 +315,10 @@ en:
       description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
       guidance_section: setup_guide_pages
 
+    guide_to_resetting_windows_laptops_and_tablets:
+      title:  Guide to resetting windows laptops and tablets
+      guidance_section:  manage_devices_pages
+
     replace_a_faulty_device:
       title: Replace faulty devices
       description: Find out what to do if a laptop or tablet you’ve received from us is not working.
@@ -327,11 +331,6 @@ en:
       title: Safeguarding devices
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
       guidance_section: manage_devices_pages
-
-    guide_to_resetting_windows_laptops_and_tablets:
-      title:  Guide to resetting windows laptops and tablets
-      description:  Foo
-      guidance_section:  manage_devices_pages
 
   guide_to_resetting_windows_laptops_and_tablets:
     before_you_start: Before you start
