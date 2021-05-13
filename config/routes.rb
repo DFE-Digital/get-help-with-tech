@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
   get '/devices/how-to-order-laptops-for-social-care-leavers', to: 'devices_guidance#how_to_order_laptops_for_social_care_leavers'
   get '/devices/how-to-order-laptops-for-independent-special-schools', to: 'devices_guidance#how_to_order_laptops_for_independent_special_schools'
+  get '/devices/preparing-a-standard-windows-device', to: 'devices_guidance#preparing_a_standard_windows_device'
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
