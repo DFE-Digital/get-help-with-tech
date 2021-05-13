@@ -22,21 +22,13 @@
       <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: {text: ""} ) do %>
         <%= f.govuk_radio_button(:will_need_chromebooks,
                                  'yes',
-                                 label: { text: t(:yes, scope: scope) }) do %>
-          <p class="govuk-body">
-            When you order you’ll receive an email asking you to provide relevant Google Workspace for Education Fundementals (formerly G Suite for Education) license information.
-          </p>
-        <%- end %>
+                                 label: { text: t(:yes, scope: scope) }) %>
         <%= f.govuk_radio_button  :will_need_chromebooks,
                                   'no',
                                   label: { text: t(:no, scope: scope) } %>
         <%= f.govuk_radio_button(:will_need_chromebooks,
                                  'i_dont_know',
-                                 label: { text: t(:im_not_sure, scope: scope) }) do %>
-          <p class="govuk-body">
-            If you order Chromebooks without letting us know first, they’ll be delivered unsecured, without access to Google Workspace for Education Fundementals (formerly G Suite for Education).
-          </p>
-        <%- end %>
+                                 label: { text: t(:im_not_sure, scope: scope) }) %>
       <%- end %>
       <%= f.govuk_submit 'Continue' %>
     <%- end %>

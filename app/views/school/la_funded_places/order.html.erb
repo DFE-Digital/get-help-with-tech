@@ -14,7 +14,7 @@
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
     <%= render partial: 'shared/stock_levels' %>
-    
+
     <p class="govuk-body">
       <%= govuk_link_to 'It’s important to check you’re ordering the best type of laptop for each pupil.', laptop_types_school_path(@school) %>
     </p>
@@ -33,18 +33,41 @@
           <%= render 'chromebook_ordering_for_care_leavers' %>
         <% else %>
           <p class="govuk-body">
-            After you place your order you’ll get an email asking for:
+            You’ll get an email after you order asking if you want us to supply
+            Chrome Education Upgrades (Chromebook licenses). An educational
+            setting will need a license to enrol the device in their Google Admin
+            console. This gives them options to manage and secure the device.
+          </p>
+          <p class="govuk-body">
+            Reply to the email to request licenses. You’ll need to provide the
+            following information for each pupil’s educational setting:
           </p>
           <ul class="govuk-list govuk-list--bullet">
             <li>
-              the domain the school has registered for Google Workspace for Education Fundamentals (formerly G Suite for Education), for example ‘school.co.uk’
+              the Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example
+              ‘school.co.uk’
             </li>
             <li>
-              a recovery email address. This should be on a separate domain to the one registered for Google Workspace for Education Fundamentals. For example, if the domain registered for Google Workspace for Education Fundamentals is ‘school.com’, the recovery email cannot be ‘recovery@school.com’
+              a recovery email address, which must be on a different
+              domain to the educational setting‘s domain - for example, if
+              the registered domain is ‘school.co.uk’, the recovery email
+              cannot be ‘recovery@school.co.uk’
             </li>
           </ul>
           <p class="govuk-body">
-            The school’s IT support should be able to give you this information.
+            The educational setting’s IT support should be able to give you this.
+          </p>
+          <p class="govuk-body">
+            Alternatively, your LA can choose to
+            <%= link_to_devices_guidance_subpage 'set up and manage a Google domain', 'google-domain-for-care-leavers-and-children-with-social-worker' %>.
+          </p>
+          <p class="govuk-body">
+            If you do not request licenses, your Chromebooks will be delivered
+            with factory settings. Cisco Umbrella web filtering will not be installed.
+            Your LA, or the education setting you lend or give the devices to, will
+            be responsible for
+            <%= link_to_devices_guidance_subpage 'installing safeguarding and security settings', 'safeguarding-for-device-users' %> before
+            they’re distributed to pupils.
           </p>
         <% end %>
       </div>
@@ -56,25 +79,56 @@
         <%- end %>
       </p>
     <% else %>
+      <p class="govuk-body">
+        You’ve told us you‘re not sure if you‘ll order Chromebooks –&nbsp;
+        <%= govuk_link_to funded_chromebooks_school_path(@school) do %>
+          Change <span class="govuk-visually-hidden">Chromebook preference</span>
+        <% end %>
+      </p>
       <div class="govuk-inset-text">
-        <p class="govuk-body">
-          <strong>
-            You have not told us if you plan to order Google Chromebooks
-          </strong>
-        </p>
-        <p class="govuk-body">
-          <% if @school.social_care_leaver? %>
+        <% if @school.social_care_leaver? %>
+          <p class="govuk-body">
             If you order Chromebooks without letting us know first, they’ll be
             delivered without being enrolled into a Google Workspace for
             Education domain. This means they cannot be managed remotely, and
             it will not be possible to apply security settings to keep users safe
             online.
-          <% else %>
-            If you order Chromebooks without letting us know first, they’ll be
-            delivered unsecured, without access to the Google Workspace for
-            Education Fundamentals (formerly G Suite for Education).
-          <% end %>
-        </p>
+          </p>
+        <% else %>
+          <p class="govuk-body">
+            If you do order them, you‘ll get an email asking if you want us to
+            supply Chrome Education Upgrades (Chromebook licenses). An
+            educational setting will need a license to enrol the device in their
+            Google Admin console. This gives them options to manage and
+            secure the device.
+          </p>
+          <p class="govuk-body">
+            Reply to the email to request licenses. You’ll need to provide the
+            following information for each pupil’s educational setting:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              the Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example ‘school.co.uk‘
+            </li>
+            <li>
+              a recovery email address, which must be on a different domain to the educational setting‘s domain - for example, if the registered domain is ‘school.co.uk’, the recovery email cannot be ‘recovery@school.co.uk’
+            </li>
+          </ul>
+          <p class="govuk-body">
+            The educational setting’s IT support should be able to give you this.
+          </p>
+          <p class="govuk-body">
+            Alternatively, your LA can choose to
+            <%= link_to_devices_guidance_subpage 'set up and manage a Google domain', 'google-domain-for-care-leavers-and-children-with-social-worker' %>.
+          </p>
+          <p class="govuk-body">
+            If you do not request licenses, your Chromebooks will be delivered
+            with factory settings. Cisco Umbrella web filtering will not be installed.
+            Your LA, or the education setting you lend or give the devices to, will
+            be responsible for <%= link_to_devices_guidance_subpage 'installing safeguarding and security settings', 'safeguarding-for-device-users' %> before
+            they’re distributed to pupils.
+          </p>
+        <% end %>
         <%= govuk_link_to 'Tell us if you’ll order Google Chromebooks', funded_chromebooks_school_path(@school) %>
       </div>
     <% end %>
