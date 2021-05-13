@@ -88,11 +88,44 @@
       <div class="govuk-inset-text">
         <% if @school.social_care_leaver? %>
           <p class="govuk-body">
-            If you order Chromebooks without letting us know first, they’ll be
-            delivered without being enrolled into a Google Workspace for
-            Education domain. This means they cannot be managed remotely, and
-            it will not be possible to apply security settings to keep users safe
-            online.
+            If you do order them, you’ll get an email asking if you want us to supply
+            Chrome Education Upgrades (Chromebook licenses). If a care leaver is in
+            education, their educational setting will need a license to enrol the device in
+            their Google Admin console (if they have one). This gives them options to
+            manage and secure the device.
+          </p>
+          <p class="govuk-body">
+            Reply to the email to request licenses. You’ll need to provide the following
+            information for each care leaver’s educational setting:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              the Google domain for Google Workspace for Education
+              Fundamentals (formerly G Suite for Education) - for example
+              ‘school.co.uk’
+            </li>
+            <li>
+              a recovery email address, which must be on a different domain to
+              the educational setting‘s domain - for example, if the registered
+              domain is ‘school.co.uk’, the recovery email cannot be
+              ‘recovery@school.co.uk’
+            </li>
+          </ul>
+          <p class="govuk-body">
+            The educational setting’s IT support should be able to give you this.
+          </p>
+          <p class="govuk-body">
+            If you’re ordering for a care leaver who is not in education, and you cannot
+            provide Google Workspace for Education details for them, your
+            Chromebooks will be delivered with factory settings. Cisco Umbrella web
+            filtering will not be installed. Your LA will be responsible for
+            <%= link_to_devices_guidance_subpage 'installing safeguarding and security settings', 'safeguarding-for-device-users' %>
+            before they’re distributed to care
+            leavers.
+          </p>
+          <p class="govuk-body">
+            Alternatively, your LA can choose to
+            <%= link_to_devices_guidance_subpage 'set up and manage a Google domain', 'google-domain-for-care-leavers-and-children-with-social-worker' %>.
           </p>
         <% else %>
           <p class="govuk-body">
@@ -108,7 +141,7 @@
           </p>
           <ul class="govuk-list govuk-list--bullet">
             <li>
-              the Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example ‘school.co.uk‘
+              the Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example ‘school.co.uk’
             </li>
             <li>
               a recovery email address, which must be on a different domain to the educational setting‘s domain - for example, if the registered domain is ‘school.co.uk’, the recovery email cannot be ‘recovery@school.co.uk’

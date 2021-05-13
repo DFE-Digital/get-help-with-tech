@@ -77,8 +77,6 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
 
 [Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
 
-</div>
-
 <div class="govuk-grid-column-full">
 
   <h2 class="govuk-heading-l">
@@ -261,8 +259,6 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
     </tbody>
   </table>
 </div>
-
-<div class="govuk-grid-column-two-thirds">
 
 ## 4G wireless routers
 

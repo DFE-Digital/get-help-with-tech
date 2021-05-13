@@ -113,7 +113,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def then_i_see_confirmation_i_have_not_indicated_whether_i_will_order_chromebooks
-    expect(page).to have_text('You have not told us if you plan to order Google Chromebooks')
+    expect(page).to have_text('not sure if you‘ll order Chromebooks')
   end
 
   def when_i_answer_no
