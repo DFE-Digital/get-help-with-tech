@@ -1,4 +1,4 @@
-This guidance is written with reference to standard Windows devices provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+This guidance is written with reference to standard Windows devices provided through the Get help with technology programme. It also applies to any [restricted DfE laptops and tablets you have reset](/guide-to-resetting-windows-laptops-and-tablets), and new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## Re-image or factory reset the device
 
