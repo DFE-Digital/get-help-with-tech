@@ -19,7 +19,7 @@ class BatchJobLogEntry < ApplicationRecord
       FROM    #{table_name}
       WHERE   run_id = :run_id
     SQL
-    stats = connection.select_all(sanitize_sql_for_assignment([sql, run_id: run_id])).first.symbolize_keys
+    stats = connection.select_all(sanitize_sql_for_assignment([sql, { run_id: run_id }])).first.symbolize_keys
     stats.merge({
       duration: stats[:max_created_at] - stats[:min_created_at],
       records_per_second: (stats[:number_of_records] / (stats[:max_created_at] - stats[:min_created_at])),

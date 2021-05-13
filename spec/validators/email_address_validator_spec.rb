@@ -5,6 +5,7 @@ RSpec.describe EmailAddressValidator do
     stub_const('Validatable', Class.new).class_eval do
       include ActiveModel::Validations
       attr_accessor :email_address
+
       validates :email_address, email_address: true
     end
   end

@@ -10,7 +10,7 @@ RSpec.describe NavComponent do
 
   describe '#class_name' do
     it 'includes govuk-header__navigation-item' do
-      expect(nav.class_name(current_path)).to match(/govuk\-header__navigation-item[\s$]/)
+      expect(nav.class_name(current_path)).to match(/govuk-header__navigation-item[\s$]/)
     end
 
     context 'when the given url is the current_path' do
