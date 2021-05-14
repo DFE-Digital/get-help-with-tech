@@ -1,6 +1,6 @@
-<div class="govuk-inset text govuk-!-margin-bottom-4">
-  <p class="govuk-body govuk-!-margin-bottom-0">
-    The person who placed a Chromebook order will receive an email from deal-fulfillment@google.com including important information regarding device setup. We suggest this email is forwarded to the technical contact responsible for preparing Chromebooks.
+<div class="govuk-inset-text">
+  <p>
+    The person who placed a Chromebook order will receive an email from <span class="app-no-wrap">deal-fulfillment@google.com</span> including important information regarding device setup. We suggest this email is forwarded to the technical contact responsible for preparing Chromebooks.
   </p>
 </div>
 

@@ -75,8 +75,7 @@ If you’re ordering for a care leaver who is not in education, and you cannot p
 
 Read more information about [preparing Google Chromebooks for pupils](/devices/preparing-chromebooks).
 
-[Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
-
+</div>
 <div class="govuk-grid-column-full">
 
   <h2 class="govuk-heading-l">
@@ -259,6 +258,8 @@ Read more information about [preparing Google Chromebooks for pupils](/devices/p
     </tbody>
   </table>
 </div>
+
+<div class="govuk-grid-column-two-thirds">
 
 ## 4G wireless routers
 

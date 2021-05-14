@@ -1,5 +1,5 @@
-<div class="govuk-inset text govuk-!-margin-bottom-4">
-  <p class="govuk-body govuk-!-margin-bottom-0">
+<div class="govuk-inset-text">
+  <p>>
     If you’re experiencing problems with your device, please see our guidance on
     <a href="/devices/resolve-issues-with-laptops-and-tablets" class="govuk-link">resolving issues with laptops and tablets</a> 
     or find out <a href="/devices/replace-a-faulty-device" class="govuk-link app-no-wrap">how to replace a faulty device</a>.

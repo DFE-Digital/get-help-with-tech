@@ -38,12 +38,9 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. You’ll be asked if you want to change your wifi name and password, we recommend you keep the ones you have.
 
-1. Once the update has downloaded it will begin to install automatically. This should take around 5 minutes. Router lights may turn on and off during this time.  
-   You should now be on the router settings homepage.
-
-1. Choose a new device login password, this should be at least 8 characters and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’. You should now be on the router settings homepage.
+1. Choose a new Huawei router login password, this should be at least <span class="app-no-wrap">8 characters</span> and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’.
    
-    You should now be on the router settings homepage.
+    If your new password is accepted, you’ll be redirected to  the router settings homepage.
 
 1. You should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update’.
 
