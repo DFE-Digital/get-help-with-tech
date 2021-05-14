@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'guide_contents', locals: { index: 1 } %>
+
+    <h3 class="govuk-heading-m">
+      Why devices need to be reset
+    </h3>
+    
+    <p class="govuk-body">
+      ‘Restricted’ Windows devices provided though the Get help with technology programme come with security software that expires on 30 September 2021.
+    </p>
+
+    <p class="govuk-body">
+      When licenses expire, users will be able to freely access any online content. Devices will not be maintained with future updates including virus scans and software upgrades. It is your responsibility to <%= link_to_devices_guidance_subpage 'safeguard the young people in your care', 'safeguarding-for-device-users' %>.
+    </p>
+     <h3 class="govuk-heading-m">
+      What you need to do
+    </h3>
+    
+    <p class="govuk-body">Laptops and tablets need to be restored to factory settings. This removes existing device management and content filtering software so you can apply your own.</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>You can reset devices any time before 30 September 2021</li>
+      <li>Back up anything you need from devices before resetting</li>
+      <li>Each reset will take approximately 40 to 60 minutes</li>
+      <li>You will need to do this for each device individually</li>
+      <li>This process can be done at the same time on multiple devices</li>
+    </ul>
+
+
+    <%= render partial: 'shared/guide_navigation' %>
+  </div>
+</div>

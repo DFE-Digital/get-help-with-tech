@@ -40,6 +40,16 @@ Rails.application.routes.draw do
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets', to: 'guide_to_resetting_windows_laptops_and_tablets#index'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/get-local-admin-and-bios-passwords', to: 'guide_to_resetting_windows_laptops_and_tablets#get_local_admin_and_bios_passwords'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/before-you-start', to: 'guide_to_resetting_windows_laptops_and_tablets#before_you_start'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/get-local-admin-and-bios-passwords', to: 'guide_to_resetting_windows_laptops_and_tablets#get_local_admin_and_bios_passwords'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/reset-the-bios-password', to: 'guide_to_resetting_windows_laptops_and_tablets#reset_the_bios_password'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/unlock-recovery-mode', to: 'guide_to_resetting_windows_laptops_and_tablets#unlock_recovery_mode'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/reset-the-device', to: 'guide_to_resetting_windows_laptops_and_tablets#reset_the_device'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/apply-your-own-settings', to: 'guide_to_resetting_windows_laptops_and_tablets#apply_your_own_settings'
+  get '/devices/guide-to-resetting-windows-laptops-and-tablets/additional-support', to: 'guide_to_resetting_windows_laptops_and_tablets#additional_support'
+
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
   get '/devices/how-to-order-laptops-for-social-care-leavers', to: 'devices_guidance#how_to_order_laptops_for_social_care_leavers'
