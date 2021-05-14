@@ -78,7 +78,7 @@ If you are unable to access the router settings, you should:
 
 If you have a TP&#8209;Link or D&#8209;Link router, you can reset your router and insert another SIM card at any time. If you choose to do this before <span class="app-no-wrap">31 July 2021</span>, your router will no longer receive data from DfE.
 
-Resetting the router will remove the content filters. Read our [safeguarding guidance](devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
+Resetting the router will remove the content filters. Read our [safeguarding guidance](/devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
 
 ### Before you start
 
