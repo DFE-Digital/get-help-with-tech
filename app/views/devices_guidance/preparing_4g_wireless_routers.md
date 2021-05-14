@@ -1,3 +1,5 @@
+All 4G wireless routers come with SIM cards that provide data until 31 July 2021.
+
 ## Get support
 
 We recommend that trusts, local authorities and schools provide a printed copy of guidance on [How to get started with your 4G wireless router](/devices/4g-user-guidance) to the young people and families who are receiving them. If they receive technical queries from those they have provided 4G wireless routers to, consult the [user guidance](/devices/4g-user-guidance) for the specific device type they have received to troubleshoot any issues before logging a support query.
