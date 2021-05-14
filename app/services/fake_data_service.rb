@@ -1,5 +1,5 @@
 class FakeDataService
-  def self.generate!(extra_mobile_data_requests: 10, mobile_network_id:, responsible_body_id:, created_by_user_id: nil)
+  def self.generate!(mobile_network_id:, responsible_body_id:, extra_mobile_data_requests: 10, created_by_user_id: nil)
     extra_mobile_data_requests.times do
       r = build_request(mobile_network_id: mobile_network_id, responsible_body_id: responsible_body_id, created_by_user_id: created_by_user_id)
       r.save!

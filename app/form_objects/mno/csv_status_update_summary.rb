@@ -4,6 +4,7 @@ class Mno::CsvStatusUpdateSummary
   DISPLAY_LIMIT = 50
 
   attr_reader :errors, :unchanged, :updated
+
   def initialize
     @errors = []
     @unchanged = []

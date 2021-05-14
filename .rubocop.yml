@@ -71,7 +71,7 @@ Naming/MethodParameterName:
     - e
     - to
 
-Capybara/FeatureMethods:
+RSpec/Capybara/FeatureMethods:
   EnabledMethods:
     - feature
     - scenario
@@ -159,3 +159,33 @@ RSpec/NestedGroups:
 Rails/Output:
   Exclude:
     - 'app/services/importers/*'
+
+# After introducing gem 'rubocop-govuk', '~> 4.0.0.pre.1'
+# These should be reviewed individually and decided if on their enforcement
+
+Lint/MissingSuper:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
+Style/CaseLikeIf:
+  Enabled: false
+
+Lint/RedundantSafeNavigation:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: false
+
+Security/Open:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false

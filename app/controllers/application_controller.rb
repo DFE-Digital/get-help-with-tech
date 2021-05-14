@@ -42,6 +42,7 @@ private
   helper_method :impersonated_user
 
   attr_reader :current_user
+
   helper_method :current_user
 
   def impersonated_or_current_user

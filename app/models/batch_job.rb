@@ -1,7 +1,5 @@
 class BatchJob
-  attr_accessor :successes, :failures
-  attr_accessor :records
-  attr_accessor :run_id, :job_name, :logger
+  attr_accessor :successes, :failures, :records, :run_id, :job_name, :logger
 
   def initialize(records:, job_name:, logger: Rails.logger)
     @records = records
