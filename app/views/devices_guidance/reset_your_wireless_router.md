@@ -20,7 +20,7 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Connect your laptop, tablet or mobile phone to the router through the wireless network or the USB cable. (If you have problems connecting, you can read our [Huawei router setup guide](/devices/4g-user-guidance#setting-up-a-huawei-router)).
 
-1. Open a web browser and type [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen. If the page is blocked by your organisation‘s web filtering, you may need to add `192.168.8.1` and `192.168.9.1` to your IP address allow list.
+1. Open a web browser and type [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen. If the page is blocked by your organisation‘s web filtering, you may need to add 192.168.8.1 and 192.168.9.1 to your IP address allow list.
 
     ![Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in.](/devices/huawei-router-log-in.png)
 
@@ -42,8 +42,8 @@ Once you have your wifi network name and password, follow the steps below.
    You should now be on the router settings homepage.
 
 1. Choose a new device login password, this should be at least 8 characters and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’. You should now be on the router settings homepage.
-
-   You should now be on the router settings homepage.
+   
+    You should now be on the router settings homepage.
 
 1. You should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update’.
 
