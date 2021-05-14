@@ -1,5 +1,3 @@
-Subject to stock availability, the Department for Education (DfE) will send routers to trusts, local authorities or schools to distribute to disadvantaged children and families
-
 For all router types, users will find the following in the box:
 
 - 4G wireless router
