@@ -330,4 +330,4 @@ If you need to amend the [Get help with technology: devices](https://get-help-wi
 4. Get a colleague to [review your pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/reviewing-changes-in-pull-requests) – the change cannot be merged without this step
 5. [Merge the pull request with a merge commit](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-a-pull-request)
 
-Once the pull request is merged, it will be released the next time the service is released.
+Once the pull request is merged, it will be released the next time the service is released?
