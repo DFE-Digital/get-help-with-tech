@@ -75,24 +75,6 @@ lafp.std_device_allocation.update!(allocation: 58, cap:58) # laptops
 lafp.coms_device_allocation.update!(allocation: 18, cap:18) # routers
 ```
 
-### Missing `LocalAuthority` contact details
-
-The supplier will see the delivery details of the `LocalAuthority`. If the `LocalAuthority` does not have an address,
-set the address details to be the same as the `LaFundedPlace` that you just added:
-
-```ruby
-la.address_1, la.address_2, la.address_3, la.town, la.county, la.postcode = lafp.address_1, lafp.address_2, lafp.address_3, lafp.town, lafp.county, lafp.postcode
-```
-
-(Note to team: the code above could be simplified if we had an `Address` model in our database which both objects 
-referred to rather than copying individual fields)
-
-Review and save!
-
-```ruby
-la.save
-```
-
 ### Supplier references
 
 The supplier will eventually (and manually) see the information on the new school and manually add their references 
