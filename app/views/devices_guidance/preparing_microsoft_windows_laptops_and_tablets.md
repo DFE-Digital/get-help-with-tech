@@ -1,5 +1,5 @@
 <div class="govuk-inset-text">
-  <p>>
+  <p>
     If you’re experiencing problems with your device, please see our guidance on
     <a href="/devices/resolve-issues-with-laptops-and-tablets" class="govuk-link">resolving issues with laptops and tablets</a> 
     or find out <a href="/devices/replace-a-faulty-device" class="govuk-link app-no-wrap">how to replace a faulty device</a>.
@@ -12,19 +12,20 @@ If you order ‘Standard’ devices without DfE safeguarding settings, they can 
 
 You'll be responsible for setting up management and [safeguarding measures](/devices/safeguarding-for-device-users) before you distribute the devices to avoid risks to the children and young people in your care.
 
-Read our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device).
+Read our guidance on [preparing a Standard Windows device](/devices/preparing-a-standard-windows-device).
 
 If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## Preparing laptops and tablets ordered with DfE settings installed
+## Preparing DfE Restricted Windows laptops and tablets ordered with DfE settings installed
 
 If you order ‘Restricted’ devices, they will be delivered with the following pre-installed security software that is not configurable at a local level:
 
 * Microsoft Intune - device management software that prevents users from installing unauthorised software or making changes to files and settings
 * Cisco Umbrella - content filtering software that blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines
 
-<div class="govuk-inset text govuk-!-margin-bottom-4">
-  <p class="govuk-body govuk-!-margin-bottom-0">
+<div class="govuk-inset-text">
+  <p>
     Licenses for this software will expire on 30 September 2021. You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. Read our guidance on <a href="/devices/guide-to-resetting-windows-laptops-and-tablets" class="govuk-link">how to apply your own settings to devices</a> to see the actions required to ensure those who have received devices can continue to do so safely.
   </p>
 </div>
@@ -50,7 +51,7 @@ DfE's Microsoft Intune MDM settings prevent users from making changes to files o
 
 Microsoft Intune licenses will expire on 30 September 2021. Read our guidance on [how to apply your own settings](/devices/guide-to-resetting-windows-laptops-and-tablets)</a>.
 
-We do not actively monitor users' activity through the MDM and it's not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the device checks in with the MDM, which happens at regular intervals.
+We do not actively monitor users’ activity through the MDM and it's not possible to tailor the configured MDM to meet local needs. Anything you try to install yourself may be lost when the device checks in with the MDM, which happens at regular intervals.
 
 ### Content filtering
 
