@@ -16,7 +16,7 @@ Read our guidance on [preparing a Standard Windows device](/devices/preparing-a-
 
 If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
-## Preparing laptops and tablets ordered with DfE settings installed
+## Preparing laptops and tablets ordered with DfE settings
 
 If you order ‘Restricted’ devices, they will be delivered with the following pre-installed security software that is not configurable at a local level:
 
