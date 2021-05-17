@@ -168,6 +168,12 @@ Follow these instructions to enrol your devices:
 
 ## Deploy Cisco Umbrella on your Chromebooks
 
+<div class="govuk-inset-text">
+  <p>
+    Licenses for Cisco Umbrella provided with Chromebooks will expire on <span class="app-no-wrap">30 September 2021</span>. It’s your responsibility to avoid risks to the online safety of the children and young people you are providing devices to. You can arrange for your own Cisco Umbrella licenses to extend beyond <span class="app-no-wrap">30 September 2021</span> or enable alternative security settings.
+  </p>
+</div>
+
 The below content is taken from the [Cisco Umbrella Client Deployment Guide](https://protect-eu.mimecast.com/s/0RnpCrmB6fnzpmDtYCsC4?domain=docs.umbrella.com) and abbreviated for the purpose of this deployment.
 
 ### Installation Guide

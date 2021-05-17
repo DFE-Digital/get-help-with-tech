@@ -29,12 +29,7 @@
       <%= govuk_link_to t('page_titles.signed_in_internet_access') , internet_school_path(@school) %>
     </h2>
 
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>request extra data for mobile devices</li>
-      <li>check the status of your data requests</li>
-      <li>request 4G wireless routers</li>
-    </ul>
+    <%= render 'shared/get_internet_access_section_description' %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.iss.details'), details_school_path(@school) %>

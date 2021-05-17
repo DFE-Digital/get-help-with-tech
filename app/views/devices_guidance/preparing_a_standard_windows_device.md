@@ -1,4 +1,4 @@
-This guidance is written with reference to Standard Windows devices provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+This guidance is written with reference to standard Windows devices provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## Re-image or factory reset the device
 
@@ -75,4 +75,4 @@ If your school does not already have device management in place, we would not re
 
 ## Set up content filtering
 
-You're responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices to avoid risks to the children and young people in your care.
+You’re responsible for setting up management and [safeguarding measures](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) before you distribute the devices to avoid risks to the children and young people in your care.

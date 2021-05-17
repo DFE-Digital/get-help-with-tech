@@ -40,11 +40,13 @@ en:
     extra_mobile_data_requests_csv_update: Update requests using a CSV
     request_extra_mobile_data: Request extra data for mobile devices
     your_requests: Your requests
+    your_huawei_router_password: Your Huawei router password
     how_would_you_like_to_submit_information: How would you like to submit information?
     upload_a_spreadsheet_of_extra_data_requests: Upload a spreadsheet of extra data requests
     weve_processed_your_spreadsheet: We’ve processed your spreadsheet
     weve_processed_your_csv: We’ve processed your CSV
     guide_to_collecting_mobile_information: Guide to collecting mobile information
+    guide_to_resetting_windows_laptops_and_tablets: Guide to resetting Windows laptops and tablets
     start: Get help with technology
     internet_access: Internet access
     signed_in_internet_access: Get internet access
@@ -310,12 +312,16 @@ en:
       guidance_section: setup_guide_pages
     preparing_chromebooks:
       title: Google Chromebooks setup guide
-      description: Guidance on how to enrol Google Chromebooks on your domain, how to install Cisco Umbrella content filtering, and set up instructions for local authorities, trusts, schools and further education institutions.
+      description: Guidance on how to enrol Google Chromebooks on your domain and options for applying content filtering.
       guidance_section: setup_guide_pages
     preparing_ipads:
       title: Apple iPads setup guide
       description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
       guidance_section: setup_guide_pages
+
+    guide_to_resetting_windows_laptops_and_tablets:
+      title:  Guide to resetting windows laptops and tablets
+      guidance_section:  manage_devices_pages
 
     replace_a_faulty_device:
       title: Replace faulty devices
@@ -355,6 +361,10 @@ en:
       title: Resolve issues with 4G wireless routers
       description: Find out what to do if you're having issues getting your 4G wireless router connected to the internet.
       guidance_section: internet_access
+    reset_your_wireless_router:
+        title: Continue using your router after 31 July 2021 – what you need to do
+        description: All 4G wireless routers come with SIM cards that provide data until 31 July 2021. To continue using your router after this date, you must reset it and replace the SIM card. The date you need to reset your router depends on the type of router you have.
+        guidance_section: internet_access
 
     enrol_chromebooks_with_user_logins:
       title: Enrol Chromebooks and add Cisco Umbrella with user logins
@@ -375,6 +385,14 @@ en:
     telling_about_offer: Telling them about their offer
     privacy: Explaining our privacy policy
     asking_for_account_holder: Asking for account holder name and mobile number
+  guide_to_resetting_windows_laptops_and_tablets:
+    before_you_start: Before you start
+    get_local_admin_and_bios_passwords: Get local admin and BIOS passwords
+    reset_the_bios_password: Reset the BIOS password
+    unlock_recovery_mode: Unlock recovery mode
+    reset_the_device: Reset the device
+    apply_your_own_settings: Apply your own settings
+    additional_support: Additional support
   school:
     chromebooks:
       success: We’ve saved your choices

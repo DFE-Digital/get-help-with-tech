@@ -10,6 +10,12 @@ Devices with pre-installed safeguarding software are available to select at the 
 * Cisco Umbrella - content filtering software that blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines
 * Microsoft Intune - device management software that prevents users from installing unauthorised software or making changes to files and settings
 
+<div class="govuk-inset-text">
+  <p>
+    Licenses for this software will expire on <span class="app-no-wrap">30 September 2021</span>. You can take control of the devices at any time by restoring them to factory settings and applying your own remote management solution. Read our guidance on <a href="/devices/guide-to-resetting-windows-laptops-and-tablets" class="govuk-link">how to apply your own settings to devices</a> to see the actions required to ensure those who have received devices can continue to do so safely.
+  </p>
+</div>
+
 All Chromebooks and iPads will arrive with virus protection in place. DfE Restricted Windows devices (with DfE settings) will have Windows Defender Antivirus software enabled. This setting will need to be applied on Standard Windows devices (without DfE settings) before they’re distributed to users.
 
 Information is available for each device type explaining what safeguarding software is in place, when licenses for these may expire, and how to apply your own settings:

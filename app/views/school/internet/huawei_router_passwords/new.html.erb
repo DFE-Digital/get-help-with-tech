@@ -1,0 +1,10 @@
+<%- title = t('page_titles.your_huawei_router_password') %>
+<% content_for :title, title %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  { t('page_titles.signed_in_internet_access') => internet_school_path(@school) },
+                  title,
+                 ]) %>
+<% end %>
+
+<%= render 'shared/internet/huawei_password_instructions', title: title %>

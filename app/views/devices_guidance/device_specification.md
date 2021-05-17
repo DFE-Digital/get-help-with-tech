@@ -5,7 +5,7 @@ When [placing an order](/), schools, colleges, further education institutions, a
 
 You can find out if any types of device are out of stock by [signing in to the Get help with technology service](/sign-in). The information is also available on the TechSource ordering website.
 
-Apple iPads and Microsoft Windows tablets are now permanently out of stock. For information on setting up and managing tablets you've already received, [see our guidance](/devices).
+Apple iPads and Microsoft Windows tablets are now permanently out of stock. See our guide for information on [setting up and managing tablets you've already received](/devices/preparing-microsoft-windows-laptops-and-tablets).
 
 ## Before you order
 
@@ -17,15 +17,15 @@ When you order you’ll be asked whether or not you want to have DfE settings in
 
 #### Not having DfE settings installed (temporarily out of stock)
 
-These ‘DfE Standard’ Windows devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
+These ‘DfE Standard’ devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
 #### DfE settings installed (in stock)
 
-These ‘DfE Restricted’ Windows devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021, <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices">read our guidance on how to reset devices and apply your own security settings to make them safe for pupils and students to use</a>.
+These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021. Read our guidance on [how to reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) to make them safe for pupils and students to use.
 
-Read more information about <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets">preparing Microsoft devices</a> for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
+Read more information about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets) for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
 
-All devices provided before September 2020 were delivered with safeguarding and mobile device management (MDM) software installed. You can <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed">find out when that software expires</a> in our guidance.
+All devices provided before September 2020 were delivered with safeguarding and mobile device management (MDM) software installed. You can [find out when that software expires](/devices/preparing-microsoft-windows-laptops-and-tablets) in our guidance.
 
 [Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
@@ -42,7 +42,7 @@ You need to [sign in to the Get help with technology service](/sign-in) and give
 
 If you’re not sure how to find this information, you should ask your IT support for help.
 
-If the school you’re ordering for does not currently use an education platform, you can <a class="govuk-link" href="/digital-platforms">apply for DfE-funded support to get access to either Google Workspace for Education Fundamentals or Microsoft 365 Education</a>.
+If the school you’re ordering for does not currently use an education platform, you can [apply for DfE-funded support to get access to either Google Workspace for Education Fundamentals or Microsoft 365 Education](/digital-platforms).
 
 ### Ordering Chromebooks for LA-funded pupils in independent special schools or alternative provision
 
@@ -73,9 +73,9 @@ If you’re ordering for a care leaver who is not in education, and you cannot p
 * [set up and manage a Google domain](https://get-help-with-tech.education.gov.uk/devices/google-domain-for-care-leavers-and-children-with-social-worker)
 * distribute the device unsecured - [read our guidance on your safeguarding responsibilities before making this choice](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users)
 
-Read more information about <a class="govuk-link" href="/devices/preparing-chromebooks">preparing Google Chromebooks for pupils</a>.
+Read more information about [preparing Google Chromebooks for pupils](/devices/preparing-chromebooks).
 
-[Find the technical specifications for Google Chromebooks](#minimum-specifications) in the table below.
+</div> <!-- This closes a `div` tag in the enclosing layout -->
 
 <div class="govuk-grid-column-full">
 
@@ -259,6 +259,8 @@ Read more information about <a class="govuk-link" href="/devices/preparing-chrom
     </tbody>
   </table>
 </div>
+
+<div class="govuk-grid-column-two-thirds"> <!-- Puts back to enclosing `div` -->
 
 ## 4G wireless routers
 
