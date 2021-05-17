@@ -10,12 +10,12 @@ Devices with pre-installed safeguarding software are available to select at the 
 * Cisco Umbrella - content filtering software that blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines
 * Microsoft Intune - device management software that prevents users from installing unauthorised software or making changes to files and settings
 
-All Chromebooks and iPads will arrive with virus protection in place. Windows devices ordered with DfE settings will have Windows Defender Antivirus software enabled. This setting will need to be applied on standard Windows devices before they’re distributed to users.
+All Chromebooks and iPads will arrive with virus protection in place. DfE Restricted Windows devices (with DfE settings) will have Windows Defender Antivirus software enabled. This setting will need to be applied on Standard Windows devices (without DfE settings) before they’re distributed to users.
 
 Information is available for each device type explaining what safeguarding software is in place, when licenses for these may expire, and how to apply your own settings:
 
-* [Microsoft Windows laptops and tablets with DfE settings](/devices/preparing-microsoft-windows-laptops-and-tablets)
-* [Microsoft Windows laptops and tablets without DfE settings](/devices/preparing-a-standard-windows-device)
+* [DfE Restricted Microsoft Windows laptops and tablets with DfE settings](/devices/preparing-microsoft-windows-laptops-and-tablets)
+* [Standard Microsoft Windows laptops and tablets without DfE settings](/devices/preparing-a-standard-windows-device)
 * [Google Chromebooks](/devices/preparing-chromebooks)
 * [Apple iPads](/devices/preparing-ipads)
 * [4G wireless routers](/devices/preparing-4g-wireless-routers#router-security)

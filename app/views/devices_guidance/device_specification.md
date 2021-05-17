@@ -17,11 +17,11 @@ When you order you’ll be asked whether or not you want to have DfE settings in
 
 #### Not having DfE settings installed (temporarily out of stock)
 
-These ‘DfE Standard’ devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
+These ‘DfE Standard’ Windows devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
 #### DfE settings installed (in stock)
 
-These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021, <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices">read our guidance on how to reset devices and apply your own security settings to make them safe for pupils and students to use</a>.
+These ‘DfE Restricted’ Windows devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021, <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices">read our guidance on how to reset devices and apply your own security settings to make them safe for pupils and students to use</a>.
 
 Read more information about <a class="govuk-link" href="/devices/preparing-microsoft-windows-laptops-and-tablets">preparing Microsoft devices</a> for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
 
