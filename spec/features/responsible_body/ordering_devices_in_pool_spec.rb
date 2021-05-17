@@ -179,7 +179,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
 
   def and_i_see_a_section_regarding_ordering_chromebooks
     expect(page).to have_css('h3', text: 'Chromebooks')
-    expect(page).to have_text('If you place an order for Chromebooks, TechSource will contact you about which ‘G Suite for Education’ domains you want to use')
+    expect(page).to have_text('If you place an order for Chromebooks, TechSource will contact you about which Google Workspace for Education Fundamentals (formerly G Suite for Education) domains you want to use')
   end
 
   def add_school_to_virtual_cap(school:)
