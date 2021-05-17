@@ -3,8 +3,8 @@ class TrustUpdateService
     # look at the trusts that have changed since the last update
     last_update ||= DataStage::DataUpdateRecord.last_update_for(:trusts)
 
-    # simple updates for trusts that are open
-    DataStage::Trust.updated_since(last_update).gias_status_open.each do |staged_trust|
+    # update trusts
+    DataStage::Trust.updated_since(last_update).each do |staged_trust|
       trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
 
       next unless trust
