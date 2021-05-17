@@ -36,7 +36,7 @@ Here is the method:
 
 ## Update the details for the ISS Provision
 
-Set the contact details on `lafp`:
+Interested LocalAuthorities will provide delivery details for the ISS Provision. This address will be used to complete the contact details for the new LaFundedPlace object:
 
 ```ruby
 lafp.address_1='123 Fake Street'
@@ -62,13 +62,16 @@ You can also check the specs [here](https://github.com/DFE-Digital/get-help-with
 
 ## Post creation
 
-Ensure that you have the `la` and `lafp` set correctly:
+We need to wait for the supplier to confirm that they have updated their system to include the new LaFundedPalce before we add the allocations.
+Whether you are coming back to the same console session or starting a new console session you should ensure that you have the ``lafp`` variable set correctly:
 
-```ruby
-urn=845;la=LocalAuthority.find_by_gias_id("#{urn}");lafp=School.find_by_provision_urn("ISS#{urn}")
-```
+````ruby
+urn=845;lafp=School.find_by_provision_urn("ISS#{urn}")
+````
 
-### Updating allocations
+Inspect the ``lafp`` variable to ensure that it correctly reflects the LaFundedPlace that you want to update.
+
+### Adding allocations
 
 ```ruby
 lafp.std_device_allocation.update!(allocation: 58, cap:58) # laptops
@@ -89,7 +92,7 @@ lafp.update!(order_state: 'can_order')
 ### Invitation to order
 
 Once the ISS has been properly configured and the supplier has added their references we can send the e-mails inviting 
-the users to order.
+the users to order. The emails are normally sent by the support team.
 
 #### Invite to order checklist
 
