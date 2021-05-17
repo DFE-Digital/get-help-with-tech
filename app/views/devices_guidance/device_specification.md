@@ -75,7 +75,7 @@ If you’re ordering for a care leaver who is not in education, and you cannot p
 
 Read more information about [preparing Google Chromebooks for pupils](/devices/preparing-chromebooks).
 
-</div> <!-- This closes a `div` tag in the enclosing layout -->
+</div>
 
 <div class="govuk-grid-column-full">
 
@@ -260,7 +260,7 @@ Read more information about [preparing Google Chromebooks for pupils](/devices/p
   </table>
 </div>
 
-<div class="govuk-grid-column-two-thirds"> <!-- Puts back to enclosing `div` -->
+<div class="govuk-grid-column-two-thirds">
 
 ## 4G wireless routers
 
