@@ -13,17 +13,17 @@
     </h1>
 
     <p class="govuk-body">
-      This scheme temporarily increases data allowances for mobile phone users on certain networks. This is so that disadvantaged children and young people can access remote education if their face-to-face education is disrupted, and they do not have access to broadband at home.
+      This scheme temporarily increases data allowances until the end of July 2021 for mobile phone users on certain networks. This supports remote and face-to-face education for disadvantaged children and young people without broadband at home.
     </p>
 
     <h2 class="govuk-heading-l">Who can get help</h2>
 
-    <p class="govuk-body">Schools, colleges, further education institutions, trusts, and local authorities in England can request mobile data increases for disadvantaged pupils and students in years 3 to 13 and students in further education who are with a <%= govuk_link_to 'participating network', guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %>. They must meet all 3 of these criteria:</p>
+    <p class="govuk-body">Schools, colleges, further education institutions, trusts, and local authorities in England can request extra mobile data for disadvantaged school pupils in years 3 to 13 and students in further education who are with a <%= govuk_link_to 'participating network', guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %>. They must meet all 3 of these criteria:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>do not have fixed broadband at home</li>
-      <li>cannot afford additional data for their devices </li>
-      <li>are experiencing disruption to their face-to-face education</li>
+      <li>they do not have fixed broadband at home</li>
+      <li>they cannot afford additional data for their devices </li>
+      <li>they're experiencing disruption to their face-to-face education</li>
     </ul>
 
     <p class="govuk-body">Schools, colleges, further education institutions, trusts, and local authorities can also make requests for children and young people who meet the criteria above, and are:</p>
@@ -35,14 +35,14 @@
     
      <p class="govuk-body">Local authorities can also <%= govuk_link_to 'request this support for state-funded pupils in years 3 to 11 in independent special schools or alternative provision', '/devices/how_to_order_laptops_for_independent_special_schools' %> who are eligible for free school meals.</p>
 
-    <p class="govuk-body">Mobile data increases are currently not available for:</p>
+    <p class="govuk-body">Extra mobile data is not currently available for:</p>
 
   <ul class="govuk-list govuk-list--bullet">
       <li>children who typically receive home education (also known as 'elective home education' or 'home schooling’)</li>
       <li>care leavers who are not attending school or further education</li>
     </ul>
 
-  <h2 class="govuk-heading-l">Which mobile networks can increase data</h2>
+  <h2 class="govuk-heading-l">Which mobile networks can provide extra data</h2>
 
     <p class="govuk-body">Pupils and students with access to a mobile phone on one of the following networks might be able to benefit:</p>
 
@@ -53,14 +53,14 @@
     </ul>
 
     <p class="govuk-body">
-      Other providers will join the scheme at a later stage. We recommend you take a <%= govuk_link_to 'look at the further details on offers from each provider to understand what is available', guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %>.
+      We recommend you take a <%= govuk_link_to 'look at the further details on offers from each provider to understand what is available', guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %>.
     </p>
 
     <p class="govuk-body">
       Note that <%= MobileNetwork.excluded_fe_networks.pluck(:brand).to_sentence(last_word_connector: ' and ') %> are not currently supporting requests for students in further education.
     </p>
 
-    <h2 class="govuk-heading-l">How to request a mobile data increase</h2>
+    <h2 class="govuk-heading-l">How to request extra mobile data</h2>
 
     <p class="govuk-body">Requests can only be made by someone who’s been nominated to order devices through the <%= govuk_link_to 'Get help with technology service', root_path %>.</p>
 
@@ -73,24 +73,28 @@
       <li>whether they pay monthly or pay as they go</li>
     </ul>
 
-    <p class="govuk-body">There’s an <%= govuk_link_to 'online guide to help you gather mobile information', guide_to_collecting_mobile_information_path %>.</p>
+    <div class="govuk-inset-text">
+      <p>There’s an <%= govuk_link_to 'online guide to help you gather mobile information', guide_to_collecting_mobile_information_path %>.</p>
+      </p>
+    </div>
 
     <p class="govuk-body">Schools, colleges, further education institutions, trusts and local authorities need to <a class="govuk-link" href="/start">submit mobile information to the DfE</a>. Each provider will vary in how quickly they process requests.</p>
 
-    <p class="govuk-body">Once a network provider has completed a data increase, they’ll send a text message to the account holder if they have opted to receive SMS alerts from their provider. It’s also possible to check the status of requests through our online service.</p>
+    <p class="govuk-body">Once a network provider has completed a data increase, they’ll send a text message to the account holder if they’ve opted to receive SMS alerts from their provider. You can <a class="govuk-link" href="/start">check the status of requests by signing in to the Get help with technology service</a>.
+    </p>
 
     <h2 class="govuk-heading-l">
       Another option for increasing internet access
     </h2>
 
-    <p class="govuk-body">If increasing mobile data is not a suitable option for some children, or if a request for additional data is unsuccessful, schools, colleges and further education institutions can also <%= govuk_link_to 'request 4G wireless routers', how_to_request_4g_wireless_routers_path %>. Find out more about <%= govuk_link_to 'choosing help with internet access', choosing_help_with_internet_access_path %>.</p>
+    <p class="govuk-body">If requesting extra mobile data is not a suitable option for some people, or if a request for extra data is unsuccessful, schools, colleges and further education institutions can also <%= govuk_link_to 'request 4G wireless routers', how_to_request_4g_wireless_routers_path %>. Find out more about <%= govuk_link_to 'choosing help with internet access', choosing_help_with_internet_access_path %>.</p>
 
     <h2 class="govuk-heading-l">
       If you have questions
     </h2>
 
     <p class="govuk-body">
-      If you have any questions, email <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk?subject=Increasing data allowances">COVID.TECHNOLOGY@education.gov.uk</a> using the subject line ‘Increasing data allowances’.
+      If you have any questions, email <a class="govuk-link" href="mailto:COVID.TECHNOLOGY@education.gov.uk?subject=Extra mobile data">COVID.TECHNOLOGY@education.gov.uk</a> using the subject line ‘Increasing data allowances’.
     </p>
   </div>
 </div>
