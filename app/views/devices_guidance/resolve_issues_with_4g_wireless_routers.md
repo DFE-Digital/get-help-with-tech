@@ -1,5 +1,9 @@
 See our guidance on [preparing 4G routers](/devices/preparing-4g-wireless-routers) and [getting started with your 4G wireless router](/devices/4g-user-guidance) for support with setting up and using routers.
 
+## Resetting your router
+
+All 4G wireless routers come with SIM cards that provide data until 31 July 2021. To continue using routers after this date, you must [reset them and replace their SIM cards](/devices/using-your-router-after-31-july-2021).
+
 ## If a router won't start
 
 If you receive a router that will not start, check that it’s fully charged. If it still will not power up, [contact us](/get-support) with the order number and the IMEI number on the device.
