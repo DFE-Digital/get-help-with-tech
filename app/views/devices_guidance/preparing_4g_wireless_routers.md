@@ -38,7 +38,7 @@ Using another SIM card will remove the content filters. Read our [safeguarding g
 
 ## Data limits
 
-Each SIM has a monthly data limit of 20GB which refreshes on the first of each month. Young people and their families can use up to 20GB of data per month before the 4G wireless router will stop connecting to the internet, until a new month begins. It is not possible for us to increase data allowances for individuals who have reached their limit.
+Each SIM has a monthly data limit of 20GB which refreshes on the first of each month. Young people and their families can use up to 20GB of data per month before the 4G wireless router will stop connecting to the internet, until a new month begins. It's not possible for us to increase data allowances for individuals who have reached their limit.
 
 20GB of data is equivalent to approximately 5 hours of remote education activities per day. 
 
@@ -50,7 +50,7 @@ When distributing devices, you should inform families, young people and care lea
 
 ## Router security
 
-Each router will only work with the SIM card that is provided with it until it is reset. Attempting to use another SIM in the router before you reset it or use the SIM card with any other device will not give a data connection and may cause the SIM card to become barred.
+Each router will only work with the SIM card that is provided with it until it is reset. Attempting to use another SIM in the router before you reset it, or to use the SIM card with any other device will not give a data connection and may cause the SIM card to become barred.
 
 The device will connect to the mobile network with the strongest signal available. Regardless of which network it uses, all traffic will pass through a private, secure connection to a filtered service. 
 
@@ -70,5 +70,5 @@ These resources include detailed guidance for schools and colleges on safe remot
 - [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - outlines resources to help keep children safe from different risks online, and where to go to receive support and advice
 - [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online - includes information on security and privacy settings
 
-In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to do this. It is also important that children, parents, carers, and school staff are clear on what the reporting mechanisms are if they have any concerns regarding online safety.
+In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to do this. It is also important that children, parents, carers, and school staff are clear on how to report any concerns they may have about online safety.
 
