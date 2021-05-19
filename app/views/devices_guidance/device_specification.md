@@ -1,4 +1,4 @@
-You can find out which types of device are in stock by [signing in to TechSource ordering website](https://techsource.computacenter.com/en/). 
+You can find out which types of device are in stock by signing in to TechSource ordering website. 
 
 ## Before you order
 
