@@ -1,44 +1,19 @@
 <h2 class="govuk-heading-m">
-  Device availability
+  What’s in stock
 </h2>
 
-<h3 class="govuk-heading-s">
-  In stock
-</h3>
-<ul class="govuk-list govuk-list--bullet">
-  <li>
-    Google Chromebooks
-  </li>
-  <li>
-    DfE Restricted Windows laptops – low stock, delivery may take longer than 5 working days
-  </li>
-</ul>
-
-<h3 class="govuk-heading-s">
-  Temporarily out of stock
-</h3>
-<ul class="govuk-list govuk-list--bullet">
-    <li>
-    Standard Windows laptops
-  </li>
-</ul>
-
-<h3 class="govuk-heading-s">
-  Permanently out of stock
-</h3>
-<ul class="govuk-list govuk-list--bullet">
-  <li>
-    Apple iPads
-  </li>
-  <li>
-    Microsoft Windows tablets
-  </li>
-</ul>
-
 <p class="govuk-body">
-  <%= link_to_devices_guidance_subpage 'Read more about the devices and specifications available.', 'device-specification' %>
+You can see which types of device are currently in stock when you sign in to TechSource.
 </p>
 
 <p class="govuk-body">
-  <%= link_to_devices_guidance_subpage 'Find out how to reset DfE Restricted Windows laptops.', '/devices/preparing_microsoft_windows_laptops_and_tablets#reconfigure_your_devices' %>
+  <%= link_to_devices_guidance_subpage 'Read more about the devices and specifications that may be available.', 'device-specification' %>
+</p>
+
+<p class="govuk-body">
+Most devices will be delivered within 5 working days.
+</p>
+
+<p class="govuk-body">
+  If you order DfE Restricted Windows laptops - <%= link_to_devices_guidance_subpage 'find out how to reset them before security software expires on 30 September 2021', '/devices/preparing_microsoft_windows_laptops_and_tablets#reconfigure_your_devices' %>.
 </p>
