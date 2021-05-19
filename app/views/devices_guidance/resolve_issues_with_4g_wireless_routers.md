@@ -6,6 +6,8 @@ All 4G wireless routers come with SIM cards that provide data until 31 July 2021
 
 If you have Huawei routers, you'll need to reset them before 16 July 2021. If you do not do this, you'll be unable to use another SIM card when the data runs out. 
 
+If you have TP‑Link or D‑Link routers, you can reset them and insert another SIM card at any time. If you choose to do this before 31 July 2021, your router will no longer receive data from DfE.
+
 ## If a router won't start
 
 If you receive a router that will not start, check that it’s fully charged. If it still will not power up, [contact us](/get-support) with the order number and the IMEI number on the device.
