@@ -2,27 +2,20 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 1 } %>
 
-    <p class="govuk-body">This guide is for anyone who needs to use the Department for Education’s service to request a mobile data increase for disadvantaged children and young people.</p>
+    <p class="govuk-body">This guide is for anyone who needs to use the Department for Education’s service to request extra mobile data for disadvantaged children and young people.</p>
 
     <p class="govuk-body">It helps you tell people what’s available and collect the information you need to submit.</p>
 
     <h3 class="govuk-heading-m" id="who-can-get-help">Who can get help</h3>
 
     <p class="govuk-body">
-      This scheme is open to:
+      Extra data is available for children and young people in years 3 to 11 and 16 to 19 education who:
     </p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>school pupils in years 3 to 11</li>
-      <li>students in years 12 to 13 and further education</li>
-    </ul>
-
-    <p class="govuk-body">
-      It’s only available to those who:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <%= render partial: 'shared/eligibility_points_across_bt_wifi_and_mno_offers' %>
-      <li>have access to a mobile device that uses a participating network</li>
       <li>are facing disruption to their face-to-face education</li>
+      <li>do not have <%= govuk_link_to 'broadband at home','https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/broadband-speeds/broadband-basics' %>  (the request may be unsuccessful if the account holder also has broadband)</li>
+      <li>cannot afford the additional data needed to access educational resources </li>
+      <li>have access to a mobile device that uses a <%= govuk_link_to 'participating network' ,guide_to_collecting_mobile_information_telling_about_offer_path(anchor: 'network-offers') %></li>  
     </ul>
 
     <p class="govuk-body">
@@ -37,7 +30,7 @@
 
     <h3 class="govuk-heading-m" id="what-information-youll-need-to-collect">What information you’ll need to collect</h3>
 
-    <p class="govuk-body">If you’re confident that a child meets all of the criteria listed above, you’ll need to collect the following information to request extra data for them:</p>
+    <p class="govuk-body">If you’re confident that a child or young person meets all of the criteria listed above, you’ll need to collect the following information to request extra data for them:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>the account holder’s name</li>

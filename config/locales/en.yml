@@ -10,8 +10,8 @@ en:
     how_request_4g_routers: How to request 4G wireless routers
     choosing_help_with_internet_access: Choosing help with internet access
     api_tokens: Your API tokens
-    about_increasing_mobile_data: Increasing data allowances on mobile devices to support disadvantaged children
-    about_increasing_mobile_data_short: Increasing data allowances on mobile devices
+    about_increasing_mobile_data: Get extra mobile data to support disadvantaged children and young people
+    about_increasing_mobile_data_short: Get extra mobile data
     increasing_mobile_data_privacy_notice: How we look after personal information for the Increasing Children’s Mobile Data scheme
     computers_for_kids_privacy_notice: How we look after personal information where you express an interest in Computers for Kids
     sign_in_or_create_account: Create an account or sign in
@@ -380,7 +380,7 @@ en:
       noindex: true
   guide_to_collecting_mobile_information:
     overview: Overview
-    asking_for_network: Asking about mobile network, contracts and Pay-as-you-go (PAYG)
+    asking_for_network: Asking about mobile networks, contracts and Pay-as-you-go (PAYG)
     telling_about_offer: Telling them about their offer
     privacy: Explaining our privacy policy
     asking_for_account_holder: Asking for account holder name and mobile number
