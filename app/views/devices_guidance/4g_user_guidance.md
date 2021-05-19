@@ -6,7 +6,7 @@
 
 You should make young people and families aware that:
 
-- SIM cards will work until the 31 July 2021
+- SIM cards will work until 31 July 2021
 - routers need to be reset by the trust, local authority or school which sent the device to them, before inserting another SIM card
 - once the 20GB limit has been reached the device will no longer connect to the internet 
 - they should not attempt to reset their own router, otherwise it will stop working
@@ -53,7 +53,7 @@ The label inside the cover of each device contains the:
 
 ## Technical support
 
-For technical support, children and families should contact the trust, local authority or school which sent them the router. They can help with setting up routers or raising an issue if there is a problem with the router or SIM card. 
+For technical support, children and families should contact the trust, local authority or school which sent them the router. They can help with setting up routers or raising an issue if there's a problem with the router or SIM card. 
 
 ### For local authorities and trusts
 
@@ -78,6 +78,6 @@ These resources include detailed guidance for schools and colleges on safe remot
 - [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - outlines resources to help keep children safe from different risks online, and where to go to receive support and advice.
 - [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) - includes information on security and privacy settings.
 
-In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to do this. It is also important that children, parents, carers, and school staff are clear on what the reporting mechanisms are if they have any concerns regarding online safety.
+In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to create this. It is also important that children, parents, carers, and school staff are clear on what the reporting mechanisms are if they have any concerns regarding online safety.
 
 If a child is worried or needs support, they can call Childline (0800 1111), download their ‘For Me’ app or visit the website: [https://www.childline.org.uk/](https://www.childline.org.uk/).
