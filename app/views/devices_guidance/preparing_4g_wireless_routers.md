@@ -1,11 +1,3 @@
-## Using routers after 31 July 2021
-
-All 4G wireless routers come with SIM cards that provide data until the end of July 2021. You'll need to [reset routers and replace the SIM cards](/devices/reset-your-wireless-router) to keep using them after this time.
-
-If you have Huawei routers, you must reset them before 16 July 2021. If you do not do this, you’ll be unable to use another SIM card when the data runs out.
-
-If you have TP‑Link or D‑Link routers, you can reset them and insert another SIM card at any time. If you choose to do this before 31 July 2021, your router will no longer receive data from the Department for Education.
-
 ## Get support
 
 Our guidance on [How to get started with your 4G wireless router](/devices/4g-user-guidance) can be shared with young people and their parents, guardians and carers. 
@@ -22,17 +14,27 @@ You can check the status of each router in the [Support Portal](https://computac
 
 ### For young people and families
 
-4G wireless router users should contact the trust, local authority or school which gave their device to them if they encounter any issues. It is important that users do not attempt to reset their device to try to resolve issues, as this will result in both the router and SIM to stop working.
+4G wireless router users should contact the trust, local authority or school which gave their device to them if they have any issues. It is important that users do not attempt to reset their device to try to resolve issues, as this will result in both the router and SIM to stop working.
 
 ## Keeping records
 
-After [placing your order](/how-to-request-4g-wireless-routers) and receiving your 4G wireless routers, you do not need to do anything to set them up before sending them to users. You should, however, keep records of the type of routers you get and who you loan them to.
+After [placing your order](/how-to-request-4g-wireless-routers) and getting your 4G wireless routers, you do not need to do anything to set them up before sending them to users. You should, however, keep records of the type of routers you get and who you loan them to.
 
 Keep a note of the name of the user, with the IMEI and SIM number for each device. 
 
 This information is essential for technical queries, for deactivating devices if they are lost or stolen, and for responding to Regulation of Investigatory Powers Act (RIPA) requests.
 
 Read information about [device ownership and distribution](/devices/device-distribution-and-ownership), including examples of loan agreements and suggestions on insurance. Our guidance [How to get started with your 4G wireless router](/devices/4g-user-guidance) can be shared with the young people and families you’re helping to get online.
+
+## Using routers after 31 July 2021
+
+All 4G wireless routers come with SIM cards that provide data until the end of July 2021. You'll need to [reset routers and replace the SIM cards](/devices/reset-your-wireless-router) to keep using them after this time.
+
+If you have Huawei routers, you must reset them before 16 July 2021. If you do not do this, you’ll be unable to use another SIM card when the data runs out.
+
+If you have TP‑Link or D‑Link routers, you can reset them and insert another SIM card at any time. If you choose to do this before 31 July 2021, your router will no longer receive data from the Department for Education.
+
+Using another SIM card will remove the content filters. Read our [safeguarding guidance](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
 
 ## Data limits
 
@@ -48,7 +50,7 @@ When distributing devices, you should inform families, young people and care lea
 
 ## Router security
 
-Each router will only work with the SIM card that is provided with it. Attempting to use another SIM in the router or use the SIM card with any other device will not give a data connection and may cause the SIM card to become barred.
+Each router will only work with the SIM card that is provided with it until it is reset. Attempting to use another SIM in the router before you reset it or use the SIM card with any other device will not give a data connection and may cause the SIM card to become barred.
 
 The device will connect to the mobile network with the strongest signal available. Regardless of which network it uses, all traffic will pass through a private, secure connection to a filtered service. 
 
