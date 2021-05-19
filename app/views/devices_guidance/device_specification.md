@@ -1,27 +1,35 @@
-When [placing an order](/), schools, colleges, further education institutions, academy trusts and local authorities (LAs) can choose (depending on availability) from:
-
-* Microsoft Windows laptops
-* Google Chromebooks
-
-You can find out if any types of device are out of stock by [signing in to the Get help with technology service](/sign-in). The information is also available on the TechSource ordering website.
-
-Apple iPads and Microsoft Windows tablets are now permanently out of stock. See our guide for information on [setting up and managing tablets you've already received](/devices/preparing-microsoft-windows-laptops-and-tablets).
+You can find out which types of device are in stock by [signing in to TechSource ordering website](https://techsource.computacenter.com/en/). 
 
 ## Before you order
 
 We may need some technical information from you before you can order, so we recommend choosing the types of devices and settings you want before you’re invited to order.
 
+### Pre-issued devices
+
+In addition to brand new devices, you may be able to order ‘pre-issued’ devices too. These have been distributed as part of the Get help with technology programme, and then returned. They may or may not be used. 
+
+Our delivery partner completes the following quality checks for each used device:
+* it’s visually inspected, and where possible any labels (such as asset tags) have been removed 
+* it switches on and powers up
+* the screen, CPU, RAM and HDD are tested
+* the device is reset
+
+These devices will meet the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
+
+The devices will come with any remaining manufacturer’s warranty (this will be less than 1 year). 
+
+
 ## Microsoft Windows laptops
 
 When you order you’ll be asked whether or not you want to have DfE settings installed.
 
-#### Not having DfE settings installed (temporarily out of stock)
+#### Not having DfE settings installed
 
-These ‘DfE Standard’ devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
+These ‘DfE Standard’ Windows devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
-#### DfE settings installed (in stock)
+#### DfE settings installed
 
-These ‘DfE Restricted’ devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021. Read our guidance on [how to reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) to make them safe for pupils and students to use.
+These ‘DfE Restricted’ Windows devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021. Read our guidance on [how to reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) to make them safe for pupils and students to use.
 
 Read more information about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets) for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
 
@@ -29,7 +37,7 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 [Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
-## Google Chromebooks (in stock)
+## Google Chromebooks
 
 A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
@@ -76,6 +84,10 @@ If you’re ordering for a care leaver who is not in education, and you cannot p
 Read more information about [preparing Google Chromebooks for pupils](/devices/preparing-chromebooks).
 
 </div>
+
+## iPads and Windows tablets
+
+Apple iPads and Microsoft Windows tablets are now permanently out of stock. See our guide for information on [setting up and managing tablets you've already received](/devices/preparing-microsoft-windows-laptops-and-tablets).
 
 <div class="govuk-grid-column-full">
 
