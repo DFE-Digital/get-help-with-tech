@@ -4,6 +4,8 @@ See our guidance on [preparing 4G routers](/devices/preparing-4g-wireless-router
 
 All 4G wireless routers come with SIM cards that provide data until 31 July 2021. To continue using routers after this date, you must [reset them and replace their SIM cards](/devices/using-your-router-after-31-july-2021).
 
+If you have Huawei routers, you'll need to reset them before 16 July 2021. If you do not do this, you'll be unable to use another SIM card when the data runs out. 
+
 ## If a router won't start
 
 If you receive a router that will not start, check that it’s fully charged. If it still will not power up, [contact us](/get-support) with the order number and the IMEI number on the device.
