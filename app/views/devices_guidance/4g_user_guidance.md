@@ -31,7 +31,7 @@ The label inside the cover of each device contains the:
 - wifi network name (SSID)
 - password (wifi key - this is case sensitive)
 
-If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out [how to resolve technical issues](#technical-support).
+If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out [how to resolve technical issues](/devices/resolve-issues-with-4g-wireless-routers).
 
 ## Setting up a D-Link router
 
@@ -53,7 +53,7 @@ The label inside the cover of each device contains the:
 
 ## Technical support
 
-For technical support, children and families should contact the trust, local authority or school which sent them the router. They can help with setting up routers or raising an issue if there is a problem with the router or SIM card.  They should not press the reset button.
+For technical support, children and families should contact the trust, local authority or school which sent them the router. They can help with setting up routers or raising an issue if there is a problem with the router or SIM card. 
 
 ### For local authorities and trusts
 
@@ -76,7 +76,7 @@ These resources include detailed guidance for schools and colleges on safe remot
 - [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2)- guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children, both online and offline.
 - [Safeguarding and remote education during coronavirus](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) - guidance to help you understand safeguarding procedures when planning remote education strategies and teaching remotely.
 - [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - outlines resources to help keep children safe from different risks online, and where to go to receive support and advice.
-- [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online)- includes information on security and privacy settings.
+- [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) - includes information on security and privacy settings.
 
 In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to do this. It is also important that children, parents, carers, and school staff are clear on what the reporting mechanisms are if they have any concerns regarding online safety.
 
