@@ -50,6 +50,10 @@ FactoryBot.define do
     trait :multi_academy_trust do
       organisation_type           { :multi_academy_trust }
     end
+
+    trait :closed do
+      status { 'closed' }
+    end
   end
 
   factory :further_education_college, parent: :responsible_body, class: 'FurtherEducationCollege' do
