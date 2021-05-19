@@ -247,15 +247,27 @@ RSpec.describe AllocationJob do
       end
 
       let(:school1) { rb.schools.first }
+      let(:school1_allocation) { school1.std_device_allocation.reload.allocation }
+      let(:school1_devices_available_to_order) { school1.std_device_allocation.reload.devices_available_to_order }
+
       let(:school2) { rb.schools.last }
+      let(:school2_allocation) { school2.std_device_allocation.reload.allocation }
+      let(:school2_devices_available_to_order) { school2.std_device_allocation.reload.devices_available_to_order }
+
+      let(:devices_available_to_deallocate) { [school1_devices_available_to_order, 100].min }
+
+      let(:batch_deallocation_jobs) do
+        create(:allocation_batch_job, urn: school1.urn, allocation_delta: '-99', order_state: 'cannot_order')
+        create(:allocation_batch_job, urn: school2.urn, allocation_delta: '-99', order_state: 'cannot_order')
+      end
 
       before do
         create_list(:school, 2,
                     :centrally_managed,
                     responsible_body: rb)
 
-        create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, school: school1)
-        create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, school: school2)
+        create(:school_device_allocation, :with_std_allocation, :partially_ordered, school: school1)
+        create(:school_device_allocation, :with_std_allocation, :partially_ordered, school: school2)
 
         rb.add_school_to_virtual_cap_pools!(school1)
         rb.add_school_to_virtual_cap_pools!(school2)
@@ -290,12 +302,10 @@ RSpec.describe AllocationJob do
       end
 
       context 'maintain part of allocation if already ordered' do
-        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
-        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-100', order_state: 'cannot_order') }
-
         it 'reduces allocation to match ordered' do
-          described_class.perform_now(batch_job)
-          expect(school.std_device_allocation.reload.allocation).to eq(school.std_device_allocation.devices_ordered)
+          expect {
+            described_class.perform_now(batch_deallocation_jobs)
+          }.to change { school1.std_device_allocation.reload.allocation }.by(-devices_available_to_deallocate)
         end
       end
 
