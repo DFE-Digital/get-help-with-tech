@@ -6,7 +6,9 @@ If a device will not start, check it’s fully charged and plugged into the main
 
 ## If a device stops working after 3 days
 
-All devices supplied by the Get help with technology programme came with a 12-month manufacturer’s warranty. If you encounter a fault, please refer to the manual supplied with the device or the manufacturer’s website for information on how to make a claim.
+All devices supplied by the Get help with technology programme came with a 12-month manufacturer’s warranty. If you've ordered ['Pre-issued' devices](/devices/device-specification) the warranty period may have already expired.
+
+If you encounter a fault, please refer to the manual supplied with the device or the manufacturer’s website for information on how to make a claim.
 
 * [Acer](https://www.acer.com/ac/en/GB/content/support)
 * [Apple](https://support.apple.com/en-gb/ipad/repair/service)
