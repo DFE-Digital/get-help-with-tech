@@ -9,6 +9,7 @@ We may need some technical information from you before you can order, so we reco
 In addition to brand new devices, you may be able to order ‘pre-issued’ devices too. These have been distributed as part of the Get help with technology programme, and then returned. They may or may not be used. 
 
 Our delivery partner completes the following quality checks for each used device:
+
 * it’s visually inspected, and where possible any labels (such as asset tags) have been removed 
 * it switches on and powers up
 * the screen, CPU, RAM and HDD are tested
@@ -16,7 +17,7 @@ Our delivery partner completes the following quality checks for each used device
 
 These devices will meet the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
 
-The devices will come with any remaining manufacturer’s warranty (this will be less than 1 year). 
+If devices have a remaining manufacturer's warranty, it will be for less than year. 
 
 
 ## Microsoft Windows laptops
@@ -83,11 +84,11 @@ If you’re ordering for a care leaver who is not in education, and you cannot p
 
 Read more information about [preparing Google Chromebooks for pupils](/devices/preparing-chromebooks).
 
-</div>
-
 ## iPads and Windows tablets
 
 Apple iPads and Microsoft Windows tablets are now permanently out of stock. See our guide for information on [setting up and managing tablets you've already received](/devices/preparing-microsoft-windows-laptops-and-tablets).
+
+</div>
 
 <div class="govuk-grid-column-full">
 
