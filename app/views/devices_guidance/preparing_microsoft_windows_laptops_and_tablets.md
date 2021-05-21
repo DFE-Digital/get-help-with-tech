@@ -8,7 +8,7 @@
 
 ## Preparing laptops and tablets ordered without DfE settings
 
-If you order ‘Standard’ devices without DfE safeguarding settings, they can be configured to your own standards with your preferred software and settings. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
+If you order ‘Standard’ Windows devices without DfE safeguarding settings, they can be configured to your own standards with your preferred software and settings. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
 
 You'll be responsible for setting up management and [safeguarding measures](/devices/safeguarding-for-device-users) before you distribute the devices to avoid risks to the children and young people in your care.
 
