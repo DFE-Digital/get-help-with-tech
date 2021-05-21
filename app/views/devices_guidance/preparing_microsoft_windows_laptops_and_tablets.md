@@ -8,17 +8,17 @@
 
 ## Preparing laptops and tablets ordered without DfE settings
 
-If you order ‘Standard’ devices without DfE safeguarding settings, they can be configured to your own standards with your preferred software and settings. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
+If you order ‘Standard’ Windows devices without DfE safeguarding settings, they can be configured to your own standards with your preferred software and settings. You’ll immediately be able to bring these devices into your own device management framework and support them in the same way you do for all devices under your control.
 
 You'll be responsible for setting up management and [safeguarding measures](/devices/safeguarding-for-device-users) before you distribute the devices to avoid risks to the children and young people in your care.
 
 Read our guidance on [preparing a Standard Windows device](/devices/preparing-a-standard-windows-device).
 
-If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+If you receive any new or refurbished Windows devices for your school or college through donations, we recommend following our guidance on [preparing a Standard Windows device](/devices/preparing-a-standard-windows-device) before lending the device to a child, family or young person. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## Preparing laptops and tablets ordered with DfE settings
 
-If you order ‘Restricted’ devices, they will be delivered with the following pre-installed security software that is not configurable at a local level:
+If you order ‘DfE Restricted’ devices, they'll be delivered with the following pre-installed security software that is not configurable at a local level:
 
 * Microsoft Intune - device management software that prevents users from installing unauthorised software or making changes to files and settings
 * Cisco Umbrella - content filtering software that blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines
@@ -29,7 +29,7 @@ If you order ‘Restricted’ devices, they will be delivered with the following
   </p>
 </div>
 
-Restricted Microsoft Windows devices come with the Windows 10 Education operating system and include the following security and antivirus software:
+DfE Restricted Microsoft Windows devices come with the Windows 10 Education operating system and include the following security and antivirus software:
 
 * Windows Information Protection
 * Windows Defender Credential/System Guard
