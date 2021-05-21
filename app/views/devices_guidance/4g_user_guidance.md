@@ -1,22 +1,26 @@
-Subject to stock availability, the Department for Education (DfE) will send routers to trusts, local authorities or schools to distribute to disadvantaged children and families
+<div class="govuk-inset-text">
+  <p>
+    All 4G wireless routers come with SIM cards that provide data until 31 July 2021. To continue using routers after this date, you must <a href="/devices/reset-your-wireless-router" class="govuk-link">reset them and replace their SIM cards</a>.
+  </p>
+</div>
 
-For all router types, users will find the following in the box:
+You should make young people and families aware that:
+
+- SIM cards will work until 31 July 2021
+- routers need to be reset by the trust, local authority or school which sent the device to them, before inserting another SIM card
+- once the 20GB limit has been reached the device will no longer connect to the internet 
+- they should not attempt to reset their own router, otherwise it will stop working
+
+## What you get
+
+Each bundle contains:
 
 - 4G wireless router
 - battery (with approximately 25% charge)
 - charging cable (micro-USB)
 - quick start guides
 
-The router will have a SIM card inserted that provides 20GB of data per month which will reset on the first day of each month.
-
-We suggest you make young people and families aware that:
-
-- SIM cards will remain active until the end of July 2021.
-- routers will only work with the SIM provided - attempts to insert an alternative SIM or to use the SIM in another device will result in it being blocked 
-- once the 20GB limit has been reached the device will no longer connect to the internet - to reduce data usage, devices should be used for accessing remote education with ‘Standard Definition’ (SD) video selected where possible
-- they should not attempt to reset their device to try to resolve issues, as this will result in both the router and SIM to stop working
-
-Step-by-step instructions for each type of router are provided below. These PDFs can be downloaded and provided by schools or local authorities to users to help them get online.
+Step-by-step instructions for each type of router are provided below. These PDFs can be given by schools or local authorities to users to help them get online.
 
 ## Setting up a Huawei router
 
@@ -24,10 +28,10 @@ Step-by-step instructions for each type of router are provided below. These PDFs
 
 The label inside the cover of each device contains the:
 
-- WiFi network name (SSID)
-- Password (WIFI KEY - this is case sensitive)
+- wifi network name (SSID)
+- password (wifi key - this is case sensitive)
 
-If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out [how to resolve technical issues](#technical-support).
+If a user is directed to the Huawei site to log in with an admin password during setup, this may be due to an issue with the SIM. Find out [how to resolve technical issues](/devices/resolve-issues-with-4g-wireless-routers).
 
 ## Setting up a D-Link router
 
@@ -35,8 +39,8 @@ If a user is directed to the Huawei site to log in with an admin password during
 
 The label inside the cover of each device contains the:
 
-- WiFi network name (SSID)
-- Password (this is case sensitive)
+- wifi network name (SSID)
+- password (this is case sensitive)
 
 ## Setting up a TP-Link router
 
@@ -44,12 +48,12 @@ The label inside the cover of each device contains the:
 
 The label inside the cover of each device contains the:
 
-- WiFi network name (SSID)
-- Password (this is case sensitive)
+- wifi network name (SSID)
+- password (this is case sensitive)
 
 ## Technical support
 
-Children and families should raise any queries regarding 4G wireless routers with the trust, local authority or school which sent the device to them. They will be able to support with setting up routers or raising an issue if there is a problem with the router or SIM card.  They should not press the reset button.
+For technical support, children and families should contact the trust, local authority or school which sent them the router. They can help with setting up routers or raising an issue if there's a problem with the router or SIM card. 
 
 ### For local authorities and trusts
 
@@ -65,6 +69,15 @@ You can check the status of each router in the [Support Portal](https://computac
 
 Users should get in touch with their school or local authority contact if they’re unable to access content required for remote education.
 
-Parents and guardians of the young people making use of these devices should be aware of advice on supervising internet use by children. Support for parents and carers to keep children safe from online harm is available at [https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19#communicating-with-parents-carers-and-pupils](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19#communicating-with-parents-carers-and-pupils).
+## Safeguarding resources for schools, colleges, families, carers, and young people
+
+These resources include detailed guidance for schools and colleges on safe remote education, virtual lessons, and live streaming. There's also information on how to make sure children and young people are safe online.
+
+- [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2)- guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children, both online and offline.
+- [Safeguarding and remote education during coronavirus](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) - guidance to help you understand safeguarding procedures when planning remote education strategies and teaching remotely.
+- [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - outlines resources to help keep children safe from different risks online, and where to go to receive support and advice.
+- [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) - includes information on security and privacy settings.
+
+In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to create this. It is also important that children, parents, carers, and school staff are clear on what the reporting mechanisms are if they have any concerns regarding online safety.
 
 If a child is worried or needs support, they can call Childline (0800 1111), download their ‘For Me’ app or visit the website: [https://www.childline.org.uk/](https://www.childline.org.uk/).
