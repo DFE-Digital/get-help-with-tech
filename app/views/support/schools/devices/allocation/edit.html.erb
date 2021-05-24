@@ -18,11 +18,19 @@
         <%= t(@form.order_state, scope: %i[support allocation edit order_states], cap: @form.current_allocation.cap, allocation: @form.current_allocation.allocation) %>
       </p>
 
+     <% if @form.is_in_virtual_cap_pool? %>
+      <%= render GovukComponent::Warning.new(text: t(:is_in_virtual_cap_pool, scope: %i[support allocation edit])) %>
+     <% end %>
+
       <%= f.govuk_number_field :allocation,
                               only_integer: true,
                               label: {text: 'New allocation'},
                               width: 3,
-                              value: @form.current_allocation.raw_allocation %>
+                              value: @form.current_allocation.raw_allocation,
+                              min: @form.raw_devices_ordered,
+                              hint: {
+                                text: t(:allocation_input_hint, scope: %i[support allocation edit], devices_ordered: @form.raw_devices_ordered)
+                              } %>
 
       <%= f.govuk_submit 'Save' %>
     <%- end %>
