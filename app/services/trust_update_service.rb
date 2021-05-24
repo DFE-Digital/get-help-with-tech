@@ -4,6 +4,18 @@ class TrustUpdateService
     last_update ||= DataStage::DataUpdateRecord.last_update_for(:trusts)
 
     # simple updates for trusts that are open
+    update_open_trusts(last_update)
+
+    # auto close trusts that have no schools
+    # skip and notify sentry when a trust is closed and still has schools - needs investigation
+    close_trusts(last_update)
+
+    DataStage::DataUpdateRecord.updated!(:trusts)
+  end
+
+private
+
+  def update_open_trusts(last_update)
     DataStage::Trust.updated_since(last_update).gias_status_open.each do |staged_trust|
       trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
 
@@ -11,11 +23,28 @@ class TrustUpdateService
 
       update_trust(trust, staged_trust)
     end
-
-    DataStage::DataUpdateRecord.updated!(:trusts)
   end
 
-private
+  def close_trusts(last_update)
+    trusts_with_schools = []
+
+    DataStage::Trust.updated_since(last_update).gias_status_closed.each do |staged_trust|
+      trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
+
+      next if !trust || trust.status == 'closed'
+
+      if trust.schools.size.positive?
+        trusts_with_schools << trust.id
+        next
+      end
+
+      close_trust(trust)
+    end
+
+    return if trusts_with_schools.empty?
+
+    Sentry.capture_message("TrustUpdateService#close_trusts - Trusts with schools skipped IDs: #{trusts_with_schools.inspect}")
+  end
 
   def update_trust(trust, staged_trust)
     # update trust details
@@ -27,6 +56,12 @@ private
 
   def create_trust(staged_trust)
     Trust.create!(staged_attributes(staged_trust))
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error(e.record.errors)
+  end
+
+  def close_trust(trust)
+    trust.update!({ status: 'closed', computacenter_change: 'closed' })
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end

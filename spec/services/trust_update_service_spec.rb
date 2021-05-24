@@ -60,4 +60,56 @@ RSpec.describe TrustUpdateService, type: :model do
       end
     end
   end
+
+  describe 'closing trusts from staging' do
+    let(:service) { subject }
+
+    context 'when a trust is open and needs closing' do
+      let!(:trust) { create(:trust, companies_house_number: '01111223') }
+
+      before { create(:staged_trust, :closed, companies_house_number: '01111223') }
+
+      it 'updates the existing trust record' do
+        service.update_trusts
+        expect(trust.reload).to have_attributes(
+          computacenter_change: 'closed',
+          status: 'closed',
+        )
+      end
+    end
+
+    context 'trusts that have schools' do
+      let!(:trust) { create(:trust) }
+      let!(:trust_with_schools_1) { create(:trust, :with_schools) }
+      let!(:trust_with_schools_2) { create(:trust, :with_schools) }
+
+      before do
+        create(:staged_trust, :closed, companies_house_number: trust.companies_house_number)
+        create(:staged_trust, :closed, companies_house_number: trust_with_schools_1.companies_house_number)
+        create(:staged_trust, :closed, companies_house_number: trust_with_schools_2.companies_house_number)
+      end
+
+      it 'notifies Sentry with a list of skipped trust ids' do
+        allow(Sentry).to receive(:capture_message)
+
+        service.update_trusts
+
+        expect(Sentry).to have_received(:capture_message).with(/TrustUpdateService#close_trusts - Trusts with schools skipped IDs: \[[0-9, ]+\]/)
+      end
+
+      it 'leaves skipped trust as open' do
+        service.update_trusts
+        expect(trust_with_schools_1.reload).to have_attributes(status: 'open')
+        expect(trust_with_schools_2.reload).to have_attributes(status: 'open')
+      end
+
+      it 'closes trusts not skipped' do
+        service.update_trusts
+        expect(trust.reload).to have_attributes(
+          computacenter_change: 'closed',
+          status: 'closed',
+        )
+      end
+    end
+  end
 end
