@@ -417,6 +417,8 @@ en:
           cannot_order: They cannot place orders yet. When they can, their total allocation is %{allocation} devices.
           can_order_for_specific_circumstances: They can place orders for specific circumstances, up to %{cap} devices from their total allocation of %{allocation}.
           can_order: They can order their full allocation of %{allocation} because a closure or group of self-isolating children has been reported.
+        is_in_virtual_cap_pool: Note that you currently won't be able to decrease the allocation for this school as it is in a virtual cap pool - contact the dev team to do this manually for now
+        allocation_input_hint: Must be at least %{devices_ordered} (current devices ordered)
       update:
         success: We’ve saved the new allocation
     service_performance:
@@ -628,10 +630,9 @@ en:
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
         support/allocation_form:
           attributes:
-            cap:
-              lte_allocation: Enter an allocation that’s greater than, or the same as, the current cap
             allocation:
-              greater_than: Enter an allocation that’s non-negative
+              decreasing_in_virtual_cap_pool: Decreasing an allocation for a school in a virtual cap pool is currently not possible - contact the dev team to do this manually for now
+              gte_devices_ordered: Allocation cannot be less than the number they have already ordered (%{devices_ordered})
         support/school_suggestion_form:
           attributes:
             name_or_urn_or_ukprn:
