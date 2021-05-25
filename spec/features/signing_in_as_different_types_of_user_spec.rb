@@ -259,4 +259,16 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       expect(page).to have_text 'TechSource'
     end
   end
+
+  context 'unable to determine where to redirect to for this user' do
+    let(:user) { create(:user) }
+
+    before { allow(Sentry).to receive(:capture_message) }
+
+    scenario 'it redirects to /' do
+      sign_in_as user
+      expect(page).to have_current_path('/')
+      expect(Sentry).to have_received(:capture_message).with("Couldn't figure out root_url_for user")
+    end
+  end
 end
