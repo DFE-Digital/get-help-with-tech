@@ -102,17 +102,12 @@ private
       support_home_path
     else
       # this should not happen - so let's tell Sentry
-      Sentry.capture_message(
-        "couldn't figure out root_url_for user",
-        logger: 'logger',
-        extra: {
-          time_at: Time.zone.now,
-          user_id: user.id,
-        },
-        tags: {
-          env: Rails.env,
-        },
-      )
+      Sentry.configure_scope do |scope|
+        scope.set_context('ApplicationController#root_url_for', { user_id: user.id })
+
+        Sentry.capture_message("Couldn't figure out root_url_for user")
+      end
+
       '/'
     end
   end
