@@ -12,26 +12,29 @@ RSpec.describe AllocationUpdater do
   end
 
   subject(:service) do
-    described_class.new(school: school, device_type: 'std_device', value: 100)
+    described_class.new(school: school, device_type: 'std_device', value: updated_value)
   end
 
-  context 'allocation exists and school can order full allocation' do
+  shared_examples 'allocation exists and school can order full allocation' do |initial:, updated:|
+    let(:initial_value) { initial }
+    let(:updated_value) { updated }
+
     let(:school) { create(:school, :in_lockdown) }
     let(:update_service) { instance_double('SchoolOrderStateAndCapUpdateService') }
 
     before do
       create(:school_device_allocation,
              :with_std_allocation,
-             allocation: 10,
-             cap: 10,
+             allocation: initial_value,
+             cap: initial_value,
              school: school)
     end
 
     it 'updates cap to match allocation' do
       service.call
       allocation = school.std_device_allocation.reload
-      expect(allocation.allocation).to be(100)
-      expect(allocation.cap).to be(100)
+      expect(allocation.allocation).to eq(updated_value)
+      expect(allocation.cap).to eq(updated_value)
     end
 
     it 'calls notifies computacenter with cap updates' do
@@ -39,19 +42,26 @@ RSpec.describe AllocationUpdater do
 
       service.call
 
-      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, std_device_cap: 100, coms_device_cap: 0)
+      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, std_device_cap: updated_value, coms_device_cap: 0)
       expect(mock_update_service).to have_received(:update!)
     end
   end
 
-  context 'allocation does not exist and school can order full allocation' do
+  it_behaves_like 'allocation exists and school can order full allocation', initial: 1, updated: 2
+  it_behaves_like 'allocation exists and school can order full allocation', initial: 1, updated: 1
+  it_behaves_like 'allocation exists and school can order full allocation', initial: 2, updated: 1
+
+  shared_examples 'allocation does not exist and school can order full allocation' do |initial:, updated:|
+    let(:initial_value) { initial }
+    let(:updated_value) { updated }
+
     let(:school) { create(:school, :in_lockdown) }
 
     it 'updates cap to match allocation' do
       service.call
       allocation = school.std_device_allocation
-      expect(allocation.allocation).to be(100)
-      expect(allocation.cap).to be(100)
+      expect(allocation.allocation).to be(updated_value)
+      expect(allocation.cap).to be(updated_value)
       expect(allocation).to be_persisted
     end
 
@@ -60,27 +70,34 @@ RSpec.describe AllocationUpdater do
 
       service.call
 
-      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, std_device_cap: 100, coms_device_cap: 0)
+      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, std_device_cap: updated_value, coms_device_cap: 0)
       expect(mock_update_service).to have_received(:update!)
     end
   end
 
+  it_behaves_like 'allocation does not exist and school can order full allocation', initial: 1, updated: 2
+  it_behaves_like 'allocation does not exist and school can order full allocation', initial: 1, updated: 1
+  it_behaves_like 'allocation does not exist and school can order full allocation', initial: 2, updated: 1
+
   context 'when school can order for specific circumstances' do
+    let(:initial_value) { 1 }
+    let(:updated_value) { 2 }
+
     let(:school) { create(:school, :can_order_for_specific_circumstances) }
 
     before do
       create(:school_device_allocation,
              :with_std_allocation,
-             allocation: 10,
-             cap: 10,
+             allocation: initial_value,
+             cap: initial_value,
              school: school)
     end
 
     it 'leaves cap value as is' do
       service.call
       allocation = school.std_device_allocation.reload
-      expect(allocation.allocation).to be(100)
-      expect(allocation.cap).to be(10)
+      expect(allocation.allocation).to be(updated_value)
+      expect(allocation.cap).to be(initial_value)
     end
   end
 end
