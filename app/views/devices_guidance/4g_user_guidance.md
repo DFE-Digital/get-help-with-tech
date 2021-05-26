@@ -69,7 +69,7 @@ You can check the status of each router in the [Support Portal](https://computac
 
 Users should get in touch with their school or local authority contact if they’re unable to access content required for remote education.
 
-## Safeguarding resources for schools, colleges, families, carers, and young people
+## Safeguarding resources
 
 These resources include detailed guidance for schools and colleges on safe remote education, virtual lessons, and live streaming. There's also information on how to make sure children and young people are safe online.
 
