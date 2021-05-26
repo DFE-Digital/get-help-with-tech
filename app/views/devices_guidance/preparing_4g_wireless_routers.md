@@ -55,6 +55,7 @@ Each router will only work with the SIM card that's provided with it until it's 
 The device will connect to the mobile network with the strongest signal available. Regardless of which network it uses, all traffic will pass through a private, secure connection to a filtered service. 
 
 This filtering system:
+
 - blocks a range of content categories
 - limits searching to the ‘safe search’ supported by popular search engines
 - should not prevent legitimate use of the devices
@@ -68,7 +69,7 @@ These resources include detailed guidance for schools and colleges on safe remot
 - [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) - guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children – both online and offline.
 - [Safeguarding and remote education during coronavirus](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) - guidance to help you understand safeguarding procedures when planning remote education strategies and teaching remotely.
 - [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - outlines resources to help keep children safe from different risks online, and where to go to receive support and advice
-- [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online - includes information on security and privacy settings
+- [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) - includes information on security and privacy settings
 
 In conversations with parents, carers, and children you should emphasise the importance of a safe online environment and offer support and advice on how to create this. It's also important that children, parents, carers, and school staff are clear on how to report any concerns they may have about online safety.
 
