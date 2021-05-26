@@ -17,7 +17,7 @@ Our delivery partner completes the following quality checks for each used device
 
 These devices will meet the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
 
-If devices have a remaining manufacturer's warranty, it will be for less than year. 
+If devices have a remaining manufacturer's warranty, it will be for less than a year. 
 
 
 ## Microsoft Windows laptops
