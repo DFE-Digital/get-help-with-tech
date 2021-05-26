@@ -69,11 +69,11 @@ You can check the status of each router in the [Support Portal](https://computac
 
 Users should get in touch with their school or local authority contact if they’re unable to access content required for remote education.
 
-## Safeguarding resources for schools, colleges, families, carers, and young people
+## Safeguarding resources 
 
 These resources include detailed guidance for schools and colleges on safe remote education, virtual lessons, and live streaming. There's also information on how to make sure children and young people are safe online.
 
-- [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2)- guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children, both online and offline.
+- [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) - guidance that schools and colleges must follow when carrying out their duties to safeguard and promote the welfare of children, both online and offline.
 - [Safeguarding and remote education during coronavirus](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19) - guidance to help you understand safeguarding procedures when planning remote education strategies and teaching remotely.
 - [Support for parents and carers to keep children safe from online harm](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online) - outlines resources to help keep children safe from different risks online, and where to go to receive support and advice.
 - [Support to stay safe online](https://www.gov.uk/guidance/covid-19-staying-safe-online) - includes information on security and privacy settings.
