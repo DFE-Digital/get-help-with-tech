@@ -62,7 +62,7 @@ This filtering system:
 
 If a child is able to access inappropriate content, you should report this through the [Support Portal](https://computacenterprod.service-now.com/dfe).
 
-## Safeguarding resources for schools, colleges, families, carers, and young people
+## Safeguarding resources
 
 These resources include detailed guidance for schools and colleges on safe remote education, virtual lessons, and live streaming. There's also information on how to make sure children and young people are safe online.
 
