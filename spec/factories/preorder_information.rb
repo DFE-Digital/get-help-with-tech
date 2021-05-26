@@ -21,5 +21,9 @@ FactoryBot.define do
     trait :does_not_need_chromebooks do
       will_need_chromebooks { 'no' }
     end
+
+    trait :dont_know_they_need_chromebooks do
+      will_need_chromebooks { 'i_dont_know' }
+    end
   end
 end
