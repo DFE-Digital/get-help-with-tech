@@ -11,7 +11,7 @@ RSpec.feature 'Huawei router password', type: :feature do
     visit root_path
     click_on 'Internet access'
     click_on 'How to reset'
-    click_on 'Sign in to see your Huawei'
+    click_on 'Sign in to see your Huawei router'
     expect_login_screen
   end
 
