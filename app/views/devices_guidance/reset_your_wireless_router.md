@@ -26,7 +26,7 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Get your Huawei router login password.
 
-    <a href="/responsible-body/internet/router-password" class="govuk-link app-emphasis-link">
+    <a href="/huawei-router-password" class="govuk-link app-emphasis-link">
       Sign in to see your Huawei router login password
     </a>
 

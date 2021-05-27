@@ -1,11 +1,9 @@
 <%- if is_rb %>
   <%- path_request_extra_mobile_data = responsible_body_internet_mobile_extra_data_guidance_path %>
   <%- path_view_extra_mobile_date = responsible_body_internet_mobile_extra_data_requests_path %>
-  <%- path_huawei_router_password = responsible_body_internet_router_password_path %>
 <%- else %>
   <%- path_request_extra_mobile_data = extra_data_guidance_internet_mobile_school_path(@school)  %>
   <%- path_view_extra_mobile_date = extra_data_requests_internet_mobile_school_path(@school) %>
-  <%- path_huawei_router_password = router_password_internet_school_path %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -59,7 +57,7 @@
       to use it after 31 July 2021.
     </p>
     <p class="govuk-body">
-      <%= govuk_link_to 'See your Huawei router password', path_huawei_router_password %>
+      <%= govuk_link_to 'See your Huawei router password', huawei_router_password_path %>
     </p>
   </div>
 </div>
