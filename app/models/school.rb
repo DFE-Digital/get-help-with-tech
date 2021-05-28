@@ -130,6 +130,10 @@ class School < ApplicationRecord
     device_allocations.find_by_device_type!(device_type)
   end
 
+  def is_eligible_to_order?
+    can_order? || can_order_for_specific_circumstances?
+  end
+
   def can_order_devices_right_now?
     is_eligible_to_order? && devices_available_to_order?
   end
@@ -237,9 +241,5 @@ private
 
   def device_ordering_organisation
     who_will_order_devices == 'school' ? self : responsible_body
-  end
-
-  def is_eligible_to_order?
-    can_order? || can_order_for_specific_circumstances?
   end
 end

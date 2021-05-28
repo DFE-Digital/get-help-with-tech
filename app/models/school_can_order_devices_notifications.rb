@@ -6,11 +6,14 @@ class SchoolCanOrderDevicesNotifications
   end
 
   def call
-    if school&.can_order_devices_right_now?
+    return unless school&.is_eligible_to_order?
+
+    if school&.devices_available_to_order?
       notify_about_school_being_able_to_order
       notify_support_if_no_one_to_contact
-      notify_computacenter
     end
+
+    notify_computacenter
   end
 
 private
