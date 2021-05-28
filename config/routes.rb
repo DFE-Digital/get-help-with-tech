@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get '/devices/distributing-devices', to: redirect('/devices/device-distribution-and-ownership')
   get '/devices/support-and-maintenance', to: redirect('/devices', status: 301)
 
+  get '/huawei-router-password', to: 'huawei_router_passwords#new', as: 'huawei_router_password'
+
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
 
   get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index'
@@ -152,7 +154,6 @@ Rails.application.routes.draw do
 
     namespace :internet do
       get '/', to: 'home#show'
-      get '/router-password', to: 'huawei_router_passwords#new'
 
       namespace :mobile, path: '/mobile' do
         get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
@@ -222,7 +223,6 @@ Rails.application.routes.draw do
 
         namespace :internet do
           get '/', to: 'home#show'
-          get '/router-password', to: 'huawei_router_passwords#new'
 
           namespace :mobile, path: '/mobile' do
             get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
