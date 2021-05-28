@@ -63,8 +63,8 @@ class ResponsibleBody < ApplicationRecord
       !has_school_in_virtual_cap_pools?(school)
   end
 
-  def has_devices_available_to_order?
-    virtual_cap_pools.any?(&:has_devices_available_to_order?)
+  def devices_available_to_order?
+    virtual_cap_pools.any?(&:devices_available_to_order?)
   end
 
   def has_school_in_virtual_cap_pools?(school)
