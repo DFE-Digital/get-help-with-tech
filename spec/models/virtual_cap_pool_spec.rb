@@ -232,22 +232,22 @@ RSpec.describe VirtualCapPool, type: :model do
     end
   end
 
-  describe '#available_devices_count' do
+  describe '#devices_available_to_order' do
     subject(:allocation) { described_class.new(cap: 100, devices_ordered: 200) }
 
     context 'when negative' do
       it 'returns zero' do
-        expect(allocation.available_devices_count).to be_zero
+        expect(allocation.devices_available_to_order).to be_zero
       end
     end
   end
 
-  describe '#has_devices_available_to_order?' do
+  describe '#devices_available_to_order?' do
     context 'when used full allocation' do
       let(:allocation) { described_class.new(cap: 100, allocation: 100, devices_ordered: 100) }
 
       it 'returns false' do
-        expect(allocation.has_devices_available_to_order?).to be false
+        expect(allocation.devices_available_to_order?).to be false
       end
     end
 
@@ -255,7 +255,7 @@ RSpec.describe VirtualCapPool, type: :model do
       let(:allocation) { described_class.new(cap: 100, allocation: 100, devices_ordered: 75) }
 
       it 'returns true' do
-        expect(allocation.has_devices_available_to_order?).to be true
+        expect(allocation.devices_available_to_order?).to be true
       end
     end
 
@@ -263,7 +263,7 @@ RSpec.describe VirtualCapPool, type: :model do
       let(:allocation) { described_class.new(cap: 100, allocation: 100, devices_ordered: 0) }
 
       it 'returns true' do
-        expect(allocation.has_devices_available_to_order?).to be true
+        expect(allocation.devices_available_to_order?).to be true
       end
     end
   end

@@ -129,7 +129,7 @@ RSpec.feature 'Ordering devices' do
   end
 
   def what_to_order_availability(school)
-    "Order #{school.std_device_allocation.available_devices_count} devices"
+    "Order #{school.std_device_allocation.devices_available_to_order} devices"
   end
 
   def what_to_order_state(school)

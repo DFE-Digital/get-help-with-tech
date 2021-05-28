@@ -15,7 +15,7 @@ class Computacenter::API::CapUsageUpdate
   def apply!
     log_to_devices_ordered_updates
     CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
-    original_devices_ordered = allocation.devices_ordered
+    is_decreasing_cap = cap_used.to_i < allocation.devices_ordered
     begin
       allocation.update!(devices_ordered: cap_used)
     rescue Computacenter::OutgoingAPI::Error => e
@@ -24,9 +24,7 @@ class Computacenter::API::CapUsageUpdate
     end
     school.preorder_information&.refresh_status!
 
-    if cap_used.to_i < original_devices_ordered
-      SchoolCanOrderDevicesNotifications.new(school: school).call
-    end
+    SchoolCanOrderDevicesNotifications.new(school: school).call if is_decreasing_cap
 
     @status = 'succeeded'
   end
