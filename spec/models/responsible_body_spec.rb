@@ -445,7 +445,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#has_devices_available_to_order?' do
+  describe '#devices_available_to_order?' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
     let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
@@ -467,7 +467,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       it 'returns false' do
-        expect(responsible_body.has_devices_available_to_order?).to be false
+        expect(responsible_body.devices_available_to_order?).to be false
       end
     end
 
@@ -480,7 +480,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       it 'returns true' do
-        expect(responsible_body.has_devices_available_to_order?).to be true
+        expect(responsible_body.devices_available_to_order?).to be true
       end
     end
 
@@ -493,7 +493,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       it 'returns true' do
-        expect(responsible_body.has_devices_available_to_order?).to be true
+        expect(responsible_body.devices_available_to_order?).to be true
       end
     end
   end

@@ -24,7 +24,7 @@ class Computacenter::API::CapUsageUpdate
     end
     school.preorder_information&.refresh_status!
 
-    if is_decreasing_cap && allocation.reload.has_devices_available_to_order?
+    if is_decreasing_cap && allocation.reload.devices_available_to_order?
       SchoolCanOrderDevicesNotifications.new(school: school).call
     end
 

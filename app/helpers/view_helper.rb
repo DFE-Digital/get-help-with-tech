@@ -131,7 +131,7 @@ module ViewHelper
   def what_to_order_availability(school:)
     suffix = (school.can_order_for_specific_circumstances? ? ' for specific circumstances' : nil)
 
-    if school.has_devices_available_to_order?
+    if school.devices_available_to_order?
       string = what_to_order_allocation_list(allocations: school.device_allocations)
 
       "Order #{string}#{suffix}"

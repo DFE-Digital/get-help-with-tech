@@ -25,7 +25,7 @@ class SchoolWelcomeWizard < ApplicationRecord
 
     case step
     when 'allocation'
-      if school&.std_device_allocation&.has_devices_available_to_order?
+      if school&.std_device_allocation&.devices_available_to_order?
         if user_orders_devices?
           techsource_account!
         else

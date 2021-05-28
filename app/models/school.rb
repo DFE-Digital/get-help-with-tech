@@ -131,15 +131,15 @@ class School < ApplicationRecord
   end
 
   def can_order_devices_right_now?
-    is_eligible_to_order? && has_devices_available_to_order?
+    is_eligible_to_order? && devices_available_to_order?
   end
 
   def can_order_routers_only_right_now?
-    is_eligible_to_order? && !std_device_allocation&.has_devices_available_to_order? && coms_device_allocation&.has_devices_available_to_order?
+    is_eligible_to_order? && !std_device_allocation&.devices_available_to_order? && coms_device_allocation&.devices_available_to_order?
   end
 
   def all_devices_ordered?
-    is_eligible_to_order? && !has_devices_available_to_order?
+    is_eligible_to_order? && !devices_available_to_order?
   end
 
   def has_std_device_allocation?
@@ -179,8 +179,8 @@ class School < ApplicationRecord
     end
   end
 
-  def has_devices_available_to_order?
-    device_allocations.any?(&:has_devices_available_to_order?)
+  def devices_available_to_order?
+    device_allocations.any?(&:devices_available_to_order?)
   end
 
   def in_virtual_cap_pool?

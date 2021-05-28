@@ -11,7 +11,7 @@ class DeviceCountComponent < ViewComponent::Base
   end
 
   def availability_string
-    if school.has_devices_available_to_order?
+    if school.devices_available_to_order?
       non_zero_allocations.map { |allocation|
         "#{allocation.devices_available_to_order} #{allocation.device_type_name.pluralize(allocation.devices_available_to_order)}"
       }.join(' and <br/>') + ' available' + availability_suffix
