@@ -33,7 +33,7 @@
 
     <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
 
-    <% if @school&.std_device_allocation&.available_devices_count > 149 %>
+    <% if @school&.std_device_allocation&.devices_available_to_order > 149 %>
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
 

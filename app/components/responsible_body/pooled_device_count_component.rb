@@ -16,7 +16,7 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
   def availability_string
     if @responsible_body.has_devices_available_to_order?
       allocations.map { |allocation|
-        "#{allocation.available_devices_count} #{allocation.device_type_name.pluralize(allocation.available_devices_count)}"
+        "#{allocation.devices_available_to_order} #{allocation.device_type_name.pluralize(allocation.devices_available_to_order)}"
       }.join(' and <br/>') + ' available to order'
     else
       'No devices left to order'

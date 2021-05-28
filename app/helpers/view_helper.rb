@@ -124,7 +124,7 @@ module ViewHelper
 
   def what_to_order_allocation_list(allocations:)
     allocations.map { |alloc|
-      "#{alloc.available_devices_count} #{alloc.device_type_name.pluralize(alloc.available_devices_count)}"
+      "#{alloc.devices_available_to_order} #{alloc.device_type_name.pluralize(alloc.devices_available_to_order)}"
     }.join(' and ')
   end
 
