@@ -38,6 +38,10 @@ FactoryBot.define do
       preorder_information { association :preorder_information, school: instance }
     end
 
+    trait :with_preorder_information_chromebooks do
+      preorder_information { association :preorder_information, :needs_chromebooks, school: instance }
+    end
+
     trait :manages_orders do
       preorder_information { association :preorder_information, :school_will_order, school: instance }
     end

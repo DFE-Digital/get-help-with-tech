@@ -135,6 +135,7 @@ en:
       responsible_body_changes: Changes to responsible bodies
       responsible_body_changes_edit: Verify the responsible body details
       multi_domain_chromebooks: Responsible bodies managing multiple Chromebook domains
+      multi_domain_chromebooks_iss_scl: ISS or Social Care LAs managing multiple Chromebook domains
     who_will_order: Who will place orders for laptops?
     who_will_order_show:
       school: Each school or college will place their own orders
