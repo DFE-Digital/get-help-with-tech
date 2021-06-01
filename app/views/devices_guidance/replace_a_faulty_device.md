@@ -19,7 +19,7 @@ If you encounter a fault, please refer to the manual supplied with the device or
 * [Lenovo](https://pcsupport.lenovo.com/uk/en/warrantylookup#/)
 * [Microsoft](https://docs.microsoft.com/en-gb/surface/)
 * [Tactus Geo](https://geo-computers.com/support/)
-* [Samsung](https://www.samsung.com/uk/business/support/)
+* [Samsung](https://www.samsung.com/uk/business/support/) (or call 0330 726 2677)
 
 Depending on the manufacturer’s warranty process, you may be required to pay courier costs when returning faulty devices.
 
