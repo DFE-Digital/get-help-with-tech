@@ -19,7 +19,7 @@ RSpec.feature 'Download CSV files' do
       expect(page).to have_link('Download Chromebook details')
     end
 
-    it 'shows me a Download donated device reuqests link' do
+    it 'shows me a Download donated device requests link' do
       expect(page).to have_link('Download donated device requests')
     end
 

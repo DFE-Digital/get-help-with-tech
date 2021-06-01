@@ -199,7 +199,7 @@ class ResponsibleBody < ApplicationRecord
           (SELECT rb_id FROM
             (SELECT DISTINCT s.responsible_body_id AS rb_id, p.school_or_rb_domain
               FROM schools s JOIN preorder_information p ON (p.school_id = s.id)
-              WHERE s.status='open'
+              WHERE s.status = 'open'
               AND p.who_will_order_devices='responsible_body'
               AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
               AND s.type <> 'LaFundedPlace'
