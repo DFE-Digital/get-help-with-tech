@@ -439,7 +439,7 @@ GEM
       redis (>= 4.2.0)
     sidekiq-failures (1.0.0)
       sidekiq (>= 4.0.0)
-    sidekiq-scheduler (3.0.1)
+    sidekiq-scheduler (3.1.0)
       e2mmap
       redis (>= 3, < 5)
       rufus-scheduler (~> 3.2)
