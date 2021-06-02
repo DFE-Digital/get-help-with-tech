@@ -53,7 +53,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', anything, anything, params: anything, args: [])
         end
       end
 
@@ -65,7 +65,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', anything, anything, params: anything, args: [])
         end
       end
 
@@ -179,7 +179,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers')
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', anything, anything, params: anything, args: [])
         end
       end
     end
@@ -235,7 +235,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'does not notify the user' do
         expect {
           service.call
-        }.not_to have_enqueued_job.on_queue('mailers')
+        }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', anything, anything, params: anything, args: [])
       end
     end
 
@@ -360,6 +360,104 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         expect {
           service.call
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers_in_fe_college', 'deliver_now', params: { school: school, user: user }, args: [])
+      end
+    end
+
+    context 'when school has no devices available (of any type) to order' do
+      before do
+        school.std_device_allocation.update!(devices_ordered: school.std_device_allocation.cap)
+        school.coms_device_allocation.update!(devices_ordered: school.coms_device_allocation.cap)
+        school.reload
+      end
+
+      context 'preconditions' do
+        it 'school has no devices available to order (of any type)' do
+          expect(school.devices_available_to_order?).to be false
+        end
+      end
+
+      context 'user has confirmed techsource account' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 techsource_account_confirmed_at: 1.second.ago,
+                 orders_devices: true)
+        end
+
+        it 'does not notify the user' do
+          expect {
+            service.call
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+      end
+
+      context 'when the school has no stakeholders' do
+        before do
+          school.users.destroy_all
+        end
+
+        it 'does not notify support' do
+          expect {
+            service.call
+          }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_support_school_can_order_but_no_one_contacted', 'deliver_now', params: anything, args: [])
+        end
+      end
+
+      it 'still notifies Computacenter' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer', 'notify_of_school_can_order', 'deliver_now', params: anything, args: [])
+      end
+    end
+
+    context 'when school has devices available of one type but not the other' do
+      before do
+        school.coms_device_allocation.update!(devices_ordered: school.coms_device_allocation.cap)
+        school.reload
+      end
+
+      context 'preconditions' do
+        it 'school has some devices available to order (of any type)' do
+          expect(school.devices_available_to_order?).to be true
+        end
+
+        it 'one type of allocation is fully ordered but the other is not' do
+          expect(school.std_device_allocation.devices_available_to_order?).to be true
+          expect(school.coms_device_allocation.devices_available_to_order?).to be false
+        end
+      end
+
+      context 'user has confirmed techsource account' do
+        let!(:user) do
+          create(:school_user,
+                 school: school,
+                 techsource_account_confirmed_at: 1.second.ago,
+                 orders_devices: true)
+        end
+
+        it 'notifies the user' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+        end
+      end
+
+      context 'when the school has no stakeholders' do
+        before do
+          school.users.destroy_all
+        end
+
+        it 'notifies support that school is missing out' do
+          expect {
+            service.call
+          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_support_school_can_order_but_no_one_contacted', 'deliver_now', params: { school: school }, args: [])
+        end
+      end
+
+      it 'still notifies Computacenter' do
+        expect {
+          service.call
+        }.to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer', 'notify_of_school_can_order', 'deliver_now', params: anything, args: [])
       end
     end
   end
