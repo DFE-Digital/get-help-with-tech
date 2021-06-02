@@ -4,12 +4,12 @@ RSpec.describe Computacenter::ChromebookDetails do
   subject(:service) { described_class }
 
   describe '.to_csv' do
-    let!(:chromebook_details) do
-      create_list(:preorder_information, 5, :needs_chromebooks)
-        .concat(create_list(:preorder_information, 2, :dont_know_they_need_chromebooks))
-    end
+    let!(:chromebook_details) { create_list(:preorder_information, 5, :needs_chromebooks) }
 
-    before { create_list(:preorder_information, 3, :does_not_need_chromebooks) }
+    before do
+      create_list(:preorder_information, 2, :dont_know_they_need_chromebooks)
+      create_list(:preorder_information, 3, :does_not_need_chromebooks)
+    end
 
     it 'has correct headers set' do
       rows = CSV.parse(service.to_csv)
@@ -20,14 +20,14 @@ RSpec.describe Computacenter::ChromebookDetails do
     it 'has correct number of rows' do
       rows = CSV.parse(service.to_csv)
 
-      expect(rows.size).to be(8)
+      expect(rows.size).to be(6)
     end
 
-    it 'includes all the chromebook details for will_need_chromebooks yes and i_dont_know only' do
+    it 'includes all the chromebook details for will_need_chromebooks yes' do
       details = details_to_array
       rows = CSV.parse(service.to_csv)
 
-      (1..7).each do |n|
+      (1..5).each do |n|
         expect(rows[n]).to eql(details[n - 1])
       end
     end

@@ -19,7 +19,7 @@ module Computacenter
 
         PreorderInformation
           .includes(school: :responsible_body)
-          .where(will_need_chromebooks: %w[yes i_dont_know])
+          .where(will_need_chromebooks: 'yes')
           .order(updated_at: :asc)
           .each do |i|
           csv << [
