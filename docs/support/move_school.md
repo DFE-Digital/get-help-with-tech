@@ -1,72 +1,61 @@
 # Move an existing school to a different RB
 
-This can happen commonly with academy conversions but also without the school changing the URN (closing and reopening). Mostly the school will have closed and reopened with a new URN. When a request has come in from a RB asking for the school to be included, they often won't include the URN.  If the school has changed URN then there may be an existing school (under the closed URN) in the service and the current school with a new URN in the `DataStage`. The school might've renamed in the process too.
+This can happen commonly with academy conversions (where the URN will change) but also without the school changing
+URN (closing and reopening). Mostly the school will have closed and reopened with a new URN. When a request has 
+come in from a RB asking for the school to be included, they often won't include the URN.  If the school has 
+changed URN then there may be an existing school (under the closed URN) in the service and the current school 
+with a new URN in the `DataStage`. The school might've renamed in the process too.
 
 Find the school in the `DataStage` area to check that it hasn't in fact closed and reopened with a new URN.
 
 ```ruby
-ss = DataStage::School.find_by(urn: 123456)
+old_staged_school = DataStage::School.find_by(urn: OLD_URN)
+new_staged_school = DataStage::School.find_by(urn: NEW_URN)
 ```
 
 or
 
 ```ruby
-ss = DataStage::School.where("name like '%School Name%'")
+new_staged_school = DataStage::School.where("name like '%School Name%'")
 ```
 
-If the school has closed/reopened then follow the procedure to add a new school (see add_missing_school.md).
+If the school has closed/reopened then follow the different procedure (add_missing_school.md) and disregard the below.
 
-
+## Procedure to change RB for a school
 
 Get the school from the school table
 
 ```ruby
-s = School.find_by(urn: 123456)
+School.find_by(urn: NEW_URN) # will be `nil`
+s = School.find_by(urn: OLD_URN)
 ```
 
 Check that the receiving responsible body exists (if it does not then that will need to be added first)
 
 ```ruby
-rb = ResponsibleBody.find_by(name: ss.responsible_body_name)
+rb = ResponsibleBody.find_by(name: new_staged_school.responsible_body_name)
 ```
 
-Move the school to the new RB
+Move the school to the new RB, assign the new URN, and indicate that this is new information for CC.
 
 ```ruby
-s.update!(responsible_body: rb)
+s.update!(responsible_body: rb, urn: NEW_URN, computacenter_change: 'amended')
 ```
 
-This leaves the existing preorder information, allocations and users still associated with the school.  This might not be desired so further updates to these may be necessary or in some cases these can be handled later by support colleagues via the support portal.
+Since the statement above sets `computacenter_change` to `amended`, the changes should now be visible for CC users 
+of our service at https://get-help-with-tech.education.gov.uk/computacenter/school-changes
+(developers can verify this themselves by setting their `User`'s `is_computacenter` attribute to `true`).
 
-
-
-## Notify Computacenter
-
-We need to let Computacenter know of the changes.  As we've moved the school to a new RB, we need to export it to a CSV file and send it to CC so that they can update their records.  In these cases CC seem to keep the existing `shipTo` number (`computacenter_reference`) for the school but update their records with the new `shipTo` / `soldTo` relationship.
-
-Select the schools to include and use the `SchoolDataExporter` to generate a CSV for CC.  I normally create this in the `public` folder under the rails root:
+For *all* RBs involved in the move, call 
 
 ```ruby
-SchoolDataExporter.new('public/school-changes.csv').export_schools(School.where(urn: [147860,138156]))
-```
-You should be able to download the file with your browser by entering the file name directly after the prod site url as the rails server is currently set to serve static assets
-
-```
-https://get-help-with-tech.education.gov.uk/school-changes.csv
+rb.calculate_virtual_caps! # recalculates virtual cap for the RB given the schools it now contains
 ```
 
-Once downloaded, remember to remove the files from the server from the SSH command line
+CC need to see this so that they can update their records.  In these cases CC seem to keep the existing
+`shipTo` number (`computacenter_reference`) for the school but update their records with the
+new `shipTo` / `soldTo` relationship.
 
-```bash
-$ rm public/school-changes.csv
-```
-
-Finally open these CSV files in a suitable editor and append an extra column at the end with the header "New/Amended".  For each moved school set this value to 'Amended' to make it easier for CC to process.
-
-Email the CSV files to  CC.
-
-CC will return the file with `shipTo` and `soldTo` references added. These should be checked against the school and RB and updated if necessary.
-
-#### TechSource Users
-
-`Computacenter::UserChange` events will be generated by the change to the `:responsible_body_id` of the `School` . Sending these changes to Computacenter is automated for any TechSource account holders so the accounts can be kept up to date.
+This leaves the existing preorder information, allocations and users still associated with the school.  
+This might not be desired so further updates to these may be necessary or in some cases these can be handled later by 
+support colleagues via the support portal.
