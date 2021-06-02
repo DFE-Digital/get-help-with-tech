@@ -1,0 +1,52 @@
+<% title = t('page_titles.computacenter.multi_domain_chromebooks_iss_scl') %>
+<% content_for :title, title %>
+<% content_for :before_content, govuk_back_link(text: 'Back', href: computacenter_home_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<% if @show_download_link %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body">
+      <%= govuk_link_to 'Download as a CSV file', computacenter_multi_domain_chromebooks_iss_scl_path(format: :csv) %>
+    </div>
+  </div>
+</div>
+<%- end %>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table" id="closed-schools">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">RB Type</th>
+          <th scope="col" class="govuk-table__header">RB Name</th>
+          <th scope="col" class="govuk-table__header">RB URN</th>
+          <th scope="col" class="govuk-table__header">School URN</th>
+          <th scope="col" class="govuk-table__header">Sold To</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @schools.each do |s| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= s.responsible_body.humanized_type %></td>
+            <td class="govuk-table__cell"><%= s.responsible_body.computacenter_name %></td>
+            <td class="govuk-table__cell"><%= s.responsible_body.computacenter_identifier %></td>
+            <td class="govuk-table__cell"><%= s.urn %></td>
+            <td class="govuk-table__cell"><%= s.responsible_body.computacenter_reference %></td>
+          </tr>
+        <%- end %>
+      </tbody>
+    </table>
+    <div class="govuk-body">
+      <%- item_count = @schools.count %>
+      <%= "#{item_count} #{'record'.pluralize(item_count)} found" -%>
+    </div>
+  </div>
+</div>
