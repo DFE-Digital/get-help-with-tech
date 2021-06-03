@@ -10,7 +10,7 @@ Using another SIM card will remove the content filters. Read our [safeguarding g
 
 It will take between 5 and 10 minutes to reset your router. You should read all the steps before you begin.
 
-You’ll need your Huawei router and the router’s wifi network name and password, you can find these on a label under the back cover of your router.
+You’ll need your Huawei router and the router’s network name ('SSID') and wifi key, you can find these on a label under the back cover of your router.
 
 You’ll also need a laptop, tablet or mobile phone.
 
@@ -22,15 +22,18 @@ Once you have your wifi network name and password, follow the steps below.
 
 1. Open a web browser and type [http://192.168.8.1](http://192.168.8.1) in the address bar to get to the Huawei login screen. If the page is blocked by your organisation‘s web filtering, you may need to add 192.168.8.1 and 192.168.9.1 to your IP address allow list.
 
-    ![Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in.](/devices/huawei-router-log-in.png)
 
-1. Get your Huawei router login password.
+1. Enter your Huawei router login password, you'll need to sign in to see this.
 
     <a href="/huawei-router-password" class="govuk-link app-emphasis-link">
       Sign in to see your Huawei router login password
     </a>
 
-    Enter your password on the Huawei login screen and click ‘Log in’.
+    Select ‘Log in’.
+    
+    If you cannot log in, check you're using the protected password and not the password 'admin'.
+    
+ ![Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in.](/devices/huawei-router-log-in.png)
 
 1. Once connected, you’ll be asked to read and accept the privacy notice and user agreement.
 
