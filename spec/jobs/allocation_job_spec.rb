@@ -130,9 +130,7 @@ RSpec.describe AllocationJob do
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
 
         it 'does not reduce allocation' do
-          expect {
-            described_class.perform_now(batch_job)
-          }.to change { school.std_device_allocation.reload.allocation }.by(0)
+          expect { described_class.perform_now(batch_job) }.not_to(change { school.std_device_allocation.reload.allocation })
         end
       end
 
@@ -223,9 +221,7 @@ RSpec.describe AllocationJob do
           let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '0', order_state: 'cannot_order') }
 
           it 'does not change the allocation' do
-            expect {
-              described_class.perform_now(batch_job)
-            }.to change { school.std_device_allocation.reload.allocation }.by(0)
+            expect { described_class.perform_now(batch_job) }.not_to(change { school.std_device_allocation.reload.allocation })
           end
 
           it 'changes the cap to equal raw_devices_ordered' do
@@ -364,23 +360,13 @@ RSpec.describe AllocationJob do
         end
 
         it 'does not change the allocation' do
-          expect {
-            described_class.perform_now(batch_allocation_job1)
-          }.to change { school1.std_device_allocation.reload.allocation }.by(0)
-
-          expect {
-            described_class.perform_now(batch_allocation_job2)
-          }.to change { school2.std_device_allocation.reload.allocation }.by(0)
+          expect { described_class.perform_now(batch_allocation_job1) }.not_to(change { school1.std_device_allocation.reload.allocation })
+          expect { described_class.perform_now(batch_allocation_job2) }.not_to(change { school2.std_device_allocation.reload.allocation })
         end
 
         it 'does not change the raw_allocation' do
-          expect {
-            described_class.perform_now(batch_allocation_job1)
-          }.to change { school1.std_device_allocation.reload.raw_allocation }.by(0)
-
-          expect {
-            described_class.perform_now(batch_allocation_job2)
-          }.to change { school2.std_device_allocation.reload.raw_allocation }.by(0)
+          expect { described_class.perform_now(batch_allocation_job1) }.not_to(change { school1.std_device_allocation.reload.raw_allocation })
+          expect { described_class.perform_now(batch_allocation_job2) }.not_to(change { school2.std_device_allocation.reload.raw_allocation })
         end
 
         it 'updates the raw_cap to match raw_devices_ordered' do

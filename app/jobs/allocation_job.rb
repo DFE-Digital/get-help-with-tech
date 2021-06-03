@@ -18,10 +18,6 @@ class AllocationJob < ApplicationJob
 
 private
 
-  def set_allocation_batch_job
-    @allocation_batch_job = allocation_batch_job
-  end
-
   def set_instance_variables(allocation_batch_job)
     @allocation_batch_job = allocation_batch_job
     @school = @allocation_batch_job.school
@@ -60,9 +56,7 @@ private
   end
 
   def update_current_allocation!
-    if @allocation_delta.negative?
-      return unless @current_allocation.devices_available_to_order.positive? # Don't update the allocation, but allow order_state to be updated
-
+    if @allocation_delta.negative? && @new_raw_allocation_value < @current_allocation.raw_cap
       @current_allocation.update!(allocation: @new_raw_allocation_value, cap: @new_raw_cap_value)
     else
       @current_allocation.update!(allocation: @new_raw_allocation_value)
