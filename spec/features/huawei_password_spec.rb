@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.feature 'Huawei router password', type: :feature do
-  let(:school) { create(:school) }
-  let(:iss_provision) { create(:iss_provision) }
-  let(:user) { create(:school_user) }
-  let(:rb_user) { create(:local_authority_user) }
+  let(:school_with_router_allocation) { create(:school, :with_coms_device_allocation) }
+  let(:iss_provision) { create(:iss_provision, :with_coms_device_allocation) }
+  let(:user_for_organisation_without_router_allocation) { create(:school_user) }
+  let(:user) { create(:school_user, school: school_with_router_allocation) }
+  let(:trust) { create(:trust, :multi_academy_trust, :vcap_feature_flag) }
+  let(:school) { create(:school, :with_coms_device_allocation, responsible_body: trust) }
+  let(:rb_user) { create(:local_authority_user, responsible_body: trust) }
   let(:la_user) { create(:la_funded_place_user, school: iss_provision) }
 
   scenario 'logged out' do
@@ -15,6 +18,13 @@ RSpec.feature 'Huawei router password', type: :feature do
     expect_login_screen
   end
 
+  scenario 'logged in but no router allocation' do
+    sign_in_as user_for_organisation_without_router_allocation
+
+    click_on 'Request internet access'
+    expect(page).to have_no_link('See your Huawei router password')
+  end
+
   scenario 'school user' do
     sign_in_as user
 
@@ -23,6 +33,10 @@ RSpec.feature 'Huawei router password', type: :feature do
   end
 
   scenario 'responsible body user' do
+    create(:preorder_information, :rb_will_order, school: school)
+
+    trust.add_school_to_virtual_cap_pools!(school)
+
     sign_in_as rb_user
 
     go_to_huawei_password
