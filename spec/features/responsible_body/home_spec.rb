@@ -40,7 +40,7 @@ RSpec.feature ResponsibleBody do
 
       expect(responsible_body_home_page).to be_displayed
       expect(page.status_code).to eq 200
-      expect(page).to have_link('Get laptops and tablets')
+      expect(page).to have_link('Get devices')
     end
 
     context 'with a responsible body managing at least 1 school centrally' do
@@ -52,7 +52,7 @@ RSpec.feature ResponsibleBody do
 
       it 'shows link to get extra data' do
         visit responsible_body_home_path
-        expect(page).to have_link('Get internet access')
+        expect(page).to have_link('Request internet access')
       end
     end
 
@@ -61,14 +61,14 @@ RSpec.feature ResponsibleBody do
 
       it 'does not show link to get extra data' do
         visit responsible_body_home_path
-        expect(page).not_to have_link('Get internet access')
+        expect(page).not_to have_link('Request internet access')
       end
     end
 
     context 'with a local authority devolved to all schools' do
       it 'shows link to get extra data' do
         visit responsible_body_home_path
-        expect(page).to have_link('Get internet access')
+        expect(page).to have_link('Request internet access')
       end
     end
 

@@ -190,7 +190,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def when_i_follow_the_get_devices_link
-    click_on 'Get laptops and tablets'
+    click_on 'Get devices'
   end
 
   def and_i_follow_the_your_schools_link

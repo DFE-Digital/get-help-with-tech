@@ -30,7 +30,7 @@
 
       <p class="govuk-body">Use this section to:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>place orders</li>
+        <li>order laptops<% if @responsible_body.coms_device_pool&.devices_available_to_order %> and routers<% end %></li>
         <li>access the Computacenter TechSource website</li>
       </ul>
 

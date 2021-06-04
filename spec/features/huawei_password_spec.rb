@@ -39,13 +39,13 @@ RSpec.feature 'Huawei router password', type: :feature do
 private
 
   def go_to_huawei_password
-    click_on 'Get internet access'
+    click_on 'Request internet access'
     click_on 'See your Huawei router password'
   end
 
   def expect_password_and_breadcrumb
     expect(page).to have_text 'Password:'
-    expect(page).to have_link('Get internet access')
+    expect(page).to have_link('Request internet access')
   end
 
   def expect_login_screen
