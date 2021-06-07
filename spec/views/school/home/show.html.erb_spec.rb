@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'school/home/show.html.erb' do
-  let(:template) { subject }
+  let(:template) { subject.split('.').first }
 
   let(:school) { user.school }
   let(:user) { build(:school_user) }
