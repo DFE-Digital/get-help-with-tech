@@ -21,7 +21,7 @@ WORKDIR $RAILS_ROOT
 RUN addgroup deploy && adduser -S -u 1001 -s bash -D -G deploy deploy
 RUN chown deploy:deploy /var/www/${APPNAME}
 
-ENV BUNDLER_VERSION 2.1.4
+ENV BUNDLER_VERSION 2.2.15
 RUN gem install bundler
 RUN chown -R deploy:deploy /usr/local/bundle/
 USER 1001
@@ -34,10 +34,10 @@ RUN chown deploy:deploy /home/deploy/.profile
 # install all gems
 COPY --chown=deploy:deploy Gemfile Gemfile.lock .ruby-version ./
 ARG BUNDLE_FLAGS="--jobs 2"
-RUN bundle config set no-cache 'true'
+RUN bundle config set cache_all true
 RUN bundle config set without 'development test'
 RUN bundle install
-RUN bundle package --all
+RUN bundle package
 
 COPY --chown=deploy:deploy . .
 
