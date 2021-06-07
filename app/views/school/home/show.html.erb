@@ -21,7 +21,11 @@
 
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>place orders</li>
+      <% if @school.coms_device_allocation&.allocation&.positive? %>
+        <li>order laptops and 4G routers</li>
+      <% else %>
+        <li>order laptops</li>
+      <% end %>
       <li>access the Computacenter TechSource website to order devices</li>
     </ul>
 

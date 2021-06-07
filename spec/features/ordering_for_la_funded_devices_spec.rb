@@ -160,7 +160,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def when_i_click_on_get_laptops
-    click_on 'Get laptops'
+    click_on 'Order devices'
   end
 
   def then_i_see_i_have_laptops_remaining

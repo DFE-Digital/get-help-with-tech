@@ -3,7 +3,8 @@
 
 <%- content_for :before_content do %>
   <% breadcrumbs([{ "Home" => root_path },
-                  "Get laptops",
+                  { "Laptops and tablets" => devices_guidance_index_path },
+                  t('page_titles.devices_guidance_how_to_order'),
                  ]) %>
 <% end %>
 

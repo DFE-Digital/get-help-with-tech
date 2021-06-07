@@ -1,9 +1,11 @@
 <%- if is_rb %>
   <%- path_request_extra_mobile_data = responsible_body_internet_mobile_extra_data_guidance_path %>
   <%- path_view_extra_mobile_date = responsible_body_internet_mobile_extra_data_requests_path %>
+  <%- path_place_order = responsible_body_devices_order_devices_path %>
 <%- else %>
   <%- path_request_extra_mobile_data = extra_data_guidance_internet_mobile_school_path(@school)  %>
   <%- path_view_extra_mobile_date = extra_data_requests_internet_mobile_school_path(@school) %>
+  <%- path_place_order = order_devices_school_path(@school) %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -20,6 +22,9 @@
 
     <p class="govuk-body">
       This scheme temporarily increases data allowances for mobile phone users on certain networks, if they do not have access to broadband at home.
+    </p>
+    <p class="govuk-body">
+       Extra mobile data will end on <span class="app-no-wrap">31 July 2021</span>.
     </p>
 
     <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
@@ -38,26 +43,36 @@
       You can request a router for disadvantaged pupils and students who do not
       have access to the internet at home, and cannot get a mobile data increase.
     </p>
+    <p class="govuk-body">
+      Data provided by DfE will end on <span class="app-no-wrap">31 July 2021</span>, but the routers will work with other data plans if they’re reset. Huawei routers need to be reset before <span class="app-no-wrap">16 July 2021</span>.
+    </p>
     <ul class="govuk-list govuk-list--spaced">
       <li>
-        <%= govuk_link_to 'What you need to know to request 4G wireless routers', how_to_request_4g_wireless_routers_path %>
+        <%= govuk_link_to 'How to request 4G wireless routers', how_to_request_4g_wireless_routers_path %>
       </li>
       <li>
-        <%= govuk_link_to 'Request a 4G wireless router', 'https://forms.gle/LE1hi2FAKdedUvCz6' %>
+        <%= govuk_link_to 'Request 4G wireless routers from DfE', 'https://forms.gle/LE1hi2FAKdedUvCz6' %>
+      </li>
+      <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && @school.coms_device_allocation&.devices_available_to_order?) %>
+      <li>
+        <%= govuk_link_to ('Get your 4G wireless routers'), path_place_order %>
       </li>
       <li>
         <%= govuk_link_to 'How to reset your router', '/devices/reset_your_wireless_router' %>
       </li>
+      <% end %>
     </ul>
-    <h3 class="govuk-heading-s">
-      Reset your Huawei router
-    </h3>
-    <p class="govuk-body">
-      If you do not reset your Huawei router before 16 July 2021, you will not be able
-      to use it after 31 July 2021.
-    </p>
-    <p class="govuk-body">
-      <%= govuk_link_to 'See your Huawei router password', huawei_router_password_path %>
-    </p>
+    <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.allocation&.positive?) || (current_user.is_school_user? && @school.coms_device_allocation&.allocation&.positive?) %>
+      <h3 class="govuk-heading-s">
+        Reset your Huawei router
+      </h3>
+      <p class="govuk-body">
+        If you do not reset your Huawei router before <span class="app-no-wrap">16 July 2021</span>, you will not be able to use it after <span class="app-no-wrap">31 July 2021</span>.
+      </p>
+      <p class="govuk-body">
+        <%= govuk_link_to 'See your Huawei router password', huawei_router_password_path %>
+      </p>
+    <% end %>
   </div>
 </div>
+
