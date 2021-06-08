@@ -7,7 +7,7 @@
       <% if @pagination.count.zero? %>
         No requests found
       <% else %>
-        <%= pagy_info(@pagination, "requests").capitalize.html_safe %> found
+        <%= pagy_info(@pagination, item_name: "requests").capitalize.html_safe %> found
       <% end %>
     </h1>
   </div>
