@@ -33,7 +33,7 @@ Once you have your wifi network name and password, follow the steps below.
     
     If you cannot log in, check you're using the protected password and not the password 'admin'.
     
- ![Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in.](/devices/huawei-router-log-in.png)
+    ![Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in.](/devices/huawei-router-log-in.png)
 
 1. Once connected, you’ll be asked to read and accept the privacy notice and user agreement.
 
