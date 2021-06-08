@@ -1,0 +1,24 @@
+<h2 class="govuk-heading-m  govuk-!-margin-top-6">
+  Order history
+</h2>
+<ul class="govuk-list govuk-list--spaced">
+  <!-- If user can order -->
+  <% if @current_user.orders_devices? %>
+  <li>
+    <%= govuk_link_to 'See your order history on TechSource', techsource_start_path %></li>
+  </li>
+  <% end %>
+  <!-- if organisation has any request -->
+  <% if @current_user.is_school_user? %>
+    <li>
+      <%= govuk_link_to 'View your requests for extra mobile data', extra_data_requests_internet_mobile_school_path(@school) %>
+    </li>
+  <% else %>
+    <li>
+      <%= govuk_link_to ('View your schools and colleges'), responsible_body_devices_schools_path %>
+    </li>
+    <li>
+      <%= govuk_link_to 'View your requests for extra mobile data', responsible_body_internet_mobile_extra_data_requests_path %>
+    </li>
+  <% end %>
+  <!-- end -->

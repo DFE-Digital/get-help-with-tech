@@ -10,13 +10,15 @@
       <%= title %>
     </h1>
 
-    <div class="govuk-warning-text">
+    <%= render partial: 'shared/invite_someone_who_can' %>
+
+<!--     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        Do not add school or college contacts here. <%= govuk_link_to 'Use the schools and colleges list instead', responsible_body_devices_path %>.
+        Do not add school or college contacts here. <%= govuk_link_to 'Use the schools and colleges list instead', responsible_body_devices_schools_path %>.
       </strong>
-    </div>
+    </div> -->
 
     <%= form_for @rb_user, url: responsible_body_users_path do |f| %>
       <%= render partial: 'shared/responsible_body_user_form', locals: { submit_text: 'Send invite', form: f } %>

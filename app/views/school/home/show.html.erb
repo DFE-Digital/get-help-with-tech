@@ -15,69 +15,64 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
-    </h2>
-
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <% if @school.coms_device_allocation&.allocation&.positive? %>
-        <li>order laptops and 4G routers</li>
+    <div class="app-card">
+      <h2 class="govuk-heading-m">
+        Ordering is now closed for devices and internet access
+      </h2>
+      <% if @school.in_virtual_cap_pool? %>
+        // IF TRUST ORDERED LAPTOPS AND ROUTERS
+          <p class="govuk-body">
+            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, <%= TRUST %> received:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>< TRUST devices_ordered %> laptops and tablets</li>
+            <li>< TRUST devices_ordered %> routers.</li>
+          </ul>
+        // ELSE IF ONLY LAPTOPS
+          <p class="govuk-body">
+            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, <%= TRUST %> received <%= @school.std_device_allocation&.devices_ordered %> laptops and tablets.
+          </p>
+        // ELSE IF ONLY LAPTOPS
+          <p class="govuk-body">
+            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, <%= TRUST %> received <%= @school.coms_device_allocation&.devices_ordered %> routers.
+          </p>
+        // ELSE
+          <p class="govuk-body">
+            Ordering is closed.
+          </p>
+          <p class="govuk-body">
+            Your <%= @school.institution_type %> did not order any laptops, tablets or routers from <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>.
+          </p>
+        // END
       <% else %>
-        <li>order laptops</li>
+        <% if @school.std_device_allocation&.devices_ordered.to_i.positive? && @school.coms_device_allocation&.devices_ordered.to_i.positive? %>
+          <p class="govuk-body">
+            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, schools and colleges in your <span class="app-no-wrap">Local authority</span> received:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><%= @school.std_device_allocation&.devices_ordered %> laptops and tablets</li>
+            <li><%= @school.coms_device_allocation&.devices_ordered %> routers</li>
+            <li>extra mobile data for 10 accounts</li>
+          </ul>
+        <% elsif @school.std_device_allocation&.devices_ordered.to_i.positive? && @school.coms_device_allocation&.devices_ordered.to_i == 0 %>
+            <p class="govuk-body">
+              From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, your <%= @school.institution_type %> received <%= @school.std_device_allocation&.devices_ordered %> laptops and tablets.
+            </p>
+        <% elsif @school.std_device_allocation&.devices_ordered.to_i == 0 && @school.coms_device_allocation&.devices_ordered.positive %>
+          <p class="govuk-body">
+              From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, your <%= @school.institution_type %> received <%= @school.std_device_allocation&.devices_ordered %> routers.
+            </p>
+        <% else %>
+          <p class="govuk-body">
+            Your <%= @school.institution_type %> did not order any laptops, tablets or routers from <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>.
+          </p>
+        <% end %>
       <% end %>
-      <li>access the Computacenter TechSource website to order devices</li>
-    </ul>
+    </div>
 
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.signed_in_internet_access') , internet_school_path(@school) %>
-    </h2>
+    <%= render partial: 'shared/summary_access_to_support_portal' %>
+    <%= render partial: 'shared/summary_reset_devices' %>
 
-    <%= render 'shared/get_internet_access_section_description' %>
-
-    <% if FeatureFlag.active?(:donated_devices) && @school.who_will_order_devices == 'school' %>
-      <% if DonatedDeviceRequest.complete.for_school(@school).any? %>
-        <h2 class="govuk-heading-l govuk-!-font-size-27">
-          <%= govuk_link_to t('page_titles.donated_devices_complete.title'), interest_donated_devices_school_path(@school) %>
-        </h2>
-
-        <p class="govuk-body">Your school has opted in. Use this section to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>check your delivery address and device preferences</li>
-          <li>read more about the scheme</li>
-        </ul>
-      <% else %>
-        <h2 class="govuk-heading-l govuk-!-font-size-27">
-          <%= govuk_link_to t('page_titles.donated_devices.title'), interest_donated_devices_school_path(@school) %>
-        </h2>
-
-        <p class="govuk-body">Use this section to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>opt in and be considered for devices donated through their scheme</li>
-          <li>set a preference for devices you want</li>
-        </ul>
-      <% end %>
-    <% end %>
-
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
-    </h2>
-
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>review your allocation</li>
-      <!-- change this to 'change' when we do the change functionality -->
-      <li>review your Chromebook settings</li>
-    </ul>
-
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
-    </h2>
-
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>give other people access to this service</li>
-      <li>set which accounts can use TechSource and use the <span class="app-no-wrap">Support Portal</span></li>
-    </ul>
+    <%= render partial: 'shared/summary_order_history' %>
   </div>
 </div>

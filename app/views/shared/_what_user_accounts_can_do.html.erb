@@ -1,0 +1,16 @@
+<p class="govuk-body">Everyone with access can:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>see who else has an account</li>
+  <li>add or edit existing accounts</li>
+<% if current_user.is_school_user? %>
+  <li>change who can access the Support Portal</li>
+<% else %>
+  <li>access the Support Portal</li>
+<% end %>
+</ul>
+
+<% if current_user.is_school_user? %>
+  <p class="govuk-body">
+    Up to 3 people from your <%= @school.institution_type %> can access the Support Portal.
+  </p>
+<% end %>

@@ -5,53 +5,23 @@
 <%- content_for :before_content do %>
   <% breadcrumbs([{ "Home" => root_path },
                   { "Your account" => responsible_body_home_path },
-                  { t('page_titles.responsible_body_devices_home') => responsible_body_devices_path },
                   title ,
                  ]) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+    <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
+  </div>
+  <div class="govuk-grid-column-full">
 
-    <%= render GovukComponent::Details.new(summary: 'Is this list wrong?') do %>
-      <% if @responsible_body.is_a_local_authority? %>
-        <p>This is a list of all local authority maintained and special schools.</p>
-      <% end %>
-      <p>Email <%= ghwt_contact_mailto(subject: 'Problem with list of schools') %>
-        and tell us what to&nbsp;change.</p>
+    <% if @schools[:ordering_schools].count.positive? %>
+      <%= render partial: 'school_states_table', locals: { schools: @schools[:ordering_schools],
+                                                           table_id: 'ordering-schools',
+                                                           heading: t('.ordering_schools_heading') } %>
     <%- end %>
+
   </div>
 </div>
-
-<% if @responsible_body.has_virtual_cap_feature_flags? %>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= render ResponsibleBody::PooledDeviceCountComponent.new(
-      responsible_body: @responsible_body,
-      show_action: @responsible_body.has_any_schools_that_can_order_now? && @responsible_body.devices_available_to_order?,
-      action: { 'Order devices' => responsible_body_devices_order_devices_path } ) %>
-  </div>
-</div>
-<%- end %>
-
-<% if @schools[:specific_circumstances_schools].count.positive? %>
-  <%= render partial: 'school_states_table', locals: { schools: @schools[:specific_circumstances_schools],
-                                                       table_id: 'specific-circumstances-schools',
-                                                       heading: t('.specific_circumstances_heading') } %>
-<%- end %>
-
-<% if @schools[:ordering_schools].count.positive? %>
-  <%= render partial: 'school_states_table', locals: { schools: @schools[:ordering_schools],
-                                                       table_id: 'ordering-schools',
-                                                       heading: t('.ordering_schools_heading') } %>
-<%- end %>
-
-<% if @schools[:fully_open_schools].count.positive? %>
-  <%= render partial: 'school_states_table', locals: { schools: @schools[:fully_open_schools],
-                                                       table_id: 'cannot-order-yet-schools',
-                                                       heading: t('.cannot_order_yet_schools_heading'),
-                                                       heading_text: t('.cannot_order_yet_schools_text') } %>
-<%- end %>

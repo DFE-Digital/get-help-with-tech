@@ -9,18 +9,10 @@
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
-    <p class="govuk-body">Everyone with access can:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>add or edit existing users</li>
-      <li>change who places orders for devices</li>
-    </ul>
-
-    <p class="govuk-body govuk-!-margin-top-6">You can also choose to let up to 3 users:</p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-      <li>order devices</li>
-      <li>use a <%= govuk_link_to 'Support Portal', 'https://computacenterprod.service-now.com/dfe' %> to report faults and <%= govuk_link_to 'view passwords needed to replace DfE settings', devices_guidance_subpage_path('preparing-microsoft-windows-laptops-and-tablets', anchor: 'getting-local-admin-and-bios-passwords-to-install-your-own-software-and-settings') %> on Microsoft Windows devices</li>
-    </ul>
+    <%= render partial: 'shared/what_user_accounts_can_do' %>
     <%= govuk_button_link_to 'Invite a new user', new_school_user_path %>
+  </div>
+  <div class="govuk-grid-column-full">
     <%- unless @users.empty? %>
       <div id="user-list">
         <h2 class="govuk-heading-l">Users</h2>

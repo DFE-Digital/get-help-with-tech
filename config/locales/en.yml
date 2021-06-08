@@ -161,7 +161,7 @@ en:
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
     school_edit_chromebooks: Will you need to order Chromebooks?
-    school_users: Manage users
+    school_users: Manage who can access the Support Portal
     school_before_can_order: Before you can order, we need more information
     donated_devices_complete:
       title: Daily Mail donated devices scheme
@@ -235,9 +235,9 @@ en:
       order_devices_now: Order devices now
     invite_school_user:
       title: Invite a new user
-      will_they_order_devices: Will they place orders for devices?
-      will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
-      can_order_devices: Yes, give them access to the TechSource website for ordering and a Support Portal for technical help
+      will_they_order_devices: Do you want to give them have access to the Support Portal?
+      will_they_order_devices_hint: Up to 3 people can have access to the Support Portal.
+      can_order_devices: Yes, give them access to the Support Portal
       cannot_order_devices: 'No'
     edit_user: Change user details
     confirm_destroy_user: Are you sure you want to delete this user?

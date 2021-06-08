@@ -1,18 +1,9 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-!-margine-top-4">
-    <h3 class="govuk-heading-m"><%= heading %></h3>
-    <% if local_assigns[:heading_text] %>
-      <p class="govuk-body"><%= heading_text %></p>
-    <%- end %>
-  </div>
-</div>
 <table id="<%= table_id %>" class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th class="govuk-table__header app-schools-table__column-40">School or college</th>
-      <th class="govuk-table__header app-schools-table__column-20">Who will order?</th>
-      <th class="govuk-table__header app-schools-table__column-20">Allocation</th>
-      <th class="govuk-table__header app-schools-table__column-20"><span class="govuk-visually-hidden">Status</span></th>
+      <th class="govuk-table__header app-schools-table__column-50">School or college</th>
+      <th class="govuk-table__header app-schools-table__column-25">Devices received</th>
+      <th class="govuk-table__header app-schools-table__column-25">Who ordered</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -24,13 +15,10 @@
           <%= school.human_for_school_type %>
         </td>
         <td class="govuk-table__cell">
-          <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
+          <%= render DisplayOrdersComponent.new(school: school) %>
         </td>
         <td class="govuk-table__cell">
-          <%= render DisplayAllocationsComponent.new(school: school) %>
-        </td>
-        <td class="govuk-table__cell govuk-table__cell--nowrap">
-          <%= render ConditionalSchoolPreorderStatusTagComponent.new(school: school, viewer: @responsible_body) %>
+          <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
         </td>
       </tr>
     <% end %>
