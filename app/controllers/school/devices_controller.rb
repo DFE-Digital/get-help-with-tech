@@ -1,5 +1,7 @@
 class School::DevicesController < School::BaseController
   def order
+    @responsible_body = @school.responsible_body
+
     if @school.can_order_devices_right_now?
       if impersonated_or_current_user.has_an_active_techsource_account? && @school.can_order_for_specific_circumstances?
         render :can_order_for_specific_circumstances
