@@ -72,6 +72,37 @@ class Support::ServicePerformance
     devolved + managed
   end
 
+  def segmented_device_counts
+    device_type = 'std_device'
+
+    [
+      Support::ServicePerformance::DeviceCounts.new(
+        key: :open_and_devolved_schools,
+        school_scope: School.gias_status_open,
+        device_type: device_type,
+        who_will_order_devices: 'school',
+      ),
+      Support::ServicePerformance::DeviceCounts.new(
+        key: :closed_and_devolved_schools,
+        school_scope: School.gias_status_closed,
+        device_type: device_type,
+        who_will_order_devices: 'school',
+      ),
+      Support::ServicePerformance::DeviceCounts.new(
+        key: :open_and_centrally_managed_schools,
+        school_scope: School.gias_status_open,
+        device_type: device_type,
+        who_will_order_devices: 'responsible_body',
+      ),
+      Support::ServicePerformance::DeviceCounts.new(
+        key: :closed_and_centrally_managed_schools,
+        school_scope: School.gias_status_closed,
+        device_type: device_type,
+        who_will_order_devices: 'responsible_body',
+      ),
+    ]
+  end
+
   #
   # devolved schools - devices
   #
