@@ -4,12 +4,13 @@ RSpec.describe School::Internet::HomeController do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
 
-  before do
-    sign_in_as user
-  end
+  before { sign_in_as user }
 
-  it 'renders 200' do
-    get :show, params: { urn: school.urn }
-    expect(response).to be_successful
+  describe '#show' do
+    before { get :show, params: { urn: school.urn } }
+
+    specify { expect(response).to be_successful }
+    specify { expect(assigns(:responsible_body)).to be_present }
+    specify { expect(assigns(:responsible_body)).to eq(school.responsible_body) }
   end
 end

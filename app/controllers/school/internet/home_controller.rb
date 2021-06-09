@@ -1,3 +1,5 @@
 class School::Internet::HomeController < School::BaseController
-  def show; end
+  def show
+    @responsible_body = @school.responsible_body
+  end
 end
