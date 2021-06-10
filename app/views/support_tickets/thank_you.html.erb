@@ -33,7 +33,4 @@
       <a href="https://get-help-with-tech.education.gov.uk/" rel="noreferrer noopener" target="_blank">Get help with technology</a>
     </p>
   </div>
-  <% if current_user.persisted? %>
-    <%= render(LinkToSurveyComponent.new(organisation: @school)) %>
-  <% end %>
 </div>
