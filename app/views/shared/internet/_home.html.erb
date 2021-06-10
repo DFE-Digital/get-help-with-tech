@@ -53,7 +53,7 @@
       <li>
         <%= govuk_link_to 'Request 4G wireless routers from DfE', 'https://forms.gle/LE1hi2FAKdedUvCz6' %>
       </li>
-      <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && @school.coms_device_allocation&.devices_available_to_order?) %>
+      <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && current_user.school.coms_device_allocation&.devices_available_to_order?) %>
       <li>
         <%= govuk_link_to ('Get your 4G wireless routers'), path_place_order %>
       </li>
@@ -62,7 +62,7 @@
       </li>
       <% end %>
     </ul>
-    <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.allocation&.positive?) || (current_user.is_school_user? && @school.coms_device_allocation&.allocation&.positive?) %>
+    <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.allocation&.positive?) || (current_user.is_school_user? && current_user.school.coms_device_allocation&.allocation&.positive?) %>
       <h3 class="govuk-heading-s">
         Reset your Huawei router
       </h3>
