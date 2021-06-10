@@ -1,6 +1,5 @@
 en:
   service_name: Get help with technology
-  user_feedback: Help us understand the impact this programme has had on your pupils and students.
   pages:
     order_devices:
       can_order_full_allocation_when_list:
