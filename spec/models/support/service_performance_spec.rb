@@ -41,8 +41,8 @@ RSpec.describe Support::ServicePerformance, type: :model do
   describe '#number_of_different_responsible_bodies_who_have_chosen_who_will_order' do
     it 'counts only the responsible bodies who have a non-nil value in who_will_order_devices' do
       # these will count
-      create_list(:local_authority, 3, who_will_order_devices: 'responsible_body')
-      create_list(:trust, 4, who_will_order_devices: 'school')
+      create_list(:local_authority, 3, :manages_centrally)
+      create_list(:trust, 4, :devolves_management)
 
       # these won't count
       create_list(:local_authority, 2, who_will_order_devices: nil)
@@ -190,6 +190,142 @@ RSpec.describe Support::ServicePerformance, type: :model do
     context 'given a datetime as to:' do
       it 'returns the total number of completions before the given datetime' do
         expect(stats.extra_mobile_data_request_completions(to: 10.days.ago)).to eq(4)
+      end
+    end
+  end
+
+  describe '#segmented_device_counts' do
+    let(:rb_devolved_1) { create(:trust, :devolves_management) }
+    let(:rb_devolved_2) { create(:trust, :devolves_management) }
+    let(:rb_centrally_managed_1) { create(:local_authority, :manages_centrally) }
+    let(:rb_centrally_managed_2) { create(:local_authority, :manages_centrally) }
+
+    let :schools_state do
+      [
+        {
+          rb: rb_devolved_1,
+          devolved: true,
+          schools: [
+            { open: true, cap: 2, devices_ordered: 0 },
+            { open: true, cap: 2, devices_ordered: 1 },
+            { open: true, cap: 2, devices_ordered: 2 },
+            { open: false, cap: 2, devices_ordered: 0 },
+            { open: false, cap: 2, devices_ordered: 3 },
+          ],
+        },
+        {
+          rb: rb_devolved_2,
+          devolved: true,
+          schools: [
+            { open: true, cap: 2, devices_ordered: 0 },
+            { open: true, cap: 2, devices_ordered: 1 },
+            { open: true, cap: 2, devices_ordered: 3 },
+            { open: false, cap: 2, devices_ordered: 0 },
+            { open: false, cap: 2, devices_ordered: 1 },
+            { open: false, cap: 2, devices_ordered: 3 },
+          ],
+        },
+        {
+          rb: rb_centrally_managed_1,
+          devolved: false,
+          schools: [
+            { open: true, cap: 2, devices_ordered: 0 },
+            { open: true, cap: 2, devices_ordered: 1 },
+            { open: true, cap: 2, devices_ordered: 3 },
+            { open: true, cap: 2, devices_ordered: 4 },
+            { open: false, cap: 2, devices_ordered: 0 },
+          ],
+        },
+        {
+          rb: rb_centrally_managed_2,
+          devolved: false,
+          schools: [
+            { open: true, cap: 2, devices_ordered: 0 },
+            { open: true, cap: 2, devices_ordered: 1 },
+            { open: true, cap: 2, devices_ordered: 0 },
+            { open: false, cap: 2, devices_ordered: 0 },
+            { open: false, cap: 2, devices_ordered: 5 },
+            { open: false, cap: 2, devices_ordered: 3 },
+          ],
+        },
+      ]
+    end
+
+    let :expected_result do
+      [
+        {
+          key: :open_and_devolved_schools,
+          available: 12,
+          ordered: 7,
+          remaining_excl_over_ordered: 6,
+          over_ordered: 1,
+        },
+        {
+          key: :closed_and_devolved_schools,
+          available: 10,
+          ordered: 7,
+          remaining_excl_over_ordered: 5,
+          over_ordered: 2,
+        },
+        {
+          key: :open_and_centrally_managed_schools,
+          available: 14,
+          ordered: 9,
+          remaining_excl_over_ordered: 8,
+          over_ordered: 3,
+        },
+        {
+          key: :closed_and_centrally_managed_schools,
+          available: 8,
+          ordered: 8,
+          remaining_excl_over_ordered: 4,
+          over_ordered: 4,
+        },
+      ]
+    end
+
+    before do
+      schools_state.each do |entry|
+        entry[:schools].each do |school_data|
+          school_record = create(
+            :school,
+            responsible_body: entry[:rb],
+            status: school_data[:open] ? 'open' : 'closed',
+          )
+
+          if entry[:devolved]
+            create(:preorder_information, :school_will_order, school: school_record)
+          else
+            create(:preorder_information, :rb_will_order, school: school_record)
+          end
+
+          create(
+            :school_device_allocation,
+            school: school_record,
+            device_type: 'std_device',
+            cap: school_data[:cap],
+            allocation: school_data[:cap],
+            devices_ordered: school_data[:devices_ordered],
+          )
+        end
+      end
+    end
+
+    it 'produces the expected segmented device counts' do
+      result = stats.segmented_device_counts
+
+      expect(result.length).to eq 4
+
+      expected_result.each_with_index do |expected_result_segment, ix|
+        result_segment = {
+          key: result[ix].key,
+          available: result[ix].available,
+          ordered: result[ix].ordered,
+          remaining_excl_over_ordered: result[ix].remaining_excl_over_ordered,
+          over_ordered: result[ix].over_ordered,
+        }
+
+        expect(result_segment).to eq expected_result_segment
       end
     end
   end
