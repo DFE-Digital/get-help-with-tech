@@ -90,11 +90,19 @@ RSpec.describe TrustUpdateService, type: :model do
       end
 
       it 'notifies Sentry with a list of skipped trust ids' do
+        sentry_scope = double
+        allow(sentry_scope).to receive(:set_context)
+
         allow(Sentry).to receive(:capture_message)
+        allow(Sentry).to receive(:configure_scope).and_yield(sentry_scope)
 
         service.update_trusts
 
-        expect(Sentry).to have_received(:capture_message).with(/TrustUpdateService#close_trusts - Trusts with schools skipped IDs: \[[0-9, ]+\]/)
+        expect(Sentry).to have_received(:capture_message).with(/Skipped auto-closing Trusts as schools.size > 0/)
+        expect(sentry_scope).to have_received(:set_context).with(
+          'TrustUpdateService#close_trusts',
+          { trust_ids: a_collection_containing_exactly(trust_with_schools_1.id, trust_with_schools_2.id) },
+        )
       end
 
       it 'leaves skipped trust as open' do

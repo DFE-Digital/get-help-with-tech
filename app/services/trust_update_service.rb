@@ -43,7 +43,11 @@ private
 
     return if trusts_with_schools.empty?
 
-    Sentry.capture_message("TrustUpdateService#close_trusts - Trusts with schools skipped IDs: #{trusts_with_schools.inspect}")
+    Sentry.configure_scope do |scope|
+      scope.set_context('TrustUpdateService#close_trusts', { trust_ids: trusts_with_schools })
+
+      Sentry.capture_message('Skipped auto-closing Trusts as schools.size > 0')
+    end
   end
 
   def update_trust(trust, staged_trust)
