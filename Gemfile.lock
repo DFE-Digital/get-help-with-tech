@@ -566,6 +566,7 @@ DEPENDENCIES
   rails-erd
   rails_semantic_logger
   redcarpet
+  redis
   rexml
   rspec-rails (~> 5.0.1)
   rubocop-govuk (~> 4.0.0)

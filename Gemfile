@@ -120,6 +120,9 @@ group :development, :test do
 
   # PageObjects for tests
   gem 'site_prism'
+
+  # For Rails cache (and implicitly for Sidekiq too)
+  gem 'redis'
 end
 
 group :development do

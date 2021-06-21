@@ -53,7 +53,18 @@ Rails.application.configure do
   config.log_tags = [:request_id]
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  redis_url = if ENV['REDIS_CACHE_URL'].present?
+                ENV['REDIS_CACHE_URL']
+              elsif ENV['VCAP_SERVICES'].present?
+                require 'v_cap_services_config'
+                redis_config = VCapServicesConfig.new.first_service_matching('redis-cache')
+                redis_config['credentials']['uri']
+              end
+  if redis_url
+    config.cache_store = :redis_cache_store, {
+      url: redis_url
+    }
+  end
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque

@@ -48,6 +48,9 @@ setup_cdn_route: set_cf_target
 setup_paas_redis: set_cf_target
 	cf create-service redis $(redis_plan) $(APP_NAME)-$(env_stub)-redis
 
+setup_paas_redis_cache: set_cf_target
+  cf create-service redis $(redis_plan) $(APP_NAME)-$(env_stub)-redis-cache
+
 setup_logit: set_cf_target
 	@test ${LOGIT_ENDPOINT} || (echo ">> LOGIT_ENDPOINT is not set (${LOGIT_ENDPOINT})- please use make setup_logit LOGIT_ENDPOINT=(Logit Logstash endpoint) LOGIT_PORT=(Logit TCP-SSL port)\n\nYou can get these values from the Logit stack settings"; exit 1)
 	@test ${LOGIT_PORT} || (echo ">> LOGIT_PORT is not set (${LOGIT_PORT})- please use make setup_logit LOGIT_ENDPOINT=(Logit Logstash endpoint) LOGIT_PORT=(Logit TCP-SSL port)\n\nYou can get these values from the Logit stack settings"; exit 1)
