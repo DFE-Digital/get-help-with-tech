@@ -1,32 +1,28 @@
-    <% if (current_user.is_responsible_body_user?) || 
-          (current_user.is_school_user? && @school.std_device_allocation&.devices_ordered.to_i.positive? || @school.coms_device_allocation&.devices_ordered.to_i.positive? )
-        %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-6">
-        Access the Support Portal
-      </h2>
-      <p class="govuk-body">
-         Use the Support Portal to get local admin and BIOS passwords.
-      </p>
-      <% if @current_user.orders_devices? %>
-        <p class="govuk-body">
-          <%= govuk_link_to 'Visit the Support Portal', 'https://computacenterprod.service-now.com/dfe' %>
-        </p>
-      <% else %>
-        <p class="govuk-body">
-          <% if @current_user.is_school_user? %>
-            Up to 3 people from your <%= @school.institution_type %> can access the Support Portal. You do not have access to the Support Portal.
-          <% else %>
-            You do not have access to the Support Portal, <%= govuk_link_to 'contact us', support_ticket_path %> to request access.
-          <% end %>
-        </p>
-      <% end %>
-      <p class="govuk-body">
-        <% if current_user.is_responsible_body_user? && @responsible_body.is_a_trust? %>
-          <%= govuk_link_to t('page_titles.responsible_body_trust_users_index'), responsible_body_users_path %>
-        <% elsif current_user.is_responsible_body_user? %>
-          <%= govuk_link_to t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type), responsible_body_users_path %>
-        <% else %>
-          <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
-        <% end %>
-      </p>
+<h2 class="govuk-heading-m govuk-!-margin-top-6">
+  Access the Support Portal
+</h2>
+<p class="govuk-body">
+   Use the Support Portal to get local admin and BIOS passwords.
+</p>
+<% if @current_user.orders_devices? %>
+  <p class="govuk-body">
+    <%= govuk_link_to 'Visit the Support Portal', 'https://computacenterprod.service-now.com/dfe' %>
+  </p>
+<% else %>
+  <p class="govuk-body">
+    <% if @current_user.is_school_user? %>
+      Up to 3 people from your <%= @school.institution_type %> can access the Support Portal. You do not have access to the Support Portal.
+    <% else %>
+      You do not have access to the Support Portal, <%= govuk_link_to 'contact us', support_ticket_path %> to request access.
     <% end %>
+  </p>
+<% end %>
+<p class="govuk-body">
+  <% if current_user.is_responsible_body_user? && @responsible_body.is_a_trust? %>
+    <%= govuk_link_to t('page_titles.responsible_body_trust_users_index'), responsible_body_users_path %>
+  <% elsif current_user.is_responsible_body_user? %>
+    <%= govuk_link_to t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type), responsible_body_users_path %>
+  <% else %>
+    <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
+  <% end %>
+</p>
