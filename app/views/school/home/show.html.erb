@@ -15,60 +15,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <div class="app-card">
-      <h2 class="govuk-heading-m">
-        Ordering is now closed for devices and internet access
-      </h2>
-      <% if @school.in_virtual_cap_pool? %>
-        // IF TRUST ORDERED LAPTOPS AND ROUTERS
-          <p class="govuk-body">
-            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, <%= TRUST %> received:
-          </p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>< TRUST devices_ordered %> laptops and tablets</li>
-            <li>< TRUST devices_ordered %> routers.</li>
-          </ul>
-        // ELSE IF ONLY LAPTOPS
-          <p class="govuk-body">
-            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, <%= TRUST %> received <%= @school.std_device_allocation&.devices_ordered %> laptops and tablets.
-          </p>
-        // ELSE IF ONLY LAPTOPS
-          <p class="govuk-body">
-            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, <%= TRUST %> received <%= @school.coms_device_allocation&.devices_ordered %> routers.
-          </p>
-        // ELSE
-          <p class="govuk-body">
-            Ordering is closed.
-          </p>
-          <p class="govuk-body">
-            Your <%= @school.institution_type %> did not order any laptops, tablets or routers from <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>.
-          </p>
-        // END
-      <% else %>
-        <% if @school.std_device_allocation&.devices_ordered.to_i.positive? && @school.coms_device_allocation&.devices_ordered.to_i.positive? %>
-          <p class="govuk-body">
-            From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, schools and colleges in your <span class="app-no-wrap">Local authority</span> received:
-          </p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li><%= @school.std_device_allocation&.devices_ordered %> laptops and tablets</li>
-            <li><%= @school.coms_device_allocation&.devices_ordered %> routers</li>
-            <li>extra mobile data for 10 accounts</li>
-          </ul>
-        <% elsif @school.std_device_allocation&.devices_ordered.to_i.positive? && @school.coms_device_allocation&.devices_ordered.to_i == 0 %>
-            <p class="govuk-body">
-              From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, your <%= @school.institution_type %> received <%= @school.std_device_allocation&.devices_ordered %> laptops and tablets.
-            </p>
-        <% elsif @school.std_device_allocation&.devices_ordered.to_i == 0 && @school.coms_device_allocation&.devices_ordered.positive %>
-          <p class="govuk-body">
-              From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, your <%= @school.institution_type %> received <%= @school.std_device_allocation&.devices_ordered %> routers.
-            </p>
-        <% else %>
-          <p class="govuk-body">
-            Your <%= @school.institution_type %> did not order any laptops, tablets or routers from <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>.
-          </p>
-        <% end %>
-      <% end %>
-    </div>
 
     <%= render partial: 'shared/summary_access_to_support_portal' %>
     <%= render partial: 'shared/summary_reset_devices' %>
