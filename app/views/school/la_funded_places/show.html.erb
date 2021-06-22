@@ -8,6 +8,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
+    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
