@@ -2,13 +2,7 @@ class GuideToCollectingMobileInformationController < ApplicationController
   include Rails.application.routes.url_helpers
   before_action :set_guide_navigation
 
-  def index; end
-
-  def asking_for_network; end
-
   def asking_for_account_holder; end
-
-  def telling_about_offer; end
 
   def privacy; end
 

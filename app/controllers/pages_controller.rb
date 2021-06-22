@@ -9,8 +9,6 @@ class PagesController < ApplicationController
     @show_parent_carer_pupil_banner = false
   end
 
-  def about_increasing_mobile_data; end
-
   def accessibility; end
 
   def privacy; end

@@ -6,7 +6,6 @@ en:
         - a school closure has been reported
         - 15 or more children (in years 3 to 11) are self-isolating
   page_titles:
-    how_request_4g_routers: How to request 4G wireless routers
     api_tokens: Your API tokens
     about_increasing_mobile_data: Get extra mobile data to support disadvantaged children and young people
     about_increasing_mobile_data_short: Get extra mobile data
@@ -43,14 +42,12 @@ en:
     upload_a_spreadsheet_of_extra_data_requests: Upload a spreadsheet of extra data requests
     weve_processed_your_spreadsheet: We’ve processed your spreadsheet
     weve_processed_your_csv: We’ve processed your CSV
-    guide_to_collecting_mobile_information: Guide to collecting mobile information
     guide_to_resetting_windows_laptops_and_tablets: Guide to resetting Windows laptops and tablets
     start: Get help with technology
     internet_access: Internet access
     signed_in_internet_access: Request internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_how_to_order: "How and when to order DfE laptops during coronavirus (COVID-19)"
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
