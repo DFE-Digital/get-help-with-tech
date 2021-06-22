@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
   get '/about-bt-wifi', to: redirect('/internet-access#bt-wifi')
-  get '/about-increasing-mobile-data', to: 'pages#about_increasing_mobile_data'
+  get '/about-increasing-mobile-data', to: redirect('/internet-access')
   get '/increasing-mobile-data/privacy-notice', to: 'pages#increasing_mobile_data_privacy_notice'
   get '/accessibility', to: 'pages#accessibility'
   get '/privacy', to: 'pages#privacy'
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice'
   get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
-  get '/how-to-request-4g-wireless-routers', to: 'pages#how_request_4g_routers'
+  get '/how-to-request-4g-wireless-routers', to: redirect('/internet-access')
   get '/choosing-help-with-internet-access', to: redirect('/internet-access')
   get '/what-to-do-if-you-cannot-get-laptops-tablets-or-internet-access-from-dfe', to: 'pages#what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe'
   get '/how-to-access-the-get-help-with-technology-service', to: 'pages#how_to_access_the_get_help_with_technology_service'
@@ -36,10 +36,10 @@ Rails.application.routes.draw do
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
 
-  get '/guide-to-collecting-mobile-information', to: 'guide_to_collecting_mobile_information#index'
+  get '/guide-to-collecting-mobile-information', to: redirect('/internet-access')
   get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: 'guide_to_collecting_mobile_information#asking_for_account_holder'
-  get '/guide-to-collecting-mobile-information/asking-for-network', to: 'guide_to_collecting_mobile_information#asking_for_network'
-  get '/guide-to-collecting-mobile-information/telling-about-offer', to: 'guide_to_collecting_mobile_information#telling_about_offer'
+  get '/guide-to-collecting-mobile-information/asking-for-network', to: redirect('/internet-access')
+  get '/guide-to-collecting-mobile-information/telling-about-offer', to: redirect('/internet-access')
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
   get '/devices/guide-to-resetting-windows-laptops-and-tablets', to: 'guide_to_resetting_windows_laptops_and_tablets#index'
@@ -53,9 +53,9 @@ Rails.application.routes.draw do
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/additional-support', to: 'guide_to_resetting_windows_laptops_and_tablets#additional_support'
 
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
-  get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
-  get '/devices/how-to-order-laptops-for-social-care-leavers', to: 'devices_guidance#how_to_order_laptops_for_social_care_leavers'
-  get '/devices/how-to-order-laptops-for-independent-special-schools', to: 'devices_guidance#how_to_order_laptops_for_independent_special_schools'
+  get '/devices/how-to-order', to: redirect('/devices')
+  get '/devices/how-to-order-laptops-for-social-care-leavers', to: redirect('/devices')
+  get '/devices/how-to-order-laptops-for-independent-special-schools', to: redirect('/devices')
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'

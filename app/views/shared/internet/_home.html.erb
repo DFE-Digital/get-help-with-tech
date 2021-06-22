@@ -50,9 +50,6 @@
       <li>
         <%= govuk_link_to 'How to request 4G wireless routers', how_to_request_4g_wireless_routers_path %>
       </li>
-      <li>
-        <%= govuk_link_to 'Request 4G wireless routers from DfE', 'https://forms.gle/LE1hi2FAKdedUvCz6' %>
-      </li>
       <% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && current_user.school.coms_device_allocation&.devices_available_to_order?) %>
       <li>
         <%= govuk_link_to ('Get your 4G wireless routers'), path_place_order %>
