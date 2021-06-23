@@ -285,8 +285,8 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: Who could get laptops and tablets, and why DfE provided them
-      description: Find out who is eligible for devices and why the DfE is providing them.
+      title: About the offer
+      description: Find out who devices were provided for and why the DfE provided them.
       guidance_section: before_you_order_pages
     device_allocations:
       title: How laptops and tablets were allocated
