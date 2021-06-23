@@ -13,37 +13,16 @@
     </h1>
 
     <p class="govuk-body">
-      How to choose, order, and safely set up laptops and tablets for pupils in <span class="app-no-wrap">years 3 to 13</span>,
+      Ordering is now closed for laptops and tablets.
+    </p>
+
+    <p class="govuk-body">
+      Find out how to safely set up laptops and tablets for pupils in <span class="app-no-wrap">years 3 to 13</span>,
       students in further education, and care leavers. You can also find out how to get help with faulty devices.
     </p>
 
     <h2 class="govuk-heading-m">
-      Before you order
-    </h2>
-
-    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
-      <%= render partial: 'page_link_and_description', collection: @before_you_order_pages, as: :page %>
-    </ul>
-
-    <h2 class="govuk-heading-m">
-      How to order
-    </h2>
-
-    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
-      <li>
-        <%= govuk_link_to 'How to order laptops and internet access for state schools, colleges and FE institutions', devices_how_to_order_path %>
-      </li>
-      <li>
-        <%= govuk_link_to 'How to get devices for state-funded pupils in independent special schools and alternative provision', devices_how_to_order_laptops_for_independent_special_schools_path %>
-      </li>
-      <li>
-        <%= govuk_link_to 'How to get devices for social care leavers', devices_how_to_order_laptops_for_social_care_leavers_path %>
-      </li>
-      <li><%= govuk_link_to "Sign in to order devices", sign_in_path, class: "app-emphasis-link" %></li>
-    </ul>
-
-    <h2 class="govuk-heading-m">
-      Once you’ve received your order
+      How to set up laptops and tablets
     </h2>
 
     <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
@@ -51,11 +30,19 @@
     </ul>
 
     <h2 class="govuk-heading-m">
-      Managing devices
+      Resetting devices, and resolving issues
     </h2>
 
     <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
       <%= render partial: 'page_link_and_description', collection: @manage_devices_pages, as: :page %>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      About the devices provided by DfE
+    </h2>
+
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <%= render partial: 'page_link_and_description', collection: @before_you_order_pages, as: :page %>
     </ul>
   </div>
 </div>

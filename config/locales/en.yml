@@ -285,19 +285,19 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: Who can get laptops and tablets, and why DfE is providing them
+      title: Who could get laptops and tablets, and why DfE provided them
       description: Find out who is eligible for devices and why the DfE is providing them.
       guidance_section: before_you_order_pages
     device_allocations:
-      title: How laptops and tablets are allocated
+      title: How laptops and tablets were allocated
       description: Find out how we estimated device requirements and how to query an allocation.
       guidance_section: before_you_order_pages
     device_specification:
-      title: Choose the most suitable type of device and IT settings
+      title: Device types and IT settings
       description: Get the technical specifications of the laptops and tablets we offer. This information can help you and your IT support to make the right choice of device and settings for your needs.
       guidance_section: before_you_order_pages
     device_distribution_and_ownership:
-      title: Who owns the devices, and how to distribute them to children and young people
+      title: Who owns the devices
       description: Guidance on who owns devices, and information on insuring devices, asset management and loan agreements.
       guidance_section: before_you_order_pages
 
