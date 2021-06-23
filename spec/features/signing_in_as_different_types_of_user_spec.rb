@@ -121,28 +121,13 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a school user who has completed the welcome wizard but not decided on chromebooks' do
-    let(:preorder) { create(:preorder_information, :school_will_order) }
-    let(:school) { create(:school, preorder_information: preorder) }
-    let(:user) { create(:school_user, school: school) }
-
-    scenario 'it redirects to the before you can order page' do
-      sign_in_as user
-      expect(page).to have_current_path(before_you_can_order_school_path(school))
-      expect(page).to have_text 'Before you can order'
-      choose 'I do not know'
-      click_on 'Save'
-      expect(page).to have_text user.school.name
-    end
-  end
-
   context 'as a school user who has not done any of the welcome wizard' do
     let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice) }
 
     scenario 'it shows the welcome wizard welcome text on the interstitial page' do
       visit validate_token_url_for(user)
       expect(page).to have_text "You’re signed in as #{user.school.name}"
-      expect(page).to have_text 'You can use the ‘Get help with technology’ service to:'
+      expect(page).to have_text 'You can use the service to:'
     end
 
     scenario 'clicking on Sign in shows them the privacy notice' do
@@ -184,16 +169,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     end
   end
 
-  context 'as a school user who has only done part of the welcome wizard' do
-    let(:user) { create(:school_user, :has_partially_completed_wizard) }
-
-    scenario 'clicking on Sign in takes them to their next step' do
-      visit validate_token_url_for(user)
-      click_on 'Continue'
-      expect(page).to have_text 'You will need to place orders on a website called TechSource'
-    end
-  end
-
   context 'as a single_academy_trust user' do
     let(:user) { create(:single_academy_trust_user, :has_not_seen_privacy_notice) }
 
@@ -202,8 +177,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       expect(page).to have_text("You’re signed in as #{user.school.name}")
       click_on 'Continue'
       expect(page).to have_text('Before you continue, please read the privacy notice.')
-      click_on 'Continue'
-      expect(page).to have_text('You’ve been allocated 0 laptops')
     end
   end
 
@@ -215,8 +188,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       expect(page).to have_text("You’re signed in as #{user.school.name}")
       click_on 'Continue'
       expect(page).to have_text('Before you continue, please read the privacy notice.')
-      click_on 'Continue'
-      expect(page).to have_text('You’ve been allocated 0 laptops')
     end
   end
 
