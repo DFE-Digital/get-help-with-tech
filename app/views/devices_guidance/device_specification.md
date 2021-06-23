@@ -1,4 +1,6 @@
-You can find out which types of device are in stock by signing in to the TechSource ordering website. 
+<div class="govuk-inset-text">We’re now permanently out of stock of all laptops and tablets. If you have an allocation of 4G wireless routers, you can still order them until 30 June. 
+If you need routers, #{govuk_link_to 'see our guidance', how_to_request_4g_wireless_routers_path}.
+</div>
 
 ## Before you order
 
