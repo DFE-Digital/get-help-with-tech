@@ -11,7 +11,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
     before { given_i_have_not_ordered_all_my_laptops }
 
     scenario 'ordering laptops when I need Chromebooks' do
-      when_i_click_on_get_laptops
+      when_i_navigate_to_school_order_page
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
       then_i_am_asked_whether_i_need_chromebooks
@@ -24,7 +24,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
     end
 
     scenario 'ordering laptops when I do not need Chromebooks' do
-      when_i_click_on_get_laptops
+      when_i_navigate_to_school_order_page
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
       then_i_am_asked_whether_i_need_chromebooks
@@ -37,7 +37,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
     end
 
     scenario 'ordering laptops when I am not sure I need Chromebooks' do
-      when_i_click_on_get_laptops
+      when_i_navigate_to_school_order_page
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
       then_i_am_asked_whether_i_need_chromebooks
@@ -51,7 +51,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
 
     scenario 'ordering laptops when a choice has already been made on Chromebooks' do
       given_i_have_already_confirmed_that_i_will_order_chromebooks
-      when_i_click_on_get_laptops
+      when_i_navigate_to_school_order_page
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
       then_i_see_the_how_to_order_page
@@ -62,7 +62,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
 
     scenario 'ordering laptops when I previously was not sure I needed Chromebooks' do
       given_i_have_already_answered_that_i_was_not_sure_that_i_will_order_chromebooks
-      when_i_click_on_get_laptops
+      when_i_navigate_to_school_order_page
       then_i_see_i_have_laptops_remaining
       when_i_click_on_continue
       then_i_see_the_how_to_order_page
@@ -76,7 +76,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
     before { given_i_have_ordered_all_of_my_laptops }
 
     scenario 'ordering laptops when no laptops left to order' do
-      when_i_click_on_get_laptops
+      when_i_navigate_to_school_order_page
       then_i_see_i_have_no_laptops_remaining
     end
   end
@@ -92,8 +92,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def given_i_am_on_the_independent_settings_school_page
-    expect(page).to have_selector('.govuk-caption-xl', text: 'State-funded pupils in independent special schools and alternative provision')
-    expect(page).to have_selector('h1', text: 'Get laptops and internet access')
+    expect(page).to have_selector('h1', text: 'State-funded pupils in independent special schools and alternative provision Your account')
   end
 
   def given_i_have_already_confirmed_that_i_will_order_chromebooks
@@ -159,8 +158,8 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
     expect(page).to have_link('Start now')
   end
 
-  def when_i_click_on_get_laptops
-    click_on 'Order devices'
+  def when_i_navigate_to_school_order_page
+    visit order_devices_school_path(@school)
   end
 
   def then_i_see_i_have_laptops_remaining

@@ -1,0 +1,42 @@
+<h2 class="govuk-heading-m govuk-!-margin-top-6">Reset devices</h2>
+
+<%# JUST STD DEVICES %>
+<% if @has_ordered_std_devices && !@has_ordered_coms_devices %>
+  <p class="govuk-body">
+    Windows laptops and tablets need to be reset before <span class="app-no-wrap">30 September 2021</span>.
+  </p>
+
+  <ul class="govuk-list govuk-list--spaced">
+    <li><%= govuk_link_to "How to reset Windows laptops and tablets" , devices_guide_to_resetting_windows_laptops_and_tablets_path %></li>
+  </ul>
+<% end %>
+
+<%# JUST ROUTERS %>
+<% if @has_ordered_coms_devices && !@has_ordered_std_devices %>
+  <p class="govuk-body">
+    Huawei routers need to be reset before <span class="app-no-wrap">16 July 2021</span>.
+  </p>
+
+  <ul class="govuk-list govuk-list--spaced">
+    <li><%= govuk_link_to 'How to reset wireless routers', '/devices/reset_your_wireless_router' -%></li>
+    <li><%= govuk_link_to 'See your Huawei router password', huawei_router_password_path -%></li>
+  </ul>
+<% end %>
+
+<%# BOTH %>
+<% if @has_ordered_std_devices && @has_ordered_coms_devices %>
+  <p class="govuk-body">
+    Your devices may need to be reset soon:
+  </p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>Windows laptops and tablets need to be reset before <span class="app-no-wrap">30 September 2021</span>.</li>
+    <li>Huawei routers need to be reset before <span class="app-no-wrap">16 July 2021</span>.</li>
+  </ul>
+
+  <ul class="govuk-list govuk-list--spaced">
+    <li><%= govuk_link_to "How to reset Windows laptops and tablets" , devices_guide_to_resetting_windows_laptops_and_tablets_path -%></li>
+    <li><%= govuk_link_to 'How to reset wireless routers', '/devices/reset_your_wireless_router' -%></li>
+    <li><%= govuk_link_to 'See your Huawei router password', huawei_router_password_path -%><li>
+  </ul>
+<% end %>

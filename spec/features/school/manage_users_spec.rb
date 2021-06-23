@@ -18,13 +18,13 @@ RSpec.feature 'Manage school users' do
   end
 
   scenario 'viewing the list of school users who can order devices' do
-    when_i_follow_the_link_to_manage_who_can_order_devices
+    when_i_navigate_to_manage_users
     then_i_see_a_list_of_users_for_my_school
     and_i_dont_see_users_from_other_schools
   end
 
   scenario 'adding a new school user' do
-    when_i_follow_the_link_to_manage_who_can_order_devices
+    when_i_navigate_to_manage_users
     and_i_click_the_link_to_invite_a_new_user
     then_i_see_the_form_to_invite_a_new_user
 
@@ -34,7 +34,7 @@ RSpec.feature 'Manage school users' do
   end
 
   scenario 'editing a school user' do
-    when_i_follow_the_link_to_manage_who_can_order_devices
+    when_i_navigate_to_manage_users
     and_i_click_the_link_to_change_a_user_from_the_same_school
     then_i_see_a_form_populated_with_the_users_details
 
@@ -44,7 +44,7 @@ RSpec.feature 'Manage school users' do
   end
 
   scenario 'adding a school user who is already on another school' do
-    when_i_follow_the_link_to_manage_who_can_order_devices
+    when_i_navigate_to_manage_users
     and_i_click_the_link_to_invite_a_new_user
     then_i_see_the_form_to_invite_a_new_user
 
@@ -55,7 +55,7 @@ RSpec.feature 'Manage school users' do
   end
 
   scenario 'adding a school user who is already on the system as a Responsible Body user' do
-    when_i_follow_the_link_to_manage_who_can_order_devices
+    when_i_navigate_to_manage_users
     and_i_click_the_link_to_invite_a_new_user
     then_i_see_the_form_to_invite_a_new_user
 
@@ -65,8 +65,8 @@ RSpec.feature 'Manage school users' do
     and_i_see_the_rb_user_in_the_list_of_users_for_my_school
   end
 
-  def when_i_follow_the_link_to_manage_who_can_order_devices
-    click_on 'Manage who can access the Support Portal'
+  def when_i_navigate_to_manage_users
+    visit school_users_path(school_user.school)
 
     expect(school_users_page).to be_displayed
     expect(page).to have_content 'Manage who can access the Support Portal'
