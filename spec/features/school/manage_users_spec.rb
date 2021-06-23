@@ -66,10 +66,10 @@ RSpec.feature 'Manage school users' do
   end
 
   def when_i_follow_the_link_to_manage_who_can_order_devices
-    click_on 'Manage users'
+    click_on 'Manage who can access the Support Portal'
 
     expect(school_users_page).to be_displayed
-    expect(page).to have_content 'Manage users'
+    expect(page).to have_content 'Manage who can access the Support Portal'
   end
 
   def then_i_see_a_list_of_users_for_my_school
@@ -111,7 +111,7 @@ RSpec.feature 'Manage school users' do
   end
 
   def when_i_change_the_details
-    choose 'Yes, give them access to the TechSource website'
+    choose 'Yes, give them access to the Support Portal'
     fill_in 'Telephone', with: '01234567890'
   end
 

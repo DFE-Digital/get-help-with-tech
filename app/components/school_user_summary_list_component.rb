@@ -8,7 +8,7 @@ class SchoolUserSummaryListComponent < UserSummaryListComponent
     info = super
     info += [
       {
-        key: 'Orders devices',
+        key: 'Has access to the Support Portal',
         value: @user.orders_devices? ? 'Yes' : 'No',
       },
     ]
