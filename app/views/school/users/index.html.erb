@@ -16,7 +16,7 @@
       <li>change who can access the Support Portal</li>
     </ul>
 
-    <p class="govuk-body">Up to 3 people from your school can access the Support Portal.</p>
+    <p class="govuk-body">Up to 3 people from your <%= @school.institution_type.humanize(capitalize: false) %> can access the Support Portal.</p>
 
     <%= govuk_button_link_to 'Invite a new user', new_school_user_path %>
     <%- unless @users.empty? %>
