@@ -233,7 +233,7 @@ en:
     invite_school_user:
       title: Invite a new user
       will_they_order_devices: Do you want to give them access to the Support Portal?
-      will_they_order_devices_hint: Up to 3 people can have access to the Support Portal.
+      will_they_order_devices_hint: Up to 3 people can access the Support Portal.
       can_order_devices: Yes, give them access to the Support Portal
       cannot_order_devices: 'No'
     edit_user: Change user details
