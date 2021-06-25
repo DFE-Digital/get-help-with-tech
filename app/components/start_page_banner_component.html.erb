@@ -5,15 +5,20 @@
         Get help with technology
       </h1>
       <p class="govuk-body-l govuk-!-font-size-27  app-body-l--inverted">
-        DfE is providing laptops and internet access for disadvantaged children and young people during coronavirus (COVID-19).
-        There’s also support with <span class="app-no-wrap">digital platforms</span> and training.
+        DfE provided laptops and internet access for disadvantaged children and young people during coronavirus (COVID-19).
+        Ordering is now closed for devices and internet access.
+        We still offer support with <span class="app-no-wrap">digital platforms</span> and training.
       </p>
       <div class="app-start-page-banner__actions">
-        <%= render GovukComponent::StartNowButton.new( text: 'Sign in',
-                                                       href: sign_in_path,
-                                                       classes: 'app-button--inverted app-start-page-banner__button') %>
+        <%=
+          render GovukComponent::StartNowButton.new(
+            text: 'Sign in',
+            href: sign_in_path,
+            classes: 'app-button--inverted app-start-page-banner__button'
+          )
+        %>
         <p class="govuk-body app-body--inverted">
-          to order laptops, request internet access, or give a colleague access to the service
+          to view your order history, or give a colleague access to the service and Support Portal
         </p>
       </div>
     </div>
