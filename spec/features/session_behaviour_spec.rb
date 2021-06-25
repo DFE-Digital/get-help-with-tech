@@ -27,6 +27,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'the user can submit a valid form' do
+        pending 'fails during new mobile data requests suspension'
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
@@ -35,6 +36,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'user session is preserved across requests' do
+        pending 'fails during new mobile data requests suspension'
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
@@ -42,6 +44,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'clicking "Sign out" signs the user out' do
+        pending 'fails during new mobile data requests suspension'
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
@@ -57,6 +60,7 @@ RSpec.feature 'Session behaviour', type: :feature do
       end
 
       scenario 'visiting with a valid but expired session logs the user out' do
+        pending 'fails during new mobile data requests suspension'
         visit new_responsible_body_internet_mobile_manual_request_path
         fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
         click_on 'Continue'
