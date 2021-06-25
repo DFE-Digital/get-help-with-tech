@@ -182,14 +182,6 @@ Rails.application.routes.draw do
       get '/details', to: 'school/details#show', as: :details
       get '/chromebooks/edit', to: 'school/chromebooks#edit'
       patch '/chromebooks', to: 'school/chromebooks#update'
-      get '/welcome', to: 'school/welcome_wizard#welcome', as: :welcome_wizard_welcome
-      get '/privacy', to: 'school/welcome_wizard#privacy', as: :welcome_wizard_privacy
-      get '/allocation', to: 'school/welcome_wizard#allocation', as: :welcome_wizard_allocation
-      get '/techsource-account', to: 'school/welcome_wizard#techsource_account', as: :welcome_wizard_techsource_account
-      get '/will-other-order', to: 'school/welcome_wizard#will_other_order', as: :welcome_wizard_will_other_order
-      get '/devices-you-can-order', to: 'school/welcome_wizard#devices_you_can_order', as: :welcome_wizard_devices_you_can_order
-      get '/chromebooks', to: 'school/welcome_wizard#chromebooks', as: :welcome_wizard_chromebooks
-      get '/what-happens-next', to: 'school/welcome_wizard#what_happens_next', as: :welcome_wizard_what_happens_next
       patch '/next(/:step)', to: 'school/welcome_wizard#next_step', as: :welcome_wizard
       patch '/prev', to: 'school/welcome_wizard#previous_step', as: :welcome_wizard_previous
       get '/get-laptops', to: 'school/la_funded_places#show', as: :get_laptops
