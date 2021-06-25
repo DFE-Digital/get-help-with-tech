@@ -1,6 +1,6 @@
 ## Devices for schools, colleges, academy trusts and local authorities from September 2020 to June 2021
 
-DfE is provided support to help disadvantaged children and young people who were otherwise unable to access remote education.
+DfE provided support to help disadvantaged children and young people who were otherwise unable to access remote education.
 
 Examples of this include disadvantaged children:
 
