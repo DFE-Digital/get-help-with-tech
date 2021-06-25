@@ -160,8 +160,6 @@ Rails.application.routes.draw do
         get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
         get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
         get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
-        resources :manual_requests, only: %i[new create], path: '/manual'
-        resources :bulk_requests, only: %i[new create], path: '/bulk'
       end
     end
     resources :users
@@ -221,8 +219,6 @@ Rails.application.routes.draw do
             get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
             get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
             get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
-            resources :manual_requests, only: %i[new create], path: '/manual'
-            resources :bulk_requests, only: %i[new create], path: '/bulk'
           end
         end
       end
