@@ -25,6 +25,17 @@ FactoryBot.define do
         responsible_body.reload
       end
     end
+
+    trait :with_extra_mobile_data_requests do
+      transient do
+        extra_mobile_data_requests_count { 3 }
+      end
+
+      after(:create) do |responsible_body, evaluator|
+        create_list(:extra_mobile_data_request, evaluator.extra_mobile_data_requests_count, status: 'complete', responsible_body: responsible_body)
+        responsible_body.reload
+      end
+    end
   end
 
   factory :local_authority, parent: :responsible_body, class: 'LocalAuthority' do

@@ -90,12 +90,27 @@ FactoryBot.define do
       coms_device_allocation { association :school_device_allocation, :with_coms_allocation, school: instance }
     end
 
+    trait :with_coms_device_allocation_partially_ordered do
+      coms_device_allocation { association :school_device_allocation, :with_coms_allocation, :partially_ordered, school: instance }
+    end
+
     trait :can_order_for_specific_circumstances do
       order_state { 'can_order_for_specific_circumstances' }
     end
 
     trait :in_lockdown do
       order_state { 'can_order' }
+    end
+
+    trait :with_extra_mobile_data_requests do
+      transient do
+        extra_mobile_data_requests_count { 2 }
+      end
+
+      after(:create) do |school, evaluator|
+        create_list(:extra_mobile_data_request, evaluator.extra_mobile_data_requests_count, status: 'complete', school: school)
+        school.reload
+      end
     end
   end
 end

@@ -15,6 +15,6 @@ class LaFundedPlace < School
   end
 
   def institution_type
-    'local_authority'
+    'organisation'
   end
 end

@@ -86,7 +86,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_the_la_funded_places_homepage
-    expect(page).to have_selector('h1', text: 'Get laptops and internet access')
+    expect(page).to have_selector('h1', text: 'State-funded pupils in independent special schools and alternative provision Your account')
   end
 
   def then_i_see_a_welcome_page_for_my_school

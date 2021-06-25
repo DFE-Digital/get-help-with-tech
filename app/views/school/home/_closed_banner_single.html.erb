@@ -1,0 +1,10 @@
+<p class="govuk-body">
+  From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, your <%= @school.institution_type -%> received
+  <% if @has_ordered_std_devices %>
+    <%= @std_count -%> laptops and tablets.
+  <% elsif @has_ordered_coms_devices %>
+    <%= @coms_count -%> routers.
+  <% else %>
+    extra mobile data for <%= @completed_requests_count -%> accounts.
+  <% end%>
+</p>
