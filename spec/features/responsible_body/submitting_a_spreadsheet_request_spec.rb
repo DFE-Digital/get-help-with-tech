@@ -31,6 +31,7 @@ RSpec.feature 'Submitting a bulk ExtraMobileDataRequest request', type: :feature
     end
 
     scenario 'submitting the form with a valid file shows a summary page' do
+      skip 'fails whilst new data requests suspended'
       visit responsible_body_internet_mobile_extra_data_requests_path
       click_on('New request')
       expect(page).to have_text('How would you like to submit information?')
