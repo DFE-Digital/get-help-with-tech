@@ -129,7 +129,7 @@ RSpec.feature 'Viewing your schools' do
   end
 
   def and_i_follow_the_get_laptops_and_tablets_link
-    click_link 'Get devices'
+    visit responsible_body_devices_path
   end
 
   def when_i_follow_the_your_schools_link

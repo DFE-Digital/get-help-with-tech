@@ -68,7 +68,7 @@ private
 
   def and_i_navigate_to_the_devices_page
     visit responsible_body_home_path
-    click_on 'Get devices'
+    visit responsible_body_devices_path
   end
 
   def and_i_click_the_donated_devices_link
