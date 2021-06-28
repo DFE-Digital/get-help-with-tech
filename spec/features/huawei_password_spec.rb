@@ -59,7 +59,7 @@ private
 
   def expect_password_and_breadcrumb
     expect(page).to have_text 'Password:'
-    expect(page).to have_link('Request internet access')
+    expect(page).to have_link('Your account')
   end
 
   def expect_login_screen
