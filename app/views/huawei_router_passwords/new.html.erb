@@ -1,8 +1,8 @@
 <%- title = t('page_titles.your_huawei_router_password') %>
 <% content_for :title, title %>
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ "Home" => root_path },
-                  { t('page_titles.signed_in_internet_access') => last_breadcrumb_path_for_huawei },
+  <% breadcrumbs([{ 'Home' => root_path },
+                  { 'Your account' => last_breadcrumb_path_for_huawei },
                   title,
                  ]) %>
 <% end %>
