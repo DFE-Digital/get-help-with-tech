@@ -10,9 +10,8 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header app-schools-table__column-40">School or college</th>
-      <th class="govuk-table__header app-schools-table__column-20">Who will order?</th>
-      <th class="govuk-table__header app-schools-table__column-20">Allocation</th>
-      <th class="govuk-table__header app-schools-table__column-20"><span class="govuk-visually-hidden">Status</span></th>
+      <th class="govuk-table__header app-schools-table__column-30">Who will order?</th>
+      <th class="govuk-table__header app-schools-table__column-30">Allocation</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -28,9 +27,6 @@
         </td>
         <td class="govuk-table__cell">
           <%= render DisplayAllocationsComponent.new(school: school) %>
-        </td>
-        <td class="govuk-table__cell govuk-table__cell--nowrap">
-          <%= render ConditionalSchoolPreorderStatusTagComponent.new(school: school, viewer: @responsible_body) %>
         </td>
       </tr>
     <% end %>
