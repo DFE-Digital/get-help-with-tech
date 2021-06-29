@@ -1,7 +1,3 @@
-<div class="govuk-inset-text">
-We’re now permanently out of stock of all laptops, tablets and routers.
-</div>
-
 ## Microsoft Windows laptops
 
 From September 2020, you were offered a choice of settings.
@@ -30,7 +26,7 @@ A Chrome Education Upgrade (Chromebook license) was offered with every device.
 
 [Find out how to manage Microsoft Windows tablets.](https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets)
 
-[Find out how to manage Apple iPads.](https://docs.google.com/document/d/1ooCMW-deQm5djoyO_9g9ELYjSFv7ZA-_dMR4VwEXXUM/edit#heading=h.fm5jouy7e5fx)
+[Find out how to manage Apple iPads.](https://get-help-with-tech.education.gov.uk/devices/preparing-ipads)
 
 ### Pre-issued devices
 
@@ -45,7 +41,7 @@ Our delivery partner completed the following quality checks for each used device
 
 These devices met the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
 
-If devices came with any remaining manufacturer's warranty (this was less than a year).
+The devices came with any remaining manufacturer's warranty (this was less than a year).
 
 </div>
 

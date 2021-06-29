@@ -18,17 +18,19 @@ They were also able to request internet access for disadvantaged children throug
 * in years 3 to 13 who did not have access to a device and whose face-to-face education was disrupted
 * aged 16 to 19 who received free meals in further education
 * over the age of 19 with an education, health and care plan (EHCP) who also received free meals
-* in any year group who had been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) arwase [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
+* in any year group who had been [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) because they (or someone they live with) was [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
 * in any year group, including those in 16 to 19 education, who attended a hospital school
 * in years 3 to 11 with [state-funded places in independent special schools or alternative provision](/devices/how-to-order-laptops-for-independent-special-schools), who were eligible for free school meals
+
+Laptops and internet access were also available for care leavers aged 16 to 25.
 
 [Find out how we calculated how many devices could be ordered](/devices/allocation-and-specification).
 
 ## Laptops, tablets and 4G wireless routers provided during the 2020 summer term
 
-DfE provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19) to local authorities and academy trusts during the 2020 summer term. 
+DfE provided [laptops, tablets and 4G wireless routers](https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19) to local authorities and academy trusts during the 2020 summer term.
 
-These were distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school. 
+These were distributed to disadvantaged families, children and young adults who did not have access to them through another source, such as their school.
 
 Laptops and tablets were provided for:
 
@@ -46,7 +48,7 @@ A care leaver is someone aged 16 to 25 who was looked after by a local authority
 
 These digital devices were provided to help:
 
-* social workers to provide virtual safeguarding and support to the children and families they work with via video conferences, for example 
+* social workers to provide virtual safeguarding and support to the children and families they work with via video conferences, for example
 * children, young people, families and care leavers to access the online services they need to protect their wellbeing
 * families and care leavers to avoid social isolation
 * children and young people to access remote learning

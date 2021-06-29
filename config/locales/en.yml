@@ -283,15 +283,15 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: About the offer
+      title: Who could get laptops and tablets, and why DfE provided them
       description: Find out who devices were provided for and why the DfE provided them.
       guidance_section: before_you_order_pages
     device_allocations:
-      title: Device allocations
+      title: How laptops and tablets were allocated
       description: Find out how the Department for Education estimated requirements for disadvantaged children and young people.
       guidance_section: before_you_order_pages
     device_specification:
-      title: Device options and specification
+      title: Device types and IT settings
       description: Get the technical specifications of the laptops and tablets provided by the Get help with technology programme.
       guidance_section: before_you_order_pages
     device_distribution_and_ownership:
