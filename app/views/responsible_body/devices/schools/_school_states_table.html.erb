@@ -10,8 +10,12 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header app-schools-table__column-40">School or college</th>
-      <th class="govuk-table__header app-schools-table__column-30">Devices received</th>
-      <th class="govuk-table__header app-schools-table__column-30">Who ordered</th>
+      <% if @show_devices_ordered_column %>
+        <th class="govuk-table__header app-schools-table__column-30">Devices received</th>
+        <th class="govuk-table__header app-schools-table__column-30">Who ordered</th>
+      <% else %>
+        <th class="govuk-table__header app-schools-table__column-60">Who ordered</th>
+      <% end %>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -22,9 +26,11 @@
           <br>
           <%= school.human_for_school_type %>
         </td>
-        <td class="govuk-table__cell">
-          <%= render DisplayDevicesOrderedComponent.new(school: school) %>
-        </td>
+        <% if @show_devices_ordered_column %>
+          <td class="govuk-table__cell">
+            <%= render DisplayDevicesOrderedComponent.new(school: school) %>
+          </td>
+        <% end %>
         <td class="govuk-table__cell">
           <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
         </td>
