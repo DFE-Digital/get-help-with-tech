@@ -19,7 +19,7 @@
     <% schools.each do |school| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
-          <%= govuk_link_to "#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn) %>
+          <%= "#{school.name} (#{school.urn})" %>
           <br>
           <%= school.human_for_school_type %>
         </td>

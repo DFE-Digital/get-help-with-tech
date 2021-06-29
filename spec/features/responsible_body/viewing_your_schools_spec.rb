@@ -60,20 +60,6 @@ RSpec.feature 'Viewing your schools' do
     then_i_see_the_summary_pooled_device_count_card
   end
 
-  scenario 'when the trust manages centrally and wants to devolve a school' do
-    given_there_are_schools_in_the_pool
-    when_i_visit_the_your_schools_page
-    and_i_select_a_centrally_managed_school
-    then_i_dont_see_change_links_for_who_will_order
-  end
-
-  scenario 'when the trust manages centrally and wants to manage a devolved a school' do
-    when_i_visit_the_your_schools_page
-    and_i_select_a_devolved_school
-    when_i_click_the_change_who_will_order_link
-    then_i_see_text_about_managing_centrally_being_irreversible
-  end
-
   def given_i_am_signed_in_as_a_responsible_body_user
     sign_in_as user
   end
