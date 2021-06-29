@@ -15,69 +15,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
-    </h2>
+    <%= render partial: 'closed_banner' %>
 
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <% if @school.coms_device_allocation&.allocation&.positive? %>
-        <li>order laptops and 4G routers</li>
-      <% else %>
-        <li>order laptops</li>
-      <% end %>
-      <li>access the Computacenter TechSource website to order devices</li>
-    </ul>
-
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.signed_in_internet_access') , internet_school_path(@school) %>
-    </h2>
-
-    <%= render 'shared/get_internet_access_section_description' %>
-
-    <% if FeatureFlag.active?(:donated_devices) && @school.who_will_order_devices == 'school' %>
-      <% if DonatedDeviceRequest.complete.for_school(@school).any? %>
-        <h2 class="govuk-heading-l govuk-!-font-size-27">
-          <%= govuk_link_to t('page_titles.donated_devices_complete.title'), interest_donated_devices_school_path(@school) %>
-        </h2>
-
-        <p class="govuk-body">Your school has opted in. Use this section to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>check your delivery address and device preferences</li>
-          <li>read more about the scheme</li>
-        </ul>
-      <% else %>
-        <h2 class="govuk-heading-l govuk-!-font-size-27">
-          <%= govuk_link_to t('page_titles.donated_devices.title'), interest_donated_devices_school_path(@school) %>
-        </h2>
-
-        <p class="govuk-body">Use this section to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>opt in and be considered for devices donated through their scheme</li>
-          <li>set a preference for devices you want</li>
-        </ul>
-      <% end %>
+    <% if @has_ordered %>
+      <%= render partial: 'summary_access_to_support_portal' %>
+      <%= render partial: 'summary_reset_devices' %>
+      <%= render partial: 'summary_order_history' %>
     <% end %>
-
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
-    </h2>
-
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>review your allocation</li>
-      <!-- change this to 'change' when we do the change functionality -->
-      <li>review your Chromebook settings</li>
-    </ul>
-
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
-    </h2>
-
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>give other people access to this service</li>
-      <li>set which accounts can use TechSource and use the <span class="app-no-wrap">Support Portal</span></li>
-    </ul>
   </div>
 </div>

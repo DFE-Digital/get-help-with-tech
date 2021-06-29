@@ -62,19 +62,6 @@ If an LA has given a child or young person a device and that person moves area, 
 * discuss transferring ownership of the device with the new LA, a relevant educational setting, or to the child or care leaver themself (if it’s safe and appropriate to do so)
 * asking the child or young person to return the device so that it can be redistributed within the LA
 
-## How to distribute devices
-
-Laptops, tablets and 4G wireless routers ordered from September 2020 will be delivered directly to schools, colleges, further education institutions or LAs named in the order. Read guidance on [how to order laptops and tablets](https://get-help-with-tech.education.gov.uk/devices/how-to-order) or [4G wireless routers](https://get-help-with-tech.education.gov.uk/how-to-request-4g-wireless-routers) for more information on the delivery process.
-
-Organisations are responsible for deciding how they deliver devices. For example, they can:
-
-* arrange for them to be collected
-* organise for them to be delivered to the homes of pupils, students and care leavers
-* arrange for schools, colleges and further education institutions to deliver them
-* use local organisations, such as those supporting care leavers
-
-All distribution and return of lent devices should be done in accordance with [social distancing guidelines relevant to your local area](https://www.gov.uk/government/collections/local-restrictions-areas-with-an-outbreak-of-coronavirus-covid-19).
-
 ### Deciding how to distribute devices
 
 LAs, trusts, schools, colleges and FE institutions can decide how best to meet the needs of vulnerable children and young people. We anticipate these organisations will safely distribute devices to people who need them as soon as possible.
@@ -85,13 +72,6 @@ Your organisation is best placed to review the needs of the people in your care.
 * only be used in supervised contexts (with a social worker, or support of an educational setting)
 * be managed by an educational setting
 * be used for other children or young people who would benefit from it, outside of eligible groups
-
-### Redistributing unused 4G wireless routers
-
-LAs, academy trusts, schools, colleges and further education institutions can use the [Support Portal](https://computacenterprod.service-now.com/dfe) to see how much data is being used by each router they are responsible for. If you identify routers that are not being used, you may wish to collect them and lend them to other children and young people who may have greater need.
-
-All SIM cards will remain active until 31 July 2021. Guidance will be made available explaining how to use routers with alternative data packages. 
-
 
 ## Loan agreements
 

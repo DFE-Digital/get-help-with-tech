@@ -6,7 +6,6 @@ en:
         - a school closure has been reported
         - 15 or more children (in years 3 to 11) are self-isolating
   page_titles:
-    how_request_4g_routers: How to request 4G wireless routers
     api_tokens: Your API tokens
     about_increasing_mobile_data: Get extra mobile data to support disadvantaged children and young people
     about_increasing_mobile_data_short: Get extra mobile data
@@ -50,7 +49,6 @@ en:
     signed_in_internet_access: Request internet access
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_how_to_order: "How and when to order DfE laptops during coronavirus (COVID-19)"
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
@@ -63,7 +61,6 @@ en:
     what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe: What to do if you cannot get laptops, tablets or internet access from DfE
     how_to_access_the_get_help_with_technology_service: How to access the Get help with technology service
     iss:
-      home: Get laptops and internet access
       order_devices: Order devices
       laptop_types: Find out what type of laptop pupils need
       chromebooks: Will your order include Google Chromebooks?
@@ -161,10 +158,8 @@ en:
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
     school_edit_chromebooks: Will you need to order Chromebooks?
-    school_users: Manage users
+    school_users: Manage who can access the Support Portal
     school_before_can_order: Before you can order, we need more information
-    donated_devices_complete:
-      title: Daily Mail donated devices scheme
     donated_devices:
       title: Opt in to the Daily Mail’s donated devices scheme
       device_labels:
@@ -235,9 +230,9 @@ en:
       order_devices_now: Order devices now
     invite_school_user:
       title: Invite a new user
-      will_they_order_devices: Will they place orders for devices?
-      will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
-      can_order_devices: Yes, give them access to the TechSource website for ordering and a Support Portal for technical help
+      will_they_order_devices: Do you want to give them access to the Support Portal?
+      will_they_order_devices_hint: Up to 3 people can access the Support Portal.
+      can_order_devices: Yes, give them access to the Support Portal
       cannot_order_devices: 'No'
     edit_user: Change user details
     confirm_destroy_user: Are you sure you want to delete this user?
@@ -288,19 +283,19 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: Who can get laptops and tablets, and why DfE is providing them
-      description: Find out who is eligible for devices and why the DfE is providing them.
+      title: Who could get laptops and tablets, and why DfE provided them
+      description: Find out who devices were provided for and why the DfE provided them.
       guidance_section: before_you_order_pages
     device_allocations:
-      title: How laptops and tablets are allocated
-      description: Find out how we estimated device requirements and how to query an allocation.
+      title: How laptops and tablets were allocated
+      description: Find out how the Department for Education estimated requirements for disadvantaged children and young people.
       guidance_section: before_you_order_pages
     device_specification:
-      title: Choose the most suitable type of device and IT settings
-      description: Get the technical specifications of the laptops and tablets we offer. This information can help you and your IT support to make the right choice of device and settings for your needs.
+      title: Device types and IT settings
+      description: Get the technical specifications of the laptops and tablets provided by the Get help with technology programme.
       guidance_section: before_you_order_pages
     device_distribution_and_ownership:
-      title: Who owns the devices, and how to distribute them to children and young people
+      title: Who owns the devices
       description: Guidance on who owns devices, and information on insuring devices, asset management and loan agreements.
       guidance_section: before_you_order_pages
 
@@ -378,11 +373,7 @@ en:
       audience: software_and_digital_tools_pages
       noindex: true
   guide_to_collecting_mobile_information:
-    overview: Overview
-    asking_for_network: Asking about mobile networks, contracts and Pay-as-you-go (PAYG)
-    telling_about_offer: Telling them about their offer
     privacy: Explaining our privacy policy
-    asking_for_account_holder: Asking for account holder name and mobile number
   guide_to_resetting_windows_laptops_and_tablets:
     before_you_start: Before you start
     get_local_admin_and_bios_passwords: Get local admin and BIOS passwords

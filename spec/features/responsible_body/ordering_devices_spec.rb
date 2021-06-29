@@ -88,7 +88,7 @@ RSpec.feature 'Ordering devices' do
   end
 
   def and_i_follow_the_get_laptops_and_tablets_link
-    click_link 'Get devices'
+    visit responsible_body_devices_path
   end
 
   def then_i_see_the_get_laptops_and_tablets_page

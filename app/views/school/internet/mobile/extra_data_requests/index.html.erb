@@ -2,8 +2,6 @@
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <%- school_breadcrumbs(items: [
-      { t('page_titles.signed_in_internet_access')  => internet_school_path(@school) },
-      { t('page_titles.request_extra_mobile_data') => extra_data_guidance_internet_mobile_school_path(@school) },
       title
     ],
     user: impersonated_or_current_user,
@@ -16,9 +14,7 @@
       <%= title %>
     </h1>
 
-    <%= govuk_button_link_to 'New request',
-      extra_data_requests_type_internet_mobile_school_path(@school)
-    %>
+    <p class="govuk-body">Requests for extra mobile data are now closed.</p>
 
     <p class="govuk-body">To contact us about a request, give us the request IDs. Do not include names and phone numbers in your email.</p>
 

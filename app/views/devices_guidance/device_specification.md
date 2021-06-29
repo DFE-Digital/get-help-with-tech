@@ -1,36 +1,14 @@
-You can find out which types of device are in stock by signing in to the TechSource ordering website. 
-
-## Before you order
-
-We may need some technical information from you before you can order, so we recommend choosing the types of devices and settings you want before you’re invited to order.
-
-### Pre-issued devices
-
-In addition to brand new devices, you may be able to order ‘pre-issued’ devices too. These have been distributed as part of the Get help with technology programme, and then returned. They may or may not be used. 
-
-Our delivery partner completes the following quality checks for each used device:
-
-* it’s visually inspected, and where possible any labels (such as asset tags) have been removed 
-* it switches on and powers up
-* the screen, CPU, RAM and HDD are tested
-* the device is reset
-
-These devices will meet the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
-
-If devices have a remaining manufacturer's warranty, it will be for less than a year. 
-
-
 ## Microsoft Windows laptops
 
-When you order you’ll be asked whether or not you want to have DfE settings installed.
+From September 2020, you were offered a choice of settings.
 
 #### Not having DfE settings installed
 
-These ‘DfE Standard’ Windows devices are provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
+These ‘DfE Standard’ Windows devices were provided with factory settings. Your school, trust or LA should configure them at your own cost before lending them to pupils. This means installing preferred safeguarding measures and bringing them into an existing device management framework.
 
 #### DfE settings installed
 
-These ‘DfE Restricted’ Windows devices are set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021. Read our guidance on [how to reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) to make them safe for pupils and students to use.
+These ‘DfE Restricted’ Windows devices were set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021. Read our guidance on [how to reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) to make them safe for pupils and students to use.
 
 Read more information about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets) for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
 
@@ -40,53 +18,30 @@ All devices provided before September 2020 were delivered with safeguarding and 
 
 ## Google Chromebooks
 
-A web-filtering solution called Cisco Umbrella is included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
+A web-filtering solution called Cisco Umbrella was included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
 
-### Ordering Chromebooks for state-funded schools, colleges or further education institutions
-
-You need to [sign in to the Get help with technology service](/sign-in) and give the following information before you can order Google Chromebooks:
-
-* the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example 'school.co.uk'
-* a recovery email address, which must be on a different domain to the educational setting's domain - for example, if the registered domain is ‘school.co.uk’, the recovery email cannot be ‘recovery@school.co.uk’
-
-If you’re not sure how to find this information, you should ask your IT support for help.
-
-If the school you’re ordering for does not currently use an education platform, you can [apply for DfE-funded support to get access to either Google Workspace for Education Fundamentals or Microsoft 365 Education](/digital-platforms).
-
-### Ordering Chromebooks for LA-funded pupils in independent special schools or alternative provision
-
-You’ll be asked if you want to order Google Chromebooks when you [sign in to the Get help with technology service](https://get-help-with-tech.education.gov.uk/sign-in). You should answer ‘Yes’.
-
-After you order you’ll get an email asking if you want us to supply Chrome Education Upgrades (Chromebook licenses). An educational setting will need a license to enrol the device in their Google Admin console. This gives them options to manage and secure the device.
-
-Reply to the email you receive to request licenses. You'll need to provide the following information for each pupil’s educational setting:
-
-* the educational setting's Google domain for Google Workspace for Education Fundamentals (formerly G Suite for Education) - for example 'school.co.uk'
-* a recovery email address, which must be on a different domain to the educational setting's domain - for example, if the registered domain is 'school.co.uk', the recovery email cannot be 'recovery@school.co.uk'
-
-The educational setting's IT support should be able to give you this.
-
-Alternatively, your LA can choose to [set up and manage a Google domain](https://get-help-with-tech.education.gov.uk/devices/google-domain-for-care-leavers-and-children-with-social-worker).
-
-If you do not request licenses, your Chromebooks will be delivered with factory settings. Cisco Umbrella web filtering will not be installed. Your LA, or the education setting you lend or give the devices to, will be responsible for [installing safeguarding and security settings](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) before they’re distributed to pupils. 
-
-### Ordering Chromebooks for care leavers
-
-You’ll be asked if you want to order Google Chromebooks when you [sign in to the Get help with technology service](https://get-help-with-tech.education.gov.uk/sign-in). You should answer ‘Yes’. 
-
-If a care leaver is in education, their educational setting will need a Chrome Education Upgrade (Chromebook license) to enrol the device in their Google Admin console (if they have one). To request a license, follow the steps listed above for LA-funded pupils in independent special schools or alternative provision.
-
-If you’re ordering for a care leaver who is not in education, and you cannot provide Google Workspace for Education details for them, you can choose to:
-
-* order a Windows laptop instead
-* [set up and manage a Google domain](https://get-help-with-tech.education.gov.uk/devices/google-domain-for-care-leavers-and-children-with-social-worker)
-* distribute the device unsecured - [read our guidance on your safeguarding responsibilities before making this choice](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users)
-
-Read more information about [preparing Google Chromebooks for pupils](/devices/preparing-chromebooks).
+A Chrome Education Upgrade (Chromebook license) was offered with every device.
 
 ## iPads and Windows tablets
 
-Apple iPads and Microsoft Windows tablets are now permanently out of stock. See our guide for information on [setting up and managing tablets you've already received](/devices/preparing-microsoft-windows-laptops-and-tablets).
+[Find out how to manage Microsoft Windows tablets.](https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets)
+
+[Find out how to manage Apple iPads.](https://get-help-with-tech.education.gov.uk/devices/preparing-ipads)
+
+### Pre-issued devices
+
+In addition to brand new devices, we offered ‘pre-issued’ devices too. These had been distributed as part of the Get help with technology programme, and then returned. They may or may not have been used.
+
+Our delivery partner completed the following quality checks for each used device:
+
+* it was visually inspected, and where possible any labels (such as asset tags) were removed
+* it switched on and powered up
+* the screen, CPU, RAM and HDD were tested
+* the device was reset
+
+These devices met the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
+
+The devices came with any remaining manufacturer's warranty (this was less than a year).
 
 </div>
 

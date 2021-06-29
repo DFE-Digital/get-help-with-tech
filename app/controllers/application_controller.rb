@@ -125,14 +125,8 @@ private
   end
 
   def school_root_url_for(user)
-    if user.schools.size == 1
-      if user.school.preorder_information&.school_will_order_devices? &&
-          user.school.preorder_information&.chromebook_info_still_needed? &&
-          !user.school.la_funded_provision?
-        before_you_can_order_school_path(user.school)
-      else
-        home_school_path(user.schools.first)
-      end
+    if user.schools.one?
+      home_school_path(user.schools.first)
     else
       schools_path
     end

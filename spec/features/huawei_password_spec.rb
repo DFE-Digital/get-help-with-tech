@@ -21,7 +21,7 @@ RSpec.feature 'Huawei router password', type: :feature do
   scenario 'logged in but no router allocation' do
     sign_in_as user_for_organisation_without_router_allocation
 
-    click_on 'Request internet access'
+    visit internet_school_path(school)
     expect(page).to have_no_link('See your Huawei router password')
   end
 
@@ -53,13 +53,13 @@ RSpec.feature 'Huawei router password', type: :feature do
 private
 
   def go_to_huawei_password
-    click_on 'Request internet access'
-    click_on 'See your Huawei router password'
+    visit internet_school_path(school)
+    visit huawei_router_password_path
   end
 
   def expect_password_and_breadcrumb
     expect(page).to have_text 'Password:'
-    expect(page).to have_link('Request internet access')
+    expect(page).to have_link('Your account')
   end
 
   def expect_login_screen

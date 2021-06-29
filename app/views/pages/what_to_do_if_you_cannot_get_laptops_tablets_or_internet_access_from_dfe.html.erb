@@ -12,7 +12,7 @@
     </h1>
 
     <p class="govuk-body">
-      The Get help with technology programme provides support for disadvantaged pupils and students in years 3 to 13, or 16 to 19 education, in England. It can only be accessed by:
+      The Get help with technology programme provided support for disadvantaged pupils and students in years 3 to 13, or 16 to 19 education, in England. It could only be accessed by:
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>state-funded schools</li>
@@ -21,19 +21,17 @@
       <li>local authorities</li>
     </ul>
 
+    <p class="govuk-body">
+      Ordering is now closed for devices and internet access.
+    </p>
+
     <h2 class="govuk-heading-m">Get help for:</h2>
     <ul class="govuk-list govuk-list--bullet">
       <li>
         <%= govuk_link_to 'parents, carers, pupils and students', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'parents-carers-pupils-students') %>
       </li>
       <li>
-        <%= govuk_link_to 'social care workers', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'social-care-workers') %>
-      </li>
-      <li>
-        <%= govuk_link_to 'nurseries and infant schools', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'nurseries-and-infant-schools') %>
-      </li>
-      <li>
-        <%= govuk_link_to 'independent schools', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'independent-schools') %>
+        <%= govuk_link_to 'educational settings', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'educational-settings') %>
       </li>
       <li>
         <%= govuk_link_to 'schools, colleges and further education institutions in Northern Ireland, Scotland and Wales', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'schools-colleges-and-further-education-institutions-in-northern-ireland-scotland-and-wales') %>
@@ -46,13 +44,10 @@
       Parents, carers, pupils and students
     </h2>
     <p class="govuk-body">
-      You cannot apply for laptops, tablets or internet access through this scheme yourself.
+      The <%= govuk_link_to 'Family Fund', 'https://www.familyfund.org.uk/' -%> may be able to provide grants for devices and other support to children or young people who are disabled or seriously ill.
     </p>
     <p class="govuk-body">
-      Contact your school, college or further education institution to discuss your options for accessing remote education.
-    </p>
-    <p class="govuk-body">
-      The <%= govuk_link_to 'Family Fund', 'https://www.familyfund.org.uk/' %> may be able to provide grants for devices and other support to children or young people who are disabled or seriously ill.
+      <%= govuk_link_to 'Ofcom', 'https://www.ofcom.org.uk/about-ofcom/latest/features-and-news/support-for-customers-during-pandemic' -%> has guidance on support for phone and broadband customers during the pandemic.
     </p>
     <p class="govuk-body">
       If you’ve been given a DfE laptop, tablet or 4G wireless router and need some help with it, these guides may be useful:
@@ -62,10 +57,10 @@
         <%= govuk_link_to 'Getting started with your Microsoft Windows device ', devices_guidance_subpage_path('getting-started-with-your-microsoft-windows-device') %>
       </li>
       <li>
-        <%= govuk_link_to 'Getting started with your Google Chromebook', devices_guidance_subpage_path('getting-started-with-your-google-chromebook')  %>
+        <%= govuk_link_to 'Getting started with your Google Chromebook', devices_guidance_subpage_path('getting-started-with-your-google-chromebook') %>
       </li>
       <li>
-        <%= govuk_link_to 'How to get started with your 4G wireless router', devices_guidance_subpage_path('4g-user-guidance')  %>
+        <%= govuk_link_to 'How to get started with your 4G wireless router', devices_guidance_subpage_path('4g-user-guidance') %>
       </li>
     </ul>
 
@@ -73,60 +68,18 @@
       If you need more help, contact the person who gave you your device.
     </p>
 
-    <h2 class="govuk-heading-l" id="social-care-workers">
-      Social care workers
+    <h2 class="govuk-heading-l" id="educational-settings">
+      Educational settings
     </h2>
     <p class="govuk-body">
-      <%= govuk_link_to 'Find out how local authorities can order laptops and get internet access for eligible care leavers', 'https://get-help-with-tech.education.gov.uk/devices/how-to-order-laptops-for-social-care-leavers' %>.
-    </p>
-    <p class="govuk-body">
-      <%= govuk_link_to 'You cannot request laptops, tablets or internet access for children and young people in social care. Find out which disadvantaged pupils and students are eligible for devices', 'https://get-help-with-tech.education.gov.uk/devices/about-the-offer#ordering-devices-for-schools-colleges-academy-trusts-and-local-authorities-from-september-2020' %> from their school, college or FE institution.
-    </p>
-    <p class="govuk-body">
-      <%= govuk_link_to 'Read about devices provided for social care in the 2020 summer term', 'https://www.gov.uk/guidance/laptops-tablets-and-4g-wireless-routers-provided-during-coronavirus-covid-19' %>.
-    </p>
-    <p class="govuk-body">
-      If you need help with a device you received from DfE, <%= govuk_link_to 'find out how to get support', 'https://get-help-with-tech.education.gov.uk/devices/' %>.
+      The <%= govuk_link_to 'BBC', 'https://www.bbc.co.uk/programmes/articles/5SqHJMTKZx5sYhlltXJvB1Q/give-a-laptop' %>
+      has a list of companies and charities involved in laptop donation schemes.
     </p>
 
-    <h2 class="govuk-heading-l" id="nurseries-and-infant-schools">
-      Nurseries and infant schools
-    </h2>
-    <p class="govuk-body">
-      Schools and nurseries can request a device or internet access for a disadvantaged child in any year group (including reception) if:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>they’ve been <%= govuk_link_to 'advised to shield', 'https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19' %> because they (or someone they live with) are <%= govuk_link_to 'clinically extremely vulnerable', 'https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev' %></li>
-      <li>they’re attending a hospital school</li>
-    </ul>
-    <p class="govuk-body">
-      <%= govuk_link_to "Contact us to make a request", support_ticket_path %>. Do not submit any personally identifiable information about pupils that we do not need to process your support query. If we receive a request that contains such information, we’ll ask you to resend it.
-    </p>
-
-    <h2 class="govuk-heading-l" id="independent-schools">
-      Independent schools
-    </h2>
-    <p class="govuk-body">
-      Local authorities can <%= govuk_link_to 'find out how to order laptops and request internet access for state-funded pupils in years 3 to 11 in independent special schools or alternative provision', devices_how_to_order_laptops_for_independent_special_schools_path %>, who are eligible for free school meals.
-    </p>
-    <p class="govuk-body">
-      Pupils attending other independent schools are currently not able to access the Get help with technology programme.
-    </p>
-    <p class="govuk-body">
-      Parents or carers of pupils attending independent schools may be able to apply to the <%= govuk_link_to 'Family Fund', 'https://www.familyfund.org.uk/' %>, which provides some grants for devices and other support for children or young people who are disabled or seriously ill.
-    </p>
     <h2 class="govuk-heading-l" id="schools-colleges-and-further-education-institutions-in-northern-ireland-scotland-and-wales">
       Schools, colleges and further education institutions in <span class="app-no-wrap">Northern Ireland</span>, Scotland and Wales
     </h2>
     <p class="govuk-body">
-      The Get help with technology programme is only available in England. Contact your devolved administration to find out about similar support programmes. These may include:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= govuk_link_to 'Northern Ireland – Education Restart', 'https://www.education-ni.gov.uk/landing-pages/education-restart' %></li>
-      <li><%= govuk_link_to 'Scotland – Support for continuity in learning', 'https://www.gov.scot/publications/coronavirus-covid-19-support-for-continuity-in-learning/pages/related-guidance/' %>
-      <li><%= govuk_link_to 'Wales – Guidance for supporting vulnerable and disadvantaged learners', 'https://gov.wales/guidance-supporting-vulnerable-and-disadvantaged-learners' %></li>
-    </ul>
-
+      The Get help with technology programme is only available in England. Contact your devolved administration to find out about similar support programmes.
   </div>
 </div>
-

@@ -8,6 +8,8 @@ RSpec.feature 'Managing ResponsibleBody users' do
   let(:new_rb_user_form) { PageObjects::ResponsibleBody::NewUserPage.new }
 
   before do
+    create(:school, :with_std_device_allocation_partially_ordered, responsible_body: rb_user.responsible_body)
+
     sign_in_as rb_user
   end
 
