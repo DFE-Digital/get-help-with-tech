@@ -1,0 +1,17 @@
+<p class="govuk-body">
+  From <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>, schools and colleges in your <%= @responsible_body.humanized_type -%> received:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% if @has_ordered_std_devices %>
+    <li><%= @std_count -%> laptops and tablets</li>
+  <% end%>
+
+  <% if @has_ordered_coms_devices %>
+    <li><%= @coms_count -%> routers</li>
+  <% end %>
+
+  <% if @has_completed_extra_mobile_data_requests %>
+    <li>extra mobile data for <%= @completed_requests_count -%> accounts</li>
+  <% end %>
+</ul>

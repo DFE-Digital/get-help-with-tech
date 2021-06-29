@@ -30,67 +30,336 @@ RSpec.feature ResponsibleBody do
   end
 
   context 'visiting the RB home page signed in as an RB user' do
-    before do
-      sign_in_as rb_user
-      visit responsible_body_home_path
+    describe 'top of the page' do
+      before do
+        sign_in_as rb_user
+        visit responsible_body_home_path
+      end
+
+      it 'displays the school name' do
+        expect(page).to have_content(responsible_body.name)
+      end
+
+      it 'displays your account title' do
+        expect(page).to have_content('Your account')
+      end
     end
 
-    it 'shows link to get laptops and tablets' do
-      visit responsible_body_home_path
-
-      expect(responsible_body_home_page).to be_displayed
-      expect(page.status_code).to eq 200
-      expect(page).to have_link('Get devices')
-    end
-
-    context 'with a responsible body managing at least 1 school centrally' do
-      let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    context 'RB has virtual cap pool flag' do
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
+        stub_request(:post, 'http://computacenter.example.com/')
+          .to_return(status: 200, body: '', headers: {})
+
+        schools.each do |s|
+          responsible_body.add_school_to_virtual_cap_pools!(s)
+          responsible_body.calculate_virtual_caps!
+        end
+
+        sign_in_as rb_user
       end
 
-      it 'shows link to get extra data' do
-        visit responsible_body_home_path
-        expect(page).to have_link('Request internet access')
+      context 'has NOT ordered anything' do
+        let(:schools) do
+          create_list(:school, 4, :centrally_managed, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body)
+        end
+
+        context 'local authority' do
+          let(:responsible_body) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
+
+          it 'says local authority did not order anything' do
+            expect(page).to have_content('Schools and colleges in your local authority did not order any laptops, tablets or routers from September 2020 to July 2021')
+          end
+        end
+
+        context 'trust' do
+          let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+
+          it 'says trust did not order anything' do
+            expect(page).to have_content('Schools and colleges in your trust did not order any laptops, tablets or routers from September 2020 to July 2021')
+          end
+        end
+      end
+
+      context 'has ordered' do
+        context 'has ordered laptops and tablets' do
+          let(:schools) do
+            create_list(:school, 4, :centrally_managed, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body)
+          end
+
+          it 'shows the number of laptops and tablets ordered' do
+            expect(page).to have_selector('li', text: "#{responsible_body.std_device_pool.devices_ordered} laptops and tablets")
+          end
+        end
+
+        context 'has ordered routers' do
+          let(:schools) do
+            create_list(:school, 4, :centrally_managed, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body)
+          end
+
+          it 'shows the number of routers ordered' do
+            expect(page).to have_selector('li', text: "#{responsible_body.coms_device_pool.devices_ordered} routers")
+          end
+        end
+
+        context 'has requested data uplifts' do
+          let(:schools) do
+            create_list(:school, 4, :centrally_managed, :with_coms_device_allocation, responsible_body: responsible_body)
+          end
+          let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_extra_mobile_data_requests) }
+
+          it 'shows number of accounts that have received data uplift' do
+            expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
+          end
+        end
+
+        context 'multiple assistence' do
+          let(:schools) do
+            create_list(:school, 4, :centrally_managed, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body)
+          end
+          let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_extra_mobile_data_requests) }
+
+          it 'show a list of the summaries' do
+            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your trust received:')
+            expect(page).to have_selector('li', text: "#{responsible_body.std_device_pool.devices_ordered} laptops and tablets")
+            expect(page).to have_selector('li', text: "#{responsible_body.coms_device_pool.devices_ordered} routers")
+            expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
+          end
+        end
       end
     end
 
-    context 'with a trust devolved to all schools' do
-      let(:responsible_body) { create(:trust) }
+    context 'RB has NOT virtual cap pool flag' do
+      context 'has NOT ordered anything' do
+        before { sign_in_as rb_user }
 
-      it 'does not show link to get extra data' do
-        visit responsible_body_home_path
-        expect(page).not_to have_link('Request internet access')
+        it 'says school did not order anything' do
+          expect(page).to have_content('Schools and colleges in your local authority did not order any laptops, tablets or routers from September 2020 to July 2021.')
+        end
+      end
+
+      context 'has ordered' do
+        before do
+          school.reload
+
+          sign_in_as rb_user
+        end
+
+        context 'has ordered laptops and tablets' do
+          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'shows the number of laptops and tablets ordered' do
+            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your local authority received:')
+            expect(page).to have_selector('li', text: "#{school.std_device_allocation.devices_ordered} laptops and tablets")
+          end
+        end
+
+        context 'has ordered routers' do
+          let(:school) { create(:school, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'shows the number of routers ordered' do
+            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your local authority received:')
+            expect(page).to have_selector('li', text: "#{school.coms_device_allocation.devices_ordered} routers")
+          end
+        end
+
+        context 'has requested data uplifts' do
+          let(:responsible_body) { create(:local_authority, :with_extra_mobile_data_requests) }
+          let(:school) { create(:school, responsible_body: responsible_body) }
+
+          it 'shows number of accounts that have received data uplift' do
+            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your local authority received:')
+            expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
+          end
+        end
+
+        context 'multiple assistence' do
+          let(:responsible_body) { create(:local_authority, :with_extra_mobile_data_requests) }
+          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'show a list of the summaries' do
+            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your local authority received:')
+            expect(page).to have_selector('li', text: "#{school.std_device_allocation.devices_ordered} laptops and tablets")
+            expect(page).to have_selector('li', text: "#{school.coms_device_allocation.devices_ordered} routers")
+            expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
+          end
+        end
       end
     end
 
-    context 'with a local authority devolved to all schools' do
-      it 'shows link to get extra data' do
-        visit responsible_body_home_path
-        expect(page).to have_link('Request internet access')
+    describe 'access support portal section' do
+      context 'has NOT ordered anything' do
+        before { sign_in_as rb_user }
+
+        it 'does not show this section' do
+          expect(page).not_to have_content('Access the Support Portal')
+        end
+      end
+
+      context 'has ordered' do
+        before do
+          create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body)
+
+          sign_in_as rb_user
+        end
+
+        it 'shows the title' do
+          expect(page).to have_content('Access the Support Portal')
+        end
+
+        it 'shows use support title blurb' do
+          expect(page).to have_content('Use the Support Portal to get local admin and BIOS passwords.')
+        end
+
+        context 'when a local authority' do
+          it 'show a link to manage users' do
+            expect(page).to have_link('Manage local authority users')
+          end
+        end
+
+        context 'when a trust' do
+          let(:responsible_body) { create(:trust) }
+
+          it 'show a link to manage trust administrators' do
+            expect(page).to have_link('Manage trust administrators')
+          end
+        end
+
+        context 'user can order devices' do
+          let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
+
+          it 'shows a link to the CC support portal' do
+            expect(page).to have_link('Visit the Support Portal')
+          end
+        end
+
+        context 'user cannot order devices' do
+          it 'does NOT show a link to the CC support portal' do
+            expect(page).not_to have_link('Visit the Support Portal')
+          end
+        end
       end
     end
 
-    context 'when the RB is a local authority' do
-      it 'shows link to Manage local authority users' do
-        visit responsible_body_home_path
+    describe 'reset devices section' do
+      context 'has NOT ordered anything' do
+        before { sign_in_as rb_user }
 
-        expect(responsible_body_home_page).to be_displayed
-        expect(page.status_code).to eq 200
-        expect(page).to have_link('Manage local authority users')
+        it 'does not show this section' do
+          expect(page).not_to have_content('Reset devices')
+        end
+      end
+
+      context 'has ordered' do
+        before do
+          school.reload
+
+          sign_in_as rb_user
+        end
+
+        context 'has ordered laptops and tablets only' do
+          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'shows title' do
+            expect(page).to have_content('Reset devices')
+          end
+
+          it 'shows deadline' do
+            expect(page).to have_content('Windows laptops and tablets need to be reset before 30 September 2021')
+          end
+
+          it 'shows link to reset devices' do
+            expect(page).to have_link('How to reset Windows laptops and tablets')
+          end
+        end
+
+        context 'has ordered routers only' do
+          let(:school) { create(:school, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'shows title' do
+            expect(page).to have_content('Reset devices')
+          end
+
+          it 'shows deadline' do
+            expect(page).to have_content('Huawei routers need to be reset before 16 July 2021.')
+          end
+
+          it 'shows link to reset wireless routers' do
+            expect(page).to have_link('How to reset wireless routers')
+          end
+
+          it 'shows the link to Huawei router password' do
+            expect(page).to have_link('See your Huawei router password')
+          end
+        end
+
+        context 'has ordered both' do
+          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'shows title' do
+            expect(page).to have_content('Reset devices')
+          end
+
+          it 'shows deadlines in list and links after' do
+            expect(page).to have_selector('li', text: 'Windows laptops and tablets need to be reset before 30 September 2021')
+            expect(page).to have_selector('li', text: 'Huawei routers need to be reset before 16 July 2021')
+
+            expect(page).to have_link('How to reset Windows laptops and tablets')
+            expect(page).to have_link('How to reset wireless routers')
+            expect(page).to have_link('See your Huawei router password')
+          end
+        end
       end
     end
 
-    context 'when the RB is a trust' do
-      let(:rb_user) { create(:trust_user) }
+    describe 'order history' do
+      context 'has NOT ordered anything' do
+        before { sign_in_as rb_user }
 
-      it 'shows link to Manage trust administrators' do
-        visit responsible_body_home_path
+        it 'does not show the order history section' do
+          expect(page).not_to have_content('Order history')
+        end
+      end
 
-        expect(responsible_body_home_page).to be_displayed
-        expect(page.status_code).to eq 200
-        expect(page).to have_link('Manage trust administrators')
+      context 'has ordered' do
+        let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+        before do
+          school.reload
+
+          sign_in_as rb_user
+        end
+
+        it 'shows the title' do
+          expect(page).to have_content('Order history')
+        end
+
+        it 'shows link to view your schools and colleges' do
+          expect(page).to have_link('View your schools and colleges')
+        end
+
+        context 'user can order devices' do
+          let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
+
+          it 'shows the link to the TechSource order history' do
+            expect(page).to have_link('See your order history on TechSource')
+          end
+        end
+
+        context 'has NOT ordered routers' do
+          it 'does NOT show the link to the extra mobile data requests page' do
+            expect(page).not_to have_link('View your requests for extra mobile data')
+          end
+        end
+
+        context 'has ordered routers' do
+          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
+          it 'shows the link to the extra mobile data requests page' do
+            expect(page).to have_link('View your requests for extra mobile data')
+          end
+        end
       end
     end
   end

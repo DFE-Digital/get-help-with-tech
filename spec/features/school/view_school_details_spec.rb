@@ -103,7 +103,7 @@ RSpec.feature 'View school details' do
           let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_extra_mobile_data_requests) }
 
           it 'show a list of the summaries' do
-            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, your schools and colleges in your trust received:')
+            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your trust received:')
             expect(page).to have_selector('li', text: "#{school.std_device_allocation.devices_ordered} laptops and tablets")
             expect(page).to have_selector('li', text: "#{school.coms_device_allocation.devices_ordered} routers")
             expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
@@ -224,7 +224,7 @@ RSpec.feature 'View school details' do
         end
 
         it 'shows deadline' do
-          expect(page).to have_content('Windows laptops and tablets need to be reset before 30 September 2021.')
+          expect(page).to have_content('Windows laptops and tablets need to be reset before 30 September 2021')
         end
 
         it 'shows link to reset devices' do
@@ -260,8 +260,8 @@ RSpec.feature 'View school details' do
         end
 
         it 'shows deadlines in list and links after' do
-          expect(page).to have_selector('li', text: 'Windows laptops and tablets need to be reset before 30 September 2021.')
-          expect(page).to have_selector('li', text: 'Huawei routers need to be reset before 16 July 2021.')
+          expect(page).to have_selector('li', text: 'Windows laptops and tablets need to be reset before 30 September 2021')
+          expect(page).to have_selector('li', text: 'Huawei routers need to be reset before 16 July 2021')
 
           expect(page).to have_link('How to reset Windows laptops and tablets')
           expect(page).to have_link('How to reset wireless routers')
