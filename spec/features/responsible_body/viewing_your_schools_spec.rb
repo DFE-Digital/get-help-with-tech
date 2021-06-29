@@ -166,24 +166,24 @@ RSpec.feature 'Viewing your schools' do
     school = schools.first
     expect(your_schools_page.ordering_school_rows[0].title).to have_content(school.name)
     expect(your_schools_page.ordering_school_rows[0].who_will_order_devices).to have_content('Trust')
-    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content(pluralize(school.std_device_allocation.raw_allocation, 'device'))
-    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content(pluralize(school.coms_device_allocation&.raw_allocation, 'router'))
+    expect(your_schools_page.ordering_school_rows[0].devices_ordered).to have_content(pluralize(school.std_device_allocation.devices_ordered, 'device'))
+    expect(your_schools_page.ordering_school_rows[0].devices_ordered).to have_content(pluralize(school.coms_device_allocation&.devices_ordered, 'router'))
   end
 
   def then_i_see_the_school_in_the_schools_with_approved_requests_list
     school = schools.second
     expect(your_schools_page.specific_circumstances_school_rows[0].title).to have_content(school.name)
     expect(your_schools_page.specific_circumstances_school_rows[0].who_will_order_devices).to have_content('Trust')
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content(pluralize(school.std_device_allocation.raw_allocation, 'device'))
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content(pluralize(school.coms_device_allocation&.raw_allocation, 'router'))
+    expect(your_schools_page.specific_circumstances_school_rows[0].devices_ordered).to have_content(pluralize(school.std_device_allocation.devices_ordered, 'device'))
+    expect(your_schools_page.specific_circumstances_school_rows[0].devices_ordered).to have_content(pluralize(school.coms_device_allocation&.devices_ordered, 'router'))
   end
 
   def then_i_see_the_school_in_the_fully_open_schools_list
     school = schools.third
     expect(your_schools_page.cannot_order_yet_school_rows[0].title).to have_content(school.name)
     expect(your_schools_page.cannot_order_yet_school_rows[0].who_will_order_devices).to have_content('School')
-    expect(your_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} #{'device'.pluralize(school.std_device_allocation.raw_allocation)}")
-    expect(your_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} #{'router'.pluralize(school.coms_device_allocation&.raw_allocation || 0)}")
+    expect(your_schools_page.cannot_order_yet_school_rows[0].devices_ordered).to have_content("#{school.std_device_allocation.devices_ordered} #{'device'.pluralize(school.std_device_allocation.devices_ordered)}")
+    expect(your_schools_page.cannot_order_yet_school_rows[0].devices_ordered).to have_content("#{school.coms_device_allocation&.devices_ordered} #{'router'.pluralize(school.coms_device_allocation&.devices_ordered || 0)}")
   end
 
   def then_i_see_the_summary_pooled_device_count_card

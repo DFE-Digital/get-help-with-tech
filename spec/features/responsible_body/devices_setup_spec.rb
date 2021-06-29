@@ -19,7 +19,7 @@ RSpec.feature 'Setting up the devices ordering' do
                                 urn: '456654',
                                 name: 'Aardvark Primary School')
 
-      create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', allocation: 42)
+      create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', devices_ordered: 42)
       create(:school_contact,
              school: @aardvark_school,
              role: :headteacher,
@@ -43,7 +43,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_choose_ordering_through_schools_which_is_recommended
       and_i_continue_after_choosing_ordering_through_schools
       then_i_see_a_list_of_the_schools_i_am_responsible_for
-      and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+      and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_schools_will_place_all_orders
 
       when_i_visit_the_first_school
@@ -73,7 +73,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_continue_through_the_guidance
       and_i_choose_ordering_centrally
       then_i_see_a_list_of_the_schools_i_am_responsible_for
-      and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+      and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_the_responsible_body_will_place_all_orders
 
       when_i_visit_the_first_school
@@ -251,9 +251,9 @@ RSpec.feature 'Setting up the devices ordering' do
       .to have_content('Pangolin Primary Academy')
   end
 
-  def and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content('42')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].allocation).to have_content('0')
+  def and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].devices_ordered).to have_content('42')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].devices_ordered).to have_content('0')
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally

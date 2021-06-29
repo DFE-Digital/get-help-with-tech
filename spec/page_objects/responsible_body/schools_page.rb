@@ -2,7 +2,7 @@ module PageObjects
   module ResponsibleBody
     class SchoolRow < SitePrism::Section
       element :title, 'td:nth-of-type(1)'
-      element :allocation, 'td:nth-of-type(2)'
+      element :devices_ordered, 'td:nth-of-type(2)'
       element :who_will_order_devices, 'td:nth-of-type(3)'
     end
 
