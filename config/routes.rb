@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
 
   get '/guide-to-collecting-mobile-information', to: redirect('/internet-access')
-  get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: 'guide_to_collecting_mobile_information#asking_for_account_holder'
+  get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: redirect('/internet-access')
   get '/guide-to-collecting-mobile-information/asking-for-network', to: redirect('/internet-access')
   get '/guide-to-collecting-mobile-information/telling-about-offer', to: redirect('/internet-access')
   get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
