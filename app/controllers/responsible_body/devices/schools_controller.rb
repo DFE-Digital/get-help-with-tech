@@ -1,7 +1,9 @@
 class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseController
   before_action :load_schools_by_order_status, only: %i[show index]
 
-  def index; end
+  def index
+    @show_devices_ordered_column = @responsible_body.virtual_cap_pools.none? || @responsible_body.has_virtual_cap_feature_flags?
+  end
 
   def show
     @school = @responsible_body.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
