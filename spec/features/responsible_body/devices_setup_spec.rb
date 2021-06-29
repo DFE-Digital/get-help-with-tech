@@ -45,7 +45,6 @@ RSpec.feature 'Setting up the devices ordering' do
       then_i_see_a_list_of_the_schools_i_am_responsible_for
       and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
       and_the_list_shows_that_schools_will_place_all_orders
-      and_each_school_needs_a_contact
 
       when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
@@ -76,7 +75,6 @@ RSpec.feature 'Setting up the devices ordering' do
       then_i_see_a_list_of_the_schools_i_am_responsible_for
       and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
       and_the_list_shows_that_the_responsible_body_will_place_all_orders
-      and_each_school_needs_information
 
       when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
@@ -251,16 +249,6 @@ RSpec.feature 'Setting up the devices ordering' do
       .to have_content('Koala Academy')
     expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].title)
       .to have_content('Pangolin Primary Academy')
-  end
-
-  def and_each_school_needs_a_contact
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].status).to have_content('Needs a contact')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].status).to have_content('Needs a contact')
-  end
-
-  def and_each_school_needs_information
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].status).to have_content('Needs information')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].status).to have_content('Needs information')
   end
 
   def and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
