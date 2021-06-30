@@ -14,27 +14,8 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
       <%= title %>
     </h1>
-
-    <%= render GovukComponent::Details.new(summary: 'Is this list wrong?') do %>
-      <% if @responsible_body.is_a_local_authority? %>
-        <p>This is a list of all local authority maintained and special schools.</p>
-      <% end %>
-      <p>Email <%= ghwt_contact_mailto(subject: 'Problem with list of schools') %>
-        and tell us what to&nbsp;change.</p>
-    <%- end %>
   </div>
 </div>
-
-<% if @responsible_body.has_virtual_cap_feature_flags? %>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= render ResponsibleBody::PooledDeviceCountComponent.new(
-      responsible_body: @responsible_body,
-      show_action: @responsible_body.has_any_schools_that_can_order_now? && @responsible_body.devices_available_to_order?,
-      action: { 'Order devices' => responsible_body_devices_order_devices_path } ) %>
-  </div>
-</div>
-<%- end %>
 
 <% if @schools[:specific_circumstances_schools].any? %>
   <%= render partial: 'school_states_table', locals: { schools: @schools[:specific_circumstances_schools],
