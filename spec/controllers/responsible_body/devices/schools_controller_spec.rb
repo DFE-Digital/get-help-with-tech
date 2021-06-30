@@ -12,7 +12,7 @@ RSpec.describe ResponsibleBody::Devices::SchoolsController do
   describe '#index' do
     context 'RB with virtual cap' do
       before do
-        user.responsible_body.virtual_cap_pools.std_device.create!
+        user.responsible_body.update!(vcap_feature_flag: true)
         get :index
       end
 
