@@ -82,7 +82,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_that_ordering_is_closed
-    expect(page).to have_text('Ordering is now closed')
+    expect(page).to have_text('Ordering is closed')
   end
 
   def then_i_see_the_la_funded_places_homepage
