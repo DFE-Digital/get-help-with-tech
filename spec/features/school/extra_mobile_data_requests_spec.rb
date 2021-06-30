@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature do
+RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
   let(:my_requests_page) { PageObjects::School::Internet::YourRequestsPage.new }

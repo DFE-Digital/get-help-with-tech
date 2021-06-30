@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'shared/filling_in_forms'
 require 'support/sidekiq'
 
-RSpec.feature 'Session behaviour', type: :feature do
+RSpec.feature 'Session behaviour', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
   scenario 'new visitor has sign in link' do
     visit '/'
 

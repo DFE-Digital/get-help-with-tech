@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'TechSource availability for responsible body' do
+RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:local_authority) { create(:local_authority) }
   let(:la_user) { create(:local_authority_user, responsible_body: local_authority) }
   let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: local_authority) }

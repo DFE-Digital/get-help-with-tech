@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering for LA-funded devices', type: :feature do
+RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
   before do
     given_there_is_an_independent_settings_school
     given_i_am_signed_in_as_an_independent_settings_school_user

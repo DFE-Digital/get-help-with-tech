@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing your schools' do
+RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service closure' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }

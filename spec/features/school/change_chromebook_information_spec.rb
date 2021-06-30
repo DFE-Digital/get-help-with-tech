@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Change school Chromebook information' do
+RSpec.feature 'Change school Chromebook information', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:school) { create(:school, :la_maintained) }
   let(:school_user) { create(:school_user, full_name: 'AAA Smith', school: school) }
 

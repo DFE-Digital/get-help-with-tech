@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
   get '/privacy/general-privacy-notice', to: 'pages#general_privacy_notice'
-  get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice'
+  get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice', constraints: -> { false }
   get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
   get '/how-to-request-4g-wireless-routers', to: redirect('/internet-access')
@@ -108,12 +108,12 @@ Rails.application.routes.draw do
     post '/privacy-notice', to: 'home#seen_privacy_notice'
 
     namespace :devices do
-      get '/', to: 'home#show'
+      get '/', to: 'home#show', constraints: -> { false }
       get '/tell-us', to: 'home#tell_us'
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
-      get 'order-devices', to: 'orders#show', as: :order_devices
+      get 'order-devices', to: 'orders#show', as: :order_devices, constraints: -> { false }
 
       resources :schools, only: %i[index show update], param: :urn do
         get '/who-to-contact', to: 'who_to_contact#new'
@@ -129,37 +129,37 @@ Rails.application.routes.draw do
     end
 
     namespace :donated_devices, path: '/donated-devices' do
-      get '/interest', to: 'interest#new'
-      post '/interest', to: 'interest#create'
+      get '/interest', to: 'interest#new', constraints: -> { false }
+      post '/interest', to: 'interest#create', constraints: -> { false }
 
       get '/about-devices', to: 'interest#about'
-      get '/queue', to: 'interest#queue'
-      get '/interest-confirmation', to: 'interest#interest_confirmation'
-      post '/interest-confirmation', to: 'interest#interest_confirmation'
-      get '/all-or-some-schools', to: 'interest#all_or_some_schools'
-      post '/all-or-some-schools', to: 'interest#all_or_some_schools'
-      get '/select-schools', to: 'interest#select_schools'
-      post '/select-schools', to: 'interest#select_schools'
+      get '/queue', to: 'interest#queue', constraints: -> { false }
+      get '/interest-confirmation', to: 'interest#interest_confirmation', constraints: -> { false }
+      post '/interest-confirmation', to: 'interest#interest_confirmation', constraints: -> { false }
+      get '/all-or-some-schools', to: 'interest#all_or_some_schools', constraints: -> { false }
+      post '/all-or-some-schools', to: 'interest#all_or_some_schools', constraints: -> { false }
+      get '/select-schools', to: 'interest#select_schools', constraints: -> { false }
+      post '/select-schools', to: 'interest#select_schools', constraints: -> { false }
 
       get '/what-devices-do-you-want', to: 'interest#device_types'
       post '/what-devices-do-you-want', to: 'interest#device_types'
-      get '/how-many-devices', to: 'interest#how_many_devices'
-      post '/how-many-devices', to: 'interest#how_many_devices'
-      get '/address', to: 'interest#address'
-      get '/disclaimer', to: 'interest#disclaimer'
-      get '/check-answers', to: 'interest#check_answers'
-      post '/check-answers', to: 'interest#check_answers'
-      get '/opted-in', to: 'interest#opted_in'
+      get '/how-many-devices', to: 'interest#how_many_devices', constraints: -> { false }
+      post '/how-many-devices', to: 'interest#how_many_devices', constraints: -> { false }
+      get '/address', to: 'interest#address', constraints: -> { false }
+      get '/disclaimer', to: 'interest#disclaimer', constraints: -> { false }
+      get '/check-answers', to: 'interest#check_answers', constraints: -> { false }
+      post '/check-answers', to: 'interest#check_answers', constraints: -> { false }
+      get '/opted-in', to: 'interest#opted_in', constraints: -> { false }
     end
 
     namespace :internet do
-      get '/', to: 'home#show'
+      get '/', to: 'home#show', constraints: -> { false }
 
       namespace :mobile, path: '/mobile' do
-        get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
+        get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance, constraints: -> { false }
         get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
         get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
-        get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
+        get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type, constraints: -> { false }
       end
     end
     resources :users
@@ -176,21 +176,21 @@ Rails.application.routes.draw do
       get '/', to: 'school/home#show', as: :home
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
-      get '/order-devices', to: 'school/devices#order'
-      get '/details', to: 'school/details#show', as: :details
-      get '/chromebooks/edit', to: 'school/chromebooks#edit'
+      get '/order-devices', to: 'school/devices#order', constraints: -> { false }
+      get '/details', to: 'school/details#show', as: :details, constraints: -> { false }
+      get '/chromebooks/edit', to: 'school/chromebooks#edit', constraints: -> { false }
       patch '/chromebooks', to: 'school/chromebooks#update'
       patch '/next(/:step)', to: 'school/welcome_wizard#next_step', as: :welcome_wizard
       patch '/prev', to: 'school/welcome_wizard#previous_step', as: :welcome_wizard_previous
       get '/get-laptops', to: 'school/la_funded_places#show', as: :get_laptops
       get '/order-laptops', to: 'school/la_funded_places#order', as: :order_laptops
       get '/funded-pupils-chromebooks/edit', to: 'school/la_funded_places_chromebooks#edit', as: :funded_chromebooks
-      patch '/funded-pupils-chromebooks', to: 'school/la_funded_places_chromebooks#update', as: :update_funded_chromebooks
-      get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types
+      patch '/funded-pupils-chromebooks', to: 'school/la_funded_places_chromebooks#update', as: :update_funded_chromebooks, constraints: -> { false }
+      get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types, constraints: -> { false }
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
 
       scope module: :school do
-        namespace :donated_devices, path: '/donated-devices' do
+        namespace :donated_devices, path: '/donated-devices', constraints: -> { false } do
           get '/interest', to: 'interest#new'
           post '/interest', to: 'interest#create'
 
@@ -212,13 +212,13 @@ Rails.application.routes.draw do
         end
 
         namespace :internet do
-          get '/', to: 'home#show'
+          get '/', to: 'home#show', constraints: -> { false }
 
           namespace :mobile, path: '/mobile' do
-            get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance
+            get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance, constraints: -> { false }
             get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
             get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
-            get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type
+            get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type, constraints: -> { false }
           end
         end
       end

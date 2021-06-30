@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'TechSource availability for school' do
+RSpec.feature 'TechSource availability for school', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:school) { create(:school, :with_std_device_allocation) }
   let(:school_user) do
     create(:school_user,

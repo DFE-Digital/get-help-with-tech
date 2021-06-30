@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering devices' do
+RSpec.feature 'Ordering devices', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:responsible_body) { create(:local_authority) }
   let(:schools) { create_list(:school, 6, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
