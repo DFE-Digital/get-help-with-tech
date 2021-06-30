@@ -2,9 +2,8 @@ module PageObjects
   module ResponsibleBody
     class SchoolRow < SitePrism::Section
       element :title, 'td:nth-of-type(1)'
-      element :who_will_order_devices, 'td:nth-of-type(2)'
-      element :allocation, 'td:nth-of-type(3)'
-      element :status, 'td:nth-of-type(4)'
+      element :devices_ordered, 'td:nth-of-type(2)'
+      element :who_will_order_devices, 'td:nth-of-type(3)'
     end
 
     class SchoolsPage < PageObjects::BasePage

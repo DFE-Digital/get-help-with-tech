@@ -10,6 +10,21 @@ RSpec.describe ResponsibleBody::Devices::SchoolsController do
   end
 
   describe '#index' do
+    context 'RB with virtual cap' do
+      before do
+        user.responsible_body.update!(vcap_feature_flag: true)
+        get :index
+      end
+
+      specify { expect(assigns(:show_devices_ordered_column)).to be false }
+    end
+
+    context 'RB without virtual cap' do
+      before { get :index }
+
+      specify { expect(assigns(:show_devices_ordered_column)).to be true }
+    end
+
     it 'excludes closed schools' do
       get :index
       expect(assigns(:schools)[:ordering_schools]).not_to include(closed_school)

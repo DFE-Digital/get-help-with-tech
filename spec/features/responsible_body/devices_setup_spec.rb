@@ -19,7 +19,7 @@ RSpec.feature 'Setting up the devices ordering' do
                                 urn: '456654',
                                 name: 'Aardvark Primary School')
 
-      create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', allocation: 42)
+      create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', devices_ordered: 42)
       create(:school_contact,
              school: @aardvark_school,
              role: :headteacher,
@@ -43,11 +43,10 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_choose_ordering_through_schools_which_is_recommended
       and_i_continue_after_choosing_ordering_through_schools
       then_i_see_a_list_of_the_schools_i_am_responsible_for
-      and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+      and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_schools_will_place_all_orders
-      and_each_school_needs_a_contact
 
-      when_i_click_on_the_first_school_name
+      when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
       and_that_the_school_orders_devices
       and_i_see_a_link_to_change_who_orders_devices
@@ -74,11 +73,10 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_continue_through_the_guidance
       and_i_choose_ordering_centrally
       then_i_see_a_list_of_the_schools_i_am_responsible_for
-      and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
+      and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_the_responsible_body_will_place_all_orders
-      and_each_school_needs_information
 
-      when_i_click_on_the_first_school_name
+      when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
       and_that_the_local_authority_orders_devices
       and_i_see_a_link_to_change_who_orders_devices
@@ -98,7 +96,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_follow_the_your_schools_link
       then_i_see_a_list_of_the_schools_i_am_responsible_for
 
-      when_i_click_on_the_first_school_name
+      when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
       and_that_the_school_orders_devices
       and_i_see_a_link_to_change_who_orders_devices
@@ -125,7 +123,7 @@ RSpec.feature 'Setting up the devices ordering' do
       and_i_continue_through_the_guidance
       and_i_choose_ordering_through_schools_which_is_recommended
       and_i_continue_after_choosing_ordering_through_schools
-      when_i_click_on_the_name_of_a_school_which_has_no_headteacher
+      when_i_visit_a_school_which_has_no_headteacher
       then_i_do_not_see_the_options_to_contact_the_headteacher_or_someone_else
       and_i_see_the_form_to_nominate_someone_to_contact
       when_i_fill_in_details_of_a_contact_and_save_their_details
@@ -253,19 +251,9 @@ RSpec.feature 'Setting up the devices ordering' do
       .to have_content('Pangolin Primary Academy')
   end
 
-  def and_each_school_needs_a_contact
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].status).to have_content('Needs a contact')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].status).to have_content('Needs a contact')
-  end
-
-  def and_each_school_needs_information
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].status).to have_content('Needs information')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].status).to have_content('Needs information')
-  end
-
-  def and_each_school_shows_the_devices_allocated_or_zero_if_no_allocation
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content('42')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].allocation).to have_content('0')
+  def and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].devices_ordered).to have_content('42')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].devices_ordered).to have_content('0')
   end
 
   def given_the_responsible_body_has_decided_to_order_centrally
@@ -289,16 +277,16 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].who_will_order_devices).to have_content('Local authority')
   end
 
-  def when_i_click_on_the_first_school_name
-    click_on @aardvark_school.name
+  def when_i_visit_the_first_school
+    visit responsible_body_devices_school_path(@aardvark_school.urn)
   end
 
   def given_there_is_a_school_with_no_headteacher
     school_with_no_headteacher
   end
 
-  def when_i_click_on_the_name_of_a_school_which_has_no_headteacher
-    click_on school_with_no_headteacher.name
+  def when_i_visit_a_school_which_has_no_headteacher
+    visit responsible_body_devices_school_path(school_with_no_headteacher.urn)
   end
 
   def then_i_do_not_see_the_options_to_contact_the_headteacher_or_someone_else
@@ -426,7 +414,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def when_i_click_on_the_name_of_a_school_which_has_no_standard_device_allocation
-    click_on @zebra_school.name
+    visit responsible_body_devices_school_path(@zebra_school.urn)
   end
 
   def then_i_see_guidance_about_why_there_is_no_allocation

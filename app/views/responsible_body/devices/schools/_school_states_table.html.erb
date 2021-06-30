@@ -10,27 +10,29 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header app-schools-table__column-40">School or college</th>
-      <th class="govuk-table__header app-schools-table__column-20">Who will order?</th>
-      <th class="govuk-table__header app-schools-table__column-20">Allocation</th>
-      <th class="govuk-table__header app-schools-table__column-20"><span class="govuk-visually-hidden">Status</span></th>
+      <% if @show_devices_ordered_column %>
+        <th class="govuk-table__header app-schools-table__column-30">Devices received</th>
+        <th class="govuk-table__header app-schools-table__column-30">Who ordered</th>
+      <% else %>
+        <th class="govuk-table__header app-schools-table__column-60">Who ordered</th>
+      <% end %>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
     <% schools.each do |school| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">
-          <%= govuk_link_to "#{school.name} (#{school.urn})", responsible_body_devices_school_path(school.urn) %>
+          <%= "#{school.name} (#{school.urn})" %>
           <br>
           <%= school.human_for_school_type %>
         </td>
+        <% if @show_devices_ordered_column %>
+          <td class="govuk-table__cell">
+            <%= render DisplayDevicesOrderedComponent.new(school: school) %>
+          </td>
+        <% end %>
         <td class="govuk-table__cell">
           <%= (school.preorder_information || school.responsible_body).who_will_order_devices_label %>
-        </td>
-        <td class="govuk-table__cell">
-          <%= render DisplayAllocationsComponent.new(school: school) %>
-        </td>
-        <td class="govuk-table__cell govuk-table__cell--nowrap">
-          <%= render ConditionalSchoolPreorderStatusTagComponent.new(school: school, viewer: @responsible_body) %>
         </td>
       </tr>
     <% end %>

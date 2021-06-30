@@ -33,6 +33,9 @@
       <li>
         <%= govuk_link_to 'educational settings', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'educational-settings') %>
       </li>
+      <li>
+        <%= govuk_link_to 'schools, colleges and further education institutions in Northern Ireland, Scotland and Wales', what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe_path(anchor:'schools-colleges-and-further-education-institutions-in-northern-ireland-scotland-and-wales') %>
+      </li>
     </ul>
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
@@ -41,13 +44,10 @@
       Parents, carers, pupils and students
     </h2>
     <p class="govuk-body">
-      You cannot apply for laptops, tablets or internet access through this scheme yourself.
+      The <%= govuk_link_to 'Family Fund', 'https://www.familyfund.org.uk/' -%> may be able to provide grants for devices and other support to children or young people who are disabled or seriously ill.
     </p>
     <p class="govuk-body">
-      Contact your school, college or further education institution to discuss your options for accessing remote education.
-    </p>
-    <p class="govuk-body">
-      The <%= govuk_link_to 'Family Fund', 'https://www.familyfund.org.uk/' %> may be able to provide grants for devices and other support to children or young people who are disabled or seriously ill.
+      <%= govuk_link_to 'Ofcom', 'https://www.ofcom.org.uk/about-ofcom/latest/features-and-news/support-for-customers-during-pandemic' -%> has guidance on support for phone and broadband customers during the pandemic.
     </p>
     <p class="govuk-body">
       If you’ve been given a DfE laptop, tablet or 4G wireless router and need some help with it, these guides may be useful:
@@ -57,10 +57,10 @@
         <%= govuk_link_to 'Getting started with your Microsoft Windows device ', devices_guidance_subpage_path('getting-started-with-your-microsoft-windows-device') %>
       </li>
       <li>
-        <%= govuk_link_to 'Getting started with your Google Chromebook', devices_guidance_subpage_path('getting-started-with-your-google-chromebook')  %>
+        <%= govuk_link_to 'Getting started with your Google Chromebook', devices_guidance_subpage_path('getting-started-with-your-google-chromebook') %>
       </li>
       <li>
-        <%= govuk_link_to 'How to get started with your 4G wireless router', devices_guidance_subpage_path('4g-user-guidance')  %>
+        <%= govuk_link_to 'How to get started with your 4G wireless router', devices_guidance_subpage_path('4g-user-guidance') %>
       </li>
     </ul>
 
@@ -83,4 +83,3 @@
       The Get help with technology programme is only available in England. Contact your devolved administration to find out about similar support programmes.
   </div>
 </div>
-

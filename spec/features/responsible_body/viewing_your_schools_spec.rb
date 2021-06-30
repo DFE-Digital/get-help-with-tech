@@ -25,27 +25,6 @@ RSpec.feature 'Viewing your schools' do
     then_i_dont_see_the_order_devices_link
   end
 
-  scenario 'see a school that is able to fully order' do
-    given_a_school_can_order
-    when_i_visit_the_your_schools_page
-    then_i_dont_see_the_order_devices_link
-    then_i_see_the_school_in_the_schools_reporting_closure_list
-  end
-
-  scenario 'see a school that is able to order for specific circumstances' do
-    given_a_school_can_order_for_specific_circumstances
-    when_i_visit_the_your_schools_page
-    then_i_dont_see_the_order_devices_link
-    then_i_see_the_school_in_the_schools_with_approved_requests_list
-  end
-
-  scenario 'see a schools that is fully open' do
-    given_a_school_is_fully_open
-    when_i_visit_the_your_schools_page
-    then_i_dont_see_the_order_devices_link
-    then_i_see_the_school_in_the_fully_open_schools_list
-  end
-
   scenario 'when the trust manages centrally' do
     given_there_are_schools_in_the_pool
     when_i_visit_the_your_schools_page
@@ -60,20 +39,6 @@ RSpec.feature 'Viewing your schools' do
     then_i_see_the_summary_pooled_device_count_card
   end
 
-  scenario 'when the trust manages centrally and wants to devolve a school' do
-    given_there_are_schools_in_the_pool
-    when_i_visit_the_your_schools_page
-    and_i_select_a_centrally_managed_school
-    then_i_dont_see_change_links_for_who_will_order
-  end
-
-  scenario 'when the trust manages centrally and wants to manage a devolved a school' do
-    when_i_visit_the_your_schools_page
-    and_i_select_a_devolved_school
-    when_i_click_the_change_who_will_order_link
-    then_i_see_text_about_managing_centrally_being_irreversible
-  end
-
   def given_i_am_signed_in_as_a_responsible_body_user
     sign_in_as user
   end
@@ -84,20 +49,6 @@ RSpec.feature 'Viewing your schools' do
     schools[0].preorder_information.responsible_body_will_order_devices!
     schools[1].preorder_information.responsible_body_will_order_devices!
     schools[2].preorder_information.school_will_order_devices!
-  end
-
-  def given_a_school_can_order
-    schools.first.can_order!
-  end
-
-  def given_a_school_can_order_for_specific_circumstances
-    schools.second.can_order_for_specific_circumstances!
-  end
-
-  def given_a_school_is_fully_open
-    schools.first.can_order!
-    schools.second.can_order_for_specific_circumstances!
-    schools.third.cannot_order!
   end
 
   def given_there_are_schools_in_the_pool
@@ -174,30 +125,6 @@ RSpec.feature 'Viewing your schools' do
 
   def then_i_dont_see_the_order_devices_link
     expect(page).not_to have_link('Order devices')
-  end
-
-  def then_i_see_the_school_in_the_schools_reporting_closure_list
-    school = schools.first
-    expect(your_schools_page.ordering_school_rows[0].title).to have_content(school.name)
-    expect(your_schools_page.ordering_school_rows[0].who_will_order_devices).to have_content('Trust')
-    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content(pluralize(school.std_device_allocation.raw_allocation, 'device'))
-    expect(your_schools_page.ordering_school_rows[0].allocation).to have_content(pluralize(school.coms_device_allocation&.raw_allocation, 'router'))
-  end
-
-  def then_i_see_the_school_in_the_schools_with_approved_requests_list
-    school = schools.second
-    expect(your_schools_page.specific_circumstances_school_rows[0].title).to have_content(school.name)
-    expect(your_schools_page.specific_circumstances_school_rows[0].who_will_order_devices).to have_content('Trust')
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content(pluralize(school.std_device_allocation.raw_allocation, 'device'))
-    expect(your_schools_page.specific_circumstances_school_rows[0].allocation).to have_content(pluralize(school.coms_device_allocation&.raw_allocation, 'router'))
-  end
-
-  def then_i_see_the_school_in_the_fully_open_schools_list
-    school = schools.third
-    expect(your_schools_page.cannot_order_yet_school_rows[0].title).to have_content(school.name)
-    expect(your_schools_page.cannot_order_yet_school_rows[0].who_will_order_devices).to have_content('School')
-    expect(your_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content("#{school.std_device_allocation.raw_allocation} #{'device'.pluralize(school.std_device_allocation.raw_allocation)}")
-    expect(your_schools_page.cannot_order_yet_school_rows[0].allocation).to have_content("#{school.coms_device_allocation&.raw_allocation} #{'router'.pluralize(school.coms_device_allocation&.raw_allocation || 0)}")
   end
 
   def then_i_see_the_summary_pooled_device_count_card
