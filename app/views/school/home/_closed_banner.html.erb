@@ -1,6 +1,6 @@
 <div class="app-card">
   <h2 class="govuk-heading-m">
-    Ordering is now closed for devices and internet access
+    Ordering is closed for laptops, tablets and <span class="app-no-wrap">extra mobile data</span>
   </h2>
 
   <% if @has_ordered || @has_completed_extra_mobile_data_requests %>
@@ -20,4 +20,7 @@
       </p>
     <% end %>
   <% end %>
+  <p class="govuk-body">
+    <span class="app-no-wrap">4G wireless routers</span> are available to order until <span class="app-no-wrap">31 July</span>.
+  </p>
 </div>

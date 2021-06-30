@@ -22,7 +22,7 @@ RSpec.feature 'View school details' do
       before { sign_in_as user }
 
       it 'shows banner title for ordering is closed' do
-        expect(page).to have_content('Ordering is now closed for devices and internet access')
+        expect(page).to have_content('Ordering is closed for laptops')
       end
     end
 
