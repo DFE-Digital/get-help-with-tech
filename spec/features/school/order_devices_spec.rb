@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Order devices' do
+RSpec.feature 'Order devices', skip: 'Disabled for 30 Jun 2021 service closure' do
   include ViewHelper
 
   let(:school) { create(:school, :with_std_device_allocation) }

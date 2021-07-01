@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature, with_feature_flags: { donated_devices: 'active' } do
+RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature, with_feature_flags: { donated_devices: 'active' }, skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:user) { create(:trust_user) }
   let(:responsible_body) { user.responsible_body }
   let(:school) { create(:school, :with_preorder_information, responsible_body: responsible_body) }

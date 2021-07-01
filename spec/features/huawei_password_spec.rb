@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Huawei router password', type: :feature do
+RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:school_with_router_allocation) { create(:school, :with_coms_device_allocation) }
   let(:iss_provision) { create(:iss_provision, :with_coms_device_allocation) }
   let(:user_for_organisation_without_router_allocation) { create(:school_user) }
