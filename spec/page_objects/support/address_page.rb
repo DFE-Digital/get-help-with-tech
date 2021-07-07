@@ -13,7 +13,7 @@ module PageObjects
       element :county_field, '#school-county-field'
       element :postcode_field, '#school-postcode-field'
 
-      element :submit, 'input[value=Save]'
+      element :submit, 'button[type=submit]'
     end
   end
 end

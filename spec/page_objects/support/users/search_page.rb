@@ -5,7 +5,7 @@ module PageObjects
         set_url '/support/users/search'
 
         element :search_term, 'input[type=text]'
-        element :submit, 'input[value=Search]'
+        element :submit, 'button[type=submit]'
       end
     end
   end

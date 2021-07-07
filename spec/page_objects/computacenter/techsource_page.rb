@@ -4,7 +4,7 @@ module PageObjects
       set_url '/computacenter/techsource'
 
       element :bulk_email_input, '#bulk-techsource-form-emails-field'
-      element :continue, 'input[value=Continue]'
+      element :continue, 'button[type=submit]'
     end
   end
 end
