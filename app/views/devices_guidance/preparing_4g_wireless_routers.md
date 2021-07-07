@@ -26,7 +26,7 @@ This information is essential for technical queries, for deactivating devices if
 
 Read information about [device ownership and distribution](/devices/device-distribution-and-ownership), including examples of loan agreements and suggestions on insurance. Our guidance [How to get started with your 4G wireless router](/devices/4g-user-guidance) can be shared with the young people and families you’re helping to get online.
 
-## Using routers after DfE stops providing data
+## Using routers after DfE data expires
 
 All 4G wireless routers come with SIM cards that provide data until 31 August 2021. You'll need to [reset routers and replace the SIM cards](/devices/reset-your-wireless-router) to keep using them after this time.
 
