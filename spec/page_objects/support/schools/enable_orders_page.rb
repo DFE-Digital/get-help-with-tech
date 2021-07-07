@@ -12,7 +12,7 @@ module PageObjects
           element :how_many_routers, '#support-enable-orders-form-router-cap-field'
           element :yes, '#support-enable-orders-form-order-state-can-order-field'
 
-          element :continue, 'input[value=Continue]'
+          element :continue, 'button[type=submit]'
         end
       end
     end

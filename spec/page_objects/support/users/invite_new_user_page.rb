@@ -9,7 +9,7 @@ module PageObjects
         element :phone, 'input[name="user[telephone]"]'
         element :orders_devices_yes, '#user-orders-devices-1-field'
         element :orders_devices_no, '#user-orders-devices-0-field'
-        element :send_invite, 'input[value="Send invite"]'
+        element :send_invite, 'button[type=submit]'
       end
     end
   end
