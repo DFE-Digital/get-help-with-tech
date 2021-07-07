@@ -1,6 +1,6 @@
 ## If you have a Huawei router  
 
-To continue using your Huawei router, you must reset it before <span class="app-no-wrap">16 July 2021</span>.
+To continue using your Huawei router, you must reset it before <span class="app-no-wrap">31 August 2021</span>.
 
 If you do not do this, you’ll be unable to use another SIM card when the data runs out.
 
@@ -63,7 +63,7 @@ After you have downloaded and installed the software update, you should be redir
 
 Enter the new device login password that you chose and click ‘Log in’. If you are redirected to the router settings homepage, your Huawei router is now reset and ready to use.
 
-The SIM card supplied with the router will provide data until 31 July 2021. You can replace this with an alternative SIM card at any time.
+The SIM card supplied with the router will provide data until 31 August 2021. You can replace this with an alternative SIM card at any time.
 
 If you are unable to access the router settings, you should:
 
@@ -76,7 +76,7 @@ If you are unable to access the router settings, you should:
 ##If you have a TP-Link or D-Link router 
 
 
-If you have a TP&#8209;Link or D&#8209;Link router, you can reset your router and insert another SIM card at any time. If you choose to do this before <span class="app-no-wrap">31 July 2021</span>, your router will no longer receive data from DfE.
+If you have a TP&#8209;Link or D&#8209;Link router, you can reset your router and insert another SIM card at any time. If you choose to do this before <span class="app-no-wrap">31 August 2021</span>, your router will no longer receive data from DfE.
 
 Resetting the router will remove the content filters. Read our [safeguarding guidance](/devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
 
