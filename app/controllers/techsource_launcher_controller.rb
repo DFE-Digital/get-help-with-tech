@@ -4,11 +4,11 @@ class TechsourceLauncherController < ApplicationController
   def start
     techsource = Computacenter::TechSource.new
 
-    if techsource.unavailable?
-      @available_at = Computacenter::TechSource::MAINTENANCE_WINDOW.last.strftime(DATE_TIME_FORMAT)
-      render 'unavailable'
-    else
+    if techsource.available?
       redirect_to URI.parse(techsource.url).to_s # The URI.parse is needed to appease Brakeman
+    else
+      @available_at = techsource.current_maintenance_window.last.strftime(DATE_TIME_FORMAT)
+      render 'unavailable'
     end
   end
 end
