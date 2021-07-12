@@ -1,12 +1,12 @@
 <div class="govuk-inset-text">
   <p>
-    All 4G wireless routers come with SIM cards that provide data until 31 July 2021. To continue using routers after this date, you must <a href="/devices/reset-your-wireless-router" class="govuk-link">reset them and replace their SIM cards</a>.
+    All 4G wireless routers come with SIM cards that provide data until 31 August 2021. To continue using routers after this date, you must <a href="/devices/reset-your-wireless-router" class="govuk-link">reset them and replace their SIM cards</a>.
   </p>
 </div>
 
 You should make young people and families aware that:
 
-- SIM cards will work until 31 July 2021
+- SIM cards will work until 31 August 2021
 - routers need to be reset by the trust, local authority or school which sent the device to them, before inserting another SIM card
 - once the 20GB limit has been reached the device will no longer connect to the internet 
 - they should not attempt to reset their own router, otherwise it will stop working

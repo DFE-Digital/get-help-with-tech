@@ -355,8 +355,8 @@ en:
       description: Find out what to do if you're having issues getting your 4G wireless router connected to the internet.
       guidance_section: internet_access
     reset_your_wireless_router:
-        title: Continue using your router after 31 July 2021 – what you need to do
-        description: All 4G wireless routers come with SIM cards that provide data until 31 July 2021. To continue using your router after this date, you must reset it and replace the SIM card. The date you need to reset your router depends on the type of router you have.
+        title: How to reset your 4G wireless router
+        description: All 4G wireless routers come with SIM cards that provide data until 31 August 2021. To continue using your router after this date, you must reset it and replace the SIM card. The date you need to reset your router depends on the type of router you have.
         guidance_section: internet_access
 
     enrol_chromebooks_with_user_logins:

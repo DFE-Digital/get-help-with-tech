@@ -26,13 +26,13 @@ This information is essential for technical queries, for deactivating devices if
 
 Read information about [device ownership and distribution](/devices/device-distribution-and-ownership), including examples of loan agreements and suggestions on insurance. Our guidance [How to get started with your 4G wireless router](/devices/4g-user-guidance) can be shared with the young people and families you’re helping to get online.
 
-## Using routers after 31 July 2021
+## Using routers after DfE data expires
 
-All 4G wireless routers come with SIM cards that provide data until the end of July 2021. You'll need to [reset routers and replace the SIM cards](/devices/reset-your-wireless-router) to keep using them after this time.
+All 4G wireless routers come with SIM cards that provide data until 31 August 2021. You'll need to [reset routers and replace the SIM cards](/devices/reset-your-wireless-router) to keep using them after this time.
 
-If you have Huawei routers, you must reset them before 16 July 2021. If you do not do this, you’ll be unable to use another SIM card when the data runs out.
+If you have Huawei routers, you must reset them before 31 August 2021. If you do not do this, you’ll be unable to use another SIM card when the data runs out.
 
-If you have TP‑Link or D‑Link routers, you can reset them and insert another SIM card at any time. If you choose to do this before 31 July 2021, your router will no longer receive data from the Department for Education.
+If you have TP‑Link or D‑Link routers, you can reset them and insert another SIM card at any time. If you choose to do this before 31 August 2021, your router will no longer receive data from the Department for Education.
 
 Using another SIM card will remove the content filters. Read our [safeguarding guidance and information for parents and carers on keeping children safe online](#safeguarding-resources).
 
