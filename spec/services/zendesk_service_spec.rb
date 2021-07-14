@@ -31,7 +31,6 @@ RSpec.describe ZendeskService, type: :model do
             'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Authorization' => 'Basic Og==',
             'Content-Type' => 'application/json',
-            'User-Agent' => 'ZendeskAPI Ruby 1.30.0',
           },
         )
         .to_return(status: 200, body: '', headers: {})
