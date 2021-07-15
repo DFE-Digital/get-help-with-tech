@@ -19,7 +19,7 @@ Depending on the manufacturer’s warranty process, you may be required to pay c
 
 Replacements from the manufacturer will come with standard factory settings. It's your responsibility to ensure these devices are safely set up for users. Refer to our guidance on [preparing a Standard Windows device](/devices/preparing-a-standard-windows-device) for steps to take regarding applying appropriate safeguarding and security settings.
 
-We are unable to provide support for laptops and tablets after the manufacturer’s warranty period expires. This includes 'Pre-issued' devices. Any repairs or replacements will need to arranged by your organisation.
+We are unable to provide support for laptops and tablets after the manufacturer’s warranty period expires. This includes 'Pre-issued' devices. Any repairs or replacements will need to be arranged by your organisation.
 
 ## 4G wireless router faults
 
