@@ -12,11 +12,7 @@
     </h1>
 
     <p class="govuk-body">
-      Ordering is closed for laptops, tablets and <span class="app-no-wrap">extra mobile data</span>.
-    </p>
-
-    <p class="govuk-body">
-      How to request 4G wireless routers before <span class="app-no-wrap">31 July</span>, and reset routers for use after free data ends on 31 August.
+      We’re no longer providing 4G wireless routers or <span class="app-no-wrap">extra mobile data</span>.
     </p>
 
     <div class="govuk-inset-text">
@@ -27,12 +23,8 @@
       4G wireless routers
     </h2>
 
-    <p class="govuk-body">
-      4G wireless routers are available to order until 31 July. <%= govuk_link_to 'Contact us to request 4G wireless routers', support_ticket_path %>
-    </p>
-
     <p class="govuk-body govuk-!-margin-bottom-7">
-      Router SIM cards you’ve received will remain active until 31 August 2021. To continue using your router after this date, you must reset it and replace the SIM card. The date you need to reset your router depends on the type of router you have.
+      Router SIM cards you’ve received will remain active until 31 August 2021. To continue using your router after this date, you must <%= govuk_link_to 'reset it and replace the SIM card', '/devices/reset-your-wireless-router' %>. The date you need to reset your router depends on the type of router you have.
     </p>
 
     <h3 class="govuk-heading-m">
@@ -63,16 +55,13 @@
     </p>
 
     <p class="govuk-body govuk-!-margin-bottom-7">
-      Extra data will be provided to existing users until the end of July 2021. Mobile network providers will contact all users to let them know when their free data increase is ending.
-      <%= govuk_link_to 'View the privacy notice for this scheme.', '/guide-to-collecting-mobile-information/privacy' %>
+      Mobile network providers have contacted all users to let them know when their free data increase ended.
+      
     </p>
-
-    <h3 class="govuk-heading-m">
-      View your extra mobile data requests
-    </h3>
-
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= govuk_link_to "Sign in to view your requests", sign_in_path, class: "app-emphasis-link" %>
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li>
+        <%= govuk_link_to 'How we look after personal information for the mobile data scheme', '/increasing-mobile-data/privacy-notice' %>
+      </li>
+    </ul>
   </div>
 </div>
