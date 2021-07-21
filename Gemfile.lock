@@ -231,7 +231,7 @@ GEM
     jwt (2.2.3)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.5.1)
+    listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     llhttp-ffi (0.3.1)
@@ -346,7 +346,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.5)
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.1)
@@ -547,7 +547,7 @@ DEPENDENCIES
   http
   i18n-debug
   launchy
-  listen (>= 3.0.5, < 3.6)
+  listen (>= 3.0.5, < 3.7)
   logstash-logger (~> 0.26.1)
   mail-notify
   memory_profiler
