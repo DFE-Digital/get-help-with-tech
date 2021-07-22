@@ -16,9 +16,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
     <%= render partial: 'closed_banner' %>
+    <%= render partial: 'summary_access_to_support_portal' %>
 
     <% if @has_ordered %>
-      <%= render partial: 'summary_access_to_support_portal' %>
       <%= render partial: 'summary_reset_devices' %>
       <%= render partial: 'summary_order_history' %>
     <% end %>

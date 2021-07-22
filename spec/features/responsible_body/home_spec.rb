@@ -192,8 +192,22 @@ RSpec.feature ResponsibleBody do
       context 'has NOT ordered anything' do
         before { sign_in_as rb_user }
 
-        it 'does not show this section' do
-          expect(page).not_to have_content('Access the Support Portal')
+        it 'shows the title' do
+          expect(page).to have_content('Access the Support Portal')
+        end
+
+        context 'when a local authority' do
+          it 'show a link to manage users' do
+            expect(page).to have_link('Manage local authority users')
+          end
+        end
+
+        context 'when a trust' do
+          let(:responsible_body) { create(:trust) }
+
+          it 'show a link to manage trust administrators' do
+            expect(page).to have_link('Manage trust administrators')
+          end
         end
       end
 
