@@ -164,8 +164,12 @@ RSpec.feature 'View school details' do
     before { sign_in_as user }
 
     context 'has NOT ordered anything' do
-      it 'does not show this section' do
-        expect(page).not_to have_content('Access the Support Portal')
+      it 'shows the title' do
+        expect(page).to have_content('Access the Support Portal')
+      end
+
+      it 'show a link to manage users' do
+        expect(page).to have_link('Manage who can access the Support Portal')
       end
     end
 
