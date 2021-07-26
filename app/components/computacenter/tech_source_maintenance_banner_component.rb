@@ -6,27 +6,27 @@ class Computacenter::TechSourceMaintenanceBannerComponent < ViewComponent::Base
   end
 
   def message
-    maintenance_window = @techsource.current_maintenance_window
+    supplier_outage = @techsource.current_supplier_outage
 
-    if maintenance_window
-      "The TechSource website will be closed for maintenance on <span class=\"app-no-wrap\">#{maintenance_window.first.strftime(DATE_TIME_FORMAT)}.</span> You can order devices when it reopens on <span class=\"app-no-wrap\">#{maintenance_window.last.strftime(DATE_TIME_FORMAT)}.</span>".html_safe
+    if supplier_outage
+      "The TechSource website will be closed for maintenance on <span class=\"app-no-wrap\">#{supplier_outage.start_at.strftime(DATE_TIME_FORMAT)}.</span> You can order devices when it reopens on <span class=\"app-no-wrap\">#{supplier_outage.end_at.strftime(DATE_TIME_FORMAT)}.</span>".html_safe
     end
   end
 
   def render?
-    banner_periods = @techsource.maintenance_windows.collect { |maintenance_window| banner_period(maintenance_window) }
+    banner_periods = @techsource.supplier_outages.collect { |supplier_outage| banner_period(supplier_outage) }
     banner_periods.any? { |banner_period| banner_period.cover? current_time }
   end
 
 private
 
-  def banner_period(maintenance_window)
-    period_from_start_of_two_days_before_window_to_end_of_window(maintenance_window)
+  def banner_period(supplier_outage)
+    period_from_start_of_two_days_before_supplier_outage_to_end_of_supplier_outage(supplier_outage)
   end
 
-  def period_from_start_of_two_days_before_window_to_end_of_window(maintenance_window)
-    display_from = 2.days.before(maintenance_window.first.beginning_of_day)
-    display_until = maintenance_window.last
+  def period_from_start_of_two_days_before_supplier_outage_to_end_of_supplier_outage(supplier_outage)
+    display_from = 2.days.before(supplier_outage.start_at.beginning_of_day)
+    display_until = supplier_outage.end_at
     display_from..display_until
   end
 

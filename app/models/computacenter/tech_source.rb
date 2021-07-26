@@ -1,8 +1,6 @@
 class Computacenter::TechSource
-  attr_reader :maintenance_windows
-
-  def initialize(maintenance_windows: [(Time.zone.parse('26 Jun 2021 9:00am')..Time.zone.parse('26 Jun 2021 1:00pm'))])
-    @maintenance_windows = maintenance_windows
+  def supplier_outages
+    SupplierOutage.all # for now Computacenter's TechSource is the only supplier
   end
 
   def url
@@ -10,16 +8,18 @@ class Computacenter::TechSource
   end
 
   def available?
-    current_maintenance_window.nil?
+    !SupplierOutage.current.exists?
   end
 
-  def current_maintenance_window
-    maintenance_windows.find { |maintenance_window| maintenance_window.cover? current_time }
+  def current_supplier_outage
+    outages = SupplierOutage.current
+    outages.none? ? nil : any_current_outage(outages)
   end
 
 private
 
-  def current_time
-    Time.zone.now
+  # we shouldn't really get overlapping outages
+  def any_current_outage(outages)
+    outages.first
   end
 end

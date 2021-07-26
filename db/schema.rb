@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_113406) do
+ActiveRecord::Schema.define(version: 2021_07_26_110031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -434,6 +434,13 @@ ActiveRecord::Schema.define(version: 2021_05_06_113406) do
     t.index ["gias_group_uid"], name: "index_staged_trusts_on_gias_group_uid", unique: true
     t.index ["name"], name: "index_staged_trusts_on_name"
     t.index ["status"], name: "index_staged_trusts_on_status"
+  end
+
+  create_table "supplier_outages", force: :cascade do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "support_tickets", force: :cascade do |t|

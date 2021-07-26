@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe TechsourceLauncherController, type: :controller do
   let(:user) { create(:local_authority_user) }
-  let(:maintenance_windows) { [(Time.zone.parse('1 Jan 2021 9:00am')..Time.zone.parse('1 Jan 2021 10:00am'))] }
-  let(:techsource) { Computacenter::TechSource.new(maintenance_windows: maintenance_windows) }
+  let(:techsource) { Computacenter::TechSource.new }
 
   before do
-    allow_any_instance_of(Computacenter::TechSource).to receive(:maintenance_windows).and_return(techsource.maintenance_windows) # rubocop:disable RSpec/AnyInstance
+    Timecop.travel(Time.zone.parse('1 Jan 2021 8:00am'))
+    create(:supplier_outage, start_at: Time.zone.parse('1 Jan 2021 9:00am'), end_at: Time.zone.parse('1 Jan 2021 10:00am'))
     sign_in_as user
   end
 
