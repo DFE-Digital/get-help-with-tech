@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe SchoolSearchForm, type: :model do
   let(:closed_school) { create(:school, name: 'Southbridge School', status: :closed) }
   let(:school) { create(:school, name: 'Southside School') }
+  let(:school_scl) { create(:scl_provision, name: 'SCL School') }
 
   it { is_expected.to validate_presence_of(:search_type) }
   it { is_expected.to validate_inclusion_of(:search_type).in_array(%w[single multiple responsible_body_or_order_state]) }
@@ -19,6 +20,11 @@ RSpec.describe SchoolSearchForm, type: :model do
     expect(described_class.new(search_type: 'multiple', identifiers: '123456')).to be_valid
     expect(described_class.new(search_type: 'multiple', identifiers: "12345678\n")).to be_valid
     expect(described_class.new(search_type: 'multiple', identifiers: "12345678\n123456")).to be_valid
+
+    expect(described_class.new(search_type: 'multiple', identifiers: 'ISS123')).to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: 'SCL123')).to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: "ISS123\nSCL123\n12345678")).to be_valid
+    expect(described_class.new(search_type: 'multiple', identifiers: "iss123\nscl123\n12345678")).not_to be_valid
   end
 
   it 'validates the presence of either RB ID or order state when the search_type=responsible_body_or_order_state' do
@@ -34,21 +40,21 @@ RSpec.describe SchoolSearchForm, type: :model do
 
   describe '#array_of_identifiers' do
     subject(:form) do
-      described_class.new(identifiers: "   123  \r\ \r\n456\r\n", search_type: 'multiple')
+      described_class.new(identifiers: "   123  \r\ \r\n456\r\n ISS123\r\nSCL123 ", search_type: 'multiple')
     end
 
     it 'returns correct array of identifiers' do
-      expect(form.array_of_identifiers).to eql(%w[123 456])
+      expect(form.array_of_identifiers).to eql(%w[123 456 ISS123 SCL123])
     end
   end
 
   describe '#missing_identifiers' do
     subject(:form) do
-      described_class.new(identifiers: "   #{school.urn}  \r\ \r\n456\r\n", search_type: 'multiple')
+      described_class.new(identifiers: "   #{school.urn}  \r\ \r\n456\r\n ISS123\r\n #{school_scl.provision_urn}", search_type: 'multiple')
     end
 
     it 'returns array of identifiers with no matches' do
-      expect(form.missing_identifiers).to eql(%w[456])
+      expect(form.missing_identifiers).to eql(%w[456 ISS123])
     end
   end
 
@@ -101,11 +107,11 @@ RSpec.describe SchoolSearchForm, type: :model do
 
     context 'given identifiers' do
       subject(:form) do
-        described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n", search_type: 'multiple')
+        described_class.new(identifiers: "#{school.urn}\r\n#{closed_school.urn}\r\n#{school_scl.provision_urn}", search_type: 'multiple')
       end
 
       it 'includes schools matching those identifiers' do
-        expect(form.schools.map(&:urn)).to eq([school.urn, closed_school.urn])
+        expect(form.schools).to contain_exactly(school, closed_school, school_scl)
       end
     end
 

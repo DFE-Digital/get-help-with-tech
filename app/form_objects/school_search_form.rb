@@ -4,13 +4,23 @@ class SchoolSearchForm
   attr_accessor :search_type, :name_or_identifier, :identifier, :identifiers, :responsible_body_id, :order_state
 
   validates :search_type, presence: true, inclusion: { in: %w[single multiple responsible_body_or_order_state] }
-  validates :identifiers, presence: true, format: { with: /\A[\d\s]*\z/ }, if: ->(form) { form.search_type == 'multiple' }
+  validates :identifiers, presence: true, format: { with: /\A((ISS|SCL)?\d+\s*)*\z/ }, if: ->(form) { form.search_type == 'multiple' }
   validates :name_or_identifier, presence: true, if: ->(form) { form.search_type == 'single' }
   validate :responsible_body_or_order_state_present_when_search_type_responsible_body_or_order_state
   validates :order_state, inclusion: { in: School.order_states }, allow_blank: true
 
+  ISS_OR_SCL = /(ISS|SCL)/
+
   def array_of_identifiers
     @array_of_identifiers ||= identifiers.to_s.split("\r\n").map(&:strip).reject(&:blank?)
+  end
+
+  def urn_or_ukprn_identifiers
+    array_of_identifiers.reject { |i| i =~ ISS_OR_SCL }
+  end
+
+  def provision_urn_identifiers
+    array_of_identifiers.find_all { |i| i =~ ISS_OR_SCL }
   end
 
   def request_count
@@ -31,7 +41,7 @@ class SchoolSearchForm
     if search_type == 'single'
       school_records = school_records.matching_name_or_urn_or_ukprn_or_provision_urn(identifier.presence || name_or_identifier)
     elsif search_type == 'multiple'
-      school_records = school_records.where('urn IN (?) OR ukprn in (?)', array_of_identifiers, array_of_identifiers) if array_of_identifiers.present?
+      school_records = school_records.where('urn IN (?) OR ukprn in (?) OR provision_urn in (?)', urn_or_ukprn_identifiers, urn_or_ukprn_identifiers, provision_urn_identifiers) if array_of_identifiers.present?
     elsif search_type == 'responsible_body_or_order_state'
       school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
       school_records = school_records.where(order_state: order_state) if order_state.present?
@@ -43,7 +53,7 @@ class SchoolSearchForm
   end
 
   def missing_identifiers
-    array_of_identifiers - schools.pluck(:urn, :ukprn).flatten.compact.map(&:to_s)
+    array_of_identifiers - schools.pluck(:urn, :ukprn, :provision_urn).flatten.compact.map(&:to_s)
   end
 
   def select_responsible_body_options
