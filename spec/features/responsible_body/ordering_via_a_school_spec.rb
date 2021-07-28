@@ -5,7 +5,7 @@ RSpec.feature 'Ordering via a school' do
   let(:rb_user) { create(:local_authority_user, responsible_body: rb) }
   let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
   let(:another_preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
-  let(:another_allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, devices_ordered: 3, cap: 12) }
+  let(:another_allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices, devices_ordered: 3, cap: 12) }
   let(:school) { create(:school, :with_headteacher_contact) }
 
   let(:school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
@@ -31,7 +31,7 @@ RSpec.feature 'Ordering via a school' do
     end
 
     context 'when school has devices to order' do
-      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, cap: 12, devices_ordered: 3) }
+      let(:allocation) { create(:school_device_allocation, allocation: 12, cap: 12, devices_ordered: 3) }
 
       before do
         school.update!(std_device_allocation: allocation, order_state: 'can_order')
@@ -71,7 +71,7 @@ RSpec.feature 'Ordering via a school' do
     end
 
     context 'when the school can order devices and has an allocation' do
-      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices, allocation: 12, cap: 10, devices_ordered: 3) }
+      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices, allocation: 12, cap: 10, devices_ordered: 3) }
 
       before do
         school.update!(std_device_allocation: allocation, order_state: 'can_order')

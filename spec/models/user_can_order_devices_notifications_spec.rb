@@ -15,7 +15,7 @@ RSpec.describe UserCanOrderDevicesNotifications do
   end
 
   context 'when orders can be placed within a virtual cap' do
-    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices) }
     let(:preorder) { create(:preorder_information, :school_will_order, status: :rb_can_order) }
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
     let(:school) { create_schools_at_status(preorder_status: 'rb_can_order', responsible_body: responsible_body) }
@@ -29,7 +29,7 @@ RSpec.describe UserCanOrderDevicesNotifications do
   end
 
   context 'when orders can be placed within a new FE college' do
-    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_orderable_devices) }
+    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices) }
     let(:preorder) { create(:preorder_information, :school_will_order, status: :rb_can_order) }
     let(:responsible_body) { create(:further_education_college, :new_fe_wave) }
     let(:school) { create_schools_at_status(preorder_status: 'rb_can_order', responsible_body: responsible_body) }
