@@ -9,16 +9,6 @@
     <% else %>
       <%= render partial: 'closed_banner_multiple' %>
     <% end %>
-  <% else %>
-    <% if @in_vcap_pool %>
-      <p class="govuk-body">
-        Schools and colleges in your <%= @school.responsible_body.humanized_type -%> did not order any laptops, tablets or routers from <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>.
-      </p>
-    <% else %>
-      <p class="govuk-body">
-        Your <%= @school.institution_type -%> did not order any laptops, tablets or routers from <span class="app-no-wrap">September 2020</span> to <span class="app-no-wrap">July 2021</span>.
-      </p>
-    <% end %>
   <% end %>
   <p class="govuk-body">
     <span class="app-no-wrap">4G wireless routers</span> are available to order until <span class="app-no-wrap">31 July</span>.
