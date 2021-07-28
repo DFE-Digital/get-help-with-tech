@@ -1,42 +1,44 @@
 FactoryBot.define do
   factory :school_device_allocation do
+    std
     association :school
     association :created_by_user, factory: :dfe_user
     association :last_updated_by_user, factory: :dfe_user
-    device_type { SchoolDeviceAllocation.device_types.keys.sample }
+
+    trait :std do
+      device_type { 'std_device' }
+    end
+
+    trait :coms do
+      device_type { 'coms_device' }
+    end
 
     trait :with_std_allocation do
-      device_type { 'std_device' }
-      allocation { Faker::Number.within(range: 1..100) }
+      allocation { 1 }
+      cap { 0 }
+    end
+
+    trait :with_coms_allocation do
+      coms
+      allocation { 1 }
       cap { 0 }
     end
 
     trait :with_available_devices do
-      allocation { 100 }
-      cap { Faker::Number.within(range: 10..50) }
-    end
-
-    trait :with_coms_allocation do
-      device_type { 'coms_device' }
-      allocation { Faker::Number.within(range: 1..100) }
-      cap { 0 }
-    end
-
-    trait :with_orderable_devices do
-      allocation { 100 }
-      cap { Faker::Number.within(range: 20..80) }
+      allocation { 2 }
+      cap { 1 }
     end
 
     trait :fully_ordered do
-      allocation { 100 }
-      cap { 100 }
-      devices_ordered { 100 }
+      allocation { 1 }
+      cap { 1 }
+      devices_ordered { 1 }
     end
 
     trait :partially_ordered do
-      allocation { 100 }
-      cap { 100 }
-      devices_ordered { Faker::Number.within(range: 20..80) }
+      allocation { 2 }
+      cap { 2 }
+      devices_ordered { 1 }
     end
   end
 end

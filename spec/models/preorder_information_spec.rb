@@ -201,14 +201,14 @@ RSpec.describe PreorderInformation, type: :model do
       end
 
       context 'when there are devices available to order' do
-        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
+        let(:allocation) { create(:school_device_allocation, :with_available_devices) }
 
         it { is_expected.to eq('rb_can_order') }
       end
 
       context 'when there are devices available to order but school cannot order' do
         let(:order_state) { 'cannot_order' }
-        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
+        let(:allocation) { create(:school_device_allocation, :with_available_devices) }
 
         it { is_expected.to eq('ready') }
       end
@@ -245,14 +245,14 @@ RSpec.describe PreorderInformation, type: :model do
       end
 
       context 'when there are devices available to order' do
-        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
+        let(:allocation) { create(:school_device_allocation, :with_available_devices) }
 
         it { is_expected.to eq('school_can_order') }
       end
 
       context 'when there are devices available to order but school cannot order' do
         let(:order_state) { 'cannot_order' }
-        let(:allocation) { create(:school_device_allocation, :with_orderable_devices) }
+        let(:allocation) { create(:school_device_allocation, :with_available_devices) }
 
         it { is_expected.to eq('school_ready') }
       end
