@@ -1,7 +1,9 @@
 class AllocationJob < ApplicationJob
   queue_as :default
 
-  def perform(allocation_batch_jobs)
+  def perform(allocation_batch_jobs, send_notifications: true)
+    @disable_user_notifications = !send_notifications
+
     allocation_batch_jobs.each do |allocation_batch_job|
       # this definitely won't be idempotent if the same CSV is uploaded again
       process_school_allocation_update(allocation_batch_job) unless allocation_batch_job.processed?
@@ -15,8 +17,8 @@ private
 
     ActiveRecord::Base.transaction do
       allocation_calculator.update_current_allocation!
-      allocation_calculator.call_school_order_state_and_cap_update_service
-      allocation_calculator.record_batch_job_processed_and_notify
+      allocation_calculator.call_school_order_state_and_cap_update_service(@disable_user_notifications)
+      allocation_calculator.record_batch_job_processed_and_notify(@disable_user_notifications)
     end
   end
 end
@@ -41,19 +43,19 @@ class AllocationUpdateHelper
     end
   end
 
-  def call_school_order_state_and_cap_update_service
+  def call_school_order_state_and_cap_update_service(disable_user_notifications)
     service = SchoolOrderStateAndCapUpdateService.new(
       school: @school.reload,
       order_state: @order_state,
       std_device_cap: @new_raw_cap_value,
     )
 
-    service.disable_user_notifications! if @disable_user_notifications
+    service.disable_user_notifications! if disable_user_notifications
     service.call
   end
 
-  def record_batch_job_processed_and_notify
-    if @disable_user_notifications
+  def record_batch_job_processed_and_notify(disable_user_notifications)
+    if disable_user_notifications
       return @allocation_batch_job.update!(processed: true)
     end
 
@@ -68,7 +70,6 @@ private
     @school = @allocation_batch_job.school
     @order_state = @allocation_batch_job.order_state
     @allocation_delta = @allocation_batch_job.allocation_delta.to_i
-    @disable_user_notifications = !@allocation_batch_job.send_notification
     @current_allocation = SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: 'std_device')
   end
 

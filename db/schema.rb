@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_26_110031) do
+ActiveRecord::Schema.define(version: 2021_07_29_105223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 2021_07_26_110031) do
     t.integer "ukprn"
     t.integer "allocation_delta", null: false
     t.text "order_state"
-    t.boolean "send_notification", default: true, null: false
     t.boolean "sent_notification", default: false, null: false
     t.boolean "processed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false

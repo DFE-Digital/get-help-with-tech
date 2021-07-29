@@ -37,32 +37,8 @@ RSpec.describe Importers::AllocationUploadCsv do
       expect(record.order_state).to eql('can_order')
 
       expect(record.batch_id).to be_present
-      expect(record.send_notification).to be_truthy
       expect(record.sent_notification).to be_falsey
       expect(record.processed).to be_falsey
-    end
-
-    context 'when send_notification is false' do
-      subject(:service) do
-        described_class.new(path_to_csv: file.path, send_notification: false)
-      end
-
-      it 'sets send_notification to false' do
-        expect {
-          service.call
-        }.to change(AllocationBatchJob, :count).by(1)
-
-        record = AllocationBatchJob.last
-        expect(record.urn).to eql(school.urn)
-        expect(record.ukprn).to eql(school.ukprn)
-        expect(record.allocation_delta).to be(3)
-        expect(record.order_state).to eql('can_order')
-
-        expect(record.batch_id).to be_present
-        expect(record.send_notification).to be_falsey
-        expect(record.sent_notification).to be_falsey
-        expect(record.processed).to be_falsey
-      end
     end
   end
 end

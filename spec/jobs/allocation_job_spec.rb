@@ -9,7 +9,7 @@ RSpec.describe AllocationJob do
     describe 'idempotency' do
       context 'unprocessed' do
         let!(:school) { create(:school, :with_std_device_allocation) }
-        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: 'can_order', send_notification: false) }
+        let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: 'can_order') }
 
         it 'only updates the first time' do
           expect { described_class.perform_now([batch_job]) }.to change { school.std_device_allocation.reload.allocation }.by(1)
@@ -19,7 +19,7 @@ RSpec.describe AllocationJob do
 
       context 'already processed' do
         let!(:school) { create(:school, :with_std_device_allocation) }
-        let(:batch_job) { create(:allocation_batch_job, processed: true, urn: school.urn, allocation_delta: 1, order_state: 'can_order', send_notification: false) }
+        let(:batch_job) { create(:allocation_batch_job, processed: true, urn: school.urn, allocation_delta: 1, order_state: 'can_order') }
 
         specify { expect { described_class.perform_now([batch_job]) }.not_to change { school.std_device_allocation.reload.allocation } } # rubocop:disable Lint/AmbiguousBlockAssociation
       end
@@ -27,7 +27,7 @@ RSpec.describe AllocationJob do
 
     context 'when send_notification is false' do
       let!(:school) { create(:school) }
-      let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order', send_notification: false) }
+      let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order') }
 
       it 'does not send notifications' do
         mock_service = instance_double(SchoolOrderStateAndCapUpdateService)
@@ -35,7 +35,7 @@ RSpec.describe AllocationJob do
         allow(mock_service).to receive(:disable_user_notifications!)
         allow(mock_service).to receive(:call)
 
-        described_class.perform_now([batch_job])
+        described_class.perform_now([batch_job], send_notifications: false)
 
         expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(
           school: school,
@@ -48,14 +48,14 @@ RSpec.describe AllocationJob do
 
       it 'does not update sent_notification flag' do
         expect {
-          described_class.perform_now([batch_job])
+          described_class.perform_now([batch_job], send_notifications: false)
         }.not_to change { batch_job.reload.sent_notification }.from(false)
       end
     end
 
     context 'when send_notification is true' do
       let!(:school) { create(:school) }
-      let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order', send_notification: true) }
+      let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order') }
 
       it 'sends notifications' do
         mock_service = instance_double(SchoolOrderStateAndCapUpdateService)
@@ -63,7 +63,7 @@ RSpec.describe AllocationJob do
         allow(mock_service).to receive(:disable_user_notifications!)
         allow(mock_service).to receive(:call)
 
-        described_class.perform_now([batch_job])
+        described_class.perform_now([batch_job], send_notifications: true)
 
         expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(
           school: school,
