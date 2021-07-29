@@ -16,9 +16,10 @@ module Importers
 
     def call
       rows.each do |row|
-        job = AllocationBatchJob.create!(row.to_h.slice('urn', 'ukprn', 'allocation_delta', 'order_state').merge(batch_id: batch_id, send_notification: send_notification))
-        AllocationJob.perform_later(job)
+        AllocationBatchJob.create!(row.to_h.slice('urn', 'ukprn', 'allocation_delta', 'order_state').merge(batch_id: batch_id, send_notification: send_notification))
       end
+
+      SequentialAllocationUpdateJob.perform_later(batch_id)
     end
 
     def batch_id
