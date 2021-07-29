@@ -49,8 +49,8 @@ RSpec.feature 'View school details' do
 
         let(:responsible_body) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
 
-        it 'says 4G routers are available to order till 31 July' do
-          expect(page).to have_content('4G wireless routers are available to order until 31 July.')
+        it 'ordering closed title' do
+          expect(page).to have_content('Ordering is closed for laptops, tablets and extra mobile data')
         end
       end
 
@@ -106,8 +106,8 @@ RSpec.feature 'View school details' do
       before { sign_in_as user }
 
       context 'has NOT ordered anything' do
-        it 'says 4G routers are available to order till 31 July' do
-          expect(page).to have_content('4G wireless routers are available to order until 31 July.')
+        it 'ordering closed title' do
+          expect(page).to have_content('Ordering is closed for laptops, tablets and extra mobile data')
         end
       end
 
