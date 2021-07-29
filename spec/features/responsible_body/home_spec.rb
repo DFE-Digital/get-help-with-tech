@@ -65,20 +65,10 @@ RSpec.feature ResponsibleBody do
           create_list(:school, 4, :centrally_managed, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body)
         end
 
-        context 'local authority' do
-          let(:responsible_body) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
+        let(:responsible_body) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
 
-          it 'says local authority did not order anything' do
-            expect(page).to have_content('Schools and colleges in your local authority did not order any laptops, tablets or routers from September 2020 to July 2021')
-          end
-        end
-
-        context 'trust' do
-          let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-
-          it 'says trust did not order anything' do
-            expect(page).to have_content('Schools and colleges in your trust did not order any laptops, tablets or routers from September 2020 to July 2021')
-          end
+        it 'says 4G routers are available to order till 31 July' do
+          expect(page).to have_content('4G wireless routers are available to order until 31 July.')
         end
       end
 
@@ -134,8 +124,8 @@ RSpec.feature ResponsibleBody do
       context 'has NOT ordered anything' do
         before { sign_in_as rb_user }
 
-        it 'says school did not order anything' do
-          expect(page).to have_content('Schools and colleges in your local authority did not order any laptops, tablets or routers from September 2020 to July 2021.')
+        it 'says 4G routers are available to order till 31 July' do
+          expect(page).to have_content('4G wireless routers are available to order until 31 July.')
         end
       end
 
