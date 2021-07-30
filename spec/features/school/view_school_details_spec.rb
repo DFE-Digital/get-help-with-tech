@@ -277,12 +277,16 @@ RSpec.feature 'View school details' do
     context 'has ordered' do
       let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
 
-      it 'shows the title' do
-        expect(page).to have_content('Order history')
+      it 'does NOT show this section' do
+        expect(page).not_to have_content('Order history')
       end
 
       context 'user can order devices' do
         let(:user) { create(:school_user, :orders_devices, full_name: 'AAA Smith', school: school) }
+
+        it 'shows the title' do
+          expect(page).to have_content('Order history')
+        end
 
         it 'shows the link to the TechSource order history' do
           expect(page).to have_link('See your order history on TechSource')
@@ -290,6 +294,10 @@ RSpec.feature 'View school details' do
       end
 
       context 'has NOT ordered routers' do
+        it 'does NOT show this section' do
+          expect(page).not_to have_content('Order history')
+        end
+
         it 'does NOT show the link to the extra mobile data requests page' do
           expect(page).not_to have_link('View your requests for extra mobile data')
         end
@@ -297,6 +305,10 @@ RSpec.feature 'View school details' do
 
       context 'has ordered routers' do
         let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered) }
+
+        it 'shows the title' do
+          expect(page).to have_content('Order history')
+        end
 
         it 'shows the link to the extra mobile data requests page' do
           expect(page).to have_link('View your requests for extra mobile data')

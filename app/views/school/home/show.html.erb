@@ -20,7 +20,7 @@
 
     <% if @has_ordered %>
       <%= render partial: 'summary_reset_devices' %>
-      <%= render partial: 'summary_order_history' %>
+      <%= render partial: 'summary_order_history' if @current_user.orders_devices? || @has_ordered_coms_devices %>
     <% end %>
   </div>
 </div>
