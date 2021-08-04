@@ -58,9 +58,9 @@ benefits of the 2 options listed above.
 Before making this decision, you should consider:
 
 * future needs of your setting or service for face-to-face and remote education (such as for disadvantaged children and young people joining the setting or service)
-* safeguarding - relevant parties (such as social workers, schools or carers) should be involved in making this decision
-* online safety, if device settings expire - for example, DfE does not recommend gifting DfE Restricted Windows devices before replacing their temporary safeguarding and management settings
-* how IT support will be provided - you should let the recipient know how to get help if their device develops a fault (DfE does not provide ongoing IT support)  
+* safeguarding &ndash; relevant parties (such as social workers, schools or carers) should be involved in making this decision
+* online safety, if device settings expire &ndash; for example, DfE does not recommend gifting DfE Restricted Windows devices before replacing their temporary safeguarding and management settings
+* how IT support will be provided &ndash; you should let the recipient know how to get help if their device develops a fault (DfE does not provide ongoing IT support)  
 
 ## What to do if circumstances change for children and young people
 
@@ -73,7 +73,7 @@ If this happens, you should assess the needs of the child or young person, inclu
 safeguarding. You can then decide whether to let them continue using the device, or ask 
 them to return it.
 
-If a device has been permanently given to a child or young person, it's their property.
+If a device has been permanently given to a child or young person, it’s their property.
 
 ### If a child or young person moves to another educational setting
 
