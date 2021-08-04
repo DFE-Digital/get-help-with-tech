@@ -104,19 +104,6 @@ device should:
 * be managed by an educational setting
 * be used for other children or young people who would benefit from it, outside of eligible groups
 
-## Loan agreements
-
-You’re advised to use a loan agreement when you choose to lend devices to children and 
-young people. This agreement may contain terms and conditions, including who is 
-responsible for what.
-
-[The Key for School Leaders](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/loaning-it-equipment-pupils-and-staff/#section-1) has templates and examples of how to set up these
-agreements.
-
-## Insuring your devices
-
-[The Key for School Leaders](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/loaning-it-equipment-pupils-and-staff/?marker=full-search-q-loan%20agreement-result-1) has some suggestions about arranging insurance.
-
 ## Labelling or tagging devices
 
 Laptops, tablets and 4G wireless routers are not tagged or labelled when they’re delivered. 
