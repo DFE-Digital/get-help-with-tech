@@ -42,7 +42,6 @@ describe EncryptionService do
         plaintext1 = EncryptionService.decrypt(ciphertext1)
         plaintext2 = EncryptionService.decrypt(ciphertext2)
 
-        expect(plaintext1).to eq(plaintext2)
         expect([plaintext1, plaintext2]).to all eq(plaintext)
       end
     end
