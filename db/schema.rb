@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_26_110031) do
+ActiveRecord::Schema.define(version: 2021_08_10_155945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,28 @@ ActiveRecord::Schema.define(version: 2021_07_26_110031) do
     t.index ["user_id", "name"], name: "index_api_tokens_on_user_id_and_name", unique: true
     t.index ["user_id", "token"], name: "index_api_tokens_on_user_id_and_token", unique: true
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
+  create_table "assets", force: :cascade do |t|
+    t.string "tag"
+    t.string "serial_number", null: false
+    t.string "model"
+    t.string "department"
+    t.string "department_id"
+    t.string "department_sold_to_id"
+    t.string "location"
+    t.string "location_id"
+    t.string "location_cc_ship_to_account"
+    t.string "encrypted_bios_password"
+    t.string "encrypted_admin_password"
+    t.string "encrypted_hardware_hash"
+    t.datetime "sys_created_at"
+    t.datetime "first_viewed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["department_sold_to_id"], name: "index_assets_on_department_sold_to_id"
+    t.index ["location_cc_ship_to_account"], name: "index_assets_on_location_cc_ship_to_account"
+    t.index ["serial_number"], name: "index_assets_on_serial_number"
   end
 
   create_table "batch_job_log_entries", force: :cascade do |t|

@@ -1,0 +1,176 @@
+require 'rails_helper'
+
+RSpec.describe Asset, type: :model do
+  subject(:asset) { build(:asset) }
+
+  let(:encryptor) { class_spy('EncryptionService') }
+
+  before { stub_const('EncryptionService', encryptor) }
+
+  describe 'creation' do
+    let(:bios_password) { 'secretbiospassword' }
+    let(:admin_password) { 'secretadminpassword' }
+    let(:hardware_hash) { 'secrethardwarehash' }
+    let(:required_attributes) { { serial_number: '30040000', department_id: 'LEA800', department_sold_to_id: '8106000', location_id: '114000', location_cc_ship_to_account: '81065000' } }
+    let(:secure_attributes) { { bios_password: bios_password, admin_password: admin_password, hardware_hash: hardware_hash } }
+
+    describe '.new' do
+      before { Asset.new(required_attributes.merge(secure_attributes)) }
+
+      specify { expect(encryptor).to have_received(:encrypt).with(bios_password).once }
+      specify { expect(encryptor).to have_received(:encrypt).with(admin_password).once }
+      specify { expect(encryptor).to have_received(:encrypt).with(hardware_hash).once }
+    end
+
+    describe '.create' do
+      before { Asset.create(required_attributes.merge(secure_attributes)) }
+
+      specify { expect(encryptor).to have_received(:encrypt).with(bios_password).once }
+      specify { expect(encryptor).to have_received(:encrypt).with(admin_password).once }
+      specify { expect(encryptor).to have_received(:encrypt).with(hardware_hash).once }
+    end
+
+    context 'FactoryBot' do
+      describe '.create' do
+        before { create(:asset, required_attributes.merge(secure_attributes)) }
+
+        specify { expect(encryptor).to have_received(:encrypt).with(bios_password).once }
+        specify { expect(encryptor).to have_received(:encrypt).with(admin_password).once }
+        specify { expect(encryptor).to have_received(:encrypt).with(hardware_hash).once }
+      end
+
+      describe '.build' do
+        before { build(:asset, required_attributes.merge(secure_attributes)) }
+
+        specify { expect(encryptor).to have_received(:encrypt).with(bios_password).once }
+        specify { expect(encryptor).to have_received(:encrypt).with(admin_password).once }
+        specify { expect(encryptor).to have_received(:encrypt).with(hardware_hash).once }
+      end
+    end
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:serial_number) }
+    it { is_expected.to validate_presence_of(:department_sold_to_id) }
+
+    it { is_expected.not_to validate_presence_of(:encrypted_bios_password) }
+    it { is_expected.not_to validate_presence_of(:encrypted_admin_password) }
+    it { is_expected.not_to validate_presence_of(:encrypted_hardware_hash) }
+  end
+
+  describe 'indices' do
+    it { is_expected.to have_db_index(:serial_number) }
+    it { is_expected.to have_db_index(:department_sold_to_id) }
+    it { is_expected.to have_db_index(:location_cc_ship_to_account) }
+  end
+
+  describe 'encrypted fields' do
+    let(:encryptor) { class_spy('EncryptionService') }
+
+    subject { build(:asset) }
+
+    before { stub_const('EncryptionService', encryptor) }
+
+    describe '#sys_created_at' do
+      context 'set' do
+        context 'string' do
+          let(:string_date) { '2020-11-22 18:03:04' }
+
+          before { asset.sys_created_at = string_date }
+
+          specify { expect(asset.sys_created_at).to eq(Time.zone.parse('22 Nov 2020 6:03:04pm')) }
+        end
+
+        context 'datetime' do
+          let(:datetime) { Time.zone.parse('25 Dec 2020 9:00am') }
+
+          before { asset.sys_created_at = datetime }
+
+          specify { expect(asset.sys_created_at).to eq(datetime) }
+        end
+      end
+    end
+
+    describe '#bios_password' do
+      context 'get' do
+        before { asset.bios_password }
+
+        specify { expect(encryptor).to have_received(:decrypt).once.with(asset.encrypted_bios_password) }
+      end
+
+      context 'set' do
+        let(:plaintext) { 'secret' }
+
+        before { asset.bios_password = 'secret' }
+
+        specify { expect(encryptor).to have_received(:encrypt).once.with(plaintext) }
+        specify { expect(asset.encrypted_bios_password).to be_present }
+        specify { expect(asset.encrypted_bios_password).not_to eq(plaintext) }
+      end
+    end
+
+    describe '#admin_password' do
+      context 'get' do
+        before { asset.admin_password }
+
+        specify { expect(encryptor).to have_received(:decrypt).once.with(asset.encrypted_admin_password) }
+      end
+    end
+
+    describe '#hardware_hash' do
+      context 'get' do
+        before { asset.hardware_hash }
+
+        specify { expect(encryptor).to have_received(:decrypt).once.with(asset.encrypted_hardware_hash) }
+      end
+    end
+  end
+
+  describe '.owned_by' do
+    context 'school' do
+      let(:school_a) { create(:school) }
+      let(:school_b) { create(:school) }
+      let(:school_a_asset_1) { build(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
+      let(:school_a_asset_2) { build(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
+      let(:school_b_asset_1) { build(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
+
+      specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_a_asset_1, school_a_asset_2) }
+    end
+
+    context 'RB' do
+      let(:rb) { create(:local_authority) }
+      let(:other_rb) { create(:local_authority) }
+      let(:rb_asset_1) { build(:asset, department_sold_to_id: rb.computacenter_reference) }
+      let(:rb_asset_2) { build(:asset, department_sold_to_id: rb.computacenter_reference) }
+      let(:other_rb_asset) { build(:asset, department_sold_to_id: other_rb.computacenter_reference) }
+      let(:rb_self_managed_school) { build(:school, :manages_orders) }
+      let(:rb_school_asset) { build(:asset, location_cc_ship_to_account: rb_self_managed_school.computacenter_reference) }
+
+      before { rb.schools << rb_self_managed_school }
+
+      specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_asset_1, rb_asset_2, rb_school_asset) }
+    end
+  end
+
+  describe '#==' do
+    subject { build(:asset, tag: 'a', serial_number: 'b') }
+
+    context 'same tag and serial number' do
+      let(:other_asset) { build(:asset, tag: 'a', serial_number: 'b') }
+
+      it { is_expected.to eq(other_asset) }
+    end
+
+    context 'different tag' do
+      let(:other_asset) { build(:asset, tag: 'p', serial_number: 'b') }
+
+      it { is_expected.not_to eq(other_asset) }
+    end
+
+    context 'different serial number' do
+      let(:other_asset) { build(:asset, tag: 'a', serial_number: 'q') }
+
+      it { is_expected.not_to eq(other_asset) }
+    end
+  end
+end

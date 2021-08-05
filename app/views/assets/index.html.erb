@@ -1,0 +1,46 @@
+<%- title = 'TODO title' %>
+<% content_for :title, title %>
+<% content_for :browser_title, title %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  title,
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <%= title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-top-4">
+    <p class="govuk-body">On this page you can find the full list of devices associated with your organisation</p>
+  </div>
+</div>
+
+<table id="<%= table_id %>" class="govuk-table">
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header app-schools-table__column-20">Serial/IMEI</th>
+    <th class="govuk-table__header app-schools-table__column-20">Model</th>
+    <th class="govuk-table__header app-schools-table__column-20">LA</th>
+    <th class="govuk-table__header app-schools-table__column-20">School/college</th>
+    <th class="govuk-table__header app-schools-table__column-20">View your BIOS and admin passwords and hardware hash</th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @assets.each do |asset| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= asset.serial_number %></td>
+      <td class="govuk-table__cell"><%= asset.model %></td>
+      <td class="govuk-table__cell"><%= asset.department %></td>
+      <td class="govuk-table__cell"><%= asset.location %></td>
+      <td class="govuk-table__cell"><%= link_to 'Show', asset %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
