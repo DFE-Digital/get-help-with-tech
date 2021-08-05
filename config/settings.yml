@@ -25,6 +25,10 @@ computacenter:
 cookie_consent:
   expiry_time_months: 6
 
+database_field_encryption:
+  key: 402aebb6e150652727db9bda
+  salt: b84bc74fa39cef36e44f6ced
+
 google:
   analytics:
     tracking_id:
