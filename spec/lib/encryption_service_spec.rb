@@ -2,11 +2,6 @@ require 'rails_helper'
 require 'encryption_service'
 
 describe EncryptionService do
-  before do
-    allow(ENV).to receive(:fetch).with('GHWT__DATABASE_FIELD_ENCRYPTION__KEY').and_return('key')
-    allow(ENV).to receive(:fetch).with('GHWT__DATABASE_FIELD_ENCRYPTION__SALT').and_return('salt')
-  end
-
   let(:plaintext) { 'secret' }
   let(:other_plaintext) { 'topsecret' }
 
@@ -24,6 +19,14 @@ describe EncryptionService do
 
         expect(ciphertext1).not_to eq(ciphertext2)
       end
+    end
+
+    context 'nil plaintext' do
+      specify { expect(EncryptionService.encrypt(nil)).to be_nil }
+    end
+
+    context 'empty plaintext' do
+      specify { expect(EncryptionService.encrypt('')).to be_nil }
     end
   end
 
@@ -44,6 +47,14 @@ describe EncryptionService do
 
         expect([plaintext1, plaintext2]).to all eq(plaintext)
       end
+    end
+
+    context 'nil ciphertext' do
+      specify { expect(EncryptionService.decrypt(nil)).to be_nil }
+    end
+
+    context 'empty ciphertext' do
+      specify { expect(EncryptionService.decrypt('')).to be_nil }
     end
   end
 end

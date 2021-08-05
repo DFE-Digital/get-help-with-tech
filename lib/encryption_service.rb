@@ -1,5 +1,5 @@
 class EncryptionService
-  # for our enviornments, generate one-off environment variables:
+  # for our environments, generate one-off environment variables:
   #
   # * GHWT__DATABASE_FIELD_ENCRYPTION__KEY
   # * GHWT__DATABASE_FIELD_ENCRYPTION__SALT
@@ -8,9 +8,9 @@ class EncryptionService
 
   def initialize
     @key = ActiveSupport::KeyGenerator.new(
-      ENV.fetch('GHWT__DATABASE_FIELD_ENCRYPTION__KEY'),
+      Settings.database_field_encryption.key,
     ).generate_key(
-      ENV.fetch('GHWT__DATABASE_FIELD_ENCRYPTION__SALT'),
+      Settings.database_field_encryption.salt,
       ActiveSupport::MessageEncryptor.key_len,
     )
 
@@ -20,11 +20,11 @@ class EncryptionService
   delegate :encrypt_and_sign, :decrypt_and_verify, to: :encryptor
 
   def self.encrypt(plaintext)
-    new.encrypt_and_sign(plaintext)
+    plaintext.present? ? new.encrypt_and_sign(plaintext) : nil
   end
 
   def self.decrypt(ciphertext)
-    new.decrypt_and_verify(ciphertext)
+    ciphertext.present? ? new.decrypt_and_verify(ciphertext) : nil
   end
 
 private

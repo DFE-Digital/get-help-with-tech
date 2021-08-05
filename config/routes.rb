@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
   post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
 
+  resources :assets, only: %i[show index]
+
   resources :sessions, only: %i[create destroy]
 
   namespace :support_ticket, path: '/get-support' do
