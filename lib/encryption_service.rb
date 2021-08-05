@@ -1,8 +1,8 @@
 class EncryptionService
   # for our enviornments, generate one-off environment variables:
   #
-  # * ENCRYPTION_SERVICE_KEY
-  # * ENCRYPTION_SERVICE_SALT
+  # * GHWT__DATABASE_FIELD_ENCRYPTION__KEY
+  # * GHWT__DATABASE_FIELD_ENCRYPTION__SALT
   #
   # with `SecureRandom.hex(12)` or suchlike
 
