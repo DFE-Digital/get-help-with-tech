@@ -4,7 +4,7 @@ RSpec.describe StageTrustData, type: :model do
   describe 'importing trusts' do
     let(:filename) { Rails.root.join('tmp/trust_test_data.csv') }
     let(:now) { Time.zone.now }
-    let(:number_of_rows) { rand(1..5) }
+    let(:number_of_rows) { 3 }
     let(:attrs) { attributes_for_list(:staged_trust, number_of_rows) }
     let(:service) { described_class.new(TrustDataFile.new(filename)) }
     let(:trust_upsert_service) { instance_double(TrustUpsertService, call: true) }
