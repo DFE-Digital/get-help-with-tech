@@ -3,6 +3,9 @@ class TrustUpdateService
     # look at the trusts that have changed since the last update
     last_update ||= DataStage::DataUpdateRecord.last_update_for(:trusts)
 
+    # create new trusts
+    create_trusts
+
     # simple updates for trusts that are open
     update_open_trusts(last_update)
 
@@ -14,6 +17,13 @@ class TrustUpdateService
   end
 
 private
+
+  def create_trusts
+    existing_trust_ids = Trust.pluck(:companies_house_number)
+    DataStage::Trust.where.not(companies_house_number: existing_trust_ids).find_each do |staged_trust|
+      create_trust(staged_trust)
+    end
+  end
 
   def update_open_trusts(last_update)
     DataStage::Trust.updated_since(last_update).gias_status_open.each do |staged_trust|
@@ -51,7 +61,6 @@ private
   end
 
   def update_trust(trust, staged_trust)
-    # update trust details
     attrs = staged_attributes(staged_trust)
     trust.update!(attrs)
   rescue ActiveRecord::RecordInvalid => e
@@ -59,7 +68,8 @@ private
   end
 
   def create_trust(staged_trust)
-    Trust.create!(staged_attributes(staged_trust))
+    attrs = staged_attributes(staged_trust)
+    Trust.create!(attrs)
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error(e.record.errors)
   end

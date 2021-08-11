@@ -7,7 +7,15 @@ class StageTrustData
 
   def import_trusts
     datasource.trusts do |trust_data|
-      TrustUpsertService.new(trust_data).call
+      trust = DataStage::Trust.find_by(companies_house_number: trust_data[:companies_house_number])
+
+      if trust
+        trust.update!(trust_data)
+      else
+        DataStage::Trust.create!(trust_data)
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error(e.message)
     end
     DataStage::DataUpdateRecord.staged!(:trusts)
   end

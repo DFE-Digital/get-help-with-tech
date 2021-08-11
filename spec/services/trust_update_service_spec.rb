@@ -59,6 +59,26 @@ RSpec.describe TrustUpdateService, type: :model do
         )
       end
     end
+
+    context 'when a trust does not exist' do
+      let!(:staged_trust) { create(:staged_trust, companies_house_number: '01111222') }
+      let(:new_trust) { Trust.find_by(companies_house_number: '01111222') }
+
+      it 'creates an associated trust record' do
+        service.update_trusts
+        expect(new_trust).to have_attributes(
+          companies_house_number: staged_trust.companies_house_number,
+          name: staged_trust.name,
+          address_1: staged_trust.address_1,
+          address_2: staged_trust.address_2,
+          address_3: staged_trust.address_3,
+          town: staged_trust.town,
+          postcode: staged_trust.postcode,
+          organisation_type: staged_trust.organisation_type,
+          status: staged_trust.status,
+        )
+      end
+    end
   end
 
   describe 'closing trusts from staging' do
