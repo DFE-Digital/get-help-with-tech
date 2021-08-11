@@ -20,7 +20,7 @@ private
 
   def create_trusts
     existing_trust_ids = Trust.pluck(:companies_house_number)
-    DataStage::Trust.where.not(companies_house_number: existing_trust_ids).find_each do |staged_trust|
+    DataStage::Trust.gias_status_open.where.not(companies_house_number: existing_trust_ids).find_each do |staged_trust|
       create_trust(staged_trust)
     end
   end

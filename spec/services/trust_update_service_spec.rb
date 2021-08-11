@@ -61,22 +61,37 @@ RSpec.describe TrustUpdateService, type: :model do
     end
 
     context 'when a trust does not exist' do
-      let!(:staged_trust) { create(:staged_trust, companies_house_number: '01111222') }
+      let!(:staged_trust) { create(:staged_trust, companies_house_number: '01111222', status: trust_status) }
       let(:new_trust) { Trust.find_by(companies_house_number: '01111222') }
 
-      it 'creates an associated trust record' do
+      before do
         service.update_trusts
-        expect(new_trust).to have_attributes(
-          companies_house_number: staged_trust.companies_house_number,
-          name: staged_trust.name,
-          address_1: staged_trust.address_1,
-          address_2: staged_trust.address_2,
-          address_3: staged_trust.address_3,
-          town: staged_trust.town,
-          postcode: staged_trust.postcode,
-          organisation_type: staged_trust.organisation_type,
-          status: staged_trust.status,
-        )
+      end
+
+      context "when it is a closed one" do
+        let(:trust_status) { "closed" }
+
+        it "do not create a Trust entry for it" do
+          expect(new_trust).to be_nil
+        end
+      end
+
+      context "when it is not closed" do
+        let(:trust_status) { "open" }
+
+        it 'creates an associated trust record' do
+          expect(new_trust).to have_attributes(
+            companies_house_number: staged_trust.companies_house_number,
+            name: staged_trust.name,
+            address_1: staged_trust.address_1,
+            address_2: staged_trust.address_2,
+            address_3: staged_trust.address_3,
+            town: staged_trust.town,
+            postcode: staged_trust.postcode,
+            organisation_type: staged_trust.organisation_type,
+            status: staged_trust.status,
+          )
+        end
       end
     end
   end
