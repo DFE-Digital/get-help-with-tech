@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AssetsController do
-  describe '#index' do
+  xdescribe '#index' do
     context 'school A' do
       let(:school_a) { create(:school) }
       let(:school_b) { create(:school) }
@@ -42,7 +42,7 @@ RSpec.describe AssetsController do
     end
   end
 
-  describe '#show' do
+  xdescribe '#show' do
     let(:asset) { create(:asset) }
 
     before { get :show, params: { id: asset.id } }
