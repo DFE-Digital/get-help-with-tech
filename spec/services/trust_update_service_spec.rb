@@ -68,16 +68,16 @@ RSpec.describe TrustUpdateService, type: :model do
         service.update_trusts
       end
 
-      context "when it is a closed one" do
-        let(:trust_status) { "closed" }
+      context 'when it is a closed one' do
+        let(:trust_status) { 'closed' }
 
-        it "do not create a Trust entry for it" do
+        it 'do not create a Trust entry for it' do
           expect(new_trust).to be_nil
         end
       end
 
-      context "when it is not closed" do
-        let(:trust_status) { "open" }
+      context 'when it is not closed' do
+        let(:trust_status) { 'open' }
 
         it 'creates an associated trust record' do
           expect(new_trust).to have_attributes(
