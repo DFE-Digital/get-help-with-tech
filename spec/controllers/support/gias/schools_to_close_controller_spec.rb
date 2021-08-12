@@ -13,12 +13,10 @@ RSpec.describe Support::Gias::SchoolsToCloseController, type: :controller do
 
     context 'support third line users' do
       let!(:staged_school_to_be_closed) { create(:staged_school, :closed) }
-      let!(:staged_school_to_be_closed_counterpart) {
-        create(:school, urn: staged_school_to_be_closed.urn, status: 'open')
-      }
-      let!(:staged_school_not_to_be_closed) { create(:staged_school) }
 
       before do
+        create(:school, urn: staged_school_to_be_closed.urn, status: 'open')
+        create(:staged_school)
         sign_in_as support_third_line_user
         get :index
       end
@@ -32,18 +30,17 @@ RSpec.describe Support::Gias::SchoolsToCloseController, type: :controller do
 
   describe 'show' do
     let!(:staged_school_to_be_closed) { create(:staged_school, :closed) }
-    let!(:staged_school_to_be_closed_counterpart) {
-      create(:school, urn: staged_school_to_be_closed.urn, status: 'open')
-    }
+
+    before { create(:school, urn: staged_school_to_be_closed.urn, status: 'open') }
 
     context 'non support third line users' do
       before { sign_in_as non_support_third_line_user }
 
-      specify {
+      specify do
         expect {
           get :show, params: { urn: staged_school_to_be_closed.urn }
         }.to be_forbidden_for(non_support_third_line_user)
-      }
+      end
     end
 
     context 'support third line users' do
@@ -61,18 +58,18 @@ RSpec.describe Support::Gias::SchoolsToCloseController, type: :controller do
 
   describe '#update' do
     let!(:staged_school_to_be_closed) { create(:staged_school, :closed) }
-    let!(:staged_school_to_be_closed_counterpart) {
+    let!(:staged_school_to_be_closed_counterpart) do
       create(:school, urn: staged_school_to_be_closed.urn, status: 'open')
-    }
+    end
 
     context 'non support third line users' do
       before { sign_in_as non_support_third_line_user }
 
-      specify {
+      specify do
         expect {
           patch :update, params: { urn: staged_school_to_be_closed.urn }
         }.to be_forbidden_for(non_support_third_line_user)
-      }
+      end
     end
 
     context 'support third line users' do
@@ -82,11 +79,13 @@ RSpec.describe Support::Gias::SchoolsToCloseController, type: :controller do
       end
 
       specify { expect(response).to redirect_to(support_gias_schools_to_close_index_path) }
-      specify {
+
+      specify do
         expect(controller)
           .to set_flash[:success]
                 .to("#{staged_school_to_be_closed_counterpart.name} (#{staged_school_to_be_closed_counterpart.urn}) has been closed")
-      }
+      end
+
       specify { expect(staged_school_to_be_closed_counterpart.reload).to be_gias_status_closed }
     end
   end

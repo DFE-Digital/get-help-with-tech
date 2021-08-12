@@ -14,9 +14,9 @@ RSpec.describe Support::Gias::SchoolsToAddController, type: :controller do
     context 'support third line users' do
       let!(:staged_school_to_be_added) { create(:staged_school) }
       let!(:staged_school_not_to_be_added) { create(:staged_school) }
-      let!(:school_added_already) { create(:school, urn: staged_school_not_to_be_added.urn) }
 
       before do
+        create(:school, urn: staged_school_not_to_be_added.urn)
         sign_in_as support_third_line_user
         get :index
       end
@@ -34,11 +34,11 @@ RSpec.describe Support::Gias::SchoolsToAddController, type: :controller do
     context 'non support third line users' do
       before { sign_in_as non_support_third_line_user }
 
-      specify {
+      specify do
         expect {
           get :show, params: { urn: staged_school_to_be_added.urn }
         }.to be_forbidden_for(non_support_third_line_user)
-      }
+      end
     end
 
     context 'support third line users' do
@@ -60,11 +60,11 @@ RSpec.describe Support::Gias::SchoolsToAddController, type: :controller do
     context 'non support third line users' do
       before { sign_in_as non_support_third_line_user }
 
-      specify {
+      specify do
         expect {
           patch :update, params: { urn: staged_school_to_be_added.urn }
         }.to be_forbidden_for(non_support_third_line_user)
-      }
+      end
     end
 
     context 'support third line users' do
@@ -81,10 +81,12 @@ RSpec.describe Support::Gias::SchoolsToAddController, type: :controller do
         end
 
         specify { expect(response).to redirect_to(support_gias_schools_to_add_index_path) }
-        specify {
+
+        specify do
           expect(controller)
             .to set_flash[:success].to("#{staged_school_to_be_added.name} (#{staged_school_to_be_added.urn}) added")
-        }
+        end
+
         specify { expect(new_school).to exist }
       end
 

@@ -12,14 +12,14 @@ RSpec.describe Support::Gias::HomeController, type: :controller do
     end
 
     context 'support third line users' do
-      let!(:staged_school_to_be_added) { create(:staged_school) }
       let!(:staged_school_not_to_be_added) { create(:staged_school) }
-      let!(:school_added_already) { create(:school, urn: staged_school_not_to_be_added.urn) }
       let!(:staged_school_to_be_closed) { create(:staged_school, :closed) }
-      let!(:staged_school_to_be_closed_counterpart) { create(:school, urn: staged_school_to_be_closed.urn) }
-      let!(:staged_school_not_to_be_closed) { create(:staged_school, :closed) }
 
       before do
+        create(:staged_school)
+        create(:school, urn: staged_school_not_to_be_added.urn)
+        create(:school, urn: staged_school_to_be_closed.urn)
+        create(:staged_school, :closed)
         sign_in_as support_third_line_user
         get :index
       end

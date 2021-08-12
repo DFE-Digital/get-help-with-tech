@@ -199,6 +199,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
   describe '#schools_that_need_to_be_added' do
     let!(:staged_school) { create(:staged_school, urn: 103_001, status: school_status) }
+
     subject { service.schools_that_need_to_be_added }
 
     context 'when a staged school is closed' do
@@ -224,6 +225,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
   describe '#schools_that_need_to_be_closed' do
     let!(:staged_school) { create(:staged_school, urn: 103_001, status: staged_school_status) }
+
     subject { service.schools_that_need_to_be_closed }
 
     context 'when a staged school is open' do
