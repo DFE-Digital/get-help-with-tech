@@ -10,14 +10,15 @@ class ComputacenterHistoricalAssetImportJob < ApplicationJob
     end
   end
 
+  # the following methods are public for easier testing
+
   def perform_on_file(file)
     job_class_name = self.class
     progress_interval = 5_000
     created_asset_count = 0
 
-    @asset_row_count = non_header_line_count_of_file
-
-    Rails.logger.info("Started #{job_class_name} for #{@path_to_csv} with #{@asset_row_count} asset(s)")
+    set_estimated_asset_lines_in_file(estimate_assets_lines_in_file)
+    Rails.logger.info("Started #{job_class_name} for #{@path_to_csv} with ~#{@asset_row_count} asset(s)")
 
     CSV.foreach(file, csv_options) do |row|
       import_csv_row(row)
@@ -29,14 +30,28 @@ class ComputacenterHistoricalAssetImportJob < ApplicationJob
     Rails.logger.info("There are now #{Asset.count} total asset(s) in the database")
   end
 
+  def set_estimated_asset_lines_in_file(estimate)
+    @asset_row_count = estimate
+  end
+
   def unix_word_count_output
-    Open3.capture3('wc', '-l', @path_to_file).first
+    stdout, stderr = Open3.capture3('wc', '-l', @path_to_csv)[0, 1]
+
+    stderr.blank? ? stdout : raise("could not get file line count for #{@path_to_csv}")
+  end
+
+  def log_progress(created_asset_count)
+    Rails.logger.info("(#{percentage(created_asset_count, @asset_row_count)}) This job has written #{created_asset_count} of ~#{@asset_row_count} asset(s) so far...")
   end
 
 private
 
-  # as a estimation of the number of assets in the CSV this could be wrong
-  # if there are blank lines in the file
+  def estimate_assets_lines_in_file
+    non_header_line_count_of_file
+  end
+
+  # as an estimate of the number of assets in the CSV this could be wrong
+  # if there are blank lines or a missing header line
   def non_header_line_count_of_file
     total_line_count = line_count_of_file
     total_line_count.zero? ? 0 : total_line_count - 1
@@ -59,7 +74,7 @@ private
     Asset.create!(tag: row[1], serial_number: row[2], model: row[3], department: row[4], department_id: row[5], department_sold_to_id: row[6], location: row[7], location_id: row[8], location_cc_ship_to_account: row[9], bios_password: row[10], admin_password: row[11], hardware_hash: row[12], sys_created_at: row[13])
   end
 
-  def log_progress(created_asset_count)
-    Rails.logger.info("This job has written #{created_asset_count} of #{@asset_row_count} assets(s) (#{number_to_percentage(created_asset_count / @asset_row_count.to_f)}) so far...")
+  def percentage(numerator, denominator)
+    (numerator * 100.0 / denominator).to_s(:percentage, precision: 2)
   end
 end

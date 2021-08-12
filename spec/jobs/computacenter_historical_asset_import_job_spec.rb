@@ -37,6 +37,8 @@ RSpec.describe ComputacenterHistoricalAssetImportJob, type: :job do
 
   let(:asset_csv_file_path) { 'assets.csv' }
 
+  before { allow(Rails.logger).to receive(:info) }
+
   describe '#perform' do
     describe 'read file' do
       before do
@@ -69,16 +71,24 @@ RSpec.describe ComputacenterHistoricalAssetImportJob, type: :job do
     describe 'logging' do
       let(:filename_regex_suitable_for_string_io_class) { /\.*/ }
 
-      before do
-        allow(Rails.logger).to receive(:info)
-        job.perform_on_file(test_io)
-      end
+      before { job.perform_on_file(test_io) }
 
       it 'logs' do
-        expect(Rails.logger).to have_received(:info).with(/Started ComputacenterHistoricalAssetImportJob for #{filename_regex_suitable_for_string_io_class.source} with 2 asset\(s\)/).ordered
+        expect(Rails.logger).to have_received(:info).with(/Started ComputacenterHistoricalAssetImportJob for #{filename_regex_suitable_for_string_io_class.source} with ~2 asset\(s\)/).ordered
         expect(Rails.logger).to have_received(:info).with(/Finished ComputacenterHistoricalAssetImportJob for #{filename_regex_suitable_for_string_io_class.source} with 2 asset\(s\) imported/).ordered
         expect(Rails.logger).to have_received(:info).with('There are now 2 total asset(s) in the database').ordered
       end
     end
+  end
+
+  describe '#log_progress' do
+    let(:job) { described_class.new }
+
+    before do
+      job.set_estimated_asset_lines_in_file(99)
+      job.log_progress(50)
+    end
+
+    specify { expect(Rails.logger).to have_received(:info).with('(50.51%) This job has written 50 of ~99 asset(s) so far...') }
   end
 end
