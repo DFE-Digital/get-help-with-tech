@@ -29,7 +29,7 @@
     <%= form_for @school, url: support_gias_schools_to_add_path(urn: @school.urn) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render Support::Gias::SchoolDetailsComponent.new(school: @school) %>
-      <% unless @school.responsible_body.blank? %>
+      <% if @school.responsible_body.present? %>
         <%= f.govuk_submit 'Add school' %>
       <%- end %>
     <%- end %>

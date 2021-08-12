@@ -2,7 +2,6 @@ class SignInTokenMailer < ApplicationMailer
   DEFAULT_NOTIFY_TEMPLATE_ID = '89b4abbb-0f01-4546-bf30-f88db5e0ae3c'.freeze
 
   def sign_in_token_email
-    byebug
     @user = params[:user]
     identifier = @user.sign_in_identifier(@user.sign_in_token)
 
