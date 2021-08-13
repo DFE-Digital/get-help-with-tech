@@ -39,19 +39,7 @@ RSpec.describe ComputacenterHistoricalAssetImportJob, type: :job do
 
   before { allow(Rails.logger).to receive(:info) }
 
-  describe '#perform' do
-    describe 'read file' do
-      before do
-        allow(File).to receive(:open)
-        described_class.perform_now(asset_csv_file_path)
-      end
-
-      specify { expect(File).to have_received(:open).with(asset_csv_file_path, 'r') }
-    end
-  end
-
-  describe '#perform_on_file' do
-    let(:test_io) { StringIO.new }
+  describe '#perform_on_csv_file_path' do
     let(:job) { described_class.new }
 
     before do
@@ -62,32 +50,25 @@ RSpec.describe ComputacenterHistoricalAssetImportJob, type: :job do
 
     describe 'record creation' do
       it 'creates two records' do
-        expect { job.perform_on_file(test_io) }.to change { Asset.count }.from(0).to(2)
+        expect { job.perform_on_csv_file_path(asset_csv_file_path) }.to change { Asset.count }.from(0).to(2)
         expect(Asset.first).to have_attributes(tag: asset_tag_1, serial_number: serial_number_1, model: model_name_1, department: department_name_1, department_id: department_id_1, department_sold_to_id: sold_to_1, location: location_name_1, location_id: location_id_1, location_cc_ship_to_account: ship_to_1, bios_password: bios_password_1, admin_password: admin_password_1, hardware_hash: hardware_hash_1, sys_created_at: Time.zone.parse(sys_created_on_1))
         expect(Asset.second).to have_attributes(tag: asset_tag_2, serial_number: serial_number_2, model: model_name_2, department: department_name_2, department_id: department_id_2, department_sold_to_id: sold_to_2, location: location_name_2, location_id: location_id_2, location_cc_ship_to_account: ship_to_2, bios_password: bios_password_2, admin_password: admin_password_2, hardware_hash: hardware_hash_2, sys_created_at: Time.zone.parse(sys_created_on_2))
       end
     end
 
     describe 'logging' do
-      let(:filename_regex_suitable_for_string_io_class) { /\.*/ }
-
-      before { job.perform_on_file(test_io) }
+      before { job.perform_on_csv_file_path(asset_csv_file_path) }
 
       it 'logs' do
-        expect(Rails.logger).to have_received(:info).with(/Started ComputacenterHistoricalAssetImportJob for #{filename_regex_suitable_for_string_io_class.source} with ~2 asset\(s\)/).ordered
-        expect(Rails.logger).to have_received(:info).with(/Finished ComputacenterHistoricalAssetImportJob for #{filename_regex_suitable_for_string_io_class.source} with 2 asset\(s\) imported/).ordered
+        expect(Rails.logger).to have_received(:info).with(/Started ComputacenterHistoricalAssetImportJob for assets.csv with ~2 asset\(s\)/).ordered
+        expect(Rails.logger).to have_received(:info).with(/Finished ComputacenterHistoricalAssetImportJob for assets.csv with 2 asset\(s\) imported/).ordered
         expect(Rails.logger).to have_received(:info).with('There are now 2 total asset(s) in the database').ordered
       end
     end
   end
 
   describe '#log_progress' do
-    let(:job) { described_class.new }
-
-    before do
-      job.set_estimated_asset_lines_in_file(99)
-      job.log_progress(50)
-    end
+    before { described_class.new.log_progress(50, 99) }
 
     specify { expect(Rails.logger).to have_received(:info).with('(50.51%) This job has written 50 of ~99 asset(s) so far...') }
   end
