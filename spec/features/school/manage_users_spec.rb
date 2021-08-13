@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Manage school users' do
   let(:school_user) { create(:school_user, full_name: 'AAA Smith') }
   let(:user_from_same_school) { create(:school_user, full_name: 'ZZZ Jones', school: school_user.school) }
+  let(:user_from_same_school_deleted) { create(:school_user, :deleted, full_name: 'John Doe', school: school_user.school) }
   let(:new_school_user) { build(:school_user, full_name: 'BBB Brown', school: school_user.school) }
   let(:user_from_other_school) { create(:school_user) }
   let(:school_users_page) { PageObjects::School::UsersPage.new }
@@ -13,6 +14,7 @@ RSpec.feature 'Manage school users' do
     allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return(nil)
     user_from_same_school
     user_from_other_school
+    user_from_same_school_deleted
 
     sign_in_as school_user
   end
@@ -75,6 +77,8 @@ RSpec.feature 'Manage school users' do
   def then_i_see_a_list_of_users_for_my_school
     expect(school_users_page.user_rows[0]).to have_content('AAA Smith')
     expect(school_users_page.user_rows[1]).to have_content('ZZZ Jones')
+
+    expect(page).not_to have_content(user_from_same_school_deleted.full_name)
   end
 
   def and_i_dont_see_users_from_other_schools
@@ -145,6 +149,8 @@ RSpec.feature 'Manage school users' do
     expect(school_users_page.user_rows[0]).to have_content('AAA Smith')
     expect(school_users_page.user_rows[1]).to have_content('BBB Brown')
     expect(school_users_page.user_rows[2]).to have_content('ZZZ Jones')
+
+    expect(page).not_to have_content(user_from_same_school_deleted.full_name)
   end
 
   def then_i_see_the_updated_details_for_the_user

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Managing ResponsibleBody users' do
   let!(:rb_user) { create(:local_authority_user, full_name: 'AAA Smith') }
   let!(:rb_user_2) { create(:local_authority_user, full_name: 'ZZZ Jones', responsible_body: rb_user.responsible_body) }
+  let!(:rb_user_3_deleted) { create(:local_authority_user, :deleted, full_name: 'John Doe', responsible_body: rb_user.responsible_body) }
   let(:user_from_other_rb) { create(:trust_user) }
   let(:rb_users_index_page) { PageObjects::ResponsibleBody::UsersPage.new }
   let(:new_rb_user_form) { PageObjects::ResponsibleBody::NewUserPage.new }
@@ -24,6 +25,8 @@ RSpec.feature 'Managing ResponsibleBody users' do
     expect(rb_users_index_page.user_rows.size).to eq(2)
     expect(rb_users_index_page.user_rows[0]).to have_content(rb_user.full_name)
     expect(rb_users_index_page.user_rows[1]).to have_content(rb_user_2.full_name)
+
+    expect(rb_users_index_page).not_to have_content(rb_user_3_deleted.full_name)
   end
 
   it 'shows a link to Invite a new user' do

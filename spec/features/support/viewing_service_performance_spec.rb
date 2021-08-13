@@ -42,6 +42,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   scenario 'DfE users can query for completions between given dates' do
+    Timecop.freeze
     given_there_are_some_completion_events
 
     when_i_sign_in_as_a_dfe_user
@@ -53,6 +54,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
     and_click_calculate
     then_i_see_the_correct_number
     and_i_see_the_dates_i_entered_in_govuk_format
+    Timecop.return
   end
 
   scenario 'DfE users see service stats about routers' do

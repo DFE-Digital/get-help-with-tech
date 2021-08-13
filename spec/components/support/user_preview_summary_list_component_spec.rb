@@ -19,6 +19,10 @@ describe Support::UserPreviewSummaryListComponent do
     expect(result.css('.govuk-summary-list__row')[2].text).to include(user.privacy_notice_seen_at.strftime('%d'))
   end
 
+  it 'does NOT display the Deleted row' do
+    expect(result.css('.govuk-summary-list__row')[6]).to be_nil
+  end
+
   context 'when privacy notice has not been seen' do
     let(:user) do
       build(:school_user, :has_not_seen_privacy_notice, telephone: '12345')
@@ -78,6 +82,17 @@ describe Support::UserPreviewSummaryListComponent do
 
     it 'displays the when the TechSource account was confirmed' do
       expect(result.css('.govuk-summary-list__row')[5].text).to include(user.techsource_account_confirmed_at.strftime('%d'))
+    end
+  end
+
+  context 'soft-deleted user' do
+    let(:user) do
+      build(:school_user, :has_seen_privacy_notice, telephone: '12345', deleted_at: Time.zone.now)
+    end
+
+    it 'displays the user is deleted' do
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('Deleted')
+      expect(result.css('.govuk-summary-list__row')[6].text).to include('Yes')
     end
   end
 end
