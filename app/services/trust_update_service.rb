@@ -11,7 +11,7 @@ class TrustUpdateService
 
     # auto close trusts that have no schools
     # skip and notify sentry when a trust is closed and still has schools - needs investigation
-    close_trusts(last_update)
+    close_trusts
 
     DataStage::DataUpdateRecord.updated!(:trusts)
   end
@@ -35,20 +35,19 @@ private
     end
   end
 
-  def close_trusts(last_update)
+  def close_trusts
     trusts_with_schools = []
 
-    DataStage::Trust.updated_since(last_update).gias_status_closed.each do |staged_trust|
+    DataStage::Trust.gias_status_closed.each do |staged_trust|
       trust = Trust.find_by(companies_house_number: staged_trust.companies_house_number)
 
       next if !trust || trust.status == 'closed'
 
-      if trust.schools.size.positive?
+      if trust.schools.any?
         trusts_with_schools << trust.id
-        next
+      else
+        close_trust(trust)
       end
-
-      close_trust(trust)
     end
 
     return if trusts_with_schools.empty?
