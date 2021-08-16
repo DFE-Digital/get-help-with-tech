@@ -115,6 +115,15 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
            last_signed_in_at: Date.new(2020, 7, 1),
            privacy_notice_seen_at: Date.new(2020, 7, 1),
            responsible_body: local_authority)
+
+    create(:user,
+           :deleted,
+           full_name: 'John Doe',
+           email_address: 'john.doe@coventry.gov.uk',
+           sign_in_count: 1,
+           last_signed_in_at: Date.new(2020, 5, 1),
+           privacy_notice_seen_at: Date.new(2020, 5, 1),
+           responsible_body: local_authority)
   end
 
   def given_a_centrally_managed_responsible_body_with_users
@@ -132,6 +141,15 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
            sign_in_count: 2,
            last_signed_in_at: Date.new(2020, 7, 1),
            privacy_notice_seen_at: Date.new(2020, 7, 1),
+           responsible_body: local_authority_managing_centrally)
+
+    create(:user,
+           :deleted,
+           full_name: 'John Doe',
+           email_address: 'john.doe@coventry.gov.uk',
+           sign_in_count: 1,
+           last_signed_in_at: Date.new(2020, 5, 1),
+           privacy_notice_seen_at: Date.new(2020, 5, 1),
            responsible_body: local_authority_managing_centrally)
   end
 
@@ -304,7 +322,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
   end
 
   def then_i_can_see_the_users_assigned_to_that_responsible_body
-    expect(responsible_body_page.users.size).to eq(2)
+    expect(responsible_body_page.users.size).to eq(3)
 
     first_user = responsible_body_page.users[0]
     expect(first_user).to have_text('Zeta Zane')
@@ -313,20 +331,32 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     expect(first_user).to have_text('01 Jul 00:00')
 
     second_user = responsible_body_page.users[1]
-    expect(second_user).to have_text('Amy Adams')
-    expect(second_user).to have_text('amy.adams@coventry.gov.uk')
-    expect(second_user).to have_text('0') # sign-ins
-    expect(second_user).to have_text('Never')
+    expect(second_user).to have_text('John Doe')
+    expect(second_user).to have_text('john.doe@coventry.gov.uk')
+    expect(second_user).to have_text('1') # sign-ins
+    expect(second_user).to have_text('01 May 00:00')
+
+    third_user = responsible_body_page.users[2]
+    expect(third_user).to have_text('Amy Adams')
+    expect(third_user).to have_text('amy.adams@coventry.gov.uk')
+    expect(third_user).to have_text('0') # sign-ins
+    expect(third_user).to have_text('Never')
   end
 
   def then_i_only_see_the_users_assigned_to_that_responsible_body_who_have_seen_the_privacy_notice
-    expect(responsible_body_page.users.size).to eq(1)
+    expect(responsible_body_page.users.size).to eq(2)
 
     first_user = responsible_body_page.users[0]
     expect(first_user).to have_text('Zeta Zane')
     expect(first_user).to have_text('zeta.zane@coventry.gov.uk')
     expect(first_user).to have_text('2') # sign-ins
     expect(first_user).to have_text('01 Jul 00:00')
+
+    first_user = responsible_body_page.users[1]
+    expect(first_user).to have_text('John Doe')
+    expect(first_user).to have_text('john.doe@coventry.gov.uk')
+    expect(first_user).to have_text('1') # sign-ins
+    expect(first_user).to have_text('01 May 00:00')
 
     expect(responsible_body_page).not_to have_text('Amy Adams')
   end

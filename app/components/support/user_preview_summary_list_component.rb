@@ -6,7 +6,7 @@ class Support::UserPreviewSummaryListComponent < ViewComponent::Base
   end
 
   def rows
-    [
+    r = [
       {
         key: 'Email address',
         value: @user.email_address,
@@ -32,6 +32,9 @@ class Support::UserPreviewSummaryListComponent < ViewComponent::Base
         value: can_order_devices_label,
       },
     ]
+
+    r << { key: 'Deleted', value: 'Yes' } if @user.soft_deleted?
+    r
   end
 
 private

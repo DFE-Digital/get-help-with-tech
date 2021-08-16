@@ -125,6 +125,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
                     responsible_body: local_authority)
     create(:school_user, school: school, full_name: 'James P. Sullivan', email_address: 'sully@alpha.sch.uk')
     create(:school_user, school: school, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk', privacy_notice_seen_at: nil)
+    create(:school_user, :deleted, school: school, full_name: 'John Doe', email_address: 'john.doe@alpha.sch.uk')
   end
 
   def and_the_school_is_closed
@@ -181,6 +182,9 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
 
     expect(page).to have_text('Mike Wazowski')
     expect(page).to have_text('mike@alpha.sch.uk')
+
+    expect(page).to have_text('John Doe')
+    expect(page).to have_text('john.doe@alpha.sch.uk')
   end
 
   def then_i_see_that_the_school_is_permanently_closed
@@ -190,6 +194,9 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   def then_i_see_the_school_users_who_have_seen_the_privacy_policy
     expect(page).to have_text('James P. Sullivan')
     expect(page).to have_text('sully@alpha.sch.uk')
+
+    expect(page).to have_text('John Doe')
+    expect(page).to have_text('john.doe@alpha.sch.uk')
   end
 
   def and_i_dont_see_the_school_users_who_have_not_seen_the_privacy_policy
@@ -227,6 +234,9 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
 
     expect(page).to have_text('Michael Wazowski')
     expect(page).to have_text('mwazowski@alpha.sch.uk')
+
+    expect(page).to have_text('John Doe')
+    expect(page).to have_text('john.doe@alpha.sch.uk')
   end
 
   def then_i_see_error_messages

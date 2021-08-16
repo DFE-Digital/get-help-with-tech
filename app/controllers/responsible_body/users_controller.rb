@@ -1,12 +1,12 @@
 class ResponsibleBody::UsersController < ResponsibleBody::BaseController
   def index
-    @users = @responsible_body.users.order(:full_name)
+    @users = @responsible_body.users.not_deleted.order(:full_name)
   end
 
   def show; end
 
   def new
-    @rb_user = @responsible_body.users.build
+    @rb_user = @responsible_body.users.not_deleted.build
   end
 
   def create
@@ -27,11 +27,11 @@ class ResponsibleBody::UsersController < ResponsibleBody::BaseController
   end
 
   def edit
-    @rb_user = @responsible_body.users.find(params[:id])
+    @rb_user = @responsible_body.users.not_deleted.find(params[:id])
   end
 
   def update
-    @rb_user = @responsible_body.users.find(params[:id])
+    @rb_user = @responsible_body.users.not_deleted.find(params[:id])
 
     authorize @rb_user, policy_class: ResponsibleBody::BasePolicy
 

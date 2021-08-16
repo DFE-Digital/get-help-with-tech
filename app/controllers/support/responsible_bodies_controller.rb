@@ -14,7 +14,7 @@ class Support::ResponsibleBodiesController < Support::BaseController
   def show
     @responsible_body = ResponsibleBody.find(params[:id])
     @virtual_cap_pools = @responsible_body.virtual_cap_pools.with_std_device_first
-    @users = policy_scope(@responsible_body.users).not_deleted.order('last_signed_in_at desc nulls last, updated_at desc')
+    @users = policy_scope(@responsible_body.users).order('last_signed_in_at desc nulls last, updated_at desc')
     @schools = @responsible_body
       .schools
       .gias_status_open

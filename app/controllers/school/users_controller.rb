@@ -1,6 +1,6 @@
 class School::UsersController < School::BaseController
   def index
-    @users = @school.users.order(:full_name)
+    @users = @school.users.not_deleted.order(:full_name)
   end
 
   def new
@@ -21,11 +21,11 @@ class School::UsersController < School::BaseController
   end
 
   def edit
-    @user = present(@school.users.find(params[:id]))
+    @user = present(@school.users.not_deleted.find(params[:id]))
   end
 
   def update
-    @user = @school.users.find(params[:id])
+    @user = @school.users.not_deleted.find(params[:id])
 
     authorize @user, policy_class: School::BasePolicy
 

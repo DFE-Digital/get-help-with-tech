@@ -32,7 +32,7 @@ class Support::SchoolsController < Support::BaseController
 
   def show
     @school = School.includes(:responsible_body).where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
-    @users = policy_scope(@school.users).not_deleted
+    @users = policy_scope(@school.users)
     @email_audits = @school.email_audits.order(created_at: :desc)
     @timeline = Timeline::School.new(school: @school)
   end
