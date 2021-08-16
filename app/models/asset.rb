@@ -3,6 +3,8 @@ require 'encryption_service'
 class Asset < ApplicationRecord
   validates :serial_number, :department_sold_to_id, presence: true
 
+  default_scope { order(:location) }
+
   def self.secure_attr_accessor(*attributes)
     attributes.each do |attribute|
       define_method(attribute) do

@@ -1,9 +1,9 @@
-<%- title = 'TODO title' %>
+<%- title = 'Assets' %>
 <% content_for :title, title %>
 <% content_for :browser_title, title %>
 
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ "Home" => root_path },
+  <% breadcrumbs([{ 'Home' => root_path },
                   title,
                  ]) %>
 <% end %>
@@ -22,14 +22,14 @@
   </div>
 </div>
 
-<table id="<%= table_id %>" class="govuk-table">
+<table class="govuk-table">
   <thead class="govuk-table__head">
   <tr class="govuk-table__row">
     <th class="govuk-table__header app-schools-table__column-20">Serial/IMEI</th>
     <th class="govuk-table__header app-schools-table__column-20">Model</th>
-    <th class="govuk-table__header app-schools-table__column-20">LA</th>
-    <th class="govuk-table__header app-schools-table__column-20">School/college</th>
-    <th class="govuk-table__header app-schools-table__column-20">View your BIOS and admin passwords and hardware hash</th>
+    <th class="govuk-table__header app-schools-table__column-20">Local Authority/Academy Trust</th>
+    <th class="govuk-table__header app-schools-table__column-20">School/College</th>
+    <th class="govuk-table__header app-schools-table__column-20">View your BIOS/admin passwords and hardware hash</th>
   </tr>
   </thead>
   <tbody class="govuk-table__body">
