@@ -1,5 +1,5 @@
 class ExtraMobileDataRequest < ApplicationRecord
-  has_paper_trail
+  has_paper_trail ignore: %i[account_holder_name device_phone_number]
 
   after_initialize :set_defaults
   before_validation :normalise_device_phone_number, :normalise_name, :update_hashes
@@ -116,7 +116,15 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def normalise_name
-    self.normalised_name = account_holder_name.to_s.downcase.gsub(/[\s[[:punct:]]]/, '')
+    self.normalised_name = normalised_name_value(account_holder_name)
+  end
+
+  def normalised_name_value(name)
+    name.to_s.downcase.gsub(/[\s[[:punct:]]]/, '')
+  end
+
+  def normalised_device_phone_number_value(phone)
+    Phonelib.parse(phone).national(false).presence
   end
 
 private
@@ -160,7 +168,7 @@ private
   end
 
   def normalise_device_phone_number
-    self.device_phone_number = Phonelib.parse(device_phone_number).national(false).presence
+    self.device_phone_number = normalised_device_phone_number_value(device_phone_number)
   end
 
   def set_defaults
