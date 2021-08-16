@@ -13,7 +13,9 @@ class AssetsController < ApplicationController
   end
 
   # GET /assets/1
-  def show; end
+  def show
+    @asset.update!(first_viewed_at: Time.zone.now) unless @asset.viewed?
+  end
 
 private
 

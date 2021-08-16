@@ -37,11 +37,40 @@ RSpec.describe AssetsController do
   end
 
   describe '#show' do
-    let(:asset) { create(:asset) }
+    context 'first view' do
+      let(:asset) { create(:asset, :never_viewed) }
+      let(:first_view_timestamp) { Time.zone.parse('1 Jan 2020 09:00') }
 
-    before { get :show, params: { id: asset.id } }
+      it 'records the time of the first view' do
+        expect(asset).not_to be_viewed
+        expect(asset.first_viewed_at).to be_nil
 
-    specify { expect(assigns(:asset)).to eq(asset) }
-    specify { expect(response).to render_template(:show) }
+        Timecop.freeze(first_view_timestamp) do
+          get :show, params: { id: asset.id }
+          asset.reload
+
+          expect(asset).to be_viewed
+          expect(asset.first_viewed_at).to eq(first_view_timestamp)
+        end
+
+        expect(assigns(:asset)).to eq(asset)
+        expect(response).to render_template(:show)
+      end
+    end
+
+    context 'second view' do
+      let(:asset) { create(:asset, :viewed) }
+      let(:first_view_timestamp) { asset.first_viewed_at }
+      let(:second_view_timestamp) { 1.minute.ago }
+
+      it 'keeps the time of the first view' do
+        Timecop.freeze(second_view_timestamp) do
+          get :show, params: { id: asset.id }
+
+          expect(asset.first_viewed_at).to eq(first_view_timestamp)
+          expect(asset.first_viewed_at).not_to eq(second_view_timestamp)
+        end
+      end
+    end
   end
 end

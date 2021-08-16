@@ -34,6 +34,10 @@ class Asset < ApplicationRecord
     end
   }
 
+  def viewed?
+    first_viewed_at.present?
+  end
+
   def ==(other)
     self.class == other.class && tag == other.tag && serial_number == other.serial_number
   end
