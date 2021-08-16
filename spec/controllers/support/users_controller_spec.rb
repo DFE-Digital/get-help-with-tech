@@ -287,32 +287,54 @@ RSpec.describe Support::UsersController do
   describe '#destroy' do
     let(:responsible_body) { create(:local_authority) }
     let(:school) { create(:school) }
-    let(:existing_user) { create(:local_authority_user, orders_devices: true) }
 
     context 'for support users' do
       before do
         sign_in_as support_user
       end
 
-      it 'sets user deleted_at timestamp' do
-        delete :destroy, params: { id: existing_user.id }
-        expect(existing_user.reload.deleted_at).to be_present
-      end
+      context 'with confirmed TechSource account' do
+        let(:existing_user) { create(:local_authority_user, :with_a_confirmed_techsource_account, orders_devices: true) }
 
-      it 'marks the user as being no longer able to order' do
-        expect {
+        it 'sets user deleted_at timestamp' do
           delete :destroy, params: { id: existing_user.id }
-        }.to change { existing_user.reload.orders_devices }.from(true).to(false)
+          expect(existing_user.reload.deleted_at).to be_present
+        end
+
+        it 'marks the user as being no longer able to order' do
+          expect {
+            delete :destroy, params: { id: existing_user.id }
+          }.to change { existing_user.reload.orders_devices }.from(true).to(false)
+        end
+
+        it 'redirects back to the RB page when called from the responsible body area' do
+          delete :destroy, params: { id: existing_user.id, user: { responsible_body_id: responsible_body.id } }
+          expect(response).to redirect_to(support_responsible_body_path(responsible_body))
+        end
+
+        it 'redirects back to the school page when called from the school area' do
+          delete :destroy, params: { id: existing_user.id, user: { school_urn: school.urn } }
+          expect(response).to redirect_to(support_school_path(school))
+        end
       end
 
-      it 'redirects back to the RB page when called from the responsible body area' do
-        delete :destroy, params: { id: existing_user.id, user: { responsible_body_id: responsible_body.id } }
-        expect(response).to redirect_to(support_responsible_body_path(responsible_body))
-      end
+      context 'WITHOUT a confirmed TechSource account' do
+        let(:existing_user) { create(:local_authority_user, orders_devices: true) }
 
-      it 'redirects back to the school page when called from the school area' do
-        delete :destroy, params: { id: existing_user.id, user: { school_urn: school.urn } }
-        expect(response).to redirect_to(support_school_path(school))
+        it 'hard deletes the user completely' do
+          delete :destroy, params: { id: existing_user.id }
+          expect(User.find_by(id: existing_user.id)).to be_nil
+        end
+
+        it 'redirects back to the RB page when called from the responsible body area' do
+          delete :destroy, params: { id: existing_user.id, user: { responsible_body_id: responsible_body.id } }
+          expect(response).to redirect_to(support_responsible_body_path(responsible_body))
+        end
+
+        it 'redirects back to the school page when called from the school area' do
+          delete :destroy, params: { id: existing_user.id, user: { school_urn: school.urn } }
+          expect(response).to redirect_to(support_school_path(school))
+        end
       end
     end
 

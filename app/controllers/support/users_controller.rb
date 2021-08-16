@@ -73,7 +73,7 @@ class Support::UsersController < Support::BaseController
   def confirm_destroy; end
 
   def destroy
-    @user.update!(deleted_at: Time.zone.now, orders_devices: false)
+    DeleteUserService.delete!(@user)
 
     flash[:success] = 'You have deleted this user'
 
