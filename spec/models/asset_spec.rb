@@ -173,4 +173,20 @@ RSpec.describe Asset, type: :model do
       it { is_expected.not_to eq(other_asset) }
     end
   end
+
+  describe '#viewed?' do
+    let(:asset) { build(:asset) }
+
+    context 'viewed' do
+      before { asset.first_viewed_at = 1.day.ago }
+
+      specify { expect(asset).to be_viewed }
+    end
+
+    context 'never viewed' do
+      before { asset.first_viewed_at = nil }
+
+      specify { expect(asset).not_to be_viewed }
+    end
+  end
 end
