@@ -48,7 +48,7 @@ class CreateUserService
     if user.schools << school
       AddAdditionalSchoolToExistingUserMailer.with(user: user, school: school).additional_school_email.deliver_later
       school.preorder_information&.refresh_status!
-      user.update!(user_params.select { |key, _value| user.send(key).blank? })
+      user.update!(user_params.select { |key, _value| user.send(key).blank? }.merge(deleted_at: nil))
     end
     user
   end
@@ -57,11 +57,11 @@ class CreateUserService
 
   def self.invite_existing_user_to_responsible_body!(user_params)
     user = User.find_by_email_address(user_params[:email_address])
-    if user.responsible_body_id.present?
+    if user.responsible_body_id.present? && !user.soft_deleted?
       user.assign_attributes(user_params)
       user.errors.add(:base, :existing_responsible_body_user)
       user.errors.add(:email_address, :belongs_to_existing_responsible_body_user)
-    elsif user.update(user_params.select { |key, _value| user.send(key).blank? })
+    elsif user.update(user_params.select { |key, _value| user.send(key).blank? }.merge(deleted_at: nil))
       InviteExistingUserToResponsibleBodyMailer.with(user: user, responsible_body: user.responsible_body).invite_existing_user_to_responsible_body_email.deliver_later
     end
     user
