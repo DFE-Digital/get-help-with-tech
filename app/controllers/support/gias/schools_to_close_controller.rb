@@ -18,7 +18,7 @@ class Support::Gias::SchoolsToCloseController < Support::BaseController
 private
 
   def get_staged_school
-    @school = DataStage::School.find_by(urn: params[:urn])
+    @school = closed_schools.find_by(urn: params[:urn])
   end
 
   def closed_schools

@@ -20,7 +20,7 @@ class Support::Gias::SchoolsToAddController < Support::BaseController
 private
 
   def get_staged_school
-    @school = DataStage::School.find_by(urn: params[:urn])
+    @school = new_schools.find_by(urn: params[:urn])
   end
 
   def new_schools
