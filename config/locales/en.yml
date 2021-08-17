@@ -825,7 +825,7 @@ en:
               belongs_to_existing_responsible_body_user: Enter an email address for someone who isn't already a user for another responsible body
             orders_devices:
               inclusion: Tell us whether the user will order devices
-              user_limit: There are already 3 users who can order devices. Change or remove another user.
+              user_limit: There are already %{limit} users who can order devices. Change or remove another user.
         school:
           attributes:
             urn:
