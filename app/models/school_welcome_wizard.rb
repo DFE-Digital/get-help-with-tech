@@ -37,7 +37,7 @@ class SchoolWelcomeWizard < ApplicationRecord
         devices_you_can_order!
       end
     when 'techsource_account'
-      if less_than_3_users_can_order?
+      if less_than_can_order_limit?
         will_other_order!
       else
         devices_you_can_order!
@@ -132,8 +132,8 @@ private
     show_chromebooks.nil? ? set_show_chromebooks_flag! : show_chromebooks
   end
 
-  def less_than_3_users_can_order?
-    school.users.who_can_order_devices.count < 3
+  def less_than_can_order_limit?
+    school.users.who_can_order_devices.count < User::CAN_ORDER_DEVICES_LIMIT
   end
 
   def set_show_chromebooks_flag!
