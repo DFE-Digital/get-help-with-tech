@@ -53,21 +53,20 @@ private
   end
 
   def expect_responsible_body_change_failed_banner(school_name)
-    expect(page).to have_selector(
-      '.app-banner--warning',
-      text: "#{school_name} could not be associated with Lancashire!",
-    )
+    expect_school_page_with_banner(:warning, "#{school_name} could not be associated with Lancashire!")
   end
 
   def expect_responsible_body_changed_banner(school_name)
-    expect(page).to have_selector(
-      '.app-banner--success',
-      text: "#{school_name} is now associated with Lancashire",
-    )
+    expect_school_page_with_banner(:success, "#{school_name} is now associated with Lancashire")
   end
 
   def expect_responsible_body_not_changed_banner(school_name)
-    expect(page).to have_selector('.app-banner--info', text: "Responsible body not changed for #{school_name}")
+    expect_school_page_with_banner(:info, "Responsible body not changed for #{school_name}")
+  end
+
+  def expect_school_page_with_banner(type, text)
+    expect(school_page).to be_displayed
+    expect(page).to have_selector(".app-banner--#{type}", text: text)
   end
 
   def select_responsible_body(name)
