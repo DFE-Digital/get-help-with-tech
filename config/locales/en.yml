@@ -82,6 +82,8 @@ en:
         home: Schools, colleges and FE institutions
         opt_outs:
           edit: Change communication preference
+        responsible_body:
+          edit: Update responsible body
       technical_support: Technical support
       feature_flags: Feature flags
       zendesk_statistics: Zendesk statistics

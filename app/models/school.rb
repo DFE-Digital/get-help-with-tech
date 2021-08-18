@@ -70,6 +70,8 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
+  delegate :name, to: :responsible_body, prefix: true, allow_nil: true
+
   def ukprn_or_urn
     ukprn || urn
   end

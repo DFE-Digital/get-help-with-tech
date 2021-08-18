@@ -1,6 +1,8 @@
 class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetailsSummaryListComponent
   def rows
     array = super
+
+    array.prepend responsible_body_row if SchoolPolicy.new(viewer, @school).update_responsible_body?
     array.prepend school_name_editable_row if SchoolPolicy.new(viewer, @school).update_name?
     array << headteacher_row if headteacher.present?
     array.map { |row| remove_change_links_if_read_only(row) }
@@ -15,6 +17,15 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
   end
 
 private
+
+  def responsible_body_row
+    {
+      key: 'Responsible Body',
+      value: @school.responsible_body.name,
+      action_path: edit_support_school_responsible_body_path(@school),
+      action: 'Change <span class="govuk-visually-hidden">responsible body</span>'.html_safe,
+    }
+  end
 
   def sold_to_row
     {
