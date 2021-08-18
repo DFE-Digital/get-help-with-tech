@@ -26,4 +26,8 @@ class SchoolPolicy < SupportPolicy
   def update_name?
     user.third_line_role?
   end
+
+  def update_responsible_body?
+    user.is_support? && user.third_line_role?
+  end
 end

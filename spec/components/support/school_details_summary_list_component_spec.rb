@@ -17,6 +17,10 @@ describe Support::SchoolDetailsSummaryListComponent do
     expect(row_for_key(result, 'Name')).to be_nil
   end
 
+  it 'does not show school responsible body' do
+    expect(row_for_key(result, 'Responsible Body')).to be_nil
+  end
+
   context 'when third line support user' do
     let(:support_user) { build(:support_user, :third_line) }
 
@@ -26,6 +30,14 @@ describe Support::SchoolDetailsSummaryListComponent do
 
     it 'shows change link for school name' do
       expect(action_for_row(result, 'Name').text).to include('Change school name')
+    end
+
+    it 'shows school responsible body' do
+      expect(value_for_row(result, 'Responsible Body').text).to include(school.responsible_body_name)
+    end
+
+    it 'shows change link for school responsible body' do
+      expect(action_for_row(result, 'Responsible Body').text).to include('Change responsible body')
     end
   end
 

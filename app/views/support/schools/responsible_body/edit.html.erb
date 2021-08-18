@@ -1,0 +1,24 @@
+<%- title = t('page_titles.support.schools.responsible_body.edit') %>
+<% content_for :title, title %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_path(@school)) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= title %>
+    </h1>
+
+    <%= form_for @form, url: support_school_responsible_body_path(@school), method: :patch do |f| %>
+      <%= f.govuk_collection_select(
+            :responsible_body_id,
+            @form.responsible_body_options,
+            :id,
+            :name,
+            label: { text: 'New responsible body' },
+            data: { autocomplete_rb: true }
+          ) %>
+      <%= f.govuk_submit 'Update' %>
+    <% end %>
+  </div>
+</div>

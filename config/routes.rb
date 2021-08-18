@@ -257,6 +257,7 @@ Rails.application.routes.draw do
 
       scope module: 'schools' do
         resource :opt_out, only: %i[edit update], path: 'opt-out'
+        resource :responsible_body, only: %i[edit update], path: 'responsible-body', controller: :responsible_body
       end
 
       collection do
