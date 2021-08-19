@@ -154,7 +154,7 @@ There are some make tasks that can help:
 The normal release process works as follows:
 
 1. Build a new Docker image called `get-help-with-tech-(env name)`
-2. Pull any existing image from Docker Hub called `dfedigital/get-help-with-tech-(env name):latest`. Re-tag it with `replaced-at-(timestamp)` and push it back up to Docker Hub.  
+2. Pull any existing image from Docker Hub called `dfedigital/get-help-with-tech-(env name):latest`. Re-tag it with `replaced-at-(timestamp)` and push it back up to Docker Hub.
 3. Tag the newly-built image as `dfedigital/get-help-with-tech-(env name):latest`, and push it to Docker Hub, overwriting any existing image with the same name and tag
 4. Tell GOV.UK PaaS to pull `dfedigital/get-help-with-tech-(env name):latest` from Docker Hub, and deploy it to the app called `get-help-with-tech-(env name)`
 
@@ -172,23 +172,23 @@ Over time, the timestamped tags will accumulate in Docker Hub, and should be pru
 
 Some values are configurable with environment variables:
 
-Name                                             |Description                                                                                                                                 |Default
--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-------
-GHWT__SIGN_IN_TOKEN_TTL_SECONDS                  |Sign-in tokens will expire after this many seconds                                                                                          |600
-GHWT__GOVUK_NOTIFY__API_KEY                      |API key for the GOV.UK Notify service, used for sending emails                                                                              |REQUIRED
-GHWT__HOSTNAME_FOR_URLS                          |Hostname used for generating URLs in emails                                                                                                 |http://localhost:3000/
-GHWT__HUAWEI__DEVICES__PASSWORD                  |Password for Huawei routers                                                                                                                 |secret
-GHWT__GOVUK_NOTIFY__TEMPLATES__SIGN_IN_TOKEN_MAIL|ID of the template in GOV.UK Notify used for mailing sign-in tokens                                                                         |'89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
-GHWT__STATIC_FILE_CACHE_TTL                      |how long CDNs and browsers should cache static assets for in production, in seconds.                                                        |(nil)
-GHWT__THROTTLE__*                                |Request throttling limits, see [settings.yaml](config/settings.yml) for more info                                                           |_(see settings)_
-GHWT__LOGSTASH__HOST                             | Hostname for where logstash should send logs                                                           | (nil)
-GHWT__LOGSTASH__PORT                             | Port for where logstash should send logs                                                               | (nil)
-GHWT__SENTRY__DSN                                | DSN (Client key) for Sentry.io error reporting | (nil)
-GHWT__COMPUTACENTER__OUTGOING_API__ENDPOINT      | URL of the CapUpdateRequest API at TechSource | (nil)
-GHWT__COMPUTACENTER__OUTGOING_API__USERNAME      | Basic auth username to use for the TechSource CapUpdateRequest API | (nil)
-GHWT__COMPUTACENTER__OUTGOING_API__PASSWORD      | Basic auth password to use for the TechSource CapUpdateRequest API | (nil)
-GHWT__ZENDESK__USERNAME                          | Username for Zendesk account to be able to use the Zendesk API. Both Zendesk options need to set before Zendesk API can be used. | (nil)
-GHWT__ZENDESK__TOKEN                             | Token for Zendesk account to be able to use the Zendesk API.Both Zendesk options need to set before Zendesk API can be used. | (nil)
+Name                                              | Description                                                                                                                                | Default
+--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------
+GHWT__SIGN_IN_TOKEN_TTL_SECONDS                   | Sign-in tokens will expire after this many seconds                                                                                         | 600
+GHWT__GOVUK_NOTIFY__API_KEY                       | API key for the GOV.UK Notify service, used for sending emails                                                                             | REQUIRED
+GHWT__HOSTNAME_FOR_URLS                           | Hostname used for generating URLs in emails                                                                                                | http://localhost:3000/
+GHWT__HUAWEI__DEVICES__PASSWORD                   | Password for Huawei routers                                                                                                                | secret
+GHWT__GOVUK_NOTIFY__TEMPLATES__SIGN_IN_TOKEN_MAIL | ID of the template in GOV.UK Notify used for mailing sign-in tokens                                                                        | '89b4abbb-0f01-4546-bf30-f88db5e0ae3c'
+GHWT__STATIC_FILE_CACHE_TTL                       | how long CDNs and browsers should cache static assets for in production, in seconds.                                                       | (nil)
+GHWT__THROTTLE__*                                 | Request throttling limits, see [settings.yaml](config/settings.yml) for more info                                                          | _(see settings)_
+GHWT__LOGSTASH__HOST                              | Hostname for where logstash should send logs                                                                                               | (nil)
+GHWT__LOGSTASH__PORT                              | Port for where logstash should send logs                                                                                                   | (nil)
+GHWT__SENTRY__DSN                                 | DSN (Client key) for Sentry.io error reporting                                                                                             | (nil)
+GHWT__COMPUTACENTER__OUTGOING_API__ENDPOINT       | URL of the CapUpdateRequest API at TechSource                                                                                              | (nil)
+GHWT__COMPUTACENTER__OUTGOING_API__USERNAME       | Basic auth username to use for the TechSource CapUpdateRequest API                                                                         | (nil)
+GHWT__COMPUTACENTER__OUTGOING_API__PASSWORD       | Basic auth password to use for the TechSource CapUpdateRequest API                                                                         | (nil)
+GHWT__ZENDESK__USERNAME                           | Username for Zendesk account to be able to use the Zendesk API. Both Zendesk options need to set before Zendesk API can be used.           | (nil)
+GHWT__ZENDESK__TOKEN                              | Token for Zendesk account to be able to use the Zendesk API.Both Zendesk options need to set before Zendesk API can be used.               | (nil)
 
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.
@@ -203,7 +203,11 @@ These are activated by having an environment variable FEATURES_(flag name) set t
 FEATURES_rate_limiting=active bundle exec rails s
 ```
 
-The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`. Each one is tested with a dedicated spec in `spec/features/feature_flags/`.
+The available flags are listed in `app/services/feature_flag.rb`, and available in the constant `FeatureFlag::FEATURES`.
+
+Name                           | Description
+-------------------------------| -----------------------------------------------------------------------------------------------------------------------------------
+FEATURES_gias_data_stage_pause | Pauses any GIAS data staging of trusts and schools, should be used e.g. in Septemeber when GIAS data is changed a lot and unsettled
 
 To display, set and unset feature flags on GOV.UK PaaS:
 
@@ -241,7 +245,7 @@ If you want to ssh to a particular process and/or particular instance, you can b
 
 ```sh
 make (env) ssh PROCESS=(web|sidekiq) INSTANCE=(0|1|...)
-```  
+```
 
 Both parameters are optional.
 PROCESS defaults to sidekiq, to prevent any possibility of using too much memory in the console and accidentally getting the web container restarted by the hosts' monitoring.

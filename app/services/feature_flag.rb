@@ -3,6 +3,7 @@ class FeatureFlag
     rate_limiting
     display_sign_in_token_links
     show_component_previews
+    gias_data_stage_pause
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[
