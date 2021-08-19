@@ -90,6 +90,16 @@ RSpec.describe CreateUserService do
         end
       end
 
+      context 'on a school and is a soft deleted user' do
+        let!(:other_school) { create(:school) }
+
+        before { create(:school_user, :deleted, email_address: 'existing@user.com', school: other_school) }
+
+        it 'returns the existing user as undeleted' do
+          expect(result.soft_deleted?).to be(false)
+        end
+      end
+
       context 'on a responsible_body' do
         before { create(:school_user, email_address: 'existing@user.com', responsible_body: create(:trust)) }
 
@@ -146,6 +156,16 @@ RSpec.describe CreateUserService do
           expect(result).to be_a(User)
           expect(result).to have_attributes(params)
           expect(result.errors.full_messages).not_to be_empty
+        end
+      end
+
+      context 'on a different school and is a soft deleted user' do
+        let!(:other_school) { create(:school) }
+
+        before { create(:school_user, :deleted, email_address: 'existing@user.com', school: other_school) }
+
+        it 'returns the existing user as undeleted' do
+          expect(result.soft_deleted?).to be(false)
         end
       end
 
