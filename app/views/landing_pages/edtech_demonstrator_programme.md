@@ -29,9 +29,3 @@ The EdTech Demonstrator programme is funded by the DfE until the end of March 20
 Schools and colleges will receive facilitated support from demonstrators through continuous professional development (CPD).
 
 You can [read testimonials](https://edtechdemo.ucst.uk/testimonials) from demonstrators and some of the schools and colleges they work within the EdTech Demonstrator website.
-
-## Contact us
-
-To apply for free training and support, please visit the EdTech Demonstrator website to [complete this form](https://edtech-demonstrator.lgfl.net/register-your-interest).
-
-If you have a question about the EdTech Demonstrator Programme please email [EdTech.TEAM@education.gov.uk](mailto:EdTech.TEAM@education.gov.uk).
