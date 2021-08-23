@@ -38,6 +38,10 @@ class Asset < ApplicationRecord
     first_viewed_at.present?
   end
 
+  def has_secret_information?
+    [bios_password, admin_password, hardware_hash].any?(&:present?)
+  end
+
   def ==(other)
     self.class == other.class && tag == other.tag && serial_number == other.serial_number
   end
