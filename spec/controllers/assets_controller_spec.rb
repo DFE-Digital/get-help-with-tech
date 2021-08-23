@@ -38,23 +38,45 @@ RSpec.describe AssetsController do
 
   describe '#show' do
     context 'first view' do
-      let(:asset) { create(:asset, :never_viewed) }
-      let(:first_view_timestamp) { Time.zone.parse('1 Jan 2020 09:00') }
+      context 'school or RB user' do
+        let(:asset) { create(:asset, :never_viewed) }
+        let(:first_view_timestamp) { Time.zone.parse('1 Jan 2020 09:00') }
 
-      it 'records the time of the first view' do
-        expect(asset).not_to be_viewed
-        expect(asset.first_viewed_at).to be_nil
+        it 'records the time of the first view' do
+          expect(asset).not_to be_viewed
+          expect(asset.first_viewed_at).to be_nil
 
-        Timecop.freeze(first_view_timestamp) do
-          get :show, params: { id: asset.id }
-          asset.reload
+          Timecop.freeze(first_view_timestamp) do
+            get :show, params: { id: asset.id }
+            asset.reload
 
-          expect(asset).to be_viewed
-          expect(asset.first_viewed_at).to eq(first_view_timestamp)
+            expect(asset).to be_viewed
+            expect(asset.first_viewed_at).to eq(first_view_timestamp)
+          end
+
+          expect(assigns(:asset)).to eq(asset)
+          expect(response).to render_template(:show)
         end
+      end
 
-        expect(assigns(:asset)).to eq(asset)
-        expect(response).to render_template(:show)
+      context 'support user' do
+        let(:support_user) { create(:support_user) }
+        let(:asset) { create(:asset, :never_viewed) }
+        let(:first_view_timestamp) { Time.zone.parse('1 Jan 2020 09:00') }
+
+        before { sign_in_as support_user }
+
+        it 'does not record the time of the first view' do
+          expect(asset).not_to be_viewed
+          expect(asset.first_viewed_at).to be_nil
+
+          Timecop.freeze(first_view_timestamp) do
+            get :show, params: { id: asset.id }
+            asset.reload
+
+            expect(asset).not_to be_viewed
+          end
+        end
       end
     end
 

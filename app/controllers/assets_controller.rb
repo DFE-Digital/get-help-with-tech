@@ -1,5 +1,5 @@
 class AssetsController < ApplicationController
-  before_action :set_asset, only: [:show]
+  before_action :set_asset, only: :show
 
   # GET /assets
   def index
@@ -14,10 +14,16 @@ class AssetsController < ApplicationController
 
   # GET /assets/1
   def show
-    @asset.update!(first_viewed_at: Time.zone.now) unless @asset.viewed?
+    if user_role_counts_as_view? && !@asset.viewed?
+      @asset.update!(first_viewed_at: Time.zone.now)
+    end
   end
 
 private
+
+  def user_role_counts_as_view?
+    !current_user.is_support?
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_asset
