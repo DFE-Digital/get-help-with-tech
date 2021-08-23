@@ -30,7 +30,7 @@ class Asset < ApplicationRecord
 
       where(department_sold_to_id: rb_cc_reference).or(where(location_cc_ship_to_account: self_managing_school_cc_references))
     else
-      raise 'unknown educational setting type'
+      Asset.none
     end
   }
 

@@ -150,6 +150,10 @@ RSpec.describe Asset, type: :model do
 
       specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_asset_1, rb_asset_2, rb_school_asset) }
     end
+
+    context 'neither RB nor school' do
+      specify { expect(Asset.owned_by(nil)).to eq(Asset.none) }
+    end
   end
 
   describe '#==' do
