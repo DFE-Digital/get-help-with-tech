@@ -42,4 +42,16 @@ FactoryBot.define do
   trait :viewed do
     first_viewed_at { 1.week.ago }
   end
+
+  trait :lacks_admin_password do
+    admin_password { nil }
+  end
+
+  trait :lacks_bios_password do
+    bios_password { nil }
+  end
+
+  trait :lacks_hardware_hash do
+    hardware_hash { nil }
+  end
 end

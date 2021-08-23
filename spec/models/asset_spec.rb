@@ -3,16 +3,15 @@ require 'rails_helper'
 RSpec.describe Asset, type: :model do
   subject(:asset) { build(:asset) }
 
-  let(:encryptor) { class_spy('EncryptionService') }
-
-  before { stub_const('EncryptionService', encryptor) }
-
   describe 'creation' do
     let(:bios_password) { 'secretbiospassword' }
     let(:admin_password) { 'secretadminpassword' }
     let(:hardware_hash) { 'secrethardwarehash' }
     let(:required_attributes) { { serial_number: '30040000', department_id: 'LEA800', department_sold_to_id: '8106000', location_id: '114000', location_cc_ship_to_account: '81065000' } }
     let(:secure_attributes) { { bios_password: bios_password, admin_password: admin_password, hardware_hash: hardware_hash } }
+    let(:encryptor) { class_spy('EncryptionService') }
+
+    before { stub_const('EncryptionService', encryptor) }
 
     describe '.new' do
       before { Asset.new(required_attributes.merge(secure_attributes)) }
@@ -187,6 +186,45 @@ RSpec.describe Asset, type: :model do
       before { asset.first_viewed_at = nil }
 
       specify { expect(asset).not_to be_viewed }
+    end
+  end
+
+  describe '#has_secret_information?' do
+    context 'with BIOS password, admin password and hardware hash' do
+      subject { build(:asset) }
+
+      specify { expect([asset.bios_password, asset.admin_password, asset.hardware_hash]).to all be_present }
+      it { is_expected.to have_secret_information }
+    end
+
+    context 'none of BIOS password, admin password and hardware hash' do
+      subject { build(:asset, :lacks_bios_password, :lacks_admin_password, :lacks_hardware_hash) }
+
+      it { is_expected.not_to have_secret_information }
+    end
+
+    context 'with BIOS password only' do
+      subject { build(:asset, :lacks_admin_password, :lacks_hardware_hash) }
+
+      it { is_expected.to have_secret_information }
+    end
+
+    context 'with admin password only' do
+      subject { build(:asset, :lacks_bios_password, :lacks_hardware_hash) }
+
+      it { is_expected.to have_secret_information }
+    end
+
+    context 'with hardware hash only' do
+      subject { build(:asset, :lacks_bios_password, :lacks_admin_password) }
+
+      it { is_expected.to have_secret_information }
+    end
+
+    context 'has two of BIOS password, admin password and hardware hash' do
+      subject { build(:asset, :lacks_bios_password) }
+
+      it { is_expected.to have_secret_information }
     end
   end
 end

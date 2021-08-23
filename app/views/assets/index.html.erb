@@ -39,7 +39,7 @@
       <td class="govuk-table__cell"><%= asset.model %></td>
       <td class="govuk-table__cell"><%= asset.department %></td>
       <td class="govuk-table__cell"><%= asset.location %></td>
-      <td class="govuk-table__cell"><%= link_to 'Show', asset %></td>
+      <td class="govuk-table__cell"><%= asset.has_secret_information? ? link_to('Show', asset) : 'N/A' %></td>
     </tr>
   <% end %>
   </tbody>
