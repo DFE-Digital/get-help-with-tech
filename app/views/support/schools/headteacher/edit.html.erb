@@ -1,0 +1,33 @@
+<%- title = t('page_titles.support.schools.headteacher.edit') %>
+<% content_for :title, title %>
+<%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_path(@school)) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl"><%= @school.name %></span>
+      <%= title %>
+    </h1>
+
+    <%= form_for @form, url: support_school_headteacher_path(@school), method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.hidden_field :id %>
+
+      <%= f.govuk_text_field :title,
+        label: { text: 'Title', size: 's' } %>
+
+      <%= f.govuk_text_field :full_name,
+        label: { text: 'Full name', size: 's' } %>
+
+      <%= f.govuk_email_field :email_address,
+        label: { text: 'Email address', size: 's' } %>
+
+      <%= f.govuk_text_field :phone_number,
+        width: 10,
+        label: { text: 'Telephone number', size: 's' } %>
+
+      <%= f.govuk_submit @form.headteacher? ? 'Update' : 'Set as headteacher', warning: true %>
+    <% end %>
+  </div>
+</div>

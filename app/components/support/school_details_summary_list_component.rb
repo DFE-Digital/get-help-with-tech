@@ -4,7 +4,7 @@ class Support::SchoolDetailsSummaryListComponent < ResponsibleBody::SchoolDetail
 
     array.prepend responsible_body_row if SchoolPolicy.new(viewer, @school).update_responsible_body?
     array.prepend school_name_editable_row if SchoolPolicy.new(viewer, @school).update_name?
-    array << headteacher_row if headteacher.present?
+    array << headteacher_row
     array.map { |row| remove_change_links_if_read_only(row) }
     array << if SchoolPolicy.new(viewer, @school).update_address?
                address_editable_row
@@ -21,7 +21,7 @@ private
   def responsible_body_row
     {
       key: 'Responsible Body',
-      value: @school.responsible_body.name,
+      value: @school.responsible_body_name,
       action_path: edit_support_school_responsible_body_path(@school),
       action: 'Change <span class="govuk-visually-hidden">responsible body</span>'.html_safe,
     }
@@ -126,17 +126,18 @@ private
   end
 
   def headteacher_row
-    {
-      key: 'Headteacher',
-      value: headteacher_lines.map { |line| h(line) }.join('<br>').html_safe,
-    }
+    details = headteacher_lines.map { |line| h(line) }.join('<br>').html_safe
+    show_link = SchoolPolicy.new(viewer, @school).update_headteacher?
+    action_path = edit_support_school_headteacher_path(@school) if show_link
+    action = 'Change <span class="govuk-visually-hidden">headteacher</span>'.html_safe if show_link
+    { key: 'Headteacher', value: details, action_path: action_path, action: action }.compact
   end
 
   def headteacher_lines
     [
-      headteacher.full_name,
-      headteacher.email_address,
-      headteacher.phone_number,
+      "#{headteacher&.title} #{headteacher&.full_name}".strip.presence || 'Not set',
+      headteacher&.email_address,
+      headteacher&.phone_number,
     ].reject(&:blank?)
   end
 
@@ -151,7 +152,7 @@ private
   end
 
   def headteacher
-    @school.headteacher_contact
+    @headteacher ||= @school.headteacher_contact
   end
 
   def display_router_allocation_row?
