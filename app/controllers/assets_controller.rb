@@ -1,8 +1,11 @@
 class AssetsController < ApplicationController
+  before_action :require_sign_in!
   before_action :set_asset, only: :show
 
   # GET /assets
   def index
+    @title = 'Assets'
+
     setting = if current_user.is_responsible_body_user?
                 current_user.responsible_body
               elsif current_user.is_school_user?
@@ -10,6 +13,17 @@ class AssetsController < ApplicationController
               end
 
     @assets = Asset.owned_by(setting)
+  end
+
+  # POST /assets/search
+  # renders the index template
+  def search
+    @title = 'Search results'
+
+    @current_serial_number = params[:serial_number]
+    @assets = Asset.search_by_serial_number(@current_serial_number)
+
+    render :index
   end
 
   # GET /assets/1

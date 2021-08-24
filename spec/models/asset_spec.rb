@@ -155,6 +155,28 @@ RSpec.describe Asset, type: :model do
     end
   end
 
+  describe '.search_by_serial_number' do
+    let!(:asset_1) { create(:asset) }
+
+    before { create(:asset) }
+
+    it 'returns assets matching serial number' do
+      expect(Asset.search_by_serial_number(asset_1.serial_number)).to contain_exactly(asset_1)
+    end
+
+    context 'multiple matches' do
+      let!(:asset_3) { create(:asset, serial_number: asset_1.serial_number) }
+
+      it 'returns all assets with the same serial number' do
+        expect(Asset.search_by_serial_number(asset_1.serial_number)).to contain_exactly(asset_1, asset_3)
+      end
+    end
+
+    it 'return no matches' do
+      expect(Asset.search_by_serial_number('hax0r')).to be_empty
+    end
+  end
+
   describe '#==' do
     subject { build(:asset, tag: 'a', serial_number: 'b') }
 

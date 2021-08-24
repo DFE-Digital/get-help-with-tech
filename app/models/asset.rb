@@ -34,6 +34,8 @@ class Asset < ApplicationRecord
     end
   }
 
+  scope :search_by_serial_number, ->(sn) { where('serial_number ILIKE ?', sn.strip) }
+
   def viewed?
     first_viewed_at.present?
   end
