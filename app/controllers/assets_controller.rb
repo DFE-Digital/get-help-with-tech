@@ -6,13 +6,25 @@ class AssetsController < ApplicationController
   def index
     @title = 'Assets'
 
-    setting = if current_user.is_responsible_body_user?
-                current_user.responsible_body
-              elsif current_user.is_school_user?
-                current_user.school
+    user = impersonated_or_current_user
+
+    setting = if user.is_responsible_body_user?
+                user.responsible_body
+              elsif user.is_school_user?
+                user.school
               end
 
-    @assets = Asset.owned_by(setting)
+    @assets = policy_scope(Asset).owned_by(setting)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        Asset.transaction do
+          send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv
+          @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
+        end
+      end
+    end
   end
 
   # POST /assets/search
@@ -21,26 +33,44 @@ class AssetsController < ApplicationController
     @title = 'Search results'
 
     @current_serial_number = params[:serial_number]
-    @assets = Asset.search_by_serial_number(@current_serial_number)
+    @assets = policy_scope(Asset).search_by_serial_number(@current_serial_number)
 
-    render :index
+    respond_to do |format|
+      format.html { render :index }
+      format.csv do
+        Asset.transaction do
+          send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv
+          @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
+        end
+      end
+    end
   end
 
   # GET /assets/1
   def show
-    if user_role_counts_as_view? && !@asset.viewed?
-      @asset.update!(first_viewed_at: Time.zone.now)
-    end
+    set_first_viewed_at_if_should_update_first_viewed_at(@asset)
   end
 
 private
 
-  def user_role_counts_as_view?
+  def set_first_viewed_at_if_should_update_first_viewed_at(asset)
+    asset.update!(first_viewed_at: Time.zone.now) if should_update_first_viewed_at?(asset)
+  end
+
+  def should_update_first_viewed_at?(asset)
+    current_user_counts_as_viewer_and_asset_unseen?(asset)
+  end
+
+  def current_user_counts_as_viewer_and_asset_unseen?(asset)
+    current_user_counts_as_viewer? && !asset.viewed?
+  end
+
+  def current_user_counts_as_viewer?
     !current_user.is_support?
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_asset
-    @asset = Asset.find(params[:id])
+    @asset = policy_scope(Asset).find(params[:id])
   end
 end

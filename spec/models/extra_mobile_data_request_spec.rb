@@ -15,8 +15,8 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     context 'when account_holder_name starts with a =' do
       before { create(:extra_mobile_data_request, account_holder_name: '=(1+2)') }
 
-      it 'prepends the = with a .' do
-        expect(requests.to_csv).to include('.=(1+2)')
+      it 'prevents formula injection' do
+        expect(requests.to_csv).to include(%q{"'=(1+2)"})
       end
     end
 

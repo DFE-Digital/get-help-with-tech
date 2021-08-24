@@ -47,16 +47,80 @@ RSpec.describe AssetsController do
 
       before { sign_in_as support_user }
 
-      it 'shows index with no assets' do
-        get :index
-        expect(response).to be_successful
-        expect(Asset).to have_received(:owned_by).with(nil)
-        expect(response).to render_template(:index)
+      context 'logged in as themselves' do
+        it 'shows index with no assets' do
+          get :index
+          expect(response).to be_successful
+          expect(Asset).to have_received(:owned_by).with(nil)
+          expect(response).to render_template(:index)
+        end
+      end
+
+      context 'impersonating user' do
+        let(:school) { create(:school) }
+        let(:school_user) { create(:school_user, schools: [school]) }
+
+        before { impersonate school_user }
+
+        it 'shows index with school assets' do
+          get :index
+          expect(response).to be_successful
+          expect(Asset).to have_received(:owned_by).with(school)
+          expect(response).to render_template(:index)
+        end
+      end
+    end
+  end
+
+  describe 'CSV format' do
+    let!(:school) { create(:school) }
+    let!(:school_user) { create(:school_user, schools: [school]) }
+    let!(:support_user) { create(:support_user) }
+    let!(:asset_1) { create(:asset, :never_viewed, location_cc_ship_to_account: school.computacenter_reference) }
+    let!(:asset_2) { create(:asset, :never_viewed, location_cc_ship_to_account: school.computacenter_reference) }
+    let!(:other_asset) { create(:asset, :never_viewed) }
+
+    context 'user counts as viewer' do
+      before { sign_in_as school_user }
+
+      it 'marks downloaded CSV assets as viewed' do
+        get :index, format: :csv
+
+        [asset_1, asset_2, other_asset].each(&:reload)
+
+        expect([asset_1, asset_2]).to all be_viewed
+        expect(other_asset).not_to be_viewed
+      end
+    end
+
+    context 'user who does not count as viewer impersonating user who does' do
+      before do
+        sign_in_as support_user
+        impersonate school_user
+      end
+
+      it 'does not mark downloaded CSV assets as viewed' do
+        get :index, format: :csv
+
+        [asset_1, asset_2, other_asset].each(&:reload)
+
+        expect(asset_1).not_to be_viewed
+        expect(asset_2).not_to be_viewed
+        expect(other_asset).not_to be_viewed
       end
     end
   end
 
   describe '#show' do
+    context 'not logged in' do
+      let(:asset) { create(:asset) }
+
+      it 'redirects to log in' do
+        get :show, params: { id: asset.id }
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+
     context 'first view' do
       context 'school or RB user' do
         let(:school) { create(:school) }
@@ -121,20 +185,29 @@ RSpec.describe AssetsController do
   end
 
   describe '#search' do
-    let(:support_user) { create(:support_user) }
-
-    before do
-      allow(Asset).to receive(:search_by_serial_number)
-
-      sign_in_as support_user
+    context 'not logged in' do
+      it 'redirects to log in' do
+        post :search, params: { serial_number: '1' }
+        expect(response).to redirect_to(sign_in_path)
+      end
     end
 
-    it 'shows the search results' do
-      post :search, params: { serial_number: '1234' }
+    context 'logged in' do
+      let(:support_user) { create(:support_user) }
 
-      expect(response).to be_successful
-      expect(Asset).to have_received(:search_by_serial_number).with('1234')
-      expect(response).to render_template(:index)
+      before do
+        allow(Asset).to receive(:search_by_serial_number)
+
+        sign_in_as support_user
+      end
+
+      it 'shows the search results' do
+        post :search, params: { serial_number: '1234' }
+
+        expect(response).to be_successful
+        expect(Asset).to have_received(:search_by_serial_number).with('1234')
+        expect(response).to render_template(:index)
+      end
     end
   end
 end

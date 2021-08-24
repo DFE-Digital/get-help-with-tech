@@ -5,6 +5,47 @@ class Asset < ApplicationRecord
 
   default_scope { order(:location) }
 
+  include ExportableAsCsv
+
+  SUPPORT_ATTRIBUTES = {
+    serial_number: 'Serial/IMEI',
+    model: 'Model',
+    department: 'Local Authority/Academy Trust',
+    location: 'School/College',
+    department_sold_to_id: 'Sold To',
+    location_cc_ship_to_account: 'Ship To',
+    bios_password: 'BIOS Password',
+    admin_password: 'Admin Password',
+    hardware_hash: 'Hardware Hash',
+  }.freeze
+
+  NON_SUPPORT_ATTRIBUTES = SUPPORT_ATTRIBUTES.except(:department_sold_to_id, :location_cc_ship_to_account).freeze
+
+  # Calls to .to_csv will return non-support attributes
+  def self.exportable_attributes
+    NON_SUPPORT_ATTRIBUTES
+  end
+
+  def self.to_support_csv
+    class << self
+      def exportable_attributes # rubocop:disable Lint/DuplicateMethods
+        SUPPORT_ATTRIBUTES
+      end
+    end
+
+    to_csv
+  end
+
+  def self.to_non_support_csv
+    class << self
+      def exportable_attributes # rubocop:disable Lint/DuplicateMethods
+        NON_SUPPORT_ATTRIBUTES
+      end
+    end
+
+    to_csv
+  end
+
   def self.secure_attr_accessor(*attributes)
     attributes.each do |attribute|
       define_method(attribute) do

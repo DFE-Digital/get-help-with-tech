@@ -39,6 +39,13 @@
   </div>
 <% end %>
 
+<% if @assets.any? %>
+<p>
+  Download:
+  <%= link_to "CSV", assets_path(format: 'csv') %>
+</p>
+<% end %>
+
 <table class="govuk-table">
   <thead class="govuk-table__head">
   <tr class="govuk-table__row">
