@@ -253,4 +253,51 @@ RSpec.describe Asset, type: :model do
       it { is_expected.to have_secret_information }
     end
   end
+
+  describe '#to_support_csv' do
+    let!(:school) { create(:school) }
+    let!(:asset) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
+
+    let(:csv) { Asset.owned_by(school).to_support_csv }
+
+    specify { expect(csv.split("\n").size).to eq(2) }
+
+    specify { expect(csv).to start_with('Serial/IMEI,Model,Local Authority/Academy Trust,School/College,Sold To,Ship To,BIOS Password,Admin Password,Hardware Hash') }
+    specify { expect(csv).to include("#{asset.serial_number},#{asset.model},#{asset.department},#{asset.location},#{asset.department_sold_to_id},#{asset.location_cc_ship_to_account},#{asset.bios_password},#{asset.admin_password},#{asset.hardware_hash}") }
+  end
+
+  describe '#to_non_support_csv' do
+    context 'normal export' do
+      context 'default index' do
+        let!(:school) { create(:school) }
+        let!(:asset_1) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
+        let!(:asset_2) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
+        let!(:other_asset) { create(:asset) }
+
+        let(:csv) { Asset.owned_by(school).to_non_support_csv }
+
+        specify { expect(csv.split("\n").size).to eq(3) }
+
+        specify { expect(csv).to start_with('Serial/IMEI,Model,Local Authority/Academy Trust,School/College,BIOS Password,Admin Password,Hardware Hash') }
+        specify { expect(csv).to include("#{asset_1.serial_number},#{asset_1.model},#{asset_1.department},#{asset_1.location},#{asset_1.bios_password},#{asset_1.admin_password},#{asset_1.hardware_hash}") }
+        specify { expect(csv).to include("#{asset_2.serial_number},#{asset_2.model},#{asset_2.department},#{asset_2.location},#{asset_2.bios_password},#{asset_2.admin_password},#{asset_2.hardware_hash}") }
+
+        specify { expect(csv).not_to include("#{other_asset.serial_number},#{other_asset.model},#{other_asset.department},#{other_asset.location},#{other_asset.bios_password},#{other_asset.admin_password},#{other_asset.hardware_hash}") }
+      end
+    end
+
+    # https://owasp.org/www-community/attacks/CSV_Injection
+    context 'input which could be interpreted as a formula' do
+      let(:bad_input_1) { '=1+1' }
+      let(:escaped_output_1) { %q("'=1+1") }
+
+      let!(:school) { create(:school) }
+      let!(:asset_1) { create(:asset, model: bad_input_1, location_cc_ship_to_account: school.computacenter_reference) }
+
+      let(:csv) { Asset.owned_by(school).to_non_support_csv }
+
+      specify { expect(csv).not_to include("#{asset_1.serial_number},#{bad_input_1},#{asset_1.department},#{asset_1.location},#{asset_1.bios_password},#{asset_1.admin_password},#{asset_1.hardware_hash}") }
+      specify { expect(csv).to include("#{asset_1.serial_number},#{escaped_output_1},#{asset_1.department},#{asset_1.location},#{asset_1.bios_password},#{asset_1.admin_password},#{asset_1.hardware_hash}") }
+    end
+  end
 end
