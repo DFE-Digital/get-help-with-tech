@@ -82,6 +82,8 @@ en:
         home: Schools, colleges and FE institutions
         opt_outs:
           edit: Change communication preference
+        headteacher:
+          edit: Update headteacher
         responsible_body:
           edit: Update responsible body
       technical_support: Technical support
@@ -637,6 +639,15 @@ en:
           attributes:
             name_or_urn_or_ukprn:
               too_short: Enter a school name that is at least %{count} characters
+        support/school/change_headteacher_form:
+          attributes:
+            email_address:
+              blank: Enter an email address in the correct format, like name@example.com
+              taken: Email address has already been used
+              invalid: Enter an email address in the correct format, like name@example.com
+            full_name:
+              blank: Enter the headteacher’s full name
+              length: Enter a name that is between 2 and 1024 characters
         school_search_form:
           attributes:
             search_type:

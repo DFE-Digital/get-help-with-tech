@@ -39,7 +39,7 @@ describe SchoolPolicy do
     end
   end
 
-  permissions :update_responsible_body? do
+  permissions(*%i[update_address? update_headteacher? update_name? update_responsible_body?]) do
     it 'block access to non support users' do
       expect(policy).not_to permit(non_support_user, school)
     end

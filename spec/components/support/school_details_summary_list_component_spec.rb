@@ -21,6 +21,10 @@ describe Support::SchoolDetailsSummaryListComponent do
     expect(row_for_key(result, 'Responsible Body')).to be_nil
   end
 
+  it 'does not show change link for headteacher' do
+    expect(action_for_row(result, 'Headteacher')).to be_nil
+  end
+
   context 'when third line support user' do
     let(:support_user) { build(:support_user, :third_line) }
 
@@ -38,6 +42,10 @@ describe Support::SchoolDetailsSummaryListComponent do
 
     it 'shows change link for school responsible body' do
       expect(action_for_row(result, 'Responsible Body').text).to include('Change responsible body')
+    end
+
+    it 'shows change link for headteacher' do
+      expect(action_for_row(result, 'Headteacher').text).to include('Change headteacher')
     end
   end
 
@@ -161,10 +169,10 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(value_for_row(result, 'Headteacher').text).to include('12345')
     end
 
-    it 'hides the headteacher details if none are available' do
+    it 'displays Not Set if none are available' do
       school.contacts.destroy_all
 
-      expect(result.css('.govuk-summary-list__row').text).not_to include('Headteacher')
+      expect(value_for_row(result, 'Headteacher').text).to include('Not set')
     end
   end
 

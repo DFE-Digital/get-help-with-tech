@@ -153,7 +153,7 @@ class School < ApplicationRecord
   end
 
   def headteacher_contact
-    contacts.find_by(role: :headteacher)
+    contacts.headteacher.first
   end
 
   def current_contact
