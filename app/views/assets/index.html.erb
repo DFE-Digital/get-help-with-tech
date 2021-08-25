@@ -1,35 +1,57 @@
-<%- title = 'Assets' %>
-<% content_for :title, title %>
-<% content_for :browser_title, title %>
+<% content_for :title, @title %>
+<% content_for :browser_title, @title %>
 
-<%- content_for :before_content do %>
+<% content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => root_path },
-                  title,
+                  { 'Assets' => assets_path },
+                  @title,
                  ]) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      <%= title %>
+      <%= @title %>
     </h1>
   </div>
 </div>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-!-margin-top-4">
-    <p class="govuk-body">On this page you can find the full list of devices associated with your organisation</p>
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      Search any serial number in our database.
+    </p>
+
+    <%= form_with url: search_assets_path do |f| %>
+      <%= f.govuk_text_field :serial_number,
+                             label: { text: 'Serial number', size: 'm' }, value: @current_serial_number || '' %>
+
+      <%= f.govuk_submit 'Search' %>
+    <% end %>
   </div>
 </div>
+
+<% if action_name == 'index' && !current_user.is_support? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds govuk-!-margin-top-4">
+      <p class="govuk-body">On this page you can find the full list of devices associated with your organisation</p>
+    </div>
+  </div>
+<% end %>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
   <tr class="govuk-table__row">
-    <th class="govuk-table__header app-schools-table__column-20">Serial/IMEI</th>
-    <th class="govuk-table__header app-schools-table__column-20">Model</th>
-    <th class="govuk-table__header app-schools-table__column-20">Local Authority/Academy Trust</th>
-    <th class="govuk-table__header app-schools-table__column-20">School/College</th>
-    <th class="govuk-table__header app-schools-table__column-20">View your BIOS/admin passwords and hardware hash</th>
+    <% width = current_user.is_support? ? '14' : '20' %>
+    <th class="govuk-table__header app-schools-table__column-<%= width -%>">Serial/IMEI</th>
+    <th class="govuk-table__header app-schools-table__column-<%= width -%>">Model</th>
+    <th class="govuk-table__header app-schools-table__column-<%= width -%>">Local Authority/Academy Trust</th>
+    <th class="govuk-table__header app-schools-table__column-<%= width -%>">School/College</th>
+    <% if current_user.is_support? %>
+      <th class="govuk-table__header app-schools-table__column-<%= width -%>">Sold To</th>
+      <th class="govuk-table__header app-schools-table__column-<%= width -%>">Ship To</th>
+    <% end %>
+    <th class="govuk-table__header app-schools-table__column-<%= width -%>">View your BIOS/admin passwords and hardware hash</th>
   </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -39,6 +61,10 @@
       <td class="govuk-table__cell"><%= asset.model %></td>
       <td class="govuk-table__cell"><%= asset.department %></td>
       <td class="govuk-table__cell"><%= asset.location %></td>
+      <% if current_user.is_support? %>
+        <td class="govuk-table__cell"><%= asset.department_sold_to_id %></td>
+        <td class="govuk-table__cell"><%= asset.location_cc_ship_to_account %></td>
+      <% end %>
       <td class="govuk-table__cell"><%= asset.has_secret_information? ? link_to('Show', asset) : 'N/A' %></td>
     </tr>
   <% end %>
