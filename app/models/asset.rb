@@ -12,7 +12,7 @@ class Asset < ApplicationRecord
       end
 
       define_method("#{attribute}=") do |plaintext|
-        send(:update!, encrypted_field_symbol(attribute) => EncryptionService.encrypt(plaintext))
+        send("#{encrypted_field_symbol(attribute)}=", EncryptionService.encrypt(plaintext))
       end
     end
   end

@@ -129,9 +129,9 @@ RSpec.describe Asset, type: :model do
     context 'school' do
       let(:school_a) { create(:school) }
       let(:school_b) { create(:school) }
-      let(:school_a_asset_1) { build(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-      let(:school_a_asset_2) { build(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-      let(:school_b_asset_1) { build(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
+      let(:school_a_asset_1) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
+      let(:school_a_asset_2) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
+      let(:school_b_asset_1) { create(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
 
       specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_a_asset_1, school_a_asset_2) }
     end
@@ -139,11 +139,11 @@ RSpec.describe Asset, type: :model do
     context 'RB' do
       let(:rb) { create(:local_authority) }
       let(:other_rb) { create(:local_authority) }
-      let(:rb_asset_1) { build(:asset, department_sold_to_id: rb.computacenter_reference) }
-      let(:rb_asset_2) { build(:asset, department_sold_to_id: rb.computacenter_reference) }
-      let(:other_rb_asset) { build(:asset, department_sold_to_id: other_rb.computacenter_reference) }
+      let(:rb_asset_1) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
+      let(:rb_asset_2) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
+      let(:other_rb_asset) { create(:asset, department_sold_to_id: other_rb.computacenter_reference) }
       let(:rb_self_managed_school) { build(:school, :manages_orders) }
-      let(:rb_school_asset) { build(:asset, location_cc_ship_to_account: rb_self_managed_school.computacenter_reference) }
+      let(:rb_school_asset) { create(:asset, location_cc_ship_to_account: rb_self_managed_school.computacenter_reference) }
 
       before { rb.schools << rb_self_managed_school }
 
