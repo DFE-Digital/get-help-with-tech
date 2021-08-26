@@ -12,21 +12,18 @@
         <td class="govuk-table__cell govuk-!-width-one-quarter"><%= email_audit.created_at.to_s(:govuk_date_and_time) %></td>
         <td class="govuk-table__cell govuk-!-padding-top-0">
           <%= govuk_summary_list do |component| %>
-            <%= component.slot(
-                  :row,
-                  key: 'Recipient',
-                  value: "#{email_audit.user.full_name} <#{email_audit.email_address}>",
-                ) %>
-            <%= component.slot(
-                  :row,
-                  key: 'Message type',
-                  value: email_audit.message_type.humanize,
-                ) %>
-            <%= component.slot(
-                  :row,
-                  key: 'Template',
-                  value: govuk_link_to('View on GOV.UK Notify', govuk_notify_template_deeplink_url(email_audit.template)),
-                ) %>
+            <%= component.row do |row|
+              row.key(text: 'Recipient')
+              row.value(text: "#{email_audit.user.full_name} <#{email_audit.email_address}>")
+            end %>
+            <%= component.row do |row|
+              row.key(text: 'Message type')
+              row.value(text: email_audit.message_type.humanize)
+            end %>
+            <%= component.row do |row|
+              row.key(text: 'Template')
+              row.value(text: govuk_link_to('View on GOV.UK Notify', govuk_notify_template_deeplink_url(email_audit.template)))
+            end %>
           <% end %>
         </td>
       </tr>

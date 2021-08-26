@@ -45,7 +45,7 @@
       </ul>
     <%- end %>
 
-    <%= govuk_details(summary: 'Try another school') do %>
+    <%= govuk_details(summary_text: 'Try another school') do %>
       <%= form_for @form, url: support_user_schools_path(@user) do |f| %>
         <%= f.govuk_text_field :name_or_urn_or_ukprn,
           width: 'two-thirds',

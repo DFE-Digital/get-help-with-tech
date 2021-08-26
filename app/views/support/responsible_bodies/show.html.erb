@@ -13,8 +13,8 @@
       <%= @responsible_body.name %>
     </h1>
 
-    <%= render GovukComponent::Tabs.new(title: 'Contents') do |component| %>
-      <% component.slot(:tab, title: 'Schools and colleges') do %>
+    <%= render GovukComponent::TabComponent.new(title: 'Contents') do |component| %>
+      <% component.tab(label: 'Schools and colleges') do %>
         <h2 class="govuk-heading-l">Schools and colleges</h2>
 
         <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
@@ -147,7 +147,7 @@
         <% end %>
       <% end %>
 
-      <% component.slot(:tab, title: 'Users') do %>
+      <% component.tab(label: 'Users') do %>
         <h2 class="govuk-heading-l">Users</h2>
 
         <% if policy(User).new? %>
@@ -174,7 +174,7 @@
       <% end %>
 
       <%- if @responsible_body.extra_mobile_data_requests.present? %>
-        <% component.slot(:tab, title: 'Mobile data requests') do %>
+        <% component.tab(label: 'Mobile data requests') do %>
           <h2 class="govuk-heading-l">Mobile data requests</h2>
 
           <%= render Support::ExtraMobileDataRequestsSummaryListComponent.new(requests: @responsible_body.extra_mobile_data_requests) %>

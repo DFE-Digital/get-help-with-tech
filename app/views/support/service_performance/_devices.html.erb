@@ -24,7 +24,7 @@
 </div>
 
 <% @stats.segmented_device_counts.each do |s| %>
-  <%= render GovukComponent::Details.new(summary: t(s.key, scope: i18n_scope), classes: ['govuk-!-margin-bottom-4']) do %>
+  <%= render GovukComponent::DetailsComponent.new(summary_text: t(s.key, scope: i18n_scope), classes: ['govuk-!-margin-bottom-4']) do %>
     <div class="govuk-!-margin-bottom-4">
       <%= render Support::TileComponent.new(
                   count: humanized_number(s.available),

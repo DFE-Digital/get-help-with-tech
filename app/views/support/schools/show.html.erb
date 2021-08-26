@@ -19,11 +19,11 @@
 </div>
 
 <% if @school.gias_status_closed? %>
-  <%= govuk_warning(text: "This #{@school.institution_type} has permanently closed") %>
+  <%= govuk_warning_text(text: "This #{@school.institution_type} has permanently closed") %>
 <% end %>
 
-<%= render GovukComponent::Tabs.new(title: 'Contents') do |component| %>
-  <% component.slot(:tab, title: 'Overview') do %>
+<%= render GovukComponent::TabComponent.new(title: 'Contents') do |component| %>
+  <% component.tab(label: "Overview") do %>
     <h2 class="govuk-heading-l">Overview</h2>
 
     <%= render Support::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @current_user) %>
@@ -34,7 +34,7 @@
     <%- end %>
   <% end %>
 
-  <% component.slot(:tab, title: 'Users') do %>
+  <% component.tab(label: 'Users') do %>
     <h2 class="govuk-heading-l">Users</h2>
 
     <% if policy(User).new? && @school.can_invite_users? %>
@@ -58,7 +58,7 @@
     <% end %>
   <% end %>
 
-  <% component.slot(:tab, title: 'Notifications') do %>
+  <% component.tab(label: 'Notifications') do %>
     <h2 class="govuk-heading-l">Notifications</h2>
 
     <% if @email_audits.present? %>
@@ -68,7 +68,7 @@
     <% end %>
   <% end %>
 
-  <% component.slot(:tab, title: 'Timeline') do %>
+  <% component.tab(label: 'Timeline') do %>
     <h2 class="govuk-heading-l">Timeline</h2>
 
     <table class="govuk-table">
@@ -109,7 +109,7 @@
     </table>
   <% end %>
 
-  <% component.slot(:tab, title: "Related schools (#{@school.school_links.count})") do %>
+  <% component.tab(label: "Related schools (#{@school.school_links.count})") do %>
     <h2 class="govuk-heading-l">Related schools</h2>
 
     <% if @school.school_links.present? %>

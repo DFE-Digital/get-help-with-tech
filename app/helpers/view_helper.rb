@@ -47,7 +47,7 @@ module ViewHelper
 
   def breadcrumbs(items)
     breadcrumbs = items.map { |k, _v| k.is_a?(Hash) ? k : { k => '' } }.inject(:merge)
-    render GovukComponent::Breadcrumbs.new(breadcrumbs: breadcrumbs)
+    render GovukComponent::BreadcrumbsComponent.new(breadcrumbs: breadcrumbs)
   end
 
   def school_breadcrumbs(items:, user:, school:)

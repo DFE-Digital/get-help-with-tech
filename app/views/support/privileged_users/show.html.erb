@@ -11,24 +11,21 @@
     </h1>
 
     <%=
-      render GovukComponent::SummaryList.new do |component|
-        component.slot(
-          :row,
-          key: 'Email',
-          value: @user.email_address,
-        )
+      render GovukComponent::SummaryListComponent.new do |component|
+        component.row do |row|
+          row.key(text: 'Email')
+          row.value(text: @user.email_address)
+        end
 
-        component.slot(
-          :row,
-          key: 'Last sign in',
-          value: @user.last_signed_in_at&.to_s(:govuk_date_short) || 'Never'
-        )
+        component.row do |row|
+          row.key(text: 'Last sign in')
+          row.value(text: @user.last_signed_in_at&.to_s(:govuk_date_short) || 'Never')
+        end
 
-        component.slot(
-          :row,
-          key: 'Privileges',
-          value: @user.privileges.map{|p| p.to_s.humanize}.join('<br>').html_safe
-        )
+        component.row do |row|
+          row.key(text: 'Privileges')
+          row.value(text: @user.privileges.map { |p| p.to_s.humanize }.join('<br>').html_safe)
+        end
       end
     %>
 

@@ -3,6 +3,12 @@
 </h3>
 
 <%= govuk_summary_list(classes: 'govuk-summary-list--no-border') do |component|
-  component.slot(:row, key: 'Email address', value: user.email_address)
-  component.slot(:row, key: 'Associated with', value: organisations)
+  component.row do |row|
+    row.key(text: 'Email address')
+    row.value(text: user.email_address)
+  end
+  component.row do |row|
+    row.key(text: 'Associated with')
+    row.value(text: organisations)
+  end
 end %>

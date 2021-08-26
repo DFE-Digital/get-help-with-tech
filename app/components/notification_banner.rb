@@ -1,4 +1,4 @@
-class NotificationBanner < GovukComponent::NotificationBanner
+class NotificationBannerComponent < GovukComponent::NotificationBannerComponent
   def render?
     true
   end

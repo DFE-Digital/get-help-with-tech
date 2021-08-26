@@ -19,7 +19,7 @@
       </p>
 
      <% if @form.is_in_virtual_cap_pool? %>
-      <%= render GovukComponent::Warning.new(text: t(:is_in_virtual_cap_pool, scope: %i[support allocation edit])) %>
+      <%= render GovukComponent::WarningTextComponent.new(text: t(:is_in_virtual_cap_pool, scope: %i[support allocation edit])) %>
      <% end %>
 
       <%= f.govuk_number_field :allocation,

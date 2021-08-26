@@ -13,7 +13,7 @@
       </p>
       <div class="app-start-page-banner__actions">
         <%=
-          render GovukComponent::StartNowButton.new(
+          render GovukComponent::StartButtonComponent.new(
             text: 'Sign in',
             href: sign_in_path,
             classes: 'app-button--inverted app-start-page-banner__button'
