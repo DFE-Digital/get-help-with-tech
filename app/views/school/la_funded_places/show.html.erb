@@ -17,7 +17,7 @@
     <p class="govuk-body">
       You’ve been allocated <%= "#{@school.std_device_allocation.cap} #{'laptop'.pluralize(@school.std_device_allocation.cap)}" %>.
     </p>
-    <%= govuk_details summary: 'How your allocation has been calculated' do %>
+    <%= govuk_details summary_text: 'How your allocation has been calculated' do %>
       <% if @school.social_care_leaver? %>
         <p class="govuk-body">
           This allocation estimate is based on your LA’s individual care leaver

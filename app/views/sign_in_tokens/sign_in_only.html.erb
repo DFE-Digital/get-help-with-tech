@@ -11,7 +11,7 @@
 
       <%= f.govuk_email_field :email_address, required: true, label: { text: 'Email address', size: 's' }, hint: { text: 'Enter your email address, and if you have an account, we’ll send you a link to sign in.' } %>
 
-      <%= render GovukComponent::Details.new(summary: 'Change email address for your account') do %>
+      <%= render GovukComponent::DetailsComponent.new(summary_text: 'Change email address for your account') do %>
         <p>
           A colleague with access to the service can update your email address for you. If a colleague cannot do this, you can <%= ghwt_contact_mailto(label: "contact us", subject: "Change my email address") %> to change it instead.
         </p>
