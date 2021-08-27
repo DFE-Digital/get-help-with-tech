@@ -50,7 +50,7 @@ private
   end
 
   def set_school
-    @school = School.gias_status_open.find_by_urn(params[:school_urn])
+    @school = School.gias_status_open.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first
     authorize school, :update_responsible_body?
   end
 
