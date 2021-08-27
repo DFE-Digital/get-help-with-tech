@@ -7,7 +7,7 @@ ruby File.read('.ruby-version').chomp
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Canonical meta tag
-gem 'canonical-rails', git: 'https://github.com/asmega/canonical-rails.git', ref: '1b9426229dfa5136326f5ce4963e8e8d1cb3b23c'
+gem 'canonical-rails', github: 'jumph4x/canonical-rails', ref: '33caa6354d04b16946246546092d1492aa195d1e'
 gem 'chronic'
 gem 'dotenv-rails'
 # Having Faker here rather than in dev/test lets us still create
