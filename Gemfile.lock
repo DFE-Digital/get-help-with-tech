@@ -1,10 +1,10 @@
 GIT
-  remote: https://github.com/asmega/canonical-rails.git
-  revision: 1b9426229dfa5136326f5ce4963e8e8d1cb3b23c
-  ref: 1b9426229dfa5136326f5ce4963e8e8d1cb3b23c
+  remote: https://github.com/jumph4x/canonical-rails.git
+  revision: 33caa6354d04b16946246546092d1492aa195d1e
+  ref: 33caa6354d04b16946246546092d1492aa195d1e
   specs:
-    canonical-rails (0.2.11)
-      railties (>= 4.1, < 6.2)
+    canonical-rails (0.2.12)
+      rails (>= 4.1, < 6.2)
 
 GEM
   remote: https://rubygems.org/
@@ -601,4 +601,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.2.15
+   2.2.22
