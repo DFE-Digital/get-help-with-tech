@@ -18,14 +18,14 @@
       <% component.row(classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-")) do |row|
         row.key(text: "Which of these best describes you?")
         row.value(text: SupportTicket::DescribeYourselfForm.new.selected_option_label(@support_ticket.user_type))
-        row.action(href: govuk_link_to("Change", support_ticket_describe_yourself_path))
+        row.action(href: support_ticket_describe_yourself_path)
       end %>
 
       <% if @support_ticket.requires_school? %>
         <% component.row(classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-")) do |row|
           row.key(text: "Which school do you work for?")
           row.value(text: "#{@support_ticket.school_name} (URN: #{ @support_ticket.school_unique_id})")
-          row.action(href: govuk_link_to("Change", @school_details_path))
+          row.action(href: @school_details_path)
         end %>
       <% end %>
 
@@ -33,7 +33,7 @@
         <% component.row(classes: "Name".to_s.downcase.gsub(/ /, "-")) do |row|
           row.key(text: "How can we contact you?")
           row.value(text: "#{ @support_ticket.full_name}<br>#{ @support_ticket.email_address}<br>#{ @support_ticket.telephone_number}".html_safe)
-          row.action(href: govuk_link_to("Change", support_ticket_contact_details_path))
+          row.action(href: support_ticket_contact_details_path)
         end %>
       <% end %>
 
@@ -44,13 +44,13 @@
             content_tag(:li, SupportTicket::SupportNeedsForm.new.selected_option_label(topic))
           end.join.html_safe
         end)
-        row.action(href: govuk_link_to("Change", support_ticket_support_needs_path))
+        row.action(href: support_ticket_support_needs_path)
       end %>
 
       <% component.row(classes: "Name".to_s.downcase.gsub(/ /, "-")) do |row|
         row.key(text: "How can we help you?")
         row.value(text: @support_ticket.message)
-        row.action(href: govuk_link_to("Change", support_ticket_support_details_path))
+        row.action(href: support_ticket_support_details_path)
       end %>
     <% end %>
 
