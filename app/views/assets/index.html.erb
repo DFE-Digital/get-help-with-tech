@@ -40,10 +40,11 @@
 <% end %>
 
 <% if @assets.any? %>
-<p>
-  Download:
-  <%= link_to "CSV", assets_path(format: 'csv') %>
-</p>
+  <% if @current_serial_number.blank? %>
+    <%= link_to "Export to CSV", assets_path(format: 'csv'), class: 'govuk-button govuk-button--secondary' %>
+  <% else %>
+    <%= button_to "Export to CSV", search_assets_path(format: 'csv', serial_number: @current_serial_number), class: 'govuk-button govuk-button--secondary' %>
+  <% end %>
 <% end %>
 
 <table class="govuk-table">
