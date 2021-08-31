@@ -3,7 +3,7 @@
 
 <% content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => root_path },
-                  { 'Assets' => assets_path },
+                  { 'Devices' => assets_path },
                   @title,
                  ]) %>
 <% end %>
@@ -24,7 +24,7 @@
 
     <%= form_with url: search_assets_path do |f| %>
       <%= f.govuk_text_field :serial_number,
-                             label: { text: 'Serial number', size: 'm' }, value: @current_serial_number || '' %>
+                             label: { text: 'Enter a Serial Number', size: 'm' }, value: @current_serial_number || '' %>
 
       <%= f.govuk_submit 'Search' %>
     <% end %>
@@ -34,7 +34,7 @@
 <% if action_name == 'index' && !current_user.is_support? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds govuk-!-margin-top-4">
-      <p class="govuk-body">On this page you can find the full list of devices associated with your organisation</p>
+      <p class="govuk-body">This page shows you all the devices associated with your organisation. You can also search our database for a device by entering its serial number.</p>
     </div>
   </div>
 <% end %>
