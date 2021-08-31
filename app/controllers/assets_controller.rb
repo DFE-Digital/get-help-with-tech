@@ -18,12 +18,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv do
-        Asset.transaction do
-          send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv
-          @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
-        end
-      end
+      format.csv(&method(:send_csv_data_and_mark_views_in_transaction))
     end
   end
 
@@ -37,12 +32,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       format.html { render :index }
-      format.csv do
-        Asset.transaction do
-          send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv
-          @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
-        end
-      end
+      format.csv(&method(:send_csv_data_and_mark_views_in_transaction))
     end
   end
 
@@ -52,6 +42,13 @@ class AssetsController < ApplicationController
   end
 
 private
+
+  def send_csv_data_and_mark_views_in_transaction
+    Asset.transaction do
+      send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
+      @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
+    end
+  end
 
   def set_first_viewed_at_if_should_update_first_viewed_at(asset)
     asset.update!(first_viewed_at: Time.zone.now) if should_update_first_viewed_at?(asset)
