@@ -3,8 +3,6 @@ class PagesController < ApplicationController
 
   def guidance; end
 
-  def increasing_mobile_data_privacy_notice; end
-
   def home_page
     @show_parent_carer_pupil_banner = false
   end

@@ -11,13 +11,13 @@ Rails.application.routes.draw do
 
   get '/about-bt-wifi', to: redirect('/internet-access#bt-wifi')
   get '/about-increasing-mobile-data', to: redirect('/internet-access')
-  get '/increasing-mobile-data/privacy-notice', to: 'pages#increasing_mobile_data_privacy_notice'
+  get '/increasing-mobile-data/privacy-notice', to: redirect('/privacy/general-privacy-notice')
   get '/accessibility', to: 'pages#accessibility'
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
   get '/privacy/general-privacy-notice', to: 'pages#general_privacy_notice'
   get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice', constraints: -> { false }
-  get '/mobile-privacy', to: redirect('/increasing-mobile-data/privacy-notice')
+  get '/mobile-privacy', to: redirect('/privacy/general-privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
   get '/how-to-request-4g-wireless-routers', to: redirect('/internet-access')
   get '/choosing-help-with-internet-access', to: redirect('/internet-access')
