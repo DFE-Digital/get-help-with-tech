@@ -32,7 +32,7 @@ Download the driver for your device and either include them in your Images or in
 * [Download Dynabook audio drivers](https://uk.dynabook.com/support/drivers/laptops/)
 
 ## PXE boot issues
- 
+
 If you are looking to reimage Tactus Geobooks using PXE boot, you may experience difficulties due to there being no RJ54 ethernet port.
 
 The following USB to RJ45 adapters have passed compatibility tests by our delivery partner. We do not promote or recommend any particular devices or manufacturers.
@@ -51,6 +51,6 @@ For Tactus Geobooks GE114:
 * StarTech USB31000S (USB-A)
 
 ## Additional support
-Guidance is available for [ordering and managing laptops and tablets](/devices), [replacing faulty devices](/devices/replace-a-faulty-device), and what to do if you have [technical issues with a 4G wireless router](/devices/resolve-issues-with-4g-wireless-routers). 
+Guidance is available for [ordering and managing laptops and tablets](/devices), [replacing faulty devices](/devices/replace-a-faulty-device), and what to do if you have [technical issues with a 4G wireless router](/devices/managing-your-4g-wireless-routers).
 
 [Contact us](/get-support) if you have any other hardware queries.

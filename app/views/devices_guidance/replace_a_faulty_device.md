@@ -23,4 +23,4 @@ We are unable to provide support for laptops and tablets after the manufacturerâ
 
 ## 4G wireless router faults
 
-Separate guidance is available explaining [what to do if you have technical issues with a 4G wireless router](/devices/resolve-issues-with-4g-wireless-routers).
+Separate guidance is available explaining [what to do if you have technical issues with a 4G wireless router](/devices/managing-your-4g-wireless-routers).
