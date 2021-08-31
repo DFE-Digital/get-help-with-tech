@@ -1,8 +1,8 @@
-<%- title = 'Asset BIOS/Admin Password and Hardware Hash' -%>
+<%- title = 'Device BIOS/Admin Password and Hardware Hash' -%>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => root_path },
-                  { 'Assets' => assets_path },
+                  { 'Devices' => assets_path },
                   title,
                  ]) %>
 <% end %>
@@ -15,8 +15,20 @@
 
     <div>
       <div>
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Asset <%= @asset.serial_number %></h2>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Device <%= @asset.serial_number %></h2>
         <%= render SummaryListComponent.new(rows: { 'Asset Tag' => @asset.tag, 'Serial/IMEI' => @asset.serial_number, 'BIOS Password' => @asset.bios_password, 'Admin Password' => @asset.admin_password, 'Hardware Hash' => @asset.hardware_hash } ) %>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              What’s a hardware hash?
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            Some manufacturers use a ‘hardware hash’ (also called a ‘hardware ID’) to identify devices. The hardware
+            hash identification format is unique to each device and is made up of details about its hardware components
+            and operating system.
+          </div>
+        </details>
       </div>
     </div>
   </div>
