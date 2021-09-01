@@ -10,8 +10,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full govuk-!-margin-bottom-5">
     <%= render GovukComponent::PanelComponent.new(
-      title: 'Support request sent',
-      body: "Your reference number #{session[:support_ticket_number]}")
+      title_text: 'Support request sent',
+      text: "Your reference number #{session[:support_ticket_number]}")
     %>
   </div>
 </div>
