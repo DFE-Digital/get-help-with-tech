@@ -1,8 +1,8 @@
-<%- title = 'Device BIOS/Admin Password and Hardware Hash' -%>
+<%- title = 'Device BIOS/admin password and hardware hash' -%>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => root_path },
-                  { 'Devices' => assets_path },
+                  { 'View your device details' => assets_path },
                   title,
                  ]) %>
 <% end %>
@@ -16,7 +16,7 @@
     <div>
       <div>
         <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Device <%= @asset.serial_number %></h2>
-        <%= render SummaryListComponent.new(rows: { 'Asset Tag' => @asset.tag, 'Serial/IMEI' => @asset.serial_number, 'BIOS Password' => @asset.bios_password, 'Admin Password' => @asset.admin_password, 'Hardware Hash' => @asset.hardware_hash } ) %>
+        <%= render SummaryListComponent.new(rows: { 'Asset tag' => @asset.tag, 'Serial/IMEI' => @asset.serial_number, 'BIOS password' => @asset.bios_password, 'Admin password' => @asset.admin_password, 'Hardware hash' => @asset.hardware_hash } ) %>
         <details class="govuk-details" data-module="govuk-details">
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">

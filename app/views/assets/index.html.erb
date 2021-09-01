@@ -3,7 +3,7 @@
 
 <% content_for :before_content do %>
   <% breadcrumbs([{ 'Home' => root_path },
-                  { 'Devices' => assets_path },
+                  { 'View your device details' => assets_path },
                   @title,
                  ]) %>
 <% end %>
@@ -24,7 +24,7 @@
 
     <%= form_with url: search_assets_path do |f| %>
       <%= f.govuk_text_field :serial_number,
-                             label: { text: 'Enter a Serial Number', size: 'm' }, value: @current_serial_number || '' %>
+                             label: { text: 'Enter a serial number', size: 'm' }, value: @current_serial_number || '' %>
 
       <%= f.govuk_submit 'Search' %>
     <% end %>
