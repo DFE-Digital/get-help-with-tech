@@ -24,7 +24,7 @@ Information is available for each device type explaining what safeguarding softw
 * [Standard Microsoft Windows laptops and tablets without DfE settings](/devices/preparing-a-standard-windows-device)
 * [Google Chromebooks](/devices/preparing-chromebooks)
 * [Apple iPads](/devices/preparing-ipads)
-* [4G wireless routers](/devices/preparing-4g-wireless-routers#router-security)
+* [4G wireless routers](/devices/managing-your-4g-wireless-routers#router-security)
 
 ## Safeguarding and security settings for pre-owned or donated devices
 
@@ -32,7 +32,7 @@ New and refurbished laptops and tablets that have been purchased or donated can 
 
 If you receive devices for your school or college through donations, you’re responsible for ensuring they are prepared so they are appropriate for use.
 
-Information we have produced on content filtering, privacy policies and mobile device management is also relevant to any new and pre-owned devices. We recommend you follow our guidance on [preparing a Windows device](/devices/preparing-a-standard-windows-device), [Chromebook](/devices/preparing-chromebooks) or [iPad](/devices/preparing-ipads) before lending a device to a child or young person. 
+Information we have produced on content filtering, privacy policies and mobile device management is also relevant to any new and pre-owned devices. We recommend you follow our guidance on [preparing a Windows device](/devices/preparing-a-standard-windows-device), [Chromebook](/devices/preparing-chromebooks) or [iPad](/devices/preparing-ipads) before lending a device to a child or young person.
 
 The following information will help you make decisions on how to set up and manage these devices.
 

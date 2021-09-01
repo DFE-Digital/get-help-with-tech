@@ -232,4 +232,4 @@ The devices came with any remaining manufacturer's warranty (this was less than 
 
 ## 4G wireless routers
 
-Read our [4G wireless router guidance](/devices/preparing-4g-wireless-routers) for information on internet connectivity devices and data limits.
+Read our [4G wireless router guidance](/devices/managing-your-4g-wireless-routers) for information on internet connectivity devices and data limits.
