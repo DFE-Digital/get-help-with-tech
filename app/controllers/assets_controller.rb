@@ -4,7 +4,7 @@ class AssetsController < ApplicationController
 
   # GET /assets
   def index
-    @title = 'Devices'
+    @title = 'View your device details'
 
     user = impersonated_or_current_user
 
