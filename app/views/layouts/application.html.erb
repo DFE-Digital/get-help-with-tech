@@ -74,7 +74,7 @@
       <%= yield :start_page_banner %>
       <div class="govuk-width-container">
         <% if impersonated_user %>
-          <%= render NotificationBannerComponent.new(title: 'Important', classes: 'govuk-!-margin-top-0 govuk-!-margin-bottom-5') do |banner| %>
+          <%= render NotificationBannerComponent.new(title_text: 'Important', classes: 'govuk-!-margin-top-0 govuk-!-margin-bottom-5') do |banner| %>
             <p class="govuk-notification-banner__heading">
               You are impersonating <%= link_to impersonated_user.full_name, support_user_path(impersonated_user) %> (<%= impersonated_user.email_address %>)
             </p>
