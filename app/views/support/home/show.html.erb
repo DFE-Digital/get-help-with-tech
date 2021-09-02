@@ -18,7 +18,13 @@
       <%= govuk_link_to 'Find users', search_support_users_path %>
     </h2>
 
-    <p class="govuk-body">Use this section to find users by name or email address</p>
+    <p class="govuk-body">Use this section to find users by name or email address.</p>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to 'Search for device details', assets_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to view the details of any device by serial number.</p>
 
     <% if policy(School).edit? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
@@ -88,7 +94,7 @@
         <%= govuk_link_to 'Technical support', support_technical_support_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to see the background queues and jobs running on the service</p>
+      <p class="govuk-body">Use this section to see the background queues and jobs running on the service.</p>
     <% end %>
 
     <% if policy(:support).feature_flags? %>
@@ -96,7 +102,7 @@
         <%= govuk_link_to 'Feature flags', support_feature_flags_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to see the status of feature flags for the service</p>
+      <p class="govuk-body">Use this section to see the status of feature flags for the service.</p>
     <% end %>
 
     <% if policy(:gias).index? %>
