@@ -6,11 +6,15 @@ RSpec.describe 'support/home/show.html.erb' do
 
     before do
       enable_pundit(view, support_user)
+      render
     end
 
     it 'does not display privileged users section' do
-      render
       expect(rendered).not_to include('Privileged users')
+    end
+
+    it 'has link to assets index' do
+      expect(rendered).to include('Search for device details')
     end
   end
 
