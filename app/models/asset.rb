@@ -1,6 +1,8 @@
 require 'encryption_service'
 
 class Asset < ApplicationRecord
+  UNLOCKABLE_MODEL_PATTERN = /\ADynabook R50/
+
   validates :serial_number, :department_sold_to_id, presence: true
 
   default_scope { order(:location) }
@@ -76,6 +78,10 @@ class Asset < ApplicationRecord
   }
 
   scope :search_by_serial_number, ->(sn) { where('serial_number ILIKE ?', sn.strip) }
+
+  def bios_unlockable?
+    model.match?(UNLOCKABLE_MODEL_PATTERN)
+  end
 
   def viewed?
     first_viewed_at.present?
