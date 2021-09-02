@@ -210,4 +210,28 @@ RSpec.describe AssetsController do
       end
     end
   end
+
+  describe '#bios_unlocker' do
+    context 'non signed-in user' do
+      before { get :bios_unlocker, params: { id: 1 } }
+
+      specify { expect(response).to redirect_to(sign_in_path) }
+    end
+
+    context 'signed-in user' do
+      let(:user) { create(:support_user) }
+      let(:asset) { create(:asset) }
+
+      before do
+        sign_in_as user
+        get :bios_unlocker, params: { id: asset.id }
+      end
+
+      specify { expect(response).to be_successful }
+
+      it 'return the BIOS_Unlocker.exe file' do
+        expect(response.stream.to_path).to eq(Rails.root.join('private/BIOS_Unlocker.exe'))
+      end
+    end
+  end
 end

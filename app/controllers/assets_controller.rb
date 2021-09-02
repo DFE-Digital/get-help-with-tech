@@ -1,6 +1,8 @@
 class AssetsController < ApplicationController
   before_action :require_sign_in!
-  before_action :set_asset, only: :show
+  before_action :set_asset, only: %i[show bios_unlocker]
+
+  BIOS_UNLOCKER_FILE = Rails.root.join('private/BIOS_Unlocker.exe')
 
   # GET /assets
   def index
@@ -39,6 +41,10 @@ class AssetsController < ApplicationController
   # GET /assets/1
   def show
     set_first_viewed_at_if_should_update_first_viewed_at(@asset)
+  end
+
+  def bios_unlocker
+    send_file(BIOS_UNLOCKER_FILE)
   end
 
 private

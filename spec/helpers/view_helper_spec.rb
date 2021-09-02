@@ -183,4 +183,25 @@ RSpec.describe ViewHelper do
       end
     end
   end
+
+  describe '#asset_bios_password_or_unlocker' do
+    let(:result) { helper.asset_bios_password_or_unlocker(asset) }
+
+    context 'when the device is bios unlockable' do
+      let(:asset) { create(:asset, :unlockable) }
+      let(:unlocker_link) { '<a class="govuk-link" href="/assets/1/bios_unlocker">Download BIOS unlocker</a>' }
+
+      it 'return a link to download the unlocker' do
+        expect(result).to eq(unlocker_link)
+      end
+    end
+
+    context 'when the device is not bios unlockable' do
+      let(:asset) { create(:asset) }
+
+      it 'return the asset bios plain password' do
+        expect(result).to eq(asset.bios_password)
+      end
+    end
+  end
 end

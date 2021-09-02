@@ -3,6 +3,14 @@ require 'string_utils'
 module ViewHelper
   include StringUtils
 
+  def asset_bios_password_or_unlocker(asset)
+    if asset.bios_unlockable?
+      govuk_link_to('Download BIOS unlocker', bios_unlocker_asset_path(asset))
+    else
+      asset.bios_password
+    end
+  end
+
   def ghwt_contact_mailto(subject: nil, label: 'COVID.TECHNOLOGY@education.gov.uk')
     mail_to_url = [
       'mailto:COVID.TECHNOLOGY@education.gov.uk',

@@ -65,6 +65,9 @@ Rails.application.routes.draw do
     collection do
       post 'search'
     end
+    member do
+      get 'bios_unlocker'
+    end
   end
 
   resources :sessions, only: %i[create destroy]

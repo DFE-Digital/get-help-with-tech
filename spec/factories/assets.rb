@@ -54,4 +54,8 @@ FactoryBot.define do
   trait :lacks_hardware_hash do
     hardware_hash { nil }
   end
+
+  trait :unlockable do
+    model { 'Dynabook R50-ec13' }
+  end
 end

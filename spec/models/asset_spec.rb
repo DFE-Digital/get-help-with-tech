@@ -199,6 +199,20 @@ RSpec.describe Asset, type: :model do
     end
   end
 
+  describe '#bios_unlockable?' do
+    context 'Dynabook R50 models' do
+      let(:asset) { build(:asset, model: 'Dynabook R50-xxx') }
+
+      specify { expect(asset).to be_bios_unlockable }
+    end
+
+    context 'Non Dynabook R50 models' do
+      let(:asset) { build(:asset, model: 'Non Dynabook R50-xxx') }
+
+      specify { expect(asset).not_to be_bios_unlockable }
+    end
+  end
+
   describe '#viewed?' do
     let(:asset) { build(:asset) }
 
