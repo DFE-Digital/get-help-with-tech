@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Device serial number checker</h1>
+    <h2 class="govuk-heading-l">Upload serial number file</h2>
+    <div class="govuk-form-group">
+      <%= form_with url: '/support/asset_serial_uploads', class: 'app-card govuk-!-margin-bottom-6', multipart: true do |form| %>
+        <%= form.govuk_file_field :serial_numbers_file, label: { text: 'Serial numbers file', size: 'm' } %>
+        <%= form.govuk_submit 'Upload' %>
+      <% end %>
+      <h2 class="govuk-heading-m">Help generating the upload file</h2>
+      <p class="govuk-body">The file needs to be a column of serial numbers.</p>
+    </div>
+  </div>
+</div>
+
+
+

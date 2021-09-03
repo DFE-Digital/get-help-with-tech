@@ -312,6 +312,7 @@ Rails.application.routes.draw do
     end
     resources :extra_mobile_data_requests, only: %i[index show], path: 'extra-mobile-data-requests'
     resources :email_audits, only: [:index], path: 'email-audits'
+    resources :asset_serial_uploads, only: %i[new create]
     mount Sidekiq::Web => '/sidekiq', constraints: RequireSupportUserConstraint.new, as: :sidekiq_admin
   end
 

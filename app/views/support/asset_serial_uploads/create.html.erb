@@ -1,0 +1,50 @@
+<% content_for :title, @title %>
+<% content_for :browser_title, @title %>
+
+<% content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => root_path },
+                  @title,
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <%= @title %>
+    </h1>
+  </div>
+</div>
+
+<% if @missing_serial_numbers.any? %>
+  <%= render GovukComponent::WarningTextComponent.new(text: "The following serial numbers were not found: #{@missing_serial_numbers.join(',')}") %>
+<% end %>
+
+<% if @found_serial_numbers.any? %>
+  <%= render GovukComponent::NotificationBannerComponent.new(title_text: 'Information', disable_auto_focus: true) do |notification_banner|
+    notification_banner.heading(
+      text: "The following serial numbers were found: #{@found_serial_numbers.join(',')}"
+    )
+    end
+  %>
+<% end %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header app-schools-table__column-25">Serial/IMEI</th>
+    <th class="govuk-table__header app-schools-table__column-25">Model</th>
+    <th class="govuk-table__header app-schools-table__column-25">Sold To</th>
+    <th class="govuk-table__header app-schools-table__column-25">Ship To</th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @assets.each do |asset| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= asset.serial_number %></td>
+      <td class="govuk-table__cell"><%= asset.model %></td>
+      <td class="govuk-table__cell"><%= asset.department %></td>
+      <td class="govuk-table__cell"><%= asset.location %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
