@@ -141,6 +141,23 @@ RSpec.describe CreateUserService do
       end
       let(:result) { CreateUserService.invite_school_user(params) }
 
+      context 'user already a user on this school and belongs to a responsible body' do
+        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: school, responsible_body_id: school.responsible_body_id) }
+
+        it 'does not create a user with the given params' do
+          expect { result }.not_to change(User, :count)
+        end
+
+        it 'does not send any email' do
+          expect { perform_enqueued_jobs { result } }.not_to change(ActionMailer::Base.deliveries, :size)
+        end
+
+        it 'returns the existing user' do
+          expect(result).to be_a(User)
+          expect(result).to eq(existing_user)
+        end
+      end
+
       context 'on the given school' do
         before { create(:school_user, email_address: 'existing@user.com', school: school) }
 

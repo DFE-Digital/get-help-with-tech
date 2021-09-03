@@ -45,7 +45,8 @@ class CreateUserService
   def self.invite_to_additional_school!(user_params)
     user = User.find_by_email_address(user_params[:email_address])
     school = School.find(user_params[:school_id])
-    if user.schools << school
+    unless user.school_ids.include?(user_params[:school_id])
+      user.schools << school
       AddAdditionalSchoolToExistingUserMailer.with(user: user, school: school).additional_school_email.deliver_later
       school.preorder_information&.refresh_status!
       user.update!(user_params.select { |key, _value| user.send(key).blank? }.merge(deleted_at: nil))
