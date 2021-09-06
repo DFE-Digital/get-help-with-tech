@@ -7,6 +7,7 @@ class AssetsController < ApplicationController
   # GET /assets
   def index
     @title = 'View your device details'
+    @csv_download = true
 
     user = impersonated_or_current_user
 
@@ -20,7 +21,12 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv(&method(:send_csv_data_and_mark_views_in_transaction))
+      format.csv do
+        Asset.transaction do
+          send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
+          @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
+        end
+      end
     end
   end
 
@@ -28,14 +34,12 @@ class AssetsController < ApplicationController
   # renders the index template
   def search
     @title = 'Search results'
+    @csv_download = false
 
     @current_serial_number = params[:serial_number]
     @assets = policy_scope(Asset).search_by_serial_number(@current_serial_number)
 
-    respond_to do |format|
-      format.html { render :index }
-      format.csv(&method(:send_csv_data_and_mark_views_in_transaction))
-    end
+    render :index
   end
 
   # GET /assets/1
@@ -48,13 +52,6 @@ class AssetsController < ApplicationController
   end
 
 private
-
-  def send_csv_data_and_mark_views_in_transaction
-    Asset.transaction do
-      send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
-      @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
-    end
-  end
 
   def set_first_viewed_at_if_should_update_first_viewed_at(asset)
     asset.update!(first_viewed_at: Time.zone.now) if should_update_first_viewed_at?(asset)
