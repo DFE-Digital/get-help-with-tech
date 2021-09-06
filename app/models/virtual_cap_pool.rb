@@ -37,6 +37,11 @@ class VirtualCapPool < ApplicationRecord
     end
   end
 
+  def remove_school!(school)
+    school_device_allocation = school.device_allocations.find_by(device_type: device_type)
+    remove_school_allocation(school_device_allocation) if school_device_allocation
+  end
+
   def has_school?(school)
     schools.exists?(school.id)
   end
@@ -52,6 +57,11 @@ private
 
   def add_school_allocation(device_allocation)
     school_virtual_caps.create!(school_device_allocation: device_allocation)
+    recalculate_caps!
+  end
+
+  def remove_school_allocation(device_allocation)
+    school_virtual_caps.find_by(school_device_allocation_id: device_allocation.id)&.destroy!
     recalculate_caps!
   end
 

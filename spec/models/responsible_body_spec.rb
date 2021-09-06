@@ -18,6 +18,122 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
+  describe '#can_school_be_added_to_virtual_cap_pools?' do
+    context 'when the responsible body has no virtual cap feature flag' do
+      subject(:responsible_body) { create(:trust, vcap_feature_flag: false) }
+
+      let(:school) { build(:school) }
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is associated to a different responsible body' do
+      let(:responsible_body) { create(:trust, vcap_feature_flag: true) }
+
+      let(:school) { create(:school, responsible_body: create(:trust)) }
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is of type LaFundedPlace' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { build_stubbed(:iss_provision, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school manages orders' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { build_stubbed(:school, :manages_orders, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school has no device_allocations' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { build_stubbed(:school, :centrally_managed, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is already included in any of the responsible body virtual cap pools' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { create_and_put_school_in_pool(responsible_body) }
+
+      before do
+        stub_computacenter_outgoing_api_calls
+      end
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is not included in any of the responsible body virtual cap pools' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { create(:school, :centrally_managed, :with_std_device_allocation, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_truthy }
+    end
+  end
+
+  describe '#can_school_be_removed_from_virtual_cap_pools?' do
+    context 'when the responsible body has no virtual cap feature flag' do
+      subject(:responsible_body) { create(:trust, vcap_feature_flag: false) }
+
+      let(:school) { build(:school) }
+
+      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is associated to a different responsible body' do
+      subject(:responsible_body) { create(:trust, vcap_feature_flag: true) }
+
+      let(:school) { create(:school, responsible_body: create(:trust)) }
+
+      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school manages orders' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { build_stubbed(:school, :manages_orders, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school has no device_allocations' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { build_stubbed(:school, :centrally_managed, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is not included in any of the responsible body virtual cap pools' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { create(:school, :centrally_managed, :with_std_device_allocation, responsible_body: responsible_body) }
+
+      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+    end
+
+    context 'when the school is included in any of the responsible body virtual cap pools' do
+      subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
+
+      let(:school) { create_and_put_school_in_pool(responsible_body) }
+
+      before do
+        stub_computacenter_outgoing_api_calls
+      end
+
+      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_truthy }
+    end
+  end
+
   describe '#next_school_sorted_ascending_by_name' do
     it 'allows navigating down a list of alphabetically-sorted schools' do
       zebra = create(:school, name: 'Zebra', responsible_body: responsible_body)
@@ -364,7 +480,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#add_school_to_virtual_cap_pools' do
+  describe '#add_school_to_virtual_cap_pools!' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
     let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
@@ -392,6 +508,86 @@ RSpec.describe ResponsibleBody, type: :model do
     it 'creates the virtual pool for the device type if it does not exists' do
       expect { responsible_body.add_school_to_virtual_cap_pools!(schools.first) }.to change { VirtualCapPool.count }.by(2)
       expect { responsible_body.add_school_to_virtual_cap_pools!(schools.second) }.not_to(change { VirtualCapPool.count })
+    end
+  end
+
+  describe '#remove_school_from_virtual_cap_pools!' do
+    subject(:rb) { create(:trust, :manages_centrally, vcap_feature_flag: vcap_feature_flag) }
+
+    before do
+      stub_computacenter_outgoing_api_calls
+    end
+
+    context 'when the responsible body has no virtual_cap_feature_flag' do
+      let(:vcap_feature_flag) { false }
+
+      it 'raise an error' do
+        expect { rb.remove_school_from_virtual_cap_pools!(create(:school)) }
+          .to raise_exception(VirtualCapPoolError)
+      end
+    end
+
+    context 'when the responsible body has virtual_cap_feature_flag' do
+      let(:vcap_feature_flag) { true }
+
+      let(:rb_std_device_start_allocation) { [school_a, school_to_remove].map(&:std_device_allocation).sum(&:raw_allocation) }
+      let(:rb_std_device_end_allocation) { school_a.std_device_allocation.raw_allocation }
+      let(:rb_std_device_start_cap) { [school_a, school_to_remove].map(&:std_device_allocation).sum(&:raw_cap) }
+      let(:rb_std_device_end_cap) { school_a.std_device_allocation.raw_cap }
+      let(:rb_std_device_start_devices_ordered) { [school_a, school_to_remove].map(&:std_device_allocation).sum(&:raw_devices_ordered) }
+      let(:rb_std_device_end_devices_ordered) { school_a.std_device_allocation.raw_devices_ordered }
+
+      let(:rb_coms_device_start_allocation) { [school_a, school_to_remove].map(&:coms_device_allocation).sum(&:raw_allocation) }
+      let(:rb_coms_device_end_allocation) { school_a.coms_device_allocation.raw_allocation }
+      let(:rb_coms_device_start_cap) { [school_a, school_to_remove].map(&:coms_device_allocation).sum(&:raw_cap) }
+      let(:rb_coms_device_end_cap) { school_a.coms_device_allocation.raw_cap }
+      let(:rb_coms_device_start_devices_ordered) { [school_a, school_to_remove].map(&:coms_device_allocation).sum(&:raw_devices_ordered) }
+      let(:rb_coms_device_end_devices_ordered) { school_a.coms_device_allocation.raw_devices_ordered }
+
+      let!(:school_a) { create_and_put_school_in_pool(rb) }
+      let!(:school_to_remove) { create_and_put_school_in_pool(rb) }
+
+      it 'remove school std allocation from the responsible body pool' do
+        expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
+          .to change { rb.virtual_cap_pools.std_device.first.allocation }
+                .from(rb_std_device_start_allocation)
+                .to(rb_std_device_end_allocation)
+      end
+
+      it 'remove school std device caps from the responsible body pool' do
+        expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
+          .to change { rb.virtual_cap_pools.std_device.first.cap }
+                .from(rb_std_device_start_cap)
+                .to(rb_std_device_end_cap)
+      end
+
+      it 'remove school std devices_ordered from the responsible body pool' do
+        expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
+          .to change { rb.virtual_cap_pools.std_device.first.devices_ordered }
+                .from(rb_std_device_start_devices_ordered)
+                .to(rb_std_device_end_devices_ordered)
+      end
+
+      it 'remove school coms allocation from the responsible body pool' do
+        expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
+          .to change { rb.virtual_cap_pools.coms_device.first.allocation }
+                .from(rb_coms_device_start_allocation)
+                .to(rb_coms_device_end_allocation)
+      end
+
+      it 'remove school coms device caps from the responsible body pool' do
+        expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
+          .to change { rb.virtual_cap_pools.coms_device.first.cap }
+                .from(rb_coms_device_start_cap)
+                .to(rb_coms_device_end_cap)
+      end
+
+      it 'remove school coms devices_ordered from the responsible body pool' do
+        expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
+          .to change { rb.virtual_cap_pools.coms_device.first.devices_ordered }
+                .from(rb_coms_device_start_devices_ordered)
+                .to(rb_coms_device_end_devices_ordered)
+      end
     end
   end
 

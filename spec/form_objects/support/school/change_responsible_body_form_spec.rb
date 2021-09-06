@@ -80,9 +80,9 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
     context 'when the form is valid' do
       let(:school) { create(:school, :with_preorder_information) }
-      let(:new_responsible_body_id) { create(:trust).id }
+      let(:new_responsible_body) { create(:trust) }
 
-      subject(:form) { described_class.new(school: school, responsible_body_id: new_responsible_body_id) }
+      subject(:form) { described_class.new(school: school, responsible_body_id: new_responsible_body.id) }
 
       it 'return true' do
         expect(form.save).to be_truthy
@@ -90,7 +90,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       it 'change the school responsible body' do
         change_rb = instance_spy(ChangeSchoolResponsibleBodyService, call: true)
-        allow(ChangeSchoolResponsibleBodyService).to receive(:new).with(school, new_responsible_body_id) { change_rb }
+        allow(ChangeSchoolResponsibleBodyService).to receive(:new).with(school, new_responsible_body) { change_rb }
 
         expect(form.save).to be_truthy
         expect(change_rb).to have_received(:call)

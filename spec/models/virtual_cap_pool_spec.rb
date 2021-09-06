@@ -267,4 +267,48 @@ RSpec.describe VirtualCapPool, type: :model do
       end
     end
   end
+
+  describe '#remove_school!' do
+    let(:rb) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
+    let(:std_device_pool) { rb.std_device_pool }
+
+    before do
+      stub_computacenter_outgoing_api_calls
+    end
+
+    context 'when the school is in the pool' do
+      let!(:school) { create_and_put_school_in_pool(rb) }
+
+      before do
+        allow(std_device_pool).to receive(:recalculate_caps!)
+      end
+
+      it 'delete connection of the school to the pool' do
+        expect { std_device_pool.remove_school!(school) }
+          .to change { std_device_pool.reload.school_virtual_caps.count }.from(1).to(0)
+      end
+
+      it 'recompute pool caps' do
+        std_device_pool.remove_school!(school)
+        expect(std_device_pool).to have_received(:recalculate_caps!).at_least(1)
+      end
+    end
+
+    context 'when the school is not in the pool' do
+      before do
+        create_and_put_school_in_pool(rb)
+        allow(std_device_pool).to receive(:recalculate_caps!)
+      end
+
+      it 'do not change any pool connection' do
+        expect { std_device_pool.remove_school!(create(:school)) }
+          .not_to(change { std_device_pool.reload.school_virtual_caps.count })
+      end
+
+      it 'do not recompute pool caps' do
+        std_device_pool.remove_school!(create(:school))
+        expect(std_device_pool).not_to have_received(:recalculate_caps!)
+      end
+    end
+  end
 end

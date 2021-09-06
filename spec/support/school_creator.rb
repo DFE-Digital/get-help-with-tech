@@ -75,3 +75,17 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
   end
   schools.count == 1 ? schools.first : schools
 end
+
+def create_and_put_school_in_pool(responsible_body)
+  create(:school, :centrally_managed, responsible_body: responsible_body).tap do |school|
+    create(:school_device_allocation, :with_std_allocation, school: school, allocation: rand(10..20), cap: rand(1..9), devices_ordered: rand(1..9))
+    create(:school_device_allocation, :with_coms_allocation, school: school, allocation: rand(10..10), cap: rand(1..9), devices_ordered: rand(1..9))
+    put_school_in_pool(responsible_body, school)
+  end
+end
+
+def put_school_in_pool(responsible_body, pool_school)
+  pool_school.preorder_information.responsible_body_will_order_devices!
+  pool_school.can_order!
+  responsible_body.add_school_to_virtual_cap_pools!(pool_school)
+end
