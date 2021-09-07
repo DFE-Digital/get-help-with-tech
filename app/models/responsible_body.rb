@@ -54,13 +54,30 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
-  def can_school_be_added_to_virtual_cap_pools?(school)
+  def remove_school_from_virtual_cap_pools!(school)
+    raise(VirtualCapPoolError, 'Virtual cap feature flags not set') unless has_virtual_cap_feature_flags?
+
+    school.device_allocations.each do |allocation|
+      pool = virtual_cap_pools.send(allocation.device_type).first
+      pool&.remove_school!(school)
+    end
+  end
+
+  def school_addable_to_virtual_cap_pools?(school)
     has_virtual_cap_feature_flags? &&
       school.responsible_body_id == id &&
       !school.la_funded_provision? &&
       school.preorder_information&.responsible_body_will_order_devices? &&
       school.device_allocations.any? &&
       !has_school_in_virtual_cap_pools?(school)
+  end
+
+  def school_removable_from_virtual_cap_pools?(school)
+    has_virtual_cap_feature_flags? &&
+      school.responsible_body_id == id &&
+      school.preorder_information&.responsible_body_will_order_devices? &&
+      school.device_allocations.any? &&
+      has_school_in_virtual_cap_pools?(school)
   end
 
   def devices_available_to_order?

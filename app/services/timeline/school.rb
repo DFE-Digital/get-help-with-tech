@@ -1,6 +1,6 @@
 module Timeline
   class School
-    FIELDS = %i[order_state status cap allocation devices_ordered].freeze
+    FIELDS = %i[order_state status cap allocation devices_ordered responsible_body_id].freeze
 
     attr_reader :school
 

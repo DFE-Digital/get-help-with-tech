@@ -75,7 +75,7 @@ class PreorderInformation < ApplicationRecord
       self.who_will_order_devices = who
       self.status = infer_status
       save!
-      if school.responsible_body.can_school_be_added_to_virtual_cap_pools?(school)
+      if school.responsible_body.school_addable_to_virtual_cap_pools?(school)
         school.responsible_body.add_school_to_virtual_cap_pools!(school)
       end
       true

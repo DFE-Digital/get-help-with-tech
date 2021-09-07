@@ -5,9 +5,9 @@ class School < ApplicationRecord
 
   belongs_to :responsible_body
 
-  has_many   :device_allocations, class_name: 'SchoolDeviceAllocation'
-  has_one    :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
-  has_one    :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
+  has_many :device_allocations, class_name: 'SchoolDeviceAllocation'
+  has_one  :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
+  has_one  :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
 
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
   has_many :user_schools

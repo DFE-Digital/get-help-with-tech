@@ -22,7 +22,7 @@ class Support::School::ChangeResponsibleBodyForm
   end
 
   def save
-    valid? && ChangeSchoolResponsibleBodyService.new(school, responsible_body_id).call
+    valid? && ChangeSchoolResponsibleBodyService.new(school, responsible_body).call
   end
 
 private
