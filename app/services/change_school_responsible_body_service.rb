@@ -11,10 +11,10 @@ class ChangeSchoolResponsibleBodyService
 
   def call
     school.transaction do
-      remove_school_from_current_pool if school_can_be_removed?
+      remove_school_from_current_pool if school_removable?
       set_school_new_responsible_body
       update_preorder_information
-      add_school_to_new_pool if school_can_be_added?
+      add_school_to_new_pool if school_addable?
     end
     true
   rescue StandardError => e
@@ -38,12 +38,12 @@ private
     initial_responsible_body.remove_school_from_virtual_cap_pools!(school)
   end
 
-  def school_can_be_added?
-    new_responsible_body.can_school_be_added_to_virtual_cap_pools?(school)
+  def school_addable?
+    new_responsible_body.school_addable_to_virtual_cap_pools?(school)
   end
 
-  def school_can_be_removed?
-    initial_responsible_body&.can_school_be_removed_from_virtual_cap_pools?(school)
+  def school_removable?
+    initial_responsible_body&.school_removable_from_virtual_cap_pools?(school)
   end
 
   def set_school_new_responsible_body

@@ -63,7 +63,7 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
-  def can_school_be_added_to_virtual_cap_pools?(school)
+  def school_addable_to_virtual_cap_pools?(school)
     has_virtual_cap_feature_flags? &&
       school.responsible_body_id == id &&
       !school.la_funded_provision? &&
@@ -72,7 +72,7 @@ class ResponsibleBody < ApplicationRecord
       !has_school_in_virtual_cap_pools?(school)
   end
 
-  def can_school_be_removed_from_virtual_cap_pools?(school)
+  def school_removable_from_virtual_cap_pools?(school)
     has_virtual_cap_feature_flags? &&
       school.responsible_body_id == id &&
       school.preorder_information&.responsible_body_will_order_devices? &&

@@ -18,13 +18,13 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#can_school_be_added_to_virtual_cap_pools?' do
+  describe '#school_addable_to_virtual_cap_pools?' do
     context 'when the responsible body has no virtual cap feature flag' do
       subject(:responsible_body) { create(:trust, vcap_feature_flag: false) }
 
       let(:school) { build(:school) }
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is associated to a different responsible body' do
@@ -32,7 +32,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { create(:school, responsible_body: create(:trust)) }
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is of type LaFundedPlace' do
@@ -40,7 +40,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { build_stubbed(:iss_provision, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school manages orders' do
@@ -48,7 +48,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { build_stubbed(:school, :manages_orders, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school has no device_allocations' do
@@ -56,7 +56,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { build_stubbed(:school, :centrally_managed, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is already included in any of the responsible body virtual cap pools' do
@@ -68,7 +68,7 @@ RSpec.describe ResponsibleBody, type: :model do
         stub_computacenter_outgoing_api_calls
       end
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is not included in any of the responsible body virtual cap pools' do
@@ -76,17 +76,17 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { create(:school, :centrally_managed, :with_std_device_allocation, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_added_to_virtual_cap_pools?(school)).to be_truthy }
+      specify { expect(responsible_body.school_addable_to_virtual_cap_pools?(school)).to be_truthy }
     end
   end
 
-  describe '#can_school_be_removed_from_virtual_cap_pools?' do
+  describe '#school_removable_from_virtual_cap_pools?' do
     context 'when the responsible body has no virtual cap feature flag' do
       subject(:responsible_body) { create(:trust, vcap_feature_flag: false) }
 
       let(:school) { build(:school) }
 
-      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_removable_from_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is associated to a different responsible body' do
@@ -94,7 +94,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { create(:school, responsible_body: create(:trust)) }
 
-      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_removable_from_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school manages orders' do
@@ -102,7 +102,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { build_stubbed(:school, :manages_orders, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_removable_from_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school has no device_allocations' do
@@ -110,7 +110,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { build_stubbed(:school, :centrally_managed, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_removable_from_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is not included in any of the responsible body virtual cap pools' do
@@ -118,7 +118,7 @@ RSpec.describe ResponsibleBody, type: :model do
 
       let(:school) { create(:school, :centrally_managed, :with_std_device_allocation, responsible_body: responsible_body) }
 
-      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_falsey }
+      specify { expect(responsible_body.school_removable_from_virtual_cap_pools?(school)).to be_falsey }
     end
 
     context 'when the school is included in any of the responsible body virtual cap pools' do
@@ -130,7 +130,7 @@ RSpec.describe ResponsibleBody, type: :model do
         stub_computacenter_outgoing_api_calls
       end
 
-      specify { expect(responsible_body.can_school_be_removed_from_virtual_cap_pools?(school)).to be_truthy }
+      specify { expect(responsible_body.school_removable_from_virtual_cap_pools?(school)).to be_truthy }
     end
   end
 
