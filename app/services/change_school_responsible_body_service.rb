@@ -11,10 +11,10 @@ class ChangeSchoolResponsibleBodyService
 
   def call
     school.transaction do
-      remove_school_from_current_pool if school_removable?
-      set_school_new_responsible_body
-      update_preorder_information
-      add_school_to_new_pool if school_addable?
+      remove_school_from_current_pool! if school_removable?
+      set_school_new_responsible_body!
+      update_preorder_information!
+      add_school_to_new_pool! if school_addable?
     end
     true
   rescue StandardError => e
@@ -24,7 +24,7 @@ class ChangeSchoolResponsibleBodyService
 
 private
 
-  def add_school_to_new_pool
+  def add_school_to_new_pool!
     new_responsible_body.add_school_to_virtual_cap_pools!(school)
   end
 
@@ -34,7 +34,7 @@ private
     Sentry.capture_exception(e)
   end
 
-  def remove_school_from_current_pool
+  def remove_school_from_current_pool!
     initial_responsible_body.remove_school_from_virtual_cap_pools!(school)
   end
 
@@ -46,14 +46,14 @@ private
     initial_responsible_body&.school_removable_from_virtual_cap_pools?(school)
   end
 
-  def set_school_new_responsible_body
+  def set_school_new_responsible_body!
     school.update!(
       responsible_body_id: new_responsible_body.id,
       computacenter_change: COMPUTACENTER_CHANGE_STATUS,
     )
   end
 
-  def update_preorder_information
+  def update_preorder_information!
     school.preorder_information.refresh_status!
   end
 end
