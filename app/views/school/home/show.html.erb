@@ -19,7 +19,7 @@
     <%= render partial: 'summary_access_to_support_portal' %>
 
     <% if @has_ordered %>
-      <%= render partial: 'summary_reset_devices' %>
+      <%= render partial: 'shared/summary_reset_devices' %>
       <%= render partial: 'summary_order_history' if @current_user.orders_devices? || @has_ordered_coms_devices %>
     <% end %>
   </div>
