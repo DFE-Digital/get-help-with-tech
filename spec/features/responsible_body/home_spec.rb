@@ -182,10 +182,6 @@ RSpec.feature ResponsibleBody do
       context 'has NOT ordered anything' do
         before { sign_in_as rb_user }
 
-        it 'shows the title' do
-          expect(page).to have_content('Access the Support Portal')
-        end
-
         context 'when a local authority' do
           it 'show a link to manage users' do
             expect(page).to have_link('Manage local authority users')
@@ -208,14 +204,6 @@ RSpec.feature ResponsibleBody do
           sign_in_as rb_user
         end
 
-        it 'shows the title' do
-          expect(page).to have_content('Access the Support Portal')
-        end
-
-        it 'shows use support title blurb' do
-          expect(page).to have_content('Use the Support Portal to get local admin and BIOS passwords.')
-        end
-
         context 'when a local authority' do
           it 'show a link to manage users' do
             expect(page).to have_link('Manage local authority users')
@@ -227,20 +215,6 @@ RSpec.feature ResponsibleBody do
 
           it 'show a link to manage trust administrators' do
             expect(page).to have_link('Manage trust administrators')
-          end
-        end
-
-        context 'user can order devices' do
-          let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
-
-          it 'shows a link to the CC support portal' do
-            expect(page).to have_link('Visit the Support Portal')
-          end
-        end
-
-        context 'user cannot order devices' do
-          it 'does NOT show a link to the CC support portal' do
-            expect(page).not_to have_link('Visit the Support Portal')
           end
         end
       end
@@ -256,63 +230,24 @@ RSpec.feature ResponsibleBody do
       end
 
       context 'has ordered' do
+        let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
+
         before do
           school.reload
 
           sign_in_as rb_user
         end
 
-        context 'has ordered laptops and tablets only' do
-          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
-
-          it 'shows title' do
-            expect(page).to have_content('Reset devices')
-          end
-
-          it 'shows deadline' do
-            expect(page).to have_content('Windows laptops and tablets need to be reset before 30 September 2021')
-          end
-
-          it 'shows link to reset devices' do
-            expect(page).to have_link('How to reset Windows laptops and tablets')
-          end
+        it 'shows title' do
+          expect(page).to have_content('Reset devices')
         end
 
-        context 'has ordered routers only' do
-          let(:school) { create(:school, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
-
-          it 'shows title' do
-            expect(page).to have_content('Reset devices')
-          end
-
-          it 'shows deadline' do
-            expect(page).to have_content('Huawei routers need to be reset before 16 July 2021.')
-          end
-
-          it 'shows link to reset wireless routers' do
-            expect(page).to have_link('How to reset wireless routers')
-          end
-
-          it 'shows the link to Huawei router password' do
-            expect(page).to have_link('See your Huawei router password')
-          end
+        it 'shows the link to view device details' do
+          expect(page).to have_link('View your device details')
         end
 
-        context 'has ordered both' do
-          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
-
-          it 'shows title' do
-            expect(page).to have_content('Reset devices')
-          end
-
-          it 'shows deadlines in list and links after' do
-            expect(page).to have_selector('li', text: 'Windows laptops and tablets need to be reset before 30 September 2021')
-            expect(page).to have_selector('li', text: 'Huawei routers need to be reset before 16 July 2021')
-
-            expect(page).to have_link('How to reset Windows laptops and tablets')
-            expect(page).to have_link('How to reset wireless routers')
-            expect(page).to have_link('See your Huawei router password')
-          end
+        it 'shows the link to Huawei router password' do
+          expect(page).to have_link('See your Huawei router password')
         end
       end
     end

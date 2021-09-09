@@ -71,7 +71,6 @@ RSpec.feature 'Manage school users' do
     visit school_users_path(school_user.school)
 
     expect(school_users_page).to be_displayed
-    expect(page).to have_content 'Manage who can access the Support Portal'
   end
 
   def then_i_see_a_list_of_users_for_my_school

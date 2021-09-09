@@ -1,16 +1,6 @@
 <h2 class="govuk-heading-m govuk-!-margin-top-6">
-  Access the Support Portal
+  Manage users
 </h2>
-
-<p class="govuk-body">
-   Use the Support Portal to get local admin and BIOS passwords.
-</p>
-
-<% if @current_user.orders_devices? %>
-  <p class="govuk-body">
-    <%= govuk_link_to 'Visit the Support Portal', 'https://computacenterprod.service-now.com/dfe' %>
-  </p>
-<% end %>
 
 <p class="govuk-body">
   <% if @responsible_body.is_a_trust? %>
