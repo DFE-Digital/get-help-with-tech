@@ -5,27 +5,57 @@
     <h3 class="govuk-heading-m">
       Why devices need to be reset
     </h3>
-    
+
     <p class="govuk-body">
-      ‘DfE Restricted’ Windows devices provided though the Get help with technology programme come with security software that expires on 30 September 2021.
+      ‘Restricted’ Windows devices provided though the Get help with technology programme came with security software that was due to expire on <span class="app-no-wrap">30 September 2021</span>.
+      To ensure devices remain safe for children and young people to use, we’ve extended licenses
+      until <span class="app-no-wrap">30 September 2022</span>. You’re still required to reset devices and apply your own
+      safeguarding settings as soon as possible.
     </p>
 
     <p class="govuk-body">
-      When licenses expire, users will be able to freely access any online content. Devices will not be maintained with future updates including virus scans and software upgrades. It is your responsibility to <%= link_to_devices_guidance_subpage 'safeguard the young people in your care', 'safeguarding-for-device-users' %>.
+      When licenses expire, users will be able to freely access any online content. Devices will not be maintained with future updates including virus scans and software upgrades. It’s your responsibility to <%= link_to_devices_guidance_subpage 'safeguard the young people in your care', 'safeguarding-for-device-users' %>.
     </p>
-     <h3 class="govuk-heading-m">
+
+    <h3 class="govuk-heading-m">
       What you need to do
     </h3>
-    
+
     <p class="govuk-body">Laptops and tablets need to be restored to factory settings. This removes existing device management and content filtering software so you can apply your own.</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>You can reset devices any time before 30 September 2021</li>
+      <li>You should reset devices as soon as possible</li>
       <li>Back up anything you need from devices before resetting</li>
       <li>Each reset will take approximately 40 to 60 minutes</li>
       <li>You will need to do this for each device individually</li>
       <li>This process can be done at the same time on multiple devices</li>
     </ul>
 
+    <h3 class="govuk-heading-m">Services to support retrieval of DFE-restricted devices</h3>
+
+    <p class="govuk-body">
+      We can offer support to help organisations retrieve devices from children and young people so they can be reset.
+    </p>
+
+    <h4 class="govuk-heading-m">Remote messaging</h4>
+
+    <p class="govuk-body">
+      If requested, we’ll display a message on the device’s login screen, lock screen, desktop
+      background and as a popup message. The message will say that the device needs a
+      critical update and that the user should contact the organisation that gave it to them to
+      arrange this.
+    </p>
+
+    <h4 class="govuk-heading-m">Restricting internet access</h4>
+
+    <p class="govuk-body">
+      If requested, we’ll disable the device’s internet access. A message will also be displayed
+      on the lock screen and desktop background stating that it needs a critical update and that
+      the user should contact the organisation that gave it to them to arrange this.
+    </p>
+
+    <p class="govuk-body">
+      If you’d like to use either of these services email <%= govuk_mail_to 'COVID.TECHNOLOGY@education.gov.uk', 'COVID.TECHNOLOGY@education.gov.uk' %>.
+    </p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>

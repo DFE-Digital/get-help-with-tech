@@ -11,8 +11,8 @@ that have received them.
 
 Device owners are able to choose how and when to temporarily lend, or permanently give, 
 devices to children and young people in need, or to other organisations. Before parting with 
-your devices, you’ll want to consider carefully your school’s or service’s future need for face-to-face learning, 
-remote learning support and online social care.
+your devices, you’ll want to consider carefully your school’s or service’s future need 
+for face-to-face learning, remote learning support and online social care.
 
 DfE expects organisations to decide how best to make devices available to disadvantaged 
 children and young people so they can access remote education, face-to-face learning and
@@ -20,10 +20,7 @@ online social care when needed.
 
 ## Options for lending or giving devices to children, young people and other organisations
 
-You must consider safeguarding when making your decision about lending. For example, 
-DfE does not recommend you give DfE Restricted Windows devices to children and young 
-people if you have not thought about  
-[what will happen when the temporary content filtering and mobile device management settings expire on 30 September 2021](https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets#reconfigure-your-devices).
+You must consider safeguarding when making your decision about lending. 
 
 [Guidance on safe internet use](https://www.saferinternet.org.uk/) should be provided at the same time as devices are lent or 
 given.
@@ -50,7 +47,7 @@ transfer ownership to them.
 
 #### Option 3: Permanently giving devices to children and young people
 
-You can choose to give devices to children, young people and families, where you have 
+You can choose to give devices to children, young people and families, where you’ve 
 deemed it appropriate. This may include giving devices to care leavers. Giving devices 
 permanently to children and young people should only be considered after assessing the 
 benefits of the 2 options listed above.
@@ -59,7 +56,7 @@ Before making this decision, you should consider:
 
 * future needs of your setting or service for face-to-face and remote education (such as for disadvantaged children and young people joining the setting or service)
 * [safeguarding](https://get-help-with-tech.education.gov.uk/devices/safeguarding-for-device-users) &ndash; relevant parties (such as social workers, schools or carers) should be involved in making this decision
-* online safety, if device settings expire &ndash; for example, [DfE does not recommend gifting DfE Restricted Windows devices before replacing their temporary safeguarding and management settings](https://get-help-with-tech.education.gov.uk/devices/preparing-microsoft-windows-laptops-and-tablets#preparing-laptops-and-tablets-ordered-with-dfe-settings-installed)
+* online safety, when device settings expire &ndash; for example, DfE does not recommend gifting DfE Restricted Windows devices before [replacing their temporary safeguarding and management settings](https://get-help-with-tech.education.gov.uk/devices/guide-to-resetting-windows-laptops-and-tablets)
 * how IT support will be provided &ndash; you should [let the recipient know how to get help if their device develops a fault](https://get-help-with-tech.education.gov.uk/devices/replace-a-faulty-device) (DfE does not provide ongoing IT support)  
 
 ## What to do if circumstances change for children and young people
@@ -78,9 +75,9 @@ If a device has been permanently given to a child or young person, it’s their 
 ### If a child or young person moves to another educational setting
 
 Children and young people may be given devices by one educational setting, then move to 
-another. Device ownership transferral will have to be decided between them.
+another. Device ownership transferral will need to be decided between them.
 
-The original device owner should uninstall any software they have added, unless licences 
+The original device owner should uninstall any software they’ve added, unless licences 
 are being transferred too. They should let the new educational setting know what changes 
 have been made, so that it can be set up and secured appropriately again.
 
@@ -118,7 +115,7 @@ mobile devices (MDM).
 
 ## Lost, stolen or sold devices
 
-You should make clear to recipients of devices that it is unlawful for any lent device to be 
+You should make clear to recipients of devices that it’s unlawful for any lent device to be 
 sold by a student or their family. If a lent device is lost, stolen or sold, or where recall is not 
 possible, you should follow any existing protocol you have for lost, stolen or missing devices.
 

@@ -1,8 +1,8 @@
-This guidance is written with reference to Standard Windows devices provided through the Get help with technology programme. It also applies to [DfE Restricted laptops and tablets you have reset](/devices/guide-to-resetting-windows-laptops-and-tablets), and any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
+This guidance is written with reference to Standard Windows devices provided through the Get help with technology programme. It also applies to any new or refurbished devices a school or college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) is available from the National Cyber Security Centre.
 
 ## Re-image or factory reset the device
 
-When you get a device, you need to prepare it to make sure it’s safely set up for users. It’s important to get your device into a ‘known state’ so that you're familiar with the software and settings and can confidently support users.
+When you get a device, you need to prepare it to make sure it’s safely set up for users. It’s important to get your device into a ‘known state’ so that you’re familiar with the software and settings and can confidently support users.
 
 The following methods can be used to do this.
 
@@ -14,27 +14,23 @@ This is the recommended route as it will bring the device in line with other dev
 
 Standard Windows devices come with Windows 10 already installed. If it does need to be reinstalled in future and you do not have a pre-prepared image, Windows 10 can be installed via:
  
-* USB - If installing from a USB, the USB stick should be wiped and formatted before loading the Windows 10 installer onto it to confirm the USB stick is clean. Find out [how to install Windows 10 and boot from a USB](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/install-windows-from-a-usb-flash-drive).
-* DVD - Find out [how to install Windows 10 and boot from a DVD](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-from-a-dvd).
+* USB &ndash; If installing from a USB, the USB stick should be wiped and formatted before loading the Windows 10 installer onto it to confirm the USB stick is clean. Find out [how to install Windows 10 and boot from a USB](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/install-windows-from-a-usb-flash-drive).
+* DVD &ndash; Find out [how to install Windows 10 and boot from a DVD](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-from-a-dvd).
  
 ### Perform a factory reset
 
 If you do not have your own image or a USB or DVD to boot from, you should reset the device to factory settings.
  
-You’ll need to do this for each device individually.
+You’ll need to do this for each device individually. You can find out how to do this in the [Guide to resetting Windows laptops and tablets](/devices/guide-to-resetting-windows-laptops-and-tablets).
 
-1. Log in to the [Support Portal](https://computacenterprod.service-now.com/dfe)
-2. Click on the ‘How do I?’ section
-3. Select ‘How to reset your Microsoft Windows device to default factory settings’ and follow the instructions to use local admin and BIOS passwords to reset your devices
- 
 ## Confirm anti-virus and other security settings are in place
 
 Open the [Windows Security](https://support.microsoft.com/en-us/windows/stay-protected-with-windows-security-2ae0363d-0ada-c064-8b56-6a39afb6a963) settings:
 
-* Press 'Windows Key+r' then type 'windowsdefender' and click 'OK' or press enter, or
-* Press 'Windows Key', click the 'Settings' icon then 'Update & Security' and 'Windows Security'
+* Press 'Windows Key+r' then type 'windowsdefender' and select 'OK' or press enter, or
+* Press 'Windows Key', select the 'Settings' icon then 'Update & Security' and 'Windows Security'
 
-You will see an overview of the main security features available in Windows 10 and an alert if any actions are required. 
+You’ll see an overview of the main security features available in Windows 10 and an alert if any actions are required. 
 
 Windows Security settings include:
 
