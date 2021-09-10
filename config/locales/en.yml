@@ -307,6 +307,10 @@ en:
       title: Google Chromebooks setup guide
       description: Guidance on how to enrol Google Chromebooks on your domain and options for applying content filtering.
       guidance_section: setup_guide_pages
+    remove_dfe_provided_cisco_umbrella_from_chromebooks:
+      title: Remove DfE-provided Cisco Umbrella from Chromebooks
+      description: Find out how to remove Cisco Umbrella from Chromebooks.
+      guidance_section: setup_guide_pages
     preparing_ipads:
       title: Apple iPads setup guide
       description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
@@ -346,15 +350,6 @@ en:
       title: Managing your 4G wireless routers
       description: This information is to help schools, colleges, LAs and trusts manage routers they received from DfE.
       guidance_section: internet_access
-
-    enrol_chromebooks_with_user_logins:
-      title: Enrol Chromebooks and add Cisco Umbrella with user logins
-      description: Find out how to enrol Google Chromebooks so you can manage them remotely, and how to add Cisco Umbrella to make them secure for families and children who are associated with a school.
-      audience: technical_staff_doing_device_setup # won't appear in the index
-    enrol_chromebooks_without_user_logins:
-      title: Enrol Chromebooks and add Cisco Umbrella with no user logins
-      description: Find out how to enrol Google Chromebooks so you can remotely manage them and how to add Cisco Umbrella to make them secure for families of preschool aged children with a social worker and care leavers who aren’t associated with a school.
-      audience: technical_staff_doing_device_setup # won't appear in the index
     google_domain_for_care_leavers_and_children_with_social_worker:
       title: How to set up a Google domain for care leavers
       description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
