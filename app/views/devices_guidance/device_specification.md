@@ -8,17 +8,20 @@ These ‘DfE Standard’ Windows devices were provided with factory settings. Yo
 
 #### DfE settings installed
 
-These ‘DfE Restricted’ Windows devices were set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings expire on 30 September 2021. Read our guidance on [how to reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) to make them safe for pupils and students to use.
+These ‘DfE Restricted’ Windows devices were set up with content filtering and MDM software before delivery. They’re not configurable, and there are limitations on downloading software and changing strict content filters that may prevent some browsers and conferencing tools from functioning. These settings were due to expire on 30 September 2021. To ensure devices remain safe for children and young people to use,
+we’ve extended licenses until 30 September 2022. You’re still required to [reset devices and apply your own security settings](/devices/guide-to-resetting-windows-laptops-and-tablets) as soon as possible to make them safe for pupils and students to use.
 
 Read more information about [preparing Microsoft devices](/devices/preparing-microsoft-windows-laptops-and-tablets) for pupils, including how to access the local admin and BIOS passwords you’ll need to reset devices.
-
-All devices provided before September 2020 were delivered with safeguarding and mobile device management (MDM) software installed. You can [find out when that software expires](/devices/preparing-microsoft-windows-laptops-and-tablets) in our guidance.
 
 [Find the technical specifications for Microsoft Windows laptops](#minimum-specifications) in the table below.
 
 ## Google Chromebooks
 
-A web-filtering solution called Cisco Umbrella was included free of charge until 30 September 2021, if you wish to use it. If you decide not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella has expired, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to. [Find out more about Cisco Umbrella](https://get-help-with-tech.education.gov.uk/devices/preparing-chromebooks#securing-your-chromebooks) in our guidance.
+The option of using a web-filtering solution called Cisco Umbrella was included free of charge and licenses were due to expire on 30 September 2021. 
+To ensure devices remain safe for children and young people to use, we’ve extended licences until 30 September 2022.
+You should arrange for your own Cisco Umbrella licenses or enable alternative security settings as soon as possible.
+
+If you decided not to use Cisco Umbrella, or you continue using the Chromebooks once Cisco Umbrella expires, DfE will no longer support these devices. It’s your responsibility to avoid risks to the online safety of the children and young people you’re providing devices to.
 
 A Chrome Education Upgrade (Chromebook license) was offered with every device.
 
@@ -41,7 +44,7 @@ Our delivery partner completed the following quality checks for each used device
 
 These devices met the minimum technical specifications for remote education. They may have residual asset labels, external scratches, smart water application, etching or writing on the exterior of the device.
 
-The devices came with any remaining manufacturer's warranty (this was less than a year).
+The devices came with any remaining manufacturer’s warranty (this was less than a year).
 
 </div>
 
@@ -84,9 +87,9 @@ The devices came with any remaining manufacturer's warranty (this was less than 
         <th scope="row" class="govuk-table__header">Resolution</th>
         <td class="govuk-table__cell">HD (or better)</td>
         <td class="govuk-table__cell">HD</td>
-        <td class="govuk-table__cell">Minimum 1280 × 800</td>
-        <td class="govuk-table__cell">2160 × 1620</td>
-        <td class="govuk-table__cell">HD (1366 x 768) anti-glare</td>
+        <td class="govuk-table__cell">Minimum 1280 &times; 800</td>
+        <td class="govuk-table__cell">2160 &times; 1620</td>
+        <td class="govuk-table__cell">HD (1366 &times; 768) anti-glare</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Processor</th>
@@ -102,7 +105,7 @@ The devices came with any remaining manufacturer's warranty (this was less than 
         <td class="govuk-table__cell">Minimum 4GB</td>
         <td class="govuk-table__cell">Minimum 2GB</td>
         <td class="govuk-table__cell">3GB</td>
-        <td class="govuk-table__cell">8GB, 1x8GB, DDR4 Non-ECC</td>
+        <td class="govuk-table__cell">8GB, 1 &times; 8GB, DDR4 Non-ECC</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Storage</th>
@@ -118,7 +121,7 @@ The devices came with any remaining manufacturer's warranty (this was less than 
         <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
         <td class="govuk-table__cell">Wi-Fi to 802.11ac</td>
         <td class="govuk-table__cell">802.11a/b/g/n/ac</td>
-        <td class="govuk-table__cell">Intel Dual Band wireless AC 9560 (802.11ac) 2x2, Bluetooth 5.0</td>
+        <td class="govuk-table__cell">Intel Dual Band wireless AC 9560 (802.11ac) 2&times;2, Bluetooth 5.0</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Audio</th>
