@@ -86,3 +86,6 @@ Children and young people can also use:
 
 Our guidance on [how to get started with your Google Chromebook](/devices/getting-started-with-your-google-chromebook) can be shared with 
 young people and their parents, guardians and carers.
+
+You may want to add contact information to this guidance for the person or team offering 
+IT support to device users.
