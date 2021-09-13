@@ -138,7 +138,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       it 'adds error messages' do
         wizard.update_step!(new_user_attrs.slice(:full_name).merge({ invite_user: 'yes' }))
-        expect(wizard.errors.attribute_names).to include(:email_address, :orders_devices)
+        expect(wizard.errors.attribute_names).to contain_exactly(:email_address)
       end
 
       it 'remains on the will_other_order step' do

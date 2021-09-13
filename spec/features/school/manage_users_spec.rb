@@ -103,18 +103,15 @@ RSpec.feature 'Manage school users' do
     expect(page).to have_field('Name', with: user_from_same_school.full_name)
     expect(page).to have_field('Email address', with: user_from_same_school.email_address)
     expect(page).to have_field('Telephone number', with: user_from_same_school.telephone)
-    expect(page).to have_checked_field('No')
   end
 
   def when_i_fill_in_the_form_with_user_details
     fill_in 'Name', with: new_school_user.full_name
     fill_in 'Email address', with: new_school_user.email_address
     fill_in 'Telephone', with: new_school_user.telephone
-    choose 'No'
   end
 
   def when_i_change_the_details
-    choose 'Yes, give them access to the Support Portal'
     fill_in 'Telephone', with: '01234567890'
   end
 
@@ -122,14 +119,12 @@ RSpec.feature 'Manage school users' do
     fill_in 'Name', with: user_from_other_school.full_name
     fill_in 'Email address', with: user_from_other_school.email_address
     fill_in 'Telephone', with: user_from_other_school.telephone
-    choose 'No'
   end
 
   def when_i_fill_in_the_form_with_a_user_from_a_responsible_body
     fill_in 'Name', with: responsible_body_user.full_name
     fill_in 'Email address', with: responsible_body_user.email_address
     fill_in 'Telephone', with: responsible_body_user.telephone
-    choose 'No'
   end
 
   def and_i_submit_form
@@ -155,7 +150,6 @@ RSpec.feature 'Manage school users' do
   def then_i_see_the_updated_details_for_the_user
     expect(school_users_page.user_rows[1]).to have_selector('h3', text: 'ZZZ Jones')
     expect(school_users_page.user_rows[1]).to have_selector('dd', text: '01234567890')
-    expect(school_users_page.user_rows[1]).to have_selector('dd', text: 'Yes')
   end
 
   def and_i_see_that_user_in_the_list_of_users_for_my_school

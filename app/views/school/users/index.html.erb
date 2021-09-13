@@ -13,10 +13,7 @@
     <ul class="govuk-list govuk-list--bullet">
       <li>see who else has an account</li>
       <li>add or edit existing accounts</li>
-      <li>change who can access the Support Portal</li>
     </ul>
-
-    <p class="govuk-body">Up to 3 people from your <%= @school.institution_type.humanize(capitalize: false) %> can access the Support Portal.</p>
 
     <%= govuk_button_link_to 'Invite a new user', new_school_user_path %>
     <%- unless @users.empty? %>

@@ -6,12 +6,7 @@ class SchoolUserSummaryListComponent < UserSummaryListComponent
 
   def rows
     info = super
-    info += [
-      {
-        key: 'Has access to the Support Portal',
-        value: @user.orders_devices? ? 'Yes' : 'No',
-      },
-    ]
+
     info.map do |i|
       i.merge({
         change_path: edit_school_user_path(@school, @user),
