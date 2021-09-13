@@ -9,13 +9,3 @@
 <%= form.govuk_text_field :telephone,
                           width: 10,
                           label: { text: 'Telephone number', size: label_size } %>
-
-<%= form.govuk_collection_radio_buttons :orders_devices,
-        can_user_order_devices_options,
-        :value,
-        :label,
-        :hint,
-        legend: { text: t('page_titles.invite_school_user.will_they_order_devices'), size: label_size },
-        hint: { text: t('page_titles.invite_school_user.will_they_order_devices_hint') },
-        classes: 'govuk-!-margin-top-3'
-      %>
