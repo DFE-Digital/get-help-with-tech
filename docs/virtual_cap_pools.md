@@ -64,7 +64,7 @@ With virtual cap pools and the shared caps, we must also generate cap update req
 
 `School` _must_
 
-* Be centrally managed - `school.preorder_information.responsible_body_will_order_devices?` returns `true`
+* Be centrally managed - `school.orders_managed_centrally?` returns `true`
 * Belong to the same responsible body as the `VirtualCapPool`
 * Have at least 1 device allocation record
 * Not already be in the `VirtualCapPool`
@@ -89,7 +89,7 @@ This will add the school's device allocations to the appropriate virtual pools
 3. Check that the school's preorder status looks correct,  it may be necessary to force the preorder status to refresh:
 
 ```ruby
-school.preorder_information.refresh_status!
+school.refresh_device_ordering_status!
 ```
 
 4. Check that the virtual pool information looks correct, if necessary force a recalculation:
@@ -134,4 +134,3 @@ school.std_device_allocation
  cap_update_request_timestamp: Thu, 07 Jan 2021 13:28:20.440683000 GMT +00:00,
  cap_update_request_payload_id: "2173f28f-c6be-4a46-87ff-d29de6033a9d">
 ```
-

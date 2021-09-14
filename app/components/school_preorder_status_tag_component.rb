@@ -7,7 +7,7 @@ class SchoolPreorderStatusTagComponent < ViewComponent::Base
   end
 
   def text
-    I18n.t!(status, scope: [:components, :school_preorder_status_tag_component, :status, who_will_order_devices_key, text_key])
+    I18n.t!(status, scope: [:components, :school_preorder_status_tag_component, :status, who_manages_orders_key, text_key])
   end
 
   def type
@@ -35,12 +35,8 @@ private
     @status ||= school.preorder_status_or_default
   end
 
-  def who_will_order_devices_key
-    if school.who_will_order_devices == 'responsible_body'
-      :responsible_body
-    else
-      :school
-    end
+  def who_manages_orders_key
+    school.orders_managed_by_school? ? :school : :responsible_body
   end
 
   def text_key

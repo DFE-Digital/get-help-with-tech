@@ -28,7 +28,6 @@ RSpec.describe SchoolUpdateService, type: :model do
         school_attrs = school.attributes.symbolize_keys
 
         service.update_schools
-
         expect(school.reload).to have_attributes(
           urn: school_attrs[:urn],
           name: school_attrs[:name],
@@ -103,7 +102,7 @@ RSpec.describe SchoolUpdateService, type: :model do
       it 'sets up preorder information' do
         school = service.create_school!(staged_school)
         expect(school.preorder_information).not_to be_nil
-        expect(school.preorder_information.who_will_order_devices).to eq('school')
+        expect(school.who_will_order_devices).to eq('school')
       end
     end
 

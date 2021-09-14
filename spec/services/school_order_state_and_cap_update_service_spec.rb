@@ -12,7 +12,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
   let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
   subject(:service) do
-    described_class.new(school: school, order_state: new_order_state, std_device_cap: new_cap)
+    described_class.new(school: school, order_state: new_order_state, laptop_cap: new_cap)
   end
 
   describe '#update!' do
@@ -80,7 +80,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
       context 'when a device_type was given' do
         subject(:service) do
-          described_class.new(school: school, order_state: new_order_state, coms_device_cap: new_cap)
+          described_class.new(school: school, order_state: new_order_state, router_cap: new_cap)
         end
 
         it 'creates a new allocation record with the given device_type' do
@@ -127,7 +127,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
     context 'when a school is centrally managed and the school is not in the virtual cap pool' do
       before do
-        school.preorder_information.responsible_body_will_order_devices!
+        school.orders_managed_centrally!
         responsible_body.update!(vcap_feature_flag: true)
       end
 
@@ -187,7 +187,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       let!(:router_allocation) { create(:school_device_allocation, :with_coms_allocation, allocation: 5, school: school) }
 
       subject(:service) do
-        described_class.new(school: school, order_state: 'can_order_for_specific_circumstances', std_device_cap: 3, coms_device_cap: 2)
+        described_class.new(school: school, order_state: 'can_order_for_specific_circumstances', laptop_cap: 3, router_cap: 2)
       end
 
       it 'sets the new cap to be the given cap' do
@@ -210,7 +210,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
                  cap: 3,
                  devices_ordered: 1)
 
-          school.device_allocations.reload
+          school.reload
           school.can_order!
         end
 
@@ -220,11 +220,11 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
         end
 
         it 'refreshes the status of the preorder' do
-          expect(preorder.status).to eq('rb_can_order')
+          expect(school.device_ordering_status).to eq('rb_can_order')
 
           expect {
             service.update!
-          }.to change(preorder, :status)
+          }.to change(school, :device_ordering_status)
         end
       end
 

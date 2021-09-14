@@ -27,8 +27,8 @@ RSpec.feature 'Updating school headteacher details' do
   end
 
   scenario 'modify details of an existing headteacher' do
-    school = create(:school, :with_headteacher_contact)
-    headteacher = school.headteacher_contact
+    school = create(:school, :with_headteacher)
+    headteacher = school.headteacher
     new_email = 'headteacher@example.com'
 
     sign_in_as support_third_line_user

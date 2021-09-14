@@ -4,12 +4,12 @@ class SchoolOrderStateAndCapUpdateService
   attr_accessor :school, :order_state, :caps
   attr_reader :disable_user_notifications
 
-  def initialize(school:, order_state:, std_device_cap: nil, coms_device_cap: nil)
+  def initialize(school:, order_state:, laptop_cap: nil, router_cap: nil)
     @school = school
     @order_state = order_state
     @caps = [
-      { device_type: 'std_device', cap: std_device_cap },
-      { device_type: 'coms_device', cap: coms_device_cap },
+      { device_type: 'std_device', cap: laptop_cap },
+      { device_type: 'coms_device', cap: router_cap },
     ]
     @disable_user_notifications = false
   end
@@ -32,7 +32,7 @@ class SchoolOrderStateAndCapUpdateService
     # ensure the updates are picked up
     school.reload
 
-    school&.preorder_information&.refresh_status!
+    school.refresh_device_ordering_status!
 
     add_school_to_virtual_cap_pool_if_eligible
 
@@ -73,7 +73,7 @@ private
   end
 
   def add_school_to_virtual_cap_pool_if_eligible
-    return unless school&.preorder_information&.responsible_body_will_order_devices?
+    return unless school&.orders_managed_centrally?
     return if school.device_allocations.first.is_in_virtual_cap_pool?
 
     begin

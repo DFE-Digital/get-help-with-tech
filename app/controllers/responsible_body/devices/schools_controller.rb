@@ -7,9 +7,9 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseControl
 
   def show
     @school = @responsible_body.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
-    if @school.preorder_information.needs_contact?
+    if @school.needs_contact?
       redirect_to responsible_body_devices_school_who_to_contact_path(@school.urn)
-    elsif @school.preorder_information.orders_managed_centrally?
+    elsif @school.orders_managed_centrally?
       @chromebook_information_form = ChromebookInformationForm.new(school: @school)
     end
   end

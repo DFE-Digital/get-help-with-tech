@@ -46,9 +46,9 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
     end
 
     context 'when headteacher is current_contact' do
-      let(:contact) { school.headteacher_contact }
+      let(:contact) { school.headteacher }
       let(:preorder_info) { create(:preorder_information, school_contact: contact) }
-      let(:school) { create(:school, :with_headteacher_contact) }
+      let(:school) { create(:school, :with_headteacher) }
 
       before do
         school.preorder_information = preorder_info
@@ -63,7 +63,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
     context 'when other contact is current_contact' do
       let(:contact) { create(:school_contact, :contact) }
       let(:preorder_info) { create(:preorder_information, school_contact: contact) }
-      let(:school) { create(:school, :with_headteacher_contact) }
+      let(:school) { create(:school, :with_headteacher) }
 
       before do
         school.preorder_information = preorder_info

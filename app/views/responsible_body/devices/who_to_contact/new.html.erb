@@ -7,7 +7,7 @@
       <%= @school.name %>
     </h1>
 
-    <%- unless @school.has_std_device_allocation? %>
+    <%- unless @school.has_laptop_allocation? %>
       <%= render partial: 'shared/school_without_allocation' %>
     <%- end %>
 

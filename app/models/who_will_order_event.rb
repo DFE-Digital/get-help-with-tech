@@ -10,14 +10,10 @@ class WhoWillOrderEvent < Event
 private
 
   def message_key
-    if schools_will_order?
-      :schools_will_order_event
-    else
-      :responsible_body_will_order_event
-    end
+    schools_will_order? ? :schools_will_order_event : :responsible_body_will_order_event
   end
 
   def schools_will_order?
-    @params[:responsible_body].who_will_order_devices == 'school'
+    @params[:responsible_body].orders_managed_by_schools?
   end
 end

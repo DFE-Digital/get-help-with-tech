@@ -92,7 +92,7 @@ private
       privacy_notice_path
     elsif user.is_mno_user?
       mno_extra_mobile_data_requests_path
-    elsif user.is_responsible_body_user?
+    elsif user.responsible_body_user?
       root_url_for_responsible_body(user)
     elsif user.is_school_user?
       school_root_url_for(user)
@@ -114,7 +114,7 @@ private
 
   def root_url_for_responsible_body(user)
     if user.is_school_user?
-      if user.is_a_single_school_user?
+      if user.single_school_user?
         school_root_url_for(user)
       else
         schools_path

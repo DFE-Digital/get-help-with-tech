@@ -1,4 +1,4 @@
-<% if @responsible_body.is_a_trust? %>
+<% if @responsible_body.trust? %>
   <%- title = t('page_titles.responsible_body_trust_users_index') -%>
 <% else %>
   <%- title = t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type) -%>

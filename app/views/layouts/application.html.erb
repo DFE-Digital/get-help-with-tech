@@ -62,7 +62,7 @@
     <div class="app-phase-banner">
       <div class="govuk-width-container">
         <%= render GovukComponent::PhaseBannerComponent.new(tag: {text: 'Alpha'}) do
-          unless SessionService.is_signed_in?(session) && (current_user&.is_responsible_body_user? || current_user&.is_school_user?)
+          unless SessionService.is_signed_in?(session) && (current_user&.responsible_body_user? || current_user&.is_school_user?)
             "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
           end
         end %>

@@ -22,25 +22,25 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#is_responsible_body_user?' do
+  describe '#responsible_body_user?' do
     it 'is true when the user is from a trust' do
       user = build(:user, responsible_body: build(:trust))
-      expect(user.is_responsible_body_user?).to be_truthy
+      expect(user.responsible_body_user?).to be_truthy
     end
 
     it 'is true when the user is from a local authority' do
       user = build(:user, responsible_body: build(:local_authority))
-      expect(user.is_responsible_body_user?).to be_truthy
+      expect(user.responsible_body_user?).to be_truthy
     end
 
     it 'is false when the user is from an MNO' do
       user = build(:user, responsible_body: nil, mobile_network: build(:mobile_network))
-      expect(user.is_responsible_body_user?).to be_falsey
+      expect(user.responsible_body_user?).to be_falsey
     end
 
     it 'is false for DfE users' do
       user = build(:user, responsible_body: nil, email_address: 'ab@education.gov.uk')
-      expect(user.is_responsible_body_user?).to be_falsey
+      expect(user.responsible_body_user?).to be_falsey
     end
   end
 
@@ -56,12 +56,12 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'is_a_single_school_user?' do
+  describe 'single_school_user?' do
     context 'when the user has a responsible_body that is a single_academy_trust, but the user has no schools' do
       let(:user) { create(:single_academy_trust_user, schools: []) }
 
       it 'is false' do
-        expect(user.is_a_single_school_user?).to be_falsey
+        expect(user.single_school_user?).to be_falsey
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe User, type: :model do
         let(:responsible_body) { create(:trust, :single_academy_trust) }
 
         it 'is true' do
-          expect(user.is_a_single_school_user?).to be_truthy
+          expect(user.single_school_user?).to be_truthy
         end
       end
 
@@ -81,7 +81,7 @@ RSpec.describe User, type: :model do
         let(:responsible_body) { create(:further_education_college) }
 
         it 'is true' do
-          expect(user.is_a_single_school_user?).to be_truthy
+          expect(user.single_school_user?).to be_truthy
         end
       end
 
@@ -89,7 +89,7 @@ RSpec.describe User, type: :model do
         let(:responsible_body) { create(:trust, :multi_academy_trust) }
 
         it 'is false' do
-          expect(user.is_a_single_school_user?).to be_falsey
+          expect(user.single_school_user?).to be_falsey
         end
       end
 
@@ -97,7 +97,7 @@ RSpec.describe User, type: :model do
         let(:responsible_body) { create(:local_authority) }
 
         it 'is false' do
-          expect(user.is_a_single_school_user?).to be_falsey
+          expect(user.single_school_user?).to be_falsey
         end
       end
     end

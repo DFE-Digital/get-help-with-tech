@@ -207,8 +207,8 @@ RSpec.describe CreateUserService do
           end
 
           it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
-            expect { result }.to change { school.reload.preorder_information&.who_will_order_devices }.from(nil).to('school')
-            expect(school.preorder_information.who_will_order_devices).to eq('school')
+            expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
+            expect(school.who_will_order_devices).to eq('school')
           end
         end
 
@@ -220,7 +220,7 @@ RSpec.describe CreateUserService do
 
         it 'updates the school status to reflect that the school has been contacted' do
           result
-          expect(school.preorder_information.reload.status).to eq('school_contacted')
+          expect(school.reload.device_ordering_status).to eq('school_contacted')
         end
 
         context 'when the existing user has a blank telephone number' do
@@ -295,7 +295,7 @@ RSpec.describe CreateUserService do
 
         it 'updates the school status to reflect that the school has been contacted' do
           result
-          expect(school.preorder_information.reload.status).to eq('school_contacted')
+          expect(school.reload.device_ordering_status).to eq('school_contacted')
         end
 
         context 'when the existing user has a blank telephone number' do
@@ -378,7 +378,7 @@ RSpec.describe CreateUserService do
       end
 
       it 'updates the school status to reflect that the school has been contacted' do
-        expect(result.school.preorder_information.status).to eq('school_contacted')
+        expect(result.school.device_ordering_status).to eq('school_contacted')
       end
 
       context 'when the additional school has no value for who_will_order_devices' do
@@ -388,8 +388,8 @@ RSpec.describe CreateUserService do
         end
 
         it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
-          expect { result }.to change { school.reload.preorder_information&.who_will_order_devices }.from(nil).to('school')
-          expect(school.preorder_information.who_will_order_devices).to eq('school')
+          expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
+          expect(school.who_will_order_devices).to eq('school')
         end
       end
     end

@@ -24,8 +24,8 @@ RSpec.describe Support::School::ChangeHeadteacherForm, type: :model do
   end
 
   describe '#save' do
-    let(:school) { create(:school, :with_headteacher_contact) }
-    let(:headteacher_id) { school.headteacher_contact.id }
+    let(:school) { create(:school, :with_headteacher) }
+    let(:headteacher_id) { school.headteacher_id }
 
     context 'when the new headteacher details cannot be set' do
       let(:new_email_address) { 'invalid_email_address' }
@@ -37,7 +37,7 @@ RSpec.describe Support::School::ChangeHeadteacherForm, type: :model do
       end
 
       it 'do not change the school headteacher' do
-        expect { form.save }.not_to change(school.reload, :headteacher_contact)
+        expect { form.save }.not_to change(school.reload, :headteacher)
       end
 
       it 'add errors to the form object' do
@@ -57,7 +57,7 @@ RSpec.describe Support::School::ChangeHeadteacherForm, type: :model do
 
       it 'change the school headteacher details' do
         expect(form.save).to be_truthy
-        expect(school.reload.headteacher_contact.email_address).to eq(new_email_address)
+        expect(school.reload.headteacher_email_address).to eq(new_email_address)
       end
 
       it 'do not add errors to the form object' do

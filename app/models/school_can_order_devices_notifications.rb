@@ -6,7 +6,7 @@ class SchoolCanOrderDevicesNotifications
   end
 
   def call
-    return unless school&.is_eligible_to_order?
+    return unless school&.eligible_to_order?
 
     if school&.devices_available_to_order?
       notify_about_school_being_able_to_order

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices within a virtual pool', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 4, :with_preorder_information, :with_headteacher_contact, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 4, :with_preorder_information, :with_headteacher, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -70,9 +70,9 @@ RSpec.feature 'Ordering devices within a virtual pool', skip: 'Disabled for 30 J
   def given_my_order_information_is_up_to_date
     responsible_body.update!(who_will_order_devices: 'responsible_body', vcap_feature_flag: true)
     PreorderInformation.where(school_id: responsible_body.schools).update_all(will_need_chromebooks: 'no')
-    schools[0].preorder_information.responsible_body_will_order_devices!
-    schools[1].preorder_information.responsible_body_will_order_devices!
-    schools[3].preorder_information.responsible_body_will_order_devices!
+    schools[0].orders_managed_centrally!
+    schools[1].orders_managed_centrally!
+    schools[3].orders_managed_centrally!
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_full_allocation

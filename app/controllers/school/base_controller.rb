@@ -1,4 +1,6 @@
 class School::BaseController < ApplicationController
+  attr_reader :school
+
   before_action :require_school_user!, :set_school
 
 private

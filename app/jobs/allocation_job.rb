@@ -67,7 +67,7 @@ private
     service = SchoolOrderStateAndCapUpdateService.new(
       school: @school.reload,
       order_state: @order_state,
-      std_device_cap: @new_raw_cap_value,
+      laptop_cap: @new_raw_cap_value,
     )
 
     service.disable_user_notifications! if @disable_user_notifications

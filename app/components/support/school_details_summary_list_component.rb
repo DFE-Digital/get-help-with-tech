@@ -30,7 +30,7 @@ private
   def sold_to_row
     {
       key: 'Computacenter SoldTo',
-      value: @school.responsible_body.computacenter_reference || 'Not present',
+      value: @school.responsible_body_computacenter_reference || 'Not present',
     }
   end
 
@@ -135,9 +135,9 @@ private
 
   def headteacher_lines
     [
-      "#{headteacher&.title} #{headteacher&.full_name}".strip.presence || 'Not set',
-      headteacher&.email_address,
-      headteacher&.phone_number,
+      "#{@school.headteacher_title} #{@school.headteacher_full_name}".strip.presence || 'Not set',
+      @school.headteacher_email_address,
+      @school.headteacher_phone_number,
     ].reject(&:blank?)
   end
 
@@ -149,10 +149,6 @@ private
           change_path: support_school_devices_chromebooks_edit_path(school_urn: @school.urn),
         )
     end
-  end
-
-  def headteacher
-    @headteacher ||= @school.headteacher_contact
   end
 
   def display_router_allocation_row?

@@ -45,7 +45,7 @@ RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled fo
   end
 
   def given_i_can_order_devices
-    school.preorder_information.responsible_body_will_order_devices!
+    school.orders_managed_centrally!
     school.std_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 20)
     school.can_order!
   end

@@ -6,11 +6,9 @@ class DisplayDevicesOrderedComponent < ViewComponent::Base
   end
 
   def devices_ordered
-    std_devices_count = school.std_device_allocation&.raw_devices_ordered || 0
-    coms_devices_count = school.coms_device_allocation&.raw_devices_ordered || 0
     [
-      build_text(std_devices_count, 'device'),
-      build_text(coms_devices_count, 'router'),
+      build_text(school.raw_laptops_ordered, 'device'),
+      build_text(school.raw_routers_ordered, 'router'),
     ]
   end
 

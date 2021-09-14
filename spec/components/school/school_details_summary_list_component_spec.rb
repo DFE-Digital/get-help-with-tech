@@ -45,23 +45,21 @@ describe School::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body will place device orders' do
-    let(:school) { create(:school, :primary, :academy) }
-
-    before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :responsible_body,
-             school_or_rb_domain: 'school.domain.org',
-             recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes',
-             school_contact: headteacher)
-    end
+    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'does not show the school contact even if the school contact is set' do
+      school.preorder_information.update!(school_contact: headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
 
     it 'shows the chromebook details without links to change it' do
+      school.preorder_information.update(
+        school_or_rb_domain: 'school.domain.org',
+        recovery_email_address: 'admin@recovery.org',
+        will_need_chromebooks: 'yes'
+      )
+
       expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('Yes')
       expect(action_for_row(result, 'Will you need to order Chromebooks?')).not_to be_present
 

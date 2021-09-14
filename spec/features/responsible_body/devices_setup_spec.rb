@@ -258,9 +258,7 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
 
   def given_the_responsible_body_has_decided_to_order_centrally
     responsible_body.update!(who_will_order_devices: 'school')
-    responsible_body.schools.each do |school|
-      school.create_preorder_information!(who_will_order_devices: 'school')
-    end
+    responsible_body.schools.each(&:orders_managed_by_school!)
   end
 
   def when_i_visit_the_responsible_body_homepage
@@ -410,7 +408,7 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
   end
 
   def given_there_is_a_school_with_no_standard_device_allocation
-    expect(@zebra_school.has_std_device_allocation?).to be false
+    expect(@zebra_school.has_laptop_allocation?).to be false
   end
 
   def when_i_click_on_the_name_of_a_school_which_has_no_standard_device_allocation

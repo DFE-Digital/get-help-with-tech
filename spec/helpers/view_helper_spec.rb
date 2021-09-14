@@ -47,14 +47,15 @@ RSpec.describe ViewHelper do
 
   describe '#what_to_order_availability' do
     context 'when devices available to order' do
-      let(:allocations) { [SchoolDeviceAllocation.new(cap: 4, devices_ordered: 1)] }
+      let!(:allocation) { create(:school_device_allocation, :std, allocation: 10, cap: 4, devices_ordered: 1) }
 
       it 'returns Order X devices' do
-        expect(helper.what_to_order_availability(school: school)).to eql('Order 3 devices')
+        expect(helper.what_to_order_availability(school: allocation.school)).to eql('Order 3 devices')
       end
 
       context 'when ordering for specific circumstances' do
-        let(:school) { School.new(device_allocations: allocations, order_state: :can_order_for_specific_circumstances) }
+        let!(:allocation) { create(:school_device_allocation, :std, allocation: 10, cap: 4, devices_ordered: 1, school: school) }
+        let!(:school) { create(:school, :can_order_for_specific_circumstances) }
 
         it 'returns Order X devices for specific circumstances' do
           expect(helper.what_to_order_availability(school: school)).to eql('Order 3 devices for specific circumstances')
@@ -63,9 +64,9 @@ RSpec.describe ViewHelper do
     end
 
     context 'when devices and routers available to order' do
-      let(:allocation1) { SchoolDeviceAllocation.new(device_type: :std_device, cap: 10, devices_ordered: 3) }
-      let(:allocation2) { SchoolDeviceAllocation.new(device_type: :coms_device, cap: 4, devices_ordered: 1) }
-      let(:allocations) { [allocation1, allocation2] }
+      let!(:std_device_allocation) { create(:school_device_allocation, :std, allocation: 20, cap: 10, devices_ordered: 3) }
+      let!(:coms_device_allocation) { create(:school_device_allocation, :coms, allocation: 20, cap: 4, devices_ordered: 1, school: school) }
+      let!(:school) { std_device_allocation.school }
 
       it 'returns Order X devices and X routers' do
         expect(helper.what_to_order_availability(school: school)).to eql('Order 7 devices and 3 routers')
@@ -73,7 +74,7 @@ RSpec.describe ViewHelper do
     end
 
     context 'when no devices available to order' do
-      let(:allocations) { [SchoolDeviceAllocation.new(cap: 1, devices_ordered: 1)] }
+      let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
 
       it 'returns All devices ordered' do
         expect(helper.what_to_order_availability(school: school)).to eql('All devices ordered')
@@ -83,7 +84,7 @@ RSpec.describe ViewHelper do
 
   describe '#what_to_order_state_list' do
     context 'when devices available to order' do
-      let(:allocations) { [SchoolDeviceAllocation.new(cap: 4, devices_ordered: 2)] }
+      let!(:allocations) { [create(:school_device_allocation, :std, allocation: 20, cap: 4, devices_ordered: 2)] }
 
       it 'returns X devices' do
         expect(helper.what_to_order_state_list(allocations: allocations)).to eql('2 devices')
@@ -91,8 +92,8 @@ RSpec.describe ViewHelper do
     end
 
     context 'when devices and routers available to order' do
-      let(:allocation1) { SchoolDeviceAllocation.new(device_type: :std_device, cap: 10, devices_ordered: 3) }
-      let(:allocation2) { SchoolDeviceAllocation.new(device_type: :coms_device, cap: 4, devices_ordered: 2) }
+      let(:allocation1) { create(:school_device_allocation, :std, allocation: 20, cap: 10, devices_ordered: 3) }
+      let(:allocation2) { create(:school_device_allocation, :coms, allocation: 20, cap: 4, devices_ordered: 2) }
       let(:allocations) { [allocation1, allocation2] }
 
       it 'returns X devices and X routers' do
@@ -103,7 +104,7 @@ RSpec.describe ViewHelper do
 
   describe '#what_to_order_state' do
     context 'when devices available to order' do
-      let(:allocations) { [SchoolDeviceAllocation.new(cap: 4, devices_ordered: 2)] }
+      let!(:allocations) { [create(:school_device_allocation, :std, allocation: 20, cap: 12, devices_ordered: 2)] }
 
       it 'returns You\'ve ordered X devices' do
         expect(helper.what_to_order_state(school: school)).to eql('You’ve ordered 2 devices')
@@ -111,8 +112,8 @@ RSpec.describe ViewHelper do
     end
 
     context 'when devices and routers available to order' do
-      let(:allocation1) { SchoolDeviceAllocation.new(device_type: :std_device, cap: 10, devices_ordered: 3) }
-      let(:allocation2) { SchoolDeviceAllocation.new(device_type: :coms_device, cap: 4, devices_ordered: 2) }
+      let(:allocation1) { create(:school_device_allocation, :std, allocation: 20, cap: 10, devices_ordered: 3) }
+      let(:allocation2) { create(:school_device_allocation, :coms, allocation: 20, cap: 4, devices_ordered: 2) }
       let(:allocations) { [allocation1, allocation2] }
 
       it 'returns Order X devices and X routers' do

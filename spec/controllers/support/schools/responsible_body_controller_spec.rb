@@ -73,6 +73,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
 
         before do
           sign_in_as support_third_line_user
+          allow(Support::School::ChangeResponsibleBodyForm).to receive(:new).and_return(double(save: false))
           patch :update, params: params
         end
 
@@ -81,7 +82,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
         end
 
         it 'warns the user about the school responsible body not changed' do
-          expect(flash[:warning]).to eq("#{school.name} could not be associated with #{new_responsible_body.name}!")
+          expect(flash[:warning]).to include("#{school.name} could not be associated with")
         end
       end
 

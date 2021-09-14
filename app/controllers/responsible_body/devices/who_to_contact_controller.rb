@@ -36,7 +36,7 @@ private
     else
       chosen_contact = @form.chosen_contact
       chosen_contact.save!
-      @school.preorder_information.update!(school_contact: chosen_contact)
+      @school.set_current_contact!(chosen_contact)
       is_success = @school.invite_school_contact
       flash[:success] = I18n.t(
         is_success ? :success : :failure,

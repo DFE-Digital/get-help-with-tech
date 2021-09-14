@@ -12,7 +12,7 @@
 </p>
 <% end %>
 
-<% if (current_user.is_responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && @school&.coms_device_allocation&.devices_available_to_order?) %>
+<% if (current_user.responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && @school&.coms_device_allocation&.devices_available_to_order?) %>
   <h3 class="govuk-heading-s">How to order 4G routers in Techsource</h3>
 
   <ol class="govuk-list govuk-list--number">
@@ -23,7 +23,7 @@
       Type ‘4G wireless routers’ into the search box and press ‘enter’ on your keyboard.
     </li>
     <li>
-      Enter the number of routers you want to order (up to <%if current_user.is_responsible_body_user? %><%= @responsible_body.coms_device_pool&.devices_available_to_order %><% else %><%= @school.coms_device_allocation&.allocation %><% end %>) and click ‘Add to basket’.
+      Enter the number of routers you want to order (up to <%if current_user.responsible_body_user? %><%= @responsible_body.coms_device_pool&.devices_available_to_order %><% else %><%= @school.coms_device_allocation&.allocation %><% end %>) and click ‘Add to basket’.
     </li>
   </ol>
 <% end %>

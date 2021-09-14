@@ -20,10 +20,10 @@
         <p class="govuk-body"><%= govuk_link_to 'Order devices now', responsible_body_devices_order_devices_path %></p>
       <%- end %>
     <%- else %>
-      <%- if @school.has_std_device_allocation? %>
+      <%- if @school.has_laptop_allocation? %>
         <%
-          show_action = @school.preorder_information.orders_managed_centrally? && (@school.std_device_allocation.devices_ordered < @school.std_device_allocation.cap)
-          they_ordered_prefix = !@school.preorder_information.orders_managed_centrally?
+          show_action = @school.orders_managed_centrally? && (@school.laptops_ordered < @school.laptop_cap)
+          they_ordered_prefix = !@school.orders_managed_centrally?
         %>
         <%= render DeviceCountComponent.new(
           school: @school,
@@ -34,8 +34,8 @@
         <%= render partial: 'shared/school_without_allocation' %>
       <%- end %>
 
-      <%- if @school.preorder_information.orders_managed_centrally? %>
-        <%- unless @school.preorder_information.chromebook_information_complete? %>
+      <%- if @school.orders_managed_centrally? %>
+        <%- unless @school.chromebook_information_complete? %>
           <h2 class="govuk-heading-l">Before you can order, we need more information</h2>
           <%= render partial: 'shared/chromebook_information_intro' %>
           <%= render partial: 'shared/chromebook_information_form', locals: {

@@ -61,7 +61,7 @@ private
 
   def setup_preorder_information(school)
     who_will_order = school.responsible_body.who_will_order_devices&.singularize
-    school.create_preorder_information!(who_will_order_devices: who_will_order) unless who_will_order.nil?
+    school.orders_managed_by!(who_will_order) if who_will_order
   end
 
   def setup_allocations(school)

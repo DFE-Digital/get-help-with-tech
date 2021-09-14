@@ -15,7 +15,6 @@ class Support::Schools::ResponsibleBodyController < Support::BaseController
     else
       flash[:warning] = error_message
     end
-
     redirect_to support_school_path(school)
   end
 

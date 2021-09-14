@@ -17,7 +17,7 @@ RSpec.describe Support::AllocationForm do
 
       before do
         # Properly associate things with a virtual cap pool.
-        school.preorder_information.responsible_body_will_order_devices!
+        school.orders_managed_centrally!
         responsible_body.add_school_to_virtual_cap_pools!(school)
         school_device_allocation.reload
       end

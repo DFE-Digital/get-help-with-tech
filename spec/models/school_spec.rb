@@ -106,12 +106,12 @@ RSpec.describe School, type: :model do
     specify { expect(independent_special_school).not_to be_a_social_care_leaver }
   end
 
-  describe '#has_std_device_allocation?' do
+  describe '#has_laptop_allocation?' do
     let(:school) { create(:school) }
 
     context 'when there is no standard device allocation' do
       it 'is false' do
-        expect(school.has_std_device_allocation?).to eq(false)
+        expect(school.has_laptop_allocation?).to eq(false)
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.has_std_device_allocation?).to eq(false)
+        expect(school.has_laptop_allocation?).to eq(false)
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is true' do
-        expect(school.has_std_device_allocation?).to eq(true)
+        expect(school.has_laptop_allocation?).to eq(true)
       end
     end
 
@@ -141,7 +141,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.has_std_device_allocation?).to eq(false)
+        expect(school.has_laptop_allocation?).to eq(false)
       end
     end
   end
@@ -249,7 +249,7 @@ RSpec.describe School, type: :model do
 
       it 'updates the status' do
         expect { school.invite_school_contact }
-          .to change { school.preorder_information.status }.from('school_will_be_contacted').to('school_contacted')
+          .to change { school.device_ordering_status }.from('school_will_be_contacted').to('school_contacted')
       end
     end
 
@@ -275,11 +275,11 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school contact matches an existing user' do
-      let(:school_contact) { build(:school_contact, email_address: 'jsmith@school.sch.gov.uk') }
+      let(:school_contact) { create(:school_contact, email_address: 'jsmith@school.sch.gov.uk') }
 
       subject(:school) do
-        build(:school,
-              preorder_information: build(:preorder_information, school_contact: school_contact))
+        create(:school,
+              preorder_information: create(:preorder_information, school_contact: school_contact))
       end
 
       before do
@@ -328,7 +328,7 @@ RSpec.describe School, type: :model do
 
     context 'when the school will order their own devices' do
       before do
-        school.preorder_information.who_will_order_devices = 'school'
+        school.orders_managed_by_school!
         create(:school_user, :never_signed_in, school: school)
       end
 
@@ -357,7 +357,7 @@ RSpec.describe School, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       first_school = schools.first
-      first_school.preorder_information.responsible_body_will_order_devices!
+      first_school.orders_managed_centrally!
       first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
       first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
       responsible_body.add_school_to_virtual_cap_pools!(first_school)
@@ -444,6 +444,90 @@ RSpec.describe School, type: :model do
 
       it 'returns false' do
         expect(school.can_notify_computacenter?).to be false
+      end
+    end
+  end
+
+  describe 'can_change_who_manages_orders?' do
+    context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'returns false' do
+        expect(school.can_change_who_manages_orders?).to be false
+      end
+    end
+
+    context 'when the school is centrally managed and the responsible body does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'returns true' do
+        expect(school.can_change_who_manages_orders?).to be true
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
+
+      it 'returns true' do
+        expect(school.can_change_who_manages_orders?).to be true
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
+
+      it 'returns true' do
+        expect(school.can_change_who_manages_orders?).to be true
+      end
+    end
+  end
+
+  describe 'change_who_manages_orders!' do
+    context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'returns raises an error' do
+        expect { school.change_who_manages_orders!('school') }.to raise_error(VirtualCapPoolError)
+      end
+    end
+
+    context 'when the school is centrally managed and the responsible body does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
+
+      it 'changes who can order' do
+        school.change_who_manages_orders!('school')
+        expect(school.reload.orders_managed_by_school?).to be_truthy
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:school) { create(:school, :manages_orders, :can_order, :with_std_device_allocation, responsible_body: local_authority) }
+
+      it 'changes who can order' do
+        school.change_who_manages_orders!('responsible_body')
+        expect(school.reload.orders_managed_centrally?).to be_truthy
+      end
+
+      it 'adds the school to the virtual cap pool' do
+        school.change_who_manages_orders!('responsible_body')
+        expect(school.reload.in_virtual_cap_pool?).to be_truthy
+      end
+    end
+
+    context 'when the school manages orders and the responsible body has does not have virtual caps enabled' do
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
+
+      it 'changes who can order' do
+        school.change_who_manages_orders!('responsible_body')
+        expect(school.reload.orders_managed_centrally?).to be_truthy
       end
     end
   end

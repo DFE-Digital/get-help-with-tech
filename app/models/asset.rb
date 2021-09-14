@@ -68,7 +68,7 @@ class Asset < ApplicationRecord
       where(location_cc_ship_to_account: school_cc_reference)
     elsif setting.is_a?(ResponsibleBody)
       rb_cc_reference = setting.computacenter_reference
-      self_managing_schools = setting.schools.to_a.select { |school| school.who_will_order_devices == 'school' }
+      self_managing_schools = setting.schools.to_a.select(&:orders_managed_by_school?)
       self_managing_school_cc_references = self_managing_schools.collect(&:computacenter_reference)
 
       where(department_sold_to_id: rb_cc_reference).or(where(location_cc_ship_to_account: self_managing_school_cc_references))

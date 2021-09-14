@@ -33,7 +33,7 @@ class NavComponent < ViewComponent::Base
       computacenter_links + support_links
     elsif @user&.is_mno_user?
       mno_links
-    elsif @user&.is_responsible_body_user?
+    elsif @user&.responsible_body_user?
       responsible_body_links
     elsif @user&.is_school_user?
       school_links

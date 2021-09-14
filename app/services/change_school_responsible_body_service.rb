@@ -13,7 +13,7 @@ class ChangeSchoolResponsibleBodyService
     school.transaction do
       remove_school_from_current_pool! if school_removable?
       set_school_new_responsible_body!
-      update_preorder_information!
+      school.refresh_device_ordering_status!
       add_school_to_new_pool! if school_addable?
     end
     true
@@ -51,9 +51,5 @@ private
       responsible_body_id: new_responsible_body.id,
       computacenter_change: COMPUTACENTER_CHANGE_STATUS,
     )
-  end
-
-  def update_preorder_information!
-    school.preorder_information.refresh_status!
   end
 end

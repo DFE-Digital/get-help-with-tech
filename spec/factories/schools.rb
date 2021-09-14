@@ -50,7 +50,7 @@ FactoryBot.define do
       preorder_information { association :preorder_information, :rb_will_order, school: instance }
     end
 
-    trait :with_headteacher_contact do
+    trait :with_headteacher do
       after :create do |school|
         school.contacts << create(:school_contact, :headteacher)
       end

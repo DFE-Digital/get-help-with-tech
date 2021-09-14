@@ -168,8 +168,8 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       allow(mock_request).to receive(:post!).and_return(response)
 
       allocation
-      school.preorder_information.responsible_body_will_order_devices!
-      school2.preorder_information.responsible_body_will_order_devices!
+      school.orders_managed_centrally!
+      school2.orders_managed_centrally!
       school2.device_allocations.std_device.create!(allocation: 200, cap: 100, devices_ordered: 50)
       responsible_body.add_school_to_virtual_cap_pools!(school)
       responsible_body.add_school_to_virtual_cap_pools!(school2)

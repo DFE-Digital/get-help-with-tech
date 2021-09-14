@@ -15,7 +15,7 @@ class SchoolContact < ApplicationRecord
   validates :role, presence: true
 
   def current_school_contact?
-    school&.preorder_information&.school_contact == self
+    school&.current_contact == self
   end
 
   def to_user

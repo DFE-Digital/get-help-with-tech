@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Support::Schools::Devices::ChromebooksController do
-  let(:preorder_information) { create(:preorder_information, :school_will_order) }
-  let(:school) { preorder_information.school }
+  let(:school) { create(:school, :manages_orders) }
 
   describe '#edit' do
     it 'is successful for support users' do

@@ -16,7 +16,7 @@
     <ul class="govuk-list govuk-list--bullet">
       <li><%= link_to_devices_guidance_subpage 'check device specifications', 'device-specification' %></li>
       <li>
-        <% if @responsible_body.is_a_trust? %>
+        <% if @responsible_body.trust? %>
           <%= govuk_link_to 'give someone else access so they can place orders', responsible_body_users_path %>
         <% else %>
           <%= govuk_link_to 'give someone else access so they can place orders', responsible_body_users_path %>

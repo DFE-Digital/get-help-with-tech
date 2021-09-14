@@ -76,7 +76,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders state' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'ordered 1 devices'
+      expect(html).to include 'ordered 1 device'
     end
   end
 
@@ -115,7 +115,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders state' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'ordered 1 devices and 2 routers'
+      expect(html).to include 'ordered 1 device and 2 routers'
     end
   end
 end

@@ -1,10 +1,6 @@
 class School::SchoolDetailsSummaryListComponent < ViewComponent::Base
   validates :school, presence: true
 
-  delegate :school_will_order_devices?,
-           :school_contact,
-           to: :preorder_information
-
   def initialize(school:)
     @school = school
   end
@@ -22,7 +18,7 @@ private
   def device_allocation_row
     {
       key: 'Device allocation',
-      value: pluralize(@school.std_device_allocation&.raw_allocation.to_i, 'device'),
+      value: pluralize(@school.laptop_raw_allocation, 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
@@ -31,14 +27,14 @@ private
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: pluralize(@school.coms_device_allocation&.raw_allocation.to_i, 'router'),
+      value: pluralize(@school.router_raw_allocation, 'router'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
   end
 
   def display_router_allocation_row?
-    @school.coms_device_allocation&.raw_allocation.to_i.positive?
+    @school.has_router_raw_allocation?
   end
 
   def type_of_school_row
@@ -48,21 +44,16 @@ private
     }
   end
 
-  def preorder_information
-    @school.preorder_information
-  end
-
   def chromebook_rows_if_needed
-    info = @school.preorder_information
-    return [] if info.nil?
+    return [] unless @school.preorder_information?
 
-    detail_value = info.will_need_chromebooks.nil? ? 'Not yet known' : t(info.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks])
+    detail_value = @school.chromebook_info_still_needed? ? 'Not yet known' : t(@school.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks])
     detail = {
       key: 'Will you need to order Chromebooks?',
       value: detail_value,
     }
 
-    unless info.orders_managed_centrally?
+    unless @school.orders_managed_centrally?
       detail.merge!({
         change_path: chromebooks_edit_school_path(@school),
         action: 'whether Chromebooks are needed',
@@ -71,17 +62,17 @@ private
 
     rows = [detail]
 
-    if info.will_need_chromebooks?
+    if @school.will_need_chromebooks?
       domain = {
         key: 'Domain',
-        value: info.school_or_rb_domain,
+        value: @school.school_or_rb_domain,
       }
       recovery = {
         key: 'Recovery email',
-        value: info.recovery_email_address,
+        value: @school.recovery_email_address,
       }
 
-      unless info.orders_managed_centrally?
+      unless @school.orders_managed_centrally?
         domain.merge!({
           change_path: chromebooks_edit_school_path(@school),
           action: 'Domain',

@@ -25,17 +25,9 @@ class ResponsibleBody::Devices::WhoToContactForm
             length: { minimum: 2, maximum: 30 },
             if: :someone_else_chosen?
 
-  def headteacher_option_label
-    headteacher_contact.title.upcase_first
-  end
-
-  def headteacher_option_hint_text
-    "#{headteacher_contact.full_name} (#{headteacher_contact.email_address})"
-  end
-
   def chosen_contact
     if headteacher_chosen?
-      headteacher_contact
+      school.headteacher
     elsif someone_else_chosen?
       existing_contact = school.contacts.find_by(email_address: email_address)
       second_contact = school.contacts.contact.first
@@ -49,8 +41,12 @@ class ResponsibleBody::Devices::WhoToContactForm
     end
   end
 
-  def headteacher_contact
-    @headteacher_contact ||= school.headteacher_contact
+  def headteacher_option_label
+    school.headteacher_title.upcase_first
+  end
+
+  def headteacher_option_hint_text
+    "#{school.headteacher_full_name} (#{school.headteacher_email_address})"
   end
 
   def populate_details_from_second_contact

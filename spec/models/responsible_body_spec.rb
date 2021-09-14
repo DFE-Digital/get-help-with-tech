@@ -215,8 +215,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].change_who_manages_orders!(:school)
         schools[2].update!(status: :closed)
       end
 
@@ -227,8 +227,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
+        schools[0].change_who_manages_orders!(:school)
+        schools[1].change_who_manages_orders!(:school)
         schools[2].update!(status: :closed)
       end
 
@@ -243,9 +243,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.responsible_body_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_centrally!
+        schools[2].change_who_manages_orders!(:school)
         schools[3].update!(status: :closed)
       end
 
@@ -289,9 +289,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].change_who_manages_orders!(:school)
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[3].update!(status: :closed)
       end
 
@@ -343,9 +343,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.responsible_body_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_centrally!
+        schools[2].change_who_manages_orders!(:school)
         schools[3].update!(status: :closed)
       end
 
@@ -356,9 +356,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].change_who_manages_orders!(:school)
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[3].update!(status: :closed)
       end
 
@@ -373,9 +373,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools that will order are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].can_order_for_specific_circumstances!
@@ -388,9 +388,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools that will order are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -420,9 +420,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some centrally managed schools are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -436,9 +436,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some devolved schools are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[0].cannot_order!
         schools[1].cannot_order!
         schools[2].can_order_for_specific_circumstances!
@@ -452,9 +452,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when none of the RBs schools are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[0].cannot_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -488,7 +488,7 @@ RSpec.describe ResponsibleBody, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
+        s.orders_managed_centrally!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
       end
@@ -599,7 +599,7 @@ RSpec.describe ResponsibleBody, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
+        s.orders_managed_centrally!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
         responsible_body.add_school_to_virtual_cap_pools!(s)
@@ -626,7 +626,7 @@ RSpec.describe ResponsibleBody, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       first_school = schools.first
-      first_school.preorder_information.responsible_body_will_order_devices!
+      first_school.orders_managed_centrally!
       first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
       first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
       responsible_body.add_school_to_virtual_cap_pools!(first_school)
@@ -649,7 +649,7 @@ RSpec.describe ResponsibleBody, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
+        s.orders_managed_centrally!
         responsible_body.add_school_to_virtual_cap_pools!(s)
       end
     end
@@ -725,9 +725,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.responsible_body_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_centrally!
+        schools[2].change_who_manages_orders!(:school)
         schools[3].update!(status: :closed)
       end
 
@@ -754,9 +754,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].change_who_manages_orders!(:school)
+        schools[1].change_who_manages_orders!(:school)
+        schools[2].change_who_manages_orders!(:school)
         schools[3].update!(status: :closed)
       end
 
@@ -793,12 +793,12 @@ RSpec.describe ResponsibleBody, type: :model do
     let(:third_schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: third_rb) }
 
     before do
-      schools[0].preorder_information.responsible_body_will_order_devices!
-      schools[1].preorder_information.responsible_body_will_order_devices!
-      second_schools[0].preorder_information.responsible_body_will_order_devices!
-      second_schools[1].preorder_information.responsible_body_will_order_devices!
-      third_schools[0].preorder_information.school_will_order_devices!
-      third_schools[1].preorder_information.school_will_order_devices!
+      schools[0].orders_managed_centrally!
+      schools[1].orders_managed_centrally!
+      second_schools[0].orders_managed_centrally!
+      second_schools[1].orders_managed_centrally!
+      third_schools[0].change_who_manages_orders!(:school)
+      third_schools[1].change_who_manages_orders!(:school)
     end
 
     context 'when centrally managed schools have different chromebook domains within a responsible body' do
@@ -843,7 +843,7 @@ RSpec.describe ResponsibleBody, type: :model do
       before do
         schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.school_will_order_devices!
+        schools[1].change_who_manages_orders!(:school)
         schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school1.google.com')
         third_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
@@ -865,8 +865,8 @@ RSpec.describe ResponsibleBody, type: :model do
     let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
 
     before do
-      schools[0].preorder_information.responsible_body_will_order_devices!
-      schools[1].preorder_information.responsible_body_will_order_devices!
+      schools[0].orders_managed_centrally!
+      schools[1].orders_managed_centrally!
     end
 
     context 'when centrally managed schools have different chromebook domains' do
@@ -900,7 +900,7 @@ RSpec.describe ResponsibleBody, type: :model do
       before do
         schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.school_will_order_devices!
+        schools[1].change_who_manages_orders!(:school)
         schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
                                                 school_or_rb_domain: 'school1.google.com')
       end

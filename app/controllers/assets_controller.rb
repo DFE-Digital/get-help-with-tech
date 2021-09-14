@@ -11,7 +11,7 @@ class AssetsController < ApplicationController
 
     user = impersonated_or_current_user
 
-    setting = if user.is_responsible_body_user?
+    setting = if user.responsible_body_user?
                 user.responsible_body
               elsif user.is_school_user?
                 user.school

@@ -44,7 +44,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     it 'refresh preorder status' do
       expect {
         cap_usage_update.apply!
-      }.to change { school.preorder_information.reload.status }.from('ready').to('ordered')
+      }.to change { school.reload.device_ordering_status }.from('ready').to('ordered')
     end
 
     it 'logs to devices_ordered_updates' do
@@ -147,7 +147,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
   end
 
   def put_school_in_pool(responsible_body, pool_school)
-    pool_school.preorder_information.responsible_body_will_order_devices!
+    pool_school.orders_managed_centrally!
     pool_school.can_order!
     responsible_body.add_school_to_virtual_cap_pools!(pool_school)
   end
