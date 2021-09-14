@@ -146,6 +146,30 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     end
   end
 
+  context 'when the school successfully ordered over their allocation' do
+    let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+    let(:std_device_allocation) { school.std_device_allocation }
+    let(:computacenter_reference) { school.computacenter_reference }
+    let(:cap) { school.std_device_allocation.cap }
+    let(:devices_ordered) { cap + 1 }
+
+    let(:args) do
+      {
+        'capType' => 'DfE_RemainThresholdQty|Std_Device',
+        'shipTo' => computacenter_reference,
+        'capAmount' => cap,
+        'usedCap' => devices_ordered,
+      }
+    end
+
+    let(:cap_usage_update) { Computacenter::API::CapUsageUpdate.new(args) }
+
+    it 'updates the allocation' do
+      cap_usage_update.apply!
+      expect(std_device_allocation.reload.allocation).to eq(devices_ordered)
+    end
+  end
+
   def put_school_in_pool(responsible_body, pool_school)
     pool_school.preorder_information.responsible_body_will_order_devices!
     pool_school.can_order!

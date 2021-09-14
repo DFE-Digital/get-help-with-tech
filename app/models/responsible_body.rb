@@ -43,11 +43,13 @@ class ResponsibleBody < ApplicationRecord
     virtual_cap_pools.each(&:recalculate_caps!)
   end
 
-  def add_school_to_virtual_cap_pools!(school)
+  def add_school_to_virtual_cap_pools!(schools)
     if has_virtual_cap_feature_flags?
-      school.device_allocations.each do |allocation|
-        pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
-        pool.add_school!(school)
+      Array(schools).each do |school|
+        school.device_allocations.each do |allocation|
+          pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
+          pool.add_school!(school)
+        end
       end
     else
       raise VirtualCapPoolError, 'Virtual cap feature flags not set'

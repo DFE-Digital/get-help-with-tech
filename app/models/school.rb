@@ -19,6 +19,7 @@ class School < ApplicationRecord
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
+  has_many :std_device_allocation_changes, through: :std_device_allocation, source: :allocation_change
 
   validates :name, presence: true
 

@@ -320,7 +320,7 @@ def add_school_to_pool_without_side_affects(responsible_body, school)
   VirtualCapPool.no_touching do
     school.device_allocations.each do |allocation|
       pool = responsible_body.virtual_cap_pools.send(allocation.device_type).first_or_create!
-      pool.school_virtual_caps.create!(school_device_allocation: allocation)
+      pool.school_virtual_caps.create!(school_device_allocation: allocation) # TODO: is school_virtual_caps even used?
     end
   end
 end

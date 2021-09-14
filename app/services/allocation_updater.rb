@@ -1,11 +1,16 @@
 class AllocationUpdater
-  def initialize(school:, device_type:, value:)
+  def initialize(school:, device_type:, value:, category: nil)
     @school = school
     @device_type = device_type
     @value = value
+    @category = category
+    @delta = delta
+    @prev_allocation = prev_allocation
   end
 
   def call
+    record_allocation_change_meta_data
+
     # HACK: this is a tactical fix to allow allocations to be decreased - we need to attempt to
     # update the cap to keep the allocation record valid when persisting the change.
     # We want to still keep the previous behaviour for increases.
@@ -22,7 +27,7 @@ class AllocationUpdater
 
 private
 
-  attr_reader :school, :device_type, :value
+  attr_reader :school, :device_type, :value, :category
 
   def allocation
     @allocation ||= SchoolDeviceAllocation.find_or_initialize_by(school: school, device_type: device_type)
@@ -66,5 +71,23 @@ private
 
   def new_or_existing_coms_device_cap
     allocation.device_type == 'coms_device' ? allocation.allocation : SchoolDeviceAllocation.find_or_initialize_by(school: school, device_type: 'coms_device').cap
+  end
+
+  def record_allocation_change_meta_data
+    return if @category.nil?
+
+    AllocationChange.create!(school_device_allocation: allocation,
+                             category: category,
+                             delta: delta,
+                             prev_allocation: prev_allocation,
+                             new_allocation: value)
+  end
+
+  def delta
+    @delta ||= allocation.raw_allocation - value
+  end
+
+  def prev_allocation
+    @prev_allocation ||= allocation.raw_allocation
   end
 end

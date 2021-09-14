@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_10_155945) do
+ActiveRecord::Schema.define(version: 2021_08_16_131556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 2021_08_10_155945) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_id"], name: "index_allocation_batch_jobs_on_batch_id"
+  end
+
+  create_table "allocation_changes", force: :cascade do |t|
+    t.bigint "school_device_allocation_id", null: false
+    t.string "category"
+    t.integer "delta"
+    t.integer "prev_allocation"
+    t.integer "new_allocation"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category"], name: "index_allocation_changes_on_category"
+    t.index ["school_device_allocation_id"], name: "index_allocation_changes_on_school_device_allocation_id"
   end
 
   create_table "api_tokens", force: :cascade do |t|
@@ -551,6 +564,7 @@ ActiveRecord::Schema.define(version: 2021_08_10_155945) do
     t.index ["responsible_body_id"], name: "index_virtual_cap_pools_on_responsible_body_id"
   end
 
+  add_foreign_key "allocation_changes", "school_device_allocations"
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
