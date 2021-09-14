@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_10_155945) do
+ActiveRecord::Schema.define(version: 2021_09_14_112651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -515,7 +515,7 @@ ActiveRecord::Schema.define(version: 2021_08_10_155945) do
     t.boolean "is_support", default: false, null: false
     t.boolean "is_computacenter", default: false, null: false
     t.datetime "privacy_notice_seen_at"
-    t.boolean "orders_devices"
+    t.boolean "orders_devices", default: false
     t.datetime "techsource_account_confirmed_at"
     t.datetime "deleted_at"
     t.text "role", default: "no", null: false
