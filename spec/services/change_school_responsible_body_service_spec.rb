@@ -64,9 +64,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
 
       context 'when the school is centrally managed' do
         let!(:initial_rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-        let!(:school_a) { create_and_put_school_in_pool(initial_rb) }
-        let!(:moving_school) { create_and_put_school_in_pool(initial_rb) }
-        let!(:school_b) { create_and_put_school_in_pool(new_rb) }
+        let!(:school_a) { create_centrally_managed_school_that_can_order(initial_rb) }
+        let!(:moving_school) { create_centrally_managed_school_that_can_order(initial_rb) }
+        let!(:school_b) { create_centrally_managed_school_that_can_order(new_rb) }
 
         let(:initial_rb_std_device_start_allocation) { [school_a, moving_school].map(&:std_device_allocation).sum(&:raw_allocation) }
         let(:initial_rb_std_device_end_allocation) { school_a.std_device_allocation.raw_allocation }

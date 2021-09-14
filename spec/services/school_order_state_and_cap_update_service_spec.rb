@@ -127,7 +127,6 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
 
     context 'when a school is centrally managed and the school is not in the virtual cap pool' do
       before do
-        school.orders_managed_centrally!
         responsible_body.update!(vcap_feature_flag: true)
       end
 

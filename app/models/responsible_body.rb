@@ -284,7 +284,9 @@ class ResponsibleBody < ApplicationRecord
   def update_who_will_order_devices(who_will_order)
     update!(who_will_order_devices: who_will_order)
     active_schools.each do |school|
-      school.orders_managed_by!(who_will_order, clear_preorder_information: true)
+      if school.can_change_who_manages_orders?
+        school.change_who_manages_orders!(who_will_order, clear_preorder_information: true)
+      end
     end
   end
 

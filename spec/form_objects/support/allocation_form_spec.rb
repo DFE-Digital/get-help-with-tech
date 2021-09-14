@@ -5,7 +5,7 @@ RSpec.describe Support::AllocationForm do
     context 'when in a virtual cap pool' do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
       let :school do
-        create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body)
+        create(:school, :centrally_managed, :in_lockdown, responsible_body: responsible_body)
       end
       let! :school_device_allocation do
         create(:school_device_allocation, school: school, allocation: initial_value)
@@ -17,7 +17,6 @@ RSpec.describe Support::AllocationForm do
 
       before do
         # Properly associate things with a virtual cap pool.
-        school.orders_managed_centrally!
         responsible_body.add_school_to_virtual_cap_pools!(school)
         school_device_allocation.reload
       end

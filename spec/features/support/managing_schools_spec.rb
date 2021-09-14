@@ -111,7 +111,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     school = create(:school, :with_preorder_information, :with_headteacher,
                     name: 'Alpha School',
                     responsible_body: local_authority)
-    school.change_who_manages_orders!(:school)
+    school.orders_managed_by_school!
     school.set_current_contact!(school.headteacher)
 
     expect(school.school_will_be_contacted?).to be_truthy

@@ -4,7 +4,7 @@ RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service cl
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 3, :with_preorder_information, :with_headteacher, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   let(:your_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
@@ -40,25 +40,21 @@ RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service cl
     PreorderInformation.where(school_id: responsible_body.schools).update_all(will_need_chromebooks: 'no')
     schools[0].orders_managed_centrally!
     schools[1].orders_managed_centrally!
-    schools[2].change_who_manages_orders!(:school)
+    schools[2].orders_managed_by_school!
   end
 
   def given_there_are_schools_in_the_pool
     schools.first.can_order!
     schools.first.std_device_allocation.update!(cap: 5, allocation: 5, devices_ordered: 2)
-    responsible_body.add_school_to_virtual_cap_pools!(schools.first)
     schools.second.can_order_for_specific_circumstances!
     schools.second.std_device_allocation.update!(cap: 5, allocation: 20, devices_ordered: 0)
-    responsible_body.add_school_to_virtual_cap_pools!(schools.second)
   end
 
   def given_there_are_schools_in_the_pool_that_cant_order
     schools.first.can_order!
     schools.first.std_device_allocation.update!(cap: 5, allocation: 5, devices_ordered: 5)
-    responsible_body.add_school_to_virtual_cap_pools!(schools.first)
     schools.second.can_order_for_specific_circumstances!
     schools.second.std_device_allocation.update!(cap: 5, allocation: 20, devices_ordered: 5)
-    responsible_body.add_school_to_virtual_cap_pools!(schools.second)
   end
 
   def when_i_visit_the_responsible_body_home_page

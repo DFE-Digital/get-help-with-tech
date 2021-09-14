@@ -15,7 +15,6 @@ class SchoolUpdateService
     responsible_body_exists!(staged_school)
 
     school = School.create!(staged_school.staged_attributes)
-    setup_preorder_information(school)
     setup_allocations(school)
 
     staged_school.predecessors.each do |predecessor|
@@ -25,6 +24,7 @@ class SchoolUpdateService
     end
 
     add_school_links(staged_school, school)
+    setup_preorder_information(school)
 
     school
   end
@@ -61,7 +61,7 @@ private
 
   def setup_preorder_information(school)
     who_will_order = school.responsible_body.who_will_order_devices&.singularize
-    school.orders_managed_by!(who_will_order) if who_will_order
+    school.change_who_manages_orders!(who_will_order) if who_will_order
   end
 
   def setup_allocations(school)

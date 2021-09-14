@@ -126,7 +126,7 @@ class School < ApplicationRecord
   end
 
   def can_change_who_manages_orders?
-    !(orders_managed_centrally? && responsible_body.has_virtual_cap_feature_flags?)
+    !(responsible_body_will_order_devices? && responsible_body.has_virtual_cap_feature_flags?)
   end
 
   def can_invite_users?
@@ -145,9 +145,9 @@ class School < ApplicationRecord
     eligible_to_order? && !laptops_available_to_order? && routers_available_to_order?
   end
 
-  def change_who_manages_orders!(who)
+  def change_who_manages_orders!(who, clear_preorder_information: false)
     if can_change_who_manages_orders?
-      (preorder_information || build_preorder_information).update(who_will_order_devices: who)
+      orders_managed_by!(who, clear_preorder_information: clear_preorder_information)
       refresh_device_ordering_status!
       if responsible_body.school_addable_to_virtual_cap_pools?(self)
         responsible_body.add_school_to_virtual_cap_pools!(self)
@@ -282,11 +282,8 @@ class School < ApplicationRecord
     !!opted_out_of_comms_at
   end
 
-  def order_users_with_active_techsource_accounts
-    device_ordering_organisation
-      .users
-      .who_can_order_devices
-      .with_techsource_account_confirmed
+  def orders_managed_centrally!
+    change_who_manages_orders!(:responsible_body)
   end
 
   def orders_managed_centrally?
@@ -294,23 +291,20 @@ class School < ApplicationRecord
     responsible_body_will_order_devices? || responsible_body.orders_managed_centrally?
   end
 
+  def orders_managed_by_school!
+    change_who_manages_orders!(:school)
+  end
+
   def orders_managed_by_school?
     return false if responsible_body_will_order_devices?
     school_will_order_devices? || responsible_body.orders_managed_by_schools?
   end
 
-  def orders_managed_by!(who_will_order, clear_preorder_information: false)
-    clear_preorder_information! if clear_preorder_information
-    manager = who_will_order.to_sym == :school ? :school_will_order_devices! : :responsible_body_will_order_devices!
-    (preorder_information || build_preorder_information).send(manager)
-  end
-
-  def orders_managed_centrally!(clear_preorder_information: false)
-    orders_managed_by!(:responsible_body, clear_preorder_information: clear_preorder_information)
-  end
-
-  def orders_managed_by_school!(clear_preorder_information: false)
-    orders_managed_by!(:school, clear_preorder_information: clear_preorder_information)
+  def order_users_with_active_techsource_accounts
+    device_ordering_organisation
+      .users
+      .who_can_order_devices
+      .with_techsource_account_confirmed
   end
 
   def organisation_users
@@ -408,6 +402,12 @@ class School < ApplicationRecord
 
   def maybe_generate_user_changes
     user_schools.map(&:user).each(&:generate_user_change_if_needed!)
+  end
+
+  def orders_managed_by!(who, clear_preorder_information: false)
+    clear_preorder_information! if clear_preorder_information
+    manager = who.to_sym == :school ? :school_will_order_devices! : :responsible_body_will_order_devices!
+    (preorder_information || build_preorder_information).send(manager)
   end
 
   def responsible_body_type

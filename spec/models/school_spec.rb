@@ -352,7 +352,7 @@ RSpec.describe School, type: :model do
   describe '#in_virtual_cap_pool?' do
     subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :manages_orders, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       stub_computacenter_outgoing_api_calls
@@ -360,7 +360,6 @@ RSpec.describe School, type: :model do
       first_school.orders_managed_centrally!
       first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
       first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
-      responsible_body.add_school_to_virtual_cap_pools!(first_school)
     end
 
     it 'returns true for a school within the pool' do
@@ -491,8 +490,8 @@ RSpec.describe School, type: :model do
       let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
       let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
 
-      it 'returns raises an error' do
-        expect { school.change_who_manages_orders!('school') }.to raise_error(VirtualCapPoolError)
+      it 'raises an error' do
+        expect { school.change_who_manages_orders!(:school) }.to raise_error(VirtualCapPoolError)
       end
     end
 
@@ -501,7 +500,7 @@ RSpec.describe School, type: :model do
       let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
 
       it 'changes who can order' do
-        school.change_who_manages_orders!('school')
+        school.change_who_manages_orders!(:school)
         expect(school.reload.orders_managed_by_school?).to be_truthy
       end
     end
@@ -511,12 +510,12 @@ RSpec.describe School, type: :model do
       let(:school) { create(:school, :manages_orders, :can_order, :with_std_device_allocation, responsible_body: local_authority) }
 
       it 'changes who can order' do
-        school.change_who_manages_orders!('responsible_body')
+        school.change_who_manages_orders!(:responsible_body)
         expect(school.reload.orders_managed_centrally?).to be_truthy
       end
 
       it 'adds the school to the virtual cap pool' do
-        school.change_who_manages_orders!('responsible_body')
+        school.change_who_manages_orders!(:responsible_body)
         expect(school.reload.in_virtual_cap_pool?).to be_truthy
       end
     end
@@ -526,7 +525,7 @@ RSpec.describe School, type: :model do
       let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
 
       it 'changes who can order' do
-        school.change_who_manages_orders!('responsible_body')
+        school.change_who_manages_orders!(:responsible_body)
         expect(school.reload.orders_managed_centrally?).to be_truthy
       end
     end

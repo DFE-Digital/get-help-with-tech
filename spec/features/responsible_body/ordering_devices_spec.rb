@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:responsible_body) { create(:local_authority) }
-  let(:schools) { create_list(:school, 6, :with_preorder_information, :with_headteacher, :with_std_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 6, :manages_orders, :with_headteacher, :with_std_device_allocation, responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -59,8 +59,8 @@ RSpec.feature 'Ordering devices', skip: 'Disabled for 30 Jun 2021 service closur
     schools[0].orders_managed_centrally!
     schools[1].orders_managed_centrally!
     schools[2].orders_managed_centrally!
-    schools[3].change_who_manages_orders!(:school)
-    schools[4].change_who_manages_orders!(:school)
+    schools[3].orders_managed_by_school!
+    schools[4].orders_managed_by_school!
   end
 
   def given_a_centrally_managed_school_can_order_for_specific_circumstances

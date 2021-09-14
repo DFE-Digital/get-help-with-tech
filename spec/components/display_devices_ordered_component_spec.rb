@@ -5,8 +5,8 @@ RSpec.describe DisplayDevicesOrderedComponent, type: :component do
   let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
   let(:trust) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-  let(:school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
-  let(:another_school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
+  let(:school) { create(:school, :manages_orders, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
+  let(:another_school) { create(:school, :manages_orders, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
 
   subject(:component) { described_class.new(school: school) }
 
@@ -15,12 +15,12 @@ RSpec.describe DisplayDevicesOrderedComponent, type: :component do
     allow(mock_request).to receive(:post!).and_return(response)
     school.std_device_allocation.update!(devices_ordered: 24)
     school.coms_device_allocation.update!(devices_ordered: 33)
-    put_school_in_pool(trust, another_school)
+    another_school.orders_managed_centrally!
   end
 
   context 'when in a virtual pool' do
     before do
-      put_school_in_pool(trust, school)
+      school.orders_managed_centrally!
       school.reload
     end
 

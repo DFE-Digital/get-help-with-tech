@@ -156,8 +156,8 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
   context 'when in a virtual pool' do
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-    let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
-    let(:school2) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:school) { create(:school, :manages_orders, :in_lockdown, responsible_body: responsible_body) }
+    let(:school2) { create(:school, :manages_orders, :in_lockdown, responsible_body: responsible_body) }
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
     let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
@@ -168,11 +168,9 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       allow(mock_request).to receive(:post!).and_return(response)
 
       allocation
+      school2.device_allocations.std_device.create!(allocation: 200, cap: 100, devices_ordered: 50)
       school.orders_managed_centrally!
       school2.orders_managed_centrally!
-      school2.device_allocations.std_device.create!(allocation: 200, cap: 100, devices_ordered: 50)
-      responsible_body.add_school_to_virtual_cap_pools!(school)
-      responsible_body.add_school_to_virtual_cap_pools!(school2)
       allocation.reload
     end
 
