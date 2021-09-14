@@ -26,7 +26,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
     context 'within a virtual cap' do
       let(:responsible_body) { create(:trust, :vcap_feature_flag) }
-      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: responsible_body) }
+      let(:schools) { create_list(:school, 2, :manages_orders, :with_std_device_allocation, :in_lockdown, responsible_body: responsible_body) }
 
       let(:school) { schools.first }
       let(:allocation) { school.std_device_allocation.reload }
@@ -36,11 +36,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
         schools.each do |school|
           school.std_device_allocation.update!(allocation: 27, cap: 0, devices_ordered: 13, school: school)
-
-          school.preorder_information.update!(who_will_order_devices: 'responsible_body')
-          school.can_order!
-          responsible_body.add_school_to_virtual_cap_pools!(school)
-          responsible_body.calculate_virtual_caps!
+          school.orders_managed_centrally!
         end
       end
 

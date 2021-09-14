@@ -94,12 +94,12 @@ RSpec.feature 'Ordering devices within a virtual pool', skip: 'Disabled for 30 J
   end
 
   def given_there_are_multiple_chromebook_domains_being_managed
-    schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                            school_or_rb_domain: 'school_1.com',
-                                            recovery_email_address: 'school_1@gmail.com')
-    schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                            school_or_rb_domain: 'school_2.com',
-                                            recovery_email_address: 'school_2@gmail.com')
+    schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                         school_or_rb_domain: 'school_1.com',
+                                                         recovery_email_address: 'school_1@gmail.com')
+    schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                         school_or_rb_domain: 'school_2.com',
+                                                         recovery_email_address: 'school_2@gmail.com')
   end
 
   def when_i_visit_the_responsible_body_home_page

@@ -18,8 +18,8 @@ class School < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :school_links, dependent: :destroy
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
-    primary_key: :computacenter_reference,
-    foreign_key: :ship_to
+                                     primary_key: :computacenter_reference,
+                                     foreign_key: :ship_to
 
   validates :name, presence: true
 
@@ -78,19 +78,18 @@ class School < ApplicationRecord
   delegate :title, to: :headteacher, allow_nil: true, prefix: true
 
   delegate :chromebook_information_complete?, to: :preorder_information
-  delegate :needs_contact?, :needs_contact!, to: :preorder_information
-  delegate :needs_info?, :needs_info!, to: :preorder_information
-  delegate :ordered?, :ordered!, to: :preorder_information
-  delegate :ready?, :ready!, to: :preorder_information
-  delegate :rb_can_order?, :rb_can_order!, to: :preorder_information
-  delegate :school_can_order?, :school_can_order!, to: :preorder_information
-  delegate :school_contacted?, :school_contacted!, to: :preorder_information
-  delegate :school_ready?, :school_ready!, to: :preorder_information
-  delegate :school_will_be_contacted?, :school_will_be_contacted!, to: :preorder_information
+  delegate :needs_contact?, :needs_contact!, to: :preorder_information, allow_nil: true
+  delegate :needs_info?, :needs_info!, to: :preorder_information, allow_nil: true
+  delegate :ordered?, :ordered!, to: :preorder_information, allow_nil: true
+  delegate :ready?, :ready!, to: :preorder_information, allow_nil: true
+  delegate :rb_can_order?, :rb_can_order!, to: :preorder_information, allow_nil: true
+  delegate :school_can_order?, :school_can_order!, to: :preorder_information, allow_nil: true
+  delegate :school_contacted?, :school_contacted!, to: :preorder_information, allow_nil: true
+  delegate :school_ready?, :school_ready!, to: :preorder_information, allow_nil: true
+  delegate :school_will_be_contacted?, :school_will_be_contacted!, to: :preorder_information, allow_nil: true
   delegate :recovery_email_address, to: :preorder_information, allow_nil: true
   delegate :responsible_body_will_order_devices?, to: :preorder_information, allow_nil: true, private: true
   delegate :status, to: :preorder_information, allow_nil: true, prefix: :device_ordering
-  delegate :school_contact, to: :preorder_information, allow_nil: true
   delegate :school_or_rb_domain, to: :preorder_information, allow_nil: true
   delegate :school_will_order_devices?, to: :preorder_information, allow_nil: true, private: true
   delegate :update_chromebook_information_and_status!, to: :preorder_information
@@ -288,6 +287,7 @@ class School < ApplicationRecord
 
   def orders_managed_centrally?
     return false if school_will_order_devices?
+
     responsible_body_will_order_devices? || responsible_body.orders_managed_centrally?
   end
 
@@ -297,6 +297,7 @@ class School < ApplicationRecord
 
   def orders_managed_by_school?
     return false if responsible_body_will_order_devices?
+
     school_will_order_devices? || responsible_body.orders_managed_by_schools?
   end
 
@@ -382,10 +383,11 @@ class School < ApplicationRecord
 
   def who_manages_orders_label
     return 'School or college' if orders_managed_by_school?
+
     responsible_body_type if orders_managed_centrally?
   end
 
-  private
+private
 
   def clear_preorder_information!
     preorder_information&.destroy!

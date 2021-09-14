@@ -17,21 +17,16 @@ RSpec.describe School, type: :model do
   end
 
   describe '#preorder_status_or_default' do
-    subject(:school) { build(:school) }
+    subject(:school) { create(:school, :manages_orders) }
 
     context 'when the school has a preorder_information record with a status' do
-      before do
-        school.preorder_information = PreorderInformation.new(school: school, status: 'ready')
-      end
-
       it 'returns the status from the preorder_information record' do
-        expect(school.preorder_status_or_default).to eq('ready')
+        expect(school.preorder_status_or_default).to eq('needs_contact')
       end
     end
 
     context 'when the school has a preorder_information record without a status' do
       it 'infers the status' do
-        school.build_preorder_information
         school.preorder_information.status = nil
         allow(school.preorder_information).to receive(:infer_status).and_return('inferred_status')
 
@@ -40,10 +35,9 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school has no preorder status and the responsible_body is set to manage orders centrally' do
-      before do
-        school.preorder_information = nil
-        school.responsible_body = build(:trust, who_will_order_devices: 'responsible_body')
-      end
+      let(:responsible_body) { create(:local_authority, :manages_centrally) }
+
+      subject(:school) { create(:school, responsible_body: responsible_body) }
 
       it 'returns "needs_info"' do
         expect(school.preorder_status_or_default).to eq('needs_info')
@@ -51,10 +45,9 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school has no preorder status and the responsible_body is set to schools managing orders' do
-      before do
-        school.preorder_information = nil
-        school.responsible_body = build(:trust, who_will_order_devices: 'school')
-      end
+      let(:responsible_body) { create(:local_authority, :devolves_management) }
+
+      subject(:school) { create(:school, responsible_body: responsible_body) }
 
       it 'returns "needs_contact"' do
         expect(school.preorder_status_or_default).to eq('needs_contact')
@@ -215,13 +208,10 @@ RSpec.describe School, type: :model do
                school: school)
       end
 
-      subject(:school) do
-        create(:school, preorder_information: create(:preorder_information,
-                                                     who_will_order_devices: :school))
-      end
+      subject(:school) { create(:school, :manages_orders) }
 
       before do
-        school.preorder_information.update(school_contact: school_contact)
+        school.set_current_contact!(school_contact)
       end
 
       it 'creates a new user from the contact details' do
@@ -249,12 +239,12 @@ RSpec.describe School, type: :model do
 
       it 'updates the status' do
         expect { school.invite_school_contact }
-          .to change { school.device_ordering_status }.from('school_will_be_contacted').to('school_contacted')
+          .to change { school.reload.device_ordering_status }.from('school_will_be_contacted').to('school_contacted')
       end
     end
 
     context 'when the school has no preorder information' do
-      subject(:school) { build(:school, preorder_information: nil) }
+      subject(:school) { build(:school) }
 
       it 'does nothing' do
         expect { school.invite_school_contact }
@@ -264,8 +254,7 @@ RSpec.describe School, type: :model do
 
     context "when there isn't any contact specified yet" do
       subject(:school) do
-        build(:school,
-              preorder_information: build(:preorder_information, school_contact: nil))
+        build_stubbed(:school, :manages_orders)
       end
 
       it 'does nothing' do
@@ -277,12 +266,10 @@ RSpec.describe School, type: :model do
     context 'when the school contact matches an existing user' do
       let(:school_contact) { create(:school_contact, email_address: 'jsmith@school.sch.gov.uk') }
 
-      subject(:school) do
-        create(:school,
-              preorder_information: create(:preorder_information, school_contact: school_contact))
-      end
+      subject(:school) { create(:school, :manages_orders) }
 
       before do
+        school.set_current_contact!(school_contact)
         create(:user, email_address: 'jsmith@school.sch.gov.uk')
       end
 
@@ -294,14 +281,10 @@ RSpec.describe School, type: :model do
   end
 
   describe '#who_will_order_devices' do
-    let(:local_authority) { build(:local_authority, who_will_order_devices: 'responsible_body') }
-
-    subject(:school) { build(:school, :la_maintained, responsible_body: local_authority) }
+    let(:local_authority) { build(:local_authority, :manages_centrally) }
 
     context 'when the school has a preorder_information' do
-      before do
-        school.preorder_information = build(:preorder_information, school: school, who_will_order_devices: 'school')
-      end
+      subject(:school) { build(:school, :manages_orders, :la_maintained, responsible_body: local_authority) }
 
       it 'returns the who_will_order_devices value from the preorder_information' do
         expect(school.who_will_order_devices).to eq('school')
@@ -309,9 +292,7 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school does not have a preorder_information' do
-      before do
-        school.preorder_information = nil
-      end
+      subject(:school) { build(:school, :la_maintained, responsible_body: local_authority) }
 
       it 'returns the who_will_order_devices value from the responsible_body' do
         expect(school.who_will_order_devices).to eq('responsible_body')
@@ -320,15 +301,14 @@ RSpec.describe School, type: :model do
   end
 
   describe '#active_responsible_users' do
-    subject(:school) { create(:school, :la_maintained, :with_preorder_information, responsible_body: local_authority) }
-
     let!(:local_authority) { create(:local_authority) }
     let!(:school_user_who_has_signed_in) { create(:school_user, :signed_in_before, school: school) }
     let!(:responsible_body_user_who_has_signed_in) { create(:local_authority_user, :signed_in_before, responsible_body: local_authority) }
 
     context 'when the school will order their own devices' do
+      subject(:school) { create(:school, :la_maintained, :manages_orders, responsible_body: local_authority) }
+
       before do
-        school.orders_managed_by_school!
         create(:school_user, :never_signed_in, school: school)
       end
 
@@ -338,8 +318,9 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school will have device orders placed centrally' do
+      subject(:school) { create(:school, :la_maintained, :centrally_managed, responsible_body: local_authority) }
+
       before do
-        school.preorder_information.who_will_order_devices = 'responsible_body'
         create(:local_authority_user, :never_signed_in, responsible_body: local_authority)
       end
 
@@ -396,10 +377,8 @@ RSpec.describe School, type: :model do
   end
 
   describe '#can_invite_users?' do
-    subject(:school) { build(:school, preorder_information: preorder) }
-
     context 'RB orders' do
-      let(:preorder) { build(:preorder_information, :rb_will_order) }
+      subject(:school) { build_stubbed(:school, :centrally_managed) }
 
       it 'returns false' do
         expect(school.can_invite_users?).to be_falsey
@@ -407,7 +386,7 @@ RSpec.describe School, type: :model do
     end
 
     context 'school orders' do
-      let(:preorder) { build(:preorder_information, :school_will_order) }
+      subject(:school) { build_stubbed(:school, :manages_orders) }
 
       it 'returns true' do
         expect(school.can_invite_users?).to be_truthy
@@ -415,7 +394,7 @@ RSpec.describe School, type: :model do
     end
 
     context 'we do not know who orders' do
-      let(:preorder) { nil }
+      subject(:school) { build_stubbed(:school) }
 
       it 'returns true' do
         expect(school.can_invite_users?).to be_truthy

@@ -21,7 +21,7 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
     'You ordered ' + [laptops_ordered, routers_ordered].compact.join(' and ')
   end
 
-  private
+private
 
   def devices_available_to_order
     [laptops_available_to_order, routers_available_to_order].compact.join(' and <br/>') + ' available to order'

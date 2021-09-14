@@ -5,7 +5,7 @@ class School::HomeController < School::BaseController
     @in_vcap_pool = school.in_virtual_cap_pool?
   end
 
-  private
+private
 
   def assistance_count
     [

@@ -49,15 +49,15 @@ describe School::SchoolDetailsSummaryListComponent do
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'does not show the school contact even if the school contact is set' do
-      school.preorder_information.update!(school_contact: headteacher)
+      school.set_current_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
 
     it 'shows the chromebook details without links to change it' do
-      school.preorder_information.update(
+      school.update_chromebook_information_and_status!(
         school_or_rb_domain: 'school.domain.org',
         recovery_email_address: 'admin@recovery.org',
-        will_need_chromebooks: 'yes'
+        will_need_chromebooks: 'yes',
       )
 
       expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('Yes')

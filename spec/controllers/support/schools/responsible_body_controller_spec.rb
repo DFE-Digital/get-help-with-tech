@@ -73,7 +73,9 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
 
         before do
           sign_in_as support_third_line_user
-          allow(Support::School::ChangeResponsibleBodyForm).to receive(:new).and_return(double(save: false))
+          allow(Support::School::ChangeResponsibleBodyForm).to receive(:new).and_return(
+            instance_double('Support::School::ChangeResponsibleBodyForm', save: false),
+          )
           patch :update, params: params
         end
 

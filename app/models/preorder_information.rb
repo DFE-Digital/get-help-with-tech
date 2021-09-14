@@ -84,6 +84,7 @@ class PreorderInformation < ApplicationRecord
     # via callbacks
     return true if school&.la_funded_provision?
     return will_not_need_chromebooks? unless will_need_chromebooks?
+
     school_or_rb_domain.present? && recovery_email_address.present?
   end
 
@@ -106,12 +107,12 @@ class PreorderInformation < ApplicationRecord
           school_id: school_id,
           orders_devices: true,
         )
-        update!(school_contacted_at: Time.zone.now, status: infer_status) if user.errors.blank?
+        reload.update!(school_contacted_at: Time.zone.now, status: infer_status) if user.errors.blank?
       end
     end
   end
 
-  private
+private
 
   def any_school_users?
     school&.user_schools&.any?

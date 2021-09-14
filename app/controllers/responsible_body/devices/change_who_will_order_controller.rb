@@ -26,9 +26,7 @@ private
 
   def check_school_can_change_who_will_order
     set_school
-    if @school.preorder_information? && !@school.can_change_who_manages_orders?
-      not_found
-    end
+    not_found unless @school.can_change_who_manages_orders?
   end
 
   def set_school

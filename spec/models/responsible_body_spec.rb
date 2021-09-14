@@ -792,14 +792,14 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when centrally managed schools have different chromebook domains within a responsible body' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
-        second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school0.google2.com')
-        second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school1.google2.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
+        second_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school0.google2.com')
+        second_schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school1.google2.com')
       end
 
       it 'returns the responsible bodies that manage those schools' do
@@ -810,15 +810,15 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when a closed school has a different chromebook domain' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school.google.com')
         schools[1].gias_status_closed!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school4.google.com')
-        second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school0.google2.com')
-        second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school1.google2.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school4.google.com')
+        second_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school0.google2.com')
+        second_schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school1.google2.com')
       end
 
       it 'does not count closed schools when determining the domains' do
@@ -830,15 +830,15 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'it does not consider schools that are not centrally managed' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
         schools[1].orders_managed_by_school!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
-        third_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                      school_or_rb_domain: 'school0.google3.com')
-        third_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                      school_or_rb_domain: 'school1.google3.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
+        third_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                   school_or_rb_domain: 'school0.google3.com')
+        third_schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                   school_or_rb_domain: 'school1.google3.com')
       end
 
       it 'does not count closed schools when determining the domains' do
@@ -855,10 +855,10 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when centrally managed schools have different chromebook domains' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
       end
 
       it 'returns true' do
@@ -868,11 +868,11 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'it does not consider closed schools' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school.google.com')
         schools[1].gias_status_closed!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school4.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school4.google.com')
       end
 
       it 'returns false' do
@@ -882,11 +882,11 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'it does not consider schools that are not centrally managed' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
         schools[1].orders_managed_by_school!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
       end
 
       it 'returns false' do

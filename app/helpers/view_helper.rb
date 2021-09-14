@@ -136,7 +136,8 @@ module ViewHelper
     suffix = (school.can_order_for_specific_circumstances? ? ' for specific circumstances' : nil)
 
     if school.devices_available_to_order?
-      string = what_to_order_allocation_list(allocations: school.device_allocations)
+      allocations = [school.std_device_allocation, school.coms_device_allocation].compact
+      string = what_to_order_allocation_list(allocations: allocations)
 
       "Order #{string}#{suffix}"
     else

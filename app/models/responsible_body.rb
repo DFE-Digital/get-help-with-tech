@@ -219,7 +219,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def orders_managed_by_schools?
-    ['school', 'schools'].include?(who_will_order_devices)
+    %w[school schools].include?(who_will_order_devices)
   end
 
   def remove_school_from_virtual_cap_pools!(school)
@@ -301,7 +301,7 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
-  private
+private
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)

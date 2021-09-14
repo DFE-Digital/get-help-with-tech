@@ -5,8 +5,8 @@ class ResponsibleBody::Devices::ChromebookInformationController < ResponsibleBod
     @chromebook_information_form = ChromebookInformationForm.new(
       school: @school,
       will_need_chromebooks: @school.will_need_chromebooks,
-      school_or_rb_domain: @school.preorder_information&.school_or_rb_domain,
-      recovery_email_address: @school.preorder_information&.recovery_email_address,
+      school_or_rb_domain: @school.school_or_rb_domain,
+      recovery_email_address: @school.recovery_email_address,
     )
     load_schools_by_order_status
   end

@@ -54,8 +54,11 @@ RSpec.describe ViewHelper do
       end
 
       context 'when ordering for specific circumstances' do
-        let!(:allocation) { create(:school_device_allocation, :std, allocation: 10, cap: 4, devices_ordered: 1, school: school) }
-        let!(:school) { create(:school, :can_order_for_specific_circumstances) }
+        let(:school) { create(:school, :can_order_for_specific_circumstances) }
+
+        before do
+          create(:school_device_allocation, :std, allocation: 10, cap: 4, devices_ordered: 1, school: school)
+        end
 
         it 'returns Order X devices for specific circumstances' do
           expect(helper.what_to_order_availability(school: school)).to eql('Order 3 devices for specific circumstances')
@@ -64,9 +67,12 @@ RSpec.describe ViewHelper do
     end
 
     context 'when devices and routers available to order' do
-      let!(:std_device_allocation) { create(:school_device_allocation, :std, allocation: 20, cap: 10, devices_ordered: 3) }
-      let!(:coms_device_allocation) { create(:school_device_allocation, :coms, allocation: 20, cap: 4, devices_ordered: 1, school: school) }
-      let!(:school) { std_device_allocation.school }
+      let(:std_device_allocation) { create(:school_device_allocation, :std, allocation: 20, cap: 10, devices_ordered: 3) }
+      let(:school) { std_device_allocation.school }
+
+      before do
+        create(:school_device_allocation, :coms, allocation: 20, cap: 4, devices_ordered: 1, school: school)
+      end
 
       it 'returns Order X devices and X routers' do
         expect(helper.what_to_order_availability(school: school)).to eql('Order 7 devices and 3 routers')
@@ -104,7 +110,7 @@ RSpec.describe ViewHelper do
 
   describe '#what_to_order_state' do
     context 'when devices available to order' do
-      let!(:allocations) { [create(:school_device_allocation, :std, allocation: 20, cap: 12, devices_ordered: 2)] }
+      let(:allocations) { [create(:school_device_allocation, :std, allocation: 20, cap: 12, devices_ordered: 2)] }
 
       it 'returns You\'ve ordered X devices' do
         expect(helper.what_to_order_state(school: school)).to eql('You’ve ordered 2 devices')

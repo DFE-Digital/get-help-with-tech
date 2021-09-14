@@ -122,12 +122,7 @@ RSpec.describe CreateUserService do
   end
 
   describe 'invite_school_user' do
-    let(:school) { create(:school) }
-    let(:preorder_information) { create(:preorder_information, school: school, who_will_order_devices: 'school') }
-
-    before do
-      preorder_information
-    end
+    let(:school) { create(:school, :manages_orders) }
 
     context 'given an email address that already exists' do
       let(:params) do
@@ -201,14 +196,11 @@ RSpec.describe CreateUserService do
         end
 
         context 'when the additional school has no value for who_will_order_devices' do
-          before do
-            school.preorder_information&.destroy!
-            school.responsible_body.update!(who_will_order_devices: nil)
-          end
+          let(:school) { create(:school) }
 
           it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
             expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
-            expect(school.who_will_order_devices).to eq('school')
+            expect(school.orders_managed_by_school?).to be_truthy
           end
         end
 
@@ -382,14 +374,11 @@ RSpec.describe CreateUserService do
       end
 
       context 'when the additional school has no value for who_will_order_devices' do
-        before do
-          school.preorder_information&.destroy!
-          school.responsible_body.update!(who_will_order_devices: nil)
-        end
+        let(:school) { create(:school) }
 
         it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
           expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
-          expect(school.who_will_order_devices).to eq('school')
+          expect(school.orders_managed_by_school?).to be_truthy
         end
       end
     end

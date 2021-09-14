@@ -2,7 +2,7 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
   include ViewHelper
   validates :school, presence: true
 
-  delegate :orders_managed_by_school?, :school_contact, to: :@school
+  delegate :orders_managed_by_school?, to: :@school
 
   def initialize(school:, viewer: nil)
     @school = school
@@ -195,5 +195,9 @@ private
       rows += [domain, recovery]
     end
     rows
+  end
+
+  def school_contact
+    @school.current_contact
   end
 end

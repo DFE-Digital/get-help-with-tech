@@ -69,11 +69,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
   describe '#create_school!' do
     let!(:staged_school) { create(:staged_school, urn: 103_001, responsible_body_name: 'Camden') }
-    let(:local_authority) { create(:local_authority, name: 'Camden') }
-
-    before do
-      local_authority
-    end
+    let!(:local_authority) { create(:local_authority, name: 'Camden') }
 
     it 'creates school record' do
       expect {
@@ -99,10 +95,9 @@ RSpec.describe SchoolUpdateService, type: :model do
         local_authority.update!(who_will_order_devices: 'schools')
       end
 
-      it 'sets up preorder information' do
+      it 'sets up ordering information' do
         school = service.create_school!(staged_school)
-        expect(school.preorder_information).not_to be_nil
-        expect(school.who_will_order_devices).to eq('school')
+        expect(school.device_ordering_status).to be_present
       end
     end
 
@@ -111,9 +106,9 @@ RSpec.describe SchoolUpdateService, type: :model do
         local_authority.update!(who_will_order_devices: nil)
       end
 
-      it 'does not set up preorder information' do
+      it 'does not set up ordering information' do
         school = service.create_school!(staged_school)
-        expect(school.preorder_information).to be_nil
+        expect(school.device_ordering_status).not_to be_present
       end
     end
 

@@ -52,7 +52,7 @@ FactoryBot.define do
 
     trait :with_headteacher do
       after :create do |school|
-        school.contacts << create(:school_contact, :headteacher)
+        school.contacts << create(:school_contact, :headteacher, school: school)
       end
     end
 

@@ -166,7 +166,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     context 'when the step is devices_you_can_order and will_need_chromebooks has not been answered' do
       before do
         wizard.devices_you_can_order!
-        school.preorder_information.update!(will_need_chromebooks: nil)
+        school.update_chromebook_information_and_status!(will_need_chromebooks: nil)
       end
 
       it 'moves to the chromebooks step' do
@@ -178,7 +178,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     context 'when the step is devices_you_can_order and will_need_chromebooks has already been answered' do
       before do
         wizard.devices_you_can_order!
-        school.preorder_information.update!(will_need_chromebooks: 'yes')
+        school.update_chromebook_information_and_status!(will_need_chromebooks: 'yes')
       end
 
       it 'skips the chromebook step and moves to the what_happens_next step' do
