@@ -155,25 +155,35 @@ RSpec.describe Asset, type: :model do
     end
   end
 
-  describe '.search_by_serial_number' do
+  describe '.search_by_serial_numbers' do
     let!(:asset_1) { create(:asset) }
 
     before { create(:asset) }
 
-    it 'returns assets matching serial number' do
-      expect(Asset.search_by_serial_number(asset_1.serial_number)).to contain_exactly(asset_1)
+    context 'single serial number' do
+      specify { expect(Asset.search_by_serial_numbers(asset_1.serial_number)).to contain_exactly(asset_1) }
+      specify { expect(Asset.search_by_serial_numbers([asset_1.serial_number])).to contain_exactly(asset_1) }
     end
 
-    context 'multiple matches' do
+    context 'multiple matches of same serial number' do
       let!(:asset_3) { create(:asset, serial_number: asset_1.serial_number) }
 
       it 'returns all assets with the same serial number' do
-        expect(Asset.search_by_serial_number(asset_1.serial_number)).to contain_exactly(asset_1, asset_3)
+        expect(Asset.search_by_serial_numbers(asset_1.serial_number)).to contain_exactly(asset_1, asset_3)
+      end
+    end
+
+    context 'matches for different serial numbers' do
+      let!(:asset_a) { create(:asset) }
+      let!(:asset_b) { create(:asset) }
+
+      it 'returns both assets' do
+        expect(Asset.search_by_serial_numbers([asset_a.serial_number, asset_b.serial_number])).to contain_exactly(asset_a, asset_b)
       end
     end
 
     it 'return no matches' do
-      expect(Asset.search_by_serial_number('hax0r')).to be_empty
+      expect(Asset.search_by_serial_numbers('hax0r')).to be_empty
     end
   end
 

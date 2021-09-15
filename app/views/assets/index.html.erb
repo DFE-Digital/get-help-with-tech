@@ -24,7 +24,7 @@
 
     <%= form_with url: search_assets_path do |f| %>
       <%= f.govuk_text_field :serial_number,
-                             label: { text: 'Enter a serial number', size: 'm' }, value: @current_serial_number || '' %>
+                             label: { text: 'Enter a serial number', size: 'm' }, value: @current_serial_number_search || '' %>
 
       <%= f.govuk_submit 'Search' %>
     <% end %>
