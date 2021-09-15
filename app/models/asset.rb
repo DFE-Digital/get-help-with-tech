@@ -77,7 +77,7 @@ class Asset < ApplicationRecord
     end
   }
 
-  scope :search_by_serial_number, ->(sn) { where('serial_number ILIKE ?', sn.strip) }
+  scope :search_by_serial_numbers, ->(serial_numbers) { where(serial_number: serial_numbers) }
 
   def bios_unlockable?
     model.match?(UNLOCKABLE_MODEL_PATTERN)

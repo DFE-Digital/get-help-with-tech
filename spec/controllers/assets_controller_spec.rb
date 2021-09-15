@@ -196,7 +196,7 @@ RSpec.describe AssetsController do
       let(:support_user) { create(:support_user) }
 
       before do
-        allow(Asset).to receive(:search_by_serial_number)
+        allow(Asset).to receive(:search_by_serial_numbers)
 
         sign_in_as support_user
       end
@@ -205,8 +205,39 @@ RSpec.describe AssetsController do
         post :search, params: { serial_number: '1234' }
 
         expect(response).to be_successful
-        expect(Asset).to have_received(:search_by_serial_number).with('1234')
+        expect(Asset).to have_received(:search_by_serial_numbers).with(%w[1234])
         expect(response).to render_template(:index)
+      end
+    end
+
+    context 'multiple serial numbers' do
+      let(:support_user) { create(:support_user) }
+      let(:non_support_user) { create(:school_user) }
+
+      before { allow(Asset).to receive(:search_by_serial_numbers) }
+
+      context 'non-support user' do
+        before { sign_in_as non_support_user }
+
+        it 'assumes search is for only one serial number' do
+          post :search, params: { serial_number: '1,2' }
+
+          expect(response).to be_successful
+          expect(Asset).to have_received(:search_by_serial_numbers).with('1,2')
+          expect(response).to render_template(:index)
+        end
+      end
+
+      context 'support user' do
+        before { sign_in_as support_user }
+
+        it 'shows the search results' do
+          post :search, params: { serial_number: '1,2' }
+
+          expect(response).to be_successful
+          expect(Asset).to have_received(:search_by_serial_numbers).with(%w[1 2])
+          expect(response).to render_template(:index)
+        end
       end
     end
   end

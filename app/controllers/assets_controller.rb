@@ -1,3 +1,5 @@
+require 'search_serial_number_parser'
+
 class AssetsController < ApplicationController
   before_action :require_sign_in!
   before_action :set_asset, only: %i[show bios_unlocker]
@@ -23,7 +25,7 @@ class AssetsController < ApplicationController
       format.html
       format.csv do
         Asset.transaction do
-          send_data current_user.is_support? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
+          send_data support_user? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
           @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
         end
       end
@@ -36,8 +38,8 @@ class AssetsController < ApplicationController
     @title = 'Search results'
     @csv_download = false
 
-    @current_serial_number = params[:serial_number]
-    @assets = policy_scope(Asset).search_by_serial_number(@current_serial_number)
+    @current_serial_number_search = params[:serial_number]
+    @assets = policy_scope(Asset).search_by_serial_numbers(serial_numbers_for_user_role)
 
     render :index
   end
@@ -66,7 +68,19 @@ private
   end
 
   def current_user_counts_as_viewer?
-    !current_user.is_support?
+    !support_user?
+  end
+
+  def support_user?
+    current_user.is_support?
+  end
+
+  def serial_numbers_for_user_role
+    multiple_search_for_support_user_or_single_search_for_non_support_user
+  end
+
+  def multiple_search_for_support_user_or_single_search_for_non_support_user
+    support_user? ? SearchSerialNumberParser.new(@current_serial_number_search).serial_numbers : @current_serial_number_search
   end
 
   # Use callbacks to share common setup or constraints between actions.
