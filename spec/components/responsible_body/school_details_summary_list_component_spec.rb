@@ -110,25 +110,20 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body will place device orders' do
-    let(:school) { create(:school, :primary, :academy) }
-
-    before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :responsible_body,
-             school_or_rb_domain: 'school.domain.org',
-             recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes',
-             school_contact: headteacher)
-    end
+    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'confirms that fact' do
-      create(:preorder_information, school: school, who_will_order_devices: :responsible_body)
-
       expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
     end
 
     it 'shows the chromebook details with links to change it' do
+      school.update_chromebook_information_and_status!(
+        school_or_rb_domain: 'school.domain.org',
+        recovery_email_address: 'admin@recovery.org',
+        will_need_chromebooks: 'yes',
+      )
+
       expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
       expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
 
@@ -140,17 +135,13 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'does not show the school contact even if the school contact is set' do
+      school.set_current_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
 
     context 'when the responsible body has virtual caps enabled' do
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-      let(:school) { create(:school, :primary, :academy, responsible_body: responsible_body) }
-
       context 'when the school manages orders' do
-        before do
-          school.preorder_information.update!(who_will_order_devices: 'school')
-        end
+        let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
 
         it 'confirms that fact and allow changes' do
           expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
@@ -159,9 +150,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       context 'when the school is centrally managed' do
-        before do
-          school.preorder_information.update!(who_will_order_devices: 'responsible_body')
-        end
+        let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
         it 'confirms that fact but does not allow changes' do
           expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')

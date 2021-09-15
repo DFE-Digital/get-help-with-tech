@@ -15,12 +15,10 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when a school can be added to the pool' do
-      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
+      let(:schools) { create_list(:school, 2, :centrally_managed, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
       before do
-        schools.first.preorder_information.responsible_body_will_order_devices!
         schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
-        schools.last.preorder_information.responsible_body_will_order_devices!
         schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
       end
 
@@ -66,10 +64,9 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when the school does not belong to the responsible body' do
-      let(:non_rb_school) { create(:school, :in_lockdown, :with_preorder_information, :with_std_device_allocation) }
+      let(:non_rb_school) { create(:school, :in_lockdown, :centrally_managed, :with_std_device_allocation) }
 
       before do
-        non_rb_school.preorder_information.responsible_body_will_order_devices!
         non_rb_school.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
       end
 
@@ -81,16 +78,13 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when the school is not in an ordering state' do
-      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
+      let(:schools) { create_list(:school, 2, :centrally_managed, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
-      let(:non_ordering_school) { create(:school, :with_preorder_information, :with_std_device_allocation, responsible_body: local_authority) }
+      let(:non_ordering_school) { create(:school, :centrally_managed, :with_std_device_allocation, responsible_body: local_authority) }
 
       before do
-        schools.first.preorder_information.responsible_body_will_order_devices!
         schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
-        schools.last.preorder_information.responsible_body_will_order_devices!
         schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
-        non_ordering_school.preorder_information.responsible_body_will_order_devices!
         non_ordering_school.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
         schools.each { |s| pool.add_school!(s) }
         pool.reload
@@ -109,10 +103,10 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when the school is not being managed centrally' do
-      let(:non_managed_school) { create(:school, :with_preorder_information, :with_std_device_allocation, responsible_body: local_authority) }
+      let(:non_managed_school) { create(:school, :with_std_device_allocation, responsible_body: local_authority) }
 
       before do
-        non_managed_school.preorder_information.school_will_order_devices!
+        non_managed_school.orders_managed_by_school!
         non_managed_school.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
       end
 
@@ -125,7 +119,7 @@ RSpec.describe VirtualCapPool, type: :model do
   end
 
   describe '#recalculate_caps!' do
-    let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
+    let(:schools) { create_list(:school, 2, :centrally_managed, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
@@ -134,7 +128,6 @@ RSpec.describe VirtualCapPool, type: :model do
       schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
       schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
         pool.add_school!(s)
       end
     end
@@ -211,12 +204,10 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'with some schools on the pool' do
-      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
+      let(:schools) { create_list(:school, 2, :centrally_managed, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
       before do
-        schools.first.preorder_information.responsible_body_will_order_devices!
         schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
-        schools.last.preorder_information.responsible_body_will_order_devices!
         schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
 
         pool.add_school!(schools.first)
@@ -277,7 +268,7 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when the school is in the pool' do
-      let!(:school) { create_and_put_school_in_pool(rb) }
+      let!(:school) { create_centrally_managed_school_that_can_order(rb) }
 
       before do
         allow(std_device_pool).to receive(:recalculate_caps!)
@@ -296,7 +287,7 @@ RSpec.describe VirtualCapPool, type: :model do
 
     context 'when the school is not in the pool' do
       before do
-        create_and_put_school_in_pool(rb)
+        create_centrally_managed_school_that_can_order(rb)
         allow(std_device_pool).to receive(:recalculate_caps!)
       end
 

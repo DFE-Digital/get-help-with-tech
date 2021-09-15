@@ -3,11 +3,10 @@ require 'rails_helper'
 RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature, with_feature_flags: { donated_devices: 'active' }, skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:user) { create(:trust_user) }
   let(:responsible_body) { user.responsible_body }
-  let(:school) { create(:school, :with_preorder_information, responsible_body: responsible_body) }
+  let(:school) { create(:school, responsible_body: responsible_body) }
 
   before do
     responsible_body.update! who_will_order_devices: 'responsible_body'
-    school.preorder_information.update!(who_will_order_devices: 'responsible_body')
     sign_in_as user
   end
 
@@ -59,11 +58,11 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
 private
 
   def given_i_have_a_devolved_school
-    school.preorder_information.update!(who_will_order_devices: 'school')
+    school.orders_managed_by_school!
   end
 
   def given_i_have_a_centrally_managed_school
-    school.preorder_information.update!(who_will_order_devices: 'responsible_body')
+    school.orders_managed_centrally!
   end
 
   def and_i_navigate_to_the_devices_page

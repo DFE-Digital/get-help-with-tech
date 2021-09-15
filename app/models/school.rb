@@ -6,10 +6,11 @@ class School < ApplicationRecord
   belongs_to :responsible_body
 
   has_many :device_allocations, class_name: 'SchoolDeviceAllocation'
-  has_one  :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
-  has_one  :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
+  has_one :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
+  has_one :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
 
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
+  has_one :headteacher, -> { where role: 'headteacher' }, class_name: 'SchoolContact', inverse_of: :school
   has_many :user_schools
   has_many :users, through: :user_schools
   has_one :preorder_information, touch: true
@@ -70,50 +71,234 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
+  delegate :email_address, to: :headteacher, allow_nil: true, prefix: true
+  delegate :id, to: :headteacher, allow_nil: true, prefix: true
+  delegate :full_name, to: :headteacher, allow_nil: true, prefix: true
+  delegate :phone_number, to: :headteacher, allow_nil: true, prefix: true
+  delegate :title, to: :headteacher, allow_nil: true, prefix: true
+
+  delegate :chromebook_information_complete?, to: :preorder_information
+  delegate :needs_contact?, :needs_contact!, to: :preorder_information, allow_nil: true
+  delegate :needs_info?, :needs_info!, to: :preorder_information, allow_nil: true
+  delegate :ordered?, :ordered!, to: :preorder_information, allow_nil: true
+  delegate :ready?, :ready!, to: :preorder_information, allow_nil: true
+  delegate :rb_can_order?, :rb_can_order!, to: :preorder_information, allow_nil: true
+  delegate :school_can_order?, :school_can_order!, to: :preorder_information, allow_nil: true
+  delegate :school_contacted?, :school_contacted!, to: :preorder_information, allow_nil: true
+  delegate :school_ready?, :school_ready!, to: :preorder_information, allow_nil: true
+  delegate :school_will_be_contacted?, :school_will_be_contacted!, to: :preorder_information, allow_nil: true
+  delegate :recovery_email_address, to: :preorder_information, allow_nil: true
+  delegate :responsible_body_will_order_devices?, to: :preorder_information, allow_nil: true, private: true
+  delegate :status, to: :preorder_information, allow_nil: true, prefix: :device_ordering
+  delegate :school_or_rb_domain, to: :preorder_information, allow_nil: true
+  delegate :school_will_order_devices?, to: :preorder_information, allow_nil: true, private: true
+  delegate :update_chromebook_information_and_status!, to: :preorder_information
+  delegate :will_need_chromebooks, to: :preorder_information, allow_nil: true
+  delegate :will_need_chromebooks?, to: :preorder_information, allow_nil: true
+  delegate :will_not_need_chromebooks?, to: :preorder_information, allow_nil: true
+
+  delegate :cap_implied_by_order_state, to: :std_device_allocation, allow_nil: true, prefix: :laptop
+
+  delegate :cap_implied_by_order_state, to: :coms_device_allocation, allow_nil: true, prefix: :router
+
+  delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
   delegate :name, to: :responsible_body, prefix: true, allow_nil: true
 
-  def ukprn_or_urn
-    ukprn || urn
+  def active_responsible_users
+    device_ordering_organisation.users.signed_in_at_least_once
   end
 
-  def is_further_education?
+  def address
+    address_components.join(', ')
+  end
+
+  def address_components
+    [address_1, address_2, address_3, town, county, postcode].reject(&:blank?)
+  end
+
+  def all_devices_ordered?
+    eligible_to_order? && !devices_available_to_order?
+  end
+
+  def available_mobile_networks
+    hide_networks_not_supporting_fe? ? MobileNetwork.fe_networks : MobileNetwork.participating
+  end
+
+  def can_change_who_manages_orders?
+    !(responsible_body_will_order_devices? && responsible_body.has_virtual_cap_feature_flags?)
+  end
+
+  def can_invite_users?
+    !preorder_information? || school_will_order_devices?
+  end
+
+  def can_notify_computacenter?
+    computacenter_reference.present? && responsible_body.computacenter_reference.present?
+  end
+
+  def can_order_devices_right_now?
+    eligible_to_order? && devices_available_to_order?
+  end
+
+  def can_order_routers_only_right_now?
+    eligible_to_order? && !laptops_available_to_order? && routers_available_to_order?
+  end
+
+  def change_who_manages_orders!(who, clear_preorder_information: false)
+    if can_change_who_manages_orders?
+      orders_managed_by!(who, clear_preorder_information: clear_preorder_information)
+      refresh_device_ordering_status!
+      if responsible_body.school_addable_to_virtual_cap_pools?(self)
+        responsible_body.add_school_to_virtual_cap_pools!(self)
+      end
+      true
+    else
+      raise VirtualCapPoolError, "#{name} (#{urn}) cannot be devolved because it is in a virtual cap pool"
+    end
+  end
+
+  def chromebook_domain
+    preorder_information&.school_or_rb_domain if will_need_chromebooks?
+  end
+
+  def chromebook_info_still_needed?
+    !preorder_information? || preorder_information.chromebook_info_still_needed?
+  end
+
+  def close!
+    update!(status: 'closed', computacenter_change: 'closed') unless gias_status_closed?
+  end
+
+  def completed_requests_count
+    if in_virtual_cap_pool?
+      responsible_body.extra_mobile_data_requests.complete_status.size
+    else
+      extra_mobile_data_requests.complete_status.size
+    end
+  end
+
+  def current_contact
+    preorder_information&.school_contact
+  end
+
+  def devices_available_to_order?
+    laptops_available_to_order? || routers_available_to_order?
+  end
+
+  def eligible_to_order?
+    can_order? || can_order_for_specific_circumstances?
+  end
+
+  def further_education?
     type == 'FurtherEducationSchool'
   end
 
-  def la_funded_provision?
-    type == 'LaFundedPlace'
+  def has_ordered?
+    has_ordered_any_laptop? || has_ordered_any_router?
+  end
+
+  def has_ordered_any_laptop?
+    laptops_ordered.positive?
+  end
+
+  def has_ordered_any_router?
+    routers_ordered.positive?
+  end
+
+  def has_laptop_allocation?
+    laptop_allocation.positive?
+  end
+
+  def has_laptop_raw_allocation?
+    laptop_raw_allocation.positive?
+  end
+
+  def has_router_allocation?
+    router_allocation.positive?
+  end
+
+  def has_router_raw_allocation?
+    router_raw_allocation.positive?
+  end
+
+  def headteacher?
+    headteacher.present?
+  end
+
+  def invite_school_contact
+    !!preorder_information&.invite_school_contact!
+  end
+
+  def in_active_virtual_cap_pool?
+    responsible_body.has_virtual_cap_feature_flags? && in_virtual_cap_pool?
   end
 
   def independent_special_school?
     provision_type == 'iss'
   end
 
-  def social_care_leaver?
-    provision_type == 'scl'
+  def in_virtual_cap_pool?
+    responsible_body.has_school_in_virtual_cap_pools?(self)
   end
 
-  def available_mobile_networks
-    if hide_networks_not_supporting_fe?
-      MobileNetwork.fe_networks
-    else
-      MobileNetwork.participating
-    end
+  def laptop_allocation
+    std_device_allocation&.allocation.to_i
   end
 
-  def hide_networks_not_supporting_fe?
-    hide_mno?
+  def laptop_cap
+    std_device_allocation&.cap.to_i
   end
 
-  def has_ordered?
-    device_allocations.to_a.any? { |alloc| alloc.devices_ordered.positive? }
+  def laptops_available_to_order?
+    std_device_allocation&.devices_available_to_order?
   end
 
-  def who_will_order_devices
-    preorder_information&.who_will_order_devices || responsible_body.who_will_order_devices
+  def laptops_ordered
+    std_device_allocation&.devices_ordered.to_i
   end
 
-  def active_responsible_users
-    device_ordering_organisation.users.signed_in_at_least_once
+  def laptop_raw_allocation
+    std_device_allocation&.raw_allocation.to_i
+  end
+
+  def la_funded_provision?
+    type == 'LaFundedPlace'
+  end
+
+  def next_school_in_responsible_body_when_sorted_by_name_ascending
+    responsible_body.next_school_sorted_ascending_by_name(self)
+  end
+
+  def opt_in!
+    update!(opted_out_of_comms_at: nil)
+  end
+
+  def opt_out!
+    update!(opted_out_of_comms_at: Time.zone.now)
+  end
+
+  def opted_out?
+    !!opted_out_of_comms_at
+  end
+
+  def orders_managed_centrally!
+    change_who_manages_orders!(:responsible_body)
+  end
+
+  def orders_managed_centrally?
+    return false if school_will_order_devices?
+
+    responsible_body_will_order_devices? || responsible_body.orders_managed_centrally?
+  end
+
+  def orders_managed_by_school!
+    change_who_manages_orders!(:school)
+  end
+
+  def orders_managed_by_school?
+    return false if responsible_body_will_order_devices?
+
+    school_will_order_devices? || responsible_body.orders_managed_by_schools?
   end
 
   def order_users_with_active_techsource_accounts
@@ -124,124 +309,114 @@ class School < ApplicationRecord
   end
 
   def organisation_users
-    device_ordering_organisation
-      .users
+    device_ordering_organisation.users
   end
 
-  def allocation_for_type!(device_type)
-    device_allocations.find_by_device_type!(device_type)
-  end
-
-  def is_eligible_to_order?
-    can_order? || can_order_for_specific_circumstances?
-  end
-
-  def can_order_devices_right_now?
-    is_eligible_to_order? && devices_available_to_order?
-  end
-
-  def can_order_routers_only_right_now?
-    is_eligible_to_order? && !std_device_allocation&.devices_available_to_order? && coms_device_allocation&.devices_available_to_order?
-  end
-
-  def all_devices_ordered?
-    is_eligible_to_order? && !devices_available_to_order?
-  end
-
-  def has_std_device_allocation?
-    std_device_allocation&.allocation.to_i.positive?
-  end
-
-  def headteacher_contact
-    contacts.headteacher.first
-  end
-
-  def current_contact
-    preorder_information&.school_contact
+  def preorder_information?
+    preorder_information.present?
   end
 
   # TODO: update this method as preorder_information gets more fields
   # as per the prototype at
   # https://github.com/DFE-Digital/increasing-internet-access-prototype/blob/master/app/views/responsible-body/devices/school/_status-tag.html
   def preorder_status_or_default
-    if preorder_information.present?
+    if preorder_information?
       preorder_information.status || preorder_information.infer_status
-    elsif responsible_body.who_will_order_devices == 'responsible_body'
+    elsif responsible_body.orders_managed_centrally?
       'needs_info'
     else
       'needs_contact'
     end
   end
 
-  def next_school_in_responsible_body_when_sorted_by_name_ascending
-    responsible_body.next_school_sorted_ascending_by_name(self)
+  def raw_laptops_ordered
+    std_device_allocation&.raw_devices_ordered.to_i
   end
 
-  def invite_school_contact
-    if preorder_information.present?
-      preorder_information.invite_school_contact!
-    else
-      false
-    end
+  def raw_routers_ordered
+    coms_device_allocation&.raw_devices_ordered.to_i
   end
 
-  def devices_available_to_order?
-    device_allocations.any?(&:devices_available_to_order?)
+  def refresh_device_ordering_status!
+    preorder_information&.refresh_status!
   end
 
-  def in_virtual_cap_pool?
-    responsible_body.has_school_in_virtual_cap_pools?(self)
+  def router_allocation
+    coms_device_allocation&.allocation.to_i
   end
 
-  def address_components
-    [address_1, address_2, address_3, town, county, postcode].reject(&:blank?)
+  def router_cap
+    coms_device_allocation&.cap.to_i
   end
 
-  def address
-    address_components.join(', ')
+  def routers_available_to_order?
+    coms_device_allocation&.devices_available_to_order?
   end
 
-  def chromebook_domain
-    preorder_information&.school_or_rb_domain if preorder_information&.will_need_chromebooks?
+  def routers_ordered
+    coms_device_allocation&.devices_ordered.to_i
   end
 
-  def can_invite_users?
-    return true if preorder_information.nil?
-
-    preorder_information.school_will_order_devices?
+  def router_raw_allocation
+    coms_device_allocation&.raw_allocation.to_i
   end
 
-  def close!
-    update!(status: 'closed', computacenter_change: 'closed') unless gias_status_closed?
+  def set_current_contact!(contact)
+    preorder_information.update!(school_contact: contact)
   end
 
-  def opt_out!
-    update!(opted_out_of_comms_at: Time.zone.now)
+  def set_contact_time!(time)
+    preorder_information.update!(school_contacted_at: time)
   end
 
-  def opt_in!
-    update!(opted_out_of_comms_at: nil)
+  def set_headteacher_as_contact!
+    preorder_information.update!(school_contact: headteacher)
   end
 
-  def opted_out?
-    !!opted_out_of_comms_at
+  def social_care_leaver?
+    provision_type == 'scl'
   end
 
-  def can_notify_computacenter?
-    computacenter_reference.present? && responsible_body.computacenter_reference.present?
+  def who_will_order_devices
+    preorder_information&.who_will_order_devices || responsible_body.who_will_order_devices
+  end
+
+  def who_manages_orders_label
+    return 'School or college' if orders_managed_by_school?
+
+    responsible_body_type if orders_managed_centrally?
   end
 
 private
+
+  def clear_preorder_information!
+    preorder_information&.destroy!
+    self.preorder_information = nil
+  end
+
+  def device_ordering_organisation
+    orders_managed_by_school? ? self : responsible_body
+  end
+
+  def hide_networks_not_supporting_fe?
+    hide_mno?
+  end
 
   def maybe_generate_user_changes
     user_schools.map(&:user).each(&:generate_user_change_if_needed!)
   end
 
-  def set_computacenter_change
-    self.computacenter_change = 'new'
+  def orders_managed_by!(who, clear_preorder_information: false)
+    clear_preorder_information! if clear_preorder_information
+    manager = who.to_sym == :school ? :school_will_order_devices! : :responsible_body_will_order_devices!
+    (preorder_information || build_preorder_information).send(manager)
   end
 
-  def device_ordering_organisation
-    who_will_order_devices == 'school' ? self : responsible_body
+  def responsible_body_type
+    responsible_body.humanized_type.capitalize
+  end
+
+  def set_computacenter_change
+    self.computacenter_change = 'new'
   end
 end

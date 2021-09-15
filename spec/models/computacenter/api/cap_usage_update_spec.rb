@@ -44,7 +44,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     it 'refresh preorder status' do
       expect {
         cap_usage_update.apply!
-      }.to change { school.preorder_information.reload.status }.from('ready').to('ordered')
+      }.to change { school.reload.device_ordering_status }.from('ready').to('ordered')
     end
 
     it 'logs to devices_ordered_updates' do
@@ -80,7 +80,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
     context 'if the devices_ordered update triggers a cap update' do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-      let!(:school) { create(:school, :in_lockdown, preorder_information: preorder, computacenter_reference: '123456', responsible_body: responsible_body) }
+      let!(:school) { create(:school, :in_lockdown, :manages_orders, computacenter_reference: '123456', responsible_body: responsible_body) }
 
       let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
       let(:exception) { Computacenter::OutgoingAPI::Error.new(cap_update_request: OpenStruct.new(body: 'body')) }
@@ -89,7 +89,8 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
         stub_computacenter_outgoing_api_calls
         school.reload.std_device_allocation.update!(allocation: 103)
         WebMock.allow_net_connect!
-        put_school_in_pool(responsible_body, school)
+        school.orders_managed_centrally!
+        school.can_order!
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
         allow(mock_request).to receive(:post!).and_raise(exception)
       end
@@ -144,11 +145,5 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
         }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
       end
     end
-  end
-
-  def put_school_in_pool(responsible_body, pool_school)
-    pool_school.preorder_information.responsible_body_will_order_devices!
-    pool_school.can_order!
-    responsible_body.add_school_to_virtual_cap_pools!(pool_school)
   end
 end

@@ -16,7 +16,7 @@ class School::SchoolBreadcrumbsComponent < ViewComponent::Base
   end
 
   def scope
-    if user.responsible_body.present? && !user.is_a_single_school_user?
+    if user.responsible_body_user? && !user.single_school_user?
       responsible_body_and_school_scope
     elsif user.has_multiple_schools?
       multiple_schools_scope

@@ -25,7 +25,7 @@ class SchoolWelcomeWizard < ApplicationRecord
 
     case step
     when 'allocation'
-      if school&.std_device_allocation&.devices_available_to_order?
+      if school&.laptops_available_to_order?
         if user_orders_devices?
           techsource_account!
         else
@@ -74,9 +74,9 @@ class SchoolWelcomeWizard < ApplicationRecord
   def chromebook_information
     @chromebook_information ||= ChromebookInformationForm.new(
       school: school,
-      will_need_chromebooks: school.preorder_information&.will_need_chromebooks,
-      school_or_rb_domain: school.preorder_information&.school_or_rb_domain,
-      recovery_email_address: school.preorder_information&.recovery_email_address,
+      will_need_chromebooks: school.will_need_chromebooks,
+      school_or_rb_domain: school.school_or_rb_domain,
+      recovery_email_address: school.recovery_email_address,
     )
   end
 
@@ -153,7 +153,7 @@ private
 
   def update_preorder_information!(params)
     params[:will_need_chromebooks] = nil if params[:will_need_chromebooks] == 'i_dont_know'
-    school.preorder_information.update_chromebook_information_and_status!(params)
+    school.update_chromebook_information_and_status!(params)
   end
 
   def user_params(params)

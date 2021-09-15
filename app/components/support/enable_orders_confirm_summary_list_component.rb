@@ -1,13 +1,13 @@
 class Support::EnableOrdersConfirmSummaryListComponent < SummaryListComponent
-  attr_accessor :order_state, :device_cap, :router_cap,
-                :device_allocation, :router_allocation,
+  attr_accessor :order_state, :laptop_cap, :router_cap,
+                :laptop_allocation, :router_allocation,
                 :change_path
 
-  def initialize(order_state:, device_cap:, router_cap:, device_allocation:, router_allocation:, change_path:)
+  def initialize(order_state:, laptop_cap:, router_cap:, laptop_allocation:, router_allocation:, change_path:)
     @order_state = order_state
-    @device_cap = device_cap
+    @laptop_cap = laptop_cap
     @router_cap = router_cap
-    @device_allocation = device_allocation
+    @laptop_allocation = laptop_allocation
     @router_allocation = router_allocation
     @change_path = change_path
     super(rows: rows)
@@ -39,14 +39,14 @@ private
     when :can_order
       {
         key: 'How many devices?',
-        value: "Their full allocation of #{device_allocation}",
+        value: "Their full allocation of #{laptop_allocation}",
         change_path: change_path,
         action: 'how many devices',
       }
     when :can_order_for_specific_circumstances
       {
         key: 'How many devices?',
-        value: "Up to #{device_cap} from an allocation of #{device_allocation}",
+        value: "Up to #{laptop_cap} from an allocation of #{laptop_allocation}",
         change_path: change_path,
         action: 'how many devices',
       }

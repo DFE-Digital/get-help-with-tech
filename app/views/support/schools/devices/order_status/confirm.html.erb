@@ -1,4 +1,4 @@
-<%- pass_through_params = {support_enable_orders_form: {order_state: @form.order_state, device_cap: @form.device_cap}} %>
+<%- pass_through_params = {support_enable_orders_form: {order_state: @form.order_state, laptop_cap: @form.laptop_cap}} %>
 <%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_devices_enable_orders_path({school_urn: @school.urn}.merge(pass_through_params))) %>
 <%- title = t('page_titles.support_order_status.confirm_enable_orders') %>
 <%- content_for :title, title %>
@@ -12,9 +12,9 @@
 
     <%= render Support::EnableOrdersConfirmSummaryListComponent.new(
       order_state: @form.order_state,
-      device_cap: @form.device_cap,
+      laptop_cap: @form.laptop_cap,
       router_cap: @form.router_cap,
-      device_allocation: @device_allocation,
+      laptop_allocation: @laptop_allocation,
       router_allocation: @router_allocation,
       change_path: support_school_devices_enable_orders_path(@school.urn, pass_through_params)) %>
 
@@ -26,7 +26,7 @@
       <%= hidden_field_tag :confirm, true %>
 
       <%= f.hidden_field :order_state %>
-      <%= f.hidden_field :device_cap %>
+      <%= f.hidden_field :laptop_cap %>
       <%= f.hidden_field :router_cap %>
 
       <%= f.govuk_submit 'Confirm', classes: 'govuk-!-margin-top-6' %>

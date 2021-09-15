@@ -6,7 +6,7 @@ RSpec.feature 'Ordering via a school' do
   let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
   let(:another_preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
   let(:another_allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices, devices_ordered: 3, cap: 12) }
-  let(:school) { create(:school, :with_headteacher_contact) }
+  let(:school) { create(:school, :with_headteacher) }
 
   let(:school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
   let(:school_order_devices_page) { PageObjects::ResponsibleBody::SchoolOrderDevicesPage.new }
@@ -35,7 +35,7 @@ RSpec.feature 'Ordering via a school' do
 
       before do
         school.update!(std_device_allocation: allocation, order_state: 'can_order')
-        school.preorder_information.refresh_status!
+        school.refresh_device_ordering_status!
       end
 
       scenario 'can order devices' do
@@ -75,7 +75,7 @@ RSpec.feature 'Ordering via a school' do
 
       before do
         school.update!(std_device_allocation: allocation, order_state: 'can_order')
-        school.preorder_information.refresh_status!
+        school.refresh_device_ordering_status!
         stub_request(:post, 'http://computacenter.example.com/')
          .to_return(status: 200, body: '', headers: {})
         vcap

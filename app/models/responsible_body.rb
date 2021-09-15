@@ -35,123 +35,26 @@ class ResponsibleBody < ApplicationRecord
 
   after_update :maybe_generate_user_changes
 
-  def active_schools
-    schools.gias_status_open.excluding_la_funded_provisions
-  end
-
-  def calculate_virtual_caps!
-    virtual_cap_pools.each(&:recalculate_caps!)
-  end
-
-  def add_school_to_virtual_cap_pools!(school)
-    if has_virtual_cap_feature_flags?
-      school.device_allocations.each do |allocation|
-        pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
-        pool.add_school!(school)
-      end
-    else
-      raise VirtualCapPoolError, 'Virtual cap feature flags not set'
-    end
-  end
-
-  def remove_school_from_virtual_cap_pools!(school)
-    raise(VirtualCapPoolError, 'Virtual cap feature flags not set') unless has_virtual_cap_feature_flags?
-
-    school.device_allocations.each do |allocation|
-      pool = virtual_cap_pools.send(allocation.device_type).first
-      pool&.remove_school!(school)
-    end
-  end
-
-  def school_addable_to_virtual_cap_pools?(school)
-    has_virtual_cap_feature_flags? &&
-      school.responsible_body_id == id &&
-      !school.la_funded_provision? &&
-      school.preorder_information&.responsible_body_will_order_devices? &&
-      school.device_allocations.any? &&
-      !has_school_in_virtual_cap_pools?(school)
-  end
-
-  def school_removable_from_virtual_cap_pools?(school)
-    has_virtual_cap_feature_flags? &&
-      school.responsible_body_id == id &&
-      school.preorder_information&.responsible_body_will_order_devices? &&
-      school.device_allocations.any? &&
-      has_school_in_virtual_cap_pools?(school)
-  end
-
-  def devices_available_to_order?
-    virtual_cap_pools.any?(&:devices_available_to_order?)
-  end
-
-  def has_school_in_virtual_cap_pools?(school)
-    virtual_cap_pools.any? { |pool| pool.has_school?(school) }
-  end
-
-  def humanized_type
-    type.demodulize.underscore.humanize.downcase
-  end
-
-  def is_a_trust?
-    type == 'Trust'
-  end
-
-  def is_a_single_academy_trust?
-    organisation_type == 'single_academy_trust'
-  end
-
-  def is_a_local_authority?
-    type == 'LocalAuthority'
-  end
-
-  def is_a_further_education_college?
-    type == 'FurtherEducationCollege'
-  end
-
-  def next_school_sorted_ascending_by_name(school)
-    active_schools
-      .where('name > ?', school.name)
-      .order(name: :asc)
-      .first
-  end
-
-  def update_who_will_order_devices(who_will_order)
-    update!(who_will_order_devices: who_will_order)
-    active_schools.each do |school|
-      school.preorder_information&.destroy!
-      school.create_preorder_information!(who_will_order_devices: who_will_order)
-    end
-  end
-
-  def who_will_order_devices_label
-    case who_will_order_devices
-    when 'school'
-      'School or college'
-    when 'schools'
-      'Schools or colleges'
-    when 'responsible_body'
-      humanized_type.capitalize
-    end
-  end
-
-  def has_virtual_cap_feature_flags?
-    vcap_feature_flag?
-  end
-
-  def has_virtual_cap_feature_flags_and_centrally_managed_schools?
-    has_virtual_cap_feature_flags? && has_centrally_managed_schools?
-  end
-
-  def has_connectivity_feature_flags?
-    has_centrally_managed_schools? || is_a_local_authority?
-  end
-
-  def has_multiple_chromebook_domains_in_managed_schools?
-    active_schools.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
-  end
-
   def self.chosen_who_will_order
     where.not(who_will_order_devices: nil)
+  end
+
+  def self.managing_multiple_chromebook_domains
+    where(
+      <<~SQL,
+        id IN
+          (SELECT rb_id FROM
+            (SELECT DISTINCT s.responsible_body_id AS rb_id, p.school_or_rb_domain
+              FROM schools s JOIN preorder_information p ON (p.school_id = s.id)
+              WHERE s.status = 'open'
+              AND p.who_will_order_devices='responsible_body'
+              AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
+              AND s.type <> 'LaFundedPlace'
+            ) AS t1
+            GROUP BY t1.rb_id HAVING COUNT(*) > 1
+          )
+      SQL
+    )
   end
 
   def self.with_at_least_one_preorder_information_completed
@@ -165,6 +68,20 @@ class ResponsibleBody < ApplicationRecord
           AND   schools.type <> 'LaFundedPlace'
           AND   preorder_information.status NOT IN (?)
       )", %w[needs_info needs_contact]
+    )
+  end
+
+  def self.with_completed_preorder_info_count
+    select(
+      "
+        (SELECT COUNT(*)
+          FROM  schools INNER JOIN preorder_information
+                                ON preorder_information.school_id = schools.id
+          WHERE schools.responsible_body_id = responsible_bodies.id
+            AND schools.type <> 'LaFundedPlace'
+            AND preorder_information.status NOT IN ('needs_info', 'needs_contact')
+        ) AS completed_preorder_info_count
+      ",
     )
   end
 
@@ -195,44 +112,39 @@ class ResponsibleBody < ApplicationRecord
     select(sql)
   end
 
-  def self.with_completed_preorder_info_count
-    select(
-      "
-        (SELECT COUNT(*)
-          FROM  schools INNER JOIN preorder_information
-                                ON preorder_information.school_id = schools.id
-          WHERE schools.responsible_body_id = responsible_bodies.id
-            AND schools.type <> 'LaFundedPlace'
-            AND preorder_information.status NOT IN ('needs_info', 'needs_contact')
-        ) AS completed_preorder_info_count
-      ",
-    )
+  def active_schools
+    schools.gias_status_open.excluding_la_funded_provisions
   end
 
-  def self.managing_multiple_chromebook_domains
-    where(
-      <<~SQL,
-        id IN
-          (SELECT rb_id FROM
-            (SELECT DISTINCT s.responsible_body_id AS rb_id, p.school_or_rb_domain
-              FROM schools s JOIN preorder_information p ON (p.school_id = s.id)
-              WHERE s.status = 'open'
-              AND p.who_will_order_devices='responsible_body'
-              AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
-              AND s.type <> 'LaFundedPlace'
-            ) AS t1
-            GROUP BY t1.rb_id HAVING COUNT(*) > 1
-          )
-      SQL
-    )
+  def address
+    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
   end
 
-  def is_ordering_for_schools?
-    has_centrally_managed_schools?
+  def add_school_to_virtual_cap_pools!(school)
+    if has_virtual_cap_feature_flags?
+      school.device_allocations.each do |allocation|
+        pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
+        pool.add_school!(school)
+      end
+    else
+      raise VirtualCapPoolError, 'Virtual cap feature flags not set'
+    end
   end
 
-  def is_ordering_for_all_schools?
-    active_schools.count == active_schools.that_are_centrally_managed.count
+  def calculate_virtual_caps!
+    virtual_cap_pools.each(&:recalculate_caps!)
+  end
+
+  def devices_available_to_order?
+    virtual_cap_pools.any?(&:devices_available_to_order?)
+  end
+
+  def further_education_college?
+    type == 'FurtherEducationCollege'
+  end
+
+  def has_any_schools_that_can_order_now?
+    active_schools.that_can_order_now.any?
   end
 
   def has_centrally_managed_schools?
@@ -243,19 +155,116 @@ class ResponsibleBody < ApplicationRecord
     active_schools.that_are_centrally_managed.that_can_order_now.any?
   end
 
+  def has_connectivity_feature_flags?
+    has_centrally_managed_schools? || local_authority?
+  end
+
+  def has_multiple_chromebook_domains_in_managed_schools?
+    active_schools.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
+  end
+
+  def has_school_in_virtual_cap_pools?(school)
+    virtual_cap_pools.any? { |pool| pool.has_school?(school) }
+  end
+
   def has_schools_that_can_order_devices_now?
     active_schools.that_will_order_devices.that_can_order_now.any?
   end
 
-  def has_any_schools_that_can_order_now?
-    active_schools.that_can_order_now.any?
+  def has_virtual_cap_feature_flags?
+    vcap_feature_flag?
+  end
+
+  def has_virtual_cap_feature_flags_and_centrally_managed_schools?
+    has_virtual_cap_feature_flags? && has_centrally_managed_schools?
+  end
+
+  def humanized_type
+    type.demodulize.underscore.humanize.downcase
+  end
+
+  def is_ordering_for_schools?
+    has_centrally_managed_schools?
+  end
+
+  def is_ordering_for_all_schools?
+    active_schools.count == active_schools.that_are_centrally_managed.count
+  end
+
+  def laptops_available_to_order
+    std_device_pool&.devices_available_to_order.to_i
+  end
+
+  def laptops_ordered
+    std_device_pool&.devices_ordered.to_i
+  end
+
+  def laptop_pool?
+    std_device_pool.present?
+  end
+
+  def local_authority?
+    type == 'LocalAuthority'
+  end
+
+  def next_school_sorted_ascending_by_name(school)
+    active_schools
+      .where('name > ?', school.name)
+      .order(name: :asc)
+      .first
+  end
+
+  def orders_managed_centrally?
+    who_will_order_devices == 'responsible_body'
+  end
+
+  def orders_managed_by_schools?
+    %w[school schools].include?(who_will_order_devices)
+  end
+
+  def remove_school_from_virtual_cap_pools!(school)
+    raise(VirtualCapPoolError, 'Virtual cap feature flags not set') unless has_virtual_cap_feature_flags?
+
+    school.device_allocations.each do |allocation|
+      pool = virtual_cap_pools.send(allocation.device_type).first
+      pool&.remove_school!(school)
+    end
+  end
+
+  def router_pool?
+    coms_device_pool.present?
+  end
+
+  def routers_available_to_order
+    coms_device_pool&.devices_available_to_order.to_i
+  end
+
+  def routers_ordered
+    coms_device_pool&.devices_ordered.to_i
+  end
+
+  def school_addable_to_virtual_cap_pools?(school)
+    has_virtual_cap_feature_flags? &&
+      school.responsible_body_id == id &&
+      !school.la_funded_provision? &&
+      school.orders_managed_centrally? &&
+      school.device_allocations.any? &&
+      !has_school_in_virtual_cap_pools?(school)
+  end
+
+  def school_removable_from_virtual_cap_pools?(school)
+    has_virtual_cap_feature_flags? &&
+      school.responsible_body_id == id &&
+      school.orders_managed_centrally? &&
+      school.device_allocations.any? &&
+      has_school_in_virtual_cap_pools?(school)
   end
 
   def schools_by_order_status
     schools_by_name = active_schools
-      .includes(:preorder_information)
-      .includes(:std_device_allocation)
-      .order(name: :asc)
+                        .includes(:preorder_information)
+                        .includes(:std_device_allocation)
+                        .order(name: :asc)
 
     {
       ordering_schools: schools_by_name.can_order,
@@ -264,8 +273,32 @@ class ResponsibleBody < ApplicationRecord
     }
   end
 
-  def address
-    [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
+  def single_academy_trust?
+    organisation_type == 'single_academy_trust'
+  end
+
+  def trust?
+    type == 'Trust'
+  end
+
+  def update_who_will_order_devices(who_will_order)
+    update!(who_will_order_devices: who_will_order)
+    active_schools.each do |school|
+      if school.can_change_who_manages_orders?
+        school.change_who_manages_orders!(who_will_order, clear_preorder_information: true)
+      end
+    end
+  end
+
+  def who_manages_orders_label
+    case who_will_order_devices
+    when 'school'
+      'School or college'
+    when 'schools'
+      'Schools or colleges'
+    when 'responsible_body'
+      humanized_type.capitalize
+    end
   end
 
 private

@@ -6,18 +6,15 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
   end
 
   def update
-    @form = Support::EnableOrdersForm.new(
-      enable_orders_form_params.merge(device_allocation: @school.std_device_allocation,
-                                      router_allocation: @school.coms_device_allocation),
-    )
+    @form = Support::EnableOrdersForm.new(enable_orders_form_params.merge(school: @school))
 
     if @form.valid?
       if params[:confirm].present?
         ActiveRecord::Base.transaction do
           service = SchoolOrderStateAndCapUpdateService.new(school: @school,
                                                             order_state: @form.order_state,
-                                                            std_device_cap: @form.device_cap,
-                                                            coms_device_cap: @form.router_cap)
+                                                            laptop_cap: @form.laptop_cap,
+                                                            router_cap: @form.router_cap)
           service.update!
         end
         flash[:success] = t(:success, scope: %i[support order_status update])
@@ -25,7 +22,7 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
       else
         redirect_to support_school_confirm_enable_orders_path(urn: @school.urn,
                                                               order_state: @form.order_state,
-                                                              device_cap: @form.device_cap,
+                                                              laptop_cap: @form.laptop_cap,
                                                               router_cap: @form.router_cap)
       end
     else
@@ -39,10 +36,10 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
   # GET /support/devices/schools/:urn/enable-orders/confirm
   def confirm
     @form = Support::EnableOrdersForm.new(order_state: params[:order_state],
-                                          device_cap: params[:device_cap],
+                                          laptop_cap: params[:laptop_cap],
                                           router_cap: params[:router_cap])
-    @device_allocation = @school.std_device_allocation.allocation
-    @router_allocation = (@school.coms_device_allocation&.allocation || 0)
+    @laptop_allocation = @school.laptop_allocation
+    @router_allocation = @school.router_allocation
   end
 
   def collect_urns_to_allow_many_schools_to_order
@@ -76,21 +73,13 @@ private
   def existing_params
     {
       order_state: @school.order_state,
-      device_cap: device_allocation.cap,
-      router_cap: router_allocation.cap,
+      laptop_cap: @school.laptop_cap,
+      router_cap: @school.router_cap,
     }
   end
 
-  def device_allocation
-    SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: 'std_device')
-  end
-
-  def router_allocation
-    SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: 'coms_device')
-  end
-
   def enable_orders_form_params(opts = params)
-    opts.fetch(:support_enable_orders_form, {}).permit(:order_state, :device_cap, :router_cap)
+    opts.fetch(:support_enable_orders_form, {}).permit(:order_state, :laptop_cap, :router_cap)
   end
 
   def restriction_params

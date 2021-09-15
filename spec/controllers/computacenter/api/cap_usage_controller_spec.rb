@@ -139,11 +139,11 @@ RSpec.describe Computacenter::API::CapUsageController do
 
         expect(response).to have_http_status(:ok)
 
-        expect(@school1.reload.allocation_for_type!(:std_device).devices_ordered).to eq(20)
-        expect(@school1.reload.allocation_for_type!(:coms_device).devices_ordered).to eq(100)
+        expect(@school1.reload.laptops_ordered).to eq(20)
+        expect(@school1.reload.routers_ordered).to eq(100)
 
-        expect(@school2.reload.allocation_for_type!(:std_device).devices_ordered).to eq(57)
-        expect(@school2.reload.allocation_for_type!(:coms_device).devices_ordered).to eq(100)
+        expect(@school2.reload.laptops_ordered).to eq(57)
+        expect(@school2.reload.routers_ordered).to eq(100)
       end
     end
 
@@ -187,7 +187,7 @@ RSpec.describe Computacenter::API::CapUsageController do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
 
         expect(response).to have_http_status(:ok)
-        expect(school.reload.allocation_for_type!(:std_device).devices_ordered).to eq(37)
+        expect(school.reload.laptops_ordered).to eq(37)
       end
     end
 
@@ -231,7 +231,7 @@ RSpec.describe Computacenter::API::CapUsageController do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
 
         expect(response).to have_http_status(:ok)
-        expect(@school.reload.allocation_for_type!(:std_device).devices_ordered).to eq(20)
+        expect(@school.reload.laptops_ordered).to eq(20)
       end
     end
   end

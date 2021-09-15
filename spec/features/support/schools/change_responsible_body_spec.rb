@@ -26,6 +26,9 @@ RSpec.feature 'Updating school responsible body' do
 
   scenario 'failed to set a new responsible body' do
     create(:trust, name: 'Lancashire')
+    allow(ChangeSchoolResponsibleBodyService).to receive(:new) {
+      instance_double('ChangeSchoolResponsibleBodyService', call: false)
+    }
 
     sign_in_as support_third_line_user
 
@@ -57,7 +60,7 @@ private
   end
 
   def expect_responsible_body_change_failed_banner(school_name)
-    expect_school_page_with_banner(:warning, "#{school_name} could not be associated with Lancashire!")
+    expect_school_page_with_banner(:warning, "#{school_name} could not be associated with")
   end
 
   def expect_responsible_body_changed_banner(school_name)

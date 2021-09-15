@@ -35,7 +35,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
   end
 
   def and_the_school_does_not_have_chromebook_information_specified
-    @school.preorder_information.update(
+    @school.update_chromebook_information_and_status!(
       will_need_chromebooks: 'no',
       school_or_rb_domain: nil,
       recovery_email_address: nil,
@@ -43,7 +43,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
   end
 
   def and_the_school_has_chromebook_information_specified
-    @school.preorder_information.update(
+    @school.update_chromebook_information_and_status!(
       will_need_chromebooks: 'yes',
       school_or_rb_domain: 'somedomain.com',
       recovery_email_address: 'someone@someotherdomain.com',

@@ -42,7 +42,7 @@ RSpec.describe AllocationUpdater do
 
       service.call
 
-      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, std_device_cap: updated_value, coms_device_cap: 0)
+      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, laptop_cap: updated_value, router_cap: 0)
       expect(mock_update_service).to have_received(:update!)
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe AllocationUpdater do
 
       service.call
 
-      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, std_device_cap: updated_value, coms_device_cap: 0)
+      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, laptop_cap: updated_value, router_cap: 0)
       expect(mock_update_service).to have_received(:update!)
     end
   end

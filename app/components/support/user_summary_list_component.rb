@@ -64,7 +64,7 @@ private
 
   def link_to_responsible_body_page_if_present
     if @user.responsible_body
-      govuk_link_to @user.responsible_body.name, support_responsible_body_path(@user.responsible_body)
+      govuk_link_to @user.responsible_body_name, support_responsible_body_path(@user.responsible_body)
     else
       ''
     end

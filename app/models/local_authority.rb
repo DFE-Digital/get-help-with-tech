@@ -59,10 +59,10 @@ private
     }.merge(extra_args)
 
     provision = LaFundedPlace.create!(attrs)
-    provision.create_preorder_information!(who_will_order_devices: 'school')
     provision.device_allocations.std_device.create!(allocation: device_allocation)
     provision.device_allocations.coms_device.create!(allocation: router_allocation)
     add_rb_users_to_provision(provision)
+    provision.orders_managed_by_school!
     provision
   end
 

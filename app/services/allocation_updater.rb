@@ -55,8 +55,8 @@ private
     @cap_service ||= SchoolOrderStateAndCapUpdateService.new(
       school: school,
       order_state: school.order_state,
-      std_device_cap: new_or_existing_std_device_cap,
-      coms_device_cap: new_or_existing_coms_device_cap,
+      laptop_cap: new_or_existing_std_device_cap,
+      router_cap: new_or_existing_coms_device_cap,
     )
   end
 

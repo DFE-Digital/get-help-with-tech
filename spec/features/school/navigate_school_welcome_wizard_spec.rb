@@ -74,7 +74,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def when_the_chromebooks_question_has_already_been_answered
-    school.preorder_information.update!(will_need_chromebooks: 'no')
+    school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
   end
 
   def when_i_sign_in_for_the_first_time

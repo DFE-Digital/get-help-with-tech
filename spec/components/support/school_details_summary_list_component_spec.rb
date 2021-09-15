@@ -101,25 +101,20 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body will place device orders' do
-    let(:school) { create(:school, :primary, :academy) }
-
-    before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :responsible_body,
-             school_or_rb_domain: 'school.domain.org',
-             recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes',
-             school_contact: headteacher)
-    end
+    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'confirms that fact' do
-      create(:preorder_information, school: school, who_will_order_devices: :responsible_body)
-
       expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
     end
 
     it 'shows the chromebook details and allows them to be edited' do
+      school.update_chromebook_information_and_status!(
+        school_or_rb_domain: 'school.domain.org',
+        recovery_email_address: 'admin@recovery.org',
+        will_need_chromebooks: 'yes',
+      )
+
       expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes, we’ll order Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
@@ -130,6 +125,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'does not show the school contact even if the school contact is set' do
+      school.set_current_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
   end

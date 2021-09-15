@@ -9,7 +9,7 @@
   <li>there was not enough data to calculate an allocation – for example it’s a new <%= @school.institution_type %></li>
 </ul>
 
-<%- if @school.preorder_information.needs_contact? || (@school.preorder_information.orders_managed_centrally? && !@school.preorder_information.chromebook_information_complete?) %>
+<%- if @school.needs_contact? || (@school.orders_managed_centrally? && !@school.chromebook_information_complete?) %>
   <h3 class="govuk-heading-m">We still need some information</h3>
 
   <p class="govuk-body">If this <%= @school.institution_type %> will order its own devices, we need to know who to contact.</p>

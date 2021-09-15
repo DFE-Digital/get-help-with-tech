@@ -4,11 +4,7 @@ module ViewHelper
   include StringUtils
 
   def asset_bios_password_or_unlocker(asset)
-    if asset.bios_unlockable?
-      govuk_link_to('Download BIOS unlocker', bios_unlocker_asset_path(asset))
-    else
-      asset.bios_password
-    end
+    asset.bios_unlockable? ? bios_unlocker_link(asset) : asset.bios_password
   end
 
   def ghwt_contact_mailto(subject: nil, label: 'COVID.TECHNOLOGY@education.gov.uk')
@@ -140,7 +136,8 @@ module ViewHelper
     suffix = (school.can_order_for_specific_circumstances? ? ' for specific circumstances' : nil)
 
     if school.devices_available_to_order?
-      string = what_to_order_allocation_list(allocations: school.device_allocations)
+      allocations = [school.std_device_allocation, school.coms_device_allocation].compact
+      string = what_to_order_allocation_list(allocations: allocations)
 
       "Order #{string}#{suffix}"
     else
@@ -171,7 +168,7 @@ module ViewHelper
 
   def chromebook_domain_label(school)
     label = Array(school.institution_type.capitalize)
-    label << "or #{school.responsible_body.humanized_type}" unless school.is_further_education?
+    label << "or #{school.responsible_body.humanized_type}" unless school.further_education?
     label << 'email domain registered for <span class="app-no-wrap">G Suite for Education</span>'
     label.join(' ').html_safe
   end
@@ -201,6 +198,10 @@ module ViewHelper
   end
 
 private
+
+  def bios_unlocker_link(asset)
+    govuk_link_to('Download BIOS unlocker', bios_unlocker_asset_path(asset))
+  end
 
   def prepend_css_class(css_class, current_class)
     if current_class

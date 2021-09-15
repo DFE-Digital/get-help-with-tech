@@ -22,7 +22,7 @@
 
     <h2 class="govuk-heading-m">Chromebooks</h2>
 
-    <% if @school.preorder_information.will_need_chromebooks? %>
+    <% if @school.will_need_chromebooks? %>
       <p class="govuk-body">
         You’ve told us you’ll order Chromebooks –&nbsp;
         <%= govuk_link_to funded_chromebooks_school_path(@school) do %>
@@ -72,7 +72,7 @@
           </p>
         <% end %>
       </div>
-    <% elsif @school.preorder_information.will_not_need_chromebooks? %>
+    <% elsif @school.will_not_need_chromebooks? %>
       <p class="govuk-body">
         You have told us you will not order Chromebooks –&nbsp;
         <%= govuk_link_to funded_chromebooks_school_path(@school) do %>

@@ -26,7 +26,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
     context 'within a virtual cap' do
       let(:responsible_body) { create(:trust, :vcap_feature_flag) }
-      let(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :in_lockdown, responsible_body: responsible_body) }
+      let(:schools) { create_list(:school, 2, :manages_orders, :with_std_device_allocation, :in_lockdown, responsible_body: responsible_body) }
 
       let(:school) { schools.first }
       let(:allocation) { school.std_device_allocation.reload }
@@ -36,11 +36,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
         schools.each do |school|
           school.std_device_allocation.update!(allocation: 27, cap: 0, devices_ordered: 13, school: school)
-
-          school.preorder_information.update!(who_will_order_devices: 'responsible_body')
-          school.can_order!
-          responsible_body.add_school_to_virtual_cap_pools!(school)
-          responsible_body.calculate_virtual_caps!
+          school.orders_managed_centrally!
         end
       end
 
@@ -156,8 +152,8 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
   context 'when in a virtual pool' do
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-    let(:school) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
-    let(:school2) { create(:school, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:school) { create(:school, :manages_orders, :in_lockdown, responsible_body: responsible_body) }
+    let(:school2) { create(:school, :manages_orders, :in_lockdown, responsible_body: responsible_body) }
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
     let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
@@ -168,11 +164,9 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       allow(mock_request).to receive(:post!).and_return(response)
 
       allocation
-      school.preorder_information.responsible_body_will_order_devices!
-      school2.preorder_information.responsible_body_will_order_devices!
       school2.device_allocations.std_device.create!(allocation: 200, cap: 100, devices_ordered: 50)
-      responsible_body.add_school_to_virtual_cap_pools!(school)
-      responsible_body.add_school_to_virtual_cap_pools!(school2)
+      school.orders_managed_centrally!
+      school2.orders_managed_centrally!
       allocation.reload
     end
 

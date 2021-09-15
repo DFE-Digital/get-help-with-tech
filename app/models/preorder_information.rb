@@ -44,15 +44,15 @@ class PreorderInformation < ApplicationRecord
     elsif school_will_order_devices? && any_school_users? && chromebook_information_complete?
       if school.can_order_devices_right_now?
         'school_can_order'
-      elsif school.device_allocations.map(&:devices_ordered).any?(&:positive?)
+      elsif school.has_ordered?
         'ordered'
       else
         'school_ready'
       end
     elsif chromebook_information_complete?
-      if orders_managed_centrally? && school.can_order_devices_right_now?
+      if responsible_body_will_order_devices? && school.can_order_devices_right_now?
         'rb_can_order'
-      elsif orders_managed_centrally? && school.device_allocations.map(&:devices_ordered).any?(&:positive?)
+      elsif responsible_body_will_order_devices? && school.has_ordered?
         'ordered'
       else
         'ready'
@@ -66,45 +66,11 @@ class PreorderInformation < ApplicationRecord
     update!(status: infer_status)
   end
 
-  def can_change_who_will_order_devices?
-    !(who_will_order_devices == 'responsible_body' && school.responsible_body.has_virtual_cap_feature_flags?)
-  end
-
-  def change_who_will_order_devices!(who)
-    if can_change_who_will_order_devices?
-      self.who_will_order_devices = who
-      self.status = infer_status
-      save!
-      if school.responsible_body.school_addable_to_virtual_cap_pools?(school)
-        school.responsible_body.add_school_to_virtual_cap_pools!(school)
-      end
-      true
-    else
-      # school cannot manage orders because it is being centrally managed in a pool
-      raise VirtualCapPoolError, "#{school.name} (#{school.urn}) cannot be devolved because it is in a virtual cap pool"
-    end
-  end
-
-  def who_will_order_devices_label
-    case who_will_order_devices
-    when 'school'
-      'School or college'
-    when 'responsible_body'
-      school.responsible_body.humanized_type.capitalize
-    end
-  end
-
   def school_contact=(value)
     super(value)
     self.status = infer_status
   end
 
-  def orders_managed_centrally?
-    who_will_order_devices == 'responsible_body'
-  end
-
-  # prevent edge case where the built-in (attribute name)? method allows
-  # a value of 'no' to return will_need_chromebooks? as true (as it's not nil)
   def will_need_chromebooks?
     will_need_chromebooks == 'yes'
   end
@@ -117,12 +83,9 @@ class PreorderInformation < ApplicationRecord
     # if we remove the '&' it breaks 400+ specs as this is called by infer_status
     # via callbacks
     return true if school&.la_funded_provision?
+    return will_not_need_chromebooks? unless will_need_chromebooks?
 
-    if will_need_chromebooks == 'yes'
-      school_or_rb_domain.present? && recovery_email_address.present?
-    else
-      will_need_chromebooks == 'no'
-    end
+    school_or_rb_domain.present? && recovery_email_address.present?
   end
 
   def chromebook_info_still_needed?
@@ -135,7 +98,7 @@ class PreorderInformation < ApplicationRecord
   end
 
   def invite_school_contact!
-    if school_contact.present?
+    if school_contact
       transaction do
         user = CreateUserService.invite_school_user(
           email_address: school_contact.email_address,
@@ -144,29 +107,21 @@ class PreorderInformation < ApplicationRecord
           school_id: school_id,
           orders_devices: true,
         )
-        if user.errors.empty?
-          update!(school_contacted_at: Time.zone.now)
-          update!(status: infer_status)
-          true
-        else
-          false
-        end
+        reload.update!(school_contacted_at: Time.zone.now, status: infer_status) if user.errors.blank?
       end
-    else
-      false
     end
   end
 
 private
 
+  def any_school_users?
+    school&.user_schools&.any?
+  end
+
   def check_and_update_status_if_necessary
     if will_need_chromebooks_changed? || who_will_order_devices_changed?
       self.status = infer_status
     end
-  end
-
-  def any_school_users?
-    school&.user_schools&.any?
   end
 
   def set_defaults

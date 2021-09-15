@@ -22,7 +22,7 @@ class Computacenter::API::CapUsageUpdate
       # Don't raise failure if a cascading cap update to CC fails
       Rails.logger.warn(e.message)
     end
-    school.preorder_information&.refresh_status!
+    school.refresh_device_ordering_status!
 
     SchoolCanOrderDevicesNotifications.new(school: school).call if is_decreasing_cap
 

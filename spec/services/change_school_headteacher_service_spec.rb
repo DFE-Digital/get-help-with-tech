@@ -14,13 +14,13 @@ RSpec.describe ChangeSchoolHeadteacherService, type: :model do
 
   describe '#call' do
     context 'when the school have already a headteacher contact set' do
-      let(:school) { create(:school, :with_headteacher_contact) }
-      let(:headteacher_id) { school.headteacher_contact.id }
+      let(:school) { create(:school, :with_headteacher) }
+      let(:headteacher_id) { school.headteacher_id }
 
       let!(:result) { service.call }
 
       it 'update their details' do
-        headteacher = school.reload.headteacher_contact
+        headteacher = school.reload.headteacher
         expect(headteacher.email_address).to eq(details[:email_address])
         expect(headteacher.full_name).to eq(details[:full_name])
         expect(headteacher.id).to eq(headteacher_id)
@@ -39,7 +39,7 @@ RSpec.describe ChangeSchoolHeadteacherService, type: :model do
       let!(:result) { service.call }
 
       it 'set it as headteacher' do
-        headteacher = school.reload.headteacher_contact
+        headteacher = school.reload.headteacher
         expect(headteacher.email_address).to eq(details[:email_address])
         expect(headteacher.full_name).to eq(details[:full_name])
         expect(headteacher.id).to eq(headteacher_id)
@@ -58,7 +58,7 @@ RSpec.describe ChangeSchoolHeadteacherService, type: :model do
       let!(:result) { service.call }
 
       it 'create a new headteacher contact' do
-        headteacher = school.reload.headteacher_contact
+        headteacher = school.reload.headteacher
         expect(headteacher.email_address).to eq(details[:email_address])
         expect(headteacher.full_name).to eq(details[:full_name])
         expect(headteacher.id).not_to eq(headteacher_id)
@@ -78,7 +78,7 @@ RSpec.describe ChangeSchoolHeadteacherService, type: :model do
       it 'do not change the school headteacher details' do
         expect {
           service.call
-        }.not_to(change { school.reload.headteacher_contact })
+        }.not_to(change { school.reload.headteacher })
       end
 
       it 'return false' do

@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DeviceCountComponent, type: :component do
   context 'when no devices available' do
-    let(:school) { School.new(device_allocations: [allocation]) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 1) }
+    let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
 
     subject(:component) { described_class.new(school: school) }
 
@@ -21,9 +20,12 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'when zero allocation present' do
-    let(:school) { School.new(device_allocations: [allocation1, allocation2]) }
-    let(:allocation1) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 0) }
-    let(:allocation2) { SchoolDeviceAllocation.new(devices_ordered: 0, cap: 1) }
+    let(:std_device_allocation) { create(:school_device_allocation, :std, cap: 1, allocation: 1, devices_ordered: 0) }
+    let(:school) { std_device_allocation.school }
+
+    before do
+      create(:school_device_allocation, :coms, cap: 0, allocation: 0, devices_ordered: 0, school: school)
+    end
 
     subject(:component) { described_class.new(school: school) }
 
@@ -42,8 +44,11 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'when devices available' do
-    let(:school) { School.new(device_allocations: [allocation]) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 5) }
+    let(:school) { create(:school) }
+
+    before do
+      create(:school_device_allocation, :std, cap: 5, allocation: 10, devices_ordered: 1, school: school)
+    end
 
     subject(:component) { described_class.new(school: school) }
 
@@ -60,7 +65,7 @@ RSpec.describe DeviceCountComponent, type: :component do
     end
 
     context 'when school can_order_for_specific_circumstances' do
-      let(:school) { School.new(device_allocations: [allocation], order_state: :can_order_for_specific_circumstances) }
+      let(:school) { create(:school, :can_order_for_specific_circumstances) }
 
       it 'renders availability with suffix' do
         content = render_inline(component).content
@@ -71,10 +76,9 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'when all devices ordered' do
-    let(:school) { School.new(device_allocations: [allocation]) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 5, cap: 5) }
+    let!(:std_device_allocation) { create(:school_device_allocation, :std, cap: 5, allocation: 10, devices_ordered: 5) }
 
-    subject(:component) { described_class.new(school: school) }
+    subject(:component) { described_class.new(school: std_device_allocation.school) }
 
     it 'renders availability' do
       html = render_inline(component).to_html
@@ -90,8 +94,7 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'with an action' do
-    let(:school) { School.new(device_allocations: [allocation]) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 3) }
+    let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
 
     subject(:component) { described_class.new(school: school, action: { 'hello' => 'https://example.com' }) }
 
@@ -131,8 +134,7 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'when school can_order_for_specific_circumstances and has_ordered' do
-    let(:school) { School.new(device_allocations: [allocation], order_state: :can_order_for_specific_circumstances) }
-    let(:allocation) { SchoolDeviceAllocation.new(devices_ordered: 1, cap: 1, allocation: 1) }
+    let(:school) { create(:school, :with_std_device_allocation_fully_ordered, order_state: :can_order_for_specific_circumstances) }
 
     subject(:component) { described_class.new(school: school) }
 
@@ -151,9 +153,12 @@ RSpec.describe DeviceCountComponent, type: :component do
   end
 
   context 'with different allocations present' do
-    let(:allocation1) { SchoolDeviceAllocation.new(device_type: 'std_device', devices_ordered: 1, cap: 3) }
-    let(:allocation2) { SchoolDeviceAllocation.new(device_type: 'coms_device', devices_ordered: 2, cap: 5) }
-    let(:school) { School.new(device_allocations: [allocation1, allocation2]) }
+    let(:std_device_allocation) { create(:school_device_allocation, :std, cap: 3, allocation: 10, devices_ordered: 1) }
+    let(:school) { std_device_allocation.school }
+
+    before do
+      create(:school_device_allocation, :coms, cap: 5, allocation: 10, devices_ordered: 2, school: school)
+    end
 
     subject(:component) { described_class.new(school: school) }
 

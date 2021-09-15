@@ -35,7 +35,7 @@ class CreateUserService
     user = User.new(user_params)
     if user.save
       InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
-      user.school.preorder_information&.refresh_status!
+      user.school.refresh_device_ordering_status!
     end
     user
   end
@@ -48,7 +48,7 @@ class CreateUserService
     unless user.school_ids.include?(user_params[:school_id])
       user.schools << school
       AddAdditionalSchoolToExistingUserMailer.with(user: user, school: school).additional_school_email.deliver_later
-      school.preorder_information&.refresh_status!
+      school.refresh_device_ordering_status!
       user.update!(user_params.select { |key, _value| user.send(key).blank? }.merge(deleted_at: nil))
     end
     user
@@ -79,8 +79,7 @@ class CreateUserService
   end
 
   def self.devolve_ordering_if_needed!(user_params)
-    school = School.find_by(id: user_params[:school_id])
-    school.create_preorder_information!(who_will_order_devices: 'school') if school && school.preorder_information.nil?
+    School.find_by(id: user_params[:school_id])&.orders_managed_by_school!
   end
 
   private_class_method :devolve_ordering_if_needed!

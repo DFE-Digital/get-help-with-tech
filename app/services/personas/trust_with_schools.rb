@@ -17,7 +17,7 @@ private
       s.postcode = 'NE1 7DE'
     end
 
-    @school_one.preorder_information || @school_one.build_preorder_information(who_will_order_devices: 'school').save!
+    @school_one.preorder_information || @school_one.orders_managed_by_school!
 
     @school_one
   end

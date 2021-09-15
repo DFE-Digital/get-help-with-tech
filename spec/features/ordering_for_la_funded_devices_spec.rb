@@ -82,8 +82,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled 
   end
 
   def given_there_is_an_independent_settings_school
-    @school = create(:iss_provision, :can_order, :with_preorder_information)
-    @school.preorder_information.update!(who_will_order_devices: 'school')
+    @school = create(:iss_provision, :can_order, :manages_orders)
   end
 
   def given_i_am_signed_in_as_an_independent_settings_school_user
@@ -96,7 +95,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled 
   end
 
   def given_i_have_already_confirmed_that_i_will_order_chromebooks
-    @school.preorder_information.update!(will_need_chromebooks: 'yes')
+    @school.update_chromebook_information_and_status!(will_need_chromebooks: 'yes')
   end
 
   def given_i_have_not_ordered_all_my_laptops
@@ -108,7 +107,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled 
   end
 
   def given_i_have_already_answered_that_i_was_not_sure_that_i_will_order_chromebooks
-    @school.preorder_information.update!(will_need_chromebooks: 'i_dont_know')
+    @school.update_chromebook_information_and_status!(will_need_chromebooks: 'i_dont_know')
   end
 
   def then_i_see_confirmation_i_have_not_indicated_whether_i_will_order_chromebooks

@@ -3,45 +3,17 @@ class Support::EnableOrdersForm
   include ActiveModel::Validations::Callbacks
 
   attr_accessor :order_state,
-                :device_cap, :device_allocation,
+                :school,
+                :laptop_cap,
                 :router_cap
 
-  attr_writer :router_allocation
-
-  def router_allocation
-    @router_allocation || SchoolDeviceAllocation.new
-  end
-
-  delegate :devices_ordered, to: :device_allocation
-
-  def routers_ordered
-    router_allocation.devices_ordered
-  end
-
-  def device_allocation_count
-    device_allocation.allocation
-  end
-
-  def router_allocation_count
-    router_allocation.allocation
-  end
-
   validates :order_state, inclusion: { in: School.order_states }
-  validates :device_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :cap_required?
+  validates :laptop_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :cap_required?
   validates :router_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, if: :cap_required?
 
   validate :validate_caps_lte_allocation
 
   before_validation :override_cap_according_to_order_state!
-
-  def cap_required?
-    order_state.to_s == 'can_order_for_specific_circumstances'
-  end
-
-  def override_cap_according_to_order_state!
-    @device_cap = device_allocation.cap_implied_by_order_state(order_state: order_state, given_cap: device_cap)
-    @router_cap = router_allocation.cap_implied_by_order_state(order_state: order_state, given_cap: router_cap)
-  end
 
   def will_enable_orders?
     order_state.to_s.in?(%w[can_order_for_specific_circumstances can_order])
@@ -49,13 +21,22 @@ class Support::EnableOrdersForm
 
 private
 
+  def cap_required?
+    order_state.to_s == 'can_order_for_specific_circumstances'
+  end
+
+  def override_cap_according_to_order_state!
+    @laptop_cap = @school.laptop_cap_implied_by_order_state(order_state: order_state, given_cap: laptop_cap)
+    @router_cap = @school.router_cap_implied_by_order_state(order_state: order_state, given_cap: router_cap)
+  end
+
   def validate_caps_lte_allocation
-    if device_cap.to_i > device_allocation_count.to_i
-      errors.add(:device_cap, :lte_allocation, allocation: device_allocation_count.to_i)
+    if laptop_cap.to_i > school.laptop_allocation
+      errors.add(:laptop_cap, :lte_allocation, allocation: school.laptop_allocation)
     end
 
-    if router_cap.to_i > router_allocation_count.to_i
-      errors.add(:router_cap, :lte_allocation, allocation: router_allocation_count.to_i)
+    if router_cap.to_i > school.router_allocation
+      errors.add(:router_cap, :lte_allocation, allocation: school.router_allocation)
     end
   end
 end

@@ -24,8 +24,7 @@ RSpec.describe LocalAuthority, type: :model do
 
       it 'adds preorder information to the provision' do
         provision = local_authority.create_iss_provision!
-        expect(provision.preorder_information).to be_present
-        expect(provision.preorder_information.who_will_order_devices).to eq('school')
+        expect(provision.orders_managed_by_school?).to be_truthy
       end
 
       it 'adds a default device and router allocation' do
@@ -72,8 +71,7 @@ RSpec.describe LocalAuthority, type: :model do
 
       it 'adds preorder information to the provision' do
         provision = local_authority.create_scl_provision!
-        expect(provision.preorder_information).to be_present
-        expect(provision.preorder_information.who_will_order_devices).to eq('school')
+        expect(provision.orders_managed_by_school?).to be_truthy
       end
 
       it 'adds a default device and router allocation' do

@@ -50,7 +50,7 @@ private
 
   def school_can_be_added_to_pool?(school)
     school.responsible_body_id == responsible_body_id &&
-      school&.preorder_information&.responsible_body_will_order_devices? &&
+      school.orders_managed_centrally? &&
       school.device_allocations.exists?(device_type: device_type) &&
       !school_virtual_caps.exists?(school_device_allocation: school.device_allocations.find_by(device_type: device_type))
   end

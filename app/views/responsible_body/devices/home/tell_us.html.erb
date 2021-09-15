@@ -15,7 +15,7 @@
 
     <p class="govuk-body">You can allow schools and colleges to order their own devices. Or you can manage some, or all, orders centrally.</p>
 
-    <% if @responsible_body.is_a_trust? %>
+    <% if @responsible_body.trust? %>
       <p class="govuk-body">If you let schools and colleges place orders you’ll need to nominate someone in each school or college for us to contact.</p>
       <p class="govuk-body">Each contact will be able to:</p>
       <ul class="govuk-list govuk-list--bullet">

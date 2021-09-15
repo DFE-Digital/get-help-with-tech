@@ -38,7 +38,7 @@ private
   def change_needed?
     @user&.id.present? && \
       (is_addition? || is_removal? || (is_change? && computacenter_fields_have_changed?)) && \
-      (!user_has_a_school_but_no_ship_to? || user.is_a_single_school_user?)
+      (!user_has_a_school_but_no_ship_to? || user.single_school_user?)
   end
 
   def user_has_a_school_but_no_ship_to?
@@ -76,8 +76,8 @@ private
       responsible_body_urn: user.effective_responsible_bodies.map(&:computacenter_identifier).join('|'),
       cc_sold_to_number: user.effective_responsible_bodies.map(&:computacenter_reference).join('|'),
       # NOTE: we must loop round user_schools (which may be dirty) not schools (which won't be)
-      school: (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
-      school_urn: (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
+      school: (user.single_school_user? ? '' : user.user_schools.map { |us| us.school.name }.join('|')),
+      school_urn: (user.single_school_user? ? '' : user.user_schools.map { |us| us.school.urn }.join('|')),
       cc_ship_to_number: cc_ship_to_number_list,
     }
 
@@ -91,7 +91,7 @@ private
   end
 
   def cc_ship_to_number_list
-    (user.is_a_single_school_user? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|'))
+    (user.single_school_user? ? '' : user.user_schools.map { |us| us.school.computacenter_reference }.join('|'))
   end
 
   def meta_attributes

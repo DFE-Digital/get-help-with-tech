@@ -72,6 +72,8 @@ class User < ApplicationRecord
     generate_user_change_if_needed!
   end
 
+  delegate :name, to: :responsible_body, prefix: true, allow_nil: true
+
   def generate_user_change_if_needed!(_obj = nil)
     Computacenter::UserChangeGenerator.new(self).generate!
   end
@@ -84,7 +86,7 @@ class User < ApplicationRecord
     mobile_network.present?
   end
 
-  def is_responsible_body_user?
+  def responsible_body_user?
     responsible_body.present?
   end
 
@@ -117,7 +119,7 @@ class User < ApplicationRecord
   end
 
   def needs_to_see_privacy_notice?
-    (is_responsible_body_user? || is_school_user?) && !seen_privacy_notice?
+    (responsible_body_user? || is_school_user?) && !seen_privacy_notice?
   end
 
   def seen_privacy_notice?
@@ -179,8 +181,8 @@ class User < ApplicationRecord
     orders_devices? && techsource_account_confirmed?
   end
 
-  def is_a_single_school_user?
-    user_schools.size == 1 && (responsible_body&.is_a_single_academy_trust? || responsible_body&.is_a_further_education_college?) && school.responsible_body_id == responsible_body.id
+  def single_school_user?
+    user_schools.size == 1 && (responsible_body&.single_academy_trust? || responsible_body&.further_education_college?) && school.responsible_body_id == responsible_body.id
   end
 
   # Wrapper methods to ease the transition from 'user belongs_to school',

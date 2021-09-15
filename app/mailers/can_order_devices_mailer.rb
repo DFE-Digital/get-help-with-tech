@@ -112,7 +112,7 @@ private
   def personalisation
     {
       school: @school.name,
-      urn: @school.ukprn_or_urn,
+      urn: @school.ukprn || @school.urn,
     }
   end
 

@@ -21,7 +21,7 @@ RSpec.describe AllocationJob do
         expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(
           school: school,
           order_state: batch_job.order_state,
-          std_device_cap: batch_job.allocation_delta,
+          laptop_cap: batch_job.allocation_delta,
         )
 
         expect(mock_service).to have_received(:disable_user_notifications!)
@@ -49,7 +49,7 @@ RSpec.describe AllocationJob do
         expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(
           school: school,
           order_state: batch_job.order_state,
-          std_device_cap: batch_job.allocation_delta,
+          laptop_cap: batch_job.allocation_delta,
         )
 
         expect(mock_service).not_to have_received(:disable_user_notifications!)
@@ -381,8 +381,8 @@ RSpec.describe AllocationJob do
           described_class.perform_now(batch_allocation_job1)
           described_class.perform_now(batch_allocation_job2)
 
-          expect(school1.std_device_allocation.reload.devices_available_to_order?).to be(false)
-          expect(school2.std_device_allocation.reload.devices_available_to_order?).to be(false)
+          expect(school1.reload.laptops_available_to_order?).to be(false)
+          expect(school2.reload.laptops_available_to_order?).to be(false)
         end
       end
 

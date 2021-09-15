@@ -20,7 +20,7 @@ class Support::Schools::HeadteacherController < Support::BaseController
 private
 
   def contact_details
-    contact = school.headteacher_contact || school.contacts.first
+    contact = school.headteacher || school.contacts.first
     {
       email_address: contact&.email_address,
       full_name: contact&.full_name,

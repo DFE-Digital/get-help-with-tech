@@ -9,29 +9,41 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
     @show_action = show_action
   end
 
+  def availability_string
+    responsible_body.devices_available_to_order? ? devices_available_to_order : 'No devices left to order'
+  end
+
   def name_string
     "#{responsible_body.name} has:"
   end
 
-  def availability_string
-    if @responsible_body.devices_available_to_order?
-      allocations.map { |allocation|
-        "#{allocation.devices_available_to_order} #{allocation.device_type_name.pluralize(allocation.devices_available_to_order)}"
-      }.join(' and <br/>') + ' available to order'
-    else
-      'No devices left to order'
-    end
-  end
-
   def ordered_string
-    'You ordered ' + allocations.map { |allocation|
-      "#{allocation.devices_ordered} #{allocation.device_type_name.pluralize(allocation.cap)}"
-    }.join(' and ')
+    'You ordered ' + [laptops_ordered, routers_ordered].compact.join(' and ')
   end
 
 private
 
-  def allocations
-    responsible_body.virtual_cap_pools.with_std_device_first
+  def devices_available_to_order
+    [laptops_available_to_order, routers_available_to_order].compact.join(' and <br/>') + ' available to order'
+  end
+
+  def humanize(noun, number)
+    "#{number} #{noun.to_s.pluralize(number)}"
+  end
+
+  def laptops_available_to_order
+    humanize(:device, responsible_body.laptops_available_to_order) if responsible_body.laptop_pool?
+  end
+
+  def laptops_ordered
+    humanize(:device, responsible_body.laptops_ordered) if responsible_body.laptop_pool?
+  end
+
+  def routers_available_to_order
+    humanize(:router, responsible_body.routers_available_to_order) if responsible_body.router_pool?
+  end
+
+  def routers_ordered
+    humanize(:router, responsible_body.routers_ordered) if responsible_body.router_pool?
   end
 end

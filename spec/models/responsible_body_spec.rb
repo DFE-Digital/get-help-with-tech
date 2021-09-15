@@ -62,7 +62,7 @@ RSpec.describe ResponsibleBody, type: :model do
     context 'when the school is already included in any of the responsible body virtual cap pools' do
       subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
 
-      let(:school) { create_and_put_school_in_pool(responsible_body) }
+      let(:school) { create_centrally_managed_school_that_can_order(responsible_body) }
 
       before do
         stub_computacenter_outgoing_api_calls
@@ -124,7 +124,7 @@ RSpec.describe ResponsibleBody, type: :model do
     context 'when the school is included in any of the responsible body virtual cap pools' do
       subject(:responsible_body) { create(:local_authority, vcap_feature_flag: true) }
 
-      let(:school) { create_and_put_school_in_pool(responsible_body) }
+      let(:school) { create_centrally_managed_school_that_can_order(responsible_body) }
 
       before do
         stub_computacenter_outgoing_api_calls
@@ -211,12 +211,11 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#is_ordering_for_schools?' do
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
+        schools[1].orders_managed_by_school!
         schools[2].update!(status: :closed)
       end
 
@@ -227,8 +226,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_by_school!
+        schools[1].orders_managed_by_school!
         schools[2].update!(status: :closed)
       end
 
@@ -243,9 +242,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.responsible_body_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_centrally!
+        schools[2].orders_managed_by_school!
         schools[3].update!(status: :closed)
       end
 
@@ -289,9 +288,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_by_school!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[3].update!(status: :closed)
       end
 
@@ -343,9 +342,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.responsible_body_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_centrally!
+        schools[2].orders_managed_by_school!
         schools[3].update!(status: :closed)
       end
 
@@ -356,9 +355,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_by_school!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[3].update!(status: :closed)
       end
 
@@ -373,9 +372,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some schools that will order are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].can_order_for_specific_circumstances!
@@ -388,9 +387,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools that will order are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -420,9 +419,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some centrally managed schools are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -436,9 +435,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some devolved schools are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[0].cannot_order!
         schools[1].cannot_order!
         schools[2].can_order_for_specific_circumstances!
@@ -452,9 +451,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when none of the RBs schools are able to order devices' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_centrally!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[0].cannot_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -483,12 +482,11 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#add_school_to_virtual_cap_pools!' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
       end
@@ -544,8 +542,8 @@ RSpec.describe ResponsibleBody, type: :model do
       let(:rb_coms_device_start_devices_ordered) { [school_a, school_to_remove].map(&:coms_device_allocation).sum(&:raw_devices_ordered) }
       let(:rb_coms_device_end_devices_ordered) { school_a.coms_device_allocation.raw_devices_ordered }
 
-      let!(:school_a) { create_and_put_school_in_pool(rb) }
-      let!(:school_to_remove) { create_and_put_school_in_pool(rb) }
+      let!(:school_a) { create_centrally_managed_school_that_can_order(rb) }
+      let!(:school_to_remove) { create_centrally_managed_school_that_can_order(rb) }
 
       it 'remove school std allocation from the responsible body pool' do
         expect { rb.remove_school_from_virtual_cap_pools!(school_to_remove) }
@@ -594,12 +592,11 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#calculate_virtual_caps!' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
         s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
         s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
         responsible_body.add_school_to_virtual_cap_pools!(s)
@@ -621,12 +618,11 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_school_in_virtual_cap_pools?' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       stub_computacenter_outgoing_api_calls
       first_school = schools.first
-      first_school.preorder_information.responsible_body_will_order_devices!
       first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
       first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
       responsible_body.add_school_to_virtual_cap_pools!(first_school)
@@ -644,12 +640,11 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#devices_available_to_order?' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :with_preorder_information, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
 
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.preorder_information.responsible_body_will_order_devices!
         responsible_body.add_school_to_virtual_cap_pools!(s)
       end
     end
@@ -721,13 +716,11 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_virtual_cap_feature_flags_and_centrally_managed_schools?' do
     subject(:responsible_body) { create(:trust) }
 
-    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].preorder_information.responsible_body_will_order_devices!
-        schools[1].preorder_information.responsible_body_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[2].orders_managed_by_school!
         schools[3].update!(status: :closed)
       end
 
@@ -754,9 +747,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.school_will_order_devices!
-        schools[2].preorder_information.school_will_order_devices!
+        schools[0].orders_managed_by_school!
+        schools[1].orders_managed_by_school!
+        schools[2].orders_managed_by_school!
         schools[3].update!(status: :closed)
       end
 
@@ -788,29 +781,25 @@ RSpec.describe ResponsibleBody, type: :model do
     let(:second_rb) { create(:trust, :manages_centrally) }
     let(:third_rb) { create(:trust, :devolves_management) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
-    let(:second_schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: second_rb) }
-    let(:third_schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: third_rb) }
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
+    let(:second_schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: second_rb) }
+    let(:third_schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: third_rb) }
 
     before do
-      schools[0].preorder_information.responsible_body_will_order_devices!
-      schools[1].preorder_information.responsible_body_will_order_devices!
-      second_schools[0].preorder_information.responsible_body_will_order_devices!
-      second_schools[1].preorder_information.responsible_body_will_order_devices!
-      third_schools[0].preorder_information.school_will_order_devices!
-      third_schools[1].preorder_information.school_will_order_devices!
+      third_schools[0].orders_managed_by_school!
+      third_schools[1].orders_managed_by_school!
     end
 
     context 'when centrally managed schools have different chromebook domains within a responsible body' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
-        second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school0.google2.com')
-        second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school1.google2.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
+        second_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school0.google2.com')
+        second_schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school1.google2.com')
       end
 
       it 'returns the responsible bodies that manage those schools' do
@@ -821,15 +810,15 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when a closed school has a different chromebook domain' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school.google.com')
         schools[1].gias_status_closed!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school4.google.com')
-        second_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school0.google2.com')
-        second_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                       school_or_rb_domain: 'school1.google2.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school4.google.com')
+        second_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school0.google2.com')
+        second_schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                    school_or_rb_domain: 'school1.google2.com')
       end
 
       it 'does not count closed schools when determining the domains' do
@@ -841,15 +830,15 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'it does not consider schools that are not centrally managed' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
-        third_schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                      school_or_rb_domain: 'school0.google3.com')
-        third_schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                      school_or_rb_domain: 'school1.google3.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
+        schools[1].orders_managed_by_school!
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
+        third_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                   school_or_rb_domain: 'school0.google3.com')
+        third_schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                                   school_or_rb_domain: 'school1.google3.com')
       end
 
       it 'does not count closed schools when determining the domains' do
@@ -862,19 +851,14 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_multiple_chromebook_domains_in_managed_schools?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
-
-    before do
-      schools[0].preorder_information.responsible_body_will_order_devices!
-      schools[1].preorder_information.responsible_body_will_order_devices!
-    end
+    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
 
     context 'when centrally managed schools have different chromebook domains' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
       end
 
       it 'returns true' do
@@ -884,11 +868,11 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'it does not consider closed schools' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school.google.com')
         schools[1].gias_status_closed!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school4.google.com')
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school4.google.com')
       end
 
       it 'returns false' do
@@ -898,11 +882,11 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'it does not consider schools that are not centrally managed' do
       before do
-        schools[0].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school0.google.com')
-        schools[1].preorder_information.school_will_order_devices!
-        schools[1].preorder_information.update!(will_need_chromebooks: 'yes',
-                                                school_or_rb_domain: 'school1.google.com')
+        schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school0.google.com')
+        schools[1].orders_managed_by_school!
+        schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
+                                                             school_or_rb_domain: 'school1.google.com')
       end
 
       it 'returns false' do

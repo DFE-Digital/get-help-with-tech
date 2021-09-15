@@ -75,10 +75,10 @@
                   <% end %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>
+                  <%= school&.who_manages_orders_label || 'Not decided' %>
                 </td>
                 <td class="govuk-table__cell">
-                  <% if policy(school).invite? && school&.preorder_information&.school_will_be_contacted? %>
+                  <% if policy(school).invite? && school&.school_will_be_contacted? %>
                     <%= govuk_link_to 'Invite', support_school_confirm_invitation_path(school_urn: school.urn) %>
                   <% end %>
                 </td>
@@ -130,7 +130,7 @@
                     <%= dongles_allocations_data&.raw_devices_ordered || 0 %> ordered
                   </td>
                   <td class="govuk-table__cell">
-                    <%= school&.preorder_information&.who_will_order_devices_label || 'Not decided' %>
+                    <%= school&.who_manages_orders_label || 'Not decided' %>
                   </td>
                   <td class="govuk-table__cell">
                     <%- user_count = school.user_count %>

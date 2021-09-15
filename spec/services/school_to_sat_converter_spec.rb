@@ -22,7 +22,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.postcode).to eq(school.postcode)
 
       school.reload
-      expect(school.preorder_information.who_will_order_devices).to eq('school')
+      expect(school.who_will_order_devices).to eq('school')
       expect(school.std_device_allocation.allocation).to eq(0)
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.organisation_type).to eq('single_academy_trust')
       expect(trust.who_will_order_devices).to eq('school')
       school.reload
-      expect(school.preorder_information.who_will_order_devices).to eq('school')
+      expect(school.who_will_order_devices).to eq('school')
       expect(school.std_device_allocation.allocation).to eq(0)
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.organisation_type).to eq('single_academy_trust')
       expect(trust.who_will_order_devices).to eq('school')
       school.reload
-      expect(school.preorder_information.who_will_order_devices).to eq('school')
+      expect(school.who_will_order_devices).to eq('school')
       expect(school.std_device_allocation.allocation).to eq(0)
     end
   end
@@ -76,12 +76,12 @@ RSpec.describe SchoolToSatConverter, type: :model do
 
   context 'when the school has preorder information and was centrally managed' do
     it 'updates the preorder information so the school will order devices' do
-      school.create_preorder_information!(who_will_order_devices: 'responsible_body')
+      school.orders_managed_centrally!
 
       converter.convert_to_sat
 
       school.reload
-      expect(school.preorder_information.who_will_order_devices).to eq('school')
+      expect(school.who_will_order_devices).to eq('school')
     end
   end
 end

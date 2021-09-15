@@ -2,7 +2,7 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_radio_buttons_fieldset(:who_to_contact, legend: { text: "Who can we contact at the school?", size: 'l' }) do %>
-    <%- if f.object.headteacher_contact.present? %>
+    <%- if f.object.headteacher.present? %>
       <%= f.govuk_radio_button :who_to_contact, 'headteacher', label: { text: form.headteacher_option_label }, hint: { text: form.headteacher_option_hint_text }, link_errors: true %>
       <%= f.govuk_radio_button :who_to_contact, 'someone_else', label: { text: 'Someone else' } do %>
         <%= render partial: 'nominate_another_contact', locals: {f: f} %>

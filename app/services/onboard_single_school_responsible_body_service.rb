@@ -17,7 +17,7 @@ private
     if responsible_body.users.present?
       add_responsible_body_users_to_school
       mark_school_as_invited
-    elsif school_has_headteacher_contact?
+    elsif school.headteacher?
       invite_school_headteacher
       add_school_headteacher_to_responsible_body
     else
@@ -42,13 +42,13 @@ private
       .first_or_create!(full_name: user_to_contact.full_name,
                         role: :contact,
                         phone_number: user_to_contact.telephone)
-    school.preorder_information.update!(school_contact: contact)
+    school.set_current_contact!(contact)
   end
 
   def mark_school_as_invited
     PreorderInformation.transaction do
-      school.preorder_information.update!(school_contacted_at: Time.zone.now)
-      school.preorder_information.update!(status: school.preorder_information.infer_status)
+      school.set_contact_time!(Time.zone.now)
+      school.refresh_device_ordering_status!
     end
   end
 
@@ -62,13 +62,9 @@ private
   def add_school_headteacher_to_responsible_body
     # User email addresses are all downcased before being added
     # however a school contact email address can still contain capitals
-    email_address = school.headteacher_contact.email_address.downcase
+    email_address = school.headteacher_email_address.downcase
     headteacher_user = school.users.find_by!(email_address: email_address)
     headteacher_user.update!(responsible_body: responsible_body)
-  end
-
-  def school_has_headteacher_contact?
-    school.headteacher_contact.present?
   end
 
   def invite_school_headteacher
@@ -77,7 +73,7 @@ private
   end
 
   def choose_headteacher_as_school_contact
-    school.preorder_information.update!(school_contact: school.headteacher_contact)
+    school.set_headteacher_as_contact!
   end
 
   def devolve_ordering_to_the_school

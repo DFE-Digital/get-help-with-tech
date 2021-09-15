@@ -15,33 +15,35 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
         }.not_to(change { moving_school.reload.responsible_body_id })
       end
 
-      it 'do not change the school preorder information' do
+      it 'do not change the school status' do
         expect {
           moving_school.name = nil
           service.call
-        }.not_to(change { moving_school.reload.preorder_information })
+        }.not_to(change { moving_school.reload.status })
       end
     end
 
-    context 'when the school preorder information cannot be refreshed for some reason' do
+    context 'when the school status cannot be refreshed for some reason' do
       let(:moving_school) { create(:school) }
 
       it 'do not change the school responsible body' do
         expect {
+          allow(moving_school).to receive(:refresh_device_ordering_status!).and_raise
           service.call
         }.not_to(change { moving_school.reload.responsible_body_id })
       end
 
-      it 'do not change the school preorder information' do
+      it 'do not change the school status' do
         expect {
+          allow(moving_school).to receive(:refresh_device_ordering_status!).and_raise
           service.call
-        }.not_to(change { moving_school.reload.preorder_information })
+        }.not_to(change { moving_school.reload.status })
       end
     end
 
     context 'success' do
-      let(:moving_school) { create(:school, :with_preorder_information) }
-      let(:initial_rb) { moving_school.responsible_body }
+      let(:moving_school) { create(:school, :with_preorder_information, responsible_body: initial_rb) }
+      let(:initial_rb) { create(:local_authority, who_will_order_devices: 'school') }
 
       before do
         stub_computacenter_outgoing_api_calls
@@ -53,20 +55,18 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
         }.to(change { moving_school.reload.responsible_body_id }.from(initial_rb.id).to(new_rb.id))
       end
 
-      it 'refresh the school preorder information' do
-        preorder_information = instance_spy(PreorderInformation, refresh_status!: true)
-        allow(moving_school).to receive(:preorder_information).and_return(preorder_information)
-
+      it 'refresh the school status' do
+        allow(moving_school).to receive(:refresh_device_ordering_status!)
         service.call
 
-        expect(preorder_information).to have_received(:refresh_status!)
+        expect(moving_school).to have_received(:refresh_device_ordering_status!)
       end
 
       context 'when the school is centrally managed' do
         let!(:initial_rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-        let!(:school_a) { create_and_put_school_in_pool(initial_rb) }
-        let!(:moving_school) { create_and_put_school_in_pool(initial_rb) }
-        let!(:school_b) { create_and_put_school_in_pool(new_rb) }
+        let!(:school_a) { create_centrally_managed_school_that_can_order(initial_rb) }
+        let!(:moving_school) { create_centrally_managed_school_that_can_order(initial_rb) }
+        let!(:school_b) { create_centrally_managed_school_that_can_order(new_rb) }
 
         let(:initial_rb_std_device_start_allocation) { [school_a, moving_school].map(&:std_device_allocation).sum(&:raw_allocation) }
         let(:initial_rb_std_device_end_allocation) { school_a.std_device_allocation.raw_allocation }

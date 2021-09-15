@@ -108,18 +108,17 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   end
 
   def and_it_has_a_school_that_needs_to_be_contacted
-    school = create(:school, :with_preorder_information, :with_headteacher_contact,
+    school = create(:school, :with_preorder_information, :with_headteacher,
                     name: 'Alpha School',
                     responsible_body: local_authority)
-    school.preorder_information.change_who_will_order_devices!(:school)
-    school.preorder_information.school_contact = school.headteacher_contact
-    school.preorder_information.save!
+    school.orders_managed_by_school!
+    school.set_current_contact!(school.headteacher)
 
-    expect(school.preorder_information.school_will_be_contacted?).to be_truthy
+    expect(school.school_will_be_contacted?).to be_truthy
   end
 
   def and_it_has_a_school_with_users
-    school = create(:school, :with_preorder_information, :with_headteacher_contact,
+    school = create(:school, :with_preorder_information, :with_headteacher,
                     name: 'Alpha School',
                     urn: '123321',
                     responsible_body: local_authority)

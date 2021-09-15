@@ -50,7 +50,7 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
       'coms_allocation' => school.coms_device_allocation.allocation,
       'coms_cap' => school.coms_device_allocation.cap,
       'coms_devices_ordered' => school.coms_device_allocation.devices_ordered,
-      'preorder_info_status' => school.preorder_information.status,
+      'preorder_info_status' => school.device_ordering_status,
       'school_order_state' => school.order_state,
       'who_will_order_devices' => school.who_will_order_devices,
     }

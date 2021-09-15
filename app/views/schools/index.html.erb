@@ -1,4 +1,4 @@
-<%- title = impersonated_or_current_user.is_responsible_body_user? ? t('page_titles.your_organisations') : t('page_titles.your_schools') %>
+<%- title = impersonated_or_current_user.responsible_body_user? ? t('page_titles.your_organisations') : t('page_titles.your_schools') %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">

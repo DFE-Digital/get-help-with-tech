@@ -595,7 +595,7 @@ en:
               cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
         support/enable_orders_form:
           attributes:
-            device_cap:
+            laptop_cap:
               greater_than_or_equal_to: Enter a device cap that’s a non-negative whole number
               not_a_number: Enter a device cap that’s a non-negative whole number
               lte_allocation: Cap cannot be more than their current allocation of %{allocation}
@@ -893,7 +893,7 @@ en:
       school_search_form:
         name_or_identifier: School name, URN or UKPRN
       support_enable_orders_form:
-        device_cap: How many devices can they order?
+        laptop_cap: How many devices can they order?
         router_cap: How many routers can they order?
       support_school_suggestion_form:
         name_or_urn_or_ukprn: School name, URN or UKPRN
