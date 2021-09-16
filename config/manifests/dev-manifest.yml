@@ -8,7 +8,7 @@ applications:
     health-check-type: http
     health-check-invocation-timeout: 60
     instances: 1
-    timeout: 120
+    timeout: 180
   - type: sidekiq
     disk_quota: 2G
     health-check-type: process
