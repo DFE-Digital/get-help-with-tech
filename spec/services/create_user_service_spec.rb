@@ -376,7 +376,7 @@ RSpec.describe CreateUserService do
       context 'when the additional school has no value for who_will_order_devices' do
         let(:school) { create(:school) }
 
-        it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
+        it 'devolves ordering to the school' do
           expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
           expect(school.orders_managed_by_school?).to be_truthy
         end

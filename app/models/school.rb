@@ -238,7 +238,7 @@ class School < ApplicationRecord
   end
 
   def in_virtual_cap_pool?
-    responsible_body.has_school_in_virtual_cap_pools?(self)
+    device_allocations.any?(&:in_virtual_cap_pool?)
   end
 
   def laptop_allocation

@@ -24,7 +24,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   def computacenter_cap
     # value to pass to computacenter
     if has_virtual_cap_feature_flags?
-      if is_in_virtual_cap_pool?
+      if in_virtual_cap_pool?
         # set the cap so the whole remaining pool amount could be ordered against this school
         # CC keep track of devices ordered by school. Assume devices_ordered has been correctly sync'd
         school_virtual_cap.adjusted_cap
@@ -32,20 +32,20 @@ class SchoolDeviceAllocation < ApplicationRecord
         raw_cap
       end
     else
-      Rails.logger.info("Computacenter adjusted cap: #{school_virtual_cap.adjusted_cap}") if is_in_virtual_cap_pool?
+      Rails.logger.info("Computacenter adjusted cap: #{school_virtual_cap.adjusted_cap}") if in_virtual_cap_pool?
       raw_cap
     end
   end
 
   def cap
     if has_virtual_cap_feature_flags?
-      if is_in_virtual_cap_pool?
+      if in_virtual_cap_pool?
         school_virtual_cap.cap
       else
         super
       end
     else
-      Rails.logger.info("Virtual cap: #{school_virtual_cap.cap}") if is_in_virtual_cap_pool?
+      Rails.logger.info("Virtual cap: #{school_virtual_cap.cap}") if in_virtual_cap_pool?
       super
     end
   end
@@ -56,13 +56,13 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def devices_ordered
     if has_virtual_cap_feature_flags?
-      if is_in_virtual_cap_pool?
+      if in_virtual_cap_pool?
         school_virtual_cap.devices_ordered
       else
         super
       end
     else
-      Rails.logger.info("Virtual devices_ordered: #{school_virtual_cap.devices_ordered}") if is_in_virtual_cap_pool?
+      Rails.logger.info("Virtual devices_ordered: #{school_virtual_cap.devices_ordered}") if in_virtual_cap_pool?
       super
     end
   end
@@ -73,13 +73,13 @@ class SchoolDeviceAllocation < ApplicationRecord
 
   def allocation
     if has_virtual_cap_feature_flags?
-      if is_in_virtual_cap_pool?
+      if in_virtual_cap_pool?
         school_virtual_cap.allocation
       else
         super
       end
     else
-      Rails.logger.info("Virtual allocation: #{school_virtual_cap.allocation}") if is_in_virtual_cap_pool?
+      Rails.logger.info("Virtual allocation: #{school_virtual_cap.allocation}") if in_virtual_cap_pool?
       super
     end
   end
@@ -88,7 +88,7 @@ class SchoolDeviceAllocation < ApplicationRecord
     self[:allocation]
   end
 
-  def is_in_virtual_cap_pool?
+  def in_virtual_cap_pool?
     school_virtual_cap.present?
   end
 

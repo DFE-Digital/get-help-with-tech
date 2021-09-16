@@ -2,16 +2,16 @@ class SchoolOrderStateAndCapUpdateService
   include Computacenter::CapChangeNotifier
 
   attr_accessor :school, :order_state, :caps
-  attr_reader :disable_user_notifications
+  attr_reader :notify_school
 
-  def initialize(school:, order_state:, laptop_cap: nil, router_cap: nil)
+  def initialize(school:, order_state:, laptop_cap: nil, router_cap: nil, notify_school: true)
     @school = school
     @order_state = order_state
     @caps = [
       { device_type: 'std_device', cap: laptop_cap },
       { device_type: 'coms_device', cap: router_cap },
     ]
-    @disable_user_notifications = false
+    @notify_school = notify_school
   end
 
   def call
@@ -24,7 +24,7 @@ class SchoolOrderStateAndCapUpdateService
     caps.each do |cap|
       allocation = update_cap!(cap[:device_type], cap[:cap])
       # don't send updates as they will happen when the pool is updated and the caps adjusted
-      next if responsible_body_has_virtual_caps_enabled? && allocation.is_in_virtual_cap_pool?
+      next if responsible_body_has_virtual_caps_enabled? && allocation.in_virtual_cap_pool?
 
       update_and_notify_computacenter!(allocation)
     end
@@ -39,11 +39,7 @@ class SchoolOrderStateAndCapUpdateService
     # notifying users should only happen after successful completion of the Computacenter
     # cap update, because it's possible for that to fail and the whole thing
     # is rolled back
-    notify_school_by_email(school) unless disable_user_notifications
-  end
-
-  def disable_user_notifications!
-    @disable_user_notifications = true
+    notify_school_by_email(school) if notify_school
   end
 
 private
@@ -74,7 +70,7 @@ private
 
   def add_school_to_virtual_cap_pool_if_eligible
     return unless school&.orders_managed_centrally?
-    return if school.device_allocations.first.is_in_virtual_cap_pool?
+    return if school.in_virtual_cap_pool?
 
     begin
       school.responsible_body.add_school_to_virtual_cap_pools!(school)
