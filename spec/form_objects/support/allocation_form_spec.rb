@@ -26,8 +26,8 @@ RSpec.describe Support::AllocationForm do
         let(:initial_value) { 1 }
         let(:updated_value) { 2 }
 
-        it 'school_device_allocation#is_in_virtual_cap_pool? is true' do
-          expect(school_device_allocation.is_in_virtual_cap_pool?).to be true
+        it 'school_device_allocation#in_virtual_cap_pool? is true' do
+          expect(school_device_allocation.in_virtual_cap_pool?).to be true
         end
       end
 

@@ -4,7 +4,7 @@ class Support::AllocationForm
   attr_reader :allocation
   attr_accessor :current_allocation, :school_allocation
 
-  delegate :cap, :raw_devices_ordered, :is_in_virtual_cap_pool?, to: :school_allocation
+  delegate :cap, :raw_devices_ordered, :in_virtual_cap_pool?, to: :school_allocation
 
   validate :check_decrease_allowed
   validate :check_minimum
@@ -31,7 +31,7 @@ private
   def check_decrease_allowed
     return unless decreasing?
 
-    errors.add(:allocation, :decreasing_in_virtual_cap_pool) if is_in_virtual_cap_pool?
+    errors.add(:allocation, :decreasing_in_virtual_cap_pool) if in_virtual_cap_pool?
   end
 
   def check_minimum

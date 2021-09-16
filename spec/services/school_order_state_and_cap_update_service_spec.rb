@@ -305,9 +305,12 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
       end
     end
 
-    context 'when #disable_user_notifications! called first' do
+    context 'when the service is initialized with no school notifications' do
+      subject(:service) do
+        described_class.new(school: school, order_state: new_order_state, laptop_cap: new_cap, notify_school: false)
+      end
+
       it 'does not send any notifications' do
-        service.disable_user_notifications!
         service.update!
         expect(notifications).not_to have_received(:call)
       end

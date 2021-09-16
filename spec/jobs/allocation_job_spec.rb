@@ -13,7 +13,6 @@ RSpec.describe AllocationJob do
       it 'does not send notifications' do
         mock_service = instance_double(SchoolOrderStateAndCapUpdateService)
         allow(SchoolOrderStateAndCapUpdateService).to receive(:new).and_return(mock_service)
-        allow(mock_service).to receive(:disable_user_notifications!)
         allow(mock_service).to receive(:call)
 
         described_class.perform_now(batch_job)
@@ -22,9 +21,8 @@ RSpec.describe AllocationJob do
           school: school,
           order_state: batch_job.order_state,
           laptop_cap: batch_job.allocation_delta,
+          notify_school: false,
         )
-
-        expect(mock_service).to have_received(:disable_user_notifications!)
       end
 
       it 'does not update sent_notification flag' do
@@ -41,7 +39,6 @@ RSpec.describe AllocationJob do
       it 'sends notifications' do
         mock_service = instance_double(SchoolOrderStateAndCapUpdateService)
         allow(SchoolOrderStateAndCapUpdateService).to receive(:new).and_return(mock_service)
-        allow(mock_service).to receive(:disable_user_notifications!)
         allow(mock_service).to receive(:call)
 
         described_class.perform_now(batch_job)
@@ -50,9 +47,8 @@ RSpec.describe AllocationJob do
           school: school,
           order_state: batch_job.order_state,
           laptop_cap: batch_job.allocation_delta,
+          notify_school: true,
         )
-
-        expect(mock_service).not_to have_received(:disable_user_notifications!)
       end
 
       it 'updates sent_notification flag' do
