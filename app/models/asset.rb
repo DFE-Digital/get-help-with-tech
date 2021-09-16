@@ -88,7 +88,7 @@ class Asset < ApplicationRecord
   end
 
   def has_secret_information?
-    [bios_password, admin_password, hardware_hash].any?(&:present?)
+    [encrypted_bios_password, encrypted_admin_password, encrypted_hardware_hash].any?(&:present?)
   end
 
   def ==(other)
