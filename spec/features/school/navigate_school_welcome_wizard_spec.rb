@@ -242,7 +242,6 @@ RSpec.feature 'Navigate school welcome wizard' do
       fill_in 'Name', with: 'Amanda Handstand'
       fill_in 'Email address', with: 'amanda@example.com'
       fill_in 'Telephone number', with: '01234 567890'
-      choose 'Yes, give them access to the Support Portal'
     end
     click_on 'Continue'
   end

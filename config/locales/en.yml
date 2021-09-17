@@ -252,10 +252,10 @@ en:
       devices_you_can_order:
         title: You can order different types of laptops
       chromebooks:
-        title: Will you order Chromebooks?
+        title: Are you ordering Chromebooks?
         'yes': Yes, we'll need Chromebooks
         'no': No, we do not need Chromebooks
-        i_dont_know: I do not know
+        i_dont_know: Not sure
         errors:
           choice: Tell us whether you'll need Chromebooks
       what_happens_next:
