@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get '/huawei-router-password', to: 'huawei_router_passwords#new', as: 'huawei_router_password'
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
+  get '/finding-out-about-internet-access-needs', to: 'pages#finding_out_about_internet_access_needs', as: :finding_out_about_internet_access_needs
 
   get '/guide-to-collecting-mobile-information', to: redirect('/internet-access')
   get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: redirect('/internet-access')
