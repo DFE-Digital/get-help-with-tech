@@ -18,4 +18,6 @@ class PagesController < ApplicationController
   def request_a_change; end
 
   def internet_access; end
+
+  def finding_out_about_internet_access_needs; end
 end

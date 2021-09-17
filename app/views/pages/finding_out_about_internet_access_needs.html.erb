@@ -1,0 +1,178 @@
+<% content_for :title, t('page_titles.finding_out_about_internet_access_needs') %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  t('page_titles.finding_out_about_internet_access_needs'),
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.finding_out_about_internet_access_needs') %>
+    </h1>
+
+    <p class="govuk-body">
+      Children and young people may not be able to access digital remote education at home
+      because they do not have access to the internet, or their internet access is not sufficient
+      (for example, it may have data usage limits).
+    </p>
+
+    <p class="govuk-body">
+      You may already have some understanding of access requirements for your pupils or
+      students, but the information below can help you to find out exactly what&rsquo;s needed.
+    </p>
+
+    <h2 class="govuk-heading-l">Internet access</h2>
+
+    <p class="govuk-body">
+      &lsquo;Internet access&rsquo; means different things to different people. For example, they may not
+      recognise that they pay for broadband as part of a TV/phone bundle. Clarify with parents
+      and carers, or young people if they live independently, what they&rsquo;re able to do online, for
+      example are they able to do their homework without waiting for long periods for a website
+      to load?
+    </p>
+
+    <p class="govuk-body">
+      Specifying types of internet access at home may be difficult (for example, if a family
+      regularly needs to pay for more mobile data, knowing whether they&rsquo;re on a pay monthly or
+      pay as you go agreement is less important). Ask respondents about the types of issues
+      and worries they may face.
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>How do you normally access the internet? (for example, through fixed line broadband or a mobile connection).</li>
+      <li>Does a member of your household pay for your access to the internet?</li>
+      <li>Are you and your family ever unable to access the internet because you cannot make extra payments for data or meet monthly payments?</li>
+      <li>Have you or your family recently cancelled an agreement, with no replacement, which gave you internet access?</li>
+    </ul>
+
+    <h2 class="govuk-heading-l">Surveys</h2>
+
+    <p class="govuk-body">
+      Use surveys to check whether families know about existing options that may be available
+      if they&rsquo;re on a low income. Explore other benefits, such as affordable tariffs with eligibility
+      criteria
+      (<%= govuk_link_to 'examples of these are listed by Ofcom', 'https://www.ofcom.org.uk/about-ofcom/latest/media/media-releases/2021/help-customers-struggling-to-pay-bills' %>).
+      Contact telecoms/mobile providers to
+      ask what support they offer and find out about support from social housing providers.
+    </p>
+
+    <p class="govuk-body">
+      You may also be able to target surveys about internet access by focusing on:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        families of children and young people who&rsquo;ve been lent devices to support
+        remote education
+      </li>
+      <li>
+        families of children and young people who you&rsquo;ve previously supported with
+        internet access options available through the Get help with technology service or
+        other sources
+      </li>
+      <li>
+        reviewing information from use of your learning platform, if available, to identify
+        children and young people who&rsquo;ve struggled to log on and stay connected with
+        online learning
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-l">Internet access options</h2>
+
+    <p class="govuk-body">
+      Schools and colleges can help children and young people to access the internet at home
+      through the following:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>mobile and broadband internet access</li>
+      <li>support from other organisations</li>
+      <li>help for schools and colleges with the costs of home internet access from DfE</li>
+    </ul>
+
+    <p class="govuk-body">
+      If applicable, you can consult your existing IT support about internet access options that
+      might be available for pupils.
+    </p>
+
+    <h2 class="govuk-heading-l">Mobile and broadband internet access</h2>
+
+    <p class="govuk-body">
+      If a family is struggling to afford the cost of internet access, there are affordable tariffs
+      available from some telecom providers. These tariffs reduce the cost of staying online and
+      may help families that might not be able to meet standard broadband contract terms.
+      <%= govuk_link_to('Further information is available from Ofcom', 'https://www.ofcom.org.uk/about-ofcom/latest/media/media-releases/2021/help-customers-struggling-to-pay-bills') %>
+      about telecom providers that offer affordable
+      broadband tariffs and the applicable eligibility criteria.
+    </p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Ofcom provides consumer advice', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/quality-of-service#mobiletable' %>
+      about choosing the best mobile and broadband provider.
+      You can use one of the
+      <%= govuk_link_to 'digital comparison tools accredited by Ofcom', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/costs-and-billing/price-comparison' %>
+      to find out what deals are available.
+    </p>
+
+    <p class="govuk-body">
+      Ofcom also offers a
+      <%= govuk_link_to 'checker for broadband and mobile coverage', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/advice/ofcom-checker' %>
+      for services from major
+      providers as well as
+      <%= govuk_link_to 'general tips', 'https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/stay-connected' %>
+      for checking broadband speeds and availability,
+      improving wifi connectivity inside the home and options for switching broadband
+      providers.
+    </p>
+
+    <h2 class="govuk-heading-l">Support from other organisations</h2>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Information is available from Citizens Advice', 'https://www.citizensadvice.org.uk/debt-and-money/if-you-cant-pay-your-bills-because-of-coronavirus/' %>
+      for families who are struggling to afford
+      household bills, including telephone and broadband. Guidance is also available from the
+      Money Helper website about
+      <%= govuk_link_to 'saving money on home phone and broadband bills', 'https://www.moneyhelper.org.uk/en/everyday-money/budgeting/save-money-on-your-home-phone-and-broadband' %>
+      and on
+      <%= govuk_link_to 'mobile phone bills', 'https://www.moneyhelper.org.uk/en/everyday-money/budgeting/save-money-on-your-mobile-phone' %>
+    </p>
+
+    <p class="govuk-body">
+      Families may also be able to find support to stay online through the following approaches.
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        Their
+        <%= govuk_link_to 'local authority', 'https://www.gov.uk/find-local-council' %>
+        may have information about local digital access initiatives.
+      </li>
+      <li>
+        If they rent their home from a social housing provider, the housing provider may
+        offer free or low-cost internet access, such as through deals covering homes in
+        accommodation blocks.
+      </li>
+      <li>
+        The local organisations that are part of the
+        <%= govuk_link_to 'Online Centres Network', 'https://www.gov.uk/ukonline-centre-internet-access-computer-training' %>
+        can help with
+        digital skills support and may have information about local digital access
+        initiatives.
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      <%= govuk_link_to 'Learn My Way', 'https://www.learnmyway.com/' %>
+      offers lots of free online courses to help people learn to use computers
+      and the internet safely. The learning modules cover digital basics and internet safety as
+      well as wider topics such as using digital tools for managing money, improving health and
+      finding work.
+    </p>
+
+    <p class="govuk-body">
+      Please note that there are other schemes and initiatives available that aren&rsquo;t listed on this
+      website.
+    </p>
+  </div>
+</div>
