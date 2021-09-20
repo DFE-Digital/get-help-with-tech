@@ -19,4 +19,10 @@ RSpec.feature 'Devices guidance pages', type: :feature do
 
     expect(page).to have_selector 'h1', text: 'Page not found'
   end
+
+  scenario 'Images that NO longer exist' do
+    visit '/devices/non-existent-image.png'
+
+    expect(page.status_code).to be(404)
+  end
 end
