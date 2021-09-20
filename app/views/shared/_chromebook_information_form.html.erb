@@ -16,7 +16,7 @@
                               hint: { text: "For example, ‘school.co.uk’" } %>
       <%= f.govuk_text_field  :recovery_email_address,
                               label: { text: "Recovery email address", size: 's' },
-                              hint: { text: "This email address must be on a different domain to the #{@school.institution_type} domain. For example, if the domain is ‘school.com’, then the email must not be ‘recovery@school.com’." } %>
+                              hint: { text: "This must be on a different domain. For example, if the domain is ‘school.com’, the email cannot be ‘recovery@school.com’" } %>
       <p class="govuk-body govuk-!-margin-top-4">
         If you need help finding these details, speak to the people you usually contact for IT support.
       </p>
