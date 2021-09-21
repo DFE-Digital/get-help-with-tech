@@ -24,8 +24,7 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
     authorize @school, :update_computacenter_reference?
     @form = Computacenter::ShipToForm.new(ship_to_params.merge(school: @school))
 
-    if @form.valid?
-      Computacenter::SoldToShipToUpdater.new(@school).update_ship_to!(@form.ship_to)
+    if @form.save
       flash[:success] = t(:success, scope: %i[computacenter ship_to update], name: @school.name, ship_to: @school.computacenter_reference)
       redirect_to computacenter_school_changes_path
     else

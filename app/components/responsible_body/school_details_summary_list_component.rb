@@ -65,7 +65,7 @@ private
   def device_allocation_row
     {
       key: 'Device allocation',
-      value: pluralize(@school.laptop_raw_allocation, 'device'),
+      value: pluralize(@school.raw_laptop_allocation, 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query <span class="govuk-visually-hidden">device</span> allocation'.html_safe,
     }
@@ -74,7 +74,7 @@ private
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: pluralize(@school.router_raw_allocation, 'router'),
+      value: pluralize(@school.raw_router_allocation, 'router'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query <span class="govuk-visually-hidden">router</span> allocation'.html_safe,
     }
@@ -103,7 +103,7 @@ private
   end
 
   def display_router_allocation_row?
-    @school.has_router_raw_allocation?
+    @school.has_raw_router_allocation?
   end
 
   def order_status_row

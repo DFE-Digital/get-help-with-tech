@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AllocationUpdater do
   let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
   let(:mock_response) { OpenStruct.new(body: '<xml>test-response</xml>') }
-  let(:mock_update_service) { instance_double(SchoolOrderStateAndCapUpdateService) }
+  let(:mock_update_service) { instance_double(UpdateSchoolDevicesService) }
 
   before do
     allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
@@ -20,7 +20,7 @@ RSpec.describe AllocationUpdater do
     let(:updated_value) { updated }
 
     let(:school) { create(:school, :in_lockdown) }
-    let(:update_service) { instance_double('SchoolOrderStateAndCapUpdateService') }
+    let(:update_service) { instance_double('UpdateSchoolDevicesService') }
 
     before do
       create(:school_device_allocation,
@@ -38,11 +38,11 @@ RSpec.describe AllocationUpdater do
     end
 
     it 'calls notifies computacenter with cap updates' do
-      allow(SchoolOrderStateAndCapUpdateService).to receive(:new).and_return(mock_update_service)
+      allow(UpdateSchoolDevicesService).to receive(:new).and_return(mock_update_service)
 
       service.call
 
-      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, laptop_cap: updated_value, router_cap: 0)
+      expect(UpdateSchoolDevicesService).to have_received(:new).with(school: school, order_state: school.order_state, laptop_cap: updated_value, router_cap: 0)
       expect(mock_update_service).to have_received(:update!)
     end
   end
@@ -66,11 +66,11 @@ RSpec.describe AllocationUpdater do
     end
 
     it 'calls notifies computacenter with cap updates' do
-      allow(SchoolOrderStateAndCapUpdateService).to receive(:new).and_return(mock_update_service)
+      allow(UpdateSchoolDevicesService).to receive(:new).and_return(mock_update_service)
 
       service.call
 
-      expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(school: school, order_state: school.order_state, laptop_cap: updated_value, router_cap: 0)
+      expect(UpdateSchoolDevicesService).to have_received(:new).with(school: school, order_state: school.order_state, laptop_cap: updated_value, router_cap: 0)
       expect(mock_update_service).to have_received(:update!)
     end
   end

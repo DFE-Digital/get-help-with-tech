@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchoolOrderStateAndCapUpdateService do
+RSpec.describe UpdateSchoolDevicesService do
   let(:responsible_body) { create(:trust, :manages_centrally) }
   let(:preorder) { create(:preorder_information, :does_not_need_chromebooks, who_will_order_devices: :responsible_body) }
   let(:school) { create(:school, order_state: 'cannot_order', preorder_information: preorder, responsible_body: responsible_body) }
@@ -15,7 +15,7 @@ RSpec.describe SchoolOrderStateAndCapUpdateService do
     described_class.new(school: school, order_state: new_order_state, laptop_cap: new_cap)
   end
 
-  describe '#update!' do
+  describe '#call' do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
     let(:notifications) { instance_double(SchoolCanOrderDevicesNotifications) }
 

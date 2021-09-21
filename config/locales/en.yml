@@ -112,8 +112,8 @@ en:
       enable_orders: Can they place orders?
       confirm_enable_orders: Check your answers and confirm
     support_edit_allocation:
-      std_device: Change device allocation
-      coms_device: Change router allocation
+      laptop: Change device allocation
+      router: Change router allocation
     support_edit_chromebook_details: Will the school need to order Chromebooks?
     support_bulk_allocation: Bulk upload allocation updates
     support_bulk_allocation_result: Bulk allocation summary
@@ -608,7 +608,7 @@ en:
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
         support/allocation_form:
           attributes:
-            allocation:
+            school:
               decreasing_in_virtual_cap_pool: Decreasing an allocation for a school in a virtual cap pool is currently not possible - contact the dev team to do this manually for now
               gte_devices_ordered: Allocation cannot be less than the number they have already ordered (%{devices_ordered})
         support/school_suggestion_form:

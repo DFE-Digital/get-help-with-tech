@@ -107,7 +107,7 @@ private
     super
       .except(:action_path, :action)
       .merge(
-        change_path: support_school_devices_allocation_edit_path(school_urn: @school.urn, device_type: 'coms_device'),
+        change_path: support_school_devices_allocation_edit_path(school_urn: @school.urn, device_type: :router),
         action: 'router allocation',
       )
   end

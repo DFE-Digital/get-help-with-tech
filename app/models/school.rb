@@ -5,7 +5,7 @@ class School < ApplicationRecord
 
   belongs_to :responsible_body
 
-  has_many :device_allocations, class_name: 'SchoolDeviceAllocation'
+  has_many :device_allocations, class_name: 'SchoolDeviceAllocation', inverse_of: :school
   has_one :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
   has_one :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
 
@@ -18,8 +18,8 @@ class School < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :school_links, dependent: :destroy
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
-                                     primary_key: :computacenter_reference,
-                                     foreign_key: :ship_to
+    primary_key: :computacenter_reference,
+    foreign_key: :ship_to
 
   validates :name, presence: true
 
@@ -98,14 +98,40 @@ class School < ApplicationRecord
   delegate :will_not_need_chromebooks?, to: :preorder_information, allow_nil: true
 
   delegate :cap_implied_by_order_state, to: :std_device_allocation, allow_nil: true, prefix: :laptop
+  delegate :computacenter_cap, to: :std_device_allocation, prefix: :laptop, allow_nil: true
+  delegate :allocation=, to: :std_device_allocation, prefix: :laptop
 
   delegate :cap_implied_by_order_state, to: :coms_device_allocation, allow_nil: true, prefix: :router
+  delegate :computacenter_cap, to: :std_device_allocation, prefix: :router, allow_nil: true
+  delegate :allocation=, to: :coms_device_allocation, prefix: :router
 
   delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
   delegate :name, to: :responsible_body, prefix: true, allow_nil: true
 
   def active_responsible_users
     device_ordering_organisation.users.signed_in_at_least_once
+  end
+
+  def addable_to_virtual_cap_pool?
+    !la_funded_provision? && orders_managed_centrally? && any_allocation_id?
+  end
+
+  def adjusted_laptop_cap_by_order_state(cap, state: order_state)
+    return raw_laptops_ordered if state == 'cannot_order'
+    state == 'can_order' ? raw_laptop_allocation : cap
+  end
+
+  def adjusted_router_cap_by_order_state(cap, state: order_state)
+    return raw_routers_ordered if state == 'cannot_order'
+    state == 'can_order' ? raw_router_allocation : cap
+  end
+
+  def allocation_ids
+    [laptop_allocation_id, router_allocation_id].compact
+  end
+
+  def any_allocation_id?
+    (laptop_allocation_id || router_allocation_id).present?
   end
 
   def address
@@ -132,8 +158,8 @@ class School < ApplicationRecord
     !preorder_information? || school_will_order_devices?
   end
 
-  def can_notify_computacenter?
-    computacenter_reference.present? && responsible_body.computacenter_reference.present?
+  def computacenter_references?
+    [computacenter_reference, responsible_body_computacenter_reference].all?(&:present?)
   end
 
   def can_order_devices_right_now?
@@ -148,9 +174,7 @@ class School < ApplicationRecord
     if can_change_who_manages_orders?
       orders_managed_by!(who, clear_preorder_information: clear_preorder_information)
       refresh_device_ordering_status!
-      if responsible_body.school_addable_to_virtual_cap_pools?(self)
-        responsible_body.add_school_to_virtual_cap_pools!(self)
-      end
+      AddSchoolToVirtualCapPoolService.new(self).call
       true
     else
       raise VirtualCapPoolError, "#{name} (#{urn}) cannot be devolved because it is in a virtual cap pool"
@@ -209,16 +233,16 @@ class School < ApplicationRecord
     laptop_allocation.positive?
   end
 
-  def has_laptop_raw_allocation?
-    laptop_raw_allocation.positive?
+  def has_raw_laptop_allocation?
+    raw_laptop_allocation.positive?
+  end
+
+  def has_raw_router_allocation?
+    raw_router_allocation.positive?
   end
 
   def has_router_allocation?
     router_allocation.positive?
-  end
-
-  def has_router_raw_allocation?
-    router_raw_allocation.positive?
   end
 
   def headteacher?
@@ -238,11 +262,15 @@ class School < ApplicationRecord
   end
 
   def in_virtual_cap_pool?
-    device_allocations.any?(&:in_virtual_cap_pool?)
+    std_device_allocation&.in_virtual_cap_pool? || coms_device_allocation&.in_virtual_cap_pool?
   end
 
   def laptop_allocation
     std_device_allocation&.allocation.to_i
+  end
+
+  def laptop_allocation_id
+    std_device_allocation&.id
   end
 
   def laptop_cap
@@ -257,9 +285,10 @@ class School < ApplicationRecord
     std_device_allocation&.devices_ordered.to_i
   end
 
-  def laptop_raw_allocation
-    std_device_allocation&.raw_allocation.to_i
-  end
+  #
+  # def existing_laptop_allocation_not_in_pool?
+  #   std_device_allocation.present? && !std_device_allocation.in_virtual_cap_pool?
+  # end
 
   def la_funded_provision?
     type == 'LaFundedPlace'
@@ -329,8 +358,24 @@ class School < ApplicationRecord
     end
   end
 
+  def raw_laptop_allocation
+    std_device_allocation&.raw_allocation.to_i
+  end
+
+  def raw_laptop_cap
+    std_device_allocation&.raw_cap.to_i
+  end
+
   def raw_laptops_ordered
     std_device_allocation&.raw_devices_ordered.to_i
+  end
+
+  def raw_router_allocation
+    coms_device_allocation&.raw_allocation.to_i
+  end
+
+  def raw_router_cap
+    coms_device_allocation&.raw_cap.to_i
   end
 
   def raw_routers_ordered
@@ -345,6 +390,10 @@ class School < ApplicationRecord
     coms_device_allocation&.allocation.to_i
   end
 
+  def router_allocation_id
+    coms_device_allocation&.id
+  end
+
   def router_cap
     coms_device_allocation&.cap.to_i
   end
@@ -357,20 +406,38 @@ class School < ApplicationRecord
     coms_device_allocation&.devices_ordered.to_i
   end
 
-  def router_raw_allocation
-    coms_device_allocation&.raw_allocation.to_i
+  def set_contact_time!(time)
+    preorder_information.update!(school_contacted_at: time)
   end
 
   def set_current_contact!(contact)
     preorder_information.update!(school_contact: contact)
   end
 
-  def set_contact_time!(time)
-    preorder_information.update!(school_contacted_at: time)
-  end
-
   def set_headteacher_as_contact!
     preorder_information.update!(school_contact: headteacher)
+  end
+
+  def set_laptop_allocation!(amount)
+    existing_or_new_std_device_allocation.update!(allocation: amount)
+    reload.refresh_device_ordering_status!
+  end
+
+  def set_laptop_cap!(cap, adjust_by_order_state: true)
+    amount = adjust_by_order_state ? adjusted_laptop_cap_by_order_state(cap) : cap
+    existing_or_new_std_device_allocation.update!(cap: amount)
+    reload.refresh_device_ordering_status!
+  end
+
+  def set_router_allocation!(amount)
+    existing_or_new_coms_device_allocation.update!(allocation: amount)
+    reload.refresh_device_ordering_status!
+  end
+
+  def set_router_cap!(cap, adjust_by_order_state: true)
+    amount = adjust_by_order_state ? adjusted_router_cap_by_order_state(cap) : cap
+    existing_or_new_coms_device_allocation.update!(cap: amount)
+    reload.refresh_device_ordering_status!
   end
 
   def social_care_leaver?
@@ -387,7 +454,7 @@ class School < ApplicationRecord
     responsible_body_type if orders_managed_centrally?
   end
 
-private
+  private
 
   def clear_preorder_information!
     preorder_information&.destroy!
@@ -396,6 +463,18 @@ private
 
   def device_ordering_organisation
     orders_managed_by_school? ? self : responsible_body
+  end
+
+  def existing_or_new_preorder_information
+    (preorder_information || build_preorder_information)
+  end
+
+  def existing_or_new_std_device_allocation
+    (std_device_allocation || build_std_device_allocation)
+  end
+
+  def existing_or_new_coms_device_allocation
+    (coms_device_allocation || build_coms_device_allocation)
   end
 
   def hide_networks_not_supporting_fe?
@@ -409,7 +488,7 @@ private
   def orders_managed_by!(who, clear_preorder_information: false)
     clear_preorder_information! if clear_preorder_information
     manager = who.to_sym == :school ? :school_will_order_devices! : :responsible_body_will_order_devices!
-    (preorder_information || build_preorder_information).send(manager)
+    existing_or_new_preorder_information.send(manager)
   end
 
   def responsible_body_type

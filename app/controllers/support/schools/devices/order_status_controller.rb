@@ -1,33 +1,19 @@
 class Support::Schools::Devices::OrderStatusController < Support::BaseController
   before_action :set_school, except: %i[collect_urns_to_allow_many_schools_to_order allow_ordering_for_many_schools]
 
+  attr_reader :form
+
   def edit
     @form = Support::EnableOrdersForm.new(existing_params.merge(enable_orders_form_params))
   end
 
   def update
-    @form = Support::EnableOrdersForm.new(enable_orders_form_params.merge(school: @school))
-
-    if @form.valid?
-      if params[:confirm].present?
-        ActiveRecord::Base.transaction do
-          service = SchoolOrderStateAndCapUpdateService.new(school: @school,
-                                                            order_state: @form.order_state,
-                                                            laptop_cap: @form.laptop_cap,
-                                                            router_cap: @form.router_cap)
-          service.update!
-        end
-        flash[:success] = t(:success, scope: %i[support order_status update])
-        redirect_to support_school_path(urn: @school.urn)
-      else
-        redirect_to support_school_confirm_enable_orders_path(urn: @school.urn,
-                                                              order_state: @form.order_state,
-                                                              laptop_cap: @form.laptop_cap,
-                                                              router_cap: @form.router_cap)
-      end
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    @form = Support::EnableOrdersForm.new(enable_orders_form_params.merge(school: school))
+    invalid_form! and return unless form.valid?
+    unconfirmed! and return if params[:confirm].blank?
+    form.save
+    flash[:success] = t(:success, scope: %i[support order_status update])
+    redirect_to support_school_path(urn: school.urn)
   rescue Computacenter::OutgoingAPI::Error => e
     flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id: e.cap_update_request&.payload_id)
     render :edit, status: :unprocessable_entity
@@ -51,13 +37,8 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
     authorize School, :edit?
     @form = Support::BulkAllocationForm.new(restriction_params)
 
-    if @form.valid?
-      importer = Importers::AllocationUploadCsv.new(
-        path_to_csv: @form.upload.path,
-        send_notification: @form.send_notification,
-      )
-      importer.call
-      redirect_to support_allocation_batch_job_path(importer.batch_id)
+    if form.save
+      redirect_to support_allocation_batch_job_path(form.batch_id)
     else
       render :collect_urns_to_allow_many_schools_to_order, status: :unprocessable_entity
     end
@@ -84,5 +65,16 @@ private
 
   def restriction_params
     params.require(:support_bulk_allocation_form).permit(:upload, :send_notification)
+  end
+
+  def invalid_form!
+    render(:edit, status: :unprocessable_entity)
+  end
+
+  def unconfirmed!
+    redirect_to support_school_confirm_enable_orders_path(urn: school.urn,
+                                                          order_state: form.order_state,
+                                                          laptop_cap: form.laptop_cap,
+                                                          router_cap: form.router_cap)
   end
 end
