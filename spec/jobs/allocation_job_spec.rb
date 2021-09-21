@@ -11,13 +11,13 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order', send_notification: false) }
 
       it 'does not send notifications' do
-        mock_service = instance_double(SchoolOrderStateAndCapUpdateService)
-        allow(SchoolOrderStateAndCapUpdateService).to receive(:new).and_return(mock_service)
+        mock_service = instance_double(UpdateSchoolDevicesService)
+        allow(UpdateSchoolDevicesService).to receive(:new).and_return(mock_service)
         allow(mock_service).to receive(:call)
 
         described_class.perform_now(batch_job)
 
-        expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(
+        expect(UpdateSchoolDevicesService).to have_received(:new).with(
           school: school,
           order_state: batch_job.order_state,
           laptop_cap: batch_job.allocation_delta,
@@ -37,13 +37,13 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order', send_notification: true) }
 
       it 'sends notifications' do
-        mock_service = instance_double(SchoolOrderStateAndCapUpdateService)
-        allow(SchoolOrderStateAndCapUpdateService).to receive(:new).and_return(mock_service)
+        mock_service = instance_double(UpdateSchoolDevicesService)
+        allow(UpdateSchoolDevicesService).to receive(:new).and_return(mock_service)
         allow(mock_service).to receive(:call)
 
         described_class.perform_now(batch_job)
 
-        expect(SchoolOrderStateAndCapUpdateService).to have_received(:new).with(
+        expect(UpdateSchoolDevicesService).to have_received(:new).with(
           school: school,
           order_state: batch_job.order_state,
           laptop_cap: batch_job.allocation_delta,

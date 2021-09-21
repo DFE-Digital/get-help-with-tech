@@ -48,7 +48,7 @@ Changes to the `allocation` and `cap` values of a `SchoolDeviceAllocation` need 
 
 ### Cap updates to Computacenter
 
-Before virtual cap pools, cap update requests were only sent to Computacenter when a school's order state was changed via the `SchoolOrderStateAndCapUpdateService`. 
+Before virtual cap pools, cap update requests were only sent to Computacenter when a school's order state was changed via the `SchoolAllocationCapUpdateService`. 
 
 With virtual cap pools and the shared caps, we must also generate cap update requests whenever the cap amount of the pool changes. The change must be sent to Computacenter for all schools in that pool.
 
@@ -71,7 +71,7 @@ With virtual cap pools and the shared caps, we must also generate cap update req
 
 #### Automatically adding schools
 
-Schools are normally automatically added to a virtual pool when they are enabled for ordering and the above prerequisites are in place.  This takes place via the `SchoolOrderStateAndCapUpdateService#update!` method used to change the school's order state.
+Schools are normally automatically added to a virtual pool when they are enabled for ordering and the above prerequisites are in place.  This takes place via the `SchoolAllocationCapUpdateService#update!` method used to change the school's order state.
 
 #### Manually add a school
 

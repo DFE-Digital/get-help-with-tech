@@ -1,42 +1,72 @@
 class Support::AllocationForm
   include ActiveModel::Model
 
-  attr_reader :allocation
-  attr_accessor :current_allocation, :school_allocation
+  attr_accessor :allocation, :device_type, :school
 
-  delegate :cap, :raw_devices_ordered, :in_virtual_cap_pool?, to: :school_allocation
+  delegate :in_virtual_cap_pool?, :order_state,
+           :raw_laptop_allocation, :raw_router_allocation,
+           :raw_laptop_cap, :raw_router_cap,
+           :raw_laptops_ordered, :raw_routers_ordered,
+           to: :school
 
   validate :check_decrease_allowed
   validate :check_minimum
 
-  def initialize(params = {})
-    super(params)
-    @current_allocation = @school_allocation.dup
+  #
+  # def allocation=(value)
+  #   @allocation = value.to_i
+  # end
+
+  def save
+    valid? && allocation_updated?
   end
 
-  def allocation=(value)
-    @allocation = value.to_i
+  private
+
+  def allocation_type
+    router? ? :router_allocation : :laptop_allocation
   end
 
-  def order_state
-    school_allocation&.school&.order_state
+  def cap
+    router? ? raw_router_cap : raw_laptop_cap
   end
 
-private
+  def cap_type
+    router? ? :router_cap : :laptop_cap
+  end
 
-  def decreasing?
-    allocation < current_allocation.raw_allocation
+  def allocation_updated?
+    SchoolAllocationCapUpdateService.new(school: school,
+                                            order_state: order_state,
+                                            allocation_type => allocation,
+                                            cap_type => cap).call
   end
 
   def check_decrease_allowed
-    return unless decreasing?
-
-    errors.add(:allocation, :decreasing_in_virtual_cap_pool) if in_virtual_cap_pool?
+    if !decreasing? && in_virtual_cap_pool?
+      errors.add(:school, :decreasing_in_virtual_cap_pool)
+    end
   end
 
   def check_minimum
     if allocation < raw_devices_ordered
-      errors.add(:allocation, :gte_devices_ordered, devices_ordered: raw_devices_ordered)
+      errors.add(:school, :gte_devices_ordered, devices_ordered: raw_devices_ordered)
     end
+  end
+
+  def decreasing?
+    allocation < raw_allocation
+  end
+
+  def raw_allocation
+    router? ? raw_router_allocation : raw_laptop_allocation
+  end
+
+  def raw_devices_ordered
+    router? ? raw_routers_ordered : raw_laptops_ordered
+  end
+
+  def router?
+    device_type == :router
   end
 end

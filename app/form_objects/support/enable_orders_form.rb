@@ -19,15 +19,26 @@ class Support::EnableOrdersForm
     order_state.to_s.in?(%w[can_order_for_specific_circumstances can_order])
   end
 
+  def save
+    valid? && orders_enabled?
+  end
+
 private
 
   def cap_required?
     order_state.to_s == 'can_order_for_specific_circumstances'
   end
 
+  def orders_enabled?
+    SchoolAllocationCapUpdateService.new(school: school,
+                                            order_state: order_state,
+                                            laptop_cap: laptop_cap,
+                                            router_cap: router_cap)
+  end
+
   def override_cap_according_to_order_state!
-    @laptop_cap = @school.laptop_cap_implied_by_order_state(order_state: order_state, given_cap: laptop_cap)
-    @router_cap = @school.router_cap_implied_by_order_state(order_state: order_state, given_cap: router_cap)
+    @laptop_cap = school.adjusted_laptop_cap_by_order_state(laptop_cap, state: order_state)
+    @router_cap = school.adjusted_router_cap_by_order_state(router_cap, state: order_state)
   end
 
   def validate_caps_lte_allocation

@@ -21,9 +21,12 @@ class SchoolDeviceAllocation < ApplicationRecord
   scope :can_order_std_devices_now, -> { by_device_type('std_device').where('cap > devices_ordered') }
   scope :by_computacenter_device_type, ->(cc_device_type) { by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type)) }
 
+  delegate :computacenter_reference, to: :school
+  delegate :computacenter_references?, to: :school
+
   def computacenter_cap
     # value to pass to computacenter
-    if has_virtual_cap_feature_flags?
+    if vcap_enabled?
       if in_virtual_cap_pool?
         # set the cap so the whole remaining pool amount could be ordered against this school
         # CC keep track of devices ordered by school. Assume devices_ordered has been correctly sync'd
@@ -38,7 +41,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def cap
-    if has_virtual_cap_feature_flags?
+    if vcap_enabled?
       if in_virtual_cap_pool?
         school_virtual_cap.cap
       else
@@ -55,7 +58,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def devices_ordered
-    if has_virtual_cap_feature_flags?
+    if vcap_enabled?
       if in_virtual_cap_pool?
         school_virtual_cap.devices_ordered
       else
@@ -72,7 +75,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def allocation
-    if has_virtual_cap_feature_flags?
+    if vcap_enabled?
       if in_virtual_cap_pool?
         school_virtual_cap.allocation
       else
@@ -96,20 +99,20 @@ class SchoolDeviceAllocation < ApplicationRecord
     Computacenter::CapTypeConverter.to_computacenter_type(device_type)
   end
 
-  def cap_implied_by_order_state(order_state:, given_cap: nil)
-    case order_state.to_sym
-    when :cannot_order
-      raw_devices_ordered.to_i
-    when :can_order
-      raw_allocation.to_i
-    else # specific circumstances
-      given_cap
-    end
-  end
+  # def cap_implied_by_order_state(order_state:, given_cap: nil)
+  #   case order_state.to_sym
+  #   when :cannot_order
+  #     raw_devices_ordered.to_i
+  #   when :can_order
+  #     raw_allocation.to_i
+  #   else # specific circumstances
+  #     given_cap
+  #   end
+  # end
 
 private
 
-  def has_virtual_cap_feature_flags?
-    school&.responsible_body&.has_virtual_cap_feature_flags? || false
+  def vcap_enabled?
+    school&.responsible_body&.has_virtual_cap_feature_flags?
   end
 end

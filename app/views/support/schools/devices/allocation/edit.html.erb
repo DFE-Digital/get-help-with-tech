@@ -1,5 +1,5 @@
 <%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_path(@school.urn)) %>
-<%- title = t("page_titles.support_edit_allocation.#{device_type}") %>
+<%- title = t("page_titles.support_edit_allocation.#{@device_type}") %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">
@@ -10,7 +10,7 @@
     </h1>
 
     <%= form_for @form, url: support_school_devices_allocation_path(@school.urn), method: :patch do |f| %>
-      <%= hidden_field_tag :device_type, device_type %>
+      <%= hidden_field_tag :device_type, @device_type %>
 
       <%= f.govuk_error_summary %>
 

@@ -24,8 +24,7 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
     authorize @responsible_body, :update_computacenter_reference?
     @form = Computacenter::SoldToForm.new(sold_to_params.merge(responsible_body: @responsible_body))
 
-    if @form.valid?
-      Computacenter::SoldToShipToUpdater.new(@responsible_body).update_sold_to!(@form.sold_to)
+    if @form.save
       flash[:success] = t(:success, scope: %i[computacenter sold_to update], name: @responsible_body.name,
                                     sold_to: @responsible_body.computacenter_reference)
       redirect_to computacenter_responsible_body_changes_path
