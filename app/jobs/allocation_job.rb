@@ -64,7 +64,7 @@ private
   end
 
   def call_school_order_state_and_cap_update_service
-    SchoolAllocationCapUpdateService.new(
+    UpdateSchoolDevicesService.new(
       school: @school.reload,
       order_state: @order_state,
       laptop_cap: @new_raw_cap_value,

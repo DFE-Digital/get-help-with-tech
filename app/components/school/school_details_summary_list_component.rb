@@ -34,7 +34,7 @@ private
   end
 
   def display_router_allocation_row?
-    @school.has_raw_router_allocation?
+    @school.raw_router_allocation.positive?
   end
 
   def type_of_school_row

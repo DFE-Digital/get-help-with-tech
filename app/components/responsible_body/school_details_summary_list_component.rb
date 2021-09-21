@@ -103,7 +103,7 @@ private
   end
 
   def display_router_allocation_row?
-    @school.has_raw_router_allocation?
+    @school.raw_router_allocation.positive?
   end
 
   def order_status_row

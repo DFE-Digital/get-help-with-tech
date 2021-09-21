@@ -9,6 +9,8 @@ class AddSchoolToVirtualCapPoolService
   end
 
   def call
+    return true if school.in_virtual_cap_pool?(responsible_body_id: rb.id)
+
     add_school! if addable?
   rescue StandardError => e
     failed(e)
@@ -29,22 +31,24 @@ class AddSchoolToVirtualCapPoolService
   end
 
   def add_devices_to_pools!
-    add_laptop_to_pool! if laptop_allocation_id
-    add_router_to_pool! if router_allocation_id
+    add_laptop_to_pool!(!school.laptop_allocation_numbers?) if laptop_allocation_id
+    add_router_to_pool!(!school.router_allocation_numbers?) if router_allocation_id
   end
 
-  def add_laptop_to_pool!
-    add_device_allocation_to_pool!(laptop_allocation_id, laptop_pool)
+  def add_laptop_to_pool!(notify)
+    add_device_allocation_to_pool!(laptop_allocation_id, laptop_pool, notify: notify)
   end
 
-  def add_router_to_pool!
-    add_device_allocation_to_pool!(router_allocation_id, router_pool)
+  def add_router_to_pool!(notify)
+    add_device_allocation_to_pool!(router_allocation_id, router_pool, notify: notify)
   end
 
-  def add_device_allocation_to_pool!(allocation_id, pool)
+  def add_device_allocation_to_pool!(allocation_id, pool, notify: true)
     SchoolVirtualCap.find_or_initialize_by(school_device_allocation_id: allocation_id)
                     .update!(virtual_cap_pool_id: pool.id)
-    # pool.recalculate_caps!
+    if notify # pool has not sent notifications because pool aggregated numbers haven't changed
+      CapUpdateNotificationsService.new(allocation_id, notify_computacenter: false, notify_school: false)
+    end
   end
 
   def failed(e)

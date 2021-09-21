@@ -16,13 +16,9 @@ class RemoveSchoolFromVirtualCapPoolService
 
   private
 
-  def remove_school!
-    school.transaction do
-      remove_devices_from_pools!
-      rb.calculate_virtual_caps!
-      school.reload.refresh_device_ordering_status!
-      true
-    end
+  def remove_device_allocation_from_pool!(allocation_id)
+    SchoolVirtualCap.find_by(school_device_allocation_id: allocation_id)&.destroy!
+    # &.recalculate_caps!
   end
 
   def remove_devices_from_pools!
@@ -38,10 +34,13 @@ class RemoveSchoolFromVirtualCapPoolService
     remove_device_allocation_from_pool!(router_allocation_id)
   end
 
-  def remove_device_allocation_from_pool!(allocation_id)
-    SchoolVirtualCap.find_by(school_device_allocation_id: allocation_id)
-      &.destroy!
-      # &.recalculate_caps!
+  def remove_school!
+    school.transaction do
+      remove_devices_from_pools!
+      # rb.calculate_virtual_caps!
+      school.reload.refresh_device_ordering_status!
+      true
+    end
   end
 
   def failed(e)

@@ -36,7 +36,7 @@ class Support::AllocationForm
   end
 
   def allocation_updated?
-    SchoolAllocationCapUpdateService.new(school: school,
+    UpdateSchoolDevicesService.new(school: school,
                                             order_state: order_state,
                                             allocation_type => allocation,
                                             cap_type => cap).call
