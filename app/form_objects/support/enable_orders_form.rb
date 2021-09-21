@@ -30,7 +30,7 @@ private
   end
 
   def orders_enabled?
-    SchoolAllocationCapUpdateService.new(school: school,
+    UpdateSchoolDevicesService.new(school: school,
                                             order_state: order_state,
                                             laptop_cap: laptop_cap,
                                             router_cap: router_cap)

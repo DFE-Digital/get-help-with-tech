@@ -11,7 +11,7 @@ RSpec.describe VirtualCapPool, type: :model do
   describe '#add_school!' do
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-      allow(mock_request).to receive(:post!).and_return(response)
+      allow(mock_request).to receive(:post).and_return(response)
     end
 
     context 'when a school can be added to the pool' do
@@ -122,17 +122,20 @@ RSpec.describe VirtualCapPool, type: :model do
     let(:schools) { create_list(:school, 2, :centrally_managed, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
     before do
+      byebug
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-      allow(mock_request).to receive(:post!).and_return(response)
+      allow(mock_request).to receive(:post).and_return(response)
 
       schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
       schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
-      schools.each do |s|
-        pool.add_school!(s)
+      schools.each do |school|
+        byebug
+        AddSchoolToVirtualCapPoolService.new(school).call
       end
     end
 
     it 'recalculates the cap and devices_ordered totals for the schools in the pool' do
+      byebug
       schools.first.std_device_allocation.update!(cap: 40, allocation: 40, devices_ordered: 26)
 
       pool.recalculate_caps!
@@ -200,7 +203,7 @@ RSpec.describe VirtualCapPool, type: :model do
   describe '#has_school?' do
     before do
       allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-      allow(mock_request).to receive(:post!).and_return(response)
+      allow(mock_request).to receive(:post).and_return(response)
     end
 
     context 'with some schools on the pool' do

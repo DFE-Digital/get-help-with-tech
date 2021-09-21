@@ -50,7 +50,7 @@
 #   end
 #
 #   def cap_service
-#     @cap_service ||= SchoolAllocationCapUpdateService.new(
+#     @cap_service ||= UpdateSchoolDevicesService.new(
 #       school: school,
 #       order_state: school.order_state,
 #       laptop_cap: new_or_existing_std_device_cap,

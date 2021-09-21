@@ -116,6 +116,14 @@ class School < ApplicationRecord
     !la_funded_provision? && orders_managed_centrally? && any_allocation_id?
   end
 
+  def address
+    address_components.join(', ')
+  end
+
+  def address_components
+    [address_1, address_2, address_3, town, county, postcode].reject(&:blank?)
+  end
+
   def adjusted_laptop_cap_by_order_state(cap, state: order_state)
     return raw_laptops_ordered if state == 'cannot_order'
     state == 'can_order' ? raw_laptop_allocation : cap
@@ -130,20 +138,20 @@ class School < ApplicationRecord
     [laptop_allocation_id, router_allocation_id].compact
   end
 
+  def all_devices_ordered?
+    eligible_to_order? && !devices_available_to_order?
+  end
+
   def any_allocation_id?
     (laptop_allocation_id || router_allocation_id).present?
   end
 
-  def address
-    address_components.join(', ')
+  def laptop_allocation_numbers?
+    std_device_allocation.allocation_numbers?
   end
 
-  def address_components
-    [address_1, address_2, address_3, town, county, postcode].reject(&:blank?)
-  end
-
-  def all_devices_ordered?
-    eligible_to_order? && !devices_available_to_order?
+  def router_allocation_numbers?
+    coms_device_allocation.allocation_numbers?
   end
 
   def available_mobile_networks
@@ -229,22 +237,6 @@ class School < ApplicationRecord
     routers_ordered.positive?
   end
 
-  def has_laptop_allocation?
-    laptop_allocation.positive?
-  end
-
-  def has_raw_laptop_allocation?
-    raw_laptop_allocation.positive?
-  end
-
-  def has_raw_router_allocation?
-    raw_router_allocation.positive?
-  end
-
-  def has_router_allocation?
-    router_allocation.positive?
-  end
-
   def headteacher?
     headteacher.present?
   end
@@ -261,8 +253,12 @@ class School < ApplicationRecord
     provision_type == 'iss'
   end
 
-  def in_virtual_cap_pool?
-    std_device_allocation&.in_virtual_cap_pool? || coms_device_allocation&.in_virtual_cap_pool?
+  def in_virtual_cap_pool?(**opts)
+    std_device_allocation&.in_virtual_cap_pool?(**opts) || coms_device_allocation&.in_virtual_cap_pool?(**opts)
+  end
+
+  def laptops_allocated?
+    laptop_allocation.positive?
   end
 
   def laptop_allocation
@@ -384,6 +380,10 @@ class School < ApplicationRecord
 
   def refresh_device_ordering_status!
     preorder_information&.refresh_status!
+  end
+
+  def routers_allocated?
+    router_allocation.positive?
   end
 
   def router_allocation

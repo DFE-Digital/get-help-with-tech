@@ -19,19 +19,10 @@ class UpdateSchoolDevicesService
     update_allocations!
     update_caps!
     notify_other_agents unless notifications_sent_by_pool_update?
-
-    # !!! Why in this service? and why after all the stuff above? If it succeeds agents will get notified twice (above and now)?
-    add_school_to_virtual_cap_pool unless school.in_virtual_cap_pool?
     true
   end
 
   private
-
-  def add_school_to_virtual_cap_pool
-    unless AddSchoolToVirtualCapPoolService.new(school).call
-      Rails.logger.error("Failed to add school to virtual pool (urn: #{school.urn})")
-    end
-  end
 
   def notifications_sent_by_pool_update?
     school.in_active_virtual_cap_pool?

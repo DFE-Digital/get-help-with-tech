@@ -91,7 +91,8 @@ class SchoolDeviceAllocation < ApplicationRecord
     self[:allocation]
   end
 
-  def in_virtual_cap_pool?
+  def in_virtual_cap_pool?(**opts)
+    return(school_virtual_cap.responsible_body_id == opts[:responsible_body_id]) if opts[:responsible_body_id]
     school_virtual_cap.present?
   end
 
@@ -109,6 +110,10 @@ class SchoolDeviceAllocation < ApplicationRecord
   #     given_cap
   #   end
   # end
+
+  def allocation_numbers?
+    ![raw_allocation, raw_cap, raw_devices_ordered].all?(0)
+  end
 
 private
 
