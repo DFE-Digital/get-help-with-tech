@@ -18,13 +18,12 @@ class VirtualCapPool < ApplicationRecord
   end
 
   def recalculate_caps!
-    byebug
     Rails.logger.info("***=== recalculating caps ===*** pool-id: #{id}")
     self.cap = school_device_allocations.sum(:cap)
     self.devices_ordered = school_device_allocations.sum(:devices_ordered)
     self.allocation = school_device_allocations.sum(:allocation)
     save!
-    update_cap_on_computacenter if enabled? && (cap_changed? || devices_ordered_changed?)
+    update_cap_on_computacenter if enabled? && (cap_previously_changed? || devices_ordered_previously_changed?)
   end
 
   # def add_school!(school)
