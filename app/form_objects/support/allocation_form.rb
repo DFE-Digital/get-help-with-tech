@@ -12,11 +12,6 @@ class Support::AllocationForm
   validate :check_decrease_allowed
   validate :check_minimum
 
-  #
-  # def allocation=(value)
-  #   @allocation = value.to_i
-  # end
-
   def save
     valid? && allocation_updated?
   end
@@ -37,15 +32,13 @@ class Support::AllocationForm
 
   def allocation_updated?
     UpdateSchoolDevicesService.new(school: school,
-                                            order_state: order_state,
-                                            allocation_type => allocation,
-                                            cap_type => cap).call
+                                   order_state: order_state,
+                                   allocation_type => allocation,
+                                   cap_type => cap).call
   end
 
   def check_decrease_allowed
-    if !decreasing? && in_virtual_cap_pool?
-      errors.add(:school, :decreasing_in_virtual_cap_pool)
-    end
+    errors.add(:school, :decreasing_in_virtual_cap_pool) if !decreasing? && in_virtual_cap_pool?
   end
 
   def check_minimum

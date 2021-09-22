@@ -11,7 +11,8 @@ class CapUpdateNotificationsService
   end
 
   def call
-    allocations.none? || (computacenter_accepts_updates? && process_allocations)
+    process_allocations!
+    true
   end
 
   private
@@ -49,10 +50,11 @@ class CapUpdateNotificationsService
     SchoolCanOrderDevicesNotifications.new(school: school).call
   end
 
-  def process_allocations
-    update_cap_on_computacenter!
-    allocations.each { |allocation| notify(allocation) }
-    true
+  def process_allocations!
+    if allocations.any? && computacenter_accepts_updates?
+      update_cap_on_computacenter!
+      allocations.each { |allocation| notify(allocation) }
+    end
   end
 
   def record_request!(allocation)

@@ -21,12 +21,13 @@ RSpec.describe Computacenter::SchoolChangesController do
   end
 
   describe '#update' do
+    let(:change_ship_to) { 'yes' }
     let(:params) do
       {
         id: school.urn,
         computacenter_ship_to_form: {
           ship_to: '12',
-          change_ship_to: 'yes',
+          change_ship_to: change_ship_to,
         },
       }
     end
@@ -76,6 +77,18 @@ RSpec.describe Computacenter::SchoolChangesController do
     it 'do not notify the school' do
       expect { patch :update, params: params }
         .not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+    end
+
+    context 'when the computacenter reference cannot be set' do
+      let(:change_ship_to) { '--' }
+
+      it 'display the edit view' do
+        patch :update, params: params
+
+        expect(flash[:success]).to be_blank
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end

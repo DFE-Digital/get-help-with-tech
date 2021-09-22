@@ -146,14 +146,6 @@ class School < ApplicationRecord
     (laptop_allocation_id || router_allocation_id).present?
   end
 
-  def laptop_allocation_numbers?
-    std_device_allocation.allocation_numbers?
-  end
-
-  def router_allocation_numbers?
-    coms_device_allocation.allocation_numbers?
-  end
-
   def available_mobile_networks
     hide_networks_not_supporting_fe? ? MobileNetwork.fe_networks : MobileNetwork.participating
   end
