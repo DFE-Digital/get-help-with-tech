@@ -48,6 +48,16 @@ class Asset < ApplicationRecord
     to_csv
   end
 
+  def self.to_viewed_csv
+    class << self
+      def exportable_attributes # rubocop:disable Lint/DuplicateMethods
+        { serial_number: 'serial_number', first_viewed_at: 'first_viewed_at' }
+      end
+    end
+
+    to_csv
+  end
+
   def self.secure_attr_accessor(*attributes)
     attributes.each do |attribute|
       define_method(attribute) do
@@ -78,6 +88,8 @@ class Asset < ApplicationRecord
   }
 
   scope :search_by_serial_numbers, ->(serial_numbers) { where(serial_number: serial_numbers) }
+
+  scope :first_viewed_during_period, ->(period) { where(first_viewed_at: period) }
 
   def bios_unlockable?
     model.match?(UNLOCKABLE_MODEL_PATTERN)

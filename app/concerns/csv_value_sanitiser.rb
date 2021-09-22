@@ -5,7 +5,8 @@ class CsvValueSanitiser
   end
 
   def safe?
-    @value =~ /\A[^=+\-@\t\r]/
+    string_value = @value.to_s
+    string_value.blank? ? true : string_value =~ /\A[^=+\-@\t\r]/
   end
 
   def sanitise

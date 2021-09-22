@@ -1,0 +1,24 @@
+<% content_for :title, @title %>
+<% content_for :browser_title, @title %>
+
+<% content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => root_path },
+                  @title,
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      Enter time period for devices which were first viewed.
+      Acceptable date formats can be found
+      <%= govuk_link_to 'here', 'https://github.com/mojombo/chronic#examples' %>
+    </p>
+
+    <%= form_with model: [@datetime_period], url: viewed_assets_path(format: 'csv'), method: :get do |f| %>
+      <%= f.govuk_text_field :start_at_string, label: { text: 'Start of period', size: 'm' } %>
+      <%= f.govuk_text_field :end_at_string, label: { text: 'End of period', size: 'm' } %>
+      <%= f.govuk_submit 'Export to CSV' %>
+    <% end %>
+  </div>
+</div>
