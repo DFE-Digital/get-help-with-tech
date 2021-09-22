@@ -71,6 +71,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :viewed_assets, only: %i[new index]
+
   resources :sessions, only: %i[create destroy]
 
   namespace :support_ticket, path: '/get-support' do

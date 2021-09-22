@@ -155,10 +155,20 @@ RSpec.describe Asset, type: :model do
     end
   end
 
+  describe '.first_viewed_between' do
+    let!(:asset_just_after_start_of_period) { create(:asset, first_viewed_at: Time.zone.parse('1 Jan 2021 00:01')) }
+    let!(:asset_just_before_end_of_period) { create(:asset, first_viewed_at: Time.zone.parse('31 Jan 2021 23:59')) }
+
+    specify { expect(Asset.first_viewed_during_period(Time.zone.parse('1 Jan 2021').beginning_of_day..Time.zone.parse('31 Jan 2021').end_of_day)).to contain_exactly(asset_just_after_start_of_period, asset_just_before_end_of_period) }
+  end
+
   describe '.search_by_serial_numbers' do
     let!(:asset_1) { create(:asset) }
 
-    before { create(:asset) }
+    before do
+      create(:asset, first_viewed_at: Time.zone.parse('31 Dec 2020 23:59'))
+      create(:asset, first_viewed_at: Time.zone.parse('1 Feb 2021 00:01'))
+    end
 
     context 'single serial number' do
       specify { expect(Asset.search_by_serial_numbers(asset_1.serial_number)).to contain_exactly(asset_1) }
@@ -323,5 +333,18 @@ RSpec.describe Asset, type: :model do
       specify { expect(csv).not_to include("#{asset_1.serial_number},#{bad_input_1},#{asset_1.department},#{asset_1.location},#{asset_1.bios_password},#{asset_1.admin_password},#{asset_1.hardware_hash}") }
       specify { expect(csv).to include("#{asset_1.serial_number},#{escaped_output_1},#{asset_1.department},#{asset_1.location},#{asset_1.bios_password},#{asset_1.admin_password},#{asset_1.hardware_hash}") }
     end
+  end
+
+  describe '#to_viewed_csv' do
+    let!(:asset) { create(:asset, :viewed) }
+    let!(:unviewed_asset) { create(:asset, :never_viewed) }
+    let(:covering_range) { 5.minutes.before(asset.first_viewed_at)..5.minutes.after(asset.first_viewed_at) }
+    let(:csv) { Asset.first_viewed_during_period(covering_range).to_viewed_csv }
+
+    specify { expect(csv.split("\n").size).to eq(2) }
+
+    specify { expect(csv).to start_with('serial_number,first_viewed_at') }
+    specify { expect(csv).to include("#{asset.serial_number},#{asset.first_viewed_at}") }
+    specify { expect(csv).not_to include("#{unviewed_asset.serial_number},#{unviewed_asset.first_viewed_at}") }
   end
 end
