@@ -25,6 +25,10 @@ class SchoolDeviceAllocation < ApplicationRecord
   delegate :computacenter_references?, to: :school
 
   def computacenter_cap
+    school.in_active_virtual_cap_pool? ? raw_cap : school_virtual_cap.adjusted_cap
+  end
+
+  def computacenter_cap
     # value to pass to computacenter
     if vcap_enabled?
       if in_virtual_cap_pool?
@@ -92,7 +96,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def in_virtual_cap_pool?(**opts)
-    return(school_virtual_cap.responsible_body_id == opts[:responsible_body_id]) if opts[:responsible_body_id]
+    return(school_virtual_cap&.responsible_body_id == opts[:responsible_body_id]) if opts[:responsible_body_id]
     school_virtual_cap.present?
   end
 

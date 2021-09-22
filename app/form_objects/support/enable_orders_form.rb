@@ -19,8 +19,8 @@ class Support::EnableOrdersForm
     order_state.to_s.in?(%w[can_order_for_specific_circumstances can_order])
   end
 
-  def save
-    valid? && orders_enabled?
+  def save(validate: true)
+    (!validate || valid?) && orders_enabled?
   end
 
 private

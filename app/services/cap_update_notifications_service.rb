@@ -1,7 +1,7 @@
 class CapUpdateNotificationsService
   attr_reader :notify_computacenter, :notify_school, :allocations
 
-  def initialize(allocation_ids, notify_computacenter: true, notify_school: true)
+  def initialize(*allocation_ids, notify_computacenter: true, notify_school: true)
     @notify_computacenter = notify_computacenter
     @notify_school = notify_school
     @allocations = SchoolDeviceAllocation.includes(school: :responsible_body)
@@ -11,7 +11,7 @@ class CapUpdateNotificationsService
   end
 
   def call
-    computacenter_accepts_updates? && process_allocations
+    allocations.none? || (computacenter_accepts_updates? && process_allocations)
   end
 
   private
@@ -41,7 +41,7 @@ class CapUpdateNotificationsService
   end
 
   def notify_computacenter_by_email(allocation)
-    notification = allocation.device_type == 'std_device' ? :notify_of_devices_cap_change : notify_of_coms_cap_change
+    notification = allocation.device_type == 'std_device' ? :notify_of_devices_cap_change : :notify_of_coms_cap_change
     ComputacenterMailer.with(school: allocation.school, new_cap_value: allocation.cap).send(notification).deliver_later
   end
 
@@ -62,7 +62,7 @@ class CapUpdateNotificationsService
   end
 
   def request
-    @request ||= Computacenter::OutgoingAPI::CapUpdateRequest.new(computacenter_cap_data).post
+    @request ||= Computacenter::OutgoingAPI::CapUpdateRequest.new(cap_data: computacenter_cap_data).post
   end
 
   def timestamp_cap_update!(allocation)
