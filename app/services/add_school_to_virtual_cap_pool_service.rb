@@ -31,8 +31,8 @@ class AddSchoolToVirtualCapPoolService
   end
 
   def add_devices_to_pools!
-    add_laptop_to_pool!(!school.laptop_allocation_numbers?) if laptop_allocation_id
-    add_router_to_pool!(!school.router_allocation_numbers?) if router_allocation_id
+    add_laptop_to_pool!(!school.laptops_available_to_order?) if laptop_allocation_id
+    add_router_to_pool!(!school.routers_available_to_order?) if router_allocation_id
   end
 
   def add_laptop_to_pool!(notify)

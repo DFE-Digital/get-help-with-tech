@@ -7,7 +7,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
            :manages_centrally,
            :vcap_feature_flag,
            name: 'RBName',
-           computacenter_reference: '11')
+           computacenter_reference: '1000')
   end
 
   before do
@@ -22,19 +22,20 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
     end
 
     it 'displays the current computacenter reference' do
-      expect(assigns[:form].sold_to).to eq('11')
+      expect(assigns[:form].sold_to).to eq('1000')
     end
   end
 
   describe '#update' do
     let(:who_manages) { :manages_orders }
+    let(:change_sold_to) { 'yes' }
 
     let(:params) do
       {
         id: rb.id,
         computacenter_sold_to_form: {
-          sold_to: '12',
-          change_sold_to: 'yes',
+          sold_to: '1200',
+          change_sold_to: change_sold_to,
         },
       }
     end
@@ -70,10 +71,10 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
     it 'sets the given computacenter reference to the rb' do
       patch :update, params: params
 
-      expect(flash[:success]).to eq("Sold To reference for RBName is 12")
+      expect(flash[:success]).to eq("Sold To reference for RBName is 1200")
     end
 
-    context 'when the schools are not in virtual cap pool' do
+    context 'when the rb schools are not in virtual cap pool' do
       let(:who_manages) { :manages_orders }
       let(:requests) do
         [
@@ -93,7 +94,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       end
     end
 
-    context 'when the schools are in virtual cap pool' do
+    context 'when the rb schools are in virtual cap pool' do
       let(:who_manages) { :centrally_managed }
       let(:requests) do
         [
@@ -114,7 +115,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       it 'update caps on Computacenter' do
         patch :update, params: params
 
-        expect_to_have_sent_caps_to_computacenter(requests)
+        expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
       end
     end
 
@@ -126,6 +127,18 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
     it 'do not notify the school' do
       expect { patch :update, params: params }
         .not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+    end
+
+    context 'when the computacenter reference cannot be set' do
+      let(:change_sold_to) { '--' }
+
+      it 'display the edit view' do
+        patch :update, params: params
+
+        expect(flash[:success]).to be_blank
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end
