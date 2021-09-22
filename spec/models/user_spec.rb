@@ -976,6 +976,27 @@ RSpec.describe User, type: :model do
           expect(NotifyComputacenterOfLatestChangeForUserJob).not_to have_been_enqueued
         end
       end
+
+      context 'user is a rb key contact' do
+        let(:user) { create(:user) }
+        let!(:rb) { create(:trust, key_contact: user) }
+
+        it 'nullifies the rb key contact' do
+          user.destroy!
+          expect(rb.reload.key_contact_id).to be_nil
+        end
+      end
+
+      context 'user is created_by for an extra mobile data request' do
+        let(:rb) { create(:trust) }
+        let(:user) { create(:user) }
+        let!(:extra_mobile_data_request) { create(:extra_mobile_data_request, created_by_user: user, responsible_body: rb) }
+
+        it 'nullifies the extra mobile data request created by user' do
+          user.destroy!
+          expect(extra_mobile_data_request.reload.created_by_user_id).to be_nil
+        end
+      end
     end
 
     describe 'marking user as soft deleted' do
