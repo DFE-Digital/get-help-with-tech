@@ -20,13 +20,14 @@ class AssetsController < ApplicationController
               end
 
     @assets = policy_scope(Asset).owned_by(setting)
+    assets_requiring_updated_viewed_at = @assets.select { |asset| should_update_first_viewed_at?(asset) }
 
     respond_to do |format|
       format.html
       format.csv do
         Asset.transaction do
           send_data support_user? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
-          @assets.each { |asset| set_first_viewed_at_if_should_update_first_viewed_at(asset) }
+          policy_scope(Asset).where(id: assets_requiring_updated_viewed_at.pluck(:id)).update_all(first_viewed_at: Time.zone.now)
         end
       end
     end
