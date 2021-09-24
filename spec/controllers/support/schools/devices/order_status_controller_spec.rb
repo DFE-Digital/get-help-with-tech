@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Support::Schools::Devices::OrderStatusController do
   let(:support_user) { create(:support_user) }
+  let(:user) { support_user }
 
   before do
-    sign_in_as support_user
+    sign_in_as user
   end
 
   describe '#edit' do
@@ -273,6 +274,77 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     end
   end
 
+  describe '#confirm' do
+    let(:school) do
+      create(:school,
+             :with_std_device_allocation_partially_ordered,
+             :with_coms_device_allocation_partially_ordered)
+    end
+
+    let(:edition_values) do
+      {
+        order_state: 'cannot_order',
+        laptop_cap: '10',
+        router_cap: '4',
+      }
+    end
+
+    let(:params) { edition_values.merge(school_urn: school.urn) }
+
+    before { get :confirm, params: params }
+
+    it 'responds successfully' do
+      expect(response).to be_successful
+    end
+
+    it 'assigns a form with the given order_state, laptop_cap and router_cap values' do
+      expect(assigns[:form].school.urn).to eq(school.urn)
+      expect(assigns[:form].order_state).to eq('cannot_order')
+      expect(assigns[:form].laptop_cap).to eq(10)
+      expect(assigns[:form].router_cap).to eq(4)
+    end
+
+    it 'assigns laptop and router allocations vars from the school values' do
+      expect(assigns[:laptop_allocation]).to eq(school.laptop_allocation)
+      expect(assigns[:router_allocation]).to eq(school.router_allocation)
+    end
+
+    it 'renders the confirm template' do
+      expect(response).to render_template(:confirm)
+    end
+  end
+
+  describe '#collect_urns_to_allow_many_schools_to_order' do
+    let(:school) do
+      create(:school,
+             :with_std_device_allocation_partially_ordered,
+             :with_coms_device_allocation_partially_ordered)
+    end
+
+    before { get :collect_urns_to_allow_many_schools_to_order }
+
+    context 'when the user is not support' do
+      let(:user) { create(:user) }
+
+      it 'forbid' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    it 'responds successfully' do
+      expect(response).to be_successful
+    end
+
+    it 'assigns an empty Support::BulkAllocationForm' do
+      expect(assigns[:form].upload).to be_blank
+      expect(assigns[:form].send_notification).to be_blank
+    end
+
+    it 'renders the collect_urns_to_allow_many_schools_to_order template' do
+      expect(response).to render_template(:collect_urns_to_allow_many_schools_to_order)
+    end
+  end
+
   describe '#allow_ordering_for_many_schools' do
     let(:file) { fixture_file_upload('allocation_upload.csv', 'text/csv') }
     let(:params) do
@@ -282,6 +354,16 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
           send_notification: 'true',
         },
       }
+    end
+
+    context 'when the user is not support' do
+      let(:user) { create(:user) }
+
+      before { put :allow_ordering_for_many_schools, params: params }
+
+      it 'forbid' do
+        expect(response).to have_http_status(:forbidden)
+      end
     end
 
     it 'enqueue an AllocationJob per allocation contained in the given file' do
