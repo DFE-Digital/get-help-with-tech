@@ -1,6 +1,11 @@
 require Rails.root.join('lib/constraints/require_dfe_user_constraint')
 
 Rails.application.routes.draw do
+  # Stop missing images in `public/devices/` hitting a controller causing exceptions
+  scope format: true, constraints: { format: /jpg|png/ } do
+    get '/devices/*anything', to: 'errors#not_found'
+  end
+
   root 'pages#home_page'
 
   resource :notify_callbacks, only: [:create]
@@ -349,8 +354,8 @@ Rails.application.routes.draw do
 
   get '/techsource-start', to: 'techsource_launcher#start'
 
-  get '/403', to: 'errors#forbidden', via: :all
-  get '/404', to: 'errors#not_found', via: :all
-  get '/422', to: 'errors#unprocessable_entity', via: :all
-  get '/500', to: 'errors#internal_server_error', via: :all
+  match '/403', to: 'errors#forbidden', via: :all
+  match '/404', to: 'errors#not_found', via: :all
+  match '/422', to: 'errors#unprocessable_entity', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 end
