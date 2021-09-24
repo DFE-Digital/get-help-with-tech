@@ -25,14 +25,11 @@ puts "--- Remove this debug info - Lorenzo: #{@body}"
     self
   end
 
-  def failed!
-    raise(Computacenter::OutgoingAPI::Error.new(cap_update_request: self),
-      "Computacenter responded with #{response.status}, response_body: #{response.body}")
+  def success?
+    @success ||= response.status.success? && xml_success?
   end
 
-  def setting(name)
-    Settings.computacenter.outgoing_api.send(name)
-  end
+  private
 
   def construct_body
     renderer.render(:cap_update_request, format: :xml, assigns: { allocations: cap_data,
@@ -44,11 +41,9 @@ puts "--- Remove this debug info - Lorenzo: #{@body}"
     Computacenter::OutgoingAPI::BaseController
   end
 
-  def success?
-    @success ||= response.status.success? && xml_success?
+  def setting(name)
+    Settings.computacenter.outgoing_api.send(name)
   end
-
-  private
 
   def xml_response
     @xml_response ||= Nokogiri::XML(response.body)

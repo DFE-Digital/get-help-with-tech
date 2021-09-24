@@ -142,7 +142,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       it 'does not send notification to order' do
         expect {
           cap_usage_update.apply!
-        }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
       end
     end
   end

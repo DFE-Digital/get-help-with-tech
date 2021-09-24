@@ -206,7 +206,6 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
                 .with(params: { school: school, new_cap_value: 35 }, args: []).once
       end
-
     end
 
     context 'when the school is in virtual cap pool' do
@@ -265,12 +264,12 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
     it 'do not notify Computacenter by email' do
       expect { patch :update, params: params }
-        .not_to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer')
+        .not_to have_enqueued_mail(ComputacenterMailer)
     end
 
     it 'do not notify the school' do
       expect { patch :update, params: params }
-        .not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+        .not_to have_enqueued_mail.with('CanOrderDevicesMailer')
     end
   end
 

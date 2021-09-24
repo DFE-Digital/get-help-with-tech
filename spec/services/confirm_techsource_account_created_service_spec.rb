@@ -51,7 +51,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
         it 'does not send an email' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers')
+          }.not_to have_enqueued_mail
         end
       end
     end
