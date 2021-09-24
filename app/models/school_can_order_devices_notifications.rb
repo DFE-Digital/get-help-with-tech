@@ -1,8 +1,9 @@
 class SchoolCanOrderDevicesNotifications
-  attr_reader :school
+  attr_reader :school, :notify_computacenter
 
-  def initialize(school: nil)
+  def initialize(school: nil, notify_computacenter: true)
     @school = school
+    @notify_computacenter = notify_computacenter
   end
 
   def call
@@ -13,7 +14,7 @@ class SchoolCanOrderDevicesNotifications
       notify_support_if_no_one_to_contact
     end
 
-    notify_computacenter
+    notify_computacenter_by_email if notify_computacenter
   end
 
 private
@@ -75,7 +76,7 @@ puts "--- Remove this debug info - Lorenzo: CanOrderDevicesMailer.with(school: #
     end
   end
 
-  def notify_computacenter
+  def notify_computacenter_by_email
 puts "--- Remove this debug info - Lorenzo: ComputacenterMailer.with(school: #{school.id}, new_cap_value: #{new_cap_value}).notify_of_school_can_order"
     ComputacenterMailer
       .with(school: school, new_cap_value: new_cap_value)

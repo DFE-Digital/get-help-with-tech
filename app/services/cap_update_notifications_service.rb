@@ -48,7 +48,7 @@ puts "--- Remove this debug info - Lorenzo: ComputacenterMailer.#{notification}.
   end
 
   def notify_school_by_email(school)
-    SchoolCanOrderDevicesNotifications.new(school: school).call
+    SchoolCanOrderDevicesNotifications.new(school: school, notify_computacenter: notify_computacenter).call
   end
 
   def process_allocations!

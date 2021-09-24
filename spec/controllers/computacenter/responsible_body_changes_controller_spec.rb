@@ -121,12 +121,12 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
 
     it 'do not notify Computacenter by email' do
       expect { patch :update, params: params }
-        .not_to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer')
+        .not_to have_enqueued_mail(ComputacenterMailer)
     end
 
     it 'do not notify the school' do
       expect { patch :update, params: params }
-        .not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+        .not_to have_enqueued_mail(CanOrderDevicesMailer)
     end
 
     context 'when the computacenter reference cannot be set' do

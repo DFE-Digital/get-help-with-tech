@@ -18,8 +18,8 @@ class School < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :school_links, dependent: :destroy
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
-    primary_key: :computacenter_reference,
-    foreign_key: :ship_to
+                                     primary_key: :computacenter_reference,
+                                     foreign_key: :ship_to
 
   validates :name, presence: true
 
