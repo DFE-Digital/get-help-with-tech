@@ -36,13 +36,14 @@ class CapUpdateNotificationsService
     raise(Computacenter::OutgoingAPI::Error.new(cap_update_request: request), message)
   end
 
-  def notify(allocation)
-    notify_computacenter_by_email(allocation) if notify_computacenter
-    notify_school_by_email(allocation.school) if notify_school
+  def notify
+    allocations.each { |allocation| notify_computacenter_by_email(allocation) } if notify_computacenter
+    notify_school_by_email(allocations.first.school) if notify_school
   end
 
   def notify_computacenter_by_email(allocation)
-    notification = allocation.device_type == 'std_device' ? :notify_of_devices_cap_change : :notify_of_coms_cap_change
+    notification = allocation.device_type == 'std_device' ? :notify_of_devices_cap_change : :notify_of_comms_cap_change
+puts "--- Remove this debug info - Lorenzo: ComputacenterMailer.#{notification}.with(school: #{allocation.school.id}, new_cap_value: #{allocation.cap})"
     ComputacenterMailer.with(school: allocation.school, new_cap_value: allocation.cap).send(notification).deliver_later
   end
 
@@ -53,7 +54,7 @@ class CapUpdateNotificationsService
   def process_allocations!
     if allocations.any? && computacenter_accepts_updates?
       update_cap_on_computacenter!
-      allocations.each { |allocation| notify(allocation) }
+      notify
     end
   end
 

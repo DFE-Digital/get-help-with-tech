@@ -24,99 +24,42 @@ class SchoolDeviceAllocation < ApplicationRecord
   delegate :computacenter_reference, to: :school
   delegate :computacenter_references?, to: :school
 
-  def computacenter_cap
-    school.in_active_virtual_cap_pool? ? raw_cap : school_virtual_cap.adjusted_cap
-  end
-
-  def computacenter_cap
-    # value to pass to computacenter
-    if vcap_enabled?
-      if in_virtual_cap_pool?
-        # set the cap so the whole remaining pool amount could be ordered against this school
-        # CC keep track of devices ordered by school. Assume devices_ordered has been correctly sync'd
-        school_virtual_cap.adjusted_cap
-      else
-        raw_cap
-      end
-    else
-      Rails.logger.info("Computacenter adjusted cap: #{school_virtual_cap.adjusted_cap}") if in_virtual_cap_pool?
-      raw_cap
-    end
+  def allocation
+    school.in_active_virtual_cap_pool? ? school_virtual_cap.allocation : super
   end
 
   def cap
-    if vcap_enabled?
-      if in_virtual_cap_pool?
-        school_virtual_cap.cap
-      else
-        super
-      end
-    else
-      Rails.logger.info("Virtual cap: #{school_virtual_cap.cap}") if in_virtual_cap_pool?
-      super
-    end
+    school.in_active_virtual_cap_pool? ? school_virtual_cap.cap : super
   end
 
-  def raw_cap
-    self[:cap]
-  end
-
-  def devices_ordered
-    if vcap_enabled?
-      if in_virtual_cap_pool?
-        school_virtual_cap.devices_ordered
-      else
-        super
-      end
-    else
-      Rails.logger.info("Virtual devices_ordered: #{school_virtual_cap.devices_ordered}") if in_virtual_cap_pool?
-      super
-    end
-  end
-
-  def raw_devices_ordered
-    self[:devices_ordered]
-  end
-
-  def allocation
-    if vcap_enabled?
-      if in_virtual_cap_pool?
-        school_virtual_cap.allocation
-      else
-        super
-      end
-    else
-      Rails.logger.info("Virtual allocation: #{school_virtual_cap.allocation}") if in_virtual_cap_pool?
-      super
-    end
-  end
-
-  def raw_allocation
-    self[:allocation]
-  end
-
-  def in_virtual_cap_pool?(**opts)
-    return(school_virtual_cap&.responsible_body_id == opts[:responsible_body_id]) if opts[:responsible_body_id]
-    school_virtual_cap.present?
+  def computacenter_cap
+    school.in_active_virtual_cap_pool? ? school_virtual_cap.adjusted_cap : raw_cap
   end
 
   def computacenter_cap_type
     Computacenter::CapTypeConverter.to_computacenter_type(device_type)
   end
 
-  # def cap_implied_by_order_state(order_state:, given_cap: nil)
-  #   case order_state.to_sym
-  #   when :cannot_order
-  #     raw_devices_ordered.to_i
-  #   when :can_order
-  #     raw_allocation.to_i
-  #   else # specific circumstances
-  #     given_cap
-  #   end
-  # end
+  def devices_ordered
+    school.in_active_virtual_cap_pool? ? school_virtual_cap.devices_ordered : super
+  end
 
-  def allocation_numbers?
-    ![raw_allocation, raw_cap, raw_devices_ordered].all?(0)
+  def in_virtual_cap_pool?(**opts)
+    asked_vcap_rb_id = opts[:responsible_body_id]
+    current_vcap_rb_id = school_virtual_cap&.responsible_body_id
+    asked_vcap_rb_id ? current_vcap_rb_id == asked_vcap_rb_id : school_virtual_cap.present?
+  end
+
+  def raw_allocation
+    self[:allocation]
+  end
+
+  def raw_cap
+    self[:cap]
+  end
+
+  def raw_devices_ordered
+    self[:devices_ordered]
   end
 
 private

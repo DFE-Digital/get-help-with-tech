@@ -11,8 +11,6 @@ class Support::BulkAllocationForm
   validates :upload, presence: { message: 'Select a CSV to upload' }
   validates :send_notification, inclusion: { in: [true, false], message: 'Select whether or not to send user notifications' }
 
-  delegate :batch_id, to: :importer
-
   def save
     valid? && upload_scheduled?
   end
@@ -21,11 +19,11 @@ class Support::BulkAllocationForm
     @send_notification = ActiveModel::Type::Boolean.new.cast(value)
   end
 
-  private
-
   def batch_id
     @batch_id ||= SecureRandom.uuid
   end
+
+  private
 
   def rows
     @rows ||= CSV.read(upload.path, headers: true)

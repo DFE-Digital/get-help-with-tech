@@ -14,14 +14,28 @@ FactoryBot.define do
     end
 
     trait :with_std_allocation do
-      allocation { 1 }
-      cap { 0 }
+      transient do
+        laptop_allocation { 1 }
+        laptop_cap { 0 }
+        laptops_ordered { 0 }
+      end
+
+      allocation { laptop_allocation }
+      cap { laptop_cap }
+      devices_ordered { laptops_ordered }
     end
 
     trait :with_coms_allocation do
+      transient do
+        router_allocation { 1 }
+        router_cap { 0 }
+        routers_ordered { 0 }
+      end
+
       coms
-      allocation { 1 }
-      cap { 0 }
+      allocation { router_allocation }
+      cap { router_cap }
+      devices_ordered { routers_ordered }
     end
 
     trait :with_available_devices do

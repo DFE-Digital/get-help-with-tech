@@ -4,10 +4,10 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
   before_action :validate_form, only: %i[update]
   before_action :check_confirmation, only: %i[update]
 
-  attr_reader :form
+  attr_reader :form, :school
 
   def edit
-    @form = Support::EnableOrdersForm.new(existing_params.merge(enable_orders_form_params))
+    @form = Support::EnableOrdersForm.new(school: school, **existing_params.merge(enable_orders_form_params))
   end
 
   def update
@@ -52,12 +52,12 @@ private
   end
 
   def set_form
-    @form = Support::EnableOrdersForm.new(enable_orders_form_params.merge(school: school))
+    @form = Support::EnableOrdersForm.new(school: school, **enable_orders_form_params)
   end
 
   def set_school
     @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
-    authorize @school, :show?
+    authorize school, :show?
   end
 
   def validate_form
@@ -83,9 +83,9 @@ private
 
   def existing_params
     {
-      order_state: @school.order_state,
-      laptop_cap: @school.laptop_cap,
-      router_cap: @school.router_cap,
+      order_state: school.order_state,
+      laptop_cap: school.laptop_cap,
+      router_cap: school.router_cap,
     }
   end
 
