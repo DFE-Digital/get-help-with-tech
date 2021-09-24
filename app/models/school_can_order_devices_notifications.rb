@@ -34,6 +34,7 @@ private
   def notify_support_if_no_one_to_contact
     return if all_relevant_users.present?
 
+puts "--- Remove this debug info - Lorenzo: CanOrderDevicesMailer.with(school: #{school.id}).notify_support_school_can_order_but_no_one_contacted"
     CanOrderDevicesMailer
       .with(school: school)
       .send(:notify_support_school_can_order_but_no_one_contacted)
@@ -75,6 +76,7 @@ private
   end
 
   def notify_computacenter
+puts "--- Remove this debug info - Lorenzo: ComputacenterMailer.with(school: #{school.id}, new_cap_value: #{new_cap_value}).notify_of_school_can_order"
     ComputacenterMailer
       .with(school: school, new_cap_value: new_cap_value)
       .notify_of_school_can_order
@@ -88,6 +90,7 @@ private
   end
 
   def notify_user(user:, school:, message_type:)
+puts "--- Remove this debug info - Lorenzo: CanOrderDevicesMailer.with(user: #{user.id}, school: #{school.id}).#{message_type}"
     CanOrderDevicesMailer
       .with(user: user, school: school)
       .send(message_type)

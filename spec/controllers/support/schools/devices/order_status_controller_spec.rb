@@ -7,41 +7,293 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     sign_in_as support_user
   end
 
-  describe '#allow_ordering_for_many_schools' do
-    it 'calls import service' do
-      importer = instance_double(Importers::AllocationUploadCsv, batch_id: 123)
-      allow(Importers::AllocationUploadCsv).to receive(:new).and_return(importer)
-      allow(importer).to receive(:call)
+  describe '#edit' do
+    let(:school) do
+      create(:school,
+             :with_std_device_allocation_partially_ordered,
+             :with_coms_device_allocation_partially_ordered)
+    end
 
-      file = fixture_file_upload('allocation_upload.csv', 'text/csv')
-
-      put :allow_ordering_for_many_schools, params: {
-        support_bulk_allocation_form: {
-          upload: file,
-          send_notification: 'false',
-        },
+    let(:edition_values) do
+      {
+        order_state: 'can_order_for_specific_circumstances',
+        laptop_cap: '1',
+        router_cap: '1',
       }
+    end
 
-      expect(Importers::AllocationUploadCsv).to have_received(:new).with(path_to_csv: anything, send_notification: false)
-      expect(importer).to have_received(:call)
+    let(:params) do
+      {
+        school_urn: school.urn,
+        support_enable_orders_form: edition_values,
+      }
+    end
+
+    before { get :edit, params: params }
+
+    it 'responds successfully' do
+      expect(response).to be_successful
+    end
+
+    context 'when given values to edit' do
+      it 'assigns a form with the given order_state, laptop_cap and router_cap values' do
+        expect(assigns[:form].school.urn).to eq(school.urn)
+        expect(assigns[:form].order_state).to eq('can_order_for_specific_circumstances')
+        expect(assigns[:form].laptop_cap).to eq(1)
+        expect(assigns[:form].router_cap).to eq(1)
+      end
+    end
+
+    context 'when given no values to edit' do
+      let(:edition_values) { {} }
+
+      it 'assigns a form with the default values from the school' do
+        expect(assigns[:form].school.urn).to eq(school.urn)
+        expect(assigns[:form].order_state).to eq(school.order_state)
+        expect(assigns[:form].laptop_cap).to eq(school.laptop_cap)
+        expect(assigns[:form].router_cap).to eq(school.router_cap)
+      end
     end
   end
 
-  it 'can send notifications' do
-    importer = instance_double(Importers::AllocationUploadCsv, batch_id: 123)
-    allow(Importers::AllocationUploadCsv).to receive(:new).and_return(importer)
-    allow(importer).to receive(:call)
+  describe '#update' do
+    let(:confirm) { true }
+    let(:order_state) { 'can_order_for_specific_circumstances' }
+    let(:laptop_cap) { '35' }
+    let(:router_cap) { '3' }
+    let(:who_manages) { :centrally_managed }
 
-    file = fixture_file_upload('allocation_upload.csv', 'text/csv')
+    let(:params) do
+      {
+        confirm: confirm,
+        school_urn: school.urn,
+        support_enable_orders_form: {
+          order_state: order_state,
+          laptop_cap: laptop_cap,
+          router_cap: router_cap,
+        },
+      }
+    end
 
-    put :allow_ordering_for_many_schools, params: {
-      support_bulk_allocation_form: {
-        upload: file,
-        send_notification: 'true',
-      },
-    }
+    let(:rb) do
+      create(:local_authority,
+             :manages_centrally,
+             :vcap_feature_flag,
+             computacenter_reference: '1000')
+    end
 
-    expect(Importers::AllocationUploadCsv).to have_received(:new).with(path_to_csv: anything, send_notification: true)
-    expect(importer).to have_received(:call)
+    let!(:school) do
+      create(:school,
+             who_manages,
+             :with_std_device_allocation,
+             :with_coms_device_allocation,
+             computacenter_reference: '11',
+             responsible_body: rb,
+             laptop_allocation: 50, laptop_cap: 40, laptops_ordered: 10,
+             router_allocation: 5, router_cap: 4, routers_ordered: 1)
+    end
+
+    let!(:school2) do
+      create(:school,
+             who_manages,
+             :with_std_device_allocation,
+             :with_coms_device_allocation,
+             responsible_body: rb,
+             computacenter_reference: '12',
+             laptop_allocation: 50, laptop_cap: 40, laptops_ordered: 10,
+             router_allocation: 5, router_cap: 4, routers_ordered: 1)
+    end
+
+    before do
+      stub_computacenter_outgoing_api_calls
+    end
+
+    context 'when the values assigned are not valid' do
+      let(:laptop_cap) { '5000' }
+
+      it 'display the edit view' do
+        patch :update, params: params
+
+        expect(flash[:success]).to be_blank
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'when the change is not confirmed' do
+      let(:confirm) { nil }
+
+      it 'redirects' do
+        patch :update, params: params
+
+        expect(response).to redirect_to(support_school_confirm_enable_orders_path(urn: school.urn,
+                                                                                  order_state: order_state,
+                                                                                  laptop_cap: laptop_cap,
+                                                                                  router_cap: router_cap))
+      end
+    end
+
+    it 'redirects to the school view' do
+      patch :update, params: params
+
+      expect(response).to redirect_to(support_school_path(school.urn))
+    end
+
+    it 'sets the given order_state to the school' do
+      expect {
+        patch :update, params: params
+      }.to change { School.find(school.id).order_state }.from('cannot_order').to(order_state)
+    end
+
+    it 'sets the given laptop cap to the school' do
+      expect {
+        patch :update, params: params
+      }.to change { School.find(school.id).laptop_cap }.from(40).to(laptop_cap.to_i)
+    end
+
+    it 'sets the given router cap to the school' do
+      expect {
+        patch :update, params: params
+      }.to change { School.find(school.id).router_cap }.from(4).to(router_cap.to_i)
+    end
+
+    context 'when the school is not in virtual cap pool' do
+      let(:who_manages) { :manages_orders }
+      let(:requests) do
+        [
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '35' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '3' },
+          ]
+        ]
+      end
+
+      it 'update school caps on Computacenter' do
+        patch :update, params: params
+
+        expect_to_have_sent_caps_to_computacenter(requests)
+      end
+
+      it 'notify Computacenter of laptops cap change by email' do
+        expect { patch :update, params: params }
+          .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+                .with(params: { school: school, new_cap_value: 35 }, args: []).once
+      end
+
+      it 'notify Computacenter of routers cap change by email' do
+        expect { patch :update, params: params }
+          .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
+                .with(params: { school: school, new_cap_value: 3 }, args: []).once
+      end
+
+      it "notify the school's organizational users" do
+        user = create(:user, :relevant_to_computacenter, school: school)
+
+        expect { patch :update, params: params }
+          .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
+                .with(params: { school: school, user: user }, args: []).once
+      end
+
+      it "notify support if no school's organizational users" do
+        expect { patch :update, params: params }
+          .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
+                .with(params: { school: school }, args: []).once
+      end
+
+      it 'notify Computacenter of school can order by email' do
+        expect { patch :update, params: params }
+          .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
+                .with(params: { school: school, new_cap_value: 35 }, args: []).once
+      end
+
+    end
+
+    context 'when the school is in virtual cap pool' do
+      let(:who_manages) { :centrally_managed }
+      let(:requests) do
+        [
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '65' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '65' },
+          ],
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '6' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '6' },
+          ]
+        ]
+      end
+
+      before do
+        AddSchoolToVirtualCapPoolService.new(school).call
+        AddSchoolToVirtualCapPoolService.new(school2).call
+      end
+
+      it 'update school caps on Computacenter' do
+        patch :update, params: params
+
+        expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
+      end
+
+      it 'do not notify Computacenter of laptops cap change by email' do
+        expect { patch :update, params: params }
+          .not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+      end
+
+      it 'do not notify Computacenter of routers cap change by email' do
+        expect { patch :update, params: params }
+          .not_to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
+      end
+
+      it "do not notify the school's organizational users" do
+        user = create(:user, :relevant_to_computacenter, school: school)
+
+        expect { patch :update, params: params }
+          .not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
+      end
+
+      it "do not notify support if no school's organizational users" do
+        expect { patch :update, params: params }
+          .not_to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
+      end
+
+      it 'do not notify Computacenter of school can order by email' do
+        expect { patch :update, params: params }
+          .not_to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
+      end
+    end
+
+    it 'do not notify Computacenter by email' do
+      expect { patch :update, params: params }
+        .not_to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer')
+    end
+
+    it 'do not notify the school' do
+      expect { patch :update, params: params }
+        .not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer')
+    end
+  end
+
+  describe '#allow_ordering_for_many_schools' do
+    let(:file) { fixture_file_upload('allocation_upload.csv', 'text/csv') }
+    let(:params) do
+      {
+        support_bulk_allocation_form: {
+          upload: file,
+          send_notification: 'true',
+        },
+      }
+    end
+
+    it 'enqueue an AllocationJob per allocation contained in the given file' do
+      expect {
+        put :allow_ordering_for_many_schools, params: params
+      }.to have_enqueued_job(AllocationJob).twice
+    end
+
+    it 'redirects to the bulk job page' do
+      put :allow_ordering_for_many_schools, params: params
+
+      expect(response).to redirect_to(support_allocation_batch_job_path(assigns[:form].batch_id))
+    end
   end
 end

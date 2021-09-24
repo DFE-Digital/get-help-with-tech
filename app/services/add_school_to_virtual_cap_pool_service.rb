@@ -23,11 +23,9 @@ class AddSchoolToVirtualCapPoolService
   end
 
   def add_school!
-    school.transaction do
-      add_devices_to_pools!
-      school.reload.refresh_device_ordering_status!
-      true
-    end
+    add_devices_to_pools!
+    school.reload.refresh_device_ordering_status!
+    true
   end
 
   def add_devices_to_pools!

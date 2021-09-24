@@ -75,7 +75,20 @@ FactoryBot.define do
     end
 
     trait :with_std_device_allocation do
-      std_device_allocation { association :school_device_allocation, :with_std_allocation, school: instance }
+      transient do
+        laptop_allocation { 1 }
+        laptop_cap { 0 }
+        laptops_ordered { 0 }
+      end
+
+      std_device_allocation {
+        association :school_device_allocation,
+                    :with_std_allocation,
+                    school: instance,
+                    laptop_allocation: laptop_allocation,
+                    laptop_cap: laptop_cap,
+                    laptops_ordered: laptops_ordered
+      }
     end
 
     trait :with_std_device_allocation_fully_ordered do
@@ -87,7 +100,20 @@ FactoryBot.define do
     end
 
     trait :with_coms_device_allocation do
-      coms_device_allocation { association :school_device_allocation, :with_coms_allocation, school: instance }
+      transient do
+        router_allocation { 1 }
+        router_cap { 0 }
+        routers_ordered { 0 }
+      end
+
+      coms_device_allocation {
+        association :school_device_allocation,
+                    :with_coms_allocation,
+                    school: instance,
+                    router_allocation: router_allocation,
+                    router_cap: router_cap,
+                    routers_ordered: routers_ordered
+      }
     end
 
     trait :with_coms_device_allocation_partially_ordered do

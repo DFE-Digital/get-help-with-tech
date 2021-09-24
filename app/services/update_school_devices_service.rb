@@ -4,7 +4,6 @@ class UpdateSchoolDevicesService
               :router_allocation, :router_cap, :router_cap_changed
 
   def initialize(school:, order_state:, notify_school: true, **opts)
-    @laptop_allocation = laptop_allocation
     @laptop_allocation = opts[:laptop_allocation]
     @laptop_cap = opts[:laptop_cap]
     @notify_school = notify_school
@@ -29,7 +28,7 @@ class UpdateSchoolDevicesService
   end
 
   def notify_other_agents
-    allocation_ids = [school.laptop_allocation_id] if laptop_cap_changed
+    allocation_ids = laptop_cap_changed ? [school.laptop_allocation_id] : []
     allocation_ids << school.router_allocation_id if router_cap_changed
     CapUpdateNotificationsService.new(*allocation_ids, notify_school: notify_school).call if allocation_ids.any?
   end
@@ -40,8 +39,8 @@ class UpdateSchoolDevicesService
   end
 
   def update_caps!
-    update_laptop_cap if laptop_cap
-    update_router_cap if router_cap
+    update_laptop_cap
+    update_router_cap
   end
 
   def update_laptop_cap

@@ -102,7 +102,7 @@ class School < ApplicationRecord
   delegate :allocation=, to: :std_device_allocation, prefix: :laptop
 
   delegate :cap_implied_by_order_state, to: :coms_device_allocation, allow_nil: true, prefix: :router
-  delegate :computacenter_cap, to: :std_device_allocation, prefix: :router, allow_nil: true
+  delegate :computacenter_cap, to: :coms_device_allocation, prefix: :router, allow_nil: true
   delegate :allocation=, to: :coms_device_allocation, prefix: :router
 
   delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
@@ -126,11 +126,13 @@ class School < ApplicationRecord
 
   def adjusted_laptop_cap_by_order_state(cap, state: order_state)
     return raw_laptops_ordered if state == 'cannot_order'
+
     state == 'can_order' ? raw_laptop_allocation : cap
   end
 
   def adjusted_router_cap_by_order_state(cap, state: order_state)
     return raw_routers_ordered if state == 'cannot_order'
+
     state == 'can_order' ? raw_router_allocation : cap
   end
 
