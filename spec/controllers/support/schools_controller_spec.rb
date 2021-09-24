@@ -192,6 +192,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
       it 'does not update school name' do
         patch :update, params: { urn: school.urn, school: { name: 'new name' } }
+
         expect(school.reload.name).not_to eql('new name')
         expect(response).not_to be_successful
       end

@@ -1,58 +1,56 @@
 class Support::Schools::Devices::OrderStatusController < Support::BaseController
   before_action :set_school, except: %i[collect_urns_to_allow_many_schools_to_order allow_ordering_for_many_schools]
-  before_action :set_form, only: %i[update]
+  before_action :set_enable_orders_form, only: %i[update]
   before_action :validate_form, only: %i[update]
   before_action :check_confirmation, only: %i[update]
+  before_action :authorize_school_edition, only: %i[collect_urns_to_allow_many_schools_to_order allow_ordering_for_many_schools]
 
   attr_reader :form, :school
 
   def edit
-    @form = Support::EnableOrdersForm.new(school: school, **existing_params.merge(enable_orders_form_params))
+    set_enable_orders_form(edition_params)
   end
 
   def update
     form.save(validate: false)
-    flash[:success] = t(:success, scope: %i[support order_status update])
-    redirect_to support_school_path(urn: school.urn)
+    updated!
   rescue Computacenter::OutgoingAPI::Error => e
-    flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id: e.cap_update_request&.payload_id)
-    render :edit, status: :unprocessable_entity
+    update_error!(e.cap_update_request&.payload_id)
   end
 
   # GET /support/devices/schools/:urn/enable-orders/confirm
   def confirm
-    @form = Support::EnableOrdersForm.new(order_state: params[:order_state],
-                                          laptop_cap: params[:laptop_cap],
-                                          router_cap: params[:router_cap])
-    @laptop_allocation = @school.laptop_allocation
-    @router_allocation = @school.router_allocation
+    set_enable_orders_form(confirm_params)
+    @laptop_allocation = school.laptop_allocation
+    @router_allocation = school.router_allocation
   end
 
   def collect_urns_to_allow_many_schools_to_order
-    authorize School, :edit?
-    @form = Support::BulkAllocationForm.new
+    set_bulk_allocation_form
   end
 
   def allow_ordering_for_many_schools
-    authorize School, :edit?
-    @form = Support::BulkAllocationForm.new(restriction_params)
-
-    if form.save
-      redirect_to support_allocation_batch_job_path(form.batch_id)
-    else
-      render :collect_urns_to_allow_many_schools_to_order, status: :unprocessable_entity
-    end
+    set_bulk_allocation_form(**restriction_params)
+    form.save ? ordering_allowed_for_many_schools! : error_allowing_ordering_for_many_schools!
   end
 
 private
 
+  def set_bulk_allocation_form(**params)
+    @form = Support::BulkAllocationForm.new(**params)
+  end
+
   # Filters
+  def authorize_school_edition
+    authorize School, :edit?
+  end
+
   def check_confirmation
     unconfirmed! if params[:confirm].blank?
   end
 
-  def set_form
-    @form = Support::EnableOrdersForm.new(school: school, **enable_orders_form_params)
+  def set_enable_orders_form(updates = enable_orders_form_params)
+    @form = Support::EnableOrdersForm.new(school: school, **updates)
   end
 
   def set_school
@@ -61,12 +59,20 @@ private
   end
 
   def validate_form
-    invalid_form! unless form.valid?
+    orders_cant_be_enabled! unless form.valid?
   end
 
   # Responses
-  def invalid_form!
+  def error_allowing_ordering_for_many_schools!
+    render :collect_urns_to_allow_many_schools_to_order, status: :unprocessable_entity
+  end
+
+  def orders_cant_be_enabled!
     render(:edit, status: :unprocessable_entity)
+  end
+
+  def ordering_allowed_for_many_schools!
+    redirect_to support_allocation_batch_job_path(form.batch_id)
   end
 
   def unconfirmed!
@@ -76,20 +82,40 @@ private
                                                           router_cap: form.router_cap)
   end
 
-  # Params
-  def enable_orders_form_params(opts = params)
-    opts.fetch(:support_enable_orders_form, {}).permit(:order_state, :laptop_cap, :router_cap)
+  def updated!
+    flash[:success] = t(:success, scope: %i[support order_status update])
+    redirect_to support_school_path(urn: school.urn)
   end
 
-  def existing_params
+  def update_error!(payload_id)
+    flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id: payload_id)
+    render :edit, status: :unprocessable_entity
+  end
+
+  # Params
+  def confirm_params
+    params.permit(:order_state, :laptop_cap, :router_cap).to_h.symbolize_keys
+  end
+
+  def edition_params
     {
       order_state: school.order_state,
       laptop_cap: school.laptop_cap,
       router_cap: school.router_cap,
-    }
+    }.merge(enable_orders_form_params)
+  end
+
+  def enable_orders_form_params
+    params.fetch(:support_enable_orders_form, {})
+        .permit(:order_state, :laptop_cap, :router_cap)
+        .to_h
+        .symbolize_keys
   end
 
   def restriction_params
-    params.require(:support_bulk_allocation_form).permit(:upload, :send_notification)
+    params.require(:support_bulk_allocation_form)
+          .permit(:upload, :send_notification)
+          .to_h
+          .symbolize_keys
   end
 end
