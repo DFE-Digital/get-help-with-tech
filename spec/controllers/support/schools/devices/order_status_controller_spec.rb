@@ -269,7 +269,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
     it 'do not notify the school' do
       expect { patch :update, params: params }
-        .not_to have_enqueued_mail.with('CanOrderDevicesMailer')
+        .not_to have_enqueued_mail.with(CanOrderDevicesMailer)
     end
   end
 
