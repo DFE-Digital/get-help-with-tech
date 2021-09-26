@@ -84,6 +84,14 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
 
         expect_to_have_sent_caps_to_computacenter(requests)
       end
+
+      it 'do not notify Computacenter by email' do
+        expect { save }.not_to have_enqueued_mail(ComputacenterMailer)
+      end
+
+      it 'do not notify the school' do
+        expect { save }.not_to have_enqueued_mail.with(CanOrderDevicesMailer)
+      end
     end
   end
 end

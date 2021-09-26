@@ -117,7 +117,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       let(:response_status) { 401 }
 
       it 'return false' do
-        expect(request.post.success?).to be_falsey
+        expect(request.post).not_to be_success
       end
     end
 
@@ -128,7 +128,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       end
 
       it 'return false' do
-        expect(request.post.success?).to be_falsey
+        expect(request.post).not_to be_success
       end
     end
 
@@ -138,7 +138,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       end
 
       it 'return true' do
-        expect(request.post.success?).to be_truthy
+        expect(request.post).to be_success
       end
     end
   end
