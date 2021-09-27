@@ -2,10 +2,10 @@
 <% content_for :title, title %>
 <%- content_for :before_content do %>
   <%= breadcrumbs([{ "Home" => root_path },
-    { 'Support home' => support_home_path },
-    { t('page_titles.support.schools.home') => support_schools_path },
-    title,
-  ]) %>
+                   { 'Support home' => support_home_path },
+                   { t('page_titles.support.schools.home') => support_schools_path },
+                   title,
+                  ]) %>
 <%- end %>
 
 <div class="govuk-grid-row">
@@ -16,7 +16,8 @@
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">
-        Download the <%= govuk_link_to 'example CSV', '/examples/allocation-upload.csv' %> and populate with schools along with their updated allocation and whether not they can order
+        Download the <%= govuk_link_to 'example CSV', '/examples/allocation-upload.csv' %> and populate with schools
+        along with their updated allocation and whether or not they can order
       </p>
 
       <%= f.govuk_file_field :upload,
@@ -24,16 +25,16 @@
                              hint: { text: 'Upload CSV' } %>
 
       <% send_notification_options = [
-          OpenStruct.new(id: true, name: 'Yes'),
-          OpenStruct.new(id: false, name: 'No'),
+        OpenStruct.new(id: true, name: 'Yes'),
+        OpenStruct.new(id: false, name: 'No'),
       ] %>
 
-    <%= f.govuk_collection_radio_buttons :send_notification,
-          send_notification_options,
-          :id,
-          :name,
-          legend: { text: 'Send user notifications?' },
-          hint: { text: 'If yes, users will receive automated messages from the service. Otherwise users will not receive automated messages from the service.' } %>
+      <%= f.govuk_collection_radio_buttons :send_notification,
+                                           send_notification_options,
+                                           :id,
+                                           :name,
+                                           legend: { text: 'Send user notifications?' },
+                                           hint: { text: 'If yes, users will receive automated messages from the service. Otherwise users will not receive automated messages from the service.' } %>
 
       <%= f.govuk_submit 'Upload allocations' %>
     <%- end %>

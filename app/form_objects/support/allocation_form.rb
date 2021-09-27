@@ -14,7 +14,7 @@ class Support::AllocationForm
   validate :check_minimum
 
   def allocation=(value)
-    @allocation = value.to_i
+    @allocation = ActiveModel::Type::Integer.new.cast(value)
   end
 
   def save

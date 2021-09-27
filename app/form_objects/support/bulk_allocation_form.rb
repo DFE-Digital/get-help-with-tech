@@ -35,5 +35,7 @@ class Support::BulkAllocationForm
       AllocationJob.perform_later(AllocationBatchJob.create!(job_attrs))
     end
     true
+  rescue StandardError
+    false
   end
 end
