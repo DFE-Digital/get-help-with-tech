@@ -7,8 +7,6 @@ Government-funded support is available for schools and colleges to get set up on
 
 [The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/feature-comparison-g-suite-education-and-office-365-education/?marker=content-body) provides feature comparison and case studies on how schools are making the most of these platforms, to help you make the most appropriate choice for your school.
 
-The programme has been extended for a further 12 months. This means you now have until the end of March 2022 to register and claim your grant.
-
 ## What is a digital education platform?
 It's a place where teachers, pupils and students can continue learning through online virtual classrooms.
 
@@ -55,7 +53,7 @@ Virtual schools and colleges are also eligible for the programme. This is especi
 
 You can choose to apply for support from either a Google or Microsoft partner.
 
-To apply, complete the support request form for your chosen partner below:
+To apply, complete the support request form for your chosen partner below by 30 November 2021:
 
 * [Apply for support from a Google partner](https://docs.google.com/forms/d/e/1FAIpQLSc45tWnxrk0ZPyhEE4UioGAxDF_2eYNEuE3lLzY_P6Hpo8jxg/viewform)
 * [Apply for support from a Microsoft partner](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR8OxR8KDk1BHllyTqp9sEZBUNEVJNDlRN0U1WUtQWk1KTjY5RDFCM1M3VyQlQCN0PWcu)
