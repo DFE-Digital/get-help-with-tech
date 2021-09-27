@@ -26,19 +26,6 @@ class VirtualCapPool < ApplicationRecord
     update_cap_on_computacenter if enabled? && (cap_previously_changed? || devices_ordered_previously_changed?)
   end
 
-  # def add_school!(school)
-  #   if school_can_be_added_to_pool?(school)
-  #     add_school_allocation!(school.device_allocations.find_by(device_type: device_type))
-  #   else
-  #     raise VirtualCapPoolError, "Cannot add school to virtual pool #{school.urn} #{school.name}"
-  #   end
-  # end
-
-  # def remove_school!(school)
-  #   school_device_allocation = school.device_allocations.find_by(device_type: device_type)
-  #   remove_school_allocation!(school_device_allocation) if school_device_allocation
-  # end
-
   def has_school?(school)
     schools.exists?(school.id)
   end
