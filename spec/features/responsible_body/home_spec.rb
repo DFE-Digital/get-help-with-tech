@@ -53,9 +53,9 @@ RSpec.feature ResponsibleBody do
           .to_return(status: 200, body: '', headers: {})
 
         schools.each do |s|
-          responsible_body.add_school_to_virtual_cap_pools!(s)
-          responsible_body.calculate_virtual_caps!
+          AddSchoolToVirtualCapPoolService.new(s).call
         end
+        responsible_body.reload
 
         sign_in_as rb_user
       end

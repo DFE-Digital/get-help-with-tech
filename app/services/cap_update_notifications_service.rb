@@ -29,7 +29,7 @@ class CapUpdateNotificationsService
     end
   end
 
-  def failed!(request)
+  def failed!
     body = request.response&.body
     status = request.response&.status
     message = "Computacenter responded with #{status}, response_body: #{body}"

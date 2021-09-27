@@ -217,9 +217,9 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     create(:preorder_information, :rb_will_order, school: closed)
     closed.can_order!
 
-    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(alpha)
-    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(closed)
-    local_authority_managing_centrally.calculate_virtual_caps!
+    AddSchoolToVirtualCapPoolService.new(alpha).call
+    AddSchoolToVirtualCapPoolService.new(closed).call
+    local_authority_managing_centrally.reload
 
     closed.gias_status_closed!
 
@@ -293,9 +293,10 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     alpha.can_order!
     beta.can_order!
     closed.can_order!
-    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(alpha)
-    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(beta)
-    local_authority_managing_centrally.add_school_to_virtual_cap_pools!(closed)
+    AddSchoolToVirtualCapPoolService.new(alpha).call
+    AddSchoolToVirtualCapPoolService.new(beta).call
+    AddSchoolToVirtualCapPoolService.new(closed).call
+    local_authority_managing_centrally.reload
 
     closed.gias_status_closed!
     local_authority_managing_centrally.calculate_virtual_caps!

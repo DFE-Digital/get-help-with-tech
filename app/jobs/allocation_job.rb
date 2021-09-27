@@ -10,8 +10,7 @@ class AllocationJob < ApplicationJob
     set_negative_allocation_and_cap_values if @allocation_delta.negative?
 
     ActiveRecord::Base.transaction do
-      update_current_allocation!
-      call_school_order_state_and_cap_update_service
+      update_school_devices
       record_batch_job_processed_and_notify
     end
   end
@@ -55,18 +54,11 @@ private
     @new_raw_cap_value = [@current_raw_cap_value + @negative_allocation_delta, @new_raw_allocation_value].min
   end
 
-  def update_current_allocation!
-    if @allocation_delta.negative? && @new_raw_allocation_value < @current_allocation.raw_cap
-      @current_allocation.update!(allocation: @new_raw_allocation_value, cap: @new_raw_cap_value)
-    else
-      @current_allocation.update!(allocation: @new_raw_allocation_value)
-    end
-  end
-
-  def call_school_order_state_and_cap_update_service
+  def update_school_devices
     UpdateSchoolDevicesService.new(
       school: @school.reload,
       order_state: @order_state,
+      laptop_allocation: @new_raw_allocation_value,
       laptop_cap: @new_raw_cap_value,
       notify_school: @notify_school,
     ).call

@@ -236,40 +236,13 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
       it 'do not notify Computacenter of laptops cap change by email' do
         expect { patch :update, params: params }
-          .not_to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-      end
-
-      it 'do not notify Computacenter of routers cap change by email' do
-        expect { patch :update, params: params }
-          .not_to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-      end
-
-      it "do not notify the school's organizational users" do
-        user = create(:user, :relevant_to_computacenter, school: school)
-
-        expect { patch :update, params: params }
-          .not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
+          .not_to have_enqueued_mail(ComputacenterMailer)
       end
 
       it "do not notify support if no school's organizational users" do
         expect { patch :update, params: params }
-          .not_to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
+          .not_to have_enqueued_mail(CanOrderDevicesMailer)
       end
-
-      it 'do not notify Computacenter of school can order by email' do
-        expect { patch :update, params: params }
-          .not_to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-      end
-    end
-
-    it 'do not notify Computacenter by email' do
-      expect { patch :update, params: params }
-        .not_to have_enqueued_mail(ComputacenterMailer)
-    end
-
-    it 'do not notify the school' do
-      expect { patch :update, params: params }
-        .not_to have_enqueued_mail.with(CanOrderDevicesMailer)
     end
   end
 

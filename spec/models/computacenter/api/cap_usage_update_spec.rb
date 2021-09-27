@@ -82,7 +82,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
       let!(:school) { create(:school, :in_lockdown, :manages_orders, computacenter_reference: '123456', responsible_body: responsible_body) }
 
-      let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
+      let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, ) }
       let(:exception) { Computacenter::OutgoingAPI::Error.new(cap_update_request: OpenStruct.new(body: 'body')) }
 
       before do
@@ -92,7 +92,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
         school.orders_managed_centrally!
         school.can_order!
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-        allow(mock_request).to receive(:post!).and_raise(exception)
+        allow(mock_request).to receive(:post).and_raise(exception)
       end
 
       it 'will not fail if the cap update were to fail' do

@@ -121,30 +121,18 @@ RSpec.describe Support::AllocationForm, type: :model do
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '40' },
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '40' },
             ],
-            [
-              { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '5' },
-              { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '5' },
-            ]
           ]
         end
 
-        it 'update school laptop raw cap to match raw laptops ordered' do
+        it 'update school device raw cap to match raw devices ordered' do
           expect { form.save }.to change(school, :raw_laptop_cap).from(40).to(10)
         end
 
-        it 'update school router raw cap to match raw routers ordered' do
-          expect { form.save }.to change(school, :raw_router_cap).from(4).to(1)
-        end
-
-        it 'update pool laptop cap' do
+        it 'update pool device cap' do
           expect { form.save }.to change(school, :laptop_cap).from(80).to(50)
         end
 
-        it 'update pool router cap' do
-          expect { form.save }.to change(school, :router_cap).from(9).to(6)
-        end
-
-        it 'update pool schools devices cap on Computacenter' do
+        it 'update pool school device cap on Computacenter' do
           form.save
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
@@ -167,30 +155,18 @@ RSpec.describe Support::AllocationForm, type: :model do
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '75' },
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '75' },
             ],
-            [
-              { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '9' },
-              { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '9' },
-            ]
           ]
         end
 
-        it 'update school laptop raw cap to match laptop raw allocation' do
+        it 'update school device raw cap to match device raw allocation' do
           expect { form.save }.to change(school, :raw_laptop_cap).from(40).to(45)
         end
 
-        it 'update school router raw cap to match router raw allocation' do
-          expect { form.save }.to change(school, :raw_router_cap).from(4).to(5)
-        end
-
-        it 'update pool laptop cap' do
+        it 'update pool device cap' do
           expect { form.save }.to change(school, :laptop_cap).from(80).to(85)
         end
 
-        it 'update pool router cap' do
-          expect { form.save }.to change(school, :router_cap).from(9).to(10)
-        end
-
-        it 'update pool schools devices cap on Computacenter' do
+        it 'update pool school device cap on Computacenter' do
           form.save
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
@@ -208,20 +184,12 @@ RSpec.describe Support::AllocationForm, type: :model do
       context 'when the school can order for specific circumstances' do
         let(:order_state) { 'can_order_for_specific_circumstances' }
 
-        it 'do not update the school laptop raw cap' do
+        it 'do not update the school device raw cap' do
           expect { form.save }.not_to change(school, :raw_laptop_cap)
         end
 
-        it 'do not update router raw cap' do
-          expect { form.save }.not_to change(school, :raw_router_cap)
-        end
-
-        it 'do not update pool laptop cap' do
+        it 'do not update pool device cap' do
           expect { form.save }.not_to change(school, :laptop_cap)
-        end
-
-        it 'do not update pool router cap' do
-          expect { form.save }.not_to change(school, :router_cap)
         end
       end
     end
@@ -270,35 +238,24 @@ RSpec.describe Support::AllocationForm, type: :model do
           [
             [
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '10' },
-              { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '1' },
             ],
           ]
         end
 
-        it 'update school laptop cap to match laptops ordered' do
+        it 'update school device cap to match devices ordered' do
           expect { form.save }.to change(school, :laptop_cap).from(40).to(10)
         end
 
-        it 'update school router cap to match routers ordered' do
-          expect { form.save }.to change(school, :router_cap).from(4).to(1)
-        end
-
-        it 'update school devices cap on Computacenter' do
+        it 'update school device cap on Computacenter' do
           form.save
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end
 
-        it 'notify Computacenter of laptops cap change by email' do
+        it 'notify Computacenter of device cap change by email' do
           expect { form.save }
             .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
                   .with(params: { school: school, new_cap_value: 10 }, args: []).once
-        end
-
-        it 'notify Computacenter of routers cap change by email' do
-          expect { form.save }
-            .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                  .with(params: { school: school, new_cap_value: 1 }, args: []).once
         end
 
         it "do not notify the school users or support by email" do
@@ -317,35 +274,24 @@ RSpec.describe Support::AllocationForm, type: :model do
           [
             [
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '45' },
-              { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '5' },
             ]
           ]
         end
 
-        it 'update school laptop cap to match laptops allocation' do
+        it 'update school device cap to match device allocation' do
           expect { form.save }.to change(school, :laptop_cap).from(40).to(45)
         end
 
-        it 'update school router cap to match routers allocation' do
-          expect { form.save }.to change(school, :router_cap).from(4).to(5)
-        end
-
-        it 'update pool schools devices cap on Computacenter' do
+        it 'update pool schools device cap on Computacenter' do
           form.save
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end
 
-        it 'notify Computacenter of laptops cap change by email' do
+        it 'notify Computacenter of device cap change by email' do
           expect { form.save }
             .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
                   .with(params: { school: school, new_cap_value: 45 }, args: []).once
-        end
-
-        it 'notify Computacenter of routers cap change by email' do
-          expect { form.save }
-            .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                  .with(params: { school: school, new_cap_value: 5 }, args: []).once
         end
 
         it "notify the school's organizational users" do

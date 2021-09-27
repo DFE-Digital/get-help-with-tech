@@ -22,7 +22,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies the user' do
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
         end
       end
 
@@ -38,7 +38,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies the user' do
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_user_to_read_privacy_policy', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :nudge_user_to_read_privacy_policy).with(params: { user: user, school: school }, args: [])
         end
       end
 
@@ -53,7 +53,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_mail(CanOrderDevicesMailer) anything, anything, params: anything, args: [])
+          }.not_to have_enqueued_mail(CanOrderDevicesMailer)
         end
       end
 
@@ -84,7 +84,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order,).with(params: { user: user, school: school }, args: [])
+          }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
         end
       end
     end
@@ -119,7 +119,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           expect(school.device_ordering_status).to eq('rb_can_order')
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_in_virtual_cap', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_in_virtual_cap).with(params: { user: user, school: school }, args: [])
         end
       end
     end
@@ -154,7 +154,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           expect(school.device_ordering_status).to eq('rb_can_order')
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_in_fe_college', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_in_fe_college).with(params: { user: user, school: school }, args: [])
         end
       end
     end
@@ -220,7 +220,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_but_action_needed', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed).with(params: { user: user, school: school }, args: [])
       end
     end
 
@@ -269,7 +269,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'nudges RB that school needs a contact' do
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'nudge_rb_to_add_school_contact', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :nudge_rb_to_add_school_contact).with(params: { user: user, school: school }, args: [])
       end
     end
 
@@ -281,7 +281,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'notifies support that school is missing out' do
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_support_school_can_order_but_no_one_contacted', 'deliver_now', params: { school: school }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted).with(params: { school: school }, args: [])
       end
     end
 
@@ -303,7 +303,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'sends notification they can order routers' do
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers', 'deliver_now', params: { school: school, user: user }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers).with(params: { school: school, user: user }, args: [])
       end
     end
 
@@ -336,7 +336,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'sends notification they can order routers' do
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers_in_virtual_cap', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_virtual_cap).with(params: { user: user, school: school }, args: [])
         end
       end
     end
@@ -360,7 +360,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'sends notification they can order routers' do
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order_routers_in_fe_college', 'deliver_now', params: { school: school, user: user }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_fe_college).with(params: { school: school, user: user }, args: [])
       end
     end
 
@@ -407,7 +407,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'still notifies Computacenter' do
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer', 'notify_of_school_can_order', 'deliver_now', params: anything, args: [])
+        }.to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order).with(params: anything, args: [])
       end
     end
 
@@ -439,7 +439,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies the user' do
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
         end
       end
 
@@ -451,14 +451,14 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies support that school is missing out' do
           expect {
             service.call
-          }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'notify_support_school_can_order_but_no_one_contacted', 'deliver_now', params: { school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted).with(params: { school: school }, args: [])
         end
       end
 
       it 'still notifies Computacenter' do
         expect {
           service.call
-        }.to have_enqueued_job.on_queue('mailers').with('ComputacenterMailer', 'notify_of_school_can_order', 'deliver_now', params: anything, args: [])
+        }.to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order).with(params: anything, args: [])
       end
     end
   end

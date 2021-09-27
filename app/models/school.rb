@@ -412,25 +412,21 @@ class School < ApplicationRecord
     preorder_information.update!(school_contact: headteacher)
   end
 
-  def set_laptop_allocation!(amount)
-    existing_or_new_std_device_allocation.update!(allocation: amount)
+  def set_laptop_ordering!(**opts)
+    existing_or_new_std_device_allocation.tap do |record|
+      record.allocation = opts[:allocation] || raw_laptop_allocation
+      record.cap = adjusted_laptop_cap_by_order_state(opts[:cap] || raw_laptop_cap)
+      record.save!
+    end
     reload.refresh_device_ordering_status!
   end
 
-  def set_laptop_cap!(cap, adjust_by_order_state: true)
-    amount = adjust_by_order_state ? adjusted_laptop_cap_by_order_state(cap) : cap
-    existing_or_new_std_device_allocation.update!(cap: amount)
-    reload.refresh_device_ordering_status!
-  end
-
-  def set_router_allocation!(amount)
-    existing_or_new_coms_device_allocation.update!(allocation: amount)
-    reload.refresh_device_ordering_status!
-  end
-
-  def set_router_cap!(cap, adjust_by_order_state: true)
-    amount = adjust_by_order_state ? adjusted_router_cap_by_order_state(cap) : cap
-    existing_or_new_coms_device_allocation.update!(cap: amount)
+  def set_router_ordering!(**opts)
+    existing_or_new_coms_device_allocation.tap do |record|
+      record.allocation = opts[:allocation] || raw_router_allocation
+      record.cap = adjusted_router_cap_by_order_state(opts[:cap] || raw_router_cap)
+      record.save!
+    end
     reload.refresh_device_ordering_status!
   end
 

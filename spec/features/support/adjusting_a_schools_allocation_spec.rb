@@ -8,6 +8,8 @@ RSpec.feature 'Adjusting a schools allocation' do
 
   before do
     create(:school_device_allocation, :with_std_allocation, allocation: 50, devices_ordered: 10, school: school)
+    stub_computacenter_outgoing_api_calls
+
     sign_in_as support_user
   end
 

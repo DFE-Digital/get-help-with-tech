@@ -161,18 +161,17 @@ RSpec.describe SchoolUpdateService, type: :model do
       end
 
       context 'when the predecessor is in a virtual cap pool' do
-        let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
         let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
         before do
-          allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-          allow(mock_request).to receive(:post!).and_return(response)
+          stub_computacenter_outgoing_api_calls
 
           rb = old_school.responsible_body
           rb.update!(vcap_feature_flag: true, who_will_order_devices: 'responsible_body')
           old_school.preorder_information.update!(who_will_order_devices: 'responsible_body')
           old_school.can_order!
-          rb.add_school_to_virtual_cap_pools!(old_school)
+          AddSchoolToVirtualCapPoolService.new(old_school).call
+          rb.reload
         end
 
         it 'does not transfer any spare allocation or adjust the original values' do
