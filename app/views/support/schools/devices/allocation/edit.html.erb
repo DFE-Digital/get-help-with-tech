@@ -15,7 +15,7 @@
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">
-        <%= t(@form.order_state, scope: %i[support allocation edit order_states], cap: @form.current_allocation.cap, allocation: @form.current_allocation.allocation) %>
+        <%= t(@form.order_state, scope: %i[support allocation edit order_states], cap: @form.device_cap, allocation: @form.device_allocation) %>
       </p>
 
      <% if @form.in_virtual_cap_pool? %>
@@ -26,7 +26,7 @@
                               only_integer: true,
                               label: {text: 'New allocation'},
                               width: 3,
-                              value: @form.current_allocation.raw_allocation,
+                              value: @form.raw_allocation,
                               min: @form.raw_devices_ordered,
                               hint: {
                                 text: t(:allocation_input_hint, scope: %i[support allocation edit], devices_ordered: @form.raw_devices_ordered)
