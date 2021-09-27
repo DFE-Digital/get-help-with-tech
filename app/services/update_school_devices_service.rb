@@ -44,12 +44,14 @@ class UpdateSchoolDevicesService
   end
 
   def update_laptop_cap
+    @laptop_cap ||= school.raw_laptop_cap
     @laptop_cap_changed = value_changed?(school, :laptop_computacenter_cap) do
       school.set_laptop_cap!(laptop_cap)
     end
   end
 
   def update_router_cap
+    @router_cap ||= school.raw_router_cap
     @router_cap_changed = value_changed?(school, :router_computacenter_cap) do
       school.set_router_cap!(router_cap)
     end
@@ -57,8 +59,6 @@ class UpdateSchoolDevicesService
 
   def update_state!
     school.update!(order_state: order_state)
-    @laptop_cap ||= school.raw_laptop_cap
-    @router_cap ||= school.raw_router_cap
   end
 
   def value_changed?(receiver, method)

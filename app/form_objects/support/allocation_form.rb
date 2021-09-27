@@ -4,16 +4,37 @@ class Support::AllocationForm
   attr_accessor :allocation, :device_type, :school
 
   delegate :in_virtual_cap_pool?, :order_state,
+           :laptop_allocation, :router_allocation,
+           :laptop_cap, :router_cap,
            :raw_laptop_allocation, :raw_router_allocation,
-           :raw_laptop_cap, :raw_router_cap,
            :raw_laptops_ordered, :raw_routers_ordered,
            to: :school
 
   validate :check_decrease_allowed
   validate :check_minimum
 
+  def allocation=(value)
+    @allocation = value.to_i
+  end
+
   def save
     valid? && allocation_updated?
+  end
+
+  def device_allocation
+    router? ? router_allocation : laptop_allocation
+  end
+
+  def device_cap
+    router? ? router_cap : laptop_cap
+  end
+
+  def raw_allocation
+    router? ? raw_router_allocation : raw_laptop_allocation
+  end
+
+  def raw_devices_ordered
+    router? ? raw_routers_ordered : raw_laptops_ordered
   end
 
   private
@@ -22,19 +43,10 @@ class Support::AllocationForm
     router? ? :router_allocation : :laptop_allocation
   end
 
-  def cap
-    router? ? raw_router_cap : raw_laptop_cap
-  end
-
-  def cap_type
-    router? ? :router_cap : :laptop_cap
-  end
-
   def allocation_updated?
     UpdateSchoolDevicesService.new(school: school,
                                    order_state: order_state,
-                                   allocation_type => allocation,
-                                   cap_type => cap).call
+                                   allocation_type => allocation).call
   end
 
   def check_decrease_allowed
@@ -49,14 +61,6 @@ class Support::AllocationForm
 
   def decreasing?
     allocation < raw_allocation
-  end
-
-  def raw_allocation
-    router? ? raw_router_allocation : raw_laptop_allocation
-  end
-
-  def raw_devices_ordered
-    router? ? raw_routers_ordered : raw_laptops_ordered
   end
 
   def router?

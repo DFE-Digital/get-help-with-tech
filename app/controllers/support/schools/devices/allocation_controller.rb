@@ -20,21 +20,22 @@ class Support::Schools::Devices::AllocationController < Support::BaseController
 
 private
 
+  def raw_allocation
+    school.send("raw_#{device_type}_allocation")
+  end
+
+  def set_school
+    @device_type = params[:device_type].to_sym == :router ? :router : :laptop
+    @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
+    authorize @school, :edit?
+  end
+
+  # Params
   def allocation_params
     params.fetch(:support_allocation_form, {}).permit(:allocation).to_h
   end
 
   def form_params
     { device_type: device_type, school: school }
-  end
-
-  def raw_allocation
-    school.send("raw_#{device_type}_allocation")
-  end
-
-  def set_school
-    @device_type = params[:device_type] == :router ? :router : :laptop
-    @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
-    authorize @school, :edit?
   end
 end
