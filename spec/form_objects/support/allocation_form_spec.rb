@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Support::AllocationForm do
+RSpec.describe Support::AllocationForm, type: :model do
   let(:order_state) { 'can_order' }
 
   let(:rb) do
