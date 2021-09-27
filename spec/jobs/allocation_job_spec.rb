@@ -20,6 +20,7 @@ RSpec.describe AllocationJob do
         expect(UpdateSchoolDevicesService).to have_received(:new).with(
           school: school,
           order_state: batch_job.order_state,
+          laptop_allocation: batch_job.allocation_delta,
           laptop_cap: batch_job.allocation_delta,
           notify_school: false,
         )
@@ -46,6 +47,7 @@ RSpec.describe AllocationJob do
         expect(UpdateSchoolDevicesService).to have_received(:new).with(
           school: school,
           order_state: batch_job.order_state,
+          laptop_allocation: batch_job.allocation_delta,
           laptop_cap: batch_job.allocation_delta,
           notify_school: true,
         )
@@ -292,8 +294,8 @@ RSpec.describe AllocationJob do
         create(:school_device_allocation, :with_std_allocation, :partially_ordered, school: school1)
         create(:school_device_allocation, :with_std_allocation, :partially_ordered, school: school2)
 
-        rb.add_school_to_virtual_cap_pools!(school1)
-        rb.add_school_to_virtual_cap_pools!(school2)
+        AddSchoolToVirtualCapPoolService.new(school1).call
+        AddSchoolToVirtualCapPoolService.new(school2).call
 
         batch_job
       end

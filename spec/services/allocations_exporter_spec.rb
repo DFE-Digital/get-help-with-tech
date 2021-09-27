@@ -43,8 +43,10 @@ RSpec.describe AllocationsExporter, type: :model do
 
       create(:school_device_allocation, device_type: 'coms_device', school: schools.first, allocation: 21, cap: 21, devices_ordered: 11)
       create(:school_device_allocation, device_type: 'coms_device', school: schools.last, allocation: 26, cap: 6, devices_ordered: 6)
-      trust.add_school_to_virtual_cap_pools!(schools.last)
-      trust.add_school_to_virtual_cap_pools!(schools.first)
+
+      AddSchoolToVirtualCapPoolService.new(schools.last).call
+      AddSchoolToVirtualCapPoolService.new(schools.first).call
+      trust.reload
     end
 
     it 'includes both the raw numbers and pooled numbers' do

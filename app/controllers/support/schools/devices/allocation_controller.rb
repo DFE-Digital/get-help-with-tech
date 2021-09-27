@@ -25,7 +25,7 @@ private
   end
 
   def set_school
-    @device_type = params[:device_type].to_sym == :router ? :router : :laptop
+    @device_type = params[:device_type]&.to_sym == :router ? :router : :laptop
     @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
     authorize @school, :edit?
   end

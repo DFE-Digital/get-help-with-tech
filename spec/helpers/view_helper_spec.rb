@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ViewHelper do
-  let(:school) { School.new(device_allocations: allocations) }
+  let(:school) { build_stubbed(:school, device_allocations: allocations) }
 
   describe '#what_to_order_allocation_list' do
     context 'with school device allocations' do
       context 'when devices available to order' do
-        let(:allocations) { [SchoolDeviceAllocation.new(cap: 4, devices_ordered: 1)] }
+        let(:allocations) { [build_stubbed(:school_device_allocation, cap: 4, devices_ordered: 1)] }
 
         it 'returns X devices' do
           expect(helper.what_to_order_allocation_list(allocations: allocations)).to eql('3 devices')
@@ -14,8 +14,8 @@ RSpec.describe ViewHelper do
       end
 
       context 'when devices and routers available to order' do
-        let(:allocation1) { SchoolDeviceAllocation.new(device_type: :std_device, cap: 10, devices_ordered: 3) }
-        let(:allocation2) { SchoolDeviceAllocation.new(device_type: :coms_device, cap: 4, devices_ordered: 1) }
+        let(:allocation1) { build_stubbed(:school_device_allocation, :std, cap: 10, devices_ordered: 3) }
+        let(:allocation2) { build_stubbed(:school_device_allocation, :coms, cap: 4, devices_ordered: 1) }
         let(:allocations) { [allocation1, allocation2] }
 
         it 'X devices and X routers' do

@@ -1,15 +1,19 @@
 class AddSchoolToVirtualCapPoolService
   attr_reader :school, :rb
 
-  delegate :laptop_allocation_id, :router_allocation_id, to: :school
+  delegate :addable_to_virtual_cap_pool?,
+           :laptop_allocation_id, :router_allocation_id,
+           :raw_laptop_cap, :raw_router_cap,
+           :raw_laptops_ordered, :raw_routers_ordered,
+           :in_virtual_cap_pool?, :responsible_body, to: :school
 
   def initialize(school)
     @school = school
-    @rb = school.responsible_body
+    @rb = responsible_body
   end
 
   def call
-    return true if school.in_virtual_cap_pool?(responsible_body_id: rb.id)
+    return true if in_virtual_cap_pool?(responsible_body_id: rb.id)
 
     add_school! if addable?
   rescue StandardError => e
@@ -19,7 +23,7 @@ class AddSchoolToVirtualCapPoolService
   private
 
   def addable?
-    rb.has_virtual_cap_feature_flags? && school.addable_to_virtual_cap_pool?
+    rb.has_virtual_cap_feature_flags? && addable_to_virtual_cap_pool?
   end
 
   def add_school!
@@ -29,8 +33,8 @@ class AddSchoolToVirtualCapPoolService
   end
 
   def add_devices_to_pools!
-    add_laptop_to_pool!(!school.laptops_available_to_order?) if laptop_allocation_id
-    add_router_to_pool!(!school.routers_available_to_order?) if router_allocation_id
+    add_laptop_to_pool!(raw_laptop_cap != raw_laptops_ordered) if laptop_allocation_id
+    add_router_to_pool!(raw_router_cap != raw_routers_ordered) if router_allocation_id
   end
 
   def add_laptop_to_pool!(notify)

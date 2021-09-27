@@ -3,68 +3,11 @@ require 'rails_helper'
 RSpec.describe SchoolDeviceAllocation, type: :model do
   it { is_expected.to be_versioned }
 
-  describe '#cap_implied_by_order_state' do
-    subject(:allocation) { described_class.new(allocation: 27, cap: nil, devices_ordered: 13) }
-
-    context 'given cannot_order' do
-      it 'returns the value of devices_ordered' do
-        expect(allocation.cap_implied_by_order_state(order_state: 'cannot_order')).to eq(13)
-      end
-    end
-
-    context 'given can_order' do
-      it 'returns the value of allocation' do
-        expect(allocation.cap_implied_by_order_state(order_state: 'can_order')).to eq(27)
-      end
-    end
-
-    context 'given can_order_for_specific_circumstances' do
-      it 'returns the given cap' do
-        expect(allocation.cap_implied_by_order_state(order_state: 'can_order_for_specific_circumstances', given_cap: 17)).to eq(17)
-      end
-    end
-
-    context 'within a virtual cap' do
-      let(:responsible_body) { create(:trust, :vcap_feature_flag) }
-      let(:schools) { create_list(:school, 2, :manages_orders, :with_std_device_allocation, :in_lockdown, responsible_body: responsible_body) }
-
-      let(:school) { schools.first }
-      let(:allocation) { school.std_device_allocation.reload }
-
-      before do
-        stub_computacenter_outgoing_api_calls
-
-        schools.each do |school|
-          school.std_device_allocation.update!(allocation: 27, cap: 0, devices_ordered: 13, school: school)
-          school.orders_managed_centrally!
-        end
-      end
-
-      context 'given cannot_order' do
-        it 'returns the value of devices_ordered' do
-          expect(allocation.cap_implied_by_order_state(order_state: 'cannot_order')).to eq(13)
-        end
-      end
-
-      context 'given can_order' do
-        it 'returns the value of allocation' do
-          expect(allocation.cap_implied_by_order_state(order_state: 'can_order')).to eq(27)
-        end
-      end
-
-      context 'given can_order_for_specific_circumstances' do
-        it 'returns the given cap' do
-          expect(allocation.cap_implied_by_order_state(order_state: 'can_order_for_specific_circumstances', given_cap: 17)).to eq(17)
-        end
-      end
-    end
-  end
-
   describe 'validations' do
     let(:school) { build(:school) }
 
     context 'cap exceeds allocation' do
-      subject(:allocation) { described_class.new(cap: 11, allocation: 10, school: school) }
+      subject(:allocation) { build_stubbed(:school_device_allocation, cap: 11, allocation: 10, school: school) }
 
       it 'fails validation' do
         expect(allocation.valid?).to be_falsey
@@ -74,7 +17,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     end
 
     context 'cap equals allocation' do
-      subject(:allocation) { described_class.new(cap: 10, allocation: 10, school: school) }
+      subject(:allocation) { build_stubbed(:school_device_allocation, cap: 10, allocation: 10, school: school) }
 
       it 'passes validation' do
         expect(allocation.valid?).to be_truthy
@@ -83,10 +26,11 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
     context 'cap less than devices_ordered' do
       subject(:allocation) do
-        described_class.new(cap: 9,
-                            devices_ordered: 10,
-                            allocation: 100,
-                            school: school)
+        build_stubbed(:school_device_allocation,
+                      cap: 9,
+                      devices_ordered: 10,
+                      allocation: 100,
+                      school: school)
       end
 
       it 'passes validation' do
@@ -96,10 +40,11 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
     context 'cap equals devices_ordered' do
       subject(:allocation) do
-        described_class.new(cap: 10,
-                            devices_ordered: 10,
-                            allocation: 100,
-                            school: school)
+        build_stubbed(:school_device_allocation,
+                      cap: 10,
+                      devices_ordered: 10,
+                      allocation: 100,
+                      school: school)
       end
 
       it 'passes validation' do
@@ -109,7 +54,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   end
 
   describe '#devices_available_to_order' do
-    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 200) }
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: 100, devices_ordered: 200) }
 
     context 'when negative' do
       it 'returns zero' do
@@ -119,7 +64,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   end
 
   describe '#allocation' do
-    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: 100, devices_ordered: 50, allocation: 100) }
 
     it 'refers to the local allocation' do
       expect(allocation.allocation).to eq(allocation.raw_allocation)
@@ -127,7 +72,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   end
 
   describe '#cap' do
-    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: 100, devices_ordered: 50, allocation: 100) }
 
     it 'refers to the local cap' do
       expect(allocation.cap).to eq(allocation.raw_cap)
@@ -135,7 +80,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   end
 
   describe '#devices_ordered' do
-    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: 100, devices_ordered: 50, allocation: 100) }
 
     it 'refers to the local devices_ordered' do
       expect(allocation.devices_ordered).to eq(allocation.raw_devices_ordered)
@@ -143,7 +88,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   end
 
   describe '#computacenter_cap' do
-    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 50, allocation: 100) }
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: 100, devices_ordered: 50, allocation: 100) }
 
     it 'returns the cap amount for computacenter' do
       expect(allocation.computacenter_cap).to eq(allocation.raw_cap)
@@ -157,16 +102,22 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
     let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
-    subject(:allocation) { described_class.create!(device_type: 'std_device', cap: 100, devices_ordered: 87, allocation: 120, school: school) }
+    subject(:allocation) do
+      create(:school_device_allocation,
+             device_type: 'std_device',
+             cap: 100,
+             devices_ordered: 87,
+             allocation: 120,
+             school: school)
+    end
 
     before do
-      allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-      allow(mock_request).to receive(:post!).and_return(response)
-
+      stub_computacenter_outgoing_api_calls(response_body: 'test-response')
       allocation
       school2.device_allocations.std_device.create!(allocation: 200, cap: 100, devices_ordered: 50)
       school.orders_managed_centrally!
       school2.orders_managed_centrally!
+      responsible_body.reload
       allocation.reload
     end
 
@@ -188,7 +139,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       allocation.reload
       expect(allocation.cap_update_calls).to be_present
       expect(allocation.cap_update_calls.last.failure).to be false
-      expect(allocation.cap_update_calls.last.request_body).to include('test-request')
+      expect(allocation.cap_update_calls.last.request_body).to include('capAmount="350"')
       expect(allocation.cap_update_calls.last.response_body).to include('test-response')
     end
 

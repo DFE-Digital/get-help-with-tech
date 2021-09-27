@@ -81,7 +81,7 @@ Sometimes it may be necessary to add schools to a pool outside of this process.
 2. Add the school to the responsible body's virtual pools
 
 ```ruby
-rb.add_school_to_virtual_cap_pools!(school)
+AddSchoolToVirtualCapPoolService.new(school).call
 ```
 
 This will add the school's device allocations to the appropriate virtual pools

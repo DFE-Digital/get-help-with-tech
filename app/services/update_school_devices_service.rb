@@ -15,8 +15,7 @@ class UpdateSchoolDevicesService
 
   def call
     update_state!
-    update_allocations!
-    update_caps!
+    update_devices_ordering!
     notify_other_agents unless notifications_sent_by_pool_update?
     true
   end
@@ -33,27 +32,20 @@ class UpdateSchoolDevicesService
     CapUpdateNotificationsService.new(*allocation_ids, notify_school: notify_school).call if allocation_ids.any?
   end
 
-  def update_allocations!
-    school.set_laptop_allocation!(laptop_allocation) if laptop_allocation
-    school.set_router_allocation!(router_allocation) if router_allocation
+  def update_devices_ordering!
+    update_laptop_ordering! if laptop_allocation || laptop_cap
+    update_router_ordering! if router_allocation || router_cap
   end
 
-  def update_caps!
-    update_laptop_cap
-    update_router_cap
-  end
-
-  def update_laptop_cap
-    @laptop_cap ||= school.raw_laptop_cap
+  def update_laptop_ordering!
     @laptop_cap_changed = value_changed?(school, :laptop_computacenter_cap) do
-      school.set_laptop_cap!(laptop_cap)
+      school.set_laptop_ordering!(cap: laptop_cap, allocation: laptop_allocation)
     end
   end
 
-  def update_router_cap
-    @router_cap ||= school.raw_router_cap
+  def update_router_ordering!
     @router_cap_changed = value_changed?(school, :router_computacenter_cap) do
-      school.set_router_cap!(router_cap)
+      school.set_router_ordering!(cap: router_cap, allocation: router_allocation)
     end
   end
 
