@@ -53,7 +53,7 @@ RSpec.describe Computacenter::SchoolChangesController do
     it 'sets the given computacenter reference to the school' do
       patch :update, params: params
 
-      expect(flash[:success]).to eq("Ship To reference for SchoolName is 12")
+      expect(flash[:success]).to eq('Ship To reference for SchoolName is 12')
     end
 
     it 'update caps on Computacenter' do
@@ -61,7 +61,7 @@ RSpec.describe Computacenter::SchoolChangesController do
         [
           { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '2' },
           { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '2' },
-        ]
+        ],
       ]
 
       patch :update, params: params

@@ -17,7 +17,7 @@
         <li>change your Chromebook settings</li>
       </ul>
 
-      <%= f.govuk_submit (impersonated_or_current_user.has_multiple_schools? ? "Finish and go to #{@school.institution_type} overview" : "Finish and go to homepage" ) %>
+      <%= f.govuk_submit(impersonated_or_current_user.has_multiple_schools? ? "Finish and go to #{@school.institution_type} overview" : "Finish and go to homepage") %>
     <%- end %>
   </div>
 </div>

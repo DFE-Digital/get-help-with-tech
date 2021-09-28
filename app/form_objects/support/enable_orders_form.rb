@@ -3,8 +3,8 @@ class Support::EnableOrdersForm
   include ActiveModel::Validations::Callbacks
 
   attr_accessor :order_state,
-                :school,
-                :laptop_cap,
+                :school
+  attr_reader   :laptop_cap,
                 :router_cap
 
   validates :order_state, inclusion: { in: School.order_states.keys }
@@ -41,9 +41,9 @@ private
 
   def orders_enabled?
     UpdateSchoolDevicesService.new(school: school,
-                                            order_state: order_state,
-                                            laptop_cap: laptop_cap,
-                                            router_cap: router_cap).call
+                                   order_state: order_state,
+                                   laptop_cap: laptop_cap,
+                                   router_cap: router_cap).call
   end
 
   def override_cap_according_to_order_state!

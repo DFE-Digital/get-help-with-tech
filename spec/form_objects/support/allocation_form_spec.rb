@@ -38,7 +38,7 @@ RSpec.describe Support::AllocationForm, type: :model do
     stub_computacenter_outgoing_api_calls
   end
 
-  context '#save' do
+  describe '#save' do
     context 'when the school is in virtual cap pool' do
       let(:allocation) { 45 }
       let(:device_type) { :laptop }
@@ -67,13 +67,12 @@ RSpec.describe Support::AllocationForm, type: :model do
           expect { form.save }.not_to change(school, :laptop_cap)
         end
 
-
         it 'add error to school field' do
           errors = {
-            school: ['Decreasing an allocation for a school in a virtual cap pool is currently not possible - contact the dev team to do this manually for now']
+            school: ['Decreasing an allocation for a school in a virtual cap pool is currently not possible - contact the dev team to do this manually for now'],
           }
 
-          form.save
+          expect(form.save).to be_falsey
 
           expect(form.errors.messages).to eq(errors)
         end
@@ -96,10 +95,10 @@ RSpec.describe Support::AllocationForm, type: :model do
 
         it 'add error to school field' do
           errors = {
-            school: ['Allocation cannot be less than the number they have already ordered (10)']
+            school: ['Allocation cannot be less than the number they have already ordered (10)'],
           }
 
-          form.save
+          expect(form.save).to be_falsey
 
           expect(form.errors.messages).to eq(errors)
         end
@@ -133,7 +132,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'update pool school device cap on Computacenter' do
-          form.save
+          expect(form.save).to be_truthy
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end
@@ -167,7 +166,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'update pool school device cap on Computacenter' do
-          form.save
+          expect(form.save).to be_truthy
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end
@@ -219,10 +218,10 @@ RSpec.describe Support::AllocationForm, type: :model do
 
         it 'add error to school field' do
           errors = {
-            school: ['Allocation cannot be less than the number they have already ordered (10)']
+            school: ['Allocation cannot be less than the number they have already ordered (10)'],
           }
 
-          form.save
+          expect(form.save).to be_falsey
 
           expect(form.errors.messages).to eq(errors)
         end
@@ -247,7 +246,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'update school device cap on Computacenter' do
-          form.save
+          expect(form.save).to be_truthy
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end
@@ -258,7 +257,7 @@ RSpec.describe Support::AllocationForm, type: :model do
                   .with(params: { school: school, new_cap_value: 10 }, args: []).once
         end
 
-        it "do not notify the school users or support by email" do
+        it 'do not notify the school users or support by email' do
           expect { form.save }.not_to have_enqueued_mail(CanOrderDevicesMailer)
         end
 
@@ -274,7 +273,7 @@ RSpec.describe Support::AllocationForm, type: :model do
           [
             [
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '45' },
-            ]
+            ],
           ]
         end
 
@@ -283,7 +282,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'update pool schools device cap on Computacenter' do
-          form.save
+          expect(form.save).to be_truthy
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end

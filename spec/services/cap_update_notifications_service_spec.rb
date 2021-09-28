@@ -84,7 +84,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
           [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '35' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '3' },
-          ]
+          ],
         ]
       end
 

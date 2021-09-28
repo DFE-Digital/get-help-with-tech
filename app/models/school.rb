@@ -444,7 +444,7 @@ class School < ApplicationRecord
     responsible_body_type if orders_managed_centrally?
   end
 
-  private
+private
 
   def clear_preorder_information!
     preorder_information&.destroy!

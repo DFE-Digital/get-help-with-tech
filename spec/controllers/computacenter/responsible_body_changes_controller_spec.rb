@@ -71,7 +71,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
     it 'sets the given computacenter reference to the rb' do
       patch :update, params: params
 
-      expect(flash[:success]).to eq("Sold To reference for RBName is 1200")
+      expect(flash[:success]).to eq('Sold To reference for RBName is 1200')
     end
 
     context 'when the rb schools are not in virtual cap pool' do
@@ -83,7 +83,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '2' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '2' },
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '2' },
-          ]
+          ],
         ]
       end
 
@@ -103,7 +103,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '3' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '3' },
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
-          ]
+          ],
         ]
       end
 

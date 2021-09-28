@@ -3,16 +3,18 @@ require 'rails_helper'
 RSpec.describe Computacenter::ShipToForm, type: :model do
   let(:school) { build(:school, computacenter_reference: '11') }
 
+  subject(:form) { described_class.new }
+
   it do
-    is_expected.to validate_numericality_of(:ship_to)
-                     .only_integer
-                     .with_message('Ship To must be a number')
+    expect(form).to validate_numericality_of(:ship_to)
+                      .only_integer
+                      .with_message('Ship To must be a number')
   end
 
   it do
-    is_expected.to validate_inclusion_of(:change_ship_to)
-                     .in_array(%w[yes no])
-                     .with_message('Tell us whether the Ship To number needs to change')
+    expect(form).to validate_inclusion_of(:change_ship_to)
+                      .in_array(%w[yes no])
+                      .with_message('Tell us whether the Ship To number needs to change')
   end
 
   describe '#save' do
@@ -73,14 +75,9 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
       end
 
       it 'update caps on Computacenter' do
-        requests = [
-          [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '100', 'capAmount' => '2' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '100', 'capAmount' => '2' },
-          ]
-        ]
+        requests = [[{ 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '100', 'capAmount' => '2' }, { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '100', 'capAmount' => '2' }]]
 
-        save
+        expect(save).to be_truthy
 
         expect_to_have_sent_caps_to_computacenter(requests)
       end

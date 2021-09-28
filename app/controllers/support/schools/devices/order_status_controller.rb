@@ -12,8 +12,7 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
   end
 
   def update
-    form.save(validate: false)
-    updated!
+    form.save(validate: false) && updated!
   rescue Computacenter::OutgoingAPI::Error => e
     update_error!(e.cap_update_request&.payload_id)
   end

@@ -20,7 +20,7 @@ class AddSchoolToVirtualCapPoolService
     failed(e)
   end
 
-  private
+private
 
   def addable?
     rb.has_virtual_cap_feature_flags? && addable_to_virtual_cap_pool?

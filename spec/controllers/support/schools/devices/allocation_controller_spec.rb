@@ -131,7 +131,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'displays successful message' do
       patch :update, params: params
 
-      expect(flash[:success]).to eq("We’ve saved the new allocation")
+      expect(flash[:success]).to eq('We’ve saved the new allocation')
     end
 
     it 'sets the given allocation to the school' do

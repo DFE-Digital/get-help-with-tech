@@ -9,10 +9,10 @@ module ComputacenterHelper
       expect(a_request(:post, 'http://computacenter.example.com/')).to have_been_made.times(requests.size)
     end
     requests.each do |caps|
-      expect(a_request(:post, 'http://computacenter.example.com/').with { |req|
+      expect(a_request(:post, 'http://computacenter.example.com/').with do |req|
         result = Nokogiri::XML(req.body)
         result.css('CapAdjustmentRequest Record').to_a.map(&:to_h).map(&:to_a).sort == caps.map(&:to_a).sort
-      }).to have_been_made
+      end).to have_been_made
     end
   end
 

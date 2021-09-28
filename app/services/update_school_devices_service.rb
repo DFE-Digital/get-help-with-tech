@@ -20,7 +20,7 @@ class UpdateSchoolDevicesService
     true
   end
 
-  private
+private
 
   def notifications_sent_by_pool_update?
     school.in_active_virtual_cap_pool?

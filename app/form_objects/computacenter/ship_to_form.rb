@@ -10,7 +10,7 @@ class Computacenter::ShipToForm
     valid? && update_school && update_computacenter
   end
 
-  private
+private
 
   def update_computacenter
     CapUpdateNotificationsService.new(*school.allocation_ids, notify_computacenter: false, notify_school: false).call

@@ -50,7 +50,7 @@ RSpec.describe BulkTechsourceForm do
     subject(:form) { described_class.new(emails: "   a@example.com  \r\n   \r\nB@example.com\r\n\r\n") }
 
     it 'returns an array of entered emails' do
-      expect(form.array_of_emails).to eql(['a@example.com', 'b@example.com'])
+      expect(form.array_of_emails).to eql(%w[a@example.com b@example.com])
     end
   end
 end
