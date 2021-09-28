@@ -125,7 +125,7 @@ Rails.application.routes.draw do
     post '/privacy-notice', to: 'home#seen_privacy_notice'
 
     namespace :devices do
-      get '/', to: 'home#show', constraints: -> { false }
+      get '/', to: 'home#show'
       get '/tell-us', to: 'home#tell_us'
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
@@ -170,7 +170,7 @@ Rails.application.routes.draw do
     end
 
     namespace :internet do
-      get '/', to: 'home#show', constraints: -> { false }
+      get '/', to: 'home#show'
 
       namespace :mobile, path: '/mobile' do
         get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance, constraints: -> { false }
@@ -237,7 +237,7 @@ Rails.application.routes.draw do
         end
 
         namespace :internet do
-          get '/', to: 'home#show', constraints: -> { false }
+          get '/', to: 'home#show'
 
           namespace :mobile, path: '/mobile' do
             get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance, constraints: -> { false }

@@ -23,7 +23,7 @@ en:
     responsible_body_home: Get help with technology
     responsible_body_devices_home: Get devices
     responsible_body_devices_tell_us: Tell us who will order laptops
-    responsible_body_users_index: Manage %{rb_type} users
+    responsible_body_users_index: Manage users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Set your Chromebook preferences
     new_responsible_body_user: Invite a new user
@@ -42,8 +42,7 @@ en:
     guide_to_resetting_windows_laptops_and_tablets: Guide to resetting Windows laptops and tablets
     start: Get help with technology
     internet_access: Internet access
-    finding_out_about_internet_access_needs: Finding out about internet access needs
-    signed_in_internet_access: Request internet access
+    signed_in_internet_access: Request or manage 4G routers
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
     click_to_sign_in:
@@ -159,7 +158,7 @@ en:
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
     school_edit_chromebooks: Set your Chromebook preferences
-    school_users: Manage your organisation's users
+    school_users: Manage users
     school_before_can_order: Before you can order, we need more information
     donated_devices:
       title: Opt in to the Daily Mail’s donated devices scheme
@@ -596,7 +595,7 @@ en:
               cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
         support/enable_orders_form:
           attributes:
-            laptop_cap:
+            device_cap:
               greater_than_or_equal_to: Enter a device cap that’s a non-negative whole number
               not_a_number: Enter a device cap that’s a non-negative whole number
               lte_allocation: Cap cannot be more than their current allocation of %{allocation}
