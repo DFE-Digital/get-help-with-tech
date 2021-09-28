@@ -32,8 +32,6 @@ RSpec.describe VirtualCapPool, type: :model do
       pool.school_device_allocations.each do |allocation|
         allocation.reload
         expect(allocation.cap_update_calls).to be_present
-        expect(allocation.cap_update_calls.last.request_body).to include('capAmount="49"')
-        expect(allocation.cap_update_calls.last.request_body).to include('capAmount="24"')
         expect(allocation.cap_update_calls.last.response_body).to include('test-response')
       end
     end

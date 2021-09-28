@@ -139,7 +139,6 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
       allocation.reload
       expect(allocation.cap_update_calls).to be_present
       expect(allocation.cap_update_calls.last.failure).to be false
-      expect(allocation.cap_update_calls.last.request_body).to include('capAmount="350"')
       expect(allocation.cap_update_calls.last.response_body).to include('test-response')
     end
 

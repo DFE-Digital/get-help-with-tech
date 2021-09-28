@@ -81,14 +81,14 @@ FactoryBot.define do
         laptops_ordered { 0 }
       end
 
-      std_device_allocation {
+      std_device_allocation do
         association :school_device_allocation,
                     :with_std_allocation,
                     school: instance,
                     laptop_allocation: laptop_allocation,
                     laptop_cap: laptop_cap,
                     laptops_ordered: laptops_ordered
-      }
+      end
     end
 
     trait :with_std_device_allocation_fully_ordered do
@@ -106,14 +106,14 @@ FactoryBot.define do
         routers_ordered { 0 }
       end
 
-      coms_device_allocation {
+      coms_device_allocation do
         association :school_device_allocation,
                     :with_coms_allocation,
                     school: instance,
                     router_allocation: router_allocation,
                     router_cap: router_cap,
                     routers_ordered: routers_ordered
-      }
+      end
     end
 
     trait :with_coms_device_allocation_partially_ordered do

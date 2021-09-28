@@ -23,7 +23,7 @@ class Support::BulkAllocationForm
     @batch_id ||= SecureRandom.uuid
   end
 
-  private
+private
 
   def rows
     @rows ||= CSV.read(upload.path, headers: true)

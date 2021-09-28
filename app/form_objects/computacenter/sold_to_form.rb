@@ -10,7 +10,7 @@ class Computacenter::SoldToForm
     valid? && update_responsible_body && update_computacenter
   end
 
-  private
+private
 
   def update_computacenter
     allocation_ids = responsible_body.schools

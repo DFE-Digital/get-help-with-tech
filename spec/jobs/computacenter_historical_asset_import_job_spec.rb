@@ -31,7 +31,7 @@ RSpec.describe ComputacenterHistoricalAssetImportJob, type: :job do
   let(:hardware_hash_2) { 'secrethardwarehash2' }
   let(:sys_created_on_2) { '2020-12-24 18:03:04' }
 
-  let(:header_row) { ['sys_id', 'asset_tag', 'serial_number', 'model.display_name', 'department.name', 'department.id', 'department.u_sold_to_id', 'location.name', 'location.name.u_location_id', 'location.u_cc_ship_to_account', 'u_bios_password', 'u_admin_password', 'u_hardware_hash', 'sys_created_on'] }
+  let(:header_row) { %w[sys_id asset_tag serial_number model.display_name department.name department.id department.u_sold_to_id location.name location.name.u_location_id location.u_cc_ship_to_account u_bios_password u_admin_password u_hardware_hash sys_created_on] }
   let(:row_1) { [sys_id_1, asset_tag_1, serial_number_1, model_name_1, department_name_1, department_id_1, sold_to_1, location_name_1, location_id_1, ship_to_1, bios_password_1, admin_password_1, hardware_hash_1, sys_created_on_1] }
   let(:row_2) { [sys_id_2, asset_tag_2, serial_number_2, model_name_2, department_name_2, department_id_2, sold_to_2, location_name_2, location_id_2, ship_to_2, bios_password_2, admin_password_2, hardware_hash_2, sys_created_on_2] }
 

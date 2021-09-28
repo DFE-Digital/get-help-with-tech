@@ -15,7 +15,7 @@ class CapUpdateNotificationsService
     true
   end
 
-  private
+private
 
   def computacenter_accepts_updates?
     Settings.computacenter.outgoing_api&.endpoint.present?
@@ -43,7 +43,6 @@ class CapUpdateNotificationsService
 
   def notify_computacenter_by_email(allocation)
     notification = allocation.device_type == 'std_device' ? :notify_of_devices_cap_change : :notify_of_comms_cap_change
-puts "--- Remove this debug info - Lorenzo: ComputacenterMailer.#{notification}.with(school: #{allocation.school.id}, new_cap_value: #{allocation.cap})"
     ComputacenterMailer.with(school: allocation.school, new_cap_value: allocation.cap).send(notification).deliver_later
   end
 

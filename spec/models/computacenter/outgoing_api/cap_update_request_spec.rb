@@ -36,7 +36,6 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       OpenStruct.new(cap_type: allocation.computacenter_cap_type,
                      ship_to: allocation.computacenter_reference,
                      cap: allocation.computacenter_cap)
-
     end
   end
 

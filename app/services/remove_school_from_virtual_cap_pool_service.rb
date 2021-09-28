@@ -14,7 +14,7 @@ class RemoveSchoolFromVirtualCapPoolService
     failed(e)
   end
 
-  private
+private
 
   def remove_device_allocation_from_pool!(allocation_id)
     SchoolVirtualCap.find_by(school_device_allocation_id: allocation_id)&.destroy!

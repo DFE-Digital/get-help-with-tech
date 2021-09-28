@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Computacenter::SoldToForm, type: :model do
+  subject(:form) { described_class.new }
+
   let(:rb) do
     create(:local_authority,
            :manages_centrally,
@@ -9,15 +11,15 @@ RSpec.describe Computacenter::SoldToForm, type: :model do
   end
 
   it do
-    is_expected.to validate_numericality_of(:sold_to)
-                     .only_integer
-                     .with_message('Sold To must be a number')
+    expect(form).to validate_numericality_of(:sold_to)
+                      .only_integer
+                      .with_message('Sold To must be a number')
   end
 
   it do
-    is_expected.to validate_inclusion_of(:change_sold_to)
-                     .in_array(%w[yes no])
-                     .with_message('Tell us whether the Sold To number needs to change')
+    expect(form).to validate_inclusion_of(:change_sold_to)
+                      .in_array(%w[yes no])
+                      .with_message('Tell us whether the Sold To number needs to change')
   end
 
   describe '#save' do
@@ -58,18 +60,21 @@ RSpec.describe Computacenter::SoldToForm, type: :model do
     end
 
     context 'when everything ok' do
-      subject(:save) { described_class.new(responsible_body: rb, sold_to: '100', change_sold_to: 'yes').save }
+      subject(:save) do
+        described_class.new(responsible_body: rb,
+                            sold_to: '100',
+                            change_sold_to: 'yes')
+                       .save
+      end
 
-      let!(:school1) do
+      before do
         create(:school,
                :manages_orders,
                :with_std_device_allocation_partially_ordered,
                :with_coms_device_allocation_partially_ordered,
                responsible_body: rb,
                computacenter_reference: '11')
-      end
 
-      let!(:school2) do
         create(:school,
                :manages_orders,
                :with_std_device_allocation_partially_ordered,
@@ -93,10 +98,10 @@ RSpec.describe Computacenter::SoldToForm, type: :model do
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '2' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '2' },
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '2' },
-          ]
+          ],
         ]
 
-        save
+        expect(save).to be_truthy
 
         expect_to_have_sent_caps_to_computacenter(requests)
       end

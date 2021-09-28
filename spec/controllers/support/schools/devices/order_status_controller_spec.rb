@@ -165,7 +165,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
           [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '35' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '3' },
-          ]
+          ],
         ]
       end
 
@@ -219,7 +219,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
           [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '6' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '6' },
-          ]
+          ],
         ]
       end
 

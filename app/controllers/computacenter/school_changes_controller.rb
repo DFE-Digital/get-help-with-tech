@@ -3,6 +3,8 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
   after_action :verify_authorized
   after_action :verify_policy_scoped, only: :index
 
+  attr_reader :form, :school
+
   def index
     authorize School
     respond_to do |format|
@@ -15,17 +17,19 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
   end
 
   def edit
-    authorize @school, :update_computacenter_reference?
-    @form = Computacenter::ShipToForm.new(school: @school,
-                                          ship_to: @school.computacenter_reference)
+    authorize school, :update_computacenter_reference?
+    @form = Computacenter::ShipToForm.new(school: school,
+                                          ship_to: school.computacenter_reference)
   end
 
   def update
-    authorize @school, :update_computacenter_reference?
-    @form = Computacenter::ShipToForm.new(ship_to_params.merge(school: @school))
+    authorize school, :update_computacenter_reference?
+    @form = Computacenter::ShipToForm.new(ship_to_params.merge(school: school))
 
-    if @form.save
-      flash[:success] = t(:success, scope: %i[computacenter ship_to update], name: @school.name, ship_to: @school.computacenter_reference)
+    if form.save
+      flash[:success] = t(:success, scope: %i[computacenter ship_to update],
+                                    name: school.name,
+                                    ship_to: school.computacenter_reference)
       redirect_to computacenter_school_changes_path
     else
       render :edit, status: :unprocessable_entity
@@ -36,7 +40,7 @@ private
 
   def set_school
     @school = School.gias_status_open.where_urn_or_ukprn_or_provision_urn(params[:id]).first!
-    authorize @school, :show?
+    authorize school, :show?
   end
 
   def csv_generator
