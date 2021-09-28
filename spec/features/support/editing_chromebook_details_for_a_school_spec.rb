@@ -64,7 +64,7 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
       .school_details['Ordering Chromebooks?']
       .follow_action_link
 
-    choose 'Yes, we’ll order Chromebooks'
+    choose 'We need Chromebooks'
     fill_in 'School or local authority', with: 'somedomain.com'
     fill_in 'Recovery email address', with: 'someone@someotherdomain.com'
     click_on 'Save'
@@ -75,18 +75,18 @@ RSpec.feature 'Editing a school’s Chromebook details from the support area' do
       .school_details['Ordering Chromebooks?']
       .follow_action_link
 
-    choose 'No, we will not order Chromebooks'
+    choose 'We do not need Chromebooks'
     click_on 'Save'
   end
 
   def then_the_chromebook_details_are_updated_in_the_support_console
-    expect(school_details_page.school_details['Ordering Chromebooks?'].value).to eq('Yes, we’ll order Chromebooks')
+    expect(school_details_page.school_details['Ordering Chromebooks?'].value).to eq('We need Chromebooks')
     expect(school_details_page.school_details['Domain'].value).to eq('somedomain.com')
     expect(school_details_page.school_details['Recovery email'].value).to eq('someone@someotherdomain.com')
   end
 
   def then_the_chromebook_details_are_not_present_in_the_support_console
-    expect(school_details_page.school_details['Ordering Chromebooks?'].value).to eq('No, we will not order Chromebooks')
+    expect(school_details_page.school_details['Ordering Chromebooks?'].value).to eq('We do not need Chromebooks')
     expect(school_details_page.school_details['Domain']).to be_nil
     expect(school_details_page.school_details['Recovery email']).to be_nil
   end

@@ -257,7 +257,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def when_i_choose_yes_and_submit_the_chromebooks_form
-    choose 'Yes'
+    choose 'We need Chromebooks'
     within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
       fill_in "School or #{school.responsible_body.humanized_type} email domain registered for G Suite for Education", with: 'example.com'
       fill_in 'Recovery email address', with: 'admin@trust.com'
@@ -266,7 +266,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def when_i_choose_yes_and_submit_invalid_chromebooks_information
-    choose 'Yes'
+    choose 'We need Chromebooks'
     within('#school-welcome-wizard-will-need-chromebooks-yes-conditional') do
       fill_in "School or #{school.responsible_body.humanized_type} email domain registered for G Suite for Education", with: ''
       fill_in 'Recovery email address', with: ''
@@ -288,7 +288,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def when_i_choose_no_and_submit_the_chromebooks_form
-    choose 'No, we do not need Chromebooks'
+    choose 'We do not need Chromebooks'
     click_on 'Continue'
   end
 
