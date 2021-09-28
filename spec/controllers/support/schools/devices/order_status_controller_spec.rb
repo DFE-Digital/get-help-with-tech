@@ -60,8 +60,8 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
   describe '#update' do
     let(:confirm) { true }
     let(:order_state) { 'can_order_for_specific_circumstances' }
-    let(:laptop_cap) { '35' }
-    let(:router_cap) { '3' }
+    let(:laptop_cap) { '3' }
+    let(:router_cap) { '2' }
     let(:who_manages) { :centrally_managed }
 
     let(:params) do
@@ -90,7 +90,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
              :with_coms_device_allocation,
              computacenter_reference: '11',
              responsible_body: rb,
-             laptop_allocation: 50, laptop_cap: 40, laptops_ordered: 10,
+             laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
              router_allocation: 5, router_cap: 4, routers_ordered: 1)
     end
 
@@ -101,7 +101,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
              :with_coms_device_allocation,
              responsible_body: rb,
              computacenter_reference: '12',
-             laptop_allocation: 50, laptop_cap: 40, laptops_ordered: 10,
+             laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
              router_allocation: 5, router_cap: 4, routers_ordered: 1)
     end
 
@@ -149,13 +149,13 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     it 'sets the given laptop cap to the school' do
       expect {
         patch :update, params: params
-      }.to change { School.find(school.id).laptop_cap }.from(40).to(laptop_cap.to_i)
+      }.to change { School.find(school.id).laptop_cap }.from(4).to(3)
     end
 
     it 'sets the given router cap to the school' do
       expect {
         patch :update, params: params
-      }.to change { School.find(school.id).router_cap }.from(4).to(router_cap.to_i)
+      }.to change { School.find(school.id).router_cap }.from(4).to(2)
     end
 
     context 'when the school is not in virtual cap pool' do
@@ -163,8 +163,8 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       let(:requests) do
         [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '35' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '3' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '2' },
           ],
         ]
       end
@@ -178,13 +178,13 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       it 'notify Computacenter of laptops cap change by email' do
         expect { patch :update, params: params }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                .with(params: { school: school, new_cap_value: 35 }, args: []).once
+                .with(params: { school: school, new_cap_value: 3 }, args: []).once
       end
 
       it 'notify Computacenter of routers cap change by email' do
         expect { patch :update, params: params }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                .with(params: { school: school, new_cap_value: 2 }, args: []).once
       end
 
       it "notify the school's organizational users" do
@@ -204,7 +204,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       it 'notify Computacenter of school can order by email' do
         expect { patch :update, params: params }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                .with(params: { school: school, new_cap_value: 35 }, args: []).once
+                .with(params: { school: school, new_cap_value: 3 }, args: []).once
       end
     end
 
@@ -213,12 +213,12 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       let(:requests) do
         [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '65' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '65' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '6' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '6' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '6' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '6' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '5' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '5' },
           ],
         ]
       end

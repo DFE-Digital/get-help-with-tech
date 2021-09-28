@@ -366,27 +366,34 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#calculate_virtual_caps!' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) do
+      create_list(:school, 3,
+                  :with_std_device_allocation,
+                  :with_coms_device_allocation,
+                  :centrally_managed,
+                  :in_lockdown,
+                  responsible_body: responsible_body)
+    end
 
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
-        s.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+        s.std_device_allocation.update!(allocation: 2, cap: 2, devices_ordered: 1)
+        s.coms_device_allocation.update!(allocation: 3, cap: 2, devices_ordered: 1)
         AddSchoolToVirtualCapPoolService.new(s).call
       end
       responsible_body.reload
     end
 
     it 'calculates the virtual cap for all device types' do
-      schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 75)
-      schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 25)
+      schools.first.std_device_allocation.update!(cap: 3, allocation: 3, devices_ordered: 2)
+      schools.last.coms_device_allocation.update!(cap: 1, allocation: 3, devices_ordered: 0)
 
       responsible_body.calculate_virtual_caps!
-      expect(responsible_body.std_device_pool.cap).to eq(120)
-      expect(responsible_body.std_device_pool.devices_ordered).to eq(79)
-      expect(responsible_body.coms_device_pool.cap).to eq(60)
-      expect(responsible_body.coms_device_pool.devices_ordered).to eq(31)
+      expect(responsible_body.std_device_pool.cap).to eq(7)
+      expect(responsible_body.std_device_pool.devices_ordered).to eq(4)
+      expect(responsible_body.coms_device_pool.cap).to eq(5)
+      expect(responsible_body.coms_device_pool.devices_ordered).to eq(2)
     end
   end
 
@@ -398,8 +405,8 @@ RSpec.describe ResponsibleBody, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       first_school = schools.first
-      first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
-      first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+      first_school.std_device_allocation.update!(allocation: 3, cap: 3, devices_ordered: 1)
+      first_school.coms_device_allocation.update!(allocation: 4, cap: 2, devices_ordered: 1)
       AddSchoolToVirtualCapPoolService.new(first_school).call
       responsible_body.reload
     end
@@ -428,8 +435,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when used full allocation' do
       before do
-        schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 100)
-        schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 100)
+        schools.first.std_device_allocation.update!(cap: 1, allocation: 1, devices_ordered: 1)
+        schools.last.coms_device_allocation.update!(cap: 1, allocation: 2, devices_ordered: 2)
 
         responsible_body.calculate_virtual_caps!
       end
@@ -441,8 +448,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when partially used allocation' do
       before do
-        schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 75)
-        schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 100)
+        schools.first.std_device_allocation.update!(cap: 2, allocation: 2, devices_ordered: 1)
+        schools.last.coms_device_allocation.update!(cap: 0, allocation: 1, devices_ordered: 1)
 
         responsible_body.calculate_virtual_caps!
       end
@@ -454,8 +461,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no devices ordered' do
       before do
-        schools.first.std_device_allocation.update!(cap: 100, allocation: 100, devices_ordered: 0)
-        schools.last.coms_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 0)
+        schools.first.std_device_allocation.update!(cap: 1, allocation: 1, devices_ordered: 0)
+        schools.last.coms_device_allocation.update!(cap: 1, allocation: 2, devices_ordered: 0)
 
         responsible_body.calculate_virtual_caps!
       end

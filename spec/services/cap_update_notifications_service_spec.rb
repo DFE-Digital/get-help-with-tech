@@ -20,8 +20,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
              :with_coms_device_allocation,
              computacenter_reference: '11',
              responsible_body: rb,
-             laptop_allocation: 50, laptop_cap: 35, laptops_ordered: 10,
-             router_allocation: 5, router_cap: 3, routers_ordered: 1)
+             laptop_allocation: 2, laptop_cap: 1, laptops_ordered: 0,
+             router_allocation: 2, router_cap: 1, routers_ordered: 1)
     end
 
     let(:allocations) { [school.std_device_allocation, school.coms_device_allocation] }
@@ -82,8 +82,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       let(:requests) do
         [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '35' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '3' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '1' },
           ],
         ]
       end
@@ -99,13 +99,13 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       it 'notify Computacenter of laptops cap change by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                .with(params: { school: school, new_cap_value: 35 }, args: []).once
+                .with(params: { school: school, new_cap_value: 1 }, args: []).once
       end
 
       it 'notify Computacenter of routers cap change by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                .with(params: { school: school, new_cap_value: 1 }, args: []).once
       end
 
       it "notify the school's organizational users" do
@@ -125,7 +125,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       it 'notify Computacenter of school can order by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                .with(params: { school: school, new_cap_value: 35 }, args: []).once
+                .with(params: { school: school, new_cap_value: 1 }, args: []).once
       end
 
       context 'when :notify_computacenter falsey' do
@@ -156,13 +156,13 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
         it 'notify Computacenter of laptops cap change by email' do
           expect { service.call }
             .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                  .with(params: { school: school, new_cap_value: 35 }, args: []).once
+                  .with(params: { school: school, new_cap_value: 1 }, args: []).once
         end
 
         it 'notify Computacenter of routers cap change by email' do
           expect { service.call }
             .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                  .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                  .with(params: { school: school, new_cap_value: 1 }, args: []).once
         end
 
         it 'do not notify Computacenter of school can order by email' do

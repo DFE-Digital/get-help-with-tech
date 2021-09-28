@@ -20,7 +20,7 @@
         <p class="govuk-body"><%= govuk_link_to 'Order devices now', responsible_body_devices_order_devices_path %></p>
       <%- end %>
     <%- else %>
-      <%- if @school.laptops_allocated? %>
+      <%- if @school.laptop_allocated? %>
         <%
           show_action = @school.orders_managed_centrally? && (@school.laptops_ordered < @school.laptop_cap)
           they_ordered_prefix = !@school.orders_managed_centrally?

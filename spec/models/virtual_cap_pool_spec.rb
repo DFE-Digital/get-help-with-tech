@@ -10,20 +10,20 @@ RSpec.describe VirtualCapPool, type: :model do
 
     before do
       stub_computacenter_outgoing_api_calls(response_body: 'test-response')
-      schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
-      schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
+      schools.first.std_device_allocation.update!(cap: 2, allocation: 3, devices_ordered: 1)
+      schools.last.std_device_allocation.update!(cap: 1, allocation: 3, devices_ordered: 1)
       schools.each do |school|
         AddSchoolToVirtualCapPoolService.new(school).call
       end
     end
 
     it 'recalculates the cap and devices_ordered totals for the schools in the pool' do
-      schools.first.std_device_allocation.update!(cap: 40, allocation: 40, devices_ordered: 26)
+      schools.first.std_device_allocation.update!(cap: 3, allocation: 3, devices_ordered: 2)
 
       pool.recalculate_caps!
 
-      expect(pool.cap).to eq(50)
-      expect(pool.devices_ordered).to eq(27)
+      expect(pool.cap).to eq(4)
+      expect(pool.devices_ordered).to eq(3)
     end
 
     it 'stores the request and response against the allocations' do
@@ -40,7 +40,7 @@ RSpec.describe VirtualCapPool, type: :model do
       schools.first.update!(order_state: 'can_order')
       schools.last.update!(order_state: 'cannot_order')
       pool.school_device_allocations.each do |allocation|
-        allocation.update!(devices_ordered: 100)
+        allocation.update!(devices_ordered: 3)
         allocation.cap_update_calls.destroy_all
       end
       pool.recalculate_caps!
@@ -71,7 +71,7 @@ RSpec.describe VirtualCapPool, type: :model do
 
     context 'when cap or devices_ordered have changed' do
       it 'notifies computacenter of changes' do
-        schools.first.std_device_allocation.update!(cap: 40, allocation: 40, devices_ordered: 26)
+        schools.first.std_device_allocation.update!(cap: 3, allocation: 3, devices_ordered: 2)
         pool.reload.recalculate_caps!
         pool.school_device_allocations.each do |allocation|
           allocation.reload
@@ -90,8 +90,8 @@ RSpec.describe VirtualCapPool, type: :model do
       let(:schools) { create_list(:school, 2, :centrally_managed, :with_std_device_allocation, :in_lockdown, responsible_body: local_authority) }
 
       before do
-        schools.first.std_device_allocation.update!(cap: 20, allocation: 30, devices_ordered: 10)
-        schools.last.std_device_allocation.update!(cap: 10, allocation: 30, devices_ordered: 1)
+        schools.first.std_device_allocation.update!(cap: 2, allocation: 3, devices_ordered: 1)
+        schools.last.std_device_allocation.update!(cap: 1, allocation: 3, devices_ordered: 1)
 
         AddSchoolToVirtualCapPoolService.new(schools.first).call
       end
@@ -107,7 +107,7 @@ RSpec.describe VirtualCapPool, type: :model do
   end
 
   describe '#devices_available_to_order' do
-    subject(:allocation) { described_class.new(cap: 100, devices_ordered: 200) }
+    subject(:allocation) { described_class.new(cap: 1, devices_ordered: 2) }
 
     context 'when negative' do
       it 'returns zero' do
@@ -118,7 +118,7 @@ RSpec.describe VirtualCapPool, type: :model do
 
   describe '#devices_available_to_order?' do
     context 'when used full allocation' do
-      let(:allocation) { described_class.new(cap: 100, allocation: 100, devices_ordered: 100) }
+      let(:allocation) { described_class.new(cap: 1, allocation: 1, devices_ordered: 1) }
 
       it 'returns false' do
         expect(allocation.devices_available_to_order?).to be false
@@ -126,7 +126,7 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when partially used allocation' do
-      let(:allocation) { described_class.new(cap: 100, allocation: 100, devices_ordered: 75) }
+      let(:allocation) { described_class.new(cap: 2, allocation: 2, devices_ordered: 1) }
 
       it 'returns true' do
         expect(allocation.devices_available_to_order?).to be true
@@ -134,7 +134,7 @@ RSpec.describe VirtualCapPool, type: :model do
     end
 
     context 'when no devices ordered' do
-      let(:allocation) { described_class.new(cap: 100, allocation: 100, devices_ordered: 0) }
+      let(:allocation) { described_class.new(cap: 1, allocation: 1, devices_ordered: 0) }
 
       it 'returns true' do
         expect(allocation.devices_available_to_order?).to be true
