@@ -25,7 +25,7 @@ en:
     responsible_body_devices_tell_us: Tell us who will order laptops
     responsible_body_users_index: Manage %{rb_type} users
     responsible_body_trust_users_index: Manage trust administrators
-    responsible_body_devices_chromebooks: Will the school need Chromebooks?
+    responsible_body_devices_chromebooks: Set your Chromebook preferences
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Your schools and colleges
@@ -158,7 +158,7 @@ en:
     school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
-    school_edit_chromebooks: Will you need to order Chromebooks?
+    school_edit_chromebooks: Set your Chromebook preferences
     school_users: Manage your organisation's users
     school_before_can_order: Before you can order, we need more information
     donated_devices:
@@ -253,8 +253,8 @@ en:
         title: You can order different types of laptops
       chromebooks:
         title: Are you ordering Chromebooks?
-        'yes': Yes, we'll need Chromebooks
-        'no': No, we do not need Chromebooks
+        'yes': We need Chromebooks
+        'no': We do not need Chromebooks
         i_dont_know: Not sure
         errors:
           choice: Tell us whether you'll need Chromebooks
@@ -729,10 +729,9 @@ en:
           predecessor_split_school: Predecessor - Split School
       preorder_information:
         will_need_chromebooks:
-          'yes': Yes, we’ll order Chromebooks
-          'no': No, we will not order Chromebooks
-          i_dont_know: I don’t know
-          im_not_sure: I’m not sure
+          'yes': We need Chromebooks
+          'no': We do not need Chromebooks
+          i_dont_know: Not sure
         status:
           needs_contact: Needs a contact
           needs_info: Needs information
