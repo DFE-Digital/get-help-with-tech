@@ -15,13 +15,13 @@ RSpec.feature 'Managing ResponsibleBody users' do
   end
 
   it 'shows the list of our users' do
-    click_on 'Manage local authority users'
+    click_on 'Manage users'
     expect(rb_users_index_page).to be_displayed
-    expect(page).to have_content 'Manage local authority users'
+    expect(page).to have_content 'Manage users'
   end
 
   it 'shows the name and attributes for each user in this RB' do
-    click_on 'Manage local authority users'
+    click_on 'Manage users'
     expect(rb_users_index_page.user_rows.size).to eq(2)
     expect(rb_users_index_page.user_rows[0]).to have_content(rb_user.full_name)
     expect(rb_users_index_page.user_rows[1]).to have_content(rb_user_2.full_name)
@@ -30,13 +30,13 @@ RSpec.feature 'Managing ResponsibleBody users' do
   end
 
   it 'shows a link to Invite a new user' do
-    click_on 'Manage local authority users'
+    click_on 'Manage users'
     expect(page).to have_content 'Invite a new user'
   end
 
   context 'clicking "Invite a new user"' do
     before do
-      click_on 'Manage local authority users'
+      click_on 'Manage users'
       click_on 'Invite a new user'
     end
 
@@ -65,13 +65,13 @@ RSpec.feature 'Managing ResponsibleBody users' do
   end
 
   it 'does not include any users from any other responsible_body' do
-    click_on 'Manage local authority users'
+    click_on 'Manage users'
     expect(page).not_to have_content(user_from_other_rb.full_name)
   end
 
   context 'clicking "Edit user"' do
     before do
-      click_on 'Manage local authority users'
+      click_on 'Manage users'
       within(rb_users_index_page.user_rows[0]) do
         click_on 'Edit user'
       end
