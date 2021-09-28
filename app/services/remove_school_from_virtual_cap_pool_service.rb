@@ -17,6 +17,7 @@ class RemoveSchoolFromVirtualCapPoolService
 private
 
   def remove_device_allocation_from_pool!(allocation_id)
+    byebug
     SchoolVirtualCap.find_by(school_device_allocation_id: allocation_id)&.destroy!
     # &.recalculate_caps!
   end
@@ -36,6 +37,7 @@ private
 
   def remove_school!
     school.transaction do
+      byebug
       remove_devices_from_pools!
       # rb.calculate_virtual_caps!
       school.reload.refresh_device_ordering_status!

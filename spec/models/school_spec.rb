@@ -99,12 +99,12 @@ RSpec.describe School, type: :model do
     specify { expect(independent_special_school).not_to be_a_social_care_leaver }
   end
 
-  describe '#laptops_allocated?' do
+  describe '#laptop_allocated?' do
     let(:school) { create(:school) }
 
     context 'when there is no standard device allocation' do
       it 'is false' do
-        expect(school.laptops_allocated?).to eq(false)
+        expect(school).not_to be_laptop_allocated
       end
     end
 
@@ -114,7 +114,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.laptops_allocated?).to eq(false)
+        expect(school).not_to be_laptop_allocated
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is true' do
-        expect(school.laptops_allocated?).to eq(true)
+        expect(school).to be_laptop_allocated
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.laptops_allocated?).to eq(false)
+        expect(school).not_to be_laptop_allocated
       end
     end
   end

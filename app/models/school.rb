@@ -251,7 +251,7 @@ class School < ApplicationRecord
     std_device_allocation&.in_virtual_cap_pool?(**opts) || coms_device_allocation&.in_virtual_cap_pool?(**opts)
   end
 
-  def laptops_allocated?
+  def laptop_allocated?
     laptop_allocation.positive?
   end
 
@@ -376,7 +376,7 @@ class School < ApplicationRecord
     preorder_information&.refresh_status!
   end
 
-  def routers_allocated?
+  def router_allocated?
     router_allocation.positive?
   end
 

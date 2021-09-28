@@ -56,19 +56,6 @@ RSpec.describe Support::Schools::Devices::AllocationController do
   end
 
   describe '#update' do
-    let(:allocation) { 45 }
-    let(:device_type) { :laptop }
-
-    let(:params) do
-      {
-        device_type: device_type,
-        school_urn: school.urn,
-        support_allocation_form: {
-          allocation: allocation,
-        },
-      }
-    end
-
     let(:rb) do
       create(:local_authority,
              :manages_centrally,
@@ -84,17 +71,29 @@ RSpec.describe Support::Schools::Devices::AllocationController do
              order_state: 'can_order',
              computacenter_reference: '11',
              responsible_body: rb,
-             laptop_allocation: 50, laptop_cap: 40, laptops_ordered: 10,
+             laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
              router_allocation: 5, router_cap: 4, routers_ordered: 1)
     end
 
     let(:requests) do
       [
         [
-          { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '45' },
+          { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
         ],
       ]
     end
+
+    let(:params) do
+      {
+        device_type: 'laptop',
+        school_urn: school.urn,
+        support_allocation_form: {
+          allocation: allocation,
+        },
+      }
+    end
+
+    let(:allocation) { '3' }
 
     before do
       stub_computacenter_outgoing_api_calls
@@ -111,7 +110,16 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     end
 
     context 'when the allocation assigned is not valid' do
-      let(:allocation) { '9' }
+      let(:params) do
+        {
+          device_type: 'laptop',
+          school_urn: school.urn,
+          support_allocation_form: {
+            allocation: allocation,
+          },
+        }
+      end
+      let(:allocation) { '0' }
 
       it 'display the edit view' do
         patch :update, params: params
@@ -137,12 +145,12 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'sets the given allocation to the school' do
       expect {
         patch :update, params: params
-      }.to change { School.find(school.id).laptop_allocation }.from(50).to(allocation.to_i)
+      }.to change { School.find(school.id).laptop_allocation }.from(5).to(3)
     end
 
     it 'adjust school laptop cap based on school order state' do
       expect { patch :update, params: params }
-        .to change { school.reload.laptop_cap }.from(40).to(45)
+        .to change { school.reload.laptop_cap }.from(4).to(3)
     end
 
     it 'update school devices cap on Computacenter' do
@@ -154,7 +162,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'notify Computacenter of laptops cap change by email' do
       expect { patch :update, params: params }
         .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-              .with(params: { school: school, new_cap_value: 45 }, args: []).once
+              .with(params: { school: school, new_cap_value: 3 }, args: []).once
     end
 
     it "notify the school's organizational users" do
@@ -174,7 +182,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'notify Computacenter of school can order by email' do
       expect { patch :update, params: params }
         .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-              .with(params: { school: school, new_cap_value: 45 }, args: []).once
+              .with(params: { school: school, new_cap_value: 3 }, args: []).once
     end
   end
 end
