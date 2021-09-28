@@ -187,7 +187,6 @@ RSpec.describe Support::AllocationForm, type: :model do
         let(:order_state) { 'can_order_for_specific_circumstances' }
 
         it 'do not update the school device raw cap' do
-          byebug
           expect { form.save }.not_to change(school, :raw_laptop_cap)
         end
 
