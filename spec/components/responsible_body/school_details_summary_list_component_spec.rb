@@ -43,7 +43,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -129,7 +129,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
       expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')

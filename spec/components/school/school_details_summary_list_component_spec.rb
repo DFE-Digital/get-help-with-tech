@@ -33,7 +33,7 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('We need Chromebooks')
       expect(action_for_row(result, 'Will you need to order Chromebooks?').text).to include('Change')
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
@@ -62,7 +62,7 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('We need Chromebooks')
       expect(action_for_row(result, 'Will you need to order Chromebooks?')).not_to be_present
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
