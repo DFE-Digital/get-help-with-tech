@@ -37,7 +37,7 @@ class InterstitialPicker
 private
 
   def rb_user_with_la_funded_place_with_available_devices?
-    user.la_funded_user? && user.is_responsible_body_user? && user.responsible_body.schools.la_funded_provision.any? { |school| school.device_allocations&.can_order_std_devices_now.present? }
+    user.la_funded_user? && user.responsible_body_user? && user.responsible_body.schools.la_funded_provision.any? { |school| school.device_allocations&.can_order_std_devices_now.present? }
   end
 
   def user_with_multiple_la_funded_places_with_available_devices?
