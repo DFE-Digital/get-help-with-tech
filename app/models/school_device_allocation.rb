@@ -2,13 +2,16 @@ class SchoolDeviceAllocation < ApplicationRecord
   include DeviceType
   include DeviceCount
 
+  before_update :record_over_order, if: :over_order_occurred?
+
   has_paper_trail
 
   belongs_to :school, touch: true
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :last_updated_by_user, class_name: 'User', optional: true
   has_one :school_virtual_cap, touch: true, dependent: :destroy
-
+  has_one :virtual_cap_pool, through: :school_virtual_cap
+  has_many :allocation_changes, dependent: :destroy
   has_many :cap_update_calls
 
   validates_with CapAndAllocationValidator
@@ -65,5 +68,28 @@ private
 
   def vcap_enabled?
     school&.responsible_body&.has_virtual_cap_feature_flags?
+  end
+
+  def over_order_occurred?
+    devices_ordered_changed? && raw_devices_ordered > raw_allocation
+  end
+
+  def record_over_order
+    return unless raw_devices_ordered > raw_allocation
+
+    return AllocationOverOrderService.new(self).call if has_virtual_cap_feature_flags? && is_in_virtual_cap_pool?
+
+    transaction do
+      allocation_changes.create!(
+        school_device_allocation: self,
+        category: :over_order,
+        delta: raw_devices_ordered - raw_allocation,
+        prev_allocation: raw_allocation,
+        new_allocation: raw_devices_ordered,
+        description: 'Over Order',
+      )
+      self.allocation = raw_devices_ordered
+      self.cap = raw_devices_ordered
+    end
   end
 end

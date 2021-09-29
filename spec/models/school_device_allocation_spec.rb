@@ -95,6 +95,27 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     end
   end
 
+  context 'when fewer devices than the allocation are ordered' do
+    let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+    let(:std_device_allocation) { school.std_device_allocation }
+
+    it 'does not change the allocation value' do
+      std_device_allocation.devices_ordered += 1
+      expect { std_device_allocation.save! }.not_to change(std_device_allocation, :raw_allocation)
+    end
+  end
+
+  context 'when more devices than the allocation are ordered' do
+    let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+    let(:std_device_allocation) { school.std_device_allocation }
+
+    it 'increases the allocation to match devices ordered' do
+      std_device_allocation.devices_ordered += 1
+      std_device_allocation.save!
+      expect(std_device_allocation.devices_ordered).to eq(std_device_allocation.raw_allocation)
+    end
+  end
+
   context 'when in a virtual pool' do
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
     let(:school) { create(:school, :manages_orders, :in_lockdown, responsible_body: responsible_body) }

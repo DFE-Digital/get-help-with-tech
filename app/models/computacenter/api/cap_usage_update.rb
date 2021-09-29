@@ -67,7 +67,11 @@ private
   end
 
   def allocation
-    @allocation ||= school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
+    @allocation ||= school.device_allocations.find_by_device_type!(device_type)
+  end
+
+  def device_type
+    @device_type ||= Computacenter::CapTypeConverter.to_dfe_type(cap_type)
   end
 
   def log_to_devices_ordered_updates
