@@ -9,7 +9,7 @@
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
     <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
