@@ -21,8 +21,7 @@ class SchoolDeviceAllocation < ApplicationRecord
   scope :can_order_std_devices_now, -> { by_device_type('std_device').where('cap > devices_ordered') }
   scope :by_computacenter_device_type, ->(cc_device_type) { by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type)) }
 
-  delegate :computacenter_reference, to: :school
-  delegate :computacenter_references?, to: :school
+  delegate :computacenter_reference, :computacenter_references?, to: :school
 
   def allocation
     school.in_active_virtual_cap_pool? ? school_virtual_cap.allocation : super
@@ -45,9 +44,9 @@ class SchoolDeviceAllocation < ApplicationRecord
   end
 
   def in_virtual_cap_pool?(**opts)
-    asked_vcap_rb_id = opts[:responsible_body_id]
-    current_vcap_rb_id = school_virtual_cap&.responsible_body_id
-    asked_vcap_rb_id ? current_vcap_rb_id == asked_vcap_rb_id : school_virtual_cap.present?
+    return school_virtual_cap.present? unless opts[:responsible_body_id]
+
+    school_virtual_cap&.responsible_body_id == opts[:responsible_body_id]
   end
 
   def raw_allocation

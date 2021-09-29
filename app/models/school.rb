@@ -251,7 +251,7 @@ class School < ApplicationRecord
     std_device_allocation&.in_virtual_cap_pool?(**opts) || coms_device_allocation&.in_virtual_cap_pool?(**opts)
   end
 
-  def laptop_allocated?
+  def has_laptop_allocation?
     laptop_allocation.positive?
   end
 
@@ -274,11 +274,6 @@ class School < ApplicationRecord
   def laptops_ordered
     std_device_allocation&.devices_ordered.to_i
   end
-
-  #
-  # def existing_laptop_allocation_not_in_pool?
-  #   std_device_allocation.present? && !std_device_allocation.in_virtual_cap_pool?
-  # end
 
   def la_funded_provision?
     type == 'LaFundedPlace'
@@ -376,10 +371,6 @@ class School < ApplicationRecord
     preorder_information&.refresh_status!
   end
 
-  def router_allocated?
-    router_allocation.positive?
-  end
-
   def router_allocation
     coms_device_allocation&.allocation.to_i
   end
@@ -413,7 +404,7 @@ class School < ApplicationRecord
   end
 
   def set_laptop_ordering!(**opts)
-    existing_or_new_std_device_allocation.tap do |record|
+    find_or_build_std_device_allocation.tap do |record|
       record.allocation = opts[:allocation] || raw_laptop_allocation
       record.cap = adjusted_laptop_cap_by_order_state(opts[:cap] || raw_laptop_cap)
       record.save!
@@ -422,7 +413,7 @@ class School < ApplicationRecord
   end
 
   def set_router_ordering!(**opts)
-    existing_or_new_coms_device_allocation.tap do |record|
+    find_or_build_coms_device_allocation.tap do |record|
       record.allocation = opts[:allocation] || raw_router_allocation
       record.cap = adjusted_router_cap_by_order_state(opts[:cap] || raw_router_cap)
       record.save!
@@ -455,15 +446,15 @@ private
     orders_managed_by_school? ? self : responsible_body
   end
 
-  def existing_or_new_preorder_information
+  def find_or_build_preorder_information
     (preorder_information || build_preorder_information)
   end
 
-  def existing_or_new_std_device_allocation
+  def find_or_build_std_device_allocation
     (std_device_allocation || build_std_device_allocation)
   end
 
-  def existing_or_new_coms_device_allocation
+  def find_or_build_coms_device_allocation
     (coms_device_allocation || build_coms_device_allocation)
   end
 
@@ -478,7 +469,7 @@ private
   def orders_managed_by!(who, clear_preorder_information: false)
     clear_preorder_information! if clear_preorder_information
     manager = who.to_sym == :school ? :school_will_order_devices! : :responsible_body_will_order_devices!
-    existing_or_new_preorder_information.send(manager)
+    find_or_build_preorder_information.send(manager)
   end
 
   def responsible_body_type

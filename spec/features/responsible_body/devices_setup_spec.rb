@@ -408,7 +408,7 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
   end
 
   def given_there_is_a_school_with_no_standard_device_allocation
-    expect(@zebra_school).not_to be_laptop_allocated
+    expect(@zebra_school).not_to have_laptop_allocation
   end
 
   def when_i_click_on_the_name_of_a_school_which_has_no_standard_device_allocation
