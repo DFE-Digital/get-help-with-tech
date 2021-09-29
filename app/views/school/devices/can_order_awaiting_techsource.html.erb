@@ -9,7 +9,7 @@
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
     <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
     <p class="govuk-body">You’ll be able to order <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> soon.</p>
 
