@@ -9,20 +9,21 @@ class RemoveSchoolFromVirtualCapPoolService
   end
 
   def call
-    remove_school! if school.in_virtual_cap_pool?
+    remove_school! if school.in_virtual_cap_pool?(responsible_body_id: rb.id)
   rescue StandardError => e
     failed(e)
   end
 
 private
 
-  def remove_device_allocation_from_pool!(allocation_id)
-    SchoolVirtualCap.find_by(school_device_allocation_id: allocation_id)&.destroy!
-  end
-
   def remove_devices_from_pools!
     remove_laptop_from_pool! if laptop_allocation_id
     remove_router_from_pool! if router_allocation_id
+  end
+
+  def remove_device_allocation_from_pool!(allocation_id)
+    SchoolVirtualCap.find_by(school_device_allocation_id: allocation_id)&.destroy!
+    CapUpdateNotificationsService.new(allocation_id, notify_computacenter: false, notify_school: false).call
   end
 
   def remove_laptop_from_pool!

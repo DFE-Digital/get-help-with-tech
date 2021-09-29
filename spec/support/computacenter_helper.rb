@@ -12,7 +12,7 @@ module ComputacenterHelper
       expect(a_request(:post, 'http://computacenter.example.com/').with do |req|
         result = Nokogiri::XML(req.body)
         result.css('CapAdjustmentRequest Record').to_a.map(&:to_h).map(&:to_a).sort == caps.map(&:to_a).sort
-      end).to have_been_made
+      end).to have_been_made.at_least_once
     end
   end
 

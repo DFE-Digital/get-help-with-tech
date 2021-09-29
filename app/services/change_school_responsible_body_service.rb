@@ -33,7 +33,10 @@ private
   end
 
   def remove_school_from_current_pool!
-    RemoveSchoolFromVirtualCapPoolService.new(school, initial_rb).call || school.reload.refresh_device_ordering_status!
+    return if RemoveSchoolFromVirtualCapPoolService.new(school, initial_rb).call
+
+    school.reload.refresh_device_ordering_status!
+    CapUpdateNotificationsService.new(*school.allocation_ids).call
   end
 
   def set_school_new_rb!
