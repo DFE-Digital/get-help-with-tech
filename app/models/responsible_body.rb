@@ -184,6 +184,14 @@ class ResponsibleBody < ApplicationRecord
     std_device_pool&.devices_available_to_order.to_i
   end
 
+  def laptop_allocation
+    std_device_pool&.allocation.to_i
+  end
+
+  def laptop_cap
+    std_device_pool&.cap.to_i
+  end
+
   def laptops_ordered
     std_device_pool&.devices_ordered.to_i
   end
@@ -217,6 +225,14 @@ class ResponsibleBody < ApplicationRecord
 
   def routers_available_to_order
     coms_device_pool&.devices_available_to_order.to_i
+  end
+
+  def router_allocation
+    coms_device_pool&.allocation.to_i
+  end
+
+  def router_cap
+    coms_device_pool&.cap.to_i
   end
 
   def routers_ordered

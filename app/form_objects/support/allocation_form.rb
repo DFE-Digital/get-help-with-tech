@@ -4,7 +4,17 @@
   attr_accessor :device_type, :school
   attr_reader :allocation
 
-  delegate :in_virtual_cap_pool?, :order_state, :laptop_allocation, :router_allocation, :laptop_cap, :router_cap, :raw_laptop_allocation, :raw_router_allocation, :raw_laptops_ordered, :raw_routers_ordered, to: :school
+  delegate :in_virtual_cap_pool?,
+           :laptop_allocation,
+           :laptop_cap,
+           :order_state,
+           :router_cap,
+           :raw_laptop_allocation,
+           :raw_laptops_ordered,
+           :raw_router_allocation,
+           :raw_routers_ordered,
+           :router_allocation,
+           to: :school
 
   validate :check_decrease_allowed
   validate :check_minimum
@@ -40,7 +50,9 @@ private
   end
 
   def allocation_updated?
-    UpdateSchoolDevicesService.new(school: school, order_state: order_state, allocation_type => allocation).call
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: order_state,
+                                   allocation_type => allocation).call
   end
 
   def check_decrease_allowed

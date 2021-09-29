@@ -33,8 +33,8 @@ private
   end
 
   def add_devices_to_pools!
-    add_laptop_to_pool!(raw_laptop_cap != raw_laptops_ordered) if laptop_allocation_id
-    add_router_to_pool!(raw_router_cap != raw_routers_ordered) if router_allocation_id
+    add_laptop_to_pool!(raw_laptop_cap == raw_laptops_ordered) if laptop_allocation_id
+    add_router_to_pool!(raw_router_cap == raw_routers_ordered) if router_allocation_id
   end
 
   def add_laptop_to_pool!(notify)
@@ -49,7 +49,7 @@ private
     SchoolVirtualCap.find_or_initialize_by(school_device_allocation_id: allocation_id)
                     .update!(virtual_cap_pool_id: pool.id)
     if notify # pool has not sent notifications because pool aggregated numbers haven't changed
-      CapUpdateNotificationsService.new(allocation_id, notify_computacenter: false, notify_school: false)
+      CapUpdateNotificationsService.new(allocation_id, notify_computacenter: false, notify_school: false).call
     end
   end
 
