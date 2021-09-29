@@ -8,7 +8,7 @@
     </h1>
 
     <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
     <p class="govuk-body">Now you’ve contacted us to request devices for specific circumstances, you can go ahead with your order.</p>
 
