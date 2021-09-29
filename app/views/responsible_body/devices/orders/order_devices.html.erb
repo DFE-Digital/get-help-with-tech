@@ -7,7 +7,7 @@
     </h1>
 
     <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
   </div>
 </div>
