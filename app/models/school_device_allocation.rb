@@ -23,6 +23,10 @@ class SchoolDeviceAllocation < ApplicationRecord
   scope :by_device_type, ->(device_type) { where(device_type: device_type) }
   scope :can_order_std_devices_now, -> { by_device_type('std_device').where('cap > devices_ordered') }
   scope :by_computacenter_device_type, ->(cc_device_type) { by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type)) }
+  scope :with_available_allocation, lambda { |device_type|
+    by_device_type(device_type).where('allocation > devices_ordered')
+                               .order(Arel.sql('allocation - devices_ordered'))
+  }
 
   delegate :computacenter_reference, :computacenter_references?, to: :school
 
@@ -64,7 +68,7 @@ class SchoolDeviceAllocation < ApplicationRecord
     self[:devices_ordered]
   end
 
-private
+  private
 
   def vcap_enabled?
     school&.responsible_body&.has_virtual_cap_feature_flags?
@@ -75,21 +79,6 @@ private
   end
 
   def record_over_order
-    return unless raw_devices_ordered > raw_allocation
-
-    return AllocationOverOrderService.new(self).call if has_virtual_cap_feature_flags? && is_in_virtual_cap_pool?
-
-    transaction do
-      allocation_changes.create!(
-        school_device_allocation: self,
-        category: :over_order,
-        delta: raw_devices_ordered - raw_allocation,
-        prev_allocation: raw_allocation,
-        new_allocation: raw_devices_ordered,
-        description: 'Over Order',
-      )
-      self.allocation = raw_devices_ordered
-      self.cap = raw_devices_ordered
-    end
+    AllocationOverOrderService.new(self).call
   end
 end
