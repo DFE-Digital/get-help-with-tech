@@ -6,14 +6,21 @@ RSpec.feature 'View school details' do
   let(:user) { create(:school_user, full_name: 'AAA Smith', school: school) }
 
   describe 'top of the page' do
+    let(:school_with_valid_allocation) { create(:school, :with_std_device_allocation, laptops_ordered: 1, preorder_information: preorder_information) }
+    let(:user) { create(:school_user, school: school_with_valid_allocation) }
+
     before { sign_in_as user }
 
     it 'displays the school name' do
-      expect(page).to have_content(school.name)
+      expect(page).to have_content(school_with_valid_allocation.name)
     end
 
     it 'displays your account title' do
       expect(page).to have_content('Your account')
+    end
+
+    it 'displays the tranche allocation' do
+      expect(page).to have_css('#tranche_allocation')
     end
   end
 
