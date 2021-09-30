@@ -120,17 +120,6 @@ class ResponsibleBody < ApplicationRecord
     [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
   end
 
-  def add_school_to_virtual_cap_pools!(school)
-    if has_virtual_cap_feature_flags?
-      school.device_allocations.each do |allocation|
-        pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
-        pool.add_school!(school)
-      end
-    else
-      raise VirtualCapPoolError, 'Virtual cap feature flags not set'
-    end
-  end
-
   def calculate_virtual_caps!
     virtual_cap_pools.each(&:recalculate_caps!)
   end
@@ -195,6 +184,14 @@ class ResponsibleBody < ApplicationRecord
     std_device_pool&.devices_available_to_order.to_i
   end
 
+  def laptop_allocation
+    std_device_pool&.allocation.to_i
+  end
+
+  def laptop_cap
+    std_device_pool&.cap.to_i
+  end
+
   def laptops_ordered
     std_device_pool&.devices_ordered.to_i
   end
@@ -222,15 +219,6 @@ class ResponsibleBody < ApplicationRecord
     %w[school schools].include?(who_will_order_devices)
   end
 
-  def remove_school_from_virtual_cap_pools!(school)
-    raise(VirtualCapPoolError, 'Virtual cap feature flags not set') unless has_virtual_cap_feature_flags?
-
-    school.device_allocations.each do |allocation|
-      pool = virtual_cap_pools.send(allocation.device_type).first
-      pool&.remove_school!(school)
-    end
-  end
-
   def router_pool?
     coms_device_pool.present?
   end
@@ -239,25 +227,16 @@ class ResponsibleBody < ApplicationRecord
     coms_device_pool&.devices_available_to_order.to_i
   end
 
+  def router_allocation
+    coms_device_pool&.allocation.to_i
+  end
+
+  def router_cap
+    coms_device_pool&.cap.to_i
+  end
+
   def routers_ordered
     coms_device_pool&.devices_ordered.to_i
-  end
-
-  def school_addable_to_virtual_cap_pools?(school)
-    has_virtual_cap_feature_flags? &&
-      school.responsible_body_id == id &&
-      !school.la_funded_provision? &&
-      school.orders_managed_centrally? &&
-      school.device_allocations.any? &&
-      !has_school_in_virtual_cap_pools?(school)
-  end
-
-  def school_removable_from_virtual_cap_pools?(school)
-    has_virtual_cap_feature_flags? &&
-      school.responsible_body_id == id &&
-      school.orders_managed_centrally? &&
-      school.device_allocations.any? &&
-      has_school_in_virtual_cap_pools?(school)
   end
 
   def schools_by_order_status

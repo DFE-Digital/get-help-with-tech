@@ -35,7 +35,8 @@ RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 J
   scenario 'responsible body user' do
     create(:preorder_information, :rb_will_order, school: school)
 
-    trust.add_school_to_virtual_cap_pools!(school)
+    AddSchoolToVirtualCapPoolService.new(school).call
+    trust.reload
 
     sign_in_as rb_user
 

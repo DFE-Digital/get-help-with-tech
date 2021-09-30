@@ -1,22 +1,20 @@
 class ChangeSchoolResponsibleBodyService
-  attr_reader :school, :initial_responsible_body, :new_responsible_body
+  attr_reader :school, :initial_rb, :new_rb
 
   COMPUTACENTER_CHANGE_STATUS = 'amended'.freeze
 
-  def initialize(school, new_responsible_body)
+  def initialize(school, new_rb)
     @school = school
-    @initial_responsible_body = school.responsible_body
-    @new_responsible_body = new_responsible_body
+    @initial_rb = school.responsible_body
+    @new_rb = new_rb
   end
 
   def call
     school.transaction do
-      remove_school_from_current_pool! if school_removable?
-      set_school_new_responsible_body!
-      school.refresh_device_ordering_status!
-      add_school_to_new_pool! if school_addable?
+      set_school_new_rb!
+      add_school_to_new_pool! ? initial_rb.calculate_virtual_caps! : remove_school_from_current_pool!
+      true
     end
-    true
   rescue StandardError => e
     log_error(e)
     false
@@ -25,7 +23,7 @@ class ChangeSchoolResponsibleBodyService
 private
 
   def add_school_to_new_pool!
-    new_responsible_body.add_school_to_virtual_cap_pools!(school)
+    AddSchoolToVirtualCapPoolService.new(school).call
   end
 
   def log_error(e)
@@ -35,20 +33,15 @@ private
   end
 
   def remove_school_from_current_pool!
-    initial_responsible_body.remove_school_from_virtual_cap_pools!(school)
+    return if RemoveSchoolFromVirtualCapPoolService.new(school, initial_rb).call
+
+    school.reload.refresh_device_ordering_status!
+    CapUpdateNotificationsService.new(*school.allocation_ids).call
   end
 
-  def school_addable?
-    new_responsible_body.school_addable_to_virtual_cap_pools?(school)
-  end
-
-  def school_removable?
-    initial_responsible_body&.school_removable_from_virtual_cap_pools?(school)
-  end
-
-  def set_school_new_responsible_body!
+  def set_school_new_rb!
     school.update!(
-      responsible_body_id: new_responsible_body.id,
+      responsible_body_id: new_rb.id,
       computacenter_change: COMPUTACENTER_CHANGE_STATUS,
     )
   end

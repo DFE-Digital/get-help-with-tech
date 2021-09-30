@@ -92,7 +92,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
         school.orders_managed_centrally!
         school.can_order!
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-        allow(mock_request).to receive(:post!).and_raise(exception)
+        allow(mock_request).to receive(:post).and_raise(exception)
       end
 
       it 'will not fail if the cap update were to fail' do
@@ -142,7 +142,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       it 'does not send notification to order' do
         expect {
           cap_usage_update.apply!
-        }.not_to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
       end
     end
   end

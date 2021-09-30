@@ -1,5 +1,5 @@
 <%- content_for :before_content, govuk_back_link(text: 'Back', href: support_school_path(@school.urn)) %>
-<%- title = t("page_titles.support_edit_allocation.#{device_type}") %>
+<%- title = t("page_titles.support_edit_allocation.#{@device_type}") %>
 <%- content_for :title, title %>
 
 <div class="govuk-grid-row">
@@ -10,15 +10,15 @@
     </h1>
 
     <%= form_for @form, url: support_school_devices_allocation_path(@school.urn), method: :patch do |f| %>
-      <%= hidden_field_tag :device_type, device_type %>
+      <%= hidden_field_tag :device_type, @device_type %>
 
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">
-        <%= t(@form.order_state, scope: %i[support allocation edit order_states], cap: @form.current_allocation.cap, allocation: @form.current_allocation.allocation) %>
+        <%= t(@form.order_state, scope: %i[support allocation edit order_states], cap: @form.device_cap, allocation: @form.device_allocation) %>
       </p>
 
-     <% if @form.is_in_virtual_cap_pool? %>
+     <% if @form.in_virtual_cap_pool? %>
       <%= render GovukComponent::WarningTextComponent.new(text: t(:is_in_virtual_cap_pool, scope: %i[support allocation edit])) %>
      <% end %>
 
@@ -26,7 +26,7 @@
                               only_integer: true,
                               label: {text: 'New allocation'},
                               width: 3,
-                              value: @form.current_allocation.raw_allocation,
+                              value: @form.raw_allocation,
                               min: @form.raw_devices_ordered,
                               hint: {
                                 text: t(:allocation_input_hint, scope: %i[support allocation edit], devices_ordered: @form.raw_devices_ordered)

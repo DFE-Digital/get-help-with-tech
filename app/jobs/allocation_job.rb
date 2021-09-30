@@ -10,8 +10,7 @@ class AllocationJob < ApplicationJob
     set_negative_allocation_and_cap_values if @allocation_delta.negative?
 
     ActiveRecord::Base.transaction do
-      update_current_allocation!
-      call_school_order_state_and_cap_update_service
+      update_school_laptop_allocation
       record_batch_job_processed_and_notify
     end
   end
@@ -23,7 +22,7 @@ private
     @school = @allocation_batch_job.school
     @order_state = @allocation_batch_job.order_state
     @allocation_delta = @allocation_batch_job.allocation_delta.to_i
-    @disable_user_notifications = !@allocation_batch_job.send_notification
+    @notify_school = @allocation_batch_job.send_notification
     @current_allocation = SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: 'std_device')
   end
 
@@ -55,30 +54,19 @@ private
     @new_raw_cap_value = [@current_raw_cap_value + @negative_allocation_delta, @new_raw_allocation_value].min
   end
 
-  def update_current_allocation!
-    if @allocation_delta.negative? && @new_raw_allocation_value < @current_allocation.raw_cap
-      @current_allocation.update!(allocation: @new_raw_allocation_value, cap: @new_raw_cap_value)
-    else
-      @current_allocation.update!(allocation: @new_raw_allocation_value)
-    end
-  end
-
-  def call_school_order_state_and_cap_update_service
-    service = SchoolOrderStateAndCapUpdateService.new(
+  def update_school_laptop_allocation
+    UpdateSchoolDevicesService.new(
       school: @school.reload,
       order_state: @order_state,
+      laptop_allocation: @new_raw_allocation_value,
       laptop_cap: @new_raw_cap_value,
-    )
-
-    service.disable_user_notifications! if @disable_user_notifications
-    service.call
+      notify_school: @notify_school,
+    ).call
   end
 
   def record_batch_job_processed_and_notify
-    if @disable_user_notifications
-      return @allocation_batch_job.update!(processed: true)
-    end
-
-    @allocation_batch_job.update!(processed: true, sent_notification: true)
+    processing_params = { processed: true }
+    processing_params.merge!(sent_notification: true) if @notify_school
+    @allocation_batch_job.update!(processing_params)
   end
 end

@@ -104,7 +104,7 @@ RSpec.describe School, type: :model do
 
     context 'when there is no standard device allocation' do
       it 'is false' do
-        expect(school.has_laptop_allocation?).to eq(false)
+        expect(school).not_to have_laptop_allocation
       end
     end
 
@@ -114,7 +114,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.has_laptop_allocation?).to eq(false)
+        expect(school).not_to have_laptop_allocation
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is true' do
-        expect(school.has_laptop_allocation?).to eq(true)
+        expect(school).to have_laptop_allocation
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'is false' do
-        expect(school.has_laptop_allocation?).to eq(false)
+        expect(school).not_to have_laptop_allocation
       end
     end
   end
@@ -402,7 +402,7 @@ RSpec.describe School, type: :model do
     end
   end
 
-  describe '#can_notify_computacenter?' do
+  describe '#computacenter_references?' do
     subject(:school) { build(:school) }
 
     context 'when computacenter have set a ship-to reference' do
@@ -411,7 +411,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'returns true' do
-        expect(school.can_notify_computacenter?).to be true
+        expect(school.computacenter_references?).to be true
       end
     end
 
@@ -421,7 +421,7 @@ RSpec.describe School, type: :model do
       end
 
       it 'returns false' do
-        expect(school.can_notify_computacenter?).to be false
+        expect(school.computacenter_references?).to be false
       end
     end
   end

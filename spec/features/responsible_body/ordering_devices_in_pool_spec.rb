@@ -177,7 +177,7 @@ RSpec.feature 'Ordering devices within a virtual pool', skip: 'Disabled for 30 J
   end
 
   def add_school_to_virtual_cap(school:)
-    responsible_body.add_school_to_virtual_cap_pools!(school)
-    responsible_body.calculate_virtual_caps!
+    AddSchoolToVirtualCapPoolService.new(school).call
+    responsible_body.reload
   end
 end

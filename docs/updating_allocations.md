@@ -55,7 +55,7 @@ In the console, grab the school first, then something like:
 ```ruby
 school.std_device_allocation.update(cap: 10, allocation: 10) # for computers
 school.coms_device_allocation.update(cap: 10, allocation: 10) # for routers (coms_device_allocation isn't a typo)
-SchoolOrderStateAndCapUpdateService.new(school: school, order_state: :can_order).update!
+UpdateSchoolDevicesService.new(school: school, order_state: :can_order).update!
 ```
 
 The last line above will send out e-mails reflecting the change. 

@@ -1,5 +1,4 @@
 class VirtualCapPool < ApplicationRecord
-  include Computacenter::CapChangeNotifier
   include DeviceType
   include DeviceCount
 
@@ -23,23 +22,8 @@ class VirtualCapPool < ApplicationRecord
     self.cap = school_device_allocations.sum(:cap)
     self.devices_ordered = school_device_allocations.sum(:devices_ordered)
     self.allocation = school_device_allocations.sum(:allocation)
-
-    notify_cc = cap_changed? || devices_ordered_changed?
     save!
-    notify_computacenter! if notify_cc
-  end
-
-  def add_school!(school)
-    if school_can_be_added_to_pool?(school)
-      add_school_allocation!(school.device_allocations.find_by(device_type: device_type))
-    else
-      raise VirtualCapPoolError, "Cannot add school to virtual pool #{school.urn} #{school.name}"
-    end
-  end
-
-  def remove_school!(school)
-    school_device_allocation = school.device_allocations.find_by(device_type: device_type)
-    remove_school_allocation!(school_device_allocation) if school_device_allocation
+    update_cap_on_computacenter if enabled? && (cap_previously_changed? || devices_ordered_previously_changed?)
   end
 
   def has_school?(school)
@@ -48,27 +32,13 @@ class VirtualCapPool < ApplicationRecord
 
 private
 
-  def school_can_be_added_to_pool?(school)
-    school.responsible_body_id == responsible_body_id &&
-      school.orders_managed_centrally? &&
-      school.device_allocations.exists?(device_type: device_type) &&
-      !school_virtual_caps.exists?(school_device_allocation: school.device_allocations.find_by(device_type: device_type))
+  def enabled?
+    responsible_body.has_virtual_cap_feature_flags?
   end
 
-  def add_school_allocation!(device_allocation)
-    school_virtual_caps.create!(school_device_allocation: device_allocation)
-    recalculate_caps!
-  end
-
-  def remove_school_allocation!(device_allocation)
-    school_virtual_caps.find_by(school_device_allocation_id: device_allocation.id)&.destroy!
-    recalculate_caps!
-  end
-
-  def notify_computacenter!
-    if responsible_body.has_virtual_cap_feature_flags? && notify_computacenter_of_cap_changes?
-      allocation_ids = school_device_allocations.select { |sda| sda.school.can_notify_computacenter? }.map(&:id)
-      update_cap_on_computacenter!(allocation_ids)
-    end
+  def update_cap_on_computacenter
+    CapUpdateNotificationsService.new(*school_device_allocation_ids,
+                                      notify_computacenter: false,
+                                      notify_school: false).call
   end
 end

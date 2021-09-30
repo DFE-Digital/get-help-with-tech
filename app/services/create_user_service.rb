@@ -79,7 +79,8 @@ class CreateUserService
   end
 
   def self.devolve_ordering_if_needed!(user_params)
-    School.find_by(id: user_params[:school_id])&.orders_managed_by_school!
+    school = School.find_by(id: user_params[:school_id])
+    school.orders_managed_by_school! if school && !school.preorder_information?
   end
 
   private_class_method :devolve_ordering_if_needed!

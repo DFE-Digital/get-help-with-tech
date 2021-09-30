@@ -3,6 +3,8 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
   after_action :verify_authorized
   after_action :verify_policy_scoped, only: :index
 
+  attr_reader :form, :responsible_body
+
   def index
     authorize ResponsibleBody
     respond_to do |format|
@@ -15,19 +17,19 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
   end
 
   def edit
-    authorize @responsible_body, :update_computacenter_reference?
-    @form = Computacenter::SoldToForm.new(responsible_body: @responsible_body,
-                                          sold_to: @responsible_body.computacenter_reference)
+    authorize responsible_body, :update_computacenter_reference?
+    @form = Computacenter::SoldToForm.new(responsible_body: responsible_body,
+                                          sold_to: responsible_body.computacenter_reference)
   end
 
   def update
-    authorize @responsible_body, :update_computacenter_reference?
+    authorize responsible_body, :update_computacenter_reference?
     @form = Computacenter::SoldToForm.new(sold_to_params.merge(responsible_body: @responsible_body))
 
-    if @form.valid?
-      Computacenter::SoldToShipToUpdater.new(@responsible_body).update_sold_to!(@form.sold_to)
-      flash[:success] = t(:success, scope: %i[computacenter sold_to update], name: @responsible_body.name,
-                                    sold_to: @responsible_body.computacenter_reference)
+    if form.save
+      flash[:success] = t(:success, scope: 'computacenter.sold_to.update',
+                                    name: responsible_body.name,
+                                    sold_to: responsible_body.computacenter_reference)
       redirect_to computacenter_responsible_body_changes_path
     else
       render :edit, status: :unprocessable_entity
@@ -38,7 +40,7 @@ private
 
   def set_responsible_body
     @responsible_body = ResponsibleBody.gias_status_open.find(params[:id])
-    authorize @responsible_body, :show?
+    authorize responsible_body, :show?
   end
 
   def csv_generator
