@@ -465,6 +465,8 @@ RSpec.describe School, type: :model do
   end
 
   describe 'change_who_manages_orders!' do
+    before { stub_computacenter_outgoing_api_calls }
+    
     context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
       let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
       let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
