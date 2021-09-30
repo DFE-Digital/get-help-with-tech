@@ -57,5 +57,5 @@ jobs:
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
           cf target -o dfe -s get-help-with-tech-dev
-          $(eval DOCKER_IMAGE_ID ?= $(shell (docker pull dfedigital/get-help-with-tech-dev:preview > /dev/null) && docker images dfedigital/get-help-with-tech-dev:preview -q) )
-          cf push get-help-with-tech-dev --manifest ./config/manifests/preview-manifest.yml --var docker_image_id=${DOCKER_IMAGE_ID} --docker-image dfedigital/get-help-with-tech-dev --docker-username ${CF_DOCKER_USERNAME} --strategy rolling
+          DOCKER_IMAGE_ID=$((docker pull dfedigital/get-help-with-tech-dev:preview > /dev/null) && docker images dfedigital/get-help-with-tech-dev:preview -q)
+          cf push get-help-with-tech-dev --manifest ./config/manifests/preview-manifest.yml --var docker_image_id=$DOCKER_IMAGE_ID --docker-image dfedigital/get-help-with-tech-dev --docker-username ${CF_DOCKER_USERNAME} --strategy rolling
