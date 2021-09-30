@@ -52,7 +52,7 @@ private
 
     return if trusts_with_schools.empty?
 
-    Sentry.configure_scope do |scope|
+    Sentry.with_scope do |scope|
       scope.set_context('TrustUpdateService#close_trusts', { trust_ids: trusts_with_schools })
 
       Sentry.capture_message('Skipped auto-closing Trusts as schools.size > 0')

@@ -271,6 +271,10 @@ class School < ApplicationRecord
     std_device_allocation&.devices_available_to_order?
   end
 
+  def laptops_available_to_order
+    std_device_allocation&.devices_available_to_order.to_i
+  end
+
   def laptops_ordered
     std_device_allocation&.devices_ordered.to_i
   end
@@ -385,6 +389,10 @@ class School < ApplicationRecord
 
   def routers_available_to_order?
     coms_device_allocation&.devices_available_to_order?
+  end
+
+  def routers_available_to_order
+    coms_device_allocation&.devices_available_to_order.to_i
   end
 
   def routers_ordered
