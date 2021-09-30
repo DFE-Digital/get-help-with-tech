@@ -129,7 +129,7 @@ RSpec.describe TrustUpdateService, type: :model do
         allow(sentry_scope).to receive(:set_context)
 
         allow(Sentry).to receive(:capture_message)
-        allow(Sentry).to receive(:configure_scope).and_yield(sentry_scope)
+        allow(Sentry).to receive(:with_scope).and_yield(sentry_scope)
 
         service.update_trusts
 

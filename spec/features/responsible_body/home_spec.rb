@@ -43,6 +43,10 @@ RSpec.feature ResponsibleBody do
       it 'displays your account title' do
         expect(page).to have_content('Your account')
       end
+
+      it 'displays the tranche allocation' do
+        expect(page).to have_css('#tranche_allocation')
+      end
     end
 
     describe 'access support portal section' do
