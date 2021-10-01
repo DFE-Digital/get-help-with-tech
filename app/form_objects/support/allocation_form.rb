@@ -27,10 +27,6 @@
     valid? && allocation_updated?
   end
 
-  def device_allocation_id
-    router? ? router_allocation_id : laptop_allocation_id
-  end
-
   def raw_allocation
     router? ? raw_router_allocation : raw_laptop_allocation
   end
@@ -59,7 +55,7 @@ private
   end
 
   def check_decrease_allowed
-    errors.add(:school, :decreasing_in_virtual_cap_pool) if !decreasing? && in_virtual_cap_pool?
+    errors.add(:school, :decreasing_in_virtual_cap_pool) if decreasing? && in_virtual_cap_pool?
   end
 
   def check_minimum
