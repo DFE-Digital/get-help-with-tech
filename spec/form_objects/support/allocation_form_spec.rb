@@ -40,11 +40,17 @@ RSpec.describe Support::AllocationForm, type: :model do
 
   describe '#save' do
     context 'when the school is in virtual cap pool' do
-      let(:allocation) { 3 }
+      let(:allocation) { 6 }
+      let(:category) {}
+      let(:description) {}
       let(:device_type) { :laptop }
 
       subject(:form) do
-        described_class.new(allocation: allocation, device_type: device_type, school: school)
+        described_class.new(allocation: allocation,
+                            device_type: device_type,
+                            school: school,
+                            category: category,
+                            description: description)
       end
 
       before do
@@ -52,8 +58,8 @@ RSpec.describe Support::AllocationForm, type: :model do
         AddSchoolToVirtualCapPoolService.new(school2).call
       end
 
-      context 'when allocation increases' do
-        let(:allocation) { 6 }
+      context 'when allocation decreases' do
+        let(:allocation) { 4 }
 
         it 'return false' do
           expect(form.save).to be_falsey
@@ -94,26 +100,47 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'add error to school field' do
-          errors = {
-            school: ['Allocation cannot be less than the number they have already ordered (1)'],
-          }
+          error = 'Allocation cannot be less than the number they have already ordered (1)'
 
           expect(form.save).to be_falsey
-
-          expect(form.errors.messages).to eq(errors)
+          expect(form.errors.messages[:school]).to include(error)
         end
       end
 
       it 'modify the school device raw allocation' do
-        expect { form.save }.to change(school, :raw_laptop_allocation).from(5).to(3)
+        expect { form.save }.to change(school, :raw_laptop_allocation).from(5).to(6)
+      end
+
+      context 'when a category for the allocation change is given' do
+        let(:category) { :over_order }
+
+        it 'persist a new AllocationChange' do
+          expect { form.save }.to change(AllocationChange, :count).by(1)
+        end
+      end
+
+      context 'when a description of the allocation change is given' do
+        let(:description) { 'increase allocation for this specific school' }
+
+        it 'persist a new AllocationChange' do
+          expect { form.save }.to change(AllocationChange, :count).by(1)
+        end
       end
 
       it 'modify the pool device allocation' do
-        expect { form.save }.to change(school, :laptop_allocation).from(10).to(8)
+        expect { form.save }.to change(school, :laptop_allocation).from(10).to(11)
+      end
+
+      it 'do not notify Computacenter by email' do
+        expect { form.save }.not_to have_enqueued_mail(ComputacenterMailer)
+      end
+
+      it 'do not notify the school or support by email' do
+        expect { form.save }.not_to have_enqueued_mail(CanOrderDevicesMailer)
       end
 
       context 'when the school cannot order' do
-        let(:allocation) { 3 }
+        let(:allocation) { 6 }
         let(:order_state) { 'cannot_order' }
         let(:requests) do
           [
@@ -137,71 +164,50 @@ RSpec.describe Support::AllocationForm, type: :model do
 
           expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
         end
-
-        it 'do not notify Computacenter by email' do
-          expect { form.save }.not_to have_enqueued_mail(ComputacenterMailer)
-        end
-
-        it 'do not notify the school or support by email' do
-          expect { form.save }.not_to have_enqueued_mail(CanOrderDevicesMailer)
-        end
       end
 
-      context 'when the school can order' do
-        let(:allocation) { 3 }
-        let(:order_state) { 'can_order' }
-        let(:requests) do
-          [
+      ['can_order', 'can_order_for_specific_circumstances'].each do |can_order_state|
+        context "when the school #{can_order_state}" do
+          let(:allocation) { 6 }
+          let(:order_state) { can_order_state }
+          let(:requests) do
             [
-              { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '7' },
-              { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '7' },
-            ],
-          ]
-        end
+              [
+                { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '9' },
+                { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '9' },
+              ],
+            ]
+          end
 
-        it 'update school device raw cap to match device raw allocation' do
-          expect { form.save }.to change(school, :raw_laptop_cap).from(4).to(3)
-        end
+          it 'update school device raw cap to match device raw allocation' do
+            expect { form.save }.to change(school, :raw_laptop_cap).from(4).to(6)
+          end
 
-        it 'update pool device cap' do
-          expect { form.save }.to change(school, :laptop_cap).from(8).to(7)
-        end
+          it 'update pool device cap' do
+            expect { form.save }.to change(school, :laptop_cap).from(8).to(10)
+          end
 
-        it 'update pool school device cap on Computacenter' do
-          expect(form.save).to be_truthy
+          it 'update pool school device cap on Computacenter' do
+            expect(form.save).to be_truthy
 
-          expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
-        end
-
-        it 'do not notify Computacenter by email' do
-          expect { form.save }.not_to have_enqueued_mail(ComputacenterMailer)
-        end
-
-        it 'do not notify the school or support by email' do
-          expect { form.save }.not_to have_enqueued_mail(CanOrderDevicesMailer)
-        end
-      end
-
-      context 'when the school can order for specific circumstances' do
-        let(:allocation) { 6 }
-        let(:order_state) { 'can_order_for_specific_circumstances' }
-
-        it 'do not update the school device raw cap' do
-          expect { form.save }.not_to change(school, :raw_laptop_cap)
-        end
-
-        it 'do not update pool device cap' do
-          expect { form.save }.not_to change(school, :laptop_cap)
+            expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
+          end
         end
       end
     end
 
     context 'when the school is not in virtual cap pool' do
       let(:allocation) { 3 }
+      let(:category) {}
+      let(:description) {}
       let(:device_type) { :laptop }
 
       subject(:form) do
-        described_class.new(allocation: allocation, device_type: device_type, school: school)
+        described_class.new(allocation: allocation,
+                            device_type: device_type,
+                            school: school,
+                            category: category,
+                            description: description)
       end
 
       context 'when allocation decreases below devices ordered' do
@@ -232,6 +238,22 @@ RSpec.describe Support::AllocationForm, type: :model do
 
       it 'modify the school device allocation' do
         expect { form.save }.to change(school, :laptop_allocation).from(5).to(3)
+      end
+
+      context 'when a category for the allocation change is given' do
+        let(:category) { :over_order }
+
+        it 'persist a new AllocationChange' do
+          expect { form.save }.to change(AllocationChange, :count).by(1)
+        end
+      end
+
+      context 'when a description of the allocation change is given' do
+        let(:description) { 'increase allocation for this specific school' }
+
+        it 'persist a new AllocationChange' do
+          expect { form.save }.to change(AllocationChange, :count).by(1)
+        end
       end
 
       context 'when the school cannot order' do
@@ -270,67 +292,52 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
       end
 
-      context 'when the school can order' do
-        let(:order_state) { 'can_order' }
-        let(:requests) do
-          [
+      ['can_order', 'can_order_for_specific_circumstances'].each do |can_order_state|
+        context "when the school #{can_order_state}" do
+          let(:order_state) { can_order_state }
+          let(:requests) do
             [
-              { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
-            ],
-          ]
-        end
+              [
+                { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
+              ],
+            ]
+          end
 
-        it 'update school device cap to match device allocation' do
-          expect { form.save }.to change(school, :laptop_cap).from(4).to(3)
-        end
+          it 'update school device cap to match device allocation' do
+            expect { form.save }.to change(school, :laptop_cap).from(4).to(3)
+          end
 
-        it 'update pool schools device cap on Computacenter' do
-          expect(form.save).to be_truthy
+          it 'update pool schools device cap on Computacenter' do
+            expect(form.save).to be_truthy
 
-          expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
-        end
+            expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
+          end
 
-        it 'notify Computacenter of device cap change by email' do
-          expect { form.save }
-            .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                  .with(params: { school: school, new_cap_value: 3 }, args: []).once
-        end
+          it 'notify Computacenter of device cap change by email' do
+            expect { form.save }
+              .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+                    .with(params: { school: school, new_cap_value: 3 }, args: []).once
+          end
 
-        it "notify the school's organizational users" do
-          user = create(:user, :relevant_to_computacenter, responsible_body: rb)
+          it "notify the school's organizational users" do
+            user = create(:user, :relevant_to_computacenter, responsible_body: rb)
 
-          expect { form.save }
-            .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
-                  .with(params: { school: school, user: user }, args: []).once
-        end
+            expect { form.save }
+              .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
+                    .with(params: { school: school, user: user }, args: []).once
+          end
 
-        it "notify support if no school's organizational users" do
-          expect { form.save }
-            .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-                  .with(params: { school: school }, args: []).once
-        end
+          it "notify support if no school's organizational users" do
+            expect { form.save }
+              .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
+                    .with(params: { school: school }, args: []).once
+          end
 
-        it 'notify Computacenter of school can order by email' do
-          expect { form.save }
-            .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                  .with(params: { school: school, new_cap_value: 3 }, args: []).once
-        end
-      end
-
-      context 'when the school can order for specific circumstances' do
-        let(:allocation) { 6 }
-        let(:order_state) { 'can_order_for_specific_circumstances' }
-
-        it 'do not update pool laptop cap' do
-          expect { form.save }.not_to change(school, :laptop_cap)
-        end
-
-        it 'do not update pool router cap' do
-          expect { form.save }.not_to change(school, :router_cap)
-        end
-
-        it 'do not update caps on Computacenter' do
-          expect_not_to_have_sent_caps_to_computacenter
+          it 'notify Computacenter of school can order by email' do
+            expect { form.save }
+              .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
+                    .with(params: { school: school, new_cap_value: 3 }, args: []).once
+          end
         end
       end
     end

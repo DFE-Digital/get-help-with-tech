@@ -48,7 +48,7 @@ class UpdateSchoolDevicesService
   def record_allocation_change_meta_data(allocation_id:, prev_allocation:, new_allocation:)
     AllocationChange.create!(school_device_allocation_id: allocation_id,
                              category: allocation_change_category,
-                             delta: laptop_allocation - school.raw_laption_allocation,
+                             delta: laptop_allocation - school.raw_laptop_allocation,
                              prev_allocation: prev_allocation,
                              new_allocation: new_allocation,
                              description: allocation_change_description)
@@ -62,12 +62,12 @@ class UpdateSchoolDevicesService
   def update_laptop_ordering!
     @laptop_cap_changed = value_changed?(school, :laptop_computacenter_cap) do
       School.transaction do
-        school.set_laptop_ordering!(cap: laptop_cap, allocation: laptop_allocation)
         if record_laptop_allocation_change?
           record_allocation_change_meta_data(allocation_id: school.laptop_allocation_id,
                                              prev_allocation: school.raw_laptop_allocation,
                                              new_allocation: laptop_allocation)
         end
+        school.set_laptop_ordering!(cap: laptop_cap, allocation: laptop_allocation)
       end
     end
   end
@@ -75,12 +75,12 @@ class UpdateSchoolDevicesService
   def update_router_ordering!
     @router_cap_changed = value_changed?(school, :router_computacenter_cap) do
       School.transaction do
-        school.set_router_ordering!(cap: router_cap, allocation: router_allocation)
         if record_router_allocation_change?
           record_allocation_change_meta_data(allocation_id: school.router_allocation_id,
                                              prev_allocation: school.raw_router_allocation,
                                              new_allocation: router_allocation)
         end
+        school.set_router_ordering!(cap: router_cap, allocation: router_allocation)
       end
     end
   end
