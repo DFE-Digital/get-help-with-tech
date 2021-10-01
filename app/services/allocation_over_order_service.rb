@@ -62,7 +62,7 @@ class AllocationOverOrderService
     AllocationForm.new(school: allocation.school,
                        device_type: allocation.device_type,
                        allocation: new_allocation_value,
-                       category: :over_order_pool_reclaim).call
+                       category: :over_order_pool_reclaim).save
   end
 
   def increase_allocation_value_to_match_devices_ordered
@@ -70,6 +70,6 @@ class AllocationOverOrderService
                        device_type: device_type,
                        allocation: raw_devices_ordered,
                        category: :over_order,
-                       description: 'Over Order').call
+                       description: 'Over Order').save
   end
 end
