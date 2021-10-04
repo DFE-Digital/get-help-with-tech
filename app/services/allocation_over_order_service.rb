@@ -13,30 +13,12 @@ class AllocationOverOrderService
 
   def call
     SchoolDeviceAllocation.transaction do
-      if allocation_is_in_virtual_cap_pool?
-        reclaim_allocation_across_virtual_cap_pool
-      end
-
+      reclaim_allocation_across_virtual_cap_pool if school.in_active_virtual_cap_pool?
       increase_allocation_value_to_match_devices_ordered
     end
   end
 
   private
-
-  def reclaim_allocation_across_virtual_cap_pool
-    remaining_over_ordered_quantity = over_ordered_quantity
-    available_allocations_in_the_vcap_pool.each do |allocation|
-      available_allocation_quantity = [raw_allocation - raw_devices_ordered, remaining_over_ordered_quantity].min
-      new_raw_allocation_value = raw_allocation - available_allocation_quantity
-
-      reclaim_allocation_from_vcap_pool_member(allocation, new_raw_allocation_value)
-
-      remaining_over_ordered_quantity -= available_allocation_quantity
-      break if remaining_over_ordered_quantity.zero?
-    end
-
-    alert_pool_allocation_reclaim_failed(remaining_over_ordered_quantity) if remaining_over_ordered_quantity.positive?
-  end
 
   def alert_pool_allocation_reclaim_failed(remaining_over_ordered_quantity)
     Sentry.configure_scope do |scope|
@@ -46,30 +28,52 @@ class AllocationOverOrderService
     end
   end
 
-  def allocation_is_in_virtual_cap_pool?
-    school&.responsible_body&.has_virtual_cap_feature_flags? && allocation.is_in_virtual_cap_pool?
-  end
-
-  def over_ordered_quantity
-    raw_devices_ordered - raw_allocation
+  def allocation_type
+    router? ? :router_allocation : :laptop_allocation
   end
 
   def available_allocations_in_the_vcap_pool
-    vcap_pool.school_device_allocations.with_available_allocation(vcap_pool.device_type)
+    vcap_pool.school_device_allocations.with_available_allocation(vcap_pool.device_type) - [allocation]
   end
 
-  def reclaim_allocation_from_vcap_pool_member(allocation, new_allocation_value)
-    AllocationForm.new(school: allocation.school,
-                       device_type: allocation.device_type,
-                       allocation: new_allocation_value,
-                       category: :over_order_pool_reclaim).save
+  def cap_type
+    router? ? :router_cap : :laptop_cap
   end
 
   def increase_allocation_value_to_match_devices_ordered
-    AllocationForm.new(school: school,
-                       device_type: device_type,
-                       allocation: raw_devices_ordered,
-                       category: :over_order,
-                       description: 'Over Order').save
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: school.order_state,
+                                   allocation_type => raw_devices_ordered,
+                                   cap_type => raw_devices_ordered,
+                                   allocation_change_category: :over_order,
+                                   allocation_change_description: 'Over Order').call
+  end
+
+  def over_ordered
+    raw_devices_ordered - raw_allocation
+  end
+
+  def reclaim_allocation_across_virtual_cap_pool
+    to_claim = available_allocations_in_the_vcap_pool.inject(over_ordered) do |needed, member|
+      needed -= reclaim_allocation_from_vcap_pool_member(member, needed: needed)
+      needed.zero? ? break : needed
+    end
+
+    alert_pool_allocation_reclaim_failed(to_claim) if to_claim
+  end
+
+  def reclaim_allocation_from_vcap_pool_member(member, needed: 0)
+    [member.raw_allocation - member.raw_devices_ordered, needed].min.tap do |claimed|
+      unclaimed = member.raw_allocation - claimed
+      UpdateSchoolDevicesService.new(school: member.school,
+                                     order_state: member.school.order_state,
+                                     allocation_type => unclaimed,
+                                     cap_type => unclaimed,
+                                     allocation_change_category: :over_order_pool_reclaim).call
+    end
+  end
+
+  def router?
+    device_type == 'coms_device'
   end
 end

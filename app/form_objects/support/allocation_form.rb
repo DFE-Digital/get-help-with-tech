@@ -5,7 +5,7 @@
   attr_reader :allocation
 
   delegate :in_virtual_cap_pool?,
-           :laptop_allocation_id,
+           :laptop_allocation,
            :laptop_cap,
            :order_state,
            :router_cap,
@@ -13,7 +13,7 @@
            :raw_laptops_ordered,
            :raw_router_allocation,
            :raw_routers_ordered,
-           :router_allocation_id,
+           :router_allocation,
            to: :school
 
   validate :check_decrease_allowed
@@ -21,6 +21,14 @@
 
   def allocation=(value)
     @allocation = ActiveModel::Type::Integer.new.cast(value)
+  end
+
+  def device_allocation
+    router? ? router_allocation : laptop_allocation
+  end
+
+  def device_cap
+    router? ? router_cap : laptop_cap
   end
 
   def save

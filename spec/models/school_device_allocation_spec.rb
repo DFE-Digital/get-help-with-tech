@@ -110,6 +110,7 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
     let(:std_device_allocation) { school.std_device_allocation }
 
     it 'increases the allocation to match devices ordered' do
+      stub_computacenter_outgoing_api_calls
       std_device_allocation.devices_ordered += 1
       std_device_allocation.save!
       expect(std_device_allocation.devices_ordered).to eq(std_device_allocation.raw_allocation)
