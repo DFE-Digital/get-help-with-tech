@@ -68,7 +68,7 @@ class SchoolDeviceAllocation < ApplicationRecord
     self[:devices_ordered]
   end
 
-  private
+private
 
   def vcap_enabled?
     school&.responsible_body&.has_virtual_cap_feature_flags?

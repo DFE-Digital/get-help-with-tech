@@ -38,6 +38,7 @@ class PreorderInformation < ApplicationRecord
       if any_school_users?
         return 'school_contacted' unless chromebook_information_complete?
         return 'school_can_order' if school.can_order_devices_right_now?
+
         school.has_ordered? ? 'ordered' : 'school_ready'
       else
         school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
@@ -46,6 +47,7 @@ class PreorderInformation < ApplicationRecord
       return 'needs_info' unless chromebook_information_complete?
       return 'ready' unless responsible_body_will_order_devices?
       return 'rb_can_order' if school.can_order_devices_right_now?
+
       school.has_ordered? ? 'ordered' : 'ready'
     end
   end

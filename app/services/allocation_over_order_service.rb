@@ -18,7 +18,7 @@ class AllocationOverOrderService
     end
   end
 
-  private
+private
 
   def alert_pool_allocation_reclaim_failed(remaining_over_ordered_quantity)
     Sentry.configure_scope do |scope|

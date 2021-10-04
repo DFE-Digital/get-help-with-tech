@@ -57,13 +57,12 @@ RSpec.describe AllocationChange, type: :model do
         }
       end
       let(:sentry_scope) { instance_spy(Sentry::Scope, set_context: :great) }
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_centrally_managed_schools_fully_ordered) }
 
       before do
         allow(Sentry).to receive(:capture_message)
         allow(Sentry).to receive(:configure_scope).and_yield(sentry_scope)
       end
-
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_centrally_managed_schools_fully_ordered) }
 
       it 'records the over order' do
         std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
