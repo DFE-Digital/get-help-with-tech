@@ -242,6 +242,7 @@ RSpec.describe PreorderInformation, type: :model do
       end
 
       it 'responds to changing the device allocation' do
+        stub_computacenter_outgoing_api_calls
         school.users << user
         preorder_info.update!(will_need_chromebooks: 'no')
         expect(preorder_info.status).to eq('school_ready')

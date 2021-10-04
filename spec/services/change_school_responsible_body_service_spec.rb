@@ -1,14 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
-  def execute_service_and_expect_to_refresh_the_school_status(times: 1)
-    allow(moving_school).to receive(:refresh_device_ordering_status!)
-
-    service.call
-
-    expect(moving_school).to have_received(:refresh_device_ordering_status!).exactly(times).times
-  end
-
   let(:rb_a_pool_active) { true }
   let(:rb_b_pool_active) { false }
   let(:who_manages_rb_a) { :manages_centrally }
@@ -61,6 +53,7 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
       AddSchoolToVirtualCapPoolService.new(school_b).call
       rb_a.reload
       rb_b.reload
+      allow(moving_school).to receive(:refresh_device_ordering_status!).and_call_original
     end
 
     context 'when the school cannot be updated for some reason' do
@@ -126,8 +119,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: false,
@@ -170,8 +164,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: false,
@@ -215,8 +210,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: false,
@@ -260,8 +256,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: false,
@@ -305,8 +302,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: false,
@@ -354,8 +352,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: true,
@@ -412,8 +411,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).at_least(1).times
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: false,
@@ -481,8 +481,9 @@ RSpec.describe ChangeSchoolResponsibleBodyService, type: :model do
           ],
         ]
 
-        execute_service_and_expect_to_refresh_the_school_status
+        service.call
 
+        expect(moving_school).to have_received(:refresh_device_ordering_status!).at_least(1).times
         expect_school_to_be_in_rb(school_id: moving_school.id,
                                   rb_id: rb_b.id,
                                   vcap: true,
