@@ -170,10 +170,4 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       expect(std_device_allocation.reload.allocation).to eq(devices_ordered)
     end
   end
-
-  def put_school_in_pool(responsible_body, pool_school)
-    pool_school.preorder_information.responsible_body_will_order_devices!
-    pool_school.can_order!
-    AddSchoolToVirtualCapPoolService.new(pool_school).call
-  end
 end

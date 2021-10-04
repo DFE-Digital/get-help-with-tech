@@ -166,7 +166,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
       end
 
-      ['can_order', 'can_order_for_specific_circumstances'].each do |can_order_state|
+      %w[can_order can_order_for_specific_circumstances].each do |can_order_state|
         context "when the school #{can_order_state}" do
           let(:allocation) { 6 }
           let(:order_state) { can_order_state }
@@ -292,7 +292,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
       end
 
-      ['can_order', 'can_order_for_specific_circumstances'].each do |can_order_state|
+      %w[can_order can_order_for_specific_circumstances].each do |can_order_state|
         context "when the school #{can_order_state}" do
           let(:order_state) { can_order_state }
           let(:requests) do
