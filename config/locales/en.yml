@@ -283,8 +283,8 @@ en:
       description: Find out who devices were provided for and why the DfE provided them.
       guidance_section: before_you_order_pages
     device_allocations:
-      title: How laptops and tablets were allocated
-      description: Find out how the Department for Education estimated requirements for disadvantaged children and young people.
+      title: How laptops and tablets are allocated
+      description: Find out how we estimated requirements and how to query an allocation.
       guidance_section: before_you_order_pages
     device_specification:
       title: Device types and IT settings
