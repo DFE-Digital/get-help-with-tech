@@ -39,7 +39,6 @@ private
     if allocation_change_category || allocation_change_description
       AllocationChange.create!(school_device_allocation_id: allocation_id,
                                category: allocation_change_category,
-                               delta: new_allocation - prev_allocation,
                                prev_allocation: prev_allocation,
                                new_allocation: new_allocation,
                                description: allocation_change_description)
