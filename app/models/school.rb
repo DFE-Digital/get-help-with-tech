@@ -6,8 +6,8 @@ class School < ApplicationRecord
   belongs_to :responsible_body
 
   has_many :device_allocations, class_name: 'SchoolDeviceAllocation', inverse_of: :school
-  has_one :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation'
-  has_one :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation'
+  has_one :std_device_allocation, -> { where device_type: 'std_device' }, class_name: 'SchoolDeviceAllocation', inverse_of: :school
+  has_one :coms_device_allocation, -> { where device_type: 'coms_device' }, class_name: 'SchoolDeviceAllocation', inverse_of: :school
 
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
   has_one :headteacher, -> { where role: 'headteacher' }, class_name: 'SchoolContact', inverse_of: :school
@@ -20,6 +20,7 @@ class School < ApplicationRecord
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
+  has_many :std_device_allocation_changes, through: :std_device_allocation, source: :allocation_change
 
   validates :name, presence: true
 

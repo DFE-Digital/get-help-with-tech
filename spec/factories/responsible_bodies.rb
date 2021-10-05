@@ -26,6 +26,30 @@ FactoryBot.define do
       end
     end
 
+    trait :with_centrally_managed_schools do
+      transient do
+        schools_count { 3 }
+      end
+
+      after(:create) do |responsible_body, evaluator|
+        schools = create_list(:school, evaluator.schools_count, :centrally_managed, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body)
+        schools.each { |school| AddSchoolToVirtualCapPoolService.new(school).call }
+        responsible_body.reload
+      end
+    end
+
+    trait :with_centrally_managed_schools_fully_ordered do
+      transient do
+        schools_count { 3 }
+      end
+
+      after(:create) do |responsible_body, evaluator|
+        schools = create_list(:school, evaluator.schools_count, :centrally_managed, :with_std_device_allocation_fully_ordered, responsible_body: responsible_body)
+        schools.each { |school| AddSchoolToVirtualCapPoolService.new(school).call }
+        responsible_body.reload
+      end
+    end
+
     trait :with_extra_mobile_data_requests do
       transient do
         extra_mobile_data_requests_count { 3 }

@@ -2,13 +2,16 @@ class SchoolDeviceAllocation < ApplicationRecord
   include DeviceType
   include DeviceCount
 
+  before_update :record_over_order, if: :over_order_occurred?
+
   has_paper_trail
 
   belongs_to :school, touch: true
   belongs_to :created_by_user, class_name: 'User', optional: true
   belongs_to :last_updated_by_user, class_name: 'User', optional: true
   has_one :school_virtual_cap, touch: true, dependent: :destroy
-
+  has_one :virtual_cap_pool, through: :school_virtual_cap
+  has_many :allocation_changes, dependent: :destroy
   has_many :cap_update_calls
 
   validates_with CapAndAllocationValidator
@@ -20,6 +23,10 @@ class SchoolDeviceAllocation < ApplicationRecord
   scope :by_device_type, ->(device_type) { where(device_type: device_type) }
   scope :can_order_std_devices_now, -> { by_device_type('std_device').where('cap > devices_ordered') }
   scope :by_computacenter_device_type, ->(cc_device_type) { by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type)) }
+  scope :with_available_allocation, lambda { |device_type|
+    by_device_type(device_type).where('allocation > devices_ordered')
+                               .order(Arel.sql('allocation - devices_ordered'))
+  }
 
   delegate :computacenter_reference, :computacenter_references?, to: :school
 
@@ -65,5 +72,13 @@ private
 
   def vcap_enabled?
     school&.responsible_body&.has_virtual_cap_feature_flags?
+  end
+
+  def over_order_occurred?
+    devices_ordered_changed? && raw_devices_ordered > raw_allocation
+  end
+
+  def record_over_order
+    AllocationOverOrderService.new(self).call
   end
 end

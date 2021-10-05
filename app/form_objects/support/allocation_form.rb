@@ -1,7 +1,7 @@
 ﻿class Support::AllocationForm
   include ActiveModel::Model
 
-  attr_accessor :device_type, :school
+  attr_accessor :category, :description, :device_type, :school
   attr_reader :allocation
 
   delegate :in_virtual_cap_pool?,
@@ -23,16 +23,16 @@
     @allocation = ActiveModel::Type::Integer.new.cast(value)
   end
 
-  def save
-    valid? && allocation_updated?
-  end
-
   def device_allocation
     router? ? router_allocation : laptop_allocation
   end
 
   def device_cap
     router? ? router_cap : laptop_cap
+  end
+
+  def save
+    valid? && allocation_updated?
   end
 
   def raw_allocation
@@ -49,14 +49,21 @@ private
     router? ? :router_allocation : :laptop_allocation
   end
 
+  def cap_type
+    router? ? :router_cap : :laptop_cap
+  end
+
   def allocation_updated?
     UpdateSchoolDevicesService.new(school: school,
                                    order_state: order_state,
-                                   allocation_type => allocation).call
+                                   allocation_type => allocation,
+                                   cap_type => allocation,
+                                   allocation_change_category: category,
+                                   allocation_change_description: description).call
   end
 
   def check_decrease_allowed
-    errors.add(:school, :decreasing_in_virtual_cap_pool) if !decreasing? && in_virtual_cap_pool?
+    errors.add(:school, :decreasing_in_virtual_cap_pool) if decreasing? && in_virtual_cap_pool?
   end
 
   def check_minimum

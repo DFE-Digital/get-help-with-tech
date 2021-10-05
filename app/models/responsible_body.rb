@@ -269,6 +269,10 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
+  def virtual_cap_pool(device_type)
+    virtual_cap_pools.where(device_type: device_type).first
+  end
+
   def who_manages_orders_label
     case who_will_order_devices
     when 'school'

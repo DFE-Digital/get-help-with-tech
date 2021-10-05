@@ -54,11 +54,49 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
   end
 
   describe '#devices_available_to_order' do
-    subject(:allocation) { build_stubbed(:school_device_allocation, cap: 1, devices_ordered: 2) }
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: cap, devices_ordered: 2) }
 
-    context 'when negative' do
+    context 'when more devices ordered than the assigned cap' do
+      let(:cap) { 1 }
+
       it 'returns zero' do
         expect(allocation.devices_available_to_order).to be_zero
+      end
+    end
+
+    context 'when no more devices ordered than the assigned cap' do
+      let(:cap) { 3 }
+
+      it 'returns the difference' do
+        expect(allocation.devices_available_to_order).to eq(1)
+      end
+    end
+  end
+
+  describe '#devices_available_to_order?' do
+    subject(:allocation) { build_stubbed(:school_device_allocation, cap: cap, allocation: cap, devices_ordered: 1) }
+
+    context 'when used full allocation' do
+      let(:cap) { 1 }
+
+      it 'returns false' do
+        expect(allocation.devices_available_to_order?).to be false
+      end
+    end
+
+    context 'when used over allocation' do
+      let(:cap) { 0 }
+
+      it 'returns false' do
+        expect(allocation.devices_available_to_order?).to be false
+      end
+    end
+
+    context 'when partially used allocation' do
+      let(:cap) { 2 }
+
+      it 'returns true' do
+        expect(allocation.devices_available_to_order?).to be true
       end
     end
   end
@@ -92,6 +130,28 @@ RSpec.describe SchoolDeviceAllocation, type: :model do
 
     it 'returns the cap amount for computacenter' do
       expect(allocation.computacenter_cap).to eq(allocation.raw_cap)
+    end
+  end
+
+  context 'when fewer devices than the allocation are ordered' do
+    let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+    let(:std_device_allocation) { school.std_device_allocation }
+
+    it 'does not change the allocation value' do
+      std_device_allocation.devices_ordered += 1
+      expect { std_device_allocation.save! }.not_to change(std_device_allocation, :raw_allocation)
+    end
+  end
+
+  context 'when more devices than the allocation are ordered' do
+    let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+    let(:std_device_allocation) { school.std_device_allocation }
+
+    it 'increases the allocation to match devices ordered' do
+      stub_computacenter_outgoing_api_calls
+      std_device_allocation.devices_ordered += 1
+      std_device_allocation.save!
+      expect(std_device_allocation.devices_ordered).to eq(std_device_allocation.raw_allocation)
     end
   end
 

@@ -107,37 +107,49 @@ RSpec.describe VirtualCapPool, type: :model do
   end
 
   describe '#devices_available_to_order' do
-    subject(:allocation) { described_class.new(cap: 1, devices_ordered: 2) }
+    subject(:pool) { described_class.new(cap: cap, devices_ordered: 2) }
 
-    context 'when negative' do
+    context 'when more devices ordered than the assigned cap' do
+      let(:cap) { 1 }
+
       it 'returns zero' do
-        expect(allocation.devices_available_to_order).to be_zero
+        expect(pool.devices_available_to_order).to be_zero
+      end
+    end
+
+    context 'when no more devices ordered than the assigned cap' do
+      let(:cap) { 3 }
+
+      it 'returns the difference' do
+        expect(pool.devices_available_to_order).to eq(1)
       end
     end
   end
 
   describe '#devices_available_to_order?' do
+    subject(:pool) { described_class.new(cap: cap, allocation: cap, devices_ordered: 1) }
+
     context 'when used full allocation' do
-      let(:allocation) { described_class.new(cap: 1, allocation: 1, devices_ordered: 1) }
+      let(:cap) { 1 }
 
       it 'returns false' do
-        expect(allocation.devices_available_to_order?).to be false
+        expect(pool.devices_available_to_order?).to be false
+      end
+    end
+
+    context 'when used over allocation' do
+      let(:cap) { 0 }
+
+      it 'returns false' do
+        expect(pool.devices_available_to_order?).to be false
       end
     end
 
     context 'when partially used allocation' do
-      let(:allocation) { described_class.new(cap: 2, allocation: 2, devices_ordered: 1) }
+      let(:cap) { 2 }
 
       it 'returns true' do
-        expect(allocation.devices_available_to_order?).to be true
-      end
-    end
-
-    context 'when no devices ordered' do
-      let(:allocation) { described_class.new(cap: 1, allocation: 1, devices_ordered: 0) }
-
-      it 'returns true' do
-        expect(allocation.devices_available_to_order?).to be true
+        expect(pool.devices_available_to_order?).to be true
       end
     end
   end
