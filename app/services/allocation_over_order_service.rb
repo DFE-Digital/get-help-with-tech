@@ -54,16 +54,16 @@ private
   end
 
   def reclaim_allocation_across_virtual_cap_pool
-    to_claim = available_allocations_in_the_vcap_pool.inject(over_ordered) do |needed, member|
-      needed -= reclaim_allocation_from_vcap_pool_member(member, needed: needed)
-      needed.zero? ? break : needed
+    to_reclaim = available_allocations_in_the_vcap_pool.inject(over_ordered) do |quantity, member|
+      quantity -= reclaim_allocation_from_vcap_pool_member(member, quantity: quantity)
+      quantity.zero? ? break : quantity
     end
 
-    alert_pool_allocation_reclaim_failed(to_claim) if to_claim
+    alert_pool_allocation_reclaim_failed(to_reclaim) if to_reclaim
   end
 
-  def reclaim_allocation_from_vcap_pool_member(member, needed: 0)
-    [member.raw_allocation - member.raw_devices_ordered, needed].min.tap do |claimed|
+  def reclaim_allocation_from_vcap_pool_member(member, quantity: 0)
+    [member.raw_allocation - member.raw_devices_ordered, quantity].min.tap do |claimed|
       unclaimed = member.raw_allocation - claimed
       UpdateSchoolDevicesService.new(school: member.school,
                                      order_state: member.school.order_state,

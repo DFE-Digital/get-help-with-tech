@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 2021_09_14_112652) do
   create_table "allocation_changes", force: :cascade do |t|
     t.bigint "school_device_allocation_id", null: false
     t.string "category"
-    t.integer "delta"
     t.integer "prev_allocation"
     t.integer "new_allocation"
     t.text "description"
