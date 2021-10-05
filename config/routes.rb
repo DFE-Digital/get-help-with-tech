@@ -60,8 +60,7 @@ Rails.application.routes.draw do
 
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/how-to-order', to: redirect('/devices')
-  get '/devices/how-to-order-laptops-for-social-care-leavers', to: redirect('/devices')
-  get '/devices/how-to-order-laptops-for-independent-special-schools', to: redirect('/devices')
+  get '/devices/how-to-order-laptops-for-social-care-leavers', to: 'devices_guidance#how_to_order_laptops_for_social_care_leavers'
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
@@ -194,8 +193,8 @@ Rails.application.routes.draw do
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
       get '/order-devices', to: 'school/devices#order'
-      get '/details', to: 'school/details#show', as: :details, constraints: -> { false }
-      get '/chromebooks/edit', to: 'school/chromebooks#edit', constraints: -> { false }
+      get '/details', to: 'school/details#show', as: :details
+      get '/chromebooks/edit', to: 'school/chromebooks#edit'
       patch '/chromebooks', to: 'school/chromebooks#update'
       get '/welcome', to: 'school/welcome_wizard#welcome', as: :welcome_wizard_welcome
       get '/privacy', to: 'school/welcome_wizard#privacy', as: :welcome_wizard_privacy
