@@ -21,7 +21,7 @@ class AllocationOverOrderService
 private
 
   def alert_pool_allocation_reclaim_failed(remaining_over_ordered_quantity)
-    Sentry.configure_scope do |scope|
+    Sentry.with_scope do |scope|
       scope.set_context('AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool', { vcap_pool_id: @vcap_pool.id, remaining_over_ordered_quantity: remaining_over_ordered_quantity })
 
       Sentry.capture_message('Unable to reclaim all of the allocation in the vcap to cover the over-order')

@@ -86,7 +86,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
 
         before do
           allow(Sentry).to receive(:capture_message)
-          allow(Sentry).to receive(:configure_scope).and_yield(sentry_scope)
+          allow(Sentry).to receive(:with_scope).and_yield(sentry_scope)
         end
 
         it 'get the extra devices ordered from the devices available in the pool and alert Sentry' do
