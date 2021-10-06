@@ -129,7 +129,7 @@ Rails.application.routes.draw do
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
-      get 'order-devices', to: 'orders#show', as: :order_devices, constraints: -> { false }
+      get 'order-devices', to: 'orders#show', as: :order_devices
 
       resources :schools, only: %i[index show update], param: :urn do
         get '/who-to-contact', to: 'who_to_contact#new'
