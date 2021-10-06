@@ -20,6 +20,6 @@ applications:
     DOCKER_IMAGE_ID: ((docker_image_id))
     ENV: $HOME/.profile
     RAILS_LOG_TO_STDOUT: true
-    GHWT__HOSTNAME_FOR_URLS: preview-get-help-with-tech.education.gov.uk
+    GHWT__HOSTNAME_FOR_URLS: get-help-with-tech-preview.london.cloudapps.digital
     GHWT__SERVICE_NAME_SUFFIX: (preview)
     SERVICE_ENV: preview
