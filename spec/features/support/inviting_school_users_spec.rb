@@ -63,12 +63,14 @@ RSpec.feature 'Inviting school users' do
     new_school_user_page.name.set 'John Doe'
     new_school_user_page.email_address.set 'john@example.com'
     new_school_user_page.phone.set '020 1'
+    new_school_user_page.orders_devices_no.click
   end
 
   def when_i_fill_in_the_existing_users_details
     new_school_user_page.name.set 'New Name'
     new_school_user_page.email_address.set 'existinguser@example.com'
     new_school_user_page.phone.set '0202 022202'
+    new_school_user_page.orders_devices_no.click
   end
 
   def and_i_submit_invite_school_user_form
