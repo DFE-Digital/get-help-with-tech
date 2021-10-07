@@ -5,7 +5,7 @@ Government-funded support is available for schools and colleges to get set up on
 * Google Workspace for Education Fundamentals (formerly G Suite for Education)
 * Microsoft 365 Education (formerly Office 365 Education)
 
-[The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/feature-comparison-g-suite-education-and-office-365-education/?marker=content-body) provides feature comparison and case studies on how schools are making the most of these platforms, to help you make the most appropriate choice for your school.
+[The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) provides feature comparison and case studies on how schools are making the most of these platforms, to help you make the most appropriate choice for your school.
 
 ## What is a digital education platform?
 It's a place where teachers, pupils and students can continue learning through online virtual classrooms.
@@ -26,7 +26,7 @@ Teachers can:
 
 Using a digital education platform allows teachers, pupils and students to continue education if a school or college closes.
 
-[The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/lead-your-approach/why-every-school-should-be-using-digital-education-platform/) has information on why you should make the move to a digital education platform, if you have not already.
+[The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) has information on why you should make the move to a digital education platform, if you have not already.
 
 ## Who can apply
 
@@ -106,7 +106,6 @@ Once your platform is set up, you can claim the following grant funding:
 Once you have access to a platform, you and your pupils and students can use it for free.
 
 ## How to get support
-You can find more information about the programme and how schools and colleges are using digital platforms on [The Key for School Leaders website](https://covid19.thekeysupport.com/covid-19/deliver-remote-learning/make-tech-work-you/digital-education-platform-hub/).
 
 [Free training and support to set up and use technology effectively](/EdTech-demonstrator-programme) is available through the EdTech Demonstrator Programme.
 
