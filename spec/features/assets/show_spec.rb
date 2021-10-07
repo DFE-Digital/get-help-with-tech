@@ -7,7 +7,6 @@ RSpec.feature 'Display asset properties' do
   let(:asset_page) { PageObjects::Assets::ShowPage.new }
   let(:asset_attr_labels) do
     [
-      'Asset tag',
       'Serial/IMEI',
       'BIOS password',
       'Admin password',
@@ -40,7 +39,6 @@ RSpec.feature 'Display asset properties' do
 private
 
   def expect_asset_properties_to_be_displayed(asset, download_unlocker: false)
-    expect(asset_page).to be_displayed(id: asset.id)
     expect(asset_page).to have_home_breadcrumb(text: 'Home')
     expect(asset_page).to have_assets_breadcrumb(text: 'View your device details')
     expect(asset_page).to have_title_header(text: 'Device BIOS/admin password and hardware hash')
@@ -61,7 +59,6 @@ private
 
   def expect_attr_values_with_bios(asset, bios)
     expect(asset_page.attr_values.map(&:text)).to eq([
-      asset.tag,
       asset.serial_number,
       bios,
       asset.admin_password,
