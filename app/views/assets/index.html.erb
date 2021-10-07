@@ -19,7 +19,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">
-      Search any serial number in our database.
+      Search any serial number in our database. You can search for up to 5 serial numbers at once. Use commas to separate each serial number.
     </p>
 
     <%= form_with url: search_assets_path do |f| %>
@@ -74,3 +74,23 @@
   <% end %>
   </tbody>
 </table>
+
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              My device does not appear in the search results
+            </span>
+  </summary>
+  <div class="govuk-details__text">
+    Check you&rsquo;ve entered the device&rsquo;s serial number correctly, or try copying
+    and pasting it into the search box. If you&rsquo;re still unable to find your serial
+    number visit
+    <%= govuk_link_to 'Get support', support_ticket_path %>.
+  </div>
+  <div class="govuk-details__text">
+    <%= govuk_link_to 'Find out more about warranties and replacing faulty devices', '/devices/replace-a-faulty-device' %>
+  </div>
+  <div class="govuk-details__text">
+    <%= govuk_link_to 'Guide to resetting Windows laptops and tablets', devices_guide_to_resetting_windows_laptops_and_tablets_path %>
+  </div>
+</details>

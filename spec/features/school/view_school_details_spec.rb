@@ -37,11 +37,11 @@ RSpec.feature 'View school details' do
       let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
 
       it 'shows title' do
-        expect(page).to have_content('Reset devices')
+        expect(page).to have_content('Reset')
       end
 
       it 'shows the link to view device details' do
-        expect(page).to have_link('View your device details')
+        expect(page).to have_link('view your device details and BIOS/admin passwords')
       end
 
       it 'shows the link to Huawei router password' do

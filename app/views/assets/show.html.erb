@@ -17,7 +17,6 @@
       <div>
         <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Device <%= @asset.serial_number %></h2>
         <%= render SummaryListComponent.new(rows: {
-          'Asset tag' => @asset.tag,
           'Serial/IMEI' => @asset.serial_number,
           'BIOS password' => asset_bios_password_or_unlocker(@asset),
           'Admin password' => @asset.admin_password,
@@ -26,13 +25,32 @@
         <details class="govuk-details" data-module="govuk-details">
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">
-              What’s a hardware hash?
+              Device ID terms explained
             </span>
           </summary>
           <div class="govuk-details__text">
-            Some manufacturers use a ‘hardware hash’ (also called a ‘hardware ID’) to identify devices. The hardware
-            hash identification format is unique to each device and is made up of details about its hardware components
-            and operating system.
+            <strong>Serial/IMEI (International Mobile Equipment Identity)</strong> &ndash;
+            a unique ID number assigned to your device by the product
+            manufacturer. You&rsquo;ll need this to use the BIOS/admin tool, or
+            when you submit a support ticket.
+          </div>
+          <div class="govuk-details__text">
+            <strong>BIOS (Basic Input/Output System) password</strong> &ndash;
+            BIOS is the core processor software that boots up your
+            device. You&rsquo;ll need the password if you want to reset your
+            device.
+          </div>
+          <div class="govuk-details__text">
+            <strong>Admin password</strong> &ndash;
+            use this to sign in to your admin user account.
+          </div>
+          <div class="govuk-details__text">
+            <strong>Hardware hash</strong> &ndash;
+            another unique device identifier that some manufacturers
+            use. It&rsquo;s made up of details about hardware components and
+            the operating system. For GHwT it&rsquo;s used when responsible
+            bodies need remote enrolment in mobile device management
+            software.
           </div>
         </details>
       </div>
