@@ -16,7 +16,7 @@ class UserSummaryListComponent < ViewComponent::Base
         value: @user.telephone,
       },
       {
-        key: 'Last sign in',
+        key: 'Last sign-in',
         value: @user.last_signed_in_at ? l(@user.last_signed_in_at, format: :short) : 'Never',
       },
     ]
