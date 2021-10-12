@@ -135,7 +135,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   end
 
   def then_i_see_the_cannot_order_anymore_page
-    expect(page).to have_css('h1', text: 'You’ve ordered all the devices you can')
+    expect(page).to have_css('h1', text: 'You’ve ordered all the devices you were allocated')
   end
 
   def and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for

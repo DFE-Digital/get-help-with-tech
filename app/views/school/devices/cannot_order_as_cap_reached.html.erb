@@ -14,7 +14,7 @@
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
-    <p class="govuk-body">We’ll contact you if you can place more orders.</p>
+    <p class="govuk-body">We’ll contact you if your allocation increases.</p>
 
     <% if impersonated_or_current_user.orders_devices? && impersonated_or_current_user.techsource_account_confirmed? %>
       <p class="govuk-body"><%= govuk_link_to 'View your order history on TechSource', techsource_start_path %></p>
