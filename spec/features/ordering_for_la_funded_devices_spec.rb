@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   before do
     given_there_is_an_independent_settings_school
     given_i_am_signed_in_as_an_independent_settings_school_user
@@ -115,11 +115,11 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled 
   end
 
   def when_i_answer_no
-    choose 'No, we will not order Chromebooks'
+    choose 'We do not need Chromebooks'
   end
 
   def when_i_answer_im_not_sure
-    choose 'I’m not sure'
+    choose 'Not sure'
   end
 
   def then_i_see_the_how_to_order_page
@@ -135,11 +135,11 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled 
   end
 
   def then_i_am_asked_whether_i_need_chromebooks
-    expect(page).to have_selector('h1', text: 'Will your order include Google Chromebooks?')
+    expect(page).to have_selector('h1', text: 'Set your Chromebook preferences')
   end
 
   def when_i_answer_yes
-    choose 'Yes, we’ll order Chromebooks'
+    choose 'We need Chromebooks'
   end
 
   def then_i_see_the_confirmation_i_will_order_chromebooks
@@ -166,7 +166,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature, skip: 'Disabled 
   end
 
   def then_i_see_i_have_no_laptops_remaining
-    expect(page).to have_selector('h1', text: 'You’ve ordered all the devices you can')
+    expect(page).to have_selector('h1', text: 'You’ve ordered all the devices you were allocated')
     expect(page).to have_text('You’ve ordered 50 of 50 devices')
   end
 end

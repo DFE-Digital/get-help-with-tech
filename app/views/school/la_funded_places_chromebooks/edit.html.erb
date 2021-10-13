@@ -19,7 +19,7 @@
         We need to know this so we can apply the right settings to the laptops you order. You can change your answer later.
       </p>
 
-      <%= f.govuk_radio_buttons_fieldset( :will_need_chromebooks, legend: {text: ""} ) do %>
+      <%= f.govuk_radio_buttons_fieldset(:will_need_chromebooks, legend: {text: title, hidden: true} ) do %>
         <%= f.govuk_radio_button(:will_need_chromebooks,
                                  'yes',
                                  label: { text: t(:yes, scope: scope) }) %>
