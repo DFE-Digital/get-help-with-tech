@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Viewing your schools' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
@@ -125,6 +125,7 @@ RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service cl
 
   def then_i_see_the_summary_pooled_device_count_card
     expect(page).to have_content("#{responsible_body.name} has:")
+    responsible_body.reload
     std_count = responsible_body.std_device_pool.cap - responsible_body.std_device_pool.devices_ordered
     coms_count = responsible_body.coms_device_pool.cap - responsible_body.coms_device_pool.devices_ordered
     expected =
