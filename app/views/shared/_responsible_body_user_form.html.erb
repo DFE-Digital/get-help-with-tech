@@ -5,7 +5,7 @@
 
 <%= form.govuk_email_field  :email_address,
                             label: { text: 'Email address', size: 'm' },
-                            hint: { text: 'They will use this email address to sign in' } %>
+                            hint: { text: 'They&rsquo;ll use this email address to sign in'.html_safe } %>
 
 <%= form.govuk_text_field :telephone,
                           width: 10,
