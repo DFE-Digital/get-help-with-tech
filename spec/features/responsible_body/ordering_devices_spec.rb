@@ -112,14 +112,14 @@ RSpec.feature 'Ordering devices' do
   end
 
   def and_i_see_1_school_that_i_need_to_place_orders_for
-    expect(page).to have_text('Schools you need to place orders for')
+    expect(page).to have_text('Schools you can place orders for')
     expect(page).to have_text("#{schools[2].name} (URN: #{schools[2].urn})")
     expect(page).to have_text(what_to_order_availability(schools[2]))
     expect(page).to have_text(what_to_order_state(schools[2]))
   end
 
   def and_i_see_2_schools_that_i_need_to_place_orders_for
-    expect(page).to have_text('Schools you need to place orders for')
+    expect(page).to have_text('Schools you can place orders for')
     expect(page).to have_text("#{schools[1].name} (URN: #{schools[1].urn})")
     expect(page).to have_text(what_to_order_availability(schools[1]))
     expect(page).to have_text(what_to_order_state(schools[1]))
