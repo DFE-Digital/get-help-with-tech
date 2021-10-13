@@ -25,9 +25,11 @@ class ResponsibleBody::Devices::WhoToContactForm
             length: { minimum: 2, maximum: 30 },
             if: :someone_else_chosen?
 
+  delegate :headteacher, to: :school
+
   def chosen_contact
     if headteacher_chosen?
-      school.headteacher
+      headteacher
     elsif someone_else_chosen?
       existing_contact = school.contacts.find_by(email_address: email_address)
       second_contact = school.contacts.contact.first

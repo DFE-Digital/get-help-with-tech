@@ -441,7 +441,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def when_i_choose_no_they_will_not_need_chromebooks
-    choose 'No, we will not order Chromebooks'
+    choose 'We do not need Chromebooks'
     click_on 'Save'
   end
 end
