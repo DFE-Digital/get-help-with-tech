@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
   let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
