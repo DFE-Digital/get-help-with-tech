@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Setting up the devices ordering' do
   let(:responsible_body_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
   let(:responsible_body_school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
 
@@ -45,6 +45,7 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
       then_i_see_a_list_of_the_schools_i_am_responsible_for
       and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_schools_will_place_all_orders
+      and_each_school_needs_a_contact
 
       when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
@@ -75,6 +76,7 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
       then_i_see_a_list_of_the_schools_i_am_responsible_for
       and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_the_responsible_body_will_place_all_orders
+      and_each_school_needs_information
 
       when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
@@ -256,6 +258,16 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
     expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].devices_ordered).to have_content('0')
   end
 
+  def and_each_school_needs_a_contact
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].text).to have_content('Needs a contact')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].text).to have_content('Needs a contact')
+  end
+
+  def and_each_school_needs_information
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].text).to have_content('Needs information')
+    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].text).to have_content('Needs information')
+  end
+
   def given_the_responsible_body_has_decided_to_order_centrally
     responsible_body.update!(who_will_order_devices: 'school')
     responsible_body.schools.each(&:orders_managed_by_school!)
@@ -429,7 +441,7 @@ RSpec.feature 'Setting up the devices ordering', skip: 'Disabled for 30 Jun 2021
   end
 
   def when_i_choose_no_they_will_not_need_chromebooks
-    choose 'No, we will not order Chromebooks'
+    choose 'We do not need Chromebooks'
     click_on 'Save'
   end
 end

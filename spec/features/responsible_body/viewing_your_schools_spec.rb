@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Viewing your schools' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
@@ -25,10 +25,18 @@ RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service cl
     then_i_dont_see_the_order_devices_link
   end
 
+  scenario 'when the trust manages centrally' do
+    given_there_are_schools_in_the_pool
+    when_i_visit_the_your_schools_page
+    then_i_see_the_order_devices_link
+    then_i_see_the_summary_pooled_device_count_card
+  end
+
   scenario 'when the trust manages centrally but there is nothing to order' do
     given_there_are_schools_in_the_pool_that_cant_order
     when_i_visit_the_your_schools_page
     then_i_dont_see_the_order_devices_link
+    then_i_see_the_summary_pooled_device_count_card
   end
 
   def given_i_am_signed_in_as_a_responsible_body_user
@@ -113,5 +121,19 @@ RSpec.feature 'Viewing your schools', skip: 'Disabled for 30 Jun 2021 service cl
 
   def then_i_dont_see_the_order_devices_link
     expect(page).not_to have_link('Order devices')
+  end
+
+  def then_i_see_the_summary_pooled_device_count_card
+    expect(page).to have_content("#{responsible_body.name} has:")
+    responsible_body.reload
+    std_count = responsible_body.std_device_pool.cap - responsible_body.std_device_pool.devices_ordered
+    coms_count = responsible_body.coms_device_pool.cap - responsible_body.coms_device_pool.devices_ordered
+    expected =
+      if std_count == 0 && coms_count == 0
+        'No devices left to order'
+      else
+        "#{std_count} #{'device'.pluralize(std_count)} and #{coms_count} #{'router'.pluralize(coms_count)} available to order"
+      end
+    expect(page).to have_content(expected)
   end
 end
