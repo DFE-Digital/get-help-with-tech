@@ -47,7 +47,7 @@ RSpec.feature 'Ordering via a school' do
         and_i_see 'Devices ordered'
         and_i_see '3 devices'
 
-        when_i_click_on('Order devices')
+        when_i_choose_to_order_devices
         then_i_see_the_school_order_devices_page
         and_i_see_the_techsource_button
       end
@@ -105,8 +105,8 @@ RSpec.feature 'Ordering via a school' do
     expect(school_page.school_details).to have_content(status)
   end
 
-  def when_i_click_on(text)
-    page.click_on text
+  def when_i_choose_to_order_devices
+    page.click_link 'Order devices', class: 'govuk-button'
   end
 
   def then_i_see_the_school_order_devices_page
