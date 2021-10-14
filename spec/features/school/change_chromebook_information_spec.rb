@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Change school Chromebook information', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Change school Chromebook information' do
   let(:school) { create(:school, :la_maintained) }
   let(:school_user) { create(:school_user, full_name: 'AAA Smith', school: school) }
 
@@ -22,17 +22,17 @@ RSpec.feature 'Change school Chromebook information', skip: 'Disabled for 30 Jun
       end
 
       it 'allows me to change whether the school will need Chromebooks' do
-        expect(page).to have_content('Will you need to order Chromebooks?')
+        expect(page).to have_content('Set your Chromebook preferences')
       end
 
       it 'lets me choose Yes or No' do
-        expect(page).to have_field('Yes, we’ll order Chromebooks')
-        expect(page).to have_field('No, we will not order Chromebooks')
+        expect(page).to have_field('We need Chromebooks')
+        expect(page).to have_field('We do not need Chromebooks')
       end
 
       context 'when I choose Yes' do
         before do
-          choose('Yes, we’ll order Chromebooks')
+          choose('We need Chromebooks')
         end
 
         it 'shows a recovery email field' do
@@ -55,7 +55,7 @@ RSpec.feature 'Change school Chromebook information', skip: 'Disabled for 30 Jun
       end
 
       it 'shows an error when I do not supply valid information' do
-        choose('Yes, we’ll order Chromebooks')
+        choose('We need Chromebooks')
         fill_in('School or local authority email domain registered for G Suite for Education', with: '')
         click_on 'Save'
         expect(page).to have_http_status(:unprocessable_entity)
@@ -64,7 +64,7 @@ RSpec.feature 'Change school Chromebook information', skip: 'Disabled for 30 Jun
       end
 
       it 'goes back to the school details page when I save valid information' do
-        choose('Yes, we’ll order Chromebooks')
+        choose('We need Chromebooks')
         fill_in('School or local authority email domain registered for G Suite for Education', with: 'some.domain.org')
         fill_in('Recovery email address', with: 'someone@someotherdomain.org')
         click_on 'Save'
