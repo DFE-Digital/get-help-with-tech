@@ -1,28 +1,19 @@
-<div class="app-start-page-banner govuk-!-margin-bottom-9">
-  <div class="govuk-grid-row govuk-width-container govuk-main-wrapper">
-    <div class="govuk-grid-column-two-thirds app-start-page-banner__grid-row">
-      <h1 class="govuk-heading-xl app-start-page-banner__heading app-heading-xl--inverted">
-        Get help with technology
-      </h1>
-      <p class="govuk-body app-body--inverted">
-        DfE provided laptops and internet access for disadvantaged children and young people during coronavirus (COVID-19).
-      </p>
-      <p class="govuk-body app-body--inverted govuk-!-margin-bottom-6">
-        Ordering is closed for laptops, tablets and <span class="app-no-wrap">extra mobile data</span>.
-        We still offer support with <span class="app-no-wrap">digital platforms</span> and training.
-      </p>
-      <div class="app-start-page-banner__actions">
-        <%=
-          render GovukComponent::StartButtonComponent.new(
-            text: 'Sign in',
-            href: sign_in_path,
-            classes: 'app-button--inverted app-start-page-banner__button'
-          )
-        %>
-        <p class="govuk-body app-body--inverted">
-          to view your order history, or give a colleague access to the service.
-        </p>
-      </div>
-    </div>
+<div class="govuk-grid-row govuk-width-container govuk-!-margin-bottom-6">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Get help with technology
+    </h1>
+    <p class="govuk-body">
+      DfE provides laptops, tablets and routers for disadvantaged children and
+      young people to help with remote education.
+    </p>
+    <%= render GovukComponent::InsetTextComponent.new(text: 'Sign in to order devices, view your order history or give a colleague access to the service.') %>
+    <%=
+      render GovukComponent::StartButtonComponent.new(
+        text: 'Sign in',
+        href: sign_in_path,
+        classes: 'govuk-button govuk-button--start'
+      )
+    %>
   </div>
 </div>
