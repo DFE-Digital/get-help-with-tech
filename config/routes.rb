@@ -210,7 +210,7 @@ Rails.application.routes.draw do
       get '/order-laptops', to: 'school/la_funded_places#order', as: :order_laptops
       get '/funded-pupils-chromebooks/edit', to: 'school/la_funded_places_chromebooks#edit', as: :funded_chromebooks
       patch '/funded-pupils-chromebooks', to: 'school/la_funded_places_chromebooks#update', as: :update_funded_chromebooks
-      get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types, constraints: -> { false }
+      get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
 
       scope module: :school do
