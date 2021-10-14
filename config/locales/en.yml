@@ -21,7 +21,7 @@ en:
       devices:
         order_devices: Get devices now
     responsible_body_home: Get help with technology
-    responsible_body_devices_home: Get devices
+    responsible_body_devices_home: Order devices
     responsible_body_devices_tell_us: Tell us who will order laptops
     responsible_body_users_index: Manage users
     responsible_body_trust_users_index: Manage trust administrators
