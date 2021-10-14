@@ -59,7 +59,7 @@ en:
     iss:
       order_devices: Order devices
       laptop_types: Find out what type of laptop pupils need
-      chromebooks: Will your order include Google Chromebooks?
+      chromebooks: Set your Chromebook preferences
       will_need_chromebooks_error: Tell us if pupils will need Chromebooks
       how_to_order: How to order
     scl:

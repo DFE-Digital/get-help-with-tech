@@ -8,7 +8,6 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
@@ -20,17 +19,12 @@
     <%= govuk_details summary_text: 'How your allocation has been calculated' do %>
       <% if @school.social_care_leaver? %>
         <p class="govuk-body">
-          This allocation estimate is based on your LA’s individual care leaver
-          population since August 2020.
-        </p>
-        <p class="govuk-body">
-          You can request internet access for these care leavers if they need it
-          too.
+          This allocation estimate is based on your local authority’s individual care leaver
+          population.
         </p>
         <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
         <p class="govuk-body">
-          Tell us how many care leavers your LA is responsible for
-          who:
+          Tell us how many care leavers your local authority (LA) is responsible for, who:
         </p>
         <ul class="govuk-list govuk-list--bullet">
           <li>
@@ -55,16 +49,9 @@
         </p>
       <% else %>
         <p class="govuk-body">
-          Your allocation estimate is based on the data <%= @school.responsible_body.name %>
-          submitted in the latest published alternative provision census (2020).
-        </p>
-        <p class="govuk-body">
-          We’ve allocated one laptop for each pupil in years 3 to 11 that
+          We’ve allocated 1 laptop for each pupil in years 3 to 11 that
           <%= @school.responsible_body.name %> reported as having a state-funded
           place at an independent special school or alternative provision, and also being eligible for free school meals.
-        </p>
-        <p class="govuk-body">
-          You can request internet access for these pupils if they need it too.
         </p>
         <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
         <p class="govuk-body">
@@ -123,6 +110,6 @@
         <li>redistributing the laptops if pupils move school or leave education</li>
       </ul>
     <% end %>
-    <%= govuk_link_to 'Continue', order_laptops_school_path(@school), button: true %>
+    <%= govuk_button_link_to 'Continue', order_laptops_school_path(@school), button: true %>
   </div>
 </div>

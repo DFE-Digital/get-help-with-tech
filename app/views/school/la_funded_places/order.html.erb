@@ -10,14 +10,13 @@
       <%= title %>
     </h1>
 
-    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
     <%= render partial: 'shared/stock_levels' %>
 
     <p class="govuk-body">
-      <%= govuk_link_to 'It’s important to check you’re ordering the best type of laptop for each pupil.', laptop_types_school_path(@school) %>
+      It’s important to check you’re ordering the best type of laptop for each pupil.
     </p>
 
     <h2 class="govuk-heading-m">Chromebooks</h2>
@@ -35,12 +34,12 @@
         <% else %>
           <p class="govuk-body">
             You’ll get an email after you order asking if you want us to supply
-            Chrome Education Upgrades (Chromebook licenses). An educational
-            setting will need a license to enrol the device in their Google Admin
+            Chrome Education Upgrades (Chromebook licences). An educational
+            setting will need a licence to enrol the device in their Google Admin
             console. This gives them options to manage and secure the device.
           </p>
           <p class="govuk-body">
-            Reply to the email to request licenses. You’ll need to provide the
+            Reply to the email to request licences. You’ll need to provide the
             following information for each pupil’s educational setting:
           </p>
           <ul class="govuk-list govuk-list--bullet">
@@ -59,13 +58,13 @@
             The educational setting’s IT support should be able to give you this.
           </p>
           <p class="govuk-body">
-            Alternatively, your LA can choose to
+            Alternatively, your local authority (LA) can choose to
             <%= link_to_devices_guidance_subpage 'set up and manage a Google domain', 'google-domain-for-care-leavers-and-children-with-social-worker' %>.
           </p>
           <p class="govuk-body">
-            If you do not request licenses, your Chromebooks will be delivered
+            If you do not request licences, your Chromebooks will be delivered
             with factory settings. Cisco Umbrella web filtering will not be installed.
-            Your LA, or the education setting you lend or give the devices to, will
+            Your local authority (LA), or the education setting you lend or give the devices to, will
             be responsible for
             <%= link_to_devices_guidance_subpage 'installing safeguarding and security settings', 'safeguarding-for-device-users' %> before
             they’re distributed to pupils.
@@ -90,13 +89,13 @@
         <% if @school.social_care_leaver? %>
           <p class="govuk-body">
             If you do order them, you’ll get an email asking if you want us to supply
-            Chrome Education Upgrades (Chromebook licenses). If a care leaver is in
-            education, their educational setting will need a license to enrol the device in
+            Chrome Education Upgrades (Chromebook licences). If a care leaver is in
+            education, their educational setting will need a licence to enrol the device in
             their Google Admin console (if they have one). This gives them options to
             manage and secure the device.
           </p>
           <p class="govuk-body">
-            Reply to the email to request licenses. You’ll need to provide the following
+            Reply to the email to request licences. You’ll need to provide the following
             information for each care leaver’s educational setting:
           </p>
           <ul class="govuk-list govuk-list--bullet">
@@ -119,25 +118,25 @@
             If you’re ordering for a care leaver who is not in education, and you cannot
             provide Google Workspace for Education details for them, your
             Chromebooks will be delivered with factory settings. Cisco Umbrella web
-            filtering will not be installed. Your LA will be responsible for
+            filtering will not be installed. Your local authority (LA) will be responsible for
             <%= link_to_devices_guidance_subpage 'installing safeguarding and security settings', 'safeguarding-for-device-users' %>
             before they’re distributed to care
             leavers.
           </p>
           <p class="govuk-body">
-            Alternatively, your LA can choose to
+            Alternatively, your local authority (LA) can choose to
             <%= link_to_devices_guidance_subpage 'set up and manage a Google domain', 'google-domain-for-care-leavers-and-children-with-social-worker' %>.
           </p>
         <% else %>
           <p class="govuk-body">
             If you do order them, you‘ll get an email asking if you want us to
-            supply Chrome Education Upgrades (Chromebook licenses). An
-            educational setting will need a license to enrol the device in their
+            supply Chrome Education Upgrades (Chromebook licences). An
+            educational setting will need a licence to enrol the device in their
             Google Admin console. This gives them options to manage and
             secure the device.
           </p>
           <p class="govuk-body">
-            Reply to the email to request licenses. You’ll need to provide the
+            Reply to the email to request licences. You’ll need to provide the
             following information for each pupil’s educational setting:
           </p>
           <ul class="govuk-list govuk-list--bullet">
@@ -152,13 +151,13 @@
             The educational setting’s IT support should be able to give you this.
           </p>
           <p class="govuk-body">
-            Alternatively, your LA can choose to
+            Alternatively, your local authority (LA) can choose to
             <%= link_to_devices_guidance_subpage 'set up and manage a Google domain', 'google-domain-for-care-leavers-and-children-with-social-worker' %>.
           </p>
           <p class="govuk-body">
-            If you do not request licenses, your Chromebooks will be delivered
+            If you do not request licences, your Chromebooks will be delivered
             with factory settings. Cisco Umbrella web filtering will not be installed.
-            Your LA, or the education setting you lend or give the devices to, will
+            Your local authority (LA), or the education setting you lend or give the devices to, will
             be responsible for <%= link_to_devices_guidance_subpage 'installing safeguarding and security settings', 'safeguarding-for-device-users' %> before
             they’re distributed to pupils.
           </p>
@@ -167,7 +166,7 @@
       </div>
     <% end %>
 
-    <h2 class="govuk-heading-m">Your laptops will be delivered to:</h2>
+    <h2 class="govuk-heading-m">Your order will be delivered to:</h2>
     <p class="govuk-body">
       <% @school.address_components.each do |address_line| %>
         <%= address_line %><br/>
@@ -179,7 +178,7 @@
 
     <h2 class="govuk-heading-m">Information for your order</h2>
     <p class="govuk-body">
-      You’ll place your order on a website called TechSource.
+      Orders are fulfilled by our technology partner TechSource. Select ‘Start now’ to go to their website.
     </p>
     <p class="govuk-body">
       When you’re asked for a URN, use ‘<strong><%= @school.urn %></strong>’.
