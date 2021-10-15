@@ -11,7 +11,7 @@
 
       <h3 class="govuk-heading-m">Essential cookies</h3>
 
-      <p class="govuk-body">Essential ‘<%= t(:service_name) %>’ cookies include:</p>
+      <p class="govuk-body">Essential &lsquo;<%= t(:service_name) %>&rsquo; cookies include:</p>
 
       <table class="govuk-table">
         <thead class="govuk-table__header">
@@ -25,7 +25,7 @@
         <tr>
           <td class="govuk-table__cell">_session_id</td>
           <td class="govuk-table__cell">Stores encrypted session data</td>
-          <td class="govuk-table__cell">When you close your browser, or don't visit any page for <%= humanized_seconds(SessionService::TTLS.max) %></td>
+          <td class="govuk-table__cell">When you close your browser, or don&rsquo;t visit any page for <%= humanized_seconds(SessionService::TTLS.max) %></td>
         </tr>
         <tr>
           <td class="govuk-table__cell">_consented-to-cookies</td>
