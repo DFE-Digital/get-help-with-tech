@@ -159,7 +159,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'timecop'
-  gem 'webdrivers', '~> 4.6'
+  gem 'webdrivers', '~> 4.7'
 end
 
 group :development, :test do
