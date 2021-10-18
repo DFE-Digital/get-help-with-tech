@@ -20,13 +20,6 @@ RSpec.feature 'View pages', type: :feature do
     and_the_page_title_should_be_set(@digital_platforms_page, 'Digital education platforms')
   end
 
-  scenario 'user is a parent,carer or student would like to find out how to use their device' do
-    when_i_visit_the_home_page
-    and_i_click_on_guides_for_parents_link
-    then_i_should_see_the_guides_for_parents_carers_students_page
-    and_the_page_title_should_be_set(@guides_parents_carers_students_page, 'Guides for parents, guardians, pupils and students')
-  end
-
 private
 
   def when_i_visit_the_home_page
