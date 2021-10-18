@@ -32,7 +32,7 @@ private
   attr_reader :viewer, :school
 
   def status
-    @status ||= school.preorder_status_or_default
+    @status ||= school.preorder_status
   end
 
   def who_manages_orders_key

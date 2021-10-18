@@ -31,11 +31,11 @@ class ResponsibleBody::Devices::WhoToContactForm
     if headteacher_chosen?
       headteacher
     elsif someone_else_chosen?
-      existing_contact = school.contacts.find_by(email_address: email_address)
-      second_contact = school.contacts.contact.first
-      new_contact = school.contacts.build(role: :contact)
+      contact = school.contacts.find_by(email_address: email_address)
+      contact ||= school.contacts.contact.first
+      contact ||= school.contacts.build(role: :contact)
 
-      (existing_contact || second_contact || new_contact).tap do |contact|
+      contact.tap do |contact|
         contact.email_address = email_address
         contact.full_name = full_name
         contact.phone_number = phone_number

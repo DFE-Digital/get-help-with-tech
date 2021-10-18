@@ -95,11 +95,11 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#is_ordering_for_schools?' do
-    let(:schools) { create_list(:school, 3, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 3, :centrally_managed, responsible_body: responsible_body, laptops: [1, 0, 0]) }
 
     context 'when some schools are centrally managed' do
       before do
-        schools[1].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
         schools[2].update!(status: :closed)
       end
 
@@ -110,8 +110,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].orders_managed_by_school!
-        schools[1].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
         schools[2].update!(status: :closed)
       end
 
@@ -122,13 +122,13 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_centrally_managed_schools_that_can_order_now?' do
-    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, laptops: [1, 0, 0], responsible_body: responsible_body) }
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_centrally!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[3].update!(status: :closed)
       end
 
@@ -157,7 +157,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       context 'when LA funded places are present' do
-        let(:la_funded_place) { create(:iss_provision, :centrally_managed, :with_std_device_allocation, responsible_body: responsible_body) }
+        let(:la_funded_place) { create(:iss_provision, :centrally_managed, laptops: [1, 0, 0], responsible_body: responsible_body) }
 
         before do
           schools.each(&:cannot_order!)
@@ -172,9 +172,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].orders_managed_by_school!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[3].update!(status: :closed)
       end
 
@@ -205,7 +205,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       context 'when LA funded places are present' do
-        let(:la_funded_place) { create(:iss_provision, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body) }
+        let(:la_funded_place) { create(:iss_provision, :manages_orders, laptops: [1, 0, 0], responsible_body: responsible_body) }
 
         before do
           schools.each(&:cannot_order!)
@@ -222,13 +222,13 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_centrally_managed_schools?' do
     subject(:responsible_body) { create(:trust) }
 
-    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body: responsible_body, laptops: [1, 0, 0]) }
 
     context 'when some schools are centrally managed' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_centrally!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[3].update!(status: :closed)
       end
 
@@ -239,9 +239,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].orders_managed_by_school!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[3].update!(status: :closed)
       end
 
@@ -252,13 +252,13 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_schools_that_can_order_devices_now?' do
-    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body: responsible_body, laptops: [1, 0, 0]) }
 
     context 'when some schools that will order are able to order devices' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].can_order_for_specific_circumstances!
@@ -271,9 +271,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools that will order are able to order devices' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -285,7 +285,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       context 'when LA funded places are present' do
-        let(:la_funded_place) { create(:iss_provision, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body) }
+        let(:la_funded_place) { create(:iss_provision, :manages_orders, laptops: [1, 0, 0], responsible_body: responsible_body) }
 
         before do
           la_funded_place.can_order!
@@ -299,13 +299,13 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_any_schools_that_can_order_now?' do
-    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :with_preorder_information, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body: responsible_body, laptops: [1, 0, 0]) }
 
     context 'when some centrally managed schools are able to order devices' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[0].can_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -319,9 +319,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when some devolved schools are able to order devices' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[0].cannot_order!
         schools[1].cannot_order!
         schools[2].can_order_for_specific_circumstances!
@@ -335,9 +335,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when none of the RBs schools are able to order devices' do
       before do
-        schools[0].orders_managed_centrally!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[0].cannot_order!
         schools[1].cannot_order!
         schools[2].cannot_order!
@@ -350,7 +350,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when LA funded places are present' do
-      let(:la_funded_place) { create(:iss_provision, :manages_orders, :with_std_device_allocation, responsible_body: responsible_body) }
+      let(:la_funded_place) { create(:iss_provision, :manages_orders, responsible_body: responsible_body, laptops: [1, 0, 0]) }
 
       before do
         schools.each(&:cannot_order!)
@@ -364,51 +364,53 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#calculate_virtual_caps!' do
-    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
     let(:schools) do
       create_list(:school, 3,
-                  :with_std_device_allocation,
-                  :with_coms_device_allocation,
                   :centrally_managed,
                   :in_lockdown,
+                  laptops: [1, 0, 0],
+                  routers: [1, 0, 0],
                   responsible_body: responsible_body)
     end
 
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.std_device_allocation.update!(allocation: 2, cap: 2, devices_ordered: 1)
-        s.coms_device_allocation.update!(allocation: 3, cap: 2, devices_ordered: 1)
-        AddSchoolToVirtualCapPoolService.new(s).call
+        s.update!(raw_laptop_allocation: 2, raw_laptop_cap: 2, raw_laptops_ordered: 1)
+        s.update!(raw_router_allocation: 3, raw_router_cap: 2, raw_routers_ordered: 1)
       end
       responsible_body.reload
     end
 
     it 'calculates the virtual cap for all device types' do
-      schools.first.std_device_allocation.update!(cap: 3, allocation: 3, devices_ordered: 2)
-      schools.last.coms_device_allocation.update!(cap: 1, allocation: 3, devices_ordered: 0)
+      schools.first.update!(raw_laptop_cap: 3, raw_laptop_allocation: 3, raw_laptops_ordered: 2)
+      schools.last.update!(raw_router_cap: 1, raw_router_allocation: 3, raw_routers_ordered: 0)
 
       responsible_body.calculate_virtual_caps!
-      expect(responsible_body.std_device_pool.cap).to eq(7)
-      expect(responsible_body.std_device_pool.devices_ordered).to eq(4)
-      expect(responsible_body.coms_device_pool.cap).to eq(5)
-      expect(responsible_body.coms_device_pool.devices_ordered).to eq(2)
+      expect(responsible_body.cap(:laptop)).to eq(7)
+      expect(responsible_body.devices_ordered(:laptop)).to eq(4)
+      expect(responsible_body.cap(:router)).to eq(5)
+      expect(responsible_body.devices_ordered(:router)).to eq(2)
     end
   end
 
   describe '#has_school_in_virtual_cap_pools?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) do
+      create_list(:school,
+                  2,
+                  :centrally_managed,
+                  :in_lockdown,
+                  responsible_body: responsible_body,
+                  laptops: [1, 0, 0],
+                  routers: [1, 0, 0])
+    end
 
     before do
       stub_computacenter_outgoing_api_calls
-      first_school = schools.first
-      first_school.std_device_allocation.update!(allocation: 3, cap: 3, devices_ordered: 1)
-      first_school.coms_device_allocation.update!(allocation: 4, cap: 2, devices_ordered: 1)
-      AddSchoolToVirtualCapPoolService.new(first_school).call
-      responsible_body.reload
     end
 
     it 'returns true for a school within the pool' do
@@ -416,6 +418,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     it 'returns false for a school outside the pool' do
+      SchoolSetWhoManagesOrdersService.new(schools.last, :school).call
       expect(responsible_body.has_school_in_virtual_cap_pools?(schools.last)).to be false
     end
   end
@@ -423,20 +426,24 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#devices_available_to_order?' do
     subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :centrally_managed, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) do
+      create_list(:school,
+                  2,
+                  :centrally_managed,
+                  :in_lockdown,
+                  responsible_body: responsible_body,
+                  laptops: [1, 0, 0],
+                  routers: [1, 0, 0])
+    end
 
     before do
       stub_computacenter_outgoing_api_calls
-      schools.each do |s|
-        AddSchoolToVirtualCapPoolService.new(s).call
-      end
-      responsible_body.reload
     end
 
     context 'when used full allocation' do
       before do
-        schools.first.std_device_allocation.update!(cap: 1, allocation: 1, devices_ordered: 1)
-        schools.last.coms_device_allocation.update!(cap: 1, allocation: 2, devices_ordered: 2)
+        schools.first.update!(raw_laptop_cap: 1, raw_laptop_allocation: 1, raw_laptops_ordered: 1)
+        schools.last.update!(raw_router_cap: 1, raw_router_allocation: 2, raw_routers_ordered: 2)
 
         responsible_body.calculate_virtual_caps!
       end
@@ -448,8 +455,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when partially used allocation' do
       before do
-        schools.first.std_device_allocation.update!(cap: 2, allocation: 2, devices_ordered: 1)
-        schools.last.coms_device_allocation.update!(cap: 0, allocation: 1, devices_ordered: 1)
+        schools.first.update!(raw_laptop_cap: 2, raw_laptop_allocation: 2, raw_laptops_ordered: 1)
+        schools.last.update!(raw_router_cap: 0, raw_router_allocation: 1, raw_routers_ordered: 1)
 
         responsible_body.calculate_virtual_caps!
       end
@@ -461,8 +468,8 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no devices ordered' do
       before do
-        schools.first.std_device_allocation.update!(cap: 1, allocation: 1, devices_ordered: 0)
-        schools.last.coms_device_allocation.update!(cap: 1, allocation: 2, devices_ordered: 0)
+        schools.first.update!(raw_laptop_cap: 1, raw_laptop_allocation: 1, raw_laptops_ordered: 0)
+        schools.last.update!(raw_router_cap: 1, raw_router_allocation: 2, raw_routers_ordered: 0)
 
         responsible_body.calculate_virtual_caps!
       end
@@ -473,7 +480,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#has_virtual_cap_feature_flags?' do
+  describe '#vcap_active?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
     context 'without any feature flags' do
@@ -482,7 +489,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       it 'returns false' do
-        expect(responsible_body.has_virtual_cap_feature_flags?).to be false
+        expect(responsible_body.vcap_active?).to be false
       end
     end
 
@@ -492,7 +499,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       it 'returns true' do
-        expect(responsible_body.has_virtual_cap_feature_flags?).to be true
+        expect(responsible_body.vcap_active?).to be true
       end
     end
   end
@@ -500,11 +507,17 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_virtual_cap_feature_flags_and_centrally_managed_schools?' do
     subject(:responsible_body) { create(:trust) }
 
-    let(:schools) { create_list(:school, 4, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
+    let(:schools) do
+      create_list(:school,
+                  4,
+                  :centrally_managed,
+                  responsible_body: responsible_body,
+                  laptops: [1, 0, 0])
+    end
 
     context 'when some schools are centrally managed' do
       before do
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[3].update!(status: :closed)
       end
 
@@ -531,9 +544,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no schools are centrally managed' do
       before do
-        schools[0].orders_managed_by_school!
-        schools[1].orders_managed_by_school!
-        schools[2].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[0], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
+        SchoolSetWhoManagesOrdersService.new(schools[2], :school).call
         schools[3].update!(status: :closed)
       end
 
@@ -565,13 +578,13 @@ RSpec.describe ResponsibleBody, type: :model do
     let(:second_rb) { create(:trust, :manages_centrally) }
     let(:third_rb) { create(:trust, :devolves_management) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
-    let(:second_schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: second_rb) }
-    let(:third_schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: third_rb) }
+    let(:schools) { create_list(:school, 2, :centrally_managed, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:second_schools) { create_list(:school, 2, :centrally_managed, responsible_body: second_rb, laptops: [1, 0, 0]) }
+    let(:third_schools) { create_list(:school, 2, :centrally_managed, responsible_body: third_rb, laptops: [1, 0, 0]) }
 
     before do
-      third_schools[0].orders_managed_by_school!
-      third_schools[1].orders_managed_by_school!
+      SchoolSetWhoManagesOrdersService.new(third_schools[0], :school).call
+      SchoolSetWhoManagesOrdersService.new(third_schools[1], :school).call
     end
 
     context 'when centrally managed schools have different chromebook domains within a responsible body' do
@@ -616,7 +629,7 @@ RSpec.describe ResponsibleBody, type: :model do
       before do
         schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
                                                              school_or_rb_domain: 'school0.google.com')
-        schools[1].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
         schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
                                                              school_or_rb_domain: 'school1.google.com')
         third_schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
@@ -635,7 +648,7 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_multiple_chromebook_domains_in_managed_schools?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :centrally_managed, responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 2, :centrally_managed, responsible_body: responsible_body, laptops: [1, 0, 0]) }
 
     context 'when centrally managed schools have different chromebook domains' do
       before do
@@ -668,7 +681,7 @@ RSpec.describe ResponsibleBody, type: :model do
       before do
         schools[0].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
                                                              school_or_rb_domain: 'school0.google.com')
-        schools[1].orders_managed_by_school!
+        SchoolSetWhoManagesOrdersService.new(schools[1], :school).call
         schools[1].update_chromebook_information_and_status!(will_need_chromebooks: 'yes',
                                                              school_or_rb_domain: 'school1.google.com')
       end

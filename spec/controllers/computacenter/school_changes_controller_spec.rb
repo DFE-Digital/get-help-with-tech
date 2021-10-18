@@ -34,8 +34,8 @@ RSpec.describe Computacenter::SchoolChangesController do
 
     let(:school) do
       create(:school,
-             :with_std_device_allocation_partially_ordered,
-             :with_coms_device_allocation_partially_ordered,
+             laptops: [2, 2, 1],
+             routers: [2, 2, 1],
              name: 'SchoolName',
              computacenter_reference: '11')
     end

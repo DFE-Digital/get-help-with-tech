@@ -714,19 +714,11 @@ en:
           merged_expansion: Merged - expansion of school capacity
           successor_split_school: Successor - Split School
           predecessor_split_school: Predecessor - Split School
-      preorder_information:
-        will_need_chromebooks:
-          'yes': We need Chromebooks
-          'no': We do not need Chromebooks
-          i_dont_know: Not sure
-        status:
-          needs_contact: Needs a contact
-          needs_info: Needs information
-          ready: Ready
-          school_contacted: School contacted
-          school_will_be_contacted: School will be contacted
-          school_ready: School ready
       school:
+        order_states:
+          cannot_order: No, orders cannot be placed yet
+          can_order_for_specific_circumstances: They can place orders for specific circumstances
+          can_order: They can order their full allocation because a closure or group of self-isolating children has been reported
         school_type:
           # School
           special_school: Special school
@@ -746,10 +738,17 @@ en:
           art_and_design_college: Art and Design College
           higher_education_provider: Higher Education Provider
           other: Other
-        order_states:
-          cannot_order: No, orders cannot be placed yet
-          can_order_for_specific_circumstances: They can place orders for specific circumstances
-          can_order: They can order their full allocation because a closure or group of self-isolating children has been reported
+        status:
+          needs_contact: Needs a contact
+          needs_info: Needs information
+          ready: Ready
+          school_contacted: School contacted
+          school_will_be_contacted: School will be contacted
+          school_ready: School ready
+        will_need_chromebooks:
+          'yes': We need Chromebooks
+          'no': We do not need Chromebooks
+          i_dont_know: Not sure
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'

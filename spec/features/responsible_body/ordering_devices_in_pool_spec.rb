@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices within a virtual pool' do
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 4, :manages_orders, :with_headteacher, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 4, :manages_orders, :with_headteacher, laptops: [1, 0, 0], routers: [1, 0, 0], responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -69,28 +69,28 @@ RSpec.feature 'Ordering devices within a virtual pool' do
 
   def given_my_order_information_is_up_to_date
     responsible_body.update!(who_will_order_devices: 'responsible_body', vcap_feature_flag: true)
-    PreorderInformation.where(school_id: responsible_body.schools).update_all(will_need_chromebooks: 'no')
-    schools[0].orders_managed_centrally!
-    schools[1].orders_managed_centrally!
-    schools[3].orders_managed_centrally!
+    responsible_body.schools.update_all(will_need_chromebooks: 'no')
+    SchoolSetWhoManagesOrdersService.new(school[0], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(school[1], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(school[3], :responsible_body).call
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     schools[0].can_order!
-    schools[0].std_device_allocation.update!(cap: 3, allocation: 20, devices_ordered: 1) # 2 left
-    schools[0].coms_device_allocation.update!(cap: 5, allocation: 10, devices_ordered: 2) # 3 left
+    schools[0].update!(raw_laptop_cap: 3, raw_laptop_allocation: 20, raw_laptops_ordered: 1) # 2 left
+    schools[0].update!(raw_router_cap: 5, raw_router_allocation: 10, raw_routers_ordered: 2) # 3 left
   end
 
   def given_a_centrally_managed_school_within_a_pool_could_order_but_cannot_order_anymore
     schools[3].can_order!
-    schools[3].std_device_allocation.update!(cap: 3, allocation: 20, devices_ordered: 3) # 2 left
-    schools[3].coms_device_allocation.update!(cap: 5, allocation: 10, devices_ordered: 5) # 3 left
+    schools[3].update!(raw_laptop_cap: 3, raw_laptop_allocation: 20, raw_laptops_ordered: 3) # 2 left
+    schools[3].update!(raw_router_cap: 5, raw_router_allocation: 10, raw_routers_ordered: 5) # 3 left
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     schools[1].can_order_for_specific_circumstances!
-    schools[1].std_device_allocation.update!(cap: 3, allocation: 20, devices_ordered: 1) # 2 left
-    schools[1].coms_device_allocation.update!(cap: 0, allocation: 0, devices_ordered: 0) # 0 left
+    schools[1].update!(raw_laptop_cap: 3, raw_laptop_allocation: 20, raw_laptops_ordered: 1) # 2 left
+    schools[1].update!(raw_router_cap: 0, raw_router_allocation: 0, raw_routers_ordered: 0) # 0 left
   end
 
   def given_there_are_multiple_chromebook_domains_being_managed

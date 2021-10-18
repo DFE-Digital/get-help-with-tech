@@ -47,17 +47,19 @@ private
   end
 
   def override_cap_according_to_order_state!
-    @laptop_cap = school.adjusted_laptop_cap_by_order_state(laptop_cap, state: order_state)
-    @router_cap = school.adjusted_router_cap_by_order_state(router_cap, state: order_state)
+    @laptop_cap = UpdateSchoolDevicesService.new(school: school, order_state: order_state)
+                                            .adjusted_cap_by_order_state(laptop_cap, device_type: :laptop)
+    @router_cap = UpdateSchoolDevicesService.new(school: school, order_state: order_state)
+                                            .adjusted_cap_by_order_state(router_cap, device_type: :router)
   end
 
   def validate_caps_lte_allocation
-    if laptop_cap.to_i > school.laptop_allocation
-      errors.add(:laptop_cap, :lte_allocation, allocation: school.laptop_allocation)
+    if laptop_cap.to_i > school.allocation(:laptop)
+      errors.add(:laptop_cap, :lte_allocation, allocation: school.allocation(:laptop))
     end
 
-    if router_cap.to_i > school.router_allocation
-      errors.add(:router_cap, :lte_allocation, allocation: school.router_allocation)
+    if router_cap.to_i > school.allocation(:router)
+      errors.add(:router_cap, :lte_allocation, allocation: school.allocation(:router))
     end
   end
 end

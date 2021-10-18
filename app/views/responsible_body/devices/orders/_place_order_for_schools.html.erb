@@ -16,9 +16,9 @@
           <%= govuk_link_to("#{school.name} (URN: #{school.urn})", responsible_body_devices_school_path(school.urn)) %>
         </td>
         <td class="govuk-table__cell">
-          <%= what_to_order_availability(school: school) %>
+          <%= what_to_order_availability(school) %>
           <span class="govuk-caption-m">
-            <%= what_to_order_state(school: school) %>
+            <%= what_to_order_state(school) %>
           </span>
         </td>
       </tr>

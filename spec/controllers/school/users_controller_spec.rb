@@ -12,6 +12,7 @@ RSpec.describe School::UsersController, type: :controller do
     context 'when authenticated' do
       before do
         sign_in_as school_user
+        stub_computacenter_outgoing_api_calls
       end
 
       it 'adds the new user to the school' do

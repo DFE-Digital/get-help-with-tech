@@ -5,44 +5,42 @@ RSpec.describe AllocationChange, type: :model do
 
   context 'when the school manages the allocation' do
     context 'when fewer devices than the allocation are ordered' do
-      let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
-      let(:std_device_allocation) { school.std_device_allocation }
+      let(:school) { create(:school, laptops: [2, 2, 1]) }
 
       it 'does not record an over order' do
-        std_device_allocation.devices_ordered += 1
-        expect { std_device_allocation.save! }.to change(described_class, :count).by(0)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.to change(described_class, :count).by(0)
       end
     end
 
     context 'when more devices than the allocation are ordered' do
-      let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
-      let(:std_device_allocation) { school.std_device_allocation }
+      let(:school) { create(:school, laptops: [1, 1, 1]) }
 
       it 'records the allocation change' do
-        std_device_allocation.devices_ordered += 1
-        expect { std_device_allocation.save! }.to change(described_class, :count).by(1)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.to change(described_class, :count).by(1)
       end
 
       it 'records the allocation change with the correct category' do
-        std_device_allocation.devices_ordered += 1
-        expect { std_device_allocation.save! }.to change(described_class.over_order, :count).by(1)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.to change(described_class.over_order, :count).by(1)
       end
     end
   end
 
   context 'when the allocation is pooled' do
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_centrally_managed_schools) }
-    let(:std_device_allocation) { responsible_body.schools.first.std_device_allocation }
+    let(:school) { responsible_body.schools.first }
 
     context 'when fewer devices than the allocation are ordered' do
       it 'does not record an over order' do
-        std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
-        expect { std_device_allocation.save! }.to change(described_class, :count).by(0)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.to change(described_class, :count).by(0)
       end
 
       it 'does not change the allocation value' do
-        std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
-        expect { std_device_allocation.save! }.not_to change(std_device_allocation, :raw_allocation)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.not_to(change { school.raw_allocation(:laptop) })
       end
     end
 
@@ -52,8 +50,9 @@ RSpec.describe AllocationChange, type: :model do
       let(:sentry_context_key) { 'AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool' }
       let(:sentry_context_value) do
         {
-          vcap_pool_id: responsible_body.std_device_pool.id,
+          device_type: :laptop,
           remaining_over_ordered_quantity: non_allocated_but_ordered_devices,
+          school_id: school.id,
         }
       end
       let(:sentry_scope) { instance_spy(Sentry::Scope, set_context: :great) }
@@ -65,24 +64,24 @@ RSpec.describe AllocationChange, type: :model do
       end
 
       it 'records the over order' do
-        std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
-        expect { std_device_allocation.save! }.to change(described_class, :count).by(1)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.to change(described_class, :count).by(1)
       end
 
       it 'records the over order with the correct category' do
-        std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
-        expect { std_device_allocation.save! }.to change(described_class.over_order, :count).by(1)
+        school.raw_laptops_ordered += 1
+        expect { school.save! }.to change(described_class.over_order, :count).by(1)
       end
 
       it 'increases the allocation to match devices ordered' do
-        std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
-        std_device_allocation.save!
-        expect(std_device_allocation.raw_allocation).to eq(std_device_allocation.raw_devices_ordered)
+        school.raw_laptops_ordered += 1
+        school.save!
+        expect(school.raw_allocation(:laptop)).to eq(school.raw_devices_ordered(:laptop))
       end
 
       it 'informs Sentry' do
-        std_device_allocation.devices_ordered = std_device_allocation.raw_devices_ordered + 1
-        std_device_allocation.save!
+        school.raw_laptops_ordered += 1
+        school.save!
         expect(Sentry).to have_received(:capture_message).with(alert)
         expect(sentry_scope).to have_received(:set_context).with(sentry_context_key, sentry_context_value)
       end

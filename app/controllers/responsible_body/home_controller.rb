@@ -15,14 +15,12 @@ private
     std_count = 0
     coms_count = 0
 
-    if @responsible_body.has_virtual_cap_feature_flags?
-      std_count = @responsible_body.std_device_pool&.devices_ordered.to_i
-      coms_count = @responsible_body.coms_device_pool&.devices_ordered.to_i
+    if @responsible_body.vcap_active?
+      std_count = @responsible_body.devices_ordered(:laptop)
+      coms_count = @responsible_body.devices_ordered(:router)
     else
-      @responsible_body.schools.each do |s|
-        std_count += s.std_device_allocation&.devices_ordered.to_i
-        coms_count += s.coms_device_allocation&.devices_ordered.to_i
-      end
+      std_count = @responsible_body.schools.sum { |school| school.devices_ordered(:laptop) }
+      coms_count = @responsible_body.schools.sum { |school| school.devices_ordered(:router) }
     end
 
     [std_count, coms_count]

@@ -1,3 +1,8 @@
 class CapUpdateCall < ApplicationRecord
-  belongs_to :school_device_allocation
+  #### PENDING MIGRATIONS
+  ####   Add t.string "device_type", null: false
+  ####   Add :school_id
+  ####   Remove :school_device_allocation_id
+
+  belongs_to :school
 end

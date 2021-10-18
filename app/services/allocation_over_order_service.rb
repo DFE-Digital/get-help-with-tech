@@ -1,19 +1,16 @@
 class AllocationOverOrderService
-  attr_reader :allocation, :device_type, :raw_allocation, :raw_devices_ordered,
-              :school, :vcap_pool
+  attr_reader :allocation, :device_type, :raw_allocation, :raw_devices_ordered, :school
 
-  def initialize(allocation)
-    @allocation = allocation
-    @device_type = allocation.device_type
-    @school = allocation.school
-    @raw_allocation = allocation.raw_allocation
-    @raw_devices_ordered = allocation.raw_devices_ordered
-    @vcap_pool = allocation.virtual_cap_pool
+  def initialize(school, device_type)
+    @device_type = device_type
+    @school = school
+    @raw_allocation = school.raw_allocation(device_type)
+    @raw_devices_ordered = school.raw_devices_ordered(device_type)
   end
 
   def call
-    SchoolDeviceAllocation.transaction do
-      reclaim_allocation_across_virtual_cap_pool if school.in_active_virtual_cap_pool?
+    School.transaction do
+      reclaim_allocation_across_virtual_cap_pool if school.in_virtual_cap_pool?
       increase_allocation_value_to_match_devices_ordered
     end
   end
@@ -22,7 +19,7 @@ private
 
   def alert_pool_allocation_reclaim_failed(remaining_over_ordered_quantity)
     Sentry.with_scope do |scope|
-      scope.set_context('AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool', { vcap_pool_id: @vcap_pool.id, remaining_over_ordered_quantity: remaining_over_ordered_quantity })
+      scope.set_context('AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool', { school_id: school.id, device_type: device_type, remaining_over_ordered_quantity: remaining_over_ordered_quantity })
 
       Sentry.capture_message('Unable to reclaim all of the allocation in the vcap to cover the over-order')
     end
@@ -33,7 +30,7 @@ private
   end
 
   def available_allocations_in_the_vcap_pool
-    vcap_pool.school_device_allocations.with_available_allocation(vcap_pool.device_type) - [allocation]
+    school.responsible_body.vcap_schools.with_available_allocation(device_type).to_a - [school]
   end
 
   def cap_type
@@ -63,10 +60,12 @@ private
   end
 
   def reclaim_allocation_from_vcap_pool_member(member, quantity: 0)
-    [member.raw_allocation - member.raw_devices_ordered, quantity].min.tap do |claimed|
-      unclaimed = member.raw_allocation - claimed
-      UpdateSchoolDevicesService.new(school: member.school,
-                                     order_state: member.school.order_state,
+    allocation = member.raw_allocation(device_type)
+    devices_ordered = member.raw_devices_ordered(device_type)
+    [allocation - devices_ordered, quantity].min.tap do |claimed|
+      unclaimed = allocation - claimed
+      UpdateSchoolDevicesService.new(school: member,
+                                     order_state: member.order_state,
                                      allocation_type => unclaimed,
                                      cap_type => unclaimed,
                                      allocation_change_category: :over_order_pool_reclaim).call
@@ -74,6 +73,6 @@ private
   end
 
   def router?
-    device_type == 'coms_device'
+    device_type == :router
   end
 end

@@ -107,7 +107,7 @@ module Importers
           phone_number: row['Business phone'],
         )
 
-        (school.preorder_information || school.build_preorder_information).update!(
+        school.update!(
           who_will_order_devices: 'responsible_body',
           school_contact: contact,
         )

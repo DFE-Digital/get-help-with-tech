@@ -4,15 +4,10 @@ class Computacenter::MultiDomainChromebooksIssSclController < Computacenter::Bas
   def index
     @schools = School
       .includes(:responsible_body)
-      .joins(:preorder_information)
       .gias_status_open
       .la_funded_provision
-      .where({
-        provision_type: %w[iss scl],
-        preorder_information: {
-          will_need_chromebooks: %w[yes i_dont_know],
-        },
-      })
+      .where(provision_type: %w[iss scl],
+             will_need_chromebooks: %w[yes i_dont_know])
       .sort_by { |s| s.responsible_body.name }
 
     respond_to do |format|

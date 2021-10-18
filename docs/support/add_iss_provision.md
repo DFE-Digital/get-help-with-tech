@@ -74,8 +74,8 @@ Inspect the ``lafp`` variable to ensure that it correctly reflects the LaFundedP
 ### Adding allocations
 
 ```ruby
-lafp.std_device_allocation.update!(allocation: 58, cap:58) # laptops
-lafp.coms_device_allocation.update!(allocation: 18, cap:18) # routers
+lafp.update!(raw_laptop_allocation: 58, raw_laptop_cap:58) # laptops
+lafp.update!(raw_router_allocation: 18, raw_router_cap:18) # routers
 ```
 
 ### Supplier references

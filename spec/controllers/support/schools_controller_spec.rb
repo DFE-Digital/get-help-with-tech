@@ -116,7 +116,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
   describe 'confirm_invitation' do
     before do
-      create(:preorder_information, school: school, school_contact: nil)
+      school.update!(school_contact: nil)
       sign_in_as create(:dfe_user)
     end
 

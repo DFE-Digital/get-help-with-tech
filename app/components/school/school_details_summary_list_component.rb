@@ -18,7 +18,7 @@ private
   def device_allocation_row
     {
       key: 'Device allocation',
-      value: pluralize(@school.raw_laptop_allocation, 'device'),
+      value: pluralize(@school.raw_allocation(:laptop), 'device'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
@@ -27,14 +27,14 @@ private
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: pluralize(@school.raw_router_allocation, 'router'),
+      value: pluralize(@school.raw_allocation(:router), 'router'),
       action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
       action: 'Query allocation',
     }
   end
 
   def display_router_allocation_row?
-    @school.raw_router_allocation.positive?
+    @school.raw_allocation(:router).positive?
   end
 
   def type_of_school_row
@@ -45,9 +45,7 @@ private
   end
 
   def chromebook_rows_if_needed
-    return [] unless @school.preorder_information?
-
-    detail_value = @school.chromebook_info_still_needed? ? 'Not yet known' : t(@school.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks])
+    detail_value = @school.chromebook_info_still_needed? ? 'Not yet known' : t(@school.will_need_chromebooks, scope: %i[activerecord attributes school will_need_chromebooks])
     detail = {
       key: 'Will you need to order Chromebooks?',
       value: detail_value,

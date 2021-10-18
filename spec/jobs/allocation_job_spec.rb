@@ -67,18 +67,18 @@ RSpec.describe AllocationJob do
       it 'creates and sets the allocation' do
         described_class.perform_now(batch_job)
 
-        expect(school.std_device_allocation.allocation).to be(3)
+        expect(school.reload.raw_allocation(:laptop)).to be(3)
       end
 
       it 'creates and sets the cap' do
         described_class.perform_now(batch_job)
 
-        expect(school.std_device_allocation.cap).to be(3)
+        expect(school.reload.cap(:laptop)).to be(3)
       end
     end
 
     context 'for school that cannot order' do
-      let!(:school) { create(:school, :with_std_device_allocation) }
+      let!(:school) { create(:school, laptops: [1, 0, 0]) }
 
       context 'updating to can_order' do
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order') }
@@ -86,13 +86,13 @@ RSpec.describe AllocationJob do
         it 'updates the allocation' do
           expect {
             described_class.perform_now(batch_job)
-          }.to change { school.std_device_allocation.reload.allocation }.by(3)
+          }.to change { school.reload.allocation(:laptop) }.by(3)
         end
 
         it 'updates the cap to match allocation' do
           described_class.perform_now(batch_job)
 
-          expect(school.std_device_allocation.reload.cap).to eql(school.std_device_allocation.reload.allocation)
+          expect(school.reload.cap(:laptop)).to eql(school.reload.allocation(:laptop))
         end
 
         it 'marks job as processed' do
@@ -108,13 +108,13 @@ RSpec.describe AllocationJob do
         it 'updates the allocation' do
           expect {
             described_class.perform_now(batch_job)
-          }.to change { school.std_device_allocation.reload.allocation }.by(3)
+          }.to change { school.reload.allocation(:laptop) }.by(3)
         end
 
         it 'leaves the cap as is' do
           expect {
             described_class.perform_now(batch_job)
-          }.not_to(change { school.std_device_allocation.reload.cap })
+          }.not_to(change { school.reload.cap(:laptop) })
         end
 
         it 'marks job as processed' do
@@ -128,34 +128,33 @@ RSpec.describe AllocationJob do
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
 
         it 'does not reduce allocation' do
-          expect { described_class.perform_now(batch_job) }.not_to(change { school.std_device_allocation.reload.allocation })
+          expect { described_class.perform_now(batch_job) }.not_to(change { school.reload.allocation(:laptop) })
         end
       end
 
       context 'maintain part of allocation if already ordered' do
-        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+        let!(:school) { create(:school, laptops: [2, 2, 1]) }
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-100', order_state: 'cannot_order') }
 
         it 'reduces allocation to match ordered' do
           described_class.perform_now(batch_job)
-          expect(school.std_device_allocation.reload.allocation).to eq(school.std_device_allocation.devices_ordered)
+          expect(school.reload.allocation(:laptop)).to eq(school.devices_ordered(:laptop))
         end
       end
 
       context 'maintain allocation if already ordered' do
-        let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+        let!(:school) { create(:school, laptops: [1, 1, 1]) }
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
 
         it 'does not update the allocation' do
-          expect {
-            described_class.perform_now(batch_job)
-          }.not_to change(school.std_device_allocation.reload, :allocation)
+          expect { described_class.perform_now(batch_job) }
+            .not_to(change { school.reload.allocation(:laptop) })
         end
       end
     end
 
     context 'for school that can order' do
-      let(:school) { create(:school, :with_std_device_allocation, :in_lockdown) }
+      let(:school) { create(:school, :in_lockdown, laptops: [1, 0, 0]) }
 
       context 'maintaining can_order' do
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '3', order_state: 'can_order') }
@@ -163,13 +162,13 @@ RSpec.describe AllocationJob do
         it 'updates the allocation' do
           expect {
             described_class.perform_now(batch_job)
-          }.to change { school.std_device_allocation.reload.allocation }.by(3)
+          }.to change { school.reload.allocation(:laptop) }.by(3)
         end
 
         it 'updates the cap to match allocation' do
           described_class.perform_now(batch_job)
 
-          expect(school.std_device_allocation.reload.cap).to eql(school.std_device_allocation.reload.allocation)
+          expect(school.reload.cap(:laptop)).to eql(school.reload.allocation(:laptop))
         end
 
         it 'marks job as processed' do
@@ -185,47 +184,47 @@ RSpec.describe AllocationJob do
         it 'updates the allocation' do
           expect {
             described_class.perform_now(batch_job)
-          }.to change { school.std_device_allocation.reload.allocation }.by(3)
+          }.to change { school.reload.allocation(:laptop) }.by(3)
         end
 
         it 'changes the cap to equal raw_devices_ordered when raw_devices_ordered is zero' do
           described_class.perform_now(batch_job)
 
-          expect(school.std_device_allocation.reload.cap).to be(school.std_device_allocation.reload.raw_devices_ordered)
+          expect(school.reload.cap(:laptop)).to be(school.reload.raw_devices_ordered(:laptop))
         end
 
         context 'when partially_ordered' do
-          let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+          let!(:school) { create(:school, laptops: [2, 2, 1]) }
 
           it 'changes the cap to equal raw_devices_ordered' do
             described_class.perform_now(batch_job)
 
-            expect(school.std_device_allocation.reload.cap).to be(school.std_device_allocation.reload.raw_devices_ordered)
+            expect(school.reload.cap(:laptop)).to be(school.reload.raw_devices_ordered(:laptop))
           end
         end
 
         context 'when fully_ordered' do
-          let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+          let!(:school) { create(:school, laptops: [1, 1, 1]) }
 
           it 'changes the cap to equal raw_devices_ordered' do
             described_class.perform_now(batch_job)
 
-            expect(school.std_device_allocation.reload.cap).to be(school.std_device_allocation.reload.raw_devices_ordered)
+            expect(school.reload.cap(:laptop)).to be(school.reload.raw_devices_ordered(:laptop))
           end
         end
 
         context 'when school partially_ordered with a zero delta' do
-          let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+          let!(:school) { create(:school, laptops: [2, 2, 1]) }
           let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '0', order_state: 'cannot_order') }
 
           it 'does not change the allocation' do
-            expect { described_class.perform_now(batch_job) }.not_to(change { school.std_device_allocation.reload.allocation })
+            expect { described_class.perform_now(batch_job) }.not_to(change { school.reload.allocation(:laptop) })
           end
 
           it 'changes the cap to equal raw_devices_ordered' do
             described_class.perform_now(batch_job)
 
-            expect(school.std_device_allocation.reload.cap).to be(school.std_device_allocation.reload.raw_devices_ordered)
+            expect(school.reload.cap(:laptop)).to be(school.reload.raw_devices_ordered(:laptop))
           end
         end
 
@@ -237,34 +236,32 @@ RSpec.describe AllocationJob do
       end
 
       context 'reducing allocation' do
-        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+        let!(:school) { create(:school, laptops: [2, 2, 1]) }
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
 
         it 'reduces allocation' do
           expect {
             described_class.perform_now(batch_job)
-          }.to change { school.std_device_allocation.reload.allocation }.by(-1)
+          }.to change { school.reload.allocation(:laptop) }.by(-1)
         end
       end
 
       context 'maintain part of allocation if already ordered' do
-        let!(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+        let!(:school) { create(:school, laptops: [2, 2, 1]) }
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-100', order_state: 'cannot_order') }
 
         it 'reduces allocation to match ordered' do
           described_class.perform_now(batch_job)
-          expect(school.std_device_allocation.reload.allocation).to eq(school.std_device_allocation.devices_ordered)
+          expect(school.reload.allocation(:laptop)).to eq(school.devices_ordered(:laptop))
         end
       end
 
       context 'maintain allocation if already ordered' do
-        let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+        let!(:school) { create(:school, laptops: [1, 1, 1]) }
         let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'cannot_order') }
 
         it 'does not update the allocation' do
-          expect {
-            described_class.perform_now(batch_job)
-          }.not_to change(school.std_device_allocation.reload, :allocation)
+          expect { described_class.perform_now(batch_job) }.not_to(change { school.reload.allocation(:laptop) })
         end
       end
     end
@@ -272,30 +269,18 @@ RSpec.describe AllocationJob do
     context 'when school is part of virtual cap pool' do
       let(:batch_job) { create(:allocation_batch_job, urn: school1.urn, allocation_delta: '3', order_state: 'can_order') }
 
-      let(:rb) do
-        create(:trust,
-               :manages_centrally,
-               :vcap_feature_flag)
-      end
+      let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
       let(:school1) { rb.schools.first }
-      let(:school1_allocation) { school1.std_device_allocation.reload.allocation }
-      let(:school1_devices_available_to_order) { school1.std_device_allocation.reload.devices_available_to_order }
+      let(:school1_allocation) { school1.reload.allocation(:laptop) }
+      let(:school1_devices_available_to_order) { school1.reload.devices_available_to_order(:laptop) }
 
       let(:school2) { rb.schools.last }
-      let(:school2_allocation) { school2.std_device_allocation.reload.allocation }
-      let(:school2_devices_available_to_order) { school2.std_device_allocation.reload.devices_available_to_order }
+      let(:school2_allocation) { school2.reload.allocation(:laptop) }
+      let(:school2_devices_available_to_order) { school2.reload.devices_available_to_order(:laptop) }
 
       before do
-        create_list(:school, 2,
-                    :centrally_managed,
-                    responsible_body: rb)
-
-        create(:school_device_allocation, :with_std_allocation, :partially_ordered, school: school1)
-        create(:school_device_allocation, :with_std_allocation, :partially_ordered, school: school2)
-
-        AddSchoolToVirtualCapPoolService.new(school1).call
-        AddSchoolToVirtualCapPoolService.new(school2).call
+        create_list(:school, 2, :centrally_managed, responsible_body: rb, laptops: [2, 2, 1])
 
         batch_job
       end
@@ -303,7 +288,7 @@ RSpec.describe AllocationJob do
       it 'updates the allocation' do
         expect {
           described_class.perform_now(batch_job)
-        }.to change { school1.std_device_allocation.reload.raw_allocation }.by(3)
+        }.to change { school1.reload.raw_allocation(:laptop) }.by(3)
       end
 
       context 'increasing the allocation for multiple schools in the same pool' do
@@ -318,18 +303,18 @@ RSpec.describe AllocationJob do
           expect {
             described_class.perform_now(batch_allocation_job1)
             described_class.perform_now(batch_allocation_job2)
-          }.to change { school1.std_device_allocation.reload.allocation }.by(200)
+          }.to change { school1.reload.allocation(:laptop) }.by(200)
         end
       end
 
       it 'updates the cap to match allocation when order_status is can_order' do
         described_class.perform_now(batch_job)
 
-        sum = school1.std_device_allocation.reload.raw_cap + school2.std_device_allocation.reload.raw_cap
-        expect(school1.std_device_allocation.cap).to eql(sum)
-        expect(school2.std_device_allocation.cap).to eql(sum)
+        sum = school1.reload.raw_cap(:laptop) + school2.reload.raw_cap(:laptop)
+        expect(school1.cap(:laptop)).to eql(sum)
+        expect(school2.cap(:laptop)).to eql(sum)
 
-        expect(school1.std_device_allocation.raw_cap).to eql(school1.std_device_allocation.raw_allocation)
+        expect(school1.raw_cap(:laptop)).to eql(school1.raw_allocation(:laptop))
       end
 
       context 'updating to cannot_order' do
@@ -344,8 +329,8 @@ RSpec.describe AllocationJob do
           described_class.perform_now(batch_allocation_job1)
           described_class.perform_now(batch_allocation_job2)
 
-          expect(school1.std_device_allocation.raw_cap).to eql(school1.std_device_allocation.raw_devices_ordered)
-          expect(school2.std_device_allocation.raw_cap).to eql(school2.std_device_allocation.raw_devices_ordered)
+          expect(school1.reload.raw_cap(:laptop)).to eql(school1.reload.raw_devices_ordered(:laptop))
+          expect(school2.reload.raw_cap(:laptop)).to eql(school2.reload.raw_devices_ordered(:laptop))
         end
       end
 
@@ -358,29 +343,29 @@ RSpec.describe AllocationJob do
         end
 
         it 'does not change the allocation' do
-          expect { described_class.perform_now(batch_allocation_job1) }.not_to(change { school1.std_device_allocation.reload.allocation })
-          expect { described_class.perform_now(batch_allocation_job2) }.not_to(change { school2.std_device_allocation.reload.allocation })
+          expect { described_class.perform_now(batch_allocation_job1) }.not_to(change { school1.reload.allocation(:laptop) })
+          expect { described_class.perform_now(batch_allocation_job2) }.not_to(change { school2.reload.allocation(:laptop) })
         end
 
         it 'does not change the raw_allocation' do
-          expect { described_class.perform_now(batch_allocation_job1) }.not_to(change { school1.std_device_allocation.reload.raw_allocation })
-          expect { described_class.perform_now(batch_allocation_job2) }.not_to(change { school2.std_device_allocation.reload.raw_allocation })
+          expect { described_class.perform_now(batch_allocation_job1) }.not_to(change { school1.reload.raw_allocation(:laptop) })
+          expect { described_class.perform_now(batch_allocation_job2) }.not_to(change { school2.reload.raw_allocation(:laptop) })
         end
 
         it 'updates the raw_cap to match raw_devices_ordered' do
           described_class.perform_now(batch_allocation_job1)
           described_class.perform_now(batch_allocation_job2)
 
-          expect(school1.std_device_allocation.raw_cap).to eql(school1.std_device_allocation.raw_devices_ordered)
-          expect(school2.std_device_allocation.raw_cap).to eql(school2.std_device_allocation.raw_devices_ordered)
+          expect(school1.reload.raw_cap(:laptop)).to eql(school1.reload.raw_devices_ordered(:laptop))
+          expect(school2.reload.raw_cap(:laptop)).to eql(school2.reload.raw_devices_ordered(:laptop))
         end
 
         it 'returns false for devices_available_to_order?' do
           described_class.perform_now(batch_allocation_job1)
           described_class.perform_now(batch_allocation_job2)
 
-          expect(school1.reload.laptops_available_to_order?).to be(false)
-          expect(school2.reload.laptops_available_to_order?).to be(false)
+          expect(school1.reload.devices_available_to_order?(:laptop)).to be(false)
+          expect(school2.reload.devices_available_to_order?(:laptop)).to be(false)
         end
       end
 
@@ -390,7 +375,7 @@ RSpec.describe AllocationJob do
         it 'reduces allocation' do
           expect {
             described_class.perform_now(batch_deallocation_job)
-          }.to change { school1.std_device_allocation.reload.raw_allocation }.by(-1)
+          }.to change { school1.reload.raw_allocation(:laptop) }.by(-1)
         end
       end
 
@@ -407,18 +392,17 @@ RSpec.describe AllocationJob do
           expect {
             described_class.perform_now(batch_deallocation_job1)
             described_class.perform_now(batch_deallocation_job2)
-          }.to change { school1.std_device_allocation.reload.allocation }.by(-devices_available_to_deallocate)
+          }.to change { school1.reload.allocation(:laptop) }.by(-devices_available_to_deallocate)
         end
       end
 
       context 'reduce and maintain all of allocation if already fully ordered' do
-        let!(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
+        let!(:school) { create(:school, laptops: [1, 1, 1]) }
         let(:batch_deallocation_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: '-1', order_state: 'can_order') }
 
         it 'does not update the allocation' do
-          expect {
-            described_class.perform_now(batch_deallocation_job)
-          }.not_to change(school.std_device_allocation.reload, :allocation)
+          expect { described_class.perform_now(batch_deallocation_job) }
+            .not_to(change { school.reload.allocation(:laptop) })
         end
       end
     end

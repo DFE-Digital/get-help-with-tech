@@ -7,8 +7,8 @@ class DisplayDevicesOrderedComponent < ViewComponent::Base
 
   def devices_ordered
     [
-      build_text(school.raw_laptops_ordered, 'device'),
-      build_text(school.raw_routers_ordered, 'router'),
+      build_text(school.raw_devices_ordered(:laptop), 'device'),
+      build_text(school.raw_devices_ordered(:router), 'router'),
     ]
   end
 

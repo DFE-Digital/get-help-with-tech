@@ -33,18 +33,23 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
   end
 
   describe '#apply!' do
-    let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, status: 'ready') }
-    let!(:school) { create(:school, :in_lockdown, preorder_information: preorder, computacenter_reference: '123456') }
-    let!(:allocation) { create(:school_device_allocation, school: school, device_type: 'std_device', cap: 100, allocation: 100, devices_ordered: 10) }
+    let!(:school) do
+      create(:school,
+             :centrally_managed,
+             :in_lockdown,
+             :does_not_need_chromebooks,
+             computacenter_reference: '123456',
+             laptops: [100, 100, 10])
+    end
 
     it 'updates the correct allocation with the given usedCap' do
-      expect { cap_usage_update.apply! }.to change { allocation.reload.devices_ordered }.from(10).to(100)
+      expect { cap_usage_update.apply! }.to change { school.reload.devices_ordered(:laptop) }.from(10).to(100)
     end
 
     it 'refresh preorder status' do
       expect {
         cap_usage_update.apply!
-      }.to change { school.reload.device_ordering_status }.from('ready').to('ordered')
+      }.to change { school.reload.preorder_status }.from('rb_can_order').to('ordered')
     end
 
     it 'logs to devices_ordered_updates' do
@@ -68,7 +73,8 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
       before do
         cap_usage_update.cap_amount += 1
-        allow(Computacenter::API::CapUsageUpdate::CapMismatch).to receive(:new).with(school, allocation).and_return(mock_mismatch)
+        allow(Computacenter::API::CapUsageUpdate::CapMismatch)
+          .to receive(:new).with(school, :laptop).and_return(mock_mismatch)
         allow(mock_mismatch).to receive(:warn)
       end
 
@@ -87,9 +93,9 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
       before do
         stub_computacenter_outgoing_api_calls
-        school.reload.std_device_allocation.update!(allocation: 103)
+        school.reload.update!(raw_laptop_allocation: 103)
         WebMock.allow_net_connect!
-        school.orders_managed_centrally!
+        SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
         school.can_order!
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
         allow(mock_request).to receive(:post).and_raise(exception)
@@ -148,10 +154,9 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
   end
 
   context 'when the school successfully ordered over their allocation' do
-    let(:school) { create(:school, :with_std_device_allocation_fully_ordered) }
-    let(:std_device_allocation) { school.std_device_allocation }
+    let(:school) { create(:school, laptops: [1, 1, 1]) }
     let(:computacenter_reference) { school.computacenter_reference }
-    let(:cap) { school.std_device_allocation.cap }
+    let(:cap) { school.cap(:laptop) }
     let(:devices_ordered) { cap + 1 }
 
     let(:args) do
@@ -165,9 +170,11 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
     let(:cap_usage_update) { Computacenter::API::CapUsageUpdate.new(args) }
 
+    before { stub_computacenter_outgoing_api_calls }
+
     it 'updates the allocation' do
       cap_usage_update.apply!
-      expect(std_device_allocation.reload.allocation).to eq(devices_ordered)
+      expect(school.reload.allocation(:laptop)).to eq(devices_ordered)
     end
   end
 end

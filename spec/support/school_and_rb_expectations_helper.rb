@@ -19,7 +19,7 @@ module SchoolAndRbExpectationsHelper
     expect(school.responsible_body).to eq(responsible_body)
 
     if vcap
-      expect(school).to be_in_virtual_cap_pool(responsible_body_id: responsible_body.id)
+      expect(school).to be_in_virtual_cap_pool
 
       expect_vcap_to_be(rb_id: responsible_body.id,
                         laptop_allocation: laptop_allocation,
@@ -54,14 +54,14 @@ module SchoolAndRbExpectationsHelper
                         routers_ordered:)
     responsible_body = ResponsibleBody.find(rb_id)
 
-    expect(responsible_body).to have_virtual_cap_feature_flags
+    expect(responsible_body).to be_vcap_active
 
-    expect(responsible_body.laptop_allocation).to eq(laptop_allocation)
-    expect(responsible_body.laptop_cap).to eq(laptop_cap)
-    expect(responsible_body.laptops_ordered).to eq(laptops_ordered)
-    expect(responsible_body.router_allocation).to eq(router_allocation)
-    expect(responsible_body.router_cap).to eq(router_cap)
-    expect(responsible_body.routers_ordered).to eq(routers_ordered)
+    expect(responsible_body.allocation(:laptop)).to eq(laptop_allocation)
+    expect(responsible_body.cap(:laptop)).to eq(laptop_cap)
+    expect(responsible_body.devices_ordered(:laptop)).to eq(laptops_ordered)
+    expect(responsible_body.allocation(:router)).to eq(router_allocation)
+    expect(responsible_body.cap(:router)).to eq(router_cap)
+    expect(responsible_body.devices_ordered(:router)).to eq(routers_ordered)
   end
 
   def expect_school_to_be(school_id:,
@@ -87,12 +87,12 @@ module SchoolAndRbExpectationsHelper
       expect(school).not_to be_orders_managed_by_school
     end
 
-    expect(school.laptop_allocation).to eq(laptop_allocation)
-    expect(school.laptop_cap).to eq(laptop_cap)
-    expect(school.laptops_ordered).to eq(laptops_ordered)
-    expect(school.router_allocation).to eq(router_allocation)
-    expect(school.router_cap).to eq(router_cap)
-    expect(school.routers_ordered).to eq(routers_ordered)
+    expect(school.allocation(:laptop)).to eq(laptop_allocation)
+    expect(school.cap(:laptop)).to eq(laptop_cap)
+    expect(school.devices_ordered(:laptop)).to eq(laptops_ordered)
+    expect(school.allocation(:router)).to eq(router_allocation)
+    expect(school.cap(:router)).to eq(router_cap)
+    expect(school.devices_ordered(:router)).to eq(routers_ordered)
   end
 end
 

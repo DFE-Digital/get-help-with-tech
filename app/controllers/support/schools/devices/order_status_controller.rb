@@ -20,8 +20,8 @@ class Support::Schools::Devices::OrderStatusController < Support::BaseController
   # GET /support/devices/schools/:urn/enable-orders/confirm
   def confirm
     set_enable_orders_form(confirm_params)
-    @laptop_allocation = school.laptop_allocation
-    @router_allocation = school.router_allocation
+    @laptop_allocation = school.allocation(:laptop)
+    @router_allocation = school.allocation(:router)
   end
 
   def collect_urns_to_allow_many_schools_to_order
@@ -99,8 +99,8 @@ private
   def edition_params
     {
       order_state: school.order_state,
-      laptop_cap: school.laptop_cap,
-      router_cap: school.router_cap,
+      laptop_cap: school.cap(:laptop),
+      router_cap: school.cap(:router),
     }.merge(enable_orders_form_params)
   end
 

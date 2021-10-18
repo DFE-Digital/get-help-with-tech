@@ -3,41 +3,36 @@ require 'rails_helper'
 RSpec.describe CapUpdateNotificationsService, type: :model do
   let(:notify_computacenter) { true }
   let(:notify_school) { true }
+  let(:rb_computacenter_reference) { '1000' }
+
+  before { stub_computacenter_outgoing_api_calls }
 
   describe '#call' do
     let(:rb) do
       create(:local_authority,
              :manages_centrally,
              :vcap_feature_flag,
-             computacenter_reference: '1000')
+             computacenter_reference: rb_computacenter_reference)
     end
 
-    let!(:school) do
+    let(:school) do
       create(:school,
              :centrally_managed,
              :in_lockdown,
-             :with_std_device_allocation,
-             :with_coms_device_allocation,
              computacenter_reference: '11',
              responsible_body: rb,
-             laptop_allocation: 2, laptop_cap: 1, laptops_ordered: 0,
-             router_allocation: 2, router_cap: 1, routers_ordered: 1)
+             laptops: [2, 1, 0],
+             routers: [2, 1, 1])
     end
 
-    let(:allocations) { [school.std_device_allocation, school.coms_device_allocation] }
-
     subject(:service) do
-      described_class.new(*allocations.map(&:id),
+      described_class.new(*school.cap_updates,
                           notify_computacenter: notify_computacenter,
                           notify_school: notify_school)
     end
 
-    before { stub_computacenter_outgoing_api_calls }
-
     context 'when there are no schools with complete computacenter references' do
-      before do
-        rb.update(computacenter_reference: nil)
-      end
+      let(:rb_computacenter_reference) {}
 
       specify { expect(service.call).to be_truthy }
 
@@ -93,7 +88,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       it 'update caps on Computacenter' do
         service.call
 
-        expect_to_have_sent_caps_to_computacenter(requests)
+        expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
       end
 
       it 'notify Computacenter of laptops cap change by email' do

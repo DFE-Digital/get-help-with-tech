@@ -6,6 +6,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
 
   before do
     sign_in_as user
+    stub_computacenter_outgoing_api_calls
   end
 
   describe '#edit' do
@@ -13,11 +14,9 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     let(:school) do
       create(:school,
              :centrally_managed,
-             :with_std_device_allocation,
-             :with_coms_device_allocation,
              computacenter_reference: '11',
-             laptop_allocation: 50, laptop_cap: 40, laptops_ordered: 10,
-             router_allocation: 5, router_cap: 4, routers_ordered: 1)
+             laptops: [50, 40, 10],
+             routers: [5, 4, 1])
     end
 
     before { get :edit, params: { school_urn: school.urn, device_type: device_type } }
@@ -36,21 +35,17 @@ RSpec.describe Support::Schools::Devices::AllocationController do
 
     it 'assigns a form for the school laptop allocation' do
       expect(assigns[:form].device_type).to eq(:laptop)
-      expect(assigns[:form].raw_allocation).to eq(school.raw_laptop_allocation)
-      expect(assigns[:form].raw_devices_ordered).to eq(school.raw_laptops_ordered)
-      expect(assigns[:form].device_allocation).to eq(school.laptop_allocation)
-      expect(assigns[:form].device_cap).to eq(school.laptop_cap)
+      expect(assigns[:form].raw_allocation(:laptop)).to eq(school.raw_allocation(:laptop))
+      expect(assigns[:form].raw_devices_ordered(:laptop)).to eq(school.raw_devices_ordered(:laptop))
     end
 
     context 'when device type is set' do
       let(:device_type) { :router }
 
-      it 'assigns a form for that school device allocation' do
+      it 'assigns a form for that school router allocation' do
         expect(assigns[:form].device_type).to eq(:router)
-        expect(assigns[:form].raw_allocation).to eq(school.raw_router_allocation)
-        expect(assigns[:form].raw_devices_ordered).to eq(school.raw_routers_ordered)
-        expect(assigns[:form].device_allocation).to eq(school.router_allocation)
-        expect(assigns[:form].device_cap).to eq(school.router_cap)
+        expect(assigns[:form].raw_allocation(:router)).to eq(school.raw_allocation(:router))
+        expect(assigns[:form].raw_devices_ordered(:router)).to eq(school.raw_devices_ordered(:router))
       end
     end
   end
@@ -65,14 +60,12 @@ RSpec.describe Support::Schools::Devices::AllocationController do
 
     let!(:school) do
       create(:school,
-             :centrally_managed,
-             :with_std_device_allocation,
-             :with_coms_device_allocation,
+             :manages_orders,
              order_state: 'can_order',
              computacenter_reference: '11',
              responsible_body: rb,
-             laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
-             router_allocation: 5, router_cap: 4, routers_ordered: 1)
+             laptops: [5, 4, 1],
+             routers: [5, 4, 1])
     end
 
     let(:requests) do
@@ -95,10 +88,6 @@ RSpec.describe Support::Schools::Devices::AllocationController do
 
     let(:allocation) { '3' }
 
-    before do
-      stub_computacenter_outgoing_api_calls
-    end
-
     context 'when the user is not support' do
       let(:user) { create(:user) }
 
@@ -110,15 +99,6 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     end
 
     context 'when the allocation assigned is not valid' do
-      let(:params) do
-        {
-          device_type: 'laptop',
-          school_urn: school.urn,
-          support_allocation_form: {
-            allocation: allocation,
-          },
-        }
-      end
       let(:allocation) { '0' }
 
       it 'display the edit view' do
@@ -145,12 +125,12 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'sets the given allocation to the school' do
       expect {
         patch :update, params: params
-      }.to change { School.find(school.id).laptop_allocation }.from(5).to(3)
+      }.to change { school.reload.allocation(:laptop) }.from(5).to(3)
     end
 
     it 'adjust school laptop cap based on school order state' do
       expect { patch :update, params: params }
-        .to change { school.reload.laptop_cap }.from(4).to(3)
+        .to change { school.reload.cap(:laptop) }.from(4).to(3)
     end
 
     it 'update school devices cap on Computacenter' do
@@ -169,7 +149,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
       user = create(:user, :relevant_to_computacenter, responsible_body: rb)
 
       expect { patch :update, params: params }
-        .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
+        .to have_enqueued_mail(CanOrderDevicesMailer, :nudge_rb_to_add_school_contact)
               .with(params: { school: school, user: user }, args: []).once
     end
 

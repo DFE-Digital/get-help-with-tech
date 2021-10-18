@@ -29,14 +29,14 @@ RSpec.describe LocalAuthority, type: :model do
 
       it 'adds a default device and router allocation' do
         provision = local_authority.create_iss_provision!
-        expect(provision.std_device_allocation.allocation).to eq(0)
-        expect(provision.coms_device_allocation.allocation).to eq(0)
+        expect(provision.raw_allocation(:laptop)).to eq(0)
+        expect(provision.raw_allocation(:router)).to eq(0)
       end
 
       it 'sets the device and router allocations to the optional supplied values' do
         provision = local_authority.create_iss_provision!(device_allocation: 50, router_allocation: 5)
-        expect(provision.std_device_allocation.allocation).to eq(50)
-        expect(provision.coms_device_allocation.allocation).to eq(5)
+        expect(provision.raw_allocation(:laptop)).to eq(50)
+        expect(provision.raw_allocation(:router)).to eq(5)
       end
     end
 
@@ -76,14 +76,14 @@ RSpec.describe LocalAuthority, type: :model do
 
       it 'adds a default device and router allocation' do
         provision = local_authority.create_scl_provision!
-        expect(provision.std_device_allocation.allocation).to eq(0)
-        expect(provision.coms_device_allocation.allocation).to eq(0)
+        expect(provision.raw_allocation(:laptop)).to eq(0)
+        expect(provision.raw_allocation(:router)).to eq(0)
       end
 
       it 'sets the device and router allocations to the optional supplied values' do
         provision = local_authority.create_scl_provision!(device_allocation: 50, router_allocation: 5)
-        expect(provision.std_device_allocation.allocation).to eq(50)
-        expect(provision.coms_device_allocation.allocation).to eq(5)
+        expect(provision.raw_allocation(:laptop)).to eq(50)
+        expect(provision.raw_allocation(:router)).to eq(5)
       end
     end
 

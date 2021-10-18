@@ -1,10 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Navigate school welcome wizard' do
-  let(:available_allocation) { create(:school_device_allocation, :with_std_allocation, allocation: 100, cap: 50) }
-  let(:unavailable_allocation) { create(:school_device_allocation, :with_std_allocation) }
-  let(:school_with_unavailable_allocation) { create(:school, :with_preorder_information, std_device_allocation: unavailable_allocation) }
-  let(:school_with_available_allocation) { create(:school, :with_preorder_information, std_device_allocation: available_allocation) }
+  let(:school_with_unavailable_allocation) { create(:school, :with_preorder_information, laptops: [1, 0, 0]) }
+  let(:school_with_available_allocation) { create(:school, :with_preorder_information, laptops: [100, 50]) }
   let(:school) { @school }
 
   before do
@@ -171,7 +169,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_la_funded_user
-    @school = create(:iss_provision, std_device_allocation: available_allocation)
+    @school = create(:iss_provision, laptops: [100, 50])
     @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school)
   end
 
@@ -313,6 +311,6 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def device_allocation
-    school.std_device_allocation&.allocation || 0
+    school.allocation(:laptop)
   end
 end

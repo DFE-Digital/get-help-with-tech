@@ -3,6 +3,8 @@ require 'string_utils'
 module ViewHelper
   include StringUtils
 
+  DEVICE_NAMES = { laptop: 'device', router: 'router' }.freeze
+
   def asset_bios_password_or_unlocker(asset)
     asset.bios_unlockable? ? bios_unlocker_link(asset) : asset.bios_password
   end
@@ -126,18 +128,18 @@ module ViewHelper
     ]
   end
 
-  def what_to_order_allocation_list(allocations:)
-    allocations.map { |alloc|
-      "#{alloc.devices_available_to_order} #{alloc.device_type_name.pluralize(alloc.devices_available_to_order)}"
+  def what_to_order_allocation_list(school_or_rb)
+    DEVICE_NAMES.map { |device_type, device_name|
+      quantity = school_or_rb.devices_available_to_order(device_type)
+      "#{quantity} #{device_name.pluralize(quantity)}"
     }.join(' and ')
   end
 
-  def what_to_order_availability(school:)
+  def what_to_order_availability(school)
     suffix = (school.can_order_for_specific_circumstances? ? ' for specific circumstances' : nil)
 
     if school.devices_available_to_order?
-      allocations = [school.std_device_allocation, school.coms_device_allocation].compact
-      string = what_to_order_allocation_list(allocations: allocations)
+      string = what_to_order_allocation_list(school)
 
       "Order #{string}#{suffix}"
     else
@@ -145,14 +147,15 @@ module ViewHelper
     end
   end
 
-  def what_to_order_state_list(allocations:)
-    allocations.map { |alloc|
-      "#{alloc.devices_ordered} #{alloc.device_type_name.pluralize(alloc.devices_ordered)}"
+  def what_to_order_state_list(school)
+    DEVICE_NAMES.map { |device_type, device_name|
+      quantity = school.devices_ordered(device_type)
+      "#{quantity} #{device_name.pluralize(quantity)}"
     }.join(' and ')
   end
 
-  def what_to_order_state(school:)
-    string = what_to_order_state_list(allocations: school.device_allocations)
+  def what_to_order_state(school)
+    string = what_to_order_state_list(school)
 
     "You’ve ordered #{string}"
   end
@@ -162,7 +165,7 @@ module ViewHelper
     if responsible_body.is_ordering_for_all_schools?
       'all'
     else
-      "#{schools.that_are_centrally_managed.count} of #{schools.count}"
+      "#{schools.responsible_body_will_order_devices.count} of #{schools.count}"
     end
   end
 

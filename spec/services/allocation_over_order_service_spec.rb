@@ -12,27 +12,14 @@ RSpec.describe AllocationOverOrderService, type: :model do
       let(:school) do
         create(:school,
                :centrally_managed,
-               :with_std_device_allocation,
                responsible_body: rb,
-               laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1)
+               laptops: [5, 4, 1])
       end
 
-      let(:sibling_schools) do
-        create_list(:school,
-                    2,
-                    :centrally_managed,
-                    :with_std_device_allocation,
-                    responsible_body: rb,
-                    laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1)
-      end
-
-      before do
-        (sibling_schools + [school]).each { |school| AddSchoolToVirtualCapPoolService.new(school).call }
-        rb.reload
-      end
+      let(:sibling_schools) { create_list(:school, 2, :centrally_managed, responsible_body: rb, laptops: [5, 4, 1]) }
 
       it 'get the extra devices ordered from the devices available in the pool' do
-        allow(school).to receive(:refresh_device_ordering_status!).and_call_original
+        allow(school).to receive(:refresh_preorder_status!).and_call_original
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => school.computacenter_reference, 'capAmount' => '12' },
@@ -41,9 +28,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
           ],
         ]
 
-        school.std_device_allocation.update!(devices_ordered: 9)
+        school.update!(raw_laptops_ordered: 9)
 
-        expect(school).to have_received(:refresh_device_ordering_status!)
+        expect(school).to have_received(:refresh_preorder_status!)
         expect_school_to_be_in_rb(school_id: school.id,
                                   rb_id: rb.id,
                                   vcap: true,
@@ -77,8 +64,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
         let(:sentry_context_key) { 'AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool' }
         let(:sentry_context_value) do
           {
-            vcap_pool_id: rb.std_device_pool.id,
+            device_type: :laptop,
             remaining_over_ordered_quantity: non_allocated_but_ordered_devices,
+            school_id: school.id,
           }
         end
         let(:sentry_scope) { instance_spy(Sentry::Scope, set_context: :great) }
@@ -90,7 +78,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
         end
 
         it 'get the extra devices ordered from the devices available in the pool and alert Sentry' do
-          allow(school).to receive(:refresh_device_ordering_status!).and_call_original
+          allow(school).to receive(:refresh_preorder_status!).and_call_original
           requests = [
             [
               { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => school.computacenter_reference, 'capAmount' => '18' },
@@ -99,9 +87,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
             ],
           ]
 
-          school.std_device_allocation.update!(devices_ordered: 18)
+          school.update!(raw_laptops_ordered: 18)
 
-          expect(school).to have_received(:refresh_device_ordering_status!)
+          expect(school).to have_received(:refresh_preorder_status!)
           expect_school_to_be_in_rb(school_id: school.id,
                                     rb_id: rb.id,
                                     vcap: true,
@@ -135,25 +123,19 @@ RSpec.describe AllocationOverOrderService, type: :model do
     end
 
     context 'when the school is not in virtual cap pool' do
-      let(:school) do
-        create(:school,
-               :centrally_managed,
-               :with_std_device_allocation,
-               responsible_body: rb,
-               laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1)
-      end
+      let(:school) { create(:school, :manages_orders, responsible_body: rb, laptops: [5, 4, 1]) }
 
       it 'adjust cap and allocation values to match devices ordered' do
-        allow(school).to receive(:refresh_device_ordering_status!).and_call_original
+        allow(school).to receive(:refresh_preorder_status!).and_call_original
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => school.computacenter_reference, 'capAmount' => '9' },
           ],
         ]
 
-        school.std_device_allocation.update!(devices_ordered: 9)
+        school.update!(raw_laptops_ordered: 9)
 
-        expect(school).to have_received(:refresh_device_ordering_status!)
+        expect(school).to have_received(:refresh_preorder_status!)
         expect_school_to_be_in_rb(school_id: school.id,
                                   rb_id: rb.id,
                                   vcap: false,
@@ -163,8 +145,8 @@ RSpec.describe AllocationOverOrderService, type: :model do
                                   router_allocation: 0,
                                   router_cap: 0,
                                   routers_ordered: 0,
-                                  centrally_managed: true,
-                                  manages_orders: false,
+                                  centrally_managed: false,
+                                  manages_orders: true,
                                   requests: requests)
       end
     end

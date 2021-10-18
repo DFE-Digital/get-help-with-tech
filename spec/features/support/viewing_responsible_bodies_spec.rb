@@ -25,13 +25,11 @@ RSpec.feature 'Viewing responsible bodies in the support area', type: :feature d
     la = create(:local_authority, name: 'Coventry', who_will_order_devices: 'responsible_body')
     create(:user, responsible_body: la, sign_in_count: 0, privacy_notice_seen_at: nil)
     create(:user, responsible_body: la, sign_in_count: 2, privacy_notice_seen_at: 1.month.ago)
-    school = create(:school, responsible_body: la)
-    create(:preorder_information, school: school, status: 'needs_info')
+    create(:school, :with_preorder_information, responsible_body: la, preorder_status: 'needs_info')
 
     trust = create(:trust, name: 'AWESOME TRUST', who_will_order_devices: 'school')
     create(:user, responsible_body: trust, sign_in_count: 0, privacy_notice_seen_at: nil)
-    school = create(:school, responsible_body: trust)
-    create(:preorder_information, school: school, status: 'ready')
+    create(:school, :with_preorder_information, responsible_body: trust, preorder_status: 'ready')
   end
 
   def when_i_sign_in_as_a_dfe_user

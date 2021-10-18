@@ -50,15 +50,16 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the school will place device orders' do
-    before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :school,
+    let(:school) do
+      create(:school,
+             :primary,
+             :la_maintained,
+             :manages_orders,
+             contacts: [headteacher],
              school_or_rb_domain: 'school.domain.org',
              recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes')
-
-      create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 3)
+             will_need_chromebooks: 'yes',
+             laptops: [3, 0, 0])
     end
 
     it 'confirms that fact' do
@@ -66,7 +67,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'renders the school allocation' do
-      expect(value_for_row(result, 'Device allocation').text).to include("#{school.std_device_allocation.raw_allocation} devices")
+      expect(value_for_row(result, 'Device allocation').text).to include("#{school.raw_allocation(:laptop)} devices")
     end
 
     it 'renders the school type' do
@@ -90,10 +91,6 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'displays the headteacher details' do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :school)
-
       expect(value_for_row(result, 'Headteacher').text).to include('Davy Jones')
       expect(value_for_row(result, 'Headteacher').text).to include('davy.jones@school.sch.uk')
       expect(value_for_row(result, 'Headteacher').text).to include('12345')
@@ -134,12 +131,10 @@ describe Support::SchoolDetailsSummaryListComponent do
     subject(:result) { render_inline(described_class.new(school: school, viewer: build(:computacenter_user))) }
 
     before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :responsible_body,
-             school_or_rb_domain: 'school.domain.org',
-             recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes')
+      school.update!(who_will_order_devices: :responsible_body,
+                     school_or_rb_domain: 'school.domain.org',
+                     recovery_email_address: 'admin@recovery.org',
+                     will_need_chromebooks: 'yes')
     end
 
     it 'shows the chromebook details and allows them to be edited' do
@@ -173,7 +168,7 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   describe 'coms_device_allocation' do
-    context 'when not present' do
+    context 'when zero' do
       let(:school) { build(:school) }
 
       it 'shows Router allocation' do
@@ -181,18 +176,8 @@ describe Support::SchoolDetailsSummaryListComponent do
       end
     end
 
-    context 'when zero' do
-      let(:school) { build(:school, coms_device_allocation: coms_allocation) }
-      let(:coms_allocation) { build(:school_device_allocation, :with_coms_allocation, allocation: 0) }
-
-      it 'shows Router allocation' do
-        expect(result.text).to include('Router allocation')
-      end
-    end
-
     context 'when non-zero value present' do
-      let(:school) { build(:school, coms_device_allocation: coms_allocation) }
-      let(:coms_allocation) { build(:school_device_allocation, :with_coms_allocation) }
+      let(:school) { build(:school, routers: [1, 0, 0]) }
 
       it 'shows Router allocation' do
         expect(result.text).to include('Router allocation')

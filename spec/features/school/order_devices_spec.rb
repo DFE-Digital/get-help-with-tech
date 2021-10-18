@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Order devices' do
   include ViewHelper
 
-  let(:school) { create(:school, :with_std_device_allocation) }
+  let(:school) { create(:school, laptops: [1, 0, 0]) }
 
   scenario 'when my school can order devices and I can order devices' do
     given_the_school_can_order_devices
@@ -88,7 +88,7 @@ RSpec.feature 'Order devices' do
   end
 
   def given_the_school_can_order_devices
-    school.std_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 20)
+    school.update!(raw_laptop_cap: 50, raw_laptop_allocation: 100, raw_laptops_ordered: 20)
     school.can_order!
   end
 

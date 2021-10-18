@@ -2,7 +2,6 @@ class Personas::SclProvisionedUser
   def call
     scl
     scl_funded_place
-    scl_funded_place_allocation
     scl_user
     scl_funded_place_user
     scl_funded_place_enable_ordering
@@ -19,10 +18,6 @@ private
     })
 
     @scl_funded_place
-  end
-
-  def scl_funded_place_allocation
-    @scl_funded_place_allocation ||= scl_funded_place.std_device_allocation
   end
 
   def scl_funded_place_user
@@ -55,7 +50,7 @@ private
 
   def scl_funded_place_enable_ordering
     @scl_funded_place.can_order!
-    @scl_funded_place.std_device_allocation.update!(allocation: 50, cap: 50)
-    @scl_funded_place.coms_device_allocation.update!(allocation: 50, cap: 50)
+    @scl_funded_place.update!(raw_laptop_allocation: 50, raw_laptop_cap: 50)
+    @scl_funded_place.update!(raw_router_allocation: 50, raw_router_cap: 50)
   end
 end

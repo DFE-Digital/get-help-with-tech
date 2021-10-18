@@ -154,150 +154,95 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
   end
 
   def and_it_has_some_schools
-    alpha = create(:school, :primary,
-                   :with_std_device_allocation, :with_coms_device_allocation,
-                   urn: 567_890,
-                   name: 'Alpha Primary School',
-                   responsible_body: local_authority)
-    alpha.std_device_allocation.update!(
-      allocation: 5,
-      cap: 3,
-      devices_ordered: 1,
-    )
-    alpha.coms_device_allocation.update!(
-      allocation: 4,
-      cap: 2,
-      devices_ordered: 0,
-    )
+    create(:school, :primary,
+           urn: 567_890,
+           name: 'Alpha Primary School',
+           responsible_body: local_authority,
+           laptops: [5, 3, 1],
+           routers: [4, 2, 0])
 
-    create(:school, :secondary, :with_std_device_allocation,
+    create(:school,
+           :secondary,
+           laptops: [1, 0, 0],
            urn: 123_456,
            name: 'Beta Secondary School',
            responsible_body: local_authority)
 
-    closed = create(:school, :secondary,
-                    :with_std_device_allocation, :with_coms_device_allocation,
+    closed = create(:school,
+                    :manages_orders,
+                    :secondary,
                     urn: 111_222,
                     name: 'The Closed Institute',
                     status: 'closed',
-                    responsible_body: local_authority)
-    closed.std_device_allocation.update!(allocation: 10, cap: 2, devices_ordered: 2)
-    closed.coms_device_allocation.update!(allocation: 4, cap: 4, devices_ordered: 4)
-    create(:preorder_information, :school_will_order, school: closed)
+                    responsible_body: local_authority,
+                    laptops: [10, 2, 2],
+                    routers: [4, 4, 4])
     closed.users << create(:user)
   end
 
   def and_it_has_some_centrally_managed_schools
-    alpha = create(:school, :primary,
-                   :with_std_device_allocation, :with_coms_device_allocation,
+    alpha = create(:school,
+                   :primary,
+                   :centrally_managed,
                    urn: 567_891,
                    name: 'Alpha Primary School',
-                   responsible_body: local_authority_managing_centrally)
-    create(:preorder_information, :rb_will_order, school: alpha)
-
-    alpha.std_device_allocation.update!(
-      allocation: 5,
-      cap: 3,
-      devices_ordered: 1,
-    )
-    alpha.coms_device_allocation.update!(
-      allocation: 4,
-      cap: 2,
-      devices_ordered: 0,
-    )
+                   responsible_body: local_authority_managing_centrally,
+                   laptops: [5, 3, 1],
+                   routers: [4, 2, 0])
     alpha.can_order!
 
-    closed = create(:school, :secondary,
-                    :with_std_device_allocation, :with_coms_device_allocation,
+    closed = create(:school,
+                    :centrally_managed,
+                    :secondary,
                     urn: 111_222,
                     name: 'The Closed Institute',
-                    responsible_body: local_authority_managing_centrally)
-    closed.std_device_allocation.update!(allocation: 10, cap: 2, devices_ordered: 2)
-    closed.coms_device_allocation.update!(allocation: 4, cap: 4, devices_ordered: 0)
-    create(:preorder_information, :rb_will_order, school: closed)
+                    responsible_body: local_authority_managing_centrally,
+                    laptops: [10, 2, 2],
+                    routers: [4, 4, 0])
     closed.can_order!
-
-    AddSchoolToVirtualCapPoolService.new(alpha).call
-    AddSchoolToVirtualCapPoolService.new(closed).call
-    local_authority_managing_centrally.reload
 
     closed.gias_status_closed!
 
     # Devolved:
-    beta = create(:school, :secondary,
-                  :with_std_device_allocation, :with_coms_device_allocation,
+    beta = create(:school,
+                  :manages_orders,
+                  :secondary,
                   urn: 123_457,
                   name: 'Beta Secondary School',
-                  responsible_body: local_authority_managing_centrally)
-    create(:preorder_information, :school_will_order, school: beta)
-
-    beta.std_device_allocation.update!(
-      allocation: 5,
-      cap: 3,
-      devices_ordered: 1,
-    )
-    beta.coms_device_allocation.update!(
-      allocation: 4,
-      cap: 2,
-      devices_ordered: 0,
-    )
+                  responsible_body: local_authority_managing_centrally,
+                  laptops: [5, 3, 1],
+                  routers: [4, 2, 0])
     beta.can_order!
   end
 
   def and_it_has_all_centrally_managed_schools
-    alpha = create(:school, :primary,
-                   :with_std_device_allocation, :with_coms_device_allocation,
+    alpha = create(:school,
+                   :centrally_managed,
+                   :primary,
                    urn: 567_891,
                    name: 'Alpha Primary School',
-                   responsible_body: local_authority_managing_centrally)
-    create(:preorder_information, :rb_will_order, school: alpha)
-
-    alpha.std_device_allocation.update!(
-      allocation: 5,
-      cap: 3,
-      devices_ordered: 1,
-    )
-    alpha.coms_device_allocation.update!(
-      allocation: 4,
-      cap: 2,
-      devices_ordered: 0,
-    )
-
-    beta = create(:school, :secondary,
-                  :with_std_device_allocation, :with_coms_device_allocation,
+                   responsible_body: local_authority_managing_centrally,
+                   laptops: [5, 3, 1],
+                   routers: [4, 2, 0])
+    beta = create(:school,
+                  :centrally_managed,
+                  :secondary,
                   urn: 123_457,
                   name: 'Beta Secondary School',
-                  responsible_body: local_authority_managing_centrally)
-    create(:preorder_information, :rb_will_order, school: beta)
-
-    beta.std_device_allocation.update!(
-      allocation: 5,
-      cap: 3,
-      devices_ordered: 1,
-    )
-    beta.coms_device_allocation.update!(
-      allocation: 4,
-      cap: 2,
-      devices_ordered: 0,
-    )
-
-    closed = create(:school, :secondary,
-                    :with_std_device_allocation, :with_coms_device_allocation,
+                  responsible_body: local_authority_managing_centrally,
+                  laptops: [5, 3, 1],
+                  routers: [4, 2, 0])
+    closed = create(:school,
+                    :centrally_managed,
+                    :secondary,
                     urn: 111_222,
                     name: 'The Closed Institute',
-                    responsible_body: local_authority_managing_centrally)
-    closed.std_device_allocation.update!(allocation: 10, cap: 2, devices_ordered: 2)
-    closed.coms_device_allocation.update!(allocation: 4, cap: 4, devices_ordered: 0)
-    create(:preorder_information, :rb_will_order, school: closed)
-
+                    responsible_body: local_authority_managing_centrally,
+                    laptops: [10, 2, 2],
+                    routers: [4, 4, 0])
     alpha.can_order!
     beta.can_order!
     closed.can_order!
-    AddSchoolToVirtualCapPoolService.new(alpha).call
-    AddSchoolToVirtualCapPoolService.new(beta).call
-    AddSchoolToVirtualCapPoolService.new(closed).call
-    local_authority_managing_centrally.reload
-
     closed.gias_status_closed!
     local_authority_managing_centrally.calculate_virtual_caps!
   end

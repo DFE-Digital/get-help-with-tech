@@ -20,7 +20,7 @@ private
   end
 
   def coms_count
-    @coms_count ||= school.routers_ordered
+    @coms_count ||= school.devices_ordered(:router)
   end
 
   def has_completed_extra_mobile_data_requests?
@@ -36,6 +36,6 @@ private
   end
 
   def std_count
-    @std_count = school.laptops_ordered.to_i
+    @std_count = school.devices_ordered(:laptop)
   end
 end

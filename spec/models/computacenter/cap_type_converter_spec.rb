@@ -4,8 +4,8 @@ RSpec.describe Computacenter::CapTypeConverter do
   describe '.to_dfe_type' do
     context 'given a valid computacenter capType' do
       it 'returns the correct device_type' do
-        expect(Computacenter::CapTypeConverter.to_dfe_type('DfE_RemainThresholdQty|Std_Device')).to eq('std_device')
-        expect(Computacenter::CapTypeConverter.to_dfe_type('DfE_RemainThresholdQty|Coms_Device')).to eq('coms_device')
+        expect(Computacenter::CapTypeConverter.to_dfe_type('DfE_RemainThresholdQty|Std_Device')).to eq(:laptop)
+        expect(Computacenter::CapTypeConverter.to_dfe_type('DfE_RemainThresholdQty|Coms_Device')).to eq(:router)
       end
     end
 
@@ -19,8 +19,8 @@ RSpec.describe Computacenter::CapTypeConverter do
   describe '.to_computacenter_type' do
     context 'given a valid DfE device_type' do
       it 'returns the correct computacenter capType' do
-        expect(Computacenter::CapTypeConverter.to_computacenter_type('std_device')).to eq('DfE_RemainThresholdQty|Std_Device')
-        expect(Computacenter::CapTypeConverter.to_computacenter_type('coms_device')).to eq('DfE_RemainThresholdQty|Coms_Device')
+        expect(Computacenter::CapTypeConverter.to_computacenter_type(:laptop)).to eq('DfE_RemainThresholdQty|Std_Device')
+        expect(Computacenter::CapTypeConverter.to_computacenter_type(:router)).to eq('DfE_RemainThresholdQty|Coms_Device')
       end
     end
 

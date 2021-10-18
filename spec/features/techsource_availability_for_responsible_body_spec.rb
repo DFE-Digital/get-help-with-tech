@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled for 30 Jun 2021 service closure' do
   let(:local_authority) { create(:local_authority) }
   let(:la_user) { create(:local_authority_user, responsible_body: local_authority) }
-  let(:school) { create(:school, :with_std_device_allocation, :with_preorder_information, responsible_body: local_authority) }
+  let(:school) { create(:school, :with_preorder_information, responsible_body: local_authority, laptops: [1, 0, 0]) }
   let(:techsource) { Computacenter::TechSource.new }
 
   scenario 'well before the techsource maintenance window' do
@@ -45,9 +45,9 @@ RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled fo
   end
 
   def given_i_can_order_devices
-    school.std_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 20)
+    school.update!(raw_laptop_cap: 50, raw_laptop_allocation: 100, raw_laptops_ordered: 20)
     school.can_order!
-    school.orders_managed_centrally!
+    SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
   end
 
   def when_i_visit_the_order_devices_page

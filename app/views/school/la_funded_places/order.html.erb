@@ -184,7 +184,7 @@
       When you’re asked for a URN, use ‘<strong><%= @school.urn %></strong>’.
     </p>
     <p class="govuk-body">
-    <% devices_available = @school.std_device_allocation.devices_available_to_order %>
+    <% devices_available = @school.devices_available_to_order(:laptop) %>
     If you place an order for more than <%= "#{devices_available} #{'laptop'.pluralize(devices_available)}" %>, your order will be cancelled.
     </p>
     <p class="govuk-body">

@@ -270,7 +270,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def given_the_responsible_body_has_decided_to_order_centrally
     responsible_body.update!(who_will_order_devices: 'school')
-    responsible_body.schools.each(&:orders_managed_by_school!)
+    responsible_body.schools.each { |school| SchoolSetWhoManagesOrdersService.new(school, :school).call }
   end
 
   def when_i_visit_the_responsible_body_homepage

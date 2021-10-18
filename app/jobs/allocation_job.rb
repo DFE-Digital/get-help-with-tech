@@ -23,16 +23,15 @@ private
     @order_state = @allocation_batch_job.order_state
     @allocation_delta = @allocation_batch_job.allocation_delta.to_i
     @notify_school = @allocation_batch_job.send_notification
-    @current_allocation = SchoolDeviceAllocation.find_or_initialize_by(school: @school, device_type: 'std_device')
   end
 
   def set_default_new_raw_allocation_value
-    @current_raw_allocation_value = @current_allocation&.raw_allocation || 0
+    @current_raw_allocation_value = @school.raw_allocation(:laptop)
     @new_raw_allocation_value = @current_raw_allocation_value + @allocation_delta
   end
 
   def set_default_new_raw_cap_value
-    @current_raw_cap_value = @current_allocation&.raw_cap || 0
+    @current_raw_cap_value = @school.raw_cap(:laptop)
     @new_raw_cap_value = @current_raw_cap_value + @allocation_delta
   end
 
@@ -43,7 +42,7 @@ private
   end
 
   def set_negative_allocation_delta
-    @negative_allocation_delta = [-@current_allocation.devices_available_to_order, @allocation_delta].max
+    @negative_allocation_delta = [-@school.devices_available_to_order(:laptop), @allocation_delta].max
   end
 
   def set_negative_new_raw_allocation_value

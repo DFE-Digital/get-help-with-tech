@@ -82,37 +82,37 @@ RSpec.feature 'Viewing service performance', type: :feature do
   end
 
   def given_there_are_available_shipped_and_remaining_devices
-    devolved_schools = create_list(:school, 5, :manages_orders, :with_std_device_allocation)
-    managed_schools = create_list(:school, 5, :centrally_managed, :with_std_device_allocation)
+    devolved_schools = create_list(:school, 5, :manages_orders, laptops: [1, 0, 0])
+    managed_schools = create_list(:school, 5, :centrally_managed, laptops: [1, 0, 0])
 
-    devolved_schools[0].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
-    devolved_schools[1].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    devolved_schools[2].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    devolved_schools[3].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    devolved_schools[4].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+    devolved_schools[0].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
+    devolved_schools[1].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
+    devolved_schools[2].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
+    devolved_schools[3].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
+    devolved_schools[4].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 0)
 
-    managed_schools[0].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
-    managed_schools[1].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
-    managed_schools[2].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    managed_schools[3].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
-    managed_schools[4].std_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+    managed_schools[0].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
+    managed_schools[1].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
+    managed_schools[2].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
+    managed_schools[3].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 0)
+    managed_schools[4].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 0)
   end
 
   def given_there_are_available_shipped_and_remaining_routers
-    devolved_schools = create_list(:school, 5, :manages_orders, :with_coms_device_allocation)
-    managed_schools = create_list(:school, 5, :centrally_managed, :with_coms_device_allocation)
+    devolved_schools = create_list(:school, 5, :manages_orders, routers: [1, 0, 0])
+    managed_schools = create_list(:school, 5, :centrally_managed, routers: [1, 0, 0])
 
-    devolved_schools[0].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
-    devolved_schools[1].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    devolved_schools[2].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    devolved_schools[3].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    devolved_schools[4].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+    devolved_schools[0].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 30)
+    devolved_schools[1].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
+    devolved_schools[2].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
+    devolved_schools[3].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
+    devolved_schools[4].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 0)
 
-    managed_schools[0].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
-    managed_schools[1].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 30)
-    managed_schools[2].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 10)
-    managed_schools[3].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
-    managed_schools[4].coms_device_allocation.update!(allocation: 30, cap: 30, devices_ordered: 0)
+    managed_schools[0].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 30)
+    managed_schools[1].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 30)
+    managed_schools[2].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
+    managed_schools[3].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 0)
+    managed_schools[4].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 0)
   end
 
   def given_some_extra_mobile_data_requests_have_been_made

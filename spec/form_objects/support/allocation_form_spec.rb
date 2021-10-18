@@ -1,49 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Support::AllocationForm, type: :model do
-  let(:order_state) { 'can_order' }
-
-  let(:rb) do
-    create(:local_authority,
-           :manages_centrally,
-           :vcap_feature_flag,
-           computacenter_reference: '1000')
-  end
-
-  let!(:school) do
-    create(:school,
-           :centrally_managed,
-           :with_std_device_allocation,
-           :with_coms_device_allocation,
-           order_state: order_state,
-           computacenter_reference: '11',
-           responsible_body: rb,
-           laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
-           router_allocation: 4, router_cap: 3, routers_ordered: 0)
-  end
-
-  let!(:school2) do
-    create(:school,
-           :centrally_managed,
-           :with_std_device_allocation,
-           :with_coms_device_allocation,
-           responsible_body: rb,
-           order_state: 'can_order_for_specific_circumstances',
-           computacenter_reference: '12',
-           laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
-           router_allocation: 4, router_cap: 4, routers_ordered: 0)
-  end
 
   before do
     stub_computacenter_outgoing_api_calls
   end
 
   describe '#save' do
+    let(:order_state) { 'can_order' }
+
+    let!(:school) do
+      create(:school,
+             :centrally_managed,
+             order_state: order_state,
+             computacenter_reference: '11',
+             responsible_body: rb,
+             laptops: [5, 4, 1],
+             routers: [4, 3, 0])
+    end
+
+    let!(:school2) do
+      create(:school,
+             :centrally_managed,
+             responsible_body: rb,
+             order_state: 'can_order_for_specific_circumstances',
+             computacenter_reference: '12',
+             laptops: [5, 4, 1],
+             routers: [4, 4, 0])
+    end
+
     context 'when the school is in virtual cap pool' do
       let(:allocation) { 6 }
       let(:category) {}
       let(:description) {}
       let(:device_type) { :laptop }
+      let(:rb) do
+        create(:local_authority,
+               :manages_centrally,
+               :vcap_feature_flag,
+               computacenter_reference: '1000')
+      end
 
       subject(:form) do
         described_class.new(allocation: allocation,
@@ -51,11 +47,6 @@ RSpec.describe Support::AllocationForm, type: :model do
                             school: school,
                             category: category,
                             description: description)
-      end
-
-      before do
-        AddSchoolToVirtualCapPoolService.new(school).call
-        AddSchoolToVirtualCapPoolService.new(school2).call
       end
 
       context 'when allocation decreases' do
@@ -67,10 +58,10 @@ RSpec.describe Support::AllocationForm, type: :model do
 
         it 'do not modify any school ordering value' do
           expect { form.save }.not_to change(school, :order_state)
-          expect { form.save }.not_to change(school, :laptop_allocation)
-          expect { form.save }.not_to change(school, :router_allocation)
-          expect { form.save }.not_to change(school, :router_cap)
-          expect { form.save }.not_to change(school, :laptop_cap)
+          expect { form.save }.not_to(change { school.allocation(:laptop) })
+          expect { form.save }.not_to(change { school.allocation(:router) })
+          expect { form.save }.not_to(change { school.cap(:router) })
+          expect { form.save }.not_to(change { school.cap(:laptop) })
         end
 
         it 'add error to school field' do
@@ -93,10 +84,10 @@ RSpec.describe Support::AllocationForm, type: :model do
 
         it 'do not modify any school ordering value' do
           expect { form.save }.not_to change(school, :order_state)
-          expect { form.save }.not_to change(school, :laptop_allocation)
-          expect { form.save }.not_to change(school, :router_allocation)
-          expect { form.save }.not_to change(school, :router_cap)
-          expect { form.save }.not_to change(school, :laptop_cap)
+          expect { form.save }.not_to(change { school.allocation(:laptop) })
+          expect { form.save }.not_to(change { school.allocation(:router) })
+          expect { form.save }.not_to(change { school.cap(:router) })
+          expect { form.save }.not_to(change { school.cap(:laptop) })
         end
 
         it 'add error to school field' do
@@ -108,7 +99,7 @@ RSpec.describe Support::AllocationForm, type: :model do
       end
 
       it 'modify the school device raw allocation' do
-        expect { form.save }.to change(school, :raw_laptop_allocation).from(5).to(6)
+        expect { form.save }.to change { school.raw_allocation(:laptop) }.from(5).to(6)
       end
 
       context 'when a category for the allocation change is given' do
@@ -128,7 +119,7 @@ RSpec.describe Support::AllocationForm, type: :model do
       end
 
       it 'modify the pool device allocation' do
-        expect { form.save }.to change(school, :laptop_allocation).from(10).to(11)
+        expect { form.save }.to change { school.allocation(:laptop) }.from(10).to(11)
       end
 
       it 'do not notify Computacenter by email' do
@@ -152,11 +143,11 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'update school device raw cap to match raw devices ordered' do
-          expect { form.save }.to change(school, :raw_laptop_cap).from(4).to(1)
+          expect { form.save }.to change { school.raw_cap(:laptop) }.from(4).to(1)
         end
 
         it 'update pool device cap' do
-          expect { form.save }.to change(school, :laptop_cap).from(8).to(5)
+          expect { form.save }.to change { school.cap(:laptop) }.from(8).to(5)
         end
 
         it 'update pool school device cap on Computacenter' do
@@ -180,11 +171,11 @@ RSpec.describe Support::AllocationForm, type: :model do
           end
 
           it 'update school device raw cap to match device raw allocation' do
-            expect { form.save }.to change(school, :raw_laptop_cap).from(4).to(6)
+            expect { form.save }.to change { school.raw_cap(:laptop) }.from(4).to(6)
           end
 
           it 'update pool device cap' do
-            expect { form.save }.to change(school, :laptop_cap).from(8).to(10)
+            expect { form.save }.to change { school.cap(:laptop) }.from(8).to(10)
           end
 
           it 'update pool school device cap on Computacenter' do
@@ -201,6 +192,11 @@ RSpec.describe Support::AllocationForm, type: :model do
       let(:category) {}
       let(:description) {}
       let(:device_type) { :laptop }
+      let(:rb) do
+        create(:local_authority,
+               :manages_centrally,
+               computacenter_reference: '1000')
+      end
 
       subject(:form) do
         described_class.new(allocation: allocation,
@@ -219,10 +215,10 @@ RSpec.describe Support::AllocationForm, type: :model do
 
         it 'do not modify any school ordering value' do
           expect { form.save }.not_to change(school, :order_state)
-          expect { form.save }.not_to change(school, :laptop_allocation)
-          expect { form.save }.not_to change(school, :router_allocation)
-          expect { form.save }.not_to change(school, :router_cap)
-          expect { form.save }.not_to change(school, :laptop_cap)
+          expect { form.save }.not_to change { school.allocation(:laptop) }
+          expect { form.save }.not_to change { school.allocation(:router) }
+          expect { form.save }.not_to change { school.cap(:router) }
+          expect { form.save }.not_to change { school.cap(:laptop) }
         end
 
         it 'add error to school field' do
@@ -237,7 +233,7 @@ RSpec.describe Support::AllocationForm, type: :model do
       end
 
       it 'modify the school device allocation' do
-        expect { form.save }.to change(school, :laptop_allocation).from(5).to(3)
+        expect { form.save }.to change { school.allocation(:laptop) }.from(5).to(3)
       end
 
       context 'when a category for the allocation change is given' do
@@ -267,7 +263,7 @@ RSpec.describe Support::AllocationForm, type: :model do
         end
 
         it 'update school device cap to match devices ordered' do
-          expect { form.save }.to change(school, :laptop_cap).from(4).to(1)
+          expect { form.save }.to change { school.cap(:laptop) }.from(4).to(1)
         end
 
         it 'update school device cap on Computacenter' do
@@ -304,7 +300,7 @@ RSpec.describe Support::AllocationForm, type: :model do
           end
 
           it 'update school device cap to match device allocation' do
-            expect { form.save }.to change(school, :laptop_cap).from(4).to(3)
+            expect { form.save }.to change { school.cap(:laptop) }.from(4).to(3)
           end
 
           it 'update pool schools device cap on Computacenter' do

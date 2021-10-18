@@ -10,33 +10,28 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   let!(:school_1) do
     create(:school,
            :centrally_managed,
-           :with_std_device_allocation,
            computacenter_reference: '01234567',
            responsible_body: trust,
-           laptop_allocation: 11,
-           laptop_cap: 11,
-           laptops_ordered: laptops_ordered)
+           laptops: [11, 11, laptops_ordered])
   end
 
   let!(:school_2) do
     create(:school,
            :centrally_managed,
-           :with_coms_device_allocation,
            computacenter_reference: '98765432',
            responsible_body: trust,
-           router_allocation: 22,
-           router_cap: 22,
-           routers_ordered: routers_ordered)
+           routers: [22, 22, routers_ordered])
   end
 
-  let(:allocations) { [school_1.std_device_allocation, school_2.coms_device_allocation] }
-
   let(:cap_data) do
-    allocations.map do |allocation|
-      OpenStruct.new(cap_type: allocation.computacenter_cap_type,
-                     ship_to: allocation.computacenter_reference,
-                     cap: allocation.computacenter_cap)
-    end
+    [
+      OpenStruct.new(cap_type: Computacenter::CapTypeConverter.to_computacenter_type(:laptop),
+                     ship_to: school_1.computacenter_reference,
+                     cap: school_1.computacenter_cap(:laptop)),
+      OpenStruct.new(cap_type: Computacenter::CapTypeConverter.to_computacenter_type(:router),
+                     ship_to: school_2.computacenter_reference,
+                     cap: school_2.computacenter_cap(:router)),
+    ]
   end
 
   let!(:network_call) do
@@ -83,15 +78,14 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
 
       before do
         trust.update!(vcap_feature_flag: true)
+        trust.calculate_virtual_caps!
         school_1.can_order!
         school_2.can_order!
-        school_1.preorder_information.update!(who_will_order_devices: 'responsible_body',
-                                              will_need_chromebooks: 'yes',
-                                              school_or_rb_domain: 'school_1.com',
-                                              recovery_email_address: 'school_1@gmail.com')
-        school_2.preorder_information.update!(who_will_order_devices: 'school',
-                                              will_need_chromebooks: 'no')
-        AddSchoolToVirtualCapPoolService.new(school_1)
+        school_1.update!(will_need_chromebooks: 'yes',
+                         school_or_rb_domain: 'school_1.com',
+                         recovery_email_address: 'school_1@gmail.com')
+        SchoolSetWhoManagesOrdersService.new(school_2, :school, notify: false).call
+        school_2.update!(will_need_chromebooks: 'no')
       end
 
       it 'generates a correct body using devices_ordered for the cap amounts to force manual handling at TechSource' do

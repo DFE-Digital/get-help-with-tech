@@ -66,11 +66,11 @@ RSpec.feature 'Changing who will order devices for a school' do
   end
 
   def given_a_school_that_is_centrally_managed
-    @school = create(:school, :centrally_managed, :with_std_device_allocation, responsible_body: @local_authority)
+    @school = create(:school, :centrally_managed, laptops: [1, 0, 0], responsible_body: @local_authority)
   end
 
   def given_a_school_that_manages_orders
-    @school = create(:school, :manages_orders, :with_std_device_allocation, responsible_body: @local_authority)
+    @school = create(:school, :manages_orders, laptops: [1, 0, 0], responsible_body: @local_authority)
   end
 
   def when_i_navigate_to_the_school_page_in_support

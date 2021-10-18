@@ -26,7 +26,7 @@ RSpec.describe SchoolContact, type: :model do
 
     context 'when current school contact' do
       before do
-        school.build_preorder_information(school_contact: contact)
+        school.school_contact = contact
       end
 
       it 'returns true' do

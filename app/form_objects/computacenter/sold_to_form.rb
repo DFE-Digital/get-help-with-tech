@@ -13,10 +13,8 @@ class Computacenter::SoldToForm
 private
 
   def update_computacenter
-    allocation_ids = responsible_body.schools
-                                     .includes(:std_device_allocation, :coms_device_allocation)
-                                     .map(&:allocation_ids).flatten
-    CapUpdateNotificationsService.new(*allocation_ids, notify_computacenter: false, notify_school: false).call
+    updates = responsible_body.schools.map(&:cap_updates)
+    CapUpdateNotificationsService.new(*updates.flatten, notify_computacenter: false, notify_school: false).call
   end
 
   def update_responsible_body

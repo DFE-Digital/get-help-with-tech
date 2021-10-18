@@ -78,23 +78,23 @@ RSpec.describe Support::ServicePerformance, type: :model do
 
     describe 'preorder_information_counts_by_status' do
       it 'returns the total number of preorder_information records with each status' do
-        expect(stats.preorder_information_counts_by_status['needs_info']).to eq(5)
-        expect(stats.preorder_information_counts_by_status['needs_contact']).to eq(2)
-        expect(stats.preorder_information_counts_by_status['school_will_be_contacted']).to eq(2)
-        expect(stats.preorder_information_counts_by_status['school_contacted']).to eq(2)
-        expect(stats.preorder_information_counts_by_status['ready']).to eq(3)
-        expect(stats.preorder_information_counts_by_status['school_ready']).to eq(7)
+        expect(stats.school_counts_by_status['needs_info']).to eq(5)
+        expect(stats.school_counts_by_status['needs_contact']).to eq(2)
+        expect(stats.school_counts_by_status['school_will_be_contacted']).to eq(2)
+        expect(stats.school_counts_by_status['school_contacted']).to eq(2)
+        expect(stats.school_counts_by_status['ready']).to eq(3)
+        expect(stats.school_counts_by_status['school_ready']).to eq(7)
       end
     end
 
     describe '#preorder_information_by_status' do
       it 'returns the count of records with the given status' do
-        expect(stats.preorder_information_by_status('needs_info')).to eq(5)
-        expect(stats.preorder_information_by_status('needs_contact')).to eq(2)
-        expect(stats.preorder_information_by_status('school_will_be_contacted')).to eq(2)
-        expect(stats.preorder_information_by_status('school_contacted')).to eq(2)
-        expect(stats.preorder_information_by_status('ready')).to eq(3)
-        expect(stats.preorder_information_counts_by_status['school_ready']).to eq(7)
+        expect(stats.school_by_status('needs_info')).to eq(5)
+        expect(stats.school_by_status('needs_contact')).to eq(2)
+        expect(stats.school_by_status('school_will_be_contacted')).to eq(2)
+        expect(stats.school_by_status('school_contacted')).to eq(2)
+        expect(stats.school_by_status('ready')).to eq(3)
+        expect(stats.school_counts_by_status['school_ready']).to eq(7)
       end
     end
 
@@ -291,22 +291,14 @@ RSpec.describe Support::ServicePerformance, type: :model do
             :school,
             responsible_body: entry[:rb],
             status: school_data[:open] ? 'open' : 'closed',
+            laptops: school_data.values_at(:cap, :cap, :devices_ordered),
           )
 
           if entry[:devolved]
-            create(:preorder_information, :school_will_order, school: school_record)
+            SchoolSetWhoManagesOrdersService.new(school_record, :school).call
           else
-            create(:preorder_information, :rb_will_order, school: school_record)
+            SchoolSetWhoManagesOrdersService.new(school_record, :responsible_body).call
           end
-
-          create(
-            :school_device_allocation,
-            school: school_record,
-            device_type: 'std_device',
-            cap: school_data[:cap],
-            allocation: school_data[:cap],
-            devices_ordered: school_data[:devices_ordered],
-          )
         end
       end
     end

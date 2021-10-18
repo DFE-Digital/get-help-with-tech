@@ -186,7 +186,7 @@ private
   def all_centrally_managed_schools_ids
     @responsible_body.schools
       .gias_status_open
-      .that_are_centrally_managed
+      .responsible_body_will_order_devices
       .order(id: :asc)
       .pluck(:id)
   end

@@ -1,43 +1,30 @@
 class Support::UsersController < Support::BaseController
   before_action :set_user, except: %i[new create search results]
   before_action { authorize User }
+  before_action :set_school_if_present, only: %i[new create]
+  before_action :set_responsible_body_if_present, only: %i[new create]
+  before_action :deny_access_if_school_cannot_invite_users, only: %i[new]
 
   def new
-    set_school_if_present
-    set_responsible_body_if_present
-
-    deny_access_if_school_cannot_invite_users
-
-    @form = Support::NewUserForm.new(
-      school: @school,
-      responsible_body: @responsible_body,
-    )
+    @form = Support::NewUserForm.new(school: @school, responsible_body: @responsible_body)
     @user = User.new
     authorize @user
   end
 
   def create
-    set_school_if_present
-    set_responsible_body_if_present
-
     authorize User, :create?
     if @school
       @user = CreateUserService.invite_school_user(
-        user_params.merge(school_id: @school.id),
-      )
+        user_params.merge(school_id: @school.id))
     elsif @responsible_body
       @user = CreateUserService.invite_responsible_body_user(
-        user_params.merge(responsible_body_id: @responsible_body.id),
-      )
+        user_params.merge(responsible_body_id: @responsible_body.id))
     end
 
     if @user.persisted?
       redirect_to support_user_path(@user)
     else
-      @form = Support::NewUserForm.new(
-        school: @school,
-        responsible_body: @responsible_body,
-      )
+      @form = Support::NewUserForm.new(school: @school, responsible_body: @responsible_body)
       render :new, status: :unprocessable_entity
     end
   end
@@ -120,9 +107,7 @@ private
   end
 
   def deny_access_if_school_cannot_invite_users
-    if @school && !@school.can_invite_users?
-      not_found
-    end
+    not_found if @school && !@school.can_invite_users?
   end
 
   def set_responsible_body_if_present

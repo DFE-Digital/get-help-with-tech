@@ -9,10 +9,12 @@ RSpec.describe ResponsibleBody::Devices::OrdersController do
   end
 
   describe '#show' do
-    let!(:closed_school) { create(:school, responsible_body: rb, status: :closed, order_state: :can_order) }
-
-    before do
-      create(:preorder_information, school: closed_school, who_will_order_devices: :responsible_body)
+    let!(:closed_school) do
+      create(:school,
+             :centrally_managed,
+             responsible_body: rb,
+             status: :closed,
+             order_state: :can_order)
     end
 
     it 'excludes closed schools' do

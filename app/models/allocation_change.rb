@@ -1,5 +1,11 @@
 class AllocationChange < ApplicationRecord
-  belongs_to :school_device_allocation
+
+  #### PENDING MIGRATIONS
+  ####   Add :device_type
+  ####   Add :school_id
+  ####   Remove :school_device_allocation_id
+
+  belongs_to :school
 
   enum category: {
     allocation_error_reversal: 'allocation_error_reversal',
