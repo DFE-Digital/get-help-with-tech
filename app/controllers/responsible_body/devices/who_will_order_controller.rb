@@ -11,7 +11,7 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::BaseCo
 
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
-      ResponsibleSetWhoWillOrderDevicesService.new(@responsible_body, @form.who_will_order).call
+      ResponsibleBodySetWhoWillOrderDevicesService.new(@responsible_body, @form.who_will_order).call
 
       event = WhoWillOrderEvent.new(responsible_body: @responsible_body)
       EventNotificationsService.broadcast(event)

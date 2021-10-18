@@ -104,7 +104,7 @@ RSpec.feature 'Ordering devices' do
   def then_i_see_the_order_for_specific_circumstances_page
     expect(page).to have_css('h1', text: 'You can order devices for specific circumstances')
     expect(page).to have_text(schools[1].name)
-    expect(page).to have_text('Order 4 devices for specific circumstances')
+    expect(page).to have_text('Order 4 devices and 0 routers for specific circumstances')
   end
 
   def then_i_see_the_order_now_page

@@ -1,15 +1,6 @@
 require 'computacenter/responsible_body_urns'
 
 class ResponsibleBody < ApplicationRecord
-  #### PENDING MIGRATIONS
-  ####   Add t.integer "laptop_allocation", default: 0, null: false
-  ####   Add t.integer "laptop_cap", default: 0, null: false
-  ####   Add t.integer "laptops_ordered", default: 0, null: false
-
-  ####   Add t.integer "router_allocation", default: 0, null: false
-  ####   Add t.integer "router_cap", default: 0, null: false
-  ####   Add t.integer "routers_ordered", default: 0, null: false
-
   has_one :bt_wifi_voucher_allocation
   belongs_to :key_contact, class_name: 'User', optional: true
   has_many :bt_wifi_vouchers

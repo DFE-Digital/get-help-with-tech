@@ -76,6 +76,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
 
   context 'when the school has preorder information and was centrally managed' do
     it 'updates the preorder information so the school will order devices' do
+      stub_computacenter_outgoing_api_calls
       SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
 
       converter.convert_to_sat

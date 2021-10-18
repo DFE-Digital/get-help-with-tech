@@ -17,8 +17,7 @@ class DeviceSupplierExportAllocationsService
 
     CSV.open(target_path, 'wb') do |csv|
       csv << csv_headers
-      School.includes(:std_device_allocation, :preorder_information, responsible_body: :virtual_cap_pools)
-            .find_each do |school|
+      School.includes(:responsible_body).find_each do |school|
         update_progress
         add_school_to_csv(csv, school)
       end
@@ -64,7 +63,7 @@ private
   def csv_row(school, responsible_body, ship_to, sold_to)
     [school.urn,
      school.order_state,
-     school&.preorder_information&.who_will_order_devices,
+     school.who_will_order_devices,
      ship_to,
      sold_to,
      school.name,
@@ -82,16 +81,16 @@ private
      responsible_body.town,
      responsible_body.county,
      responsible_body.postcode,
-     school.raw_laptop_allocation,
-     school.raw_laptop_cap,
-     school.laptop_computacenter_cap,
-     school.raw_laptops_ordered,
+     school.raw_allocation(:laptop),
+     school.raw_cap(:laptop),
+     school.computacenter_cap(:laptop),
+     school.raw_devices_ordered(:laptop),
      rb_vcap_feature_flag_text(school),
      schools_vcap_enabled_text(school)]
   end
 
   def rb_vcap_feature_flag_text(school)
-    school.responsible_body.vcap_feature_flag ? 'Yes' : 'No'
+    school.responsible_body.vcap_active? ? 'Yes' : 'No'
   end
 
   def school_allocation_and_rb_details(school)
@@ -102,13 +101,8 @@ private
     csv_row(school, responsible_body, ship_to, sold_to)
   end
 
-  def schools_vcap_enabled?(school)
-    school.responsible_body.vcap_feature_flag &&
-      school.responsible_body.virtual_cap_pools.any? { |pool| pool.has_school?(school) }
-  end
-
   def schools_vcap_enabled_text(school)
-    schools_vcap_enabled?(school) ? 'Yes' : 'No'
+    school.in_virtual_cap_pool? ? 'Yes' : 'No'
   end
 
   def update_progress

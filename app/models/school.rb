@@ -5,29 +5,6 @@ class School < ApplicationRecord
 
   DEVICE_TYPES = %i[laptop router].freeze
 
-  #### PENDING MIGRATIONS
-  ####   Add t.string "preorder_status", null: false, index: true
-  ####   Add t.bigint "school_contact_id", index: true
-  ####   Add t.string "will_need_chromebooks"
-  ####   Add t.string "school_or_rb_domain"
-  ####   Add t.string "recovery_email_address"
-  ####   Add t.datetime "school_contacted_at"
-  ####   Add t.string "who_will_order_devices", null: false, default: 'responsible_body', index: true
-
-  ####   Add t.boolean "in_virtual_cap_pool", null: false, default: false, index: true
-
-  ####   Add t.integer "raw_laptop_allocation", default: 0, null: false
-  ####   Add t.integer "raw_laptop_cap", default: 0, null: false
-  ####   Add t.integer "raw_laptops_ordered", default: 0, null: false
-  ####   Add t.datetime "laptop_cap_update_request_timestamp", index: true
-  ####   Add t.datetime "laptop_cap_update_request_payload_id", index: true
-
-  ####   Add t.integer "raw_router_allocation", default: 0, null: false
-  ####   Add t.integer "raw_router_cap", default: 0, null: false
-  ####   Add t.integer "raw_routers_ordered", default: 0, null: false
-  ####   Add t.datetime "router_cap_update_request_timestamp"
-  ####   Add t.datetime "router_cap_update_request_payload_id"
-
   belongs_to :responsible_body
   belongs_to :school_contact, optional: true
 

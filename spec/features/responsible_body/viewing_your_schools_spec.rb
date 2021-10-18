@@ -126,8 +126,8 @@ RSpec.feature 'Viewing your schools' do
   def then_i_see_the_summary_pooled_device_count_card
     expect(page).to have_content("#{responsible_body.name} has:")
     responsible_body.reload
-    std_count = responsible_body.std_device_pool.cap - responsible_body.std_device_pool.devices_ordered
-    coms_count = responsible_body.coms_device_pool.cap - responsible_body.coms_device_pool.devices_ordered
+    std_count = responsible_body.cap(:laptop) - responsible_body.devices_ordered(:laptop)
+    coms_count = responsible_body.cap(:router) - responsible_body.devices_ordered(:router)
     expected =
       if std_count == 0 && coms_count == 0
         'No devices left to order'

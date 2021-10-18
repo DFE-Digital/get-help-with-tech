@@ -1,19 +1,21 @@
 class UpdateSchoolDevicesService
   attr_reader :allocation_change_category, :allocation_change_description,
-              :laptop_allocation, :laptop_cap, :laptop_cap_changed,
+              :laptop_allocation, :laptop_cap, :laptop_cap_changed, :laptops_ordered,
               :notify_computacenter, :notify_school, :order_state, :school,
-              :router_allocation, :router_cap, :router_cap_changed
+              :router_allocation, :router_cap, :router_cap_changed, :routers_ordered
 
   def initialize(school:, order_state:, notify_school: true, notify_computacenter: true, **opts)
     @allocation_change_category = opts[:allocation_change_category]
     @allocation_change_description = opts[:allocation_change_description]
     @laptop_allocation = opts[:laptop_allocation]
     @laptop_cap = opts[:laptop_cap]
+    @laptops_ordered = opts[:laptops_ordered]
     @notify_computacenter = notify_computacenter
     @notify_school = notify_school
     @order_state = order_state
-    @router_cap = opts[:router_cap]
     @router_allocation = opts[:router_allocation]
+    @router_cap = opts[:router_cap]
+    @routers_ordered = opts[:routers_ordered]
     @school = school
   end
 

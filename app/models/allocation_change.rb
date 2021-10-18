@@ -1,10 +1,4 @@
 class AllocationChange < ApplicationRecord
-
-  #### PENDING MIGRATIONS
-  ####   Add :device_type
-  ####   Add :school_id
-  ####   Remove :school_device_allocation_id
-
   belongs_to :school
 
   enum category: {

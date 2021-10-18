@@ -70,9 +70,9 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   def given_my_order_information_is_up_to_date
     responsible_body.update!(who_will_order_devices: 'responsible_body', vcap_feature_flag: true)
     responsible_body.schools.update_all(will_need_chromebooks: 'no')
-    SchoolSetWhoManagesOrdersService.new(school[0], :responsible_body).call
-    SchoolSetWhoManagesOrdersService.new(school[1], :responsible_body).call
-    SchoolSetWhoManagesOrdersService.new(school[3], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(schools[3], :responsible_body).call
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_full_allocation

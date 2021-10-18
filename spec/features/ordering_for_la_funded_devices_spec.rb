@@ -99,7 +99,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def given_i_have_not_ordered_all_my_laptops
-    @school.update!(raw_laptop_allocation: 2, raw_laptops_ordered: 1)
+    @school.update!(raw_laptop_allocation: 2, raw_laptop_cap: 2, raw_laptops_ordered: 1)
   end
 
   def given_i_have_ordered_all_of_my_laptops

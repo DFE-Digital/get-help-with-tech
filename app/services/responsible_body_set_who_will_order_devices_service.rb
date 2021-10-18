@@ -33,7 +33,7 @@ private
   end
 
   def log_error(e)
-    school.errors.add(:base, e.message)
+    responsible_body.errors.add(:base, e.message)
     Rails.logger.error(e.message)
     Sentry.capture_exception(e)
   end
