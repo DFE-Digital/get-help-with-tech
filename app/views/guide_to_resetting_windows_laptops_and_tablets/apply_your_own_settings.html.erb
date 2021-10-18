@@ -2,20 +2,33 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 6 } %>
 
-    <p class="govuk-body">After resetting devices, you should apply your own security settings and set up content filtering to ensure they’re safe for users.</p>
-
     <p class="govuk-body">
-      For more information on how to do this, read our guidance on <%= govuk_link_to 'preparing standard Microsoft Windows laptops and tablets', '/devices/preparing-a-standard-windows-device' %>.
+      After resetting devices, you should apply your own security settings and set up content
+      filtering to ensure they&rsquo;re safe for users.
     </p>
 
-    <p class="govuk-body">Guidance on <%= govuk_link_to 'Keeping Children Safe in Education', 'https://www.gov.uk/government/publications/keeping-children-safe-in-education--2' %> provides online safety resources, including:</p>
+    <p class="govuk-body">
+      For more information on how to do this, read our guidance on
+      <%= govuk_link_to 'preparing standard Microsoft Windows laptops and tablets', '/devices/preparing-a-standard-windows-device' %>.
+    </p>
+
+    <p class="govuk-body">
+      Guidance on
+      <%= govuk_link_to 'Keeping Children Safe in Education', 'https://www.gov.uk/government/publications/keeping-children-safe-in-education--2' %>
+      provides online safety resources, including:
+    </p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li><%= govuk_link_to 'Appropriate filtering and monitoring', 'https://www.saferinternet.org.uk/advice-centre/teachers-and-school-staff/appropriate-filtering-and-monitoring', target: '_blank', rel: 'noopener noreferrer' %> from saferinternet.org.uk</li>
       <li><%= govuk_link_to 'Cyber security advice for school SLTs and technical staff', 'https://www.nen.gov.uk/advice/', target: '_blank', rel: 'noopener noreferrer' %> from nen.gov.uk</li>
     </ul>
 
-    <p class="govuk-body">Check the <%= govuk_link_to 'technical specifications of laptops and tablets', '/devices/device-specification' %> to help determine what software is compatible with your devices.</p>
+    <p class="govuk-body">
+      Check the
+      <%= govuk_link_to 'technical specifications of laptops and tablets', '/devices/device-specification' %>
+      to help determine what software
+      is compatible with your devices.
+    </p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>

@@ -2,7 +2,11 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 7 } %>
 
-    <p class="govuk-body"><%= govuk_link_to 'Contact us', support_ticket_path %> if you have any queries related to taking control of devices, applying your own settings or software licenses.</p>
+    <p class="govuk-body">
+      <%= govuk_link_to 'Contact us', support_ticket_path %>
+      if you have any queries related to taking control of devices, applying your own
+      settings or software licences.
+    </p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
