@@ -16,6 +16,7 @@ en:
     token_not_recognised: We did not recognise that link
     confirm: Check your answers before confirming
     new_user: Create an account
+    finding_out_about_internet_access_needs: Finding out about internet access needs
     error_prefix: "Error: "
     responsible_body:
       devices:
