@@ -2,17 +2,25 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'guide_contents', locals: { index: 5 } %>
 
-    <p class="govuk-body">Your device is now ready to be reset to factory settings. This will usually take between 40 and 60 minutes.</p>
+    <p class="govuk-body">
+      Your device is now ready to be reset to factory settings. This will usually take between 40
+      and 60 minutes.
+    </p>
 
     <h3 class="govuk-heading-m">
       Enter recovery mode
     </h3>
 
-    <p class="govuk-body">Open the Windows Start menu and select the power button. While holding down ‘Shift’ select ‘Restart’.</p>
+    <p class="govuk-body">
+      Open the Windows Start menu and select the power button. While holding down &lsquo;Shift&rsquo; select &lsquo;Restart&rsquo;.
+    </p>
 
     <p class="govuk-body">The device should restart to a blue recovery mode screen.</p>
 
-    <p class="govuk-body">If the above method is not successful, try pressing and holding the following keys while your device is booting:</p>
+    <p class="govuk-body">
+      If the above method is not successful, try pressing and holding the following keys while
+      your device is booting:
+    </p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>Acer &ndash; F2</li>
@@ -23,7 +31,9 @@
       <li>Lenovo &ndash; FN+F11 at the same time</li>
     </ul>
 
-    <p class="govuk-body">Consult the manufacturer’s guidance for specific instructions if the methods above do not work.</p>
+    <p class="govuk-body">
+      Consult the manufacturer&rsquo;s guidance for specific instructions if the methods above do not work.
+    </p>
 
     <h3 class="govuk-heading-m">
       Perform a factory reset
@@ -32,19 +42,30 @@
     <p class="govuk-body">From the recovery mode menu:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>select ‘Troubleshoot’ and select ‘Reset this PC’ &ndash; if you’re asked where to reinstall Windows, select ‘Local Reinstall’</li>
-      <li>select ‘Remove everything’ &ndash; your screen may go blank for a short period after this</li>
-      <li>when asked if you want to keep this PC set up for your workspace, select ‘No’</li>
-      <li>select ‘Clean the drive fully’ and select ‘Reset’ when prompted</li>
+      <li>select &lsquo;Troubleshoot&rsquo; and select &lsquo;Reset this PC&rsquo; &ndash; if you&rsquo;re asked where to reinstall Windows, select &lsquo;Local Reinstall&rsquo;</li>
+      <li>select &lsquo;Remove everything&rsquo; &ndash; your screen may go blank for a short period after this</li>
+      <li>when asked if you want to keep this PC set up for your workspace, select &lsquo;No&rsquo;</li>
+      <li>select &lsquo;Clean the drive fully&rsquo; and select &lsquo;Reset&rsquo; when prompted</li>
     </ul>
 
-    <p class="govuk-body">The device will now enter the reset process &ndash; this usually takes between 40 and 60 minutes.</p>
-
     <p class="govuk-body">
-      If you cannot complete these steps, the BIOS password process may not have been completed correctly. Revisit <%= govuk_link_to 'step 2 of this guide', devices_guide_to_resetting_windows_laptops_and_tablets_get_local_admin_and_bios_passwords_path %>, or <%= govuk_link_to 'contact us', support_ticket_path %> if you require additional support.
+      The device will now enter the reset process &ndash; this usually takes between 40 and 60 minutes.
     </p>
 
-    <p class="govuk-body">The reset is complete when you see either the Windows setup screen or a black screen with white text asking if you wish to remove the TPM (Trusted Platform Module). This is up to your organisation’s preferences and not part of our reset guidance.</p>
+    <p class="govuk-body">
+      If you cannot complete these steps, the BIOS password process may not have been
+      completed correctly. Revisit
+      <%= govuk_link_to 'step 2 of this guide', devices_guide_to_resetting_windows_laptops_and_tablets_get_local_admin_and_bios_passwords_path %>,
+      or
+      <%= govuk_link_to 'contact us', support_ticket_path %>
+      if you require additional support.
+    </p>
+
+    <p class="govuk-body">
+      The reset is complete when you see either the Windows setup screen or a black screen
+      with white text asking if you wish to remove the TPM (Trusted Platform Module). This is up
+      to your organisation&rsquo;s preferences and not part of our reset guidance.
+    </p>
 
     <%= render partial: 'shared/guide_navigation' %>
   </div>
