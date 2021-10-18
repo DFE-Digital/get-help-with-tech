@@ -306,7 +306,7 @@ en:
       guidance_section: setup_guide_pages
     preparing_chromebooks:
       title: Google Chromebooks setup guide
-      description: Guidance on how to enrol Google Chromebooks on your domain and options for applying content filtering.
+      description: Guidance on how to enrol Google Chromebooks on your domain and information about software.
       guidance_section: setup_guide_pages
     remove_dfe_provided_cisco_umbrella_from_chromebooks:
       title: Remove DfE-provided Cisco Umbrella from Chromebooks

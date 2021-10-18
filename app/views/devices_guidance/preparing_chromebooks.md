@@ -1,68 +1,68 @@
-The person who placed a Chromebook order will receive an email from
-<span class="app-no-wrap">deal-fulfillment@google.com</span> including important information regarding device setup. We
-suggest this email is forwarded to the technical contact responsible for preparing 
+The person placing the Chromebook order will receive an email from
+<span class="app-no-wrap">deal-fulfillment@google.com</span>, which includes important information about device setup. 
+
+We suggest you forward this email to the technical contact responsible for preparing 
 Chromebooks.
 
-This guidance is written with reference to Chromebooks provided through the Get help 
-with technology programme. It also applies to any new or refurbished devices a school or 
-college has received through donations. Further information on [erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) 
-is available from the National Cyber Security Centre.
+This guidance is for Chromebooks provided through the Get help with technology 
+programme, as well as new or refurbished devices a school or college receives through
+donations. Further information on 
+[erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) 
+is available from the 
+National Cyber Security Centre.
 
 ## Getting a Google domain
 
-When you ordered your Google Chromebooks you provided your Google domain, which 
-we used to link to your licenses for the Google Admin console.
+If you do not have a Google domain, we recommend you set one up before placing your
+order for Chromebooks. Schools can set up a Google Domain and get access to Google
+for Education by 
+[applying for government-funded support](/digital-platforms).
 
-If you didn’t enter a Google domain and don’t have one, you can set one up. Schools can
-set up a Google Domain and get access to Google for Education by [applying for government-funded support](/digital-platforms).
-
-For Chromebooks for children linked to schools, local authorities should use the school’s 
-domain so that children can access their remote education as well as social care. If the 
-Chromebook is for a young person who is not linked to a school, local authorities can 
+For Chromebooks linked to schools, local authorities should use the school&rsquo;s domain so 
+that children can access their remote education as well as social care. If the Chromebook
+is for a young person who&rsquo;s not linked to a school, local authorities can 
 [set up a Google domain for care leavers and families with children that have a social worker](/devices/google-domain-for-care-leavers-and-children-with-social-worker).
 
 ## How to enrol Chromebooks
 
+When you order your Google Chromebooks you&rsquo;re asked to provide your Google domain,
+which we use to link to your licences for the Google Admin console.
+
 You need to enrol your Chromebooks so you can manage them remotely.
 
-Before you enrol your devices, please ensure that you have the correct number of Chrome 
-licenses available in your domain by going to <span class="app-no-wrap">‘Devices’ > ‘Chrome devices’</span> and clicking the 
-‘Upgrades’ button in the top right. If you do not have enough licenses for the number of devices
-you need to enrol and manage, please contact [COVID.TECHNOLOGY@education.gov.uk](mailto:COVID.TECHNOLOGY@education.gov.uk).
+Before you enrol your devices, ensure that you have the correct number of Chrome 
+licences available in your domain by going to <span class="app-no-wrap">&lsquo;Devices&rsquo; > &lsquo;Chrome devices&rsquo;</span> and selecting 
+the &lsquo;Upgrades&rsquo; button in the top right. 
 
-First, create an organisational unit called ‘DfE Devices’ in your Google Admin Console, then 
-follow these instructions to enrol your devices:
+First, create an organisational unit called &lsquo;DfE Devices&rsquo; in your Google Admin Console, 
+then follow these instructions to enrol your devices:
 
-1. Unbox multiple devices and turn on
-1. Connect to WiFi
-1. On the login screen press ‘ctrl’ + ‘alt’ + ‘e’ (or select ‘More options’ > ‘Enterprise Enrollment’)
-1. Enter credentials on enrollment screen (use credentials from an account on your domain)
-1. Wait for ‘Your Chromebook has been successfully enrolled’ and select ‘Next’
+1. Unbox multiple devices and turn on.
+1. Connect to WiFi.
+1. On the login screen press &lsquo;ctrl&rsquo; + &lsquo;alt&rsquo; + &lsquo;e&rsquo; (or select &lsquo;More options&rsquo; > &lsquo;Enterprise Enrollment&rsquo;).
+1. Enter credentials on enrolment screen (use credentials from an account on your domain).
+1. Wait for &lsquo;Your Chromebook has been successfully enrolled&rsquo; and select &lsquo;Next&rsquo;.
 
-## Chromebook settings and software
+## Chromebook settings
 
 ### Content filtering
 
 <div class="govuk-inset-text">
   <p>
-    Chromebooks provided through the Get Help With Technology programme previously 
-    came with the option of Cisco Umbrella content filtering. Licenses for Cisco Umbrella that 
-    were provided by DfE are not intended to be a permanent solution. You should enable 
-    alternative security settings as soon as possible. It’s your responsibility to avoid risks to the 
-    online safety of the children and young people you’re providing devices to. 
+    Google Chromebooks provided by Get help with technology from October 2021 do not
+    come with web filtering software. You should arrange your own security settings to ensure
+    the devices are safe for children and young people to use.
   </p>
 </div>
 
-Find out [how to remove Cisco Umbrella from Chromebooks](/devices/remove-dfe-provided-cisco-umbrella-from-chromebooks).
-
-#### For devices previously provided that use Cisco Umbrella content filtering
-
-Websites that users visit on their devices will be logged by Cisco Umbrella, but DfE will not 
-monitor these logs and they will not be available to schools, local authorities or trusts. DfE 
-may turn logging on when adjusting filtering rules to test whether they’re effective.
-
-This filtering should not prevent legitimate use of the devices. [Contact us](/get-support) to report 
-instances where legitimate use is blocked or inappropriate content can be accessed.
+Chromebooks provided before October 2021 through the Get help with technology
+programme came with the option of Cisco Umbrella content filtering. Licences for Cisco
+Umbrella that were provided by DfE are not intended to be a permanent solution. You
+should 
+[remove Cisco Umbrella from Chromebooks](/devices/remove-dfe-provided-cisco-umbrella-from-chromebooks)
+and enable alternative security settings
+as soon as possible. It&rsquo;s your responsibility to ensure the online safety of the children and
+young people you&rsquo;re providing devices to.
 
 ## Software
 
@@ -72,20 +72,12 @@ Chromebooks come with Chrome OS. This manages:
 * anti-malware
 * anti-virus
 
-Chromebooks have the H1 Secure Microcontroller, which is Google’s version of TPM 
-(Microsoft’s encrypted processor). This allows patching and OS updates to be installed 
-more quickly, so it’s easier to keep devices up to date.
+Chromebooks have the H1 Secure Microcontroller, which is Google&rsquo;s version of TPM 
+(Microsoft&rsquo;s encrypted processor). This allows patching and OS updates to be installed 
+more quickly, so it&rsquo;s easier to keep devices up to date.
 
 Children and young people can also use:
 
 * Google Docs
 * Google Sheets
 * Google Slides
-
-## User guidance for young people and their carers
-
-Our guidance on [how to get started with your Google Chromebook](/devices/getting-started-with-your-google-chromebook) can be shared with 
-young people and their parents, guardians and carers.
-
-You may want to add contact information to this guidance for the person or team offering 
-IT support to device users.
