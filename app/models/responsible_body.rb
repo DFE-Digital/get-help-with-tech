@@ -232,22 +232,6 @@ class ResponsibleBody < ApplicationRecord
             routers_ordered: values.ordered_sum.to_i)
     update_cap_on_computacenter(:router) if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
   end
-  #
-  # def recalculate_laptop_vcap
-  #   Rails.logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
-  #   update!(laptop_allocation: vcap_schools.sum(:raw_laptop_allocation),
-  #           laptop_cap: vcap_schools.sum(:raw_laptop_cap),
-  #           laptops_ordered: vcap_schools.sum(:raw_laptops_ordered))
-  #   update_cap_on_computacenter(:laptop) if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
-  # end
-  #
-  # def recalculate_router_vcap
-  #   Rails.logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
-  #   update!(router_allocation: vcap_schools.sum(:raw_router_allocation),
-  #           router_cap: vcap_schools.sum(:raw_router_cap),
-  #           routers_ordered: vcap_schools.sum(:raw_routers_ordered))
-  #   update_cap_on_computacenter(:router) if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
-  # end
 
   def schools_by_order_status
     schools_by_name = active_schools.order(name: :asc)

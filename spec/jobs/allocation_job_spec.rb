@@ -281,7 +281,6 @@ RSpec.describe AllocationJob do
 
       before do
         create_list(:school, 2, :centrally_managed, responsible_body: rb, laptops: [2, 2, 1])
-
         batch_job
       end
 

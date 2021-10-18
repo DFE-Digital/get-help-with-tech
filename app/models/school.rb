@@ -28,11 +28,9 @@ class School < ApplicationRecord
 
   before_save :check_and_update_status_if_necessary
   before_create :set_computacenter_change
-  before_update :record_over_order
   after_update :maybe_generate_user_changes
   after_save :recalculate_virtual_caps
   after_commit :refresh_preorder_status!, on: :create
-
 
   enum computacenter_change: {
     none: 'none',
@@ -400,11 +398,6 @@ class School < ApplicationRecord
     update!(school_contact: contact)
   end
 
-  def set_devices_ordered!(device_type, quantity)
-    field = laptop?(device_type) ? :raw_laptops_ordered : :raw_routers_ordered
-    update!(field => quantity)
-  end
-
   def set_headteacher_as_contact!
     update!(school_contact: headteacher)
   end
@@ -496,21 +489,11 @@ private
     user_schools.map(&:user).each(&:generate_user_change_if_needed!)
   end
 
-  def over_order_occurred?(device_type)
-    send("raw_#{device_type}s_ordered_changed?") && raw_devices_ordered(device_type) > raw_allocation(device_type)
-  end
-
   def recalculate_virtual_caps
     return unless in_virtual_cap_pool?
 
     DEVICE_TYPES.each do |device_type|
       responsible_body.calculate_virtual_caps!(device_type) if calculate_virtual_cap?(device_type)
-    end
-  end
-
-  def record_over_order
-    DEVICE_TYPES.each do |device_type|
-      AllocationOverOrderService.new(self, device_type).call if over_order_occurred?(device_type)
     end
   end
 

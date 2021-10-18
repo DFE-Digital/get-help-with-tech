@@ -28,7 +28,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
           ],
         ]
 
-        school.update!(raw_laptops_ordered: 9)
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: school.order_state,
+                                       laptops_ordered: 9).call
 
         expect(school).to have_received(:refresh_preorder_status!)
         expect_school_to_be_in_rb(school_id: school.id,
@@ -87,7 +89,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
             ],
           ]
 
-          school.update!(raw_laptops_ordered: 18)
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 18).call
 
           expect(school).to have_received(:refresh_preorder_status!)
           expect_school_to_be_in_rb(school_id: school.id,
@@ -133,7 +137,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
           ],
         ]
 
-        school.update!(raw_laptops_ordered: 9)
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: school.order_state,
+                                       laptops_ordered: 9).call
 
         expect(school).to have_received(:refresh_preorder_status!)
         expect_school_to_be_in_rb(school_id: school.id,

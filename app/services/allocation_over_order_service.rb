@@ -1,18 +1,14 @@
 class AllocationOverOrderService
-  attr_reader :allocation, :device_type, :raw_allocation, :raw_devices_ordered, :school
+  attr_reader :allocation, :device_type, :over_order, :school
 
-  def initialize(school, device_type)
+  def initialize(school, over_order, device_type)
     @device_type = device_type
+    @over_order = over_order
     @school = school
-    @raw_allocation = school.raw_allocation(device_type)
-    @raw_devices_ordered = school.raw_devices_ordered(device_type)
   end
 
   def call
-    School.transaction do
-      reclaim_allocation_across_virtual_cap_pool if school.in_virtual_cap_pool?
-      increase_allocation_value_to_match_devices_ordered
-    end
+    reclaim_allocation_across_virtual_cap_pool if school.in_virtual_cap_pool?
   end
 
 private
@@ -37,26 +33,14 @@ private
     router? ? :router_cap : :laptop_cap
   end
 
-  def increase_allocation_value_to_match_devices_ordered
-    UpdateSchoolDevicesService.new(school: school,
-                                   order_state: school.order_state,
-                                   allocation_type => raw_devices_ordered,
-                                   cap_type => raw_devices_ordered,
-                                   allocation_change_category: :over_order,
-                                   allocation_change_description: 'Over Order').call
-  end
-
-  def over_ordered
-    raw_devices_ordered - raw_allocation
-  end
-
   def reclaim_allocation_across_virtual_cap_pool
-    to_reclaim = available_allocations_in_the_vcap_pool.inject(over_ordered) do |quantity, member|
-      quantity -= reclaim_allocation_from_vcap_pool_member(member, quantity: quantity)
-      quantity.zero? ? break : quantity
+    School.transaction do
+      to_reclaim = available_allocations_in_the_vcap_pool.inject(over_order) do |quantity, member|
+        quantity -= reclaim_allocation_from_vcap_pool_member(member, quantity: quantity)
+        quantity.zero? ? break : quantity
+      end
+      alert_pool_allocation_reclaim_failed(to_reclaim) if to_reclaim
     end
-
-    alert_pool_allocation_reclaim_failed(to_reclaim) if to_reclaim
   end
 
   def reclaim_allocation_from_vcap_pool_member(member, quantity: 0)

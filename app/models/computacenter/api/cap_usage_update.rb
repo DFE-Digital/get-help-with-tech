@@ -6,8 +6,8 @@ class Computacenter::API::CapUsageUpdate
   def initialize(string_keyed_hash = {})
     @cap_type = string_keyed_hash['capType']
     @ship_to = string_keyed_hash['shipTo']
-    @cap_amount = string_keyed_hash['capAmount']
-    @cap_used = string_keyed_hash['usedCap']
+    @cap_amount = string_keyed_hash['capAmount'].to_i
+    @cap_used = string_keyed_hash['usedCap'].to_i
     @status = 'received'
     @error = nil
   end
@@ -15,14 +15,18 @@ class Computacenter::API::CapUsageUpdate
   def apply!
     log_to_devices_ordered_updates
     CapMismatch.new(school, device_type).warn(cap_amount) if cap_amount != school.allocation(device_type)
-    is_decreasing_cap = cap_used.to_i < school.devices_ordered(device_type)
+    is_decreasing_cap = cap_used < school.devices_ordered(device_type)
     begin
-      school.set_devices_ordered!(device_type, cap_used)
+      UpdateSchoolDevicesService.new(school: school,
+                                     order_state: school.order_state,
+                                     devices_ordered_field(device_type) => cap_used,
+                                     notify_computacenter: false,
+                                     notify_school: false).call
     rescue Computacenter::OutgoingAPI::Error => e
       # Don't raise failure if a cascading cap update to CC fails
       Rails.logger.warn(e.message)
+      school.refresh_preorder_status!
     end
-    school.refresh_preorder_status!
 
     SchoolCanOrderDevicesNotifications.new(school: school).call if is_decreasing_cap
 
@@ -65,12 +69,16 @@ class Computacenter::API::CapUsageUpdate
 
 private
 
-  def school
-    @school ||= School.find_by_computacenter_reference!(ship_to)
-  end
-
   def device_type
     @device_type ||= Computacenter::CapTypeConverter.to_dfe_type(cap_type)
+  end
+
+  def devices_ordered_field(device_type)
+    laptop?(device_type) ? :laptops_ordered : :routers_ordered
+  end
+
+  def laptop?(device_type)
+    device_type.to_sym == :laptop
   end
 
   def log_to_devices_ordered_updates
@@ -80,5 +88,9 @@ private
       cap_amount: cap_amount,
       cap_used: cap_used,
     )
+  end
+
+  def school
+    @school ||= School.find_by_computacenter_reference!(ship_to)
   end
 end

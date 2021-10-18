@@ -8,8 +8,11 @@ RSpec.describe AllocationChange, type: :model do
       let(:school) { create(:school, laptops: [2, 2, 1]) }
 
       it 'does not record an over order' do
-        school.raw_laptops_ordered += 1
-        expect { school.save! }.to change(described_class, :count).by(0)
+        expect {
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 2).call
+        }.to change(described_class, :count).by(0)
       end
     end
 
@@ -17,13 +20,20 @@ RSpec.describe AllocationChange, type: :model do
       let(:school) { create(:school, laptops: [1, 1, 1]) }
 
       it 'records the allocation change' do
-        school.raw_laptops_ordered += 1
-        expect { school.save! }.to change(described_class, :count).by(1)
+        expect {
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 0,
+                                         allocation_change_category: :service_closure).call
+        }.to change(described_class, :count).by(1)
       end
 
       it 'records the allocation change with the correct category' do
-        school.raw_laptops_ordered += 1
-        expect { school.save! }.to change(described_class.over_order, :count).by(1)
+        expect {
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 2).call
+        }.to change(described_class.over_order, :count).by(1)
       end
     end
   end
@@ -34,8 +44,11 @@ RSpec.describe AllocationChange, type: :model do
 
     context 'when fewer devices than the allocation are ordered' do
       it 'does not record an over order' do
-        school.raw_laptops_ordered += 1
-        expect { school.save! }.to change(described_class, :count).by(0)
+        expect {
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 2).call
+        }.to change(described_class, :count).by(0)
       end
 
       it 'does not change the allocation value' do
@@ -64,24 +77,32 @@ RSpec.describe AllocationChange, type: :model do
       end
 
       it 'records the over order' do
-        school.raw_laptops_ordered += 1
-        expect { school.save! }.to change(described_class, :count).by(1)
+        expect {
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 3).call
+        }.to change(described_class, :count).by(1)
       end
 
       it 'records the over order with the correct category' do
-        school.raw_laptops_ordered += 1
-        expect { school.save! }.to change(described_class.over_order, :count).by(1)
+        expect {
+          UpdateSchoolDevicesService.new(school: school,
+                                         order_state: school.order_state,
+                                         laptops_ordered: 3).call
+        }.to change(described_class.over_order, :count).by(1)
       end
 
       it 'increases the allocation to match devices ordered' do
-        school.raw_laptops_ordered += 1
-        school.save!
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: school.order_state,
+                                       laptops_ordered: 3).call
         expect(school.raw_allocation(:laptop)).to eq(school.raw_devices_ordered(:laptop))
       end
 
       it 'informs Sentry' do
-        school.raw_laptops_ordered += 1
-        school.save!
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: school.order_state,
+                                       laptops_ordered: 3).call
         expect(Sentry).to have_received(:capture_message).with(alert)
         expect(sentry_scope).to have_received(:set_context).with(sentry_context_key, sentry_context_value)
       end
