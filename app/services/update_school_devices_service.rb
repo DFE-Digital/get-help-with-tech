@@ -47,7 +47,7 @@ private
   def allocation_change_props_for(device_type)
     {
       category: allocation_change_category || over_order_category(device_type),
-      description: allocation_change_description || over_order_description(device_type)
+      description: allocation_change_description || over_order_description(device_type),
     }
   end
 

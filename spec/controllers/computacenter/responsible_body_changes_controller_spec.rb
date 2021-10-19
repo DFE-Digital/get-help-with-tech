@@ -41,16 +41,14 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       }
     end
 
-    let!(:school1) do
+    before do
       create(:school,
              who_manages,
              laptops: [2, 2, 1],
              routers: [2, 2, 1],
              responsible_body: rb,
              computacenter_reference: '11')
-    end
 
-    let!(:school2) do
       create(:school,
              who_manages,
              laptops: [2, 2, 1],

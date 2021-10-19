@@ -154,7 +154,7 @@ RSpec.describe School, type: :model do
   end
 
   describe '#invite_school_contact' do
-    before { stub_computacenter_outgoing_api_calls}
+    before { stub_computacenter_outgoing_api_calls }
 
     context "when the school contact isn't a user on the system" do
       let(:school_contact) do

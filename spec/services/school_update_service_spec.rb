@@ -28,19 +28,17 @@ RSpec.describe SchoolUpdateService, type: :model do
         school_attrs = school.attributes.symbolize_keys
 
         service.update_schools
-        expect(school.reload).to have_attributes(
-          urn: school_attrs[:urn],
-          name: school_attrs[:name],
-          responsible_body_id: local_authority.id,
-          address_1: school_attrs[:address_1],
-          address_2: school_attrs[:address_2],
-          address_3: school_attrs[:address_3],
-          town: school_attrs[:town],
-          postcode: school_attrs[:postcode],
-          phase: school_attrs[:phase],
-          establishment_type: school_attrs[:establishment_type],
-          status: school_attrs[:status],
-                                 )
+        expect(school.reload).to have_attributes(urn: school_attrs[:urn],
+                                                 name: school_attrs[:name],
+                                                 responsible_body_id: local_authority.id,
+                                                 address_1: school_attrs[:address_1],
+                                                 address_2: school_attrs[:address_2],
+                                                 address_3: school_attrs[:address_3],
+                                                 town: school_attrs[:town],
+                                                 postcode: school_attrs[:postcode],
+                                                 phase: school_attrs[:phase],
+                                                 establishment_type: school_attrs[:establishment_type],
+                                                 status: school_attrs[:status])
       end
     end
 

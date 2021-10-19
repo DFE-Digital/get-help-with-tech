@@ -9,7 +9,7 @@ RSpec.describe ResponsibleBody::Devices::OrdersController do
   end
 
   describe '#show' do
-    let!(:closed_school) do
+    before do
       create(:school,
              :centrally_managed,
              responsible_body: rb,

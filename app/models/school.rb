@@ -88,10 +88,10 @@ class School < ApplicationRecord
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
   scope :who_will_order_devices_not_set, -> { where(who_will_order_devices: nil) }
-  scope :with_available_allocation, lambda { |device_type|
-    where("raw_#{device_type}_allocation > raw_#{device_type}s_ordered")
-      .order(Arel.sql("raw_#{device_type}_allocation - raw_#{device_type}s_ordered"))
-  }
+
+  def self.laptop?(device_type)
+    device_type.to_sym == :laptop
+  end
 
   def self.that_can_order_now
     where(order_state: %w[can_order_for_specific_circumstances can_order])
@@ -101,10 +101,22 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
+  def self.with_available_allocation(device_type)
+    if laptop?(device_type)
+      where('raw_laptop_allocation > raw_laptops_ordered')
+        .order(Arel.sql('raw_laptop_allocation - raw_laptops_ordered'))
+    else
+      where('raw_router_allocation > raw_routers_ordered')
+        .order(Arel.sql('raw_router_allocation - raw_routers_ordered'))
+    end
+  end
+
   def initialize(*args)
     super
     self.preorder_status ||= infer_status
   end
+
+  delegate :laptop?, to: :class
 
   delegate :allocation, to: :responsible_body, prefix: :vcap, private: true
   delegate :cap, to: :responsible_body, prefix: :vcap, private: true
@@ -116,12 +128,6 @@ class School < ApplicationRecord
   delegate :phone_number, to: :headteacher, allow_nil: true, prefix: true
   delegate :title, to: :headteacher, allow_nil: true, prefix: true
 
-  # delegate :computacenter_cap, to: :std_device_allocation, prefix: :laptop, allow_nil: true
-  # delegate :allocation=, to: :std_device_allocation, prefix: :laptop
-
-  # delegate :computacenter_cap, to: :coms_device_allocation, prefix: :router, allow_nil: true
-  # delegate :allocation=, to: :coms_device_allocation, prefix: :router
-  #
   delegate :companies_house_number, to: :responsible_body, prefix: true, allow_nil: true
   delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
   delegate :gias_id, to: :responsible_body, prefix: true, allow_nil: true
@@ -317,19 +323,11 @@ class School < ApplicationRecord
     !!opted_out_of_comms_at
   end
 
-  # def orders_managed_centrally!
-  #   change_who_manages_orders!(:responsible_body)
-  # end
-
   def orders_managed_centrally?
     return false if school_will_order_devices?
 
     responsible_body_will_order_devices? || responsible_body.orders_managed_centrally?
   end
-  #
-  # def orders_managed_by_school!
-  #   change_who_manages_orders!(:school)
-  # end
 
   def orders_managed_by_school?
     return false if responsible_body_will_order_devices?
@@ -439,8 +437,8 @@ private
 
   def calculate_virtual_cap?(device_type)
     previous_changes.include?(raw_allocation_field(device_type)) ||
-    previous_changes.include?(raw_cap_field(device_type)) ||
-    previous_changes.include?(raw_devices_ordered_field(device_type))
+      previous_changes.include?(raw_cap_field(device_type)) ||
+      previous_changes.include?(raw_devices_ordered_field(device_type))
   end
 
   def check_and_update_status_if_necessary
@@ -479,10 +477,6 @@ private
     return 'rb_can_order' if can_order_devices_right_now?
 
     has_ordered? ? 'ordered' : 'ready'
-  end
-
-  def laptop?(device_type)
-    device_type.to_sym == :laptop
   end
 
   def maybe_generate_user_changes

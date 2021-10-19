@@ -72,7 +72,6 @@ describe School::SchoolDetailsSummaryListComponent do
   end
 
   describe 'router allocation' do
-
     context 'when there is a zero allocation' do
       it 'does not show router allocation' do
         expect(result.text).not_to include('Router allocation')

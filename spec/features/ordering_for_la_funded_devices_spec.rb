@@ -111,7 +111,7 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
                                    laptop_allocation: 50,
                                    laptop_cap: 50,
                                    laptops_ordered: 50).call
-    end
+  end
 
   def given_i_have_already_answered_that_i_was_not_sure_that_i_will_order_chromebooks
     @school.update_chromebook_information_and_status!(will_need_chromebooks: 'i_dont_know')

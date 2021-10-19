@@ -77,15 +77,6 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
              routers: [5, 4, 1])
     end
 
-    let!(:school2) do
-      create(:school,
-             who_manages,
-             responsible_body: rb,
-             computacenter_reference: '12',
-             laptops: [5, 4, 1],
-             routers: [5, 4, 1])
-    end
-
     let(:params) do
       {
         confirm: confirm,
@@ -96,6 +87,15 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
           router_cap: router_cap,
         },
       }
+    end
+
+    before do
+      create(:school,
+             who_manages,
+             responsible_body: rb,
+             computacenter_reference: '12',
+             laptops: [5, 4, 1],
+             routers: [5, 4, 1])
     end
 
     context 'when the values assigned are not valid' do

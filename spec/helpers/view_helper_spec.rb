@@ -30,7 +30,7 @@ RSpec.describe ViewHelper do
       end
 
       context 'when devices and routers available to order' do
-        let(:rb) {build_stubbed(:responsible_body, laptops: [10, 10, 3], routers: [4, 4, 1]) }
+        let(:rb) { build_stubbed(:responsible_body, laptops: [10, 10, 3], routers: [4, 4, 1]) }
 
         it 'X devices and X routers' do
           expect(helper.what_to_order_allocation_list(rb)).to eql('7 devices and 3 routers')

@@ -35,10 +35,10 @@ class ResponsibleBody::Devices::WhoToContactForm
       contact ||= school.contacts.contact.first
       contact ||= school.contacts.build(role: :contact)
 
-      contact.tap do |contact|
-        contact.email_address = email_address
-        contact.full_name = full_name
-        contact.phone_number = phone_number
+      contact.tap do |user|
+        user.email_address = email_address
+        user.full_name = full_name
+        user.phone_number = phone_number
       end
     end
   end

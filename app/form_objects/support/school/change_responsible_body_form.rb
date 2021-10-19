@@ -27,7 +27,7 @@ class Support::School::ChangeResponsibleBodyForm
     valid? && (same_responsible_body? || responsible_body_changed?)
   end
 
-  private
+private
 
   def log_error(e)
     school.errors.add(:base, e.message)

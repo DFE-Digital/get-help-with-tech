@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Support::AllocationForm, type: :model do
-
   before do
     stub_computacenter_outgoing_api_calls
   end
@@ -19,7 +18,7 @@ RSpec.describe Support::AllocationForm, type: :model do
              routers: [4, 3, 0])
     end
 
-    let!(:school2) do
+    before do
       create(:school,
              :centrally_managed,
              responsible_body: rb,
@@ -215,10 +214,10 @@ RSpec.describe Support::AllocationForm, type: :model do
 
         it 'do not modify any school ordering value' do
           expect { form.save }.not_to change(school, :order_state)
-          expect { form.save }.not_to change { school.allocation(:laptop) }
-          expect { form.save }.not_to change { school.allocation(:router) }
-          expect { form.save }.not_to change { school.cap(:router) }
-          expect { form.save }.not_to change { school.cap(:laptop) }
+          expect { form.save }.not_to(change { school.allocation(:laptop) })
+          expect { form.save }.not_to(change { school.allocation(:router) })
+          expect { form.save }.not_to(change { school.cap(:router) })
+          expect { form.save }.not_to(change { school.cap(:laptop) })
         end
 
         it 'add error to school field' do

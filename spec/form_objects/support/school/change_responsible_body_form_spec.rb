@@ -104,23 +104,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: false) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -133,6 +116,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -157,7 +154,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -180,23 +177,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: true) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -209,6 +189,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -233,7 +227,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -256,23 +250,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :devolves_management, computacenter_reference: '2000', vcap_feature_flag: false) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -285,6 +262,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -310,7 +301,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -333,23 +324,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :devolves_management, computacenter_reference: '2000', vcap_feature_flag: true) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -362,6 +336,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -387,7 +375,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -410,23 +398,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: false) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: false) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -439,6 +410,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -464,7 +449,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -487,23 +472,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: false) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: true) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -516,6 +484,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -543,7 +525,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).once
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -566,23 +548,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: false) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -595,6 +560,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -626,7 +605,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).at_least(1).times
         expect_school_to_be_in_rb(school_id: moving_school.id,
@@ -657,23 +636,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: true) }
-      let!(:school_a) do
-        create(:school,
-               :centrally_managed,
-               computacenter_reference: 'AAA',
-               responsible_body: rb_a,
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
-
-      let!(:school_b) do
-        create(:school,
-               :centrally_managed,
-               responsible_body: rb_b,
-               computacenter_reference: 'BBB',
-               laptops: [5, 4, 1],
-               routers: [5, 4, 1])
-      end
 
       let!(:moving_school) do
         create(:school,
@@ -686,6 +648,20 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       before do
         allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
       end
 
       it 'moves school to new rb' do
@@ -719,7 +695,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
           ],
         ]
 
-        form.save
+        expect(form.save).to be_truthy
 
         expect(moving_school).to have_received(:refresh_preorder_status!).at_least(1).times
         expect_school_to_be_in_rb(school_id: moving_school.id,

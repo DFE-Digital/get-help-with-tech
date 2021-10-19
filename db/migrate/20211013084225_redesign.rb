@@ -137,8 +137,8 @@ def copy_allocation_data_into_rbs
 end
 
 def copy_allocation_data_into_schools
-  SchoolDeviceAllocation.includes(:school_virtual_cap, school: [:responsible_body, :users]).find_each do |sda|
-    puts "SchoolDeviceAllocation: #{sda.id}"
+  SchoolDeviceAllocation.includes(:school_virtual_cap, school: %i[responsible_body users]).find_each do |sda|
+    # puts "SchoolDeviceAllocation: #{sda.id}"
     if sda.device_type == 'std_device'
       copy_laptop_allocation_data_into_school(sda.school, sda)
     else
@@ -151,10 +151,10 @@ def copy_allocation_data_into_virtual_cap_pools
   ResponsibleBody.find_each { |rb| create_virtual_cap_pools_for(rb) }
 end
 
-def copy_laptop_allocation_data_into_rb(rb, vcp)
-  rb.update!(laptop_allocation: vcp.allocation,
-             laptop_cap: vcp.cap,
-             laptops_ordered: vcp.devices_ordered)
+def copy_laptop_allocation_data_into_rb(responsible_body, vcp)
+  responsible_body.update!(laptop_allocation: vcp.allocation,
+                           laptop_cap: vcp.cap,
+                           laptops_ordered: vcp.devices_ordered)
 end
 
 def copy_laptop_allocation_data_into_school(school, sda)
@@ -166,8 +166,8 @@ def copy_laptop_allocation_data_into_school(school, sda)
 end
 
 def copy_preorder_information_into_schools
-  PreorderInformation.includes(school: [:responsible_body, :users]).find_each do |preorder_informacion|
-    puts "PreorderInformacion: #{preorder_informacion.id}"
+  PreorderInformation.includes(school: %i[responsible_body users]).find_each do |preorder_informacion|
+    # puts "PreorderInformacion: #{preorder_informacion.id}"
     school = preorder_informacion.school
     school.update!(who_will_order_devices: preorder_informacion.who_will_order_devices,
                    preorder_status: preorder_informacion.status,
@@ -179,10 +179,10 @@ def copy_preorder_information_into_schools
   end
 end
 
-def copy_router_allocation_data_into_rb(rb, vcp)
-  rb.update!(router_allocation: vcp.allocation,
-             router_cap: vcp.cap,
-             routers_ordered: vcp.devices_ordered)
+def copy_router_allocation_data_into_rb(responsible_body, vcp)
+  responsible_body.update!(router_allocation: vcp.allocation,
+                           router_cap: vcp.cap,
+                           routers_ordered: vcp.devices_ordered)
 end
 
 def copy_router_allocation_data_into_school(school, sda)
@@ -195,7 +195,7 @@ end
 
 def copy_school_data_into_entities
   School.includes(:responsible_body).find_each do |school|
-    puts "School: #{school.id}"
+    # puts "School: #{school.id}"
     create_preorder_information_for(school)
     create_std_device_allocation_for(school)
     create_coms_device_allocation_for(school)
@@ -224,13 +224,13 @@ def create_coms_device_school_virtual_cap_for(school, coms_device_allocation)
   end
 end
 
-def create_laptop_virtual_cap_pool_for(rb)
-  if [rb.laptop_allocation, rb.laptop_cap, rb.laptops_ordered].any?(&:positive?)
-    VirtualCapPool.create!(responsible_body_id: rb.id,
+def create_laptop_virtual_cap_pool_for(responsible_body)
+  if [responsible_body.laptop_allocation, responsible_body.laptop_cap, responsible_body.laptops_ordered].any?(&:positive?)
+    VirtualCapPool.create!(responsible_body_id: responsible_body.id,
                            device_type: 'std_device',
-                           allocation: rb.laptop_allocation,
-                           cap: rb.laptop_cap,
-                           devices_ordered: rb.laptops_ordered)
+                           allocation: responsible_body.laptop_allocation,
+                           cap: responsible_body.laptop_cap,
+                           devices_ordered: responsible_body.laptops_ordered)
   end
 end
 
@@ -261,13 +261,13 @@ def create_preorder_information_table
   end
 end
 
-def create_router_virtual_cap_pool_for(rb)
-  if [rb.router_allocation, rb.router_cap, rb.routers_ordered].any?(&:positive?)
-    VirtualCapPool.create!(responsible_body_id: rb.id,
+def create_router_virtual_cap_pool_for(responsible_body)
+  if [responsible_body.router_allocation, responsible_body.router_cap, responsible_body.routers_ordered].any?(&:positive?)
+    VirtualCapPool.create!(responsible_body_id: responsible_body.id,
                            device_type: 'coms_device',
-                           allocation: rb.router_allocation,
-                           cap: rb.router_cap,
-                           devices_ordered: rb.routers_ordered)
+                           allocation: responsible_body.router_allocation,
+                           cap: responsible_body.router_cap,
+                           devices_ordered: responsible_body.routers_ordered)
   end
 end
 
@@ -279,8 +279,8 @@ def create_school_device_allocations_table
     t.bigint :last_updated_by_user_id, index: true
     t.bigint :created_by_user_id, index: true
     t.integer :cap, default: 0, null: false, index: true
-    t.datetime :cap_update_request_timestamp, index: { name: "ix_allocations_cap_update_timestamp" }
-    t.string :cap_update_request_payload_id, index: { name: "ix_allocations_cap_update_payload_id" }
+    t.datetime :cap_update_request_timestamp, index: { name: 'ix_allocations_cap_update_timestamp' }
+    t.string :cap_update_request_payload_id, index: { name: 'ix_allocations_cap_update_payload_id' }
 
     t.references :school, null: false
 
@@ -319,9 +319,9 @@ def create_std_device_school_virtual_cap_for(school, std_device_allocation)
   end
 end
 
-def create_virtual_cap_pools_for(rb)
-  create_laptop_virtual_cap_pool_for(rb)
-  create_router_virtual_cap_pool_for(rb)
+def create_virtual_cap_pools_for(responsible_body)
+  create_laptop_virtual_cap_pool_for(responsible_body)
+  create_router_virtual_cap_pool_for(responsible_body)
 end
 
 def create_virtual_cap_pools_table
@@ -335,7 +335,7 @@ def create_virtual_cap_pools_table
 
     t.timestamps
 
-    t.index [:device_type, :responsible_body_id]
+    t.index %i[device_type responsible_body_id]
   end
 end
 

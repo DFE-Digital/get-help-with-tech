@@ -14,11 +14,11 @@ class Support::UsersController < Support::BaseController
   def create
     authorize User, :create?
     if @school
-      @user = CreateUserService.invite_school_user(
-        user_params.merge(school_id: @school.id))
+      @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id))
     elsif @responsible_body
       @user = CreateUserService.invite_responsible_body_user(
-        user_params.merge(responsible_body_id: @responsible_body.id))
+        user_params.merge(responsible_body_id: @responsible_body.id),
+      )
     end
 
     if @user.persisted?
