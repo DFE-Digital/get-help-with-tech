@@ -100,16 +100,3 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
   end
   schools.count == 1 ? schools.first : schools
 end
-
-def create_centrally_managed_school_that_can_order(responsible_body)
-  create(:school, :manages_orders, responsible_body: responsible_body).tap do |school|
-    school.update!(raw_laptop_allocation: rand(10..20),
-                   raw_laptop_cap: rand(1..9),
-                   raw_laptops_ordered: rand(1..9),
-                   raw_router_allocation: rand(10..10),
-                   raw_router_cap: rand(1..9),
-                   raw_routers_ordered: rand(1..9))
-    SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
-    school.can_order!
-  end
-end

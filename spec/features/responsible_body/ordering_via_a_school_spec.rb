@@ -36,8 +36,12 @@ RSpec.feature 'Ordering via a school' do
 
     context 'when school has devices to order' do
       before do
-        school.update!(raw_laptop_allocation: 12, raw_laptop_cap: 12, raw_laptops_ordered: 3, order_state: 'can_order')
-        school.refresh_preorder_status!
+        stub_computacenter_outgoing_api_calls
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: 'can_order',
+                                       laptop_allocation: 12,
+                                       laptop_cap: 12,
+                                       laptops_ordered: 3).call
       end
 
       scenario 'can order devices' do
@@ -72,10 +76,12 @@ RSpec.feature 'Ordering via a school' do
 
     context 'when the school can order devices and has an allocation' do
       before do
-        school.update!(raw_laptop_allocation: 12, raw_laptop_cap: 10, raw_laptops_ordered: 3, order_state: 'can_order')
-        school.refresh_preorder_status!
-        stub_request(:post, 'http://computacenter.example.com/')
-         .to_return(status: 200, body: '', headers: {})
+        stub_computacenter_outgoing_api_calls
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: 'can_order',
+                                       laptop_allocation: 12,
+                                       laptop_cap: 12,
+                                       laptops_ordered: 3).call
       end
 
       scenario 'I do not see the number of devices' do

@@ -78,8 +78,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
     context 'and the headteacher has been set as the school contact' do
       it 'displays the headteacher details' do
-        school.update!(who_will_order_devices: :school,
-                       school_contact: headteacher)
+        school.update!(who_will_order_devices: :school, school_contact: headteacher)
 
         expect(value_for_row(result, 'School contact').text).to include('Headteacher: Davy Jones')
         expect(value_for_row(result, 'School contact').text).to include('davy.jones@school.sch.uk')
@@ -93,8 +92,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                              full_name: 'Jane Smith',
                              email_address: 'abc@example.com',
                              phone_number: '12345')
-        school.update!(who_will_order_devices: :school,
-                       school_contact: new_contact)
+        school.update!(who_will_order_devices: :school, school_contact: new_contact)
 
         expect(value_for_row(result, 'School contact').text).to include('Jane Smith')
         expect(value_for_row(result, 'School contact').text).to include('abc@example.com')

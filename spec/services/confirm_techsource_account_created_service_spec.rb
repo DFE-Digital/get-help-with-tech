@@ -45,7 +45,11 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
       context 'if there are no devices orderable' do
         before do
-          school.update!(raw_laptop_cap: 10, raw_laptop_allocation: 10, raw_laptops_ordered: 10)
+          stub_computacenter_outgoing_api_calls
+          UpdateSchoolDevicesService.new(school: school,
+                                         laptop_cap: 10,
+                                         laptop_allocation: 10,
+                                         laptops_ordered: 10).call
         end
 
         it 'does not send an email' do

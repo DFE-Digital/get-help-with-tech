@@ -49,8 +49,11 @@ RSpec.feature 'TechSource availability for school', skip: 'Disabled for 30 Jun 2
   end
 
   def given_i_can_order_devices
-    school.update!(raw_laptop_cap: 50, raw_laptop_allocation: 100, raw_laptops_ordered: 20)
-    school.can_order!
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: :can_order,
+                                   laptop_cap: 50,
+                                   laptop_allocation: 100,
+                                   laptops_ordered: 20).call
   end
 
   def when_i_visit_the_order_devices_page

@@ -9,15 +9,13 @@ RSpec.describe DisplayDevicesOrderedComponent, type: :component do
 
   before do
     stub_computacenter_outgoing_api_calls
-    school.update!(raw_laptops_ordered: 24)
-    school.update!(raw_routers_ordered: 33)
+    UpdateSchoolDevicesService.new(school: school, laptops_ordered: 24, routers_ordered: 33).call
     SchoolSetWhoManagesOrdersService.new(another_school, :responsible_body).call
   end
 
   context 'when in a virtual pool' do
     before do
       SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
-      school.reload
     end
 
     it 'renders the devices ordered' do

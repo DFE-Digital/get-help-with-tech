@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   before do
+    stub_computacenter_outgoing_api_calls
     given_there_is_an_independent_settings_school
     given_i_am_signed_in_as_an_independent_settings_school_user
     given_i_am_on_the_independent_settings_school_page
@@ -99,12 +100,18 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def given_i_have_not_ordered_all_my_laptops
-    @school.update!(raw_laptop_allocation: 2, raw_laptop_cap: 2, raw_laptops_ordered: 1)
+    UpdateSchoolDevicesService.new(school: @school,
+                                   laptop_allocation: 2,
+                                   laptop_cap: 2,
+                                   laptops_ordered: 1).call
   end
 
   def given_i_have_ordered_all_of_my_laptops
-    @school.update!(raw_laptop_allocation: 50, raw_laptop_cap: 50, raw_laptops_ordered: 50)
-  end
+    UpdateSchoolDevicesService.new(school: @school,
+                                   laptop_allocation: 50,
+                                   laptop_cap: 50,
+                                   laptops_ordered: 50).call
+    end
 
   def given_i_have_already_answered_that_i_was_not_sure_that_i_will_order_chromebooks
     @school.update_chromebook_information_and_status!(will_need_chromebooks: 'i_dont_know')

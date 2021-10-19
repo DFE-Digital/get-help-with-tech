@@ -1,13 +1,13 @@
 class UpdateSchoolDevicesService
   attr_reader :allocation_change_category, :allocation_change_description,
-              :laptop_allocation, :laptop_cap, :laptops_ordered, :laptop_cap_changed,
-              :router_allocation, :router_cap, :routers_ordered, :router_cap_changed,
+              :laptop_allocation, :laptop_cap, :laptops_ordered,
+              :router_allocation, :router_cap, :routers_ordered,
               :notify_computacenter, :notify_school, :order_state, :school
 
   OVER_ORDER_ALLOCATION_CHANGE_CATEGORY = :over_order
   OVER_ORDER_ALLOCATION_CHANGE_DESCRIPTION = 'Over Order'.freeze
 
-  def initialize(school:, order_state:, notify_school: true, notify_computacenter: true, **opts)
+  def initialize(school:, notify_school: true, notify_computacenter: true, **opts)
     @allocation_change_category = opts[:allocation_change_category]
     @allocation_change_description = opts[:allocation_change_description]
     @laptop_allocation = opts[:laptop_allocation]
@@ -15,7 +15,7 @@ class UpdateSchoolDevicesService
     @laptops_ordered = opts[:laptops_ordered]
     @notify_computacenter = notify_computacenter
     @notify_school = notify_school
-    @order_state = order_state
+    @order_state = (opts[:order_state] || school.order_state).to_s
     @router_allocation = opts[:router_allocation]
     @router_cap = opts[:router_cap]
     @routers_ordered = opts[:routers_ordered]
@@ -42,6 +42,8 @@ class UpdateSchoolDevicesService
 
 private
 
+  attr_reader :laptop_cap_changed, :router_cap_changed
+
   def allocation_change_props_for(device_type)
     {
       category: allocation_change_category || over_order_category(device_type),
@@ -64,8 +66,8 @@ private
   end
 
   def ordering?(device_type)
-    { laptop: laptop_allocation || laptop_cap || laptops_ordered,
-      router: router_allocation || router_cap || routers_ordered }[device_type]
+    { laptop: laptop_allocation || laptop_cap || laptops_ordered || school.order_state_previously_changed?,
+      router: router_allocation || router_cap || routers_ordered || school.order_state_previously_changed? }[device_type]
   end
 
   def over_order_category(device_type)
@@ -146,7 +148,7 @@ private
   end
 
   def update_state?
-    school.order_state != order_state
+    school.order_state.to_sym != order_state.to_sym
   end
 
   def value_changed?(receiver, method, *args)

@@ -45,7 +45,11 @@ RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled fo
   end
 
   def given_i_can_order_devices
-    school.update!(raw_laptop_cap: 50, raw_laptop_allocation: 100, raw_laptops_ordered: 20)
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: :can_order,
+                                   laptop_cap: 50,
+                                   laptop_allocation: 100,
+                                   laptops_ordered: 20).call
     school.can_order!
     SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
   end

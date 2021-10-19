@@ -18,7 +18,6 @@ class Computacenter::API::CapUsageUpdate
     is_decreasing_cap = cap_used < school.devices_ordered(device_type)
     begin
       UpdateSchoolDevicesService.new(school: school,
-                                     order_state: school.order_state,
                                      devices_ordered_field(device_type) => cap_used,
                                      notify_computacenter: false,
                                      notify_school: false).call

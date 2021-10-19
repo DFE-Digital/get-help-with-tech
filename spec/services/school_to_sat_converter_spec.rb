@@ -66,10 +66,9 @@ RSpec.describe SchoolToSatConverter, type: :model do
 
   context 'when the school has a device allocation' do
     it 'does not alter the allocation' do
-      school.update!(raw_laptop_allocation: 20)
+      UpdateSchoolDevicesService.new(school: school, laptop_allocation: 20).call
 
       converter.convert_to_sat
-      school.reload
       expect(school.raw_allocation(:laptop)).to eq(20)
     end
   end

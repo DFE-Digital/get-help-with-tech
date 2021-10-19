@@ -49,7 +49,6 @@ private
     [allocation - devices_ordered, quantity].min.tap do |claimed|
       unclaimed = allocation - claimed
       UpdateSchoolDevicesService.new(school: member,
-                                     order_state: member.order_state,
                                      allocation_type => unclaimed,
                                      cap_type => unclaimed,
                                      allocation_change_category: :over_order_pool_reclaim).call

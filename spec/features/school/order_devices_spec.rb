@@ -88,8 +88,12 @@ RSpec.feature 'Order devices' do
   end
 
   def given_the_school_can_order_devices
-    school.update!(raw_laptop_cap: 50, raw_laptop_allocation: 100, raw_laptops_ordered: 20)
-    school.can_order!
+    stub_computacenter_outgoing_api_calls
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: :can_order,
+                                   laptop_allocation: 100,
+                                   laptop_cap: 50,
+                                   laptops_ordered: 20).call
   end
 
   def given_the_school_cannot_order_devices
@@ -102,7 +106,7 @@ RSpec.feature 'Order devices' do
   end
 
   def then_i_see_the_amount_of_devices_i_can_order
-    expect(page).to have_text('30 devices available')
+    expect(page).to have_text('80 devices available')
   end
 
   def and_i_see_a_link_to_techsource

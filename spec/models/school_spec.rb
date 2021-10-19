@@ -154,6 +154,8 @@ RSpec.describe School, type: :model do
   end
 
   describe '#invite_school_contact' do
+    before { stub_computacenter_outgoing_api_calls}
+
     context "when the school contact isn't a user on the system" do
       let(:school_contact) do
         create(:school_contact,
@@ -281,8 +283,13 @@ RSpec.describe School, type: :model do
       stub_computacenter_outgoing_api_calls
       first_school = schools.first
       SchoolSetWhoManagesOrdersService.new(first_school, :responsible_body).call
-      first_school.update!(raw_laptop_allocation: 10, raw_laptop_cap: 10, raw_laptops_ordered: 2,
-                           raw_router_allocation: 20, raw_router_cap: 5, raw_routers_ordered: 3)
+      UpdateSchoolDevicesService.new(school: first_school,
+                                     laptop_allocation: 10,
+                                     laptop_cap: 10,
+                                     laptops_ordered: 2,
+                                     router_allocation: 20,
+                                     router_cap: 5,
+                                     routers_ordered: 3).call
     end
 
     it 'returns true for a school within the pool' do

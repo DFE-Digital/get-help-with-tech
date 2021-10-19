@@ -46,8 +46,12 @@ RSpec.describe UserCanOrderDevicesNotifications do
     let(:user) { create(:user, orders_devices: true, responsible_body: responsible_body) }
 
     before do
-      school.update!(raw_laptop_allocation: 10, raw_laptop_cap: 10, raw_laptops_ordered: 0)
-      school.can_order!
+      stub_computacenter_outgoing_api_calls
+      UpdateSchoolDevicesService.new(school: school,
+                                     order_state: :can_order,
+                                     laptop_allocation: 10,
+                                     laptop_cap: 10,
+                                     laptops_ordered: 0).call
     end
 
     it 'sends :user_can_order_but_action_needed email' do

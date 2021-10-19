@@ -74,17 +74,13 @@ private
 
         School.transaction do
           UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
                                          "#{device_type}_allocation".to_sym => spare_allocation,
                                          "#{device_type}_cap".to_sym => spare_allocation,
                                          notify_computacenter: false).call
           UpdateSchoolDevicesService.new(school: predecessor,
-                                         order_state: school.order_state,
                                          "#{device_type}_allocation".to_sym => ordered,
                                          "#{device_type}_cap".to_sym => ordered,
                                          notify_computacenter: false).call
-          # school.set_device_ordering!(device_type: device_type, allocation: spare_allocation, cap: spare_allocation)
-          # predecessor.set_device_ordering!(device_type: device_type, allocation: ordered, cap: ordered)
         end
       end
     end

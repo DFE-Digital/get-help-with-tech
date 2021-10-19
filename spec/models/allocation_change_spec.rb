@@ -9,9 +9,7 @@ RSpec.describe AllocationChange, type: :model do
 
       it 'does not record an over order' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
-                                         laptops_ordered: 2).call
+          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 2).call
         }.to change(described_class, :count).by(0)
       end
     end
@@ -22,7 +20,6 @@ RSpec.describe AllocationChange, type: :model do
       it 'records the allocation change' do
         expect {
           UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
                                          laptops_ordered: 0,
                                          allocation_change_category: :service_closure).call
         }.to change(described_class, :count).by(1)
@@ -30,9 +27,7 @@ RSpec.describe AllocationChange, type: :model do
 
       it 'records the allocation change with the correct category' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
-                                         laptops_ordered: 2).call
+          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 2).call
         }.to change(described_class.over_order, :count).by(1)
       end
     end
@@ -45,9 +40,7 @@ RSpec.describe AllocationChange, type: :model do
     context 'when fewer devices than the allocation are ordered' do
       it 'does not record an over order' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
-                                         laptops_ordered: 2).call
+          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 2).call
         }.to change(described_class, :count).by(0)
       end
 
@@ -78,31 +71,23 @@ RSpec.describe AllocationChange, type: :model do
 
       it 'records the over order' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
-                                         laptops_ordered: 3).call
+          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
         }.to change(described_class, :count).by(1)
       end
 
       it 'records the over order with the correct category' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
-                                         order_state: school.order_state,
-                                         laptops_ordered: 3).call
+          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
         }.to change(described_class.over_order, :count).by(1)
       end
 
       it 'increases the allocation to match devices ordered' do
-        UpdateSchoolDevicesService.new(school: school,
-                                       order_state: school.order_state,
-                                       laptops_ordered: 3).call
+        UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
         expect(school.raw_allocation(:laptop)).to eq(school.raw_devices_ordered(:laptop))
       end
 
       it 'informs Sentry' do
-        UpdateSchoolDevicesService.new(school: school,
-                                       order_state: school.order_state,
-                                       laptops_ordered: 3).call
+        UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
         expect(Sentry).to have_received(:capture_message).with(alert)
         expect(sentry_scope).to have_received(:set_context).with(sentry_context_key, sentry_context_value)
       end

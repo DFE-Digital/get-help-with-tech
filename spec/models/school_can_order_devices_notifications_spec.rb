@@ -167,7 +167,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       subject(:service) { described_class.new(school: school) }
 
       before do
-        school.update!(order_state: 'can_order')
+        school.can_order!
       end
 
       context 'user has confirmed techsource account' do
@@ -190,7 +190,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order') }
 
       before do
-        school.update!(order_state: 'cannot_order')
+        school.cannot_order!
       end
 
       context 'user has confirmed techsource account' do
@@ -231,7 +231,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let(:user) { create(:school_user, school: school) }
 
       before do
-        school.update!(order_state: 'can_order')
+        school.can_order!
         school.needs_info!
       end
 
@@ -247,7 +247,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let(:user) { create(:school_user, school: school) }
 
       before do
-        school.update!(order_state: 'cannot_order')
+        school.cannot_order!
         school.needs_info!
       end
 
@@ -264,8 +264,11 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let!(:user) { create(:user, responsible_body: rb) }
 
       before do
-        school.update!(raw_laptop_allocation: 10, raw_laptop_cap: 10, raw_laptops_ordered: 0)
-        school.can_order!
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: :can_order,
+                                       laptop_allocation: 10,
+                                       laptop_cap: 10,
+                                       laptops_ordered: 0).call
       end
 
       it 'nudges RB that school needs a contact' do
@@ -305,8 +308,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       end
 
       before do
-        school.increment!(:raw_router_cap)
-        school.reload.refresh_preorder_status!
+        UpdateSchoolDevicesService.new(school: school, router_cap: school.raw_cap(:router) + 1).call
       end
 
       it 'sends notification they can order routers' do
@@ -329,9 +331,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school,
-                                       order_state: school.order_state,
-                                       router_cap: school.raw_cap(:router) + 1).call
+        UpdateSchoolDevicesService.new(school: school, router_cap: school.raw_cap(:router) + 1).call
       end
 
       context 'user has confirmed techsource account' do
@@ -346,7 +346,8 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'sends notification they can order routers' do
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_virtual_cap).with(params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_virtual_cap)
+                 .with(params: { user: user, school: school }, args: [])
         end
       end
     end
@@ -370,9 +371,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       before do
         school.responsible_body.update!(new_fe_wave: true)
-        UpdateSchoolDevicesService.new(school: school,
-                                       order_state: school.order_state,
-                                       router_cap: school.raw_cap(:router) + 1).call
+        UpdateSchoolDevicesService.new(school: school, router_cap: school.raw_cap(:router) + 1).call
       end
 
       it 'sends notification they can order routers' do
@@ -384,9 +383,9 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
     context 'when school has no devices available (of any type) to order' do
       before do
-        school.update!(raw_laptops_ordered: school.cap(:laptop))
-        school.update!(raw_routers_ordered: school.cap(:router))
-        school.reload
+        UpdateSchoolDevicesService.new(school: school,
+                                       laptops_ordered: school.allocation(:laptop),
+                                       routers_ordered: school.allocation(:router)).call
       end
 
       context 'preconditions' do
@@ -431,7 +430,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
     context 'when school has devices available of one type but not the other' do
       before do
-        school.update!(raw_routers_ordered: school.cap(:router))
+        UpdateSchoolDevicesService.new(school: school, routers_ordered: school.allocation(:router)).call
         school.reload
       end
 
