@@ -46,6 +46,7 @@ en:
     signed_in_internet_access: Request or manage 4G routers
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
+    devices_guidance_how_to_order: How to order DfE laptops, tablets and routers
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
