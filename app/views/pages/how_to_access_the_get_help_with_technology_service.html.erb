@@ -11,16 +11,83 @@
       <%= t('page_titles.how_to_access_the_get_help_with_technology_service') %>
     </h1>
     <p class="govuk-body">
-      You need to be invited to use this service by DfE, or someone from your <span class="app-no-wrap">state-funded</span> school, college, FE institution, trust or local authority education team who has access.
-    </p>
-    <p class="govuk-body">
-      People with access to the service can invite colleagues to use it by <span class="app-no-wrap"><%= govuk_link_to 'signing in', sign_in_path %></span> and selecting ‘Manage users’.
-    </p>
-    <p class="govuk-body">
-      If you’re not sure which colleagues can give you access, <%= govuk_link_to "contact us", support_ticket_path %>.
+      You need to be invited to use this service by the Department for Education, or by someone
+      from your <span class="app-no-wrap">state-funded</span> school, college, FE institution, trust or local authority education
+      team who has access.
     </p>
     <p class="govuk-body">
       You cannot access this service with your DfE Sign-in account.
+    </p>
+    <p class="govuk-body">
+      Everyone with access can:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>see who else has an account within their organisation</li>
+      <li>add or edit existing accounts</li>
+    </ul>
+    <h2 class="govuk-heading-l">
+      Logging onto the service
+    </h2>
+    <p class="govuk-body">
+      You can
+      <%= govuk_link_to 'log onto the service via the sign in link', root_path %>
+      using your registered email address.
+    </p>
+    <p class="govuk-body">
+      If your email address is recognised and you have an account, we&rsquo;ll send you a link to sign
+      in.
+    </p>
+    <h3 class="govuk-heading-m">
+      If your email address is not recognised
+    </h3>
+    <p class="govuk-body">
+      If your email address is still not recognised, please speak to someone at your organisation
+      that has an account.
+    </p>
+    <p class="govuk-body">
+      You&rsquo;ll need to ask them to sign into the service, view your account details and amend if
+      necessary, or add you to the service.
+    </p>
+    <h2 class="govuk-heading-l">
+      Managing user accounts
+    </h2>
+    <p class="govuk-body">
+      Registered users can amend their own or their colleagues&rsquo; account details by
+      <%= govuk_link_to 'signing in', root_path %>
+      and selecting &lsquo;Manage users&rsquo;.
+    </p>
+    <p class="govuk-body">
+      On this page, you&rsquo;ll be able to view all the users registered to your organisation&rsquo;s account.
+    </p>
+    <p class="govuk-body">
+      You can amend:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>username</li>
+      <li>email address</li>
+      <li>telephone number</li>
+      <li>allow user to order &ndash; this option will create a TechSource ordering account</li>
+    </ul>
+    <p class="govuk-body">
+      Please ensure that your contact details, and those of other registered users, are up to date
+      so that you do not miss any important communications.
+    </p>
+    <p class="govuk-body">
+      You can also invite and remove colleagues from the service.
+    </p>
+    <h2 class="govuk-heading-l">
+      Further support
+    </h2>
+    <p class="govuk-body">
+      If you are unable to access the service, and colleagues at your organisation are unable to
+      help, you can
+      <%= govuk_link_to 'contact us', support_ticket_path %>.
+    </p>
+    <p class="govuk-body">
+      To assist us with your enquiry, please provide an email address registered to your
+      organisation, your organisation name, address and, if possible, URN. You can find your
+      organisation&rsquo;s URN at
+      <%= govuk_link_to 'Get Information About Schools', 'https://get-information-schools.service.gov.uk' %>.
     </p>
   </div>
 </div>
