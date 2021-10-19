@@ -60,7 +60,6 @@ Rails.application.routes.draw do
 
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/how-to-order', to: redirect('/devices')
-  get '/devices/how-to-order-laptops-for-social-care-leavers', to: 'devices_guidance#how_to_order_laptops_for_social_care_leavers'
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
