@@ -325,10 +325,6 @@ en:
       title: Replace faulty devices
       description: Find out what to do if a laptop or tablet you’ve received from us is not working.
       guidance_section: manage_devices_pages
-    resolve_issues_with_laptops_and_tablets:
-      title: Resolve issues with laptops and tablets
-      description: Suggested fixes for bugs and possible solutions to issues that may affect devices.
-      guidance_section: manage_devices_pages
     safeguarding_for_device_users:
       title: Safeguarding devices
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
