@@ -338,10 +338,6 @@ en:
       title: Preparing Standard Microsoft Windows laptops and tablets
       description: When you receive a Standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
       guidance_section: technical_staff_doing_device_setup # won't appear in the index
-    getting_started_with_your_microsoft_windows_device:
-      title: How to get started with your Microsoft Windows laptop or tablet
-      description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
-      guidance_section: parents_carers_students
     getting_started_with_your_google_chromebook:
       title: How to get started with your Google Chromebook
       description: User guidance for Google Chromebooks to share with children, young people and their carers.
