@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
   resource :notify_callbacks, only: [:create]
 
-  get '/guides-for-parents-carers-and-students', to: 'guides_for_parents_carers_students#index'
   get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
