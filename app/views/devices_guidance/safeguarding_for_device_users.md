@@ -2,32 +2,20 @@ Local authorities, academy trusts, schools, colleges and further education insti
 
 This applies where laptops and tablets are provided through the Department for Education (DfE) Get help with technology programme, as well as any new or refurbished devices received through donations.
 
-## Safeguarding and security settings on devices provided by DfE
+## Devices ordered from October 2021 onwards
 
-Owners of laptops and tablets are responsible for ensuring appropriate content filters and monitoring systems are in place to protect children when they are online.
-Devices with pre-installed safeguarding software are available to select at the time of ordering. These come with:
+Laptops and tablets ordered from October 2021 onwards are delivered with factory settings and do not have any DfE-managed software installed. Owners of devices are responsible for ensuring appropriate content filters and device management systems are in place.
 
-* Cisco Umbrella &ndash; content filtering software that blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines
-* Microsoft Intune &ndash; device management software that prevents users from installing unauthorised software or making changes to files and settings
+## Devices ordered before October 2021
 
-<div class="govuk-inset-text">
-  <p>
-    Licenses for this software were due to expire on <span class="app-no-wrap">30 September 2021</span>. To ensure
-    devices remain safe for children and young people to use, we’ve extended licenses until
-    <span class="app-no-wrap">30 September 2022</span>. You’re still required to take control of the devices as soon as
-    possible by restoring them to factory settings and applying your own remote management solution. Read our guidance on <a href="/devices/guide-to-resetting-windows-laptops-and-tablets" class="govuk-link">how to apply your own settings to devices</a> to see the actions required to ensure those who received them can continue to use them safely.
-  </p>
-</div>
+For devices delivered before October 2021, organisations could choose between standard devices, or devices with pre-installed safeguarding software. These came with:
 
-All Chromebooks and iPads will arrive with virus protection in place. DfE Restricted Windows devices (with DfE settings) have Windows Defender Antivirus software enabled. This setting must be applied on Standard Windows devices (without DfE settings) before they’re distributed to users.
+* Cisco Umbrella – content filtering software that blocks a range of illegal and inappropriate content and limits searching to the ‘Safe Search’ provided by popular search engines
+* Microsoft Intune – device management software that prevents users from installing unauthorised software or making changes to files and settings
 
-Information is available for each device type explaining what safeguarding software is in place, when licenses for these may expire, and how to apply your own settings:
+Licences for this software were due to expire on 30 September 2021, but to ensure they remain safe for children and young people to use, we extended licences until 30 September 2022.
 
-* [DfE Restricted Microsoft Windows laptops and tablets with DfE settings](/devices/preparing-microsoft-windows-laptops-and-tablets)
-* [Standard Microsoft Windows laptops and tablets without DfE settings](/devices/preparing-a-standard-windows-device)
-* [Google Chromebooks](/devices/preparing-chromebooks)
-* [Apple iPads](/devices/preparing-ipads)
-* [4G wireless routers](/devices/managing-your-4g-wireless-routers#router-security)
+You’re still required to take control of the devices as soon as possible by restoring them to factory settings and applying your own remote management solution. Read our guidance on [how to apply your own settings to devices](/devices/guide-to-resetting-windows-laptops-and-tablets) to see the actions required to ensure those who received them can continue to use them safely.
 
 ## Safeguarding and security settings for pre-owned or donated devices
 
@@ -39,5 +27,13 @@ Information we’ve produced on content filtering, privacy policies and mobile d
 
 The following information will help you make decisions on how to set up and manage these devices.
 
-* [Erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) &ndash; guidance from the National Centre for Cyber Security (NCSC) covering protecting personal data, how to erase data before donating, avoiding unsupported devices, and good cyber practice.
-* [Maintaining portable electrical equipment](https://www.hse.gov.uk/pubns/books/hsg107.htm) &ndash; guidance from the Health and Safety Executive (HSE) covering legal responsibilities around ensuring electrical equipment is maintained and [portable appliance testing (PAT)](https://www.hse.gov.uk/electricity/faq-portable-appliance-testing.htm).
+* [Erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) – guidance from the National Centre for Cyber Security (NCSC) covering protecting personal data, how to erase data before donating, avoiding unsupported devices, and good cyber practice.
+* [Maintaining portable electrical equipment](https://www.hse.gov.uk/pubns/books/hsg107.htm) – guidance from the Health and Safety Executive (HSE) covering legal responsibilities around ensuring electrical equipment is maintained and [portable appliance testing (PAT)](https://www.hse.gov.uk/electricity/faq-portable-appliance-testing.htm).
+
+## Advice for parents and carers
+
+If you’re worried that your child is accessing harmful content on any device, you can [find support and advice at GOV.UK](https://www.gov.uk/guidance/safeguarding-and-remote-education-during-coronavirus-covid-19).
+
+If your child is worried or needs support, they can call [Childline](https://www.childline.org.uk/) (0800 1111) or download their ‘For Me’ app.
+
+If your child has a social worker, you should contact your local authority if you have any concerns about your child’s safety or wellbeing.
