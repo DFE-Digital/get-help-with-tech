@@ -13,12 +13,8 @@
     </h1>
 
     <p class="govuk-body">
-      Ordering is now closed for laptops, tablets and extra mobile data.
-    </p>
-
-    <p class="govuk-body">
       Find out how to safely set up laptops and tablets for pupils in <span class="app-no-wrap">years 3 to 13</span>,
-      students in further education, and care leavers. You can also find out how to get help with faulty devices.
+      students in further education, and care leavers. You can also find out how to manage devices you’ve already received.
     </p>
 
     <h2 class="govuk-heading-m">
@@ -30,7 +26,15 @@
     </ul>
 
     <h2 class="govuk-heading-m">
-      Resetting devices, and resolving issues
+      Replacing faulty devices
+    </h2>
+
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <%= render partial: 'page_link_and_description', collection: @replace_faulty_devices_pages, as: :page %>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Resetting and safeguarding devices
     </h2>
 
     <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">

@@ -3,6 +3,7 @@ class DevicesGuidanceController < ApplicationController
     @before_you_order_pages = devices_guidance.pages_for(guidance_section: :before_you_order_pages)
     @setup_guide_pages = devices_guidance.pages_for(guidance_section: :setup_guide_pages)
     @manage_devices_pages = devices_guidance.pages_for(guidance_section: :manage_devices_pages)
+    @replace_faulty_devices_pages = devices_guidance.pages_for(guidance_section: :replace_faulty_devices_pages)
   end
 
   def subpage

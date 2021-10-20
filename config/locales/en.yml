@@ -301,46 +301,44 @@ en:
       description: Guidance on who owns devices, asset management and loan agreements.
       guidance_section: before_you_order_pages
 
+    replace_a_faulty_device:
+      title: Replace faulty devices
+      description: Find out what to do if a laptop or tablet you’ve received from us is not working.
+      guidance_section: replace_faulty_devices_pages
+
+    preparing_a_standard_windows_device:
+      title: Preparing Microsoft Windows laptops and tablets
+      description: When you receive a Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
+      guidance_section: setup_guide_pages
     preparing_chromebooks:
       title: Google Chromebooks setup guide
       description: Guidance on how to enrol Google Chromebooks on your domain and information about software.
-      guidance_section: setup_guide_pages
-    remove_dfe_provided_cisco_umbrella_from_chromebooks:
-      title: Remove DfE-provided Cisco Umbrella from Chromebooks
-      description: Find out how to remove Cisco Umbrella from Chromebooks.
       guidance_section: setup_guide_pages
     preparing_ipads:
       title: Apple iPads setup guide
       description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
       guidance_section: setup_guide_pages
+    google_domain_for_care_leavers_and_children_with_social_worker:
+      title: How to set up a Google domain for care leavers
+      description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
+      guidance_section: setup_guide_pages
 
     guide_to_resetting_windows_laptops_and_tablets:
       title:  Guide to resetting windows laptops and tablets
       guidance_section:  manage_devices_pages
-
-    replace_a_faulty_device:
-      title: Replace faulty devices
-      description: Find out what to do if a laptop or tablet you’ve received from us is not working.
+    remove_dfe_provided_cisco_umbrella_from_chromebooks:
+      title: Remove DfE-provided Cisco Umbrella from Chromebooks
+      description: Find out how to remove Cisco Umbrella from Chromebooks.
       guidance_section: manage_devices_pages
     safeguarding_for_device_users:
       title: Safeguarding devices
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
       guidance_section: manage_devices_pages
 
-    preparing_a_standard_windows_device:
-      title: Preparing Microsoft Windows laptops and tablets
-      description: When you receive a Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
-      guidance_section: technical_staff_doing_device_setup # won't appear in the index
-
     managing_your_4g_wireless_routers:
       title: Managing your 4G wireless routers
       description: This information is to help schools, colleges, LAs and trusts manage routers they received from DfE.
       guidance_section: internet_access
-    google_domain_for_care_leavers_and_children_with_social_worker:
-      title: How to set up a Google domain for care leavers
-      description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
-      audience: software_and_digital_tools_pages
-      noindex: true
   guide_to_collecting_mobile_information:
     privacy: Explaining our privacy policy
   guide_to_resetting_windows_laptops_and_tablets:
