@@ -327,8 +327,8 @@ en:
       guidance_section: manage_devices_pages
 
     preparing_a_standard_windows_device:
-      title: Preparing Standard Microsoft Windows laptops and tablets
-      description: When you receive a Standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
+      title: Preparing Microsoft Windows laptops and tablets
+      description: When you receive a Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
       guidance_section: technical_staff_doing_device_setup # won't appear in the index
 
     managing_your_4g_wireless_routers:
