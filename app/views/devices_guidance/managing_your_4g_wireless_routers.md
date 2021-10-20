@@ -1,28 +1,33 @@
 ## Providing routers to families
 
-You should keep records of the type of routers you have received, who you’ve loaned them to and the IMEI number for each device. This information is essential for responding to any Regulation of Investigatory Powers Act (RIPA) requests you may get.
+You should keep records of the types of routers you’ve received, who you’ve loaned them to and the IMEI number for each device. This information is essential for responding to any Regulation of Investigatory Powers Act (RIPA) requests you may get.
 
 Our guidance on [device ownership and distribution](/devices/device-distribution-and-ownership) includes examples of loan agreements and suggestions for insurance.
 
 ## Data allowance
 
-SIM cards included with 4G routers provided data until 31 August 2021.
+Routers ordered from 1 October 2021 onwards do not come with SIM cards. You’ll need to supply your own SIM card (with a data allowance) for each router. You may be able to get government-funded support to help disadvantaged pupils in years 3 to 13 to access the internet where face-to-face education is disrupted.
 
-To continue using the routers, organisations will need to supply their own SIM cards (with a data allowance) to connect to the internet.
+Previously, 4G routers were provided with SIM cards. These have now expired – to continue using your routers, you’ll need to reset them and replace the SIM cards.
 
 ## Resetting routers
 
-SIM cards in 4G routers provided by DfE have now expired. To continue using your router, you must reset it and replace the SIM card. The process to reset your router depends on the type of router you have.
+The process to reset your router depends on the type of router you have.
 
-Using another SIM card will remove the content filters. Read our [safeguarding guidance](/devices/safeguarding-for-device-users) and information for parents and carers on [keeping children safe online](https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online).
+<div class="govuk-inset-text">
+  <p>
+    Please note: Replacing the SIM card in your router will remove the content filters.
+    Read our <a href="/devices/safeguarding-for-device-users">safeguarding guidance</a> and information for parents and carers on <a href="https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online">keeping children safe online</a>.
+  </p>
+</div>
 
 ### If you have a Huawei router
 
 To reset your Huawei router, you’ll need to use another internet connection to download a firmware update onto the router.
 
-It will take around 10 minutes to reset your router. You’ll need:
+It takes around 10 minutes to reset your router. You’ll need:
 
-* your Huawei router, the router’s network name ('SSID') and wifi key - you can find these on a label under the back cover of your router
+* your Huawei router, the router’s network name ('SSID') and wifi key – you can find these on a label under the back cover of your router
 * a laptop, tablet or mobile phone
 * another internet source, such as your work or home wifi, and the password
 
