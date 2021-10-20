@@ -1,4 +1,8 @@
 class ResponsibleBody::HomeController < ResponsibleBody::BaseController
+  attr_reader :responsible_body
+
+  DEVICE_TYPES = %i[laptop router].freeze
+
   def show
     @std_count, @coms_count = device_count
     @completed_requests_count = completed_requests_count
@@ -12,18 +16,17 @@ class ResponsibleBody::HomeController < ResponsibleBody::BaseController
 private
 
   def device_count
-    std_count = 0
-    coms_count = 0
+    responsible_body.vcap_active? ? devices_ordered_by_vcap_schools : devices_ordered_by_schools
+  end
 
-    if @responsible_body.vcap_active?
-      std_count = @responsible_body.devices_ordered(:laptop)
-      coms_count = @responsible_body.devices_ordered(:router)
-    else
-      std_count = @responsible_body.schools.sum { |school| school.devices_ordered(:laptop) }
-      coms_count = @responsible_body.schools.sum { |school| school.devices_ordered(:router) }
+  def devices_ordered_by_schools
+    DEVICE_TYPES.map do |device_type|
+      responsible_body.schools.sum { |school| school.devices_ordered(device_type) }
     end
+  end
 
-    [std_count, coms_count]
+  def devices_ordered_by_vcap_schools
+    DEVICE_TYPES.map { |device_type| responsible_body.devices_ordered(device_type) }
   end
 
   def completed_requests_count
