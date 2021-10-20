@@ -93,10 +93,10 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
       before do
         stub_computacenter_outgoing_api_calls
-        school.reload.update!(raw_laptop_allocation: 103)
+        UpdateSchoolDevicesService.new(school: school, laptop_allocation: 103).call
         WebMock.allow_net_connect!
         SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
-        school.can_order!
+        UpdateSchoolDevicesService.new(school: school, order_state: :can_order).call
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
         allow(mock_request).to receive(:post).and_raise(exception)
       end

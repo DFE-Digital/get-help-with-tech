@@ -378,17 +378,26 @@ RSpec.describe ResponsibleBody, type: :model do
     before do
       stub_computacenter_outgoing_api_calls
       schools.each do |s|
-        s.update!(raw_laptop_allocation: 2, raw_laptop_cap: 2, raw_laptops_ordered: 1)
-        s.update!(raw_router_allocation: 3, raw_router_cap: 2, raw_routers_ordered: 1)
+        UpdateSchoolDevicesService.new(school: s,
+                                       order_state: :can_order_for_specific_circumstances,
+                                       laptop_allocation: 2,
+                                       laptop_cap: 2,
+                                       laptops_ordered: 1,
+                                       router_allocation: 3,
+                                       router_cap: 2,
+                                       routers_ordered: 1).call
       end
-      responsible_body.reload
     end
 
     it 'calculates the virtual cap for all device types' do
-      schools.first.update!(raw_laptop_cap: 3, raw_laptop_allocation: 3, raw_laptops_ordered: 2)
-      schools.last.update!(raw_router_cap: 1, raw_router_allocation: 3, raw_routers_ordered: 0)
-
-      responsible_body.calculate_virtual_caps!
+      UpdateSchoolDevicesService.new(school: schools.first,
+                                     laptop_allocation: 3,
+                                     laptop_cap: 3,
+                                     laptops_ordered: 2).call
+      UpdateSchoolDevicesService.new(school: schools.last,
+                                     router_allocation: 3,
+                                     router_cap: 1,
+                                     routers_ordered: 0).call
       expect(responsible_body.cap(:laptop)).to eq(7)
       expect(responsible_body.devices_ordered(:laptop)).to eq(4)
       expect(responsible_body.cap(:router)).to eq(5)
@@ -442,10 +451,14 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when used full allocation' do
       before do
-        schools.first.update!(raw_laptop_cap: 1, raw_laptop_allocation: 1, raw_laptops_ordered: 1)
-        schools.last.update!(raw_router_cap: 1, raw_router_allocation: 2, raw_routers_ordered: 2)
-
-        responsible_body.calculate_virtual_caps!
+        UpdateSchoolDevicesService.new(school: schools.first,
+                                       laptop_allocation: 1,
+                                       laptop_cap: 1,
+                                       laptops_ordered: 1).call
+        UpdateSchoolDevicesService.new(school: schools.last,
+                                       router_allocation: 2,
+                                       router_cap: 1,
+                                       routers_ordered: 2).call
       end
 
       it 'returns false' do
@@ -455,10 +468,14 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when partially used allocation' do
       before do
-        schools.first.update!(raw_laptop_cap: 2, raw_laptop_allocation: 2, raw_laptops_ordered: 1)
-        schools.last.update!(raw_router_cap: 0, raw_router_allocation: 1, raw_routers_ordered: 1)
-
-        responsible_body.calculate_virtual_caps!
+        UpdateSchoolDevicesService.new(school: schools.first,
+                                       laptop_allocation: 2,
+                                       laptop_cap: 2,
+                                       laptops_ordered: 1).call
+        UpdateSchoolDevicesService.new(school: schools.last,
+                                       router_allocation: 1,
+                                       router_cap: 0,
+                                       routers_ordered: 1).call
       end
 
       it 'returns true' do
@@ -468,10 +485,14 @@ RSpec.describe ResponsibleBody, type: :model do
 
     context 'when no devices ordered' do
       before do
-        schools.first.update!(raw_laptop_cap: 1, raw_laptop_allocation: 1, raw_laptops_ordered: 0)
-        schools.last.update!(raw_router_cap: 1, raw_router_allocation: 2, raw_routers_ordered: 0)
-
-        responsible_body.calculate_virtual_caps!
+        UpdateSchoolDevicesService.new(school: schools.first,
+                                       laptop_allocation: 1,
+                                       laptop_cap: 1,
+                                       laptops_ordered: 0).call
+        UpdateSchoolDevicesService.new(school: schools.last,
+                                       router_allocation: 2,
+                                       router_cap: 1,
+                                       routers_ordered: 0).call
       end
 
       it 'returns true' do

@@ -2,7 +2,14 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices within a virtual pool' do
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 4, :manages_orders, :with_headteacher, laptops: [1, 0, 0], routers: [1, 0, 0], responsible_body: responsible_body) }
+  let(:schools) do
+    create_list(:school, 4,
+                :manages_orders,
+                :with_headteacher,
+                laptops: [1, 0, 0],
+                routers: [1, 0, 0],
+                responsible_body: responsible_body)
+  end
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -68,7 +75,8 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   end
 
   def given_my_order_information_is_up_to_date
-    responsible_body.update!(who_will_order_devices: 'responsible_body', vcap_feature_flag: true)
+    ResponsibleBodySetWhoWillOrderDevicesService.new(responsible_body, :responsible_body).call
+    responsible_body.update!(vcap_feature_flag: true)
     responsible_body.schools.update_all(will_need_chromebooks: 'no')
     SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
     SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call
@@ -76,21 +84,36 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
-    schools[0].can_order!
-    schools[0].update!(raw_laptop_cap: 3, raw_laptop_allocation: 20, raw_laptops_ordered: 1) # 2 left
-    schools[0].update!(raw_router_cap: 5, raw_router_allocation: 10, raw_routers_ordered: 2) # 3 left
+    UpdateSchoolDevicesService.new(school: schools[0],
+                                   order_state: :can_order,
+                                   laptop_allocation: 20,
+                                   laptop_cap: 3,
+                                   laptops_ordered: 1,
+                                   router_allocation: 10,
+                                   router_cap: 5,
+                                   routers_ordered: 2).call
   end
 
   def given_a_centrally_managed_school_within_a_pool_could_order_but_cannot_order_anymore
-    schools[3].can_order!
-    schools[3].update!(raw_laptop_cap: 3, raw_laptop_allocation: 20, raw_laptops_ordered: 3) # 2 left
-    schools[3].update!(raw_router_cap: 5, raw_router_allocation: 10, raw_routers_ordered: 5) # 3 left
+    UpdateSchoolDevicesService.new(school: schools[3],
+                                   order_state: :can_order,
+                                   laptop_allocation: 3,
+                                   laptop_cap: 3,
+                                   laptops_ordered: 3,
+                                   router_allocation: 5,
+                                   router_cap: 5,
+                                   routers_ordered: 5).call
   end
 
   def given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
-    schools[1].can_order_for_specific_circumstances!
-    schools[1].update!(raw_laptop_cap: 3, raw_laptop_allocation: 20, raw_laptops_ordered: 1) # 2 left
-    schools[1].update!(raw_router_cap: 0, raw_router_allocation: 0, raw_routers_ordered: 0) # 0 left
+    UpdateSchoolDevicesService.new(school: schools[1],
+                                   order_state: :can_order_for_specific_circumstances,
+                                   laptop_allocation: 20,
+                                   laptop_cap: 3,
+                                   laptops_ordered: 1,
+                                   router_allocation: 0,
+                                   router_cap: 0,
+                                   routers_ordered: 0).call
   end
 
   def given_there_are_multiple_chromebook_domains_being_managed
@@ -139,7 +162,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   end
 
   def and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
-    expect(page).to have_text('2 devices and 3 routers available to order')
+    expect(page).to have_text('19 devices and 8 routers available to order')
   end
 
   def and_i_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
@@ -155,7 +178,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   end
 
   def and_i_see_2_schools_that_i_need_to_place_orders_for
-    expect(page).to have_text('4 devices and 3 routers available to order')
+    expect(page).to have_text('21 devices and 8 routers available to order')
   end
 
   def and_i_see_2_schools_that_i_have_already_placed_orders_for

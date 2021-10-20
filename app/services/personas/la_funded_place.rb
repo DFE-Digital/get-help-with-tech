@@ -49,8 +49,11 @@ private
   end
 
   def la_funded_place_enable_ordering
-    @la_funded_place.can_order!
-    @la_funded_place.update!(raw_laptop_allocation: 100, raw_laptop_cap: 100)
-    @la_funded_place.update!(raw_router_allocation: 100, raw_router_cap: 100)
+    UpdateSchoolDevicesService.new(school: @la_funded_place,
+                                   state: :can_order,
+                                   laptop_allocation: 100,
+                                   laptop_cap: 100,
+                                   router_allocation: 100,
+                                   router_cap: 100)
   end
 end

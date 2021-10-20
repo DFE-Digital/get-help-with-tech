@@ -6,6 +6,7 @@ RSpec.feature 'Ordering devices' do
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
+    stub_computacenter_outgoing_api_calls
     given_i_am_signed_in_as_a_responsible_body_user
     given_my_order_information_is_up_to_date
   end
@@ -64,13 +65,17 @@ RSpec.feature 'Ordering devices' do
   end
 
   def given_a_centrally_managed_school_can_order_for_specific_circumstances
-    schools[1].can_order_for_specific_circumstances!
-    schools[1].update!(raw_laptop_cap: 4, raw_laptop_allocation: 8)
+    UpdateSchoolDevicesService.new(school: schools[1],
+                                   order_state: :can_order_for_specific_circumstances,
+                                   laptop_allocation: 8,
+                                   laptop_cap: 4).call
   end
 
   def given_a_centrally_managed_school_can_order_full_allocation
-    schools[2].can_order!
-    schools[2].update!(raw_laptop_cap: 7, raw_laptop_allocation: 7)
+    UpdateSchoolDevicesService.new(school: schools[2],
+                                   order_state: :can_order,
+                                   laptop_allocation: 7,
+                                   laptop_cap: 7).call
   end
 
   def when_i_visit_the_responsible_body_home_page

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing service performance', type: :feature do
+  before { stub_computacenter_outgoing_api_calls }
+
   scenario 'DfE users see service stats about sign-ins and who orders' do
     given_there_have_been_sign_ins_from_users_of_devolved_schools_and_responsible_bodies
 
@@ -85,34 +87,34 @@ RSpec.feature 'Viewing service performance', type: :feature do
     devolved_schools = create_list(:school, 5, :manages_orders, laptops: [1, 0, 0])
     managed_schools = create_list(:school, 5, :centrally_managed, laptops: [1, 0, 0])
 
-    devolved_schools[0].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
-    devolved_schools[1].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
-    devolved_schools[2].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
-    devolved_schools[3].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
-    devolved_schools[4].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 0)
+    UpdateSchoolDevicesService.new(school: devolved_schools[0], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 30).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[1], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[2], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[3], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[4], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 0).call
 
-    managed_schools[0].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
-    managed_schools[1].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
-    managed_schools[2].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 10)
-    managed_schools[3].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 0)
-    managed_schools[4].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 0)
+    UpdateSchoolDevicesService.new(school: managed_schools[0], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 30).call
+    UpdateSchoolDevicesService.new(school: managed_schools[1], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 30).call
+    UpdateSchoolDevicesService.new(school: managed_schools[2], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: managed_schools[3], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 0).call
+    UpdateSchoolDevicesService.new(school: managed_schools[4], order_state: :can_order, laptop_allocation: 30, laptop_cap: 30, laptops_ordered: 0).call
   end
 
   def given_there_are_available_shipped_and_remaining_routers
     devolved_schools = create_list(:school, 5, :manages_orders, routers: [1, 0, 0])
     managed_schools = create_list(:school, 5, :centrally_managed, routers: [1, 0, 0])
 
-    devolved_schools[0].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 30)
-    devolved_schools[1].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
-    devolved_schools[2].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
-    devolved_schools[3].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
-    devolved_schools[4].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 0)
+    UpdateSchoolDevicesService.new(school: devolved_schools[0], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 30).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[1], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[2], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[3], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: devolved_schools[4], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 0).call
 
-    managed_schools[0].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 30)
-    managed_schools[1].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 30)
-    managed_schools[2].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 10)
-    managed_schools[3].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 0)
-    managed_schools[4].update!(raw_router_allocation: 30, raw_router_cap: 30, raw_routers_ordered: 0)
+    UpdateSchoolDevicesService.new(school: managed_schools[0], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 30).call
+    UpdateSchoolDevicesService.new(school: managed_schools[1], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 30).call
+    UpdateSchoolDevicesService.new(school: managed_schools[2], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 10).call
+    UpdateSchoolDevicesService.new(school: managed_schools[3], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 0).call
+    UpdateSchoolDevicesService.new(school: managed_schools[4], order_state: :can_order, router_allocation: 30, router_cap: 30, routers_ordered: 0).call
   end
 
   def given_some_extra_mobile_data_requests_have_been_made

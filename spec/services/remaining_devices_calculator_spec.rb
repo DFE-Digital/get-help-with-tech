@@ -8,12 +8,38 @@ RSpec.describe RemainingDevicesCalculator, type: :model do
 
   describe '#current_unclaimed_totals' do
     before do
-      devolved_schools[0].update!(raw_laptop_allocation: 20, raw_laptop_cap: 20, raw_laptops_ordered: 10)
-      devolved_schools[1].update!(raw_laptop_allocation: 30, raw_laptop_cap: 30, raw_laptops_ordered: 30)
-      devolved_schools[2].update!(raw_laptop_allocation: 40, raw_laptop_cap: 20, raw_laptops_ordered: 5)
-      managed_schools[0].update!(raw_laptop_allocation: 50, raw_laptop_cap: 50, raw_laptops_ordered: 10)
-      managed_schools[1].update!(raw_laptop_allocation: 60, raw_laptop_cap: 60, raw_laptops_ordered: 60)
-      managed_schools[2].update!(raw_laptop_allocation: 70, raw_laptop_cap: 40, raw_laptops_ordered: 15)
+      stub_computacenter_outgoing_api_calls
+      UpdateSchoolDevicesService.new(school: devolved_schools[0],
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 20,
+                                     laptop_cap: 20,
+                                     laptops_ordered: 10).call
+      UpdateSchoolDevicesService.new(school: devolved_schools[1],
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 30,
+                                     laptop_cap: 30,
+                                     laptops_ordered: 30).call
+      UpdateSchoolDevicesService.new(school: devolved_schools[2],
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 40,
+                                     laptop_cap: 20,
+                                     laptops_ordered: 5).call
+
+      UpdateSchoolDevicesService.new(school: managed_schools[0],
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 50,
+                                     laptop_cap: 50,
+                                     laptops_ordered: 10).call
+      UpdateSchoolDevicesService.new(school: managed_schools[1],
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 60,
+                                     laptop_cap: 60,
+                                     laptops_ordered: 60).call
+      UpdateSchoolDevicesService.new(school: managed_schools[2],
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 70,
+                                     laptop_cap: 40,
+                                     laptops_ordered: 15).call
     end
 
     it 'returns a RemainingDeviceCount object with the current totals remaining' do

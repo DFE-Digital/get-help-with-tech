@@ -13,12 +13,20 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
       let!(:schools) { create_list(:school, 3, :with_preorder_information, laptops: [1, 0, 0], routers: [1, 0, 0]) }
 
       before do
+        stub_computacenter_outgoing_api_calls
         setup_auth_token
-        schools[0].update!(raw_laptop_allocation: 0, raw_laptop_cap: 0)
-        schools[0].update!(raw_router_allocation: 0, raw_router_cap: 0)
-
-        schools[1].update!(raw_laptop_allocation: 10, raw_laptop_cap: 10)
-        schools[2].update!(raw_router_allocation: 10, raw_router_cap: 0)
+        UpdateSchoolDevicesService.new(school: schools[0],
+                                       order_state: :can_order_for_specific_circumstances,
+                                       laptop_allocation: 0,
+                                       laptop_cap: 0,
+                                       router_allocation: 0,
+                                       router_cap: 0).call
+        UpdateSchoolDevicesService.new(school: schools[1],
+                                       order_state: :can_order_for_specific_circumstances,
+                                       laptop_allocation: 10,
+                                       laptop_cap: 10,
+                                       router_allocation: 10,
+                                       router_cap: 0).call
       end
 
       it 'does not return an unauthorized status' do

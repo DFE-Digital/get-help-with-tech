@@ -85,6 +85,7 @@ class School < ApplicationRecord
   scope :in_virtual_cap_pool, -> { where(in_virtual_cap_pool: true) }
   scope :iss_provision, -> { where(type: 'LaFundedPlace', provision_type: 'iss') }
   scope :scl_provision, -> { where(type: 'LaFundedPlace', provision_type: 'scl') }
+  scope :that_can_order_now, -> { where(order_state: %w[can_order_for_specific_circumstances can_order]) }
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
   scope :who_will_order_devices_not_set, -> { where(who_will_order_devices: nil) }

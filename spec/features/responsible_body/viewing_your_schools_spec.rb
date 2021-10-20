@@ -44,7 +44,8 @@ RSpec.feature 'Viewing your schools' do
   end
 
   def given_my_order_information_is_up_to_date
-    responsible_body.update!(who_will_order_devices: 'responsible_body', vcap_feature_flag: true)
+    ResponsibleBodySetWhoWillOrderDevicesService.new(responsible_body, :responsible_body).call
+    responsible_body.update!(vcap_feature_flag: true)
     responsible_body.schools.update_all(will_need_chromebooks: 'no')
     SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
     SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call
@@ -52,17 +53,29 @@ RSpec.feature 'Viewing your schools' do
   end
 
   def given_there_are_schools_in_the_pool
-    schools.first.can_order!
-    schools.first.update!(raw_laptop_cap: 5, raw_laptop_allocation: 5, raw_laptops_ordered: 2)
-    schools.second.can_order_for_specific_circumstances!
-    schools.second.update!(raw_laptop_cap: 5, raw_laptop_allocation: 20, raw_laptops_ordered: 0)
+    UpdateSchoolDevicesService.new(school: schools.first,
+                                   order_state: :can_order,
+                                   laptop_allocation: 5,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 2).call
+    UpdateSchoolDevicesService.new(school: schools.second,
+                                   order_state: :can_order_for_specific_circumstances,
+                                   laptop_allocation: 20,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 0).call
   end
 
   def given_there_are_schools_in_the_pool_that_cant_order
-    schools.first.can_order!
-    schools.first.update!(raw_laptop_cap: 5, raw_laptop_allocation: 5, raw_laptops_ordered: 5)
-    schools.second.can_order_for_specific_circumstances!
-    schools.second.update!(raw_laptop_cap: 5, raw_laptop_allocation: 20, raw_laptops_ordered: 5)
+    UpdateSchoolDevicesService.new(school: schools.first,
+                                   order_state: :can_order,
+                                   laptop_allocation: 5,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 5).call
+    UpdateSchoolDevicesService.new(school: schools.second,
+                                   order_state: :can_order_for_specific_circumstances,
+                                   laptop_allocation: 20,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 5).call
   end
 
   def when_i_visit_the_responsible_body_home_page

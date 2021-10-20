@@ -59,7 +59,9 @@ private
     }.merge(extra_args)
 
     provision = LaFundedPlace.create!(attrs)
-    provision.update!(raw_laptop_allocation: device_allocation, raw_router_allocation: router_allocation)
+    UpdateSchoolDevicesService.new(school: provision,
+                                   laptop_allocation: device_allocation,
+                                   router_allocation: router_allocation).call
     add_rb_users_to_provision(provision)
     SchoolSetWhoManagesOrdersService.new(provision, :school).call
     provision

@@ -36,18 +36,22 @@ RSpec.describe AllocationsExporter, type: :model do
 
     before do
       stub_request(:post, 'http://computacenter.example.com/').to_return(status: 200, body: '', headers: {})
-      schools.first.update!(raw_laptop_allocation: 20,
-                            raw_laptop_cap: 20,
-                            raw_laptops_ordered: 10,
-                            raw_router_allocation: 21,
-                            raw_router_cap: 21,
-                            raw_routers_ordered: 11)
-      schools.last.update!(raw_laptop_allocation: 25,
-                           raw_laptop_cap: 5,
-                           raw_laptops_ordered: 5,
-                           raw_router_allocation: 26,
-                           raw_router_cap: 6,
-                           raw_routers_ordered: 6)
+      UpdateSchoolDevicesService.new(school: schools.first,
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 20,
+                                     laptop_cap: 20,
+                                     laptops_ordered: 10,
+                                     router_allocation: 21,
+                                     router_cap: 21,
+                                     routers_ordered: 11).call
+      UpdateSchoolDevicesService.new(school: schools.last,
+                                     order_state: :can_order_for_specific_circumstances,
+                                     laptop_allocation: 25,
+                                     laptop_cap: 5,
+                                     laptops_ordered: 5,
+                                     router_allocation: 26,
+                                     router_cap: 6,
+                                     routers_ordered: 6).call
       SchoolSetWhoManagesOrdersService.new(schools.first, :responsible_body).call
       SchoolSetWhoManagesOrdersService.new(schools.last, :responsible_body).call
       trust.reload
