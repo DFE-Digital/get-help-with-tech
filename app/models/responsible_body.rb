@@ -156,7 +156,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?
-    active_schools.responsible_body_will_order_devices.filter_map(&:chromebook_domain).uniq.count > 1
+    active_schools.responsible_body_will_order_devices.filter_map(&:chromebook_domain).uniq.size > 1
   end
 
   def has_school_in_virtual_cap_pools?(school)
@@ -180,7 +180,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def is_ordering_for_all_schools?
-    active_schools.count == active_schools.responsible_body_will_order_devices.count
+    active_schools.size == active_schools.responsible_body_will_order_devices.size
   end
 
   def laptop?(device_type)
