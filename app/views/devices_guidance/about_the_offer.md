@@ -20,7 +20,7 @@ They were also able to request internet access for disadvantaged children throug
 * over the age of 19 with an education, health and care plan (EHCP) who also receive free meals
 * in any year group who were [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) during the COVID-19 pandemic because they (or someone they live with) was [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
 * in any year group, including those in 16 to 19 education, who attend a hospital school
-* in years 3 to 11 with [state-funded places in independent special schools or alternative provision](/devices/how-to-order-laptops-for-independent-special-schools), who are eligible for free school meals
+* in years 3 to 11 with state-funded places in independent special schools or alternative provision, who are eligible for free school meals
 
 Laptops and internet access are also available for care leavers aged 16 to 25.
 
