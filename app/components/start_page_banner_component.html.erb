@@ -7,13 +7,22 @@
       DfE provides laptops, tablets and routers for disadvantaged children and
       young people to help with remote education.
     </p>
-    <%= render GovukComponent::InsetTextComponent.new(text: 'Sign in to order devices, view your order history or give a colleague access to the service.') %>
-    <%=
-      render GovukComponent::StartButtonComponent.new(
-        text: 'Sign in',
-        href: sign_in_path,
-        classes: 'govuk-button govuk-button--start'
-      )
-    %>
+
+    <% unless SessionService.is_signed_in?(session) %>
+      <div id="sign_in">
+        <%= render GovukComponent::InsetTextComponent.new(text: 'Sign in to order devices, view your order history or give a colleague access to the service.') %>
+        <%=
+          render GovukComponent::StartButtonComponent.new(
+            text: 'Sign in',
+            href: sign_in_path,
+            classes: 'govuk-button govuk-button--start'
+          )
+        %>
+        <p class="govuk-body">
+          If you do not have sign-in details, read about
+          <%= govuk_link_to 'how to access the service', how_to_access_the_get_help_with_technology_service_path %>.
+        </p>
+      </div>
+    <% end %>
   </div>
 </div>
