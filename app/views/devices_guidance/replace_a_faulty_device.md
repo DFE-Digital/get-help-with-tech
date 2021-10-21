@@ -1,8 +1,37 @@
 ## Laptop and tablet faults
 
-All devices supplied by the Get help with technology programme came with a 12-month manufacturer’s warranty. If you've ordered ['Pre-issued' devices](/devices/device-specification#pre-issued-devices) the warranty period may have already expired.
+### As soon as you receive your order
 
-If you encounter a fault, please refer to the manual supplied with the device or the manufacturer’s website for information on how to make a claim.
+On receipt of your devices, check for any external damage. If you notice any damage to
+the packaging, ensure that the courier captures this on the &lsquo;proof of delivery&rsquo; (POD) note,
+before you sign. It may affect a future claim if damage is not recorded on the POD note.
+
+Keep each device&rsquo;s box and packaging until it has been checked and powered on by your
+organisation &ndash; you&rsquo;ll need it if you return any faulty devices.
+
+### If your device will not start within 10 working days of receiving it
+
+You have a maximum of 10 working days from the delivery date recorded on your POD
+note to report to us that a device is dead on arrival (DOA). This is a strict deadline and
+after this time you&rsquo;ll need to follow the manufacturer&rsquo;s warranty guidelines. This deadline
+also applies to local authorities and trusts that have received devices on behalf of schools.
+
+If a device will not start, please check it&rsquo;s fully charged and plugged into the mains. If you 
+still cannot start the device, please notify us as soon as possible at 
+[https://get-help-with-tech.education.gov.uk/get-support](https://get-help-with-tech.education.gov.uk/get-support).
+
+On the page that asks &lsquo;How can we help you?&rsquo;, let us know that your device won&rsquo;t start,
+and provide your order number (this will begin &lsquo;HYB&rsquo;) and the device&rsquo;s serial number.
+
+### If your device is not working and you&rsquo;ve had it for longer than 10 working days
+
+All devices supplied by the Get help with technology programme come with a minimum
+12-month manufacturer&rsquo;s warranty.
+
+If you&rsquo;ve ordered [&lsquo;Pre-issued&rsquo; devices](/devices/device-specification#pre-issued-devices) the warranty period may have already expired.
+
+If you encounter a fault, refer to the manual supplied with the device or the manufacturer&rsquo;s 
+website for information on how to make a claim.
 
 * [Acer](https://www.acer.com/ac/en/GB/content/support)
 * [Apple](https://support.apple.com/en-gb/ipad/repair/service)
@@ -15,12 +44,38 @@ If you encounter a fault, please refer to the manual supplied with the device or
 * [Tactus Geo](https://geo-computers.com/support/)
 * [Samsung](https://www.samsung.com/uk/business/support/) (or call 0330 726 2677)
 
-Depending on the manufacturer’s warranty process, you may be required to pay courier costs when returning faulty devices.
+Depending on the manufacturer&rsquo;s warranty process, you may need to pay courier costs
+when returning faulty devices. You&rsquo;ll also need to ensure devices are returned in
+appropriate packaging to avoid damage during transit.
 
-Replacements from the manufacturer will come with standard factory settings. It's your responsibility to ensure these devices are safely set up for users. Refer to our guidance on [preparing a Standard Windows device](/devices/preparing-a-standard-windows-device) for steps to take regarding applying appropriate safeguarding and security settings.
+Devices returned or replaced by the manufacturer will come with standard factory settings. 
+It&rsquo;s your responsibility to ensure these devices are safely set up for users. See our
+guidance on [preparing a Windows device](/devices/preparing-a-standard-windows-device) for how to apply appropriate safeguarding and 
+security settings.
 
-We are unable to provide support for laptops and tablets after the manufacturer’s warranty period expires. This includes 'Pre-issued' devices. Any repairs or replacements will need to be arranged by your organisation.
+We cannot provide support for laptops and tablets after the manufacturer&rsquo;s warranty period
+expires. This includes &lsquo;pre-issued&rsquo; devices. Your organisation will need to arrange any
+repairs or replacements.
+
+### Returning a Chromebook
+
+When you ordered Chromebooks we asked you to provide your organisation&rsquo;s Google
+domain. If you provided this information, we linked your Chromebooks to your Google 
+admin console.
+
+Before returning a Chromebook, you must deprovision it from your Google domain by
+following this guidance: [Repair, repurpose, or retire Chrome devices](https://support.google.com/chrome/a/answer/3523633).
+
+### Returning an iPad
+
+When you ordered iPads we asked you to provide us with your Apple School Manager 
+(ASM) ID. If you provided this information, we linked your iPads to your organisation&rsquo;s 
+ASM.
+
+Before returning an iPad, you must unassign your iPad from your ASM by following this
+guidance: [Assign, reassign or unassign devices in Apple School Manager](https://support.apple.com/en-gb/guide/apple-school-manager/asmf500c0851/web).
 
 ## 4G wireless router faults
 
-Separate guidance is available explaining [what to do if you have technical issues with a 4G wireless router](/devices/managing-your-4g-wireless-routers).
+Separate guidance is available explaining 
+[what to do if you have technical issues with a 4G wireless router](/devices/managing-your-4g-wireless-routers).
