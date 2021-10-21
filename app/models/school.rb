@@ -70,8 +70,6 @@ class School < ApplicationRecord
   scope :excluding_la_funded_provisions, -> { where.not(type: 'LaFundedPlace') }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
 
-  scope :can_order_laptops_now, -> { where('raw_laptop_cap > raw_laptops_ordered') }
-
   scope :has_fully_ordered_laptops, -> { where('raw_laptops_ordered > 0 AND raw_laptop_cap = raw_laptops_ordered') }
   scope :has_fully_ordered_routers, -> { where('raw_routers_ordered > 0 AND raw_router_cap = raw_routers_ordered') }
   scope :has_partially_ordered_laptops, -> { where('raw_laptops_ordered > 0 AND raw_laptop_cap > raw_laptops_ordered') }

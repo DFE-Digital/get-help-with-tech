@@ -141,3 +141,6 @@ upload: setup_scp_params
 	@test ${REMOTE_PATH} || (echo ">> REMOTE_PATH is not set (${REMOTE_PATH})- please use make (env) upload REMOTE_PATH=(remote path to upload to) LOCAL_PATH=(local path to upload from) PROCESS=(process name - defaults to sidekiq) INSTANCE=(instance number - defaults to 0)"; exit 1)
 	@test ${LOCAL_PATH} || (echo ">> FROM is not set (${FROM})- please use make (env) upload REMOTE_PATH=(remote path to upload to) LOCAL_PATH=(local path to upload from) PROCESS=(process name - defaults to sidekiq) INSTANCE=(instance number - defaults to 0)"; exit 1)
 	scp -P 2222 -o StrictHostKeyChecking=no -o User=cf:${process_guid}/0 $(LOCAL_PATH) ssh.london.cloud.service.gov.uk:$(REMOTE_PATH)
+
+dump_pass_db: set_cf_target
+	cf conduit $(APP_NAME)-$(env_stub)-db -- pg_dump --file $(env_stub).sql --no-acl --no-owner
