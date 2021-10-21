@@ -5,11 +5,20 @@ RSpec.feature 'Display asset properties' do
   let(:asset) { create(:asset) }
   let(:bios_unlockable_asset) { create(:asset, :unlockable) }
   let(:asset_page) { PageObjects::Assets::ShowPage.new }
-  let(:asset_attr_labels) do
+  let(:asset_detail_labels) do
     [
+      'Asset tag',
       'Serial/IMEI',
+    ]
+  end
+  let(:asset_secrets_labels) do
+    [
       'BIOS password',
       'Admin password',
+    ]
+  end
+  let(:asset_hardware_labels) do
+    [
       'Hardware hash',
     ]
   end
@@ -33,36 +42,48 @@ RSpec.feature 'Display asset properties' do
 
     visit asset_path(bios_unlockable_asset)
 
-    expect_asset_properties_to_be_displayed(bios_unlockable_asset, download_unlocker: true)
+    expect_asset_properties_to_be_displayed(bios_unlockable_asset, download_bios_unlocker: true)
+  end
+
+  context 'empty values' do
+    let(:asset) { create(:asset, :lacks_bios_password, :lacks_admin_password, :lacks_hardware_hash) }
+
+    scenario 'show hyphens' do
+      sign_in_as user
+
+      visit asset_path(asset)
+
+      expect_asset_properties_to_be_displayed(asset)
+    end
   end
 
 private
 
-  def expect_asset_properties_to_be_displayed(asset, download_unlocker: false)
+  def expect_asset_properties_to_be_displayed(asset, download_bios_unlocker: false)
     expect(asset_page).to have_home_breadcrumb(text: 'Home')
     expect(asset_page).to have_assets_breadcrumb(text: 'View your device details')
     expect(asset_page).to have_title_header(text: 'Device BIOS/admin password and hardware hash')
-    expect(asset_page.attr_labels.map(&:text)).to eq(asset_attr_labels)
-    expect_attr_values_to_be_displayed(asset, download_unlocker: download_unlocker)
-  end
 
-  def expect_attr_values_to_be_displayed(asset, download_unlocker: false)
-    bios = download_unlocker ? 'Download BIOS unlocker' : asset.bios_password
-    expect_attr_values_with_bios(asset, bios)
+    # labels for each table
+    expect(asset_page.asset_detail_labels.map(&:text)).to eq(asset_detail_labels)
+    expect(asset_page.asset_secrets_labels.map(&:text)).to eq(asset_secrets_labels)
+    expect(asset_page.asset_hardware_labels.map(&:text)).to eq(asset_hardware_labels)
 
-    if download_unlocker
-      expect(asset_page.download_unlocker(text: bios)['href']).to eq(bios_unlocker_asset_path(asset))
-    else
-      expect(asset_page).to have_no_download_unlocker
+    # values for each table
+    expect(asset_page.asset_detail_values.map(&:text)).to eq([asset.tag, asset.serial_number])
+    expect(asset_page.asset_secrets_values.map(&:text)).to eq([
+      bios_password_value(asset, download_bios_unlocker) || '-',
+      asset.admin_password || '-',
+    ])
+    expect(asset_page.asset_hardware_values.map(&:text)).to eq([asset.hardware_hash || '-'])
+
+    # download bios unlocker link
+    if download_bios_unlocker
+      expect(asset_page.download_bios_unlocker_link['href']).to eq(bios_unlocker_asset_path(asset))
     end
   end
 
-  def expect_attr_values_with_bios(asset, bios)
-    expect(asset_page.attr_values.map(&:text)).to eq([
-      asset.serial_number,
-      bios,
-      asset.admin_password,
-      asset.hardware_hash,
-    ])
+  def bios_password_value(asset, download_bios_unlocker)
+    download_bios_unlocker ? 'Download BIOS unlocker' : asset.bios_password
   end
 end

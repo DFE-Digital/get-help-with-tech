@@ -50,3 +50,15 @@
     }
   }
 }
+
+// custom override for app/views/assets/show.html.erb
+.assets-table-override {
+  .govuk-table__header,
+  .govuk-table__cell {
+    border-bottom: none;
+  }
+
+  .assets-hardware-hash {
+    word-break: break-all;
+  }
+}

@@ -8,10 +8,15 @@ module PageObjects
 
       element :title_header, 'h1.govuk-heading-xl'
 
-      element :download_unlocker, 'dd.govuk-summary-list__value a.govuk-link'
+      elements :asset_detail_labels, 'table.asset-details th'
+      elements :asset_secrets_labels, 'table.asset-secrets th'
+      elements :asset_hardware_labels, 'table.asset-hardware th'
 
-      elements :attr_labels, 'dt.govuk-summary-list__key'
-      elements :attr_values, 'dd.govuk-summary-list__value'
+      elements :asset_detail_values, 'table.asset-details td'
+      elements :asset_secrets_values, 'table.asset-secrets td'
+      elements :asset_hardware_values, 'table.asset-hardware td'
+
+      element :download_bios_unlocker_link, 'table.asset-secrets a.govuk-link'
     end
   end
 end
