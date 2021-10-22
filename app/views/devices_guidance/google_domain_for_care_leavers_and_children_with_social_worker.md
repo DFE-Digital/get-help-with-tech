@@ -8,14 +8,14 @@ apply for one, you should follow these instructions.
 
 You need to:
 
-* Sign up for Google Workspace for Education Fundamentals (formerly G&nbsp;Suite for Education)
-* Verify domain ownership
+* sign up for Google Workspace for Education Fundamentals (formerly G&nbsp;Suite for Education)
+* verify domain ownership.
 
 ## Sign up for Google Workspace for Education Fundamentals
 
 Video Tutorials: [Domain Registration](https://www.youtube.com/watch?v=5aqNmtHs8Ko&list=PLP7Bvyb3ap45rPc0a79jBt4EH1YvHs9Sb&index=2&t=0s), [Domain Verification](https://www.youtube.com/watch?v=jGmpa59fvBI&list=PLP7Bvyb3ap45rPc0a79jBt4EH1YvHs9Sb&index=3&t=0s)
 
-Sign up for [Google Workspace for Education Fundamentals](https://edu.google.com/products/workspace-for-education/)
+Sign up for [Google Workspace for Education Fundamentals](https://edu.google.com/products/workspace-for-education/).
 
 During the sign-up process, you&rsquo;ll be asked to choose your 
 [primary domain](https://support.google.com/a/answer/182080?hl=en&ref_topic=29190).
