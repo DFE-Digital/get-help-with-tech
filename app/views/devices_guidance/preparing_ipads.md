@@ -13,7 +13,7 @@ Each iPad bundle contains:
 * USB charging cable
 * 3-point power adapter
 * a lightly padded neoprene sleeve (sleeves are packaged separately and may arrive
-on a different day to the iPads)
+on a different day to the iPads).
 
 See the [full device specification](/devices/device-specification). 
  
@@ -25,9 +25,9 @@ iPads to protect the devices and reduce the risk of accidental damage.
 When you order iPads we ask for your Apple School Manager (ASM). If you need to find 
 this, you can follow these steps:
 
-1. Log in to Apple School Manager
-1. Select &lsquo;Settings&rsquo;, then select &lsquo;Enrolment Information&rsquo;
-1. Look for your Organisation ID in the Enrolment Information pane
+1. Log in to Apple School Manager.
+1. Select &lsquo;Settings&rsquo;, then select &lsquo;Enrolment Information&rsquo;.
+1. Look for your Organisation ID in the Enrolment Information pane.
 
 Find out [how to enrol in Apple School Manager](https://support.apple.com/en-gb/guide/apple-school-manager/apd402206497/web).
 
@@ -36,16 +36,16 @@ Find out [how to enrol in Apple School Manager](https://support.apple.com/en-gb/
 You need to enter the reseller ID in Apple School Manager (ASM) before you can enrol the
 iPads in ASM to manage them.
 
-1. Go to [https://school.apple.com](https://school.apple.com)
-1. Enter your ASM ID to login
-1. Select &lsquo;Settings&rsquo; in the bottom left-hand corner
-1. Select &lsquo;Device Management Settings&rsquo;
-1. In the &lsquo;Customer Numbers&rsquo; section in the right-hand pane select &lsquo;Edit&rsquo;
-1. Select &lsquo;Reseller Number&rsquo; from the drop down box
-1. Enter the Reseller ID. You&rsquo;ll find this in the &lsquo;Description&rsquo; section of the delivery note you
+1. Go to [school.apple.com](https://school.apple.com).
+1. Enter your ASM ID to login.
+1. Select &lsquo;Settings&rsquo; in the bottom left-hand corner.
+1. Select &lsquo;Device Management Settings&rsquo;.
+1. In the &lsquo;Customer Numbers&rsquo; section in the right-hand pane select &lsquo;Edit&rsquo;.
+1. Select &lsquo;Reseller Number&rsquo; from the drop down box.
+1. Enter the Reseller ID. You&rsquo;ll find this in the &lsquo;Description&rsquo; section of the delivery note you.
 received with your Apple iPads. It will look like this: COK:DFE8:APPLE IPAD 10.2 XXXXXXX (the last 7 digits are your Reseller ID). If you have any problems locating the 
-Reseller ID, contact us and we&rsquo;ll confirm it
-1. Once the number has been verified select &lsquo;Done&rsquo;
+Reseller ID, contact us and we&rsquo;ll confirm it.
+1. Once the number has been verified select &lsquo;Done&rsquo;.
 
 
 ## How to set up iPads
@@ -55,10 +55,10 @@ This [Apple Education Deployment Guide](https://support.apple.com/en-gb/guide/de
 * scope their deployment
 * prepare their environment
 * set up and deploy Apple devices
-* enable teachers to create engaging learning experiences with Apple tools
+* enable teachers to create engaging learning experiences with Apple tools.
 
 It includes a checklist with project milestones, best practices for deployment scenarios and 
-guidance on iPad using mobile data. It has links to additional resources including videos
+guidance on iPads using mobile data. It has links to additional resources including videos
 and Apple Professional Services.
 
 ## Get help using your iPads

@@ -1,6 +1,6 @@
 ## About the programme
 
-The EdTech Demonstrator programme provides schools and colleges free peer-to-peer 
+The EdTech Demonstrator programme provides schools and colleges with free peer-to-peer 
 support on effective use of technology in education.
 
 The Demonstrators are schools and colleges who have significant experience and 
@@ -8,11 +8,11 @@ expertise in the effective use of education technology.
 
 The Demonstrator network support schools and colleges to use technology to:
 
-* Help improve students&rsquo; outcomes
-* Reduce unnecessary teacher workload burden
-* Support school/college improvement plans
-* Help schools/colleges manage their resources effectively
-* Secure an accessible and inclusive curriculum, including for pupils with SEND
+* help improve students&rsquo; outcomes
+* reduce unnecessary teacher workload burden
+* support school/college improvement plans
+* help schools/colleges manage their resources effectively
+* secure an accessible and inclusive curriculum, including for pupils with SEND.
 
 ## Who the programme is for
 
