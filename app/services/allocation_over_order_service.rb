@@ -35,11 +35,11 @@ private
 
   def reclaim_allocation_across_virtual_cap_pool
     School.transaction do
-      to_reclaim = available_allocations_in_the_vcap_pool.inject(over_order) do |quantity, member|
+      failed_to_reclaim = available_allocations_in_the_vcap_pool.inject(over_order) do |quantity, member|
         quantity -= reclaim_allocation_from_vcap_pool_member(member, quantity: quantity)
         quantity.positive? ? quantity : break
       end
-      alert_pool_allocation_reclaim_failed(to_reclaim) if to_reclaim
+      alert_pool_allocation_reclaim_failed(failed_to_reclaim) if failed_to_reclaim
     end
   end
 
