@@ -167,7 +167,7 @@ RSpec.describe School, type: :model do
       subject(:school) { create(:school, :manages_orders) }
 
       before do
-        school.set_current_contact!(school_contact)
+        school.set_school_contact!(school_contact)
       end
 
       it 'creates a new user from the contact details' do
@@ -225,7 +225,7 @@ RSpec.describe School, type: :model do
       subject(:school) { create(:school, :manages_orders) }
 
       before do
-        school.set_current_contact!(school_contact)
+        school.set_school_contact!(school_contact)
         create(:user, email_address: 'jsmith@school.sch.gov.uk')
       end
 

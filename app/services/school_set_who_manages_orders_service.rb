@@ -35,13 +35,14 @@ private
   end
 
   def notify_other_agents
-    %i[laptop router].each do |device_type|
-      next if school.in_virtual_cap_pool? && school_impacts_computacenter_numbers?(device_type)
-
-      CapUpdateNotificationsService.new(school.cap_update(device_type),
-                                        notify_computacenter: false,
-                                        notify_school: false).call
+    device_types = DEVICE_TYPES.reject do |device_type|
+      school.in_virtual_cap_pool? && school_impacts_computacenter_numbers?(device_type)
     end
+
+    CapUpdateNotificationsService.new(school,
+                                      device_types: device_types,
+                                      notify_computacenter: false,
+                                      notify_school: false).call
   end
 
   def pools_affected

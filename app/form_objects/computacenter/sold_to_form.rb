@@ -1,6 +1,8 @@
 class Computacenter::SoldToForm
   include ActiveModel::Model
 
+  DEVICE_TYPES = %i[laptop router].freeze
+
   attr_accessor :change_sold_to, :sold_to, :responsible_body
 
   validates :sold_to, numericality: { only_integer: true, message: 'Sold To must be a number' }
@@ -13,8 +15,10 @@ class Computacenter::SoldToForm
 private
 
   def update_computacenter
-    updates = responsible_body.schools.map(&:cap_updates)
-    CapUpdateNotificationsService.new(*updates.flatten, notify_computacenter: false, notify_school: false).call
+    CapUpdateNotificationsService.new(*responsible_body.schools,
+                                      device_types: DEVICE_TYPES,
+                                      notify_computacenter: false,
+                                      notify_school: false).call
   end
 
   def update_responsible_body

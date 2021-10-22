@@ -42,7 +42,7 @@ private
       .first_or_create!(full_name: user_to_contact.full_name,
                         role: :contact,
                         phone_number: user_to_contact.telephone)
-    school.set_current_contact!(contact)
+    school.set_school_contact!(contact)
   end
 
   def mark_school_as_invited

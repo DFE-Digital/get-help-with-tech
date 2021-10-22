@@ -1,6 +1,11 @@
 class ResponsibleBody::Devices::WhoToContactForm
   include ActiveModel::Model
 
+  ROLE_WHO_TO_CONTACT = {
+    headteacher: 'headteacher',
+    contact: 'someone_else',
+  }.freeze
+
   attr_accessor :school,
                 :who_to_contact,
                 :full_name,
@@ -58,18 +63,14 @@ class ResponsibleBody::Devices::WhoToContactForm
   end
 
   def preselect_who_to_contact
-    case current_contact&.role
-    when 'headteacher'
-      self.who_to_contact = 'headteacher'
-    when 'contact'
-      self.who_to_contact = 'someone_else'
-    end
+    who = ROLE_WHO_TO_CONTACT[school_contact&.role]
+    self.who_to_contact = who if who
   end
 
 private
 
-  def current_contact
-    school.current_contact || SchoolContact.new
+  def school_contact
+    school.school_contact || SchoolContact.new
   end
 
   def second_contact

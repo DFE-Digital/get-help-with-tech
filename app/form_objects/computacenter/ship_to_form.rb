@@ -1,6 +1,8 @@
 class Computacenter::ShipToForm
   include ActiveModel::Model
 
+  DEVICE_TYPES = %i[laptop router].freeze
+
   attr_accessor :change_ship_to, :ship_to, :school
 
   validates :ship_to, numericality: { only_integer: true, message: 'Ship To must be a number' }
@@ -13,7 +15,10 @@ class Computacenter::ShipToForm
 private
 
   def update_computacenter
-    CapUpdateNotificationsService.new(*school.cap_updates, notify_computacenter: false, notify_school: false).call
+    CapUpdateNotificationsService.new(school,
+                                      device_types: DEVICE_TYPES,
+                                      notify_computacenter: false,
+                                      notify_school: false).call
   end
 
   def update_school

@@ -286,8 +286,8 @@ private
   end
 
   def update_cap_on_computacenter(device_type)
-    updates = vcap_schools.map { |school| school.cap_updates(device_type) }.flatten
-    CapUpdateNotificationsService.new(*updates,
+    CapUpdateNotificationsService.new(*vcap_schools,
+                                      device_types: [device_type],
                                       notify_computacenter: false,
                                       notify_school: false).call
   end

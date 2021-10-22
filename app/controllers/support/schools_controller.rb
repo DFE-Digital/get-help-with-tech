@@ -39,7 +39,7 @@ class Support::SchoolsController < Support::BaseController
 
   def confirm_invitation
     @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
-    @school_contact = @school.current_contact
+    @school_contact = @school.school_contact
     if @school_contact.nil?
       flash[:warning] = I18n.t('support.schools.invite.no_school_contact', name: @school.name)
       redirect_to support_school_path(@school)

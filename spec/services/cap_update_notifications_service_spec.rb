@@ -26,7 +26,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
     end
 
     subject(:service) do
-      described_class.new(*school.cap_updates,
+      described_class.new(school,
+                          device_types: %i[laptop router],
                           notify_computacenter: notify_computacenter,
                           notify_school: notify_school)
     end

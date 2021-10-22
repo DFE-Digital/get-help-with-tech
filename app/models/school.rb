@@ -172,18 +172,6 @@ class School < ApplicationRecord
     in_virtual_cap_pool? ? vcap_cap(device_type) : raw_cap(device_type)
   end
 
-  def cap_updates(*device_types)
-    device_types = DEVICE_TYPES if device_types.blank?
-    [
-      (cap_update(:laptop) if device_types.include?(:laptop)),
-      (cap_update(:router) if device_types.include?(:router)),
-    ].compact
-  end
-
-  def cap_update(device_type)
-    OpenStruct.new(school: self, device_type: device_type)
-  end
-
   def computacenter_cap(device_type)
     in_virtual_cap_pool? ? vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type) : raw_cap(device_type)
   end
@@ -225,10 +213,6 @@ class School < ApplicationRecord
     else
       extra_mobile_data_requests.complete_status.size
     end
-  end
-
-  def current_contact
-    school_contact
   end
 
   def devices_available_to_order(device_type)
@@ -391,7 +375,7 @@ class School < ApplicationRecord
     update!(school_contacted_at: time)
   end
 
-  def set_current_contact!(contact)
+  def set_school_contact!(contact)
     update!(school_contact: contact)
   end
 

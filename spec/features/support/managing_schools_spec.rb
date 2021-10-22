@@ -114,7 +114,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
                     name: 'Alpha School',
                     responsible_body: local_authority)
     SchoolSetWhoManagesOrdersService.new(school, :school).call
-    school.set_current_contact!(school.headteacher)
+    school.set_school_contact!(school.headteacher)
 
     expect(school.school_will_be_contacted?).to be_truthy
   end

@@ -1,10 +1,10 @@
 class CapUpdateNotificationsService
   attr_reader :notify_computacenter, :notify_school, :updates
 
-  def initialize(*updates, notify_computacenter: true, notify_school: true)
+  def initialize(*schools, device_types:, notify_computacenter: true, notify_school: true)
     @notify_computacenter = notify_computacenter
     @notify_school = notify_school
-    @updates = updates.select { |update| update.school.computacenter_references? }.sort_by(&:device_type)
+    @updates = cap_updates(schools, device_types)
   end
 
   def call
@@ -13,6 +13,18 @@ class CapUpdateNotificationsService
   end
 
 private
+
+  def cap_updates(schools, device_types)
+    cc_schools = schools.select(&:computacenter_references?)
+    updates = device_types.map do |device_type|
+      cc_schools.map { |school| cap_update(school, device_type) }
+    end
+    updates.flatten.sort_by(&:device_type)
+  end
+
+  def cap_update(school, device_type)
+    OpenStruct.new(school: school, device_type: device_type)
+  end
 
   def computacenter_accepts_updates?
     Settings.computacenter.outgoing_api&.endpoint.present?

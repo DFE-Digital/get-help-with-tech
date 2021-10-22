@@ -127,7 +127,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'does not show the school contact even if the school contact is set' do
-      school.set_current_contact!(headteacher)
+      school.set_school_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
 

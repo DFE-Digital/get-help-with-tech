@@ -196,6 +196,6 @@ private
   end
 
   def school_contact
-    @school.current_contact
+    @school.school_contact
   end
 end

@@ -148,8 +148,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
           ],
         ]
@@ -221,8 +219,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
           ],
         ]
@@ -295,8 +291,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
           ],
         ]
@@ -369,8 +363,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
           ],
         ]
@@ -443,8 +435,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
           ],
         ]

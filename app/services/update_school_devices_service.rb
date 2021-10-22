@@ -60,9 +60,9 @@ private
   end
 
   def notify_other_agents
-    device_types = [laptop_cap_changed && :laptop, router_cap_changed && :router].compact
-    updates = school.cap_updates(*device_types)
-    CapUpdateNotificationsService.new(*updates, notify_school: notify_school).call if updates.any?
+    device_types = laptop_cap_changed ? %i[laptop] : []
+    device_types << :router if router_cap_changed
+    CapUpdateNotificationsService.new(school, device_types: device_types, notify_school: notify_school).call
   end
 
   def ordering?(device_type)

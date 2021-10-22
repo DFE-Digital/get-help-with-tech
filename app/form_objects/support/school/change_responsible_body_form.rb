@@ -5,6 +5,7 @@ class Support::School::ChangeResponsibleBodyForm
   attr_writer :responsible_body_id, :responsible_body
 
   COMPUTACENTER_CHANGE_STATUS = 'amended'.freeze
+  DEVICE_TYPES = %i[laptop router].freeze
 
   validates :school, presence: true
   validates :responsible_body, presence: true
@@ -36,13 +37,11 @@ private
   end
 
   def notify_other_agents
-    %i[laptop router].each do |device_type|
-      next if pool_notified_agents?(device_type)
-
-      CapUpdateNotificationsService.new(school.cap_update(device_type),
-                                        notify_computacenter: false,
-                                        notify_school: false).call
-    end
+    device_types = DEVICE_TYPES.reject { |device_type| pool_notified_agents?(device_type) }
+    CapUpdateNotificationsService.new(school,
+                                      device_types: device_types,
+                                      notify_computacenter: false,
+                                      notify_school: false).call
   end
 
   def pool_notified_agents?(device_type)
