@@ -63,7 +63,7 @@ class ResponsibleBody::Devices::WhoToContactForm
   end
 
   def preselect_who_to_contact
-    who = ROLE_WHO_TO_CONTACT[school_contact&.role]
+    who = ROLE_WHO_TO_CONTACT[school_contact&.role&.to_sym]
     self.who_to_contact = who if who
   end
 

@@ -37,7 +37,7 @@ private
     School.transaction do
       to_reclaim = available_allocations_in_the_vcap_pool.inject(over_order) do |quantity, member|
         quantity -= reclaim_allocation_from_vcap_pool_member(member, quantity: quantity)
-        quantity.zero? ? break : quantity
+        quantity.positive? ? quantity : break
       end
       alert_pool_allocation_reclaim_failed(to_reclaim) if to_reclaim
     end
