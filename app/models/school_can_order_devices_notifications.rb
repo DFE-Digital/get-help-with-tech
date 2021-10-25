@@ -103,6 +103,6 @@ private
   end
 
   def status?(*statuses, school:)
-    school.preorder_status&.in?(statuses)
+    school.preorder_status.in?(statuses)
   end
 end

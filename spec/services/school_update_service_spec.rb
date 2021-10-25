@@ -96,17 +96,6 @@ RSpec.describe SchoolUpdateService, type: :model do
         expect(school.preorder_status).to be_present
       end
     end
-    #
-    # context 'when the responsible body has not decided who will order' do
-    #   before do
-    #     local_authority.update!(who_will_order_devices: nil)
-    #   end
-    #
-    #   it 'does not set up ordering information' do
-    #     school = service.create_school!(staged_school)
-    #     expect(school.preorder_status).not_to be_present
-    #   end
-    # end
 
     context 'when there is an existing predecessor school' do
       let(:old_staged_school) { create(:staged_school, urn: 100_001, responsible_body_name: 'Camden', status: 'closed') }
