@@ -2,12 +2,12 @@ class TrancheAllocationComponentFactory
   def self.create_component(organisation)
     TrancheAllocationComponent.new(
       organisation: organisation,
-      devices_remaining: organisation.laptops_available_to_order,
-      routers_remaining: organisation.routers_available_to_order,
-      devices_ordered: organisation.laptops_ordered,
-      routers_ordered: organisation.routers_ordered,
-      devices_allocation: organisation.laptop_allocation,
-      routers_allocation: organisation.router_allocation,
+      devices_remaining: organisation.devices_available_to_order(:laptop),
+      routers_remaining: organisation.devices_available_to_order(:router),
+      devices_ordered: organisation.devices_ordered(:laptop),
+      routers_ordered: organisation.devices_ordered(:router),
+      devices_allocation: organisation.allocation(:laptop),
+      routers_allocation: organisation.allocation(:router),
     )
   end
 end

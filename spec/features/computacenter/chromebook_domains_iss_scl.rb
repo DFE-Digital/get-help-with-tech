@@ -7,8 +7,8 @@ RSpec.feature 'ISS or Social Care LAs managing multiple Chromebook domains' do
   context 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
     let!(:school) { create(:iss_provision, :with_preorder_information) }
-    let!(:school_iss) { create(:iss_provision, :with_preorder_information_chromebooks) }
-    let!(:school_scl) { create(:scl_provision, :with_preorder_information_chromebooks) }
+    let!(:school_iss) { create(:iss_provision, :with_preorder_information, :needs_chromebooks) }
+    let!(:school_scl) { create(:scl_provision, :with_preorder_information, :needs_chromebooks) }
 
     before do
       sign_in_as user

@@ -12,20 +12,20 @@ describe School::SchoolDetailsSummaryListComponent do
   subject(:result) { render_inline(described_class.new(school: school)) }
 
   context 'when the school will place device orders' do
-    before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :school,
+    let(:school) do
+      create(:school,
+             :primary,
+             :la_maintained,
+             :manages_orders,
              school_or_rb_domain: 'school.domain.org',
              recovery_email_address: 'admin@recovery.org',
              will_need_chromebooks: 'yes',
-             school_contact: headteacher)
-
-      create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 3)
+             school_contact: headteacher,
+             laptops: [3, 0, 0])
     end
 
     it 'renders the school allocation' do
-      expect(value_for_row(result, 'Device allocation').text).to include("#{school.std_device_allocation.raw_allocation} devices")
+      expect(value_for_row(result, 'Device allocation').text).to include("#{school.raw_allocation(:laptop)} devices")
     end
 
     it 'renders the school type' do
@@ -49,7 +49,7 @@ describe School::SchoolDetailsSummaryListComponent do
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'does not show the school contact even if the school contact is set' do
-      school.set_current_contact!(headteacher)
+      school.set_school_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
 
@@ -72,26 +72,14 @@ describe School::SchoolDetailsSummaryListComponent do
   end
 
   describe 'router allocation' do
-    context 'when there is no allocation' do
-      it 'does not show router allocation' do
-        expect(result.text).not_to include('Router allocation')
-      end
-    end
-
     context 'when there is a zero allocation' do
-      before do
-        create(:school_device_allocation, :with_coms_allocation, allocation: 0, school: school)
-      end
-
       it 'does not show router allocation' do
         expect(result.text).not_to include('Router allocation')
       end
     end
 
     context 'when there is a non-zero allocation' do
-      before do
-        create(:school_device_allocation, :with_coms_allocation, school: school)
-      end
+      let(:school) { create(:school, :primary, :la_maintained, routers: [1, 0, 0]) }
 
       it 'shows router allocation' do
         expect(result.text).to include('Router allocation')

@@ -16,45 +16,6 @@ RSpec.describe School, type: :model do
     it { is_expected.to validate_presence_of(:name).with_message('Enter the name of the establishment') }
   end
 
-  describe '#preorder_status_or_default' do
-    subject(:school) { create(:school, :manages_orders) }
-
-    context 'when the school has a preorder_information record with a status' do
-      it 'returns the status from the preorder_information record' do
-        expect(school.preorder_status_or_default).to eq('needs_contact')
-      end
-    end
-
-    context 'when the school has a preorder_information record without a status' do
-      it 'infers the status' do
-        school.preorder_information.status = nil
-        allow(school.preorder_information).to receive(:infer_status).and_return('inferred_status')
-
-        expect(school.preorder_status_or_default).to eq('inferred_status')
-      end
-    end
-
-    context 'when the school has no preorder status and the responsible_body is set to manage orders centrally' do
-      let(:responsible_body) { create(:local_authority, :manages_centrally) }
-
-      subject(:school) { create(:school, responsible_body: responsible_body) }
-
-      it 'returns "needs_info"' do
-        expect(school.preorder_status_or_default).to eq('needs_info')
-      end
-    end
-
-    context 'when the school has no preorder status and the responsible_body is set to schools managing orders' do
-      let(:responsible_body) { create(:local_authority, :devolves_management) }
-
-      subject(:school) { create(:school, responsible_body: responsible_body) }
-
-      it 'returns "needs_contact"' do
-        expect(school.preorder_status_or_default).to eq('needs_contact')
-      end
-    end
-  end
-
   describe '#school_type' do
     subject { school.school_type }
 
@@ -99,42 +60,39 @@ RSpec.describe School, type: :model do
     specify { expect(independent_special_school).not_to be_a_social_care_leaver }
   end
 
-  describe '#has_laptop_allocation?' do
+  describe '#has_allocation?' do
     let(:school) { create(:school) }
 
-    context 'when there is no standard device allocation' do
+    context 'when there is 0 allocation' do
       it 'is false' do
-        expect(school).not_to have_laptop_allocation
+        expect(school).not_to have_allocation(:laptop)
+        expect(school).not_to have_allocation(:router)
       end
     end
 
-    context 'when there is a standard device allocation of the given type but the value is 0' do
+    context 'when there is positive allocation' do
       before do
-        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', allocation: 0)
-      end
-
-      it 'is false' do
-        expect(school).not_to have_laptop_allocation
-      end
-    end
-
-    context 'when there is a standard device allocation' do
-      before do
-        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', allocation: 1)
+        school.raw_laptop_allocation = 1
+        school.raw_router_allocation = 2
       end
 
       it 'is true' do
-        expect(school).to have_laptop_allocation
+        expect(school).to have_allocation(:laptop)
+        expect(school).to have_allocation(:router)
       end
     end
 
-    context 'when there is a comms device allocation' do
+    context 'when there is allocation only for one device type' do
       before do
-        school.device_allocations << build(:school_device_allocation, device_type: 'coms_device', allocation: 1)
+        school.raw_router_allocation = 1
       end
 
-      it 'is false' do
-        expect(school).not_to have_laptop_allocation
+      it 'is true for the positive type' do
+        expect(school).to have_allocation(:router)
+      end
+
+      it 'is false for the non positive type' do
+        expect(school).not_to have_allocation(:laptop)
       end
     end
   end
@@ -153,7 +111,8 @@ RSpec.describe School, type: :model do
       let(:devices_ordered) { 0 }
 
       before do
-        school.device_allocations << build(:school_device_allocation, device_type: 'std_device', cap: cap, devices_ordered: devices_ordered)
+        school.raw_laptop_cap = cap
+        school.raw_laptops_ordered = devices_ordered
       end
 
       it 'is false' do
@@ -167,11 +126,9 @@ RSpec.describe School, type: :model do
       let(:allocation) { 3 }
 
       before do
-        school.device_allocations << build(:school_device_allocation,
-                                           device_type: 'std_device',
-                                           cap: cap,
-                                           allocation: allocation,
-                                           devices_ordered: devices_ordered)
+        school.raw_laptop_allocation = allocation
+        school.raw_laptop_cap = cap
+        school.raw_laptops_ordered = devices_ordered
       end
 
       it 'is true' do
@@ -185,12 +142,9 @@ RSpec.describe School, type: :model do
       let(:allocation) { 3 }
 
       before do
-        school.device_allocations << create(:school_device_allocation,
-                                            school: school,
-                                            device_type: 'std_device',
-                                            cap: cap,
-                                            allocation: allocation,
-                                            devices_ordered: devices_ordered)
+        school.raw_laptop_allocation = allocation
+        school.raw_laptop_cap = cap
+        school.raw_laptops_ordered = devices_ordered
       end
 
       it 'is false' do
@@ -200,6 +154,8 @@ RSpec.describe School, type: :model do
   end
 
   describe '#invite_school_contact' do
+    before { stub_computacenter_outgoing_api_calls }
+
     context "when the school contact isn't a user on the system" do
       let(:school_contact) do
         create(:school_contact,
@@ -211,7 +167,7 @@ RSpec.describe School, type: :model do
       subject(:school) { create(:school, :manages_orders) }
 
       before do
-        school.set_current_contact!(school_contact)
+        school.set_school_contact!(school_contact)
       end
 
       it 'creates a new user from the contact details' do
@@ -239,7 +195,7 @@ RSpec.describe School, type: :model do
 
       it 'updates the status' do
         expect { school.invite_school_contact }
-          .to change { school.reload.device_ordering_status }.from('school_will_be_contacted').to('school_contacted')
+          .to change { school.reload.preorder_status }.from('school_will_be_contacted').to('school_contacted')
       end
     end
 
@@ -269,33 +225,13 @@ RSpec.describe School, type: :model do
       subject(:school) { create(:school, :manages_orders) }
 
       before do
-        school.set_current_contact!(school_contact)
+        school.set_school_contact!(school_contact)
         create(:user, email_address: 'jsmith@school.sch.gov.uk')
       end
 
       it 'does nothing' do
         expect { school.invite_school_contact }
           .not_to change { User.count }.from(1)
-      end
-    end
-  end
-
-  describe '#who_will_order_devices' do
-    let(:local_authority) { build(:local_authority, :manages_centrally) }
-
-    context 'when the school has a preorder_information' do
-      subject(:school) { build(:school, :manages_orders, :la_maintained, responsible_body: local_authority) }
-
-      it 'returns the who_will_order_devices value from the preorder_information' do
-        expect(school.who_will_order_devices).to eq('school')
-      end
-    end
-
-    context 'when the school does not have a preorder_information' do
-      subject(:school) { build(:school, :la_maintained, responsible_body: local_authority) }
-
-      it 'returns the who_will_order_devices value from the responsible_body' do
-        expect(school.who_will_order_devices).to eq('responsible_body')
       end
     end
   end
@@ -333,14 +269,27 @@ RSpec.describe School, type: :model do
   describe '#in_virtual_cap_pool?' do
     subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
-    let(:schools) { create_list(:school, 2, :with_std_device_allocation, :with_coms_device_allocation, :manages_orders, :in_lockdown, responsible_body: responsible_body) }
+    let(:schools) do
+      create_list(:school,
+                  2,
+                  :manages_orders,
+                  :in_lockdown,
+                  responsible_body: responsible_body,
+                  laptops: [1, 0, 0],
+                  routers: [1, 0, 0])
+    end
 
     before do
       stub_computacenter_outgoing_api_calls
       first_school = schools.first
-      first_school.orders_managed_centrally!
-      first_school.std_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 2)
-      first_school.coms_device_allocation.update!(allocation: 20, cap: 5, devices_ordered: 3)
+      SchoolSetWhoManagesOrdersService.new(first_school, :responsible_body).call
+      UpdateSchoolDevicesService.new(school: first_school,
+                                     laptop_allocation: 10,
+                                     laptop_cap: 10,
+                                     laptops_ordered: 2,
+                                     router_allocation: 20,
+                                     router_cap: 5,
+                                     routers_ordered: 3).call
     end
 
     it 'returns true for a school within the pool' do
@@ -460,54 +409,6 @@ RSpec.describe School, type: :model do
 
       it 'returns true' do
         expect(school.can_change_who_manages_orders?).to be true
-      end
-    end
-  end
-
-  describe 'change_who_manages_orders!' do
-    before { stub_computacenter_outgoing_api_calls }
-
-    context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
-      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
-
-      it 'raises an error' do
-        expect { school.change_who_manages_orders!(:school) }.to raise_error(VirtualCapPoolError)
-      end
-    end
-
-    context 'when the school is centrally managed and the responsible body does not have virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
-      let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
-
-      it 'changes who can order' do
-        school.change_who_manages_orders!(:school)
-        expect(school.reload.orders_managed_by_school?).to be_truthy
-      end
-    end
-
-    context 'when the school manages orders and the responsible body has virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
-      let(:school) { create(:school, :manages_orders, :can_order, :with_std_device_allocation, responsible_body: local_authority) }
-
-      it 'changes who can order' do
-        school.change_who_manages_orders!(:responsible_body)
-        expect(school.reload.orders_managed_centrally?).to be_truthy
-      end
-
-      it 'adds the school to the virtual cap pool' do
-        school.change_who_manages_orders!(:responsible_body)
-        expect(school.reload.in_virtual_cap_pool?).to be_truthy
-      end
-    end
-
-    context 'when the school manages orders and the responsible body has does not have virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
-      let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
-
-      it 'changes who can order' do
-        school.change_who_manages_orders!(:responsible_body)
-        expect(school.reload.orders_managed_centrally?).to be_truthy
       end
     end
   end

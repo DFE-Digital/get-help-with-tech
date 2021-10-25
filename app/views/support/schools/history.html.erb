@@ -27,29 +27,9 @@
           selected: @view_mode.blank? || @view_mode == 'school')
         %>
         <%= render TabComponent.new(
-          label: 'Devices',
-          path: support_school_history_path(view: 'std_device'),
-          selected: @view_mode == 'std_device')
-        %>
-        <%= render TabComponent.new(
-          label: 'Routers',
-          path: support_school_history_path(view: 'coms_device'),
-          selected: @view_mode == 'coms_device')
-        %>
-        <%= render TabComponent.new(
           label: 'Cap',
           path: support_school_history_path(view: 'caps'),
           selected: @view_mode == 'caps')
-        %>
-        <%= render TabComponent.new(
-          label: 'Devices (v-cap)',
-          path: support_school_history_path(view: 'std_device_pool'),
-          selected: @view_mode == 'std_device_pool')
-        %>
-        <%= render TabComponent.new(
-          label: 'Routers (v-cap)',
-          path: support_school_history_path(view: 'coms_device_pool'),
-          selected: @view_mode == 'coms_device_pool')
         %>
         <%= render TabComponent.new(
           label: 'Ordered (CC)',

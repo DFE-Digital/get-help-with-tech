@@ -219,7 +219,7 @@ class User < ApplicationRecord
 
   def schools_i_order_for
     if orders_devices?
-      schools.that_will_order_devices + Array(responsible_body&.schools&.that_are_centrally_managed)
+      schools.school_will_order_devices + Array(responsible_body&.schools&.responsible_body_will_order_devices)
     else
       []
     end

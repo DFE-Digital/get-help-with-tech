@@ -6,14 +6,11 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
   before do
     sign_in_as user
+    stub_computacenter_outgoing_api_calls
   end
 
   describe '#edit' do
-    let(:school) do
-      create(:school,
-             :with_std_device_allocation_partially_ordered,
-             :with_coms_device_allocation_partially_ordered)
-    end
+    let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1]) }
 
     let(:edition_values) do
       {
@@ -51,8 +48,8 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       it 'assigns a form with the default values from the school' do
         expect(assigns[:form].school.urn).to eq(school.urn)
         expect(assigns[:form].order_state).to eq(school.order_state)
-        expect(assigns[:form].laptop_cap).to eq(school.laptop_cap)
-        expect(assigns[:form].router_cap).to eq(school.router_cap)
+        expect(assigns[:form].laptop_cap).to eq(school.cap(:laptop))
+        expect(assigns[:form].router_cap).to eq(school.cap(:router))
       end
     end
   end
@@ -62,7 +59,23 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     let(:order_state) { 'can_order_for_specific_circumstances' }
     let(:laptop_cap) { '3' }
     let(:router_cap) { '2' }
-    let(:who_manages) { :centrally_managed }
+    let(:who_manages) { :manages_orders }
+
+    let(:rb) do
+      create(:local_authority,
+             :manages_centrally,
+             :vcap_feature_flag,
+             computacenter_reference: '1000')
+    end
+
+    let!(:school) do
+      create(:school,
+             who_manages,
+             computacenter_reference: '11',
+             responsible_body: rb,
+             laptops: [5, 4, 1],
+             routers: [5, 4, 1])
+    end
 
     let(:params) do
       {
@@ -76,37 +89,13 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       }
     end
 
-    let(:rb) do
-      create(:local_authority,
-             :manages_centrally,
-             :vcap_feature_flag,
-             computacenter_reference: '1000')
-    end
-
-    let!(:school) do
+    before do
       create(:school,
              who_manages,
-             :with_std_device_allocation,
-             :with_coms_device_allocation,
-             computacenter_reference: '11',
-             responsible_body: rb,
-             laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
-             router_allocation: 5, router_cap: 4, routers_ordered: 1)
-    end
-
-    let!(:school2) do
-      create(:school,
-             who_manages,
-             :with_std_device_allocation,
-             :with_coms_device_allocation,
              responsible_body: rb,
              computacenter_reference: '12',
-             laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 1,
-             router_allocation: 5, router_cap: 4, routers_ordered: 1)
-    end
-
-    before do
-      stub_computacenter_outgoing_api_calls
+             laptops: [5, 4, 1],
+             routers: [5, 4, 1])
     end
 
     context 'when the values assigned are not valid' do
@@ -149,13 +138,13 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     it 'sets the given laptop cap to the school' do
       expect {
         patch :update, params: params
-      }.to change { School.find(school.id).laptop_cap }.from(4).to(3)
+      }.to change { school.reload.cap(:laptop) }.from(4).to(3)
     end
 
     it 'sets the given router cap to the school' do
       expect {
         patch :update, params: params
-      }.to change { School.find(school.id).router_cap }.from(4).to(2)
+      }.to change { school.reload.cap(:router) }.from(4).to(2)
     end
 
     context 'when the school is not in virtual cap pool' do
@@ -223,11 +212,6 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
         ]
       end
 
-      before do
-        AddSchoolToVirtualCapPoolService.new(school).call
-        AddSchoolToVirtualCapPoolService.new(school2).call
-      end
-
       it 'update school caps on Computacenter' do
         patch :update, params: params
 
@@ -247,11 +231,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
   end
 
   describe '#confirm' do
-    let(:school) do
-      create(:school,
-             :with_std_device_allocation_partially_ordered,
-             :with_coms_device_allocation_partially_ordered)
-    end
+    let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1]) }
 
     let(:edition_values) do
       {
@@ -277,8 +257,8 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     end
 
     it 'assigns laptop and router allocations vars from the school values' do
-      expect(assigns[:laptop_allocation]).to eq(school.laptop_allocation)
-      expect(assigns[:router_allocation]).to eq(school.router_allocation)
+      expect(assigns[:laptop_allocation]).to eq(school.allocation(:laptop))
+      expect(assigns[:router_allocation]).to eq(school.allocation(:router))
     end
 
     it 'renders the confirm template' do
@@ -287,11 +267,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
   end
 
   describe '#collect_urns_to_allow_many_schools_to_order' do
-    let(:school) do
-      create(:school,
-             :with_std_device_allocation_partially_ordered,
-             :with_coms_device_allocation_partially_ordered)
-    end
+    let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1]) }
 
     before { get :collect_urns_to_allow_many_schools_to_order }
 

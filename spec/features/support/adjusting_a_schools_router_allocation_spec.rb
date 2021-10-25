@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.feature 'Adjusting a schools router allocation' do
   let(:support_user) { create(:support_user) }
-  let(:school) { create(:school, order_state: :cannot_order) }
+  let(:school) { create(:school, order_state: :cannot_order, routers: [50, 1, 0]) }
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
 
   before do
-    create(:school_device_allocation, :with_coms_allocation, allocation: 50, school: school)
     sign_in_as support_user
+    stub_computacenter_outgoing_api_calls
   end
 
   describe 'visiting a school details page' do

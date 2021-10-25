@@ -60,18 +60,18 @@ private
         school.responsible_body.computacenter_identifier,
         school.order_state,
         school.who_will_order_devices,
-        school.std_device_allocation&.raw_allocation,
-        school.std_device_allocation&.raw_cap,
-        school.std_device_allocation&.raw_devices_ordered,
-        (school.in_virtual_cap_pool? ? school.std_device_allocation&.allocation : nil),
-        (school.in_virtual_cap_pool? ? school.std_device_allocation&.cap : nil),
-        (school.in_virtual_cap_pool? ? school.std_device_allocation&.devices_ordered : nil),
-        school.coms_device_allocation&.raw_allocation,
-        school.coms_device_allocation&.raw_cap,
-        school.coms_device_allocation&.raw_devices_ordered,
-        (school.in_virtual_cap_pool? ? school.coms_device_allocation&.allocation : nil),
-        (school.in_virtual_cap_pool? ? school.coms_device_allocation&.cap : nil),
-        (school.in_virtual_cap_pool? ? school.coms_device_allocation&.devices_ordered : nil),
+        school.raw_allocation(:laptop),
+        school.raw_cap(:laptop),
+        school.raw_devices_ordered(:laptop),
+        (school.in_virtual_cap_pool? ? school.allocation(:laptop) : nil),
+        (school.in_virtual_cap_pool? ? school.cap(:laptop) : nil),
+        (school.in_virtual_cap_pool? ? school.devices_ordered(:laptop) : nil),
+        school.raw_allocation(:router),
+        school.raw_cap(:router),
+        school.raw_devices_ordered(:router),
+        (school.in_virtual_cap_pool? ? school.allocation(:router) : nil),
+        (school.in_virtual_cap_pool? ? school.cap(:router) : nil),
+        (school.in_virtual_cap_pool? ? school.devices_ordered(:router) : nil),
       ]
     end
   end
@@ -81,6 +81,6 @@ private
   end
 
   def schools
-    School.all.includes(:responsible_body, :std_device_allocation, :coms_device_allocation).order(urn: :asc)
+    School.all.includes(:responsible_body).order(urn: :asc)
   end
 end

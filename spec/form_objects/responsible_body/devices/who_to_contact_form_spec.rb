@@ -22,7 +22,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
       let(:contact) { create(:school_contact, :contact, school: school) }
       let(:school) { create(:school, :manages_orders) }
 
-      before { school.set_current_contact!(contact) }
+      before { school.set_school_contact!(contact) }
 
       it 'populates contact details' do
         form.populate_details_from_second_contact
@@ -42,11 +42,11 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
       end
     end
 
-    context 'when headteacher is current_contact' do
+    context 'when headteacher is school_contact' do
       let(:contact) { school.headteacher }
       let(:school) { create(:school, :manages_orders, :with_headteacher) }
 
-      before { school.set_current_contact!(contact) }
+      before { school.set_school_contact!(contact) }
 
       it 'sets who_to_contact as headteacher' do
         form.preselect_who_to_contact
@@ -54,11 +54,11 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
       end
     end
 
-    context 'when other contact is current_contact' do
+    context 'when other contact is school_contact' do
       let(:contact) { create(:school_contact, :contact) }
       let(:school) { create(:school, :manages_orders, :with_headteacher) }
 
-      before { school.set_current_contact!(contact) }
+      before { school.set_school_contact!(contact) }
 
       it 'sets who_to_contact as someone_else' do
         form.preselect_who_to_contact

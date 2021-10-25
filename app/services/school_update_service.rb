@@ -15,7 +15,6 @@ class SchoolUpdateService
     responsible_body_exists!(staged_school)
 
     school = School.create!(staged_school.staged_attributes)
-    setup_allocations(school)
 
     staged_school.predecessors.each do |predecessor|
       move_remaining_allocations(school, predecessor)
@@ -24,7 +23,7 @@ class SchoolUpdateService
     end
 
     add_school_links(staged_school, school)
-    setup_preorder_information(school)
+    set_who_manages_orders(school)
 
     school
   end
@@ -59,33 +58,29 @@ private
     School.find_by(urn: last_link.link_urn) if last_link
   end
 
-  def setup_preorder_information(school)
+  def set_who_manages_orders(school)
     who_will_order = school.responsible_body.who_will_order_devices&.singularize
-    school.change_who_manages_orders!(who_will_order) if who_will_order
-  end
-
-  def setup_allocations(school)
-    school.device_allocations.std_device.create!(allocation: 0)
-    school.device_allocations.coms_device.create!(allocation: 0)
+    SchoolSetWhoManagesOrdersService.new(school, who_will_order).call if who_will_order
   end
 
   def move_remaining_allocations(school, predecessor)
     rb = predecessor.responsible_body
-    unless rb.has_virtual_cap_feature_flags? && rb.has_school_in_virtual_cap_pools?(predecessor)
-      predecessor.device_allocations.each do |allocation|
-        alloc = allocation.raw_allocation
-        ordered = allocation.raw_devices_ordered
+    unless rb.vcap_active? && rb.has_school_in_virtual_cap_pools?(predecessor)
+      %i[laptop router].each do |device_type|
+        alloc = predecessor.raw_allocation(device_type)
+        ordered = predecessor.raw_devices_ordered(device_type)
         spare_allocation = alloc - ordered
-
         next unless spare_allocation.positive?
 
-        SchoolDeviceAllocation.transaction do
-          school.device_allocations
-            .send(allocation.device_type).first
-            .update!(allocation: spare_allocation,
-                     cap: spare_allocation)
-
-          allocation.update!(allocation: ordered, cap: ordered)
+        School.transaction do
+          UpdateSchoolDevicesService.new(school: school,
+                                         "#{device_type}_allocation".to_sym => spare_allocation,
+                                         "#{device_type}_cap".to_sym => spare_allocation,
+                                         notify_computacenter: false).call
+          UpdateSchoolDevicesService.new(school: predecessor,
+                                         "#{device_type}_allocation".to_sym => ordered,
+                                         "#{device_type}_cap".to_sym => ordered,
+                                         notify_computacenter: false).call
         end
       end
     end

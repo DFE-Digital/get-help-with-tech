@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.feature 'Adjusting a schools allocation' do
   let(:support_user) { create(:support_user) }
-  let(:school) { create(:school, order_state: :cannot_order) }
+  let(:school) { create(:school, order_state: :cannot_order, laptops: [50, 0, 10]) }
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
 
   before do
-    create(:school_device_allocation, :with_std_allocation, allocation: 50, devices_ordered: 10, school: school)
     stub_computacenter_outgoing_api_calls
 
     sign_in_as support_user
@@ -29,7 +28,7 @@ RSpec.feature 'Adjusting a schools allocation' do
       end
 
       it 'shows me a form to change the allocation' do
-        expect(page).to have_field('New allocation', with: school.std_device_allocation.raw_allocation)
+        expect(page).to have_field('New allocation', with: school.raw_allocation(:laptop))
       end
 
       context 'filling in an invalid value and clicking Save' do

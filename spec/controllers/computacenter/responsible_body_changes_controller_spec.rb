@@ -12,6 +12,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
 
   before do
     sign_in_as user
+    stub_computacenter_outgoing_api_calls
   end
 
   describe '#edit' do
@@ -40,26 +41,20 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       }
     end
 
-    let!(:school1) do
+    before do
       create(:school,
              who_manages,
-             :with_std_device_allocation_partially_ordered,
-             :with_coms_device_allocation_partially_ordered,
+             laptops: [2, 2, 1],
+             routers: [2, 2, 1],
              responsible_body: rb,
              computacenter_reference: '11')
-    end
 
-    let!(:school2) do
       create(:school,
              who_manages,
-             :with_std_device_allocation_partially_ordered,
-             :with_coms_device_allocation_partially_ordered,
+             laptops: [2, 2, 1],
+             routers: [2, 2, 1],
              responsible_body: rb,
              computacenter_reference: '12')
-    end
-
-    before do
-      stub_computacenter_outgoing_api_calls
     end
 
     it 'redirects' do
@@ -105,11 +100,6 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
           ],
         ]
-      end
-
-      before do
-        AddSchoolToVirtualCapPoolService.new(school1).call
-        AddSchoolToVirtualCapPoolService.new(school2).call
       end
 
       it 'update caps on Computacenter' do

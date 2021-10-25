@@ -13,17 +13,14 @@ class Support::ResponsibleBodiesController < Support::BaseController
 
   def show
     @responsible_body = ResponsibleBody.find(params[:id])
-    @virtual_cap_pools = @responsible_body.virtual_cap_pools.with_std_device_first
     @users = policy_scope(@responsible_body.users).order('last_signed_in_at desc nulls last, updated_at desc')
     @schools = @responsible_body
       .schools
       .gias_status_open
-      .includes(:device_allocations, :preorder_information)
       .order(name: :asc)
     @closed_schools = @responsible_body
       .schools
       .gias_status_closed
-      .includes(:device_allocations, :preorder_information)
       .left_outer_joins(:user_schools)
       .select('schools.*, count(user_schools.id) AS user_count')
       .group('schools.id')

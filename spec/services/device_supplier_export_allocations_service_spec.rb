@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
   describe '#call' do
-    let(:school) { create(:school, :manages_orders, :can_order, :with_std_device_allocation) }
+    let(:school) { create(:school, :manages_orders, :can_order, laptops: [1, 0, 0]) }
     let(:rb) { school.responsible_body }
     let(:filename) { Rails.root.join('tmp/device_supplier_export_allocations_test_data.csv') }
     let(:csv) { CSV.read(filename, headers: true) }
-    let(:school_csv_row) { csv[0] }
-    let(:service_call) { service.call }
+    let(:school_csv_row) { csv.find { |row| row['urn'] == school.urn.to_s } }
 
     after do
       remove_file(filename)
@@ -15,10 +14,12 @@ RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
 
     subject(:service) { described_class.new(filename) }
 
+    before { stub_computacenter_outgoing_api_calls }
+
     context 'when given a filename' do
       before do
         school
-        service_call
+        service.call
       end
 
       it 'creates a CSV file' do
@@ -34,7 +35,7 @@ RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
     context 'when devices are managed by the school' do
       before do
         school
-        service_call
+        service.call
       end
 
       it 'displays "school" in the "who_orders" column' do
@@ -64,31 +65,26 @@ RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
 
     context 'when the devices are centrally managed' do
       let(:rb) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
-      let(:create_vcap_pool) { ([school] + sibling_schools).each { |school| AddSchoolToVirtualCapPoolService.new(school).call } }
-      let(:sibling_school_csv_row) { csv[-1] }
+      let(:sibling_school_csv_row) { csv.find { |row| row['urn'] == sibling_schools.first.urn.to_s } }
 
       let!(:school) do
         create(:school,
                :centrally_managed,
-               :with_std_device_allocation,
                responsible_body: rb,
-               laptop_allocation: 5, laptop_cap: 4, laptops_ordered: 3)
+               laptops: [5, 4, 3])
       end
 
-      let(:sibling_schools) do
+      let!(:sibling_schools) do
         create_list(:school,
                     2,
                     :centrally_managed,
-                    :with_std_device_allocation,
                     responsible_body: rb,
-                    laptop_allocation: 7, laptop_cap: 6, laptops_ordered: 4)
+                    laptops: [7, 6, 4])
       end
 
       before do
         stub_computacenter_outgoing_api_calls
-        create_vcap_pool
-        rb.reload
-        service_call
+        service.call
       end
 
       it 'displays "responsible_body" in the "who_orders" column' do

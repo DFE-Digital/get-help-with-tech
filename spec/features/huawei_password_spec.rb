@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
-  let(:school_with_router_allocation) { create(:school, :with_coms_device_allocation) }
-  let(:iss_provision) { create(:iss_provision, :with_coms_device_allocation) }
+  let(:school_with_router_allocation) { create(:school, routers: [1, 0, 0]) }
+  let(:iss_provision) { create(:iss_provision, routers: [1, 0, 0]) }
   let(:user_for_organisation_without_router_allocation) { create(:school_user) }
   let(:user) { create(:school_user, school: school_with_router_allocation) }
   let(:trust) { create(:trust, :multi_academy_trust, :vcap_feature_flag) }
-  let(:school) { create(:school, :with_coms_device_allocation, responsible_body: trust) }
+  let(:school) { create(:school, routers: [1, 0, 0], responsible_body: trust) }
   let(:rb_user) { create(:local_authority_user, responsible_body: trust) }
   let(:la_user) { create(:la_funded_place_user, school: iss_provision) }
 
@@ -33,7 +33,7 @@ RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 J
   end
 
   scenario 'responsible body user' do
-    create(:preorder_information, :rb_will_order, school: school)
+    SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
 
     AddSchoolToVirtualCapPoolService.new(school).call
     trust.reload

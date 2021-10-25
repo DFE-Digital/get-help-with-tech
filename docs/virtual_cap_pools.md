@@ -89,7 +89,7 @@ This will add the school's device allocations to the appropriate virtual pools
 3. Check that the school's preorder status looks correct,  it may be necessary to force the preorder status to refresh:
 
 ```ruby
-school.refresh_device_ordering_status!
+school.refresh_preorder_status!
 ```
 
 4. Check that the virtual pool information looks correct, if necessary force a recalculation:

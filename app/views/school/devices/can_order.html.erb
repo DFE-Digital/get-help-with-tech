@@ -33,12 +33,12 @@
 
     <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
 
-    <% if @school&.std_device_allocation&.devices_available_to_order > 149 %>
+    <% if @school&.devices_available_to_order(:laptop) > 149 %>
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
 
     <p class="govuk-body">
-      If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
+      If you try to order more than <%= what_to_order_allocation_list(@school) %> the order will be cancelled.
     </p>
 
     <h3 class="govuk-heading-s">Delivery address</h3>

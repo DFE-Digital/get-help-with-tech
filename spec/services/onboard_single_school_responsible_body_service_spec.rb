@@ -4,6 +4,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
   before do
     # disable computacenter user import API calls
     allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return(nil)
+    stub_computacenter_outgoing_api_calls
   end
 
   after do
@@ -37,7 +38,6 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
   context 'when the responsible body has users' do
     before do
       create_list(:trust_user, 4, responsible_body: responsible_body, orders_devices: true)
-
       described_class.new(urn: school.urn).call
       responsible_body.reload
       school.reload
@@ -48,17 +48,17 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     end
 
     it 'sets one of the users as a school contact' do
-      expect(school.current_contact).to be_present
+      expect(school.school_contact).to be_present
 
-      contact_email_address = school.current_contact.email_address
+      contact_email_address = school.school_contact.email_address
       expect(responsible_body.users.find_by(email_address: contact_email_address)).to be_present
     end
 
     it 'contacts the school contact and marks the school as contacted' do
       perform_enqueued_jobs
 
-      expect(ActionMailer::Base.deliveries.first.to.first).to eq(school.current_contact.email_address)
-      expect(school.device_ordering_status).to eq('school_contacted')
+      expect(ActionMailer::Base.deliveries.first.to.first).to eq(school.school_contact.email_address)
+      expect(school.preorder_status).to eq('school_contacted')
     end
 
     it 'contacts all RB users' do
@@ -102,7 +102,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
       perform_enqueued_jobs
 
       expect(ActionMailer::Base.deliveries.first.to.first).to eq(@headteacher.email_address)
-      expect(school.device_ordering_status).to eq('school_contacted')
+      expect(school.preorder_status).to eq('school_contacted')
     end
 
     it 'makes the headteacher a school user' do
@@ -124,14 +124,14 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     end
 
     it 'sets the headteacher as a school contact' do
-      expect(school.current_contact).to eq(@headteacher)
+      expect(school.school_contact).to eq(@headteacher)
     end
 
     it 'contacts the headteacher and marks the school as contacted' do
       perform_enqueued_jobs
 
       expect(ActionMailer::Base.deliveries.first.to.first).to eq(@headteacher.email_address)
-      expect(school.device_ordering_status).to eq('school_contacted')
+      expect(school.preorder_status).to eq('school_contacted')
     end
 
     it 'adds the headteacher as a single_academy_trust user who can order' do

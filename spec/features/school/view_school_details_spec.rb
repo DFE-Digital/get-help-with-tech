@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'View school details' do
-  let(:preorder_information) { create(:preorder_information, :school_will_order, :does_not_need_chromebooks) }
-  let(:school) { create(:school, :with_std_device_allocation, preorder_information: preorder_information) }
+  let(:school) { create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [1, 1, 0]) }
   let(:user) { create(:school_user, full_name: 'AAA Smith', school: school) }
 
   describe 'top of the page' do
-    let(:school_with_valid_allocation) { create(:school, :with_std_device_allocation, laptops_ordered: 1, preorder_information: preorder_information) }
+    let(:school_with_valid_allocation) do
+      create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [1, 1, 0])
+    end
+
     let(:user) { create(:school_user, school: school_with_valid_allocation) }
 
     before { sign_in_as user }
@@ -34,7 +36,7 @@ RSpec.feature 'View school details' do
     end
 
     context 'has ordered' do
-      let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+      let(:school) { create(:school, laptops: [2, 2, 1]) }
 
       it 'shows title' do
         expect(page).to have_content('Reset')
@@ -60,7 +62,7 @@ RSpec.feature 'View school details' do
     end
 
     context 'has ordered' do
-      let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+      let(:school) { create(:school, laptops: [2, 2, 1]) }
 
       it 'does NOT show this section' do
         expect(page).not_to have_content('Order history')
@@ -89,7 +91,7 @@ RSpec.feature 'View school details' do
       end
 
       context 'has ordered routers' do
-        let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered) }
+        let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1]) }
 
         it 'shows the title' do
           expect(page).to have_content('Order history')

@@ -36,7 +36,7 @@ class SchoolSearchForm
   end
 
   def schools
-    school_records = School.includes(:responsible_body, :std_device_allocation)
+    school_records = School.includes(:responsible_body)
 
     if search_type == 'single'
       school_records = school_records.matching_name_or_urn_or_ukprn_or_provision_urn(identifier.presence || name_or_identifier)

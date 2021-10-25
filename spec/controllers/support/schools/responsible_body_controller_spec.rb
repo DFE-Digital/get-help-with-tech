@@ -39,6 +39,8 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
       }
     end
 
+    before { stub_computacenter_outgoing_api_calls }
+
     context 'non support third line users' do
       let(:responsible_body_id) { school.responsible_body_id.next }
 
@@ -93,7 +95,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
         let(:responsible_body_id) { new_responsible_body.id }
 
         before do
-          create(:preorder_information, school: school)
+          school.refresh_preorder_status!
           sign_in_as support_third_line_user
           patch :update, params: params
         end

@@ -26,7 +26,7 @@ RSpec.feature 'Download CSV files' do
 
     describe 'clicking Download Chromebook details' do
       before do
-        create_list(:preorder_information, 4, :needs_chromebooks)
+        create_list(:school, 4, :needs_chromebooks)
       end
 
       it 'downloads a CSV file' do

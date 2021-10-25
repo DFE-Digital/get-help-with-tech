@@ -65,7 +65,7 @@ RSpec.feature ResponsibleBody do
       end
 
       context 'has ordered' do
-        let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
+        let(:school) { create(:school, laptops: [2, 2, 1], responsible_body: responsible_body) }
 
         before do
           school.reload
@@ -97,7 +97,7 @@ RSpec.feature ResponsibleBody do
       end
 
       context 'has ordered' do
-        let(:school) { create(:school, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body) }
+        let(:school) { create(:school, laptops: [2, 2, 1], responsible_body: responsible_body) }
 
         before do
           school.reload
@@ -128,7 +128,7 @@ RSpec.feature ResponsibleBody do
         end
 
         context 'has ordered routers' do
-          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body) }
+          let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1], responsible_body: responsible_body) }
 
           it 'shows the link to the extra mobile data requests page' do
             expect(page).to have_link('View your requests for extra mobile data')

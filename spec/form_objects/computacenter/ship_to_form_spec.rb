@@ -57,12 +57,7 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
     end
 
     context 'when everything ok' do
-      let(:school) do
-        create(:school,
-               :with_std_device_allocation_partially_ordered,
-               :with_coms_device_allocation_partially_ordered,
-               computacenter_reference: '11')
-      end
+      let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1], computacenter_reference: '11') }
 
       subject(:save) { described_class.new(school: school, ship_to: '100', change_ship_to: 'yes').save }
 

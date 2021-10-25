@@ -1,7 +1,7 @@
 <%-
   submit_label = local_assigns[:submit_label] || 'Save'
   legend_text = local_assigns[:legend_text] || nil
-  scope = local_assigns[:scope] || 'activerecord.attributes.preorder_information.will_need_chromebooks'
+  scope = local_assigns[:scope] || 'activerecord.attributes.school.will_need_chromebooks'
   legend = legend_text ? { text: legend_text } : { text: 'Will the school need Chromebooks?', hidden: true }
 %>
 <%= form_for local_assigns[:form_object], url: local_assigns[:url], method: :patch do |f| %>

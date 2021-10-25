@@ -2,15 +2,13 @@ require 'rails_helper'
 
 RSpec.feature 'Inviting school users' do
   let(:support_user) { create(:support_user) }
-  let(:school) { create(:school) }
+  let(:school) { create(:school, :manages_orders) }
   let(:other_school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:new_school_user_page) { PageObjects::Support::Users::InviteNewUserPage.new }
   let(:existing_user) { create(:school_user, email_address: 'existinguser@example.com', schools: [other_school]) }
 
-  before do
-    create(:preorder_information, school: school, who_will_order_devices: 'school')
-  end
+  before { stub_computacenter_outgoing_api_calls }
 
   scenario 'support invites new school user' do
     given_i_am_signed_in_as_a_support_user

@@ -32,18 +32,18 @@ private
   end
 
   def laptops_available_to_order
-    humanize(:device, responsible_body.laptops_available_to_order) if responsible_body.laptop_pool?
+    humanize(:device, responsible_body.devices_available_to_order(:laptop)) if responsible_body.vcap_active?
   end
 
   def laptops_ordered
-    humanize(:device, responsible_body.laptops_ordered) if responsible_body.laptop_pool?
+    humanize(:device, responsible_body.devices_ordered(:laptop)) if responsible_body.vcap_active?
   end
 
   def routers_available_to_order
-    humanize(:router, responsible_body.routers_available_to_order) if responsible_body.router_pool?
+    humanize(:router, responsible_body.devices_available_to_order(:router)) if responsible_body.vcap_active?
   end
 
   def routers_ordered
-    humanize(:router, responsible_body.routers_ordered) if responsible_body.router_pool?
+    humanize(:router, responsible_body.devices_ordered(:router)) if responsible_body.vcap_active?
   end
 end

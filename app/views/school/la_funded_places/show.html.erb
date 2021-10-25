@@ -14,7 +14,7 @@
     <%= render DeviceCountComponent.new(school: @school) %>
 
     <p class="govuk-body">
-      You’ve been allocated <%= "#{@school.std_device_allocation.cap} #{'laptop'.pluralize(@school.std_device_allocation.cap)}" %>.
+      You’ve been allocated <%= "#{@school.allocation(:laptop)} #{'laptop'.pluralize(@school.allocation(:laptop))}" %>.
     </p>
     <%= govuk_details summary_text: 'How your allocation has been calculated' do %>
       <% if @school.social_care_leaver? %>

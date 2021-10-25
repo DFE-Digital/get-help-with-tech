@@ -23,7 +23,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
 
       school.reload
       expect(school.who_will_order_devices).to eq('school')
-      expect(school.std_device_allocation.allocation).to eq(0)
+      expect(school.raw_allocation(:laptop)).to eq(0)
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.who_will_order_devices).to eq('school')
       school.reload
       expect(school.who_will_order_devices).to eq('school')
-      expect(school.std_device_allocation.allocation).to eq(0)
+      expect(school.raw_allocation(:laptop)).to eq(0)
     end
   end
 
@@ -60,23 +60,23 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.who_will_order_devices).to eq('school')
       school.reload
       expect(school.who_will_order_devices).to eq('school')
-      expect(school.std_device_allocation.allocation).to eq(0)
+      expect(school.allocation(:laptop)).to eq(0)
     end
   end
 
   context 'when the school has a device allocation' do
     it 'does not alter the allocation' do
-      school.device_allocations.create!(device_type: 'std_device', allocation: 20)
+      UpdateSchoolDevicesService.new(school: school, laptop_allocation: 20).call
 
       converter.convert_to_sat
-      school.reload
-      expect(school.std_device_allocation.allocation).to eq(20)
+      expect(school.raw_allocation(:laptop)).to eq(20)
     end
   end
 
   context 'when the school has preorder information and was centrally managed' do
     it 'updates the preorder information so the school will order devices' do
-      school.orders_managed_centrally!
+      stub_computacenter_outgoing_api_calls
+      SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
 
       converter.convert_to_sat
 

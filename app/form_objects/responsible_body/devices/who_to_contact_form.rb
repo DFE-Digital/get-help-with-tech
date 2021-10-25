@@ -1,6 +1,11 @@
 class ResponsibleBody::Devices::WhoToContactForm
   include ActiveModel::Model
 
+  ROLE_WHO_TO_CONTACT = {
+    headteacher: 'headteacher',
+    contact: 'someone_else',
+  }.freeze
+
   attr_accessor :school,
                 :who_to_contact,
                 :full_name,
@@ -31,14 +36,14 @@ class ResponsibleBody::Devices::WhoToContactForm
     if headteacher_chosen?
       headteacher
     elsif someone_else_chosen?
-      existing_contact = school.contacts.find_by(email_address: email_address)
-      second_contact = school.contacts.contact.first
-      new_contact = school.contacts.build(role: :contact)
+      contact = school.contacts.find_by(email_address: email_address)
+      contact ||= school.contacts.contact.first
+      contact ||= school.contacts.build(role: :contact)
 
-      (existing_contact || second_contact || new_contact).tap do |contact|
-        contact.email_address = email_address
-        contact.full_name = full_name
-        contact.phone_number = phone_number
+      contact.tap do |user|
+        user.email_address = email_address
+        user.full_name = full_name
+        user.phone_number = phone_number
       end
     end
   end
@@ -58,18 +63,14 @@ class ResponsibleBody::Devices::WhoToContactForm
   end
 
   def preselect_who_to_contact
-    case current_contact&.role
-    when 'headteacher'
-      self.who_to_contact = 'headteacher'
-    when 'contact'
-      self.who_to_contact = 'someone_else'
-    end
+    who = ROLE_WHO_TO_CONTACT[school_contact&.role&.to_sym]
+    self.who_to_contact = who if who
   end
 
 private
 
-  def current_contact
-    school.current_contact || SchoolContact.new
+  def school_contact
+    school.school_contact || SchoolContact.new
   end
 
   def second_contact

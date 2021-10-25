@@ -1,2 +1,0 @@
-class PreorderInformationPolicy < SupportPolicy
-end

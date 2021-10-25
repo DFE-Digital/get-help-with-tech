@@ -37,19 +37,19 @@ class InterstitialPicker
 private
 
   def rb_user_with_la_funded_place_with_available_devices?
-    user.la_funded_user? && user.responsible_body_user? && user.responsible_body.schools.la_funded_provision.any? { |school| school.device_allocations&.can_order_std_devices_now.present? }
+    user.la_funded_user? && user.responsible_body_user? && user.responsible_body.schools.la_funded_provision.any?(&:has_not_fully_ordered_laptops_now?)
   end
 
   def user_with_multiple_la_funded_places_with_available_devices?
-    user.schools.la_funded_provision.count > 1 && user.schools.la_funded_provision.any? { |school| school.device_allocations&.can_order_std_devices_now.present? }
+    user.schools.la_funded_provision.count > 1 && user.schools.la_funded_provision.any?(&:has_not_fully_ordered_laptops_now?)
   end
 
   def iss_provision_user_with_available_devices?
-    user.iss_provision_user? && user.schools.iss_provision.first&.device_allocations&.can_order_std_devices_now.present?
+    user.iss_provision_user? && user.schools.iss_provision.first&.has_not_fully_ordered_laptops_now?
   end
 
   def scl_provision_user_with_available_devices?
-    user.scl_provision_user? && user.schools.scl_provision.first&.device_allocations&.can_order_std_devices_now.present?
+    user.scl_provision_user? && user.schools.scl_provision.first&.has_not_fully_ordered_laptops_now?
   end
 
   def title_for_default

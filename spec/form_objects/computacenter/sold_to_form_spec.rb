@@ -70,15 +70,15 @@ RSpec.describe Computacenter::SoldToForm, type: :model do
       before do
         create(:school,
                :manages_orders,
-               :with_std_device_allocation_partially_ordered,
-               :with_coms_device_allocation_partially_ordered,
+               laptops: [2, 2, 1],
+               routers: [2, 2, 1],
                responsible_body: rb,
                computacenter_reference: '11')
 
         create(:school,
                :manages_orders,
-               :with_std_device_allocation_partially_ordered,
-               :with_coms_device_allocation_partially_ordered,
+               laptops: [2, 2, 1],
+               routers: [2, 2, 1],
                responsible_body: rb,
                computacenter_reference: '12')
       end

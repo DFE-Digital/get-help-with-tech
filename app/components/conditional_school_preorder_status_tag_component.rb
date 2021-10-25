@@ -4,14 +4,10 @@ class ConditionalSchoolPreorderStatusTagComponent < SchoolPreorderStatusTagCompo
   end
 
   def should_show_status?
-    case @school.preorder_information&.who_will_order_devices
-    when 'responsible_body'
-      status.in? statuses_to_display
-    when 'school'
-      status.in?(statuses_to_display + %w[ordered])
-    else
-      true
-    end
+    return status.in?(statuses_to_display) if @school.orders_managed_centrally?
+    return status.in?(statuses_to_display + %w[ordered]) if @school.orders_managed_by_school?
+
+    true
   end
 
 private

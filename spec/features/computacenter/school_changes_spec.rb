@@ -4,9 +4,9 @@ require 'shared/expect_download'
 RSpec.feature 'Administering school changes' do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
-    let!(:new_schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
-    let!(:amended_schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
-    let!(:schools) { create_list(:school, 2, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
+    let!(:new_schools) { create_list(:school, 2, :with_preorder_information, laptops: [1, 0, 0], routers: [1, 0, 0]) }
+    let!(:amended_schools) { create_list(:school, 2, :with_preorder_information, laptops: [1, 0, 0], routers: [1, 0, 0]) }
+    let!(:schools) { create_list(:school, 2, :with_preorder_information, laptops: [1, 0, 0], routers: [1, 0, 0]) }
 
     before do
       given_the_schools_have_the_correct_computacenter_change_states

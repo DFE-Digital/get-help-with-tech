@@ -10,19 +10,14 @@ class RemainingDevicesCalculator
 private
 
   def remaining_from_devolved_schools
-    SchoolDeviceAllocation
-      .std_device
-      .joins(school: :preorder_information)
-      .where(preorder_information: { who_will_order_devices: 'school' })
-      .where(school: { status: 'open' })
-      .sum('cap - devices_ordered')
+    School
+      .where(who_will_order_devices: 'school', status: 'open')
+      .sum('raw_laptop_cap - raw_laptops_ordered')
   end
 
   def remaining_from_managed_schools
-    SchoolDeviceAllocation
-      .std_device
-      .joins(school: :preorder_information)
-      .where(preorder_information: { who_will_order_devices: 'responsible_body' })
-      .sum('cap - devices_ordered')
+    School
+      .where(who_will_order_devices: 'responsible_body')
+      .sum('raw_laptop_cap - raw_laptops_ordered')
   end
 end

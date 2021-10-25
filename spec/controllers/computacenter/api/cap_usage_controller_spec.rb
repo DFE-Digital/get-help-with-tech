@@ -124,14 +124,8 @@ RSpec.describe Computacenter::API::CapUsageController do
 
     context 'when all updates succeed' do
       before do
-        @school1 = create(:school, computacenter_reference: '81060874')
-        @school2 = create(:school, computacenter_reference: '81060875')
-
-        create(:school_device_allocation, school: @school1, device_type: 'std_device', cap: 100, allocation: 100)
-        create(:school_device_allocation, school: @school1, device_type: 'coms_device', cap: 100, allocation: 100)
-
-        create(:school_device_allocation, school: @school2, device_type: 'std_device', cap: 100, allocation: 300)
-        create(:school_device_allocation, school: @school2, device_type: 'coms_device', cap: 100, allocation: 400)
+        @school1 = create(:school, computacenter_reference: '81060874', laptops: [100, 100, 0], routers: [100, 100, 0])
+        @school2 = create(:school, computacenter_reference: '81060875', laptops: [300, 100, 0], routers: [400, 100, 0])
       end
 
       it 'responds with :ok status and updates the records' do
@@ -139,11 +133,11 @@ RSpec.describe Computacenter::API::CapUsageController do
 
         expect(response).to have_http_status(:ok)
 
-        expect(@school1.reload.laptops_ordered).to eq(20)
-        expect(@school1.reload.routers_ordered).to eq(100)
+        expect(@school1.reload.devices_ordered(:laptop)).to eq(20)
+        expect(@school1.reload.devices_ordered(:routers)).to eq(100)
 
-        expect(@school2.reload.laptops_ordered).to eq(57)
-        expect(@school2.reload.routers_ordered).to eq(100)
+        expect(@school2.reload.devices_ordered(:laptop)).to eq(57)
+        expect(@school2.reload.devices_ordered(:router)).to eq(100)
       end
     end
 
@@ -157,8 +151,7 @@ RSpec.describe Computacenter::API::CapUsageController do
       end
 
       before do
-        school = create(:school, computacenter_reference: '81060874')
-        create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 0)
+        create(:school, computacenter_reference: '81060874')
       end
 
       it 'is treated a valid payload' do
@@ -177,17 +170,14 @@ RSpec.describe Computacenter::API::CapUsageController do
         XML
       end
 
-      let(:school) { create(:school, computacenter_reference: '81060874') }
-
-      before do
-        create(:school_device_allocation, school: school, device_type: 'std_device', allocation: 0)
-      end
+      let!(:school) { create(:school, computacenter_reference: '81060874') }
 
       it 'is treated a valid payload' do
+        stub_computacenter_outgoing_api_calls
         post :bulk_update, format: :xml, body: cap_usage_update_packet
 
         expect(response).to have_http_status(:ok)
-        expect(school.reload.laptops_ordered).to eq(37)
+        expect(school.reload.devices_ordered(:laptop)).to eq(37)
       end
     end
 
@@ -202,9 +192,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     context 'when some but not all updates failed' do
       before do
         # only 1 of 2 schools there so partial failure
-        school1 = create(:school, computacenter_reference: '81060874')
-        create(:school_device_allocation, school: school1, device_type: 'std_device', cap: 100, allocation: 100)
-        create(:school_device_allocation, school: school1, device_type: 'coms_device', cap: 100, allocation: 100)
+        create(:school, computacenter_reference: '81060874', laptops: [100, 100, 0], routers: [100, 100, 0])
       end
 
       it 'responds with :multi_status status' do
@@ -222,16 +210,13 @@ RSpec.describe Computacenter::API::CapUsageController do
         XML
       end
 
-      before do
-        @school = create(:school, computacenter_reference: '81060874')
-        create(:school_device_allocation, school: @school, device_type: 'std_device', cap: 100, allocation: 100)
-      end
+      let!(:school) { create(:school, computacenter_reference: '81060874', laptops: [100, 100, 0]) }
 
       it 'responds with :multi_status status' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
 
         expect(response).to have_http_status(:ok)
-        expect(@school.reload.laptops_ordered).to eq(20)
+        expect(school.reload.devices_ordered(:laptop)).to eq(20)
       end
     end
   end

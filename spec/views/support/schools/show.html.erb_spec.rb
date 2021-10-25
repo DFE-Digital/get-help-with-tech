@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'support/schools/show.html.erb' do
-  let(:school) { create(:school, :with_std_device_allocation) }
+  let(:school) { create(:school, laptops: [1, 0, 0]) }
   let(:support_user) { create(:support_user) }
 
   before do

@@ -1,5 +1,5 @@
 class AllocationChange < ApplicationRecord
-  belongs_to :school_device_allocation
+  belongs_to :school
 
   enum category: {
     allocation_error_reversal: 'allocation_error_reversal',

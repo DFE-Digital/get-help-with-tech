@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<% if @responsible_body.has_virtual_cap_feature_flags? %>
+<% if @responsible_body.vcap_active? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render ResponsibleBody::PooledDeviceCountComponent.new(

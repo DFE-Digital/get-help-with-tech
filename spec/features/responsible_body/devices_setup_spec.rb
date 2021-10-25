@@ -10,6 +10,8 @@ RSpec.feature 'Setting up the devices ordering' do
     let(:school_with_no_headteacher) { create(:school, :la_maintained, :secondary, responsible_body: responsible_body, name: 'School with no headteacher') }
 
     before do
+      stub_computacenter_outgoing_api_calls
+
       @zebra_school = create(:school, :la_maintained, :secondary,
                              responsible_body: responsible_body,
                              urn: '123321',
@@ -17,9 +19,9 @@ RSpec.feature 'Setting up the devices ordering' do
       @aardvark_school = create(:school, :la_maintained, :primary,
                                 responsible_body: responsible_body,
                                 urn: '456654',
-                                name: 'Aardvark Primary School')
+                                name: 'Aardvark Primary School',
+                                laptops: [42, 42, 42])
 
-      create(:school_device_allocation, school: @aardvark_school, device_type: 'std_device', devices_ordered: 42)
       create(:school_contact,
              school: @aardvark_school,
              role: :headteacher,
@@ -160,6 +162,8 @@ RSpec.feature 'Setting up the devices ordering' do
     let(:trust_user) { create(:trust_user, responsible_body: responsible_body) }
 
     before do
+      stub_computacenter_outgoing_api_calls
+
       @koala_academy = create(:school, :academy, :secondary,
                               responsible_body: responsible_body,
                               name: 'Koala Academy')
@@ -270,7 +274,7 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def given_the_responsible_body_has_decided_to_order_centrally
     responsible_body.update!(who_will_order_devices: 'school')
-    responsible_body.schools.each(&:orders_managed_by_school!)
+    responsible_body.schools.each { |school| SchoolSetWhoManagesOrdersService.new(school, :school).call }
   end
 
   def when_i_visit_the_responsible_body_homepage
@@ -420,7 +424,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def given_there_is_a_school_with_no_standard_device_allocation
-    expect(@zebra_school).not_to have_laptop_allocation
+    expect(@zebra_school).not_to have_allocation(:laptop)
   end
 
   def when_i_click_on_the_name_of_a_school_which_has_no_standard_device_allocation

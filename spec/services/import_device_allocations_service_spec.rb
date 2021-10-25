@@ -24,21 +24,14 @@ RSpec.describe ImportDeviceAllocationsService, type: :model do
         remove_file(filename)
       end
 
-      it 'creates a new device allocation record' do
-        expect {
-          @service.import_device_allocations
-        }.to change { SchoolDeviceAllocation.count }.by(1)
-      end
-
-      it 'sets the correct allocation on the device allocation record' do
-        @service.import_device_allocations
-        expect(school.std_device_allocation.allocation).to eq 50
+      it 'sets the correct allocation' do
+        @service.import_laptop_allocations
+        expect(school.reload.raw_allocation(:laptop)).to eq 50
       end
     end
 
     context 'when an allocation already exists' do
-      let(:school) { create(:school, :with_std_device_allocation) }
-      let(:allocation_id) { school.std_device_allocation.id }
+      let(:school) { create(:school, laptops: [1, 0, 0]) }
 
       let(:attrs) do
         {
@@ -52,17 +45,15 @@ RSpec.describe ImportDeviceAllocationsService, type: :model do
       before do
         create_school_csv_file(filename, [attrs])
         service = described_class.new(AllocationDataFile.new(filename))
-        service.import_device_allocations
-        school.reload
+        service.import_laptop_allocations
       end
 
       after do
         remove_file(filename)
       end
 
-      it 'updates the existing device allocation record' do
-        expect(school.std_device_allocation.id).to eq allocation_id
-        expect(school.std_device_allocation.allocation).to eq 123
+      it 'updates the existing device allocation' do
+        expect(school.reload.raw_allocation(:laptop)).to eq 123
       end
     end
   end

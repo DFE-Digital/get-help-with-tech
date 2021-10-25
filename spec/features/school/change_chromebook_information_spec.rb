@@ -5,8 +5,11 @@ RSpec.feature 'Change school Chromebook information' do
   let(:school_user) { create(:school_user, full_name: 'AAA Smith', school: school) }
 
   before do
-    create(:preorder_information, school: school_user.school, who_will_order_devices: 'school', will_need_chromebooks: 'yes')
-    create(:school_device_allocation, school: school_user.school, device_type: 'std_device', allocation: 63)
+    school.update!(who_will_order_devices: 'school',
+                   will_need_chromebooks: 'yes',
+                   raw_laptop_allocation: 63,
+                   raw_laptop_cap: 0,
+                   raw_laptops_ordered: 0)
   end
 
   context 'logged in as a school user' do

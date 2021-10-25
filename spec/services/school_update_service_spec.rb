@@ -28,19 +28,17 @@ RSpec.describe SchoolUpdateService, type: :model do
         school_attrs = school.attributes.symbolize_keys
 
         service.update_schools
-        expect(school.reload).to have_attributes(
-          urn: school_attrs[:urn],
-          name: school_attrs[:name],
-          responsible_body_id: local_authority.id,
-          address_1: school_attrs[:address_1],
-          address_2: school_attrs[:address_2],
-          address_3: school_attrs[:address_3],
-          town: school_attrs[:town],
-          postcode: school_attrs[:postcode],
-          phase: school_attrs[:phase],
-          establishment_type: school_attrs[:establishment_type],
-          status: school_attrs[:status],
-        )
+        expect(school.reload).to have_attributes(urn: school_attrs[:urn],
+                                                 name: school_attrs[:name],
+                                                 responsible_body_id: local_authority.id,
+                                                 address_1: school_attrs[:address_1],
+                                                 address_2: school_attrs[:address_2],
+                                                 address_3: school_attrs[:address_3],
+                                                 town: school_attrs[:town],
+                                                 postcode: school_attrs[:postcode],
+                                                 phase: school_attrs[:phase],
+                                                 establishment_type: school_attrs[:establishment_type],
+                                                 status: school_attrs[:status])
       end
     end
 
@@ -50,19 +48,17 @@ RSpec.describe SchoolUpdateService, type: :model do
       it 'updates the existing school record' do
         service.update_schools
 
-        expect(school.reload).to have_attributes(
-          urn: 103_001,
-          name: staged_school.name,
-          responsible_body_id: local_authority.id,
-          address_1: staged_school.address_1,
-          address_2: staged_school.address_2,
-          address_3: staged_school.address_3,
-          town: staged_school.town,
-          postcode: staged_school.postcode,
-          phase: staged_school.phase,
-          establishment_type: staged_school.establishment_type,
-          status: staged_school.status,
-        )
+        expect(school.reload).to have_attributes(urn: 103_001,
+                                                 name: staged_school.name,
+                                                 responsible_body_id: local_authority.id,
+                                                 address_1: staged_school.address_1,
+                                                 address_2: staged_school.address_2,
+                                                 address_3: staged_school.address_3,
+                                                 town: staged_school.town,
+                                                 postcode: staged_school.postcode,
+                                                 phase: staged_school.phase,
+                                                 establishment_type: staged_school.establishment_type,
+                                                 status: staged_school.status)
       end
     end
   end
@@ -97,33 +93,37 @@ RSpec.describe SchoolUpdateService, type: :model do
 
       it 'sets up ordering information' do
         school = service.create_school!(staged_school)
-        expect(school.device_ordering_status).to be_present
-      end
-    end
-
-    context 'when the responsible body has not decided who will order' do
-      before do
-        local_authority.update!(who_will_order_devices: nil)
-      end
-
-      it 'does not set up ordering information' do
-        school = service.create_school!(staged_school)
-        expect(school.device_ordering_status).not_to be_present
+        expect(school.preorder_status).to be_present
       end
     end
 
     context 'when there is an existing predecessor school' do
       let(:old_staged_school) { create(:staged_school, urn: 100_001, responsible_body_name: 'Camden', status: 'closed') }
-      let!(:old_school) { create(:school, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation, name: old_staged_school.name, urn: old_staged_school.urn, responsible_body: local_authority) }
+      let!(:old_school) do
+        create(:school,
+               :with_preorder_information,
+               laptops: [1, 0, 0],
+               routers: [1, 0, 0],
+               name: old_staged_school.name,
+               urn: old_staged_school.urn,
+               responsible_body: local_authority)
+      end
+
       let(:old_school_link) { create(:staged_school_link, staged_school: old_staged_school, link_urn: staged_school.urn) }
       let(:school_link) { create(:staged_school_link, :predecessor, staged_school: staged_school, link_urn: old_staged_school.urn) }
       let!(:users) { create_list(:school_user, 2, school: old_school) }
 
       before do
+        stub_computacenter_outgoing_api_calls
         school_link
         old_school_link
-        old_school.std_device_allocation.update!(allocation: 100, cap: 100, devices_ordered: 90)
-        old_school.coms_device_allocation.update!(allocation: 10, cap: 10, devices_ordered: 8)
+        UpdateSchoolDevicesService.new(school: old_school,
+                                       laptop_allocation: 100,
+                                       laptop_cap: 100,
+                                       laptops_ordered: 90,
+                                       router_allocation: 10,
+                                       router_cap: 10,
+                                       routers_ordered: 8).call
       end
 
       it 'closes the predecessor school' do
@@ -134,12 +134,12 @@ RSpec.describe SchoolUpdateService, type: :model do
       it 'transfers any spare allocations from the predecessor and adjusts original values' do
         school = service.create_school!(staged_school)
         old_school.reload
-        expect(school.std_device_allocation.raw_allocation).to eq(10)
-        expect(school.coms_device_allocation.raw_allocation).to eq(2)
-        expect(old_school.std_device_allocation.raw_allocation).to eq(90)
-        expect(old_school.std_device_allocation.raw_cap).to eq(90)
-        expect(old_school.coms_device_allocation.raw_allocation).to eq(8)
-        expect(old_school.coms_device_allocation.raw_cap).to eq(8)
+        expect(school.raw_allocation(:laptop)).to eq(10)
+        expect(school.raw_allocation(:router)).to eq(2)
+        expect(old_school.raw_allocation(:laptop)).to eq(90)
+        expect(old_school.raw_cap(:laptop)).to eq(90)
+        expect(old_school.raw_allocation(:router)).to eq(8)
+        expect(old_school.raw_cap(:router)).to eq(8)
       end
 
       it 'moves users from the predecessor to the new school' do
@@ -164,14 +164,10 @@ RSpec.describe SchoolUpdateService, type: :model do
         let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
         before do
-          stub_computacenter_outgoing_api_calls
-
           rb = old_school.responsible_body
           rb.update!(vcap_feature_flag: true, who_will_order_devices: 'responsible_body')
-          old_school.preorder_information.update!(who_will_order_devices: 'responsible_body')
-          old_school.can_order!
-          AddSchoolToVirtualCapPoolService.new(old_school).call
-          rb.reload
+          old_school.update!(who_will_order_devices: 'responsible_body')
+          UpdateSchoolDevicesService.new(school: old_school, order_state: :can_order).call
         end
 
         it 'does not transfer any spare allocation or adjust the original values' do
@@ -179,12 +175,12 @@ RSpec.describe SchoolUpdateService, type: :model do
           old_school.reload
           expect(old_school.in_virtual_cap_pool?).to be true
 
-          expect(school.std_device_allocation.raw_allocation).to eq(0)
-          expect(school.coms_device_allocation.raw_allocation).to eq(0)
-          expect(old_school.std_device_allocation.raw_allocation).to eq(100)
-          expect(old_school.std_device_allocation.raw_cap).to eq(100)
-          expect(old_school.coms_device_allocation.raw_allocation).to eq(10)
-          expect(old_school.coms_device_allocation.raw_cap).to eq(10)
+          expect(school.raw_allocation(:laptop)).to eq(0)
+          expect(school.raw_allocation(:router)).to eq(0)
+          expect(old_school.raw_allocation(:laptop)).to eq(100)
+          expect(old_school.raw_cap(:laptop)).to eq(100)
+          expect(old_school.raw_allocation(:router)).to eq(10)
+          expect(old_school.raw_cap(:router)).to eq(8)
         end
       end
     end

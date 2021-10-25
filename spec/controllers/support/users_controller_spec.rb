@@ -39,7 +39,8 @@ RSpec.describe Support::UsersController do
 
       context 'when RB orders' do
         before do
-          create(:preorder_information, :rb_will_order, school: school)
+          stub_computacenter_outgoing_api_calls
+          SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
         end
 
         it 'does not allow school users to be added' do
@@ -52,6 +53,8 @@ RSpec.describe Support::UsersController do
   end
 
   describe '#create' do
+    before { stub_computacenter_outgoing_api_calls }
+
     context 'when inviting to a responsible body' do
       context 'for support users', versioning: true do
         before do

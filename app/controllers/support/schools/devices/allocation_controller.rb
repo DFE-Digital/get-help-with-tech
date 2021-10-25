@@ -21,7 +21,7 @@ class Support::Schools::Devices::AllocationController < Support::BaseController
 private
 
   def raw_allocation
-    school.send("raw_#{device_type}_allocation")
+    school.raw_allocation(device_type)
   end
 
   def set_school

@@ -4,7 +4,7 @@ RSpec.feature 'Viewing your schools' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, laptops: [1, 0, 0], routers: [1, 0, 0], responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   let(:your_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
@@ -44,25 +44,38 @@ RSpec.feature 'Viewing your schools' do
   end
 
   def given_my_order_information_is_up_to_date
-    responsible_body.update!(who_will_order_devices: 'responsible_body', vcap_feature_flag: true)
-    PreorderInformation.where(school_id: responsible_body.schools).update_all(will_need_chromebooks: 'no')
-    schools[0].orders_managed_centrally!
-    schools[1].orders_managed_centrally!
-    schools[2].orders_managed_by_school!
+    ResponsibleBodySetWhoWillOrderDevicesService.new(responsible_body, :responsible_body).call
+    responsible_body.update!(vcap_feature_flag: true)
+    responsible_body.schools.update_all(will_need_chromebooks: 'no')
+    SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call
+    SchoolSetWhoManagesOrdersService.new(schools[2], :responsible_body).call
   end
 
   def given_there_are_schools_in_the_pool
-    schools.first.can_order!
-    schools.first.std_device_allocation.update!(cap: 5, allocation: 5, devices_ordered: 2)
-    schools.second.can_order_for_specific_circumstances!
-    schools.second.std_device_allocation.update!(cap: 5, allocation: 20, devices_ordered: 0)
+    UpdateSchoolDevicesService.new(school: schools.first,
+                                   order_state: :can_order,
+                                   laptop_allocation: 5,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 2).call
+    UpdateSchoolDevicesService.new(school: schools.second,
+                                   order_state: :can_order_for_specific_circumstances,
+                                   laptop_allocation: 20,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 0).call
   end
 
   def given_there_are_schools_in_the_pool_that_cant_order
-    schools.first.can_order!
-    schools.first.std_device_allocation.update!(cap: 5, allocation: 5, devices_ordered: 5)
-    schools.second.can_order_for_specific_circumstances!
-    schools.second.std_device_allocation.update!(cap: 5, allocation: 20, devices_ordered: 5)
+    UpdateSchoolDevicesService.new(school: schools.first,
+                                   order_state: :can_order,
+                                   laptop_allocation: 5,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 5).call
+    UpdateSchoolDevicesService.new(school: schools.second,
+                                   order_state: :can_order_for_specific_circumstances,
+                                   laptop_allocation: 20,
+                                   laptop_cap: 5,
+                                   laptops_ordered: 5).call
   end
 
   def when_i_visit_the_responsible_body_home_page
@@ -126,8 +139,8 @@ RSpec.feature 'Viewing your schools' do
   def then_i_see_the_summary_pooled_device_count_card
     expect(page).to have_content("#{responsible_body.name} has:")
     responsible_body.reload
-    std_count = responsible_body.std_device_pool.cap - responsible_body.std_device_pool.devices_ordered
-    coms_count = responsible_body.coms_device_pool.cap - responsible_body.coms_device_pool.devices_ordered
+    std_count = responsible_body.cap(:laptop) - responsible_body.devices_ordered(:laptop)
+    coms_count = responsible_body.cap(:router) - responsible_body.devices_ordered(:router)
     expected =
       if std_count == 0 && coms_count == 0
         'No devices left to order'

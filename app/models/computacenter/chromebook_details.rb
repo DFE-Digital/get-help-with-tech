@@ -17,20 +17,20 @@ module Computacenter
       CSV.generate do |csv|
         csv << HEADERS
 
-        PreorderInformation
-          .includes(school: :responsible_body)
+        School
+          .includes(:responsible_body)
           .where(will_need_chromebooks: 'yes')
           .order(updated_at: :asc)
-          .each do |i|
+          .each do |school|
           csv << [
-            i.school.responsible_body.computacenter_identifier,
-            i.school.responsible_body.name,
-            i.school.name,
-            i.school.urn,
-            i.school_or_rb_domain,
-            i.recovery_email_address,
-            i.updated_at.utc.strftime('%d/%m/%Y'),
-            i.updated_at.utc.strftime('%R'),
+            school.responsible_body.computacenter_identifier,
+            school.responsible_body.name,
+            school.name,
+            school.urn,
+            school.school_or_rb_domain,
+            school.recovery_email_address,
+            school.updated_at.utc.strftime('%d/%m/%Y'),
+            school.updated_at.utc.strftime('%R'),
           ]
         end
       end

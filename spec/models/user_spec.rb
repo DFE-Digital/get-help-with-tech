@@ -1117,11 +1117,11 @@ RSpec.describe User, type: :model do
     context 'when they order devices' do
       let(:rb) { create(:trust) }
 
-      let(:included_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'school')) }
-      let(:excluded_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'responsible_body')) }
+      let(:included_school) { create(:school, :manages_orders) }
+      let(:excluded_school) { create(:school, :centrally_managed) }
 
-      let(:included_rb_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'responsible_body')) }
-      let(:excluded_rb_school) { create(:school, preorder_information: create(:preorder_information, who_will_order_devices: 'school')) }
+      let(:included_rb_school) { create(:school, :centrally_managed) }
+      let(:excluded_rb_school) { create(:school, :manages_orders) }
 
       subject(:user) { create(:user, orders_devices: true, responsible_body: rb) }
 
