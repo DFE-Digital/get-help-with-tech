@@ -4,7 +4,7 @@ Government-funded support is available for schools and colleges to get set up on
 two free-to-use digital education platforms. You can choose to use either:
 
 * Google Workspace for Education Fundamentals (formerly G Suite for Education)
-* Microsoft 365 Education (formerly Office 365 Education)
+* Microsoft 365 Education (formerly Office 365 Education).
 
 [The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) 
 provides feature comparison and case studies on 
@@ -28,7 +28,7 @@ Teachers can:
 * continue with formal assessment for learning
 * set up separate classrooms for smaller groups of students
 * develop structured file and folder storage for different users
-* use tools to support staff planning
+* use tools to support staff planning.
 
 Using a digital education platform allows teachers, pupils and students to continue education if 
 a school or college closes.
@@ -44,7 +44,7 @@ The funded support is for schools and colleges that:
 * do not have a digital education platform
 * have access to Microsoft 365 Education or Google Workspace for Education 
 Fundamentals, but are not yet set up to assign work and communicate with pupils 
-and students
+and students.
 
 Support is available to state funded:
 
@@ -53,14 +53,14 @@ Support is available to state funded:
 * special schools
 * pupil referral units
 * further education colleges
-* sixth-form colleges
+* sixth-form colleges.
 
 Virtual schools and colleges are also eligible for the programme. This is especially true for
 virtual schools and colleges that:
 
 * regularly coordinate and deliver elements of educational provision and curricular 
 content
-* engage with looked-after children
+* engage with looked-after children.
 
 ## How to apply
 
