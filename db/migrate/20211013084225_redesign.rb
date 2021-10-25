@@ -102,7 +102,7 @@ private
     AllocationChange.find_each do |allocation_change|
       sda = SchoolDeviceAllocation.find(allocation_change.school_device_allocation_id)
       allocation_change.update_columns(school_id: sda.school_id,
-                                       device_type: DEVICE_TYPES[sda.school.device_type])
+                                       device_type: DEVICE_TYPES[sda.device_type])
     end
   end
 
