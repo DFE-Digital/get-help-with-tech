@@ -232,7 +232,7 @@ en:
       order_devices_now: Order devices now
     invite_school_user:
       title: Invite a new user
-      will_they_order_devices: Do you want to give them access to the Support Portal?
+      will_they_order_devices: Do you want to give them access to the TechSource website for ordering?
       will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
       can_order_devices: Yes, give them access to the TechSource website for ordering
       cannot_order_devices: 'No'

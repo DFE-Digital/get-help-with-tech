@@ -11,4 +11,6 @@ have received last year.
 Devices are available in AY21/22 to support care leavers and children with supported by a social worker who:
 
 * are aged between 16 and 25 years old
-* do not have access to a laptop or tablet from their LA, or any other source
+* do not have access to a laptop or tablet from their LA, or any other source.
+
+If you need to query your allocation, [contact us](/get-support).

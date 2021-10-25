@@ -40,4 +40,4 @@ schools and colleges they work with on the EdTech Demonstrator website.
 ## Contact us
 
 If you have any further questions about the EdTech Demonstrator Programme, please 
-email [edtechdemoprogramme@ucst.uk](mailto:edtechdemoprogramme@ucst.uk).
+email: [edtechdemoprogramme@ucst.uk](mailto:edtechdemoprogramme@ucst.uk)

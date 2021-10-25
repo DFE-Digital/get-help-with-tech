@@ -19,17 +19,13 @@ private
     {
       key: 'Device allocation',
       value: pluralize(@school.raw_allocation(:laptop), 'device'),
-      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-      action: 'Query allocation',
     }
   end
 
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: pluralize(@school.raw_allocation(:router), 'router'),
-      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-      action: 'Query allocation',
+      value: @school.raw_allocation(:router).positive? ? 'routers are available to order' : 'no routers are available to order',
     }
   end
 
