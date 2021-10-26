@@ -96,10 +96,6 @@ RSpec.feature 'View school details' do
         it 'shows the title' do
           expect(page).to have_content('Order history')
         end
-
-        it 'shows the link to the extra mobile data requests page' do
-          expect(page).to have_link('View your requests for extra mobile data')
-        end
       end
     end
   end

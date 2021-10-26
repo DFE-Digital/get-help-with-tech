@@ -43,7 +43,7 @@ en:
     guide_to_resetting_windows_laptops_and_tablets: Guide to resetting Windows laptops and tablets
     start: Get help with technology
     internet_access: Internet access
-    signed_in_internet_access: Request or manage 4G routers
+    signed_in_internet_access: Manage 4G routers
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
     devices_guidance_how_to_order: How to order DfE laptops, tablets and routers
@@ -156,7 +156,7 @@ en:
             title: Your school has ordered all the devices it can
           user:
             title: You’ve ordered all the devices you were allocated
-    school_order_devices: Order devices
+    school_order_devices: Order devices and routers
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
     school_edit_chromebooks: Set your Chromebook preferences
