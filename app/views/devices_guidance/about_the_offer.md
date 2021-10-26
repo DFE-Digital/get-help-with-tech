@@ -24,7 +24,7 @@ They were also able to request internet access for disadvantaged children throug
 
 Laptops and internet access are also available for care leavers aged 16 to 25.
 
-[Find out how we calculated how many devices could be ordered](/devices/allocation-and-specification).
+[Find out how we calculated how many devices could be ordered](/devices/device-allocations).
 
 ## Laptops, tablets and 4G wireless routers provided during the 2020 summer term
 

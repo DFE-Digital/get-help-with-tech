@@ -13,39 +13,22 @@ Rails.application.routes.draw do
   get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
 
-  get '/about-bt-wifi', to: redirect('/internet-access#bt-wifi')
-  get '/about-increasing-mobile-data', to: redirect('/internet-access')
-  get '/increasing-mobile-data/privacy-notice', to: redirect('/privacy/general-privacy-notice')
   get '/accessibility', to: 'pages#accessibility'
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
   get '/privacy/general-privacy-notice', to: 'pages#general_privacy_notice'
   get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice', constraints: -> { false }
-  get '/mobile-privacy', to: redirect('/privacy/general-privacy-notice')
   get '/request-a-change', to: 'pages#request_a_change'
-  get '/how-to-request-4g-wireless-routers', to: redirect('/internet-access')
-  get '/choosing-help-with-internet-access', to: redirect('/internet-access')
   get '/what-to-do-if-you-cannot-get-laptops-tablets-or-internet-access-from-dfe', to: 'pages#what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe'
   get '/how-to-access-the-get-help-with-technology-service', to: 'pages#how_to_access_the_get_help_with_technology_service'
 
   # redirects for moved guidance pages
-  get '/pages/guidance', to: redirect('/')
   get '/start', to: redirect('/')
-  get '/devices/choosing-devices', to: redirect('/devices/device-allocations')
-  get '/devices/allocation-and-specification', to: redirect('/devices/device-allocations')
-  get '/devices/distributing-devices', to: redirect('/devices/device-distribution-and-ownership')
-  get '/devices/support-and-maintenance', to: redirect('/devices', status: 301)
 
   get '/huawei-router-password', to: 'huawei_router_passwords#new', as: 'huawei_router_password'
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
   get '/finding-out-about-internet-access-needs', to: 'pages#finding_out_about_internet_access_needs', as: :finding_out_about_internet_access_needs
-
-  get '/guide-to-collecting-mobile-information', to: redirect('/internet-access')
-  get '/guide-to-collecting-mobile-information/asking-for-account-holder', to: redirect('/internet-access')
-  get '/guide-to-collecting-mobile-information/asking-for-network', to: redirect('/internet-access')
-  get '/guide-to-collecting-mobile-information/telling-about-offer', to: redirect('/internet-access')
-  get '/guide-to-collecting-mobile-information/privacy', to: 'guide_to_collecting_mobile_information#privacy'
 
   get '/devices/guide-to-resetting-windows-laptops-and-tablets', to: 'guide_to_resetting_windows_laptops_and_tablets#index'
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/get-local-admin-and-bios-passwords', to: 'guide_to_resetting_windows_laptops_and_tablets#get_local_admin_and_bios_passwords'
