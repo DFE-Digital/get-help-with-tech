@@ -141,7 +141,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
     end
 
     it 'responds successfully with each view' do
-      %w[school std_device coms_device std_device_pool coms_device_pool caps ordered].each do |view|
+      %w[school std_device coms_device caps ordered].each do |view|
         get :history, params: { school_urn: school.urn, view: view }
         expect(response).to be_successful
       end

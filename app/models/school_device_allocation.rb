@@ -21,7 +21,6 @@ class SchoolDeviceAllocation < ApplicationRecord
   scope :has_not_ordered, -> { where(devices_ordered: 0) }
   scope :has_not_fully_ordered, -> { where('cap > devices_ordered') }
   scope :by_device_type, ->(device_type) { where(device_type: device_type) }
-  scope :can_order_std_devices_now, -> { by_device_type('std_device').where('cap > devices_ordered') }
   scope :by_computacenter_device_type, ->(cc_device_type) { by_device_type(Computacenter::CapTypeConverter.to_dfe_type(cc_device_type)) }
   scope :with_available_allocation, lambda { |device_type|
     by_device_type(device_type).where('allocation > devices_ordered')

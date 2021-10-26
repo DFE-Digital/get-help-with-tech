@@ -9,8 +9,8 @@ private
 
   def assistance_count
     [
-      has_ordered_coms_devices?,
-      has_ordered_std_devices?,
+      has_ordered_routers?,
+      has_ordered_laptops?,
       has_completed_extra_mobile_data_requests?,
     ].count(true)
   end
@@ -19,23 +19,23 @@ private
     @completed_requests_count = school.completed_requests_count
   end
 
-  def coms_count
-    @coms_count ||= school.devices_ordered(:router)
+  def router_count
+    @router_count ||= school.devices_ordered(:router)
   end
 
   def has_completed_extra_mobile_data_requests?
     @has_completed_extra_mobile_data_requests = completed_requests_count.positive?
   end
 
-  def has_ordered_coms_devices?
-    @has_ordered_coms_devices = coms_count.positive?
+  def has_ordered_routers?
+    @has_ordered_routers = router_count.positive?
   end
 
-  def has_ordered_std_devices?
-    @has_ordered_std_devices = std_count.positive?
+  def has_ordered_laptops?
+    @has_ordered_laptops = laptop_count.positive?
   end
 
-  def std_count
-    @std_count = school.devices_ordered(:laptop)
+  def laptop_count
+    @laptop_count = school.devices_ordered(:laptop)
   end
 end

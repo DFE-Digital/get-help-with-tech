@@ -167,7 +167,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
   end
 
-  describe 'coms_device_allocation' do
+  describe 'router_allocation' do
     context 'when zero' do
       let(:school) { build(:school) }
 

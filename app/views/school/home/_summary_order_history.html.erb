@@ -5,7 +5,7 @@
     <li><%= govuk_link_to 'See your order history on TechSource', techsource_start_path -%></li>
   <% end %>
 
-  <% if @has_ordered_coms_devices %>
+  <% if @has_ordered_routers %>
     <li><%= govuk_link_to 'View your requests for extra mobile data', extra_data_requests_internet_mobile_school_path(@school) -%></li>
   <% end %>
 </ul>

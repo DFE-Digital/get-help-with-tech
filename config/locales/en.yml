@@ -525,12 +525,19 @@ en:
             ordered: Responsible body has ordered
     timeline:
       field:
-        std_device_cap: Device cap
-        std_device_allocation: Device allocation
-        std_device_devices_ordered: Devices ordered
         coms_device_cap: Router cap
         coms_device_allocation: Router allocation
         coms_device_devices_ordered: Routers ordered
+        std_device_cap: Device cap
+        std_device_allocation: Device allocation
+        std_device_devices_ordered: Devices ordered
+        School_raw_laptop_allocation: Device allocation
+        School_raw_laptop_cap: Device cap
+        School_raw_laptops_ordered: Devices ordered
+        School_raw_router_allocation: Router allocation
+        School_raw_router_cap: Router cap
+        School_raw_routers_ordered: Routers ordered
+        School_responsible_body_id: Responsible body
         School_status: School status
         School_order_state: School order state
   activemodel:

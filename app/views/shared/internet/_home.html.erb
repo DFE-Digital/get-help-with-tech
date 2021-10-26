@@ -17,7 +17,7 @@
       <li>
         <%= govuk_link_to 'Request 4G wireless routers', support_ticket_path %>
       </li>
-      <% if (current_user.responsible_body_user? && @responsible_body.coms_device_pool&.devices_available_to_order?) || (current_user.is_school_user? && current_user.school.devices_available_to_order?(:router)) %>
+      <% if (current_user.responsible_body_user? && @responsible_body.devices_available_to_order?(:router)) || (current_user.is_school_user? && current_user.school.devices_available_to_order?(:router)) %>
       <li>
         <%= govuk_link_to 'How to reset your router', '/devices/managing-your-4g-wireless-routers' %>
       </li>

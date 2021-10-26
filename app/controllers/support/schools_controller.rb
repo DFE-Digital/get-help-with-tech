@@ -88,7 +88,7 @@ private
   end
 
   def parse_view_mode
-    available = %w[school std_device coms_device std_device_pool coms_device_pool caps ordered]
+    available = %w[school std_device coms_device caps ordered]
     mode = params[:view]
     mode = 'all' unless mode.in?(available)
     mode
@@ -96,8 +96,6 @@ private
 
   def object_for_view_mode
     case view_mode
-    when 'school'
-      @school
     when 'responsible_body'
       @school.responsible_body
     when 'caps'
