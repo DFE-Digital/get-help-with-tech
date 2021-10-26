@@ -4,12 +4,12 @@ class ResponsibleBody::HomeController < ResponsibleBody::BaseController
   DEVICE_TYPES = %i[laptop router].freeze
 
   def show
-    @std_count, @coms_count = device_count
+    @laptop_count, @router_count = device_count
     @completed_requests_count = completed_requests_count
 
-    @has_ordered_std_devices = @std_count.positive?
-    @has_ordered_coms_devices = @coms_count.positive?
-    @has_ordered = @has_ordered_std_devices || @has_ordered_coms_devices
+    @has_ordered_laptops = @laptop_count.positive?
+    @has_ordered_routers = @router_count.positive?
+    @has_ordered = @has_ordered_laptops || @has_ordered_routers
     @has_completed_extra_mobile_data_requests = @completed_requests_count.positive?
   end
 

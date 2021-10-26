@@ -148,10 +148,6 @@ class School < ApplicationRecord
     in_virtual_cap_pool? ? vcap_allocation(device_type) : raw_allocation(device_type)
   end
 
-  def allocation_ids
-    [laptop_allocation_id, router_allocation_id].compact
-  end
-
   def all_devices_ordered?
     eligible_to_order? && !devices_available_to_order?
   end
@@ -282,10 +278,6 @@ class School < ApplicationRecord
     allocation(device_type).positive?
   end
 
-  def laptop_allocation_id
-    std_device_allocation&.id
-  end
-
   def la_funded_provision?
     type == 'LaFundedPlace'
   end
@@ -360,10 +352,6 @@ class School < ApplicationRecord
 
   def refresh_preorder_status!
     update!(preorder_status: infer_status)
-  end
-
-  def router_allocation_id
-    coms_device_allocation&.id
   end
 
   def school_contact=(value)
