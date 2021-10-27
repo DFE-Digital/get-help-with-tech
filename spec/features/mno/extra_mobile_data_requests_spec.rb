@@ -89,16 +89,16 @@ RSpec.feature 'MNO Requests view', type: :feature, skip: 'Disabled for 30 Jun 20
     end
 
     context 'with multiple pages of extra_mobile_data_requests' do
-      original_pagination_value = Pagy::VARS[:items]
+      original_pagination_value = Pagy::DEFAULT[:items]
 
       before do
-        Pagy::VARS[:items] = 20
+        Pagy::DEFAULT[:items] = 20
         create_list(:extra_mobile_data_request, 25, status: 'new', mobile_network: mno_user.mobile_network, created_by_user: local_authority_user)
         click_on 'Your requests'
       end
 
       after do
-        Pagy::VARS[:items] = original_pagination_value
+        Pagy::DEFAULT[:items] = original_pagination_value
       end
 
       it 'shows pagination' do

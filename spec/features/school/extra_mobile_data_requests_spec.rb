@@ -110,10 +110,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
 
     context 'when there are more requests that the per-page limit' do
       around do |example|
-        original_pagination_value = Pagy::VARS[:items]
-        Pagy::VARS[:items] = 2
+        original_pagination_value = Pagy::DEFAULT[:items]
+        Pagy::DEFAULT[:items] = 2
         example.run
-        Pagy::VARS[:items] = original_pagination_value
+        Pagy::DEFAULT[:items] = original_pagination_value
       end
 
       scenario 'user can navigate between pages' do
