@@ -2,9 +2,25 @@ require 'rails_helper'
 
 RSpec.describe Support::UsersController do
   let(:support_user) { create(:support_user, full_name: 'Jenny Jones') }
-  let(:user_who_has_seen_privacy_notice) { create(:school_user, :has_seen_privacy_notice, full_name: 'Jane Smith') }
-  let(:user_who_has_not_seen_privacy_notice) { create(:school_user, :has_not_seen_privacy_notice, full_name: 'John Smith') }
-  let(:user_who_is_deleted) { create(:school_user, :has_seen_privacy_notice, :deleted, full_name: 'July Smith') }
+  let(:user_who_has_seen_privacy_notice) do
+    create(:school_user,
+           :has_seen_privacy_notice,
+           email_address: 'privacy_note_seen@example.com',
+           full_name: 'Jane Smith')
+  end
+  let(:user_who_has_not_seen_privacy_notice) do
+    create(:school_user,
+           :has_not_seen_privacy_notice,
+           email_address: 'privacy_note_not_seen@example.com',
+           full_name: 'John Smith')
+  end
+  let(:user_who_is_deleted) do
+    create(:school_user,
+           :has_seen_privacy_notice,
+           :deleted,
+           email_address: 'deleted@example.com',
+           full_name: 'July Smith')
+  end
   let(:existing_user) { create(:local_authority_user, responsible_body: responsible_body) }
   let(:responsible_body) { create(:local_authority) }
   let(:school) { create(:school) }
