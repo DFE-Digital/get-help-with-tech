@@ -30,6 +30,11 @@
       </li>
     </ul>
 
+    <p class="govuk-body">
+      If you order iPads, we’ll ask for your Apple School Manager (ASM).
+      <%= govuk_link_to 'Go to the Apple School website to find your ASM, or to create an account', 'https://school.apple.com/' -%>.
+    </p>
+
     <h2 class="govuk-heading-m">How to order</h2>
 
     <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
@@ -41,7 +46,7 @@
     <% end %>
 
     <p class="govuk-body">
-      If you try to order more than <%= what_to_order_allocation_list(@school) %> the order will be cancelled.
+      If you try to order more than your allocation the order will be cancelled.
     </p>
 
     <%= render partial: 'shared/start_ordering_on_techsource', locals: { email_address: impersonated_or_current_user.email_address, school_urn: @school.urn } %>

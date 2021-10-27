@@ -22,9 +22,9 @@ en:
       devices:
         order_devices: Get devices now
     responsible_body_home: Get help with technology
-    responsible_body_devices_home: Order devices
+    responsible_body_devices_home: Order devices and routers
     responsible_body_devices_tell_us: Tell us who will order laptops
-    responsible_body_users_index: Manage users
+    responsible_body_users_index: Manage your schools and users
     responsible_body_trust_users_index: Manage trust administrators
     responsible_body_devices_chromebooks: Set your Chromebook preferences
     new_responsible_body_user: Invite a new user

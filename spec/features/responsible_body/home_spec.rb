@@ -52,7 +52,7 @@ RSpec.feature ResponsibleBody do
     describe 'access support portal section' do
       before { sign_in_as rb_user }
 
-      specify { expect(page).to have_link('Manage users') }
+      specify { expect(page).to have_link('Manage your schools and users') }
     end
 
     describe 'reset devices section' do
@@ -124,14 +124,6 @@ RSpec.feature ResponsibleBody do
         context 'has NOT ordered routers' do
           it 'does NOT show the link to the extra mobile data requests page' do
             expect(page).not_to have_link('View your requests for extra mobile data')
-          end
-        end
-
-        context 'has ordered routers' do
-          let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1], responsible_body: responsible_body) }
-
-          it 'shows the link to the extra mobile data requests page' do
-            expect(page).to have_link('View your requests for extra mobile data')
           end
         end
       end
