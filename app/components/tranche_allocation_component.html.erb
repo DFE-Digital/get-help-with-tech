@@ -1,16 +1,12 @@
 <div id="tranche_allocation" class="app-card govuk-!-margin-bottom-4">
-  <% if @organisation.is_a?(ResponsibleBody) %>
-    <h2 id="intro" class="govuk-heading-m">
-      <%= intro_sentence %>
-    </h2>
-  <% end %>
-
-  <h2 id="available_summary" class="govuk-heading-l">
-    <%= available_to_order_summary %>
+  <h2 id="total_allocation_sentence" class="govuk-heading-l">
+    <%= total_allocation_sentence %>
   </h2>
 
-  <h2 id="ordered_summary">
-    <%= ordered_summary %>
+  <h2>You can order 4G routers.</h2>
+
+  <h2 id="ordered_sentence">
+    <%= ordered_sentence %>
   </h2>
 
   <div id="current_tranche">
