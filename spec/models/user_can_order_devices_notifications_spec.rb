@@ -15,11 +15,11 @@ RSpec.describe UserCanOrderDevicesNotifications do
   end
 
   context 'when orders can be placed within a virtual cap' do
-    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices) }
-    let(:preorder) { create(:preorder_information, :school_will_order, status: :rb_can_order) }
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
     let(:school) { create_schools_at_status(preorder_status: 'rb_can_order', responsible_body: responsible_body) }
     let(:user) { create(:trust_user, orders_devices: true, responsible_body: responsible_body) }
+
+    before { stub_computacenter_outgoing_api_calls }
 
     it 'sends :user_can_order_in_virtual_cap email' do
       expect {
@@ -29,8 +29,6 @@ RSpec.describe UserCanOrderDevicesNotifications do
   end
 
   context 'when orders can be placed within a new FE college' do
-    let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices) }
-    let(:preorder) { create(:preorder_information, :school_will_order, status: :rb_can_order) }
     let(:responsible_body) { create(:further_education_college, :new_fe_wave) }
     let(:school) { create_schools_at_status(preorder_status: 'rb_can_order', responsible_body: responsible_body) }
     let(:user) { create(:fe_college_user, orders_devices: true, responsible_body: responsible_body) }
@@ -48,8 +46,12 @@ RSpec.describe UserCanOrderDevicesNotifications do
     let(:user) { create(:user, orders_devices: true, responsible_body: responsible_body) }
 
     before do
-      school.device_allocations.std_device.create!(cap: 10, allocation: 10, devices_ordered: 0)
-      school.can_order!
+      stub_computacenter_outgoing_api_calls
+      UpdateSchoolDevicesService.new(school: school,
+                                     order_state: :can_order,
+                                     laptop_allocation: 10,
+                                     laptop_cap: 10,
+                                     laptops_ordered: 0).call
     end
 
     it 'sends :user_can_order_but_action_needed email' do

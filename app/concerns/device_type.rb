@@ -8,12 +8,7 @@ module DeviceType
     }
 
     def device_type_name
-      case device_type
-      when 'coms_device'
-        'router'
-      else
-        'device'
-      end
+      device_type == 'coms_device' ? 'router' : 'device'
     end
   end
 end

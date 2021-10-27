@@ -4,11 +4,10 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl"><%= t('page_titles.order_devices.title') %></span>
-      You’ve ordered all the devices you can
+      You’ve ordered all the devices you were allocated
     </h1>
 
-    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
   </div>
 </div>
 
@@ -17,7 +16,7 @@
 
     <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
 
-    <p class="govuk-body">We’ll contact you if you can place more orders.</p>
+    <p class="govuk-body">We’ll contact you if your allocation increases.</p>
 
     <% if impersonated_or_current_user.orders_devices? && impersonated_or_current_user.techsource_account_confirmed? %>
       <p class="govuk-body"><%= link_to 'View your order history on TechSource', techsource_start_path %></p>

@@ -1,8 +1,8 @@
 <h2 class="govuk-heading-m">Some schools can place their own orders</h2>
 
 <%
-  lr_school_count = @responsible_body.schools.that_will_order_devices.can_order.count
-  sc_school_count = @responsible_body.schools.that_will_order_devices.can_order_for_specific_circumstances.count
+  lr_school_count = @responsible_body.schools.school_will_order_devices.can_order.count
+  sc_school_count = @responsible_body.schools.school_will_order_devices.can_order_for_specific_circumstances.count
 %>
 
 <% if lr_school_count.positive? %>

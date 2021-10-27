@@ -1,5 +1,18 @@
 FactoryBot.define do
   factory :responsible_body do
+    transient do
+      laptops { [0, 0, 0] }
+      routers { [0, 0, 0] }
+    end
+
+    laptop_allocation { laptops[0].to_i }
+    laptop_cap { laptops[1].to_i }
+    laptops_ordered { laptops[2].to_i }
+
+    router_allocation { routers[0].to_i }
+    router_cap { routers[1].to_i }
+    routers_ordered { routers[2].to_i }
+
     computacenter_reference { Faker::Number.number(digits: 8) }
     status                  { 'open' }
 
@@ -22,6 +35,28 @@ FactoryBot.define do
 
       after(:create) do |responsible_body, evaluator|
         create_list(:school, evaluator.schools_count, responsible_body: responsible_body)
+        responsible_body.reload
+      end
+    end
+
+    trait :with_centrally_managed_schools do
+      transient do
+        schools_count { 3 }
+      end
+
+      after(:create) do |responsible_body, evaluator|
+        create_list(:school, evaluator.schools_count, :centrally_managed, laptops: [2, 2, 1], responsible_body: responsible_body)
+        responsible_body.reload
+      end
+    end
+
+    trait :with_centrally_managed_schools_fully_ordered do
+      transient do
+        schools_count { 3 }
+      end
+
+      after(:create) do |responsible_body, evaluator|
+        create_list(:school, evaluator.schools_count, :centrally_managed, laptops: [2, 2, 2], responsible_body: responsible_body)
         responsible_body.reload
       end
     end

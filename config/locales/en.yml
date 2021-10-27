@@ -16,16 +16,17 @@ en:
     token_not_recognised: We did not recognise that link
     confirm: Check your answers before confirming
     new_user: Create an account
+    finding_out_about_internet_access_needs: Finding out about internet access needs
     error_prefix: "Error: "
     responsible_body:
       devices:
         order_devices: Get devices now
     responsible_body_home: Get help with technology
-    responsible_body_devices_home: Get devices
+    responsible_body_devices_home: Order devices and routers
     responsible_body_devices_tell_us: Tell us who will order laptops
-    responsible_body_users_index: Manage %{rb_type} users
+    responsible_body_users_index: Manage your schools and users
     responsible_body_trust_users_index: Manage trust administrators
-    responsible_body_devices_chromebooks: Will the school need Chromebooks?
+    responsible_body_devices_chromebooks: Set your Chromebook preferences
     new_responsible_body_user: Invite a new user
     edit_responsible_body_user: Edit user
     responsible_body_schools_list: Your schools and colleges
@@ -42,10 +43,10 @@ en:
     guide_to_resetting_windows_laptops_and_tablets: Guide to resetting Windows laptops and tablets
     start: Get help with technology
     internet_access: Internet access
-    finding_out_about_internet_access_needs: Finding out about internet access needs
-    signed_in_internet_access: Request internet access
+    signed_in_internet_access: Manage 4G routers
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
+    devices_guidance_how_to_order: How to order DfE laptops, tablets and routers
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
@@ -55,12 +56,12 @@ en:
     privacy: Privacy
     dfe_windows_privacy_notice: How we look after personal information using the mobile device management on Microsoft Windows laptops and tablets
     general_privacy_notice: How we look after personal information as part of the Get help with technology programme
-    what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe: What to do if you cannot get laptops, tablets or internet access from DfE
+    what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe: What to do if you cannot get laptops, tablets or 4G routers
     how_to_access_the_get_help_with_technology_service: How to access the Get help with technology service
     iss:
       order_devices: Order devices
       laptop_types: Find out what type of laptop pupils need
-      chromebooks: Will your order include Google Chromebooks?
+      chromebooks: Set your Chromebook preferences
       will_need_chromebooks_error: Tell us if pupils will need Chromebooks
       how_to_order: How to order
     scl:
@@ -112,8 +113,8 @@ en:
       enable_orders: Can they place orders?
       confirm_enable_orders: Check your answers and confirm
     support_edit_allocation:
-      std_device: Change device allocation
-      coms_device: Change router allocation
+      laptop: Change device allocation
+      router: Change router allocation
     support_edit_chromebook_details: Will the school need to order Chromebooks?
     support_bulk_allocation: Bulk upload allocation updates
     support_bulk_allocation_result: Bulk allocation summary
@@ -154,12 +155,12 @@ en:
           school:
             title: Your school has ordered all the devices it can
           user:
-            title: You’ve ordered all the devices you can
-    school_order_devices: Order devices
+            title: You’ve ordered all the devices you were allocated
+    school_order_devices: Order devices and routers
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
-    school_edit_chromebooks: Will you need to order Chromebooks?
-    school_users: Manage your organisation's users
+    school_edit_chromebooks: Set your Chromebook preferences
+    school_users: Manage users
     school_before_can_order: Before you can order, we need more information
     donated_devices:
       title: Opt in to the Daily Mail’s donated devices scheme
@@ -231,6 +232,10 @@ en:
       order_devices_now: Order devices now
     invite_school_user:
       title: Invite a new user
+      will_they_order_devices: Do you want to give them access to the TechSource website for ordering?
+      will_they_order_devices_hint: No more than 3 users will be allowed to place orders.
+      can_order_devices: Yes, give them access to the TechSource website for ordering
+      cannot_order_devices: 'No'
     edit_user: Change user details
     confirm_destroy_user: Are you sure you want to delete this user?
     school_user_welcome_wizard:
@@ -252,10 +257,10 @@ en:
       devices_you_can_order:
         title: You can order different types of laptops
       chromebooks:
-        title: Will you order Chromebooks?
-        'yes': Yes, we'll need Chromebooks
-        'no': No, we do not need Chromebooks
-        i_dont_know: I do not know
+        title: Are you ordering Chromebooks?
+        'yes': We need Chromebooks
+        'no': We do not need Chromebooks
+        i_dont_know: Not sure
         errors:
           choice: Tell us whether you'll need Chromebooks
       what_happens_next:
@@ -280,11 +285,11 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: Who could get laptops and tablets, and why DfE provided them
-      description: Find out who devices were provided for and why the DfE provided them.
+      title: Who can get laptops and tablets, and why DfE provides them
+      description: Find out who can order devices and why.
       guidance_section: before_you_order_pages
     device_allocations:
-      title: How laptops and tablets were allocated
+      title: How laptops and tablets are allocated
       description: Find out how the Department for Education estimated requirements for disadvantaged children and young people.
       guidance_section: before_you_order_pages
     device_specification:
@@ -293,65 +298,47 @@ en:
       guidance_section: before_you_order_pages
     device_distribution_and_ownership:
       title: Who owns the devices
-      description: Guidance on who owns devices, and information on insuring devices, asset management and loan agreements.
+      description: Guidance on who owns devices, asset management and loan agreements.
       guidance_section: before_you_order_pages
 
-    preparing_microsoft_windows_laptops_and_tablets:
-      title: Windows laptops and tablets setup guide
-      description: Guidance for Microsoft Windows devices provided with safeguarding and mobile device management software and how to install your own.
+    replace_a_faulty_device:
+      title: Replace faulty devices
+      description: Find out what to do if a laptop or tablet you’ve received from us is not working.
+      guidance_section: replace_faulty_devices_pages
+
+    preparing_a_standard_windows_device:
+      title: Preparing Microsoft Windows laptops and tablets
+      description: When you receive a Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
       guidance_section: setup_guide_pages
     preparing_chromebooks:
       title: Google Chromebooks setup guide
-      description: Guidance on how to enrol Google Chromebooks on your domain and options for applying content filtering.
-      guidance_section: setup_guide_pages
-    remove_dfe_provided_cisco_umbrella_from_chromebooks:
-      title: Remove DfE-provided Cisco Umbrella from Chromebooks
-      description: Find out how to remove Cisco Umbrella from Chromebooks.
+      description: Guidance on how to enrol Google Chromebooks on your domain and information about software.
       guidance_section: setup_guide_pages
     preparing_ipads:
       title: Apple iPads setup guide
       description: Find out how to enrol your iPads in Apple School Manager (ASM), set up your iPads and make the most out of them.
       guidance_section: setup_guide_pages
+    google_domain_for_care_leavers_and_children_with_social_worker:
+      title: How to set up a Google domain for care leavers
+      description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
+      guidance_section: setup_guide_pages
 
     guide_to_resetting_windows_laptops_and_tablets:
       title:  Guide to resetting windows laptops and tablets
       guidance_section:  manage_devices_pages
-
-    replace_a_faulty_device:
-      title: Replace faulty devices
-      description: Find out what to do if a laptop or tablet you’ve received from us is not working.
-      guidance_section: manage_devices_pages
-    resolve_issues_with_laptops_and_tablets:
-      title: Resolve issues with laptops and tablets
-      description: Suggested fixes for bugs and possible solutions to issues that may affect devices.
+    remove_dfe_provided_cisco_umbrella_from_chromebooks:
+      title: Remove DfE-provided Cisco Umbrella from Chromebooks
+      description: Find out how to remove Cisco Umbrella from Chromebooks.
       guidance_section: manage_devices_pages
     safeguarding_for_device_users:
       title: Safeguarding devices
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
       guidance_section: manage_devices_pages
 
-    preparing_a_standard_windows_device:
-      title: Preparing Standard Microsoft Windows laptops and tablets
-      description: When you receive a Standard Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
-      guidance_section: technical_staff_doing_device_setup # won't appear in the index
-    getting_started_with_your_microsoft_windows_device:
-      title: How to get started with your Microsoft Windows laptop or tablet
-      description: User guidance for Microsoft Windows devices to share with children, young people and their carers.
-      guidance_section: parents_carers_students
-    getting_started_with_your_google_chromebook:
-      title: How to get started with your Google Chromebook
-      description: User guidance for Google Chromebooks to share with children, young people and their carers.
-      guidance_section: parents_carers_students
-
     managing_your_4g_wireless_routers:
       title: Managing your 4G wireless routers
       description: This information is to help schools, colleges, LAs and trusts manage routers they received from DfE.
       guidance_section: internet_access
-    google_domain_for_care_leavers_and_children_with_social_worker:
-      title: How to set up a Google domain for care leavers
-      description: Find out how local authorities can set up a Google domain for care leavers and children with a social worker.
-      audience: software_and_digital_tools_pages
-      noindex: true
   guide_to_collecting_mobile_information:
     privacy: Explaining our privacy policy
   guide_to_resetting_windows_laptops_and_tablets:
@@ -538,12 +525,19 @@ en:
             ordered: Responsible body has ordered
     timeline:
       field:
-        std_device_cap: Device cap
-        std_device_allocation: Device allocation
-        std_device_devices_ordered: Devices ordered
         coms_device_cap: Router cap
         coms_device_allocation: Router allocation
         coms_device_devices_ordered: Routers ordered
+        std_device_cap: Device cap
+        std_device_allocation: Device allocation
+        std_device_devices_ordered: Devices ordered
+        School_raw_laptop_allocation: Device allocation
+        School_raw_laptop_cap: Device cap
+        School_raw_laptops_ordered: Devices ordered
+        School_raw_router_allocation: Router allocation
+        School_raw_router_cap: Router cap
+        School_raw_routers_ordered: Routers ordered
+        School_responsible_body_id: Responsible body
         School_status: School status
         School_order_state: School order state
   activemodel:
@@ -596,7 +590,7 @@ en:
               cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
         support/enable_orders_form:
           attributes:
-            laptop_cap:
+            device_cap:
               greater_than_or_equal_to: Enter a device cap that’s a non-negative whole number
               not_a_number: Enter a device cap that’s a non-negative whole number
               lte_allocation: Cap cannot be more than their current allocation of %{allocation}
@@ -608,7 +602,7 @@ en:
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
         support/allocation_form:
           attributes:
-            allocation:
+            school:
               decreasing_in_virtual_cap_pool: Decreasing an allocation for a school in a virtual cap pool is currently not possible - contact the dev team to do this manually for now
               gte_devices_ordered: Allocation cannot be less than the number they have already ordered (%{devices_ordered})
         support/school_suggestion_form:
@@ -727,20 +721,11 @@ en:
           merged_expansion: Merged - expansion of school capacity
           successor_split_school: Successor - Split School
           predecessor_split_school: Predecessor - Split School
-      preorder_information:
-        will_need_chromebooks:
-          'yes': Yes, we’ll order Chromebooks
-          'no': No, we will not order Chromebooks
-          i_dont_know: I don’t know
-          im_not_sure: I’m not sure
-        status:
-          needs_contact: Needs a contact
-          needs_info: Needs information
-          ready: Ready
-          school_contacted: School contacted
-          school_will_be_contacted: School will be contacted
-          school_ready: School ready
       school:
+        order_states:
+          cannot_order: No, orders cannot be placed yet
+          can_order_for_specific_circumstances: They can place orders for specific circumstances
+          can_order: They can order their full allocation because a closure or group of self-isolating children has been reported
         school_type:
           # School
           special_school: Special school
@@ -760,10 +745,17 @@ en:
           art_and_design_college: Art and Design College
           higher_education_provider: Higher Education Provider
           other: Other
-        order_states:
-          cannot_order: No, orders cannot be placed yet
-          can_order_for_specific_circumstances: They can place orders for specific circumstances
-          can_order: They can order their full allocation because a closure or group of self-isolating children has been reported
+        status:
+          needs_contact: Needs a contact
+          needs_info: Needs information
+          ready: Ready
+          school_contacted: School contacted
+          school_will_be_contacted: School will be contacted
+          school_ready: School ready
+        will_need_chromebooks:
+          'yes': We need Chromebooks
+          'no': We do not need Chromebooks
+          i_dont_know: Not sure
       school_device_allocation:
         device_type:
           std_device: 'Standard device (laptop etc)'

@@ -10,15 +10,23 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
     end
 
     context 'when a valid authentication token is supplied' do
-      let!(:schools) { create_list(:school, 3, :with_preorder_information, :with_std_device_allocation, :with_coms_device_allocation) }
+      let!(:schools) { create_list(:school, 3, :with_preorder_information, laptops: [1, 0, 0], routers: [1, 0, 0]) }
 
       before do
+        stub_computacenter_outgoing_api_calls
         setup_auth_token
-        schools[0].std_device_allocation.update!(allocation: 0, cap: 0)
-        schools[0].coms_device_allocation.update!(allocation: 0, cap: 0)
-
-        schools[1].std_device_allocation.update!(allocation: 10, cap: 10)
-        schools[2].coms_device_allocation.update!(allocation: 10, cap: 0)
+        UpdateSchoolDevicesService.new(school: schools[0],
+                                       order_state: :can_order_for_specific_circumstances,
+                                       laptop_allocation: 0,
+                                       laptop_cap: 0,
+                                       router_allocation: 0,
+                                       router_cap: 0).call
+        UpdateSchoolDevicesService.new(school: schools[1],
+                                       order_state: :can_order_for_specific_circumstances,
+                                       laptop_allocation: 10,
+                                       laptop_cap: 10,
+                                       router_allocation: 10,
+                                       router_cap: 0).call
       end
 
       it 'does not return an unauthorized status' do
@@ -41,16 +49,16 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
     {
       'school_name' => school.name,
       'school_urn' => school.urn.to_s,
-      'responsible_body_name' => school.responsible_body.name,
-      'responsible_body_gias_id' => school.responsible_body.gias_id,
-      'responsible_body_companies_house_number' => school.responsible_body.companies_house_number,
-      'allocation' => school.std_device_allocation.allocation,
-      'cap' => school.std_device_allocation.cap,
-      'devices_ordered' => school.std_device_allocation.devices_ordered,
-      'coms_allocation' => school.coms_device_allocation.allocation,
-      'coms_cap' => school.coms_device_allocation.cap,
-      'coms_devices_ordered' => school.coms_device_allocation.devices_ordered,
-      'preorder_info_status' => school.device_ordering_status,
+      'responsible_body_name' => school.responsible_body_name,
+      'responsible_body_gias_id' => school.responsible_body_gias_id,
+      'responsible_body_companies_house_number' => school.responsible_body_companies_house_number,
+      'allocation' => school.allocation(:laptop),
+      'cap' => school.cap(:laptop),
+      'devices_ordered' => school.devices_ordered(:laptop),
+      'coms_allocation' => school.allocation(:router),
+      'coms_cap' => school.cap(:router),
+      'coms_devices_ordered' => school.devices_ordered(:router),
+      'preorder_info_status' => school.preorder_status,
       'school_order_state' => school.order_state,
       'who_will_order_devices' => school.who_will_order_devices,
     }

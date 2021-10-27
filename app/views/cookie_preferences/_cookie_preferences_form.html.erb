@@ -1,17 +1,18 @@
 <div class="app-cookie-preferences">
   <h2 class="govuk-heading-l">Cookies that measure website use</h2>
   <p class="govuk-body">
-    We use Google Analytics software to collect information about how you use ‘<%= t(:service_name) %>’.
-    We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
+    We use Google Analytics software to collect information about how you use &lsquo;<%= t(:service_name) %>&rsquo;.
+    We do this to help make sure the site is meeting the needs of its users
+    and to help us make improvements.
   </p>
   <p class="govuk-body">Google Analytics stores information about:</p>
   <ul class="govuk-list govuk-list--bullet">
-    <li>the pages you visit on ‘<%= t(:service_name) %>’</li>
+    <li>the pages you visit on &lsquo;<%= t(:service_name) %>&rsquo;</li>
     <li>how long you spend on each page</li>
     <li>how you got to the site</li>
-    <li>what you click on while you’re visiting the site</li>
+    <li>what you click on while you&rsquo;re visiting the site</li>
   </ul>
-  <p class="govuk-body">We don’t allow Google to use or share our analytics data.</p>
+  <p class="govuk-body">We don&rsquo;t allow Google to use or share our analytics data.</p>
 
   <%= form_for @form, url: create_cookie_preferences_path, method: :post do |f| %>
     <%= f.govuk_error_summary %>

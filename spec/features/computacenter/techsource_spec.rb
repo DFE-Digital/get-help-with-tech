@@ -36,28 +36,32 @@ RSpec.describe 'Computacenter confirming TechSource accounts' do
   end
 
   def given_rb_exists_that_can_order_devices
-    allocation = create(:school_device_allocation, :with_std_allocation, :with_available_devices)
-    preorder = create(:preorder_information, who_will_order_devices: 'responsible_body')
     @rb = create(:trust)
     @school = create(:school,
+                     :with_preorder_information,
+                     :centrally_managed,
                      responsible_body: @rb,
-                     preorder_information: preorder,
                      order_state: :can_order,
-                     std_device_allocation: allocation)
+                     laptops: [2, 1, 0])
   end
 
   def given_school_exists_that_can_order_devices
-    allocation = create(:school_device_allocation, :with_std_allocation, :with_available_devices)
-    preorder = create(:preorder_information, :does_not_need_chromebooks, who_will_order_devices: 'school', status: :school_can_order)
-    @school = create(:school, preorder_information: preorder, order_state: :can_order, std_device_allocation: allocation)
+    @school = create(:school,
+                     :manages_orders,
+                     :does_not_need_chromebooks,
+                     preorder_status: :school_can_order,
+                     order_state: :can_order,
+                     laptops: [2, 1, 0])
     @school.users << create(:school_user)
-    expect(preorder.status).to eq('school_can_order')
+    @school.refresh_preorder_status!
+    expect(@school.preorder_status).to eq('school_can_order')
   end
 
   def given_school_exists_that_cannot_order_devices
-    allocation = create(:school_device_allocation, :with_std_allocation)
-    preorder = create(:preorder_information, who_will_order_devices: 'school')
-    @school = create(:school, preorder_information: preorder, order_state: :can_order, std_device_allocation: allocation)
+    @school = create(:school,
+                     :manages_orders,
+                     laptops: [1, 0, 0],
+                     order_state: :can_order)
   end
 
   def and_school_user_awaiting_techsource_confirmation

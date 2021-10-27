@@ -9,7 +9,7 @@ class Support::SchoolsController < Support::BaseController
     if request.post?
       @search_form = SchoolSearchForm.new(search_params)
       if @search_form.valid?
-        @schools = policy_scope(@search_form.schools).includes(:preorder_information, :responsible_body)
+        @schools = policy_scope(@search_form.schools).includes(:responsible_body)
         respond_to do |format|
           format.html {}
           format.csv do
@@ -39,7 +39,7 @@ class Support::SchoolsController < Support::BaseController
 
   def confirm_invitation
     @school = School.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
-    @school_contact = @school.current_contact
+    @school_contact = @school.school_contact
     if @school_contact.nil?
       flash[:warning] = I18n.t('support.schools.invite.no_school_contact', name: @school.name)
       redirect_to support_school_path(@school)
@@ -88,7 +88,7 @@ private
   end
 
   def parse_view_mode
-    available = %w[school std_device coms_device std_device_pool coms_device_pool caps ordered]
+    available = %w[school std_device coms_device caps ordered]
     mode = params[:view]
     mode = 'all' unless mode.in?(available)
     mode
@@ -96,18 +96,10 @@ private
 
   def object_for_view_mode
     case view_mode
-    when 'school'
-      @school
-    when 'std_device'
-      @school&.std_device_allocation
-    when 'coms_device'
-      @school&.coms_device_allocation
-    when 'std_device_pool'
-      @school.responsible_body&.std_device_pool
-    when 'coms_device_pool'
-      @school.responsible_body&.coms_device_pool
+    when 'responsible_body'
+      @school.responsible_body
     when 'caps'
-      @school&.std_device_allocation&.cap_update_calls
+      @school&.cap_update_calls
     when 'ordered'
       @school.devices_ordered_updates
     else

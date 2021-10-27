@@ -1,5 +1,10 @@
 FactoryBot.define do
   factory :school, class: 'CompulsorySchool' do
+    transient do
+      laptops { [0, 0, 0] }
+      routers { [0, 0, 0] }
+    end
+
     factory :fe_school, class: 'FurtherEducationSchool' do
       association :responsible_body, factory: :further_education_college
       ukprn { Faker::Number.unique.number(digits: 8) }
@@ -34,20 +39,41 @@ FactoryBot.define do
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }
 
-    trait :with_preorder_information do
-      preorder_information { association :preorder_information, school: instance }
+    raw_laptop_allocation { laptops[0].to_i }
+    raw_laptop_cap { laptops[1].to_i }
+    raw_laptops_ordered { laptops[2].to_i }
+
+    raw_router_allocation { routers[0].to_i }
+    raw_router_cap { routers[1].to_i }
+    raw_routers_ordered { routers[2].to_i }
+
+    trait :does_not_need_chromebooks do
+      will_need_chromebooks { 'no' }
     end
 
-    trait :with_preorder_information_chromebooks do
-      preorder_information { association :preorder_information, :needs_chromebooks, school: instance }
+    trait :dont_know_they_need_chromebooks do
+      will_need_chromebooks { 'i_dont_know' }
+    end
+
+    trait :with_preorder_information do
+      who_will_order_devices { %w[school responsible_body].sample }
+      preorder_status { instance.send(:infer_status) }
     end
 
     trait :manages_orders do
-      preorder_information { association :preorder_information, :school_will_order, school: instance }
+      who_will_order_devices { 'school' }
+      preorder_status { instance.send(:infer_status) }
+    end
+
+    trait :needs_chromebooks do
+      will_need_chromebooks { 'yes' }
+      school_or_rb_domain { Faker::Internet.domain_name }
+      recovery_email_address { Faker::Internet.email }
     end
 
     trait :centrally_managed do
-      preorder_information { association :preorder_information, :rb_will_order, school: instance }
+      who_will_order_devices { 'responsible_body' }
+      preorder_status { instance.send(:infer_status) }
     end
 
     trait :with_headteacher do
@@ -72,26 +98,6 @@ FactoryBot.define do
     trait :la_maintained do
       establishment_type { :local_authority }
       association :responsible_body, factory: :local_authority
-    end
-
-    trait :with_std_device_allocation do
-      std_device_allocation { association :school_device_allocation, :with_std_allocation, school: instance }
-    end
-
-    trait :with_std_device_allocation_fully_ordered do
-      std_device_allocation { association :school_device_allocation, :with_std_allocation, :fully_ordered, school: instance }
-    end
-
-    trait :with_std_device_allocation_partially_ordered do
-      std_device_allocation { association :school_device_allocation, :with_std_allocation, :partially_ordered, school: instance }
-    end
-
-    trait :with_coms_device_allocation do
-      coms_device_allocation { association :school_device_allocation, :with_coms_allocation, school: instance }
-    end
-
-    trait :with_coms_device_allocation_partially_ordered do
-      coms_device_allocation { association :school_device_allocation, :with_coms_allocation, :partially_ordered, school: instance }
     end
 
     trait :can_order_for_specific_circumstances do

@@ -42,13 +42,13 @@ private
       .first_or_create!(full_name: user_to_contact.full_name,
                         role: :contact,
                         phone_number: user_to_contact.telephone)
-    school.set_current_contact!(contact)
+    school.set_school_contact!(contact)
   end
 
   def mark_school_as_invited
-    PreorderInformation.transaction do
+    School.transaction do
       school.set_contact_time!(Time.zone.now)
-      school.refresh_device_ordering_status!
+      school.refresh_preorder_status!
     end
   end
 
@@ -77,7 +77,8 @@ private
   end
 
   def devolve_ordering_to_the_school
-    responsible_body.update_who_will_order_devices('school')
+    ResponsibleBodySetWhoWillOrderDevicesService.new(responsible_body, :school).call
+    school.reload
   end
 
   def single_school_responsible_body?

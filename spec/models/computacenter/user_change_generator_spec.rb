@@ -27,7 +27,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
 
     it 'generates a user change' do
       expect {
-        school.update!(computacenter_reference: 'ABC')
+        school.reload.update!(computacenter_reference: 'ABC')
       }.to change(Computacenter::UserChange, :count).by(1)
 
       user_change = Computacenter::UserChange.last

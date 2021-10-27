@@ -8,8 +8,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
     <%= render DeviceCountComponent.new(school: @school) %>
@@ -28,18 +27,23 @@
       You can <%= govuk_link_to 'give someone else access so they can place orders', school_users_path %>.
     </p>
 
+    <p class="govuk-body">
+      If you order iPads, we’ll ask for your Apple School Manager (ASM).
+      <%= govuk_link_to 'Go to the Apple School website to find your ASM, or to create an account', 'https://school.apple.com/' -%>.
+    </p>
+
     <h2 class="govuk-heading-m">How to order</h2>
 
     <p class="govuk-body">You need to place your orders on a website called TechSource.</p>
 
     <p class="govuk-body"><%= t('responsible_body.devices.delivery_timeline') %></p>
 
-    <% if @school&.std_device_allocation&.devices_available_to_order > 149 %>
+    <% if @school&.devices_available_to_order(:laptop) > 149 %>
       <p class="govuk-body">For large orders (more than 150 devices), we’ll call your delivery contact to arrange delivery.</p>
     <% end %>
 
     <p class="govuk-body">
-      If you try to order more than <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> the order will be cancelled.
+      If you try to order more than your allocation the order will be cancelled.
     </p>
 
     <h3 class="govuk-heading-s">Delivery address</h3>

@@ -15,8 +15,38 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <%= render partial: 'closed_banner' %>
-    <%= render partial: 'summary_access_to_support_portal' %>
+    <%= render TrancheAllocationComponentFactory.create_component(@responsible_body) %>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.responsible_body_devices_home'), responsible_body_devices_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>order devices</li>
+      <li>add school or college contacts</li>
+      <li>tell us who&rsquo;ll place orders for schools and colleges</li>
+      <li>give school and college staff access to this service and TechSource.</li>
+    </ul>
+
+    <%- if @responsible_body.has_connectivity_feature_flags? %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to t('page_titles.signed_in_internet_access') , responsible_body_internet_path %>
+      </h2>
+
+      <%= render 'shared/get_internet_access_section_description' %>
+    <%- end %>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.responsible_body_users_index'), responsible_body_users_path %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>give other people access to this service</li>
+      <li>set which accounts can use TechSource to order</li>
+      <li>manage the schools that you can order for.</li>
+    </ul>
 
     <% if @has_ordered %>
       <%= render partial: 'shared/summary_reset_devices' %>

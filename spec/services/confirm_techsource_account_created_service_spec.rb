@@ -45,13 +45,17 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
       context 'if there are no devices orderable' do
         before do
-          school.std_device_allocation.update!(cap: 10, allocation: 10, devices_ordered: 10)
+          stub_computacenter_outgoing_api_calls
+          UpdateSchoolDevicesService.new(school: school,
+                                         laptop_cap: 10,
+                                         laptop_allocation: 10,
+                                         laptops_ordered: 10).call
         end
 
         it 'does not send an email' do
           expect {
             service.call
-          }.not_to have_enqueued_job.on_queue('mailers')
+          }.not_to have_enqueued_mail
         end
       end
     end

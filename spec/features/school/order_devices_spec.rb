@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.feature 'Order devices', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Order devices' do
   include ViewHelper
 
-  let(:school) { create(:school, :with_std_device_allocation) }
+  let(:school) { create(:school, laptops: [1, 0, 0]) }
 
   scenario 'when my school can order devices and I can order devices' do
     given_the_school_can_order_devices
@@ -88,8 +88,12 @@ RSpec.feature 'Order devices', skip: 'Disabled for 30 Jun 2021 service closure' 
   end
 
   def given_the_school_can_order_devices
-    school.std_device_allocation.update!(cap: 50, allocation: 100, devices_ordered: 20)
-    school.can_order!
+    stub_computacenter_outgoing_api_calls
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: :can_order,
+                                   laptop_allocation: 100,
+                                   laptop_cap: 50,
+                                   laptops_ordered: 20).call
   end
 
   def given_the_school_cannot_order_devices
@@ -102,7 +106,7 @@ RSpec.feature 'Order devices', skip: 'Disabled for 30 Jun 2021 service closure' 
   end
 
   def then_i_see_the_amount_of_devices_i_can_order
-    expect(page).to have_text('30 devices available')
+    expect(page).to have_text('80 devices available')
   end
 
   def and_i_see_a_link_to_techsource

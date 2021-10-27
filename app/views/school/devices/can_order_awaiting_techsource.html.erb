@@ -8,10 +8,9 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
-    <p class="govuk-body">You’ll be able to order <%= what_to_order_allocation_list(allocations: @school.device_allocations) %> soon.</p>
+    <p class="govuk-body">You’ll be able to order <%= what_to_order_allocation_list(@school) %> soon.</p>
 
     <p class="govuk-body">Orders are placed on a website called TechSource, but your account is not ready yet. It should be ready in the next 24 hours.</p>
 

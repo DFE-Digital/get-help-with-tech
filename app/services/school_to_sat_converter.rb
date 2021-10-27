@@ -9,9 +9,8 @@ class SchoolToSatConverter
   def convert_to_sat(trust_name: school.name, companies_house_number: nil)
     school.transaction do
       @trust = create_sat_trust(trust_name, companies_house_number)
-      setup_std_device_allocation
       school.update!(responsible_body: @trust)
-      school.orders_managed_by_school!
+      SchoolSetWhoManagesOrdersService.new(school, :school).call
     end
   end
 
@@ -28,11 +27,5 @@ private
                   town: school.town,
                   county: school.county,
                   postcode: school.postcode)
-  end
-
-  def setup_std_device_allocation
-    if school.std_device_allocation.nil?
-      school.device_allocations.create!(device_type: 'std_device', allocation: 0)
-    end
   end
 end

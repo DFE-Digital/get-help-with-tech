@@ -25,7 +25,7 @@ class SchoolWelcomeWizard < ApplicationRecord
 
     case step
     when 'allocation'
-      if school&.laptops_available_to_order?
+      if school&.devices_available_to_order?(:laptop)
         if user_orders_devices?
           techsource_account!
         else

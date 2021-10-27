@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
+  before { stub_computacenter_outgoing_api_calls }
+
   context 'when no devices available' do
-    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
-    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 0, cap: 0, device_type: 'std_device') }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
     subject(:component) { described_class.new(responsible_body: responsible_body) }
 
@@ -21,8 +22,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
   end
 
   context 'with an action' do
-    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
-    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 0, cap: 0, device_type: 'std_device') }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
     subject(:component) { described_class.new(responsible_body: responsible_body, action: { 'hello' => 'https://example.com' }) }
 
@@ -62,27 +62,25 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
   end
 
   context 'when devices available' do
-    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
-    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 1, cap: 5, device_type: 'std_device') }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, laptops: [5, 5, 1]) }
 
     subject(:component) { described_class.new(responsible_body: responsible_body) }
 
     it 'renders availability' do
-      html = render_inline(component).to_html
+      content = render_inline(component).content
 
-      expect(html).to include '4 devices available to order'
+      expect(content).to include '4 devices and 0 routers available to order'
     end
 
     it 'renders state' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'ordered 1 device'
+      expect(html).to include 'ordered 1 device and 0 routers'
     end
   end
 
   context 'when all devices ordered' do
-    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation]) }
-    let(:pooled_allocation) { VirtualCapPool.new(devices_ordered: 5, cap: 5, device_type: 'std_device') }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, laptops: [5, 5, 5]) }
 
     subject(:component) { described_class.new(responsible_body: responsible_body) }
 
@@ -95,14 +93,14 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders state' do
       html = render_inline(component).to_html
 
-      expect(html).to include 'ordered 5 devices'
+      expect(html).to include 'ordered 5 devices and 0 routers'
     end
   end
 
   context 'with different allocations present' do
-    let(:pooled_allocation1) { VirtualCapPool.new(device_type: 'std_device', devices_ordered: 1, cap: 3) }
-    let(:pooled_allocation2) { VirtualCapPool.new(device_type: 'coms_device', devices_ordered: 2, cap: 5) }
-    let(:responsible_body) { create(:trust, :manages_centrally, virtual_cap_pools: [pooled_allocation1, pooled_allocation2]) }
+    let(:responsible_body) do
+      create(:trust, :manages_centrally, :vcap_feature_flag, laptops: [3, 3, 1], routers: [5, 5, 2])
+    end
 
     subject(:component) { described_class.new(responsible_body: responsible_body) }
 

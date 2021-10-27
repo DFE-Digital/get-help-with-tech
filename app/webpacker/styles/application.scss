@@ -83,5 +83,4 @@ $sizes: 40, 20, 16;
   @media (max-width: 768px) {
     @include govuk-responsive-margin(6, "top");
   }
-
 }

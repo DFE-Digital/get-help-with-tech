@@ -3,9 +3,5 @@
 </h2>
 
 <p class="govuk-body">
-  <% if @responsible_body.trust? %>
-    <%= govuk_link_to t('page_titles.responsible_body_trust_users_index'), responsible_body_users_path %>
-  <% else %>
-    <%= govuk_link_to t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type), responsible_body_users_path %>
-  <% end %>
+  <%= govuk_link_to t('page_titles.responsible_body_users_index'), responsible_body_users_path %>
 </p>

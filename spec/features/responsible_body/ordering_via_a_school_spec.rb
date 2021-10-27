@@ -3,17 +3,21 @@ require 'rails_helper'
 RSpec.feature 'Ordering via a school' do
   let(:rb) { create(:local_authority, schools: [school]) }
   let(:rb_user) { create(:local_authority_user, responsible_body: rb) }
-  let(:preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
-  let(:another_preorder) { create(:preorder_information, :rb_will_order, :does_not_need_chromebooks, school_contact: school.contacts.first) }
-  let(:another_allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices, devices_ordered: 3, cap: 12) }
-  let(:school) { create(:school, :with_headteacher) }
-
+  let(:another_school) do
+    create(:school,
+           :centrally_managed,
+           :does_not_need_chromebooks,
+           school_contact: school.contacts.first,
+           laptops: [12, 12, 3])
+  end
+  let(:school) do
+    create(:school,
+           :centrally_managed,
+           :with_headteacher,
+           :does_not_need_chromebooks)
+  end
   let(:school_page) { PageObjects::ResponsibleBody::SchoolPage.new }
   let(:school_order_devices_page) { PageObjects::ResponsibleBody::SchoolOrderDevicesPage.new }
-
-  before do
-    school.update!(preorder_information: preorder)
-  end
 
   context 'when the school is not in a virtual cap pool' do
     before do
@@ -31,11 +35,13 @@ RSpec.feature 'Ordering via a school' do
     end
 
     context 'when school has devices to order' do
-      let(:allocation) { create(:school_device_allocation, allocation: 12, cap: 12, devices_ordered: 3) }
-
       before do
-        school.update!(std_device_allocation: allocation, order_state: 'can_order')
-        school.refresh_device_ordering_status!
+        stub_computacenter_outgoing_api_calls
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: 'can_order',
+                                       laptop_allocation: 12,
+                                       laptop_cap: 12,
+                                       laptops_ordered: 3).call
       end
 
       scenario 'can order devices' do
@@ -47,7 +53,7 @@ RSpec.feature 'Ordering via a school' do
         and_i_see 'Devices ordered'
         and_i_see '3 devices'
 
-        when_i_click_on('Order devices')
+        when_i_choose_to_order_devices
         then_i_see_the_school_order_devices_page
         and_i_see_the_techsource_button
       end
@@ -55,9 +61,7 @@ RSpec.feature 'Ordering via a school' do
   end
 
   context 'when the school is in a virtual cap pool' do
-    let(:rb) { create(:trust, :vcap_feature_flag, schools: [school]) }
-    let(:vcap_pool) { rb.virtual_cap_pools.create!(device_type: 'std_device') }
-    let(:vcap) { SchoolVirtualCap.create!(virtual_cap_pool: vcap_pool, school_device_allocation: school.std_device_allocation) }
+    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag, schools: [school]) }
 
     context 'when school has no devices to order' do
       scenario 'cannot order devices' do
@@ -71,14 +75,13 @@ RSpec.feature 'Ordering via a school' do
     end
 
     context 'when the school can order devices and has an allocation' do
-      let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices, allocation: 12, cap: 10, devices_ordered: 3) }
-
       before do
-        school.update!(std_device_allocation: allocation, order_state: 'can_order')
-        school.refresh_device_ordering_status!
-        stub_request(:post, 'http://computacenter.example.com/')
-         .to_return(status: 200, body: '', headers: {})
-        vcap
+        stub_computacenter_outgoing_api_calls
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: 'can_order',
+                                       laptop_allocation: 12,
+                                       laptop_cap: 12,
+                                       laptops_ordered: 3).call
       end
 
       scenario 'I do not see the number of devices' do
@@ -105,8 +108,8 @@ RSpec.feature 'Ordering via a school' do
     expect(school_page.school_details).to have_content(status)
   end
 
-  def when_i_click_on(text)
-    page.click_on text
+  def when_i_choose_to_order_devices
+    page.click_link 'Order devices', class: 'govuk-button'
   end
 
   def then_i_see_the_school_order_devices_page

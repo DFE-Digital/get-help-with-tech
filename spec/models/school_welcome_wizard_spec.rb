@@ -22,8 +22,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
 
       context 'has devices available to order' do
-        let(:allocation) { create(:school_device_allocation, :with_std_allocation, :with_available_devices) }
-        let(:school) { create(:school, :with_preorder_information, std_device_allocation: allocation) }
+        let(:school) { create(:school, :with_preorder_information, laptops: [2, 1, 0]) }
 
         context 'user orders devices' do
           let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }
@@ -138,7 +137,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
       it 'adds error messages' do
         wizard.update_step!(new_user_attrs.slice(:full_name).merge({ invite_user: 'yes' }))
-        expect(wizard.errors.attribute_names).to contain_exactly(:email_address)
+        expect(wizard.errors.attribute_names).to include(:email_address)
       end
 
       it 'remains on the will_other_order step' do
@@ -188,7 +187,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     end
 
     context 'when the step is chromebooks and the school needs chromebooks' do
-      let(:request) { attributes_for(:preorder_information, :needs_chromebooks) }
+      let(:request) { attributes_for(:school, :needs_chromebooks) }
 
       before do
         wizard.chromebooks!
@@ -228,7 +227,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     end
 
     context 'when the step is chromebooks and the school does not need chromebooks' do
-      let(:request) { attributes_for(:preorder_information, :does_not_need_chromebooks) }
+      let(:request) { attributes_for(:school, :does_not_need_chromebooks) }
 
       before do
         wizard.chromebooks!

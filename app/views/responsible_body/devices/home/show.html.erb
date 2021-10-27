@@ -20,7 +20,7 @@
     <ul class="govuk-list govuk-list--bullet">
       <li>see your list of schools and colleges and their device allocations</li>
       <li>tell us if the school or colleges will place their own orders</li>
-      <li>give contacts and technical information for each school or college</li>
+      <li>give contacts and technical information for each school or college.</li>
     </ul>
 
     <% if @responsible_body.is_ordering_for_schools? %>
@@ -28,22 +28,10 @@
         <%= govuk_link_to t('page_titles.order_devices.title'), responsible_body_devices_order_devices_path %>
       </h2>
 
-      <p class="govuk-body">Use this section to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>order laptops<% if @responsible_body.coms_device_pool&.devices_available_to_order %> and routers<% end %></li>
-        <li>access the Computacenter TechSource website</li>
-      </ul>
-
-      <% if FeatureFlag.active?(:donated_devices) %>
-        <h2 class="govuk-heading-l govuk-!-font-size-27">
-          <%= govuk_link_to t('page_titles.donated_devices.title'), responsible_body_donated_devices_interest_path %>
-        </h2>
-        <p class="govuk-body">Use this section to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>opt in schools and colleges to be considered for devices donated through this scheme</li>
-          <li>set preferences for the devices they would want</li>
-        </ul>
-      <% end %>
+      <p class="govuk-body">
+        Use this section to access the TechSource
+        website to order laptops and tablets.
+      </p>
     <%- end %>
   </div>
 </div>

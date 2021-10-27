@@ -6,23 +6,26 @@ class Computacenter::API::CapUsageUpdate
   def initialize(string_keyed_hash = {})
     @cap_type = string_keyed_hash['capType']
     @ship_to = string_keyed_hash['shipTo']
-    @cap_amount = string_keyed_hash['capAmount']
-    @cap_used = string_keyed_hash['usedCap']
+    @cap_amount = string_keyed_hash['capAmount'].to_i
+    @cap_used = string_keyed_hash['usedCap'].to_i
     @status = 'received'
     @error = nil
   end
 
   def apply!
     log_to_devices_ordered_updates
-    CapMismatch.new(school, allocation).warn(cap_amount) if cap_amount != allocation.allocation
-    is_decreasing_cap = cap_used.to_i < allocation.devices_ordered
+    CapMismatch.new(school, device_type).warn(cap_amount) if cap_amount != school.allocation(device_type)
+    is_decreasing_cap = cap_used < school.devices_ordered(device_type)
     begin
-      allocation.update!(devices_ordered: cap_used)
+      UpdateSchoolDevicesService.new(school: school,
+                                     devices_ordered_field(device_type) => cap_used,
+                                     notify_computacenter: false,
+                                     notify_school: false).call
     rescue Computacenter::OutgoingAPI::Error => e
       # Don't raise failure if a cascading cap update to CC fails
       Rails.logger.warn(e.message)
+      school.refresh_preorder_status!
     end
-    school.refresh_device_ordering_status!
 
     SchoolCanOrderDevicesNotifications.new(school: school).call if is_decreasing_cap
 
@@ -43,11 +46,11 @@ class Computacenter::API::CapUsageUpdate
   end
 
   class CapMismatch
-    attr_accessor :school, :allocation, :logger
+    attr_accessor :school, :device_type, :logger
 
-    def initialize(school, allocation, logger = Rails.logger)
+    def initialize(school, device_type, logger = Rails.logger)
       @school = school
-      @allocation = allocation
+      @device_type = device_type
       @logger = logger
     end
 
@@ -55,19 +58,26 @@ class Computacenter::API::CapUsageUpdate
       @logger.warn(cap_mismatch_message(given_cap_amount))
     end
 
+  private
+
     def cap_mismatch_message(cap_amount)
-      "CapUsage mismatch: given capAmount: #{cap_amount}, school URN: #{school.urn}, SchoolDeviceAllocation: #{allocation.inspect}"
+      allocation_numbers = [school.allocation(device_type), school.cap(device_type), school.devices_ordered(device_type)]
+      "CapUsage mismatch: given capAmount: #{cap_amount}, school URN: #{school.urn}, DeviceAllocation(#{device_type}): #{allocation_numbers}"
     end
   end
 
 private
 
-  def school
-    @school ||= School.find_by_computacenter_reference!(ship_to)
+  def device_type
+    @device_type ||= Computacenter::CapTypeConverter.to_dfe_type(cap_type)
   end
 
-  def allocation
-    @allocation ||= school.device_allocations.find_by_device_type!(Computacenter::CapTypeConverter.to_dfe_type(cap_type))
+  def devices_ordered_field(device_type)
+    laptop?(device_type) ? :laptops_ordered : :routers_ordered
+  end
+
+  def laptop?(device_type)
+    device_type.to_sym == :laptop
   end
 
   def log_to_devices_ordered_updates
@@ -77,5 +87,9 @@ private
       cap_amount: cap_amount,
       cap_used: cap_used,
     )
+  end
+
+  def school
+    @school ||= School.find_by_computacenter_reference!(ship_to)
   end
 end

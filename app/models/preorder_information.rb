@@ -33,33 +33,21 @@ class PreorderInformation < ApplicationRecord
     set_defaults
   end
 
-  # If this method is added, we may need to update School::SchoolDetailsSummaryListComponent
   def infer_status
-    if school_will_order_devices? && !any_school_users? && school_contact.nil?
-      'needs_contact'
-    elsif school_will_order_devices? && !any_school_users? && school_contact.present?
-      'school_will_be_contacted'
-    elsif school_will_order_devices? && any_school_users? && !chromebook_information_complete?
-      'school_contacted'
-    elsif school_will_order_devices? && any_school_users? && chromebook_information_complete?
-      if school.can_order_devices_right_now?
-        'school_can_order'
-      elsif school.has_ordered?
-        'ordered'
-      else
-        'school_ready'
+    if school_will_order_devices?
+      if any_school_users?
+        return 'school_contacted' unless chromebook_information_complete?
+        return 'school_can_order' if school.can_order_devices_right_now?
+
+        return school.has_ordered? ? 'ordered' : 'school_ready'
       end
-    elsif chromebook_information_complete?
-      if responsible_body_will_order_devices? && school.can_order_devices_right_now?
-        'rb_can_order'
-      elsif responsible_body_will_order_devices? && school.has_ordered?
-        'ordered'
-      else
-        'ready'
-      end
-    else
-      'needs_info'
+      return school_contact.present? ? 'school_will_be_contacted' : 'needs_contact'
     end
+    return 'needs_info' unless chromebook_information_complete?
+    return 'ready' unless responsible_body_will_order_devices?
+    return 'rb_can_order' if school.can_order_devices_right_now?
+
+    school.has_ordered? ? 'ordered' : 'ready'
   end
 
   def refresh_status!

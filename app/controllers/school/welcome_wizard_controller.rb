@@ -18,7 +18,7 @@ class School::WelcomeWizardController < School::BaseController
   def privacy; end
 
   def allocation
-    @allocation = @school.std_device_allocation&.allocation || 0
+    @allocation = @school.allocation(:laptop)
   end
 
   def will_other_order; end

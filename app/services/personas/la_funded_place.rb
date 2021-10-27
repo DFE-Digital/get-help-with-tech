@@ -2,7 +2,6 @@ class Personas::LaFundedPlace
   def call
     la
     la_funded_place
-    la_funded_place_allocation
     la_user
     la_funded_place_user
     la_funded_place_enable_ordering
@@ -19,10 +18,6 @@ private
     })
 
     @la_funded_place
-  end
-
-  def la_funded_place_allocation
-    @la_funded_place_allocation ||= la_funded_place.std_device_allocation
   end
 
   def la_funded_place_user
@@ -54,8 +49,11 @@ private
   end
 
   def la_funded_place_enable_ordering
-    @la_funded_place.can_order!
-    @la_funded_place.std_device_allocation.update!(allocation: 100, cap: 100)
-    @la_funded_place.coms_device_allocation.update!(allocation: 100, cap: 100)
+    UpdateSchoolDevicesService.new(school: @la_funded_place,
+                                   state: :can_order,
+                                   laptop_allocation: 100,
+                                   laptop_cap: 100,
+                                   router_allocation: 100,
+                                   router_cap: 100)
   end
 end

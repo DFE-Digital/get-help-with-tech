@@ -7,6 +7,8 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
   let(:school) { School.find_by_name('Alpha School') }
   let(:school_contact) { school.contacts.first }
 
+  before { stub_computacenter_outgoing_api_calls }
+
   scenario 'DfE users see school users' do
     given_a_responsible_body
     and_it_has_a_school_with_users
@@ -111,8 +113,8 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     school = create(:school, :with_preorder_information, :with_headteacher,
                     name: 'Alpha School',
                     responsible_body: local_authority)
-    school.orders_managed_by_school!
-    school.set_current_contact!(school.headteacher)
+    SchoolSetWhoManagesOrdersService.new(school, :school).call
+    school.set_school_contact!(school.headteacher)
 
     expect(school.school_will_be_contacted?).to be_truthy
   end

@@ -7,6 +7,8 @@ RSpec.feature 'Updating school responsible body' do
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:edit_page) { PageObjects::Support::School::ResponsibleBody::EditPage.new }
 
+  before { stub_computacenter_outgoing_api_calls }
+
   scenario 'non support third line users cant change a school responsible body' do
     sign_in_as non_support_third_line_user
 
@@ -26,9 +28,7 @@ RSpec.feature 'Updating school responsible body' do
 
   scenario 'failed to set a new responsible body' do
     create(:trust, name: 'Lancashire')
-    allow(ChangeSchoolResponsibleBodyService).to receive(:new) {
-      instance_double('ChangeSchoolResponsibleBodyService', call: false)
-    }
+    allow(CapUpdateNotificationsService).to receive(:new).and_raise(StandardError)
 
     sign_in_as support_third_line_user
 

@@ -1,42 +1,48 @@
-class Support::AllocationForm
+﻿class Support::AllocationForm
   include ActiveModel::Model
 
+  attr_accessor :category, :description, :device_type, :school
   attr_reader :allocation
-  attr_accessor :current_allocation, :school_allocation
 
-  delegate :cap, :raw_devices_ordered, :is_in_virtual_cap_pool?, to: :school_allocation
+  delegate :in_virtual_cap_pool?,
+           :order_state,
+           :raw_allocation,
+           :raw_devices_ordered,
+           to: :school
 
   validate :check_decrease_allowed
   validate :check_minimum
 
-  def initialize(params = {})
-    super(params)
-    @current_allocation = @school_allocation.dup
-  end
-
   def allocation=(value)
-    @allocation = value.to_i
+    @allocation = ActiveModel::Type::Integer.new.cast(value)
   end
 
-  def order_state
-    school_allocation&.school&.order_state
+  def save
+    valid? && allocation_updated?
   end
 
 private
 
-  def decreasing?
-    allocation < current_allocation.raw_allocation
+  def allocation_updated?
+    UpdateSchoolDevicesService.new(school: school,
+                                   order_state: order_state,
+                                   "#{device_type}_allocation".to_sym => allocation,
+                                   "#{device_type}_cap".to_sym => allocation,
+                                   allocation_change_category: category,
+                                   allocation_change_description: description).call
   end
 
   def check_decrease_allowed
-    return unless decreasing?
-
-    errors.add(:allocation, :decreasing_in_virtual_cap_pool) if is_in_virtual_cap_pool?
+    errors.add(:school, :decreasing_in_virtual_cap_pool) if decreasing? && in_virtual_cap_pool?
   end
 
   def check_minimum
-    if allocation < raw_devices_ordered
-      errors.add(:allocation, :gte_devices_ordered, devices_ordered: raw_devices_ordered)
+    if allocation < raw_devices_ordered(device_type)
+      errors.add(:school, :gte_devices_ordered, devices_ordered: raw_devices_ordered(device_type))
     end
+  end
+
+  def decreasing?
+    allocation < raw_allocation(device_type)
   end
 end

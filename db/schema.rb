@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_14_112651) do
+ActiveRecord::Schema.define(version: 2021_10_13_084225) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "allocation_batch_jobs", force: :cascade do |t|
     t.text "batch_id", null: false
@@ -27,6 +29,20 @@ ActiveRecord::Schema.define(version: 2021_09_14_112651) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_id"], name: "index_allocation_batch_jobs_on_batch_id"
+  end
+
+  create_table "allocation_changes", force: :cascade do |t|
+    t.bigint "school_device_allocation_id"
+    t.string "category"
+    t.integer "prev_allocation"
+    t.integer "new_allocation"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "school_id"
+    t.string "device_type", default: "laptop", null: false
+    t.index ["category"], name: "index_allocation_changes_on_category"
+    t.index ["school_device_allocation_id"], name: "index_allocation_changes_on_school_device_allocation_id"
   end
 
   create_table "api_tokens", force: :cascade do |t|
@@ -101,6 +117,8 @@ ActiveRecord::Schema.define(version: 2021_09_14_112651) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "failure", default: false
+    t.bigint "school_id"
+    t.string "device_type", default: "laptop", null: false
     t.index ["school_device_allocation_id"], name: "index_cap_update_calls_on_school_device_allocation_id"
   end
 
@@ -290,6 +308,12 @@ ActiveRecord::Schema.define(version: 2021_09_14_112651) do
     t.boolean "vcap_feature_flag", default: false
     t.string "computacenter_change", default: "none", null: false
     t.boolean "new_fe_wave", default: false
+    t.integer "laptop_allocation", default: 0, null: false
+    t.integer "laptop_cap", default: 0, null: false
+    t.integer "laptops_ordered", default: 0, null: false
+    t.integer "router_allocation", default: 0, null: false
+    t.integer "router_cap", default: 0, null: false
+    t.integer "routers_ordered", default: 0, null: false
     t.index ["computacenter_change"], name: "index_responsible_bodies_on_computacenter_change"
     t.index ["computacenter_reference"], name: "index_responsible_bodies_on_computacenter_reference"
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
@@ -382,17 +406,34 @@ ActiveRecord::Schema.define(version: 2021_09_14_112651) do
     t.string "phone_number"
     t.string "order_state", default: "cannot_order", null: false
     t.string "status", default: "open", null: false
-    t.string "computacenter_change", default: "none", null: false
     t.boolean "increased_allocations_feature_flag", default: false
+    t.string "computacenter_change", default: "none", null: false
     t.boolean "increased_sixth_form_feature_flag", default: false
     t.boolean "increased_fe_feature_flag", default: false
+    t.boolean "hide_mno", default: false
     t.string "type", default: "CompulsorySchool", null: false
     t.integer "ukprn"
     t.text "fe_type"
-    t.boolean "hide_mno", default: false
     t.datetime "opted_out_of_comms_at"
     t.string "provision_urn"
     t.string "provision_type"
+    t.string "preorder_status"
+    t.bigint "school_contact_id"
+    t.string "will_need_chromebooks"
+    t.string "school_or_rb_domain"
+    t.string "recovery_email_address"
+    t.datetime "school_contacted_at"
+    t.string "who_will_order_devices"
+    t.integer "raw_laptop_allocation", default: 0, null: false
+    t.integer "raw_laptop_cap", default: 0, null: false
+    t.integer "raw_laptops_ordered", default: 0, null: false
+    t.datetime "laptop_cap_update_request_timestamp"
+    t.string "laptop_cap_update_request_payload_id"
+    t.integer "raw_router_allocation", default: 0, null: false
+    t.integer "raw_router_cap", default: 0, null: false
+    t.integer "raw_routers_ordered", default: 0, null: false
+    t.datetime "router_cap_update_request_timestamp"
+    t.string "router_cap_update_request_payload_id"
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["provision_urn"], name: "index_schools_on_provision_urn", unique: true
@@ -551,6 +592,7 @@ ActiveRecord::Schema.define(version: 2021_09_14_112651) do
     t.index ["responsible_body_id"], name: "index_virtual_cap_pools_on_responsible_body_id"
   end
 
+  add_foreign_key "allocation_changes", "school_device_allocations"
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"

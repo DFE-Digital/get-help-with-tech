@@ -38,41 +38,41 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.preorder_information_counts_by_status['needs_contact'] || 0,
-                 label: t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_contact'] || 0),
+                 count: @stats.school_counts_by_status['needs_contact'] || 0,
+                 label: t(:needs_a_contact, scope: %i[support devices_performance], count: @stats.school_counts_by_status['needs_contact'] || 0),
                  size: :reduced) %>
 
     <%= render Support::TileComponent.new(
-                 count: @stats.preorder_information_counts_by_status['school_contacted'] || 0,
-                 label: t(:school_contacted, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_contacted'] || 0),
+                 count: @stats.school_counts_by_status['school_contacted'] || 0,
+                 label: t(:school_contacted, scope: %i[support devices_performance], count: @stats.school_counts_by_status['school_contacted'] || 0),
                  colour: :blue,
                  size: :reduced) %>
 
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0,
-                 label: t(:school_contacts, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_will_be_contacted'] || 0),
+                 count: @stats.school_counts_by_status['school_will_be_contacted'] || 0,
+                 label: t(:school_contacts, scope: %i[support devices_performance], count: @stats.school_counts_by_status['school_will_be_contacted'] || 0),
                  colour: :'light-blue',
                  size: :reduced) %>
 
     <%= render Support::TileComponent.new(
-                 count: @stats.preorder_information_counts_by_status['school_ready'] || 0,
-                 label: t(:school_ready, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['school_ready'] || 0),
+                 count: @stats.school_counts_by_status['school_ready'] || 0,
+                 label: t(:school_ready, scope: %i[support devices_performance], count: @stats.school_counts_by_status['school_ready'] || 0),
                  colour: :green,
                  size: :reduced) %>
 
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.preorder_information_counts_by_status['needs_info'] || 0,
-                 label: t(:needs_information, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0),
+                 count: @stats.school_counts_by_status['needs_info'] || 0,
+                 label: t(:needs_information, scope: %i[support devices_performance], count: @stats.school_counts_by_status['needs_info'] || 0),
                  size: :reduced) %>
   </div>
   <div class="govuk-grid-column-one-quarter">
     <%= render Support::TileComponent.new(
-                 count: @stats.preorder_information_counts_by_status['ready'] || 0,
-                 label: t(:information_given, scope: %i[support devices_performance], count: @stats.preorder_information_counts_by_status['needs_info'] || 0),
+                 count: @stats.school_counts_by_status['ready'] || 0,
+                 label: t(:information_given, scope: %i[support devices_performance], count: @stats.school_counts_by_status['needs_info'] || 0),
                  colour: :'light-blue',
                  size: :reduced) %>
   </div>

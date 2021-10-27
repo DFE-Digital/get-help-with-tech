@@ -65,45 +65,41 @@ private
   def device_allocation_row
     {
       key: 'Device allocation',
-      value: pluralize(@school.laptop_raw_allocation, 'device'),
-      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-      action: 'Query <span class="govuk-visually-hidden">device</span> allocation'.html_safe,
+      value: pluralize(@school.raw_allocation(:laptop), 'device'),
     }
   end
 
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: pluralize(@school.router_raw_allocation, 'router'),
-      action_path: devices_guidance_subpage_path(subpage_slug: 'device-allocations', anchor: 'how-to-query-an-allocation'),
-      action: 'Query <span class="govuk-visually-hidden">router</span> allocation'.html_safe,
+      value: @school.raw_allocation(:router).positive? ? 'routers are available to order' : 'no routers are available to order',
     }
   end
 
   def devices_ordered_row
     {
       key: 'Devices ordered',
-      value: pluralize(@school.laptops_ordered, 'device'),
+      value: pluralize(@school.devices_ordered(:laptop), 'device'),
     }
   end
 
   def routers_ordered_row
     {
       key: 'Routers ordered',
-      value: pluralize(@school.routers_ordered, 'router'),
+      value: pluralize(@school.devices_ordered(:router), 'router'),
     }
   end
 
   def display_devices_ordered_row?
-    !@school.in_active_virtual_cap_pool? && @school.has_ordered_any_laptop?
+    !@school.in_virtual_cap_pool? && @school.has_ordered_any_laptop?
   end
 
   def display_routers_ordered_row?
-    !@school.in_active_virtual_cap_pool? && @school.has_ordered_any_router?
+    !@school.in_virtual_cap_pool? && @school.has_ordered_any_router?
   end
 
   def display_router_allocation_row?
-    @school.has_router_raw_allocation?
+    @school.raw_allocation(:router).positive?
   end
 
   def order_status_row
@@ -154,9 +150,7 @@ private
   end
 
   def chromebook_rows_if_needed
-    return [] unless @school.preorder_information?
-
-    detail_value = @school.chromebook_info_still_needed? ? 'Not yet known' : t(@school.will_need_chromebooks, scope: %i[activerecord attributes preorder_information will_need_chromebooks])
+    detail_value = @school.chromebook_info_still_needed? ? 'Not yet known' : t(@school.will_need_chromebooks, scope: %i[activerecord attributes school will_need_chromebooks])
     detail = {
       key: 'Ordering Chromebooks?',
       value: detail_value,
@@ -198,6 +192,6 @@ private
   end
 
   def school_contact
-    @school.current_contact
+    @school.school_contact
   end
 end

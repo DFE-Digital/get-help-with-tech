@@ -1,0 +1,310 @@
+<% content_for :devices_service, true %>
+<% content_for :title, t('page_titles.devices_guidance_how_to_order') %>
+
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  { "Laptops and tablets" => devices_guidance_index_path },
+                  t('page_titles.devices_guidance_how_to_order'),
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.devices_guidance_how_to_order') %>
+    </h1>
+
+    <p class="govuk-body-l">
+      How to order laptops, tablets and routers through the Get help with technology service.
+    </p>
+
+    <p class="govuk-body">
+      Find out
+      <%= govuk_link_to 'who can get laptops and tablets', '/devices/about-the-offer' %>.
+    </p>
+
+    <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active">
+      <ol class="app-step-nav__steps">
+        <li class="app-step-nav__step" id="decide-who-will-place-orders">
+          <div class="app-step-nav__header app-step-nav__header--non-clickable" data-position="1">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 1
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Get set up to order
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel" id="step-panel-decide-who-will-place-orders-1">
+            <p class="app-step-nav__paragraph">
+              DfE asked local authorities (LAs) and academy trusts to use the
+              <%= govuk_link_to 'Get help with technology service', root_path %>
+              to tell us if they wanted to:
+            </p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>let schools place their own orders</li>
+              <li>place orders centrally on behalf of schools.</li>
+            </ul>
+
+            <p class="app-step-nav__paragraph">
+              If you&rsquo;ve been nominated to place an order, you should have received an email inviting
+              you to the
+              <%= govuk_link_to 'Get help with technology service', root_path %>
+              where you can:
+            </p>
+
+            <ul class="govuk-list govuk-list--bullet">
+              <li>amend existing contact information</li>
+              <li>add additional contacts to place orders</li>
+              <li>view your device allocation.</li>
+            </ul>
+            <p class="app-step-nav__paragraph">
+              If you need access to use the service,
+              <%= govuk_link_to 'read our guidance', '/how-to-access-the-get-help-with-technology-service' %>.
+            </p>
+
+            <h3 class="govuk-heading-s">
+              About device allocation
+            </h3>
+
+            <p class="app-step-nav__paragraph">
+              Each school has an allocation figure. This is the total number of devices they can order.
+              There&rsquo;s also a &lsquo;cap&rsquo; figure for each school, which represents the number of devices they
+              can order at any one time, to help manage stock levels.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              Where a responsible body, for example an academy trust, orders on behalf of several
+              schools, they&rsquo;ll have a &lsquo;shared&rsquo; cap.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              For example, the responsible body may have an allocation of 100 devices across 4
+              schools. To begin with, all 4 schools will show an allocation of 100 devices. If the
+              responsible body then orders 25 devices for 1 school, all 4 will now show an allocation of 75.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              Learn more
+              <%= govuk_link_to 'about how devices are allocated', '/devices/device-allocations' %>.
+            </p>
+          </div>
+        </li>
+
+        <li class="app-step-nav__step" id="nominate-people-to-manage-orders">
+          <div class="app-step-nav__header app-step-nav__header--non-clickable" data-position="2">
+            <h2 class="app-step-nav__title" id="step-panel-nominate-people-to-manage-orders-2-heading">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 2
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+               Choose devices and provide technical information
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel" id="step-panel-nominate-people-to-manage-orders-2">
+            <p class="app-step-nav__paragraph">
+              We may need some technical information from you before you can order, so we
+              recommend choosing the types of devices you&rsquo;ll need before we send out your invitation to
+              order.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              <%= govuk_link_to 'Check the technical specifications of the laptops and tablets provided by the Get help with technology programme', '/devices/device-specification' %>.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              The device types (depending on availability) are:
+            </p>
+
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                <a class="govuk-link govuk-link--no-visited-state" href="/devices/preparing-a-standard-windows-device">Microsoft
+                  Windows laptops and tablets</a></li>
+              <li><a class="govuk-link govuk-link--no-visited-state" href="/devices/preparing-chromebooks">Google
+                Chromebooks</a></li>
+              <li><a class="govuk-link govuk-link--no-visited-state" href="/devices/preparing-ipads">Apple iPads</a>
+              </li>
+            </ul>
+
+            <p class="app-step-nav__paragraph">
+              You can also order 4G wireless routers, but you will need to supply your own SIM cards
+              and data.
+            </p>
+
+            <h3 class="govuk-heading-s" id="microsoft-windows-laptops">
+              Important information about Microsoft Windows laptops and tablets
+            </h3>
+
+            <p class="app-step-nav__paragraph">
+              Windows devices are provided with factory settings. Schools, colleges, further education
+              providers, trusts or LAs should configure them at their own cost before lending them to
+              students. This means installing preferred safeguarding measures and bringing them into
+              an existing device management framework.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              Read our guidance on
+              <%= govuk_link_to 'preparing a standard Windows device', '/devices/preparing-a-standard-windows-device' %>.
+            </p>
+
+            <h3 class="govuk-heading-s" id="google-chromebooks">
+              Important information about Google Chromebooks
+            </h3>
+
+            <p class="app-step-nav__paragraph">
+              You need to
+              <%= govuk_link_to 'sign in to the Get help with technology service', '/sign-in' %>
+              and provide the following
+              information before you can order Google Chromebooks:
+            </p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>
+                the domain the school, college or FE provider has registered for Google
+                Workspace for Education Fundamentals (formerly G Suite for Education), for
+                example &lsquo;school.co.uk&rsquo;
+              </li>
+              <li>
+                a recovery email address on a separate domain to the one registered for Google
+                Workspace for Education Fundamentals &ndash; for example, if the registered domain is
+                &lsquo;school.com&rsquo;, the recovery email cannot be &lsquo;recovery@school.com&rsquo;.
+              </li>
+            </ul>
+
+            <p class="app-step-nav__paragraph">
+              If you&rsquo;re not sure how to find this information, you should ask your IT support for help.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              If the school or college you&rsquo;re ordering for does not currently use an education platform,
+              you can
+              <%= govuk_link_to 'apply for government-funded support to get access to either a Google Workspace for Education Fundamentals or Microsoft 365 Education platform', '/digital-platforms' %>.
+              The closing date for all applications is 30 November 2021.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              Read more information about
+              <%= govuk_link_to 'preparing Google Chromebooks', '/devices/preparing-chromebooks' %>
+              for pupils and students.
+            </p>
+
+            <h3 class="govuk-heading-s" id="google-chromebooks">
+              Important information about Apple iPads
+            </h3>
+
+            <p class="app-step-nav__paragraph">
+              When you order iPads we&rsquo;ll ask for your Apple School Manager (ASM). If you need to
+              find this, you can follow these steps:
+            </p>
+
+            <ol class="govuk-list govuk-list--number">
+              <li>Log in to Apple School Manager.</li>
+              <li>Select &lsquo;Settings&rsquo;, then select &lsquo;Enrolment Information&rsquo;.</li>
+              <li>Look for your Organisation ID in the Enrolment Information panel.</li>
+            </ol>
+
+            <p class="app-step-nav__paragraph">
+              Find out how to enrol in
+              <%= govuk_link_to 'Apple School Manager', 'https://support.apple.com/en-gb/guide/apple-school-manager/apd402206497/web' %>.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              View the
+              <%= govuk_link_to 'full specifications', '/devices/device-specification' %>
+              of all of these devices.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              To help organisations with the cost of technical support to set up these new devices, we&rsquo;re
+              offering a devices grant.
+              <%= govuk_link_to 'Learn more about the devices grant, including the eligibility criteria', 'https://www.gov.uk/government/publications/get-help-with-technology-conditions-of-connectivity-support-grants' %>.
+            </p>
+          </div>
+        </li>
+
+        <li class="app-step-nav__step" id="prepare-to-place-an-order">
+          <div class="app-step-nav__header app-step-nav__header--non-clickable" data-position="3">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 3
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Order devices when you&rsquo;re invited to
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel" id="step-panel-prepare-to-place-an-order-3">
+            <p class="app-step-nav__paragraph">
+              You&rsquo;ll be asked to
+              <%= govuk_link_to 'sign in to the Get help with technology service', '/sign-in' %>
+              to check your allocation.
+              You&rsquo;ll then be taken to our technology partner&rsquo;s website to place your order.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              Once you select the devices you want to order, you&rsquo;ll be asked to confirm delivery and
+              contact details.
+            </p>
+
+          </div>
+        </li>
+
+        <li class="app-step-nav__step" id="choosing-devices">
+          <div class="app-step-nav__header app-step-nav__header--non-clickable" data-position="4">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 4
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Receive your order
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel" id="step-panel-choosing-devices-4">
+            <p class="app-step-nav__paragraph">
+              Most devices will be delivered within 5 working days of an order being confirmed, subject
+              to stock availability. For large orders (more than 150 devices), we&rsquo;ll call the main delivery
+              contact to arrange delivery.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              <%= govuk_link_to 'Find out about ownership, and options for lending or giving devices to children, young people or other organisations', '/devices/device-distribution-and-ownership' %>.
+            </p>
+
+            <p class="app-step-nav__paragraph">
+              Find out how to
+              <%= govuk_link_to 'set up your devices', '/devices' %>
+              and
+              <%= govuk_link_to 'what to do if you have a faulty device', '/devices/replace-a-faulty-device' %>.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>

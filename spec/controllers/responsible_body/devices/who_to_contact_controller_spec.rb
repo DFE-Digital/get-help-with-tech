@@ -33,6 +33,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
 
     context 'when contact exists and updating the same email' do
       before do
+        stub_computacenter_outgoing_api_calls
         post :create, params: {
           responsible_body_devices_who_to_contact_form: {
             who_to_contact: 'someone_else',
@@ -65,6 +66,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
       let(:existing_user) { create(:school_user) }
 
       before do
+        stub_computacenter_outgoing_api_calls
         post :create, params: {
           responsible_body_devices_who_to_contact_form: {
             who_to_contact: 'someone_else',
@@ -89,6 +91,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
       let(:existing_user) { create(:local_authority_user) }
 
       before do
+        stub_computacenter_outgoing_api_calls
         post :create, params: {
           responsible_body_devices_who_to_contact_form: {
             who_to_contact: 'someone_else',
@@ -136,6 +139,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
       let!(:second_contact) { create(:school_contact, :contact, school: school) }
 
       def perform_update!
+        stub_computacenter_outgoing_api_calls
         put :update, params: {
           responsible_body_devices_who_to_contact_form: {
             who_to_contact: 'someone_else', # hidden field

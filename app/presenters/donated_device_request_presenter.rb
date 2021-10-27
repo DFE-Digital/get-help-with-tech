@@ -74,7 +74,7 @@ private
   end
 
   def available_schools
-    responsible_body.schools.gias_status_open.that_are_centrally_managed
+    responsible_body.schools.gias_status_open.responsible_body_will_order_devices
   end
 
   def schools_that_can_be_selected_now

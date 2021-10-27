@@ -1,0 +1,25 @@
+---
+applications:
+- name: get-help-with-tech-preview
+  processes:
+  - type: web
+    disk_quota: 2G
+    health-check-http-endpoint: /healthcheck.json
+    health-check-type: http
+    health-check-invocation-timeout: 10
+    instances: 1
+  - type: sidekiq
+    disk_quota: 2G
+    health-check-type: process
+    instances: 1
+    command: bundle exec sidekiq -C config/sidekiq.yml
+  services:
+    - get-help-with-tech-preview-db
+    - get-help-with-tech-preview-redis
+  env:
+    DOCKER_IMAGE_ID: ((docker_image_id))
+    ENV: $HOME/.profile
+    RAILS_LOG_TO_STDOUT: true
+    GHWT__HOSTNAME_FOR_URLS: get-help-with-tech-preview.london.cloudapps.digital
+    GHWT__SERVICE_NAME_SUFFIX: (preview)
+    SERVICE_ENV: preview

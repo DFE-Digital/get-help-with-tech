@@ -1,7 +1,7 @@
 <%-
   submit_label = local_assigns[:submit_label] || 'Save'
   legend_text = local_assigns[:legend_text] || nil
-  scope = local_assigns[:scope] || 'activerecord.attributes.preorder_information.will_need_chromebooks'
+  scope = local_assigns[:scope] || 'activerecord.attributes.school.will_need_chromebooks'
   legend = legend_text ? { text: legend_text } : { text: 'Will the school need Chromebooks?', hidden: true }
 %>
 <%= form_for local_assigns[:form_object], url: local_assigns[:url], method: :patch do |f| %>
@@ -16,7 +16,7 @@
                               hint: { text: "For example, ‘school.co.uk’" } %>
       <%= f.govuk_text_field  :recovery_email_address,
                               label: { text: "Recovery email address", size: 's' },
-                              hint: { text: "This email address must be on a different domain to the #{@school.institution_type} domain. For example, if the domain is ‘school.com’, then the email must not be ‘recovery@school.com’." } %>
+                              hint: { text: "This email will be on a different domain to the school domain, for example a Gmail or Yahoo email account." } %>
       <p class="govuk-body govuk-!-margin-top-4">
         If you need help finding these details, speak to the people you usually contact for IT support.
       </p>
@@ -28,7 +28,7 @@
       <%= f.govuk_radio_button :will_need_chromebooks,
                               'i_dont_know',
                               label: { text: t(:i_dont_know, scope: scope) } do %>
-        <p class="govuk-body">You cannot place an order until you tell us whether you’ll be ordering Chromebooks or not</p>
+        <p class="govuk-body">You cannot place an order until you tell us whether you’ll be ordering Chromebooks or not.</p>
       <%- end %>
     <%- end %>
   <%- end %>

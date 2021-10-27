@@ -11,7 +11,7 @@ class Support::ServicePerformance
     @number_of_devolved_schools_that_have_signed_in ||=
       School
       .gias_status_open
-      .that_will_order_devices
+      .school_will_order_devices
       .joins(user_schools: :user)
       .where('users.sign_in_count > 0')
       .count('DISTINCT(schools.id)')
@@ -21,7 +21,7 @@ class Support::ServicePerformance
     @number_of_devolved_schools ||=
       School
       .gias_status_open
-      .that_will_order_devices
+      .school_will_order_devices
       .count
   end
 
@@ -29,51 +29,42 @@ class Support::ServicePerformance
     @number_of_centrally_managed_schools ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
+      .responsible_body_will_order_devices
       .count
   end
 
   def total_devices_available
-    sum_allocation(device_type: 'std_device', sum_expression: 'cap')
+    sum_allocation('raw_laptop_cap')
   end
 
   def total_devices_ordered
-    sum_allocation(device_type: 'std_device', sum_expression: 'devices_ordered')
+    sum_allocation('raw_laptops_ordered')
   end
 
   def total_devices_remaining
-    sum_allocation(device_type: 'std_device', sum_expression: 'cap - devices_ordered')
+    sum_allocation('raw_laptop_cap - raw_laptops_ordered')
   end
 
   def total_routers_available
-    sum_allocation(device_type: 'coms_device', sum_expression: 'cap')
+    sum_allocation('raw_router_cap')
   end
 
   def total_routers_ordered
-    sum_allocation(device_type: 'coms_device', sum_expression: 'devices_ordered')
+    sum_allocation('raw_routers_ordered')
   end
 
   def total_routers_remaining
-    sum_allocation(device_type: 'coms_device', sum_expression: 'cap - devices_ordered')
+    sum_allocation('raw_router_cap - raw_routers_ordered')
   end
 
-  def sum_allocation(device_type:, sum_expression:)
-    devolved = SchoolDeviceAllocation
-      .where(device_type: device_type)
-      .joins(school: :preorder_information)
-      .merge(School.gias_status_open)
-      .where(preorder_information: { who_will_order_devices: 'school' })
-      .sum(sum_expression)
-    managed = SchoolDeviceAllocation
-      .where(device_type: device_type)
-      .joins(school: :preorder_information)
-      .where(preorder_information: { who_will_order_devices: 'responsible_body' })
-      .sum(sum_expression)
+  def sum_allocation(sum_expression)
+    devolved = School.gias_status_open.school_will_order_devices.sum(sum_expression)
+    managed = School.responsible_body_will_order_devices.sum(sum_expression)
     devolved + managed
   end
 
   def segmented_device_counts
-    device_type = 'std_device'
+    device_type = :laptop
 
     [
       Support::ServicePerformance::DeviceCounts.new(
@@ -108,17 +99,17 @@ class Support::ServicePerformance
   #
   def number_of_devolved_schools_that_have_fully_ordered
     @number_of_devolved_schools_that_have_fully_ordered ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.std_device.has_fully_ordered)
+      number_of_devolved_schools_that_have(scope: School.has_fully_ordered_laptops)
   end
 
   def number_of_devolved_schools_that_have_partially_ordered
     @number_of_devolved_schools_that_have_partially_ordered ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.std_device.has_partially_ordered)
+      number_of_devolved_schools_that_have(scope: School.has_partially_ordered_laptops)
   end
 
   def number_of_devolved_schools_that_have_not_ordered
     @number_of_devolved_schools_that_have_not_ordered ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.std_device.has_not_ordered)
+      number_of_devolved_schools_that_have(scope: School.has_not_ordered_laptops)
   end
 
   def percentage_of_devolved_schools_that_have_fully_ordered
@@ -150,22 +141,22 @@ class Support::ServicePerformance
   #
   def number_of_devolved_schools_that_have_fully_ordered_routers
     @number_of_devolved_schools_that_have_fully_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.has_fully_ordered)
+      number_of_devolved_schools_that_have(scope: School.has_fully_ordered_routers)
   end
 
   def number_of_devolved_schools_that_have_partially_ordered_routers
     @number_of_devolved_schools_that_have_partially_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.has_partially_ordered)
+      number_of_devolved_schools_that_have(scope: School.has_partially_ordered_routers)
   end
 
   def number_of_devolved_schools_that_have_not_ordered_routers
     @number_of_devolved_schools_that_have_not_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('cap > 0 AND devices_ordered = 0'))
+      number_of_devolved_schools_that_have(scope: School.where('raw_router_cap > 0 AND raw_routers_ordered = 0'))
   end
 
   def number_of_devolved_schools_that_have_a_router_allocation
     @number_of_devolved_schools_that_have_a_router_allocation ||=
-      number_of_devolved_schools_that_have(scope: SchoolDeviceAllocation.coms_device.where('cap > 0'))
+      number_of_devolved_schools_that_have(scope: School.where('raw_router_cap > 0'))
   end
 
   def percentage_of_devolved_schools_that_have_fully_ordered_routers
@@ -195,8 +186,7 @@ class Support::ServicePerformance
   def number_of_devolved_schools_that_have(scope:)
     School
     .gias_status_open
-    .that_will_order_devices
-    .joins(:device_allocations)
+    .school_will_order_devices
     .merge(scope)
     .count
   end
@@ -227,7 +217,7 @@ class Support::ServicePerformance
     @number_of_responsible_bodies_managing_centrally ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
+      .responsible_body_will_order_devices
       .count('DISTINCT(responsible_body_id)')
   end
 
@@ -242,9 +232,8 @@ class Support::ServicePerformance
     @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
-      .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.std_device.has_not_fully_ordered)
+      .responsible_body_will_order_devices
+      .has_not_fully_ordered_laptops
       .count('DISTINCT(responsible_body_id)')
   end
 
@@ -252,9 +241,8 @@ class Support::ServicePerformance
     @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
-      .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.std_device.has_partially_ordered)
+      .responsible_body_will_order_devices
+      .has_partially_ordered_laptops
       .count('DISTINCT(responsible_body_id)')
   end
 
@@ -297,9 +285,8 @@ class Support::ServicePerformance
     @number_of_responsible_bodies_managing_centrally_that_have_not_fully_ordered_routers ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
-      .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.coms_device.has_not_fully_ordered)
+      .responsible_body_will_order_devices
+      .has_not_fully_ordered_routers
       .count('DISTINCT(responsible_body_id)')
   end
 
@@ -307,9 +294,8 @@ class Support::ServicePerformance
     @number_of_responsible_bodies_managing_centrally_that_have_partially_ordered_routers ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
-      .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.coms_device.has_partially_ordered)
+      .responsible_body_will_order_devices
+      .has_partially_ordered_routers
       .count('DISTINCT(responsible_body_id)')
   end
 
@@ -322,9 +308,8 @@ class Support::ServicePerformance
     @number_of_responsible_bodies_managing_centrally_that_have_schools_with_a_router_allocation ||=
       School
       .gias_status_open
-      .that_are_centrally_managed
-      .joins(:device_allocations)
-      .merge(SchoolDeviceAllocation.coms_device.where('cap > 0'))
+      .responsible_body_will_order_devices
+      .where('raw_router_cap > 0')
       .count('DISTINCT(responsible_body_id)')
   end
 
@@ -392,29 +377,29 @@ class Support::ServicePerformance
   end
 
   def number_of_schools_devolved_to
-    needs_contact_count = preorder_information_counts_by_status['needs_contact'] || 0
-    has_contact_count = preorder_information_counts_by_status['school_will_be_contacted'] || 0
-    contacted_count = preorder_information_counts_by_status['school_contacted'] || 0
-    school_ready_count = preorder_information_counts_by_status['school_ready'] || 0
+    needs_contact_count = school_counts_by_status['needs_contact'] || 0
+    has_contact_count = school_counts_by_status['school_will_be_contacted'] || 0
+    contacted_count = school_counts_by_status['school_contacted'] || 0
+    school_ready_count = school_counts_by_status['school_ready'] || 0
     needs_contact_count + has_contact_count + contacted_count + school_ready_count
   end
 
   def number_of_schools_managed_centrally
-    needs_information = preorder_information_counts_by_status['needs_info'] || 0
-    ready = preorder_information_counts_by_status['ready'] || 0
+    needs_information = school_counts_by_status['needs_info'] || 0
+    ready = school_counts_by_status['ready'] || 0
 
     needs_information + ready
   end
 
-  def preorder_information_counts_by_status
-    PreorderInformation
-      .group(:status)
+  def school_by_status(status)
+    School
+      .where(preorder_status: status)
       .count
   end
 
-  def preorder_information_by_status(status)
-    PreorderInformation
-      .where(status: status)
+  def school_counts_by_status
+    School
+      .group(:preorder_status)
       .count
   end
 

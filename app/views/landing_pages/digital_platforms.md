@@ -1,16 +1,22 @@
 ## About the programme
 
-Government-funded support is available for schools and colleges to get set up on one of two free-to-use digital education platforms. You can choose to use either:
+Government-funded support is available for schools and colleges to get set up on one of 
+two free-to-use digital education platforms. You can choose to use either:
 
 * Google Workspace for Education Fundamentals (formerly G Suite for Education)
-* Microsoft 365 Education (formerly Office 365 Education)
+* Microsoft 365 Education (formerly Office 365 Education).
 
-[The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) provides feature comparison and case studies on how schools are making the most of these platforms, to help you make the most appropriate choice for your school.
+[The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) 
+provides feature comparison and case studies on 
+how schools are making the most of these platforms, to help you make the most
+appropriate choice for your school.
 
 ## What is a digital education platform?
-It's a place where teachers, pupils and students can continue learning through online virtual classrooms.
+It&rsquo;s a place where teachers, pupils and students can continue learning through online
+virtual classrooms.
 
-The platforms are purpose-built for remote learning in a way that a school or college website is not.
+The platforms are purpose-built for remote learning in a way that a school or college 
+website is not.
 
 Teachers can:
 
@@ -22,18 +28,23 @@ Teachers can:
 * continue with formal assessment for learning
 * set up separate classrooms for smaller groups of students
 * develop structured file and folder storage for different users
-* use tools to support staff planning
+* use tools to support staff planning.
 
-Using a digital education platform allows teachers, pupils and students to continue education if a school or college closes.
+Using a digital education platform allows teachers, pupils and students to continue education if 
+a school or college closes.
 
-[The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) has information on why you should make the move to a digital education platform, if you have not already.
+[The Key for School Leaders website](https://schoolleaders.thekeysupport.com/curriculum-and-learning/curriculum-guidance-all-phases/deliver-remote-learning/feature-comparison-g-suite-education-and-office-365-education/?marker=full-search-q-feature%20comparison-result-1) 
+has information on why you should make the move to 
+a digital education platform, if you have not already.
 
 ## Who can apply
 
 The funded support is for schools and colleges that:
 
 * do not have a digital education platform
-* have access to Microsoft 365 Education or Google Workspace for Education Fundamentals, but are not yet set up to assign work and communicate with pupils and students
+* have access to Microsoft 365 Education or Google Workspace for Education 
+Fundamentals, but are not yet set up to assign work and communicate with pupils 
+and students.
 
 Support is available to state funded:
 
@@ -42,18 +53,21 @@ Support is available to state funded:
 * special schools
 * pupil referral units
 * further education colleges
-* sixth-form colleges
+* sixth-form colleges.
 
-Virtual schools and colleges are also eligible for the programme. This is especially true for virtual schools and colleges that:
+Virtual schools and colleges are also eligible for the programme. This is especially true for
+virtual schools and colleges that:
 
-* regularly coordinate and deliver elements of educational provision and curricular content
-* engage with looked-after children
+* regularly coordinate and deliver elements of educational provision and curricular 
+content
+* engage with looked-after children.
 
 ## How to apply
 
 You can choose to apply for support from either a Google or Microsoft partner.
 
-To apply, complete the support request form for your chosen partner below by 30 November 2021:
+To apply, complete the support request form for your chosen partner below by
+<span class="app-no-wrap">30 November 2021</span>:
 
 * [Apply for support from a Google partner](https://docs.google.com/forms/d/e/1FAIpQLSc45tWnxrk0ZPyhEE4UioGAxDF_2eYNEuE3lLzY_P6Hpo8jxg/viewform)
 * [Apply for support from a Microsoft partner](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR8OxR8KDk1BHllyTqp9sEZBUNEVJNDlRN0U1WUtQWk1KTjY5RDFCM1M3VyQlQCN0PWcu)
@@ -62,15 +76,20 @@ Trusts and sponsors can apply on behalf of their schools and colleges.
 
 ## What happens after you apply
 
-A member from either Google or Microsoft will receive your request. They’ll confirm if you’re eligible for the programme and, if so, they’ll assign you to an IT supplier.
+A member from either Google or Microsoft will receive your request. They&rsquo;ll confirm if 
+you&rsquo;re eligible for the programme and, if so, they&rsquo;ll assign you to an IT supplier.
 
-Your IT supplier will contact you within 2 days to agree a day and time to start the process of setting up the platform for your school or college.
+Your IT supplier will contact you within 2 days to agree a day and time to start the process 
+of setting up the platform for your school or college.
 
-It will take only a few days to install your platform if you respond quickly to the IT supplier’s requests to agree to the scope of work, and share user data and any other relevant information.
+It will take only a few days to install your platform if you respond quickly to the IT supplier&rsquo;s 
+requests to agree to the scope of work, and share user data and any other relevant 
+information.
 
 ## How to claim your grant funding
 
-After you complete your support request form, you'll receive an email from the DfE Digital Infrastructure Payments team with details on how to claim your grant.
+After you complete your support request form, you&rsquo;ll receive an email from the DfE Digital 
+Infrastructure Payments team with details on how to claim your grant.
 
 Once your platform is set up, you can claim the following grant funding:
 
@@ -107,6 +126,10 @@ Once you have access to a platform, you and your pupils and students can use it 
 
 ## How to get support
 
-[Free training and support to set up and use technology effectively](/EdTech-demonstrator-programme) is available through the EdTech Demonstrator Programme.
+[Free training and support to set up and use technology effectively](/EdTech-demonstrator-programme)
+is available through the 
+EdTech Demonstrator Programme.
 
-If you have a question about this programme, [contact us](/get-support).
+If you have a question about this programme,
+[contact us](/get-support).
+

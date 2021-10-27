@@ -58,11 +58,11 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
 private
 
   def given_i_have_a_devolved_school
-    school.orders_managed_by_school!
+    SchoolSetWhoManagesOrdersService.new(school, :school).call
   end
 
   def given_i_have_a_centrally_managed_school
-    school.orders_managed_centrally!
+    SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
   end
 
   def and_i_navigate_to_the_devices_page

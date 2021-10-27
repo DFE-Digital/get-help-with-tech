@@ -15,14 +15,14 @@
       <%= @school.name %>
     </h1>
 
-    <%- if @responsible_body.has_virtual_cap_feature_flags? %>
+    <%- if @responsible_body.vcap_active? %>
       <%- if @school.can_order? || @school.can_order_for_specific_circumstances? %>
         <p class="govuk-body"><%= govuk_link_to 'Order devices now', responsible_body_devices_order_devices_path %></p>
       <%- end %>
     <%- else %>
-      <%- if @school.has_laptop_allocation? %>
+      <%- if @school.has_allocation?(:laptop) %>
         <%
-          show_action = @school.orders_managed_centrally? && (@school.laptops_ordered < @school.laptop_cap)
+          show_action = @school.orders_managed_centrally? && (@school.devices_ordered(:laptop) < @school.cap(:laptop))
           they_ordered_prefix = !@school.orders_managed_centrally?
         %>
         <%= render DeviceCountComponent.new(

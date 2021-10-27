@@ -12,6 +12,7 @@ RSpec.feature 'Manage school users' do
   before do
     # disable computacenter user import API calls
     allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return(nil)
+    stub_computacenter_outgoing_api_calls
     user_from_same_school
     user_from_other_school
     user_from_same_school_deleted

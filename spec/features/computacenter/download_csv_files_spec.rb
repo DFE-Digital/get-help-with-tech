@@ -19,13 +19,14 @@ RSpec.feature 'Download CSV files' do
       expect(page).to have_link('Download Chromebook details')
     end
 
-    it 'shows me a Download donated device requests link' do
+    # Daily Mail - Unsure if this is coming back
+    xit 'shows me a Download donated device requests link' do
       expect(page).to have_link('Download donated device requests')
     end
 
     describe 'clicking Download Chromebook details' do
       before do
-        create_list(:preorder_information, 4, :needs_chromebooks)
+        create_list(:school, 4, :needs_chromebooks)
       end
 
       it 'downloads a CSV file' do
@@ -74,13 +75,15 @@ RSpec.feature 'Download CSV files' do
         create(:donated_device_request, :wants_tablets, units: 2, schools: [school_with_incomplete_request.id], responsible_body: trust)
       end
 
-      it 'downloads a CSV file' do
+      # Daily Mail - Unsure if this is coming back
+      xit 'downloads a CSV file' do
         click_on 'Download donated device requests'
         expect_download(content_type: 'text/csv')
         expect(page.body).to include(DonatedDeviceRequestsExporter.headings.join(','))
       end
 
-      it 'includes all the completed DonatedDeviceRequests in ascending id order' do
+      # Daily Mail - Unsure if this is coming back
+      xit 'includes all the completed DonatedDeviceRequests in ascending id order' do
         click_on 'Download donated device requests'
         csv = CSV.parse(page.body, headers: true)
 

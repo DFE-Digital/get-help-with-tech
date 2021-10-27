@@ -9,7 +9,7 @@ class Support::Schools::Devices::ChangeWhoWillOrderController < Support::BaseCon
   def update
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order_params)
     if @form.valid?
-      @school.change_who_manages_orders!(@form.who_will_order)
+      SchoolSetWhoManagesOrdersService.new(@school, @form.who_will_order).call
 
       flash[:success] = I18n.t(:success, scope: %i[responsible_body devices who_will_order update])
       redirect_to support_school_path(@school.urn)

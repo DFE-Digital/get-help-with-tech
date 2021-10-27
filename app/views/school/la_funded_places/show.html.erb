@@ -8,29 +8,23 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%= render Computacenter::TechSourceOutOfStockComponent.new %>
-    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new %>
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
     <%= render DeviceCountComponent.new(school: @school) %>
 
     <p class="govuk-body">
-      You’ve been allocated <%= "#{@school.std_device_allocation.cap} #{'laptop'.pluralize(@school.std_device_allocation.cap)}" %>.
+      You’ve been allocated <%= "#{@school.allocation(:laptop)} #{'laptop'.pluralize(@school.allocation(:laptop))}" %>.
     </p>
     <%= govuk_details summary_text: 'How your allocation has been calculated' do %>
       <% if @school.social_care_leaver? %>
         <p class="govuk-body">
-          This allocation estimate is based on your LA’s individual care leaver
-          population since August 2020.
-        </p>
-        <p class="govuk-body">
-          You can request internet access for these care leavers if they need it
-          too.
+          This allocation estimate is based on your local authority’s individual care leaver
+          population.
         </p>
         <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
         <p class="govuk-body">
-          Tell us how many care leavers your LA is responsible for
-          who:
+          Tell us how many care leavers your local authority (LA) is responsible for, who:
         </p>
         <ul class="govuk-list govuk-list--bullet">
           <li>
@@ -55,16 +49,9 @@
         </p>
       <% else %>
         <p class="govuk-body">
-          Your allocation estimate is based on the data <%= @school.responsible_body.name %>
-          submitted in the latest published alternative provision census (2020).
-        </p>
-        <p class="govuk-body">
-          We’ve allocated one laptop for each pupil in years 3 to 11 that
+          We’ve allocated 1 laptop for each pupil in years 3 to 11 that
           <%= @school.responsible_body.name %> reported as having a state-funded
           place at an independent special school or alternative provision, and also being eligible for free school meals.
-        </p>
-        <p class="govuk-body">
-          You can request internet access for these pupils if they need it too.
         </p>
         <h3 class="govuk-heading-m">Tell us if your allocation is wrong</h3>
         <p class="govuk-body">
@@ -113,16 +100,16 @@
         <li>deciding whether to temporarily lend or permanently gift devices to care leavers &ndash; <%= link_to_devices_guidance_subpage 'read about ownership', 'device-distribution-and-ownership' %></li>
         <li>making sure laptops have appropriate safety and security measures installed and maintained &ndash; <%= link_to_devices_guidance_subpage 'read about laptop safeguarding', 'safeguarding-for-device-users' %></li>
         <li>fixing any technical issues &ndash; <%= link_to_devices_guidance_subpage 'read about how to organise repairs', 'replace-a-faulty-device' %></li>
-        <li>distributing the laptops safely &ndash; <%= link_to_devices_guidance_subpage 'read about how to get devices to care leavers', 'device-distribution-and-ownership', {}, anchor: 'distributing-devices' %>
+        <li>distributing the laptops safely &ndash; <%= link_to_devices_guidance_subpage 'read about how to get devices to care leavers', 'device-distribution-and-ownership' %>
       </ul>
     <% else %>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
         <li>making sure laptops have appropriate safety and security measures installed and maintained &ndash; <%= link_to_devices_guidance_subpage 'read about laptop safeguarding', 'safeguarding-for-device-users' %></li>
         <li>fixing any technical issues &ndash; <%= link_to_devices_guidance_subpage 'read about how to organise repairs', 'replace-a-faulty-device' %></li>
-        <li>distributing the laptops safely &ndash; <%= link_to_devices_guidance_subpage 'read about how to get devices to pupils', 'device-distribution-and-ownership', {}, anchor: 'distributing-devices' %>
+        <li>distributing the laptops safely &ndash; <%= link_to_devices_guidance_subpage 'read about how to get devices to pupils', 'device-distribution-and-ownership' %>
         <li>redistributing the laptops if pupils move school or leave education</li>
       </ul>
     <% end %>
-    <%= govuk_link_to 'Continue', order_laptops_school_path(@school), button: true %>
+    <%= govuk_button_link_to 'Continue', order_laptops_school_path(@school), button: true %>
   </div>
 </div>

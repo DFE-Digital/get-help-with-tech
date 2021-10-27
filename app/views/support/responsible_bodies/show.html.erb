@@ -24,8 +24,8 @@
               <p class="govuk-body"><%= @responsible_body.name %>:</p>
               <ul id="responsible-body-centrally-managed-stats" class="govuk-list govuk-list--bullet">
                 <li>manages ordering for <%= centrally_managing_count_or_all_schools(responsible_body: @responsible_body) %> of its schools and colleges</li>
-                <li>has <%= what_to_order_allocation_list(allocations: @virtual_cap_pools) %> available to order right now</li>
-                <li>has ordered <%= what_to_order_state_list(allocations: @virtual_cap_pools) %> so far</li>
+                <li>has <%= what_to_order_allocation_list(@responsible_body) %> available to order right now</li>
+                <li>has ordered <%= what_to_order_state_list(@responsible_body) %> so far</li>
               </ul>
             </div>
           </div>
@@ -58,27 +58,25 @@
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.human_for_school_type %></td>
                 <td class="govuk-table__cell"><%= render SchoolPreorderStatusTagComponent.new(school: school) %></td>
-                <%- device_allocations_data = school.std_device_allocation %>
                 <td class="govuk-table__cell">
-                  <%= device_allocations_data&.raw_allocation.to_i %> allocated<br>
+                  <%= school.raw_allocation(:laptop) %> allocated<br>
                   <% unless @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
-                    <%= device_allocations_data&.cap || 0 %> caps<br>
-                    <%= device_allocations_data&.devices_ordered || 0 %> ordered
-                  <% end %>
-                </td>
-                <%- dongles_allocations_data = school.coms_device_allocation %>
-                <td class="govuk-table__cell">
-                  <%= dongles_allocations_data&.raw_allocation.to_i %> allocated<br>
-                  <% unless @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
-                    <%= dongles_allocations_data&.cap || 0 %> caps<br>
-                    <%= dongles_allocations_data&.devices_ordered || 0 %> ordered
+                    <%= school.cap(:laptop) %> caps<br>
+                    <%= school.devices_ordered(:laptop) %> ordered
                   <% end %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= school&.who_manages_orders_label || 'Not decided' %>
+                  <%= school.raw_allocation(:router) %> allocated<br>
+                  <% unless @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
+                    <%= school.cap(:router)  %> caps<br>
+                    <%= school.devices_ordered(:router) %> ordered
+                  <% end %>
                 </td>
                 <td class="govuk-table__cell">
-                  <% if policy(school).invite? && school&.school_will_be_contacted? %>
+                  <%= school.who_manages_orders_label || 'Not decided' %>
+                </td>
+                <td class="govuk-table__cell">
+                  <% if policy(school).invite? && school.school_will_be_contacted? %>
                     <%= govuk_link_to 'Invite', support_school_confirm_invitation_path(school_urn: school.urn) %>
                   <% end %>
                 </td>
@@ -117,20 +115,18 @@
                       <%= govuk_tag text: 'Not applicable', colour: 'grey' %>
                     <%- end %>
                   </td>
-                  <%- device_allocations_data = school.std_device_allocation %>
                   <td class="govuk-table__cell">
-                    <%= device_allocations_data&.raw_allocation.to_i %> allocated<br>
-                    <%= device_allocations_data&.raw_cap || 0 %> caps<br>
-                    <%= device_allocations_data&.raw_devices_ordered || 0 %> ordered
-                  </td>
-                  <%- dongles_allocations_data = school.coms_device_allocation %>
-                  <td class="govuk-table__cell">
-                    <%= dongles_allocations_data&.raw_allocation.to_i %> allocated<br>
-                    <%= dongles_allocations_data&.raw_cap || 0 %> caps<br>
-                    <%= dongles_allocations_data&.raw_devices_ordered || 0 %> ordered
+                    <%= school.raw_allocation(:laptop) %> allocated<br>
+                    <%= school.raw_cap(:laptop) %> caps<br>
+                    <%= school.raw_devices_ordered(:laptop) %> ordered
                   </td>
                   <td class="govuk-table__cell">
-                    <%= school&.who_manages_orders_label || 'Not decided' %>
+                    <%= school.raw_allocation(:router) %> allocated<br>
+                    <%= school.raw_cap(:router) %> caps<br>
+                    <%= school.raw_devices_ordered(:router) %> ordered
+                  </td>
+                  <td class="govuk-table__cell">
+                    <%= school.who_manages_orders_label || 'Not decided' %>
                   </td>
                   <td class="govuk-table__cell">
                     <%- user_count = school.user_count %>

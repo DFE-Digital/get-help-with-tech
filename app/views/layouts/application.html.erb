@@ -63,7 +63,7 @@
       <div class="govuk-width-container">
         <%= render GovukComponent::PhaseBannerComponent.new(tag: {text: 'Alpha'}) do
           unless SessionService.is_signed_in?(session) && (current_user&.responsible_body_user? || current_user&.is_school_user?)
-            "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback")} will help us to improve it.".html_safe
+            "This is a new service – your #{ghwt_contact_mailto(label: "feedback", subject: "Feedback - improvements to the service")} will help us to improve it.".html_safe
           end
         end %>
 
@@ -111,6 +111,11 @@
               <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link" href="<%= privacy_path %>">
                   Privacy
+                </a>
+              </li>
+              <li class="govuk-footer__inline-list-item">
+                <a class="govuk-footer__link" href="<%= cookie_preferences_path %>">
+                  Cookies
                 </a>
               </li>
             </ul>

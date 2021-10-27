@@ -1,6 +1,6 @@
 <table id="schools" class="govuk-table">
   <caption class="govuk-table__caption">
-    <span class="govuk-heading-m">Schools you need to place orders for</span>
+    <span class="govuk-heading-m">Schools you can place orders for</span>
     <p class="govuk-body">Place an order for each school.</p>
   </caption>
   <thead class="govuk-table__head">
@@ -16,9 +16,9 @@
           <%= govuk_link_to("#{school.name} (URN: #{school.urn})", responsible_body_devices_school_path(school.urn)) %>
         </td>
         <td class="govuk-table__cell">
-          <%= what_to_order_availability(school: school) %>
+          <%= what_to_order_availability(school) %>
           <span class="govuk-caption-m">
-            <%= what_to_order_state(school: school) %>
+            <%= what_to_order_state(school) %>
           </span>
         </td>
       </tr>

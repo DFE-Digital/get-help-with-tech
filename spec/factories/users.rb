@@ -112,14 +112,14 @@ FactoryBot.define do
     factory :dfe_user do
       is_support { true }
       email_address do
-        full_name.downcase.gsub(' ', '.') + ['@digital.education.gov.uk', '@education.gov.uk'].sample
+        full_name.downcase.gsub(' ', '.') + '@digital.education.gov.uk'
       end
     end
 
     factory :support_user do
       is_support { true }
       email_address do
-        full_name.downcase.gsub(' ', '.') + ['@digital.education.gov.uk', '@education.gov.uk'].sample
+        full_name.downcase.gsub(' ', '.') + '@education.gov.uk'
       end
 
       trait :third_line do

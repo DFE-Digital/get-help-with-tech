@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe CreateUserService do
   let(:last_email) { ActionMailer::Base.deliveries.last }
 
+  before { stub_computacenter_outgoing_api_calls }
+
   describe 'invite_responsible_body_user' do
     let(:trust) { create(:trust) }
 
@@ -198,7 +200,7 @@ RSpec.describe CreateUserService do
         context 'when the additional school has no value for who_will_order_devices' do
           let(:school) { create(:school) }
 
-          it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
+          it 'sets it to "school"' do
             expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
             expect(school.orders_managed_by_school?).to be_truthy
           end
@@ -212,7 +214,7 @@ RSpec.describe CreateUserService do
 
         it 'updates the school status to reflect that the school has been contacted' do
           result
-          expect(school.reload.device_ordering_status).to eq('school_contacted')
+          expect(school.reload.preorder_status).to eq('school_contacted')
         end
 
         context 'when the existing user has a blank telephone number' do
@@ -287,7 +289,7 @@ RSpec.describe CreateUserService do
 
         it 'updates the school status to reflect that the school has been contacted' do
           result
-          expect(school.reload.device_ordering_status).to eq('school_contacted')
+          expect(school.reload.preorder_status).to eq('school_contacted')
         end
 
         context 'when the existing user has a blank telephone number' do
@@ -370,13 +372,13 @@ RSpec.describe CreateUserService do
       end
 
       it 'updates the school status to reflect that the school has been contacted' do
-        expect(result.school.device_ordering_status).to eq('school_contacted')
+        expect(result.school.preorder_status).to eq('school_contacted')
       end
 
       context 'when the additional school has no value for who_will_order_devices' do
         let(:school) { create(:school) }
 
-        it 'creates a PreorderInformation, defaulting who_will_order_devices to "school"' do
+        it 'devolves ordering to the school' do
           expect { result }.to change { school.reload&.who_will_order_devices }.from(nil).to('school')
           expect(school.orders_managed_by_school?).to be_truthy
         end

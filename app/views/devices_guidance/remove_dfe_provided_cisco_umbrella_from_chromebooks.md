@@ -1,11 +1,8 @@
 <div class="govuk-inset-text">
-  <p>
-    Content filtering software from Cisco Umbrella was included with Chromebooks and these 
-    settings were due to expire on <span class="app-no-wrap">30 September 2021</span>. To ensure devices remain safe for 
-    children and young people to use, we’ve extended licenses until <span class="app-no-wrap">30 September 2022</span>. To
-    keep users safe online, you should enable alternative security settings as soon as possible.
-  </p>
+  <p>This content is relevant to those who ordered Chromebooks before October 2021.</p>
 </div>
+
+Content filtering software from Cisco Umbrella was included with Chromebooks and these settings were due to expire on 30 September 2021. To ensure devices remain safe for children and young people to use, we’ve extended licences until 30 September 2022. To keep users safe online, you should enable alternative security settings as soon as possible.
 
 ## Steps to remove Cisco Umbrella
 

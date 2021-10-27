@@ -1,0 +1,19 @@
+<div id="tranche_allocation" class="app-card govuk-!-margin-bottom-4">
+  <% if @organisation.is_a?(ResponsibleBody) %>
+    <h2 id="intro" class="govuk-heading-m">
+      <%= intro_sentence %>
+    </h2>
+  <% end %>
+
+  <h2 id="available_summary" class="govuk-heading-l">
+    <%= available_to_order_summary %>
+  </h2>
+
+  <h2 id="ordered_summary">
+    <%= ordered_summary %>
+  </h2>
+
+  <div id="current_tranche">
+    <%= render GovukComponent::WarningTextComponent.new(text: 'These allocations are for the current winter 2021 Get help with tech programme. Devices received before 30 September 2021 are not included here.', classes: 'govuk-!-margin-bottom-0') %>
+  </div>
+</div>

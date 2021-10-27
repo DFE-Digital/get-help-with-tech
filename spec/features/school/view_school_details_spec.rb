@@ -1,152 +1,28 @@
 require 'rails_helper'
 
 RSpec.feature 'View school details' do
-  let(:preorder_information) { create(:preorder_information, :school_will_order, :does_not_need_chromebooks) }
-  let(:school) { create(:school, :with_std_device_allocation, preorder_information: preorder_information) }
+  let(:school) { create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [1, 1, 0]) }
   let(:user) { create(:school_user, full_name: 'AAA Smith', school: school) }
 
   describe 'top of the page' do
+    let(:school_with_valid_allocation) do
+      create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [1, 1, 0])
+    end
+
+    let(:user) { create(:school_user, school: school_with_valid_allocation) }
+
     before { sign_in_as user }
 
     it 'displays the school name' do
-      expect(page).to have_content(school.name)
+      expect(page).to have_content(school_with_valid_allocation.name)
     end
 
     it 'displays your account title' do
       expect(page).to have_content('Your account')
     end
-  end
 
-  describe 'banner' do
-    describe 'title' do
-      before { sign_in_as user }
-
-      it 'shows banner title for ordering is closed' do
-        expect(page).to have_content('Ordering is closed for laptops')
-      end
-    end
-
-    context 'school in virtual cap pool' do
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-      let(:school) { schools.first }
-
-      before do
-        stub_request(:post, 'http://computacenter.example.com/')
-          .to_return(status: 200, body: '', headers: {})
-
-        schools.each do |s|
-          responsible_body.add_school_to_virtual_cap_pools!(s)
-          responsible_body.calculate_virtual_caps!
-        end
-
-        sign_in_as user
-      end
-
-      context 'has NOT ordered anything' do
-        let(:schools) do
-          create_list(:school, 4, :centrally_managed, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: responsible_body)
-        end
-
-        let(:responsible_body) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
-
-        it 'ordering closed title' do
-          expect(page).to have_content('Ordering is closed for laptops, tablets and extra mobile data')
-        end
-      end
-
-      context 'has ordered' do
-        context 'has ordered laptops and tablets' do
-          let(:schools) do
-            create_list(:school, 4, :centrally_managed, :with_std_device_allocation_partially_ordered, responsible_body: responsible_body)
-          end
-
-          it 'shows the number of laptops and tablets ordered' do
-            expect(page).to have_selector('li', text: "#{school.std_device_allocation.devices_ordered} laptops and tablets")
-          end
-        end
-
-        context 'has ordered routers' do
-          let(:schools) do
-            create_list(:school, 4, :centrally_managed, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body)
-          end
-
-          it 'shows the number of routers ordered' do
-            expect(page).to have_selector('li', text: "#{school.coms_device_allocation.devices_ordered} routers")
-          end
-        end
-
-        context 'has requested data uplifts' do
-          let(:schools) do
-            create_list(:school, 4, :centrally_managed, :with_coms_device_allocation, responsible_body: responsible_body)
-          end
-          let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_extra_mobile_data_requests) }
-
-          it 'shows number of accounts that have received data uplift' do
-            expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
-          end
-        end
-
-        context 'multiple assistence' do
-          let(:schools) do
-            create_list(:school, 4, :centrally_managed, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, responsible_body: responsible_body)
-          end
-          let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_extra_mobile_data_requests) }
-
-          it 'show a list of the summaries' do
-            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, schools and colleges in your trust received:')
-            expect(page).to have_selector('li', text: "#{school.std_device_allocation.devices_ordered} laptops and tablets")
-            expect(page).to have_selector('li', text: "#{school.coms_device_allocation.devices_ordered} routers")
-            expect(page).to have_selector('li', text: 'extra mobile data for 3 accounts')
-          end
-        end
-      end
-    end
-
-    context 'school NOT in virtual cap pool' do
-      before { sign_in_as user }
-
-      context 'has NOT ordered anything' do
-        it 'ordering closed title' do
-          expect(page).to have_content('Ordering is closed for laptops, tablets and extra mobile data')
-        end
-      end
-
-      context 'has ordered' do
-        context 'has ordered laptops and tablets' do
-          let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
-
-          it 'shows the number of laptops and tablets ordered' do
-            expect(page).to have_selector('p', text: "From September 2020 to July 2021, your school received #{school.std_device_allocation.devices_ordered} laptops and tablets.")
-          end
-        end
-
-        context 'has ordered routers' do
-          let(:school) { create(:school, :with_coms_device_allocation_partially_ordered) }
-
-          it 'shows the number of routers ordered' do
-            expect(page).to have_selector('p', text: "From September 2020 to July 2021, your school received #{school.coms_device_allocation.devices_ordered} routers.")
-          end
-        end
-
-        context 'has requested data uplifts' do
-          let(:school) { create(:school, :with_extra_mobile_data_requests) }
-
-          it 'shows number of accounts that have received data uplift' do
-            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, your school received extra mobile data for 2 accounts')
-          end
-        end
-
-        context 'multiple assistence' do
-          let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered, :with_extra_mobile_data_requests) }
-
-          it 'show a list of the summaries' do
-            expect(page).to have_selector('p', text: 'From September 2020 to July 2021, your school received:')
-            expect(page).to have_selector('li', text: "#{school.std_device_allocation.devices_ordered} laptops and tablets")
-            expect(page).to have_selector('li', text: "#{school.coms_device_allocation.devices_ordered} routers")
-            expect(page).to have_selector('li', text: 'extra mobile data for 2 accounts')
-          end
-        end
-      end
+    it 'displays the tranche allocation' do
+      expect(page).to have_css('#tranche_allocation')
     end
   end
 
@@ -160,14 +36,14 @@ RSpec.feature 'View school details' do
     end
 
     context 'has ordered' do
-      let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+      let(:school) { create(:school, laptops: [2, 2, 1]) }
 
       it 'shows title' do
-        expect(page).to have_content('Reset devices')
+        expect(page).to have_content('Reset')
       end
 
       it 'shows the link to view device details' do
-        expect(page).to have_link('View your device details')
+        expect(page).to have_link('view your device details and BIOS/admin passwords')
       end
 
       it 'shows the link to Huawei router password' do
@@ -186,7 +62,7 @@ RSpec.feature 'View school details' do
     end
 
     context 'has ordered' do
-      let(:school) { create(:school, :with_std_device_allocation_partially_ordered) }
+      let(:school) { create(:school, laptops: [2, 2, 1]) }
 
       it 'does NOT show this section' do
         expect(page).not_to have_content('Order history')
@@ -215,14 +91,10 @@ RSpec.feature 'View school details' do
       end
 
       context 'has ordered routers' do
-        let(:school) { create(:school, :with_std_device_allocation_partially_ordered, :with_coms_device_allocation_partially_ordered) }
+        let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1]) }
 
         it 'shows the title' do
           expect(page).to have_content('Order history')
-        end
-
-        it 'shows the link to the extra mobile data requests page' do
-          expect(page).to have_link('View your requests for extra mobile data')
         end
       end
     end

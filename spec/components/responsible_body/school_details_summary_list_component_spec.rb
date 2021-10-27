@@ -15,15 +15,13 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
   context 'when the school will place device orders' do
     before do
-      create(:preorder_information,
-             school: school,
-             who_will_order_devices: :school,
-             school_or_rb_domain: 'school.domain.org',
-             recovery_email_address: 'admin@recovery.org',
-             will_need_chromebooks: 'yes',
-             school_contact: headteacher)
-
-      create(:school_device_allocation, school: school, device_type: 'std_device', cap: 1, allocation: 100)
+      school.update!(who_will_order_devices: :school,
+                     school_or_rb_domain: 'school.domain.org',
+                     recovery_email_address: 'admin@recovery.org',
+                     will_need_chromebooks: 'yes',
+                     school_contact: headteacher,
+                     raw_laptop_allocation: 100,
+                     raw_laptop_cap: 1)
     end
 
     it 'confirms that fact' do
@@ -43,7 +41,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -80,10 +78,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
     context 'and the headteacher has been set as the school contact' do
       it 'displays the headteacher details' do
-        create(:preorder_information,
-               school: school,
-               who_will_order_devices: :school,
-               school_contact: headteacher)
+        school.update!(who_will_order_devices: :school, school_contact: headteacher)
 
         expect(value_for_row(result, 'School contact').text).to include('Headteacher: Davy Jones')
         expect(value_for_row(result, 'School contact').text).to include('davy.jones@school.sch.uk')
@@ -97,10 +92,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                              full_name: 'Jane Smith',
                              email_address: 'abc@example.com',
                              phone_number: '12345')
-        create(:preorder_information,
-               school: school,
-               who_will_order_devices: :school,
-               school_contact: new_contact)
+        school.update!(who_will_order_devices: :school, school_contact: new_contact)
 
         expect(value_for_row(result, 'School contact').text).to include('Jane Smith')
         expect(value_for_row(result, 'School contact').text).to include('abc@example.com')
@@ -124,7 +116,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         will_need_chromebooks: 'yes',
       )
 
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('Yes')
+      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
       expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
@@ -135,7 +127,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'does not show the school contact even if the school contact is set' do
-      school.set_current_contact!(headteacher)
+      school.set_school_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
     end
 
@@ -176,15 +168,11 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     context 'when devices_ordered > 0' do
-      before do
-        alloc = school.build_std_device_allocation(devices_ordered: 3, cap: 100, allocation: 100)
-        alloc.save!
-      end
-
       context 'when the school is not in a virtual_cap_pool' do
+        let(:school) { create(:school, :primary, :la_maintained, laptops: [100, 100, 3]) }
+
         before do
-          allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
-          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
+          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
         end
 
         it 'shows devices ordered row with count' do
@@ -193,9 +181,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       context 'when the responsible body is not in the virtual cap' do
+        let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, laptops: [100, 100, 3]) }
+
         before do
-          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
-          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
+          allow(school.responsible_body).to receive(:vcap_active?).and_return(false)
         end
 
         it 'shows devices ordered row with count' do
@@ -204,9 +193,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       context 'when the school is in a virtual_cap_pool' do
+        let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, laptops: [100, 100, 3]) }
+
         before do
-          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
-          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(true)
+          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
         end
 
         it 'does not show devices ordered row' do
@@ -224,15 +214,11 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     context 'when routers_ordered > 0' do
-      before do
-        alloc = school.build_coms_device_allocation(devices_ordered: 3, cap: 100, allocation: 100)
-        alloc.save!
-      end
-
       context 'when the school is not in a virtual_cap_pool' do
+        let(:school) { create(:school, :primary, :la_maintained, routers: [100, 100, 3]) }
+
         before do
-          allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
-          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
+          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
         end
 
         it 'shows routers ordered row with count' do
@@ -241,10 +227,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       context 'when the responsible body is not in the virtual cap' do
-        before do
-          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
-          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(false)
-        end
+        let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, routers: [100, 100, 3]) }
 
         it 'shows routers ordered row with count' do
           expect(value_for_row(result, 'Routers ordered').text).to include('3 routers')
@@ -252,9 +235,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       context 'when the school is in a virtual_cap_pool' do
+        let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, routers: [100, 100, 3]) }
+
         before do
-          allow(school).to receive(:in_virtual_cap_pool?).and_return(true)
-          allow(school.responsible_body).to receive(:has_virtual_cap_feature_flags?).and_return(true)
+          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
         end
 
         it 'does not show routers ordered row' do
@@ -264,8 +248,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
   end
 
-  describe 'coms_device_allocation' do
-    context 'when not present' do
+  describe 'router_allocation' do
+    context 'when zero' do
       let(:school) { build(:school) }
 
       it 'does not show Router allocation' do
@@ -273,18 +257,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
     end
 
-    context 'when zero' do
-      let(:school) { build(:school, coms_device_allocation: coms_allocation) }
-      let(:coms_allocation) { build(:school_device_allocation, :with_coms_allocation, allocation: 0) }
-
-      it 'does not show Router allocation' do
-        expect(result.text).not_to include('Router allocation')
-      end
-    end
-
     context 'when non-zero value present' do
-      let(:school) { build(:school, coms_device_allocation: coms_allocation) }
-      let(:coms_allocation) { build(:school_device_allocation, :with_coms_allocation) }
+      let(:school) { build(:school, routers: [1, 0, 0]) }
 
       it 'shows Router allocation' do
         expect(result.text).to include('Router allocation')

@@ -48,7 +48,7 @@ Changes to the `allocation` and `cap` values of a `SchoolDeviceAllocation` need 
 
 ### Cap updates to Computacenter
 
-Before virtual cap pools, cap update requests were only sent to Computacenter when a school's order state was changed via the `SchoolOrderStateAndCapUpdateService`. 
+Before virtual cap pools, cap update requests were only sent to Computacenter when a school's order state was changed via the `UpdateSchoolDevicesService`. 
 
 With virtual cap pools and the shared caps, we must also generate cap update requests whenever the cap amount of the pool changes. The change must be sent to Computacenter for all schools in that pool.
 
@@ -71,7 +71,7 @@ With virtual cap pools and the shared caps, we must also generate cap update req
 
 #### Automatically adding schools
 
-Schools are normally automatically added to a virtual pool when they are enabled for ordering and the above prerequisites are in place.  This takes place via the `SchoolOrderStateAndCapUpdateService#update!` method used to change the school's order state.
+Schools are normally automatically added to a virtual pool when they are enabled for ordering and the above prerequisites are in place.  This takes place via the `UpdateSchoolDevicesService#update!` method used to change the school's order state.
 
 #### Manually add a school
 
@@ -81,7 +81,7 @@ Sometimes it may be necessary to add schools to a pool outside of this process.
 2. Add the school to the responsible body's virtual pools
 
 ```ruby
-rb.add_school_to_virtual_cap_pools!(school)
+AddSchoolToVirtualCapPoolService.new(school).call
 ```
 
 This will add the school's device allocations to the appropriate virtual pools
@@ -89,7 +89,7 @@ This will add the school's device allocations to the appropriate virtual pools
 3. Check that the school's preorder status looks correct,  it may be necessary to force the preorder status to refresh:
 
 ```ruby
-school.refresh_device_ordering_status!
+school.refresh_preorder_status!
 ```
 
 4. Check that the virtual pool information looks correct, if necessary force a recalculation:

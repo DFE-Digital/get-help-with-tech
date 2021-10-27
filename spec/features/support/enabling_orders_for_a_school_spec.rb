@@ -66,20 +66,24 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   end
 
   def given_a_school_with_device_and_router_allocations_that_cannot_order
-    create(:school, order_state: :cannot_order, computacenter_reference: 'cc_ref')
-      .tap do |school|
-        create(:school_device_allocation, :with_std_allocation, allocation: 50, school: school)
-        create(:school_device_allocation, :with_coms_allocation, allocation: 40, school: school)
-        create(:preorder_information, :does_not_need_chromebooks, :school_will_order, status: 'ready', school: school)
-      end
+    create(:school,
+           :does_not_need_chromebooks,
+           :manages_orders,
+           order_state: :cannot_order,
+           computacenter_reference: 'cc_ref',
+           laptops: [50, 0, 0],
+           routers: [40, 0, 0],
+           preorder_status: 'ready')
   end
 
   def a_school_with_a_device_allocation_that_can_order
-    create(:school, order_state: :can_order, computacenter_reference: 'cc_ref')
-      .tap do |school|
-        create(:school_device_allocation, :with_std_allocation, allocation: 50, cap: 50, devices_ordered: 25, school: school)
-        create(:preorder_information, :does_not_need_chromebooks, :school_will_order, status: 'ready', school: school)
-      end
+    create(:school,
+           :manages_orders,
+           :does_not_need_chromebooks,
+           order_state: :can_order,
+           computacenter_reference: 'cc_ref',
+           laptops: [50, 50, 25],
+           preorder_status: 'ready')
   end
 
   def and_the_school_has_order_users_with_confirmed_techsource_accounts

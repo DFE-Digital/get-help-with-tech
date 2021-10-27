@@ -8,34 +8,91 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds assets-table-override">
     <h1 class="govuk-heading-xl">
       <%= title %>
     </h1>
 
-    <div>
-      <div>
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Device <%= @asset.serial_number %></h2>
-        <%= render SummaryListComponent.new(rows: {
-          'Asset tag' => @asset.tag,
-          'Serial/IMEI' => @asset.serial_number,
-          'BIOS password' => asset_bios_password_or_unlocker(@asset),
-          'Admin password' => @asset.admin_password,
-          'Hardware hash' => @asset.hardware_hash
-        } ) %>
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              What’s a hardware hash?
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            Some manufacturers use a ‘hardware hash’ (also called a ‘hardware ID’) to identify devices. The hardware
-            hash identification format is unique to each device and is made up of details about its hardware components
-            and operating system.
-          </div>
-        </details>
+    <table class="govuk-table asset-details">
+      <caption class="govuk-table__caption govuk-table__caption--m">Device <%= @asset.serial_number -%></caption>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-third">Asset tag</th>
+          <td class="govuk-table__cell"><%= @asset.tag.presence || '-' -%></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-third">Serial/IMEI</th>
+          <td class="govuk-table__cell"><%= @asset.serial_number.presence || '-' -%></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Serial/IMEI (International Mobile Equipment Identity) explained
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        A unique ID number assigned to your device by the product manufacturer. You&rsquo;ll need this to use the BIOS/admin tool, or when you submit a support ticket.
       </div>
-    </div>
+    </details>
+
+    <hr class="govuk-!-margin-top-7 govuk-!-margin-bottom-5">
+
+    <table class="govuk-table govuk-!-margin-top-6 asset-secrets">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-third">BIOS password</th>
+          <td class="govuk-table__cell"><%= asset_bios_password_or_unlocker(@asset).presence || '-' -%></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-third">Admin password</th>
+          <td class="govuk-table__cell"><%= @asset.admin_password.presence || '-' -%></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Password terms explained
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <h3 class="govuk-heading-s">BIOS (Basic Input/Output System) password</h3>
+        <p>BIOS is the core processor software that boots up your device. You&rsquo;ll need the password if you want to reset your device.</p>
+
+        <h3 class="govuk-heading-s">Admin password</h3>
+        <p>Use this to sign in to your admin user account.</p>
+      </div>
+    </details>
+
+    <hr class="govuk-!-margin-top-7 govuk-!-margin-bottom-5">
+
+    <table class="govuk-table govuk-!-margin-top-6 asset-hardware">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-third">Hardware hash</th>
+          <td class="govuk-table__cell assets-hardware-hash">
+            <%= @asset.hardware_hash.presence || '-' %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Hardware hash explained
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        Another unique device identifier that some manufacturers use. It&rsquo;s made up of details about hardware
+        components and the operating system. For GHwT it&rsquo;s used when responsible bodies need remote enrolment in mobile
+        device management software.
+      </div>
+    </details>
   </div>
 </div>

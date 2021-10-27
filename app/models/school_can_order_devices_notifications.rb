@@ -1,8 +1,9 @@
 class SchoolCanOrderDevicesNotifications
-  attr_reader :school
+  attr_reader :school, :notify_computacenter
 
-  def initialize(school: nil)
+  def initialize(school: nil, notify_computacenter: true)
     @school = school
+    @notify_computacenter = notify_computacenter
   end
 
   def call
@@ -13,7 +14,7 @@ class SchoolCanOrderDevicesNotifications
       notify_support_if_no_one_to_contact
     end
 
-    notify_computacenter
+    notify_computacenter_by_email if notify_computacenter
   end
 
 private
@@ -53,7 +54,7 @@ private
       :user_can_order_but_action_needed
     elsif status?('rb_can_order', 'school_can_order', school: school) && user.orders_devices? && !user.seen_privacy_notice?
       :nudge_user_to_read_privacy_policy
-    elsif status?('rb_can_order', school: school) && school.responsible_body.has_virtual_cap_feature_flags? && user.in?(school.order_users_with_active_techsource_accounts)
+    elsif status?('rb_can_order', school: school) && school.responsible_body.vcap_active? && user.in?(school.order_users_with_active_techsource_accounts)
       if school.can_order_routers_only_right_now?
         :user_can_order_routers_in_virtual_cap
       else
@@ -74,7 +75,7 @@ private
     end
   end
 
-  def notify_computacenter
+  def notify_computacenter_by_email
     ComputacenterMailer
       .with(school: school, new_cap_value: new_cap_value)
       .notify_of_school_can_order
@@ -98,10 +99,10 @@ private
   end
 
   def new_cap_value
-    school&.std_device_allocation&.cap || 0
+    school&.raw_cap(:laptop)
   end
 
   def status?(*statuses, school:)
-    school.device_ordering_status&.in?(statuses)
+    school.preorder_status.in?(statuses)
   end
 end

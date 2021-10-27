@@ -8,10 +8,6 @@ class ResponsibleBody < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :schools
 
-  has_many :virtual_cap_pools, dependent: :destroy
-  has_one :std_device_pool, -> { std_device }, class_name: 'VirtualCapPool'
-  has_one :coms_device_pool, -> { coms_device }, class_name: 'VirtualCapPool'
-
   has_many :donated_device_requests, dependent: :destroy
 
   scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
@@ -44,11 +40,11 @@ class ResponsibleBody < ApplicationRecord
       <<~SQL,
         id IN
           (SELECT rb_id FROM
-            (SELECT DISTINCT s.responsible_body_id AS rb_id, p.school_or_rb_domain
-              FROM schools s JOIN preorder_information p ON (p.school_id = s.id)
+            (SELECT DISTINCT s.responsible_body_id AS rb_id, s.school_or_rb_domain
+              FROM schools s
               WHERE s.status = 'open'
-              AND p.who_will_order_devices='responsible_body'
-              AND NOT (p.school_or_rb_domain = '' OR p.school_or_rb_domain IS NULL)
+              AND s.who_will_order_devices='responsible_body'
+              AND NOT (s.school_or_rb_domain = '' OR s.school_or_rb_domain IS NULL)
               AND s.type <> 'LaFundedPlace'
             ) AS t1
             GROUP BY t1.rb_id HAVING COUNT(*) > 1
@@ -60,13 +56,11 @@ class ResponsibleBody < ApplicationRecord
   def self.with_at_least_one_preorder_information_completed
     where(
       "EXISTS(
-        SELECT  preorder_information.id
-        FROM    preorder_information
-                          INNER JOIN schools
-                                  ON schools.id = preorder_information.school_id
+        SELECT  schools.id
+        FROM    schools
         WHERE   schools.responsible_body_id = responsible_bodies.id
           AND   schools.type <> 'LaFundedPlace'
-          AND   preorder_information.status NOT IN (?)
+          AND   schools.preorder_status NOT IN (?)
       )", %w[needs_info needs_contact]
     )
   end
@@ -75,11 +69,10 @@ class ResponsibleBody < ApplicationRecord
     select(
       "
         (SELECT COUNT(*)
-          FROM  schools INNER JOIN preorder_information
-                                ON preorder_information.school_id = schools.id
+          FROM  schools
           WHERE schools.responsible_body_id = responsible_bodies.id
             AND schools.type <> 'LaFundedPlace'
-            AND preorder_information.status NOT IN ('needs_info', 'needs_contact')
+            AND schools.preorder_status NOT IN ('needs_info', 'needs_contact')
         ) AS completed_preorder_info_count
       ",
     )
@@ -116,27 +109,30 @@ class ResponsibleBody < ApplicationRecord
     schools.gias_status_open.excluding_la_funded_provisions
   end
 
+  def allocation(device_type)
+    laptop?(device_type) ? laptop_allocation : router_allocation
+  end
+
   def address
     [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
   end
 
-  def add_school_to_virtual_cap_pools!(school)
-    if has_virtual_cap_feature_flags?
-      school.device_allocations.each do |allocation|
-        pool = virtual_cap_pools.send(allocation.device_type).first_or_create!
-        pool.add_school!(school)
-      end
-    else
-      raise VirtualCapPoolError, 'Virtual cap feature flags not set'
-    end
+  def cap(device_type)
+    laptop?(device_type) ? laptop_cap : router_cap
   end
 
-  def calculate_virtual_caps!
-    virtual_cap_pools.each(&:recalculate_caps!)
+  def devices_available_to_order?(device_type = nil)
+    return devices_available_to_order(device_type).positive? if device_type
+
+    devices_available_to_order?(:laptop) || devices_available_to_order?(:router)
   end
 
-  def devices_available_to_order?
-    virtual_cap_pools.any?(&:devices_available_to_order?)
+  def devices_available_to_order(device_type)
+    [0, cap(device_type) - devices_ordered(device_type)].max
+  end
+
+  def devices_ordered(device_type)
+    laptop?(device_type) ? laptops_ordered : routers_ordered
   end
 
   def further_education_college?
@@ -148,11 +144,11 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_centrally_managed_schools?
-    active_schools.that_are_centrally_managed.any?
+    active_schools.responsible_body_will_order_devices.any?
   end
 
   def has_centrally_managed_schools_that_can_order_now?
-    active_schools.that_are_centrally_managed.that_can_order_now.any?
+    active_schools.responsible_body_will_order_devices.that_can_order_now.any?
   end
 
   def has_connectivity_feature_flags?
@@ -160,23 +156,19 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def has_multiple_chromebook_domains_in_managed_schools?
-    active_schools.joins(:preorder_information).merge(PreorderInformation.responsible_body_will_order_devices).filter_map(&:chromebook_domain).uniq.count > 1
+    active_schools.responsible_body_will_order_devices.filter_map(&:chromebook_domain).uniq.size > 1
   end
 
   def has_school_in_virtual_cap_pools?(school)
-    virtual_cap_pools.any? { |pool| pool.has_school?(school) }
+    vcap_schools.include?(school)
   end
 
   def has_schools_that_can_order_devices_now?
-    active_schools.that_will_order_devices.that_can_order_now.any?
-  end
-
-  def has_virtual_cap_feature_flags?
-    vcap_feature_flag?
+    active_schools.school_will_order_devices.that_can_order_now.any?
   end
 
   def has_virtual_cap_feature_flags_and_centrally_managed_schools?
-    has_virtual_cap_feature_flags? && has_centrally_managed_schools?
+    vcap_feature_flag? && has_centrally_managed_schools?
   end
 
   def humanized_type
@@ -188,19 +180,11 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def is_ordering_for_all_schools?
-    active_schools.count == active_schools.that_are_centrally_managed.count
+    active_schools.size == active_schools.responsible_body_will_order_devices.size
   end
 
-  def laptops_available_to_order
-    std_device_pool&.devices_available_to_order.to_i
-  end
-
-  def laptops_ordered
-    std_device_pool&.devices_ordered.to_i
-  end
-
-  def laptop_pool?
-    std_device_pool.present?
+  def laptop?(device_type)
+    device_type.to_sym == :laptop
   end
 
   def local_authority?
@@ -222,49 +206,35 @@ class ResponsibleBody < ApplicationRecord
     %w[school schools].include?(who_will_order_devices)
   end
 
-  def remove_school_from_virtual_cap_pools!(school)
-    raise(VirtualCapPoolError, 'Virtual cap feature flags not set') unless has_virtual_cap_feature_flags?
-
-    school.device_allocations.each do |allocation|
-      pool = virtual_cap_pools.send(allocation.device_type).first
-      pool&.remove_school!(school)
-    end
+  def calculate_virtual_caps!(device_types = %i[laptop router])
+    recalculate_laptop_vcap if Array(device_types).include?(:laptop)
+    recalculate_router_vcap if Array(device_types).include?(:router)
   end
 
-  def router_pool?
-    coms_device_pool.present?
+  def recalculate_vcap(device_type)
+    laptop?(device_type) ? recalculate_laptop_vcap : recalculate_router_vcap
   end
 
-  def routers_available_to_order
-    coms_device_pool&.devices_available_to_order.to_i
+  def recalculate_laptop_vcap
+    Rails.logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
+    values = vcap_schools.select('SUM(raw_laptop_allocation) as allocation_sum, SUM(raw_laptop_cap) as cap_sum, SUM(raw_laptops_ordered) as ordered_sum')[0]
+    update!(laptop_allocation: values.allocation_sum.to_i,
+            laptop_cap: values.cap_sum.to_i,
+            laptops_ordered: values.ordered_sum.to_i)
+    update_cap_on_computacenter(:laptop) if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
   end
 
-  def routers_ordered
-    coms_device_pool&.devices_ordered.to_i
-  end
-
-  def school_addable_to_virtual_cap_pools?(school)
-    has_virtual_cap_feature_flags? &&
-      school.responsible_body_id == id &&
-      !school.la_funded_provision? &&
-      school.orders_managed_centrally? &&
-      school.device_allocations.any? &&
-      !has_school_in_virtual_cap_pools?(school)
-  end
-
-  def school_removable_from_virtual_cap_pools?(school)
-    has_virtual_cap_feature_flags? &&
-      school.responsible_body_id == id &&
-      school.orders_managed_centrally? &&
-      school.device_allocations.any? &&
-      has_school_in_virtual_cap_pools?(school)
+  def recalculate_router_vcap
+    Rails.logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
+    values = vcap_schools.select('SUM(raw_router_allocation) as allocation_sum, SUM(raw_router_cap) as cap_sum, SUM(raw_routers_ordered) as ordered_sum')[0]
+    update!(router_allocation: values.allocation_sum.to_i,
+            router_cap: values.cap_sum.to_i,
+            routers_ordered: values.ordered_sum.to_i)
+    update_cap_on_computacenter(:router) if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
   end
 
   def schools_by_order_status
-    schools_by_name = active_schools
-                        .includes(:preorder_information)
-                        .includes(:std_device_allocation)
-                        .order(name: :asc)
+    schools_by_name = active_schools.order(name: :asc)
 
     {
       ordering_schools: schools_by_name.can_order,
@@ -281,13 +251,17 @@ class ResponsibleBody < ApplicationRecord
     type == 'Trust'
   end
 
-  def update_who_will_order_devices(who_will_order)
-    update!(who_will_order_devices: who_will_order)
-    active_schools.each do |school|
-      if school.can_change_who_manages_orders?
-        school.change_who_manages_orders!(who_will_order, clear_preorder_information: true)
-      end
-    end
+  def vcap_active?
+    vcap_feature_flag? && orders_managed_centrally?
+  end
+
+  def vcap_schools
+    return School.none unless vcap_active?
+
+    schools
+      .excluding_la_funded_provisions
+      .responsible_body_will_order_devices
+      .or(schools.who_will_order_devices_not_set)
   end
 
   def who_manages_orders_label
@@ -309,5 +283,12 @@ private
 
   def set_computacenter_change
     self.computacenter_change = 'new'
+  end
+
+  def update_cap_on_computacenter(device_type)
+    CapUpdateNotificationsService.new(*vcap_schools,
+                                      device_types: [device_type],
+                                      notify_computacenter: false,
+                                      notify_school: false).call
   end
 end

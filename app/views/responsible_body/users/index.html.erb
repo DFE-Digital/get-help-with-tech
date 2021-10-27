@@ -1,8 +1,4 @@
-<% if @responsible_body.trust? %>
-  <%- title = t('page_titles.responsible_body_trust_users_index') -%>
-<% else %>
-  <%- title = t('page_titles.responsible_body_users_index', rb_type: @responsible_body.humanized_type) -%>
-<% end %>
+<%- title = t('page_titles.responsible_body_users_index') -%>
 
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
@@ -18,11 +14,20 @@
       <%= title %>
     </h1>
 
-    <p class="govuk-body">Everyone with access can:</p>
+    <p class="govuk-body">Everyone has the same level of access, they can:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-      <li>see who else has an account</li>
-      <li>add or edit existing accounts</li>
+      <li>add or edit existing users</li>
+      <li>view the list of existing users</li>
+      <li>order devices for centrally managed schools and colleges</li>
+      <li>
+        use the Get help with Technology service to
+        <%= govuk_link_to 'report faults', support_ticket_path %>
+        and
+        <%= govuk_link_to 'view passwords needed to replace DfE settings', assets_path -%>.
+      </li>
     </ul>
+
+    <%= render GovukComponent::InsetTextComponent.new(text: "Do not add school or college contacts here. #{govuk_link_to 'Use the schools and colleges list instead', responsible_body_devices_path}.".html_safe) %>
 
     <%= govuk_button_link_to 'Invite a new user', new_responsible_body_user_path %>
 

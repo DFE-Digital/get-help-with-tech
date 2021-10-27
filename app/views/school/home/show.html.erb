@@ -15,12 +15,53 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <%= render partial: 'closed_banner' %>
-    <%= render partial: 'summary_access_to_support_portal' %>
+    <%= render TrancheAllocationComponentFactory.create_component(@school) %>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>order laptops and 4G routers</li>
+      <li>access the TechSource website to order devices.</li>
+    </ul>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.signed_in_internet_access') , internet_school_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>manage 4G routers</li>
+      <li>see your Huawei router password.</li>
+    </ul>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>review your allocation</li>
+      <li>review your Chromebook settings.</li>
+    </ul>
+
+    <h2 class="govuk-heading-l govuk-!-font-size-27">
+      <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
+    </h2>
+
+    <p class="govuk-body">Use this section to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>give other people access to this service</li>
+      <li>set which accounts can use TechSource to order.</li>
+    </ul>
 
     <% if @has_ordered %>
       <%= render partial: 'shared/summary_reset_devices' %>
-      <%= render partial: 'summary_order_history' if @current_user.orders_devices? || @has_ordered_coms_devices %>
+      <%= render partial: 'summary_order_history' if @current_user.orders_devices? || @has_ordered_routers %>
     <% end %>
   </div>
 </div>

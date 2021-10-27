@@ -102,7 +102,7 @@ private
       support_home_path
     else
       # this should not happen - so let's tell Sentry
-      Sentry.configure_scope do |scope|
+      Sentry.with_scope do |scope|
         scope.set_context('ApplicationController#root_url_for', { user_id: user.id })
 
         Sentry.capture_message("Couldn't figure out root_url_for user")
@@ -125,8 +125,14 @@ private
   end
 
   def school_root_url_for(user)
-    if user.schools.one?
-      home_school_path(user.schools.first)
+    if user.schools.size == 1
+      if user.school.school_will_order_devices? &&
+          user.school.chromebook_info_still_needed? &&
+          !user.school.la_funded_provision?
+        before_you_can_order_school_path(user.school)
+      else
+        home_school_path(user.schools.first)
+      end
     else
       schools_path
     end

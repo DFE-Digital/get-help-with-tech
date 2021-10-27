@@ -116,7 +116,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
   describe 'confirm_invitation' do
     before do
-      create(:preorder_information, school: school, school_contact: nil)
+      school.update!(school_contact: nil)
       sign_in_as create(:dfe_user)
     end
 
@@ -141,7 +141,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
     end
 
     it 'responds successfully with each view' do
-      %w[school std_device coms_device std_device_pool coms_device_pool caps ordered].each do |view|
+      %w[school std_device coms_device caps ordered].each do |view|
         get :history, params: { school_urn: school.urn, view: view }
         expect(response).to be_successful
       end
@@ -192,6 +192,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
       it 'does not update school name' do
         patch :update, params: { urn: school.urn, school: { name: 'new name' } }
+
         expect(school.reload.name).not_to eql('new name')
         expect(response).not_to be_successful
       end

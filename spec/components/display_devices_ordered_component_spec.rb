@@ -1,27 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe DisplayDevicesOrderedComponent, type: :component do
-  let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest, timestamp: Time.zone.now, payload_id: '123456789', body: '<xml>test-request</xml>') }
-  let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
-
   let(:trust) { create(:trust, :manages_centrally, :vcap_feature_flag) }
-  let(:school) { create(:school, :manages_orders, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
-  let(:another_school) { create(:school, :manages_orders, :with_std_device_allocation, :with_coms_device_allocation, responsible_body: trust) }
+  let(:school) { create(:school, :manages_orders, responsible_body: trust, laptops: [1, 0, 0], routers: [1, 0, 0]) }
+  let(:another_school) { create(:school, :manages_orders, responsible_body: trust, laptops: [1, 0, 0], routers: [1, 0, 0]) }
 
   subject(:component) { described_class.new(school: school) }
 
   before do
-    allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
-    allow(mock_request).to receive(:post!).and_return(response)
-    school.std_device_allocation.update!(devices_ordered: 24)
-    school.coms_device_allocation.update!(devices_ordered: 33)
-    another_school.orders_managed_centrally!
+    stub_computacenter_outgoing_api_calls
+    UpdateSchoolDevicesService.new(school: school, laptops_ordered: 24, routers_ordered: 33).call
+    SchoolSetWhoManagesOrdersService.new(another_school, :responsible_body).call
   end
 
   context 'when in a virtual pool' do
     before do
-      school.orders_managed_centrally!
-      school.reload
+      SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
     end
 
     it 'renders the devices ordered' do

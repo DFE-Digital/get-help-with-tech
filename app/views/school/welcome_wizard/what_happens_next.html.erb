@@ -12,13 +12,12 @@
       <p class="govuk-body">You can continue to use this service to:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
         <li>check how many devices you can order</li>
-        <li>request extra data for mobile devices</li>
         <li>request 4G wireless routers</li>
         <li>add more users</li>
         <li>change your Chromebook settings</li>
       </ul>
 
-      <%= f.govuk_submit (impersonated_or_current_user.has_multiple_schools? ? "Finish and go to #{@school.institution_type} overview" : "Finish and go to homepage" ) %>
+      <%= f.govuk_submit(impersonated_or_current_user.has_multiple_schools? ? "Finish and go to #{@school.institution_type} overview" : "Finish and go to homepage") %>
     <%- end %>
   </div>
 </div>
