@@ -14,9 +14,6 @@
       students who do not have access to the internet at home.
     </p>
     <ul class="govuk-list govuk-list--spaced">
-      <li>
-        <%= govuk_link_to 'Manage your 4G routers', devices_guidance_subpage_path(subpage_slug: 'managing-your-4g-wireless-routers') %>
-      </li>
       <% if (current_user.responsible_body_user? && @responsible_body.devices_available_to_order?(:router)) || (current_user.is_school_user? && current_user.school.devices_available_to_order?(:router)) %>
       <li>
         <%= govuk_link_to 'How to reset your router', '/devices/managing-your-4g-wireless-routers' %>
