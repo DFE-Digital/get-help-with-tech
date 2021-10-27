@@ -4,60 +4,46 @@ RSpec.describe TrancheAllocationComponent, type: :component do
   let(:school) { build(:school) }
   let(:rb) { build(:responsible_body) }
 
-  describe 'intro_sentence' do
-    context 'RB' do
-      let(:rb_with_name) { build(:responsible_body, name: 'Trent Trust') }
+  describe '#total_allocation_sentence' do
+    let(:rb_with_name) { build(:responsible_body, name: 'Trent Trust') }
 
+    context 'zero devices' do
       subject { described_class.new(organisation: rb_with_name, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0, routers_allocation: 0) }
 
-      it { is_expected.to have_attributes(intro_sentence: 'Trent Trust has:') }
+      it { is_expected.to have_attributes(total_allocation_sentence: 'Trent Trust has a total allocation of 0 devices for academic year 2021/22.') }
     end
 
-    context 'school' do
-      let(:component) { described_class.new(organisation: school, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0, routers_allocation: 0) }
+    context 'one device' do
+      subject { described_class.new(organisation: rb_with_name, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 1, routers_allocation: 0) }
 
-      specify { expect { component.intro_sentence }.to raise_error('Invalid for school') }
-    end
-  end
-
-  describe '#available_to_order_summary' do
-    context 'both zero' do
-      subject { described_class.new(organisation: nil, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0, routers_allocation: 0) }
-
-      it { is_expected.to have_attributes(available_to_order_summary: '0 devices and 0 routers available to order') }
+      it { is_expected.to have_attributes(total_allocation_sentence: 'Trent Trust has a total allocation of 1 device for academic year 2021/22.') }
     end
 
-    context 'both one' do
-      subject { described_class.new(organisation: nil, devices_remaining: 1, routers_remaining: 1, devices_ordered: 0, routers_ordered: 0, devices_allocation: 1, routers_allocation: 1) }
+    context 'more than one' do
+      subject { described_class.new(organisation: rb_with_name, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 2, routers_allocation: 0) }
 
-      it { is_expected.to have_attributes(available_to_order_summary: '1 device and 1 router available to order') }
-    end
-
-    context 'both two' do
-      subject { described_class.new(organisation: nil, devices_remaining: 2, routers_remaining: 2, devices_ordered: 0, routers_ordered: 0, devices_allocation: 2, routers_allocation: 2) }
-
-      it { is_expected.to have_attributes(available_to_order_summary: '2 devices and 2 routers available to order') }
+      it { is_expected.to have_attributes(total_allocation_sentence: 'Trent Trust has a total allocation of 2 devices for academic year 2021/22.') }
     end
   end
 
-  describe '#ordered_summary' do
+  describe '#ordered_sentence' do
     context 'both zero' do
       subject(:component) { described_class.new(organisation: nil, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0, routers_allocation: 0) }
 
-      it { is_expected.to have_attributes(ordered_summary: 'You&rsquo;ve ordered 0 of 0 devices and 0 of 0 routers') }
-      specify { expect(component.ordered_summary).to be_html_safe }
+      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve received 0 devices and 0 routers in academic year 2021/22.') }
+      specify { expect(component.ordered_sentence).to be_html_safe }
     end
 
     context 'both one' do
-      subject { described_class.new(organisation: nil, devices_remaining: 1, routers_remaining: 1, devices_ordered: 0, routers_ordered: 0, devices_allocation: 1, routers_allocation: 1) }
+      subject { described_class.new(organisation: nil, devices_remaining: 0, routers_remaining: 0, devices_ordered: 1, routers_ordered: 1, devices_allocation: 1, routers_allocation: 1) }
 
-      it { is_expected.to have_attributes(ordered_summary: 'You&rsquo;ve ordered 0 of 1 device and 0 of 1 router') }
+      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve received 1 device and 1 router in academic year 2021/22.') }
     end
 
     context 'both two' do
-      subject { described_class.new(organisation: nil, devices_remaining: 2, routers_remaining: 2, devices_ordered: 0, routers_ordered: 0, devices_allocation: 2, routers_allocation: 2) }
+      subject { described_class.new(organisation: nil, devices_remaining: 0, routers_remaining: 0, devices_ordered: 2, routers_ordered: 2, devices_allocation: 2, routers_allocation: 2) }
 
-      it { is_expected.to have_attributes(ordered_summary: 'You&rsquo;ve ordered 0 of 2 devices and 0 of 2 routers') }
+      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve received 2 devices and 2 routers in academic year 2021/22.') }
     end
   end
 
@@ -104,18 +90,16 @@ RSpec.describe TrancheAllocationComponent, type: :component do
     context 'RB' do
       subject { render_inline(described_class.new(organisation: rb, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0, routers_allocation: 0)) }
 
-      it { is_expected.to have_css('#intro') }
-      it { is_expected.to have_css('#available_summary') }
-      it { is_expected.to have_css('#ordered_summary') }
+      it { is_expected.to have_css('#total_allocation_sentence') }
+      it { is_expected.to have_css('#ordered_sentence') }
       it { is_expected.to have_css('#current_tranche') }
     end
 
     context 'school' do
       subject { render_inline(described_class.new(organisation: school, devices_remaining: 0, routers_remaining: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0, routers_allocation: 0)) }
 
-      it { is_expected.to have_no_css('#intro') }
-      it { is_expected.to have_css('#available_summary') }
-      it { is_expected.to have_css('#ordered_summary') }
+      it { is_expected.to have_css('#total_allocation_sentence') }
+      it { is_expected.to have_css('#ordered_sentence') }
       it { is_expected.to have_css('#current_tranche') }
     end
   end
