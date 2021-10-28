@@ -28,7 +28,7 @@ RSpec.describe DeviceCountComponent, type: :component do
       html = render_inline(component).to_html
 
       expect(html).not_to include '0 devices'
-      expect(html).to include '1 device available'
+      expect(html).to include '1 device is available to order'
     end
 
     it 'does not render zero allocation' do
@@ -48,7 +48,7 @@ RSpec.describe DeviceCountComponent, type: :component do
     it 'renders availability' do
       html = render_inline(component).to_html
 
-      expect(html).to include '4 devices available'
+      expect(html).to include '4 devices are available to order'
     end
 
     it 'renders state' do
@@ -65,7 +65,7 @@ RSpec.describe DeviceCountComponent, type: :component do
       it 'renders availability with suffix' do
         content = render_inline(component).content
 
-        expect(content).to include '4 devices available for specific circumstances'
+        expect(content).to include '4 devices are available to order for specific circumstances'
       end
     end
   end
@@ -157,7 +157,7 @@ RSpec.describe DeviceCountComponent, type: :component do
     it 'renders availability' do
       content = render_inline(component).content
 
-      expect(content).to include '2 devices and 3 routers available'
+      expect(content).to include '2 devices are available to order'
     end
 
     it 'renders state' do

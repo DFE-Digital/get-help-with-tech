@@ -162,32 +162,32 @@ RSpec.feature 'Ordering devices within a virtual pool' do
   end
 
   def and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
-    expect(page).to have_text('19 devices and 8 routers available to order')
+    expect(page).to have_text('19 devices available to order')
   end
 
   def and_i_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
-    expect(page).to have_text('You ordered 1 device and 2 routers')
+    expect(page).to have_text('You’ve ordered 1 device and 2 routers')
   end
 
   def and_i_see_1_school_with_specific_circumstances_that_i_need_to_place_orders_for
-    expect(page).to have_text('2 devices and 0 routers available to order')
+    expect(page).to have_text('2 devices available to order')
   end
 
   def and_i_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
-    expect(page).to have_text('You ordered 1 device and 0 routers')
+    expect(page).to have_text('You’ve ordered 1 device and 0 routers')
   end
 
   def and_i_see_2_schools_that_i_need_to_place_orders_for
-    expect(page).to have_text('21 devices and 8 routers available to order')
+    expect(page).to have_text('21 devices available to order')
   end
 
   def and_i_see_2_schools_that_i_have_already_placed_orders_for
-    expect(page).to have_text('You ordered 2 devices and 2 routers')
+    expect(page).to have_text('You’ve ordered 2 devices and 2 routers')
   end
 
   def and_i_see_i_have_no_more_devices_to_order
     expect(page).to have_text('No devices left to order')
-    expect(page).to have_text('You ordered 3 devices and 5 routers')
+    expect(page).to have_text('You’ve ordered 3 devices and 5 routers')
   end
 
   def and_i_do_not_see_a_section_on_ordering_chromebooks

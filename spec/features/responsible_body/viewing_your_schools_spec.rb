@@ -145,7 +145,7 @@ RSpec.feature 'Viewing your schools' do
       if laptop_count == 0 && router_count == 0
         'No devices left to order'
       else
-        "#{laptop_count} #{'device'.pluralize(laptop_count)} and #{router_count} #{'router'.pluralize(router_count)} available to order"
+        "#{laptop_count} #{'device'.pluralize(laptop_count)} available to order"
       end
     expect(page).to have_content(expected)
   end

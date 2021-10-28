@@ -18,13 +18,13 @@ class ResponsibleBody::PooledDeviceCountComponent < ViewComponent::Base
   end
 
   def ordered_string
-    'You ordered ' + [laptops_ordered, routers_ordered].compact.join(' and ')
+    'You’ve ordered ' + [laptops_ordered, routers_ordered].compact.join(' and ')
   end
 
 private
 
   def devices_available_to_order
-    [laptops_available_to_order, routers_available_to_order].compact.join(' and <br/>') + ' available to order'
+    "#{laptops_available_to_order} available to order"
   end
 
   def humanize(noun, number)
