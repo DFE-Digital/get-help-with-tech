@@ -1,4 +1,4 @@
-class Redesign
+class MigrateRedesignData
   def associate_allocation_changes_to_schools
     AllocationChange.find_each do |allocation_change|
       sda = SchoolDeviceAllocation.find(allocation_change.school_device_allocation_id)
@@ -80,11 +80,11 @@ end
 namespace :db do
   desc 'Migrate redesigned data'
   task migrate_redesign_data: :environment do
-    redesign = Redesign.new
-    redesign.copy_preorder_information_into_schools
-    redesign.copy_allocation_data_into_schools
-    redesign.associate_allocation_changes_to_schools
-    redesign.associate_cap_update_calls_to_schools
-    redesign.copy_allocation_data_into_rbs
+    migrate = MigrateRedesignData.new
+    migrate.copy_preorder_information_into_schools
+    migrate.copy_allocation_data_into_schools
+    migrate.associate_allocation_changes_to_schools
+    migrate.associate_cap_update_calls_to_schools
+    migrate.copy_allocation_data_into_rbs
   end
 end
