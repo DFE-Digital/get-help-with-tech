@@ -69,7 +69,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders availability' do
       content = render_inline(component).content
 
-      expect(content).to include '4 devices and 0 routers available to order'
+      expect(content).to include '4 devices available to order'
     end
 
     it 'renders state' do
@@ -107,7 +107,7 @@ RSpec.describe ResponsibleBody::PooledDeviceCountComponent, type: :component do
     it 'renders availability' do
       content = render_inline(component).content
 
-      expect(content).to include '2 devices and 3 routers available to order'
+      expect(content).to include '2 devices available to order'
     end
 
     it 'renders state' do

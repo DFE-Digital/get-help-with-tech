@@ -14,9 +14,8 @@ class DeviceCountComponent < ViewComponent::Base
 
   def availability_string
     if school.devices_available_to_order?
-      non_zero_caps.map { |device_type|
-        "#{school.devices_available_to_order(device_type)} #{DEVICE_NAMES[device_type].pluralize(school.devices_available_to_order(device_type))}"
-      }.join(' and <br/>') + ' available' + availability_suffix
+      devices_remaining = school.devices_available_to_order('laptop')
+      "#{pluralize(devices_remaining, 'device is', plural: 'devices are')} available to order" + availability_suffix
     else
       'All devices ordered'
     end
@@ -39,7 +38,7 @@ class DeviceCountComponent < ViewComponent::Base
 private
 
   def availability_suffix
-    school.order_state.to_sym == :can_order_for_specific_circumstances ? ' <br/>for specific circumstances' : ''
+    school.order_state.to_sym == :can_order_for_specific_circumstances ? ' <br/>for specific circumstances.' : '.'
   end
 
   def non_zero_caps

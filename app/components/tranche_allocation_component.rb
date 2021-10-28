@@ -17,22 +17,12 @@ class TrancheAllocationComponent < ViewComponent::Base
     @sane
   end
 
-  def intro_sentence
-    if @organisation.is_a?(ResponsibleBody)
-      "#{@organisation.name} has:"
-    else
-      raise 'Invalid for school'
-    end
+  def total_allocation_sentence
+    "#{@organisation.name} has a total allocation of #{@devices_allocation} #{'device'.pluralize(@devices_allocation)} for academic year 2021/22.".html_safe
   end
 
-  def available_to_order_summary
-    "#{pluralize(@devices_remaining, 'device')} and "\
-    "#{pluralize(@routers_remaining, 'router')} available to order"
-  end
-
-  def ordered_summary
-    "You&rsquo;ve ordered #{@devices_ordered} of #{pluralize(@devices_allocation, 'device')} and "\
-    "#{@routers_ordered} of #{pluralize(@routers_allocation, 'router')}".html_safe
+  def ordered_sentence
+    "You&rsquo;ve received #{@devices_ordered} #{'device'.pluralize(@devices_ordered)} and #{@routers_ordered} #{'router'.pluralize(@routers_ordered)} in academic year 2021/22.".html_safe
   end
 
 private

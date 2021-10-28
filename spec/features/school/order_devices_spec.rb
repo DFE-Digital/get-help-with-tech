@@ -106,7 +106,7 @@ RSpec.feature 'Order devices' do
   end
 
   def then_i_see_the_amount_of_devices_i_can_order
-    expect(page).to have_text('80 devices available')
+    expect(page).to have_text('80 devices are available to order')
   end
 
   def and_i_see_a_link_to_techsource

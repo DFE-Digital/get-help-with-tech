@@ -56,6 +56,6 @@ private
   end
 
   def router?
-    device_type == :router
+    device_type.to_sym == :router
   end
 end

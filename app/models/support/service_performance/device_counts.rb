@@ -48,10 +48,6 @@ private
     "raw_#{device_type}s_ordered"
   end
 
-  def laptop?
-    device_type == :laptop
-  end
-
   def not_over_ordered_allocation_query
     "raw_#{device_type}_cap >= raw_#{device_type}s_ordered"
   end

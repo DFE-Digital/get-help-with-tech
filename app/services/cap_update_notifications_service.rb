@@ -53,7 +53,7 @@ private
   end
 
   def notify_computacenter_by_email(school, device_type)
-    notification = device_type == :laptop ? :notify_of_devices_cap_change : :notify_of_comms_cap_change
+    notification = device_type.to_sym == :laptop ? :notify_of_devices_cap_change : :notify_of_comms_cap_change
     ComputacenterMailer.with(school: school, new_cap_value: school.cap(device_type)).send(notification).deliver_later
   end
 
