@@ -47,11 +47,11 @@ class Redesign < ActiveRecord::Migration[6.1]
 
     School.update_all(preorder_status: 'needs_info', who_will_order_devices: 'responsible_body')
 
-    copy_preorder_information_into_schools
-    copy_allocation_data_into_schools
-    associate_allocation_changes_to_schools
-    associate_cap_update_calls_to_schools
-    copy_allocation_data_into_rbs
+    # copy_preorder_information_into_schools
+    # copy_allocation_data_into_schools
+    # associate_allocation_changes_to_schools
+    # associate_cap_update_calls_to_schools
+    # copy_allocation_data_into_rbs
   end
 
   def down
