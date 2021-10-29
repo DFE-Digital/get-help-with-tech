@@ -285,6 +285,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
     end
 
     before do
+      stub_computacenter_outgoing_api_calls
       schools_state.each do |entry|
         entry[:schools].each do |school_data|
           school_record = create(
