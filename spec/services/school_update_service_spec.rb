@@ -180,7 +180,7 @@ RSpec.describe SchoolUpdateService, type: :model do
           expect(old_school.raw_allocation(:laptop)).to eq(100)
           expect(old_school.raw_cap(:laptop)).to eq(100)
           expect(old_school.raw_allocation(:router)).to eq(10)
-          expect(old_school.raw_cap(:router)).to eq(8)
+          expect(old_school.raw_cap(:router)).to eq(10)
         end
       end
     end
