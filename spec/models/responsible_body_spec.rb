@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe ResponsibleBody, type: :model do
   subject(:responsible_body) { create(:local_authority) }
 
+  before do
+    stub_computacenter_outgoing_api_calls
+  end
+
   describe '#active_schools' do
     let!(:schools) { create(:school, responsible_body: responsible_body) }
     let(:closed_schools) { create(:school, status: 'closed', responsible_body: responsible_body) }
@@ -376,7 +380,6 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     before do
-      stub_computacenter_outgoing_api_calls
       schools.each do |s|
         UpdateSchoolDevicesService.new(school: s,
                                        order_state: :can_order_for_specific_circumstances,
@@ -418,10 +421,6 @@ RSpec.describe ResponsibleBody, type: :model do
                   routers: [1, 0, 0])
     end
 
-    before do
-      stub_computacenter_outgoing_api_calls
-    end
-
     it 'returns true for a school within the pool' do
       expect(responsible_body.has_school_in_virtual_cap_pools?(schools.first)).to be true
     end
@@ -443,10 +442,6 @@ RSpec.describe ResponsibleBody, type: :model do
                   responsible_body: responsible_body,
                   laptops: [1, 0, 0],
                   routers: [1, 0, 0])
-    end
-
-    before do
-      stub_computacenter_outgoing_api_calls
     end
 
     context 'when used full allocation' do
