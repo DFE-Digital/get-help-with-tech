@@ -66,8 +66,11 @@ private
   end
 
   def ordering?(device_type)
-    { laptop: laptop_allocation || laptop_cap || laptops_ordered || school.order_state_previously_changed?,
-      router: router_allocation || router_cap || routers_ordered || school.order_state_previously_changed? }[device_type]
+    @update_devices_ordering ||= {
+      laptop: laptop_allocation || laptop_cap || laptops_ordered || school.order_state_previously_changed?,
+      router: router_allocation || router_cap || routers_ordered || school.order_state_previously_changed?,
+    }
+    @update_devices_ordering[device_type]
   end
 
   def over_order_category(device_type)

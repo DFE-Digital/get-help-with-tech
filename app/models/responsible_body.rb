@@ -11,6 +11,7 @@ class ResponsibleBody < ApplicationRecord
   has_many :donated_device_requests, dependent: :destroy
 
   scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
+  scope :vcap_active, -> { where(who_will_order_devices: 'responsible_body', vcap_feature_flag: true) }
 
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
