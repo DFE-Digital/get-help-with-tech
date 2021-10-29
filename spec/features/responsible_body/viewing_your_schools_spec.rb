@@ -70,7 +70,10 @@ RSpec.feature 'Viewing your schools' do
                                    order_state: :can_order,
                                    laptop_allocation: 5,
                                    laptop_cap: 5,
-                                   laptops_ordered: 5).call
+                                   laptops_ordered: 5,
+                                   router_allocation: 1,
+                                   router_cap: 1,
+                                   routers_ordered: 1).call
     UpdateSchoolDevicesService.new(school: schools.second,
                                    order_state: :can_order_for_specific_circumstances,
                                    laptop_allocation: 20,
