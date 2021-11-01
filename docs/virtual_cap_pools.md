@@ -95,7 +95,7 @@ school.refresh_preorder_status!
 4. Check that the virtual pool information looks correct, if necessary force a recalculation:
 
 ```ruby
-rb.calculate_virtual_caps!
+rb.calculate_vcaps!
 => [#<VirtualCapPool:0x0000564a34d8fef8
   id: 974,
   device_type: "coms_device",

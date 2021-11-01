@@ -100,7 +100,7 @@ class CanOrderDevicesMailer < ApplicationMailer
 private
 
   def tracked_template_mail(message_type, template_id, mail_params = {})
-    puts "--- LOCAL DEBUG: #{self.class.name}.#{message_type}.with(#{params})" if ENV['LOCAL_DEBUG']
+    logger.info "--- LOCAL DEBUG: #{self.class.name}.#{message_type}.with(#{params})" if ENV['LOCAL_DEBUG']
     audit = EmailAudit.create!(message_type: message_type,
                                template: template_id,
                                email_address: @user.email_address,
