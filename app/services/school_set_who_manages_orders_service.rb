@@ -50,7 +50,7 @@ private
   end
 
   def recalculate_vcaps!
-    pools_affected.each { |device_type| school.responsible_body.recalculate_vcap(device_type) }
+    pools_affected.each { |device_type| school.calculate_vcap(device_type) }
   end
 
   def school_impacts_computacenter_numbers?(device_type)

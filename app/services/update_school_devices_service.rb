@@ -2,12 +2,13 @@ class UpdateSchoolDevicesService
   attr_reader :allocation_change_category, :allocation_change_description,
               :laptop_allocation, :laptop_cap, :laptops_ordered,
               :router_allocation, :router_cap, :routers_ordered,
-              :notify_computacenter, :notify_school, :order_state, :school
+              :notify_computacenter, :notify_school, :order_state,
+              :recalculate_vcaps, :school
 
   OVER_ORDER_ALLOCATION_CHANGE_CATEGORY = :over_order
   OVER_ORDER_ALLOCATION_CHANGE_DESCRIPTION = 'Over Order'.freeze
 
-  def initialize(school:, notify_school: true, notify_computacenter: true, **opts)
+  def initialize(school:, notify_school: true, notify_computacenter: true, recalculate_vcaps: true, **opts)
     @allocation_change_category = opts[:allocation_change_category]
     @allocation_change_description = opts[:allocation_change_description]
     @laptop_allocation = opts[:laptop_allocation]
@@ -16,6 +17,7 @@ class UpdateSchoolDevicesService
     @notify_computacenter = notify_computacenter
     @notify_school = notify_school
     @order_state = (opts[:order_state] || school.order_state).to_s
+    @recalculate_vcaps = recalculate_vcaps
     @router_allocation = opts[:router_allocation]
     @router_cap = opts[:router_cap]
     @routers_ordered = opts[:routers_ordered]
@@ -56,7 +58,7 @@ private
   end
 
   def notifications_sent_by_pool_update?
-    school.in_virtual_cap_pool?
+    recalculate_vcaps && school.in_virtual_cap_pool?
   end
 
   def notify_other_agents
@@ -113,6 +115,7 @@ private
 
     AllocationOverOrderService.new(school, over_order(:laptop), :laptop).call if over_ordered?(:laptop)
     @laptop_cap_changed = update_device_ordering!(laptop_allocation, laptop_cap, laptops_ordered, :laptop)
+    school.calculate_vcaps_if_needed(:laptop) if recalculate_vcaps
   end
 
   def update_router_allocations!
@@ -124,6 +127,7 @@ private
 
     AllocationOverOrderService.new(school, over_order(:router), :router).call if over_ordered?(:router)
     @router_cap_changed = update_device_ordering!(router_allocation, router_cap, routers_ordered, :router)
+    school.calculate_vcaps_if_needed(:router) if recalculate_vcaps
   end
 
   def update_device_ordering!(allocation, cap, devices_ordered, device_type)

@@ -48,6 +48,8 @@ RSpec.describe Support::AllocationForm, type: :model do
                             description: description)
       end
 
+      before { rb.calculate_vcaps! }
+
       context 'when allocation decreases' do
         let(:allocation) { 4 }
 

@@ -212,6 +212,8 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
         ]
       end
 
+      before { rb.calculate_vcaps! }
+
       it 'update school caps on Computacenter' do
         patch :update, params: params
 
@@ -302,6 +304,11 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
           send_notification: 'true',
         },
       }
+    end
+
+    before do
+      create(:school, urn: 123_456)
+      create(:school, ukprn: 12_345_678)
     end
 
     context 'when the user is not support' do

@@ -84,6 +84,7 @@ RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
 
       before do
         stub_computacenter_outgoing_api_calls
+        rb.calculate_vcaps!
         service.call
       end
 

@@ -78,7 +78,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
 
       before do
         trust.update!(vcap_feature_flag: true)
-        trust.calculate_virtual_caps!
+        trust.calculate_vcaps!
         school_1.can_order!
         school_2.can_order!
         school_1.update!(will_need_chromebooks: 'yes',

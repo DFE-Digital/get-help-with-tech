@@ -25,17 +25,45 @@ class Support::BulkAllocationForm
 
 private
 
+  def add_school_to_vcap(school)
+    vcaps[school.responsible_body_id] += 1
+  end
+
+  def create_allocation_batch_job(props)
+    job_attrs = props.merge(batch_id: batch_id, send_notification: send_notification)
+    AllocationBatchJob.create!(job_attrs)
+  end
+
+  def recalculate_vcaps
+    vcaps.each_key do |responsible_body_id|
+      CalculateVcapJob.perform_later(responsible_body_id: responsible_body_id,
+                                     batch_id: batch_id,
+                                     notify_school: send_notification)
+    end
+  end
+
   def rows
     @rows ||= CSV.read(upload.path, headers: true)
   end
 
+  def schedule_school(school, props)
+    allocation_batch_job = create_allocation_batch_job(props)
+    school.in_virtual_cap_pool? ? add_school_to_vcap(school) : AllocationJob.perform_later(allocation_batch_job)
+  end
+
   def upload_scheduled?
     rows.each do |row|
-      job_attrs = row.to_h.slice(*CSV_HEADERS).merge(batch_id: batch_id, send_notification: send_notification)
-      AllocationJob.perform_later(AllocationBatchJob.create!(job_attrs))
+      props = row.to_h.slice(*CSV_HEADERS).symbolize_keys!
+      school = School.where_urn_or_ukprn_or_provision_urn(props[:urn] || props[:ukprn]).first
+      schedule_school(school, props) if school
     end
+    recalculate_vcaps
     true
   rescue StandardError
     false
+  end
+
+  def vcaps
+    @vcaps ||= Hash.new { |hash, key| hash[key] = 0 }
   end
 end

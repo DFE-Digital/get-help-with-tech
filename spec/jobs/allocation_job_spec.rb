@@ -22,7 +22,9 @@ RSpec.describe AllocationJob do
           order_state: batch_job.order_state,
           laptop_allocation: batch_job.allocation_delta,
           laptop_cap: batch_job.allocation_delta,
+          notify_computacenter: true,
           notify_school: false,
+          recalculate_vcaps: true,
         )
       end
 
@@ -49,7 +51,9 @@ RSpec.describe AllocationJob do
           order_state: batch_job.order_state,
           laptop_allocation: batch_job.allocation_delta,
           laptop_cap: batch_job.allocation_delta,
+          notify_computacenter: true,
           notify_school: true,
+          recalculate_vcaps: true,
         )
       end
 
@@ -281,6 +285,7 @@ RSpec.describe AllocationJob do
 
       before do
         create_list(:school, 2, :centrally_managed, responsible_body: rb, laptops: [2, 2, 1])
+        rb.calculate_vcaps!
         batch_job
       end
 

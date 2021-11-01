@@ -5,7 +5,7 @@ class School < ApplicationRecord
 
   DEVICE_TYPES = %i[laptop router].freeze
 
-  belongs_to :responsible_body
+  belongs_to :responsible_body, inverse_of: :schools
   belongs_to :school_contact, optional: true
 
   has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
@@ -29,7 +29,6 @@ class School < ApplicationRecord
   before_save :check_and_update_status_if_necessary
   before_create :set_computacenter_change
   after_update :maybe_generate_user_changes
-  after_save :recalculate_virtual_caps
   after_commit :refresh_preorder_status!, on: :create
 
   enum computacenter_change: {
@@ -127,6 +126,7 @@ class School < ApplicationRecord
   delegate :phone_number, to: :headteacher, allow_nil: true, prefix: true
   delegate :title, to: :headteacher, allow_nil: true, prefix: true
 
+  delegate :calculate_vcap, to: :responsible_body, prefix: false
   delegate :companies_house_number, to: :responsible_body, prefix: true, allow_nil: true
   delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
   delegate :gias_id, to: :responsible_body, prefix: true, allow_nil: true
@@ -154,6 +154,14 @@ class School < ApplicationRecord
 
   def available_mobile_networks
     hide_networks_not_supporting_fe? ? MobileNetwork.fe_networks : MobileNetwork.participating
+  end
+
+  def calculate_vcaps_if_needed(*device_types)
+    return unless in_virtual_cap_pool?
+
+    (device_types.presence || DEVICE_TYPES).each do |device_type|
+      calculate_vcap(device_type) if calculate_vcap?(device_type)
+    end
   end
 
   def can_change_who_manages_orders?
@@ -282,6 +290,10 @@ class School < ApplicationRecord
     type == 'LaFundedPlace'
   end
 
+  def laptops
+    [allocation(:laptop), cap(:laptop), devices_ordered(:laptop)]
+  end
+
   def next_school_in_responsible_body_when_sorted_by_name_ascending
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
@@ -350,6 +362,18 @@ class School < ApplicationRecord
     laptop?(device_type) ? :raw_laptops_ordered : :raw_routers_ordered
   end
 
+  def raw_laptops
+    [raw_allocation(:laptop), raw_cap(:laptop), raw_devices_ordered(:laptop)]
+  end
+
+  def raw_routers
+    [raw_allocation(:router), raw_cap(:router), raw_devices_ordered(:router)]
+  end
+
+  def routers
+    [allocation(:router), cap(:router), devices_ordered(:router)]
+  end
+
   def refresh_preorder_status!
     update!(preorder_status: infer_status)
   end
@@ -406,7 +430,7 @@ private
     user_schools.exists?
   end
 
-  def calculate_virtual_cap?(device_type)
+  def calculate_vcap?(device_type)
     previous_changes.include?(raw_allocation_field(device_type)) ||
       previous_changes.include?(raw_cap_field(device_type)) ||
       previous_changes.include?(raw_devices_ordered_field(device_type))
@@ -452,14 +476,6 @@ private
 
   def maybe_generate_user_changes
     user_schools.map(&:user).each(&:generate_user_change_if_needed!)
-  end
-
-  def recalculate_virtual_caps
-    return unless in_virtual_cap_pool?
-
-    DEVICE_TYPES.each do |device_type|
-      responsible_body.calculate_virtual_caps!(device_type) if calculate_virtual_cap?(device_type)
-    end
   end
 
   def responsible_body_type

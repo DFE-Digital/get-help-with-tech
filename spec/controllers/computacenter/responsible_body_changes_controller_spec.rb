@@ -102,6 +102,8 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
         ]
       end
 
+      before { rb.calculate_vcaps! }
+
       it 'update caps on Computacenter' do
         patch :update, params: params
 

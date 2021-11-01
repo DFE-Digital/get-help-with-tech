@@ -8,7 +8,10 @@ class CapUpdateNotificationsService
   end
 
   def call
-    process_updates!
+    if updates.any? && computacenter_accepts_updates?
+      update_cap_on_computacenter!
+      notify
+    end
     true
   end
 
@@ -59,13 +62,6 @@ private
 
   def notify_school_by_email(school)
     SchoolCanOrderDevicesNotifications.new(school: school, notify_computacenter: notify_computacenter).call
-  end
-
-  def process_updates!
-    if updates.any? && computacenter_accepts_updates?
-      update_cap_on_computacenter!
-      notify
-    end
   end
 
   def record_request!(school, device_type)

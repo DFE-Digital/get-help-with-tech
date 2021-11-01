@@ -5,6 +5,7 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
 
   describe '#save' do
     let(:file) { fixture_file_upload('allocation_upload.csv', 'text/csv') }
+    let(:rb) { create(:trust, :vcap_feature_flag, :manages_centrally) }
     let(:attrs) do
       [
         {
@@ -41,8 +42,10 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
     end
 
     it 'creates an AllocationBatchJob per row in the file' do
-      expect(AllocationBatchJob.count).to eq(0)
+      create(:school, urn: 123_456)
+      create(:school, ukprn: 12_345_678)
 
+      expect(AllocationBatchJob.count).to eq(0)
       expect(described_class.new(upload: file, send_notification: true).save).to be_truthy
 
       AllocationBatchJob.order(:allocation_delta).to_a.each_with_index do |job, i|
@@ -51,10 +54,33 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
       end
     end
 
-    it 'enqueue an AllocationJob per AllocationBatchJob created' do
+    it 'enqueue an AllocationJob per non vcap AllocationBatchJob created' do
+      create(:school, urn: 123_456)
+      create(:school, ukprn: 12_345_678)
+
       expect {
         described_class.new(upload: file, send_notification: true).save
       }.to have_enqueued_job(AllocationJob).twice
+    end
+
+    it 'enqueue no AllocationJob per vcap AllocationBatchJob created' do
+      create(:school, :centrally_managed, responsible_body: rb, urn: 123_456)
+      create(:school, :centrally_managed, responsible_body: rb, ukprn: 12_345_678)
+
+      expect {
+        described_class.new(upload: file, send_notification: true).save
+      }.not_to have_enqueued_job(AllocationJob)
+    end
+
+    it 'enqueue a CalculateVcapJob per vcap' do
+      create(:school, :centrally_managed, responsible_body: rb, urn: 123_456)
+      create(:school, :centrally_managed, responsible_body: rb, ukprn: 12_345_678)
+
+      expect {
+        described_class.new(upload: file, send_notification: true).save
+      }.to have_enqueued_job(CalculateVcapJob)
+             .with(hash_including(responsible_body_id: rb.id, notify_school: true))
+             .once
     end
   end
 end

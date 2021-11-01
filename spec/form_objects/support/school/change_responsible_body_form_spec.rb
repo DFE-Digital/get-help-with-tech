@@ -564,6 +564,8 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                computacenter_reference: 'BBB',
                laptops: [5, 4, 1],
                routers: [5, 4, 1])
+
+        rb_a.calculate_vcaps!
       end
 
       it 'moves school to new rb' do
@@ -583,8 +585,6 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
         requests = [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
           ],
           [
@@ -652,6 +652,8 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                computacenter_reference: 'BBB',
                laptops: [5, 4, 1],
                routers: [5, 4, 1])
+
+        rb_a.calculate_vcaps!
       end
 
       it 'moves school to new rb' do
