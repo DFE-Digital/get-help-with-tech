@@ -32,7 +32,6 @@ class ComputacenterMailer < ApplicationMailer
 private
 
   def setup_params
-    logger.info "--- LOCAL DEBUG: #{self.class.name}.#{caller_locations(1, 1)[0].label}.with(#{params})" if ENV['LOCAL_DEBUG']
     @school = params[:school]
     @new_cap_value = params[:new_cap_value]
   end
