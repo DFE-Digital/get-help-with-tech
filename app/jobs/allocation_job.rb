@@ -1,71 +1,60 @@
 class AllocationJob < ApplicationJob
   queue_as :default
 
-  def perform(allocation_batch_job)
-    set_instance_variables(allocation_batch_job)
-    set_default_new_raw_allocation_value
-    set_default_new_raw_cap_value
+  attr_reader :allocation_batch_job, :allocation_delta,
+              :current_raw_laptop_allocation, :current_raw_laptop_cap,
+              :new_raw_laptop_allocation, :new_raw_laptop_cap,
+              :notify_computacenter, :notify_school, :recalculate_vcaps
 
-    # A negative delta must check against devices_available_to_order
-    set_negative_allocation_and_cap_values if @allocation_delta.negative?
+  delegate :order_state, to: :allocation_batch_job
+  delegate :school, to: :allocation_batch_job
 
+  def perform(allocation_batch_job, notify_computacenter: true, recalculate_vcaps: true)
+    @allocation_batch_job = allocation_batch_job
+    @allocation_delta = allocation_batch_job.allocation_delta.to_i
+    @notify_school = allocation_batch_job.send_notification
+    @notify_computacenter = notify_computacenter
+    @recalculate_vcaps = recalculate_vcaps
+    recompute_laptop_allocation_numbers
+    persist_changes
+  end
+
+private
+
+  def recompute_laptop_allocation_numbers
+    @current_raw_laptop_allocation = school.raw_allocation(:laptop)
+    @current_raw_laptop_cap = school.raw_cap(:laptop)
+    @new_raw_laptop_allocation = current_raw_laptop_allocation + allocation_delta
+    @new_raw_laptop_cap = current_raw_laptop_cap + allocation_delta
+    if allocation_delta.negative?
+      negative_allocation_delta = [-school.devices_available_to_order(:laptop), allocation_delta].max
+      @new_raw_laptop_allocation = current_raw_laptop_allocation + negative_allocation_delta
+      @new_raw_laptop_cap = [current_raw_laptop_cap + negative_allocation_delta, new_raw_laptop_allocation].min
+    end
+  end
+
+  def persist_changes
     ActiveRecord::Base.transaction do
       update_school_laptop_allocation
       record_batch_job_processed_and_notify
     end
   end
 
-private
-
-  def set_instance_variables(allocation_batch_job)
-    @allocation_batch_job = allocation_batch_job
-    @school = @allocation_batch_job.school
-    @order_state = @allocation_batch_job.order_state
-    @allocation_delta = @allocation_batch_job.allocation_delta.to_i
-    @notify_school = @allocation_batch_job.send_notification
-  end
-
-  def set_default_new_raw_allocation_value
-    @current_raw_allocation_value = @school.raw_allocation(:laptop)
-    @new_raw_allocation_value = @current_raw_allocation_value + @allocation_delta
-  end
-
-  def set_default_new_raw_cap_value
-    @current_raw_cap_value = @school.raw_cap(:laptop)
-    @new_raw_cap_value = @current_raw_cap_value + @allocation_delta
-  end
-
-  def set_negative_allocation_and_cap_values
-    set_negative_allocation_delta
-    set_negative_new_raw_allocation_value
-    set_negative_new_raw_cap_value
-  end
-
-  def set_negative_allocation_delta
-    @negative_allocation_delta = [-@school.devices_available_to_order(:laptop), @allocation_delta].max
-  end
-
-  def set_negative_new_raw_allocation_value
-    @new_raw_allocation_value = @current_raw_allocation_value + @negative_allocation_delta
-  end
-
-  def set_negative_new_raw_cap_value
-    @new_raw_cap_value = [@current_raw_cap_value + @negative_allocation_delta, @new_raw_allocation_value].min
+  def record_batch_job_processed_and_notify
+    processing_params = { processed: true }
+    processing_params.merge!(sent_notification: true) if notify_school
+    allocation_batch_job.update!(processing_params)
   end
 
   def update_school_laptop_allocation
     UpdateSchoolDevicesService.new(
-      school: @school.reload,
-      order_state: @order_state,
-      laptop_allocation: @new_raw_allocation_value,
-      laptop_cap: @new_raw_cap_value,
-      notify_school: @notify_school,
+      school: school,
+      order_state: order_state,
+      laptop_allocation: new_raw_laptop_allocation,
+      laptop_cap: new_raw_laptop_cap,
+      notify_computacenter: notify_computacenter,
+      notify_school: notify_school,
+      recalculate_vcaps: recalculate_vcaps,
     ).call
-  end
-
-  def record_batch_job_processed_and_notify
-    processing_params = { processed: true }
-    processing_params.merge!(sent_notification: true) if @notify_school
-    @allocation_batch_job.update!(processing_params)
   end
 end

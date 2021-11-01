@@ -15,7 +15,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
              computacenter_reference: rb_computacenter_reference)
     end
 
-    let(:school) do
+    let!(:school) do
       create(:school,
              :centrally_managed,
              :in_lockdown,
@@ -34,6 +34,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
     context 'when there are no schools with complete computacenter references' do
       let(:rb_computacenter_reference) {}
+
+      before { rb.calculate_vcaps! }
 
       specify { expect(service.call).to be_truthy }
 
@@ -55,6 +57,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
     context 'when computacenter setting to inform Computacenter of cap changes is falsey' do
       before do
         allow(Settings.computacenter.outgoing_api).to receive(:endpoint).and_return(nil)
+        rb.calculate_vcaps!
       end
 
       specify { expect(service.call).to be_truthy }
@@ -78,7 +81,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       let(:requests) do
         [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '0' },
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '1' },
           ],
         ]
@@ -95,17 +98,18 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       it 'notify Computacenter of laptops cap change by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                .with(params: { school: school, new_cap_value: 1 }, args: []).once
+                .with(params: { school: school, new_cap_value: 0 }, args: []).once
       end
 
       it 'notify Computacenter of routers cap change by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                .with(params: { school: school, new_cap_value: 1 }, args: []).once
+                .with(params: { school: school, new_cap_value: 0 }, args: []).once
       end
 
       it "notify the school's organizational users" do
         user = create(:user, :relevant_to_computacenter, responsible_body: rb)
+        rb.calculate_vcaps!
 
         expect { service.call }
           .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
@@ -113,12 +117,16 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       end
 
       it "notify support if no school's organizational users" do
+        rb.calculate_vcaps!
+
         expect { service.call }
           .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
                 .with(params: { school: school }, args: []).once
       end
 
       it 'notify Computacenter of school can order by email' do
+        rb.calculate_vcaps!
+
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
                 .with(params: { school: school, new_cap_value: 1 }, args: []).once
@@ -133,6 +141,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
         it "notify the school's organizational users" do
           user = create(:user, :relevant_to_computacenter, responsible_body: rb)
+          rb.calculate_vcaps!
 
           expect { service.call }
             .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
@@ -140,6 +149,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
         end
 
         it "notify support if no school's organizational users" do
+          rb.calculate_vcaps!
+
           expect { service.call }
             .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
                   .with(params: { school: school }, args: []).once
@@ -148,6 +159,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
       context 'when :notify_school falsey' do
         let(:notify_school) { false }
+
+        before { rb.calculate_vcaps! }
 
         it 'notify Computacenter of laptops cap change by email' do
           expect { service.call }

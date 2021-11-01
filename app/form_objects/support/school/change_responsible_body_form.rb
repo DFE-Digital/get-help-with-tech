@@ -50,7 +50,7 @@ private
   end
 
   def recompute_pool(responsible_body = school.responsible_body)
-    responsible_body.calculate_virtual_caps! if responsible_body.vcap_active?
+    responsible_body.calculate_vcaps! if responsible_body.vcap_active?
   end
 
   def responsible_bodies

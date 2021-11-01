@@ -183,7 +183,7 @@ RSpec.feature 'Viewing service performance', type: :feature do
   def and_i_see_the_dates_i_entered_in_govuk_format
     within('#mno') do
       expect(page).to have_text "requests completed between #{(Time.zone.now - 10.days).localtime.to_date.to_s(:govuk_date)}".gsub(/(\s)+/, '\1')
-      expect(page).to have_text "and #{(Time.zone.now - 2.days).localtime.to_s(:govuk_date_and_time)}".gsub(/(\s)+/, '\1')
+      expect(page).to have_text "and #{Chronic.parse('2 days ago').localtime.to_s(:govuk_date_and_time)}".gsub(/(\s)+/, '\1')
     end
   end
 

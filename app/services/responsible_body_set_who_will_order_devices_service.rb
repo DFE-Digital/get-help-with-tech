@@ -23,7 +23,7 @@ private
                                            recalculate_vcaps: false,
                                            notify: responsible_body.orders_managed_by_schools?).call
     end
-    responsible_body.calculate_virtual_caps! if responsible_body.orders_managed_centrally?
+    responsible_body.calculate_vcaps! if responsible_body.orders_managed_centrally?
     true
   end
 

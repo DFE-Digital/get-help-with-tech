@@ -93,6 +93,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
   else
     raise "Unknown preorder_status '#{preorder_status}'"
   end
+  rb.calculate_vcaps! if rb.vcap_active?
   schools.each do |school|
     school.reload
     school.refresh_preorder_status!

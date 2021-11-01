@@ -1,12 +1,14 @@
 require 'computacenter/responsible_body_urns'
 
 class ResponsibleBody < ApplicationRecord
+  DEVICE_TYPES = %i[laptop router].freeze
+
   has_one :bt_wifi_voucher_allocation
   belongs_to :key_contact, class_name: 'User', optional: true
   has_many :bt_wifi_vouchers
   has_many :users
   has_many :extra_mobile_data_requests
-  has_many :schools
+  has_many :schools, inverse_of: :responsible_body
 
   has_many :donated_device_requests, dependent: :destroy
 
@@ -207,31 +209,32 @@ class ResponsibleBody < ApplicationRecord
     %w[school schools].include?(who_will_order_devices)
   end
 
-  def calculate_virtual_caps!(device_types = %i[laptop router])
-    recalculate_laptop_vcap if Array(device_types).include?(:laptop)
-    recalculate_router_vcap if Array(device_types).include?(:router)
+  def calculate_vcaps!
+    DEVICE_TYPES.each { |device_type| calculate_vcap(device_type) }
   end
 
-  def recalculate_vcap(device_type)
-    laptop?(device_type) ? recalculate_laptop_vcap : recalculate_router_vcap
+  def calculate_vcap(device_type, **opts)
+    laptop?(device_type) ? calculate_laptop_vcap(**opts) : calculate_router_vcap(**opts)
   end
 
-  def recalculate_laptop_vcap
-    Rails.logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
-    values = vcap_schools.select('SUM(raw_laptop_allocation) as allocation_sum, SUM(raw_laptop_cap) as cap_sum, SUM(raw_laptops_ordered) as ordered_sum')[0]
-    update!(laptop_allocation: values&.allocation_sum.to_i,
-            laptop_cap: values&.cap_sum.to_i,
-            laptops_ordered: values&.ordered_sum.to_i)
-    update_cap_on_computacenter(:laptop) if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
+  def calculate_laptop_vcap(**opts)
+    logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
+    sums = vcap_schools.pick('SUM(raw_laptop_allocation)', 'SUM(raw_laptop_cap)', 'SUM(raw_laptops_ordered)')
+    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
+    update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
+    if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
+      update_cap_on_computacenter(:laptop, **opts)
+    end
   end
 
-  def recalculate_router_vcap
-    Rails.logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
-    values = vcap_schools.select('SUM(raw_router_allocation) as allocation_sum, SUM(raw_router_cap) as cap_sum, SUM(raw_routers_ordered) as ordered_sum')[0]
-    update!(router_allocation: values&.allocation_sum.to_i,
-            router_cap: values&.cap_sum.to_i,
-            routers_ordered: values&.ordered_sum.to_i)
-    update_cap_on_computacenter(:router) if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
+  def calculate_router_vcap(**opts)
+    logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
+    sums = vcap_schools.pick('SUM(raw_router_allocation)', 'SUM(raw_router_cap)', 'SUM(raw_routers_ordered)')
+    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
+    update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
+    if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
+      update_cap_on_computacenter(:router, **opts)
+    end
   end
 
   def schools_by_order_status
@@ -286,10 +289,12 @@ private
     self.computacenter_change = 'new'
   end
 
-  def update_cap_on_computacenter(device_type)
-    CapUpdateNotificationsService.new(*vcap_schools,
+  def update_cap_on_computacenter(device_type, notify_computacenter: false, notify_school: false)
+    schools = vcap_schools.map { |school| school.tap(&:refresh_preorder_status!) }
+
+    CapUpdateNotificationsService.new(*schools,
                                       device_types: [device_type],
-                                      notify_computacenter: false,
-                                      notify_school: false).call
+                                      notify_computacenter: notify_computacenter,
+                                      notify_school: notify_school).call
   end
 end

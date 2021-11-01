@@ -367,7 +367,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#calculate_virtual_caps!' do
+  describe '#calculate_vcaps!' do
     subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
 
     let(:schools) do
