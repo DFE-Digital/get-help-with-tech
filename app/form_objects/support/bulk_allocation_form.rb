@@ -25,8 +25,8 @@ class Support::BulkAllocationForm
 
 private
 
-  def add_school_to_vcap(school)
-    vcaps[school.responsible_body_id] += 1
+  def add_school_for_post_processing_of_vcaps(school)
+    vcaps_for_post_processing[school.responsible_body_id] += 1
   end
 
   def create_allocation_batch_job(props)
@@ -34,8 +34,8 @@ private
     AllocationBatchJob.create!(job_attrs)
   end
 
-  def recalculate_vcaps
-    vcaps.each_key do |responsible_body_id|
+  def post_process_vcaps
+    vcaps_for_post_processing.each_key do |responsible_body_id|
       CalculateVcapJob.perform_later(responsible_body_id: responsible_body_id,
                                      batch_id: batch_id,
                                      notify_school: send_notification)
@@ -48,7 +48,11 @@ private
 
   def schedule_school(school, props)
     allocation_batch_job = create_allocation_batch_job(props)
-    school.in_virtual_cap_pool? ? add_school_to_vcap(school) : AllocationJob.perform_later(allocation_batch_job)
+    if school.in_virtual_cap_pool?
+      add_school_for_post_processing_of_vcaps(school)
+    else
+      AllocationJob.perform_later(allocation_batch_job)
+    end
   end
 
   def upload_scheduled?
@@ -57,13 +61,13 @@ private
       school = School.where_urn_or_ukprn_or_provision_urn(props[:urn] || props[:ukprn]).first
       schedule_school(school, props) if school
     end
-    recalculate_vcaps
+    post_process_vcaps
     true
   rescue StandardError
     false
   end
 
-  def vcaps
-    @vcaps ||= Hash.new { |hash, key| hash[key] = 0 }
+  def vcaps_for_post_processing
+    @vcaps_for_post_processing ||= Hash.new { |hash, key| hash[key] = 0 }
   end
 end
