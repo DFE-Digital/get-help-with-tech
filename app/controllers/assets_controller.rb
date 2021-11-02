@@ -21,6 +21,7 @@ class AssetsController < ApplicationController
 
     @assets = policy_scope(Asset).owned_by(setting)
     assets_requiring_updated_viewed_at = @assets.select { |asset| should_update_first_viewed_at?(asset) }
+    @multiple_serial_number_search = allow_multiple_serial_number_search?
 
     respond_to do |format|
       format.html
@@ -41,6 +42,7 @@ class AssetsController < ApplicationController
 
     @current_serial_number_search = params[:serial_number]
     @assets = policy_scope(Asset).search_by_serial_numbers(serial_numbers_for_user_role)
+    @multiple_serial_number_search = allow_multiple_serial_number_search?
 
     render :index
   end
@@ -81,7 +83,11 @@ private
   end
 
   def multiple_search_for_support_user_or_single_search_for_non_support_user
-    support_user? ? SearchSerialNumberParser.new(@current_serial_number_search).serial_numbers : @current_serial_number_search
+    SearchSerialNumberParser.new(serial_numbers_string: @current_serial_number_search, multiple: allow_multiple_serial_number_search?).serial_numbers
+  end
+
+  def allow_multiple_serial_number_search?
+    support_user?
   end
 
   # Use callbacks to share common setup or constraints between actions.

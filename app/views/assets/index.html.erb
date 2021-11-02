@@ -19,7 +19,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">
-      Search any serial number in our database. You can search for up to 5 serial numbers at once. Use commas to separate each serial number.
+      Search any serial number in our database.
+      <% if @multiple_serial_number_search %>
+        You can search for up to 5 serial numbers at once. Use commas to separate each serial number.
+      <% end %>
     </p>
 
     <%= form_with url: search_assets_path do |f| %>

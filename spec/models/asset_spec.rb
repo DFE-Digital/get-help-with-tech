@@ -175,6 +175,14 @@ RSpec.describe Asset, type: :model do
       specify { expect(Asset.search_by_serial_numbers([asset_1.serial_number])).to contain_exactly(asset_1) }
     end
 
+    context 'different case' do
+      let(:upper_case_serial_number) { 'Z1' }
+      let(:lower_case_serial_number) { 'z1' }
+      let!(:upper_case_serial_number_asset) { create(:asset, serial_number: upper_case_serial_number) }
+
+      specify { expect(Asset.search_by_serial_numbers(lower_case_serial_number)).to contain_exactly(upper_case_serial_number_asset) }
+    end
+
     context 'multiple matches of same serial number' do
       let!(:asset_3) { create(:asset, serial_number: asset_1.serial_number) }
 
