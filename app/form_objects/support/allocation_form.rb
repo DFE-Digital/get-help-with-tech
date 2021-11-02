@@ -1,7 +1,7 @@
 ﻿class Support::AllocationForm
   include ActiveModel::Model
 
-  attr_accessor :category, :description, :device_type, :school
+  attr_accessor :device_type, :school
   attr_reader :allocation
 
   delegate :in_virtual_cap_pool?,
@@ -27,9 +27,7 @@ private
     UpdateSchoolDevicesService.new(school: school,
                                    order_state: order_state,
                                    "#{device_type}_allocation".to_sym => allocation,
-                                   "#{device_type}_cap".to_sym => allocation,
-                                   allocation_change_category: category,
-                                   allocation_change_description: description).call
+                                   "#{device_type}_cap".to_sym => allocation).call
   end
 
   def check_decrease_allowed

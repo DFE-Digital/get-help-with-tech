@@ -162,6 +162,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
   context 'when the school successfully ordered over their allocation' do
     let(:school) { create(:school, laptops: [1, 1, 1]) }
     let(:computacenter_reference) { school.computacenter_reference }
+    let(:allocation) { school.allocation(:laptop) }
     let(:cap) { school.cap(:laptop) }
     let(:devices_ordered) { cap + 1 }
 
@@ -178,9 +179,10 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
     before { stub_computacenter_outgoing_api_calls }
 
-    it 'updates the allocation' do
+    it 'updates the cap but not the allocation' do
       cap_usage_update.apply!
-      expect(school.reload.allocation(:laptop)).to eq(devices_ordered)
+      expect(school.reload.cap(:laptop)).to eq(devices_ordered)
+      expect(school.reload.allocation(:laptop)).to eq(allocation)
     end
   end
 end

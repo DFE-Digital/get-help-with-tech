@@ -11,12 +11,20 @@ RSpec.describe AllocationOverOrderService, type: :model do
     context 'when the school is centrally managed in virtual cap pool' do
       let(:school) do
         create(:school,
+               :in_lockdown,
                :centrally_managed,
                responsible_body: rb,
-               laptops: [5, 4, 1])
+               laptops: [5, 5, 1])
       end
 
-      let(:sibling_schools) { create_list(:school, 2, :centrally_managed, responsible_body: rb, laptops: [5, 4, 1]) }
+      let(:sibling_schools) do
+        create_list(:school,
+                    2,
+                    :centrally_managed,
+                    :in_lockdown,
+                    responsible_body: rb,
+                    laptops: [5, 5, 1])
+      end
 
       it 'get the extra devices ordered from the devices available in the pool' do
         allow(school).to receive(:refresh_preorder_status!).and_call_original
@@ -28,6 +36,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
           ],
         ]
 
+        byebug
         UpdateSchoolDevicesService.new(school: school, laptops_ordered: 9).call
 
         expect(school).to have_received(:refresh_preorder_status!)

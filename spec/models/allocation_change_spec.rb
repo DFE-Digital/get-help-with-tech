@@ -21,7 +21,7 @@ RSpec.describe AllocationChange, type: :model do
         expect {
           UpdateSchoolDevicesService.new(school: school,
                                          laptops_ordered: 0,
-                                         allocation_change_category: :service_closure).call
+                                         cap_change_category: :service_closure).call
         }.to change(described_class, :count).by(1)
       end
 
@@ -51,9 +51,9 @@ RSpec.describe AllocationChange, type: :model do
     end
 
     context 'when more devices than the allocation are ordered in a pool' do
-      let(:alert) { 'Unable to reclaim all of the allocation in the vcap to cover the over-order' }
+      let(:alert) { 'Unable to reclaim all of the cap in the vcap to cover the over-order' }
       let(:non_allocated_but_ordered_devices) { 1 }
-      let(:sentry_context_key) { 'AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool' }
+      let(:sentry_context_key) { 'AllocationOverOrderService#reclaim_cap_across_virtual_cap_pool' }
       let(:sentry_context_value) do
         {
           device_type: :laptop,
@@ -81,9 +81,9 @@ RSpec.describe AllocationChange, type: :model do
         }.to change(described_class.over_order, :count).by(1)
       end
 
-      it 'increases the allocation to match devices ordered' do
+      it 'increases the cap to match devices ordered' do
         UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
-        expect(school.raw_allocation(:laptop)).to eq(school.raw_devices_ordered(:laptop))
+        expect(school.raw_cap(:laptop)).to eq(school.raw_devices_ordered(:laptop))
       end
 
       it 'informs Sentry' do

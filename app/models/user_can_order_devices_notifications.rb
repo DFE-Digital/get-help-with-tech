@@ -21,6 +21,7 @@ private
     message_type = message_type_for_school(school)
 
     return unless message_type
+    Rails.logger.info "--- LOCAL DEBUG: CanOrderDevicesMailer.#{message_type}.with(#{{ user: user.id, school: school.id }})" if ENV['LOCAL_DEBUG']
 
     CanOrderDevicesMailer
       .with(user: user, school: school)

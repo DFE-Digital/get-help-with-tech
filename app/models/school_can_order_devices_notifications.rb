@@ -34,6 +34,7 @@ private
 
   def notify_support_if_no_one_to_contact
     return if all_relevant_users.present?
+    Rails.logger.info "--- LOCAL DEBUG: CanOrderDevicesMailer.notify_support_school_can_order_but_no_one_contacted.with(#{{ school: school.id }})" if ENV['LOCAL_DEBUG']
 
     CanOrderDevicesMailer
       .with(school: school)
@@ -76,6 +77,8 @@ private
   end
 
   def notify_computacenter_by_email
+    Rails.logger.info "--- LOCAL DEBUG: ComputacenterMailer.notify_of_school_can_order.with(#{{ school: school.id, new_cap_value: new_cap_value }})" if ENV['LOCAL_DEBUG']
+
     ComputacenterMailer
       .with(school: school, new_cap_value: new_cap_value)
       .notify_of_school_can_order
@@ -89,6 +92,8 @@ private
   end
 
   def notify_user(user:, school:, message_type:)
+    Rails.logger.info "--- LOCAL DEBUG: CanOrderDevicesMailer.#{message_type}.with(#{{ user: user.id, school: school.id }})" if ENV['LOCAL_DEBUG']
+
     CanOrderDevicesMailer
       .with(user: user, school: school)
       .send(message_type)

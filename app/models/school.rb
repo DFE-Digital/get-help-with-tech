@@ -18,7 +18,7 @@ class School < ApplicationRecord
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
-  has_many :allocation_changes, dependent: :destroy, inverse_of: :school
+  has_many :cap_changes, dependent: :destroy, inverse_of: :school
   has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
 
   validates :name, presence: true
@@ -99,13 +99,13 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
-  def self.with_available_allocation(device_type)
+  def self.with_available_cap(device_type)
     if laptop?(device_type)
-      where('raw_laptop_allocation > raw_laptops_ordered')
-        .order(Arel.sql('raw_laptop_allocation - raw_laptops_ordered'))
+      where('raw_laptop_cap > raw_laptops_ordered')
+        .order(Arel.sql('raw_laptop_cap - raw_laptops_ordered'))
     else
-      where('raw_router_allocation > raw_routers_ordered')
-        .order(Arel.sql('raw_router_allocation - raw_routers_ordered'))
+      where('raw_router_cap > raw_routers_ordered')
+        .order(Arel.sql('raw_router_cap - raw_routers_ordered'))
     end
   end
 
@@ -177,7 +177,9 @@ class School < ApplicationRecord
   end
 
   def computacenter_cap(device_type)
-    in_virtual_cap_pool? ? vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type) : raw_cap(device_type)
+    return raw_cap(device_type) unless in_virtual_cap_pool?
+
+    vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type)
   end
 
   def computacenter_references?
