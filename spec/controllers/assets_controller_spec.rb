@@ -229,7 +229,7 @@ RSpec.describe AssetsController do
           post :search, params: { serial_number: '1,2' }
 
           expect(response).to be_successful
-          expect(Asset).to have_received(:search_by_serial_numbers).with('1,2')
+          expect(Asset).to have_received(:search_by_serial_numbers).with(['1,2'])
           expect(response).to render_template(:index)
         end
       end

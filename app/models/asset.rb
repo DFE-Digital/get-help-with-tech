@@ -87,7 +87,7 @@ class Asset < ApplicationRecord
     end
   }
 
-  scope :search_by_serial_numbers, ->(serial_numbers) { where(serial_number: serial_numbers) }
+  scope :search_by_serial_numbers, ->(serial_numbers) { where('serial_number ILIKE ANY (ARRAY[?])', serial_numbers) }
 
   scope :first_viewed_during_period, ->(period) { where(first_viewed_at: period) }
 
