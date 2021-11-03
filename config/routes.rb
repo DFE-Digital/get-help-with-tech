@@ -327,9 +327,6 @@ Rails.application.routes.draw do
     resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
       put '/', to: 'school_device_allocations#bulk_update', on: :collection
     end
-    namespace :api do
-      post '/cap-usage/bulk-update', to: 'cap_usage#bulk_update'
-    end
   end
 
   get '/healthcheck', to: 'monitoring#healthcheck', as: :healthcheck

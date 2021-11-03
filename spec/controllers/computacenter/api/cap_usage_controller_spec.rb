@@ -16,7 +16,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     XML
   end
 
-  describe 'Authentication' do
+  xdescribe 'Authentication' do
     context 'with no Authorization header' do
       it 'responds with :unauthorized' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
@@ -40,7 +40,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     end
   end
 
-  describe 'POST bulk_update with valid auth but invalid XML' do
+  xdescribe 'POST bulk_update with valid auth but invalid XML' do
     let(:invalid_xml) do
       <<~XML
         <Broken Tag Structure>
@@ -106,7 +106,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     end
   end
 
-  describe 'POST bulk_update with valid auth and valid XML' do
+  xdescribe 'POST bulk_update with valid auth and valid XML' do
     let(:cap_usage_update_packet) do
       <<~XML
         <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
