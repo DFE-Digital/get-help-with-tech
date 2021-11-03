@@ -1,5 +1,5 @@
 class Computacenter::API::CapUsageUpdateBatch
-  attr_accessor :payload_id, :timestamp, :updates
+  attr_accessor :notify_decreases, :payload_id, :timestamp, :updates
 
   def initialize(string_keyed_hash)
     @payload_id = string_keyed_hash['payloadID']
@@ -7,6 +7,7 @@ class Computacenter::API::CapUsageUpdateBatch
     @updates    = Array.wrap(string_keyed_hash['Record']).map do |update|
       Computacenter::API::CapUsageUpdate.new(update)
     end
+    @notify_decreases = FeatureFlag.active?(:notify_when_cap_usage_decreases)
   end
 
   def process!
@@ -18,7 +19,7 @@ class Computacenter::API::CapUsageUpdateBatch
   end
 
   def apply_update_and_catch_errors(update)
-    update.apply!
+    update.apply!(notify_decreases: notify_decreases)
   rescue ActiveRecord::RecordNotFound => e
     update.fail! e.message
   end
