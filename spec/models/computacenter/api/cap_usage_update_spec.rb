@@ -131,6 +131,12 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
           cap_usage_update.apply!
         }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
       end
+
+      it 'sends no notifications when notify_decreases is false' do
+        expect {
+          cap_usage_update.apply!(notify_decreases: false)
+        }.not_to have_enqueued_mail(ComputacenterMailer, :user_can_order)
+      end
     end
 
     context 'if the devices_ordered increases' do

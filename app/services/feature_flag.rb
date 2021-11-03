@@ -10,6 +10,7 @@ class FeatureFlag
     half_term_delivery_suspension
     donated_devices
     rb_level_access_notification
+    notify_when_cap_usage_decreases
   ].freeze
 
   FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze

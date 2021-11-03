@@ -12,22 +12,24 @@ class Computacenter::API::CapUsageUpdate
     @error = nil
   end
 
-  def apply!
+  def apply!(notify_decreases: true)
     log_to_devices_ordered_updates
     CapMismatch.new(school, device_type).warn(cap_amount) if cap_amount != school.allocation(device_type)
-    is_decreasing_cap = cap_used < school.devices_ordered(device_type)
+    cap_usage_change = cap_used - school.raw_devices_ordered(device_type)
     begin
-      UpdateSchoolDevicesService.new(school: school,
-                                     devices_ordered_field(device_type) => cap_used,
-                                     notify_computacenter: false,
-                                     notify_school: false).call
+      unless cap_usage_change.zero?
+        UpdateSchoolDevicesService.new(school: school,
+                                       devices_ordered_field(device_type) => cap_used,
+                                       notify_computacenter: false,
+                                       notify_school: false).call
+      end
     rescue Computacenter::OutgoingAPI::Error => e
       # Don't raise failure if a cascading cap update to CC fails
       Rails.logger.warn(e.message)
       school.refresh_preorder_status!
     end
 
-    SchoolCanOrderDevicesNotifications.new(school: school).call if is_decreasing_cap
+    SchoolCanOrderDevicesNotifications.new(school: school).call if cap_usage_change.negative? && notify_decreases
 
     @status = 'succeeded'
   end
