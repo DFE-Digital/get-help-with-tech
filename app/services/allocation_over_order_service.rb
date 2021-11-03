@@ -51,7 +51,7 @@ private
       UpdateSchoolDevicesService.new(school: member,
                                      allocation_type => allocation - claimed,
                                      cap_type => cap - claimed,
-                                     cap_change_category: :over_order_pool_reclaim).call
+                                     allocation_change_category: :over_order_pool_reclaim).call
     end
   end
 

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :cap_change do
+  factory :allocation_change do
     school_device_allocation
     category { 'increase' }
     delta { 1 }

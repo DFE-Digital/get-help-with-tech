@@ -9,13 +9,11 @@ class Support::EnableOrdersForm
 
   validates :order_state, inclusion: { in: School.order_states.keys }
   validates :laptop_cap, presence: true, if: :cap_required?
-  validates :laptop_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
+  validates :laptop_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }, if: :cap_required?
   validates :router_cap, presence: true, if: :cap_required?
-  validates :router_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
+  validates :router_cap, numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }, if: :cap_required?
 
-  validate :validate_caps_lte_allocation
-
-  before_validation :override_cap_according_to_order_state!
+  validate :validate_caps_lte_allocation, if: :cap_required?
 
   def laptop_cap=(value)
     @laptop_cap = ActiveModel::Type::Integer.new.cast(value)
@@ -30,27 +28,18 @@ class Support::EnableOrdersForm
   end
 
   def will_enable_orders?
-    order_state.to_s.in?(%w[can_order_for_specific_circumstances can_order])
+    order_state.to_sym.in?(%i[can_order_for_specific_circumstances can_order])
   end
 
 private
 
   def cap_required?
-    order_state.to_s == 'can_order_for_specific_circumstances'
+    order_state.to_sym == :can_order_for_specific_circumstances
   end
 
   def orders_enabled?
-    UpdateSchoolDevicesService.new(school: school,
-                                   order_state: order_state,
-                                   laptop_cap: laptop_cap,
-                                   router_cap: router_cap).call
-  end
-
-  def override_cap_according_to_order_state!
-    @laptop_cap = UpdateSchoolDevicesService.new(school: school, order_state: order_state)
-                                            .adjusted_cap_by_order_state(laptop_cap, device_type: :laptop)
-    @router_cap = UpdateSchoolDevicesService.new(school: school, order_state: order_state)
-                                            .adjusted_cap_by_order_state(router_cap, device_type: :router)
+    opts = { laptop_cap: laptop_cap, router_cap: router_cap } if cap_required?
+    UpdateSchoolDevicesService.new(school: school, order_state: order_state, **opts).call
   end
 
   def validate_caps_lte_allocation

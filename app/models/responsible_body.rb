@@ -120,6 +120,38 @@ class ResponsibleBody < ApplicationRecord
     [address_1, address_2, address_3, town, postcode].reject(&:blank?).join(', ')
   end
 
+  def calculate_vcaps!
+    DEVICE_TYPES.each { |device_type| calculate_vcap(device_type) }
+  end
+
+  def calculate_vcap(device_type, **opts)
+    laptop?(device_type) ? calculate_laptop_vcap(**opts) : calculate_router_vcap(**opts)
+  end
+
+  def calculate_laptop_vcap(**opts)
+    logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
+    sums = vcap_schools.pick('SUM(raw_laptop_allocation)',
+                             "SUM(CASE order_state WHEN 'cannot_order' THEN raw_laptops_ordered ELSE raw_laptop_cap)",
+                             'SUM(raw_laptops_ordered)')
+    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
+    update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
+    if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
+      update_cap_on_computacenter(:laptop, **opts)
+    end
+  end
+
+  def calculate_router_vcap(**opts)
+    logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
+    sums = vcap_schools.pick('SUM(raw_router_allocation)',
+                             "SUM(CASE order_state WHEN 'cannot_order' THEN raw_routers_ordered ELSE raw_router_cap)",
+                             'SUM(raw_routers_ordered)')
+    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
+    update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
+    if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
+      update_cap_on_computacenter(:router, **opts)
+    end
+  end
+
   def cap(device_type)
     laptop?(device_type) ? laptop_cap : router_cap
   end
@@ -207,34 +239,6 @@ class ResponsibleBody < ApplicationRecord
 
   def orders_managed_by_schools?
     %w[school schools].include?(who_will_order_devices)
-  end
-
-  def calculate_vcaps!
-    DEVICE_TYPES.each { |device_type| calculate_vcap(device_type) }
-  end
-
-  def calculate_vcap(device_type, **opts)
-    laptop?(device_type) ? calculate_laptop_vcap(**opts) : calculate_router_vcap(**opts)
-  end
-
-  def calculate_laptop_vcap(**opts)
-    logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
-    sums = vcap_schools.pick('SUM(raw_laptop_allocation)', 'SUM(raw_laptop_cap)', 'SUM(raw_laptops_ordered)')
-    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
-    update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
-    if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
-      update_cap_on_computacenter(:laptop, **opts)
-    end
-  end
-
-  def calculate_router_vcap(**opts)
-    logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
-    sums = vcap_schools.pick('SUM(raw_router_allocation)', 'SUM(raw_router_cap)', 'SUM(raw_routers_ordered)')
-    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
-    update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
-    if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
-      update_cap_on_computacenter(:router, **opts)
-    end
   end
 
   def schools_by_order_status

@@ -45,8 +45,11 @@ private
   end
 
   def pool_notified_agents?(device_type)
-    school.in_virtual_cap_pool? && [school.raw_cap(device_type),
-                                    school.raw_devices_ordered(device_type)].any?(&:positive?)
+    return false unless school.in_virtual_cap_pool?
+    return true if school.raw_devices_ordered(device_type).positive?
+    return false if school.cannot_order?
+
+    school.raw_cap(device_type).positive?
   end
 
   def recompute_pool(responsible_body = school.responsible_body)

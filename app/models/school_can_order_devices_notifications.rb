@@ -104,7 +104,7 @@ private
   end
 
   def new_cap_value
-    school&.raw_cap(:laptop)
+    school.cannot_order? ? school&.raw_devices_ordered(:laptop) : school&.raw_cap(:laptop)
   end
 
   def status?(*statuses, school:)

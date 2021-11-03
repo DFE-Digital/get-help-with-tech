@@ -18,7 +18,7 @@ class School < ApplicationRecord
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
-  has_many :cap_changes, dependent: :destroy, inverse_of: :school
+  has_many :allocation_changes, dependent: :destroy, inverse_of: :school
   has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
 
   validates :name, presence: true
@@ -69,14 +69,14 @@ class School < ApplicationRecord
   scope :excluding_la_funded_provisions, -> { where.not(type: 'LaFundedPlace') }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
 
-  scope :has_fully_ordered_laptops, -> { where('raw_laptops_ordered > 0 AND raw_laptop_cap = raw_laptops_ordered') }
-  scope :has_fully_ordered_routers, -> { where('raw_routers_ordered > 0 AND raw_router_cap = raw_routers_ordered') }
-  scope :has_partially_ordered_laptops, -> { where('raw_laptops_ordered > 0 AND raw_laptop_cap > raw_laptops_ordered') }
-  scope :has_partially_ordered_routers, -> { where('raw_routers_ordered > 0 AND raw_router_cap > raw_routers_ordered') }
+  scope :has_fully_ordered_laptops, -> { where("raw_laptops_ordered > 0 AND (order_state = 'cannot_order' OR raw_laptop_cap = raw_laptops_ordered)") }
+  scope :has_fully_ordered_routers, -> { where("raw_routers_ordered > 0 AND (order_state = 'cannot_order' OR raw_router_cap = raw_routers_ordered)") }
+  scope :has_partially_ordered_laptops, -> { where.not(order_state: :cannot_order).where('raw_laptops_ordered > 0 AND raw_laptop_cap > raw_laptops_ordered') }
+  scope :has_partially_ordered_routers, -> { where.not(order_state: :cannot_order).where('raw_routers_ordered > 0 AND raw_router_cap > raw_routers_ordered') }
   scope :has_not_ordered_laptops, -> { where(raw_laptops_ordered: 0) }
   scope :has_not_ordered_routers, -> { where(raw_routers_ordered: 0) }
-  scope :has_not_fully_ordered_laptops, -> { where('raw_laptop_cap > raw_laptops_ordered') }
-  scope :has_not_fully_ordered_routers, -> { where('raw_router_cap > raw_routers_ordered') }
+  scope :has_not_fully_ordered_laptops, -> { where.not(order_state: :cannot_order).where('raw_laptop_cap > raw_laptops_ordered') }
+  scope :has_not_fully_ordered_routers, -> { where.not(order_state: :cannot_order).where('raw_router_cap > raw_routers_ordered') }
 
   scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
   scope :in_virtual_cap_pool, -> { where(in_virtual_cap_pool: true) }
@@ -101,10 +101,10 @@ class School < ApplicationRecord
 
   def self.with_available_cap(device_type)
     if laptop?(device_type)
-      where('raw_laptop_cap > raw_laptops_ordered')
+      where('raw_laptop_cap > raw_laptops_ordered').where.not(order_state: :cannot_order)
         .order(Arel.sql('raw_laptop_cap - raw_laptops_ordered'))
     else
-      where('raw_router_cap > raw_routers_ordered')
+      where('raw_router_cap > raw_routers_ordered').where.not(order_state: :cannot_order)
         .order(Arel.sql('raw_router_cap - raw_routers_ordered'))
     end
   end
@@ -173,11 +173,13 @@ class School < ApplicationRecord
   end
 
   def cap(device_type)
-    in_virtual_cap_pool? ? vcap_cap(device_type) : raw_cap(device_type)
+    return vcap_cap(device_type) if in_virtual_cap_pool?
+
+    cannot_order? ? raw_devices_ordered(device_type) : raw_cap(device_type)
   end
 
   def computacenter_cap(device_type)
-    return raw_cap(device_type) unless in_virtual_cap_pool?
+    return cap(device_type) unless in_virtual_cap_pool?
 
     vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type)
   end
@@ -244,7 +246,7 @@ class School < ApplicationRecord
   end
 
   def has_not_fully_ordered_laptops_now?
-    raw_cap(:laptop) > raw_devices_ordered(:laptop)
+    raw_cap(:laptop) > raw_devices_ordered(:laptop) unless cannot_order?
   end
 
   def has_ordered?

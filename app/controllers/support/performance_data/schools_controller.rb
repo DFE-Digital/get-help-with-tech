@@ -25,10 +25,10 @@ private
               responsible_bodies.gias_id AS responsible_body_gias_id,
               responsible_bodies.companies_house_number AS responsible_body_companies_house_number,
               schools.raw_laptop_allocation AS allocation,
-              schools.raw_laptop_cap AS cap,
+              (CASE schools.order_state WHEN 'cannot_order' THEN schools.raw_laptops_ordered ELSE schools.raw_laptop_cap) AS cap,
               schools.raw_laptops_ordered AS devices_ordered,
               schools.raw_router_allocation AS coms_allocation,
-              schools.raw_router_cap AS coms_cap,
+              (CASE schools.order_state WHEN 'cannot_order' THEN schools.raw_routers_ordered ELSE schools.raw_router_cap) AS coms_cap,
               schools.raw_routers_ordered AS coms_devices_ordered,
               schools.preorder_status AS preorder_info_status,
               COALESCE( schools.who_will_order_devices, responsible_bodies.who_will_order_devices ) AS who_will_order_devices
@@ -36,9 +36,9 @@ private
       FROM    schools   INNER JOIN responsible_bodies
                                 ON responsible_bodies.id = schools.responsible_body_id
 
-      WHERE  schools.raw_laptop_cap > 0
+      WHERE  cap > 0
           OR schools.raw_laptop_allocation > 0
-          OR schools.raw_router_cap > 0
+          OR coms_cap > 0
           OR schools.raw_router_allocation > 0
     SQL
   end
