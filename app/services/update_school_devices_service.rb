@@ -1,16 +1,16 @@
 class UpdateSchoolDevicesService
-  attr_reader :allocation_change_category, :allocation_change_description,
+  attr_reader :cap_change_category, :cap_change_description,
               :laptop_allocation, :laptop_cap, :laptops_ordered,
               :router_allocation, :router_cap, :routers_ordered,
               :notify_computacenter, :notify_school, :order_state,
               :recalculate_vcaps, :school
 
-  OVER_ORDER_ALLOCATION_CHANGE_CATEGORY = :over_order
-  OVER_ORDER_ALLOCATION_CHANGE_DESCRIPTION = 'Over Order'.freeze
+  OVER_ORDER_CAP_CHANGE_CATEGORY = :over_order
+  OVER_ORDER_CAP_CHANGE_DESCRIPTION = 'Over Order'.freeze
 
   def initialize(school:, notify_school: true, notify_computacenter: true, recalculate_vcaps: true, **opts)
-    @allocation_change_category = opts[:allocation_change_category]
-    @allocation_change_description = opts[:allocation_change_description]
+    @cap_change_category = opts[:cap_change_category]
+    @cap_change_description = opts[:cap_change_description]
     @laptop_allocation = opts[:laptop_allocation]
     @laptop_cap = opts[:laptop_cap]
     @laptops_ordered = opts[:laptops_ordered]
@@ -41,10 +41,10 @@ private
 
   attr_reader :laptop_cap_changed, :router_cap_changed
 
-  def allocation_change_props_for(device_type)
+  def cap_change_props_for(device_type)
     {
-      category: allocation_change_category || over_order_category(device_type),
-      description: allocation_change_description || over_order_description(device_type),
+      category: cap_change_category || over_order_category(device_type),
+      description: cap_change_description || over_order_description(device_type),
     }
   end
 
@@ -71,11 +71,11 @@ private
   end
 
   def over_order_category(device_type)
-    over_ordered?(device_type) && OVER_ORDER_ALLOCATION_CHANGE_CATEGORY
+    over_ordered?(device_type) && OVER_ORDER_CAP_CHANGE_CATEGORY
   end
 
   def over_order_description(device_type)
-    over_ordered?(device_type) && OVER_ORDER_ALLOCATION_CHANGE_DESCRIPTION
+    over_ordered?(device_type) && OVER_ORDER_CAP_CHANGE_DESCRIPTION
   end
 
   def over_ordered?(device_type)
@@ -90,25 +90,13 @@ private
     end
   end
 
-  def record_allocation_change_meta_data!(device_type:,
-                                          school_id:,
-                                          prev_allocation:,
-                                          new_allocation:,
-                                          prev_cap:,
-                                          new_cap:,
-                                          prev_devices_ordered:,
-                                          new_devices_ordered:,
-                                          **opts)
+  def record_cap_change_meta_data!(device_type:, school_id:, prev_cap:, new_cap:, **opts)
     if opts[:category] || opts[:description]
       AllocationChange.create!(device_type: device_type,
                                school_id: school_id,
                                category: opts[:category],
-                               prev_allocation: prev_allocation,
-                               new_allocation: new_allocation,
                                prev_cap: prev_cap,
                                new_cap: new_cap,
-                               prev_devices_ordered: prev_devices_ordered,
-                               new_devices_ordered: new_devices_ordered,
                                description: opts[:description])
     end
   end
@@ -137,15 +125,11 @@ private
 
   def update_device_ordering!(allocation, cap, devices_ordered, device_type)
     value_changed?(school, :computacenter_cap, device_type) do
-      record_allocation_change_meta_data!(device_type: device_type,
-                                          school_id: school.id,
-                                          prev_allocation: school.raw_allocation(device_type),
-                                          next_allocation: allocation,
-                                          prev_cap: school.raw_cap(device_type),
-                                          new_cap: cap,
-                                          prev_devices_ordered: school.raw_devices_ordered(device_type),
-                                          new_cap: devices_ordered,
-                                          **allocation_change_props_for(device_type))
+      record_cap_change_meta_data!(device_type: device_type,
+                                   school_id: school.id,
+                                   prev_cap: school.raw_cap(device_type),
+                                   new_cap: cap,
+                                   **cap_change_props_for(device_type))
       update_device_numbers!(allocation, cap, devices_ordered, device_type)
     end
   end

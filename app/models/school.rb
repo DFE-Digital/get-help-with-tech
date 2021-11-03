@@ -18,7 +18,7 @@ class School < ApplicationRecord
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
-  has_many :allocation_changes, dependent: :destroy, inverse_of: :school
+  has_many :cap_changes, dependent: :destroy, inverse_of: :school
   has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
 
   validates :name, presence: true

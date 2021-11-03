@@ -4,8 +4,8 @@ RSpec.describe AllocationChange, type: :model do
   before { stub_computacenter_outgoing_api_calls }
 
   context 'when the school manages the allocation' do
-    context 'when fewer devices than the allocation are ordered' do
-      let(:school) { create(:school, laptops: [2, 2, 1]) }
+    context 'when no more devices than the allocation are ordered' do
+      let(:school) { create(:school, :in_lockdown, laptops: [2, 2, 1]) }
 
       it 'does not record an over order' do
         expect {

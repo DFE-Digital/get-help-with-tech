@@ -1,4 +1,4 @@
-class AllocationChange < ApplicationRecord
+class CapChange < ApplicationRecord
   belongs_to :school
 
   enum category: {
