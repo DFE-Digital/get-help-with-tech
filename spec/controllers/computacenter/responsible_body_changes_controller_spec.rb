@@ -44,6 +44,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
     before do
       create(:school,
              who_manages,
+             :in_lockdown,
              laptops: [2, 2, 1],
              routers: [2, 2, 1],
              responsible_body: rb,
@@ -51,6 +52,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
 
       create(:school,
              who_manages,
+             :in_lockdown,
              laptops: [2, 2, 1],
              routers: [2, 2, 1],
              responsible_body: rb,

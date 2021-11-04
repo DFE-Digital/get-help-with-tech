@@ -76,10 +76,12 @@ private
           UpdateSchoolDevicesService.new(school: school,
                                          "#{device_type}_allocation".to_sym => spare_allocation,
                                          "#{device_type}_cap".to_sym => spare_allocation,
+                                         recalculate_vcaps: false,
                                          notify_computacenter: false).call
           UpdateSchoolDevicesService.new(school: predecessor,
                                          "#{device_type}_allocation".to_sym => ordered,
                                          "#{device_type}_cap".to_sym => ordered,
+                                         recalculate_vcaps: false,
                                          notify_computacenter: false).call
         end
       end

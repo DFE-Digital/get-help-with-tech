@@ -106,16 +106,16 @@ RSpec.describe Support::AllocationForm, type: :model do
       context 'when a category for the allocation change is given' do
         let(:category) { :over_order }
 
-        it 'persist a new AllocationChange' do
-          expect { form.save }.to change(AllocationChange, :count).by(1)
+        it 'persist a new CapChange' do
+          expect { form.save }.to change(CapChange, :count).by(1)
         end
       end
 
       context 'when a description of the allocation change is given' do
         let(:description) { 'increase allocation for this specific school' }
 
-        it 'persist a new AllocationChange' do
-          expect { form.save }.to change(AllocationChange, :count).by(1)
+        it 'persist a new CapChange' do
+          expect { form.save }.to change(CapChange, :count).by(1)
         end
       end
 
@@ -240,16 +240,16 @@ RSpec.describe Support::AllocationForm, type: :model do
       context 'when a category for the allocation change is given' do
         let(:category) { :over_order }
 
-        it 'persist a new AllocationChange' do
-          expect { form.save }.to change(AllocationChange, :count).by(1)
+        it 'persist a new CapChange' do
+          expect { form.save }.to change(CapChange, :count).by(1)
         end
       end
 
       context 'when a description of the allocation change is given' do
         let(:description) { 'increase allocation for this specific school' }
 
-        it 'persist a new AllocationChange' do
-          expect { form.save }.to change(AllocationChange, :count).by(1)
+        it 'persist a new CapChange' do
+          expect { form.save }.to change(CapChange, :count).by(1)
         end
       end
 

@@ -92,12 +92,12 @@ private
 
   def record_cap_change_meta_data!(device_type:, school_id:, prev_cap:, new_cap:, **opts)
     if opts[:category] || opts[:description]
-      AllocationChange.create!(device_type: device_type,
-                               school_id: school_id,
-                               category: opts[:category],
-                               prev_cap: prev_cap,
-                               new_cap: new_cap,
-                               description: opts[:description])
+      CapChange.create!(device_type: device_type,
+                        school_id: school_id,
+                        category: opts[:category],
+                        prev_cap: prev_cap,
+                        new_cap: new_cap,
+                        description: opts[:description])
     end
   end
 

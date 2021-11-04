@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AllocationChange, type: :model do
+RSpec.describe CapChange, type: :model do
   before { stub_computacenter_outgoing_api_calls }
 
   context 'when the school manages the allocation' do

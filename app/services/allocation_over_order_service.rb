@@ -21,10 +21,6 @@ private
     end
   end
 
-  def allocation_type
-    router? ? :router_allocation : :laptop_allocation
-  end
-
   def available_caps_in_the_vcap_pool
     school.responsible_body.vcap_schools.with_available_cap(device_type).to_a - [school]
   end
@@ -44,13 +40,12 @@ private
   end
 
   def reclaim_cap_from_vcap_pool_member(member, quantity: 0)
-    allocation = member.raw_allocation(device_type)
     cap = member.raw_cap(device_type)
     devices_ordered = member.raw_devices_ordered(device_type)
     [cap - devices_ordered, quantity].min.tap do |claimed|
       UpdateSchoolDevicesService.new(school: member,
-                                     allocation_type => allocation - claimed,
                                      cap_type => cap - claimed,
+                                     recalculate_vcaps: false,
                                      cap_change_category: :over_order_pool_reclaim).call
     end
   end

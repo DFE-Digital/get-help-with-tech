@@ -34,6 +34,7 @@ RSpec.describe Computacenter::SchoolChangesController do
 
     let(:school) do
       create(:school,
+             :in_lockdown,
              laptops: [2, 2, 1],
              routers: [2, 2, 1],
              name: 'SchoolName',
