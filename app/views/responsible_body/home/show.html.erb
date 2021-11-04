@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <%= render TrancheAllocationComponentFactory.create_component(@responsible_body) %>
+    <%= render AllocationComponentFactory.create_component(@responsible_body) %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.responsible_body_devices_home'), responsible_body_devices_path %>

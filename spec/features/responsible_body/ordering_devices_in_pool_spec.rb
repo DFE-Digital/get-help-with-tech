@@ -31,8 +31,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     given_a_centrally_managed_school_within_a_pool_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
-    and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
-    and_i_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
@@ -40,8 +38,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
-    and_i_see_1_school_with_specific_circumstances_that_i_need_to_place_orders_for
-    and_i_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
@@ -50,8 +46,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     given_a_centrally_managed_school_within_a_pool_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
-    and_i_see_2_schools_that_i_need_to_place_orders_for
-    and_i_see_2_schools_that_i_have_already_placed_orders_for
     and_i_do_not_see_a_section_on_ordering_chromebooks
   end
 
@@ -67,7 +61,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     given_a_centrally_managed_school_within_a_pool_could_order_but_cannot_order_anymore
     when_i_visit_the_order_devices_page
     then_i_see_the_cannot_order_anymore_page
-    and_i_see_i_have_no_more_devices_to_order
   end
 
   def given_i_am_signed_in_as_a_responsible_body_user
@@ -159,35 +152,6 @@ RSpec.feature 'Ordering devices within a virtual pool' do
 
   def then_i_see_the_cannot_order_anymore_page
     expect(page).to have_css('h1', text: 'You’ve ordered all the devices you were allocated')
-  end
-
-  def and_i_see_1_school_in_local_restrictions_that_i_need_to_place_orders_for
-    expect(page).to have_text('19 devices available to order')
-  end
-
-  def and_i_see_1_school_in_local_restrictions_that_i_have_already_placed_orders_for
-    expect(page).to have_text('You’ve ordered 1 device and 2 routers')
-  end
-
-  def and_i_see_1_school_with_specific_circumstances_that_i_need_to_place_orders_for
-    expect(page).to have_text('2 devices available to order')
-  end
-
-  def and_i_see_1_school_with_specific_circumstances_that_i_have_already_placed_orders_for
-    expect(page).to have_text('You’ve ordered 1 device and 0 routers')
-  end
-
-  def and_i_see_2_schools_that_i_need_to_place_orders_for
-    expect(page).to have_text('21 devices available to order')
-  end
-
-  def and_i_see_2_schools_that_i_have_already_placed_orders_for
-    expect(page).to have_text('You’ve ordered 2 devices and 2 routers')
-  end
-
-  def and_i_see_i_have_no_more_devices_to_order
-    expect(page).to have_text('No devices left to order')
-    expect(page).to have_text('You’ve ordered 3 devices and 5 routers')
   end
 
   def and_i_do_not_see_a_section_on_ordering_chromebooks

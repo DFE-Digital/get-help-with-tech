@@ -8,7 +8,7 @@
       <%= t('page_titles.responsible_body.devices.order_devices') %>
     </h1>
 
-    <%= render DeviceCountComponent.new(school: @school) %>
+    <%= render AllocationComponentFactory.create_component(@school) %>
 
     <h2 class="govuk-heading-m">
       Before you order

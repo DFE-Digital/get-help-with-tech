@@ -44,8 +44,8 @@ RSpec.feature ResponsibleBody do
         expect(page).to have_content('Your account')
       end
 
-      it 'displays the tranche allocation' do
-        expect(page).to have_css('#tranche_allocation')
+      it 'displays the allocation' do
+        expect(page).to have_css('#allocation')
       end
     end
 

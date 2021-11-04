@@ -12,7 +12,7 @@
       <%= title %>
     </h1>
 
-    <%= render DeviceCountComponent.new(school: @school) %>
+    <%= render AllocationComponentFactory.create_component(@school) %>
 
     <p class="govuk-body">We’ll contact you if your allocation increases.</p>
 

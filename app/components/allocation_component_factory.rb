@@ -1,6 +1,6 @@
-class TrancheAllocationComponentFactory
+class AllocationComponentFactory
   def self.create_component(organisation)
-    TrancheAllocationComponent.new(
+    AllocationComponent.new(
       organisation: organisation,
       devices_ordered: organisation.devices_ordered(:laptop),
       routers_ordered: organisation.devices_ordered(:router),

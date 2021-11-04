@@ -21,15 +21,7 @@
       <%- end %>
     <%- else %>
       <%- if @school.has_allocation?(:laptop) %>
-        <%
-          show_action = @school.orders_managed_centrally? && (@school.devices_ordered(:laptop) < @school.cap(:laptop))
-          they_ordered_prefix = !@school.orders_managed_centrally?
-        %>
-        <%= render DeviceCountComponent.new(
-          school: @school,
-          show_action: show_action,
-          they_ordered_prefix: they_ordered_prefix,
-          action: { 'Order devices' => order_devices_responsible_body_devices_school_path(urn: @school.urn) }) %>
+        <%= render AllocationComponentFactory.create_component(@school) %>
       <% else %>
         <%= render partial: 'shared/school_without_allocation' %>
       <%- end %>

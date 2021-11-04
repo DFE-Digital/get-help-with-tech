@@ -10,7 +10,7 @@
 
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
-    <%= render DeviceCountComponent.new(school: @school) %>
+    <%= render AllocationComponentFactory.create_component(@school) %>
 
     <p class="govuk-body">Now you’ve contacted us to request devices for specific circumstances, you can go ahead with your order.</p>
 

@@ -11,7 +11,7 @@ RSpec.feature 'Order devices' do
     given_i_am_signed_in_as_a_school_user
 
     when_i_visit_the_order_devices_page
-    then_i_see_the_amount_of_devices_i_can_order
+    then_i_see_the_allocation_of_devices
     and_i_see_a_link_to_techsource
   end
 
@@ -105,8 +105,8 @@ RSpec.feature 'Order devices' do
     expect(page).to have_http_status(:ok)
   end
 
-  def then_i_see_the_amount_of_devices_i_can_order
-    expect(page).to have_text('80 devices are available to order')
+  def then_i_see_the_allocation_of_devices
+    expect(page).to have_text('allocation of 100 devices')
   end
 
   def and_i_see_a_link_to_techsource

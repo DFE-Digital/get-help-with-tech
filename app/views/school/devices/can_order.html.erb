@@ -11,7 +11,7 @@
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
     <%= render partial: 'shared/half_term_delivery_suspension' %>
 
-    <%= render DeviceCountComponent.new(school: @school) %>
+    <%= render AllocationComponentFactory.create_component(@school) %>
 
     <%= render partial: 'shared/stock_levels' %>
 

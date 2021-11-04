@@ -1,9 +1,9 @@
-<div id="tranche_allocation" class="app-card govuk-!-margin-bottom-4">
+<div id="allocation" class="app-card govuk-!-margin-bottom-4">
   <h2 id="total_allocation_sentence" class="govuk-heading-l">
     <%= total_allocation_sentence %>
   </h2>
 
-  <h2>You can order 4G routers.</h2>
+  <h2>You can order 4G routers</h2>
 
   <h2 id="ordered_sentence">
     <%= ordered_sentence %>
@@ -12,4 +12,6 @@
   <div id="current_tranche">
     <%= render GovukComponent::WarningTextComponent.new(text: 'These allocations are for the current winter 2021 Get help with tech programme. Devices received before 30 September 2021 are not included here.', classes: 'govuk-!-margin-bottom-0') %>
   </div>
+
+  <%= render OrderDevicesComponent.new(organisation: @organisation) %>
 </div>
