@@ -14,14 +14,12 @@
       students who do not have access to the internet at home.
     </p>
     <ul class="govuk-list govuk-list--spaced">
-      <% if (current_user.responsible_body_user? && @responsible_body.devices_available_to_order?(:router)) || (current_user.is_school_user? && current_user.school.devices_available_to_order?(:router)) %>
       <li>
         <%= govuk_link_to 'How to reset your router', '/devices/managing-your-4g-wireless-routers' %>
       </li>
       <li>
         <%= govuk_link_to 'See your Huawei router password', huawei_router_password_path %>
       </li>
-      <% end %>
     </ul>
   </div>
 </div>
