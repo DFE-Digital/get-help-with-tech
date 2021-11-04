@@ -32,6 +32,7 @@ private
     }.merge(who_to_contact_form_params))
 
     if @form.invalid?
+      load_schools_by_order_status
       render :new, status: :unprocessable_entity
     else
       chosen_contact = @form.chosen_contact
