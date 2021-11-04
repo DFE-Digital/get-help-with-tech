@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TrancheAllocationComponentFactory do
+RSpec.describe AllocationComponentFactory do
   describe '.initialize' do
     let(:organisation) { spy }
 
@@ -10,6 +10,6 @@ RSpec.describe TrancheAllocationComponentFactory do
     specify { expect(organisation).to have_received(:devices_ordered).with(:router) }
     specify { expect(organisation).to have_received(:allocation).with(:laptop) }
 
-    specify { expect(described_class.create_component(organisation)).to be_an_instance_of(TrancheAllocationComponent) }
+    specify { expect(described_class.create_component(organisation)).to be_an_instance_of(AllocationComponent) }
   end
 end

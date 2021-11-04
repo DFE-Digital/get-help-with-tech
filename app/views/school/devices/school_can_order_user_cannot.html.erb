@@ -11,7 +11,7 @@
 
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
-    <%= render DeviceCountComponent.new(school: @school) %>
+    <%= render AllocationComponentFactory.create_component(@school) %>
 
     <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
 

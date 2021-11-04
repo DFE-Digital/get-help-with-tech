@@ -14,7 +14,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= render ResponsibleBody::PooledDeviceCountComponent.new(responsible_body: @responsible_body) %>
+    <%= render AllocationComponentFactory.create_component(@responsible_body) %>
 
     <p class="govuk-body">We’ll contact you if your allocation increases.</p>
 
