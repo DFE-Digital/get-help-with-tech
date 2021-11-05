@@ -135,16 +135,30 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       }.to change { School.find(school.id).order_state }.from('cannot_order').to(order_state)
     end
 
-    it 'sets the given laptop cap to the school' do
+    it 'sets the given raw laptop cap to the school' do
       expect {
         patch :update, params: params
-      }.to change { school.reload.cap(:laptop) }.from(4).to(3)
+      }.to change { school.reload.raw_cap(:laptop) }.from(4).to(3)
     end
 
-    it 'sets the given router cap to the school' do
+    it 'update the laptop cap of the school' do
+      expect(school.cap(:laptop)).to eq(1)
       expect {
         patch :update, params: params
-      }.to change { school.reload.cap(:router) }.from(4).to(2)
+      }.to change { school.reload.cap(:laptop) }.from(1).to(3)
+    end
+
+    it 'sets the given raw router cap to the school' do
+      expect {
+        patch :update, params: params
+      }.to change { school.reload.raw_cap(:router) }.from(4).to(2)
+    end
+
+    it 'update the router cap of the school' do
+      expect(school.cap(:router)).to eq(1)
+      expect {
+        patch :update, params: params
+      }.to change { school.reload.cap(:router) }.from(1).to(2)
     end
 
     context 'when the school is not in virtual cap pool' do
@@ -202,12 +216,12 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       let(:requests) do
         [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '6' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '6' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '12', 'capAmount' => '3' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '5' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '5' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '2' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '12', 'capAmount' => '2' },
           ],
         ]
       end

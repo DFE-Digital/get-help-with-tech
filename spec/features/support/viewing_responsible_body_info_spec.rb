@@ -316,11 +316,11 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     expect(first_row).to have_text('Needs a contact')
     # devices
     expect(first_row).to have_text('5 allocated')
-    expect(first_row).to have_text('3 caps')
+    expect(first_row).to have_text('1 caps')
     expect(first_row).to have_text('1 ordered')
     # dongles
     expect(first_row).to have_text('4 allocated')
-    expect(first_row).to have_text('2 caps')
+    expect(first_row).to have_text('0 caps')
     expect(first_row).to have_text('0 ordered')
     expect(first_row).to have_text('School')
 

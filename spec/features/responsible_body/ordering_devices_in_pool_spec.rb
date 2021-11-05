@@ -80,7 +80,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     UpdateSchoolDevicesService.new(school: schools[0],
                                    order_state: :can_order,
                                    laptop_allocation: 20,
-                                   laptop_cap: 3,
+                                   laptop_cap: 20,
                                    laptops_ordered: 1,
                                    router_allocation: 10,
                                    router_cap: 5,

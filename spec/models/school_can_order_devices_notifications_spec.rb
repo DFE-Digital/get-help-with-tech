@@ -103,9 +103,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school,
-                                       order_state: :can_order,
-                                       laptop_cap: school.allocation(:laptop)).call
+        UpdateSchoolDevicesService.new(school: school, order_state: :can_order, laptop_cap: 1).call
       end
 
       context 'user has confirmed techsource account' do

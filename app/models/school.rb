@@ -358,6 +358,10 @@ class School < ApplicationRecord
     laptop?(device_type) ? :raw_laptop_cap : :raw_router_cap
   end
 
+  def raw_devices_available_to_order(device_type)
+    [0, raw_cap(device_type) - raw_devices_ordered(device_type)].max
+  end
+
   def raw_devices_ordered(device_type)
     laptop?(device_type) ? raw_laptops_ordered : raw_routers_ordered
   end
@@ -435,7 +439,8 @@ private
   end
 
   def calculate_vcap?(device_type)
-    previous_changes.include?(raw_allocation_field(device_type)) ||
+    previous_changes.include?(:order_state) ||
+      previous_changes.include?(raw_allocation_field(device_type)) ||
       previous_changes.include?(raw_cap_field(device_type)) ||
       previous_changes.include?(raw_devices_ordered_field(device_type))
   end

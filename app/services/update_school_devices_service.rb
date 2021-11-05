@@ -25,12 +25,16 @@ class UpdateSchoolDevicesService
   end
 
   def call
-    return unless update_state? || ordering?(:laptop) || ordering?(:router)
+    return unless allocation_numbers_will_change?
 
+    @laptop_initial_cap = school.cap(:laptop) if laptops_will_change?
+    @router_initial_cap = school.cap(:router) if routers_will_change?
     School.transaction do
       update_state!
       update_laptop_allocations! if ordering?(:laptop)
+      school.calculate_vcaps_if_needed(:laptop) if recalculate_vcaps
       update_router_allocations! if ordering?(:router)
+      school.calculate_vcaps_if_needed(:router) if recalculate_vcaps
       school.refresh_preorder_status!
       notify_other_agents if notify_computacenter && !notifications_sent_by_pool_update?
       true
@@ -39,7 +43,11 @@ class UpdateSchoolDevicesService
 
 private
 
-  attr_reader :laptop_cap_changed, :router_cap_changed
+  attr_reader :laptop_initial_cap, :router_initial_cap
+
+  def allocation_numbers_will_change?
+    laptops_will_change? || routers_will_change?
+  end
 
   def cap_change_props_for(device_type)
     {
@@ -52,13 +60,17 @@ private
     device_type.to_sym == :laptop
   end
 
+  def laptops_will_change?
+    update_state? || ordering?(:laptop)
+  end
+
   def notifications_sent_by_pool_update?
     recalculate_vcaps && school.in_virtual_cap_pool?
   end
 
   def notify_other_agents
-    device_types = laptop_cap_changed ? %i[laptop] : []
-    device_types << :router if router_cap_changed
+    device_types = laptops_will_change? && laptop_initial_cap != school.cap(:laptop) ? %i[laptop] : []
+    device_types << :router if routers_will_change? && router_initial_cap != school.cap(:router)
     CapUpdateNotificationsService.new(school, device_types: device_types, notify_school: notify_school).call
   end
 
@@ -84,9 +96,9 @@ private
 
   def over_order(device_type)
     if laptop?(device_type)
-      @laptop_over_ordered ||= laptops_ordered - laptop_allocation
+      @laptop_over_ordered ||= laptops_ordered - [laptop_allocation, laptop_cap].max
     else
-      @router_over_ordered ||= routers_ordered - router_allocation
+      @router_over_ordered ||= routers_ordered - [router_allocation, router_cap].max
     end
   end
 
@@ -101,6 +113,10 @@ private
     end
   end
 
+  def routers_will_change?
+    update_state? || ordering?(:router)
+  end
+
   def update_laptop_allocations!
     @laptop_allocation ||= school.raw_allocation(:laptop)
     @laptops_ordered ||= school.raw_devices_ordered(:laptop)
@@ -108,8 +124,7 @@ private
     @laptop_cap = laptops_ordered if over_ordered?(:laptop)
 
     AllocationOverOrderService.new(school, over_order(:laptop), :laptop).call if over_ordered?(:laptop)
-    @laptop_cap_changed = update_device_ordering!(laptop_allocation, laptop_cap, laptops_ordered, :laptop)
-    school.calculate_vcaps_if_needed(:laptop) if recalculate_vcaps
+    update_device_ordering!(laptop_allocation, laptop_cap, laptops_ordered, :laptop)
   end
 
   def update_router_allocations!
@@ -119,19 +134,16 @@ private
     @router_cap = routers_ordered if over_ordered?(:router)
 
     AllocationOverOrderService.new(school, over_order(:router), :router).call if over_ordered?(:router)
-    @router_cap_changed = update_device_ordering!(router_allocation, router_cap, routers_ordered, :router)
-    school.calculate_vcaps_if_needed(:router) if recalculate_vcaps
+    update_device_ordering!(router_allocation, router_cap, routers_ordered, :router)
   end
 
   def update_device_ordering!(allocation, cap, devices_ordered, device_type)
-    value_changed?(school, :computacenter_cap, device_type) do
-      record_cap_change_meta_data!(device_type: device_type,
-                                   school_id: school.id,
-                                   prev_cap: school.raw_cap(device_type),
-                                   new_cap: cap,
-                                   **cap_change_props_for(device_type))
-      update_device_numbers!(allocation, cap, devices_ordered, device_type)
-    end
+    record_cap_change_meta_data!(device_type: device_type,
+                                 school_id: school.id,
+                                 prev_cap: school.raw_cap(device_type),
+                                 new_cap: cap,
+                                 **cap_change_props_for(device_type))
+    update_device_numbers!(allocation, cap, devices_ordered, device_type)
   end
 
   def update_device_numbers!(allocation, cap, devices_ordered, device_type)
@@ -145,12 +157,8 @@ private
   end
 
   def update_state?
-    school.order_state.to_sym != order_state.to_sym
-  end
+    return @update_state if instance_variable_defined?(:@update_state)
 
-  def value_changed?(receiver, method, *args)
-    initial = receiver.send(method, *args)
-    yield
-    initial != receiver.send(method, *args)
+    @update_state = school.order_state.to_sym != order_state.to_sym
   end
 end

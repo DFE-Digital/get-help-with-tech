@@ -9,6 +9,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
 
   let!(:school_1) do
     create(:school,
+           :in_lockdown,
            :centrally_managed,
            computacenter_reference: '01234567',
            responsible_body: trust,
@@ -17,6 +18,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
 
   let!(:school_2) do
     create(:school,
+           :in_lockdown,
            :centrally_managed,
            computacenter_reference: '98765432',
            responsible_body: trust,

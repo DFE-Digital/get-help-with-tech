@@ -70,7 +70,12 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
       end
 
       it 'update caps on Computacenter' do
-        requests = [[{ 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '100', 'capAmount' => '2' }, { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '100', 'capAmount' => '2' }]]
+        requests = [
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '100', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '100', 'capAmount' => '1' },
+          ],
+        ]
 
         expect(save).to be_truthy
 

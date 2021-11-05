@@ -8,7 +8,7 @@ RSpec.describe InterstitialPicker do
       let(:la) { school.responsible_body }
 
       context 'when devices can be ordered' do
-        let(:school) { create :iss_provision, laptops: [2, 1, 0] }
+        let(:school) { create :iss_provision, :in_lockdown, laptops: [2, 1, 0] }
 
         it 'uses partial interstitials/la_funded_user' do
           expect(service.call.partial).to eq 'interstitials/la_funded_user'
@@ -30,8 +30,8 @@ RSpec.describe InterstitialPicker do
       let(:la) { school.responsible_body }
 
       context 'when devices can be ordered' do
-        let(:iss_provision) { create :iss_provision, laptops: [2, 1, 0] }
-        let(:scl_provision) { create :scl_provision, laptops: [2, 1, 0] }
+        let(:iss_provision) { create :iss_provision, :in_lockdown, laptops: [2, 1, 0] }
+        let(:scl_provision) { create :scl_provision, :in_lockdown, laptops: [2, 1, 0] }
 
         it 'uses partial interstitials/la_funded_user' do
           expect(service.call.partial).to eq 'interstitials/la_funded_user'
@@ -53,7 +53,7 @@ RSpec.describe InterstitialPicker do
       let(:service) { described_class.new(user: user) }
 
       context 'when devices can be orderd' do
-        let(:school) { create :iss_provision, laptops: [2, 1, 0] }
+        let(:school) { create :iss_provision, :in_lockdown, laptops: [2, 1, 0] }
 
         it 'uses partial interstitials/iss_provision_user' do
           expect(service.call.partial).to eq 'interstitials/iss_provision_user'
@@ -74,7 +74,7 @@ RSpec.describe InterstitialPicker do
       let(:service) { described_class.new(user: user) }
 
       context 'when devices can be orderd' do
-        let(:school) { create :scl_provision, laptops: [2, 1, 0] }
+        let(:school) { create :scl_provision, :in_lockdown, laptops: [2, 1, 0] }
 
         it 'uses partial interstitials/scl_provision_user' do
           expect(service.call.partial).to eq 'interstitials/scl_provision_user'

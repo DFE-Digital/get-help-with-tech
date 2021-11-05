@@ -70,8 +70,8 @@ RSpec.describe AllocationOverOrderService, type: :model do
       end
 
       context 'when the pool has not enough devices available' do
-        let(:alert) { 'Unable to reclaim all of the allocation in the vcap to cover the over-order' }
-        let(:sentry_context_key) { 'AllocationOverOrderService#reclaim_allocation_across_virtual_cap_pool' }
+        let(:alert) { 'Unable to reclaim all of the cap in the vcap to cover the over-order' }
+        let(:sentry_context_key) { 'AllocationOverOrderService#reclaim_cap_across_virtual_cap_pool' }
         let(:sentry_context_value) do
           {
             device_type: :laptop,
@@ -103,7 +103,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
           expect_school_to_be_in_rb(school_id: school.id,
                                     rb_id: rb.id,
                                     vcap: true,
-                                    laptop_allocation: 20,
+                                    laptop_allocation: 15,
                                     laptop_cap: 20,
                                     laptops_ordered: 20,
                                     router_allocation: 0,
@@ -116,7 +116,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
             expect_school_to_be_in_rb(school_id: school.id,
                                       rb_id: rb.id,
                                       vcap: true,
-                                      laptop_allocation: 20,
+                                      laptop_allocation: 15,
                                       laptop_cap: 20,
                                       laptops_ordered: 20,
                                       router_allocation: 0,
@@ -133,9 +133,9 @@ RSpec.describe AllocationOverOrderService, type: :model do
     end
 
     context 'when the school is not in virtual cap pool' do
-      let(:school) { create(:school, :manages_orders, responsible_body: rb, laptops: [5, 4, 1]) }
+      let(:school) { create(:school, :in_lockdown, :manages_orders, responsible_body: rb, laptops: [5, 4, 1]) }
 
-      it 'adjust cap and allocation values to match devices ordered' do
+      it 'adjust cap value to match the devices ordered' do
         allow(school).to receive(:refresh_preorder_status!).and_call_original
         requests = [
           [
@@ -149,7 +149,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
         expect_school_to_be_in_rb(school_id: school.id,
                                   rb_id: rb.id,
                                   vcap: false,
-                                  laptop_allocation: 9,
+                                  laptop_allocation: 5,
                                   laptop_cap: 9,
                                   laptops_ordered: 9,
                                   router_allocation: 0,

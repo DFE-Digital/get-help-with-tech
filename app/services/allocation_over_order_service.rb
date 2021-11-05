@@ -45,6 +45,7 @@ private
     [cap - devices_ordered, quantity].min.tap do |claimed|
       UpdateSchoolDevicesService.new(school: member,
                                      cap_type => cap - claimed,
+                                     notify_computacenter: false,
                                      recalculate_vcaps: false,
                                      cap_change_category: :over_order_pool_reclaim).call
     end

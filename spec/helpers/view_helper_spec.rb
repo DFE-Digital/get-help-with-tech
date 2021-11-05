@@ -4,7 +4,7 @@ RSpec.describe ViewHelper do
   describe '#what_to_order_allocation_list' do
     context 'with school device allocations' do
       context 'when devices available to order' do
-        let(:school) { build_stubbed(:school, laptops: [4, 4, 1]) }
+        let(:school) { build_stubbed(:school, :in_lockdown, laptops: [4, 4, 1]) }
 
         it 'returns X devices' do
           expect(helper.what_to_order_allocation_list(school)).to eql('3 devices and 0 routers')
@@ -12,7 +12,7 @@ RSpec.describe ViewHelper do
       end
 
       context 'when devices and routers available to order' do
-        let(:school) { build_stubbed(:school, laptops: [10, 10, 3], routers: [4, 4, 1]) }
+        let(:school) { build_stubbed(:school, :in_lockdown, laptops: [10, 10, 3], routers: [4, 4, 1]) }
 
         it 'X devices and X routers' do
           expect(helper.what_to_order_allocation_list(school)).to eql('7 devices and 3 routers')
@@ -41,7 +41,7 @@ RSpec.describe ViewHelper do
 
   describe '#what_to_order_availability' do
     context 'when devices available to order' do
-      let(:school) { create(:school, laptops: [10, 4, 1]) }
+      let(:school) { create(:school, :in_lockdown, laptops: [10, 4, 1]) }
 
       it 'returns Order X devices' do
         expect(helper.what_to_order_availability(school)).to eql('Order 3 devices and 0 routers')
@@ -59,7 +59,7 @@ RSpec.describe ViewHelper do
     end
 
     context 'when devices and routers available to order' do
-      let(:school) { build_stubbed(:school, laptops: [20, 10, 3], routers: [20, 4, 1]) }
+      let(:school) { build_stubbed(:school, :in_lockdown, laptops: [20, 10, 3], routers: [20, 4, 1]) }
 
       it 'returns Order X devices and X routers' do
         expect(helper.what_to_order_availability(school)).to eql('Order 7 devices and 3 routers')

@@ -2,7 +2,6 @@ class AllocationJob < ApplicationJob
   queue_as :default
 
   attr_reader :allocation_batch_job, :allocation_delta,
-              :current_raw_laptop_allocation, :current_raw_laptop_cap,
               :new_raw_laptop_allocation, :new_raw_laptop_cap,
               :notify_computacenter, :notify_school, :recalculate_vcaps
 
@@ -22,15 +21,11 @@ class AllocationJob < ApplicationJob
 private
 
   def recompute_laptop_allocation_numbers
-    @current_raw_laptop_allocation = school.raw_allocation(:laptop)
-    @current_raw_laptop_cap = school.raw_cap(:laptop)
-    @new_raw_laptop_allocation = current_raw_laptop_allocation + allocation_delta
-    @new_raw_laptop_cap = current_raw_laptop_cap + allocation_delta
-    if allocation_delta.negative?
-      negative_allocation_delta = [-school.devices_available_to_order(:laptop), allocation_delta].max
-      @new_raw_laptop_allocation = current_raw_laptop_allocation + negative_allocation_delta
-      @new_raw_laptop_cap = [current_raw_laptop_cap + negative_allocation_delta, new_raw_laptop_allocation].min
-    end
+    delta = [-school.raw_devices_available_to_order(:laptop), allocation_delta].max
+    @new_raw_laptop_allocation = school.raw_allocation(:laptop) + delta
+    cap_lower_limit = school.raw_devices_ordered(:laptop)
+    cap_upper_limit = [new_raw_laptop_allocation, cap_lower_limit].max
+    @new_raw_laptop_cap = [[school.raw_cap(:laptop) + delta, cap_lower_limit].max, cap_upper_limit].min
   end
 
   def persist_changes

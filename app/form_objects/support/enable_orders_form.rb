@@ -38,7 +38,7 @@ private
   end
 
   def orders_enabled?
-    opts = { laptop_cap: laptop_cap, router_cap: router_cap } if cap_required?
+    opts = cap_required? ? { laptop_cap: laptop_cap, router_cap: router_cap } : {}
     UpdateSchoolDevicesService.new(school: school, order_state: order_state, **opts).call
   end
 

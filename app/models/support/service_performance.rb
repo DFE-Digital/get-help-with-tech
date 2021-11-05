@@ -34,7 +34,7 @@ class Support::ServicePerformance
   end
 
   def total_devices_available
-    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN raw_laptops_ordered ELSE raw_laptop_cap"))
+    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN raw_laptops_ordered ELSE raw_laptop_cap END"))
   end
 
   def total_devices_ordered
@@ -42,11 +42,11 @@ class Support::ServicePerformance
   end
 
   def total_devices_remaining
-    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN 0 ELSE raw_laptop_cap - raw_laptops_ordered"))
+    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN 0 ELSE raw_laptop_cap - raw_laptops_ordered END"))
   end
 
   def total_routers_available
-    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN raw_routers_ordered ELSE raw_router_cap"))
+    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN raw_routers_ordered ELSE raw_router_cap END"))
   end
 
   def total_routers_ordered
@@ -54,7 +54,7 @@ class Support::ServicePerformance
   end
 
   def total_routers_remaining
-    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN 0 ELSE raw_router_cap - raw_routers_ordered"))
+    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order' THEN 0 ELSE raw_router_cap - raw_routers_ordered END"))
   end
 
   def sum_allocation(sum_expression)

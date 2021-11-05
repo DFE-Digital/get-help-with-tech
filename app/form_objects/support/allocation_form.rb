@@ -7,6 +7,7 @@
   delegate :in_virtual_cap_pool?,
            :order_state,
            :raw_allocation,
+           :raw_cap,
            :raw_devices_ordered,
            to: :school
 
@@ -25,9 +26,15 @@ private
 
   def allocation_updated?
     UpdateSchoolDevicesService.new(school: school,
-                                   order_state: order_state,
                                    "#{device_type}_allocation".to_sym => allocation,
-                                   "#{device_type}_cap".to_sym => allocation).call
+                                   "#{device_type}_cap".to_sym => cap).call
+  end
+
+  def cap
+    delta = allocation - raw_allocation(device_type)
+    lower_limit = raw_devices_ordered(device_type)
+    upper_limit = [allocation, lower_limit].max
+    [[raw_cap(device_type) + delta, lower_limit].max, upper_limit].min
   end
 
   def check_decrease_allowed

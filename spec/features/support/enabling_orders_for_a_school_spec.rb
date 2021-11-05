@@ -71,8 +71,8 @@ RSpec.feature 'Enabling orders for a school from the support area' do
            :manages_orders,
            order_state: :cannot_order,
            computacenter_reference: 'cc_ref',
-           laptops: [50, 0, 0],
-           routers: [40, 0, 0],
+           laptops: [50, 50, 0],
+           routers: [40, 40, 0],
            preorder_status: 'ready')
   end
 
