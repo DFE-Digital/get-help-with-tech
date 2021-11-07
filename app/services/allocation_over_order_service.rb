@@ -25,10 +25,6 @@ private
     school.responsible_body.vcap_schools.with_available_cap(device_type).to_a - [school]
   end
 
-  def cap_type
-    router? ? :router_cap : :laptop_cap
-  end
-
   def reclaim_cap_across_virtual_cap_pool
     School.transaction do
       failed_to_reclaim = available_caps_in_the_vcap_pool.inject(over_order) do |quantity, member|
@@ -40,18 +36,13 @@ private
   end
 
   def reclaim_cap_from_vcap_pool_member(member, quantity: 0)
-    cap = member.raw_cap(device_type)
-    devices_ordered = member.raw_devices_ordered(device_type)
-    [cap - devices_ordered, quantity].min.tap do |claimed|
+    [member.raw_devices_available_to_order(device_type), quantity].min.tap do |claimed|
+      over_order_field = member.over_order_reclaimed_devices_field(device_type)
       UpdateSchoolDevicesService.new(school: member,
-                                     cap_type => cap - claimed,
+                                     over_order_field => member.over_order_reclaimed_devices(device_type) - claimed,
                                      notify_computacenter: false,
                                      recalculate_vcaps: false,
                                      cap_change_category: :over_order_pool_reclaim).call
     end
-  end
-
-  def router?
-    device_type.to_sym == :router
   end
 end

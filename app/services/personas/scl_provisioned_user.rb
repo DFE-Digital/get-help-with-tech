@@ -52,8 +52,8 @@ private
     UpdateSchoolDevicesService.new(school: @scl_funded_place,
                                    state: :can_order,
                                    laptop_allocation: 50,
-                                   laptop_cap: 50,
+                                   over_order_reclaimed_laptops: 50,
                                    router_allocation: 50,
-                                   router_cap: 50)
+                                   over_order_reclaimed_routers: 50)
   end
 end

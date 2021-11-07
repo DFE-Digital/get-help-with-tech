@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_150517) do
+ActiveRecord::Schema.define(version: 2021_11_05_224402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -423,15 +423,17 @@ ActiveRecord::Schema.define(version: 2021_11_02_150517) do
     t.datetime "school_contacted_at"
     t.string "who_will_order_devices"
     t.integer "raw_laptop_allocation", default: 0, null: false
-    t.integer "raw_laptop_cap", default: 0, null: false
     t.integer "raw_laptops_ordered", default: 0, null: false
     t.datetime "laptop_cap_update_request_timestamp"
     t.string "laptop_cap_update_request_payload_id"
     t.integer "raw_router_allocation", default: 0, null: false
-    t.integer "raw_router_cap", default: 0, null: false
     t.integer "raw_routers_ordered", default: 0, null: false
     t.datetime "router_cap_update_request_timestamp"
     t.string "router_cap_update_request_payload_id"
+    t.integer "circumstances_laptops", default: 0, null: false
+    t.integer "circumstances_routers", default: 0, null: false
+    t.integer "over_order_reclaimed_laptops", default: 0, null: false
+    t.integer "over_order_reclaimed_routers", default: 0, null: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["provision_urn"], name: "index_schools_on_provision_urn", unique: true

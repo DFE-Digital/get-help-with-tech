@@ -50,7 +50,6 @@ RSpec.describe UserCanOrderDevicesNotifications do
       UpdateSchoolDevicesService.new(school: school,
                                      order_state: :can_order,
                                      laptop_allocation: 10,
-                                     laptop_cap: 10,
                                      laptops_ordered: 0).call
     end
 

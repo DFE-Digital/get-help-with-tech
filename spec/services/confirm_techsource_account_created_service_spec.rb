@@ -47,8 +47,8 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
         before do
           stub_computacenter_outgoing_api_calls
           UpdateSchoolDevicesService.new(school: school,
-                                         laptop_cap: 10,
                                          laptop_allocation: 10,
+                                         over_order_reclaimed_laptops: 0,
                                          laptops_ordered: 10).call
         end
 

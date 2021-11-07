@@ -38,9 +38,8 @@ RSpec.feature 'Ordering via a school' do
       before do
         stub_computacenter_outgoing_api_calls
         UpdateSchoolDevicesService.new(school: school,
-                                       order_state: 'can_order',
+                                       order_state: :can_order,
                                        laptop_allocation: 12,
-                                       laptop_cap: 12,
                                        laptops_ordered: 3).call
       end
 
@@ -80,7 +79,6 @@ RSpec.feature 'Ordering via a school' do
         UpdateSchoolDevicesService.new(school: school,
                                        order_state: 'can_order',
                                        laptop_allocation: 12,
-                                       laptop_cap: 12,
                                        laptops_ordered: 3).call
       end
 

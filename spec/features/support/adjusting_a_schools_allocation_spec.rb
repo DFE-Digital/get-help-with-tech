@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Adjusting a schools allocation' do
   let(:support_user) { create(:support_user) }
-  let(:school) { create(:school, order_state: :cannot_order, laptops: [50, 0, 10]) }
+  let(:school) { create(:school, order_state: :cannot_order, laptops: [50, 50, 10]) }
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }
 

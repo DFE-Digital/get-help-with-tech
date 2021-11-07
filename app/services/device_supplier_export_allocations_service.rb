@@ -82,7 +82,7 @@ private
      responsible_body.county,
      responsible_body.postcode,
      school.raw_allocation(:laptop),
-     school.cannot_order? ? school.raw_devices_ordered(:laptop) : school.raw_cap(:laptop),
+     school.raw_cap(:laptop),
      school.computacenter_cap(:laptop),
      school.raw_devices_ordered(:laptop),
      rb_vcap_feature_flag_text(school),

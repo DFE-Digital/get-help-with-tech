@@ -121,8 +121,9 @@ RSpec.describe Support::AllocationForm, type: :model do
           ]
         end
 
-        it 'update school device raw cap to add the allocation delta' do
-          expect { form.save }.to change { school.raw_cap(:laptop) }.from(4).to(5)
+        it 'do not change school device raw cap' do
+          expect(school.raw_cap(:laptop)).to be(1)
+          expect { form.save }.not_to(change { school.reload.raw_cap(:laptop) })
         end
 
         it 'the pool device cap remains unchanged' do
@@ -213,8 +214,8 @@ RSpec.describe Support::AllocationForm, type: :model do
       context 'when the school cannot order' do
         let(:order_state) { 'cannot_order' }
 
-        it 'update school raw device cap by allocation delta.' do
-          expect { form.save }.to change { school.raw_cap(:laptop) }.from(4).to(2)
+        it 'do not update school raw device cap' do
+          expect { form.save }.not_to(change { school.raw_cap(:laptop) })
         end
 
         it 'do not change school device cap' do

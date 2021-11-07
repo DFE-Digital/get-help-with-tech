@@ -31,10 +31,10 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
       school.update!(who_will_order_devices: :school,
                      will_need_chromebooks: :no,
                      raw_laptop_allocation: 2,
-                     raw_laptop_cap: 1,
+                     over_order_reclaimed_laptops: -1,
                      raw_laptops_ordered: 0,
                      raw_router_allocation: 1,
-                     raw_router_cap: 0,
+                     over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
       school.can_order!
@@ -44,10 +44,10 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
       school.update!(who_will_order_devices: :school,
                      will_need_chromebooks: :no,
                      raw_laptop_allocation: 10,
-                     raw_laptop_cap: 10,
+                     over_order_reclaimed_laptops: 0,
                      raw_laptops_ordered: 10,
                      raw_router_allocation: 1,
-                     raw_router_cap: 0,
+                     over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
     end
@@ -56,10 +56,10 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
       school.update!(who_will_order_devices: :school,
                      will_need_chromebooks: :no,
                      raw_laptop_allocation: 1,
-                     raw_laptop_cap: 0,
+                     over_order_reclaimed_laptops: -1,
                      raw_laptops_ordered: 0,
                      raw_router_allocation: 1,
-                     raw_router_cap: 0,
+                     over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
     end
@@ -68,10 +68,10 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
       school.update!(who_will_order_devices: :responsible_body,
                      will_need_chromebooks: :no,
                      raw_laptop_allocation: 2,
-                     raw_laptop_cap: 1,
+                     over_order_reclaimed_laptops: -1,
                      raw_laptops_ordered: 0,
                      raw_router_allocation: 1,
-                     raw_router_cap: 0,
+                     over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
       school.responsible_body.update!(who_will_order_devices: 'responsible_body')
@@ -82,10 +82,10 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
       school.update!(who_will_order_devices: :responsible_body,
                      will_need_chromebooks: :no,
                      raw_laptop_allocation: 1,
-                     raw_laptop_cap: 0,
+                     over_order_reclaimed_laptops: -1,
                      raw_laptops_ordered: 0,
                      raw_router_allocation: 1,
-                     raw_router_cap: 0,
+                     over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
       school.responsible_body.update!(who_will_order_devices: 'responsible_body')

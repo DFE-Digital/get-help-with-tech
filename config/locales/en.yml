@@ -531,6 +531,10 @@ en:
         std_device_cap: Device cap
         std_device_allocation: Device allocation
         std_device_devices_ordered: Devices ordered
+        School_circumstances_laptops: Devices not allowed for specific circumstances
+        School_circumstances_routers: Routers not allowed for specific circumstances
+        School_over_order_reclaimed_laptops: Devices reclaimed for over-orders
+        School_over_order_reclaimed_routers: Routers reclaimed for over-orders
         School_raw_laptop_allocation: Device allocation
         School_raw_laptop_cap: Device cap
         School_raw_laptops_ordered: Devices ordered
@@ -588,17 +592,20 @@ en:
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Enter an email address in the correct format, like name@example.com
               cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
+        school:
+          attributes:
+            invalid_circumstances_devices: must be 0 when status is %{status}
         support/enable_orders_form:
           attributes:
-            device_cap:
+            laptop_cap:
               greater_than_or_equal_to: Enter a device cap that’s a non-negative whole number
               not_a_number: Enter a device cap that’s a non-negative whole number
-              lte_allocation: Cap cannot be more than their current allocation of %{allocation}
+              lte_allocation: Cap cannot be more than their current effective allocation of %{allocation}
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
             router_cap:
               greater_than_or_equal_to: Enter a router cap that’s a non-negative whole number
               not_a_number: Enter a router cap that’s a non-negative whole number
-              lte_allocation: Cap cannot be more than their current allocation of %{allocation}
+              lte_allocation: Cap cannot be more than their current effective allocation of %{allocation}
               gte_devices_ordered: Cap cannot be less than the number they have already ordered (%{devices_ordered})
         support/allocation_form:
           attributes:

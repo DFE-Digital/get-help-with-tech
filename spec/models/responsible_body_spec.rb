@@ -374,8 +374,8 @@ RSpec.describe ResponsibleBody, type: :model do
       create_list(:school, 3,
                   :centrally_managed,
                   :in_lockdown,
-                  laptops: [1, 0, 0],
-                  routers: [1, 0, 0],
+                  laptops: [1, 1, 0],
+                  routers: [1, 1, 0],
                   responsible_body: responsible_body)
     end
 
@@ -384,10 +384,9 @@ RSpec.describe ResponsibleBody, type: :model do
         UpdateSchoolDevicesService.new(school: s,
                                        order_state: :can_order_for_specific_circumstances,
                                        laptop_allocation: 2,
-                                       laptop_cap: 2,
                                        laptops_ordered: 1,
                                        router_allocation: 3,
-                                       router_cap: 2,
+                                       circumstances_routers: -1,
                                        routers_ordered: 1).call
       end
     end
@@ -395,11 +394,10 @@ RSpec.describe ResponsibleBody, type: :model do
     it 'calculates the virtual cap for all device types' do
       UpdateSchoolDevicesService.new(school: schools.first,
                                      laptop_allocation: 3,
-                                     laptop_cap: 3,
                                      laptops_ordered: 2).call
       UpdateSchoolDevicesService.new(school: schools.last,
                                      router_allocation: 3,
-                                     router_cap: 1,
+                                     circumstances_routers: -2,
                                      routers_ordered: 0).call
       expect(responsible_body.cap(:laptop)).to eq(7)
       expect(responsible_body.devices_ordered(:laptop)).to eq(4)
@@ -440,19 +438,16 @@ RSpec.describe ResponsibleBody, type: :model do
                   :centrally_managed,
                   :in_lockdown,
                   responsible_body: responsible_body,
-                  laptops: [1, 0, 0],
-                  routers: [1, 0, 0])
+                  laptops: [1, 1, 0],
+                  routers: [1, 1, 0])
     end
 
     context 'when used full allocation' do
       before do
-        UpdateSchoolDevicesService.new(school: schools.first,
-                                       laptop_allocation: 1,
-                                       laptop_cap: 1,
-                                       laptops_ordered: 1).call
+        UpdateSchoolDevicesService.new(school: schools.first, laptops_ordered: 1, routers_ordered: 1).call
         UpdateSchoolDevicesService.new(school: schools.last,
+                                       laptops_ordered: 1,
                                        router_allocation: 2,
-                                       router_cap: 1,
                                        routers_ordered: 2).call
       end
 
@@ -465,11 +460,9 @@ RSpec.describe ResponsibleBody, type: :model do
       before do
         UpdateSchoolDevicesService.new(school: schools.first,
                                        laptop_allocation: 2,
-                                       laptop_cap: 2,
                                        laptops_ordered: 1).call
         UpdateSchoolDevicesService.new(school: schools.last,
                                        router_allocation: 1,
-                                       router_cap: 0,
                                        routers_ordered: 1).call
       end
 
@@ -482,11 +475,10 @@ RSpec.describe ResponsibleBody, type: :model do
       before do
         UpdateSchoolDevicesService.new(school: schools.first,
                                        laptop_allocation: 1,
-                                       laptop_cap: 1,
                                        laptops_ordered: 0).call
         UpdateSchoolDevicesService.new(school: schools.last,
                                        router_allocation: 2,
-                                       router_cap: 1,
+                                       over_order_reclaimed_routers: -1,
                                        routers_ordered: 0).call
       end
 

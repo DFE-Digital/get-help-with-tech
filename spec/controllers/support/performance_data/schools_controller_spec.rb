@@ -10,7 +10,7 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
     end
 
     context 'when a valid authentication token is supplied' do
-      let!(:schools) { create_list(:school, 3, :with_preorder_information, laptops: [1, 0, 0], routers: [1, 0, 0]) }
+      let!(:schools) { create_list(:school, 3, :with_preorder_information, laptops: [1, 1, 0], routers: [1, 1, 0]) }
 
       before do
         stub_computacenter_outgoing_api_calls
@@ -18,15 +18,14 @@ RSpec.describe Support::PerformanceData::SchoolsController, type: :controller do
         UpdateSchoolDevicesService.new(school: schools[0],
                                        order_state: :can_order_for_specific_circumstances,
                                        laptop_allocation: 0,
-                                       laptop_cap: 0,
+                                       circumstances_laptops: -1,
                                        router_allocation: 0,
-                                       router_cap: 0).call
+                                       circumstances_routers: -1).call
         UpdateSchoolDevicesService.new(school: schools[1],
                                        order_state: :can_order_for_specific_circumstances,
                                        laptop_allocation: 10,
-                                       laptop_cap: 10,
                                        router_allocation: 10,
-                                       router_cap: 0).call
+                                       circumstances_routers: -10).call
       end
 
       it 'does not return an unauthorized status' do

@@ -103,7 +103,9 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school, order_state: :can_order, laptop_cap: 1).call
+        UpdateSchoolDevicesService.new(school: school,
+                                       order_state: :can_order,
+                                       over_order_reclaimed_laptops: 0).call
       end
 
       context 'user has confirmed techsource account' do
@@ -138,7 +140,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
         UpdateSchoolDevicesService.new(school: school,
                                        order_state: :can_order,
-                                       laptop_cap: school.allocation(:laptop)).call
+                                       over_order_reclaimed_laptops: 0).call
       end
 
       context 'user has confirmed techsource account' do
@@ -265,7 +267,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         UpdateSchoolDevicesService.new(school: school,
                                        order_state: :can_order,
                                        laptop_allocation: 10,
-                                       laptop_cap: 10,
+                                       over_order_reclaimed_laptops: 0,
                                        laptops_ordered: 0).call
       end
 
@@ -306,7 +308,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       end
 
       before do
-        UpdateSchoolDevicesService.new(school: school, router_cap: school.raw_cap(:router) + 1).call
+        UpdateSchoolDevicesService.new(school: school, over_order_reclaimed_routers: 0).call
       end
 
       it 'sends notification they can order routers' do
@@ -329,7 +331,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school, router_cap: school.raw_cap(:router) + 1).call
+        UpdateSchoolDevicesService.new(school: school, over_order_reclaimed_routers: 0).call
       end
 
       context 'user has confirmed techsource account' do
@@ -369,7 +371,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       before do
         school.responsible_body.update!(new_fe_wave: true)
-        UpdateSchoolDevicesService.new(school: school, router_cap: school.raw_cap(:router) + 1).call
+        UpdateSchoolDevicesService.new(school: school, over_order_reclaimed_routers: 0).call
       end
 
       it 'sends notification they can order routers' do

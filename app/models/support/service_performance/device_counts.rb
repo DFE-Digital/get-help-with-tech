@@ -17,7 +17,7 @@ class Support::ServicePerformance::DeviceCounts
   end
 
   def available
-    sum_allocation(sum_expression: cap)
+    sum_allocation(sum_expression: raw_cap)
   end
 
   def ordered
@@ -40,8 +40,8 @@ class Support::ServicePerformance::DeviceCounts
 
 private
 
-  def cap
-    "raw_#{device_type}_cap"
+  def raw_cap
+    "(raw_#{device_type}_allocation + over_order_reclaimed_#{device_type}s + circumstances_#{device_type}s)"
   end
 
   def devices_ordered
@@ -49,19 +49,19 @@ private
   end
 
   def not_over_ordered_allocation_query
-    "raw_#{device_type}_cap >= raw_#{device_type}s_ordered"
+    "#{raw_cap} >= raw_#{device_type}s_ordered"
   end
 
   def not_over_ordered_quantity
-    "raw_#{device_type}_cap - raw_#{device_type}s_ordered"
+    "#{raw_cap} - raw_#{device_type}s_ordered"
   end
 
   def over_ordered_quantity
-    "raw_#{device_type}s_ordered - raw_#{device_type}_cap"
+    "raw_#{device_type}s_ordered - #{raw_cap}"
   end
 
   def over_ordered_allocation_query
-    "raw_#{device_type}s_ordered > 0 AND raw_#{device_type}_cap < raw_#{device_type}s_ordered"
+    "raw_#{device_type}s_ordered > 0 AND #{raw_cap} < raw_#{device_type}s_ordered"
   end
 
   def sum_allocation(sum_expression:, scope_query: nil)

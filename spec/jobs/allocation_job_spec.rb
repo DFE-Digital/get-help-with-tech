@@ -21,7 +21,6 @@ RSpec.describe AllocationJob do
           school: school,
           order_state: batch_job.order_state,
           laptop_allocation: batch_job.allocation_delta,
-          laptop_cap: batch_job.allocation_delta,
           notify_computacenter: true,
           notify_school: false,
           recalculate_vcaps: true,
@@ -50,7 +49,6 @@ RSpec.describe AllocationJob do
           school: school,
           order_state: batch_job.order_state,
           laptop_allocation: batch_job.allocation_delta,
-          laptop_cap: batch_job.allocation_delta,
           notify_computacenter: true,
           notify_school: true,
           recalculate_vcaps: true,
@@ -69,11 +67,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -84,11 +80,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -99,11 +93,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -114,11 +106,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -129,11 +119,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -144,11 +132,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -159,11 +145,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -174,11 +158,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -189,11 +171,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([1, 1, 0])
         expect(school.laptops).to eq([1, 1, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -204,11 +184,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([1, 1, 0])
         expect(school.laptops).to eq([1, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -219,11 +197,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([1, 1, 0])
         expect(school.laptops).to eq([1, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -234,11 +210,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([0, 0, 0])
         expect(school.laptops).to eq([0, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([1, 1, 0])
         expect(school.laptops).to eq([1, 1, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -249,11 +223,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -264,11 +236,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -279,11 +249,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -294,11 +262,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -309,11 +275,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -324,11 +288,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -339,11 +301,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -354,11 +314,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -369,11 +327,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 1, 0])
         expect(school.laptops).to eq([6, 1, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -384,11 +340,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 1, 0])
         expect(school.laptops).to eq([6, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -399,11 +353,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 1, 0])
         expect(school.laptops).to eq([6, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -414,11 +366,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 0, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 1, 0])
         expect(school.laptops).to eq([6, 1, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -429,11 +379,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([3, 0, 0])
         expect(school.laptops).to eq([3, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -444,11 +392,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([3, 0, 0])
         expect(school.laptops).to eq([3, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -459,11 +405,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([3, 0, 0])
         expect(school.laptops).to eq([3, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -474,11 +418,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([3, 0, 0])
         expect(school.laptops).to eq([3, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -489,11 +431,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 0])
         expect(school.laptops).to eq([4, 1, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -504,11 +444,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 0])
         expect(school.laptops).to eq([4, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -519,11 +457,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 0])
         expect(school.laptops).to eq([4, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -534,11 +470,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 0])
         expect(school.laptops).to eq([4, 1, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -549,11 +483,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -564,11 +496,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -579,11 +509,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -594,11 +522,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -609,11 +535,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 0])
         expect(school.laptops).to eq([6, 3, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -624,11 +548,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 2, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 0])
         expect(school.laptops).to eq([6, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -639,11 +561,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 0])
         expect(school.laptops).to eq([6, 0, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -654,11 +574,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 0])
         expect(school.laptops).to eq([5, 0, 0])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 0])
         expect(school.laptops).to eq([6, 3, 0])
         expect(batch_job.reload).to be_processed
       end
@@ -669,11 +587,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -684,11 +600,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -699,11 +613,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -714,11 +626,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -729,11 +639,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -744,11 +652,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -759,11 +665,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -774,11 +678,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([4, 1, 1])
         expect(school.laptops).to eq([4, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -789,11 +691,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -804,11 +704,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -819,11 +717,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -834,11 +730,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -849,11 +743,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 1])
         expect(school.laptops).to eq([6, 3, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -864,11 +756,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 2, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 1])
         expect(school.laptops).to eq([6, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -879,11 +769,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 1])
         expect(school.laptops).to eq([6, 1, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -894,11 +782,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 1])
         expect(school.laptops).to eq([5, 1, 1])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 1])
         expect(school.laptops).to eq([6, 3, 1])
         expect(batch_job.reload).to be_processed
       end
@@ -909,11 +795,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -924,11 +808,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -939,11 +821,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -954,11 +834,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -969,11 +847,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -984,11 +860,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -999,11 +873,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1014,11 +886,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1029,11 +899,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1044,11 +912,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1059,11 +925,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1074,11 +938,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1089,11 +951,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 2])
         expect(school.laptops).to eq([6, 3, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1104,11 +964,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 2])
         expect(school.laptops).to eq([6, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1119,11 +977,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 2])
         expect(school.laptops).to eq([6, 2, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1134,11 +990,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 2, 2])
         expect(school.laptops).to eq([5, 2, 2])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 3, 2])
         expect(school.laptops).to eq([6, 3, 2])
         expect(batch_job.reload).to be_processed
       end
@@ -1149,11 +1003,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1164,11 +1016,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1179,11 +1029,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1194,11 +1042,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1209,11 +1055,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1224,11 +1068,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1239,11 +1081,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1254,11 +1094,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1269,11 +1107,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 6, 5])
         expect(school.laptops).to eq([6, 6, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1284,11 +1120,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 6, 5])
         expect(school.laptops).to eq([6, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1299,11 +1133,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 6, 5])
         expect(school.laptops).to eq([6, 5, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1314,11 +1146,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 5, 5])
         expect(school.laptops).to eq([5, 5, 5])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 6, 5])
         expect(school.laptops).to eq([6, 6, 5])
         expect(batch_job.reload).to be_processed
       end
@@ -1329,11 +1159,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1344,11 +1172,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1359,11 +1185,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1374,11 +1198,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: -1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1389,11 +1211,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1404,11 +1224,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1419,11 +1237,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1434,11 +1250,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 0, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1449,12 +1263,10 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 7, 7])
-        expect(school.laptops).to eq([6, 7, 7])
+        expect(school.laptops).to eq([6, 8, 7])
         expect(batch_job.reload).to be_processed
       end
     end
@@ -1464,11 +1276,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 7, 7])
         expect(school.laptops).to eq([6, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1479,11 +1289,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 7, 7])
         expect(school.laptops).to eq([6, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1494,12 +1302,10 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 1, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([6, 7, 7])
-        expect(school.laptops).to eq([6, 7, 7])
+        expect(school.laptops).to eq([6, 8, 7])
         expect(batch_job.reload).to be_processed
       end
     end
@@ -1509,12 +1315,10 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([8, 8, 7])
-        expect(school.laptops).to eq([8, 8, 7])
+        expect(school.laptops).to eq([8, 10, 7])
         expect(batch_job.reload).to be_processed
       end
     end
@@ -1524,11 +1328,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([8, 8, 7])
         expect(school.laptops).to eq([8, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1539,11 +1341,9 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 3, order_state: :cannot_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([8, 8, 7])
         expect(school.laptops).to eq([8, 7, 7])
         expect(batch_job.reload).to be_processed
       end
@@ -1554,12 +1354,10 @@ RSpec.describe AllocationJob do
       let(:batch_job) { create(:allocation_batch_job, urn: school.urn, allocation_delta: 3, order_state: :can_order) }
 
       it 'updates laptop allocation numbers' do
-        expect(school.raw_laptops).to eq([5, 7, 7])
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.raw_laptops).to eq([8, 8, 7])
-        expect(school.laptops).to eq([8, 8, 7])
+        expect(school.laptops).to eq([8, 10, 7])
         expect(batch_job.reload).to be_processed
       end
     end

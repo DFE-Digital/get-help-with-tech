@@ -8,7 +8,7 @@ RSpec.feature 'Change school Chromebook information' do
     school.update!(who_will_order_devices: 'school',
                    will_need_chromebooks: 'yes',
                    raw_laptop_allocation: 63,
-                   raw_laptop_cap: 0,
+                   over_order_reclaimed_laptops: -63,
                    raw_laptops_ordered: 0)
   end
 

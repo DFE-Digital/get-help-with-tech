@@ -2,12 +2,14 @@ module Timeline
   class School
     FIELDS = %i[
       order_state
+      circumstances_laptops
+      circumstances_routers
+      over_order_reclaimed_laptops
+      over_order_reclaimed_routers
       status
       raw_laptop_allocation
-      raw_laptop_cap
       raw_laptops_ordered
       raw_router_allocation
-      raw_router_cap
       raw_routers_ordered
       responsible_body_id
     ].freeze

@@ -102,8 +102,8 @@ RSpec.describe SchoolUpdateService, type: :model do
       let!(:old_school) do
         create(:school,
                :with_preorder_information,
-               laptops: [1, 0, 0],
-               routers: [1, 0, 0],
+               laptops: [1, 1, 0],
+               routers: [1, 1, 0],
                name: old_staged_school.name,
                urn: old_staged_school.urn,
                responsible_body: local_authority)
@@ -119,10 +119,8 @@ RSpec.describe SchoolUpdateService, type: :model do
         old_school_link
         UpdateSchoolDevicesService.new(school: old_school,
                                        laptop_allocation: 100,
-                                       laptop_cap: 100,
                                        laptops_ordered: 90,
                                        router_allocation: 10,
-                                       router_cap: 10,
                                        routers_ordered: 8).call
       end
 

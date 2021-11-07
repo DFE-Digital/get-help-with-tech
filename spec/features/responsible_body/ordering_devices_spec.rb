@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Ordering devices' do
   let(:responsible_body) { create(:local_authority) }
-  let(:schools) { create_list(:school, 6, :manages_orders, :with_headteacher, laptops: [1, 0, 0], responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 6, :manages_orders, :with_headteacher, laptops: [1, 1, 0], responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   before do
@@ -68,14 +68,11 @@ RSpec.feature 'Ordering devices' do
     UpdateSchoolDevicesService.new(school: schools[1],
                                    order_state: :can_order_for_specific_circumstances,
                                    laptop_allocation: 8,
-                                   laptop_cap: 4).call
+                                   circumstances_laptops: -4).call
   end
 
   def given_a_centrally_managed_school_can_order_full_allocation
-    UpdateSchoolDevicesService.new(school: schools[2],
-                                   order_state: :can_order,
-                                   laptop_allocation: 7,
-                                   laptop_cap: 7).call
+    UpdateSchoolDevicesService.new(school: schools[2], order_state: :can_order, laptop_allocation: 7).call
   end
 
   def when_i_visit_the_responsible_body_home_page

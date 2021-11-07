@@ -100,17 +100,11 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
   end
 
   def given_i_have_not_ordered_all_my_laptops
-    UpdateSchoolDevicesService.new(school: @school,
-                                   laptop_allocation: 2,
-                                   laptop_cap: 2,
-                                   laptops_ordered: 1).call
+    UpdateSchoolDevicesService.new(school: @school, laptop_allocation: 2, laptops_ordered: 1).call
   end
 
   def given_i_have_ordered_all_of_my_laptops
-    UpdateSchoolDevicesService.new(school: @school,
-                                   laptop_allocation: 50,
-                                   laptop_cap: 50,
-                                   laptops_ordered: 50).call
+    UpdateSchoolDevicesService.new(school: @school, laptop_allocation: 50, laptops_ordered: 50).call
   end
 
   def given_i_have_already_answered_that_i_was_not_sure_that_i_will_order_chromebooks

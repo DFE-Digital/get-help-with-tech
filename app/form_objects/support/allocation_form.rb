@@ -5,9 +5,9 @@
   attr_reader :allocation
 
   delegate :in_virtual_cap_pool?,
-           :order_state,
+           :circumstances_devices,
+           :over_order_reclaimed_devices,
            :raw_allocation,
-           :raw_cap,
            :raw_devices_ordered,
            to: :school
 
@@ -25,16 +25,7 @@
 private
 
   def allocation_updated?
-    UpdateSchoolDevicesService.new(school: school,
-                                   "#{device_type}_allocation".to_sym => allocation,
-                                   "#{device_type}_cap".to_sym => cap).call
-  end
-
-  def cap
-    delta = allocation - raw_allocation(device_type)
-    lower_limit = raw_devices_ordered(device_type)
-    upper_limit = [allocation, lower_limit].max
-    [[raw_cap(device_type) + delta, lower_limit].max, upper_limit].min
+    UpdateSchoolDevicesService.new(school: school, "#{device_type}_allocation".to_sym => allocation).call
   end
 
   def check_decrease_allowed
@@ -42,7 +33,8 @@ private
   end
 
   def check_minimum
-    if allocation < raw_devices_ordered(device_type)
+    new_cap = allocation + over_order_reclaimed_devices(device_type) + circumstances_devices(device_type)
+    if new_cap < raw_devices_ordered(device_type)
       errors.add(:school, :gte_devices_ordered, devices_ordered: raw_devices_ordered(device_type))
     end
   end

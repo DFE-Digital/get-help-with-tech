@@ -6,8 +6,8 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     create_list(:school, 4,
                 :manages_orders,
                 :with_headteacher,
-                laptops: [1, 0, 0],
-                routers: [1, 0, 0],
+                laptops: [1, 1, 0],
+                routers: [1, 1, 0],
                 responsible_body: responsible_body)
   end
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
@@ -80,10 +80,9 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     UpdateSchoolDevicesService.new(school: schools[0],
                                    order_state: :can_order,
                                    laptop_allocation: 20,
-                                   laptop_cap: 20,
                                    laptops_ordered: 1,
                                    router_allocation: 10,
-                                   router_cap: 5,
+                                   over_order_reclaimed_routers: -5,
                                    routers_ordered: 2).call
   end
 
@@ -91,10 +90,8 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     UpdateSchoolDevicesService.new(school: schools[3],
                                    order_state: :can_order,
                                    laptop_allocation: 3,
-                                   laptop_cap: 3,
                                    laptops_ordered: 3,
                                    router_allocation: 5,
-                                   router_cap: 5,
                                    routers_ordered: 5).call
   end
 
@@ -102,10 +99,9 @@ RSpec.feature 'Ordering devices within a virtual pool' do
     UpdateSchoolDevicesService.new(school: schools[1],
                                    order_state: :can_order_for_specific_circumstances,
                                    laptop_allocation: 20,
-                                   laptop_cap: 3,
+                                   circumstances_laptops: -17,
                                    laptops_ordered: 1,
                                    router_allocation: 0,
-                                   router_cap: 0,
                                    routers_ordered: 0).call
   end
 

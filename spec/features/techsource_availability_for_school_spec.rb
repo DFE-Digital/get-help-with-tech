@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'TechSource availability for school', skip: 'Disabled for 30 Jun 2021 service closure' do
-  let(:school) { create(:school, laptops: [1, 0, 0]) }
+  let(:school) { create(:school, laptops: [1, 1, 0]) }
   let(:school_user) do
     create(:school_user,
            school: school,
@@ -51,7 +51,7 @@ RSpec.feature 'TechSource availability for school', skip: 'Disabled for 30 Jun 2
   def given_i_can_order_devices
     UpdateSchoolDevicesService.new(school: school,
                                    order_state: :can_order,
-                                   laptop_cap: 50,
+                                   over_order_reclaimed_laptops: -50,
                                    laptop_allocation: 100,
                                    laptops_ordered: 20).call
   end

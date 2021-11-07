@@ -4,7 +4,7 @@ RSpec.feature 'Viewing your schools' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, laptops: [1, 0, 0], routers: [1, 0, 0], responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, laptops: [1, 1, 0], routers: [1, 1, 0], responsible_body: responsible_body) }
   let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
 
   let(:your_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
@@ -56,12 +56,11 @@ RSpec.feature 'Viewing your schools' do
     UpdateSchoolDevicesService.new(school: schools.first,
                                    order_state: :can_order,
                                    laptop_allocation: 5,
-                                   laptop_cap: 5,
                                    laptops_ordered: 2).call
     UpdateSchoolDevicesService.new(school: schools.second,
                                    order_state: :can_order_for_specific_circumstances,
                                    laptop_allocation: 20,
-                                   laptop_cap: 5,
+                                   circumstances_laptops: -15,
                                    laptops_ordered: 0).call
   end
 
@@ -69,15 +68,13 @@ RSpec.feature 'Viewing your schools' do
     UpdateSchoolDevicesService.new(school: schools.first,
                                    order_state: :can_order,
                                    laptop_allocation: 5,
-                                   laptop_cap: 5,
                                    laptops_ordered: 5,
                                    router_allocation: 1,
-                                   router_cap: 1,
                                    routers_ordered: 1).call
     UpdateSchoolDevicesService.new(school: schools.second,
                                    order_state: :can_order_for_specific_circumstances,
                                    laptop_allocation: 20,
-                                   laptop_cap: 5,
+                                   circumstances_laptops: -15,
                                    laptops_ordered: 5).call
   end
 

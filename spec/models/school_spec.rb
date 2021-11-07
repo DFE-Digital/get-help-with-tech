@@ -100,20 +100,18 @@ RSpec.describe School, type: :model do
   describe '#can_order_devices_right_now?' do
     let(:school) { create(:school, :in_lockdown) }
 
-    context 'when there is no allocation of the given type' do
-      it 'is false' do
-        expect(school.can_order_devices_right_now?).to be_falsey
-      end
+    before do
+      school.raw_laptop_allocation = allocation
+      school.circumstances_laptops = circumstances_devices
+      school.over_order_reclaimed_laptops = over_order_reclaimed_devices
+      school.raw_laptops_ordered = devices_ordered
     end
 
     context 'when there is an allocation of the given type with cap = devices_ordered' do
-      let(:cap) { 0 }
+      let(:allocation) { devices_ordered }
+      let(:circumstances_devices) { 0 }
+      let(:over_order_reclaimed_devices) { 0 }
       let(:devices_ordered) { 0 }
-
-      before do
-        school.raw_laptop_cap = cap
-        school.raw_laptops_ordered = devices_ordered
-      end
 
       it 'is false' do
         expect(school.can_order_devices_right_now?).to be_falsey
@@ -121,15 +119,10 @@ RSpec.describe School, type: :model do
     end
 
     context 'when there is an allocation of the given type with cap > devices_ordered' do
-      let(:cap) { 2 }
-      let(:devices_ordered) { 1 }
       let(:allocation) { 3 }
-
-      before do
-        school.raw_laptop_allocation = allocation
-        school.raw_laptop_cap = cap
-        school.raw_laptops_ordered = devices_ordered
-      end
+      let(:circumstances_devices) { -1 }
+      let(:over_order_reclaimed_devices) { 0 }
+      let(:devices_ordered) { 1 }
 
       it 'is true' do
         expect(school.can_order_devices_right_now?).to be_truthy
@@ -137,15 +130,10 @@ RSpec.describe School, type: :model do
     end
 
     context 'when there is an allocation of the given type with cap equals devices_ordered' do
-      let(:cap) { 2 }
-      let(:devices_ordered) { 2 }
       let(:allocation) { 3 }
-
-      before do
-        school.raw_laptop_allocation = allocation
-        school.raw_laptop_cap = cap
-        school.raw_laptops_ordered = devices_ordered
-      end
+      let(:circumstances_devices) { -1 }
+      let(:over_order_reclaimed_devices) { 0 }
+      let(:devices_ordered) { 2 }
 
       it 'is false' do
         expect(school.can_order_devices_right_now?).to be_falsey
@@ -281,14 +269,13 @@ RSpec.describe School, type: :model do
 
     before do
       stub_computacenter_outgoing_api_calls
-      first_school = schools.first
-      SchoolSetWhoManagesOrdersService.new(first_school, :responsible_body).call
-      UpdateSchoolDevicesService.new(school: first_school,
+      SchoolSetWhoManagesOrdersService.new(schools.first, :responsible_body).call
+      UpdateSchoolDevicesService.new(school: schools.first,
                                      laptop_allocation: 10,
-                                     laptop_cap: 10,
+                                     over_order_reclaimed_laptops: 0,
                                      laptops_ordered: 2,
                                      router_allocation: 20,
-                                     router_cap: 5,
+                                     over_order_reclaimed_routers: -15,
                                      routers_ordered: 3).call
     end
 

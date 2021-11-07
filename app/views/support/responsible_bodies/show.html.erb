@@ -117,12 +117,12 @@
                   </td>
                   <td class="govuk-table__cell">
                     <%= school.raw_allocation(:laptop) %> allocated<br>
-                    <%= school.cannot_order? ? school.raw_devices_ordered(:laptop) : school.raw_cap(:laptop) %> caps<br>
+                    <%= school.raw_cap(:laptop) %> caps<br>
                     <%= school.raw_devices_ordered(:laptop) %> ordered
                   </td>
                   <td class="govuk-table__cell">
                     <%= school.raw_allocation(:router) %> allocated<br>
-                    <%= school.cannot_order? ? school.raw_devices_ordered(:router) : school.raw_cap(:router) %> caps<br>
+                    <%= school.raw_cap(:router) %> caps<br>
                     <%= school.raw_devices_ordered(:router) %> ordered
                   </td>
                   <td class="govuk-table__cell">

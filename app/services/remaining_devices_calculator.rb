@@ -12,12 +12,18 @@ private
   def remaining_from_devolved_schools
     School
       .where(who_will_order_devices: 'school', status: 'open')
-      .sum("CASE order_state WHEN 'cannot_order' THEN 0 ELSE raw_laptop_cap - raw_laptops_ordered END")
+      .sum("CASE order_state
+                            WHEN 'cannot_order' THEN 0
+                            ELSE raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops - raw_laptops_ordered
+                        END")
   end
 
   def remaining_from_managed_schools
     School
       .where(who_will_order_devices: 'responsible_body')
-      .sum("CASE order_state WHEN 'cannot_order' THEN 0 ELSE raw_laptop_cap - raw_laptops_ordered END")
+      .sum("CASE order_state
+                            WHEN 'cannot_order' THEN 0
+                            ELSE raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops - raw_laptops_ordered
+                        END")
   end
 end
