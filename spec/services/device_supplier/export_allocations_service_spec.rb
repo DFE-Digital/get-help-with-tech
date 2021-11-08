@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
+RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
   describe '#call' do
     let(:school) { create(:school, :manages_orders, :can_order, laptops: [1, 0, 0]) }
     let(:rb) { school.responsible_body }
