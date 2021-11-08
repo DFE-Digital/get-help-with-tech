@@ -45,7 +45,7 @@ private
                                      over_order_field => member.over_order_reclaimed_devices(device_type) - returned,
                                      notify_computacenter: false,
                                      recalculate_vcaps: false,
-                                     cap_change_category: :over_order_pool_give_back).call
+                                     cap_change_category: :over_order_pool_rollback).call
     end
   end
 end
