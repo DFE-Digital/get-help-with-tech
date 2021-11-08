@@ -19,7 +19,6 @@ private
 
   def notify_user(school:)
     message_type = message_type_for_school(school)
-
     return unless message_type
 
     CanOrderDevicesMailer

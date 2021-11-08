@@ -1,11 +1,12 @@
 ﻿class Support::AllocationForm
   include ActiveModel::Model
 
-  attr_accessor :category, :description, :device_type, :school
+  attr_accessor :device_type, :school
   attr_reader :allocation
 
   delegate :in_virtual_cap_pool?,
-           :order_state,
+           :circumstances_devices,
+           :over_order_reclaimed_devices,
            :raw_allocation,
            :raw_devices_ordered,
            to: :school
@@ -24,12 +25,7 @@
 private
 
   def allocation_updated?
-    UpdateSchoolDevicesService.new(school: school,
-                                   order_state: order_state,
-                                   "#{device_type}_allocation".to_sym => allocation,
-                                   "#{device_type}_cap".to_sym => allocation,
-                                   allocation_change_category: category,
-                                   allocation_change_description: description).call
+    UpdateSchoolDevicesService.new(school: school, "#{device_type}_allocation".to_sym => allocation).call
   end
 
   def check_decrease_allowed
@@ -37,7 +33,8 @@ private
   end
 
   def check_minimum
-    if allocation < raw_devices_ordered(device_type)
+    new_cap = allocation + over_order_reclaimed_devices(device_type) + circumstances_devices(device_type)
+    if new_cap < raw_devices_ordered(device_type)
       errors.add(:school, :gte_devices_ordered, devices_ordered: raw_devices_ordered(device_type))
     end
   end

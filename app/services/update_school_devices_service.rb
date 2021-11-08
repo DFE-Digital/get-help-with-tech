@@ -1,41 +1,43 @@
 class UpdateSchoolDevicesService
-  attr_reader :allocation_change_category, :allocation_change_description,
-              :laptop_allocation, :laptop_cap, :laptops_ordered,
-              :router_allocation, :router_cap, :routers_ordered,
+  attr_reader :cap_change_category, :cap_change_description,
+              :laptop_allocation, :laptops_ordered, :circumstances_laptops, :over_order_reclaimed_laptops,
+              :router_allocation, :routers_ordered, :circumstances_routers, :over_order_reclaimed_routers,
               :notify_computacenter, :notify_school, :order_state,
               :recalculate_vcaps, :school
 
-  OVER_ORDER_ALLOCATION_CHANGE_CATEGORY = :over_order
-  OVER_ORDER_ALLOCATION_CHANGE_DESCRIPTION = 'Over Order'.freeze
+  DEVICE_TYPES = %i[laptop router].freeze
+  OVER_ORDER_CAP_CHANGE_CATEGORY = :over_order
+  OVER_ORDER_CAP_CHANGE_DESCRIPTION = 'Over Order'.freeze
 
   def initialize(school:, notify_school: true, notify_computacenter: true, recalculate_vcaps: true, **opts)
-    @allocation_change_category = opts[:allocation_change_category]
-    @allocation_change_description = opts[:allocation_change_description]
+    @cap_change_category = opts[:cap_change_category]
+    @cap_change_description = opts[:cap_change_description]
+    @circumstances_laptops = opts[:circumstances_laptops]
+    @circumstances_routers = opts[:circumstances_routers]
     @laptop_allocation = opts[:laptop_allocation]
-    @laptop_cap = opts[:laptop_cap]
     @laptops_ordered = opts[:laptops_ordered]
     @notify_computacenter = notify_computacenter
     @notify_school = notify_school
     @order_state = (opts[:order_state] || school.order_state).to_s
+    @over_order_reclaimed_laptops = opts[:over_order_reclaimed_laptops]
+    @over_order_reclaimed_routers = opts[:over_order_reclaimed_routers]
     @recalculate_vcaps = recalculate_vcaps
     @router_allocation = opts[:router_allocation]
-    @router_cap = opts[:router_cap]
     @routers_ordered = opts[:routers_ordered]
     @school = school
   end
 
-  def adjusted_cap_by_order_state(cap, device_type:)
-    return school.raw_devices_ordered(device_type) if order_state == 'cannot_order'
-    return school.raw_allocation(device_type) if order_state == 'can_order'
-
-    cap || school.raw_cap(device_type)
-  end
-
   def call
+    return unless ordering?(:laptop) || ordering?(:router)
+
+    @laptop_initial_raw_cap = school.raw_cap(:laptop) if ordering?(:laptop)
+    @router_initial_raw_cap = school.raw_cap(:router) if ordering?(:router)
     School.transaction do
       update_state!
       update_laptop_allocations! if ordering?(:laptop)
+      school.calculate_vcaps_if_needed(:laptop) if recalculate_vcaps
       update_router_allocations! if ordering?(:router)
+      school.calculate_vcaps_if_needed(:router) if recalculate_vcaps
       school.refresh_preorder_status!
       notify_other_agents if notify_computacenter && !notifications_sent_by_pool_update?
       true
@@ -44,13 +46,17 @@ class UpdateSchoolDevicesService
 
 private
 
-  attr_reader :laptop_cap_changed, :router_cap_changed
+  attr_reader :laptop_initial_raw_cap, :router_initial_raw_cap
 
-  def allocation_change_props_for(device_type)
+  def cap_change_props_for(device_type)
     {
-      category: allocation_change_category || over_order_category(device_type),
-      description: allocation_change_description || over_order_description(device_type),
+      category: cap_change_category || over_order_category(device_type),
+      description: cap_change_description || over_order_description(device_type),
     }
+  end
+
+  def initial_raw_cap(device_type)
+    laptop?(device_type) ? laptop_initial_raw_cap : router_initial_raw_cap
   end
 
   def laptop?(device_type)
@@ -61,93 +67,116 @@ private
     recalculate_vcaps && school.in_virtual_cap_pool?
   end
 
+  def notify_device?(device_type)
+    (update_state? || ordering?(device_type)) && initial_raw_cap(device_type) != school.raw_cap(device_type)
+  end
+
   def notify_other_agents
-    device_types = laptop_cap_changed ? %i[laptop] : []
-    device_types << :router if router_cap_changed
+    device_types = DEVICE_TYPES.select { |device_type| notify_device?(device_type) }
     CapUpdateNotificationsService.new(school, device_types: device_types, notify_school: notify_school).call
   end
 
   def ordering?(device_type)
     @update_devices_ordering ||= {
-      laptop: laptop_allocation || laptop_cap || laptops_ordered || school.order_state_previously_changed?,
-      router: router_allocation || router_cap || routers_ordered || school.order_state_previously_changed?,
+      laptop: update_state? || laptop_allocation || laptops_ordered || circumstances_laptops || over_order_reclaimed_laptops,
+      router: update_state? || router_allocation || routers_ordered || circumstances_routers || over_order_reclaimed_routers,
     }
     @update_devices_ordering[device_type]
   end
 
   def over_order_category(device_type)
-    over_ordered?(device_type) && OVER_ORDER_ALLOCATION_CHANGE_CATEGORY
+    over_ordering?(device_type) && OVER_ORDER_CAP_CHANGE_CATEGORY
   end
 
   def over_order_description(device_type)
-    over_ordered?(device_type) && OVER_ORDER_ALLOCATION_CHANGE_DESCRIPTION
+    over_ordering?(device_type) && OVER_ORDER_CAP_CHANGE_DESCRIPTION
   end
 
-  def over_ordered?(device_type)
+  def over_ordering?(device_type)
     over_order(device_type).positive?
+  end
+
+  def reverting_over_ordered_laptops?
+    over_order(:laptop).negative? && over_order_reclaimed_laptops.positive?
+  end
+
+  def reverting_over_ordered_routers?
+    over_order(:router).negative? && over_order_reclaimed_routers.positive?
   end
 
   def over_order(device_type)
     if laptop?(device_type)
-      @laptop_over_ordered ||= laptops_ordered - laptop_allocation
+      @laptop_over_ordered ||= laptops_ordered - (laptop_allocation + circumstances_laptops + over_order_reclaimed_laptops)
     else
-      @router_over_ordered ||= routers_ordered - router_allocation
+      @router_over_ordered ||= routers_ordered - (router_allocation + circumstances_routers + over_order_reclaimed_routers)
     end
   end
 
-  def record_allocation_change_meta_data!(device_type:, school_id:, prev_allocation:, new_allocation:, **opts)
+  def record_cap_change_meta_data!(device_type:, school_id:, prev_cap:, new_cap:, **opts)
     if opts[:category] || opts[:description]
-      AllocationChange.create!(device_type: device_type,
-                               school_id: school_id,
-                               category: opts[:category],
-                               prev_allocation: prev_allocation,
-                               new_allocation: new_allocation,
-                               description: opts[:description])
+      CapChange.create!(device_type: device_type,
+                        school_id: school_id,
+                        category: opts[:category],
+                        prev_cap: prev_cap,
+                        new_cap: new_cap,
+                        description: opts[:description])
     end
   end
 
   def update_laptop_allocations!
-    @laptops_ordered ||= school.raw_devices_ordered(:laptop)
     @laptop_allocation ||= school.raw_allocation(:laptop)
-    @laptop_allocation = laptops_ordered if over_ordered?(:laptop)
-    @laptop_cap ||= school.raw_cap(:laptop)
-    @laptop_cap = laptops_ordered if over_ordered?(:laptop)
+    @laptops_ordered ||= school.raw_devices_ordered(:laptop)
+    @circumstances_laptops ||= school.can_order_for_specific_circumstances? ? school.circumstances_devices(:laptop) : 0
+    @over_order_reclaimed_laptops ||= school.over_order_reclaimed_devices(:laptop)
 
-    AllocationOverOrderService.new(school, over_order(:laptop), :laptop).call if over_ordered?(:laptop)
-    @laptop_cap_changed = update_device_ordering!(laptop_allocation, laptop_cap, laptops_ordered, :laptop)
-    school.calculate_vcaps_if_needed(:laptop) if recalculate_vcaps
+    if over_ordering?(:laptop)
+      @over_order_reclaimed_laptops = laptops_ordered - (laptop_allocation + circumstances_laptops)
+      AllocationOverOrderService.new(school, over_order(:laptop), :laptop).call
+    end
+
+    if reverting_over_ordered_laptops?
+      @over_order_reclaimed_laptops = [laptops_ordered - (laptop_allocation + circumstances_laptops), 0].max
+      returned = over_order_reclaimed_laptops - school.over_order_reclaimed_laptops
+      AllocationOverOrderRevertingService.new(school, returned, :laptop).call
+    end
+
+    update_device_ordering!(laptop_allocation, laptops_ordered, circumstances_laptops, over_order_reclaimed_laptops, :laptop)
   end
 
   def update_router_allocations!
-    @routers_ordered ||= school.raw_devices_ordered(:router)
     @router_allocation ||= school.raw_allocation(:router)
-    @router_allocation = routers_ordered if over_ordered?(:router)
-    @router_cap ||= school.raw_cap(:router)
-    @router_cap = routers_ordered if over_ordered?(:router)
+    @routers_ordered ||= school.raw_devices_ordered(:router)
+    @circumstances_routers ||= school.can_order_for_specific_circumstances? ? school.circumstances_devices(:router) : 0
+    @over_order_reclaimed_routers ||= school.over_order_reclaimed_devices(:router)
 
-    AllocationOverOrderService.new(school, over_order(:router), :router).call if over_ordered?(:router)
-    @router_cap_changed = update_device_ordering!(router_allocation, router_cap, routers_ordered, :router)
-    school.calculate_vcaps_if_needed(:router) if recalculate_vcaps
-  end
-
-  def update_device_ordering!(allocation, cap, devices_ordered, device_type)
-    value_changed?(school, :computacenter_cap, device_type) do
-      record_allocation_change_meta_data!(device_type: device_type,
-                                          school_id: school.id,
-                                          prev_allocation: school.raw_allocation(device_type),
-                                          new_allocation: allocation,
-                                          **allocation_change_props_for(device_type))
-      update_device_numbers!(allocation, cap, devices_ordered, device_type)
+    if over_ordering?(:router)
+      @over_order_reclaimed_routers = routers_ordered - (router_allocation + circumstances_routers)
+      AllocationOverOrderService.new(school, over_order(:router), :router).call
     end
+
+    if reverting_over_ordered_routers?
+      @over_order_reclaimed_routers = [routers_ordered - (router_allocation + circumstances_routers), 0].max
+      returned = over_order_reclaimed_routers - school.over_order_reclaimed_routers
+      AllocationOverOrderRevertingService.new(school, returned, :router).call
+    end
+
+    update_device_ordering!(router_allocation, routers_ordered, circumstances_routers, over_order_reclaimed_routers, :router)
   end
 
-  def update_device_numbers!(allocation, cap, devices_ordered, device_type)
-    allocation_field = school.raw_allocation_field(device_type)
-    devices_ordered_field = school.raw_devices_ordered_field(device_type)
-    cap_field = school.raw_cap_field(device_type)
-    school.write_attribute(allocation_field, allocation) if allocation
-    school.write_attribute(devices_ordered_field, devices_ordered) if devices_ordered
-    school.update!(cap_field => adjusted_cap_by_order_state(cap, device_type: device_type))
+  def update_device_ordering!(allocation, devices_ordered, circumstances_devices, over_order_reclaimed_devices, device_type)
+    update_device_numbers!(allocation, devices_ordered, circumstances_devices, over_order_reclaimed_devices, device_type)
+    record_cap_change_meta_data!(device_type: device_type,
+                                 school_id: school.id,
+                                 prev_cap: initial_raw_cap(device_type),
+                                 new_cap: school.raw_cap(device_type),
+                                 **cap_change_props_for(device_type))
+  end
+
+  def update_device_numbers!(allocation, devices_ordered, circumstances_devices, over_order_reclaimed_devices, device_type)
+    school.update!(school.raw_allocation_field(device_type) => allocation,
+                   school.raw_devices_ordered_field(device_type) => devices_ordered,
+                   school.circumstances_devices_field(device_type) => circumstances_devices,
+                   school.over_order_reclaimed_devices_field(device_type) => over_order_reclaimed_devices)
   end
 
   def update_state!
@@ -155,12 +184,8 @@ private
   end
 
   def update_state?
-    school.order_state.to_sym != order_state.to_sym
-  end
+    return @update_state if instance_variable_defined?(:@update_state)
 
-  def value_changed?(receiver, method, *args)
-    initial = receiver.send(method, *args)
-    yield
-    initial != receiver.send(method, *args)
+    @update_state = school.order_state.to_sym != order_state.to_sym
   end
 end

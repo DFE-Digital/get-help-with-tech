@@ -69,6 +69,7 @@ RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
 
       let!(:school) do
         create(:school,
+               :in_lockdown,
                :centrally_managed,
                responsible_body: rb,
                laptops: [5, 4, 3])
@@ -77,6 +78,7 @@ RSpec.describe DeviceSupplierExportAllocationsService, type: :model do
       let!(:sibling_schools) do
         create_list(:school,
                     2,
+                    :in_lockdown,
                     :centrally_managed,
                     responsible_body: rb,
                     laptops: [7, 6, 4])

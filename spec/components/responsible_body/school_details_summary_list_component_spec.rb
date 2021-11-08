@@ -21,7 +21,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                      will_need_chromebooks: 'yes',
                      school_contact: headteacher,
                      raw_laptop_allocation: 100,
-                     raw_laptop_cap: 1)
+                     over_order_reclaimed_laptops: -99)
     end
 
     it 'confirms that fact' do

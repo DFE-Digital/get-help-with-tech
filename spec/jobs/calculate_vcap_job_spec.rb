@@ -38,7 +38,7 @@ RSpec.describe CalculateVcapJob do
       rb.reload
 
       expect(rb.laptop_allocation).to eq(10)
-      expect(rb.laptop_cap).to eq(10)
+      expect(rb.laptop_cap).to eq(8)
       expect(rb.laptops_ordered).to eq(2)
     end
   end

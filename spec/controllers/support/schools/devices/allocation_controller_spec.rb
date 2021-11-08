@@ -71,7 +71,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     let(:requests) do
       [
         [
-          { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
+          { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '2' },
         ],
       ]
     end
@@ -130,7 +130,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
 
     it 'adjust school laptop cap based on school order state' do
       expect { patch :update, params: params }
-        .to change { school.reload.cap(:laptop) }.from(4).to(3)
+        .to change { school.reload.cap(:laptop) }.from(4).to(2)
     end
 
     it 'update school devices cap on Computacenter' do
@@ -142,7 +142,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'notify Computacenter of laptops cap change by email' do
       expect { patch :update, params: params }
         .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-              .with(params: { school: school, new_cap_value: 3 }, args: []).once
+              .with(params: { school: school, new_cap_value: 2 }, args: []).once
     end
 
     it "notify the school's organizational users" do
@@ -162,7 +162,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     it 'notify Computacenter of school can order by email' do
       expect { patch :update, params: params }
         .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-              .with(params: { school: school, new_cap_value: 3 }, args: []).once
+              .with(params: { school: school, new_cap_value: 2 }, args: []).once
     end
   end
 end

@@ -137,18 +137,18 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true)
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
         ]
 
@@ -159,10 +159,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
@@ -208,18 +208,18 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true)
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
         ]
 
@@ -230,10 +230,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
@@ -279,10 +279,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
@@ -290,8 +290,8 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
         ]
 
@@ -302,10 +302,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
@@ -351,10 +351,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
@@ -362,8 +362,8 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
         ]
 
@@ -374,10 +374,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
@@ -423,10 +423,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -434,8 +434,8 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
         ]
 
@@ -446,10 +446,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -495,10 +495,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -506,12 +506,12 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'BBB', 'capAmount' => '7' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '7' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'BBB', 'capAmount' => '7' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '7' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
         ]
 
@@ -522,10 +522,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: true,
                                   laptop_allocation: 10,
-                                  laptop_cap: 8,
+                                  laptop_cap: 2,
                                   laptops_ordered: 2,
                                   router_allocation: 10,
-                                  router_cap: 8,
+                                  router_cap: 2,
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -573,10 +573,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: true,
                                   laptop_allocation: 10,
-                                  laptop_cap: 8,
+                                  laptop_cap: 2,
                                   laptops_ordered: 2,
                                   router_allocation: 10,
-                                  router_cap: 8,
+                                  router_cap: 2,
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -584,14 +584,14 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'AAA', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'AAA', 'capAmount' => '1' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'AAA', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'AAA', 'capAmount' => '1' },
           ],
         ]
 
@@ -602,10 +602,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: false,
                                   laptop_allocation: 5,
-                                  laptop_cap: 4,
+                                  laptop_cap: 1,
                                   laptops_ordered: 1,
                                   router_allocation: 5,
-                                  router_cap: 4,
+                                  router_cap: 1,
                                   routers_ordered: 1,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -613,10 +613,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         expect_vcap_to_be(rb_id: rb_a.id,
                           laptop_allocation: 5,
-                          laptop_cap: 4,
+                          laptop_cap: 1,
                           laptops_ordered: 1,
                           router_allocation: 5,
-                          router_cap: 4,
+                          router_cap: 1,
                           routers_ordered: 1)
       end
     end
@@ -661,10 +661,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_a.id,
                                   vcap: true,
                                   laptop_allocation: 10,
-                                  laptop_cap: 8,
+                                  laptop_cap: 2,
                                   laptops_ordered: 2,
                                   router_allocation: 10,
-                                  router_cap: 8,
+                                  router_cap: 2,
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -672,18 +672,18 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         requests = [
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'AAA', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'AAA', 'capAmount' => '1' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'AAA', 'capAmount' => '4' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'AAA', 'capAmount' => '1' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '7' },
-            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'BBB', 'capAmount' => '7' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
           ],
           [
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '7' },
-            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'BBB', 'capAmount' => '7' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
           ],
         ]
 
@@ -694,10 +694,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   rb_id: rb_b.id,
                                   vcap: true,
                                   laptop_allocation: 10,
-                                  laptop_cap: 8,
+                                  laptop_cap: 2,
                                   laptops_ordered: 2,
                                   router_allocation: 10,
-                                  router_cap: 8,
+                                  router_cap: 2,
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
@@ -705,10 +705,10 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
         expect_vcap_to_be(rb_id: rb_a.id,
                           laptop_allocation: 5,
-                          laptop_cap: 4,
+                          laptop_cap: 1,
                           laptops_ordered: 1,
                           router_allocation: 5,
-                          router_cap: 4,
+                          router_cap: 1,
                           routers_ordered: 1)
       end
     end

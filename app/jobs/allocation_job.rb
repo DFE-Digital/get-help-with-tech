@@ -2,12 +2,13 @@ class AllocationJob < ApplicationJob
   queue_as :default
 
   attr_reader :allocation_batch_job, :allocation_delta,
-              :current_raw_laptop_allocation, :current_raw_laptop_cap,
-              :new_raw_laptop_allocation, :new_raw_laptop_cap,
+              :new_raw_laptop_allocation,
               :notify_computacenter, :notify_school, :recalculate_vcaps
 
   delegate :order_state, to: :allocation_batch_job
   delegate :school, to: :allocation_batch_job
+  delegate :raw_allocation, :over_order_reclaimed_devices, :circumstances_devices, :raw_devices_ordered,
+           to: :school
 
   def perform(allocation_batch_job, notify_computacenter: true, recalculate_vcaps: true)
     @allocation_batch_job = allocation_batch_job
@@ -22,15 +23,9 @@ class AllocationJob < ApplicationJob
 private
 
   def recompute_laptop_allocation_numbers
-    @current_raw_laptop_allocation = school.raw_allocation(:laptop)
-    @current_raw_laptop_cap = school.raw_cap(:laptop)
-    @new_raw_laptop_allocation = current_raw_laptop_allocation + allocation_delta
-    @new_raw_laptop_cap = current_raw_laptop_cap + allocation_delta
-    if allocation_delta.negative?
-      negative_allocation_delta = [-school.devices_available_to_order(:laptop), allocation_delta].max
-      @new_raw_laptop_allocation = current_raw_laptop_allocation + negative_allocation_delta
-      @new_raw_laptop_cap = [current_raw_laptop_cap + negative_allocation_delta, new_raw_laptop_allocation].min
-    end
+    raw_cap = raw_allocation(:laptop) + over_order_reclaimed_devices(:laptop) + circumstances_devices(:laptop)
+    delta = [-[0, raw_cap - raw_devices_ordered(:laptop)].max, allocation_delta].max
+    @new_raw_laptop_allocation = raw_allocation(:laptop) + delta
   end
 
   def persist_changes
@@ -51,7 +46,6 @@ private
       school: school,
       order_state: order_state,
       laptop_allocation: new_raw_laptop_allocation,
-      laptop_cap: new_raw_laptop_cap,
       notify_computacenter: notify_computacenter,
       notify_school: notify_school,
       recalculate_vcaps: recalculate_vcaps,

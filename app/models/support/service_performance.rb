@@ -34,7 +34,10 @@ class Support::ServicePerformance
   end
 
   def total_devices_available
-    sum_allocation('raw_laptop_cap')
+    sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order'
+                                        THEN raw_laptops_ordered
+                                        ELSE raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops
+                                    END"))
   end
 
   def total_devices_ordered
@@ -42,11 +45,17 @@ class Support::ServicePerformance
   end
 
   def total_devices_remaining
-    sum_allocation('raw_laptop_cap - raw_laptops_ordered')
+    sum_allocation(Arel.sql("CASE order_state
+                                        WHEN 'cannot_order' THEN 0
+                                        ELSE raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops - raw_laptops_ordered
+                                    END"))
   end
 
   def total_routers_available
-    sum_allocation('raw_router_cap')
+    sum_allocation(Arel.sql("CASE order_state
+                                        WHEN 'cannot_order' THEN raw_routers_ordered
+                                        ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
+                                    END"))
   end
 
   def total_routers_ordered
@@ -54,7 +63,10 @@ class Support::ServicePerformance
   end
 
   def total_routers_remaining
-    sum_allocation('raw_router_cap - raw_routers_ordered')
+    sum_allocation(Arel.sql("CASE order_state
+                                        WHEN 'cannot_order' THEN 0
+                                        ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers - raw_routers_ordered
+                                    END"))
   end
 
   def sum_allocation(sum_expression)
@@ -151,12 +163,18 @@ class Support::ServicePerformance
 
   def number_of_devolved_schools_that_have_not_ordered_routers
     @number_of_devolved_schools_that_have_not_ordered_routers ||=
-      number_of_devolved_schools_that_have(scope: School.where('raw_router_cap > 0 AND raw_routers_ordered = 0'))
+      number_of_devolved_schools_that_have(scope: School.where("raw_routers_ordered = 0 and (CASE order_state
+                                                                                                WHEN 'cannot_order' THEN raw_routers_ordered
+                                                                                                ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
+                                                                                             END) > 0"))
   end
 
   def number_of_devolved_schools_that_have_a_router_allocation
     @number_of_devolved_schools_that_have_a_router_allocation ||=
-      number_of_devolved_schools_that_have(scope: School.where('raw_router_cap > 0'))
+      number_of_devolved_schools_that_have(scope: School.where("(CASE order_state
+                                                                    WHEN 'cannot_order' THEN raw_routers_ordered
+                                                                    ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
+                                                                 END) > 0"))
   end
 
   def percentage_of_devolved_schools_that_have_fully_ordered_routers
@@ -309,7 +327,10 @@ class Support::ServicePerformance
       School
       .gias_status_open
       .responsible_body_will_order_devices
-      .where('raw_router_cap > 0')
+      .where("(CASE order_state
+                  WHEN 'cannot_order' THEN raw_routers_ordered
+                  ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
+               END) > 0")
       .count('DISTINCT(responsible_body_id)')
   end
 

@@ -169,7 +169,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_la_funded_user
-    @school = create(:iss_provision, laptops: [100, 50])
+    @school = create(:iss_provision, :in_lockdown, laptops: [100, 50])
     @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school)
   end
 

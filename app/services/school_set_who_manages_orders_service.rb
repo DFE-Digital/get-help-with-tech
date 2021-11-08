@@ -54,7 +54,7 @@ private
   end
 
   def school_impacts_computacenter_numbers?(device_type)
-    [school.raw_cap(device_type), school.raw_devices_ordered(device_type)].any?(&:positive?)
+    school.raw_devices_ordered(device_type).positive? || school.raw_cap(device_type).positive?
   end
 
   def school_impacts_pool_numbers?(device_type)

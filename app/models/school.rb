@@ -18,7 +18,7 @@ class School < ApplicationRecord
   has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
                                      primary_key: :computacenter_reference,
                                      foreign_key: :ship_to
-  has_many :allocation_changes, dependent: :destroy, inverse_of: :school
+  has_many :cap_changes, dependent: :destroy, inverse_of: :school
   has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
 
   validates :name, presence: true
@@ -69,14 +69,14 @@ class School < ApplicationRecord
   scope :excluding_la_funded_provisions, -> { where.not(type: 'LaFundedPlace') }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
 
-  scope :has_fully_ordered_laptops, -> { where('raw_laptops_ordered > 0 AND raw_laptop_cap = raw_laptops_ordered') }
-  scope :has_fully_ordered_routers, -> { where('raw_routers_ordered > 0 AND raw_router_cap = raw_routers_ordered') }
-  scope :has_partially_ordered_laptops, -> { where('raw_laptops_ordered > 0 AND raw_laptop_cap > raw_laptops_ordered') }
-  scope :has_partially_ordered_routers, -> { where('raw_routers_ordered > 0 AND raw_router_cap > raw_routers_ordered') }
+  scope :has_fully_ordered_laptops, -> { where("raw_laptops_ordered > 0 AND (order_state = 'cannot_order' OR (raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops) = raw_laptops_ordered)") }
+  scope :has_fully_ordered_routers, -> { where("raw_routers_ordered > 0 AND (order_state = 'cannot_order' OR (raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) = raw_routers_ordered)") }
+  scope :has_partially_ordered_laptops, -> { where.not(order_state: :cannot_order).where('raw_laptops_ordered > 0 AND (raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops) > raw_laptops_ordered') }
+  scope :has_partially_ordered_routers, -> { where.not(order_state: :cannot_order).where('raw_routers_ordered > 0 AND (raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) > raw_routers_ordered') }
   scope :has_not_ordered_laptops, -> { where(raw_laptops_ordered: 0) }
   scope :has_not_ordered_routers, -> { where(raw_routers_ordered: 0) }
-  scope :has_not_fully_ordered_laptops, -> { where('raw_laptop_cap > raw_laptops_ordered') }
-  scope :has_not_fully_ordered_routers, -> { where('raw_router_cap > raw_routers_ordered') }
+  scope :has_not_fully_ordered_laptops, -> { where.not(order_state: :cannot_order).where('(raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops) > raw_laptops_ordered') }
+  scope :has_not_fully_ordered_routers, -> { where.not(order_state: :cannot_order).where('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) > raw_routers_ordered') }
 
   scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
   scope :in_virtual_cap_pool, -> { where(in_virtual_cap_pool: true) }
@@ -85,6 +85,10 @@ class School < ApplicationRecord
   scope :that_can_order_now, -> { where(order_state: %w[can_order_for_specific_circumstances can_order]) }
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
+  scope :with_over_order_stolen_cap, lambda { |device_type|
+    where(':over_order_field < 0',
+          over_order_field: laptop?(device_type) ? 'over_order_reclaimed_laptops' : 'over_order_reclaimed_routers')
+  }
   scope :who_will_order_devices_not_set, -> { where(who_will_order_devices: nil) }
 
   def self.laptop?(device_type)
@@ -99,13 +103,15 @@ class School < ApplicationRecord
     gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
   end
 
-  def self.with_available_allocation(device_type)
+  def self.with_available_cap(device_type)
     if laptop?(device_type)
-      where('raw_laptop_allocation > raw_laptops_ordered')
-        .order(Arel.sql('raw_laptop_allocation - raw_laptops_ordered'))
+      where('(raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops) > raw_laptops_ordered')
+        .where.not(order_state: :cannot_order)
+        .order(Arel.sql('(raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops) - raw_laptops_ordered'))
     else
-      where('raw_router_allocation > raw_routers_ordered')
-        .order(Arel.sql('raw_router_allocation - raw_routers_ordered'))
+      where('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) > raw_routers_ordered')
+        .where.not(order_state: :cannot_order)
+        .order(Arel.sql('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) - raw_routers_ordered'))
     end
   end
 
@@ -176,8 +182,18 @@ class School < ApplicationRecord
     in_virtual_cap_pool? ? vcap_cap(device_type) : raw_cap(device_type)
   end
 
+  def circumstances_devices(device_type)
+    laptop?(device_type) ? circumstances_laptops : circumstances_routers
+  end
+
+  def circumstances_devices_field(device_type)
+    laptop?(device_type) ? :circumstances_laptops : :circumstances_routers
+  end
+
   def computacenter_cap(device_type)
-    in_virtual_cap_pool? ? vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type) : raw_cap(device_type)
+    return cap(device_type) unless in_virtual_cap_pool?
+
+    vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type)
   end
 
   def computacenter_references?
@@ -294,6 +310,15 @@ class School < ApplicationRecord
     [allocation(:laptop), cap(:laptop), devices_ordered(:laptop)]
   end
 
+  def laptops_full
+    [
+      allocation(:laptop),
+      circumstances_devices(:laptop),
+      over_order_reclaimed_devices(:laptop),
+      devices_ordered(:laptop),
+    ]
+  end
+
   def next_school_in_responsible_body_when_sorted_by_name_ascending
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
@@ -338,6 +363,14 @@ class School < ApplicationRecord
     device_ordering_organisation.users
   end
 
+  def over_order_reclaimed_devices(device_type)
+    laptop?(device_type) ? over_order_reclaimed_laptops : over_order_reclaimed_routers
+  end
+
+  def over_order_reclaimed_devices_field(device_type)
+    laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
+  end
+
   def raw_allocation(device_type)
     laptop?(device_type) ? raw_laptop_allocation : raw_router_allocation
   end
@@ -347,11 +380,13 @@ class School < ApplicationRecord
   end
 
   def raw_cap(device_type)
-    laptop?(device_type) ? raw_laptop_cap : raw_router_cap
+    return raw_devices_ordered(device_type) if cannot_order?
+
+    raw_allocation(device_type) + over_order_reclaimed_devices(device_type) + circumstances_devices(device_type)
   end
 
-  def raw_cap_field(device_type)
-    laptop?(device_type) ? :raw_laptop_cap : :raw_router_cap
+  def raw_devices_available_to_order(device_type)
+    [0, raw_cap(device_type) - raw_devices_ordered(device_type)].max
   end
 
   def raw_devices_ordered(device_type)
@@ -372,6 +407,15 @@ class School < ApplicationRecord
 
   def routers
     [allocation(:router), cap(:router), devices_ordered(:router)]
+  end
+
+  def routers_full
+    [
+      allocation(:router),
+      circumstances_devices(:router),
+      over_order_reclaimed_devices(:router),
+      devices_ordered(:router),
+    ]
   end
 
   def refresh_preorder_status!
@@ -431,8 +475,10 @@ private
   end
 
   def calculate_vcap?(device_type)
-    previous_changes.include?(raw_allocation_field(device_type)) ||
-      previous_changes.include?(raw_cap_field(device_type)) ||
+    previous_changes.include?(:order_state) ||
+      previous_changes.include?(raw_allocation_field(device_type)) ||
+      previous_changes.include?(circumstances_devices_field(device_type)) ||
+      previous_changes.include?(over_order_reclaimed_devices_field(device_type)) ||
       previous_changes.include?(raw_devices_ordered_field(device_type))
   end
 

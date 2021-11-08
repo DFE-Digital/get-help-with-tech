@@ -39,18 +39,16 @@ RSpec.describe AllocationsExporter, type: :model do
       UpdateSchoolDevicesService.new(school: schools.first,
                                      order_state: :can_order_for_specific_circumstances,
                                      laptop_allocation: 20,
-                                     laptop_cap: 20,
                                      laptops_ordered: 10,
                                      router_allocation: 21,
-                                     router_cap: 21,
                                      routers_ordered: 11).call
       UpdateSchoolDevicesService.new(school: schools.last,
                                      order_state: :can_order_for_specific_circumstances,
                                      laptop_allocation: 25,
-                                     laptop_cap: 5,
+                                     circumstances_laptops: -20,
                                      laptops_ordered: 5,
                                      router_allocation: 26,
-                                     router_cap: 6,
+                                     circumstances_routers: -20,
                                      routers_ordered: 6).call
       SchoolSetWhoManagesOrdersService.new(schools.first, :responsible_body).call
       SchoolSetWhoManagesOrdersService.new(schools.last, :responsible_body).call
