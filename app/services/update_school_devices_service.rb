@@ -5,6 +5,7 @@ class UpdateSchoolDevicesService
               :notify_computacenter, :notify_school, :order_state,
               :recalculate_vcaps, :school
 
+  DEVICE_TYPES = %i[laptop router].freeze
   OVER_ORDER_CAP_CHANGE_CATEGORY = :over_order
   OVER_ORDER_CAP_CHANGE_DESCRIPTION = 'Over Order'.freeze
 
@@ -27,7 +28,7 @@ class UpdateSchoolDevicesService
   end
 
   def call
-    return unless allocation_numbers_will_change?
+    return unless ordering?(:laptop) || ordering?(:router)
 
     @laptop_initial_raw_cap = school.raw_cap(:laptop) if ordering?(:laptop)
     @router_initial_raw_cap = school.raw_cap(:router) if ordering?(:router)
@@ -47,15 +48,15 @@ private
 
   attr_reader :laptop_initial_raw_cap, :router_initial_raw_cap
 
-  def allocation_numbers_will_change?
-    update_state? || ordering?(:laptop) || ordering?(:router)
-  end
-
   def cap_change_props_for(device_type)
     {
       category: cap_change_category || over_order_category(device_type),
       description: cap_change_description || over_order_description(device_type),
     }
+  end
+
+  def initial_raw_cap(device_type)
+    laptop?(device_type) ? laptop_initial_raw_cap : router_initial_raw_cap
   end
 
   def laptop?(device_type)
@@ -66,30 +67,41 @@ private
     recalculate_vcaps && school.in_virtual_cap_pool?
   end
 
+  def notify_device?(device_type)
+    (update_state? || ordering?(device_type)) && initial_raw_cap(device_type) != school.raw_cap(device_type)
+  end
+
   def notify_other_agents
-    device_types = (update_state? || ordering?(:laptop)) && laptop_initial_raw_cap != school.raw_cap(:laptop) ? %i[laptop] : []
-    device_types << :router if (update_state? || ordering?(:router)) && router_initial_raw_cap != school.raw_cap(:router)
+    device_types = DEVICE_TYPES.select { |device_type| notify_device?(device_type) }
     CapUpdateNotificationsService.new(school, device_types: device_types, notify_school: notify_school).call
   end
 
   def ordering?(device_type)
     @update_devices_ordering ||= {
-      laptop: laptop_allocation || laptops_ordered || circumstances_laptops || over_order_reclaimed_laptops,
-      router: router_allocation || routers_ordered || circumstances_routers || over_order_reclaimed_routers,
+      laptop: update_state? || laptop_allocation || laptops_ordered || circumstances_laptops || over_order_reclaimed_laptops,
+      router: update_state? || router_allocation || routers_ordered || circumstances_routers || over_order_reclaimed_routers,
     }
     @update_devices_ordering[device_type]
   end
 
   def over_order_category(device_type)
-    over_ordered?(device_type) && OVER_ORDER_CAP_CHANGE_CATEGORY
+    over_ordering?(device_type) && OVER_ORDER_CAP_CHANGE_CATEGORY
   end
 
   def over_order_description(device_type)
-    over_ordered?(device_type) && OVER_ORDER_CAP_CHANGE_DESCRIPTION
+    over_ordering?(device_type) && OVER_ORDER_CAP_CHANGE_DESCRIPTION
   end
 
-  def over_ordered?(device_type)
+  def over_ordering?(device_type)
     over_order(device_type).positive?
+  end
+
+  def reverting_over_ordered_laptops?
+    over_order(:laptop).negative? && over_order_reclaimed_laptops.positive?
+  end
+
+  def reverting_over_ordered_routers?
+    over_order(:router).negative? && over_order_reclaimed_routers.positive?
   end
 
   def over_order(device_type)
@@ -116,9 +128,18 @@ private
     @laptops_ordered ||= school.raw_devices_ordered(:laptop)
     @circumstances_laptops ||= school.can_order_for_specific_circumstances? ? school.circumstances_devices(:laptop) : 0
     @over_order_reclaimed_laptops ||= school.over_order_reclaimed_devices(:laptop)
-    @over_order_reclaimed_laptops = laptops_ordered - (laptop_allocation + circumstances_laptops) if over_ordered?(:laptop)
 
-    AllocationOverOrderService.new(school, over_order(:laptop), :laptop).call if over_ordered?(:laptop)
+    if over_ordering?(:laptop)
+      @over_order_reclaimed_laptops = laptops_ordered - (laptop_allocation + circumstances_laptops)
+      AllocationOverOrderService.new(school, over_order(:laptop), :laptop).call
+    end
+
+    if reverting_over_ordered_laptops?
+      @over_order_reclaimed_laptops = [laptops_ordered - (laptop_allocation + circumstances_laptops), 0].max
+      returned = over_order_reclaimed_laptops - school.over_order_reclaimed_laptops
+      AllocationOverOrderRevertingService.new(school, returned, :laptop).call
+    end
+
     update_device_ordering!(laptop_allocation, laptops_ordered, circumstances_laptops, over_order_reclaimed_laptops, :laptop)
   end
 
@@ -127,18 +148,26 @@ private
     @routers_ordered ||= school.raw_devices_ordered(:router)
     @circumstances_routers ||= school.can_order_for_specific_circumstances? ? school.circumstances_devices(:router) : 0
     @over_order_reclaimed_routers ||= school.over_order_reclaimed_devices(:router)
-    @over_order_reclaimed_routers = routers_ordered - (router_allocation + circumstances_routers) if over_ordered?(:router)
 
-    AllocationOverOrderService.new(school, over_order(:router), :router).call if over_ordered?(:router)
+    if over_ordering?(:router)
+      @over_order_reclaimed_routers = routers_ordered - (router_allocation + circumstances_routers)
+      AllocationOverOrderService.new(school, over_order(:router), :router).call
+    end
+
+    if reverting_over_ordered_routers?
+      @over_order_reclaimed_routers = [routers_ordered - (router_allocation + circumstances_routers), 0].max
+      returned = over_order_reclaimed_routers - school.over_order_reclaimed_routers
+      AllocationOverOrderRevertingService.new(school, returned, :router).call
+    end
+
     update_device_ordering!(router_allocation, routers_ordered, circumstances_routers, over_order_reclaimed_routers, :router)
   end
 
   def update_device_ordering!(allocation, devices_ordered, circumstances_devices, over_order_reclaimed_devices, device_type)
-    prev_raw_cap = school.raw_cap(device_type)
     update_device_numbers!(allocation, devices_ordered, circumstances_devices, over_order_reclaimed_devices, device_type)
     record_cap_change_meta_data!(device_type: device_type,
                                  school_id: school.id,
-                                 prev_cap: prev_raw_cap,
+                                 prev_cap: initial_raw_cap(device_type),
                                  new_cap: school.raw_cap(device_type),
                                  **cap_change_props_for(device_type))
   end

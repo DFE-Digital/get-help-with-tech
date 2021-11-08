@@ -592,9 +592,6 @@ en:
               blank: Enter an email address in the correct format, like name@example.com
               invalid: Enter an email address in the correct format, like name@example.com
               cannot_be_same_domain_as_school_or_rb: Recovery email address must be on a different domain to the school domain
-        school:
-          attributes:
-            invalid_circumstances_devices: must be 0 when status is %{status}
         support/enable_orders_form:
           attributes:
             laptop_cap:

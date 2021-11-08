@@ -1266,7 +1266,7 @@ RSpec.describe AllocationJob do
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.laptops).to eq([6, 8, 7])
+        expect(school.laptops).to eq([6, 7, 7])
         expect(batch_job.reload).to be_processed
       end
     end
@@ -1305,7 +1305,7 @@ RSpec.describe AllocationJob do
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.laptops).to eq([6, 8, 7])
+        expect(school.laptops).to eq([6, 7, 7])
         expect(batch_job.reload).to be_processed
       end
     end
@@ -1318,7 +1318,7 @@ RSpec.describe AllocationJob do
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.laptops).to eq([8, 10, 7])
+        expect(school.laptops).to eq([8, 8, 7])
         expect(batch_job.reload).to be_processed
       end
     end
@@ -1357,7 +1357,7 @@ RSpec.describe AllocationJob do
         expect(school.laptops).to eq([5, 7, 7])
         described_class.perform_now(batch_job)
         school.reload
-        expect(school.laptops).to eq([8, 10, 7])
+        expect(school.laptops).to eq([8, 8, 7])
         expect(batch_job.reload).to be_processed
       end
     end

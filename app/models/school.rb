@@ -23,7 +23,6 @@ class School < ApplicationRecord
 
   validates :name, presence: true
   validates :preorder_status, presence: true
-  validate :circumstances_devices_match_status
 
   pg_search_scope :matching_name_or_urn_or_ukprn_or_provision_urn, against: %i[name urn ukprn provision_urn], using: { tsearch: { prefix: true } }
 
@@ -86,6 +85,10 @@ class School < ApplicationRecord
   scope :that_can_order_now, -> { where(order_state: %w[can_order_for_specific_circumstances can_order]) }
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
+  scope :with_over_order_stolen_cap, lambda { |device_type|
+    where(':over_order_field < 0',
+          over_order_field: laptop?(device_type) ? 'over_order_reclaimed_laptops' : 'over_order_reclaimed_routers')
+  }
   scope :who_will_order_devices_not_set, -> { where(who_will_order_devices: nil) }
 
   def self.laptop?(device_type)
@@ -185,14 +188,6 @@ class School < ApplicationRecord
 
   def circumstances_devices_field(device_type)
     laptop?(device_type) ? :circumstances_laptops : :circumstances_routers
-  end
-
-  def circumstances_devices_match_status
-    DEVICE_TYPES.each do |device_type|
-      if (can_order? || cannot_order?) && !circumstances_devices(device_type).zero?
-        errors.add(circumstances_devices_field(device_type), :invalid_circumstances_devices, status: order_state)
-      end
-    end
   end
 
   def computacenter_cap(device_type)
@@ -315,6 +310,15 @@ class School < ApplicationRecord
     [allocation(:laptop), cap(:laptop), devices_ordered(:laptop)]
   end
 
+  def laptops_full
+    [
+      allocation(:laptop),
+      circumstances_devices(:laptop),
+      over_order_reclaimed_devices(:laptop),
+      devices_ordered(:laptop),
+    ]
+  end
+
   def next_school_in_responsible_body_when_sorted_by_name_ascending
     responsible_body.next_school_sorted_ascending_by_name(self)
   end
@@ -403,6 +407,15 @@ class School < ApplicationRecord
 
   def routers
     [allocation(:router), cap(:router), devices_ordered(:router)]
+  end
+
+  def routers_full
+    [
+      allocation(:router),
+      circumstances_devices(:router),
+      over_order_reclaimed_devices(:router),
+      devices_ordered(:router),
+    ]
   end
 
   def refresh_preorder_status!

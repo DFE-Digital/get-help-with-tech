@@ -40,9 +40,9 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
 
     raw_laptop_allocation { laptops[0].to_i }
-    circumstances_laptops { can_order_for_specific_circumstances? ? laptops[1].to_i - raw_laptop_allocation : 0 }
-    over_order_reclaimed_laptops { can_order_for_specific_circumstances? ? 0 : laptops[1].to_i - raw_laptop_allocation }
-    raw_laptops_ordered { laptops[2].to_i }
+    circumstances_laptops { laptops.size == 4 ? laptops[1].to_i : 0 }
+    over_order_reclaimed_laptops { laptops.size == 4 ? laptops[2].to_i : laptops[1].to_i - raw_laptop_allocation }
+    raw_laptops_ordered { laptops.size == 4 ? laptops[3].to_i : laptops[2].to_i }
 
     raw_router_allocation { routers[0].to_i }
     circumstances_routers { can_order_for_specific_circumstances? ? routers[1].to_i - raw_router_allocation : 0 }
