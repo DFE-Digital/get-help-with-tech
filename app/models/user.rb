@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :invited_to_school_welcome_wizards, class_name: 'SchoolWelcomeWizard', foreign_key: 'invited_user_id', dependent: :nullify
   has_many :key_contact_for_responsible_bodies, class_name: 'ResponsibleBody', foreign_key: 'key_contact_id', dependent: :nullify
   has_many :email_audits, dependent: :destroy
+  has_one :last_user_change, -> { order('created_at DESC').limit(1) }, class_name: 'Computacenter::UserChange'
 
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
