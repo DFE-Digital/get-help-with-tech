@@ -17,8 +17,8 @@ private
     School.joins(:cap_changes).find_each do |school|
       changes_by_device_type = school.cap_changes.group_by(&:device_type)
       props_to_update = {
-        raw_laptop_allocation: changes_by_device_type['laptop']&.sort_by(:created_at)&.first&.prev_cap,
-        raw_router_allocation: changes_by_device_type['router']&.sort_by(:created_at)&.first&.prev_cap,
+        raw_laptop_allocation: changes_by_device_type['laptop']&.sort_by(&:created_at)&.first&.prev_cap,
+        raw_router_allocation: changes_by_device_type['router']&.sort_by(&:created_at)&.first&.prev_cap,
       }.compact
       school.update_columns(**props_to_update)
     end
