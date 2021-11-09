@@ -105,7 +105,7 @@ module DeviceSupplier
       school = School.find_by(computacenter_reference: ship_to)
       return if school.nil?
 
-      school.resposible_body.computacenter_reference
+      school.responsible_body.computacenter_reference
     end
 
     def user_schools_sold_tos(user)
