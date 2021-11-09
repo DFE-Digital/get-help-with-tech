@@ -8,14 +8,14 @@ class AllocationOverOrderRevertingService
   end
 
   def call
-    give_back_cap_across_virtual_cap_pool if school.in_virtual_cap_pool?
+    give_cap_back_across_virtual_cap_pool if school.in_virtual_cap_pool?
   end
 
 private
 
   def alert_pool_cap_give_back_failed(remaining_over_ordered_quantity)
     Sentry.with_scope do |scope|
-      scope.set_context('AllocationOverOrderRevertingService#give_back_cap_across_virtual_cap_pool',
+      scope.set_context('AllocationOverOrderRevertingService#give_cap_back_across_virtual_cap_pool',
                         { school_id: school.id,
                           device_type: device_type,
                           remaining_over_ordered_quantity: remaining_over_ordered_quantity })
@@ -28,11 +28,11 @@ private
     school.responsible_body.vcap_schools.with_over_order_stolen_cap(device_type)
   end
 
-  def give_back_cap_across_virtual_cap_pool
+  def give_cap_back_across_virtual_cap_pool
     School.transaction do
       failed_to_give_back = stolen_caps_in_the_vcap_pool.inject(devices) do |quantity, member|
         quantity -= give_cap_back_to_vcap_pool_member(member, quantity: quantity)
-        quantity.negative ? quantity : break
+        quantity.negative? ? quantity : break
       end
       alert_pool_cap_give_back_failed(failed_to_give_back) if failed_to_give_back
     end

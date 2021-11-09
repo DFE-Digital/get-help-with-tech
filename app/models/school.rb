@@ -86,8 +86,7 @@ class School < ApplicationRecord
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
   scope :with_over_order_stolen_cap, lambda { |device_type|
-    where(':over_order_field < 0',
-          over_order_field: laptop?(device_type) ? 'over_order_reclaimed_laptops' : 'over_order_reclaimed_routers')
+    laptop?(device_type) ? where('over_order_reclaimed_laptops < 0') : where('over_order_reclaimed_routers < 0')
   }
   scope :who_will_order_devices_not_set, -> { where(who_will_order_devices: nil) }
 
@@ -401,8 +400,26 @@ class School < ApplicationRecord
     [raw_allocation(:laptop), raw_cap(:laptop), raw_devices_ordered(:laptop)]
   end
 
+  def raw_laptops_full
+    [
+      raw_allocation(:laptop),
+      circumstances_devices(:laptop),
+      over_order_reclaimed_devices(:laptop),
+      raw_devices_ordered(:laptop),
+    ]
+  end
+
   def raw_routers
     [raw_allocation(:router), raw_cap(:router), raw_devices_ordered(:router)]
+  end
+
+  def raw_routers_full
+    [
+      raw_allocation(:router),
+      circumstances_devices(:router),
+      over_order_reclaimed_devices(:router),
+      raw_devices_ordered(:router),
+    ]
   end
 
   def routers
