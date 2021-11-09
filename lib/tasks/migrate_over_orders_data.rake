@@ -1,26 +1,4 @@
-class ReplaceRawCapFieldsFromSchools < ActiveRecord::Migration[6.1]
-  def up
-    add_column :schools, :circumstances_laptops, :integer, default: 0, null: false
-    add_column :schools, :circumstances_routers, :integer, default: 0, null: false
-    add_column :schools, :over_order_reclaimed_laptops, :integer, default: 0, null: false
-    add_column :schools, :over_order_reclaimed_routers, :integer, default: 0, null: false
-    # populate_new_fields
-    # remove_column :schools, :raw_laptop_cap, :integer, default: 0, null: false
-    # remove_column :schools, :raw_router_cap, :integer, default: 0, null: false
-  end
-
-  def down
-    # add_column :schools, :raw_laptop_cap, :integer, default: 0, null: false
-    # add_column :schools, :raw_router_cap, :integer, default: 0, null: false
-    # populate_raw_cap_fields
-    remove_column :schools, :circumstances_laptops, :integer, default: 0, null: false
-    remove_column :schools, :circumstances_routers, :integer, default: 0, null: false
-    remove_column :schools, :over_order_reclaimed_laptops, :integer, default: 0, null: false
-    remove_column :schools, :over_order_reclaimed_routers, :integer, default: 0, null: false
-  end
-
-private
-
+class MigrateOverOrdersData
   def populate_new_fields
     School.cannot_order.update_all('raw_laptop_cap = raw_laptop_allocation')
     School.cannot_order.update_all('raw_router_cap = raw_router_allocation')
@@ -51,5 +29,13 @@ private
                                             WHEN 'cannot_order' THEN raw_routers_ordered
                                             ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
                                         END")
+  end
+end
+
+namespace :db do
+  desc 'Migrate over-orders data'
+  task migrate_over_orders_data: :environment do
+    migrate = MigrateOverOrdersData.new
+    migrate.populate_new_fields
   end
 end
