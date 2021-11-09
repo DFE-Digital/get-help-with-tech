@@ -430,6 +430,8 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
     t.integer "raw_routers_ordered", default: 0, null: false
     t.datetime "router_cap_update_request_timestamp"
     t.string "router_cap_update_request_payload_id"
+    t.integer "raw_laptop_cap", default: 0, null: false
+    t.integer "raw_router_cap", default: 0, null: false
     t.integer "circumstances_laptops", default: 0, null: false
     t.integer "circumstances_routers", default: 0, null: false
     t.integer "over_order_reclaimed_laptops", default: 0, null: false
