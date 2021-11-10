@@ -19,7 +19,7 @@ class ComputacenterAssetJob < ApplicationJob
     when :create
       create_assets(path_to_csv)
     when :update
-      update_assets(path_to_csv, :tag) # :tag or :serial_number
+      update_assets(path_to_csv, :serial_number) # :tag or :serial_number
     else
       Rails.logger.fatal("Unknown action :#{action_symbol}")
     end
