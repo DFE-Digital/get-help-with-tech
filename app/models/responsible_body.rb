@@ -130,13 +130,7 @@ class ResponsibleBody < ApplicationRecord
 
   def calculate_laptop_vcap(**opts)
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
-    sums = vcap_schools.pick(Arel.sql("SUM(raw_laptop_allocation),
-                                       SUM(CASE order_state
-                                           WHEN 'cannot_order' THEN raw_laptops_ordered
-                                           ELSE raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops
-                                           END),
-                                       SUM(raw_laptops_ordered)"))
-    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
+    allocation, cap, ordered = compute_laptops
     update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
     if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
       update_cap_on_computacenter(:laptop, **opts)
@@ -145,13 +139,7 @@ class ResponsibleBody < ApplicationRecord
 
   def calculate_router_vcap(**opts)
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
-    sums = vcap_schools.pick(Arel.sql("SUM(raw_router_allocation),
-                                       SUM(CASE order_state
-                                           WHEN 'cannot_order' THEN raw_routers_ordered
-                                           ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
-                                           END),
-                                       SUM(raw_routers_ordered)"))
-    allocation, cap, ordered = Array(sums).values_at(0, 1, 2).map(&:to_i)
+    allocation, cap, ordered = compute_routers
     update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
     if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
       update_cap_on_computacenter(:router, **opts)
@@ -298,6 +286,26 @@ class ResponsibleBody < ApplicationRecord
   end
 
 private
+
+  def compute_laptops
+    sums = vcap_schools.pick(Arel.sql("SUM(raw_laptop_allocation),
+                                       SUM(CASE order_state
+                                           WHEN 'cannot_order' THEN raw_laptops_ordered
+                                           ELSE raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops
+                                           END),
+                                       SUM(raw_laptops_ordered)"))
+    Array(sums).values_at(0, 1, 2).map(&:to_i)
+  end
+
+  def compute_routers
+    sums = vcap_schools.pick(Arel.sql("SUM(raw_router_allocation),
+                                       SUM(CASE order_state
+                                           WHEN 'cannot_order' THEN raw_routers_ordered
+                                           ELSE raw_router_allocation + over_order_reclaimed_routers + circumstances_routers
+                                           END),
+                                       SUM(raw_routers_ordered)"))
+    Array(sums).values_at(0, 1, 2).map(&:to_i)
+  end
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)
