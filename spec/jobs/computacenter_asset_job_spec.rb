@@ -76,7 +76,7 @@ RSpec.describe ComputacenterAssetJob, type: :job do
 
     context 'update assets' do
       let(:action) { :update }
-      let!(:asset_1) { create(:asset, tag: asset_tag_1) }
+      let!(:asset_1) { create(:asset, serial_number: serial_number_1) }
 
       describe 'record updates' do
         it 'updates one record' do
