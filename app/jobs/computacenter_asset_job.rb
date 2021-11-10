@@ -1,3 +1,5 @@
+require 'csv'
+
 class ComputacenterAssetJob < ApplicationJob
   queue_as :default
 
@@ -43,7 +45,7 @@ private
 
     log_start(path_to_csv, action)
 
-    CSV.foreach(path_to_csv, IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
+    CSV.foreach(path_to_csv, **IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
       import_csv_row(row)
       csv_asset_read_count += 1
       log_progress(csv_asset_read_count, estimated_asset_count) if (csv_asset_read_count % progress_interval).zero?
@@ -98,7 +100,7 @@ private
 
     log_start(path_to_csv, action)
 
-    CSV.foreach(path_to_csv, IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
+    CSV.foreach(path_to_csv, **IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
       case update_asset(id_tag, row)
       when :updated
         updated_asset_count += 1
