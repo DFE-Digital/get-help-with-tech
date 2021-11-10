@@ -161,14 +161,6 @@ class School < ApplicationRecord
     hide_networks_not_supporting_fe? ? MobileNetwork.fe_networks : MobileNetwork.participating
   end
 
-  def calculate_vcaps_if_needed(*device_types)
-    return unless in_virtual_cap_pool?
-
-    (device_types.presence || DEVICE_TYPES).each do |device_type|
-      calculate_vcap(device_type) if calculate_vcap?(device_type)
-    end
-  end
-
   def can_change_who_manages_orders?
     !(responsible_body_will_order_devices? && responsible_body.vcap_active?)
   end
@@ -489,14 +481,6 @@ private
 
   def any_school_users?
     user_schools.exists?
-  end
-
-  def calculate_vcap?(device_type)
-    previous_changes.include?(:order_state) ||
-      previous_changes.include?(raw_allocation_field(device_type)) ||
-      previous_changes.include?(circumstances_devices_field(device_type)) ||
-      previous_changes.include?(over_order_reclaimed_devices_field(device_type)) ||
-      previous_changes.include?(raw_devices_ordered_field(device_type))
   end
 
   def check_and_update_status_if_necessary

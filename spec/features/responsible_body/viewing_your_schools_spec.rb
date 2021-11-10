@@ -75,7 +75,9 @@ RSpec.feature 'Viewing your schools' do
                                    order_state: :can_order_for_specific_circumstances,
                                    laptop_allocation: 20,
                                    circumstances_laptops: -15,
-                                   laptops_ordered: 5).call
+                                   laptops_ordered: 5,
+                                   router_allocation: 0,
+                                   routers_ordered: 0).call
   end
 
   def when_i_visit_the_responsible_body_home_page
