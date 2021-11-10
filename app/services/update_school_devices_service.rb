@@ -35,11 +35,11 @@ class UpdateSchoolDevicesService
     School.transaction do
       update_state!
       update_laptop_allocations! if ordering?(:laptop)
-      school.calculate_vcaps_if_needed(:laptop) if recalculate_vcaps
+      school.calculate_vcap(:laptop) if recalculate_device_vcap?(:laptop)
       update_router_allocations! if ordering?(:router)
-      school.calculate_vcaps_if_needed(:router) if recalculate_vcaps
+      school.calculate_vcap(:router) if recalculate_device_vcap?(:router)
       school.refresh_preorder_status!
-      notify_other_agents if notify_computacenter && !notifications_sent_by_pool_update?
+      notify_other_agents if notify_computacenter && !vcaps?
       true
     end
   end
@@ -63,12 +63,8 @@ private
     device_type.to_sym == :laptop
   end
 
-  def notifications_sent_by_pool_update?
-    recalculate_vcaps && school.in_virtual_cap_pool?
-  end
-
   def notify_device?(device_type)
-    (update_state? || ordering?(device_type)) && initial_raw_cap(device_type) != school.raw_cap(device_type)
+    ordering?(device_type) && initial_raw_cap(device_type) != school.raw_cap(device_type)
   end
 
   def notify_other_agents
@@ -96,20 +92,16 @@ private
     over_order(device_type).positive?
   end
 
-  def reverting_over_ordered_laptops?
-    over_order(:laptop).negative? && over_order_reclaimed_laptops.positive?
-  end
-
-  def reverting_over_ordered_routers?
-    over_order(:router).negative? && over_order_reclaimed_routers.positive?
-  end
-
   def over_order(device_type)
     if laptop?(device_type)
       @laptop_over_ordered ||= laptops_ordered - (laptop_allocation + circumstances_laptops + over_order_reclaimed_laptops)
     else
       @router_over_ordered ||= routers_ordered - (router_allocation + circumstances_routers + over_order_reclaimed_routers)
     end
+  end
+
+  def recalculate_device_vcap?(device_type)
+    vcaps? && ordering?(device_type)
   end
 
   def record_cap_change_meta_data!(device_type:, school_id:, prev_cap:, new_cap:, **opts)
@@ -121,6 +113,14 @@ private
                         new_cap: new_cap,
                         description: opts[:description])
     end
+  end
+
+  def reverting_over_ordered_laptops?
+    over_order(:laptop).negative? && over_order_reclaimed_laptops.positive?
+  end
+
+  def reverting_over_ordered_routers?
+    over_order(:router).negative? && over_order_reclaimed_routers.positive?
   end
 
   def update_laptop_allocations!
@@ -187,5 +187,9 @@ private
     return @update_state if instance_variable_defined?(:@update_state)
 
     @update_state = school.order_state.to_sym != order_state.to_sym
+  end
+
+  def vcaps?
+    recalculate_vcaps && school.in_virtual_cap_pool?
   end
 end
