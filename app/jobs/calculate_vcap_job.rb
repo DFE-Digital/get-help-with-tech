@@ -8,6 +8,7 @@ class CalculateVcapJob < ApplicationJob
     @batch_id = batch_id
     process_allocation_batch_jobs
     responsible_body.calculate_vcap(:laptop, notify_computacenter: true, notify_school: notify_school)
+    responsible_body.calculate_vcap(:router, notify_computacenter: true, notify_school: notify_school)
   end
 
 private
