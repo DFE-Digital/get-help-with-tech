@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_05_224402) do
+ActiveRecord::Schema.define(version: 2021_11_07_180047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,13 +95,13 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
   end
 
   create_table "cap_changes", force: :cascade do |t|
+    t.bigint "school_device_allocation_id"
     t.string "category"
     t.integer "prev_cap", default: 0, null: false
     t.integer "new_cap", default: 0, null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "school_device_allocation_id"
     t.bigint "school_id"
     t.string "device_type", default: "laptop", null: false
     t.index ["category"], name: "index_cap_changes_on_category"
@@ -109,15 +109,29 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
   end
 
   create_table "cap_update_calls", force: :cascade do |t|
+    t.bigint "school_device_allocation_id"
     t.text "request_body"
     t.text "response_body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "failure", default: false
-    t.bigint "school_device_allocation_id"
     t.bigint "school_id"
     t.string "device_type", default: "laptop", null: false
     t.index ["school_device_allocation_id"], name: "index_cap_update_calls_on_school_device_allocation_id"
+  end
+
+  create_table "computacenter_cap_usage_update_payloads", force: :cascade do |t|
+    t.string "payload_id"
+    t.string "payload_xml"
+    t.datetime "payload_timestamp"
+    t.integer "records_count"
+    t.integer "succeeded_count"
+    t.integer "failed_count"
+    t.string "status"
+    t.datetime "completed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payload_id"], name: "index_computacenter_cap_usage_update_payloads_on_payload_id"
   end
 
   create_table "computacenter_devices_ordered_updates", force: :cascade do |t|
@@ -127,6 +141,8 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
     t.integer "cap_used"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "cap_usage_update_payload_id"
+    t.index ["cap_usage_update_payload_id"], name: "index_devices_ordered_updates_on_cap_usage_update_payload_id"
     t.index ["ship_to"], name: "index_computacenter_devices_ordered_updates_on_ship_to"
   end
 
@@ -246,16 +262,16 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
+    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
     t.datetime "school_contacted_at"
-    t.bigint "school_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"
@@ -333,17 +349,17 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
   end
 
   create_table "school_device_allocations", force: :cascade do |t|
+    t.bigint "school_id"
     t.string "device_type", null: false
+    t.integer "allocation", default: 0
+    t.integer "devices_ordered", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.bigint "last_updated_by_user_id"
     t.bigint "created_by_user_id"
     t.integer "cap", default: 0, null: false
     t.datetime "cap_update_request_timestamp"
     t.string "cap_update_request_payload_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "school_id"
-    t.integer "allocation", default: 0
-    t.integer "devices_ordered", default: 0
     t.index ["cap"], name: "index_school_device_allocations_on_cap"
     t.index ["cap_update_request_payload_id"], name: "ix_allocations_cap_update_payload_id"
     t.index ["cap_update_request_timestamp"], name: "ix_allocations_cap_update_timestamp"
@@ -362,10 +378,10 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
   end
 
   create_table "school_virtual_caps", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.bigint "virtual_cap_pool_id"
     t.bigint "school_device_allocation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_device_allocation_id"], name: "index_school_virtual_caps_on_school_device_allocation_id"
     t.index ["virtual_cap_pool_id"], name: "index_school_virtual_caps_on_virtual_cap_pool_id"
   end
@@ -423,15 +439,15 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
     t.datetime "school_contacted_at"
     t.string "who_will_order_devices"
     t.integer "raw_laptop_allocation", default: 0, null: false
+    t.integer "raw_laptop_cap", default: 0, null: false
     t.integer "raw_laptops_ordered", default: 0, null: false
     t.datetime "laptop_cap_update_request_timestamp"
     t.string "laptop_cap_update_request_payload_id"
     t.integer "raw_router_allocation", default: 0, null: false
+    t.integer "raw_router_cap", default: 0, null: false
     t.integer "raw_routers_ordered", default: 0, null: false
     t.datetime "router_cap_update_request_timestamp"
     t.string "router_cap_update_request_payload_id"
-    t.integer "raw_laptop_cap", default: 0, null: false
-    t.integer "raw_router_cap", default: 0, null: false
     t.integer "circumstances_laptops", default: 0, null: false
     t.integer "circumstances_routers", default: 0, null: false
     t.integer "over_order_reclaimed_laptops", default: 0, null: false
@@ -584,12 +600,12 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
 
   create_table "virtual_cap_pools", force: :cascade do |t|
     t.string "device_type", null: false
-    t.integer "allocation", default: 0, null: false
+    t.bigint "responsible_body_id", null: false
     t.integer "cap", default: 0, null: false
     t.integer "devices_ordered", default: 0, null: false
-    t.bigint "responsible_body_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "allocation", default: 0, null: false
     t.index ["device_type", "responsible_body_id"], name: "index_virtual_cap_pools_on_device_type_and_responsible_body_id", unique: true
     t.index ["responsible_body_id"], name: "index_virtual_cap_pools_on_responsible_body_id"
   end
@@ -597,6 +613,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_224402) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "cap_changes", "school_device_allocations"
+  add_foreign_key "computacenter_devices_ordered_updates", "computacenter_cap_usage_update_payloads", column: "cap_usage_update_payload_id"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "schools"
   add_foreign_key "preorder_information", "school_contacts"

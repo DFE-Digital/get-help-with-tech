@@ -12,8 +12,8 @@ class Computacenter::API::CapUsageUpdate
     @error = nil
   end
 
-  def apply!(notify_decreases: true)
-    log_to_devices_ordered_updates
+  def apply!(notify_decreases: true, cap_usage_update_payload_id: nil)
+    log_to_devices_ordered_updates(cap_usage_update_payload_id)
     CapMismatch.new(school, device_type).warn(cap_amount) if cap_amount != school.allocation(device_type)
     cap_usage_change = cap_used - school.raw_devices_ordered(device_type)
     begin
@@ -82,12 +82,13 @@ private
     device_type.to_sym == :laptop
   end
 
-  def log_to_devices_ordered_updates
+  def log_to_devices_ordered_updates(cap_usage_update_payload_id)
     Computacenter::DevicesOrderedUpdate.create!(
       cap_type: cap_type,
       ship_to: ship_to,
       cap_amount: cap_amount,
       cap_used: cap_used,
+      cap_usage_update_payload_id: cap_usage_update_payload_id,
     )
   end
 

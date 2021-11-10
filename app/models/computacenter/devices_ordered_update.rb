@@ -5,5 +5,7 @@ module Computacenter
     belongs_to :school, primary_key: :computacenter_reference,
                         foreign_key: :ship_to,
                         optional: true
+
+    belongs_to :cap_usage_update_payload, class_name: 'Computacenter::API::CapUsageUpdatePayload', optional: true
   end
 end
