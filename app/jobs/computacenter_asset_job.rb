@@ -1,4 +1,5 @@
 require 'csv'
+require 'set'
 
 class ComputacenterAssetJob < ApplicationJob
   queue_as :default
@@ -19,7 +20,7 @@ class ComputacenterAssetJob < ApplicationJob
     when :create
       create_assets(path_to_csv)
     when :update
-      update_assets(path_to_csv, :serial_number) # :tag or :serial_number
+      update_assets(path_to_csv)
     else
       Rails.logger.fatal("Unknown action :#{action_symbol}")
     end
@@ -89,25 +90,29 @@ private
     Rails.logger.info("Finished #{self.class} (#{path_to_csv}, :#{action_symbol}) with #{csv_asset_read_count} asset(s) from CSV file")
   end
 
-  def update_assets(path_to_csv, id_tag)
+  def update_assets(path_to_csv)
     action = :update
     progress_interval = 500
     updated_asset_count = 0
     unchanged_asset_count = 0
     missing_asset_count = 0
+    conflict_asset_count = 0
     csv_asset_read_count = 0
     estimated_asset_count = estimate_assets_lines_in_file(path_to_csv)
+    @updated_attributes = Set.new
 
     log_start(path_to_csv, action)
 
     CSV.foreach(path_to_csv, **IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
-      case update_asset(id_tag, row)
+      case update_asset(row)
       when :updated
         updated_asset_count += 1
       when :unchanged
         unchanged_asset_count += 1
       when :missing
         missing_asset_count += 1
+      when :conflict
+        conflict_asset_count += 1
       end
 
       csv_asset_read_count += 1
@@ -118,17 +123,32 @@ private
     Rails.logger.info("#{updated_asset_count} asset(s) updated in the database")
     Rails.logger.info("#{unchanged_asset_count} asset(s) found but unchanged in the database")
     Rails.logger.info("#{missing_asset_count} missing asset(s) could not be updated")
+    Rails.logger.info("#{conflict_asset_count} conflicting asset match(es) could not be updated")
+    Rails.logger.info("This file updated #{@updated_attributes} asset attribute(s)")
   end
 
-  def update_asset(key, row)
-    search_term_hash = search_term_hash(key, row)
-    asset_to_update = find_asset(search_term_hash)
+  def update_asset(row)
+    serial_number_search_term = search_term_hash(:serial_number, row)
+    tag_search_term = search_term_hash(:tag, row)
+    asset_to_update_according_to_serial_number = find_asset(serial_number_search_term)
+    asset_to_update_according_to_tag = find_asset(tag_search_term)
 
-    if asset_to_update.present?
+    if [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].all?(&:nil?)
+      Rails.logger.info("No matches for (serial_number: #{serial_number_search_term.values.first}) or (tag: #{tag_search_term.values.first})")
+      return :missing
+    end
+
+    unless asset_to_update_according_to_serial_number == asset_to_update_according_to_tag
+      Rails.logger.info("Conflicting matches. (serial_number: #{asset_to_update_according_to_serial_number&.attributes}) (tag: #{asset_to_update_according_to_tag&.attributes})")
+      return :conflict
+    end
+
+    if asset_to_update_according_to_serial_number.present?
       attributes_for_row = attributes_hash(row)
 
-      if changing?(asset_to_update, attributes_for_row)
-        asset_to_update.update!(attributes_for_row) unless @dry_run
+      if changing?(asset_to_update_according_to_serial_number, attributes_for_row)
+        @updated_attributes.merge(changed_attributes(asset_to_update_according_to_serial_number, attributes_for_row))
+        asset_to_update_according_to_serial_number.update!(attributes_for_row) unless @dry_run
         :updated
       else
         :unchanged
@@ -138,16 +158,30 @@ private
     end
   end
 
+  def changed_attributes(asset_to_update, attributes_for_row)
+    diff(asset_to_update, attributes_for_row).keys
+  end
+
+  def diff(first, second)
+    first.reject { |k, v| second[k] == v }.merge(second.reject { |k, _| first.key?(k) })
+  end
+
   def changing?(asset_to_update, new_attributes_hash)
+    rails_generated_attributes = %i[id created_at updated_at]
+    relevant_asset_to_update_encrypted_attributes = asset_to_update.attributes.except(*rails_generated_attributes)
+    encrypted_new_attributes_hash = encrypted_attributes(new_attributes_hash).except(*rails_generated_attributes)
+
+    diff(relevant_asset_to_update_encrypted_attributes, encrypted_new_attributes_hash).any?
+  end
+
+  def encrypted_attributes(new_attributes_hash)
     encrypted_new_attributes_hash = new_attributes_hash.except(:bios_password, :admin_password, :hardware_hash)
 
     encrypted_new_attributes_hash.store(:encrypted_bios_password, EncryptionService.encrypt(new_attributes_hash[:bios_password]))
     encrypted_new_attributes_hash.store(:encrypted_admin_password, EncryptionService.encrypt(new_attributes_hash[:admin_password]))
     encrypted_new_attributes_hash.store(:encrypted_hardware_hash, EncryptionService.encrypt(new_attributes_hash[:hardware_hash]))
 
-    encrypted_relevant_record_attributes = asset_to_update.attributes.except(:id, :created_at, :updated_at)
-
-    encrypted_new_attributes_hash != encrypted_relevant_record_attributes
+    encrypted_new_attributes_hash
   end
 
   def search_term_hash(key, row)
