@@ -1,5 +1,4 @@
 require 'csv'
-require 'set'
 
 class ComputacenterAssetJob < ApplicationJob
   queue_as :default
@@ -99,7 +98,7 @@ private
     conflict_asset_count = 0
     csv_asset_read_count = 0
     estimated_asset_count = estimate_assets_lines_in_file(path_to_csv)
-    @updated_attributes = Set.new
+    @updated_attribute_keys = Set.new
 
     log_start(path_to_csv, action)
 
@@ -124,7 +123,7 @@ private
     Rails.logger.info("#{unchanged_asset_count} asset(s) found but unchanged in the database")
     Rails.logger.info("#{missing_asset_count} missing asset(s) could not be updated")
     Rails.logger.info("#{conflict_asset_count} conflicting asset match(es) could not be updated")
-    Rails.logger.info("This file updated #{@updated_attributes} asset attribute(s)")
+    Rails.logger.info("This file updated #{@updated_attribute_keys} asset attribute(s)")
   end
 
   def update_asset(row)
@@ -138,50 +137,35 @@ private
       return :missing
     end
 
-    unless asset_to_update_according_to_serial_number == asset_to_update_according_to_tag
+    if asset_to_update_according_to_serial_number != asset_to_update_according_to_tag
       Rails.logger.info("Conflicting matches. (serial_number: #{asset_to_update_according_to_serial_number&.attributes}) (tag: #{asset_to_update_according_to_tag&.attributes})")
       return :conflict
     end
 
-    if asset_to_update_according_to_serial_number.present?
-      attributes_for_row = attributes_hash(row)
+    asset_to_update = asset_to_update_according_to_serial_number # could use either at this point
+    attributes_for_row = attributes_hash(row)
+    differing_attribute_keys = differing_attribute_keys(asset_to_update, attributes_for_row)
 
-      if changing?(asset_to_update_according_to_serial_number, attributes_for_row)
-        @updated_attributes.merge(changed_attributes(asset_to_update_according_to_serial_number, attributes_for_row))
-        asset_to_update_according_to_serial_number.update!(attributes_for_row) unless @dry_run
-        :updated
-      else
-        :unchanged
-      end
+    if differing_attribute_keys.any?
+      @updated_attribute_keys.merge(differing_attribute_keys)
+      asset_to_update.update!(attributes_for_row.slice(*differing_attribute_keys)) unless @dry_run
+      :updated
     else
-      :missing
+      :unchanged
     end
   end
 
-  def changed_attributes(asset_to_update, attributes_for_row)
-    diff(asset_to_update, attributes_for_row).keys
+  def differing_attribute_keys(asset, row_attributes)
+    attribute_intersection = asset.attributes.symbolize_keys.slice(*row_attributes.keys)
+    differing_keys(attribute_intersection, row_attributes)
   end
 
-  def diff(first, second)
-    first.reject { |k, v| second[k] == v }.merge(second.reject { |k, _| first.key?(k) })
-  end
+  def differing_keys(hash, other_hash)
+    differing_keys = []
 
-  def changing?(asset_to_update, new_attributes_hash)
-    rails_generated_attributes = %i[id created_at updated_at]
-    relevant_asset_to_update_encrypted_attributes = asset_to_update.attributes.except(*rails_generated_attributes)
-    encrypted_new_attributes_hash = encrypted_attributes(new_attributes_hash).except(*rails_generated_attributes)
+    hash.each { |key, value| differing_keys << key if other_hash.fetch(key) != value }
 
-    diff(relevant_asset_to_update_encrypted_attributes, encrypted_new_attributes_hash).any?
-  end
-
-  def encrypted_attributes(new_attributes_hash)
-    encrypted_new_attributes_hash = new_attributes_hash.except(:bios_password, :admin_password, :hardware_hash)
-
-    encrypted_new_attributes_hash.store(:encrypted_bios_password, EncryptionService.encrypt(new_attributes_hash[:bios_password]))
-    encrypted_new_attributes_hash.store(:encrypted_admin_password, EncryptionService.encrypt(new_attributes_hash[:admin_password]))
-    encrypted_new_attributes_hash.store(:encrypted_hardware_hash, EncryptionService.encrypt(new_attributes_hash[:hardware_hash]))
-
-    encrypted_new_attributes_hash
+    differing_keys
   end
 
   def search_term_hash(key, row)
