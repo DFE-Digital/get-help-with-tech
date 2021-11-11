@@ -137,12 +137,12 @@ private
       return :missing
     end
 
-    if asset_to_update_according_to_serial_number != asset_to_update_according_to_tag
+    if (asset_to_update_according_to_serial_number != asset_to_update_according_to_tag) && [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].all?(&:present?)
       Rails.logger.info("Conflicting matches. (serial_number: #{asset_to_update_according_to_serial_number&.attributes}) (tag: #{asset_to_update_according_to_tag&.attributes})")
       return :conflict
     end
 
-    asset_to_update = asset_to_update_according_to_serial_number # could use either at this point
+    asset_to_update = [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].compact.first
     attributes_for_row = attributes_hash(row)
     differing_attribute_keys = differing_attribute_keys(asset_to_update, attributes_for_row)
 
@@ -156,7 +156,13 @@ private
   end
 
   def differing_attribute_keys(asset, row_attributes)
-    attribute_intersection = asset.attributes.symbolize_keys.slice(*row_attributes.keys)
+    asset_attributes = asset.attributes.symbolize_keys
+
+    asset_attributes.store(:bios_password, asset.bios_password)
+    asset_attributes.store(:admin_password, asset.admin_password)
+    asset_attributes.store(:hardware_hash, asset.hardware_hash)
+
+    attribute_intersection = asset_attributes.slice(*row_attributes.keys)
     differing_keys(attribute_intersection, row_attributes)
   end
 
