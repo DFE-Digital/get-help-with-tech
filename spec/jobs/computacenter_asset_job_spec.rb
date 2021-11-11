@@ -77,9 +77,9 @@ RSpec.describe ComputacenterAssetJob, type: :job do
     context 'update assets' do
       let(:action) { :update }
 
-      describe 'record updates' do
-        before { create(:asset, tag: asset_tag_1, serial_number: serial_number_1) }
+      before { create(:asset, tag: asset_tag_1, serial_number: serial_number_1) }
 
+      describe 'record updates' do
         it 'updates one record' do
           expect { job.perform_on_csv_file_path(asset_csv_file_path, action) }.not_to change { Asset.count } # rubocop:disable Lint/AmbiguousBlockAssociation:
           expect(Rails.logger).to have_received(:info).with('Started ComputacenterAssetJob (assets.csv, :update) ~2 asset(s)').ordered
