@@ -73,6 +73,18 @@ RSpec.describe Computacenter::API::CapUsageController do
         post :bulk_update, format: :xml, body: valid_xml_but_not_valid_for_the_schema
         expect(response).to have_http_status(:bad_request)
       end
+
+      it 'stores just the xml' do
+        post :bulk_update, format: :xml, body: valid_xml_but_not_valid_for_the_schema
+
+        payload = Computacenter::API::CapUsageUpdatePayload.order(id: :desc).limit(1).first
+
+        expect(payload.payload_id).to be_nil
+        expect(payload.payload_xml).to eq(valid_xml_but_not_valid_for_the_schema)
+        expect(payload.payload_timestamp).to be_nil
+        expect(payload.status).to be_nil
+        expect(payload.completed_at).to be_nil
+      end
     end
 
     context 'given valid XML but where the usedCap is negative' do
@@ -103,13 +115,31 @@ RSpec.describe Computacenter::API::CapUsageController do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:bad_request)
       end
+
+      it 'stores just the xml' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        payload = Computacenter::API::CapUsageUpdatePayload.order(id: :desc).limit(1).first
+
+        expect(payload.payload_id).to be_nil
+        expect(payload.payload_xml).to eq(cap_usage_update_packet)
+        expect(payload.payload_timestamp).to be_nil
+        expect(payload.records_count).to be_nil
+        expect(payload.succeeded_count).to be_nil
+        expect(payload.failed_count).to be_nil
+        expect(payload.status).to be_nil
+        expect(payload.completed_at).to be_nil
+      end
     end
   end
 
   describe 'POST bulk_update with valid auth and valid XML' do
+    let(:payload_id) { 'IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123' }
+    let(:payload_timestamp) { '2020-06-18T09:20:45Z' }
+
     let(:cap_usage_update_packet) do
       <<~XML
-        <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+        <CapUsage payloadID="#{payload_id}" dateTime="#{payload_timestamp}" >
           <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
           <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100"/>
           <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060875" capAmount="300" usedCap="57"/>
@@ -138,6 +168,21 @@ RSpec.describe Computacenter::API::CapUsageController do
 
         expect(@school2.reload.devices_ordered(:laptop)).to eq(57)
         expect(@school2.reload.devices_ordered(:router)).to eq(100)
+      end
+
+      it 'stores the payload with status succeeded and completed_at timestamp' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        payload = Computacenter::API::CapUsageUpdatePayload.order(id: :desc).limit(1).first
+
+        expect(payload.payload_id).to eq(payload_id)
+        expect(payload.payload_xml).to eq(cap_usage_update_packet)
+        expect(payload.payload_timestamp).to eq(payload_timestamp)
+        expect(payload.records_count).to eq(4)
+        expect(payload.succeeded_count).to eq(4)
+        expect(payload.failed_count).to eq(0)
+        expect(payload.status).to eq('succeeded')
+        expect(payload.completed_at).to be_present
       end
     end
 
@@ -187,6 +232,21 @@ RSpec.describe Computacenter::API::CapUsageController do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:unprocessable_entity)
       end
+
+      it 'stores the payload with status failed and completed_at timestamp' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        payload = Computacenter::API::CapUsageUpdatePayload.order(id: :desc).limit(1).first
+
+        expect(payload.payload_id).to eq(payload_id)
+        expect(payload.payload_xml).to eq(cap_usage_update_packet)
+        expect(payload.payload_timestamp).to eq(payload_timestamp)
+        expect(payload.records_count).to eq(4)
+        expect(payload.succeeded_count).to eq(0)
+        expect(payload.failed_count).to eq(4)
+        expect(payload.status).to eq('failed')
+        expect(payload.completed_at).to be_present
+      end
     end
 
     context 'when some but not all updates failed' do
@@ -198,6 +258,21 @@ RSpec.describe Computacenter::API::CapUsageController do
       it 'responds with :multi_status status' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:multi_status)
+      end
+
+      it 'stores the payload with status partially_failed and completed_at timestamp' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+
+        payload = Computacenter::API::CapUsageUpdatePayload.order(id: :desc).limit(1).first
+
+        expect(payload.payload_id).to eq(payload_id)
+        expect(payload.payload_xml).to eq(cap_usage_update_packet)
+        expect(payload.payload_timestamp).to eq(payload_timestamp)
+        expect(payload.records_count).to eq(4)
+        expect(payload.succeeded_count).to eq(2)
+        expect(payload.failed_count).to eq(2)
+        expect(payload.status).to eq('partially_failed')
+        expect(payload.completed_at).to be_present
       end
     end
 
@@ -212,7 +287,7 @@ RSpec.describe Computacenter::API::CapUsageController do
 
       let!(:school) { create(:school, computacenter_reference: '81060874', laptops: [100, 100, 0]) }
 
-      it 'responds with :multi_status status' do
+      it 'responds with :ok status' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
 
         expect(response).to have_http_status(:ok)

@@ -33,6 +33,8 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
   end
 
   describe '#apply!' do
+    let!(:cap_usage_update_payload) { Computacenter::API::CapUsageUpdatePayload.create!(payload_xml: '<xml></xml>') }
+
     let!(:school) do
       create(:school,
              :centrally_managed,
@@ -54,7 +56,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
     it 'logs to devices_ordered_updates' do
       expect {
-        cap_usage_update.apply!
+        cap_usage_update.apply!(cap_usage_update_payload_id: cap_usage_update_payload.id)
       }.to change { Computacenter::DevicesOrderedUpdate.count }.by(1)
 
       log = Computacenter::DevicesOrderedUpdate.last
@@ -63,6 +65,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       expect(log.ship_to).to eql(args['shipTo'])
       expect(log.cap_amount).to eql(args['capAmount'])
       expect(log.cap_used).to eql(args['usedCap'])
+      expect(log.cap_usage_update_payload_id).to eq(cap_usage_update_payload.id)
 
       expect(log.school).to eql(school)
       expect(school.devices_ordered_updates).to include(log)
