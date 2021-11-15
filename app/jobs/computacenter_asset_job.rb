@@ -7,13 +7,11 @@ class ComputacenterAssetJob < ApplicationJob
 
   # Active Job expects a `perform` method
   def perform(path_to_csv, action_symbol)
-    @dry_run = true
-
-    Rails.logger.info('Running as dry run (so not really affecting database)') if @dry_run
     perform_on_csv_file_path(path_to_csv, action_symbol)
   end
 
   # the following methods are public for easier testing
+
   def perform_on_csv_file_path(path_to_csv, action_symbol)
     case action_symbol
     when :create
@@ -56,10 +54,6 @@ private
     Rails.logger.info("There are now #{Asset.count} total asset(s) in the database")
   end
 
-  def log_start(path_to_csv, action_symbol)
-    Rails.logger.info("Started #{self.class} (#{path_to_csv}, :#{action_symbol}) ~#{estimate_assets_lines_in_file(path_to_csv)} asset(s)")
-  end
-
   def estimate_assets_lines_in_file(path)
     non_header_line_count_of_file(path)
   end
@@ -76,8 +70,12 @@ private
     console_output.to_i
   end
 
+  def log_start(path_to_csv, action_symbol)
+    Rails.logger.info("Started #{self.class} (#{path_to_csv}, :#{action_symbol}) ~#{estimate_assets_lines_in_file(path_to_csv)} asset(s)")
+  end
+
   def import_csv_row(row)
-    Asset.create!(attributes_hash(row)) unless @dry_run
+    Asset.create!(attributes_hash(row))
   end
 
   def attributes_hash(row)
@@ -93,12 +91,9 @@ private
     action = :update
     progress_interval = 500
     updated_asset_count = 0
-    unchanged_asset_count = 0
-    missing_asset_count = 0
-    conflict_asset_count = 0
+    created_asset_count = 0
     csv_asset_read_count = 0
     estimated_asset_count = estimate_assets_lines_in_file(path_to_csv)
-    @updated_attribute_keys = Set.new
 
     log_start(path_to_csv, action)
 
@@ -106,12 +101,9 @@ private
       case update_asset(row)
       when :updated
         updated_asset_count += 1
-      when :unchanged
-        unchanged_asset_count += 1
-      when :missing
-        missing_asset_count += 1
-      when :conflict
-        conflict_asset_count += 1
+      when :missing, :conflict, :secure_attribute_overwrite_attempt
+        import_csv_row(row)
+        created_asset_count += 1
       end
 
       csv_asset_read_count += 1
@@ -120,58 +112,28 @@ private
 
     log_finish(path_to_csv, action, csv_asset_read_count)
     Rails.logger.info("#{updated_asset_count} asset(s) updated in the database")
-    Rails.logger.info("#{unchanged_asset_count} asset(s) found but unchanged in the database")
-    Rails.logger.info("#{missing_asset_count} missing asset(s) could not be updated")
-    Rails.logger.info("#{conflict_asset_count} conflicting asset match(es) could not be updated")
-    Rails.logger.info("This file updated #{@updated_attribute_keys} asset attribute(s)")
+    Rails.logger.info("#{created_asset_count} missing/conflicting/overwriting asset(s) added to the database")
   end
 
   def update_asset(row)
-    serial_number_search_term = search_term_hash(:serial_number, row)
-    tag_search_term = search_term_hash(:tag, row)
-    asset_to_update_according_to_serial_number = find_asset(serial_number_search_term)
-    asset_to_update_according_to_tag = find_asset(tag_search_term)
+    asset_to_update_according_to_serial_number = find_asset(search_term_hash(:serial_number, row))
+    asset_to_update_according_to_tag = find_asset(search_term_hash(:tag, row))
 
     if [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].all?(&:nil?)
-      Rails.logger.info("No matches for (serial_number: #{serial_number_search_term.values.first}) or (tag: #{tag_search_term.values.first})")
-      return :missing
-    end
-
-    if (asset_to_update_according_to_serial_number != asset_to_update_according_to_tag) && [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].all?(&:present?)
-      Rails.logger.info("Conflicting matches. (serial_number: #{asset_to_update_according_to_serial_number&.attributes}) (tag: #{asset_to_update_according_to_tag&.attributes})")
-      return :conflict
-    end
-
-    asset_to_update = [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].compact.first
-    attributes_for_row = attributes_hash(row)
-    differing_attribute_keys = differing_attribute_keys(asset_to_update, attributes_for_row)
-
-    if differing_attribute_keys.any?
-      @updated_attribute_keys.merge(differing_attribute_keys)
-      asset_to_update.update!(attributes_for_row.slice(*differing_attribute_keys)) unless @dry_run
-      :updated
+      :missing
+    elsif (asset_to_update_according_to_serial_number != asset_to_update_according_to_tag) && [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].all?(&:present?)
+      :conflict
     else
-      :unchanged
+      asset_to_update = [asset_to_update_according_to_serial_number, asset_to_update_according_to_tag].compact.first
+      row_attributes_hash = attributes_hash(row)
+
+      if overwriting_present_secure_attribute?(row_attributes_hash, asset_to_update)
+        :secure_attribute_overwrite_attempt
+      else
+        asset_to_update.update!(row_attributes_hash)
+        :updated
+      end
     end
-  end
-
-  def differing_attribute_keys(asset, row_attributes)
-    asset_attributes = asset.attributes.symbolize_keys
-
-    asset_attributes.store(:bios_password, asset.bios_password)
-    asset_attributes.store(:admin_password, asset.admin_password)
-    asset_attributes.store(:hardware_hash, asset.hardware_hash)
-
-    attribute_intersection = asset_attributes.slice(*row_attributes.keys)
-    differing_keys(attribute_intersection, row_attributes)
-  end
-
-  def differing_keys(hash, other_hash)
-    differing_keys = []
-
-    hash.each { |key, value| differing_keys << key if other_hash.fetch(key) != value }
-
-    differing_keys
   end
 
   def search_term_hash(key, row)
@@ -179,8 +141,20 @@ private
   end
 
   def find_asset(search_term_hash)
-    relation = @dry_run ? Asset.readonly : Asset
-    relation.find_by(search_term_hash)
+    Asset.find_by(search_term_hash)
+  end
+
+  def overwriting_present_secure_attribute?(row_attributes_hash, asset)
+    secure_attributes = %i[bios_password admin_password hardware_hash]
+
+    secure_attributes.each do |secure_attribute|
+      current_value = asset.send(secure_attribute)
+      new_value = row_attributes_hash[secure_attribute]
+
+      return true if current_value.present? && (new_value != current_value)
+    end
+
+    false
   end
 
   def percentage(numerator, denominator)
