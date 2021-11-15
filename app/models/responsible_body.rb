@@ -132,7 +132,7 @@ class ResponsibleBody < ApplicationRecord
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
     allocation, cap, ordered = compute_laptops
     update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
-    if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
+    if vcap_feature_flag? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
       update_cap_on_computacenter(:laptop, **opts)
     end
   end
@@ -141,7 +141,7 @@ class ResponsibleBody < ApplicationRecord
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
     allocation, cap, ordered = compute_routers
     update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
-    if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
+    if vcap_feature_flag? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
       update_cap_on_computacenter(:router, **opts)
     end
   end
@@ -261,17 +261,11 @@ class ResponsibleBody < ApplicationRecord
     type == 'Trust'
   end
 
-  def vcap_active?
-    vcap_feature_flag? && orders_managed_centrally?
-  end
-
   def vcap_schools
-    return School.none unless vcap_active?
+    return School.none unless vcap_feature_flag?
 
-    schools
-      .excluding_la_funded_provisions
-      .responsible_body_will_order_devices
-      .or(schools.who_will_order_devices_not_set)
+    query = schools.excluding_la_funded_provisions.responsible_body_will_order_devices
+    orders_managed_centrally? ? query.or(schools.who_will_order_devices_not_set) : query
   end
 
   def who_manages_orders_label

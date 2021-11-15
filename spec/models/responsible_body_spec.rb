@@ -488,30 +488,6 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#vcap_active?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally) }
-
-    context 'without any feature flags' do
-      before do
-        responsible_body.update!(vcap_feature_flag: false)
-      end
-
-      it 'returns false' do
-        expect(responsible_body.vcap_active?).to be false
-      end
-    end
-
-    context 'when responsible body flag is enabled' do
-      before do
-        responsible_body.update!(vcap_feature_flag: true)
-      end
-
-      it 'returns true' do
-        expect(responsible_body.vcap_active?).to be true
-      end
-    end
-  end
-
   describe '#has_virtual_cap_feature_flags_and_centrally_managed_schools?' do
     subject(:responsible_body) { create(:trust) }
 

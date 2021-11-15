@@ -70,7 +70,7 @@ class SchoolDeviceAllocation < ApplicationRecord
 private
 
   def vcap_enabled?
-    school&.responsible_body&.vcap_active?
+    school&.responsible_body&.vcap_feature_flag?
   end
 
   def over_order_occurred?

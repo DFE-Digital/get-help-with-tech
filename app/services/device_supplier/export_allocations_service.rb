@@ -93,7 +93,7 @@ module DeviceSupplier
     end
 
     def rb_vcap_feature_flag_text(school)
-      school.responsible_body.vcap_active? ? 'Yes' : 'No'
+      school.responsible_body.vcap_feature_flag? ? 'Yes' : 'No'
     end
 
     def school_allocation_and_rb_details(school)

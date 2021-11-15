@@ -162,7 +162,7 @@ class School < ApplicationRecord
   end
 
   def can_change_who_manages_orders?
-    !(responsible_body_will_order_devices? && responsible_body.vcap_active?)
+    !(orders_managed_centrally? && responsible_body.vcap_feature_flag?)
   end
 
   def can_invite_users?
@@ -282,7 +282,7 @@ class School < ApplicationRecord
   end
 
   def in_virtual_cap_pool?
-    responsible_body.vcap_active? && !la_funded_provision? && orders_managed_centrally?
+    responsible_body.vcap_feature_flag? && !la_funded_provision? && orders_managed_centrally?
   end
 
   def independent_special_school?

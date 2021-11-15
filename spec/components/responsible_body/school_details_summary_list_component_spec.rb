@@ -172,7 +172,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :la_maintained, laptops: [100, 100, 3]) }
 
         before do
-          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
+          allow(school.responsible_body).to receive(:vcap_feature_flag?).and_return(true)
         end
 
         it 'shows devices ordered row with count' do
@@ -184,7 +184,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, laptops: [100, 100, 3]) }
 
         before do
-          allow(school.responsible_body).to receive(:vcap_active?).and_return(false)
+          allow(school.responsible_body).to receive(:vcap_feature_flag?).and_return(false)
         end
 
         it 'shows devices ordered row with count' do
@@ -196,7 +196,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, laptops: [100, 100, 3]) }
 
         before do
-          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
+          allow(school.responsible_body).to receive(:vcap_feature_flag?).and_return(true)
         end
 
         it 'does not show devices ordered row' do
@@ -218,7 +218,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :la_maintained, routers: [100, 100, 3]) }
 
         before do
-          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
+          allow(school.responsible_body).to receive(:vcap_feature_flag?).and_return(true)
         end
 
         it 'shows routers ordered row with count' do
@@ -238,7 +238,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :centrally_managed, :primary, :la_maintained, routers: [100, 100, 3]) }
 
         before do
-          allow(school.responsible_body).to receive(:vcap_active?).and_return(true)
+          allow(school.responsible_body).to receive(:vcap_feature_flag?).and_return(true)
         end
 
         it 'does not show routers ordered row' do
