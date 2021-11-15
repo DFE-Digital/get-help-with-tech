@@ -329,7 +329,7 @@ class School < ApplicationRecord
   def orders_managed_centrally?
     return false if school_will_order_devices?
 
-    responsible_body_will_order_devices? || responsible_body.responsible_body_will_order_devices_for_schools_by_default?
+    responsible_body_will_order_devices? || responsible_body.will_order_devices_for_schools_by_default?
   end
 
   def orders_managed_by_school?

@@ -226,10 +226,6 @@ class ResponsibleBody < ApplicationRecord
       .first
   end
 
-  def responsible_body_will_order_devices_for_schools_by_default?
-    default_who_will_order_devices_for_schools == 'responsible_body'
-  end
-
   def schools_will_order_devices_by_default?
     default_who_will_order_devices_for_schools == 'school'
   end
@@ -259,7 +255,7 @@ class ResponsibleBody < ApplicationRecord
   def vcap_schools
     return School.none unless vcap_feature_flag?
 
-    if responsible_body_will_order_devices_for_schools_by_default?
+    if will_order_devices_for_schools_by_default?
       schools.excluding_la_funded_provisions.school_not_set_to_order_devices
     else
       schools.excluding_la_funded_provisions.responsible_body_will_order_devices
@@ -275,6 +271,10 @@ class ResponsibleBody < ApplicationRecord
     when 'responsible_body'
       humanized_type.capitalize
     end
+  end
+
+  def will_order_devices_for_schools_by_default?
+    default_who_will_order_devices_for_schools == 'responsible_body'
   end
 
 private
