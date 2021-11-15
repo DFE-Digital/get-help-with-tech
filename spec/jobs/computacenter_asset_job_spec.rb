@@ -77,16 +77,16 @@ RSpec.describe ComputacenterAssetJob, type: :job do
     context 'update assets' do
       let(:action) { :update }
 
-      before { create(:asset, tag: asset_tag_1, serial_number: serial_number_1) }
+      before do
+        create(:asset, tag: asset_tag_1, serial_number: serial_number_1)
+        create(:asset, tag: asset_tag_2)
+        job.perform_on_csv_file_path(asset_csv_file_path, action)
+      end
 
       describe 'record updates' do
-        it 'updates one record' do
-          expect { job.perform_on_csv_file_path(asset_csv_file_path, action) }.not_to change { Asset.count } # rubocop:disable Lint/AmbiguousBlockAssociation:
+        it 'logs' do
           expect(Rails.logger).to have_received(:info).with('Started ComputacenterAssetJob (assets.csv, :update) ~2 asset(s)').ordered
           expect(Rails.logger).to have_received(:info).with('Finished ComputacenterAssetJob (assets.csv, :update) with 2 asset(s) from CSV file').ordered
-          expect(Rails.logger).to have_received(:info).with('1 asset(s) updated in the database').ordered
-          expect(Rails.logger).to have_received(:info).with('0 asset(s) found but unchanged in the database').ordered
-          expect(Rails.logger).to have_received(:info).with('1 missing asset(s) could not be updated').ordered
         end
       end
     end
