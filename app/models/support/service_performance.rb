@@ -381,12 +381,6 @@ class Support::ServicePerformance
       .size
   end
 
-  def number_of_different_responsible_bodies_who_have_chosen_who_will_order
-    ResponsibleBody
-      .chosen_who_will_order
-      .count
-  end
-
   def number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed
     ResponsibleBody
       .with_at_least_one_preorder_information_completed

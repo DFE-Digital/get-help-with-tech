@@ -33,10 +33,6 @@ class ResponsibleBody < ApplicationRecord
 
   after_update :maybe_generate_user_changes
 
-  def self.chosen_who_will_order
-    where.not(default_who_will_order_devices_for_schools: nil)
-  end
-
   def self.managing_multiple_chromebook_domains
     where(
       <<~SQL,
@@ -230,12 +226,12 @@ class ResponsibleBody < ApplicationRecord
       .first
   end
 
-  def orders_managed_centrally?
+  def responsible_body_will_order_devices_for_schools_by_default?
     default_who_will_order_devices_for_schools == 'responsible_body'
   end
 
-  def orders_managed_by_schools?
-    %w[school schools].include?(default_who_will_order_devices_for_schools)
+  def schools_will_order_devices_by_default?
+    default_who_will_order_devices_for_schools == 'school'
   end
 
   def routers
@@ -263,12 +259,10 @@ class ResponsibleBody < ApplicationRecord
   def vcap_schools
     return School.none unless vcap_feature_flag?
 
-    not_laf_schools = schools.excluding_la_funded_provisions
-    not_laf_schools_centrally_managed = not_laf_schools.responsible_body_will_order_devices
-    if orders_managed_centrally?
-      not_laf_schools_centrally_managed.or(not_laf_schools.who_will_order_devices_not_set)
+    if responsible_body_will_order_devices_for_schools_by_default?
+      schools.excluding_la_funded_provisions.school_not_set_to_order_devices
     else
-      not_laf_schools_centrally_managed
+      schools.excluding_la_funded_provisions.responsible_body_will_order_devices
     end
   end
 

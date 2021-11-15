@@ -38,19 +38,6 @@ RSpec.describe Support::ServicePerformance, type: :model do
     end
   end
 
-  describe '#number_of_different_responsible_bodies_who_have_chosen_who_will_order' do
-    it 'counts only the responsible bodies who have a non-nil value in who_will_order_devices' do
-      # these will count
-      create_list(:local_authority, 3, :manages_centrally)
-      create_list(:trust, 4, :devolves_management)
-
-      # these won't count
-      create_list(:local_authority, 2, default_who_will_order_devices_for_schools: nil)
-
-      expect(stats.number_of_different_responsible_bodies_who_have_chosen_who_will_order).to eq(7)
-    end
-  end
-
   describe '#number_of_different_responsible_bodies_with_at_least_one_preorder_information_completed' do
     it 'counts the number of unique responsible bodies where there is at least one school with preorder information that is not in a "needs_(x)" status' do
       # these will count

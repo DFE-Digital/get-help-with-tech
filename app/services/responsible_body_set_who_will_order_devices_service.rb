@@ -21,9 +21,9 @@ private
                                            who,
                                            clear_preorder_information: true,
                                            recalculate_vcaps: false,
-                                           notify: responsible_body.orders_managed_by_schools?).call
+                                           notify: responsible_body.schools_will_order_devices_by_default?).call
     end
-    responsible_body.calculate_vcaps! if responsible_body.orders_managed_centrally?
+    responsible_body.calculate_vcaps! if responsible_body.responsible_body_will_order_devices_for_schools_by_default?
     true
   end
 

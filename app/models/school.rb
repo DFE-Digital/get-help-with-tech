@@ -88,7 +88,7 @@ class School < ApplicationRecord
   scope :with_over_order_stolen_cap, lambda { |device_type|
     laptop?(device_type) ? where('over_order_reclaimed_laptops < 0') : where('over_order_reclaimed_routers < 0')
   }
-  scope :who_will_order_devices_not_set, -> { where(who_will_order_devices: nil) }
+  scope :school_not_set_to_order_devices, -> { where(who_will_order_devices: [nil, :responsible_body]) }
 
   def self.laptop?(device_type)
     device_type.to_sym == :laptop
@@ -329,13 +329,13 @@ class School < ApplicationRecord
   def orders_managed_centrally?
     return false if school_will_order_devices?
 
-    responsible_body_will_order_devices? || responsible_body.orders_managed_centrally?
+    responsible_body_will_order_devices? || responsible_body.responsible_body_will_order_devices_for_schools_by_default?
   end
 
   def orders_managed_by_school?
     return false if responsible_body_will_order_devices?
 
-    school_will_order_devices? || responsible_body&.orders_managed_by_schools?
+    school_will_order_devices? || responsible_body&.schools_will_order_devices_by_default?
   end
 
   def orders_managed_by!(who, clear_preorder_information: false)

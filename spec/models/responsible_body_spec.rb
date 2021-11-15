@@ -713,7 +713,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
 
-    context 'when the rb centrally manages schools' do
+    context 'when the rb defaults to centrally managed schools' do
       let(:responsible_body) { create(:trust, :vcap_feature_flag, :manages_centrally) }
 
       it 'include schools not managing devices themselves' do
