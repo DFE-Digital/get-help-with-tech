@@ -688,7 +688,7 @@ RSpec.describe ResponsibleBody, type: :model do
       la_funded_place
     end
 
-    context 'when the responsible body has not vcaps enabled' do
+    context 'when the responsible body has vcaps disabled' do
       let(:responsible_body) { create(:trust, vcap_feature_flag: false) }
 
       it 'returns no schools' do
