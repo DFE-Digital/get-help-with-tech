@@ -1,12 +1,12 @@
 <%- content_for :before_content, govuk_back_link(text: 'Back', href: responsible_body_devices_who_will_order_edit_path) %>
 
-<%- title = t(@responsible_body.who_will_order_devices.to_sym, scope: %i[page_titles who_will_order_show]) %>
+<%- title = t(@responsible_body.default_who_will_order_devices_for_schools.to_sym, scope: %i[page_titles who_will_order_show]) %>
 <%- content_for :title, title %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
 
-    <%- if @responsible_body.who_will_order_devices == 'school' %>
+    <%- if @responsible_body.default_who_will_order_devices_for_schools == 'school' %>
       <p class="govuk-body">If a school or college cannot order its own devices, you can change this setting on an individual basis.</p>
 
       <h2 class="govuk-heading-m">What you need to do now</h2>

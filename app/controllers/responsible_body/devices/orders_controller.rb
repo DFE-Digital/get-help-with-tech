@@ -10,10 +10,10 @@ class ResponsibleBody::Devices::OrdersController < ResponsibleBody::BaseControll
         @schools_can_order_for_specific_circumstances = @schools.can_order_for_specific_circumstances
 
         # There is no seperate 'specific circumstances' page if we're using virtual caps.
-        if @responsible_body.vcap_active? || @schools.can_order.count.positive?
+        if @responsible_body.vcap_feature_flag? || @schools.can_order.count.positive?
 
           # There is no seperate 'cannot order anymore' page if we're not using virtual caps.
-          if !@responsible_body.vcap_active? || @responsible_body.devices_available_to_order?
+          if !@responsible_body.vcap_feature_flag? || @responsible_body.devices_available_to_order?
             render 'order_devices'
           else
             render 'cannot_order_anymore'

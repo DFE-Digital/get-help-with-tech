@@ -51,7 +51,7 @@ module Importers
           rb = FurtherEducationCollege.create!(
             name: row['Name'],
             organisation_type: 'FurtherEducationSchool',
-            who_will_order_devices: 'responsible_body',
+            default_who_will_order_devices_for_schools: 'responsible_body',
             address_1: row['Address Line 1'],
             address_2: row['Address Line 2'],
             address_3: row['Address Line 3'],
@@ -85,7 +85,7 @@ module Importers
             rb = FurtherEducationCollege.create!(
               name: row['Name'],
               organisation_type: 'FurtherEducationSchool',
-              who_will_order_devices: 'responsible_body',
+              default_who_will_order_devices_for_schools: 'responsible_body',
               address_1: row['Address Line 1'],
               address_2: row['Address Line 2'],
               address_3: row['Address Line 3'],

@@ -2,7 +2,7 @@ class ResponsibleBody::Devices::WhoWillOrderController < ResponsibleBody::BaseCo
   def edit
     authorize ResponsibleBody::Devices::WhoWillOrderForm, policy_class: ResponsibleBody::BasePolicy
     @form = ResponsibleBody::Devices::WhoWillOrderForm.new(
-      who_will_order: @responsible_body.who_will_order_devices,
+      who_will_order: @responsible_body.default_who_will_order_devices_for_schools,
     )
   end
 

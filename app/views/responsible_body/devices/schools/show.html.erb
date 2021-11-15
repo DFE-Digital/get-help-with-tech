@@ -15,7 +15,7 @@
       <%= @school.name %>
     </h1>
 
-    <%- if @responsible_body.vcap_active? %>
+    <%- if @responsible_body.vcap_feature_flag? %>
       <%- if @school.can_order? || @school.can_order_for_specific_circumstances? %>
         <p class="govuk-body"><%= govuk_link_to 'Order devices now', responsible_body_devices_order_devices_path %></p>
       <%- end %>

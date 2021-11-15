@@ -17,15 +17,15 @@ FactoryBot.define do
     status                  { 'open' }
 
     trait :manages_centrally do
-      who_will_order_devices      { 'responsible_body' }
+      default_who_will_order_devices_for_schools { 'responsible_body' }
     end
 
     trait :devolves_management do
-      who_will_order_devices      { 'school' }
+      default_who_will_order_devices_for_schools { 'school' }
     end
 
     trait :vcap_feature_flag do
-      vcap_feature_flag           { true }
+      vcap_feature_flag { true }
     end
 
     trait :with_schools do

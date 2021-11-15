@@ -533,6 +533,82 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
       end
     end
 
+    context 'move school centrally managed not in vcap to an rb with vcap that devolves management to schools by default' do
+      subject(:form) { described_class.new(school: moving_school, responsible_body_id: rb_b.id) }
+
+      let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: false) }
+      let(:rb_b) { create(:local_authority, :devolves_management, computacenter_reference: '2000', vcap_feature_flag: true) }
+
+      let!(:moving_school) do
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'MOVING',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+      end
+
+      before do
+        allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+      end
+
+      it 'moves school to new rb' do
+        expect_school_to_be_in_rb(school_id: moving_school.id,
+                                  rb_id: rb_a.id,
+                                  vcap: false,
+                                  laptop_allocation: 5,
+                                  laptop_cap: 1,
+                                  laptops_ordered: 1,
+                                  router_allocation: 5,
+                                  router_cap: 1,
+                                  routers_ordered: 1,
+                                  centrally_managed: true,
+                                  manages_orders: false,
+                                  requests: false)
+
+        requests = [
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+          ],
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+          ],
+        ]
+
+        expect(form.save).to be_truthy
+
+        expect(moving_school).to have_received(:refresh_preorder_status!).once
+        expect_school_to_be_in_rb(school_id: moving_school.id,
+                                  rb_id: rb_b.id,
+                                  vcap: true,
+                                  laptop_allocation: 10,
+                                  laptop_cap: 2,
+                                  laptops_ordered: 2,
+                                  router_allocation: 10,
+                                  router_cap: 2,
+                                  routers_ordered: 2,
+                                  centrally_managed: true,
+                                  manages_orders: false,
+                                  requests: requests)
+      end
+    end
+
     context 'move school centrally managed vcap to centrally managed no vcap responsible body' do
       subject(:form) { described_class.new(school: moving_school, responsible_body_id: rb_b.id) }
 
@@ -626,6 +702,98 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
       let(:rb_b) { create(:local_authority, :manages_centrally, computacenter_reference: '2000', vcap_feature_flag: true) }
+
+      let!(:moving_school) do
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'MOVING',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+      end
+
+      before do
+        allow(moving_school).to receive(:refresh_preorder_status!).and_call_original
+
+        create(:school,
+               :centrally_managed,
+               computacenter_reference: 'AAA',
+               responsible_body: rb_a,
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        create(:school,
+               :centrally_managed,
+               responsible_body: rb_b,
+               computacenter_reference: 'BBB',
+               laptops: [5, 4, 1],
+               routers: [5, 4, 1])
+
+        rb_a.calculate_vcaps!
+      end
+
+      it 'moves school to new rb' do
+        expect_school_to_be_in_rb(school_id: moving_school.id,
+                                  rb_id: rb_a.id,
+                                  vcap: true,
+                                  laptop_allocation: 10,
+                                  laptop_cap: 2,
+                                  laptops_ordered: 2,
+                                  router_allocation: 10,
+                                  router_cap: 2,
+                                  routers_ordered: 2,
+                                  centrally_managed: true,
+                                  manages_orders: false,
+                                  requests: false)
+
+        requests = [
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'AAA', 'capAmount' => '1' },
+          ],
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'AAA', 'capAmount' => '1' },
+          ],
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
+          ],
+          [
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'MOVING', 'capAmount' => '1' },
+            { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => 'BBB', 'capAmount' => '1' },
+          ],
+        ]
+
+        expect(form.save).to be_truthy
+
+        expect(moving_school).to have_received(:refresh_preorder_status!).at_least(1).times
+        expect_school_to_be_in_rb(school_id: moving_school.id,
+                                  rb_id: rb_b.id,
+                                  vcap: true,
+                                  laptop_allocation: 10,
+                                  laptop_cap: 2,
+                                  laptops_ordered: 2,
+                                  router_allocation: 10,
+                                  router_cap: 2,
+                                  routers_ordered: 2,
+                                  centrally_managed: true,
+                                  manages_orders: false,
+                                  requests: requests)
+
+        expect_vcap_to_be(rb_id: rb_a.id,
+                          laptop_allocation: 5,
+                          laptop_cap: 1,
+                          laptops_ordered: 1,
+                          router_allocation: 5,
+                          router_cap: 1,
+                          routers_ordered: 1)
+      end
+    end
+
+    context 'move school centrally managed vcap to an rb with vcap that devolves management to schools by default' do
+      subject(:form) { described_class.new(school: moving_school, responsible_body_id: rb_b.id) }
+
+      let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
+      let(:rb_b) { create(:local_authority, :devolves_management, computacenter_reference: '2000', vcap_feature_flag: true) }
 
       let!(:moving_school) do
         create(:school,

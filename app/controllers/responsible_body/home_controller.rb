@@ -16,7 +16,7 @@ class ResponsibleBody::HomeController < ResponsibleBody::BaseController
 private
 
   def device_count
-    responsible_body.vcap_active? ? devices_ordered_by_vcap_schools : devices_ordered_by_schools
+    responsible_body.vcap_feature_flag? ? devices_ordered_by_vcap_schools : devices_ordered_by_schools
   end
 
   def devices_ordered_by_schools

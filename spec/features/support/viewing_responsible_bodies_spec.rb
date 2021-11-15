@@ -22,12 +22,12 @@ RSpec.feature 'Viewing responsible bodies in the support area', type: :feature d
   end
 
   def given_there_are_responsible_bodies_that_have_users
-    la = create(:local_authority, name: 'Coventry', who_will_order_devices: 'responsible_body')
+    la = create(:local_authority, name: 'Coventry', default_who_will_order_devices_for_schools: 'responsible_body')
     create(:user, responsible_body: la, sign_in_count: 0, privacy_notice_seen_at: nil)
     create(:user, responsible_body: la, sign_in_count: 2, privacy_notice_seen_at: 1.month.ago)
     create(:school, :with_preorder_information, responsible_body: la, preorder_status: 'needs_info')
 
-    trust = create(:trust, name: 'AWESOME TRUST', who_will_order_devices: 'school')
+    trust = create(:trust, name: 'AWESOME TRUST', default_who_will_order_devices_for_schools: 'school')
     create(:user, responsible_body: trust, sign_in_count: 0, privacy_notice_seen_at: nil)
     create(:school, :with_preorder_information, responsible_body: trust, preorder_status: 'ready')
   end

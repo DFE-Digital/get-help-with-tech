@@ -15,15 +15,15 @@ class ResponsibleBodySetWhoWillOrderDevicesService
 private
 
   def set_who_will_order_devices!
-    responsible_body.update!(who_will_order_devices: who)
+    responsible_body.update!(default_who_will_order_devices_for_schools: who)
     responsible_body.active_schools.each do |school|
       SchoolSetWhoManagesOrdersService.new(school,
                                            who,
                                            clear_preorder_information: true,
                                            recalculate_vcaps: false,
-                                           notify: responsible_body.orders_managed_by_schools?).call
+                                           notify: responsible_body.schools_will_order_devices_by_default?).call
     end
-    responsible_body.calculate_vcaps! if responsible_body.orders_managed_centrally?
+    responsible_body.calculate_vcaps!
     true
   end
 

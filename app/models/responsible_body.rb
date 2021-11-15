@@ -13,7 +13,6 @@ class ResponsibleBody < ApplicationRecord
   has_many :donated_device_requests, dependent: :destroy
 
   scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
-  scope :vcap_active, -> { where(who_will_order_devices: 'responsible_body', vcap_feature_flag: true) }
 
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
@@ -34,10 +33,6 @@ class ResponsibleBody < ApplicationRecord
 
   after_update :maybe_generate_user_changes
 
-  def self.chosen_who_will_order
-    where.not(who_will_order_devices: nil)
-  end
-
   def self.managing_multiple_chromebook_domains
     where(
       <<~SQL,
@@ -46,7 +41,7 @@ class ResponsibleBody < ApplicationRecord
             (SELECT DISTINCT s.responsible_body_id AS rb_id, s.school_or_rb_domain
               FROM schools s
               WHERE s.status = 'open'
-              AND s.who_will_order_devices='responsible_body'
+              AND s.who_will_order_devices = 'responsible_body'
               AND NOT (s.school_or_rb_domain = '' OR s.school_or_rb_domain IS NULL)
               AND s.type <> 'LaFundedPlace'
             ) AS t1
@@ -132,7 +127,7 @@ class ResponsibleBody < ApplicationRecord
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
     allocation, cap, ordered = compute_laptops
     update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
-    if vcap_active? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
+    if vcap_feature_flag? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
       update_cap_on_computacenter(:laptop, **opts)
     end
   end
@@ -141,7 +136,7 @@ class ResponsibleBody < ApplicationRecord
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
     allocation, cap, ordered = compute_routers
     update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
-    if vcap_active? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
+    if vcap_feature_flag? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
       update_cap_on_computacenter(:router, **opts)
     end
   end
@@ -231,12 +226,8 @@ class ResponsibleBody < ApplicationRecord
       .first
   end
 
-  def orders_managed_centrally?
-    who_will_order_devices == 'responsible_body'
-  end
-
-  def orders_managed_by_schools?
-    %w[school schools].include?(who_will_order_devices)
+  def schools_will_order_devices_by_default?
+    default_who_will_order_devices_for_schools == 'school'
   end
 
   def routers
@@ -261,21 +252,18 @@ class ResponsibleBody < ApplicationRecord
     type == 'Trust'
   end
 
-  def vcap_active?
-    vcap_feature_flag? && orders_managed_centrally?
-  end
-
   def vcap_schools
-    return School.none unless vcap_active?
+    return School.none unless vcap_feature_flag?
 
-    schools
-      .excluding_la_funded_provisions
-      .responsible_body_will_order_devices
-      .or(schools.who_will_order_devices_not_set)
+    if will_order_devices_for_schools_by_default?
+      schools.excluding_la_funded_provisions.school_not_set_to_order_devices
+    else
+      schools.excluding_la_funded_provisions.responsible_body_will_order_devices
+    end
   end
 
   def who_manages_orders_label
-    case who_will_order_devices
+    case default_who_will_order_devices_for_schools
     when 'school'
       'School or college'
     when 'schools'
@@ -283,6 +271,10 @@ class ResponsibleBody < ApplicationRecord
     when 'responsible_body'
       humanized_type.capitalize
     end
+  end
+
+  def will_order_devices_for_schools_by_default?
+    default_who_will_order_devices_for_schools == 'responsible_body'
   end
 
 private

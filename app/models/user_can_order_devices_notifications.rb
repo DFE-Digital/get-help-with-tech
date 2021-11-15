@@ -31,7 +31,7 @@ private
   end
 
   def message_type_for_school(school)
-    if %w[rb_can_order].include?(school.preorder_status) && school.responsible_body.vcap_active?
+    if %w[rb_can_order].include?(school.preorder_status) && school.responsible_body.vcap_feature_flag?
       :user_can_order_in_virtual_cap
     elsif %w[rb_can_order school_can_order].include?(school.preorder_status)
       if school.responsible_body.new_fe_wave?

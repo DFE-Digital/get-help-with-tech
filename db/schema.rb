@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_07_180047) do
+ActiveRecord::Schema.define(version: 2021_11_15_123649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,7 +307,7 @@ ActiveRecord::Schema.define(version: 2021_11_07_180047) do
     t.string "companies_house_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "who_will_order_devices"
+    t.string "default_who_will_order_devices_for_schools"
     t.string "computacenter_reference"
     t.string "gias_group_uid"
     t.string "gias_id"

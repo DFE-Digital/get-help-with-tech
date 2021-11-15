@@ -9,7 +9,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
   case preorder_status
   when 'needs_info'
     schools.each do |school|
-      school.responsible_body.update!(who_will_order_devices: 'responsible_body')
+      school.responsible_body.update!(default_who_will_order_devices_for_schools: 'responsible_body')
       school.update!(who_will_order_devices: :responsible_body)
     end
   when 'needs_contact'
@@ -74,7 +74,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
-      school.responsible_body.update!(who_will_order_devices: 'responsible_body')
+      school.responsible_body.update!(default_who_will_order_devices_for_schools: 'responsible_body')
       school.can_order!
     end
   when 'ready'
@@ -88,12 +88,12 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
       create(:school_user, school: school)
-      school.responsible_body.update!(who_will_order_devices: 'responsible_body')
+      school.responsible_body.update!(default_who_will_order_devices_for_schools: 'responsible_body')
     end
   else
     raise "Unknown preorder_status '#{preorder_status}'"
   end
-  rb.calculate_vcaps! if rb.vcap_active?
+  rb.calculate_vcaps! if rb.vcap_feature_flag?
   schools.each do |school|
     school.reload
     school.refresh_preorder_status!

@@ -14,6 +14,6 @@ private
   end
 
   def schools_will_order?
-    @params[:responsible_body].orders_managed_by_schools?
+    @params[:responsible_body].schools_will_order_devices_by_default?
   end
 end

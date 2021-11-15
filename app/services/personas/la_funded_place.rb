@@ -30,7 +30,7 @@ private
   def la
     @la ||= LocalAuthority.find_or_create_by!(name: 'Cambridgeshire') do |rb|
       rb.organisation_type = 'county'
-      rb.who_will_order_devices = 'responsible_body'
+      rb.default_who_will_order_devices_for_schools = 'responsible_body'
       rb.gias_id = '873'
     end
   end

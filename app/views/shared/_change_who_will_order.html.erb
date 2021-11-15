@@ -8,7 +8,7 @@
         <span class="govuk-caption-xl"><%= school.name %></span>
         <%= t('page_titles.change_who_will_order') %>
       </h1>
-      <% if school.responsible_body.vcap_active? %>
+      <% if school.responsible_body.vcap_feature_flag? %>
         <p class="govuk-body">
         If you choose to order for this <%= school.institution_type %>, its device allocation will be added to the total for all the schools and colleges you manage (because you are managing centrally).
         </p>

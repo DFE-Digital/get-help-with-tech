@@ -54,7 +54,7 @@ module SchoolAndRbExpectationsHelper
                         routers_ordered:)
     responsible_body = ResponsibleBody.find(rb_id)
 
-    expect(responsible_body).to be_vcap_active
+    expect(responsible_body).to be_vcap_feature_flag
 
     expect(responsible_body.allocation(:laptop)).to eq(laptop_allocation)
     expect(responsible_body.cap(:laptop)).to eq(laptop_cap)
