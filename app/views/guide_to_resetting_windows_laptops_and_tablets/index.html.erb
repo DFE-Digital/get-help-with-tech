@@ -14,7 +14,7 @@
 
     <p class="govuk-body">
       If you received &lsquo;DfE-restricted&rsquo; Windows devices before this date, you&rsquo;ll need to reset
-      them. You do not need to reset &lsquo;standard&rsquo; Windows devices, Chromebooks or iPads.
+      them. You do not need to reset &lsquo;Standard&rsquo; Windows devices, Chromebooks or iPads.
     </p>
 
     <h3 class="govuk-heading-m">
@@ -22,9 +22,9 @@
     </h3>
 
     <p class="govuk-body">
-      Restricted Windows devices provided though the Get help with technology programme
+      &lsquo;Restricted&rsquo; Windows devices provided though the Get help with technology programme
       came with security software. It was due to expire on <span class="app-no-wrap">30 September 2021</span>, but to ensure
-      devices remained safe for children and young people to use, we extended licences until
+      devices remain safe for children and young people to use, we extended licences until
       <span class="app-no-wrap">30 September 2022</span>. You&rsquo;re still required to reset devices and apply your own safeguarding
       settings as soon as possible.
     </p>
@@ -41,7 +41,7 @@
     </h3>
 
     <p class="govuk-body">
-      Restricted Windows laptops and tablets need to be restored to factory settings. This
+      &lsquo;Restricted&rsquo; Windows laptops and tablets need to be restored to factory settings. This
       removes existing device management and content filtering software so you can apply your
       own.
     </p>
@@ -50,14 +50,14 @@
       <li>You should reset devices as soon as possible.</li>
       <li>Back up anything you need from devices before resetting.</li>
       <li>Each reset will take approximately 40 to 60 minutes.</li>
-      <li>You&rsquo;ll need to do this for each device individually.</li>
+      <li>You will need to do this for each device individually.</li>
       <li>This process can be done at the same time on multiple devices.</li>
     </ul>
 
     <h3 class="govuk-heading-m">Help with retrieving DfE-restricted Windows devices</h3>
 
     <p class="govuk-body">
-      We have 2 remote services to help organisations retrieve devices from children and young
+      We have 3 services to help organisations retrieve devices from children and young
       people so they can be reset.
     </p>
 
@@ -77,8 +77,21 @@
       should contact the organisation that gave it to them to arrange this.
     </p>
 
+    <h4 class="govuk-heading-m">Remote resetting service</h4>
+
     <p class="govuk-body">
-      If you&rsquo;d like to use either of these services email <%= govuk_mail_to 'COVID.TECHNOLOGY@education.gov.uk', 'COVID.TECHNOLOGY@education.gov.uk', subject: 'Support for DfE-restricted devices' %>.
+      This service returns the device to an out-of-the-box state, as though it&rsquo;s being turned on for the first time.
+      The process deletes all local files on the device.
+    </p>
+
+    <p class="govuk-body">
+      The remote resetting service is only for devices that have been returned to your organisation and are under the supervision
+      of an IT professional &ndash; it is not suitable for devices that are still with children and young people.
+      If you need support to retrieve devices, consider the remote messaging or restricting internet access services instead.
+    </p>
+
+    <p class="govuk-body">
+      If you&rsquo;d like to use any of these services email <%= govuk_mail_to 'COVID.TECHNOLOGY@education.gov.uk', 'COVID.TECHNOLOGY@education.gov.uk', subject: 'Support for DfE-restricted devices' %>.
     </p>
 
     <%= render partial: 'shared/guide_navigation' %>
