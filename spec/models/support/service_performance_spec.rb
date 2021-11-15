@@ -45,7 +45,7 @@ RSpec.describe Support::ServicePerformance, type: :model do
       create_list(:trust, 4, :devolves_management)
 
       # these won't count
-      create_list(:local_authority, 2, who_will_order_devices: nil)
+      create_list(:local_authority, 2, default_who_will_order_devices_for_schools: nil)
 
       expect(stats.number_of_different_responsible_bodies_who_have_chosen_who_will_order).to eq(7)
     end

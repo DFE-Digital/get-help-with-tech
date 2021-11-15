@@ -55,7 +55,7 @@ RSpec.feature 'Ordering devices' do
   end
 
   def given_my_order_information_is_up_to_date
-    responsible_body.update!(who_will_order_devices: 'responsible_body')
+    responsible_body.update!(default_who_will_order_devices_for_schools: 'responsible_body')
     responsible_body.schools.update_all(will_need_chromebooks: 'no')
     SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
     SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call

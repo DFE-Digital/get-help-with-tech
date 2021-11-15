@@ -675,4 +675,53 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
   end
+
+  describe '#vcap_schools' do
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:centrally_managed_school) { create(:school, :centrally_managed, responsible_body: responsible_body) }
+    let(:management_not_set_school) { create(:school, responsible_body: responsible_body, who_will_order_devices: nil) }
+    let(:la_funded_place) { create(:iss_provision, responsible_body: responsible_body) }
+
+    before do
+      centrally_managed_school
+      management_not_set_school
+      la_funded_place
+    end
+
+    context "when the responsible body has not vcaps enabled" do
+      let(:responsible_body) { create(:trust, vcap_feature_flag: false) }
+
+      it 'returns no schools' do
+        expect(responsible_body.vcap_schools).to eq(School.none)
+      end
+    end
+
+    context "la_funded_provisions are never included" do
+      it 'do not include la_funded_place' do
+        expect(responsible_body.vcap_schools).not_to include(la_funded_place)
+      end
+    end
+
+    context "when the rb devolves device management to schools" do
+      let(:responsible_body) { create(:trust, :vcap_feature_flag, :devolves_management) }
+
+      it "only include schools centrally managed" do
+        vcap_schools = responsible_body.vcap_schools
+
+        expect(vcap_schools).to include(centrally_managed_school)
+        expect(vcap_schools).not_to include(management_not_set_school)
+      end
+    end
+
+    context "when the rb centrally manages schools" do
+      let(:responsible_body) { create(:trust, :vcap_feature_flag, :manages_centrally) }
+
+      it "include schools not managing devices themselves" do
+        vcap_schools = responsible_body.vcap_schools
+
+        expect(vcap_schools).to include(centrally_managed_school)
+        expect(vcap_schools).to include(management_not_set_school)
+      end
+    end
+  end
 end

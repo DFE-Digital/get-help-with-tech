@@ -6,7 +6,7 @@ RSpec.feature 'Accessing the donated devices area as an RB user', type: :feature
   let(:school) { create(:school, responsible_body: responsible_body) }
 
   before do
-    responsible_body.update! who_will_order_devices: 'responsible_body'
+    responsible_body.update! default_who_will_order_devices_for_schools: 'responsible_body'
     sign_in_as user
   end
 

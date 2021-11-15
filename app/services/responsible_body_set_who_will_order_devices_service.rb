@@ -15,7 +15,7 @@ class ResponsibleBodySetWhoWillOrderDevicesService
 private
 
   def set_who_will_order_devices!
-    responsible_body.update!(who_will_order_devices: who)
+    responsible_body.update!(default_who_will_order_devices_for_schools: who)
     responsible_body.active_schools.each do |school|
       SchoolSetWhoManagesOrdersService.new(school,
                                            who,

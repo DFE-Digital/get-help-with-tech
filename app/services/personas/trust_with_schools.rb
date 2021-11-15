@@ -28,7 +28,7 @@ private
   def trust
     @trust ||= Trust.find_or_create_by!(name: 'Elizabeth Trust') do |rb|
       rb.organisation_type = 'Multi-academy trust'
-      rb.who_will_order_devices = 'school'
+      rb.default_who_will_order_devices_for_schools = 'school'
       rb.address_1 = '1 Grey Street'
       rb.town = 'Newcastle'
       rb.county = 'Tyne and Wear'

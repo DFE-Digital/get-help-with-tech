@@ -59,7 +59,7 @@ private
   end
 
   def set_who_manages_orders(school)
-    who_will_order = school.responsible_body.who_will_order_devices&.singularize
+    who_will_order = school.responsible_body.default_who_will_order_devices_for_schools&.singularize
     SchoolSetWhoManagesOrdersService.new(school, who_will_order).call if who_will_order
   end
 

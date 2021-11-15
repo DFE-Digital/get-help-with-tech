@@ -88,7 +88,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
     context 'when the responsible body has decided who will order' do
       before do
-        local_authority.update!(who_will_order_devices: 'schools')
+        local_authority.update!(default_who_will_order_devices_for_schools: 'schools')
       end
 
       it 'sets up ordering information' do
@@ -163,7 +163,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
         before do
           rb = old_school.responsible_body
-          rb.update!(vcap_feature_flag: true, who_will_order_devices: 'responsible_body')
+          rb.update!(vcap_feature_flag: true, default_who_will_order_devices_for_schools: 'responsible_body')
           old_school.update!(who_will_order_devices: 'responsible_body')
           UpdateSchoolDevicesService.new(school: old_school, order_state: :can_order).call
         end

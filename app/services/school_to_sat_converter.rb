@@ -20,7 +20,7 @@ private
     Trust.create!(name: name,
                   companies_house_number: companies_house_number,
                   organisation_type: 'single_academy_trust',
-                  who_will_order_devices: 'school',
+                  default_who_will_order_devices_for_schools: 'school',
                   address_1: school.address_1,
                   address_2: school.address_2,
                   address_3: school.address_3,

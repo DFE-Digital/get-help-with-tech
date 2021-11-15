@@ -44,7 +44,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     end
 
     it 'marks the responsible body as having devolved ordering to schools' do
-      expect(responsible_body.who_will_order_devices).to eq('school')
+      expect(responsible_body.default_who_will_order_devices_for_schools).to eq('school')
     end
 
     it 'sets one of the users as a school contact' do
@@ -120,7 +120,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
     end
 
     it 'marks the responsible body as having devolved ordering to schools' do
-      expect(responsible_body.who_will_order_devices).to eq('school')
+      expect(responsible_body.default_who_will_order_devices_for_schools).to eq('school')
     end
 
     it 'sets the headteacher as a school contact' do

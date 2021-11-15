@@ -13,7 +13,6 @@ class ResponsibleBody < ApplicationRecord
   has_many :donated_device_requests, dependent: :destroy
 
   scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
-  scope :vcap_active, -> { where(who_will_order_devices: 'responsible_body', vcap_feature_flag: true) }
 
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
@@ -35,7 +34,7 @@ class ResponsibleBody < ApplicationRecord
   after_update :maybe_generate_user_changes
 
   def self.chosen_who_will_order
-    where.not(who_will_order_devices: nil)
+    where.not(default_who_will_order_devices_for_schools: nil)
   end
 
   def self.managing_multiple_chromebook_domains
@@ -46,7 +45,7 @@ class ResponsibleBody < ApplicationRecord
             (SELECT DISTINCT s.responsible_body_id AS rb_id, s.school_or_rb_domain
               FROM schools s
               WHERE s.status = 'open'
-              AND s.who_will_order_devices='responsible_body'
+              AND s.default_who_will_order_devices_for_schools = 'responsible_body'
               AND NOT (s.school_or_rb_domain = '' OR s.school_or_rb_domain IS NULL)
               AND s.type <> 'LaFundedPlace'
             ) AS t1
@@ -232,11 +231,11 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def orders_managed_centrally?
-    who_will_order_devices == 'responsible_body'
+    default_who_will_order_devices_for_schools == 'responsible_body'
   end
 
   def orders_managed_by_schools?
-    %w[school schools].include?(who_will_order_devices)
+    %w[school schools].include?(default_who_will_order_devices_for_schools)
   end
 
   def routers
@@ -264,12 +263,17 @@ class ResponsibleBody < ApplicationRecord
   def vcap_schools
     return School.none unless vcap_feature_flag?
 
-    query = schools.excluding_la_funded_provisions.responsible_body_will_order_devices
-    orders_managed_centrally? ? query.or(schools.who_will_order_devices_not_set) : query
+    not_laf_schools = schools.excluding_la_funded_provisions
+    not_laf_schools_centrally_managed = not_laf_schools.responsible_body_will_order_devices
+    if orders_managed_centrally?
+      not_laf_schools_centrally_managed.or(not_laf_schools.who_will_order_devices_not_set)
+    else
+      not_laf_schools_centrally_managed
+    end
   end
 
   def who_manages_orders_label
-    case who_will_order_devices
+    case default_who_will_order_devices_for_schools
     when 'school'
       'School or college'
     when 'schools'
@@ -279,7 +283,7 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
-private
+  private
 
   def compute_laptops
     sums = vcap_schools.pick(Arel.sql("SUM(raw_laptop_allocation),
