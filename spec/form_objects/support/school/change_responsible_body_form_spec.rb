@@ -533,7 +533,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
       end
     end
 
-    context 'move school centrally managed no vcap to school manages vcap responsible body' do
+    context 'move school centrally managed not in vcap to an rb with vcap that devolves management to schools by default' do
       subject(:form) { described_class.new(school: moving_school, responsible_body_id: rb_b.id) }
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: false) }
@@ -789,7 +789,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
       end
     end
 
-    context 'move school centrally managed vcap to school manages vcap responsible body' do
+    context 'move school centrally managed vcap to an rb with vcap that devolves management to schools by default' do
       subject(:form) { described_class.new(school: moving_school, responsible_body_id: rb_b.id) }
 
       let(:rb_a) { create(:local_authority, :manages_centrally, computacenter_reference: '1000', vcap_feature_flag: true) }
