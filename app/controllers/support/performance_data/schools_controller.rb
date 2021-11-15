@@ -37,7 +37,7 @@ private
               END AS coms_cap,
               schools.raw_routers_ordered AS coms_devices_ordered,
               schools.preorder_status AS preorder_info_status,
-              COALESCE( schools.who_will_order_devices, responsible_bodies.who_will_order_devices ) AS who_will_order_devices
+              COALESCE( schools.who_will_order_devices, responsible_bodies.default_who_will_order_devices_for_schools ) AS who_will_order_devices
 
       FROM    schools   INNER JOIN responsible_bodies
                                 ON responsible_bodies.id = schools.responsible_body_id

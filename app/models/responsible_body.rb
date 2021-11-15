@@ -45,7 +45,7 @@ class ResponsibleBody < ApplicationRecord
             (SELECT DISTINCT s.responsible_body_id AS rb_id, s.school_or_rb_domain
               FROM schools s
               WHERE s.status = 'open'
-              AND s.default_who_will_order_devices_for_schools = 'responsible_body'
+              AND s.who_will_order_devices = 'responsible_body'
               AND NOT (s.school_or_rb_domain = '' OR s.school_or_rb_domain IS NULL)
               AND s.type <> 'LaFundedPlace'
             ) AS t1
@@ -283,7 +283,7 @@ class ResponsibleBody < ApplicationRecord
     end
   end
 
-  private
+private
 
   def compute_laptops
     sums = vcap_schools.pick(Arel.sql("SUM(raw_laptop_allocation),

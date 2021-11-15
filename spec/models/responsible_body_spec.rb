@@ -688,7 +688,7 @@ RSpec.describe ResponsibleBody, type: :model do
       la_funded_place
     end
 
-    context "when the responsible body has not vcaps enabled" do
+    context 'when the responsible body has not vcaps enabled' do
       let(:responsible_body) { create(:trust, vcap_feature_flag: false) }
 
       it 'returns no schools' do
@@ -696,16 +696,16 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
 
-    context "la_funded_provisions are never included" do
+    context 'la_funded_provisions are never included' do
       it 'do not include la_funded_place' do
         expect(responsible_body.vcap_schools).not_to include(la_funded_place)
       end
     end
 
-    context "when the rb devolves device management to schools" do
+    context 'when the rb devolves device management to schools' do
       let(:responsible_body) { create(:trust, :vcap_feature_flag, :devolves_management) }
 
-      it "only include schools centrally managed" do
+      it 'only include schools centrally managed' do
         vcap_schools = responsible_body.vcap_schools
 
         expect(vcap_schools).to include(centrally_managed_school)
@@ -713,10 +713,10 @@ RSpec.describe ResponsibleBody, type: :model do
       end
     end
 
-    context "when the rb centrally manages schools" do
+    context 'when the rb centrally manages schools' do
       let(:responsible_body) { create(:trust, :vcap_feature_flag, :manages_centrally) }
 
-      it "include schools not managing devices themselves" do
+      it 'include schools not managing devices themselves' do
         vcap_schools = responsible_body.vcap_schools
 
         expect(vcap_schools).to include(centrally_managed_school)

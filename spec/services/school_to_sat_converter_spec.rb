@@ -13,7 +13,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.name).to eq(school.name)
       expect(trust.companies_house_number).to be_blank
       expect(trust.organisation_type).to eq('single_academy_trust')
-      expect(trust.who_will_order_devices).to eq('school')
+      expect(trust.default_who_will_order_devices_for_schools).to eq('school')
       expect(trust.address_1).to eq(school.address_1)
       expect(trust.address_2).to eq(school.address_2)
       expect(trust.address_3).to eq(school.address_3)
@@ -36,7 +36,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.name).to eq(trust_name)
       expect(trust.companies_house_number).to be_blank
       expect(trust.organisation_type).to eq('single_academy_trust')
-      expect(trust.who_will_order_devices).to eq('school')
+      expect(trust.default_who_will_order_devices_for_schools).to eq('school')
       school.reload
       expect(school.who_will_order_devices).to eq('school')
       expect(school.raw_allocation(:laptop)).to eq(0)
@@ -57,7 +57,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
       expect(trust.name).to eq(trust_name)
       expect(trust.companies_house_number).to eq(companies_house_number)
       expect(trust.organisation_type).to eq('single_academy_trust')
-      expect(trust.who_will_order_devices).to eq('school')
+      expect(trust.default_who_will_order_devices_for_schools).to eq('school')
       school.reload
       expect(school.who_will_order_devices).to eq('school')
       expect(school.allocation(:laptop)).to eq(0)
