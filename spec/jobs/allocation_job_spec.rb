@@ -1366,7 +1366,7 @@ RSpec.describe AllocationJob do
   context 'when school is part of virtual cap pool' do
     let(:batch_job) { create(:allocation_batch_job, urn: school1.urn, allocation_delta: '3', order_state: 'can_order') }
 
-    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:rb) { create(:trust, :manages_centrally, :vcap) }
 
     let(:school1) { rb.schools.first }
     let(:school1_allocation) { school1.reload.allocation(:laptop) }

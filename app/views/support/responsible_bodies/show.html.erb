@@ -17,7 +17,7 @@
       <% component.tab(label: 'Schools and colleges') do %>
         <h2 class="govuk-heading-l">Schools and colleges</h2>
 
-        <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
+        <% if @responsible_body.vcap_and_centrally_managed_schools? %>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
               <h2 class="govuk-heading-l govuk-!-margin-top-9">Centrally managed schools and colleges</h2>
@@ -60,14 +60,14 @@
                 <td class="govuk-table__cell"><%= render SchoolPreorderStatusTagComponent.new(school: school) %></td>
                 <td class="govuk-table__cell">
                   <%= school.raw_allocation(:laptop) %> allocated<br>
-                  <% unless @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
+                  <% unless @responsible_body.vcap_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
                     <%= school.cap(:laptop) %> caps<br>
                     <%= school.devices_ordered(:laptop) %> ordered
                   <% end %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= school.raw_allocation(:router) %> allocated<br>
-                  <% unless @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
+                  <% unless @responsible_body.vcap_and_centrally_managed_schools? && @responsible_body.has_school_in_virtual_cap_pools?(school) %>
                     <%= school.cap(:router)  %> caps<br>
                     <%= school.devices_ordered(:router) %> ordered
                   <% end %>
@@ -105,7 +105,7 @@
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.human_for_school_type %></td>
                   <td class="govuk-table__cell">
-                    <% if @responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools? %>
+                    <% if @responsible_body.vcap_and_centrally_managed_schools? %>
                       <% if @responsible_body.has_school_in_virtual_cap_pools?(school) %>
                         <%= govuk_tag text: 'In pool', colour: 'red' %>
                       <%- else %>

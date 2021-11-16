@@ -60,7 +60,7 @@ rb.postcode = ...
  county: nil,
  postcode: "BN11 1RY",
  status: "open",
- vcap_feature_flag: false,
+ vcap: false,
  computacenter_change: "none",
  new_fe_wave: true>
 ```

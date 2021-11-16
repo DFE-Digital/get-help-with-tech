@@ -98,7 +98,7 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body will place device orders' do
-    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:rb) { create(:trust, :manages_centrally, :vcap) }
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'confirms that fact' do

@@ -12,7 +12,7 @@ RSpec.describe ResponsibleBody::Devices::SchoolsController do
   describe '#index' do
     context 'RB with virtual cap' do
       before do
-        user.responsible_body.update!(vcap_feature_flag: true, default_who_will_order_devices_for_schools: :responsible_body)
+        user.responsible_body.update!(vcap: true, default_who_will_order_devices_for_schools: :responsible_body)
         get :index
       end
 

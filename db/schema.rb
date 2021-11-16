@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_123649) do
+ActiveRecord::Schema.define(version: 2021_11_16_090552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(version: 2021_11_15_123649) do
     t.string "county"
     t.string "postcode"
     t.string "status", default: "open", null: false
-    t.boolean "vcap_feature_flag", default: false
+    t.boolean "vcap", default: false
     t.string "computacenter_change", default: "none", null: false
     t.boolean "new_fe_wave", default: false
     t.integer "laptop_allocation", default: 0, null: false

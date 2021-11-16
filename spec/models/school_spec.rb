@@ -254,8 +254,8 @@ RSpec.describe School, type: :model do
     end
   end
 
-  describe '#in_virtual_cap_pool?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+  describe '#vcap?' do
+    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
 
     let(:schools) do
       create_list(:school,
@@ -280,11 +280,11 @@ RSpec.describe School, type: :model do
     end
 
     it 'returns true for a school within the pool' do
-      expect(schools.first.in_virtual_cap_pool?).to be true
+      expect(schools.first.vcap?).to be true
     end
 
     it 'returns false for a school outside the pool' do
-      expect(schools.last.in_virtual_cap_pool?).to be false
+      expect(schools.last.vcap?).to be false
     end
   end
 
@@ -364,7 +364,7 @@ RSpec.describe School, type: :model do
 
   describe 'can_change_who_manages_orders?' do
     context 'when the school is centrally managed and the responsible body has virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap: true) }
       let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
 
       it 'returns false' do
@@ -373,7 +373,7 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school is centrally managed and the responsible body does not have virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap: false) }
       let(:school) { create(:school, :centrally_managed, responsible_body: local_authority) }
 
       it 'returns true' do
@@ -382,7 +382,7 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school manages orders and the responsible body has virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: true) }
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap: true) }
       let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
 
       it 'returns true' do
@@ -391,7 +391,7 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school manages orders and the responsible body has does not have virtual caps enabled' do
-      let(:local_authority) { create(:local_authority, :manages_centrally, vcap_feature_flag: false) }
+      let(:local_authority) { create(:local_authority, :manages_centrally, vcap: false) }
       let(:school) { create(:school, :manages_orders, responsible_body: local_authority) }
 
       it 'returns true' do

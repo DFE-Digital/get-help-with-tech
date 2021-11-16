@@ -64,7 +64,7 @@ RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
     end
 
     context 'when the devices are centrally managed' do
-      let(:rb) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
+      let(:rb) { create(:local_authority, :manages_centrally, :vcap) }
       let(:sibling_school_csv_row) { csv.find { |row| row['urn'] == sibling_schools.first.urn.to_s } }
 
       let!(:school) do

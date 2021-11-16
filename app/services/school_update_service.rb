@@ -65,7 +65,7 @@ private
 
   def move_remaining_allocations(school, predecessor)
     rb = predecessor.responsible_body
-    unless rb.vcap_feature_flag? && rb.has_school_in_virtual_cap_pools?(predecessor)
+    unless rb.vcap? && rb.has_school_in_virtual_cap_pools?(predecessor)
       %i[laptop router].each do |device_type|
         alloc = predecessor.raw_allocation(device_type)
         ordered = predecessor.raw_devices_ordered(device_type)

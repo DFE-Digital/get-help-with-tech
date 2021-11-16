@@ -6,7 +6,7 @@ RSpec.describe Computacenter::SoldToForm, type: :model do
   let(:rb) do
     create(:local_authority,
            :manages_centrally,
-           :vcap_feature_flag,
+           :vcap,
            computacenter_reference: '1000')
   end
 

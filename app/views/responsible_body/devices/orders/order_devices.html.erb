@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<% if @responsible_body.vcap_feature_flag? %>
+<% if @responsible_body.vcap? %>
   <%= render partial: 'place_order_for_virtual_pool' %>
 <% else %>
   <%= render partial: 'place_order_for_schools' %>

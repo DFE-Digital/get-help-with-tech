@@ -25,6 +25,6 @@ private
   end
 
   def lacks_virtual_cap?
-    !@responsible_body.vcap_feature_flag?
+    !@responsible_body.vcap?
   end
 end

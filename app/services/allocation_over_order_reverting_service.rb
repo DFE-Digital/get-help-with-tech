@@ -8,7 +8,7 @@ class AllocationOverOrderRevertingService
   end
 
   def call
-    give_cap_back_across_virtual_cap_pool if school.in_virtual_cap_pool?
+    give_cap_back_across_virtual_cap_pool if school.vcap?
   end
 
 private

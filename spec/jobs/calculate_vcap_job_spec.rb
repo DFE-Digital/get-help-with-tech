@@ -7,7 +7,7 @@ RSpec.describe CalculateVcapJob do
 
   describe '#perform' do
     let(:batch_id) { SecureRandom.uuid }
-    let(:rb) { create(:trust, :vcap_feature_flag, :manages_centrally) }
+    let(:rb) { create(:trust, :vcap, :manages_centrally) }
     let(:schools) do
       create_list(:school, 2,
                   :centrally_managed,

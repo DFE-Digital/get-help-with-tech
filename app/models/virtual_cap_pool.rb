@@ -33,7 +33,7 @@ class VirtualCapPool < ApplicationRecord
 private
 
   def enabled?
-    responsible_body.has_virtual_cap_feature_flags?
+    responsible_body.vcap?
   end
 
   def update_cap_on_computacenter

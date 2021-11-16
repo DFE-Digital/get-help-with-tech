@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AllocationOverOrderService, type: :model do
   describe '#call' do
-    let(:rb) { create(:local_authority, :manages_centrally, :vcap_feature_flag) }
+    let(:rb) { create(:local_authority, :manages_centrally, :vcap) }
 
     before do
       stub_computacenter_outgoing_api_calls

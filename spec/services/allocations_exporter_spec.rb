@@ -29,7 +29,7 @@ RSpec.describe AllocationsExporter, type: :model do
   context 'when exporting schools in a virtual_cap_pool' do
     subject(:exporter) { described_class.new }
 
-    let(:trust) { create(:trust, :manages_centrally, :multi_academy_trust, :vcap_feature_flag) }
+    let(:trust) { create(:trust, :manages_centrally, :multi_academy_trust, :vcap) }
     let(:schools) { create_list(:school, 2, :in_lockdown, responsible_body: trust) }
     let(:csv) { CSV.parse(exporter.export(School.where(responsible_body_id: trust.id)), headers: true) }
     let(:mock_response) { instance_double(HTTP::Response) }

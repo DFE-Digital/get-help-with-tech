@@ -21,7 +21,7 @@ RSpec.feature 'Ordering via a school' do
 
   context 'when the school is not in a virtual cap pool' do
     before do
-      allow(school).to receive(:in_virtual_cap_pool?).and_return(false)
+      allow(school).to receive(:vcap?).and_return(false)
     end
 
     context 'when school has no devices to order' do
@@ -60,7 +60,7 @@ RSpec.feature 'Ordering via a school' do
   end
 
   context 'when the school is in a virtual cap pool' do
-    let(:rb) { create(:trust, :manages_centrally, :vcap_feature_flag, schools: [school]) }
+    let(:rb) { create(:trust, :manages_centrally, :vcap, schools: [school]) }
 
     context 'when school has no devices to order' do
       scenario 'cannot order devices' do

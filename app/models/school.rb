@@ -79,7 +79,6 @@ class School < ApplicationRecord
   scope :has_not_fully_ordered_routers, -> { where.not(order_state: :cannot_order).where('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) > raw_routers_ordered') }
 
   scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
-  scope :in_virtual_cap_pool, -> { where(in_virtual_cap_pool: true) }
   scope :iss_provision, -> { where(type: 'LaFundedPlace', provision_type: 'iss') }
   scope :scl_provision, -> { where(type: 'LaFundedPlace', provision_type: 'scl') }
   scope :that_can_order_now, -> { where(order_state: %w[can_order_for_specific_circumstances can_order]) }
@@ -150,7 +149,7 @@ class School < ApplicationRecord
   end
 
   def allocation(device_type)
-    in_virtual_cap_pool? ? vcap_allocation(device_type) : raw_allocation(device_type)
+    vcap? ? vcap_allocation(device_type) : raw_allocation(device_type)
   end
 
   def all_devices_ordered?
@@ -162,7 +161,7 @@ class School < ApplicationRecord
   end
 
   def can_change_who_manages_orders?
-    !(orders_managed_centrally? && responsible_body.vcap_feature_flag?)
+    !(orders_managed_centrally? && responsible_body.vcap?)
   end
 
   def can_invite_users?
@@ -170,7 +169,7 @@ class School < ApplicationRecord
   end
 
   def cap(device_type)
-    in_virtual_cap_pool? ? vcap_cap(device_type) : raw_cap(device_type)
+    vcap? ? vcap_cap(device_type) : raw_cap(device_type)
   end
 
   def circumstances_devices(device_type)
@@ -182,7 +181,7 @@ class School < ApplicationRecord
   end
 
   def computacenter_cap(device_type)
-    return cap(device_type) unless in_virtual_cap_pool?
+    return cap(device_type) unless vcap?
 
     vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type)
   end
@@ -219,7 +218,7 @@ class School < ApplicationRecord
   end
 
   def completed_requests_count
-    if in_virtual_cap_pool?
+    if vcap?
       responsible_body.extra_mobile_data_requests.complete_status.size
     else
       extra_mobile_data_requests.complete_status.size
@@ -237,7 +236,7 @@ class School < ApplicationRecord
   end
 
   def devices_ordered(device_type)
-    in_virtual_cap_pool? ? vcap_devices_ordered(device_type) : raw_devices_ordered(device_type)
+    vcap? ? vcap_devices_ordered(device_type) : raw_devices_ordered(device_type)
   end
 
   def eligible_to_order?
@@ -281,8 +280,8 @@ class School < ApplicationRecord
     end
   end
 
-  def in_virtual_cap_pool?
-    responsible_body.vcap_feature_flag? && !la_funded_provision? && orders_managed_centrally?
+  def vcap?
+    responsible_body.vcap? && !la_funded_provision? && orders_managed_centrally?
   end
 
   def independent_special_school?

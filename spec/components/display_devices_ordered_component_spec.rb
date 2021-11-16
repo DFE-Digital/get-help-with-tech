@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DisplayDevicesOrderedComponent, type: :component do
-  let(:trust) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+  let(:trust) { create(:trust, :manages_centrally, :vcap) }
   let(:school) { create(:school, :manages_orders, responsible_body: trust, laptops: [1, 0, 0], routers: [1, 0, 0]) }
   let(:another_school) { create(:school, :manages_orders, responsible_body: trust, laptops: [1, 0, 0], routers: [1, 0, 0]) }
 
@@ -27,7 +27,7 @@ RSpec.describe DisplayDevicesOrderedComponent, type: :component do
 
   context 'when not in a virtual pool' do
     before do
-      trust.update!(vcap_feature_flag: false)
+      trust.update!(vcap: false)
     end
 
     it 'renders the devices ordered' do

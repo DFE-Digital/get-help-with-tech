@@ -2,7 +2,7 @@ class School::HomeController < School::BaseController
   def show
     @assistance_count = assistance_count
     @has_ordered = school.has_ordered?
-    @in_vcap_pool = school.in_virtual_cap_pool?
+    @in_vcap_pool = school.vcap?
   end
 
 private

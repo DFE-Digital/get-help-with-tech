@@ -127,7 +127,7 @@ class ResponsibleBody < ApplicationRecord
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
     allocation, cap, ordered = compute_laptops
     update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
-    if vcap_feature_flag? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
+    if vcap? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
       update_cap_on_computacenter(:laptop, **opts)
     end
   end
@@ -136,7 +136,7 @@ class ResponsibleBody < ApplicationRecord
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
     allocation, cap, ordered = compute_routers
     update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
-    if vcap_feature_flag? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
+    if vcap? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
       update_cap_on_computacenter(:router, **opts)
     end
   end
@@ -191,8 +191,8 @@ class ResponsibleBody < ApplicationRecord
     active_schools.school_will_order_devices.that_can_order_now.any?
   end
 
-  def has_virtual_cap_feature_flags_and_centrally_managed_schools?
-    vcap_feature_flag? && has_centrally_managed_schools?
+  def vcap_and_centrally_managed_schools?
+    vcap? && has_centrally_managed_schools?
   end
 
   def humanized_type
@@ -253,7 +253,7 @@ class ResponsibleBody < ApplicationRecord
   end
 
   def vcap_schools
-    return School.none unless vcap_feature_flag?
+    return School.none unless vcap?
 
     if will_order_devices_for_schools_by_default?
       schools.excluding_la_funded_provisions.school_not_set_to_order_devices

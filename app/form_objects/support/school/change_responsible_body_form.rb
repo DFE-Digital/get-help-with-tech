@@ -45,13 +45,13 @@ private
   end
 
   def pool_notified_agents?(device_type)
-    return false unless school.in_virtual_cap_pool?
+    return false unless school.vcap?
 
     school.raw_devices_ordered(device_type).positive? || school.raw_cap(device_type).positive?
   end
 
   def recompute_pool(responsible_body = school.responsible_body)
-    responsible_body.calculate_vcaps! if responsible_body.vcap_feature_flag?
+    responsible_body.calculate_vcaps! if responsible_body.vcap?
   end
 
   def responsible_bodies
@@ -60,10 +60,10 @@ private
 
   def responsible_body_changed?
     school.transaction do
-      original_pool = school.responsible_body if school.in_virtual_cap_pool?
+      original_pool = school.responsible_body if school.vcap?
       set_school_new_rb!
       recompute_pool(original_pool) if original_pool
-      recompute_pool if school.in_virtual_cap_pool?
+      recompute_pool if school.vcap?
       notify_other_agents
       school.refresh_preorder_status!
       true

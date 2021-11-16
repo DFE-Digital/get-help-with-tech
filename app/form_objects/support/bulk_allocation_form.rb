@@ -48,7 +48,7 @@ private
 
   def schedule_school(school, props)
     allocation_batch_job = create_allocation_batch_job(props)
-    if school.in_virtual_cap_pool?
+    if school.vcap?
       add_school_for_post_processing_of_vcaps(school)
     else
       AllocationJob.perform_later(allocation_batch_job)

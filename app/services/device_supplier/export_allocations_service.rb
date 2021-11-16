@@ -88,12 +88,12 @@ module DeviceSupplier
        school.raw_cap(:laptop),
        school.computacenter_cap(:laptop),
        school.raw_devices_ordered(:laptop),
-       rb_vcap_feature_flag_text(school),
+       rb_vcap_text(school),
        schools_vcap_enabled_text(school)]
     end
 
-    def rb_vcap_feature_flag_text(school)
-      school.responsible_body.vcap_feature_flag? ? 'Yes' : 'No'
+    def rb_vcap_text(school)
+      school.responsible_body.vcap? ? 'Yes' : 'No'
     end
 
     def school_allocation_and_rb_details(school)
@@ -105,7 +105,7 @@ module DeviceSupplier
     end
 
     def schools_vcap_enabled_text(school)
-      school.in_virtual_cap_pool? ? 'Yes' : 'No'
+      school.vcap? ? 'Yes' : 'No'
     end
 
     def update_progress

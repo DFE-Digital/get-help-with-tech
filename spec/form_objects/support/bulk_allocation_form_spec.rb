@@ -5,7 +5,7 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
 
   describe '#save' do
     let(:file) { fixture_file_upload('allocation_upload.csv', 'text/csv') }
-    let(:rb) { create(:trust, :vcap_feature_flag, :manages_centrally) }
+    let(:rb) { create(:trust, :vcap, :manages_centrally) }
     let(:attrs) do
       [
         {
