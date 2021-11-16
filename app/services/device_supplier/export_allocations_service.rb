@@ -89,7 +89,7 @@ module DeviceSupplier
        school.computacenter_cap(:laptop),
        school.raw_devices_ordered(:laptop),
        rb_vcap_text(school),
-       schools_vcap_enabled_text(school)]
+       schools_vcap_enabled_text(school)].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
 
     def rb_vcap_text(school)

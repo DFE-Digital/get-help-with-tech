@@ -79,7 +79,7 @@ module Computacenter
         user_change.original_school,
         user_change.original_school_urn,
         user_change.original_cc_ship_to_number,
-      ]
+      ].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end
 end

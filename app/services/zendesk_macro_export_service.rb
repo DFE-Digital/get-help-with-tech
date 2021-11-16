@@ -43,7 +43,7 @@ class ZendeskMacroExportService
             tags(macro.actions, 'set_tags'),
             tags(macro.actions, 'current_tags'),
             tags(macro.actions, 'remove_tags'),
-          ]
+          ].map { |value| CsvValueSanitiser.new(value).sanitise }
         end
       end
     end

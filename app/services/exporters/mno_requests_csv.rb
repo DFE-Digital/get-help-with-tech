@@ -45,7 +45,7 @@ class Exporters::MnoRequestsCsv
           request.created_at.strftime('%d/%m/%Y'),
           request.updated_at,
           request.updated_at.strftime('%d/%m/%Y'),
-        ]
+        ].map { |value| CsvValueSanitiser.new(value).sanitise }
       end
     end
   end

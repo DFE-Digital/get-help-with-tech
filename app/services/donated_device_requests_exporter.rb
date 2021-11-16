@@ -52,7 +52,7 @@ private
           request.user.telephone,
           request.device_types.join(','),
           request.units,
-        ]
+        ].map { |value| CsvValueSanitiser.new(value).sanitise }
       end
     end
   end

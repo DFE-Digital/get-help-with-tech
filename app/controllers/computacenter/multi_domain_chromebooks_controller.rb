@@ -24,7 +24,7 @@ private
           responsible_body.computacenter_name,
           responsible_body.computacenter_identifier,
           responsible_body.computacenter_reference,
-        ]
+        ].map { |value| CsvValueSanitiser.new(value).sanitise }
       end
     end
   end

@@ -32,7 +32,7 @@ private
           s.responsible_body.computacenter_identifier,
           s.urn,
           s.responsible_body.computacenter_reference,
-        ]
+        ].map { |value| CsvValueSanitiser.new(value).sanitise }
       end
     end
   end
