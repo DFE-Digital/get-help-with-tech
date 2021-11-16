@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<% if @responsible_body.vcap_feature_flag? %>
+<% if @responsible_body.vcap? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render AllocationComponentFactory.create_component(@responsible_body) %>

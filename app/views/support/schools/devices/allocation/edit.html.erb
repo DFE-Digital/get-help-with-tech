@@ -18,7 +18,7 @@
         <%= t(@school.order_state, scope: %i[support allocation edit order_states], cap: @school.cap(@device_type), allocation: @school.allocation(@device_type)) %>
       </p>
 
-     <% if @form.in_virtual_cap_pool? %>
+     <% if @form.vcap? %>
       <%= render GovukComponent::WarningTextComponent.new(text: t(:is_in_virtual_cap_pool, scope: %i[support allocation edit])) %>
      <% end %>
 

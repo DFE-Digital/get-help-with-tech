@@ -4,7 +4,7 @@
   attr_accessor :device_type, :school
   attr_reader :allocation
 
-  delegate :in_virtual_cap_pool?,
+  delegate :vcap?,
            :circumstances_devices,
            :over_order_reclaimed_devices,
            :raw_allocation,
@@ -29,7 +29,7 @@ private
   end
 
   def check_decrease_allowed
-    errors.add(:school, :decreasing_in_virtual_cap_pool) if decreasing? && in_virtual_cap_pool?
+    errors.add(:school, :decreasing_in_virtual_cap_pool) if decreasing? && vcap?
   end
 
   def check_minimum

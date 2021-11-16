@@ -36,7 +36,7 @@ private
 
   def notify_other_agents
     device_types = DEVICE_TYPES.reject do |device_type|
-      school.in_virtual_cap_pool? && school_impacts_computacenter_numbers?(device_type)
+      school.vcap? && school_impacts_computacenter_numbers?(device_type)
     end
 
     CapUpdateNotificationsService.new(school,

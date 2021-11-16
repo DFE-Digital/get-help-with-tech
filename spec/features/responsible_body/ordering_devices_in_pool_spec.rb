@@ -69,7 +69,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
 
   def given_my_order_information_is_up_to_date
     ResponsibleBodySetWhoWillOrderDevicesService.new(responsible_body, :responsible_body).call
-    responsible_body.update!(vcap_feature_flag: true)
+    responsible_body.update!(vcap: true)
     responsible_body.schools.update_all(will_need_chromebooks: 'no')
     SchoolSetWhoManagesOrdersService.new(schools[0], :responsible_body).call
     SchoolSetWhoManagesOrdersService.new(schools[1], :responsible_body).call

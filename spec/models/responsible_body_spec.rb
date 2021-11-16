@@ -368,7 +368,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#calculate_vcaps!' do
-    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
 
     let(:schools) do
       create_list(:school, 3,
@@ -407,7 +407,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_school_in_virtual_cap_pools?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
 
     let(:schools) do
       create_list(:school,
@@ -430,7 +430,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#devices_available_to_order?' do
-    subject(:responsible_body) { create(:trust, :manages_centrally, vcap_feature_flag: true) }
+    subject(:responsible_body) { create(:trust, :manages_centrally, vcap: true) }
 
     let(:schools) do
       create_list(:school,
@@ -488,7 +488,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
-  describe '#has_virtual_cap_feature_flags_and_centrally_managed_schools?' do
+  describe '#vcap_and_centrally_managed_schools?' do
     subject(:responsible_body) { create(:trust) }
 
     let(:schools) do
@@ -507,21 +507,21 @@ RSpec.describe ResponsibleBody, type: :model do
 
       context 'without any feature flags' do
         before do
-          responsible_body.update!(vcap_feature_flag: false)
+          responsible_body.update!(vcap: false)
         end
 
         it 'returns false' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+          expect(responsible_body.vcap_and_centrally_managed_schools?).to be false
         end
       end
 
       context 'when responsible body flag is enabled' do
         before do
-          responsible_body.update!(vcap_feature_flag: true)
+          responsible_body.update!(vcap: true)
         end
 
         it 'returns true' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be true
+          expect(responsible_body.vcap_and_centrally_managed_schools?).to be true
         end
       end
     end
@@ -536,21 +536,21 @@ RSpec.describe ResponsibleBody, type: :model do
 
       context 'without any feature flags' do
         before do
-          responsible_body.update!(vcap_feature_flag: false)
+          responsible_body.update!(vcap: false)
         end
 
         it 'returns false' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+          expect(responsible_body.vcap_and_centrally_managed_schools?).to be false
         end
       end
 
       context 'when responsible body flag is enabled' do
         before do
-          responsible_body.update!(vcap_feature_flag: true)
+          responsible_body.update!(vcap: true)
         end
 
         it 'returns false' do
-          expect(responsible_body.has_virtual_cap_feature_flags_and_centrally_managed_schools?).to be false
+          expect(responsible_body.vcap_and_centrally_managed_schools?).to be false
         end
       end
     end
@@ -677,7 +677,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#vcap_schools' do
-    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
     let(:centrally_managed_school) { create(:school, :centrally_managed, responsible_body: responsible_body) }
     let(:management_not_set_school) { create(:school, responsible_body: responsible_body, who_will_order_devices: nil) }
     let(:la_funded_place) { create(:iss_provision, responsible_body: responsible_body) }
@@ -689,7 +689,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when the responsible body has vcaps disabled' do
-      let(:responsible_body) { create(:trust, vcap_feature_flag: false) }
+      let(:responsible_body) { create(:trust, vcap: false) }
 
       it 'returns no schools' do
         expect(responsible_body.vcap_schools).to eq(School.none)
@@ -703,7 +703,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when the rb devolves device management to schools' do
-      let(:responsible_body) { create(:trust, :vcap_feature_flag, :devolves_management) }
+      let(:responsible_body) { create(:trust, :vcap, :devolves_management) }
 
       it 'only include schools centrally managed' do
         vcap_schools = responsible_body.vcap_schools
@@ -714,7 +714,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when the rb defaults to centrally managed schools' do
-      let(:responsible_body) { create(:trust, :vcap_feature_flag, :manages_centrally) }
+      let(:responsible_body) { create(:trust, :vcap, :manages_centrally) }
 
       it 'include schools not managing devices themselves' do
         vcap_schools = responsible_body.vcap_schools

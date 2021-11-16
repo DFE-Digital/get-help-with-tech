@@ -11,7 +11,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
     let(:rb) do
       create(:local_authority,
              :manages_centrally,
-             :vcap_feature_flag,
+             :vcap,
              computacenter_reference: rb_computacenter_reference)
     end
 

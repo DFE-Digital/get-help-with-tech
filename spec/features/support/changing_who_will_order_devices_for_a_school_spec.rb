@@ -58,11 +58,11 @@ RSpec.feature 'Changing who will order devices for a school' do
   end
 
   def given_a_responsible_body_without_virtual_caps_enabled
-    @local_authority = create(:local_authority, :manages_centrally, vcap_feature_flag: false)
+    @local_authority = create(:local_authority, :manages_centrally, vcap: false)
   end
 
   def given_a_responsible_body_with_virtual_caps_enabled
-    @local_authority = create(:local_authority, :manages_centrally, vcap_feature_flag: true)
+    @local_authority = create(:local_authority, :manages_centrally, vcap: true)
   end
 
   def given_a_school_that_is_centrally_managed

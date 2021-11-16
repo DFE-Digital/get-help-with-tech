@@ -8,7 +8,7 @@ class AllocationOverOrderService
   end
 
   def call
-    reclaim_cap_across_virtual_cap_pool if school.in_virtual_cap_pool?
+    reclaim_cap_across_virtual_cap_pool if school.vcap?
   end
 
 private

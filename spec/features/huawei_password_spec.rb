@@ -5,7 +5,7 @@ RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 J
   let(:iss_provision) { create(:iss_provision, routers: [1, 0, 0]) }
   let(:user_for_organisation_without_router_allocation) { create(:school_user) }
   let(:user) { create(:school_user, school: school_with_router_allocation) }
-  let(:trust) { create(:trust, :multi_academy_trust, :vcap_feature_flag) }
+  let(:trust) { create(:trust, :multi_academy_trust, :vcap) }
   let(:school) { create(:school, routers: [1, 0, 0], responsible_body: trust) }
   let(:rb_user) { create(:local_authority_user, responsible_body: trust) }
   let(:la_user) { create(:la_funded_place_user, school: iss_provision) }

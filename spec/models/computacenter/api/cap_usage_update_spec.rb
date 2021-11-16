@@ -88,7 +88,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
     end
 
     context 'if the devices_ordered update triggers a cap update' do
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
       let!(:school) { create(:school, :in_lockdown, :manages_orders, computacenter_reference: '123456', responsible_body: responsible_body) }
 
       let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }

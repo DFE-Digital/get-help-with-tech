@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Viewing responsible body information in the support area', type: :feature do
   let(:local_authority) { create(:local_authority, :devolves_management, name: 'Coventry') }
-  let(:local_authority_managing_centrally) { create(:trust, :manages_centrally, :vcap_feature_flag, name: 'Manchester') }
+  let(:local_authority_managing_centrally) { create(:trust, :manages_centrally, :vcap, name: 'Manchester') }
 
   let(:responsible_bodies_page) { PageObjects::Support::ResponsibleBodiesPage.new }
   let(:responsible_body_page) { PageObjects::Support::ResponsibleBodyPage.new }

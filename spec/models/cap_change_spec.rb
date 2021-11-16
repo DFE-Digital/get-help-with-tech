@@ -34,7 +34,7 @@ RSpec.describe CapChange, type: :model do
   end
 
   context 'when the allocation is pooled' do
-    let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_centrally_managed_schools) }
+    let(:responsible_body) { create(:trust, :manages_centrally, :vcap, :with_centrally_managed_schools) }
     let(:school) { responsible_body.schools.first }
 
     context 'when fewer devices than the allocation are ordered' do
@@ -62,7 +62,7 @@ RSpec.describe CapChange, type: :model do
         }
       end
       let(:sentry_scope) { instance_spy(Sentry::Scope, set_context: :great) }
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag, :with_centrally_managed_schools_fully_ordered) }
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap, :with_centrally_managed_schools_fully_ordered) }
 
       before do
         allow(Sentry).to receive(:capture_message)

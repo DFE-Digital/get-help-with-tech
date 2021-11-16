@@ -24,8 +24,8 @@ FactoryBot.define do
       default_who_will_order_devices_for_schools { 'school' }
     end
 
-    trait :vcap_feature_flag do
-      vcap_feature_flag { true }
+    trait :vcap do
+      vcap { true }
     end
 
     trait :with_schools do

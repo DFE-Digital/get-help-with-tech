@@ -20,7 +20,7 @@ A `ResponsibleBody` can have one `VirtualCapPool` per device type. Currently we 
 
 The `SchoolVirtualCap` is a join table between a `SchoolDeviceAllocation` of a given type and the `VirtualCapPool` of the same type.
 
-Additionally, each `ResponsibleBody` instance has an attribute that determines whether or not the virtual cap pool functionality is enabled.  This attribute is a boolean value named `vcap_feature_flag`.  When this flag is set, the `allocation`, `cap` and `devices_ordered` values for the responsible body's centrally managed schools are taken from the virtual cap pool rather than the school.
+Additionally, each `ResponsibleBody` instance has an attribute that determines whether or not the virtual cap pool functionality is enabled.  This attribute is a boolean value named `vcap`.  When this flag is set, the `allocation`, `cap` and `devices_ordered` values for the responsible body's centrally managed schools are taken from the virtual cap pool rather than the school.
 
 ### Raw values
 
@@ -60,7 +60,7 @@ With virtual cap pools and the shared caps, we must also generate cap update req
 
 `ResponsibleBody` _must_
 
-* Have `vcap_feature_flag` set to `true`
+* Have `vcap` set to `true`
 
 `School` _must_
 

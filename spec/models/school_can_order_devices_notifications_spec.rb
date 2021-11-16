@@ -92,7 +92,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
     end
 
     context 'when school ordering centrally in virtual cap which is ready changes from cannot_order to can_order' do
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
       let(:school) do
         create(:school,
                :centrally_managed,
@@ -319,7 +319,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
     end
 
     context 'when an school in virtual cap can order routers' do
-      let(:responsible_body) { create(:trust, :manages_centrally, :vcap_feature_flag) }
+      let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
       let(:school) do
         create(:school,
                :centrally_managed,

@@ -5,7 +5,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
   let(:rb) do
     create(:local_authority,
            :manages_centrally,
-           :vcap_feature_flag,
+           :vcap,
            name: 'RBName',
            computacenter_reference: '1000')
   end

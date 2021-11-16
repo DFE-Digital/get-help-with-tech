@@ -163,7 +163,7 @@ RSpec.describe SchoolUpdateService, type: :model do
 
         before do
           rb = old_school.responsible_body
-          rb.update!(vcap_feature_flag: true, default_who_will_order_devices_for_schools: 'responsible_body')
+          rb.update!(vcap: true, default_who_will_order_devices_for_schools: 'responsible_body')
           old_school.update!(who_will_order_devices: 'responsible_body')
           UpdateSchoolDevicesService.new(school: old_school, order_state: :can_order).call
         end
@@ -171,7 +171,7 @@ RSpec.describe SchoolUpdateService, type: :model do
         it 'does not transfer any spare allocation or adjust the original values' do
           school = service.create_school!(staged_school)
           old_school.reload
-          expect(old_school.in_virtual_cap_pool?).to be true
+          expect(old_school.vcap?).to be true
 
           expect(school.raw_allocation(:laptop)).to eq(0)
           expect(school.raw_allocation(:router)).to eq(0)

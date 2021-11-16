@@ -19,7 +19,7 @@ module SchoolAndRbExpectationsHelper
     expect(school.responsible_body).to eq(responsible_body)
 
     if vcap
-      expect(school).to be_in_virtual_cap_pool
+      expect(school).to be_vcap
 
       expect_vcap_to_be(rb_id: responsible_body.id,
                         laptop_allocation: laptop_allocation,
@@ -29,7 +29,7 @@ module SchoolAndRbExpectationsHelper
                         router_cap: router_cap,
                         routers_ordered: routers_ordered)
     else
-      expect(school).not_to be_in_virtual_cap_pool
+      expect(school).not_to be_vcap
     end
 
     expect_school_to_be(school_id: school.id,
@@ -54,7 +54,7 @@ module SchoolAndRbExpectationsHelper
                         routers_ordered:)
     responsible_body = ResponsibleBody.find(rb_id)
 
-    expect(responsible_body).to be_vcap_feature_flag
+    expect(responsible_body).to be_vcap
 
     expect(responsible_body.allocation(:laptop)).to eq(laptop_allocation)
     expect(responsible_body.cap(:laptop)).to eq(laptop_cap)

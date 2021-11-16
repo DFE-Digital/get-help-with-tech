@@ -79,7 +79,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
       let(:routers_ordered) { 3 }
 
       before do
-        trust.update!(vcap_feature_flag: true)
+        trust.update!(vcap: true)
         trust.calculate_vcaps!
         school_1.can_order!
         school_2.can_order!

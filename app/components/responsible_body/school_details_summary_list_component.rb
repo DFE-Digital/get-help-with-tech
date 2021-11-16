@@ -91,11 +91,11 @@ private
   end
 
   def display_devices_ordered_row?
-    !@school.in_virtual_cap_pool? && @school.has_ordered_any_laptop?
+    !@school.vcap? && @school.has_ordered_any_laptop?
   end
 
   def display_routers_ordered_row?
-    !@school.in_virtual_cap_pool? && @school.has_ordered_any_router?
+    !@school.vcap? && @school.has_ordered_any_router?
   end
 
   def display_router_allocation_row?

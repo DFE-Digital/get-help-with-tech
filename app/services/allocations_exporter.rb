@@ -63,15 +63,15 @@ private
         school.raw_allocation(:laptop),
         school.raw_cap(:laptop),
         school.raw_devices_ordered(:laptop),
-        (school.in_virtual_cap_pool? ? school.allocation(:laptop) : nil),
-        (school.in_virtual_cap_pool? ? school.cap(:laptop) : nil),
-        (school.in_virtual_cap_pool? ? school.devices_ordered(:laptop) : nil),
+        (school.vcap? ? school.allocation(:laptop) : nil),
+        (school.vcap? ? school.cap(:laptop) : nil),
+        (school.vcap? ? school.devices_ordered(:laptop) : nil),
         school.raw_allocation(:router),
         school.raw_cap(:router),
         school.raw_devices_ordered(:router),
-        (school.in_virtual_cap_pool? ? school.allocation(:router) : nil),
-        (school.in_virtual_cap_pool? ? school.cap(:router) : nil),
-        (school.in_virtual_cap_pool? ? school.devices_ordered(:router) : nil),
+        (school.vcap? ? school.allocation(:router) : nil),
+        (school.vcap? ? school.cap(:router) : nil),
+        (school.vcap? ? school.devices_ordered(:router) : nil),
       ]
     end
   end

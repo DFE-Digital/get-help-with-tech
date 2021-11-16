@@ -190,6 +190,6 @@ private
   end
 
   def vcaps?
-    recalculate_vcaps && school.in_virtual_cap_pool?
+    recalculate_vcaps && school.vcap?
   end
 end
