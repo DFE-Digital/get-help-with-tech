@@ -137,7 +137,7 @@ private
     if reverting_over_ordered_laptops?
       @over_order_reclaimed_laptops = [laptops_ordered - (laptop_allocation + circumstances_laptops), 0].max
       returned = over_order_reclaimed_laptops - school.over_order_reclaimed_laptops
-      AllocationOverOrderRevertingService.new(school, returned, :laptop).call
+      AllocationOverOrderRevertingService.new(school, returned, :laptop).call if school.vcap?
     end
 
     update_device_ordering!(laptop_allocation, laptops_ordered, circumstances_laptops, over_order_reclaimed_laptops, :laptop)
@@ -157,7 +157,7 @@ private
     if reverting_over_ordered_routers?
       @over_order_reclaimed_routers = [routers_ordered - (router_allocation + circumstances_routers), 0].max
       returned = over_order_reclaimed_routers - school.over_order_reclaimed_routers
-      AllocationOverOrderRevertingService.new(school, returned, :router).call
+      AllocationOverOrderRevertingService.new(school, returned, :router).call if school.vcap?
     end
 
     update_device_ordering!(router_allocation, routers_ordered, circumstances_routers, over_order_reclaimed_routers, :router)

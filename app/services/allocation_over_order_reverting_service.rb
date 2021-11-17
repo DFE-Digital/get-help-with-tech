@@ -1,14 +1,14 @@
 class AllocationOverOrderRevertingService
-  attr_reader :cap, :device_type, :devices, :school
+  attr_reader :cap, :device_type, :returned, :school
 
   def initialize(school, devices, device_type)
     @device_type = device_type
-    @devices = devices
+    @returned = devices + school.responsible_body.over_order_reclaimed(device_type)
     @school = school
   end
 
   def call
-    give_cap_back_across_virtual_cap_pool if school.vcap?
+    give_cap_back_across_virtual_cap_pool if returned.negative?
   end
 
 private
@@ -30,7 +30,7 @@ private
 
   def give_cap_back_across_virtual_cap_pool
     School.transaction do
-      failed_to_give_back = stolen_caps_in_the_vcap_pool.inject(devices) do |quantity, member|
+      failed_to_give_back = stolen_caps_in_the_vcap_pool.inject(returned) do |quantity, member|
         quantity -= give_cap_back_to_vcap_pool_member(member, quantity: quantity)
         quantity.negative? ? quantity : break
       end
