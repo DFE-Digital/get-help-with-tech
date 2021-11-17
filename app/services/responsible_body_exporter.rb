@@ -36,7 +36,7 @@ private
         rb.address_3,
         rb.town,
         rb.postcode,
-      ]
+      ].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end
 

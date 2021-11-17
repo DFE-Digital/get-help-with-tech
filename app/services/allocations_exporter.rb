@@ -72,7 +72,7 @@ private
         (school.vcap? ? school.allocation(:router) : nil),
         (school.vcap? ? school.cap(:router) : nil),
         (school.vcap? ? school.devices_ordered(:router) : nil),
-      ]
+      ].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end
 

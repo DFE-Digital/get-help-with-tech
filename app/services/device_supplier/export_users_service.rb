@@ -57,7 +57,7 @@ module DeviceSupplier
        user.email_address,
        user_sold_tos_text(user),
        user_default_sold_to_text(user),
-       device_supplier_user_updated_at_timestamp_string(user)]
+       device_supplier_user_updated_at_timestamp_string(user)].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
 
     def device_supplier_latest_user_change(user)

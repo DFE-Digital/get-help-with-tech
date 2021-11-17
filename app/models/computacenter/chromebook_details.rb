@@ -31,7 +31,7 @@ module Computacenter
             school.recovery_email_address,
             school.updated_at.utc.strftime('%d/%m/%Y'),
             school.updated_at.utc.strftime('%R'),
-          ]
+          ].map { |value| CsvValueSanitiser.new(value).sanitise }
         end
       end
     end

@@ -37,7 +37,7 @@ private
         school.town,
         school.postcode,
         school.computacenter_change&.capitalize,
-      ]
+      ].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end
 
