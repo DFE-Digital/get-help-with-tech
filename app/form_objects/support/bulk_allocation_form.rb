@@ -56,6 +56,7 @@ private
   end
 
   def upload_scheduled?
+    Rails.logger.info("BatchID: #{batch_id} - #{rows.count} rows")
     rows.each do |row|
       props = row.to_h.slice(*CSV_HEADERS).symbolize_keys!
       school = School.where_urn_or_ukprn_or_provision_urn(props[:urn] || props[:ukprn]).first
