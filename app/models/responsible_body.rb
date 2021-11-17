@@ -191,10 +191,6 @@ class ResponsibleBody < ApplicationRecord
     active_schools.school_will_order_devices.that_can_order_now.any?
   end
 
-  def vcap_and_centrally_managed_schools?
-    vcap? && has_centrally_managed_schools?
-  end
-
   def humanized_type
     type.demodulize.underscore.humanize.downcase
   end
@@ -226,6 +222,11 @@ class ResponsibleBody < ApplicationRecord
       .first
   end
 
+  def over_order_reclaimed(device_type)
+    field = laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
+    vcap_schools.sum(field)
+  end
+
   def schools_will_order_devices_by_default?
     default_who_will_order_devices_for_schools == 'school'
   end
@@ -250,6 +251,10 @@ class ResponsibleBody < ApplicationRecord
 
   def trust?
     type == 'Trust'
+  end
+
+  def vcap_and_centrally_managed_schools?
+    vcap? && has_centrally_managed_schools?
   end
 
   def vcap_schools
