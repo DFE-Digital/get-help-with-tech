@@ -141,5 +141,40 @@ RSpec.describe Computacenter::Ledger do
         ])
       end
     end
+
+    context 'when data provided by users is not secure' do
+      let!(:user_change) { create(:user_change, :school_user, :school_unchanged, :changed_telephone, telephone: '=cmd|’ /C notepad’!A1') }
+      let(:secured_telephone) { "\"'=cmd|’ /C notepad’!A1\"" }
+
+      it 'secure it' do
+        rows = CSV.parse(service.to_csv)
+        expect(rows[1]).to eql([
+          user_change.first_name,
+          user_change.last_name,
+          user_change.email_address,
+          secured_telephone,
+          user_change.responsible_body,
+          user_change.responsible_body_urn,
+          user_change.cc_sold_to_number,
+          user_change.school,
+          user_change.school_urn,
+          user_change.cc_ship_to_number,
+          user_change.updated_at_timestamp.utc.strftime('%d/%m/%Y'),
+          user_change.updated_at_timestamp.utc.strftime('%R'),
+          user_change.updated_at_timestamp.utc.iso8601,
+          'Change',
+          nil,
+          nil,
+          nil,
+          user_change.original_telephone,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+        ])
+      end
+    end
   end
 end
