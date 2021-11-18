@@ -16,6 +16,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
     <%= render AllocationComponentFactory.create_component(@school) %>
+    <%= render partial: 'shared/summary_reset_devices' if @has_ordered %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
@@ -59,9 +60,6 @@
       <li>set which accounts can use TechSource to order.</li>
     </ul>
 
-    <% if @has_ordered %>
-      <%= render partial: 'shared/summary_reset_devices' %>
-      <%= render partial: 'summary_order_history' if @current_user.orders_devices? || @has_ordered_routers %>
-    <% end %>
+    <%= render partial: 'summary_order_history' if @has_ordered && (@current_user.orders_devices? || @has_ordered_routers) %>
   </div>
 </div>

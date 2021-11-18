@@ -1,18 +1,15 @@
-<h2 class="govuk-heading-m govuk-!-margin-top-6">Reset your existing devices</h2>
-
-<p class="govuk-body">
-  DfE-restricted Windows laptops and tablets, as well as Huawei routers,
-  need to be reset as soon as possible.
-</p>
-
-<p class="govuk-body">
-  If you ordered devices prior to 30 June 2021, you can
-  <%= govuk_link_to 'view your device details and BIOS/admin passwords', assets_path -%>.
-</p>
-
-<p class="govuk-body">
-  <%= govuk_link_to 'See your Huawei router password', huawei_router_password_path -%>
-</p>
+<%=
+  govuk_notification_banner(title_text: "Reset your DfE-restricted Windows laptops and tablets") do |banner|
+    banner.heading(text: "DfE-restricted Windows laptops and tablets need to be reset as soon as possible")
+    banner.heading do
+      [
+        "<p class='govuk-body'>If you ordered devices before <strong>30 June 2021</strong> you can:<p>",
+        "<p>#{govuk_link_to 'View your details and BIOS/admin passwords', assets_path}</p>",
+        "<p>#{govuk_link_to 'Find out more about resetting Windows devices', devices_guide_to_resetting_windows_laptops_and_tablets_path}</p>"
+      ].join.html_safe
+    end
+  end
+%>
 
 <h2 class="govuk-heading-m govuk-!-margin-top-6">Further guidance</h2>
 
