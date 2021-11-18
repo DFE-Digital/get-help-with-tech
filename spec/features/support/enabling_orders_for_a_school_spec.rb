@@ -169,7 +169,7 @@ RSpec.feature 'Enabling orders for a school from the support area' do
   def then_i_see_a_confirmation_that_the_school_cannot_order
     expect(school_details_page).to have_text('We’ve saved your choices')
     expect(school_details_page.school_details['Devices ordered']).to have_text '25'
-    expect(school_details_page.school_details['Can place orders?']).to have_text 'No'
+    expect(school_details_page.school_details['Can place orders?']).to have_text 'Cannot order yet'
   end
 
   def and_the_school_order_users_have_been_informed_that_they_can_order
