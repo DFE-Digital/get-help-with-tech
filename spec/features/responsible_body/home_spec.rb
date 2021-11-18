@@ -78,11 +78,7 @@ RSpec.feature ResponsibleBody do
         end
 
         it 'shows the link to view device details' do
-          expect(page).to have_link('view your device details and BIOS/admin passwords')
-        end
-
-        it 'shows the link to Huawei router password' do
-          expect(page).to have_link('See your Huawei router password')
+          expect(page).to have_link('View your details and BIOS/admin passwords')
         end
       end
     end
