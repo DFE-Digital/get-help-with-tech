@@ -116,7 +116,7 @@ private
     else
       {
         key: 'Can place orders?',
-        value: 'Not yet because no closure or group of self-isolating children has been reported'.html_safe,
+        value: 'Cannot order yet',
       }
     end
   end
