@@ -86,7 +86,7 @@ RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
 
       before do
         stub_computacenter_outgoing_api_calls
-        rb.calculate_vcaps!
+        rb.update!(laptop_allocation: 19, laptop_cap: 16, laptops_ordered: 11)
         service.call
       end
 

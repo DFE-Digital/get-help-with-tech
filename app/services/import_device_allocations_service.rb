@@ -10,7 +10,9 @@ class ImportDeviceAllocationsService
       school = School.find_by(urn: allocation[:urn])
 
       if school
-        UpdateSchoolDevicesService.new(school: school, laptop_allocation: allocation[:y3_10]).call
+        UpdateSchoolDevicesService.new(school: school,
+                                       laptop_allocation: allocation[:y3_10],
+                                       cap_change_category: :import_device_allocations).call
       else
         Rails.logger.warn("Could not find school (#{allocation[:urn]} - #{allocation[:name]})")
       end

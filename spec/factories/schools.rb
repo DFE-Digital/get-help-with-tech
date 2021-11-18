@@ -45,7 +45,7 @@ FactoryBot.define do
     raw_laptops_ordered { laptops.size == 4 ? laptops[3].to_i : laptops[2].to_i }
 
     raw_router_allocation { routers[0].to_i }
-    circumstances_routers { can_order_for_specific_circumstances? ? routers[1].to_i - raw_router_allocation : 0 }
+    circumstances_routers { routers.size == 4 ? routers[1].to_i : 0 }
     over_order_reclaimed_routers { routers.size == 4 ? routers[2].to_i : routers[1].to_i - raw_router_allocation }
     raw_routers_ordered { routers[2].to_i }
 

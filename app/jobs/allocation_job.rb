@@ -49,6 +49,7 @@ private
       notify_computacenter: notify_computacenter,
       notify_school: notify_school,
       recalculate_vcaps: recalculate_vcaps,
+      cap_change_category: :allocation_job,
     ).call
   end
 end

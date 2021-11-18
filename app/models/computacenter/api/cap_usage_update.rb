@@ -21,7 +21,8 @@ class Computacenter::API::CapUsageUpdate
         UpdateSchoolDevicesService.new(school: school,
                                        devices_ordered_field(device_type) => cap_used,
                                        notify_computacenter: false,
-                                       notify_school: false).call
+                                       notify_school: false,
+                                       cap_change_category: :cap_usage).call
       end
     rescue Computacenter::OutgoingAPI::Error => e
       # Don't raise failure if a cascading cap update to CC fails

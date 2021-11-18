@@ -24,6 +24,7 @@ RSpec.describe AllocationJob do
           notify_computacenter: true,
           notify_school: false,
           recalculate_vcaps: true,
+          cap_change_category: :allocation_job,
         )
       end
 
@@ -52,6 +53,7 @@ RSpec.describe AllocationJob do
           notify_computacenter: true,
           notify_school: true,
           recalculate_vcaps: true,
+          cap_change_category: :allocation_job,
         )
       end
 
