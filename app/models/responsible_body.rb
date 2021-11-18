@@ -224,7 +224,7 @@ class ResponsibleBody < ApplicationRecord
 
   def over_order_reclaimed(device_type)
     field = laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
-    vcap_schools.sum(field)
+    vcap_schools.where.not(order_state: :cannot_order).sum(field)
   end
 
   def schools_will_order_devices_by_default?

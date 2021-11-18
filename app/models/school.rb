@@ -85,7 +85,8 @@ class School < ApplicationRecord
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
   scope :with_over_order_stolen_cap, lambda { |device_type|
-    laptop?(device_type) ? where('over_order_reclaimed_laptops < 0') : where('over_order_reclaimed_routers < 0')
+    query = where.not(order_state: :cannot_order)
+    laptop?(device_type) ? query.where('over_order_reclaimed_laptops < 0') : query.where('over_order_reclaimed_routers < 0')
   }
   scope :school_not_set_to_order_devices, -> { where(who_will_order_devices: [nil, :responsible_body]) }
 
