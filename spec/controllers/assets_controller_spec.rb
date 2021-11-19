@@ -76,6 +76,57 @@ RSpec.describe AssetsController do
         end
       end
     end
+
+    describe 'search' do
+      context 'logged in' do
+        let(:support_user) { create(:support_user) }
+
+        before do
+          allow(Asset).to receive(:search_by_serial_numbers)
+
+          sign_in_as support_user
+        end
+
+        it 'shows the search results' do
+          get :index, params: { serial_number: '1234' }
+
+          expect(response).to be_successful
+          expect(Asset).to have_received(:search_by_serial_numbers).with(%w[1234])
+          expect(response).to render_template(:index)
+        end
+      end
+
+      context 'multiple serial numbers' do
+        let(:support_user) { create(:support_user) }
+        let(:non_support_user) { create(:school_user) }
+
+        before { allow(Asset).to receive(:search_by_serial_numbers) }
+
+        context 'non-support user' do
+          before { sign_in_as non_support_user }
+
+          it 'assumes search is for only one serial number' do
+            get :index, params: { serial_number: '1,2' }
+
+            expect(response).to be_successful
+            expect(Asset).to have_received(:search_by_serial_numbers).with(['1,2'])
+            expect(response).to render_template(:index)
+          end
+        end
+
+        context 'support user' do
+          before { sign_in_as support_user }
+
+          it 'shows the search results' do
+            get :index, params: { serial_number: '1,2' }
+
+            expect(response).to be_successful
+            expect(Asset).to have_received(:search_by_serial_numbers).with(%w[1 2])
+            expect(response).to render_template(:index)
+          end
+        end
+      end
+    end
   end
 
   describe 'CSV format' do
@@ -89,13 +140,27 @@ RSpec.describe AssetsController do
     context 'user counts as viewer' do
       before { sign_in_as school_user }
 
-      it 'marks downloaded CSV assets as viewed' do
-        get :index, format: :csv
+      context 'with search' do
+        before { get :index, format: :csv, params: { serial_number: other_asset.serial_number } }
 
-        [asset_1, asset_2, other_asset].each(&:reload)
+        it 'marks the downloaded found asset as viewed' do
+          [asset_1, asset_2, other_asset].each(&:reload)
 
-        expect([asset_1, asset_2]).to all be_viewed
-        expect(other_asset).not_to be_viewed
+          expect(asset_1).not_to be_viewed
+          expect(asset_2).not_to be_viewed
+          expect(other_asset).to be_viewed
+        end
+      end
+
+      context 'without search' do
+        it 'marks the index assets as viewed' do
+          get :index, format: :csv
+
+          [asset_1, asset_2, other_asset].each(&:reload)
+
+          expect([asset_1, asset_2]).to all be_viewed
+          expect(other_asset).not_to be_viewed
+        end
       end
     end
 
@@ -185,64 +250,6 @@ RSpec.describe AssetsController do
 
           expect(asset.first_viewed_at).to eq(first_view_timestamp)
           expect(asset.first_viewed_at).not_to eq(second_view_timestamp)
-        end
-      end
-    end
-  end
-
-  describe '#search' do
-    context 'not logged in' do
-      it 'redirects to log in' do
-        post :search, params: { serial_number: '1' }
-        expect(response).to redirect_to(sign_in_path)
-      end
-    end
-
-    context 'logged in' do
-      let(:support_user) { create(:support_user) }
-
-      before do
-        allow(Asset).to receive(:search_by_serial_numbers)
-
-        sign_in_as support_user
-      end
-
-      it 'shows the search results' do
-        post :search, params: { serial_number: '1234' }
-
-        expect(response).to be_successful
-        expect(Asset).to have_received(:search_by_serial_numbers).with(%w[1234])
-        expect(response).to render_template(:index)
-      end
-    end
-
-    context 'multiple serial numbers' do
-      let(:support_user) { create(:support_user) }
-      let(:non_support_user) { create(:school_user) }
-
-      before { allow(Asset).to receive(:search_by_serial_numbers) }
-
-      context 'non-support user' do
-        before { sign_in_as non_support_user }
-
-        it 'assumes search is for only one serial number' do
-          post :search, params: { serial_number: '1,2' }
-
-          expect(response).to be_successful
-          expect(Asset).to have_received(:search_by_serial_numbers).with(['1,2'])
-          expect(response).to render_template(:index)
-        end
-      end
-
-      context 'support user' do
-        before { sign_in_as support_user }
-
-        it 'shows the search results' do
-          post :search, params: { serial_number: '1,2' }
-
-          expect(response).to be_successful
-          expect(Asset).to have_received(:search_by_serial_numbers).with(%w[1 2])
-          expect(response).to render_template(:index)
         end
       end
     end

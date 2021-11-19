@@ -48,9 +48,6 @@ Rails.application.routes.draw do
   post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
 
   resources :assets, only: %i[show index] do
-    collection do
-      post 'search'
-    end
     member do
       get 'bios_unlocker'
     end
