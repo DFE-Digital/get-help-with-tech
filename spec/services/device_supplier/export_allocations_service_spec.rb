@@ -30,6 +30,10 @@ RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
         line_count = `wc -l "#{filename}"`.split.first.to_i
         expect(line_count).to eq(School.count + 1)
       end
+
+      it 'includes the correct headers' do
+        expect(csv.headers).to match_array(DeviceSupplier::ExportAllocationsService.headers)
+      end
     end
 
     context 'when devices are managed by the school' do
@@ -47,7 +51,15 @@ RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
       end
 
       it 'has a sold_to value equal to the school computacenter_refernce' do
-        expect(school_csv_row['sold_to']).to eq(rb.computacenter_reference)
+        expect(school_csv_row['sold_to']).to eq(rb.sold_to)
+      end
+
+      it 'has a responsible body name' do
+        expect(school_csv_row['responsible_body_name']).to eq(rb.name)
+      end
+
+      it 'has a responsible_body_id value equal to the rb computacenter_identifier' do
+        expect(school_csv_row['responsible_body_id']).to eq(rb.computacenter_identifier)
       end
 
       it 'has an adjusted cap equal to cap' do

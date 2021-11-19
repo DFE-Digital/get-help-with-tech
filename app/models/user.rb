@@ -33,6 +33,8 @@ class User < ApplicationRecord
                         ->(user, school) { user.destroy_school_welcome_wizard!(school) },
                       ]
 
+  alias_method :rb, :responsible_body
+
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
   scope :responsible_body_users, -> { where.not(responsible_body: nil) }
   scope :from_responsible_body_or_schools, -> { left_joins(:user_schools).where('responsible_body_id IS NOT NULL or user_schools.id IS NOT NULL') }
@@ -45,6 +47,10 @@ class User < ApplicationRecord
   scope :search_by_email_address_or_full_name, lambda { |search_term|
     where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term.strip}%", "%#{search_term.strip}%")
   }
+
+  def self.relevant_to_device_supplier
+    where(is_computacenter: false, is_support: false).who_have_seen_privacy_notice.who_can_order_devices.not_deleted
+  end
 
   validates :full_name,
             presence: true,

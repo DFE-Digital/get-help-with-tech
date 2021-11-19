@@ -31,10 +31,16 @@ RSpec.feature 'Administering responsible body changes' do
       then_i_see_the_list_of_amended_responsible_bodies
     end
 
-    scenario 'download csv file' do
+    scenario 'download csv file of changes' do
       when_i_visit_the_changes_to_responsible_bodies_page
-      and_i_click_the_download_csv_link
+      and_i_click_the_download_changes_csv_link
       then_it_downloads_the_changed_responsible_bodies_as_a_csv_file
+    end
+
+    scenario 'download csv file of schools and bodies' do
+      when_i_visit_the_changes_to_responsible_bodies_page
+      and_i_click_the_download_schools_and_bodies_csv_link
+      then_it_downloads_the_schools_and_bodies_as_a_csv_file
     end
 
     scenario 'update a Sold To reference' do
@@ -148,7 +154,7 @@ RSpec.feature 'Administering responsible body changes' do
       end
     end
 
-    def and_i_click_the_download_csv_link
+    def and_i_click_the_download_changes_csv_link
       click_on 'Download changes as a CSV file'
     end
 
@@ -165,6 +171,18 @@ RSpec.feature 'Administering responsible body changes' do
 
       trusts.each do |t|
         expect(page.body).not_to have_text(t.computacenter_identifier)
+      end
+    end
+
+    def and_i_click_the_download_schools_and_bodies_csv_link
+      click_on 'Download all schools and bodies as a CSV file'
+    end
+
+    def then_it_downloads_the_schools_and_bodies_as_a_csv_file
+      expect_download(content_type: 'text/csv')
+
+      trusts.each do |t|
+        expect(page.body).to have_text(t.computacenter_identifier)
       end
     end
 

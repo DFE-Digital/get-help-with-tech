@@ -29,6 +29,10 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
         line_count = `wc -l "#{filename}"`.split.first.to_i
         expect(line_count).to eq(School.count + 1)
       end
+
+      it 'includes the correct headers' do
+        expect(csv.headers).to match_array(DeviceSupplier::ExportUsersService.headers)
+      end
     end
 
     context 'when devices are managed by the school' do
@@ -48,11 +52,11 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
         expect(user_csv_row['email_address']).to eq(user.email_address)
       end
 
-      it 'displays "school" in the "who_orders" column' do
+      it 'includes the sold_to in the csv' do
         expect(user_csv_row['sold_to']).to eq(sold_to)
       end
 
-      it 'has a ship_to value equal to the school computacenter_refernce' do
+      it 'includes the default_sold_to in the csv' do
         expect(user_csv_row['default_sold_to']).to eq(sold_to)
       end
     end

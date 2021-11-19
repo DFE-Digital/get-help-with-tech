@@ -8,33 +8,7 @@ module DeviceSupplier
 
     UPDATE_PROGRESS_DELAY = 200
 
-    def initialize(path = nil)
-      @path = path
-      @progress_percentage = 0
-      @count = 0
-      @per_school_percentage = 100.0 / School.count
-    end
-
-    def call(target_path = path)
-      raise 'No path specified' if target_path.nil?
-
-      CSV.open(target_path, 'wb') do |csv|
-        csv << csv_headers
-        School.includes(:responsible_body).find_each do |school|
-          update_progress
-          add_school_to_csv(csv, school)
-        end
-      end
-      Rails.logger.info "DeviceSupplierExportAllocationsService: Exported #{count} schools to #{path}"
-    end
-
-  private
-
-    def add_school_to_csv(csv, school)
-      csv << school_allocation_and_rb_details(school)
-    end
-
-    def csv_headers
+    def self.headers
       %w[urn
          order_state
          who_orders
@@ -63,12 +37,43 @@ module DeviceSupplier
          school_in_virtual_cap?]
     end
 
-    def csv_row(school, responsible_body, ship_to, sold_to)
+    def initialize(path = nil)
+      @path = path
+      @progress_percentage = 0
+      @count = 0
+      @per_school_percentage = 100.0 / School.count
+    end
+
+    def call(target_path = path)
+      raise 'No path specified' if target_path.nil?
+
+      to_csv(target_path)
+      Rails.logger.info "DeviceSupplierExportAllocationsService: Exported #{count} schools to #{target_path}"
+    end
+
+    def to_csv(path = nil)
+      open_or_generate = path.nil? ? [:generate] : [:open, path, 'wb']
+      CSV.send(*open_or_generate) do |csv|
+        csv << self.class.headers
+        School.includes(:responsible_body).find_each do |school|
+          update_progress
+          add_school_to_csv(csv, school)
+        end
+      end
+    end
+
+  private
+
+    def add_school_to_csv(csv, school)
+      csv << csv_row(school)
+    end
+
+    def csv_row(school)
       [school.urn,
        school.order_state,
        school.who_will_order_devices,
-       ship_to,
-       sold_to,
+       school.ship_to,
+       school.sold_to,
        school.name,
        school.address_1,
        school.address_2,
@@ -76,14 +81,14 @@ module DeviceSupplier
        school.town,
        school.county,
        school.postcode,
-       responsible_body.computacenter_identifier,
-       responsible_body.name,
-       responsible_body.address_1,
-       responsible_body.address_2,
-       responsible_body.address_3,
-       responsible_body.town,
-       responsible_body.county,
-       responsible_body.postcode,
+       school.rb.computacenter_identifier,
+       school.rb.name,
+       school.rb.address_1,
+       school.rb.address_2,
+       school.rb.address_3,
+       school.rb.town,
+       school.rb.county,
+       school.rb.postcode,
        school.raw_allocation(:laptop),
        school.raw_cap(:laptop),
        school.computacenter_cap(:laptop),
@@ -94,14 +99,6 @@ module DeviceSupplier
 
     def rb_vcap_text(school)
       school.responsible_body.vcap? ? 'Yes' : 'No'
-    end
-
-    def school_allocation_and_rb_details(school)
-      responsible_body = school.responsible_body
-      ship_to = school.computacenter_reference
-      sold_to = responsible_body.computacenter_reference
-
-      csv_row(school, responsible_body, ship_to, sold_to)
     end
 
     def schools_vcap_enabled_text(school)

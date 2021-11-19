@@ -1,5 +1,15 @@
 class Computacenter::UserLedgerController < Computacenter::BaseController
   def index
+    @ledger = DeviceSupplier::ExportUsersService.new
+
+    respond_to do |format|
+      format.csv do
+        send_data @ledger.to_csv, filename: "#{Time.zone.now.iso8601}_device_supplier_allocations_export.csv"
+      end
+    end
+  end
+
+  def changes
     @user_changes = Computacenter::UserChange.all.order(:updated_at_timestamp)
     @ledger = Computacenter::Ledger.new(user_changes: @user_changes)
 

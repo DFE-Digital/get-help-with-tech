@@ -314,7 +314,9 @@ Rails.application.routes.draw do
 
   namespace :computacenter do
     get '/', to: 'home#show', as: :home
+    get '/allocation-ledger', to: 'allocation_ledger#index', as: :allocation_ledger
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
+    get '/user-change-ledger', to: 'user_ledger#changes', as: :user_change_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
     get '/donated-device-requests', to: 'donated_device_requests#index', as: :donated_device_requests, constraints: -> { false }
     resources :schools, only: %i[index edit update], path: '/school-changes', as: :school_changes, controller: 'school_changes'
