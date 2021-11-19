@@ -307,7 +307,7 @@ en:
       guidance_section: replace_faulty_devices_pages
 
     preparing_a_standard_windows_device:
-      title: Preparing Microsoft Windows laptops and tablets
+      title: Microsoft Windows laptops and tablets setup guide
       description: When you receive a Microsoft Windows laptop or tablet, you should follow these steps before lending the device to a child, family or young person.
       guidance_section: setup_guide_pages
     preparing_chromebooks:
