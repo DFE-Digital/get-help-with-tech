@@ -125,8 +125,10 @@ class ResponsibleBody < ApplicationRecord
 
   def calculate_laptop_vcap(**opts)
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - laptops")
+    balance_over_ordered_cap(:laptop)
     allocation, cap, ordered = compute_laptops
     update!(laptop_allocation: allocation, laptop_cap: cap, laptops_ordered: ordered)
+
     if vcap? && (laptop_cap_previously_changed? || laptops_ordered_previously_changed?)
       update_cap_on_computacenter(:laptop, **opts)
     end
@@ -134,6 +136,7 @@ class ResponsibleBody < ApplicationRecord
 
   def calculate_router_vcap(**opts)
     logger.info("***=== recalculating caps ===*** responsible_body_id: #{id} - routers")
+    balance_over_ordered_cap(:router)
     allocation, cap, ordered = compute_routers
     update!(router_allocation: allocation, router_cap: cap, routers_ordered: ordered)
     if vcap? && (router_cap_previously_changed? || routers_ordered_previously_changed?)
@@ -224,7 +227,7 @@ class ResponsibleBody < ApplicationRecord
 
   def over_order_reclaimed(device_type)
     field = laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
-    vcap_schools.sum(field)
+    vcap_schools.where.not(order_state: :cannot_order).sum(field)
   end
 
   def schools_will_order_devices_by_default?
@@ -283,6 +286,12 @@ class ResponsibleBody < ApplicationRecord
   end
 
 private
+
+  def balance_over_ordered_cap(device_type)
+    over_ordered = over_order_reclaimed(device_type)
+    AllocationOverOrderService.new(self, over_ordered, device_type).call if over_ordered.positive?
+    AllocationOverOrderRevertingService.new(self, over_ordered, device_type).call if over_ordered.negative?
+  end
 
   def compute_laptops
     sums = vcap_schools.pick(Arel.sql("SUM(raw_laptop_allocation),

@@ -14,8 +14,8 @@ RSpec.describe Support::AllocationForm, type: :model do
              order_state: order_state,
              computacenter_reference: '11',
              responsible_body: rb,
-             laptops: [5, 4, 1],
-             routers: [4, 3, 0])
+             laptops: [5, 0, 0, 1],
+             routers: [4, 0, 0, 0])
     end
 
     before do
@@ -24,19 +24,14 @@ RSpec.describe Support::AllocationForm, type: :model do
              responsible_body: rb,
              order_state: 'can_order_for_specific_circumstances',
              computacenter_reference: '12',
-             laptops: [5, 4, 1],
-             routers: [4, 4, 0])
+             laptops: [5, -1, 0, 1],
+             routers: [4, 0, 0, 0])
     end
 
     context 'when the school is in virtual cap pool' do
       let(:allocation) { 6 }
       let(:device_type) { :laptop }
-      let(:rb) do
-        create(:local_authority,
-               :manages_centrally,
-               :vcap,
-               computacenter_reference: '1000')
-      end
+      let(:rb) { create(:local_authority, :manages_centrally, :vcap, computacenter_reference: '1000') }
 
       subject(:form) do
         described_class.new(allocation: allocation, device_type: device_type, school: school)
@@ -110,7 +105,6 @@ RSpec.describe Support::AllocationForm, type: :model do
       end
 
       context 'when the school cannot order' do
-        let(:allocation) { 6 }
         let(:order_state) { 'cannot_order' }
         let(:requests) do
           [
@@ -152,11 +146,11 @@ RSpec.describe Support::AllocationForm, type: :model do
           end
 
           it 'update school device raw cap with allocation delta' do
-            expect { form.save }.to change { school.raw_cap(:laptop) }.from(4).to(5)
+            expect { form.save }.to change { school.raw_cap(:laptop) }.from(5).to(6)
           end
 
           it 'update pool device cap' do
-            expect { form.save }.to change { school.cap(:laptop) }.from(8).to(9)
+            expect { form.save }.to change { school.cap(:laptop) }.from(9).to(10)
           end
 
           it 'update pool school device cap on Computacenter' do
@@ -250,13 +244,13 @@ RSpec.describe Support::AllocationForm, type: :model do
           let(:requests) do
             [
               [
-                { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '2' },
+                { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
               ],
             ]
           end
 
           it 'update school raw device cap by allocation delta' do
-            expect { form.save }.to change { school.cap(:laptop) }.from(4).to(2)
+            expect { form.save }.to change { school.cap(:laptop) }.from(5).to(3)
           end
 
           it 'update pool schools device cap on Computacenter' do
@@ -268,7 +262,7 @@ RSpec.describe Support::AllocationForm, type: :model do
           it 'notify Computacenter of device cap change by email' do
             expect { form.save }
               .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                    .with(params: { school: school, new_cap_value: 2 }, args: []).once
+                    .with(params: { school: school, new_cap_value: 3 }, args: []).once
           end
 
           it "notify the school's organizational users" do
@@ -288,7 +282,7 @@ RSpec.describe Support::AllocationForm, type: :model do
           it 'notify Computacenter of school can order by email' do
             expect { form.save }
               .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                    .with(params: { school: school, new_cap_value: 2 }, args: []).once
+                    .with(params: { school: school, new_cap_value: 3 }, args: []).once
           end
         end
       end

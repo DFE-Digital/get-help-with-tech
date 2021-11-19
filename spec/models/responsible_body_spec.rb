@@ -367,6 +367,91 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
+  describe '#calculate_laptop_vcap' do
+    context 'case 1' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 10, 20]) }
+
+      before do
+        rb.update!(laptop_allocation: 20, laptop_cap: 30, laptops_ordered: 20)
+      end
+
+      it 'balances cap decreasing over increased cap' do
+        expect(school_a.raw_laptops).to eq([10, 10, 0])
+        expect(school_b.raw_laptops).to eq([10, 20, 20])
+        expect(rb.laptops).to eq([20, 30, 20])
+
+        rb.calculate_laptop_vcap
+
+        expect(rb.laptops).to eq([20, 20, 20])
+        expect(school_a.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.reload.raw_laptops_full).to eq([10, 0, 10, 20])
+        expect(school_a.raw_laptops).to eq([10, 0, 0])
+        expect(school_b.raw_laptops).to eq([10, 20, 20])
+      end
+    end
+
+    context 'case 2' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [43, 0, -43, 0]) }
+      let!(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [15, 0, 63, 78]) }
+      let!(:school_c) { create(:school, :centrally_managed, responsible_body: rb, laptops: [20, 0, 0, 0]) }
+
+      before do
+        rb.update!(laptop_allocation: 78, laptop_cap: 78, laptops_ordered: 78)
+      end
+
+      it 'do not touch over-ordered distribution when there is no room for redistribution' do
+        expect(school_a.raw_laptops).to eq([43, 0, 0])
+        expect(school_b.raw_laptops).to eq([15, 78, 78])
+        expect(school_c.raw_laptops).to eq([20, 0, 0])
+        expect(rb.laptops).to eq([78, 78, 78])
+
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([78, 78, 78])
+        expect(school_a.reload.raw_laptops).to eq([43, 0, 0])
+        expect(school_b.reload.raw_laptops).to eq([15, 78, 78])
+        expect(school_c.reload.raw_laptops).to eq([20, 0, 0])
+        expect(school_a.raw_laptops_full).to eq([43, 0, -43, 0])
+        expect(school_b.raw_laptops_full).to eq([15, 0, 63, 78])
+        expect(school_c.raw_laptops_full).to eq([20, 0, 0, 0])
+      end
+    end
+
+    context 'case 3' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [43, 0, -43, 0]) }
+      let!(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [15, 0, 40, 55]) }
+      let!(:school_c) { create(:school, :centrally_managed, responsible_body: rb, laptops: [20, 0, 0, 0]) }
+
+      before do
+        rb.update!(laptop_allocation: 78, laptop_cap: 55, laptops_ordered: 55)
+      end
+
+      it 'balances cap increasing over decreased cap' do
+        expect(school_a.raw_laptops).to eq([43, 0, 0])
+        expect(school_b.raw_laptops).to eq([15, 55, 55])
+        expect(school_c.raw_laptops).to eq([20, 0, 0])
+        expect(rb.laptops).to eq([78, 55, 55])
+
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([78, 58, 55])
+        expect(school_a.reload.raw_laptops).to eq([43, 3, 0])
+        expect(school_b.reload.raw_laptops).to eq([15, 55, 55])
+        expect(school_c.reload.raw_laptops).to eq([20, 0, 0])
+        expect(school_a.raw_laptops_full).to eq([43, 0, -40, 0])
+        expect(school_b.raw_laptops_full).to eq([15, 0, 40, 55])
+        expect(school_c.raw_laptops_full).to eq([20, 0, 0, 0])
+      end
+    end
+  end
+
   describe '#calculate_vcaps!' do
     subject(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
 

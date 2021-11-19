@@ -77,12 +77,14 @@ private
                                          "#{device_type}_allocation".to_sym => spare_allocation,
                                          "#{device_type}_cap".to_sym => spare_allocation,
                                          recalculate_vcaps: false,
-                                         notify_computacenter: false).call
+                                         notify_computacenter: false,
+                                         cap_change_category: :get_allocations_from_predecessor).call
           UpdateSchoolDevicesService.new(school: predecessor,
                                          "#{device_type}_allocation".to_sym => ordered,
                                          "#{device_type}_cap".to_sym => ordered,
                                          recalculate_vcaps: false,
-                                         notify_computacenter: false).call
+                                         notify_computacenter: false,
+                                         cap_change_category: :give_allocations_to_successor).call
         end
       end
     end

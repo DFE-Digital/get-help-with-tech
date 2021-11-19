@@ -69,7 +69,8 @@ private
   end
 
   def orders_enabled?
-    opts = cap_required? ? circumstances_props : {}
+    opts = { cap_change_category: :enable_orders }
+    opts.merge!(circumstances_props) if cap_required?
     UpdateSchoolDevicesService.new(school: school, order_state: order_state, **opts).call
   end
 

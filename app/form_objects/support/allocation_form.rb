@@ -25,7 +25,9 @@
 private
 
   def allocation_updated?
-    UpdateSchoolDevicesService.new(school: school, "#{device_type}_allocation".to_sym => allocation).call
+    UpdateSchoolDevicesService.new(school: school,
+                                   "#{device_type}_allocation".to_sym => allocation,
+                                   cap_change_category: :allocation_change).call
   end
 
   def check_decrease_allowed

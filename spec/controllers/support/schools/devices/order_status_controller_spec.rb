@@ -61,20 +61,15 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     let(:router_cap) { '2' }
     let(:who_manages) { :manages_orders }
 
-    let(:rb) do
-      create(:local_authority,
-             :manages_centrally,
-             :vcap,
-             computacenter_reference: '1000')
-    end
+    let(:rb) { create(:local_authority, :manages_centrally, :vcap, computacenter_reference: '1000') }
 
     let!(:school) do
       create(:school,
              who_manages,
              computacenter_reference: '11',
              responsible_body: rb,
-             laptops: [5, 4, 1],
-             routers: [5, 4, 1])
+             laptops: [5, 5, 1],
+             routers: [5, 5, 1])
     end
 
     let(:params) do

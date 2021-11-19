@@ -21,8 +21,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
              :in_lockdown,
              computacenter_reference: '11',
              responsible_body: rb,
-             laptops: [2, 1, 0],
-             routers: [2, 1, 1])
+             laptops: [1, 1, 0],
+             routers: [1, 1, 1])
     end
 
     subject(:service) do

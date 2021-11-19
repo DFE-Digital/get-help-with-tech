@@ -213,7 +213,8 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
                   laptops: [5, 3, 1],
                   routers: [4, 2, 0])
     beta.can_order!
-    local_authority_managing_centrally.calculate_vcaps!
+    local_authority_managing_centrally.update!(laptop_allocation: 15, laptop_cap: 5, laptops_ordered: 3,
+                                               router_allocation: 8, router_cap: 6, routers_ordered: 0)
   end
 
   def and_it_has_all_centrally_managed_schools
@@ -245,7 +246,8 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     beta.can_order!
     closed.can_order!
     closed.gias_status_closed!
-    local_authority_managing_centrally.calculate_vcaps!
+    local_authority_managing_centrally.update!(laptop_allocation: 20, laptop_cap: 8, laptops_ordered: 4,
+                                               router_allocation: 12, router_cap: 8, routers_ordered: 0)
   end
 
   def when_i_sign_in_as_a_dfe_user

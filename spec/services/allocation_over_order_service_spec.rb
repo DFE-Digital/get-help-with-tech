@@ -76,7 +76,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
           {
             device_type: :laptop,
             remaining_over_ordered_quantity: non_allocated_but_ordered_devices,
-            school_id: school.id,
+            responsible_body_id: rb.id,
           }
         end
         let(:sentry_scope) { instance_spy(Sentry::Scope, set_context: :great) }
