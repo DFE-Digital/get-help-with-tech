@@ -3,6 +3,8 @@ class School < ApplicationRecord
   include PgSearch::Model
   include SchoolType
 
+  alias_attribute :ship_to, :computacenter_reference
+
   DEVICE_TYPES = %i[laptop router].freeze
 
   belongs_to :responsible_body, inverse_of: :schools
@@ -136,6 +138,9 @@ class School < ApplicationRecord
   delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
   delegate :gias_id, to: :responsible_body, prefix: true, allow_nil: true
   delegate :name, to: :responsible_body, prefix: true, allow_nil: true
+
+  alias_method :rb, :responsible_body
+  alias_method :sold_to, :responsible_body_computacenter_reference
 
   def active_responsible_users
     device_ordering_organisation.users.signed_in_at_least_once

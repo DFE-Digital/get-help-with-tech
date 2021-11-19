@@ -1,6 +1,8 @@
 require 'computacenter/responsible_body_urns'
 
 class ResponsibleBody < ApplicationRecord
+  alias_attribute :sold_to, :computacenter_reference
+
   DEVICE_TYPES = %i[laptop router].freeze
 
   has_one :bt_wifi_voucher_allocation

@@ -10,6 +10,8 @@
 
     <p class="govuk-body">Download a CSV file of all users with permission to place orders on TechSource.</p>
 
+    <p class="govuk-body-s">Or <%= govuk_link_to 'Download TechSource users delta', computacenter_user_change_ledger_path(format: :csv) %> CSV file.</p>
+
     <h2 class="govuk-heading-m">
       <%= govuk_link_to 'Update TechSource users', computacenter_techsource_path %>
     </h2>

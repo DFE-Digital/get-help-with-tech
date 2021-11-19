@@ -9,11 +9,20 @@
     </h1>
   </div>
 </div>
-<%- item_count = @responsible_bodies.count %>
-<% if @show_download_link %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body">
+      <%= govuk_link_to 'Download all schools and bodies as a CSV file', computacenter_allocation_ledger_path(format: :csv) %>
+    </div>
+  </div>
+</div>
+
+<%- item_count = @responsible_bodies.size %>
+<% if @show_download_link %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body-s">
       <%= govuk_link_to 'Download changes as a CSV file', computacenter_responsible_body_changes_path(format: :csv) %>
     </div>
   </div>
