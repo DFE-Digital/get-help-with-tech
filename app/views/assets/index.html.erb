@@ -25,7 +25,7 @@
       <% end %>
     </p>
 
-    <%= form_with url: search_assets_path do |f| %>
+    <%= form_with url: assets_path, method: :get do |f| %>
       <%= f.govuk_text_field :serial_number,
                              label: { text: 'Enter a serial number', size: 'm' }, value: @current_serial_number_search || '' %>
 
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<% if action_name == 'index' && !current_user.is_support? %>
+<% if @current_serial_number_search.blank? && !@multiple_serial_number_search %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds govuk-!-margin-top-4">
       <p class="govuk-body">This page shows you all the devices associated with your organisation. You can also search our database for a device by entering its serial number.</p>
@@ -42,8 +42,8 @@
   </div>
 <% end %>
 
-<% if @csv_download && @assets.any? %>
-  <%= link_to "Export to CSV", assets_path(format: 'csv'), class: 'govuk-button govuk-button--secondary' %>
+<% if @assets.any? %>
+  <%= link_to "Export to CSV", assets_path(format: 'csv', serial_number: @current_serial_number_search), class: 'govuk-button govuk-button--secondary' %>
 <% end %>
 
 <table class="govuk-table">

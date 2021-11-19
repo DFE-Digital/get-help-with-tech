@@ -8,19 +8,15 @@ class AssetsController < ApplicationController
 
   # GET /assets
   def index
-    @title = 'View your device details'
-    @csv_download = true
+    if params[:serial_number].blank?
+      @title = 'View your device details'
+      @assets = policy_scope(Asset).owned_by(setting)
+    else
+      @current_serial_number_search = params[:serial_number]
+      @title = 'Search results'
+      @assets = policy_scope(Asset).search_by_serial_numbers(serial_numbers_for_user_role)
+    end
 
-    user = impersonated_or_current_user
-
-    setting = if user.responsible_body_user?
-                user.responsible_body
-              elsif user.is_school_user?
-                user.school
-              end
-
-    @assets = policy_scope(Asset).owned_by(setting)
-    assets_requiring_updated_viewed_at = @assets.select { |asset| should_update_first_viewed_at?(asset) }
     @multiple_serial_number_search = allow_multiple_serial_number_search?
 
     respond_to do |format|
@@ -28,23 +24,11 @@ class AssetsController < ApplicationController
       format.csv do
         Asset.transaction do
           send_data support_user? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
+          assets_requiring_updated_viewed_at = @assets.select { |asset| should_update_first_viewed_at?(asset) }
           policy_scope(Asset).where(id: assets_requiring_updated_viewed_at.pluck(:id)).update_all(first_viewed_at: Time.zone.now)
         end
       end
     end
-  end
-
-  # POST /assets/search
-  # renders the index template
-  def search
-    @title = 'Search results'
-    @csv_download = false
-
-    @current_serial_number_search = params[:serial_number]
-    @assets = policy_scope(Asset).search_by_serial_numbers(serial_numbers_for_user_role)
-    @multiple_serial_number_search = allow_multiple_serial_number_search?
-
-    render :index
   end
 
   # GET /assets/1
@@ -57,6 +41,16 @@ class AssetsController < ApplicationController
   end
 
 private
+
+  def setting
+    user = impersonated_or_current_user
+
+    if user.responsible_body_user?
+      user.responsible_body
+    elsif user.is_school_user?
+      user.school
+    end
+  end
 
   def set_first_viewed_at_if_should_update_first_viewed_at(asset)
     asset.update!(first_viewed_at: Time.zone.now) if should_update_first_viewed_at?(asset)
