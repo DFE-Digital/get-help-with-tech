@@ -106,7 +106,10 @@ RSpec.feature 'Ordering devices' do
   def then_i_see_the_order_for_specific_circumstances_page
     expect(page).to have_css('h1', text: 'You can order devices for specific circumstances')
     expect(page).to have_text(schools[1].name)
-    expect(page).to have_text('Order 4 devices and 0 routers for specific circumstances')
+
+    expect(page).to have_text('Devices ordered – 0')
+    expect(page).to have_text('Devices remaining – 4')
+    expect(page).to have_text('Routers are also available while in stock.')
   end
 
   def then_i_see_the_order_now_page
@@ -116,18 +119,18 @@ RSpec.feature 'Ordering devices' do
   def and_i_see_1_school_that_i_need_to_place_orders_for
     expect(page).to have_text('Schools you can place orders for')
     expect(page).to have_text("#{schools[2].name} (URN: #{schools[2].urn})")
-    expect(page).to have_text(what_to_order_availability(schools[2]))
-    expect(page).to have_text(what_to_order_state(schools[2]))
+    expect(page).to have_text('Devices ordered – 0')
+    expect(page).to have_text('Devices remaining – 7')
   end
 
   def and_i_see_2_schools_that_i_need_to_place_orders_for
     expect(page).to have_text('Schools you can place orders for')
     expect(page).to have_text("#{schools[1].name} (URN: #{schools[1].urn})")
-    expect(page).to have_text(what_to_order_availability(schools[1]))
-    expect(page).to have_text(what_to_order_state(schools[1]))
+    expect(page).to have_text('Devices ordered – 0')
+    expect(page).to have_text('Devices remaining – 7')
     expect(page).to have_text("#{schools[2].name} (URN: #{schools[2].urn})")
-    expect(page).to have_text(what_to_order_availability(schools[2]))
-    expect(page).to have_text(what_to_order_state(schools[2]))
+    expect(page).to have_text('Devices ordered – 0')
+    expect(page).to have_text('Devices remaining – 4')
   end
 
   def what_to_order_availability(school)

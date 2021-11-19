@@ -1,12 +1,12 @@
 <table id="schools" class="govuk-table">
   <caption class="govuk-table__caption">
     <span class="govuk-heading-m">Schools you can place orders for</span>
-    <p class="govuk-body">Place an order for each school.</p>
+    <p class="govuk-body">You can place an order for each school.</p>
   </caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header app-schools-table__column-40">School</th>
-      <th class="govuk-table__header">What to order</th>
+      <th class="govuk-table__header">What’s available</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -16,9 +16,11 @@
           <%= govuk_link_to("#{school.name} (URN: #{school.urn})", responsible_body_devices_school_path(school.urn)) %>
         </td>
         <td class="govuk-table__cell">
-          <%= what_to_order_availability(school) %>
+          Devices ordered – <%= school.devices_ordered(:laptop) %>
+          <br />
+          Devices remaining – <%= school.devices_available_to_order(:laptop) %>
           <span class="govuk-caption-m">
-            <%= what_to_order_state(school) %>
+            Routers are also available while in stock.
           </span>
         </td>
       </tr>
