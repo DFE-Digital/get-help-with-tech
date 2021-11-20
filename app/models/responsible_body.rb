@@ -229,7 +229,7 @@ class ResponsibleBody < ApplicationRecord
 
   def over_order_reclaimed(device_type)
     field = laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
-    vcap_schools.where.not(order_state: :cannot_order).sum(field)
+    vcap_schools.sum(field)
   end
 
   def schools_will_order_devices_by_default?
@@ -261,6 +261,12 @@ class ResponsibleBody < ApplicationRecord
   def vcap_and_centrally_managed_schools?
     vcap? && has_centrally_managed_schools?
   end
+
+  def vcap_schools_that_can_lend_cap(device_type)
+    vcap_schools.that_can_order_now.with_available_cap(device_type)
+  end
+
+  delegate :with_over_order_reclaimed_cap, to: :vcap_schools, prefix: true
 
   def vcap_schools
     return School.none unless vcap?
