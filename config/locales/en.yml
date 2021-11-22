@@ -300,6 +300,9 @@ en:
       title: Who owns the devices
       description: Guidance on who owns devices, asset management and loan agreements.
       guidance_section: before_you_order_pages
+    operation_warm_welcome:
+      title: Devices for children arriving under Operation Warm Welcome
+      guidance_section: before_you_order_pages
 
     replace_a_faulty_device:
       title: Replace faulty devices
