@@ -28,7 +28,7 @@ private
   end
 
   def available_caps_in_the_vcap_pool
-    responsible_body.vcap_schools.with_available_cap(device_type).to_a
+    responsible_body.vcap_schools_that_can_lend_cap(device_type)
   end
 
   def reclaim_cap_from_vcap_pool_member(member, quantity: 0)

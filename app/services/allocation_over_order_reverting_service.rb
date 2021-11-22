@@ -9,7 +9,7 @@ class AllocationOverOrderRevertingService
 
   def call
     ResponsibleBody.transaction do
-      failed_to_give_back = stolen_caps_in_the_vcap_pool.inject(returned) do |quantity, member|
+      failed_to_give_back = reclaimed_caps_in_the_vcap_pool.inject(returned) do |quantity, member|
         quantity -= give_cap_back_to_vcap_pool_member(member, quantity: quantity)
         quantity.negative? ? quantity : break
       end
@@ -30,8 +30,10 @@ private
     end
   end
 
-  def stolen_caps_in_the_vcap_pool
-    responsible_body.vcap_schools.with_over_order_stolen_cap(device_type)
+  def reclaimed_caps_in_the_vcap_pool
+    responsible_body
+      .vcap_schools_with_over_order_reclaimed_cap(device_type)
+      .order(Arel.sql("order_state = 'cannot_order' DESC"))
   end
 
   def give_cap_back_to_vcap_pool_member(member, quantity: 0)

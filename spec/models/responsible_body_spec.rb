@@ -450,6 +450,159 @@ RSpec.describe ResponsibleBody, type: :model do
         expect(school_c.raw_laptops_full).to eq([20, 0, 0, 0])
       end
     end
+
+    context 'case 4' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_c) { create(:school, :centrally_managed, responsible_body: rb, laptops: [10, 0, 20, 30]) }
+
+      it 'do not touch over-ordered distribution when there is no room for redistribution' do
+        expect(school_a.raw_laptops).to eq([10, 10, 0])
+        expect(school_b.raw_laptops).to eq([10, 10, 0])
+        expect(school_c.raw_laptops).to eq([10, 30, 30])
+        expect(rb.laptops).to eq([0, 0, 0])
+
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([30, 30, 30])
+        expect(school_a.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_b.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_c.reload.raw_laptops).to eq([10, 30, 30])
+        expect(school_a.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_c.raw_laptops_full).to eq([10, 0, 20, 30])
+      end
+    end
+
+    context 'case 5' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let(:alert) { 'Unable to reclaim all of the cap in the vcap to cover the over-order' }
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_b) { create(:school, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_c) { create(:school, :centrally_managed, responsible_body: rb, laptops: [10, 0, 20, 30]) }
+
+      before do
+        allow(Sentry).to receive(:capture_message)
+      end
+
+      it 'recomputes vcap and balances cap. vcap schools that cannot order never lend cap' do
+        expect(school_a.raw_laptops).to eq([10, 10, 0])
+        expect(school_b.raw_laptops).to eq([10, 0, 0])
+        expect(school_c.raw_laptops).to eq([10, 30, 30])
+        expect(rb.laptops).to eq([0, 0, 0])
+
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([30, 30, 30])
+        expect(school_a.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_b.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_c.reload.raw_laptops).to eq([10, 30, 30])
+        expect(school_a.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.raw_laptops_full).to eq([10, 0, 0, 0])
+        expect(school_c.raw_laptops_full).to eq([10, 0, 20, 30])
+        expect(Sentry).to have_received(:capture_message).with(alert)
+      end
+    end
+
+    context 'case 6' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_c) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 20, 30]) }
+
+      before do
+        allow(Sentry).to receive(:capture_message)
+        rb.calculate_laptop_vcap
+      end
+
+      it 'do not touch over-ordered distribution when there is no room for redistribution' do
+        expect(school_a.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_c.reload.raw_laptops_full).to eq([10, 0, 20, 30])
+        expect(rb.laptops).to eq([30, 30, 30])
+
+        school_c.cannot_order!
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([30, 30, 30])
+        expect(school_a.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_b.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_c.reload.raw_laptops).to eq([10, 30, 30])
+        expect(school_a.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_c.raw_laptops_full).to eq([10, 0, 20, 30])
+        expect(Sentry).not_to have_received(:capture_message)
+      end
+    end
+
+    context 'case 7' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 0, 0]) }
+      let!(:school_c) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 20, 30]) }
+
+      before do
+        allow(Sentry).to receive(:capture_message)
+        rb.calculate_laptop_vcap
+      end
+
+      it 'do not touch over-ordered distribution when there is no room for redistribution' do
+        expect(school_a.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_c.reload.raw_laptops_full).to eq([10, 0, 20, 30])
+        expect(rb.laptops).to eq([30, 30, 30])
+
+        school_b.cannot_order!
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([30, 30, 30])
+        expect(school_a.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_b.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_c.reload.raw_laptops).to eq([10, 30, 30])
+        expect(school_a.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_c.raw_laptops_full).to eq([10, 0, 20, 30])
+        expect(Sentry).not_to have_received(:capture_message)
+      end
+    end
+
+    context 'case 8' do
+      subject(:rb) { create(:trust, :manages_centrally, :vcap) }
+
+      let!(:school_a) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, -10, 0]) }
+      let!(:school_b) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, -10, 0]) }
+      let!(:school_c) { create(:school, :in_lockdown, :centrally_managed, responsible_body: rb, laptops: [10, 0, 20, 30]) }
+
+      before do
+        allow(Sentry).to receive(:capture_message)
+        rb.calculate_laptop_vcap
+      end
+
+      it 'redistribute over-ordered cap so that schools that cannot order get their lent cap asap' do
+        expect(school_a.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.reload.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_c.reload.raw_laptops_full).to eq([10, 0, 20, 30])
+        expect(rb.laptops).to eq([30, 30, 30])
+
+        school_b.cannot_order!
+        school_c.update!(raw_laptops_ordered: 20, over_order_reclaimed_laptops: 10)
+        rb.calculate_laptop_vcap
+
+        expect(rb.reload.laptops).to eq([30, 20, 20])
+        expect(school_a.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_b.reload.raw_laptops).to eq([10, 0, 0])
+        expect(school_c.reload.raw_laptops).to eq([10, 20, 20])
+        expect(school_a.raw_laptops_full).to eq([10, 0, -10, 0])
+        expect(school_b.raw_laptops_full).to eq([10, 0, 0, 0])
+        expect(school_c.raw_laptops_full).to eq([10, 0, 10, 20])
+        expect(Sentry).not_to have_received(:capture_message)
+      end
+    end
   end
 
   describe '#calculate_vcaps!' do
