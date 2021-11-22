@@ -330,7 +330,9 @@ private
   end
 
   def update_cap_on_computacenter(device_type, notify_computacenter: false, notify_school: false)
-    schools = vcap_schools.map { |school| school.tap(&:refresh_preorder_status!) }
+    schools = vcap_schools
+                .map { |school| school.tap(&:refresh_preorder_status!) }
+                .reject(&:cannot_order?)
 
     CapUpdateNotificationsService.new(*schools,
                                       device_types: [device_type],
