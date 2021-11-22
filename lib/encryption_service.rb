@@ -4,7 +4,7 @@ class EncryptionService
   # * GHWT__DATABASE_FIELD_ENCRYPTION__KEY
   # * GHWT__DATABASE_FIELD_ENCRYPTION__SALT
   #
-  # with `SecureRandom.hex(12)` or suchlike
+  # with `SecureRandom.hex(24)` or suchlike
 
   def initialize
     @key = ActiveSupport::KeyGenerator.new(

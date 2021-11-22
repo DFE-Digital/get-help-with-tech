@@ -173,7 +173,7 @@ RSpec.describe ViewHelper do
 
     context 'when the device is bios unlockable' do
       let(:asset) { create(:asset, :unlockable) }
-      let(:unlocker_link) { '<a class="govuk-link" href="/assets/1/bios_unlocker">Download BIOS unlocker</a>' }
+      let(:unlocker_link) { "<a class=\"govuk-link\" href=\"/assets/#{asset.to_param}/bios_unlocker\">Download BIOS unlocker</a>" }
 
       it 'return a link to download the unlocker' do
         expect(result).to eq(unlocker_link)
