@@ -14,9 +14,7 @@ National Cyber Security Centre.
 ## Getting a Google domain
 
 If you do not have a Google domain, we recommend you set one up before placing your
-order for Chromebooks. Schools can set up a Google Domain and get access to Google
-for Education by 
-[applying for government-funded support](/digital-platforms).
+order for Chromebooks.
 
 For Chromebooks linked to schools, local authorities should use the school&rsquo;s domain so 
 that children can access their remote education as well as social care. If the Chromebook

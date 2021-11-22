@@ -173,11 +173,6 @@ installed, but users will be able to use Microsoft 365 online if their school ha
 subscription. A child or young person not in school (such as a care leaver) can make use
 of their own preferred online system.
 
-Schools can 
-[apply for government funding to get set up on Microsoft 365 Education](/digital-platforms). 
-Microsoft 365 Education includes Microsoft Word, Excel and Powerpoint as well as many 
-mobile device management features.
-
 A Chrome Education Upgrade is offered with every Google Chromebook.
 
 ### Pre-issued devices
