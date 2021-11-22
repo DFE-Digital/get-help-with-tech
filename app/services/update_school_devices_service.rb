@@ -37,7 +37,7 @@ class UpdateSchoolDevicesService
       update_router_allocations! if ordering?(:router)
       school.calculate_vcap(:router) if recalculate_device_vcap?(:router)
       school.refresh_preorder_status!
-      notify_other_agents if notify_computacenter && !vcaps?
+      notify_other_agents if notify_other_agents?
       true
     end
   end
@@ -56,6 +56,10 @@ private
 
   def notify_device?(device_type)
     ordering?(device_type) && initial_raw_cap(device_type) != school.raw_cap(device_type)
+  end
+
+  def notify_other_agents?
+    notify_computacenter && (school.cannot_order? || !vcaps?)
   end
 
   def notify_other_agents

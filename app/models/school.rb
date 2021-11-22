@@ -184,7 +184,7 @@ class School < ApplicationRecord
   end
 
   def computacenter_cap(device_type)
-    return cap(device_type) unless vcap?
+    return raw_cap(device_type) if cannot_order? || !vcap?
 
     vcap_cap(device_type) - vcap_devices_ordered(device_type) + raw_devices_ordered(device_type)
   end
