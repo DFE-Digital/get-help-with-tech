@@ -13,7 +13,7 @@
                               label: { text: t(:yes, scope: scope) } do %>
       <%= f.govuk_text_field  :school_or_rb_domain,
                               label: { text: chromebook_domain_label(local_assigns[:form_object].school), size: 's' },
-                              hint: { text: "For example, ‘school.co.uk’" } %>
+                              hint: { text: "You can enter more than one domain if you need to. Our delivery partner will contact you to confirm details of multiple domains and how many devices relate to each one." } %>
       <%= f.govuk_text_field  :recovery_email_address,
                               label: { text: "Recovery email address", size: 's' },
                               hint: { text: "This email will be on a different domain to the school domain, for example a Gmail or Yahoo email account." } %>

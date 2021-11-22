@@ -115,13 +115,7 @@ RSpec.describe ViewHelper do
     let(:school) { build(:school, :la_maintained) }
     let(:result) { helper.chromebook_domain_label(school) }
 
-    it 'starts with the capitalized institution_type' do
-      expect(result).to start_with('School')
-    end
-
-    it 'ends with email domain registered for <span class="app-no-wrap">G Suite for Education</span>' do
-      expect(result).to end_with('email domain registered for <span class="app-no-wrap">G Suite for Education</span>')
-    end
+    specify { expect(result).to eq('School or local authority email domain registered for <span class="app-no-wrap">G Suite for Education</span> (for example, &lsquo;school.co.uk&rsquo;)') }
 
     context 'when the school is not a FurtherEducationSchool' do
       context 'and the responsible body is a local authority' do
