@@ -6,17 +6,28 @@ RSpec.describe Computacenter::TechSourceMaintenanceBannerComponent, type: :compo
   subject(:banner) { described_class.new(techsource) }
 
   describe '#message' do
-    context 'within window' do
+    subject { banner.message }
+
+    context 'during warning period' do
       before do
-        Timecop.travel(Time.zone.parse('4 Jan 2021 15:00'))
+        Timecop.travel(Time.zone.parse('4 Jan 2021 08:59'))
         create(:supplier_outage, start_at: Time.zone.parse('4 Jan 2021 09:00'), end_at: Time.zone.parse('4 Jan 2021 22:00'))
       end
 
-      specify { expect(banner.message).to eq('The TechSource website will be closed for maintenance on <span class="app-no-wrap">Monday 4 January 09:00am.</span> You can order devices when it reopens on <span class="app-no-wrap">Monday 4 January 10:00pm.</span>') }
+      it { is_expected.to eq('The TechSource website will be closed for maintenance on <span class="app-no-wrap">Monday 4 January 09:00am.</span> You can order devices when it reopens on <span class="app-no-wrap">Monday 4 January 10:00pm.</span>') }
+    end
+
+    context 'within window' do
+      before do
+        Timecop.travel(Time.zone.parse('4 Jan 2021 09:01'))
+        create(:supplier_outage, start_at: Time.zone.parse('4 Jan 2021 09:00'), end_at: Time.zone.parse('4 Jan 2021 22:00'))
+      end
+
+      it { is_expected.to eq('The TechSource website will be closed for maintenance on <span class="app-no-wrap">Monday 4 January 09:00am.</span> You can order devices when it reopens on <span class="app-no-wrap">Monday 4 January 10:00pm.</span>') }
     end
   end
 
-  describe '#render?' do
+  describe 'rendering' do
     before do
       Timecop.travel(Time.zone.parse('4 Jan 2021 08:00'))
       create(:supplier_outage, start_at: Time.zone.parse('4 Jan 2021 09:00'), end_at: Time.zone.parse('4 Jan 2021 10:00'))
