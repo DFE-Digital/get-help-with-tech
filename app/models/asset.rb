@@ -70,6 +70,10 @@ class Asset < ApplicationRecord
     end
   end
 
+  def to_param
+    "#{id}-#{SlugChecksumService.checksum(id)}"
+  end
+
   secure_attr_accessor :bios_password, :admin_password, :hardware_hash
 
   scope :owned_by, lambda { |setting|

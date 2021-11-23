@@ -187,7 +187,7 @@ RSpec.describe AssetsController do
       let(:asset) { create(:asset) }
 
       it 'redirects to log in' do
-        get :show, params: { id: asset.id }
+        get :show, params: { uid: asset.to_param }
         expect(response).to redirect_to(sign_in_path)
       end
     end
@@ -206,7 +206,7 @@ RSpec.describe AssetsController do
           expect(asset.first_viewed_at).to be_nil
 
           Timecop.freeze(first_view_timestamp) do
-            get :show, params: { id: asset.id }
+            get :show, params: { uid: asset.to_param }
             asset.reload
 
             expect(asset).to be_viewed
@@ -230,7 +230,7 @@ RSpec.describe AssetsController do
           expect(asset.first_viewed_at).to be_nil
 
           Timecop.freeze(first_view_timestamp) do
-            get :show, params: { id: asset.id }
+            get :show, params: { uid: asset.to_param }
             asset.reload
 
             expect(asset).not_to be_viewed
@@ -246,7 +246,7 @@ RSpec.describe AssetsController do
 
       it 'keeps the time of the first view' do
         Timecop.freeze(second_view_timestamp) do
-          get :show, params: { id: asset.id }
+          get :show, params: { uid: asset.to_param }
 
           expect(asset.first_viewed_at).to eq(first_view_timestamp)
           expect(asset.first_viewed_at).not_to eq(second_view_timestamp)
@@ -257,7 +257,7 @@ RSpec.describe AssetsController do
 
   describe '#bios_unlocker' do
     context 'non signed-in user' do
-      before { get :bios_unlocker, params: { id: 1 } }
+      before { get :bios_unlocker, params: { uid: '1-123' } }
 
       specify { expect(response).to redirect_to(sign_in_path) }
     end
@@ -268,7 +268,7 @@ RSpec.describe AssetsController do
 
       before do
         sign_in_as user
-        get :bios_unlocker, params: { id: asset.id }
+        get :bios_unlocker, params: { uid: asset.to_param }
       end
 
       specify { expect(response).to be_successful }

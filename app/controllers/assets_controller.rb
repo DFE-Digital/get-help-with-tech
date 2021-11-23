@@ -86,6 +86,7 @@ private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_asset
-    @asset = policy_scope(Asset).find(params[:id])
+    id = SlugChecksumService.verify_uid(params[:uid])
+    @asset = policy_scope(Asset).find(id)
   end
 end
