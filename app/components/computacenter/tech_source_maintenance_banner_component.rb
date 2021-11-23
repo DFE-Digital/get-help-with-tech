@@ -6,19 +6,20 @@ class Computacenter::TechSourceMaintenanceBannerComponent < ViewComponent::Base
   end
 
   def message
-    supplier_outage = @techsource.current_supplier_outage
+    supplier_outage = supplier_outage_to_warn_about
 
-    if supplier_outage
-      "The TechSource website will be closed for maintenance on <span class=\"app-no-wrap\">#{supplier_outage.start_at.strftime(DATE_TIME_FORMAT)}.</span> You can order devices when it reopens on <span class=\"app-no-wrap\">#{supplier_outage.end_at.strftime(DATE_TIME_FORMAT)}.</span>".html_safe
-    end
+    "The TechSource website will be closed for maintenance on <span class=\"app-no-wrap\">#{supplier_outage.start_at.strftime(DATE_TIME_FORMAT)}.</span> You can order devices when it reopens on <span class=\"app-no-wrap\">#{supplier_outage.end_at.strftime(DATE_TIME_FORMAT)}.</span>".html_safe
   end
 
   def render?
-    banner_periods = @techsource.supplier_outages.collect { |supplier_outage| banner_period(supplier_outage) }
-    banner_periods.any? { |banner_period| banner_period.cover? current_time }
+    supplier_outage_to_warn_about.present?
   end
 
 private
+
+  def supplier_outage_to_warn_about
+    @techsource.supplier_outages.detect { |supplier_outage| banner_period(supplier_outage).cover? current_time }
+  end
 
   def banner_period(supplier_outage)
     period_from_start_of_two_days_before_supplier_outage_to_end_of_supplier_outage(supplier_outage)
