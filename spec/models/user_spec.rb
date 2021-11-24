@@ -1154,6 +1154,40 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#schools_sold_tos' do
+    it 'includes the sold_to of school that the user belongs to' do
+      user = create(:school_user)
+
+      expect(user.schools_sold_tos.size).to eq(1)
+      expect(user.schools_sold_tos).to include(*user.schools.map(&:sold_to).uniq)
+    end
+  end
+
+  describe '#sold_tos' do
+    let(:user) { create(:school_user) }
+    let(:rb) { create(:local_authority) }
+
+    before do
+      user.responsible_body = rb
+      user.save!
+    end
+
+    it 'includes the sold_tos of schools and rb that the user belongs to' do
+      expect(user.sold_tos.size).to eq(2)
+      expect(user.sold_tos).to include(*user.schools.map(&:sold_to).uniq)
+      expect(user.sold_tos).to include(user.responsible_body.sold_to)
+    end
+  end
+
+  describe '#schools_ship_tos' do
+    it 'includes the computacenter_reference of school the user belongs to' do
+      user = create(:school_user)
+
+      expect(user.ship_tos.size).to eq(1)
+      expect(user.ship_tos).to include(*user.schools.pluck(:computacenter_reference))
+    end
+  end
+
   describe '.search_by_email_address_or_full_name' do
     def user_search(search_string)
       User.search_by_email_address_or_full_name(search_string)
