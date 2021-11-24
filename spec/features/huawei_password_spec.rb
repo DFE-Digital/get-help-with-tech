@@ -35,7 +35,6 @@ RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 J
   scenario 'responsible body user' do
     SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
 
-    AddSchoolToVirtualCapPoolService.new(school).call
     trust.reload
 
     sign_in_as rb_user

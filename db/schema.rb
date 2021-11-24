@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_090552) do
+ActiveRecord::Schema.define(version: 2021_11_24_114339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
   end
 
   create_table "cap_changes", force: :cascade do |t|
-    t.bigint "school_device_allocation_id"
     t.string "category"
     t.integer "prev_cap", default: 0, null: false
     t.integer "new_cap", default: 0, null: false
@@ -105,11 +104,9 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
     t.bigint "school_id"
     t.string "device_type", default: "laptop", null: false
     t.index ["category"], name: "index_cap_changes_on_category"
-    t.index ["school_device_allocation_id"], name: "index_cap_changes_on_school_device_allocation_id"
   end
 
   create_table "cap_update_calls", force: :cascade do |t|
-    t.bigint "school_device_allocation_id"
     t.text "request_body"
     t.text "response_body"
     t.datetime "created_at", precision: 6, null: false
@@ -117,7 +114,6 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
     t.boolean "failure", default: false
     t.bigint "school_id"
     t.string "device_type", default: "laptop", null: false
-    t.index ["school_device_allocation_id"], name: "index_cap_update_calls_on_school_device_allocation_id"
   end
 
   create_table "computacenter_cap_usage_update_payloads", force: :cascade do |t|
@@ -348,26 +344,6 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
     t.index ["school_id"], name: "index_school_contacts_on_school_id"
   end
 
-  create_table "school_device_allocations", force: :cascade do |t|
-    t.bigint "school_id"
-    t.string "device_type", null: false
-    t.integer "allocation", default: 0
-    t.integer "devices_ordered", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "last_updated_by_user_id"
-    t.bigint "created_by_user_id"
-    t.integer "cap", default: 0, null: false
-    t.datetime "cap_update_request_timestamp"
-    t.string "cap_update_request_payload_id"
-    t.index ["cap"], name: "index_school_device_allocations_on_cap"
-    t.index ["cap_update_request_payload_id"], name: "ix_allocations_cap_update_payload_id"
-    t.index ["cap_update_request_timestamp"], name: "ix_allocations_cap_update_timestamp"
-    t.index ["created_by_user_id"], name: "index_school_device_allocations_on_created_by_user_id"
-    t.index ["last_updated_by_user_id"], name: "index_school_device_allocations_on_last_updated_by_user_id"
-    t.index ["school_id"], name: "index_school_device_allocations_on_school_id"
-  end
-
   create_table "school_links", force: :cascade do |t|
     t.bigint "school_id"
     t.text "link_type", null: false
@@ -375,15 +351,6 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_id"], name: "index_school_links_on_school_id"
-  end
-
-  create_table "school_virtual_caps", force: :cascade do |t|
-    t.bigint "virtual_cap_pool_id"
-    t.bigint "school_device_allocation_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["school_device_allocation_id"], name: "index_school_virtual_caps_on_school_device_allocation_id"
-    t.index ["virtual_cap_pool_id"], name: "index_school_virtual_caps_on_virtual_cap_pool_id"
   end
 
   create_table "school_welcome_wizards", force: :cascade do |t|
@@ -439,12 +406,10 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
     t.datetime "school_contacted_at"
     t.string "who_will_order_devices"
     t.integer "raw_laptop_allocation", default: 0, null: false
-    t.integer "raw_laptop_cap", default: 0, null: false
     t.integer "raw_laptops_ordered", default: 0, null: false
     t.datetime "laptop_cap_update_request_timestamp"
     t.string "laptop_cap_update_request_payload_id"
     t.integer "raw_router_allocation", default: 0, null: false
-    t.integer "raw_router_cap", default: 0, null: false
     t.integer "raw_routers_ordered", default: 0, null: false
     t.datetime "router_cap_update_request_timestamp"
     t.string "router_cap_update_request_payload_id"
@@ -598,31 +563,14 @@ ActiveRecord::Schema.define(version: 2021_11_16_090552) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  create_table "virtual_cap_pools", force: :cascade do |t|
-    t.string "device_type", null: false
-    t.bigint "responsible_body_id", null: false
-    t.integer "cap", default: 0, null: false
-    t.integer "devices_ordered", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "allocation", default: 0, null: false
-    t.index ["device_type", "responsible_body_id"], name: "index_virtual_cap_pools_on_device_type_and_responsible_body_id", unique: true
-    t.index ["responsible_body_id"], name: "index_virtual_cap_pools_on_responsible_body_id"
-  end
-
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
-  add_foreign_key "cap_changes", "school_device_allocations"
   add_foreign_key "computacenter_devices_ordered_updates", "computacenter_cap_usage_update_payloads", column: "cap_usage_update_payload_id"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "schools"
   add_foreign_key "preorder_information", "school_contacts"
   add_foreign_key "responsible_bodies", "users", column: "key_contact_id"
-  add_foreign_key "school_device_allocations", "schools"
-  add_foreign_key "school_virtual_caps", "school_device_allocations"
-  add_foreign_key "school_virtual_caps", "virtual_cap_pools"
   add_foreign_key "school_welcome_wizards", "users", column: "invited_user_id"
   add_foreign_key "schools", "responsible_bodies"
   add_foreign_key "support_tickets", "users"
-  add_foreign_key "virtual_cap_pools", "responsible_bodies"
 end
