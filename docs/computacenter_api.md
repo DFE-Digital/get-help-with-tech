@@ -90,7 +90,7 @@ Example:
 Given this XML packet in the body -
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+<CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
   <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
   <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100"/>
   <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060875" capAmount="300" usedCap="57"/>
@@ -114,7 +114,7 @@ If all `Record`s are processed successfully:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<CapUsageResponse payloadId="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-08-14T16:47:12Z">
+<CapUsageResponse payloadId="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-08-14T16:47:12Z">
   <HeaderResult status="succeeded">
     <FailedRecords />
   </HeaderResult>
@@ -133,7 +133,7 @@ If all `Record`s fail:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<CapUsageResponse payloadId="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-08-14T16:47:12Z">
+<CapUsageResponse payloadId="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-08-14T16:47:12Z">
   <HeaderResult status="partially_failed">
     <FailedRecords>
       <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100" status="failed" errorDetails="Couldn't find SchoolDeviceAllocation"/>
@@ -156,7 +156,7 @@ If some, but not all, `Record`s fail:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<CapUsageResponse payloadId="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-08-14T16:47:12Z">
+<CapUsageResponse payloadId="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-08-14T16:47:12Z">
   <HeaderResult status="partially_failed">
     <FailedRecords>
       <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100" status="failed" errorDetails="Couldn't find SchoolDeviceAllocation"/>
