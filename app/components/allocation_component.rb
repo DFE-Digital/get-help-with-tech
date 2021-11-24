@@ -19,7 +19,7 @@ class AllocationComponent < ViewComponent::Base
   end
 
   def ordered_sentence
-    "You&rsquo;ve received #{@devices_ordered} #{'device'.pluralize(@devices_ordered)} and #{@routers_ordered} #{'router'.pluralize(@routers_ordered)} in academic year 2021/22".html_safe
+    "You&rsquo;ve ordered #{@devices_ordered} #{'device'.pluralize(@devices_ordered)} and #{@routers_ordered} #{'router'.pluralize(@routers_ordered)} in academic year 2021/22".html_safe
   end
 
 private
