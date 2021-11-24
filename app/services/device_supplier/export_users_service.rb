@@ -81,10 +81,6 @@ module DeviceSupplier
       device_supplier_user_updated_at_timestamp(user)&.iso8601
     end
 
-    def rb_sold_to(user)
-      user.rb.sold_to
-    end
-
     def update_progress
       @progress_percentage += @per_user_percentage
       @count += 1
@@ -92,15 +88,15 @@ module DeviceSupplier
     end
 
     def user_default_sold_to_text(user)
-      return rb_sold_to(user) if user.responsible_body.present?
+      return user.rb.sold_to if user.rb.present?
 
-      return user_schools_sold_tos(user).first.to_s if user_schools_sold_tos(user).size == 1
+      return user.schools_sold_tos.first.to_s if user.schools_sold_tos.one?
 
       user_most_recently_used_sold_to(user)
     end
 
     def user_most_recently_used_ship_to(user)
-      Computacenter::DevicesOrderedUpdate.where(ship_to: user_ship_tos(user)).order(created_at: :desc).limit(1).first
+      Computacenter::DevicesOrderedUpdate.where(ship_to: user.ship_tos).order(created_at: :desc).limit(1).first
     end
 
     def user_most_recently_used_sold_to(user)
@@ -113,18 +109,8 @@ module DeviceSupplier
       school.sold_to
     end
 
-    def user_schools_sold_tos(user)
-      user.schools.map(&:responsible_body).uniq.map(&:computacenter_reference).compact
-    end
-
-    def user_ship_tos(user)
-      user.schools.pluck(:computacenter_reference).compact
-    end
-
     def user_sold_tos_text(user)
-      return rb_sold_to(user) if user.responsible_body.present?
-
-      user_schools_sold_tos(user)&.join('|') if user_schools_sold_tos(user).size.positive?
+      user.sold_tos.join('|')
     end
   end
 end

@@ -193,6 +193,18 @@ class User < ApplicationRecord
     user_schools.size == 1 && (responsible_body&.single_academy_trust? || responsible_body&.further_education_college?) && school.responsible_body_id == responsible_body.id
   end
 
+  def schools_sold_tos
+    schools.map(&:responsible_body).uniq.map(&:computacenter_reference).compact
+  end
+
+  def sold_tos
+    ([rb&.sold_to] + schools_sold_tos).flatten.compact.uniq
+  end
+
+  def ship_tos
+    schools.pluck(:computacenter_reference).compact
+  end
+
   # Wrapper methods to ease the transition from 'user belongs_to school',
   # to 'user has_many schools'
   def school

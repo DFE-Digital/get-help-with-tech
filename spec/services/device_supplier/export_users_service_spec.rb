@@ -7,7 +7,7 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
     let(:csv) { CSV.read(filename, headers: true) }
     let(:user_csv_row) { csv[0] }
     let(:service_call) { service.call }
-    let(:sold_to) { user.school.responsible_body_computacenter_reference }
+    let(:sold_to) { user.school.sold_to }
 
     after do
       remove_file(filename)
@@ -15,9 +15,9 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
 
     subject(:service) { described_class.new(filename) }
 
-    before do
+    before do |test|
       user
-      service_call
+      service_call unless test.metadata[:delayed_service_call]
     end
 
     context 'when given a filename' do
@@ -63,14 +63,35 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
 
     context 'when the devices are centrally managed' do
       let(:user) { create(:local_authority_user, :relevant_to_computacenter, :with_a_confirmed_techsource_account) }
-      let(:sold_to) { user.responsible_body.computacenter_reference }
+      let(:sold_to) { user.responsible_body.sold_to }
 
-      it 'displays "school" in the "who_orders" column' do
+      it 'includes the sold_to in the csv' do
         expect(user_csv_row['sold_to']).to eq(sold_to)
       end
 
-      it 'has a ship_to value equal to the school computacenter_refernce' do
+      it 'has a default_sold_to value equal to the rb sold_to' do
         expect(user_csv_row['default_sold_to']).to eq(sold_to)
+      end
+    end
+
+    context 'when the user is associated with an rb and a further education college', :delayed_service_call do
+      let(:user) { create(:fe_college_user, :relevant_to_computacenter, :with_a_confirmed_techsource_account) }
+      let(:rb) { create(:local_authority) }
+      let(:sold_to) { user.sold_tos.join('|') }
+      let(:default_sold_to) { user.responsible_body.sold_to }
+
+      before do
+        user.responsible_body = rb
+        user.save!
+        service_call
+      end
+
+      it 'includes the sold_to in the csv' do
+        expect(user_csv_row['sold_to']).to eq(sold_to)
+      end
+
+      it 'has a default_sold_to value equal to the rb sold_to' do
+        expect(user_csv_row['default_sold_to']).to eq(default_sold_to)
       end
     end
   end
