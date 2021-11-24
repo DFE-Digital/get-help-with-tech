@@ -30,20 +30,20 @@ RSpec.describe AllocationComponent, type: :component do
     context 'both zero' do
       subject(:component) { described_class.new(organisation: nil, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0) }
 
-      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve received 0 devices and 0 routers in academic year 2021/22') }
+      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve ordered 0 devices and 0 routers in academic year 2021/22') }
       specify { expect(component.ordered_sentence).to be_html_safe }
     end
 
     context 'both one' do
       subject { described_class.new(organisation: nil, devices_ordered: 1, routers_ordered: 1, devices_allocation: 1) }
 
-      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve received 1 device and 1 router in academic year 2021/22') }
+      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve ordered 1 device and 1 router in academic year 2021/22') }
     end
 
     context 'both two' do
       subject { described_class.new(organisation: nil, devices_ordered: 2, routers_ordered: 2, devices_allocation: 2) }
 
-      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve received 2 devices and 2 routers in academic year 2021/22') }
+      it { is_expected.to have_attributes(ordered_sentence: 'You&rsquo;ve ordered 2 devices and 2 routers in academic year 2021/22') }
     end
   end
 

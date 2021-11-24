@@ -168,6 +168,6 @@ RSpec.feature 'Ordering for LA-funded devices', type: :feature do
 
   def then_i_see_i_have_no_laptops_remaining
     expect(page).to have_selector('h1', text: 'You’ve ordered all the devices you were allocated')
-    expect(page).to have_text('You’ve received 50 devices')
+    expect(page).to have_text('You’ve ordered 50 devices')
   end
 end
