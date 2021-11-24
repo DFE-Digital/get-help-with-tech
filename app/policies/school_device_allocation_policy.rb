@@ -1,2 +1,0 @@
-class SchoolDeviceAllocationPolicy < SupportPolicy
-end

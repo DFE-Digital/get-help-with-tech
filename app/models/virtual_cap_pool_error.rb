@@ -1,1 +1,0 @@
-class VirtualCapPoolError < StandardError; end

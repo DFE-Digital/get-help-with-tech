@@ -1,25 +1,12 @@
 require 'computacenter/responsible_body_urns'
 
 class ResponsibleBody < ApplicationRecord
-  alias_attribute :sold_to, :computacenter_reference
-
-  DEVICE_TYPES = %i[laptop router].freeze
-
-  has_one :bt_wifi_voucher_allocation
-  belongs_to :key_contact, class_name: 'User', optional: true
-  has_many :bt_wifi_vouchers
-  has_many :users
-  has_many :extra_mobile_data_requests
-  has_many :schools, inverse_of: :responsible_body
-
-  has_many :donated_device_requests, dependent: :destroy
-
-  scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
-
   extend Computacenter::ResponsibleBodyUrns::ClassMethods
   include Computacenter::ResponsibleBodyUrns::InstanceMethods
 
-  before_create :set_computacenter_change
+  DEVICE_TYPES = %i[laptop router].freeze
+
+  alias_attribute :sold_to, :computacenter_reference
 
   enum status: {
     open: 'open',
@@ -33,7 +20,22 @@ class ResponsibleBody < ApplicationRecord
     closed: 'closed',
   }, _prefix: true
 
+  # Associations
+  has_one :bt_wifi_voucher_allocation
+  belongs_to :key_contact, class_name: 'User', optional: true
+  has_many :bt_wifi_vouchers
+  has_many :users
+  has_many :extra_mobile_data_requests
+  has_many :schools, inverse_of: :responsible_body
+  has_many :donated_device_requests, dependent: :destroy
+
+  # Callbacks
+  before_create :set_computacenter_change
   after_update :maybe_generate_user_changes
+
+  # Scopes
+  scope :excluding_department_for_education, -> { where.not(type: 'DfE') }
+  scope :vcap, -> { where(vcap: true) }
 
   def self.managing_multiple_chromebook_domains
     where(
@@ -227,9 +229,11 @@ class ResponsibleBody < ApplicationRecord
       .first
   end
 
-  def over_order_reclaimed(device_type)
-    field = laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
-    vcap_schools.sum(field)
+  def over_ordered?(device_type)
+    return false unless vcap?
+    return true if devices_ordered(device_type) > allocation(device_type)
+
+    over_order_reclaimed(device_type) != 0
   end
 
   def schools_will_order_devices_by_default?
@@ -266,8 +270,6 @@ class ResponsibleBody < ApplicationRecord
     vcap_schools.that_can_order_now.with_available_cap(device_type)
   end
 
-  delegate :with_over_order_reclaimed_cap, to: :vcap_schools, prefix: true
-
   def vcap_schools
     return School.none unless vcap?
 
@@ -277,6 +279,8 @@ class ResponsibleBody < ApplicationRecord
       schools.excluding_la_funded_provisions.responsible_body_will_order_devices
     end
   end
+
+  delegate :with_over_order_reclaimed_cap, to: :vcap_schools, prefix: true
 
   def who_manages_orders_label
     case default_who_will_order_devices_for_schools
@@ -323,6 +327,11 @@ private
 
   def maybe_generate_user_changes
     users.each(&:generate_user_change_if_needed!)
+  end
+
+  def over_order_reclaimed(device_type)
+    field = laptop?(device_type) ? :over_order_reclaimed_laptops : :over_order_reclaimed_routers
+    vcap_schools.sum(field)
   end
 
   def set_computacenter_change

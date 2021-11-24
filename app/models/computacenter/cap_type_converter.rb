@@ -1,5 +1,4 @@
 class Computacenter::CapTypeConverter
-  # computacenter cap type => SchoolDeviceAllocation.device_type
   CAP_TYPES_MAP = {
     laptop: 'DfE_RemainThresholdQty|Std_Device',
     router: 'DfE_RemainThresholdQty|Coms_Device',

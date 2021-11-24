@@ -3,35 +3,9 @@ class School < ApplicationRecord
   include PgSearch::Model
   include SchoolType
 
-  alias_attribute :ship_to, :computacenter_reference
-
   DEVICE_TYPES = %i[laptop router].freeze
 
-  belongs_to :responsible_body, inverse_of: :schools
-  belongs_to :school_contact, optional: true
-
-  has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
-  has_one :headteacher, -> { where role: 'headteacher' }, class_name: 'SchoolContact', inverse_of: :school
-  has_many :user_schools
-  has_many :users, through: :user_schools
-  has_many :email_audits
-  has_many :extra_mobile_data_requests
-  has_many :school_links, dependent: :destroy
-  has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
-                                     primary_key: :computacenter_reference,
-                                     foreign_key: :ship_to
-  has_many :cap_changes, dependent: :destroy, inverse_of: :school
-  has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
-
-  validates :name, presence: true
-  validates :preorder_status, presence: true
-
-  pg_search_scope :matching_name_or_urn_or_ukprn_or_provision_urn, against: %i[name urn ukprn provision_urn], using: { tsearch: { prefix: true } }
-
-  before_save :check_and_update_status_if_necessary
-  before_create :set_computacenter_change
-  after_update :maybe_generate_user_changes
-  after_commit :refresh_preorder_status!, on: :create
+  alias_attribute :ship_to, :computacenter_reference
 
   enum computacenter_change: {
     none: 'none',
@@ -68,6 +42,35 @@ class School < ApplicationRecord
     responsible_body: 'responsible_body',
   }, _suffix: 'will_order_devices'
 
+  # Associations
+  belongs_to :responsible_body, inverse_of: :schools
+  belongs_to :school_contact, optional: true
+
+  has_many :contacts, class_name: 'SchoolContact', inverse_of: :school
+  has_one :headteacher, -> { where role: 'headteacher' }, class_name: 'SchoolContact', inverse_of: :school
+  has_many :user_schools
+  has_many :users, through: :user_schools
+  has_many :email_audits
+  has_many :extra_mobile_data_requests
+  has_many :school_links, dependent: :destroy
+  has_many :devices_ordered_updates, class_name: 'Computacenter::DevicesOrderedUpdate',
+                                     primary_key: :computacenter_reference,
+                                     foreign_key: :ship_to
+  has_many :cap_changes, dependent: :destroy, inverse_of: :school
+  has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
+
+  # Validations
+  validates :name, presence: true
+  validates :preorder_status, presence: true
+
+  # Callbacks
+  before_save :check_and_update_status_if_necessary
+  before_create :set_computacenter_change
+  after_update :maybe_generate_user_changes
+  after_commit :refresh_preorder_status!, on: :create
+
+  # Scopes
+  pg_search_scope :matching_name_or_urn_or_ukprn_or_provision_urn, against: %i[name urn ukprn provision_urn], using: { tsearch: { prefix: true } }
   scope :excluding_la_funded_provisions, -> { where.not(type: 'LaFundedPlace') }
   scope :further_education, -> { where(type: 'FurtherEducationSchool') }
 
@@ -80,27 +83,28 @@ class School < ApplicationRecord
   scope :has_not_fully_ordered_laptops, -> { where.not(order_state: :cannot_order).where('(raw_laptop_allocation + over_order_reclaimed_laptops + circumstances_laptops) > raw_laptops_ordered') }
   scope :has_not_fully_ordered_routers, -> { where.not(order_state: :cannot_order).where('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) > raw_routers_ordered') }
 
-  scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
   scope :iss_provision, -> { where(type: 'LaFundedPlace', provision_type: 'iss') }
+  scope :la_funded_provision, -> { where(type: 'LaFundedPlace') }
+  scope :school_not_set_to_order_devices, -> { where(who_will_order_devices: [nil, :responsible_body]) }
   scope :scl_provision, -> { where(type: 'LaFundedPlace', provision_type: 'scl') }
   scope :that_can_order_now, -> { where(order_state: %w[can_order_for_specific_circumstances can_order]) }
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
-  scope :with_over_order_reclaimed_cap, lambda { |device_type|
-    laptop?(device_type) ? where('over_order_reclaimed_laptops < 0') : where('over_order_reclaimed_routers < 0')
-  }
-  scope :school_not_set_to_order_devices, -> { where(who_will_order_devices: [nil, :responsible_body]) }
 
   def self.laptop?(device_type)
     device_type.to_sym == :laptop
   end
 
-  def self.that_can_order_now
-    where(order_state: %w[can_order_for_specific_circumstances can_order])
+  def self.over_ordered(device_type)
+    return where('raw_laptops_ordered > raw_laptop_allocation') if laptop?(device_type)
+
+    where('raw_routers_ordered > raw_router_allocation')
   end
 
   def self.requiring_a_new_computacenter_reference
-    gias_status_open.where(computacenter_change: %w[new amended]).or(gias_status_open.where(computacenter_reference: nil))
+    gias_status_open
+      .where(computacenter_change: %w[new amended])
+      .or(gias_status_open.where(computacenter_reference: nil))
   end
 
   def self.with_available_cap(device_type)
@@ -111,6 +115,10 @@ class School < ApplicationRecord
       where('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) > raw_routers_ordered')
         .order(Arel.sql('(raw_router_allocation + over_order_reclaimed_routers + circumstances_routers) - raw_routers_ordered'))
     end
+  end
+
+  def self.with_over_order_reclaimed_cap(device_type)
+    laptop?(device_type) ? where('over_order_reclaimed_laptops < 0') : where('over_order_reclaimed_routers < 0')
   end
 
   def initialize(*args)
@@ -354,6 +362,10 @@ class School < ApplicationRecord
 
   def organisation_users
     device_ordering_organisation.users
+  end
+
+  def over_ordered?(device_type)
+    raw_devices_ordered(device_type) > raw_allocation(device_type)
   end
 
   def over_order_reclaimed_devices(device_type)

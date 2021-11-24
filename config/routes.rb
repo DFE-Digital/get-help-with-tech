@@ -323,9 +323,6 @@ Rails.application.routes.draw do
     get '/multi-domain-chromebooks', to: 'multi_domain_chromebooks#index', as: :multi_domain_chromebooks
     get '/multi-domain-chromebooks-iss-scl', to: 'multi_domain_chromebooks_iss_scl#index', as: :multi_domain_chromebooks_iss_scl
     resources :api_tokens, path: '/api-tokens'
-    resources :school_device_allocations, only: %i[index], path: '/school-device-allocations' do
-      put '/', to: 'school_device_allocations#bulk_update', on: :collection
-    end
     namespace :api do
       post '/cap-usage/bulk-update', to: 'cap_usage#bulk_update'
     end
