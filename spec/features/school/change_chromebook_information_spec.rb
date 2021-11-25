@@ -17,6 +17,19 @@ RSpec.feature 'Change school Chromebook information' do
       sign_in_as school_user
     end
 
+    context "when the user's school is of type LaFundedPlace" do
+      let(:school) { create(:iss_provision) }
+
+      it "dont display the school's details" do
+        expect(page).not_to have_content('Check your organisation’s details')
+
+        visit details_school_path(school)
+
+        expect(page).to have_content('Forbidden')
+        expect(page).not_to have_content('Set your Chromebook preferences')
+      end
+    end
+
     context 'when I visit the school details and click on the Chromebook information "Change" link' do
       before do
         allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
