@@ -2,7 +2,7 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseControl
   before_action :load_schools_by_order_status, only: %i[show index]
 
   def index
-    @show_devices_ordered_column = lacks_virtual_cap?
+    @vcap = @responsible_body.vcap?
   end
 
   def show
@@ -22,9 +22,5 @@ private
 
   def load_schools_by_order_status
     @schools = @responsible_body.schools_by_order_status
-  end
-
-  def lacks_virtual_cap?
-    !@responsible_body.vcap?
   end
 end
