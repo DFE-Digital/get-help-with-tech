@@ -6,7 +6,7 @@ Guidance for LAs, trusts, schools, colleges and FE institutions about who owns d
 
 Ownership of laptops, tablets and 4G wireless routers is transferred from DfE to the local authorities (LAs), academy trusts, schools, colleges and further education (FE) institutions that have received them.
 
-Device owners are able to choose how and when to temporarily lend, or permanently give, devices to children and young people in need, or to other organisations. Before parting with your devices, you’ll want to consider carefully the balance of the individual&rsquo's need against your school’s or service’s future need for face-to-face learning, remote learning support and online social care.
+Device owners are able to choose how and when to temporarily lend, or permanently give, devices to children and young people in need, or to other organisations. Before parting with your devices, you’ll want to consider carefully the balance of the individual&rsquo;s need against your school’s or service’s future need for face-to-face learning, remote learning support and online social care.
 
 DfE expects organisations to decide how best to make devices available to disadvantaged children and young people so they can access remote education, face-to-face learning and online social care when needed.
 
