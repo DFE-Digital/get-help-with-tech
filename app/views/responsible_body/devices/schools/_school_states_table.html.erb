@@ -10,11 +10,12 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header app-schools-table__column-40">School or college</th>
-      <% if @show_devices_ordered_column %>
-        <th class="govuk-table__header app-schools-table__column-20">Allocation</th>
-        <th class="govuk-table__header app-schools-table__column-20">Who will order?</th>
-      <% else %>
+      <% if vcap %>
         <th class="govuk-table__header app-schools-table__column-40">Who will order?</th>
+      <% else %>
+        <th class="govuk-table__header app-schools-table__column-20">Allocation</th>
+        <th class="govuk-table__header app-schools-table__column-20">Devices Ordered</th>
+        <th class="govuk-table__header app-schools-table__column-20">Who will order?</th>
       <% end %>
       <th class="govuk-table__header app-schools-table__column-20"><span class="govuk-visually-hidden">Status</span></th>
     </tr>
@@ -27,7 +28,10 @@
           <br>
           <%= school.human_for_school_type %>
         </td>
-        <% if @show_devices_ordered_column %>
+        <% unless vcap %>
+          <td class="govuk-table__cell">
+            <%= render DisplayAllocationComponent.new(school: school) %>
+          </td>
           <td class="govuk-table__cell">
             <%= render DisplayDevicesOrderedComponent.new(school: school) %>
           </td>

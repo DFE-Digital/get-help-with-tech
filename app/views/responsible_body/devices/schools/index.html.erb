@@ -36,18 +36,21 @@
 <% if @schools[:specific_circumstances_schools].any? %>
   <%= render partial: 'school_states_table', locals: { schools: @schools[:specific_circumstances_schools],
                                                        table_id: 'specific-circumstances-schools',
-                                                       heading: t('.specific_circumstances_heading') } %>
+                                                       heading: t('.specific_circumstances_heading'),
+                                                       vcap: @vcap } %>
 <%- end %>
 
 <% if @schools[:ordering_schools].any? %>
   <%= render partial: 'school_states_table', locals: { schools: @schools[:ordering_schools],
                                                        table_id: 'ordering-schools',
-                                                       heading: t('.ordering_schools_heading') } %>
+                                                       heading: t('.ordering_schools_heading'),
+                                                       vcap: @vcap } %>
 <%- end %>
 
 <% if @schools[:fully_open_schools].any? %>
   <%= render partial: 'school_states_table', locals: { schools: @schools[:fully_open_schools],
                                                        table_id: 'cannot-order-yet-schools',
                                                        heading: t('.cannot_order_yet_schools_heading'),
-                                                       heading_text: t('.cannot_order_yet_schools_text') } %>
+                                                       heading_text: t('.cannot_order_yet_schools_text'),
+                                                       vcap: @vcap } %>
 <%- end %>
