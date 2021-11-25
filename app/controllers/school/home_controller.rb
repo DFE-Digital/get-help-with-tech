@@ -3,6 +3,7 @@ class School::HomeController < School::BaseController
     @assistance_count = assistance_count
     @has_ordered = school.has_ordered?
     @in_vcap_pool = school.vcap?
+    @display_organisation_details = School::DetailsPolicy.new(impersonated_or_current_user, school).show?
   end
 
 private

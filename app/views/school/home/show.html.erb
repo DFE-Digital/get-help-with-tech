@@ -41,15 +41,17 @@
       <li>see your Huawei router password.</li>
     </ul>
 
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
-    </h2>
+    <% if @display_organisation_details %>
+      <h2 class="govuk-heading-l govuk-!-font-size-27">
+        <%= govuk_link_to t('page_titles.school_details'), details_school_path(@school) %>
+      </h2>
 
-    <p class="govuk-body">Use this section to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>review your allocation</li>
-      <li>review your Chromebook settings.</li>
-    </ul>
+      <p class="govuk-body">Use this section to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>review your allocation</li>
+        <li>review your Chromebook settings.</li>
+      </ul>
+    <% end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
       <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
