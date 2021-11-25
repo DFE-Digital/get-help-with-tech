@@ -5,7 +5,7 @@ RSpec.describe Computacenter::API::CapUsageController do
   let(:api_token) { create(:api_token, status: :active, user: user) }
   let(:cap_usage_update_packet) do
     <<~XML
-      <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+      <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
         <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
         <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100"/>
         <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060875" capAmount="300" usedCap="57"/>
@@ -90,7 +90,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     context 'given valid XML but where the usedCap is negative' do
       let(:cap_usage_update_packet) do
         <<~XML
-          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+          <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
             <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="0" usedCap="-1"/>
           </CapUsage>
         XML
@@ -105,7 +105,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     context 'given valid XML but where the capAmount is negative' do
       let(:cap_usage_update_packet) do
         <<~XML
-          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+          <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
             <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="-1" usedCap="2"/>
           </CapUsage>
         XML
@@ -134,7 +134,7 @@ RSpec.describe Computacenter::API::CapUsageController do
   end
 
   describe 'POST bulk_update with valid auth and valid XML' do
-    let(:payload_id) { 'IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123' }
+    let(:payload_id) { '45520C4CEEEF4CACAB2603847F08EFA2' }
     let(:payload_timestamp) { '2020-06-18T09:20:45Z' }
 
     let(:cap_usage_update_packet) do
@@ -189,7 +189,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     context 'when the used cap and cap amount are zero' do
       let(:cap_usage_update_packet) do
         <<~XML
-          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+          <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
             <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="0" usedCap="0"/>
           </CapUsage>
         XML
@@ -209,7 +209,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     context 'when the used cap is greater than cap amount (see Trello card #716)' do
       let(:cap_usage_update_packet) do
         <<~XML
-          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+          <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
             <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="10" usedCap="37"/>
           </CapUsage>
         XML
@@ -279,7 +279,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     context 'when only a single record is being updated (XML parsing works slightly differently)' do
       let(:cap_usage_update_packet) do
         <<~XML
-          <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+          <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
             <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
           </CapUsage>
         XML

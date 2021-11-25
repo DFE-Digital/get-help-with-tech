@@ -4,10 +4,10 @@ RSpec.feature 'Bulk cap usage update with XML', type: :request do
   let(:user) { create(:computacenter_user) }
   let(:api_token) { create(:api_token, status: :active, user: user) }
   let(:headers) { { 'Authorization' => "Bearer #{api_token.token}" } }
-  let(:payload_id) { 'IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123' }
+  let(:payload_id) { '45520C4CEEEF4CACAB2603847F08EFA2' }
   let(:cap_usage_update_packet) do
     <<~XML
-      <CapUsage payloadID="IDGAAC47B3HSQAQ2EH0LQ1G_SRI_TEST_123" dateTime="2020-06-18T09:20:45Z" >
+      <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
         <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060874" capAmount="100" usedCap="20"/>
         <Record capType="DfE_RemainThresholdQty|Coms_Device" shipTo="81060874" capAmount="200" usedCap="100"/>
         <Record capType="DfE_RemainThresholdQty|Std_Device" shipTo="81060875" capAmount="300" usedCap="57"/>

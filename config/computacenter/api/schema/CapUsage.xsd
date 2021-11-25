@@ -14,6 +14,7 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="10"/>
+						<xs:pattern value="[0-9]+"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
@@ -36,7 +37,10 @@
 			</xs:sequence>
 			<xs:attribute name="payloadID">
 				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
+					<xs:restriction base="xs:string">
+						<xs:length value="32"/>
+						<xs:pattern value="[A-F0-9]+"/>
+					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
 			<xs:attribute name="dateTime">
