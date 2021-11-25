@@ -16,13 +16,13 @@ RSpec.describe ResponsibleBody::Devices::SchoolsController do
         get :index
       end
 
-      specify { expect(assigns(:show_devices_ordered_column)).to be false }
+      specify { expect(assigns(:vcap)).to be true }
     end
 
     context 'RB without virtual cap' do
       before { get :index }
 
-      specify { expect(assigns(:show_devices_ordered_column)).to be true }
+      specify { expect(assigns(:vcap)).to be false }
     end
 
     it 'excludes closed schools' do
