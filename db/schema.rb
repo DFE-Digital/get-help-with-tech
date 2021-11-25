@@ -29,6 +29,19 @@ ActiveRecord::Schema.define(version: 2021_11_24_114339) do
     t.index ["batch_id"], name: "index_allocation_batch_jobs_on_batch_id"
   end
 
+  create_table "allocation_changes", force: :cascade do |t|
+    t.bigint "school_device_allocation_id", null: false
+    t.string "category"
+    t.integer "delta"
+    t.integer "prev_allocation"
+    t.integer "new_allocation"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category"], name: "index_allocation_changes_on_category"
+    t.index ["school_device_allocation_id"], name: "index_allocation_changes_on_school_device_allocation_id"
+  end
+
   create_table "api_tokens", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
@@ -258,16 +271,16 @@ ActiveRecord::Schema.define(version: 2021_11_24_114339) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
-    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
     t.datetime "school_contacted_at"
+    t.bigint "school_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

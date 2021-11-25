@@ -17,6 +17,18 @@ RSpec.describe Computacenter::ResponsibleBodyUrns do
     end
   end
 
+  describe '#requiring_a_new_computacenter_reference' do
+    subject(:model) { ResponsibleBody }
+
+    it 'returns only rbs that have schools associated' do
+      create(:local_authority, :with_schools)
+      create(:local_authority)
+
+      expect(model.count).to eq(2)
+      expect(model.requiring_a_new_computacenter_reference.count).to eq(1)
+    end
+  end
+
   describe '#computacenter_name' do
     subject(:model) { fe_klass.new }
 
