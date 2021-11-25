@@ -9,15 +9,19 @@
     <%= l(api_token.created_at, format: :long) %>
   </td>
   <td class="govuk-table__cell">
-    <%= render(GovukComponent::TagComponent.new(text: api_token.translated_enum_value(:status), colour: api_token_status_colour(api_token.status))) %>
+    <%= l(api_token.expires_at, format: :long) %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= render(GovukComponent::TagComponent.new(text: api_token.display_status, colour: api_token_status_colour(api_token.display_status))) %>
   </td>
   <td class="govuk-table__cell govuk-form-group display-child-forms-inline govuk-table__cell--nowrap">
-    <%- if api_token.active? %>
-      <%= govuk_button_to 'Revoke', computacenter_api_token_path(api_token), method: :patch, params: { api_token: { status: 'revoked' } }, class: "govuk-button--secondary", form_class: 'govuk-form-group' %>
-    <%- else %>
-      <%= govuk_button_to 'Activate', computacenter_api_token_path(api_token), method: :patch, params: { api_token: { status: 'active' } }, class: "govuk-button--secondary", form_class: 'govuk-form-group' %>
+    <%- unless api_token.expired? %>
+      <%- if api_token.active? %>
+        <%= govuk_button_to 'Revoke', computacenter_api_token_path(api_token), method: :patch, params: { api_token: { status: 'revoked' } }, class: "govuk-button--secondary", form_class: 'govuk-form-group' %>
+      <%- else %>
+        <%= govuk_button_to 'Activate', computacenter_api_token_path(api_token), method: :patch, params: { api_token: { status: 'active' } }, class: "govuk-button--secondary", form_class: 'govuk-form-group' %>
+      <%- end %>
     <%- end %>
     <%= govuk_button_to 'Delete', computacenter_api_token_path(api_token), method: :delete, class: "govuk-button--warning", form_class: 'govuk-form-group' %>
-
   </td>
 </tr>

@@ -11,6 +11,8 @@ class APIToken < ApplicationRecord
 
   before_validation :fill_in_defaults!
 
+  DEFAULT_TTL_DAYS = 90
+
   enum status: {
     active: 'active',
     revoked: 'revoked',
@@ -23,6 +25,23 @@ class APIToken < ApplicationRecord
   def fill_in_defaults!
     generate_token! if token.blank?
     self.status ||= APIToken.statuses[:active]
+  end
+
+  def expires_at
+    created_at + ttl
+  end
+
+  def expired?
+    expires_at < Time.zone.now
+  end
+
+  def ttl
+    (Settings.api_token_ttl.presence || DEFAULT_TTL_DAYS).to_i.days
+  end
+
+  # Used to include `expired` status, as it's not in the enum
+  def display_status
+    expired? ? 'expired' : status
   end
 
   def self.generate!(user)
