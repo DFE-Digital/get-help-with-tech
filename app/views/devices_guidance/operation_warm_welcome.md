@@ -38,7 +38,7 @@ During the ordering process, schools will be asked to fill out a declaration con
 This information will then be verified. Schools may later be asked to provide 
 evidence of how they&rsquo;ve distributed devices consistent with our agreement.
 
-Schools may also be able to find support though other organisations that work with 
+Schools may also be able to find support through other organisations that work with 
 children and young people from Afghanistan, such as the 
 [Barnardo&rsquo;s device and connectivity initiative](https://www.barnardos.org.uk/news/vodafone-and-barnardos-issue-new-appeal-devices-help-afghan-refugees).
 
