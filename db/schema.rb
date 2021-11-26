@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_114339) do
+ActiveRecord::Schema.define(version: 2021_11_26_135609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "allocation_batch_jobs", force: :cascade do |t|
     t.text "batch_id", null: false
-    t.integer "urn"
+    t.string "urn"
     t.integer "ukprn"
     t.integer "allocation_delta", null: false
     t.text "order_state"
