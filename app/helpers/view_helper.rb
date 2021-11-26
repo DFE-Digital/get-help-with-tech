@@ -185,7 +185,7 @@ module ViewHelper
   end
 
   def link_to_urn_or_ukprn_otherwise_identifier(identifier)
-    if School.exists?(['urn = ? or ukprn = ?', identifier, identifier])
+    if School.where_urn_or_ukprn_or_provision_urn(identifier).exists?
       govuk_link_to identifier, support_school_path(identifier)
     else
       identifier
