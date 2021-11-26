@@ -9,7 +9,7 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
     let(:attrs) do
       [
         {
-          urn: 123_456,
+          urn: '123456',
           ukprn: nil,
           allocation_delta: 1,
           order_state: 'can_order',
