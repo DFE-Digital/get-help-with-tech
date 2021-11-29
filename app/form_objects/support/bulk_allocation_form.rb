@@ -3,7 +3,7 @@ require 'csv'
 class Support::BulkAllocationForm
   include ActiveModel::Model
 
-  CSV_HEADERS = %w[urn ukprn allocation_delta order_state].freeze
+  CSV_HEADERS = %w[urn ukprn allocation allocation_delta order_state].freeze
 
   attr_accessor :upload
   attr_reader :send_notification
@@ -29,7 +29,9 @@ private
     vcaps_for_post_processing[school.responsible_body_id] += 1
   end
 
-  def create_allocation_batch_job(props)
+  def create_allocation_batch_job(school, props)
+    allocation = props.delete(:allocation)
+    props[:allocation_delta] = allocation.to_i - school.raw_allocation(:laptop) if allocation.present?
     job_attrs = props.merge(batch_id: batch_id, send_notification: send_notification)
     AllocationBatchJob.create!(job_attrs)
   end
@@ -47,7 +49,7 @@ private
   end
 
   def schedule_school(school, props)
-    allocation_batch_job = create_allocation_batch_job(props)
+    allocation_batch_job = create_allocation_batch_job(school, props)
     if school.vcap?
       add_school_for_post_processing_of_vcaps(school)
     else
