@@ -192,6 +192,7 @@ GHWT__ZENDESK__TOKEN                              | Token for Zendesk account to
 GHWT__DATABASE_FIELD_ENCRYPTION__KEY              | Secret key for the encrytion fields in the assets table                                                                                    | REQUIRED
 GHWT__DATABASE_FIELD_ENCRYPTION__SALT             | Salt for the encryption field in the assets table                                                                                          | REQUIRED
 GHWT__SLUG_CHECKSUM_SECRET                        | A secret for hashing a checksum for IDs in the URL                                                                                         | REQUIRED
+GHWT__API_TOKEN_TTL                               | TTL in days after which API Tokens CC use will expire from creation date                                                                   | 90
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.
 

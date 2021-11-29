@@ -19,6 +19,7 @@ module ApplicationHelper
   def api_token_status_colour(status)
     {
       active: 'green',
+      expired: 'red',
       revoked: 'red',
     }[status.to_sym]
   end

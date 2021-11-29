@@ -62,7 +62,7 @@ RSpec.feature 'Managing API tokens' do
           click_on 'Revoke'
         end
         within("#api_token-#{api_token_1.id}") do
-          expect(page).to have_text 'Revoked'
+          expect(page).to have_text 'revoked'
           expect(page).to have_button 'Activate'
         end
       end

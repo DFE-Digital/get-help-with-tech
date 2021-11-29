@@ -24,7 +24,7 @@ RSpec.describe Computacenter::API::CapUsageController do
       end
     end
 
-    context 'with an auth token from a non-computacenter_user' do
+    context 'with an api token from a non-computacenter_user' do
       let(:other_user) { create(:mno_user) }
       let(:other_user_token) { create(:api_token, status: :active, user: other_user) }
       let(:auth_header) { "Bearer #{other_user_token.token}" }
@@ -36,6 +36,19 @@ RSpec.describe Computacenter::API::CapUsageController do
       it 'responds with a :forbidden status' do
         post :bulk_update, format: :xml, body: cap_usage_update_packet
         expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'expired api token' do
+      let(:api_token) { create(:api_token, status: :active, user: user, created_at: (APIToken::DEFAULT_TTL_DAYS + 1).days.ago) }
+
+      before do
+        request.headers['Authorization'] = "Bearer #{api_token.token}"
+      end
+
+      it 'responds with :unauthorized' do
+        post :bulk_update, format: :xml, body: cap_usage_update_packet
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end
