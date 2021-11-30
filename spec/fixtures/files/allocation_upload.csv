@@ -1,3 +1,5 @@
-urn,ukprn,allocation_delta,order_state
-123456,,1,can_order
-,12345678,2,cannot_order
+urn,ukprn,allocation_delta,allocation,order_state
+123456,,1,,can_order
+,12345678,2,,cannot_order
+345678,,,5,can_order
+999999,,1,6,can_order
