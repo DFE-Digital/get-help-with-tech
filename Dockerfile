@@ -12,7 +12,7 @@ RUN apk add libxml2-dev libxslt-dev build-base postgresql-dev tzdata
 RUN wget https://data.iana.org/time-zones/tzdb/tzdata.zi -O /usr/share/zoneinfo/tzdata.zi && \
     /usr/sbin/zic -b fat /usr/share/zoneinfo/tzdata.zi
 
-RUN apk add nodejs=16.13.0 yarn=1.22.17 postgresql-contrib libpq less git
+RUN apk add nodejs yarn postgresql-contrib libpq less git
 
 ENV RAILS_ROOT /var/www/${APPNAME}
 RUN mkdir -p $RAILS_ROOT
