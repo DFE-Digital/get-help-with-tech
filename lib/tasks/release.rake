@@ -1,7 +1,6 @@
 namespace :release do
   desc 'Render 429.html error page to the public folder'
-  task :render_429_to_file do
-    Rails.application.initialize!
+  task render_429_to_file: :environment do
     renderer = ApplicationController.renderer.new(
       http_host: Settings.hostname_for_urls,
     )
