@@ -1,0 +1,3 @@
+urn,ukprn,allocation_delta,allocation,order_state
+123456,,,10,can_order
+,12345678,2,,cannot_order

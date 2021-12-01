@@ -16,8 +16,25 @@
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">
-        Download the <%= govuk_link_to 'example CSV', '/examples/allocation-upload.csv' %> and populate with schools along with their updated allocation and whether or not they can order
+        Download one of the example files below and populate it with schools along with their updated allocation and
+        whether or not they can order:
       </p>
+
+      <ul>
+        <li class="govuk-body">
+          <a class="govuk-link" href="/examples/allocation-upload-1.csv">example-1.csv</a> illustrating the use of
+          deltas to alter allocations.
+        </li>
+        <li class="govuk-body">
+          <a class="govuk-link" href="/examples/allocation-upload-2.csv">example-2.csv</a> illustrating the use of
+          absolute values to alter allocations. This is the prefered usage as it can be performed multiple times in case
+          of error,
+        </li>
+        <li class="govuk-body">
+          <a class="govuk-link" href="/examples/allocation-upload-3.csv">example-3.csv</a> illustrating the use of
+          deltas for some schools and absolute values for others.
+        </li>
+      </ul>
 
       <%= f.govuk_file_field :upload,
                              label: { text: 'CSV', size: 'm' },
