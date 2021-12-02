@@ -51,12 +51,45 @@ These are the tasks that you will need to run to set up your local db:
 - Create yourself an API key with permissions `Test – pretends to send messages`
 - Run `echo "GHWT__GOVUK_NOTIFY__API_KEY: YOUR_API_KEY_GOES_HERE" > .env` so the local app uses this new key
 
-### Creating a support user
+### Creating Support and Supplier (ComputaCenter) users
 
-- Open up a rails console with `bundle exec rails c`
-- Then run `User.create!(full_name: 'Your Name', email_address: 'your.name@example.com', is_support: true)`
+Open up a rails console with...
 
-You can then login with your new support user, check the rails logs for the magic link that you must use to log in as the new user.
+```
+bundle exec rails c`
+```
+
+#### Single user
+
+```
+# creates a single support user
+CreateAdminUsersService.new('first.last@digital.education.gov.uk').create!
+# or (:support is default)
+CreateAdminUsersService.new('first.last@digital.education.gov.uk', :support).create!
+
+# creates a single computacenter user
+CreateAdminUsersService.new('first.last@computacenter.com', :supplier).create!
+```
+
+#### Multiple users
+
+You can only create multiple users of the same type in one batch.
+
+```
+# creates multiple support users
+CreateAdminUsersService.new(['first1.last1@digital.education.gov.uk', 'first2.last2@digital.education.gov.uk']).create!
+# or (:support is default)
+CreateAdminUsersService.new(['first1.last1@digital.education.gov.uk', 'first2.last2@digital.education.gov.uk'], :support).create!
+
+# creates muliple computacenter users
+CreateAdminUsersService.new(['first1.last1@computacenter.com', 'first2.last2@computacenter.com'], :supplier).create!
+```
+
+#### Notes
+
+- The full name of the user will be derived from the email address.
+- Any email address that exists on the system will simply update the user with the support or computacenter privileges, it will NOT create another user account.
+- You can then login with your new support user, check the rails logs for the magic link that you must use to log in as the new user.
 
 ## Running specs
 ```
