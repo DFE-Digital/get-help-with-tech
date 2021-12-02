@@ -61,7 +61,7 @@ private
   end
 
   def notify_school_by_email(school)
-    SchoolCanOrderDevicesNotifications.new(school: school, notify_computacenter: notify_computacenter).call
+    SchoolCanOrderDevicesNotifications.new(school, notify_computacenter: notify_computacenter).call
   end
 
   def record_request!(school, device_type)

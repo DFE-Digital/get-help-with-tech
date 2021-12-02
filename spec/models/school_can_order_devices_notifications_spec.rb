@@ -6,7 +6,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
   let(:school) { create_schools_at_status(preorder_status: 'school_can_order') }
 
   subject(:service) do
-    described_class.new(school: school.reload)
+    described_class.new(school.reload)
   end
 
   describe '#call' do
@@ -164,7 +164,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
     context 'when a school that is ready changes status from specfic circumstances to lockdown' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order_for_specific_circumstances') }
 
-      subject(:service) { described_class.new(school: school) }
+      subject(:service) { described_class.new(school) }
 
       before do
         school.can_order!

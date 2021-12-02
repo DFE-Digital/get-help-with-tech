@@ -30,7 +30,7 @@ class Computacenter::API::CapUsageUpdate
       school.refresh_preorder_status!
     end
 
-    SchoolCanOrderDevicesNotifications.new(school: school).call if cap_usage_change.negative? && notify_decreases
+    SchoolCanOrderDevicesNotifications.new(school).call if cap_usage_change.negative? && notify_decreases
 
     @status = 'succeeded'
   end

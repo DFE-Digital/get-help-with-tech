@@ -12,7 +12,7 @@ RSpec.describe AllocationEmailJob do
 
       described_class.perform_now(allocation_batch_job)
 
-      expect(SchoolCanOrderDevicesNotifications).to have_received(:new).with(school: school)
+      expect(SchoolCanOrderDevicesNotifications).to have_received(:new).with(school)
       expect(mock_service).to have_received(:call)
     end
 
@@ -30,7 +30,7 @@ RSpec.describe AllocationEmailJob do
 
         described_class.perform_now(allocation_batch_job)
 
-        expect(SchoolCanOrderDevicesNotifications).not_to have_received(:new).with(school: school)
+        expect(SchoolCanOrderDevicesNotifications).not_to have_received(:new).with(school)
         expect(mock_service).not_to have_received(:call)
       end
     end
