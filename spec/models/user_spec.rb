@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_changes: 'active' } do
   describe 'associations' do
     it { is_expected.to have_many(:email_audits).dependent(:destroy) }
   end
