@@ -65,7 +65,7 @@ private
   end
 
   def notify_users
-    relevant_users ? notify_about_school_being_able_to_order : notify_support
+    relevant_users.present? ? notify_about_school_being_able_to_order : notify_support
   end
 
   def notify_user(user)
@@ -89,13 +89,11 @@ private
   end
 
   def rb_user?(user)
-    user.in?(school.responsible_body_users)
+    user.in?(school.rb_users)
   end
 
   def relevant_users
-    return @relevant_users if instance_variable_defined?(:@relevant_users)
-
-    @relevant_users = school.organisation_users.presence || school.responsible_body_users.presence
+    @relevant_users ||= school.organisation_users.presence || school.rb_users
   end
 
   def routers_only?

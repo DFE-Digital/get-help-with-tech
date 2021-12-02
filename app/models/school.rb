@@ -143,7 +143,6 @@ class School < ApplicationRecord
   delegate :computacenter_reference, to: :responsible_body, prefix: true, allow_nil: true
   delegate :gias_id, to: :responsible_body, prefix: true, allow_nil: true
   delegate :name, to: :responsible_body, prefix: true, allow_nil: true
-  delegate :users, to: :responsible_body, prefix: true, allow_nil: true
 
   alias_method :rb, :responsible_body
   alias_method :sold_to, :responsible_body_computacenter_reference
@@ -357,12 +356,13 @@ class School < ApplicationRecord
   def order_users_with_active_techsource_accounts
     device_ordering_organisation
       .users
+      .not_deleted
       .who_can_order_devices
       .with_techsource_account_confirmed
   end
 
   def organisation_users
-    device_ordering_organisation.users
+    device_ordering_organisation.users.not_deleted
   end
 
   def over_ordered?(device_type)
@@ -429,6 +429,10 @@ class School < ApplicationRecord
     ]
   end
 
+  def rb_users
+    responsible_body_users&.not_deleted.to_a
+  end
+
   def routers
     [allocation(:router), cap(:router), devices_ordered(:router)]
   end
@@ -493,6 +497,8 @@ class School < ApplicationRecord
   end
 
 private
+
+  delegate :users, to: :responsible_body, prefix: true, allow_nil: true
 
   def any_school_users?
     user_schools.exists?
