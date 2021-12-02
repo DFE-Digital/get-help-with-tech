@@ -4,6 +4,7 @@ class FeatureFlag
     display_sign_in_token_links
     show_component_previews
     gias_data_stage_pause
+    notify_cc_about_user_changes
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = %i[

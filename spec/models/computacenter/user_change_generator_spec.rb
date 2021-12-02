@@ -35,6 +35,32 @@ RSpec.describe Computacenter::UserChangeGenerator do
     end
   end
 
+  context 'when CC api settings are setup' do
+    let(:school) { create(:school, computacenter_reference: nil) }
+
+    before do
+      allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return('http://example.com')
+      stub_computacenter_outgoing_api_calls
+      create(:school_user, :relevant_to_computacenter, school: school)
+    end
+
+    context 'when CC api calls are disabled?', with_feature_flags: { notify_cc_about_user_changes: 'inactive' } do
+      it 'do not enqueue any job to notify CC' do
+        expect {
+          school.reload.update!(computacenter_reference: 'ABC')
+        }.not_to have_enqueued_job(NotifyComputacenterOfLatestChangeForUserJob)
+      end
+    end
+
+    context 'when CC api calls are enabled?', with_feature_flags: { notify_cc_about_user_changes: 'active' } do
+      it 'enqueue a job to notify CC' do
+        expect {
+          school.reload.update!(computacenter_reference: 'ABC')
+        }.to have_enqueued_job(NotifyComputacenterOfLatestChangeForUserJob).once
+      end
+    end
+  end
+
   describe '#is_addition?' do
     subject(:generator) { described_class.new(user) }
 

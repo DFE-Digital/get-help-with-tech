@@ -10,15 +10,18 @@ class Computacenter::UserChangeGenerator
       change = Computacenter::UserChange.new(consolidated_attributes)
       change.add_original_fields_from(last_change_for_user) if last_change_for_user.present?
       change.save!
-      notify_computacenter_via_api if computacenter_api_configured?
+      notify_computacenter_via_api if notify_computacenter?
       change
     end
   end
 
 private
 
-  def computacenter_api_configured?
-    Settings.computacenter.service_now_user_import_api.endpoint.present?
+  def notify_computacenter?
+    [
+      FeatureFlag.active?(:notify_cc_about_user_changes),
+      Settings.computacenter.service_now_user_import_api.endpoint.present?,
+    ].all?
   end
 
   def notify_computacenter_via_api
