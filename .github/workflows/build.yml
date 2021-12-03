@@ -11,7 +11,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main, reopening ]
+    branches: [ main, preview ]
 
 jobs:
   build_and_test:
