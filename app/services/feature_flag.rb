@@ -1,20 +1,15 @@
 class FeatureFlag
-  PERMANENT_SETTINGS = %i[
-    rate_limiting
+  FEATURES = %i[
     display_sign_in_token_links
-    show_component_previews
-    gias_data_stage_pause
-    notify_cc_about_user_changes
-  ].freeze
-
-  TEMPORARY_FEATURE_FLAGS = %i[
-    half_term_delivery_suspension
     donated_devices
-    rb_level_access_notification
+    gias_data_stage_pause
+    half_term_delivery_suspension
+    notify_cc_about_user_changes
     notify_when_cap_usage_decreases
+    rate_limiting
+    rb_level_access_notification
+    show_component_previews
   ].freeze
-
-  FEATURES = (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS).freeze
 
   def self.activate(feature_name)
     raise unless feature_name.in?(FEATURES)
@@ -36,28 +31,6 @@ class FeatureFlag
 
   def self.inactive?(feature_name)
     !active?(feature_name)
-  end
-
-  def self.temporarily_activate(*feature_names)
-    original_values = {}
-    Array(feature_names).each do |name|
-      original_values[name] = FeatureFlag.active?(name)
-      activate(name)
-    end
-    return_value = yield
-    feature_names.each { |name| FeatureFlag.deactivate(name) unless original_values[name] }
-    return_value
-  end
-
-  def self.temporarily_deactivate(*feature_names)
-    original_values = {}
-    Array(feature_names).each do |name|
-      original_values[name] = FeatureFlag.active?(name)
-      deactivate(name)
-    end
-    return_value = yield
-    feature_names.each { |name| FeatureFlag.activate(name) if original_values[name] }
-    return_value
   end
 
   def self.set_temporary_flags(features = {})

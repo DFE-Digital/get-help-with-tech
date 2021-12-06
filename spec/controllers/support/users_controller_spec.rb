@@ -247,7 +247,7 @@ RSpec.describe Support::UsersController do
     end
 
     it 'returns all matching school and RB users who have seen the privacy notice for Computacenter users' do
-      sign_in_as create(:computacenter_user)
+      sign_in_as create(:computacenter_user, full_name: 'Ralph Wort')
       post :results, params: { support_user_search_form: { email_address_or_full_name: 'Smith' } }
 
       expect(assigns[:results]).to contain_exactly(user_who_has_seen_privacy_notice)
