@@ -3,7 +3,9 @@ inherit_gem:
     - config/default.yml
     - config/rails.yml
 
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - ./lib/rubocop/cop/lint/unknown_feature_flag.rb
 
 AllCops:
   Exclude:
