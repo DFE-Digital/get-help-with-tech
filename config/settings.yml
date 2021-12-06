@@ -84,6 +84,8 @@ service_name_suffix:
 # Sign-in tokens will expire after this many seconds
 sign_in_token_ttl_seconds: 1800
 
+site_banner_message:
+
 # how long CDNs and browsers should cache static assets for in production, in seconds.
 static_file_cache_ttl:
 

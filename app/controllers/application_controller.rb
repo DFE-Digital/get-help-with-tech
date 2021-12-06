@@ -32,6 +32,11 @@ private
     Sentry.set_user(id: current_user&.id)
   end
 
+  def site_banner_message
+    Site.banner_message
+  end
+  helper_method :site_banner_message
+
   def impersonated_user
     @impersonated_user = if session[:impersonated_user_id].blank?
                            nil
