@@ -5,14 +5,14 @@ describe RuboCop::Cop::Lint::UnknownFeatureFlag, :config do
   subject(:cop) { described_class.new }
 
   context 'when the feature flag is not defined' do
-    it 'registers an offense when code calls checks the feature flag is active' do
+    it 'registers an offense when the code checks the feature flag is active' do
       expect_offense(<<~RUBY)
         FeatureFlag.active?(:no_existent_feature_flag)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unknown feature flag `no_existent_feature_flag`
       RUBY
     end
 
-    it 'registers an offense when code calls checks the feature flag is inactive' do
+    it 'registers an offense when the code checks the feature flag is inactive' do
       expect_offense(<<~RUBY)
         FeatureFlag.inactive?(:no_existent_feature_flag)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unknown feature flag `no_existent_feature_flag`
