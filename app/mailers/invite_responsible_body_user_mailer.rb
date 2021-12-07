@@ -10,17 +10,6 @@ class InviteResponsibleBodyUserMailer < ApplicationMailer
     )
   end
 
-  def nominate_contacts_email
-    @user = params[:user]
-    @rb = params[:responsible_body]
-
-    template_mail(
-      nominate_contacts_template_id,
-      to: @user.email_address,
-      personalisation: personalisation,
-    )
-  end
-
 private
 
   def personalisation
@@ -36,9 +25,5 @@ private
 
   def invite_user_template_id
     Settings.govuk_notify.templates.devices.invite_responsible_body_user
-  end
-
-  def nominate_contacts_template_id
-    Settings.govuk_notify.templates.devices.nominate_contacts
   end
 end
