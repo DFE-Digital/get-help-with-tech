@@ -45,7 +45,7 @@ RSpec.feature 'Adjusting a schools router allocation' do
           expect(page).to have_current_path(support_school_path(school.urn))
           expect(page).to have_http_status(:ok)
           expect(page).to have_text('We’ve saved the new allocation')
-          expect(school_details_page.school_details_rows[3]).to have_text('routers are available to order')
+          expect(school_details_page.school_details_rows[3]).to have_text('routers are not available')
         end
       end
     end

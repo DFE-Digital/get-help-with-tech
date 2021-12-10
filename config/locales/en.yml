@@ -22,7 +22,7 @@ en:
       devices:
         order_devices: Get devices now
     responsible_body_home: Get help with technology
-    responsible_body_devices_home: Order devices and routers
+    responsible_body_devices_home: Order devices
     responsible_body_devices_tell_us: Tell us who will order laptops
     responsible_body_users_index: Manage your schools and users
     responsible_body_trust_users_index: Manage trust administrators
@@ -46,7 +46,7 @@ en:
     signed_in_internet_access: Manage 4G routers
     who_needs_the_data: Who needs the extra mobile data?
     report_a_problem: Report a problem
-    devices_guidance_how_to_order: How to order DfE laptops, tablets and routers
+    devices_guidance_how_to_order: How to order DfE laptops and tablets
     click_to_sign_in:
       standard: You’re signed in
       related_organisation: You’re signed in as %{organisation}
@@ -156,7 +156,7 @@ en:
             title: Your school has ordered all the devices it can
           user:
             title: You’ve ordered all the devices you were allocated
-    school_order_devices: Order devices and routers
+    school_order_devices: Order devices
     school_order_devices_soon: You’ll be able to order once your TechSource account is ready
     school_details: Check your organisation’s details
     school_edit_chromebooks: Set your Chromebook preferences
