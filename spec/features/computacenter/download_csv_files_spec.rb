@@ -45,7 +45,7 @@ RSpec.feature 'Download CSV files' do
 
       it 'downloads a CSV file with the correct headers' do
         click_on 'Download TechSource users'
-        expect(csv.headers).to match_array(DeviceSupplier::ExportUsersService.headers)
+        expect(csv.headers).to match_array(DeviceSupplier::UserReport.headers)
       end
 
       it 'includes all Users' do

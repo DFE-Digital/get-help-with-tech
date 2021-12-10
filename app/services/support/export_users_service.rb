@@ -1,9 +1,9 @@
 require 'csv'
 
 # This service is used to export users to a CSV file.
-class DeviceSupplier::ExportUsersService < ExportServiceBase
+class Support::ExportUsersService < ExportServiceBase
   def initialize(scope_ids)
-    @report_class = DeviceSupplier::UserReport
+    @report_class = Support::UserReport
     @scope_ids = scope_ids
   end
 end

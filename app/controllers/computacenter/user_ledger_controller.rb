@@ -1,10 +1,11 @@
 class Computacenter::UserLedgerController < Computacenter::BaseController
   def index
-    @ledger = DeviceSupplier::ExportUsersService.new
+    @user_ids = policy_scope(User).pluck(:id)
+    @ledger = DeviceSupplier::ExportUsersService.call(@user_ids)
 
     respond_to do |format|
       format.csv do
-        send_data @ledger.to_csv, filename: "#{Time.zone.now.iso8601}_device_supplier_allocations_export.csv"
+        send_data @ledger, filename: "#{Time.zone.now.iso8601}_device_supplier_allocations_export.csv"
       end
     end
   end

@@ -294,6 +294,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[show edit update destroy] do
       collection do
         get 'search'
+        get 'export'
         post 'results'
       end
       member do
