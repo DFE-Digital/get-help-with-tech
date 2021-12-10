@@ -20,24 +20,15 @@ When decreasing numbers, the cap can't exceed the allocation (validated by model
 The team might be asked how many devices we have unallocated (typically computers rather than routers).
 
 ```ruby
-SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:cap) - SchoolDeviceAllocation.by_device_type(:std_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:devices_ordered) # for computers
-SchoolDeviceAllocation.by_device_type(:coms_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:cap) - SchoolDeviceAllocation.by_device_type(:coms_device).includes(:school).where(schools: {order_state: :can_order, status: :open}).sum(:devices_ordered) # for routers (coms_device isn't a typo)
+School.where(order_state: :can_order, status: :open).sum(:raw_laptop_cap) - School.where(order_state: :can_order, status: :open).sum(:raw_laptops_ordered) # for computers
+School.where(order_state: :can_order, status: :open).sum(:raw_router_cap) - School.where(order_state: :can_order, status: :open).sum(:raw_routers_ordered) # for routers (coms_device isn't a typo)
 ```
 
 Generating the comprehensive "all allocations" report is described in more detail at `docs/reporting_allocations.md`.
 
-## Relevant code
+## Virtual Cap documentation
 
-* `school_device_allocation.rb`
-* `allocation_updater.rb`
-* `school_order_state_and_cap_update_service.rb`
-* `school_can_order_devices_notifications.rb`
-* `cap_change_notifier.rb`
-* `cap_update_request.rb`
-* `cap_update_request.xml.builder`
-* `allocations_exporter.rb`
-
-Cap documentation diagram is at `https://github.com/DFE-Digital/get-help-with-tech/blob/main/docs/virtual_cap_pools.md`
+Cap documentation is at `https://github.com/DFE-Digital/get-help-with-tech/blob/main/docs/virtual_cap_pools.md`
 
 ## Changing the cap/allocation for an individual school
 
@@ -53,12 +44,12 @@ To get into the production console:
 In the console, grab the school first, then something like:
 
 ```ruby
-school.std_device_allocation.update(cap: 10, allocation: 10) # for computers
-school.coms_device_allocation.update(cap: 10, allocation: 10) # for routers (coms_device_allocation isn't a typo)
-UpdateSchoolDevicesService.new(school: school, order_state: :can_order).update!
+UpdateSchoolDevicesService.new(school: school, laptop_cap: 10, laptop_allocation: 10).call
+UpdateSchoolDevicesService.new(school: school, router_cap: 10, router_allocation: 10).call
+UpdateSchoolDevicesService.new(school: school, order_state: :can_order).call
 ```
 
-The last line above will send out e-mails reflecting the change. 
+This will send out e-mails reflecting the change. 
 
 ## Changing the cap/allocation for multiple schools
 
@@ -118,8 +109,7 @@ Use ```make <env> download``` to download the exported CSV:
 First build the list of schools that represent the subset:
 
 ```
-allocations = SchoolDeviceAllocation.has_not_fully_ordered.includes(:school).where(school: { type: 'FurtherEducationSchool' })
-schools = School.where(id: allocations.pluck(:school_id))
+schools = School.has_not_fully_ordered_laptops.where(type: 'FurtherEducationSchool')
 ```
 
 Pass the collection of schools to the export method of the AllocationsExporter:

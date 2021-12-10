@@ -2,135 +2,138 @@
 
 ## Overview
 
-Before virtual cap pools were implemented, each school would have a `SchoolDeviceAllocation` for devices and possibly another `SchoolDeviceAllocation` for routers.  The `SchoolDeviceAllocation` contains the `allocation`, `cap` (the amount of their allocation they can currently order) and a `devices_ordered` value indicating how much of the `cap` had been used.
+As described on [Who Will Order Devices](./who_will_order_devices.md) Virtual Cap Pools or simply vcaps, are a way for responsible bodies centrally managing some schools to be able to put all their allocated devices in a single pool so that any school can put orders for the whole amount of devices shared.
 
-The `cap` values are sent automatically to Computacenter so that they are able to control the amount available for the school to order via Techsource.  The `devices_ordered` values are updated by Computacenter once a school has placed an order.
+Usually devices get delivered to one of the schools. Once there, they are configured and distributed to the rest of the schools in the pool.
 
-In Techsource, users can order devices only for schools they are associated with. When devices have been ordered for a school, the devices are delivered to that school's address. This works fine for most schools, especially those devolved schools which are managing their own devices.  However, some responsible bodies that manage their schools centrally needed the abilty to have devices sent to a central location rather than directly to individual schools. Typically this was to facilitate the installation, configuration and distribution of the devices from a centralised IT office.
 
-The solution to this for centrally managed schools was to provide a virtual cap pool as means to group together device and/or router allocations within a responsible body and enable the full amount available to be ordered for, and therefore delivered to, any of the organisation's schools.
+## Automatically adding schools
 
-## Implementation
+Schools are normally automatically added to a virtual pool when they set to be centrally managed by their responsible body and it has a vcap enabled.
 
-![Class diagram](./images/virtual_cap_classes.svg)
 
-The virtual cap pool implementation add two models to the schema, `VirtualCapPool` and `SchoolVirtualCap`.
+## Allocation numbers for Virtual Cap Pools
 
-A `ResponsibleBody` can have one `VirtualCapPool` per device type. Currently we have two types, 'device' and 'coms' representing laptop/tablet devices and routers respectively.
+Conceptually, given that centrally managed schools in a vcap share their devices allocated with the rest of schools in the pool, we can talk about three different components on a vcap:
 
-The `SchoolVirtualCap` is a join table between a `SchoolDeviceAllocation` of a given type and the `VirtualCapPool` of the same type.
+- **Allocation**: sum of the devices assigned to each of the schools in the pool
+  
+- **Cap**: sum of the raw caps of the schools in the pool as defined in [Who Will Order Devices](./who_will_order_devices.md) for individually managed schools. Note that, if the school is set to `cannot_order`, its raw_cap matches the number of devices already ordered by that school so far.
+  
+- **Devices Ordered**: sum of devices ordered by each school in the pool.
+  
+We can easily understand this via an example:
 
-Additionally, each `ResponsibleBody` instance has an attribute that determines whether or not the virtual cap pool functionality is enabled.  This attribute is a boolean value named `vcap`.  When this flag is set, the `allocation`, `cap` and `devices_ordered` values for the responsible body's centrally managed schools are taken from the virtual cap pool rather than the school.
-
-### Raw values
-
-Once in a virtual pool, the accessors for `allocation`, `cap` and `devices_ordered` for a `SchoolDeviceAllocation`  retrieve their values from the associated `VirtualCapPool`. To enable the original values to be exposed in the service UI, additional accessor methods have been added that retrieve the local values for a given instance. The accessors are all prefixed with `raw_` - `raw_allocation`, `raw_cap` and `raw_devices_ordered`.
-
-### Adjusted cap
-
-The `cap` value passed to Computacenter for a school in a virtual cap pool needs to be adjusted based on how many devices have already been ordered.  This is to ensure that the full amount of devices available to order could be ordered for any school in the pool.
-
-e.g.
-
-A virtual cap pool has 20 devices in total available to order. Only one school in the pool has placed orders and it has ordered 10 devices. The cap updates sent to Computcenter would have a `cap` value of `20` for all the schools that haven't ordered and a `cap` value of `30` for the school that has already ordered (20 + 10 already ordered).  This enables the full amount of `20` devices to be ordered from any school. Computacenter track how many have been ordered and will perform the calculation:
-
-> cap - devices already ordered = amount available to order
-
-so we need to adjust the `cap` to add the amount already ordered.
-
-The cap adjustment is performed in the `SchoolVirtualCap#adjusted_cap` method
-
-### Notification of changes
-
-Changes to the `allocation` and `cap` values of a `SchoolDeviceAllocation` need to be propagated up to the `VirtualCapPool`. This is done using `touch: true` on the model associations and the `after_touch` `ActiveRecord::Callbacks` framework.
-
-![Touch event chain](images/virtual_cap_touch_chain.svg)
-
-### Cap updates to Computacenter
-
-Before virtual cap pools, cap update requests were only sent to Computacenter when a school's order state was changed via the `UpdateSchoolDevicesService`. 
-
-With virtual cap pools and the shared caps, we must also generate cap update requests whenever the cap amount of the pool changes. The change must be sent to Computacenter for all schools in that pool.
-
-![Cap update diagram](./images/virtual_cap_update_process.svg)
-
-### Adding a school to a pool
-
-#### Prerequisites
-
-`ResponsibleBody` _must_
-
-* Have `vcap` set to `true`
-
-`School` _must_
-
-* Be centrally managed - `school.orders_managed_centrally?` returns `true`
-* Belong to the same responsible body as the `VirtualCapPool`
-* Have at least 1 device allocation record
-* Not already be in the `VirtualCapPool`
-
-#### Automatically adding schools
-
-Schools are normally automatically added to a virtual pool when they are enabled for ordering and the above prerequisites are in place.  This takes place via the `UpdateSchoolDevicesService#update!` method used to change the school's order state.
-
-#### Manually add a school
-
-Sometimes it may be necessary to add schools to a pool outside of this process.
-
-1. Ensure the prerequisites above are in place
-2. Add the school to the responsible body's virtual pools
-
-```ruby
-AddSchoolToVirtualCapPoolService.new(school).call
+School A:
+```
+school_a.order_state #=> 'can_order'
+school_a.raw_laptop_allocation #=> 10
+school_a.circumstances_laptops #=> 0
+school_a.over_order_reclaimed_laptops #=> 0
+school_a.raw_laptops_ordered  #=> 0
 ```
 
-This will add the school's device allocations to the appropriate virtual pools
-
-3. Check that the school's preorder status looks correct,  it may be necessary to force the preorder status to refresh:
-
-```ruby
-school.refresh_preorder_status!
+that means this school was allocated 10 laptops, 10 (10-0-0) is the maximum number that could be ordered (raw cap) and it has ordered 0 laptops so far:
+```
+school_a.raw_laptops #=> [10, 10, 0] # raw_allocation: 10, raw_cap: 10, devices_ordered: 0 for laptops
 ```
 
-4. Check that the virtual pool information looks correct, if necessary force a recalculation:
-
-```ruby
-rb.calculate_vcaps!
-=> [#<VirtualCapPool:0x0000564a34d8fef8
-  id: 974,
-  device_type: "coms_device",
-  responsible_body_id: 2777,
-  cap: 0,
-  devices_ordered: 0,
-  created_at: Tue, 24 Nov 2020 11:33:01.114249000 GMT +00:00,
-  updated_at: Thu, 07 Jan 2021 13:28:20.375824000 GMT +00:00,
-  allocation: 0>,
- #<VirtualCapPool:0x0000564a34d8fc50
-  id: 975,
-  device_type: "std_device",
-  responsible_body_id: 2777,
-  cap: 1172,
-  devices_ordered: 1207,
-  created_at: Tue, 24 Nov 2020 11:33:01.155062000 GMT +00:00,
-  updated_at: Thu, 07 Jan 2021 13:28:20.432806000 GMT +00:00,
-  allocation: 1213>]
+School B, in the same pool, has these numbers:
+```
+school_b.order_state #=> 'can_order_for_specific_circumstances'
+school_b.raw_laptop_allocation #=> 10
+school_b.circumstances_laptops #=> -3
+school_b.over_order_reclaimed_laptops #=> 0
+school_b.raw_laptops_ordered #=> 0
+```
+so 
+```
+school_b.raw_laptops #=> [10, 7, 0]
 ```
 
-5. You can also verify that a cap update has been sent to Computacenter for the school from the `cap_update_request_timestamp`
-
-```ruby
-school.std_device_allocation
-=> #<SchoolDeviceAllocation:0x0000564a36cdd670
- id: 20915,
- school_id: 20979,
- device_type: "std_device",
- allocation: 74,
- devices_ordered: 15,
- created_at: Thu, 27 Aug 2020 13:03:26.814923000 BST +01:00,
- updated_at: Thu, 07 Jan 2021 13:28:20.807274000 GMT +00:00,
- last_updated_by_user_id: nil,
- created_by_user_id: nil,
- cap: 74,
- cap_update_request_timestamp: Thu, 07 Jan 2021 13:28:20.440683000 GMT +00:00,
- cap_update_request_payload_id: "2173f28f-c6be-4a46-87ff-d29de6033a9d">
+Similarly, a third school in the pool, School C:
 ```
+school_c.order_state                  #=> 'cannot_order'
+school_c.raw_laptop_allocation        #=> 10
+school_c.circumstances_laptops        #=> 0
+school_c.over_order_reclaimed_laptops #=> 0
+school_c.raw_laptops_ordered          #=> 0
+```
+so
+```
+school_c.raw_laptops #=> [10, 0, 0] # raw_cap is 0 instead of (10-0-0) because the school is set to can't order devices.
+```
+
+Therefore, if these are all the schools in the vcap, we can say:
+
+- vcap allocation equals to 30 laptops
+- vcap cap equals to 20 laptops (maximum number of laptops allowed to be ordered)
+- vcap laptops ordered equals to 0 (laptops ordered so far by all the schools in the pool)
+
+When the vcap gets computed, their 3 allocation number fields gets populated like this:
+```
+vcap.laptop_allocation: 30
+vcap.laptop_cap: 20
+vcap.laptops_ordered: 0
+```
+We can get these numbers listed together with the #laptops method:
+```
+vcap.laptops #=> [30, 20, 0]
+```
+
+
+## Placing devices orders
+[Computacenter outgoing api](./computacenter_outgoing_api.md) document describes how GHwT system reports individual school and vcap allocation numbers to the supplier (Computacenter) for the users to place device orders.
+
+When a user places an order in the suppliers portal (CC's TechSource website) it will get reported instantaneously back to GHwT so that individual school and vcap allocation numbers get inmediately updated accordingly.
+
+In the example described above, CC should not allow orders to be put on School C given that it is set to `cannot order.` Let's say an order for 7 devices is put on School A. That would result in the following updates:
+```
+school_a.raw_laptops #=> [10, 10, 7]
+school_b.raw_laptops #=> [10,  7, 0]
+school_c.raw_laptops #=> [10,  0, 0]
+vcap.laptops         #=> [30, 17, 7]
+```
+
+If later on, the responsible body associated to these schools decides to send all the remaining devices in the pool to School A, it might put a new order on it so the updated numbers for the pool would be like this:
+```
+school_a.raw_laptops #=> [10, 17, 17]
+school_b.raw_laptops #=> [10,  0, 0]
+school_c.raw_laptops #=> [10,  0, 0]
+vcap.laptops         #=> [30, 17, 17]
+```
+
+If we dig even deeper into the schools new numbers it would show this:
+```
+school_a.raw_laptops #=> [10,  0,  7, 17] # allocation: 10, circumstances: 0, over_order_reclaimed: +7, ordered: 17
+school_b.raw_laptops #=> [10, -3, -7,  0] 
+school_c.raw_laptops #=> [10,  0,  0,  0]
+vcap.laptops         #=> [30,    17,  17]
+```
+
+A few things to note:
+- School A has borrowed 7 devices from School B (over_order_reclaimed_laptops column)
+- School A cap has automatically been increased from 10 to 17 (10-0+7)
+- School A cap and devices ordered are higher than the initial school allocation
+- School B cap has lent 7 devices to School A (-7 over ordered reclaimed devices)
+- School B cap has decreased automatically from 10 devices allocated to 0 (3 and 7 devices have gone away because of cicumstances status and over order lend)
+- The pool cap (17 devices) has been fully ordered. CC should not allow any more orders on this vcap even though the overall allocation is higher (30) but 10 of them cannot be ordered and 3 went away after setting School B to `can_order_for_specific_circumstances`
+- Even though technically School A has ordered more devices than allocated, the whole vcap is not in over order status because total devices ordered (17) does not surpass the total cap of the pool (17).
+
+If for some reason, CC allows extra orders on this vcap, the last point wouldn't be true any longer so in that case, we say the vcap is in `over order`:
+```
+school_a.raw_laptops #=> [10,  0,  8, 18, :can_order]    which makes [10, 18, 18]
+school_b.raw_laptops #=> [10, -3, -7,  0, :can_order]    which makes [10,  0,  0]
+school_c.raw_laptops #=> [10,  0,  0,  0, :cannot_order] which makes [10,  0,  0]
+vcap.laptops         #=>                                             [30, 18, 18]
+```
+
+Note that the vcap is in over order even though there are 10 devices allocated (but not available) on School C.
+This is an edge case. Normally over orders happens when the number of devices ordered is higher than the overall allocation of the pool:
+```
+school_a.raw_laptops #=> [10, 0,  21, 31, :can_order] which makes [10, 31, 31]
+school_b.raw_laptops #=> [10, 0, -10,  0, :can_order] which makes [10,  0,  0]
+school_c.raw_laptops #=> [10, 0, -10,  0, :can_order] which makes [10,  0,  0]
+vcap.laptops         #=>                                          [30, 31, 31] 
+```
+21 devices borrowed but only 20 lent. That makes 1 over ordered device.
