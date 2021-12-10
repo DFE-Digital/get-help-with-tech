@@ -211,8 +211,6 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
         [
           [
             { 'capType' => 'DfE_RemainThresholdQty|Std_Device', 'shipTo' => '11', 'capAmount' => '3' },
-          ],
-          [
             { 'capType' => 'DfE_RemainThresholdQty|Coms_Device', 'shipTo' => '11', 'capAmount' => '2' },
           ],
         ]
@@ -226,14 +224,16 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
         expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
       end
 
-      it 'do not notify Computacenter of laptops cap change by email' do
+      it 'notify Computacenter of laptops cap change by email' do
         expect { patch :update, params: params }
-          .not_to have_enqueued_mail(ComputacenterMailer)
+          .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
+                .with(params: { school: school, new_cap_value: 4 }, args: []).once
       end
 
-      it "do not notify support if no school's organizational users" do
+      it "notify support if no school's organizational users" do
         expect { patch :update, params: params }
-          .not_to have_enqueued_mail(CanOrderDevicesMailer)
+          .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
+                .with(params: { school: school }, args: []).once
       end
     end
   end

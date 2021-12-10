@@ -55,11 +55,11 @@ private
   end
 
   def notify_device?(device_type)
-    ordering?(device_type) && initial_raw_cap(device_type) != school.raw_cap(device_type)
+    update_state? || (ordering?(device_type) && initial_raw_cap(device_type) != school.raw_cap(device_type))
   end
 
   def notify_other_agents?
-    notify_computacenter && (school.cannot_order? || !vcaps?)
+    notify_computacenter && (school.cannot_order? || update_state? || !vcaps?)
   end
 
   def notify_other_agents
