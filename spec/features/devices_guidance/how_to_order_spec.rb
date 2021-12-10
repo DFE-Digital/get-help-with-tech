@@ -8,7 +8,7 @@ RSpec.feature 'How to order devices', type: :feature do
 
     expect(devices_guidance_how_to_order_page).to be_displayed
 
-    expect(devices_guidance_how_to_order_page.page_heading).to have_content('How to order DfE laptops, tablets and routers')
+    expect(devices_guidance_how_to_order_page.page_heading).to have_content('How to order DfE laptops and tablets')
     expect(devices_guidance_how_to_order_page.steps.length).to eq(4)
   end
 end

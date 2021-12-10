@@ -11,7 +11,7 @@ Examples of this include disadvantaged children:
 
 This offer applies to maintained schools, pupil referral units, academy trusts and hospital schools, as well as sixth-form colleges and further education institutions that have enrolled 14 to 16-year-olds.
 
-They were also able to request internet access for disadvantaged children through increased mobile phone data allowances or [4G wireless routers](/internet-access). Organisations can still order 4G routers, although the programme no longer offers mobile data.
+They were also able to request internet access for disadvantaged children through increased mobile phone data allowances or [4G wireless routers](/internet-access).
 
 ## Devices are available for disadvantaged pupils and students
 
@@ -22,7 +22,7 @@ They were also able to request internet access for disadvantaged children throug
 * in any year group, including those in 16 to 19 education, who attend a hospital school
 * in years 3 to 13 with state-funded places in independent special schools or alternative provision, who are eligible for free school meals
 
-Laptops and internet access are also available for care leavers aged 16 to 25.
+Laptops are also available for care leavers aged 16 to 25.
 
 [Find out how we calculated how many devices could be ordered](/devices/device-allocations).
 

@@ -72,7 +72,7 @@ private
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: @school.raw_allocation(:router).positive? ? 'routers are available to order' : 'no routers are available to order',
+      value: 'routers are not available',
     }
   end
 
