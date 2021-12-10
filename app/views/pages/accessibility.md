@@ -1,6 +1,4 @@
-Get help with technology is a service from the Department for Education.
-
-We designed it using [GOV.UK accessible design principles](https://design-system.service.gov.uk/accessibility/).
+Get help with technology is a service from the Department for Education. We designed it using [GOV.UK accessible design principles](https://design-system.service.gov.uk/accessibility/).
 
 We want as many people as possible to be able to use this website. For example, that means you should be able to:
 
@@ -16,8 +14,7 @@ If you need information in a different format, email [COVID.TECHNOLOGY@education
 we&rsquo;ll respond to you within 3 working days. It will help us if you can tell us what assistive technology you use.
 
 [AbilityNet](https://mcmw.abilitynet.org.uk/) has advice on making your device easier to use if you have a disability. They
-have a free helpline on 0800 048 7642. You can also email
-[enquiries@abilitynet.org.uk](mailto:enquiries@abilitynet.org.uk)
+have a free helpline on 0800 048 7642. You can also email: [enquiries@abilitynet.org.uk](mailto:enquiries@abilitynet.org.uk)
 
 ## Reporting accessibility problems
 
