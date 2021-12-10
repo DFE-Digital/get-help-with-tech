@@ -90,8 +90,8 @@ capAmount(school, device_type) = if school.cannot_order?
                                    school.vcap_cap(device_type) - school.vcap_devices_ordered(device_type) + school.raw_devices_ordered(device_type)
                                  end
 ```
-that is, the capAmount sent to CC for each school in the vcap is the overall number of devices remaining to order in the pool increased by the number of devices ordered by each particular school,
-so that, when CC computes the available devices to order:
+Therefore, the capAmount sent to CC for each school in the vcap is the overall number of devices remaining to order in the pool increased by the number of devices ordered so far by each particular school.
+When CC computes the available devices to order for a school:
 ```
 laptopsRemainingToOrder(school) = capAmount(school, :laptop) - devicesOrdered(school, :laptop)
 routersRemainingToOrder(school) = capAmount(school, :router) - devicesOrdered(school, :router)
@@ -99,10 +99,20 @@ routersRemainingToOrder(school) = capAmount(school, :router) - devicesOrdered(sc
 
 the result for all the schools in the pool will be exactly the overall number of devices still available to order in the shared pool.
 
+Note that for schools in the vcap set to `cannot_order`, the `capAmount` value sent to CC matches the number of devices ordered by the school so far.
+This way, the resulting remaining devices to order for those schools will be 0 (no more devices can be ordered).
+
 #### Example:
 ```
 Vcap School A (can_order):    [10, 10, 3] #=> capAmount: 20 - 3 + 3 = 20
 Vcap School B (can_order):    [10, 10, 0] #=> capAmount: 20 - 3 + 0 = 17
 Vcap School C (cannot_order): [10,  0, 0] #=> capAmount: 0
 Vcap:                         [30, 20, 3] #> 20 - 3 = 17 devices available to order                
+```
+
+On CC side, after receiving these cap updates, the calculations will be:
+```
+devicesRemainingToOrder(school_A) = 20 - 3 = 17
+devicesRemainingToOrder(school_B) = 17 - 0 = 17
+devicesRemainingToOrder(school_C) =  0 - 0 =  0
 ```
