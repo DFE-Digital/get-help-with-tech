@@ -80,7 +80,7 @@ laptopsRemainingToOrder(school) = capAmount(school, :laptop) - devicesOrdered(sc
 routersRemainingToOrder(school) = capAmount(school, :router) - devicesOrdered(school, :router)
 ```
 
-#### Schools centrally managed
+#### Schools that are centrally managed
 With virtual cap pools and the shared caps, we must generate cap update requests whenever the cap amount of the pool changes. The change must be sent to Computacenter for all schools in that pool according to the expression:
 
 ```
