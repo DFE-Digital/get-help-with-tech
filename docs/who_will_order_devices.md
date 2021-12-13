@@ -1,6 +1,6 @@
 # Who will order devices
 
-DfE managers of the GHwT programme allocate a certain number of devices (laptops and routers) to each school in the programme.
+DfE policy allocates a certain number of devices (laptops and routers) to each school in the GHwT programme.
 
 For children to obtain and benefit from the use of those devices, some authorized users (either school users or a user from the school's responsible body) need to order those devices via the supplier's portal.
 Currently Computacenter's TechSource website.
