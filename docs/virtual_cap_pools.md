@@ -82,7 +82,7 @@ vcap.laptops #=> [30, 20, 0]
 ```
 
 
-## Placing devices orders
+## Placing device orders
 [Computacenter outgoing api](./computacenter_outgoing_api.md) document describes how GHwT system reports individual school and vcap allocation numbers to the supplier (Computacenter) for the users to place device orders.
 
 When a user places an order in the suppliers portal (CC's TechSource website) it will get reported instantaneously back to GHwT so that individual school and vcap allocation numbers get inmediately updated accordingly.
