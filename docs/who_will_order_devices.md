@@ -2,7 +2,7 @@
 
 DfE managers of the GHwT programme allocate a certain number of devices (laptops and routers) to each school in the programme.
 
-For children to obtain and benefit the use of those devices, some authorized users (either school users or some from the school's responsible body) need to order those devices via the supplier's portal.
+For children to obtain and benefit from the use of those devices, some authorized users (either school users or a user from the school's responsible body) need to order those devices via the supplier's portal.
 Currently Computacenter's TechSource website.
 
 What users are authorized to place devices orders for a given school?
