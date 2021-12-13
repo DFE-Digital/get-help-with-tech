@@ -18,7 +18,7 @@ Therefore, the authorised users able to place orders for the devices allocated t
 
 - Those from the organization set by the school.
 - In case no value is set by the school, the default value set by the responsible body will apply.
-- Also, it is technically possible to have both fields unset, (meaning `a decision is yet to be made`) though none of the schools currently in the programme are left unset like that.
+- Also, it is technically possible to have both fields unset, (meaning `a decision is yet to be made`) though none of the schools currently (Dec 2021) in the programme are left unset like that.
 
 When a school is directly 
 ```
