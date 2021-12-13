@@ -247,22 +247,4 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
     end
   end
-
-  describe 'router_allocation' do
-    context 'when zero' do
-      let(:school) { build(:school) }
-
-      it 'does not show Router allocation' do
-        expect(result.text).not_to include('Router allocation')
-      end
-    end
-
-    context 'when non-zero value present' do
-      let(:school) { build(:school, routers: [1, 0, 0]) }
-
-      it 'shows Router allocation' do
-        expect(result.text).to include('Router allocation')
-      end
-    end
-  end
 end
