@@ -40,7 +40,7 @@ Given this XML packet in the body -
 </CapAdjustmentRequest>
 ```
 
-it will report CC the `capAmount` allowed for each school in a record. See below for an explanation on the way these values are calculated.
+it will report to CC the `capAmount` allowed for each school in a record. See below for an explanation of the way these values are calculated.
 
 #### Responses
 
