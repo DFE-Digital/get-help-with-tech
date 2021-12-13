@@ -5,7 +5,7 @@ module PageObjects
         set_url '/support/users/search'
 
         element :search_term, 'input[type=text]'
-        element :submit, 'button[type=submit]'
+        element :submit, 'button[name=search]'
         element :audit_data_checkbox, 'input[name="include_audit_data"]'
         element :export_button, 'button[name="export"]'
       end

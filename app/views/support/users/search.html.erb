@@ -21,7 +21,7 @@
       <%= f.govuk_text_field :email_address_or_full_name,
                              label: { text: 'Email address or name', size: 'm' } %>
 
-      <%= f.govuk_submit 'Search' %>
+      <%= f.govuk_submit 'Search', name: :search %>
     <% end %>
   </div>
 </div>
