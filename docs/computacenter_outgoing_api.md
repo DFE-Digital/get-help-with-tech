@@ -69,7 +69,7 @@ If all `Record`s are processed successfully:
 The devices supplier (CC currently) keeps records of the devices ordered by any school at anytime.
 Actually, given that user orders are put in their portal, the supplier knows first-hand the right number of devices ordered by any school.
 
-It is DfE responsability to keep CC updated with the maximum number of devices each school can order (`capAmount`) at any time by hitting this api endpoint whenever that number changes.
+It is DfE's responsibility to keep CC updated with the maximum number of devices each school can order (`capAmount`) at any time by hitting this api endpoint whenever that number changes.
 
 #### Schools individually managed
 For a school individually managed, all CC needs as `capAmount` for that school is simply the `raw_cap` value for each device type (`laptop` and `router`).
