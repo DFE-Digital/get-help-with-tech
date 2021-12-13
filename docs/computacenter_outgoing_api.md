@@ -72,7 +72,7 @@ Actually, given that user orders are put in their portal, the supplier knows fir
 It is DfE's responsibility to keep CC updated with the maximum number of devices each school can order (`capAmount`) at any time by hitting this api endpoint whenever that number changes.
 
 #### Schools individually managed
-For a school individually managed, all CC needs as `capAmount` for that school is simply the `raw_cap` value for each device type (`laptop` and `router`).
+For a devolved schools, all CC needs as `capAmount` for that school is simply the `raw_cap` value for each device type (`laptop` and `router`).
 Once they get those values, they can easily calculate the number of remaining devices available to order:
 
 ```
