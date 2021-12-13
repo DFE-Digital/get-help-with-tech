@@ -2,7 +2,7 @@
 
 ## Overview
 
-As described on [Who Will Order Devices](./who_will_order_devices.md) Virtual Cap Pools or simply vcaps, are a way for responsible bodies centrally managing some schools to be able to put all their allocated devices in a single pool so that any school can put orders for the whole amount of devices shared.
+As described on [Who Will Order Devices](./who_will_order_devices.md) Virtual Cap Pools or simply vcaps, are a way for responsible bodies centrally managing some schools to be able to put all their allocated devices into a single pool. This enables the responsible body user ordering for the pool to do so against any single school in the pool for the whole amount of devices.
 
 Usually devices get delivered to one of the schools. Once there, they are configured and distributed to the rest of the schools in the pool.
 
