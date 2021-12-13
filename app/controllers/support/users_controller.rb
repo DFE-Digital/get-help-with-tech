@@ -1,5 +1,6 @@
 class Support::UsersController < Support::BaseController
   before_action :set_user, except: %i[new create search results export]
+  before_action :set_user_ids, only: %i[export]
   before_action { authorize User }
   before_action :set_school_if_present, only: %i[new create]
   before_action :set_responsible_body_if_present, only: %i[new create]
@@ -59,11 +60,9 @@ class Support::UsersController < Support::BaseController
 
   def export
     authorize User, :export?
-    @user_ids = policy_scope(User).ids
-    csv = Support::ExportUsersService.call(@user_ids)
     respond_to do |format|
       format.csv do
-        render csv: csv, filename: 'users'
+        render csv: Support::ExportUsersService.call(@user_ids), filename: 'users'
       end
     end
   end
@@ -87,6 +86,14 @@ class Support::UsersController < Support::BaseController
 
 private
 
+  def export_params
+    params.permit(:include_audit_data)
+  end
+
+  def export_scope
+    export_params['include_audit_data'].to_i == 1 ? :all : :from_responsible_body_or_schools
+  end
+
   # this is necessary to turn orders_devices=true/false into 0/1
   def present(user)
     SchoolUserPresenter.new(user)
@@ -108,6 +115,10 @@ private
   def set_user
     @user = User.not_deleted.find(params[:id])
     authorize @user
+  end
+
+  def set_user_ids
+    @user_ids = policy_scope(User).send(export_scope).ids
   end
 
   def set_school_if_present
