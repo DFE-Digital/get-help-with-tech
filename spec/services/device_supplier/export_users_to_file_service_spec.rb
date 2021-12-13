@@ -1,11 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
+RSpec.describe DeviceSupplier::ExportUsersToFileService, type: :model do
   describe '#call' do
     let(:user) { create(:school_user, :relevant_to_computacenter, :with_a_confirmed_techsource_account) }
     let(:filename) { Rails.root.join('tmp/device_supplier_export_users_test_data.csv') }
     let(:csv) { CSV.read(filename, headers: true) }
+    let(:expected_headers) { DeviceSupplier::UserReport.headers }
+    let(:relevent_user_count) { User.relevant_to_device_supplier.count }
     let(:user_csv_row) { csv[0] }
+    let(:user_ids) { User.ids }
     let(:service_call) { service.call }
     let(:sold_to) { user.school.sold_to }
 
@@ -13,7 +16,7 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
       remove_file(filename)
     end
 
-    subject(:service) { described_class.new(filename) }
+    subject(:service) { described_class.new(filename, user_ids: user_ids) }
 
     before do |test|
       user
@@ -25,13 +28,13 @@ RSpec.describe DeviceSupplier::ExportUsersService, type: :model do
         expect(File.exist?(filename)).to be true
       end
 
-      it 'includes a heading row and all Schools in the CSV file' do
+      it 'includes a heading row and all relevant Users in the CSV file' do
         line_count = `wc -l "#{filename}"`.split.first.to_i
-        expect(line_count).to eq(School.count + 1)
+        expect(line_count).to eq(relevent_user_count + 1)
       end
 
       it 'includes the correct headers' do
-        expect(csv.headers).to match_array(DeviceSupplier::ExportUsersService.headers)
+        expect(csv.headers).to match_array(expected_headers)
       end
     end
 

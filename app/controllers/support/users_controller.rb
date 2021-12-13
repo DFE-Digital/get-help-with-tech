@@ -1,5 +1,5 @@
 class Support::UsersController < Support::BaseController
-  before_action :set_user, except: %i[new create search results]
+  before_action :set_user, except: %i[new create search results export]
   before_action { authorize User }
   before_action :set_school_if_present, only: %i[new create]
   before_action :set_responsible_body_if_present, only: %i[new create]
@@ -55,6 +55,17 @@ class Support::UsersController < Support::BaseController
     @results = @search_form.results
     @related_results = @search_form.related_results
     @maximum_search_result_number_reached = @search_form.maximum_search_result_number_reached?
+  end
+
+  def export
+    authorize User, :export?
+    @user_ids = policy_scope(User).ids
+    csv = Support::ExportUsersService.call(@user_ids)
+    respond_to do |format|
+      format.csv do
+        render csv: csv, filename: 'users'
+      end
+    end
   end
 
   def confirm_destroy; end

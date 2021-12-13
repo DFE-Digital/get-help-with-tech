@@ -1,18 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
+RSpec.describe DeviceSupplier::ExportAllocationsToFileService, type: :model do
   describe '#call' do
-    let(:school) { create(:school, :manages_orders, :can_order, laptops: [1, 0, 0]) }
-    let(:rb) { school.responsible_body }
-    let(:filename) { Rails.root.join('tmp/device_supplier_export_allocations_test_data.csv') }
     let(:csv) { CSV.read(filename, headers: true) }
+    let(:expected_headers) { DeviceSupplier::AllocationReport.headers }
+    let(:filename) { Rails.root.join('tmp/device_supplier_export_allocations_test_data.csv') }
+    let(:rb) { school.responsible_body }
+    let(:school) { create(:school, :manages_orders, :can_order, laptops: [1, 0, 0]) }
     let(:school_csv_row) { csv.find { |row| row['urn'] == school.urn.to_s } }
+    let(:school_ids) { School.ids }
 
     after do
       remove_file(filename)
     end
 
-    subject(:service) { described_class.new(filename) }
+    subject(:service) { described_class.new(filename, school_ids: school_ids) }
 
     before { stub_computacenter_outgoing_api_calls }
 
@@ -32,7 +34,7 @@ RSpec.describe DeviceSupplier::ExportAllocationsService, type: :model do
       end
 
       it 'includes the correct headers' do
-        expect(csv.headers).to match_array(DeviceSupplier::ExportAllocationsService.headers)
+        expect(csv.headers).to match_array(expected_headers)
       end
     end
 

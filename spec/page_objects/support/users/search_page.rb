@@ -6,6 +6,7 @@ module PageObjects
 
         element :search_term, 'input[type=text]'
         element :submit, 'button[type=submit]'
+        element :export_button, 'input[name="export"]'
       end
     end
   end

@@ -25,3 +25,23 @@
     <% end %>
   </div>
 </div>
+
+<% if current_user.is_support? %>
+  <div class="govuk-grid-row govuk-!-margin-top-9">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Export all users
+      </h1>
+
+      <p class="govuk-body">
+        Generate a CSV file of all users.
+      </p>
+
+      <%= button_to 'Download CSV',
+                    export_support_users_path(format: :csv),
+                    class: 'govuk-button',
+                    name: :export,
+                    method: :get %>
+    </div>
+  </div>
+<% end %>
