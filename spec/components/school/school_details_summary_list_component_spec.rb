@@ -70,20 +70,4 @@ describe School::SchoolDetailsSummaryListComponent do
       expect(action_for_row(result, 'Recovery email')).not_to be_present
     end
   end
-
-  describe 'router allocation' do
-    context 'when there is a zero allocation' do
-      it 'does not show router allocation' do
-        expect(result.text).not_to include('Router allocation')
-      end
-    end
-
-    context 'when there is a non-zero allocation' do
-      let(:school) { create(:school, :primary, :la_maintained, routers: [1, 0, 0]) }
-
-      it 'shows router allocation' do
-        expect(result.text).to include('Router allocation')
-      end
-    end
-  end
 end
