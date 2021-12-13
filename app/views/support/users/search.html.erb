@@ -37,11 +37,14 @@
         Generate a CSV file of all users.
       </p>
 
-      <%= button_to 'Download CSV',
-                    export_support_users_path(format: :csv),
-                    class: 'govuk-button',
-                    name: :export,
-                    method: :get %>
+      <%= form_with url: export_support_users_path(format: :csv) do |f| %>
+        <div class="govuk-form-group">
+          <%= f.govuk_check_box :include_audit_data, 1, 0, multiple: false, link_errors: true, label: { text: "Include audit data (soft deleted, support and supplier users)" } %>
+        </div>
+        <div class="govuk-form-group">
+          <%= f.govuk_submit 'Download CSV', name: :export %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
