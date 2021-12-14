@@ -1,4 +1,4 @@
-# Computacenter API
+# Computacenter Incoming API
 
 ## Table of contents
 
@@ -13,7 +13,7 @@
 
 ## Access
 
-The Computacenter API is based at `/computacenter/api/`, and is authenticated-
+The Computacenter incoming API is based at `/computacenter/api/`, and is authenticated-
 only. There is no public access.
 
 All requests must have the headers 'Content-type' and 'Accept' set to an XML MIME type - either `text/xml` or `application/xml`
