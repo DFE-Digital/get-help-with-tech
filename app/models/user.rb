@@ -38,6 +38,7 @@ class User < ApplicationRecord
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
   scope :responsible_body_users, -> { where.not(responsible_body: nil) }
   scope :from_responsible_body_or_schools, -> { left_joins(:user_schools).where('responsible_body_id IS NOT NULL or user_schools.id IS NOT NULL') }
+  scope :not_deleted_from_responsible_body_or_schools, -> { not_deleted.from_responsible_body_or_schools }
   scope :mno_users, -> { where.not(mobile_network: nil) }
   scope :who_can_order_devices, -> { where(orders_devices: true) }
   scope :with_techsource_account_confirmed, -> { where.not(techsource_account_confirmed_at: nil) }

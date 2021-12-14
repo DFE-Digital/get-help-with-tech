@@ -5,7 +5,7 @@ RSpec.feature 'Exporting users' do
   let(:csv) { CSV.parse(page.body, headers: true) }
   let(:expected_headers) { Support::UserReport.headers }
   let(:relevant_users_count) { User.count }
-  let(:school_and_rb_users_count) { User.from_responsible_body_or_schools.count }
+  let(:school_and_rb_users_count) { User.not_deleted_from_responsible_body_or_schools.count }
   let(:search_page) { PageObjects::Support::Users::SearchPage.new }
   let(:support_user) { create(:support_user) }
 

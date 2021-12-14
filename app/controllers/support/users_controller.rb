@@ -91,7 +91,7 @@ private
   end
 
   def export_scope
-    export_params['include_audit_data'].to_i == 1 ? :all : :from_responsible_body_or_schools
+    export_params['include_audit_data'].to_i == 1 ? :all : :not_deleted_from_responsible_body_or_schools
   end
 
   # this is necessary to turn orders_devices=true/false into 0/1
