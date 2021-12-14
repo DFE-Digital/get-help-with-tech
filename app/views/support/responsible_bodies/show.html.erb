@@ -24,6 +24,7 @@
               <p class="govuk-body"><%= @responsible_body.name %>:</p>
               <ul id="responsible-body-centrally-managed-stats" class="govuk-list govuk-list--bullet">
                 <li>manages ordering for <%= centrally_managing_count_or_all_schools(responsible_body: @responsible_body) %> of its schools and colleges</li>
+                <li>vcap: <%= render OrganisationVcapTagComponent.new(@responsible_body) %></li>
                 <li>has <%= what_to_order_allocation_list(@responsible_body) %> available to order right now</li>
                 <li>has ordered <%= what_to_order_state_list(@responsible_body) %> so far</li>
               </ul>
@@ -45,6 +46,7 @@
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name and URN</th>
+              <th scope="col" class="govuk-table__header">Vcap</th>
               <th scope="col" class="govuk-table__header">Status</th>
               <th scope="col" class="govuk-table__header">Devices</th>
               <th scope="col" class="govuk-table__header">Routers</th>
@@ -57,6 +59,7 @@
             <% @schools.each do |school| %>
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell"><%= govuk_link_to "#{school.name} (#{school.urn})", support_school_path(urn: school.urn) %><br><%= school.human_for_school_type %></td>
+                <td class="govuk-table__cell"><%= render OrganisationVcapTagComponent.new(school) %></td>
                 <td class="govuk-table__cell"><%= render SchoolPreorderStatusTagComponent.new(school: school) %></td>
                 <td class="govuk-table__cell">
                   <%= school.raw_allocation(:laptop) %> allocated<br>
