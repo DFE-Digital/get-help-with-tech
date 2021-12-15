@@ -482,6 +482,10 @@ en:
       single_page: "%{count} %{item_name}"
       multiple_pages: "%{item_name} %{from}&thinsp;–&thinsp;%{to} of %{count}"
   components:
+    organisation_vcap_tag_component:
+      vcap:
+        true: 'YES'
+        false: 'NONE'
     school_preorder_status_tag_component:
       status:
         school:

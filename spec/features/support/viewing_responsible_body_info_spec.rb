@@ -315,6 +315,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
     first_row = responsible_body_page.school_rows[0]
     expect(first_row).to have_text('Alpha Primary School (567890)')
+    expect(first_row).to have_text('NONE')
     expect(first_row).to have_text('Needs a contact')
     # devices
     expect(first_row).to have_text('5 allocated')
@@ -327,6 +328,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     expect(first_row).to have_text('School')
 
     second_row = responsible_body_page.school_rows[1]
+    expect(second_row).to have_text('NONE')
     expect(second_row).to have_text('Needs a contact')
     expect(second_row).to have_text('Beta Secondary School (123456)')
     expect(second_row).to have_text('0 allocated')
@@ -360,6 +362,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
     first_row = responsible_body_page.school_rows[0]
     expect(first_row).to have_text('Alpha Primary School (567891)')
+    expect(first_row).to have_text('YES')
     # devices
     expect(first_row).to have_text('5 allocated')
     expect(first_row).not_to have_text('3 caps')
@@ -373,6 +376,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
     second_row = responsible_body_page.school_rows[1]
     expect(second_row).to have_text('Beta Secondary School (123457)')
+    expect(second_row).to have_text('NONE')
 
     # devices
     expect(second_row).to have_text('5 allocated')
@@ -390,8 +394,9 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     stats = responsible_body_page.centrally_managed_stats
 
     expect(stats[0]).to have_text('manages ordering for 1 of 2 of its schools')
-    expect(stats[1]).to have_text('has 2 devices and 6 routers available')
-    expect(stats[2]).to have_text('has ordered 3 devices and 0 routers')
+    expect(stats[1]).to have_text('vcap: YES')
+    expect(stats[2]).to have_text('has 2 devices and 6 routers available')
+    expect(stats[3]).to have_text('has ordered 3 devices and 0 routers')
   end
 
   def and_i_can_see_the_closed_schools_in_the_responsible_body
@@ -419,6 +424,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
     first_row = responsible_body_page.school_rows[0]
     expect(first_row).to have_text('Alpha Primary School (567891)')
+    expect(first_row).to have_text('YES')
     # devices
     expect(first_row).to have_text('5 allocated')
     expect(first_row).not_to have_text('3 caps')
@@ -431,6 +437,7 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
 
     second_row = responsible_body_page.school_rows[1]
     expect(second_row).to have_text('Beta Secondary School (123457)')
+    expect(second_row).to have_text('YES')
 
     # devices
     expect(second_row).to have_text('5 allocated')
@@ -448,7 +455,8 @@ RSpec.feature 'Viewing responsible body information in the support area', type: 
     stats = responsible_body_page.centrally_managed_stats
 
     expect(stats[0]).to have_text('manages ordering for all of its schools')
-    expect(stats[1]).to have_text('has 4 devices and 8 routers available')
-    expect(stats[2]).to have_text('has ordered 4 devices and 0 routers')
+    expect(stats[1]).to have_text('vcap: YES')
+    expect(stats[2]).to have_text('has 4 devices and 8 routers available')
+    expect(stats[3]).to have_text('has ordered 4 devices and 0 routers')
   end
 end
