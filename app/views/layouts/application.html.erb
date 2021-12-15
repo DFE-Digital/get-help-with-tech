@@ -71,12 +71,12 @@
       </div>
     </div>
     <main class="govuk-main-wrapper " id="main-content" role="main">
-      <% if site_banner_message %>
+      <% if Site.banner_message %>
         <div class="govuk-width-container">
           <div class="govuk-grid-row govuk-!-margin-bottom-9" id="site-banner-app-card">
             <div class="govuk-grid-column-full">
               <div class="app-card">
-                  <%= render(SiteBannerComponent.new(message: site_banner_message)) %>
+                  <%= render(SiteBannerComponent.new(message: Site.banner_message)) %>
                 </div>
             </div>
           </div>
