@@ -51,7 +51,7 @@ gem 'pundit'
 gem 'rack-throttle'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 6.1.4.2', '< 6.2'
+gem 'rails', '>= 6.1.4.4', '< 6.2'
 
 # Used for markdown rendering of guidance pages
 gem 'redcarpet'
