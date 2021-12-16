@@ -49,6 +49,11 @@ class User < ApplicationRecord
     where('email_address ILIKE ? OR full_name ILIKE ?', "%#{search_term.strip}%", "%#{search_term.strip}%")
   }
 
+  scope :linked_to_school, ->(school_ids) { manages_school(school_ids).or(manages_school_through_rb(school_ids)) }
+  scope :manages_rb, ->(rb_ids) { where(responsible_body_id: rb_ids) }
+  scope :manages_school_through_rb, ->(school_ids) { manages_rb(ResponsibleBody.where_school_id(school_ids)) }
+  scope :manages_school, ->(school_ids) { left_joins(:user_schools).where(user_schools: { school_id: school_ids }) }
+
   def self.relevant_to_device_supplier
     where(is_computacenter: false, is_support: false).who_have_seen_privacy_notice.who_can_order_devices.not_deleted
   end

@@ -55,6 +55,10 @@ class ResponsibleBody < ApplicationRecord
     )
   end
 
+  def self.where_school_id(school_ids)
+    where('EXISTS (SELECT 1 FROM schools s WHERE s.responsible_body_id = responsible_bodies.id AND s.id IN (?))', Array(school_ids))
+  end
+
   def self.with_at_least_one_preorder_information_completed
     where(
       "EXISTS(
