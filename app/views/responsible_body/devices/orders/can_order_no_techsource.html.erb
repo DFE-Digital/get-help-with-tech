@@ -1,0 +1,16 @@
+<%= render partial: 'heading' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Order devices</span>
+    <h1 class="govuk-heading-xl">Your organisation can order devices</h1>
+
+    <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
+
+    <%= render AllocationComponentFactory.create_component(@responsible_body) %>
+
+    <p class="govuk-body">You do not have a TechSource account. Someone else will need to place your school’s orders.</p>
+
+    <p class="govuk-body"><%= govuk_link_to 'Go to Manage users to see who can place orders', responsible_body_users_path %>.</p>
+  </div>
+</div>

@@ -3,15 +3,17 @@ require 'rails_helper'
 RSpec.feature 'Ordering devices' do
   let(:responsible_body) { create(:local_authority) }
   let(:schools) { create_list(:school, 6, :manages_orders, :with_headteacher, laptops: [1, 1, 0], responsible_body: responsible_body) }
-  let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
+  let(:user) { create(:local_authority_user, :with_a_confirmed_techsource_account, responsible_body: responsible_body, orders_devices: true) }
+  let(:user_no_ts) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: false) }
+  let(:user_awaiting_ts) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
 
   before do
     stub_computacenter_outgoing_api_calls
-    given_i_am_signed_in_as_a_responsible_body_user
     given_my_order_information_is_up_to_date
   end
 
   scenario 'navigate to order devices page' do
+    given_i_am_signed_in_as_a_responsible_body_user
     when_i_visit_the_responsible_body_home_page
     and_i_follow_the_get_laptops_and_tablets_link
     then_i_see_the_get_laptops_and_tablets_page
@@ -21,6 +23,7 @@ RSpec.feature 'Ordering devices' do
   end
 
   scenario 'a responsible body that cannot order devices yet' do
+    given_i_am_signed_in_as_a_responsible_body_user
     when_i_visit_the_responsible_body_home_page
     and_i_follow_the_get_laptops_and_tablets_link
     then_i_see_the_get_laptops_and_tablets_page
@@ -30,12 +33,14 @@ RSpec.feature 'Ordering devices' do
   end
 
   scenario 'a centrally managed school can order for specific circumstances' do
+    given_i_am_signed_in_as_a_responsible_body_user
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
     then_i_see_the_order_for_specific_circumstances_page
   end
 
   scenario 'a centrally managed school can order full allocation' do
+    given_i_am_signed_in_as_a_responsible_body_user
     given_a_centrally_managed_school_can_order_full_allocation
     when_i_visit_the_order_devices_page
     then_i_see_the_order_now_page
@@ -43,6 +48,7 @@ RSpec.feature 'Ordering devices' do
   end
 
   scenario 'centrally managed schools that can order for specific circumstances and full allocation' do
+    given_i_am_signed_in_as_a_responsible_body_user
     given_a_centrally_managed_school_can_order_full_allocation
     given_a_centrally_managed_school_can_order_for_specific_circumstances
     when_i_visit_the_order_devices_page
@@ -50,8 +56,30 @@ RSpec.feature 'Ordering devices' do
     and_i_see_2_schools_that_i_need_to_place_orders_for
   end
 
+  scenario 'centrally managed school can order but logged in user does not have a TS account' do
+    given_i_am_signed_in_as_a_responsible_body_user_with_no_ts_account
+    given_a_centrally_managed_school_can_order_full_allocation
+    when_i_visit_the_order_devices_page
+    then_i_see_no_ts_account_page
+  end
+
+  scenario 'centrally managed school can order but logged in user is awaiting a TS account' do
+    given_i_am_signed_in_as_a_responsible_body_user_with_ts_awaiting
+    given_a_centrally_managed_school_can_order_full_allocation
+    when_i_visit_the_order_devices_page
+    then_i_see_awaiting_ts_account_page
+  end
+
   def given_i_am_signed_in_as_a_responsible_body_user
     sign_in_as user
+  end
+
+  def given_i_am_signed_in_as_a_responsible_body_user_with_no_ts_account
+    sign_in_as user_no_ts
+  end
+
+  def given_i_am_signed_in_as_a_responsible_body_user_with_ts_awaiting
+    sign_in_as user_awaiting_ts
   end
 
   def given_my_order_information_is_up_to_date
@@ -143,5 +171,14 @@ RSpec.feature 'Ordering devices' do
 
   def then_i_see_that_i_will_be_able_to_order_soon
     expect(page).to have_content('Ordering will be opened as soon as possible.')
+  end
+
+  def then_i_see_no_ts_account_page
+    expect(page).to have_content('Your organisation can order devices')
+    expect(page).to have_content('You do not have a TechSource account')
+  end
+
+  def then_i_see_awaiting_ts_account_page
+    expect(page).to have_content('You’ll be able to order once your TechSource account is ready')
   end
 end
