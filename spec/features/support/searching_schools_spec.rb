@@ -71,6 +71,34 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     and_the_csv_contains_data_for_the_correct_schools
   end
 
+  context 'export of users scoped to schools' do
+    let(:school_user1) { create(:school_user, email_address: 'user@can-order-school.sch.uk', school: schools_who_can_order.first) }
+    let(:school_user2) { create(:school_user, email_address: 'user@another-can-order-school.sch.uk', school: schools_who_can_order.last) }
+    let(:trust_user) { create(:trust_user, email_address: 'user@trust.gov.uk', responsible_body: responsible_body) }
+    let(:out_of_scope_school_user) { create(:school_user) }
+
+    before do
+      out_of_scope_school_user
+    end
+
+    scenario 'support agent exports users as CSV' do
+      given_i_am_signed_in_as_a_support_user
+      and_multiple_schools_from_the_same_responsible_body_in_different_order_states
+      and_there_are_school_and_responsible_body_users
+      when_i_follow_the_links_to_find_schools
+      then_i_see_the_schools_search_page
+
+      when_i_choose_an_order_state_and_responsible_body
+      and_i_submit
+      then_i_see_the_results_page
+      and_i_see_a_button_to_download_users_as_csv
+
+      when_i_click_on_the_download_users_button
+      then_i_download_a_csv_of_users
+      and_the_csv_contains_data_for_the_correct_users
+    end
+  end
+
   def given_i_am_signed_in_as_a_support_user
     sign_in_as support_user
   end
@@ -78,6 +106,12 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   def and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     schools_who_can_order
     create_list(:school, 2, responsible_body: responsible_body, order_state: 'cannot_order')
+  end
+
+  def and_there_are_school_and_responsible_body_users
+    school_user1
+    school_user2
+    trust_user
   end
 
   def when_i_follow_the_links_to_find_schools
@@ -150,6 +184,19 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     expect(page.body).to include(AllocationsExporter.headings.join(','))
   end
 
+  def and_i_see_a_button_to_download_users_as_csv
+    expect(results_page).to have_button('Download users as CSV')
+  end
+
+  def when_i_click_on_the_download_users_button
+    click_on('Download users as CSV')
+  end
+
+  def then_i_download_a_csv_of_users
+    expect_download(content_type: 'text/csv')
+    expect(page.body).to include(Support::UserReport.headers.join(','))
+  end
+
   def and_the_csv_contains_data_for_the_searched_schools
     rows = page.body.split("\n")
     expect(rows.size).to eq(3)
@@ -160,6 +207,16 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     rows = page.body.split("\n")
     expect(rows.size).to eq(3)
     expect(rows.map { |row| row.split(',').first }).to include('School URN', schools_who_can_order.first.urn.to_s, schools_who_can_order.last.urn.to_s)
+  end
+
+  def and_the_csv_contains_data_for_the_correct_users
+    rows = page.body.split("\n")
+    expect(rows.size).to eq(4)
+    expect(page.body).to have_content('email_address')
+    expect(page.body).to have_content(school_user1.email_address)
+    expect(page.body).to have_content(school_user2.email_address)
+    expect(page.body).to have_content(trust_user.email_address)
+    expect(page.body).not_to have_content(out_of_scope_school_user.email_address)
   end
 
   def when_i_click_on_perform_another_search

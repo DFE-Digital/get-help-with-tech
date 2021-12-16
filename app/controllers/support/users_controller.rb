@@ -91,7 +91,7 @@ private
   end
 
   def export_scope
-    export_params['include_audit_data'].to_i == 1 ? :all : :not_deleted_from_responsible_body_or_schools
+    scope_to_schools? ? school_scope : user_scope
   end
 
   # this is necessary to turn orders_devices=true/false into 0/1
@@ -112,13 +112,29 @@ private
     params.require(:support_user_search_form).permit(:email_address_or_full_name)
   end
 
+  def school_params
+    params.permit(:scope_to_schools, school_ids: [])
+  end
+
+  def school_ids
+    school_params[:school_ids]&.map(&:to_i) || []
+  end
+
+  def school_scope
+    [:linked_to_school, school_ids]
+  end
+
+  def scope_to_schools?
+    school_params[:scope_to_schools].to_s.casecmp('true').zero?
+  end
+
   def set_user
     @user = User.not_deleted.find(params[:id])
     authorize @user
   end
 
   def set_user_ids
-    @user_ids = policy_scope(User).send(export_scope).ids
+    @user_ids = policy_scope(User).send(*export_scope).ids
   end
 
   def set_school_if_present
@@ -126,6 +142,10 @@ private
       @school = School.gias_status_open.where_urn_or_ukprn_or_provision_urn(params[:school_urn]).first!
       authorize @school, :show?
     end
+  end
+
+  def user_scope
+    export_params['include_audit_data'].to_i == 1 ? :all : :not_deleted_from_responsible_body_or_schools
   end
 
   def deny_access_if_school_cannot_invite_users

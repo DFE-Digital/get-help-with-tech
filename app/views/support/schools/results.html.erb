@@ -65,11 +65,12 @@
 
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-one-third">
     <p class="govuk-body"><%= govuk_link_to 'Try another search', search_support_schools_path, classes: 'govuk-!-margin-top-8' %></p>
   </div>
-  <div class="govuk-grid-column-one-third">
+  <div class="govuk-grid-column-two-thirds">
       <%- if @schools.present? %>
+
         <%= govuk_button_to('Download allocations as CSV',
                             results_support_schools_path(format: :csv),
                             params: {
@@ -85,6 +86,14 @@
                             },
                             method: :post,
                             form_class: 'govuk-!-display-inline-block search-results__new-search')  %>
+        <%= govuk_button_to('Download users as CSV',
+                            export_support_users_path(format: :csv),
+                            params: {
+                              scope_to_schools: true,
+                              school_ids: @schools.ids,
+                            },
+                            method: :post,
+                            form_class: 'govuk-!-display-inline-block')  %>
       <%- end %>
   </div>
 </div>
