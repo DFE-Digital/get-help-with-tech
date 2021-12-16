@@ -76,6 +76,12 @@ huawei:
   devices:
     password: secret
 
+programme:
+  current:
+    start_date: '2021-08-01'
+  winter_2020:
+    start_date: '2020-01-01'
+
 sentry:
   dsn:
 

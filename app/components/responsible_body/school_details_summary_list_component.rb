@@ -18,6 +18,7 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
     array << router_allocation_row if display_router_allocation_row?
     array << routers_ordered_row if display_routers_ordered_row?
     array << order_status_row
+    array << previously_ordered_devices_row
     array << school_type_row
 
     array +
@@ -119,6 +120,13 @@ private
         value: 'Cannot order yet',
       }
     end
+  end
+
+  def previously_ordered_devices_row
+    {
+      key: 'Previously ordered devices (before September 2021)',
+      value: @school.laptops_ordered_in_the_past,
+    }
   end
 
   def school_type_row
