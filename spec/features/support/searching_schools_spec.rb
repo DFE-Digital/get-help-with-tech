@@ -77,6 +77,10 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
     let(:trust_user) { create(:trust_user, email_address: 'user@trust.gov.uk', responsible_body: responsible_body) }
     let(:out_of_scope_school_user) { create(:school_user) }
 
+    before do
+      out_of_scope_school_user
+    end
+
     scenario 'support agent exports users as CSV' do
       given_i_am_signed_in_as_a_support_user
       and_multiple_schools_from_the_same_responsible_body_in_different_order_states
