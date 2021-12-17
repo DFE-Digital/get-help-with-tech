@@ -10,7 +10,7 @@ RSpec.feature 'Ordering devices within a virtual pool' do
                 routers: [1, 1, 0],
                 responsible_body: responsible_body)
   end
-  let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
+  let(:user) { create(:local_authority_user, :with_a_confirmed_techsource_account, responsible_body: responsible_body, orders_devices: true) }
 
   before do
     stub_computacenter_outgoing_api_calls

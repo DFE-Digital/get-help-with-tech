@@ -1,12 +1,8 @@
-<%- title = t('page_titles.school_order_devices_soon') %>
-<%- content_for :title, title %>
-<%- content_for :before_content do %>
-  <%- school_breadcrumbs items: 'Order devices', school: @school, user: impersonated_or_current_user %>
-<%- end %>
+<%= render partial: 'heading' %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= title %></h1>
+    <h1 class="govuk-heading-xl">You’ll be able to order once your TechSource account is ready</h1>
 
     <%= render Computacenter::TechSourceMaintenanceBannerComponent.new(Computacenter::TechSource.new) %>
 
