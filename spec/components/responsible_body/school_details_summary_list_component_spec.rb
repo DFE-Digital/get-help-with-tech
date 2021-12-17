@@ -14,6 +14,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   subject(:result) { render_inline(described_class.new(school: school)) }
 
   context 'when the school will place device orders' do
+    let(:cap_used) { 30 }
+    let(:programme_dates) { Settings.programme.map { |(_, props)| Time.zone.parse(props.start_date) }.sort }
+    let(:laptops_ordered_in_the_past_waves) { (programme_dates.size - 1) * cap_used }
+
     before do
       school.update!(who_will_order_devices: :school,
                      school_or_rb_domain: 'school.domain.org',
@@ -22,6 +26,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
                      school_contact: headteacher,
                      raw_laptop_allocation: 100,
                      over_order_reclaimed_laptops: -99)
+      programme_dates.each do |date|
+        create(:devices_ordered_update, :laptop, created_at: date, cap_used: 30, ship_to: school.ship_to)
+      end
     end
 
     it 'confirms that fact' do
@@ -30,6 +37,11 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
     it 'renders the school allocation' do
       expect(result.css('.govuk-summary-list__row')[2].text).to include('100 devices')
+    end
+
+    it 'renders the number of devices ordered in the past' do
+      expect(value_for_row(result, 'Previously ordered devices (before September 2021)').text)
+        .to include(laptops_ordered_in_the_past_waves.to_s)
     end
 
     it 'renders the school type' do

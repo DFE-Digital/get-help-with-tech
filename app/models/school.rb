@@ -307,6 +307,13 @@ class School < ApplicationRecord
     type == 'LaFundedPlace'
   end
 
+  def laptops_ordered_in_the_past
+    updates = Settings.programme.map do |(_, props)|
+      devices_ordered_updates.laptop.before(props.start_date).order(created_at: :desc).first
+    end
+    updates.uniq.compact.sum(&:cap_used)
+  end
+
   def laptops
     [allocation(:laptop), cap(:laptop), devices_ordered(:laptop)]
   end

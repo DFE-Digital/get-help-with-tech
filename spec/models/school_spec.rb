@@ -399,4 +399,88 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe 'laptops_ordered_in_the_past' do
+    let(:cap_used) { 30 }
+    let(:programme_dates) { Settings.programme.map { |(_, props)| Date.parse(props.start_date) }.sort }
+
+    subject(:school) { build(:school) }
+
+    context 'when no laptops ordered in the past' do
+      it 'returns 0' do
+        expect(school.laptops_ordered_in_the_past).to eq(0)
+      end
+    end
+
+    context 'when laptops ordered only in the current wave' do
+      before do
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.last + 1.day,
+               cap_used: cap_used,
+               ship_to: school.ship_to)
+      end
+
+      it 'returns 0' do
+        expect(school.laptops_ordered_in_the_past).to eq(0)
+      end
+    end
+
+    context 'when laptops ordered in a past wave' do
+      before do
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.first - 1.day,
+               cap_used: cap_used,
+               ship_to: school.ship_to)
+      end
+
+      it 'returns the laptops ordered in previous programme waves' do
+        expect(school.laptops_ordered_in_the_past).to eq(cap_used)
+      end
+    end
+
+    context 'when laptops ordered in past waves' do
+      before do
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.first,
+               cap_used: cap_used,
+               ship_to: school.ship_to)
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.first - 1.day,
+               cap_used: cap_used,
+               ship_to: school.ship_to)
+      end
+
+      it 'returns the laptops ordered in previous programme waves' do
+        expect(school.laptops_ordered_in_the_past).to eq(cap_used * 2)
+      end
+    end
+
+    context 'when laptops ordered several times in past waves' do
+      before do
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.first,
+               cap_used: (cap_used / 2),
+               ship_to: school.ship_to)
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.first + 1.day,
+               cap_used: cap_used,
+               ship_to: school.ship_to)
+        create(:devices_ordered_update,
+               :laptop,
+               created_at: programme_dates.first - 1.day,
+               cap_used: cap_used,
+               ship_to: school.ship_to)
+      end
+
+      it 'returns the laptops ordered in previous programme waves' do
+        expect(school.laptops_ordered_in_the_past).to eq(cap_used * 2)
+      end
+    end
+  end
 end
