@@ -1,26 +1,26 @@
 class Support::SchoolsController < Support::BaseController
   before_action { authorize School }
+  before_action :set_form_from_suggestion_params, only: [:results], if: :get_request?
+  before_action :set_search_form_from_params, only: [:results], if: :post_request?
 
   def search
     @search_form = SchoolSearchForm.new
   end
 
   def results
-    if request.post?
-      @search_form = SchoolSearchForm.new(search_params)
-      if @search_form.valid?
-        @schools = policy_scope(@search_form.schools).includes(:responsible_body)
+    if post_request?
+      if all_schools? || search_form_valid?
+        @schools = all_or_search_form_schools
         respond_to do |format|
           format.html {}
           format.csv do
-            send_data AllocationsExporter.new.export(@schools), filename: @search_form.csv_filename
+            send_data AllocationsExporter.new.export(@schools), filename: csv_filename
           end
         end
       else
         render :search, status: :unprocessable_entity
       end
-    elsif request.get?
-      @form = Support::SchoolSuggestionForm.new(name_or_urn_or_ukprn: params[:query])
+    elsif get_request?
       if @form.valid?
         @schools = @form.matching_schools
         render json: @schools.as_json(only: %i[id name urn postcode town])
@@ -83,6 +83,29 @@ class Support::SchoolsController < Support::BaseController
 
 private
 
+  def all_or_search_form_schools
+    school_scope = all_schools? ? School : @search_form.schools
+    policy_scope(school_scope).includes(:responsible_body)
+  end
+
+  def all_schools?
+    @all_schools ||= params[:all_schools].to_s.casecmp('true').zero?
+  end
+
+  def all_schools_params
+    params.permit(:all_schools)
+  end
+
+  def csv_filename
+    return @search_form.csv_filename if @search_form.present?
+
+    "#{Time.zone.now.iso8601}_all_school_allocations_export.csv"
+  end
+
+  def get_request?
+    request.get?
+  end
+
   def view_mode
     @view_mode ||= parse_view_mode
   end
@@ -107,6 +130,14 @@ private
     end
   end
 
+  def post_request?
+    request.post?
+  end
+
+  def search_form_valid?
+    @search_form && @search_form.valid?
+  end
+
   def search_params
     params.require(:school_search_form).permit(
       :search_type,
@@ -116,6 +147,14 @@ private
       :name_or_identifier,
       :identifier,
     )
+  end
+
+  def set_form_from_suggestion_params
+    @form = Support::SchoolSuggestionForm.new(name_or_urn_or_ukprn: params[:query])
+  end
+
+  def set_search_form_from_params
+    @search_form = all_schools? ? nil : SchoolSearchForm.new(search_params)
   end
 
   def school_params

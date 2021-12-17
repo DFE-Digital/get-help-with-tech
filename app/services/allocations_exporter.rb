@@ -59,7 +59,7 @@ private
         school.responsible_body.name,
         school.responsible_body.computacenter_identifier,
         school.order_state,
-        school.who_will_order_devices,
+        school.who_will_order_devices || school.responsible_body&.default_who_will_order_devices_for_schools,
         school.raw_allocation(:laptop),
         school.raw_cap(:laptop),
         school.raw_devices_ordered(:laptop),
