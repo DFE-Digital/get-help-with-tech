@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
   get '/privacy/general-privacy-notice', to: 'pages#general_privacy_notice'
-  get '/privacy/computers-for-kids-privacy-notice', to: 'pages#computers_for_kids_privacy_notice', constraints: -> { false }
   get '/request-a-change', to: 'pages#request_a_change'
   get '/what-to-do-if-you-cannot-get-laptops-tablets-or-internet-access-from-dfe', to: redirect('/devices/about-the-offer')
   get '/how-to-access-the-get-help-with-technology-service', to: 'pages#how_to_access_the_get_help_with_technology_service'
