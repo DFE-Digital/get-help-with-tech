@@ -1,10 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'TechSource availability for responsible body' do
   let(:local_authority) { create(:local_authority) }
-  let(:la_user) { create(:local_authority_user, responsible_body: local_authority) }
+  let(:la_user) { create(:local_authority_user, responsible_body: local_authority, orders_devices: true, techsource_account_confirmed_at: 1.second.ago) }
   let(:school) { create(:school, :with_preorder_information, responsible_body: local_authority, laptops: [1, 1, 0]) }
   let(:techsource) { Computacenter::TechSource.new }
+
+  before do
+    stub_computacenter_outgoing_api_calls
+  end
 
   scenario 'well before the techsource maintenance window' do
     given_it_is_well_before_the_techsource_maintenance_window
@@ -61,26 +65,25 @@ RSpec.feature 'TechSource availability for responsible body', skip: 'Disabled fo
 
   def given_it_is_well_before_the_techsource_maintenance_window
     Timecop.travel(Time.zone.parse('20 Nov 2020 23:00'))
-    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00'))
+    create(:supplier_outage, start_at: Time.zone.parse('3 Dec 2020 09:00'), end_at: Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def given_it_is_less_than_2_days_before_the_techsource_maintenance_window
     Timecop.travel(Time.zone.parse('2 Dec 2020 23:00'))
-    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00'))
+    create(:supplier_outage, start_at: Time.zone.parse('3 Dec 2020 09:00'), end_at: Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def given_it_is_during_the_techsource_maintenance_window
     Timecop.travel(Time.zone.parse('3 Dec 2020 09:01'))
-    downtime = Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00')
-    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', downtime)
-    # Below line is needed to stub out the models version of thw MAINTENANCE_WINDOW because this is used for the redirect
-    # journey to the "unavailable" page and they need to be for the same period
-    stub_const('Computacenter::TechSource::MAINTENANCE_WINDOW', downtime)
+    create(:supplier_outage, start_at: Time.zone.parse('3 Dec 2020 09:00'), end_at: Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def given_it_is_after_the_techsource_maintenance_window
+    # needed due to end_at validation that it can't be in the past
+    Timecop.travel(Time.zone.parse('2 Dec 2020 23:00'))
+    create(:supplier_outage, start_at: Time.zone.parse('3 Dec 2020 09:00'), end_at: Time.zone.parse('3 Dec 2020 22:00'))
+
     Timecop.travel(Time.zone.parse('4 Dec 2020 23:00'))
-    stub_const('Computacenter::TechSourceMaintenanceBannerComponent::MAINTENANCE_WINDOW', Time.zone.parse('3 Dec 2020 09:00')..Time.zone.parse('3 Dec 2020 22:00'))
   end
 
   def then_i_see_a_warning_notice

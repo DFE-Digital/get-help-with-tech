@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Huawei router password', type: :feature do
   let(:school_with_router_allocation) { create(:school, routers: [1, 0, 0]) }
   let(:iss_provision) { create(:iss_provision, routers: [1, 0, 0]) }
   let(:user_for_organisation_without_router_allocation) { create(:school_user) }
@@ -10,11 +10,15 @@ RSpec.feature 'Huawei router password', type: :feature, skip: 'Disabled for 30 J
   let(:rb_user) { create(:local_authority_user, responsible_body: trust) }
   let(:la_user) { create(:la_funded_place_user, school: iss_provision) }
 
+  before do
+    stub_computacenter_outgoing_api_calls
+  end
+
   scenario 'logged out' do
     visit root_path
     click_on 'Internet access'
-    click_on 'How to reset'
-    click_on 'Sign in to see your Huawei'
+    click_on 'reset them and replace the SIM cards'
+    click_on 'Sign in to see your Huawei router login password'
     expect_login_screen
   end
 
