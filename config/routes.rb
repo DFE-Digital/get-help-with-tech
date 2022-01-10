@@ -125,10 +125,8 @@ Rails.application.routes.draw do
       get '/', to: 'home#show'
 
       namespace :mobile, path: '/mobile' do
-        get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance, constraints: -> { false }
         get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
         get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
-        get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type, constraints: -> { false }
       end
     end
     resources :users
@@ -171,10 +169,8 @@ Rails.application.routes.draw do
           get '/', to: 'home#show'
 
           namespace :mobile, path: '/mobile' do
-            get '/', to: 'extra_data_requests#guidance', as: :extra_data_guidance, constraints: -> { false }
             get '/requests', to: 'extra_data_requests#index', as: :extra_data_requests
             get '/requests/:id', to: 'extra_data_requests#show', as: :extra_data_request
-            get '/type', to: 'extra_data_requests#new', as: :extra_data_requests_type, constraints: -> { false }
           end
         end
       end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared/expect_download'
 
-RSpec.feature 'MNO Requests view', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'MNO Requests view', type: :feature do
   let(:local_authority_user) { create(:local_authority_user) }
   let(:mno_user) { create(:mno_user) }
   let(:other_mno) { create(:mobile_network, brand: 'Other MNO') }
