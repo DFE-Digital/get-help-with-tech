@@ -2,75 +2,11 @@ require 'rails_helper'
 require 'shared/filling_in_forms'
 require 'support/sidekiq'
 
-RSpec.feature 'Session behaviour', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Session behaviour', type: :feature do
   scenario 'new visitor has sign in link' do
     visit '/'
 
     expect(page).to have_text('Sign in')
-  end
-
-  context 'with a participating mobile network' do
-    let(:user) { create(:local_authority_user) }
-    let(:participating_mobile_network) do
-      create(:mobile_network)
-    end
-
-    before do
-      # this seems overly-verbose compared to let!, but this is what rubocop wants
-      participating_mobile_network
-    end
-
-    # TODO: need to think about how verification should work
-    context 'when signed in' do
-      before do
-        sign_in_as user
-      end
-
-      scenario 'the user can submit a valid form' do
-        pending 'fails during new mobile data requests suspension'
-        visit new_responsible_body_internet_mobile_manual_request_path
-        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-        click_on 'Continue'
-
-        expect(page).to have_text('Check your answers')
-      end
-
-      scenario 'user session is preserved across requests' do
-        pending 'fails during new mobile data requests suspension'
-        visit new_responsible_body_internet_mobile_manual_request_path
-        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-        click_on 'Continue'
-        expect(page).to have_button('Sign out')
-      end
-
-      scenario 'clicking "Sign out" signs the user out' do
-        pending 'fails during new mobile data requests suspension'
-        visit new_responsible_body_internet_mobile_manual_request_path
-        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-        click_on 'Continue'
-
-        click_on 'Sign out'
-        expect(page).to have_text('Sign in')
-      end
-    end
-
-    context 'when the session expires between requests' do
-      before do
-        sign_in_as user
-      end
-
-      scenario 'visiting with a valid but expired session logs the user out' do
-        pending 'fails during new mobile data requests suspension'
-        visit new_responsible_body_internet_mobile_manual_request_path
-        fill_in_valid_application_form(mobile_network_name: participating_mobile_network.brand)
-        click_on 'Continue'
-
-        Timecop.travel(Time.zone.now + SessionService::DEFAULT_USER_TTL + 1) do
-          click_on 'Back'
-          expect(page).to have_text('Sign in')
-        end
-      end
-    end
   end
 
   context 'when an active session already exists' do
