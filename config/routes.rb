@@ -121,30 +121,6 @@ Rails.application.routes.draw do
       end
     end
 
-    namespace :donated_devices, path: '/donated-devices' do
-      get '/interest', to: 'interest#new', constraints: -> { false }
-      post '/interest', to: 'interest#create', constraints: -> { false }
-
-      get '/about-devices', to: 'interest#about'
-      get '/queue', to: 'interest#queue', constraints: -> { false }
-      get '/interest-confirmation', to: 'interest#interest_confirmation', constraints: -> { false }
-      post '/interest-confirmation', to: 'interest#interest_confirmation', constraints: -> { false }
-      get '/all-or-some-schools', to: 'interest#all_or_some_schools', constraints: -> { false }
-      post '/all-or-some-schools', to: 'interest#all_or_some_schools', constraints: -> { false }
-      get '/select-schools', to: 'interest#select_schools', constraints: -> { false }
-      post '/select-schools', to: 'interest#select_schools', constraints: -> { false }
-
-      get '/what-devices-do-you-want', to: 'interest#device_types'
-      post '/what-devices-do-you-want', to: 'interest#device_types'
-      get '/how-many-devices', to: 'interest#how_many_devices', constraints: -> { false }
-      post '/how-many-devices', to: 'interest#how_many_devices', constraints: -> { false }
-      get '/address', to: 'interest#address', constraints: -> { false }
-      get '/disclaimer', to: 'interest#disclaimer', constraints: -> { false }
-      get '/check-answers', to: 'interest#check_answers', constraints: -> { false }
-      post '/check-answers', to: 'interest#check_answers', constraints: -> { false }
-      get '/opted-in', to: 'interest#opted_in', constraints: -> { false }
-    end
-
     namespace :internet do
       get '/', to: 'home#show'
 
@@ -191,27 +167,6 @@ Rails.application.routes.draw do
       resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
 
       scope module: :school do
-        namespace :donated_devices, path: '/donated-devices', constraints: -> { false } do
-          get '/interest', to: 'interest#new'
-          post '/interest', to: 'interest#create'
-
-          get '/about-devices', to: 'interest#about'
-          get '/queue', to: 'interest#queue'
-          get '/interest-confirmation', to: 'interest#interest_confirmation'
-          post '/interest-confirmation', to: 'interest#interest_confirmation'
-          get '/what-devices-do-you-want', to: 'interest#device_types'
-          post '/what-devices-do-you-want', to: 'interest#device_types'
-          get '/how-many-devices', to: 'interest#how_many_devices'
-          post '/how-many-devices', to: 'interest#how_many_devices'
-          get '/address', to: 'interest#address'
-          post '/address', to: 'interest#address'
-          get '/disclaimer', to: 'interest#disclaimer'
-          post '/disclaimer', to: 'interest#disclaimer'
-          get '/check-answers', to: 'interest#check_answers'
-          post '/check-answers', to: 'interest#check_answers'
-          get 'opted-in', to: 'interest#opted_in'
-        end
-
         namespace :internet do
           get '/', to: 'home#show'
 
@@ -315,7 +270,7 @@ Rails.application.routes.draw do
     get '/user-ledger', to: 'user_ledger#index', as: :user_ledger
     get '/user-change-ledger', to: 'user_ledger#changes', as: :user_change_ledger
     get '/chromebooks', to: 'chromebooks#index', as: :chromebooks
-    get '/donated-device-requests', to: 'donated_device_requests#index', as: :donated_device_requests, constraints: -> { false }
+    # get '/donated-device-requests', to: 'donated_device_requests#index', as: :donated_device_requests, constraints: -> { false }
     resources :schools, only: %i[index edit update], path: '/school-changes', as: :school_changes, controller: 'school_changes'
     resources :responsible_bodies, only: %i[index edit update], path: '/responsible-body-changes', as: :responsible_body_changes, controller: 'responsible_body_changes'
     get '/techsource', to: 'techsource#new'

@@ -1,7 +1,6 @@
 class FeatureFlag
   FEATURES = %i[
     display_sign_in_token_links
-    donated_devices
     gias_data_stage_pause
     half_term_delivery_suspension
     notify_cc_about_user_changes

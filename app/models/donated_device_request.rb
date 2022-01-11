@@ -1,4 +1,6 @@
 class DonatedDeviceRequest < ApplicationRecord
+  # Model no longer used - this model remains for access to data kept in the table
+
   DEVICE_TYPES = %w[
     windows
     chromebook

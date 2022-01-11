@@ -27,6 +27,8 @@ class ResponsibleBody < ApplicationRecord
   has_many :users
   has_many :extra_mobile_data_requests
   has_many :schools, inverse_of: :responsible_body
+
+  # no longer used - data retained for historical purposes
   has_many :donated_device_requests, dependent: :destroy
 
   # Callbacks
