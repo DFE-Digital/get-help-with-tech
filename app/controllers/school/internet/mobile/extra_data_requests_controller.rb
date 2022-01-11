@@ -4,26 +4,6 @@ class School::Internet::Mobile::ExtraDataRequestsController < School::BaseContro
     @statuses_with_descriptions = statuses_with_descriptions
   end
 
-  def guidance; end
-
-  def new
-    if params.fetch(:commit, '') == 'Continue'
-      @submission_type = ExtraMobileDataSubmissionForm.new(submission_type_params)
-
-      if @submission_type.valid?
-        if @submission_type.manual?
-          redirect_to new_internet_mobile_manual_request_path(@school)
-        else
-          redirect_to new_internet_mobile_bulk_request_path(@school)
-        end
-      else
-        render :new, status: :unprocessable_entity
-      end
-    else
-      @submission_type = ExtraMobileDataSubmissionForm.new
-    end
-  end
-
   def show
     @request = @school.extra_mobile_data_requests.find(params[:id])
   end

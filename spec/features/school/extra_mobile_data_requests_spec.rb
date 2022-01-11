@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature, skip: 'Disabled for 30 Jun 2021 service closure' do
+RSpec.feature 'Accessing the extra mobile data requests area as a school user', type: :feature do
   let(:user) { create(:school_user) }
   let(:school) { user.school }
   let(:my_requests_page) { PageObjects::School::Internet::YourRequestsPage.new }
@@ -9,70 +9,12 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
     sign_in_as user
   end
 
-  scenario 'the user can navigate to the manual request form from the home page' do
-    pending 'fails during new mobile data requests suspension'
-    click_on 'Request internet access'
-    click_on 'Request extra data for mobile devices'
-
-    expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
-    expect(page).to have_http_status(:ok)
-    click_on 'New request'
-    expect(page).to have_css('h1', text: 'How would you like to submit information?')
-    choose 'One at a time, using a form'
-    click_on 'Continue'
-    expect(page).to have_css('h1', text: 'Who needs the extra mobile data?')
-  end
-
-  context 'school.hide_mno is true' do
-    before do
-      school.update!(hide_mno: true)
-      create(:mobile_network, brand: 'giffgaff', excluded_fe_network: true)
-    end
-
-    scenario 'do not show FE excluded MNOs' do
-      pending 'fails during new mobile data requests suspension'
-      click_on 'Request internet access'
-      click_on 'Request extra data for mobile devices'
-      click_on 'New request'
-      choose 'One at a time, using a form'
-      click_on 'Continue'
-      expect(page).not_to have_selector 'label', text: 'giffgaff'
-    end
-  end
-
-  scenario 'the user can navigate to the bulk upload form from the home page' do
-    pending 'fails during new mobile data requests suspension'
-    click_on 'Request internet access'
-    click_on 'Request extra data for mobile devices'
-
-    expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
-    expect(page).to have_http_status(:ok)
-    click_on 'New request'
-    expect(page).to have_css('h1', text: 'How would you like to submit information?')
-    choose 'Many at once, using a spreadsheet'
-    click_on 'Continue'
-    expect(page).to have_css('h1', text: 'Upload a spreadsheet of extra data requests')
-  end
-
   context 'when the user has already submitted requests' do
     let(:another_user_from_the_same_school) { create(:school_user, school: school) }
     let(:requests) { create_list(:extra_mobile_data_request, 5, status: 'new', created_by_user: user, school: school) }
 
     before do
       requests.last.unavailable_status!
-    end
-
-    scenario 'the user can navigate to their previous requests from the home page' do
-      visit internet_school_path(school)
-      click_on 'Request extra data for mobile devices'
-
-      expect(page).to have_css('h1', text: 'Request extra data for mobile devices')
-      expect(page).to have_http_status(:ok)
-
-      click_on 'Check your requests'
-
-      expect(page).to have_css('h1', text: 'Your requests')
-      expect(page).to have_http_status(:ok)
     end
 
     scenario 'the user can see their previous requests' do
@@ -177,7 +119,9 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is problem_no_match_for_number' do
+      # PROBLEM SCENARIOS
+
+      xcontext 'when the request is problem_no_match_for_number' do
         let(:status) { 'problem_no_match_for_number' }
 
         it 'shows status unknown number' do
@@ -193,7 +137,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is problem_incorrect_phone_number' do
+      xcontext 'when the request is problem_incorrect_phone_number' do
         let(:status) { 'problem_incorrect_phone_number' }
 
         it 'shows status invalid number' do
@@ -209,7 +153,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is problem_no_match_for_account_name' do
+      xcontext 'when the request is problem_no_match_for_account_name' do
         let(:status) { 'problem_no_match_for_account_name' }
 
         it 'shows status unknown name' do
@@ -225,7 +169,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is problem_not_eligible' do
+      xcontext 'when the request is problem_not_eligible' do
         let(:status) { 'problem_not_eligible' }
 
         it 'shows status not eligible' do
@@ -241,7 +185,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is problem_duplicate' do
+      xcontext 'when the request is problem_duplicate' do
         let(:status) { 'problem_duplicate' }
 
         it 'shows status duplicate' do
@@ -256,7 +200,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is problem_other' do
+      xcontext 'when the request is problem_other' do
         let(:status) { 'problem_other' }
 
         it 'shows status other problem' do
@@ -270,7 +214,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      context 'when the request is unavailable' do
+      xcontext 'when the request is unavailable' do
         let(:status) { 'unavailable' }
 
         it 'shows status other problem' do
