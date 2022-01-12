@@ -121,7 +121,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
 
       # PROBLEM SCENARIOS
 
-      xcontext 'when the request is problem_no_match_for_number' do
+      context 'when the request is problem_no_match_for_number' do
         let(:status) { 'problem_no_match_for_number' }
 
         it 'shows status unknown number' do
@@ -133,11 +133,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
           expect(page).to have_content('Check the following')
           expect(page).to have_content('the number was typed correctly')
           expect(page).to have_content('the correct mobile network was provided')
-          expect(page).to have_link('Make new request')
         end
       end
 
-      xcontext 'when the request is problem_incorrect_phone_number' do
+      context 'when the request is problem_incorrect_phone_number' do
         let(:status) { 'problem_incorrect_phone_number' }
 
         it 'shows status invalid number' do
@@ -149,11 +148,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
           expect(page).to have_content('Check the following')
           expect(page).to have_content('the number was typed correctly')
           expect(page).to have_content('the correct mobile network was provided')
-          expect(page).to have_link('Make new request')
         end
       end
 
-      xcontext 'when the request is problem_no_match_for_account_name' do
+      context 'when the request is problem_no_match_for_account_name' do
         let(:status) { 'problem_no_match_for_account_name' }
 
         it 'shows status unknown name' do
@@ -165,11 +163,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
           expect(page).to have_content('Check the following')
           expect(page).to have_content('the correct account holder was given')
           expect(page).to have_content('the name matches the name on the bill')
-          expect(page).to have_link('Make new request')
         end
       end
 
-      xcontext 'when the request is problem_not_eligible' do
+      context 'when the request is problem_not_eligible' do
         let(:status) { 'problem_not_eligible' }
 
         it 'shows status not eligible' do
@@ -181,11 +178,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
           expect(page).to have_content("they are a new #{request.mobile_network.brand} customer")
           expect(page).to have_content("they do not meet #{request.mobile_network.brand}’s criteria")
           expect(page).to have_content('they already have fixed line broadband at home')
-          expect(page).to have_link('4G wireless router instead')
         end
       end
 
-      xcontext 'when the request is problem_duplicate' do
+      context 'when the request is problem_duplicate' do
         let(:status) { 'problem_duplicate' }
 
         it 'shows status duplicate' do
@@ -200,7 +196,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         end
       end
 
-      xcontext 'when the request is problem_other' do
+      context 'when the request is problem_other' do
         let(:status) { 'problem_other' }
 
         it 'shows status other problem' do
@@ -210,11 +206,10 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
         it 'shows a panel with more info about the problem' do
           expect(page).to have_content("#{request.mobile_network.brand} could not process this request")
           expect(page).to have_content('confirm this person needs internet access')
-          expect(page).to have_link('4G wireless router instead')
         end
       end
 
-      xcontext 'when the request is unavailable' do
+      context 'when the request is unavailable' do
         let(:status) { 'unavailable' }
 
         it 'shows status other problem' do
