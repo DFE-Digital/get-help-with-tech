@@ -116,7 +116,7 @@ en:
       laptop: Change device allocation
       router: Change router allocation
     support_edit_chromebook_details: Will the school need to order Chromebooks?
-    support_bulk_allocation: Bulk upload allocation updates
+    support_bulk_allocation: Bulk allocation updates
     support_bulk_allocation_result: Bulk allocation summary
     gias_updates: GIAS updates
     gias_schools_to_add: Schools to be added

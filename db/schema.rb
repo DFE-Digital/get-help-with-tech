@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_26_135609) do
+ActiveRecord::Schema.define(version: 2022_01_07_134610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_11_26_135609) do
     t.boolean "processed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "applied_allocation_delta"
     t.index ["batch_id"], name: "index_allocation_batch_jobs_on_batch_id"
   end
 
@@ -258,16 +259,16 @@ ActiveRecord::Schema.define(version: 2021_11_26_135609) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
-    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
     t.datetime "school_contacted_at"
+    t.bigint "school_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

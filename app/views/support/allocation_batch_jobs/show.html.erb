@@ -9,15 +9,42 @@
                  ]) %>
 <% end %>
 
-<span class="govuk-caption-xl"><%= @jobs.first.batch_id %></span>
 <h1 class="govuk-heading-xl">Allocation batch job</h1>
 
-<table class="govuk-table">
+<table id="details" class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-third"></th>
+      <th scope="col" class="govuk-table__header"></th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">ID</th>
+      <td class="govuk-table__cell"><%= @jobs.first.batch_id %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">Processed jobs</th>
+      <td class="govuk-table__cell"><%= processed_jobs(@jobs) %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header">Aggregate allocation change</th>
+      <td class="govuk-table__cell"><%= aggregate_allocation_change(@jobs) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table id="schools" class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header">URN</th>
       <th scope="col" class="govuk-table__header">UKPRN</th>
       <th scope="col" class="govuk-table__header">Allocation delta</th>
+      <th scope="col" class="govuk-table__header">Applied delta</th>
       <th scope="col" class="govuk-table__header">Order state</th>
       <th scope="col" class="govuk-table__header">Send notification?</th>
       <th scope="col" class="govuk-table__header">Sent notification?</th>
@@ -27,10 +54,11 @@
 
   <tbody class="govuk-table__body">
     <% @jobs.each do |job| %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier job.urn %></td>
-        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier job.ukprn %></td>
+      <tr class="govuk-table__row <%= 'govuk-tag--yellow' if job.delta_adjusted? %>">
+        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn(job.urn) %></td>
+        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn(job.ukprn) %></td>
         <td class="govuk-table__cell"><%= job.allocation_delta %></td>
+        <td class="govuk-table__cell"><%= job.applied_allocation_delta %></td>
         <td class="govuk-table__cell"><%= job.order_state %></td>
         <td class="govuk-table__cell"><%= job.send_notification %></td>
         <td class="govuk-table__cell"><%= job.sent_notification %></td>

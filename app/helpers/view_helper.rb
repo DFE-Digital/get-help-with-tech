@@ -176,28 +176,32 @@ module ViewHelper
     label.join(' ').html_safe
   end
 
-  def mno_offer_details_partial(brand)
-    ['shared', 'mno_offer_details', brand].join('/')
-  end
-
-  def participating_mobile_networks
-    MobileNetwork.where(participation_in_pilot: 'participating').order(:brand)
-  end
-
-  def link_to_urn_or_ukprn_otherwise_identifier(identifier)
-    if School.where_urn_or_ukprn_or_provision_urn(identifier).exists?
-      govuk_link_to identifier, support_school_path(identifier)
-    else
-      identifier
-    end
-  end
-
   def humanized_number(value)
     if value > 999_999
       number_to_human(value, format: '%n%u', precision: 2, significant: false, strip_insignificant_zeros: false, units: { million: 'm' })
     else
       number_with_delimiter(value)
     end
+  end
+
+  def link_to_urn_or_ukprn_otherwise_identifier(identifier)
+    if School.where_urn_or_ukprn_or_provision_urn(identifier).exists?
+      link_to_urn_or_ukprn(identifier)
+    else
+      identifier
+    end
+  end
+
+  def link_to_urn_or_ukprn(identifier)
+    govuk_link_to(identifier, support_school_path(identifier)) if identifier.present?
+  end
+
+  def mno_offer_details_partial(brand)
+    ['shared', 'mno_offer_details', brand].join('/')
+  end
+
+  def participating_mobile_networks
+    MobileNetwork.where(participation_in_pilot: 'participating').order(:brand)
   end
 
 private
