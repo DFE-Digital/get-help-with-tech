@@ -27,20 +27,13 @@ RSpec.feature 'Bulk allocation upload' do
     choose('No')
     click_on('Upload allocations')
 
-    expect(allocation_batch_job_page).to be_displayed
-    expect(allocation_batch_job_page).to have_id(text: AllocationBatchJob.last.batch_id)
-    expect(allocation_batch_job_page).to have_processed_jobs(text: '2 / 2')
-    expect(allocation_batch_job_page).to have_aggregate_allocation_change(text: '3')
+    expect_processing_details(batch_id: AllocationBatchJob.last.batch_id,
+                              processed_jobs: 2,
+                              total_jobs: 2,
+                              aggregate_allocation_change: 3)
 
-    expect(allocation_batch_job_page.schools.size).to eq(2)
-
-    school_a_row = allocation_batch_job_page.schools.detect { |row| row.urn.text == school_a.urn.to_s }
-    expect(school_a_row.text).to eq('123456 1 1 can_order false false true')
-    expect(school_a_row.to_capybara_node['class']).not_to include('govuk-tag--yellow')
-
-    school_b_row = allocation_batch_job_page.schools.detect { |row| row.ukprn.text == school_b.ukprn.to_s }
-    expect(school_b_row.text).to eq('12345678 2 2 can_order false false true')
-    expect(school_b_row.to_capybara_node['class']).not_to include('govuk-tag--yellow')
+    expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order false false true', highlighted: false)
+    expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 2 can_order false false true', highlighted: false)
   end
 
   scenario 'ignore unknown schools' do
@@ -51,19 +44,15 @@ RSpec.feature 'Bulk allocation upload' do
     choose('No')
     click_on('Upload allocations')
 
-    expect(allocation_batch_job_page).to be_displayed
-    expect(allocation_batch_job_page).to have_id(text: AllocationBatchJob.last.batch_id)
-    expect(allocation_batch_job_page).to have_processed_jobs(text: '1 / 1')
-    expect(allocation_batch_job_page).to have_aggregate_allocation_change(text: '1')
+    expect_processing_details(batch_id: AllocationBatchJob.last.batch_id,
+                              processed_jobs: 1,
+                              total_jobs: 1,
+                              aggregate_allocation_change: 1)
 
-    expect(allocation_batch_job_page.schools.size).to eq(1)
-
-    school_a_row = allocation_batch_job_page.schools.detect { |row| row.urn.text == school_a.urn.to_s }
-    expect(school_a_row.text).to eq('123456 1 1 can_order false false true')
-    expect(school_a_row.to_capybara_node['class']).not_to include('govuk-tag--yellow')
+    expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order false false true', highlighted: false)
   end
 
-  scenario 'school rows with deltas that cannot be set exactly as they come, are highlighted' do
+  scenario 'school rows with deltas that cannot be set exactly as they are provided, are highlighted' do
     sign_in_as support_user
 
     goto_bulk_upload_allocations
@@ -71,18 +60,13 @@ RSpec.feature 'Bulk allocation upload' do
     choose('No')
     click_on('Upload allocations')
 
-    expect(allocation_batch_job_page).to be_displayed
-    expect(allocation_batch_job_page).to have_id(text: AllocationBatchJob.last.batch_id)
-    expect(allocation_batch_job_page).to have_processed_jobs(text: '2 / 2')
-    expect(allocation_batch_job_page).to have_aggregate_allocation_change(text: '1')
+    expect_processing_details(batch_id: AllocationBatchJob.last.batch_id,
+                              processed_jobs: 2,
+                              total_jobs: 2,
+                              aggregate_allocation_change: 1)
 
-    school_a_row = allocation_batch_job_page.schools.detect { |row| row.urn.text == school_a.urn.to_s }
-    expect(school_a_row.text).to eq('123456 1 1 can_order false false true')
-    expect(school_a_row.to_capybara_node['class']).not_to include('govuk-tag--yellow')
-
-    school_b_row = allocation_batch_job_page.schools.detect { |row| row.ukprn.text == school_b.ukprn.to_s }
-    expect(school_b_row.text).to eq('12345678 -2 0 can_order false false true')
-    expect(school_b_row.to_capybara_node['class']).to include('govuk-tag--yellow')
+    expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order false false true', highlighted: false)
+    expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 -2 0 can_order false false true', highlighted: true)
   end
 
   scenario 'some schools are yet to be processed', sidekiq: false do
@@ -97,20 +81,13 @@ RSpec.feature 'Bulk allocation upload' do
       }.to change(AllocationJob.enqueued_jobs, :size).by(2)
     end
 
-    expect(allocation_batch_job_page).to be_displayed
-    expect(allocation_batch_job_page).to have_id(text: AllocationBatchJob.last.batch_id)
-    expect(allocation_batch_job_page).to have_processed_jobs(text: '0 / 2')
-    expect(allocation_batch_job_page).to have_aggregate_allocation_change(text: '0')
+    expect_processing_details(batch_id: AllocationBatchJob.last.batch_id,
+                              processed_jobs: 0,
+                              total_jobs: 2,
+                              aggregate_allocation_change: 0)
 
-    school_a_row = allocation_batch_job_page.schools.detect { |row| row.urn.text == school_a.urn.to_s }
-    expect(school_a_row.text).to eq('123456 1 can_order true false false')
-    expect(school_a_row.applied_delta.text).to be_blank
-    expect(school_a_row.to_capybara_node['class']).to include('govuk-tag--yellow')
-
-    school_b_row = allocation_batch_job_page.schools.detect { |row| row.ukprn.text == school_b.ukprn.to_s }
-    expect(school_b_row.text).to eq('12345678 2 can_order true false false')
-    expect(school_b_row.applied_delta.text).to be_blank
-    expect(school_b_row.to_capybara_node['class']).to include('govuk-tag--yellow')
+    expect_row_for_school(urn: school_a.urn, text: '123456 1 can_order true false false', highlighted: true)
+    expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 can_order true false false', highlighted: true)
   end
 
   scenario 'process all schools and notify' do
@@ -121,25 +98,34 @@ RSpec.feature 'Bulk allocation upload' do
     choose('Yes')
     click_on('Upload allocations')
 
-    expect(allocation_batch_job_page).to be_displayed
-    expect(allocation_batch_job_page).to have_id(text: AllocationBatchJob.last.batch_id)
-    expect(allocation_batch_job_page).to have_processed_jobs(text: '2 / 2')
-    expect(allocation_batch_job_page).to have_aggregate_allocation_change(text: '3')
+    expect_processing_details(batch_id: AllocationBatchJob.last.batch_id,
+                              processed_jobs: 2,
+                              total_jobs: 2,
+                              aggregate_allocation_change: 3)
 
-    school_a_row = allocation_batch_job_page.schools.detect { |row| row.urn.text == school_a.urn.to_s }
-    expect(school_a_row.text).to eq('123456 1 1 can_order true true true')
-    expect(school_a_row.to_capybara_node['class']).not_to include('govuk-tag--yellow')
-
-    school_b_row = allocation_batch_job_page.schools.detect { |row| row.ukprn.text == school_b.ukprn.to_s }
-    expect(school_b_row.text).to eq('12345678 2 2 can_order true true true')
-    expect(school_b_row.to_capybara_node['class']).not_to include('govuk-tag--yellow')
+    expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order true true true', highlighted: false)
+    expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 2 can_order true true true', highlighted: false)
   end
 
-private
+  private
 
   def expect_forbidden_page_to_be_displayed
     expect(page).to have_content('Forbidden')
     expect(page).to have_content('You’re not allowed to do that.')
+  end
+
+  def expect_processing_details(batch_id:, processed_jobs:, total_jobs:, aggregate_allocation_change:)
+    expect(allocation_batch_job_page).to be_displayed
+    expect(allocation_batch_job_page).to have_id(text: batch_id.to_s)
+    expect(allocation_batch_job_page).to have_processed_jobs(text: [processed_jobs, total_jobs].join(' / '))
+    expect(allocation_batch_job_page).to have_aggregate_allocation_change(text: aggregate_allocation_change.to_s)
+    expect(allocation_batch_job_page.schools.size).to eq(total_jobs)
+  end
+
+  def expect_row_for_school(text:, highlighted:, **opts)
+    school_row = school_row(**opts)
+    expect(school_row.text).to eq(text)
+    expect(school_row.to_capybara_node['class'].include?('govuk-tag--yellow')).to eq(highlighted)
   end
 
   def goto_bulk_upload_allocations
@@ -150,5 +136,11 @@ private
     expect(bulk_upload_allocation_page).to have_send_notifications_yes_label(text: 'Yes')
     expect(bulk_upload_allocation_page).to have_send_notifications_no_label(text: 'No')
     expect(bulk_upload_allocation_page).to have_submit_button(text: 'Upload allocations')
+  end
+
+  def school_row(**opts)
+    allocation_batch_job_page.schools.detect do |row|
+      row.send(opts.keys.first).text == opts.values.first.to_s
+    end
   end
 end
