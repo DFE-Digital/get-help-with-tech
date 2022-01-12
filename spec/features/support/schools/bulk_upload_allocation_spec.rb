@@ -107,7 +107,7 @@ RSpec.feature 'Bulk allocation upload' do
     expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 2 can_order true true true', highlighted: false)
   end
 
-  private
+private
 
   def expect_forbidden_page_to_be_displayed
     expect(page).to have_content('Forbidden')
@@ -131,7 +131,7 @@ RSpec.feature 'Bulk allocation upload' do
   def goto_bulk_upload_allocations
     visit devices_enable_orders_for_many_schools_support_schools_path
     expect(bulk_upload_allocation_page).to be_displayed
-    expect(bulk_upload_allocation_page).to have_header(text: 'Bulk upload allocation updates')
+    expect(bulk_upload_allocation_page).to have_header(text: 'Bulk allocation updates')
     expect(bulk_upload_allocation_page).to have_choose_file_button
     expect(bulk_upload_allocation_page).to have_send_notifications_yes_label(text: 'Yes')
     expect(bulk_upload_allocation_page).to have_send_notifications_no_label(text: 'No')

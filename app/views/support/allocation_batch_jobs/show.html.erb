@@ -55,8 +55,8 @@
   <tbody class="govuk-table__body">
     <% @jobs.each do |job| %>
       <tr class="govuk-table__row <%= 'govuk-tag--yellow' if job.delta_adjusted? %>">
-        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier job.urn %></td>
-        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn_otherwise_identifier job.ukprn %></td>
+        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn(job.urn) %></td>
+        <td class="govuk-table__cell"><%= link_to_urn_or_ukprn(job.ukprn) %></td>
         <td class="govuk-table__cell"><%= job.allocation_delta %></td>
         <td class="govuk-table__cell"><%= job.applied_allocation_delta %></td>
         <td class="govuk-table__cell"><%= job.order_state %></td>
