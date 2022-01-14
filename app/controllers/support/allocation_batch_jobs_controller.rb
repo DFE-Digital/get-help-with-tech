@@ -6,7 +6,12 @@ class Support::AllocationBatchJobsController < Support::BaseController
   end
 
   def show
-    @jobs = AllocationBatchJob.where(batch_id: params[:id])
+    jobs = AllocationBatchJob.where(batch_id: params[:id])
+    @pagination, @jobs = pagy(jobs.select('ABS(allocation_delta::INTEGER - applied_allocation_delta::INTEGER) delta_mismatch, *')
+                                  .order('delta_mismatch desc, urn, ukprn'))
+    @aggregate_allocation_change = jobs.sum(:applied_allocation_delta)
+    @number_of_processed_jobs = jobs.where(processed: true).size
+    @total_number_of_jobs = jobs.size
   end
 
   def send_notifications
