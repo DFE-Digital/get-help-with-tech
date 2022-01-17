@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_134610) do
+ActiveRecord::Schema.define(version: 2022_01_14_153735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_134610) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "applied_allocation_delta"
+    t.index "abs((allocation_delta - applied_allocation_delta)) DESC, urn, ukprn", name: "idx_delta_mismatch_urn_ukprn"
     t.index ["batch_id"], name: "index_allocation_batch_jobs_on_batch_id"
   end
 

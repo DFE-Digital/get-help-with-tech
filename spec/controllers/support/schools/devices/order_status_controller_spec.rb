@@ -327,10 +327,10 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       end
     end
 
-    it 'enqueue an AllocationJob per allocation contained in the given file' do
+    it 'enqueue a BulkAllocationJob to process the given file' do
       expect {
         put :allow_ordering_for_many_schools, params: params
-      }.to have_enqueued_job(AllocationJob).twice
+      }.to have_enqueued_job(BulkAllocationJob).once
     end
 
     it 'redirects to the bulk job page' do

@@ -69,27 +69,6 @@ RSpec.feature 'Bulk allocation upload' do
     expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 -2 0 can_order false false true', highlighted: true)
   end
 
-  scenario 'some schools are yet to be processed', sidekiq: false do
-    sign_in_as support_user
-
-    goto_bulk_upload_allocations
-    bulk_upload_allocation_page.choose_file_button.attach_file(Rails.root.join('spec/fixtures/files/allocation_upload_with_positive_deltas.csv'))
-    choose('Yes')
-    Sidekiq::Testing.fake! do
-      expect {
-        click_on('Upload allocations')
-      }.to change(AllocationJob.enqueued_jobs, :size).by(2)
-    end
-
-    expect_processing_details(batch_id: AllocationBatchJob.last.batch_id,
-                              processed_jobs: 0,
-                              total_jobs: 2,
-                              aggregate_allocation_change: 0)
-
-    expect_row_for_school(urn: school_a.urn, text: '123456 1 can_order true false false', highlighted: true)
-    expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 can_order true false false', highlighted: true)
-  end
-
   scenario 'process all schools and notify' do
     sign_in_as support_user
 

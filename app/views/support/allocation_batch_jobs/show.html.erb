@@ -22,15 +22,15 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <th class="govuk-table__header">ID</th>
-      <td class="govuk-table__cell"><%= @jobs.first.batch_id %></td>
+      <td class="govuk-table__cell"><%= @jobs.first&.batch_id %></td>
     </tr>
     <tr class="govuk-table__row">
       <th class="govuk-table__header">Processed jobs</th>
-      <td class="govuk-table__cell"><%= processed_jobs(@jobs) %></td>
+      <td class="govuk-table__cell"><%= "#{@number_of_processed_jobs} / #{@total_number_of_jobs}" %></td>
     </tr>
     <tr class="govuk-table__row">
       <th class="govuk-table__header">Aggregate allocation change</th>
-      <td class="govuk-table__cell"><%= aggregate_allocation_change(@jobs) %></td>
+      <td class="govuk-table__cell"><%= @aggregate_allocation_change %></td>
     </tr>
   </tbody>
 </table>
@@ -68,4 +68,8 @@
   </tbody>
 </table>
 
-<%= govuk_button_to('Send notifications', send_notifications_support_allocation_batch_job_path(id: @jobs.first.batch_id)) %>
+<% if @jobs.any? %>
+  <%= govuk_button_to('Send notifications', send_notifications_support_allocation_batch_job_path(id: @jobs.first.batch_id)) %>
+<% end %>
+
+<%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>

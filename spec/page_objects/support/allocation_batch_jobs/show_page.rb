@@ -2,7 +2,7 @@ module PageObjects
   module Support
     module AllocationBatchJobs
       class SchoolRow < SitePrism::Section
-        element :urn, 'td:nth-of-type(1) a'
+        element :urn, 'td:nth-of-type(1)'
         element :ukprn, 'td:nth-of-type(2)'
         element :allocation_delta, 'td:nth-of-type(3)'
         element :applied_delta, 'td:nth-of-type(4)'
