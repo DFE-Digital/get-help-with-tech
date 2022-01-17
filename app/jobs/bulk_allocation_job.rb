@@ -57,7 +57,9 @@ private
     end
     post_process_vcaps
     true
-  rescue StandardError
+  rescue StandardError => e
+    logger.error(e)
+    Sentry.capture_exception(e)
     false
   end
 
