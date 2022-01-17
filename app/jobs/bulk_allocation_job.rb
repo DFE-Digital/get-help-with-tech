@@ -62,6 +62,6 @@ private
   end
 
   def vcaps_for_post_processing
-    @vcaps_for_post_processing ||= Hash.new { |hash, key| hash[key] = 0 }
+    @vcaps_for_post_processing ||= Hash.new(0)
   end
 end
