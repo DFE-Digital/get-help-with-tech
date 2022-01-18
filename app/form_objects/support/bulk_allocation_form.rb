@@ -30,7 +30,7 @@ private
   end
 
   def bucket_name
-    @bucket_name ||= Settings.aws.s3.bulk_allocation_uploads_bucket
+    @bucket_name ||= GhwtAws::AWS_S3_BUCKET_NAME
   end
 
   def cant_store_file(response)
@@ -48,7 +48,7 @@ private
   def file_stored?
     return true unless s3
 
-    bucket_created? && store_file
+    store_file # bucket_created? && store_file
   end
 
   def store_file
@@ -57,7 +57,7 @@ private
   end
 
   def s3
-    @s3 ||= Aws::S3::Client.new unless Rails.env.development?
+    @s3 ||= GhwtAws::AWS_S3_CLIENT
   end
 
   def upload_scheduled?
