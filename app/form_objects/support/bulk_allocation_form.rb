@@ -48,7 +48,7 @@ private
   def file_stored?
     return true unless s3
 
-    bucket_created? && store_file
+    store_file # bucket_created? && store_file
   end
 
   def store_file
