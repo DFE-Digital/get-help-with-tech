@@ -69,6 +69,10 @@
 </table>
 
 <% if @jobs.any? %>
+  <p class="govuk-body-s">
+    ‘Send notifications’ button notifies all <%= @total_number_of_jobs %> schools in the tranche (on all pages, not just those displayed on this page).
+  </p>
+
   <%= govuk_button_to('Send notifications', send_notifications_support_allocation_batch_job_path(id: @jobs.first.batch_id)) %>
 <% end %>
 
