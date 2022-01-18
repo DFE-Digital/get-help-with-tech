@@ -313,6 +313,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     end
 
     before do
+      stub_s3
       create(:school, urn: 123_456)
       create(:school, ukprn: 12_345_678)
     end

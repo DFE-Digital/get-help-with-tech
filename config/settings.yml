@@ -10,6 +10,10 @@
 active_job:
   default_wait: 2
 
+aws:
+  s3:
+    bulk_allocation_uploads_bucket: bulk_allocation_uploads
+
 computacenter:
   notify_email_address: departmentforeducation@computacenter.com
   techsource_url: https://techsource.computacenter.com/en/

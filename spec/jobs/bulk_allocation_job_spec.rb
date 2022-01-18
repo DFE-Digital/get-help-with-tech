@@ -53,14 +53,19 @@ RSpec.describe BulkAllocationJob do
   end
 
   describe '#perform' do
+    let(:file) { Rails.root.join('spec/fixtures/files/allocation_upload.csv') }
+    let(:filename) { "tranche-#{batch_id}.csv" }
+
+    before do
+      stub_file_storage(file)
+    end
+
     it 'creates an AllocationBatchJob per row with allocation_delta set' do
       create(:school, urn: 123_456)
       create(:school, ukprn: 12_345_678)
 
       expect(AllocationBatchJob.count).to eq(0)
-      described_class.perform_now(batch_id: batch_id,
-                                  filepath: Rails.root.join('spec/fixtures/files/allocation_upload.csv'),
-                                  send_notification: true)
+      described_class.perform_now(batch_id: batch_id, filename: filename, send_notification: true)
 
       AllocationBatchJob.order(:allocation_delta).first(2).each_with_index do |job, i|
         expect(job.attributes.symbolize_keys.except(:created_at, :updated_at, :id, :batch_id)).to eq(attrs[i])
@@ -73,9 +78,7 @@ RSpec.describe BulkAllocationJob do
       create(:school, urn: 999_999, laptops: [2, 0, 0, 0])
 
       expect(AllocationBatchJob.count).to eq(0)
-      described_class.perform_now(batch_id: batch_id,
-                                  filepath: Rails.root.join('spec/fixtures/files/allocation_upload.csv'),
-                                  send_notification: true)
+      described_class.perform_now(batch_id: batch_id, filename: filename, send_notification: true)
 
       AllocationBatchJob.order(:allocation_delta).last(2).each_with_index do |job, i|
         expect(job.attributes.symbolize_keys.except(:created_at, :updated_at, :id, :batch_id)).to eq(attrs.last(2)[i])
@@ -88,9 +91,7 @@ RSpec.describe BulkAllocationJob do
       create(:school, ukprn: 12_345_678)
 
       expect {
-        described_class.perform_now(batch_id: batch_id,
-                                    filepath: Rails.root.join('spec/fixtures/files/allocation_upload.csv'),
-                                    send_notification: true)
+        described_class.perform_now(batch_id: batch_id, filename: filename, send_notification: true)
       }.to have_enqueued_job(AllocationJob).twice
     end
 
@@ -99,9 +100,7 @@ RSpec.describe BulkAllocationJob do
       create(:school, :centrally_managed, responsible_body: rb, ukprn: 12_345_678)
 
       expect {
-        described_class.perform_now(batch_id: batch_id,
-                                    filepath: Rails.root.join('spec/fixtures/files/allocation_upload.csv'),
-                                    send_notification: false)
+        described_class.perform_now(batch_id: batch_id, filename: filename, send_notification: false)
       }.not_to have_enqueued_job(AllocationJob)
     end
 
@@ -110,9 +109,7 @@ RSpec.describe BulkAllocationJob do
       create(:school, :centrally_managed, responsible_body: rb, ukprn: 12_345_678)
 
       expect {
-        described_class.perform_now(batch_id: batch_id,
-                                    filepath: Rails.root.join('spec/fixtures/files/allocation_upload.csv'),
-                                    send_notification: false)
+        described_class.perform_now(batch_id: batch_id, filename: filename, send_notification: false)
       }.to have_enqueued_job(CalculateVcapJob)
              .with(hash_including(responsible_body_id: rb.id, notify_school: false))
              .once
