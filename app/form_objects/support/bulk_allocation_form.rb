@@ -12,7 +12,7 @@ class Support::BulkAllocationForm
   end
 
   def save
-    valid? && upload_scheduled?
+    valid? && file_stored? && upload_scheduled?
   end
 
   def send_notification=(value)
@@ -21,8 +21,47 @@ class Support::BulkAllocationForm
 
 private
 
+  def bucket_created?
+    bucket_exists? || s3.create_bucket(bucket: bucket_name).location.present?
+  end
+
+  def bucket_exists?
+    s3.list_buckets.buckets.any? { |bucket| bucket.name == bucket_name }
+  end
+
+  def bucket_name
+    @bucket_name ||= Settings.aws.s3.bulk_allocation_uploads_bucket
+  end
+
+  def cant_store_file(response)
+    Sentry.with_scope do |scope|
+      scope.set_context('S3PutObjectResponse', response.to_h)
+      Sentry.capture_message("Unable to store object #{filename} on S3 bucket #{bucket_name}!")
+    end
+    nil
+  end
+
+  def filename
+    @filename ||= "tranche-#{batch_id}.csv"
+  end
+
+  def file_stored?
+    return true unless s3
+
+    bucket_created? && store_file
+  end
+
+  def store_file
+    response = s3.put_object(bucket: bucket_name, key: filename, body: upload) if upload.respond_to?(:read)
+    response&.etag.present? || cant_store_file(response)
+  end
+
+  def s3
+    @s3 ||= Aws::S3::Client.new unless Rails.env.development?
+  end
+
   def upload_scheduled?
-    BulkAllocationJob.perform_later(filepath: upload.path,
+    BulkAllocationJob.perform_later(filename: s3 ? filename : upload.path,
                                     batch_id: batch_id,
                                     send_notification: send_notification)
     true

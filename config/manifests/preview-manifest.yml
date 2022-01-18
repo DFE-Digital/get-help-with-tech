@@ -16,6 +16,7 @@ applications:
   services:
     - get-help-with-tech-preview-db
     - get-help-with-tech-preview-redis
+    - get-help-with-tech-preview-aws-s3-bucket
   env:
     DOCKER_IMAGE_ID: ((docker_image_id))
     ENV: $HOME/.profile

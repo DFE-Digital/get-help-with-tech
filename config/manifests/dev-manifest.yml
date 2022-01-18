@@ -17,6 +17,7 @@ applications:
   services:
     - get-help-with-tech-dev-db
     - get-help-with-tech-dev-redis
+    - get-help-with-tech-dev-aws-s3-bucket
   env:
     DOCKER_IMAGE_ID: ((docker_image_id))
     ENV: $HOME/.profile

@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.feature 'Bulk allocation upload' do
   let(:non_support_user) { create(:user) }
   let(:support_user) { create(:support_user) }
+  let(:negative_deltas_file) { Rails.root.join('spec/fixtures/files/allocation_upload_with_negative_deltas.csv') }
+  let(:positive_deltas_file) { Rails.root.join('spec/fixtures/files/allocation_upload_with_positive_deltas.csv') }
+  let(:unknown_schools_file) { Rails.root.join('spec/fixtures/files/allocation_upload_with_unknown_schools.csv') }
   let(:bulk_upload_allocation_page) { PageObjects::Support::Schools::BulkUploadAllocationPage.new }
   let(:allocation_batch_job_page) { PageObjects::Support::AllocationBatchJobs::ShowPage.new }
   let!(:school_a) { create(:school, urn: '123456') }
@@ -22,8 +25,8 @@ RSpec.feature 'Bulk allocation upload' do
   scenario 'process all schools but do not notify' do
     sign_in_as support_user
 
-    goto_bulk_upload_allocations
-    bulk_upload_allocation_page.choose_file_button.attach_file(Rails.root.join('spec/fixtures/files/allocation_upload_with_positive_deltas.csv'))
+    goto_bulk_upload_allocations(positive_deltas_file)
+    bulk_upload_allocation_page.choose_file_button.attach_file(positive_deltas_file)
     choose('No')
     click_on('Upload allocations')
 
@@ -39,8 +42,8 @@ RSpec.feature 'Bulk allocation upload' do
   scenario 'ignore unknown schools' do
     sign_in_as support_user
 
-    goto_bulk_upload_allocations
-    bulk_upload_allocation_page.choose_file_button.attach_file(Rails.root.join('spec/fixtures/files/allocation_upload_with_unknown_schools.csv'))
+    goto_bulk_upload_allocations(unknown_schools_file)
+    bulk_upload_allocation_page.choose_file_button.attach_file(unknown_schools_file)
     choose('No')
     click_on('Upload allocations')
 
@@ -55,8 +58,8 @@ RSpec.feature 'Bulk allocation upload' do
   scenario 'school rows with deltas that cannot be set exactly as they are provided, are highlighted' do
     sign_in_as support_user
 
-    goto_bulk_upload_allocations
-    bulk_upload_allocation_page.choose_file_button.attach_file(Rails.root.join('spec/fixtures/files/allocation_upload_with_negative_deltas.csv'))
+    goto_bulk_upload_allocations(negative_deltas_file)
+    bulk_upload_allocation_page.choose_file_button.attach_file(negative_deltas_file)
     choose('No')
     click_on('Upload allocations')
 
@@ -72,8 +75,8 @@ RSpec.feature 'Bulk allocation upload' do
   scenario 'process all schools and notify' do
     sign_in_as support_user
 
-    goto_bulk_upload_allocations
-    bulk_upload_allocation_page.choose_file_button.attach_file(Rails.root.join('spec/fixtures/files/allocation_upload_with_positive_deltas.csv'))
+    goto_bulk_upload_allocations(positive_deltas_file)
+    bulk_upload_allocation_page.choose_file_button.attach_file(positive_deltas_file)
     choose('Yes')
     click_on('Upload allocations')
 
@@ -107,7 +110,8 @@ private
     expect(school_row.to_capybara_node['class'].include?('govuk-tag--yellow')).to eq(highlighted)
   end
 
-  def goto_bulk_upload_allocations
+  def goto_bulk_upload_allocations(file)
+    stub_file_storage(file)
     visit devices_enable_orders_for_many_schools_support_schools_path
     expect(bulk_upload_allocation_page).to be_displayed
     expect(bulk_upload_allocation_page).to have_header(text: 'Bulk allocation updates')

@@ -13,18 +13,24 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
     end
 
     context 'when the file is not a valid .csv file' do
-      subject { described_class.new(upload: 'nofile.csv', send_notification: true).save }
+      subject(:form) { described_class.new(upload: 'nofile.csv', send_notification: true) }
 
-      it { is_expected.to be_falsey }
+      it 'return false' do
+        stub_s3
+
+        expect(form.save).to be_falsey
+      end
     end
 
     it 'enqueue a BulkAlocationJob to process the file' do
       form = described_class.new(upload: file, send_notification: false)
+      filename = "tranche-#{form.batch_id}.csv"
+      stub_file_storage(file)
 
       expect {
         form.save
       }.to have_enqueued_job(BulkAllocationJob)
-             .with(hash_including(filepath: file.path, batch_id: form.batch_id, send_notification: false))
+             .with(hash_including(filename: filename, batch_id: form.batch_id, send_notification: false))
              .once
     end
   end
