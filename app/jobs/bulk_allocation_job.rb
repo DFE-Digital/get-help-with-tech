@@ -23,7 +23,7 @@ private
   end
 
   def bucket_name
-    @bucket_name ||= GhwtAws::AWS_S3_BUCKET_NAME
+    @bucket_name ||= GhwtAws::S3_BUCKET_NAME
   end
 
   def cant_read_file
@@ -66,7 +66,7 @@ private
   end
 
   def s3
-    @s3 ||= GhwtAws::AWS_S3_CLIENT
+    @s3 ||= GhwtAws::S3_CLIENT
   end
 
   def schedule_school(school, props)
