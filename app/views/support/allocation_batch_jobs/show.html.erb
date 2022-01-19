@@ -22,7 +22,7 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <th class="govuk-table__header">ID</th>
-      <td class="govuk-table__cell"><%= @jobs.first&.batch_id %></td>
+      <td class="govuk-table__cell"><%= @batch_id %></td>
     </tr>
     <tr class="govuk-table__row">
       <th class="govuk-table__header">Processed jobs</th>
@@ -73,7 +73,7 @@
     ‘Send notifications’ button notifies all <%= @total_number_of_jobs %> schools in the tranche (on all pages, not just those displayed on this page).
   </p>
 
-  <%= govuk_button_to('Send notifications', send_notifications_support_allocation_batch_job_path(id: @jobs.first.batch_id)) %>
+  <%= govuk_button_to('Send notifications', send_notifications_support_allocation_batch_job_path(id: @batch_id)) %>
 <% end %>
 
 <%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>
