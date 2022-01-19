@@ -6,7 +6,7 @@
 
 .govuk-form-group--error {
   .autocomplete__input--default {
-    border: $govuk-border-width-form-element-error solid $govuk-error-colour;
+    border: $govuk-border-width-form-element solid $govuk-error-colour;
   }
 
   .autocomplete__input--focused {

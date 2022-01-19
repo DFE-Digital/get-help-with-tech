@@ -11,7 +11,7 @@
     </h1>
 
     <%=
-      render GovukComponent::SummaryListComponent.new do |component|
+      render GovukComponent::SummaryListComponent.new(actions: false) do |component|
         component.row do |row|
           row.key(text: 'Email')
           row.value(text: @user.email_address)

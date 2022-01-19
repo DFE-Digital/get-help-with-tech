@@ -63,50 +63,55 @@ describe SummaryListComponent do
     expect(result.css('.govuk-summary-list__value p').to_html).to eq('<p class="govuk-body">Unsafe</p>')
   end
 
-  it 'does not render a span if no row has an action' do
-    rows = [{ key: 'Job',
-              value: ['Teacher', 'Clearcourt High'] },
-            { key: 'Working pattern',
-              value: "Full-time\n Omnis itaque rerum. Velit in ." },
-            { key: 'Description',
-              value: 'Cumque autem veritatis..'  },
-            { key: 'Dates',
-              value: 'May 2003 - November 2019'  }]
+  context 'no row has an action' do
+    it 'does not add no-actions class to any of the rows' do
+      rows = [{ key: 'Job',
+                value: ['Teacher', 'Clearcourt High'] },
+              { key: 'Working pattern',
+                value: "Full-time\n Omnis itaque rerum. Velit in ." },
+              { key: 'Description',
+                value: 'Cumque autem veritatis..' },
+              { key: 'Dates',
+                value: 'May 2003 - November 2019' }]
 
-    result = render_inline(SummaryListComponent.new(rows: rows))
+      result = render_inline(SummaryListComponent.new(rows: rows))
 
-    expect(result.to_html).not_to include('<span class="govuk-summary-list__actions"></span>')
+      expect(result.to_html).not_to include('govuk-summary-list__row--no-actions')
+    end
   end
 
-  it 'does render a span if any row as an action' do
-    rows = [{ key: 'Job',
-              value: ['Teacher', 'Clearcourt High'] },
-            { key: 'Working pattern',
-              value: "Full-time\n Omnis itaque rerum. Velit in ." },
-            { key: 'Description',
-              value: 'Cumque autem veritatis..' },
-            { key: 'Dates',
-              value: 'May 2003 - November 2019',
-              action: 'dates for Teacher, Clearcourt High' }]
+  context 'mix of rows with and without actions' do
+    it 'adds no-actions class to rows without actions' do
+      rows = [{ key: 'Job',
+                value: ['Teacher', 'Clearcourt High'] },
+              { key: 'Working pattern',
+                value: "Full-time\n Omnis itaque rerum. Velit in ." },
+              { key: 'Description',
+                value: 'Cumque autem veritatis..' },
+              { key: 'Dates',
+                value: 'May 2003 - November 2019',
+                action: 'dates for Teacher, Clearcourt High',
+                action_path: '/some/url' }]
 
-    result = render_inline(SummaryListComponent.new(rows: rows))
+      result = render_inline(SummaryListComponent.new(rows: rows))
 
-    expect(result.to_html).to include('<span class="govuk-summary-list__actions"></span>')
-  end
+      expect(result.to_html).to include('govuk-summary-list__row--no-actions').at_least(3).times
+    end
 
-  it 'does render a span if any row has a change_path' do
-    rows = [{ key: 'Job',
-              value: ['Teacher', 'Clearcourt High'] },
-            { key: 'Working pattern',
-              value: "Full-time\n Omnis itaque rerum. Velit in ." },
-            { key: 'Description',
-              value: 'Cumque autem veritatis..' },
-            { key: 'Dates',
-              value: 'May 2003 - November 2019',
-              change_path: '/some/url' }]
+    it 'adds no-actions class to rows without actions - change_path option' do
+      rows = [{ key: 'Job',
+                value: ['Teacher', 'Clearcourt High'] },
+              { key: 'Working pattern',
+                value: "Full-time\n Omnis itaque rerum. Velit in ." },
+              { key: 'Description',
+                value: 'Cumque autem veritatis..' },
+              { key: 'Dates',
+                value: 'May 2003 - November 2019',
+                change_path: '/some/url' }]
 
-    result = render_inline(SummaryListComponent.new(rows: rows))
+      result = render_inline(SummaryListComponent.new(rows: rows))
 
-    expect(result.to_html).to include('<span class="govuk-summary-list__actions"></span>')
+      expect(result.to_html).to include('govuk-summary-list__row--no-actions').at_least(3).times
+    end
   end
 end
