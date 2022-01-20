@@ -1,4 +1,4 @@
-<ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+<ul id="navigation" class="govuk-header__navigation-list">
   <%= render_nav_links links %>
 
   <%- if SessionService.is_signed_in?(session) && @user %>

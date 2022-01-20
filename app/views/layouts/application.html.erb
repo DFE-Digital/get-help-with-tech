@@ -27,7 +27,7 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
 
-    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+    <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
     <%- unless cookies['consented-to-cookies'].present? || request.path == cookie_preferences_path %>
       <%= render partial: 'layouts/cookie_banner' %>
@@ -51,8 +51,8 @@
         <div class="govuk-header__content">
           <%= render partial: 'layouts/service_link' %>
           <% unless controller.hide_nav_menu? %>
-            <button type="button" role="button" data-module="govuk-button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
-            <nav>
+            <nav class="govuk-header__navigation" aria-label="Top Level Navigation">
+              <button type="button" role="button" data-module="govuk-button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
               <%= render partial: 'layouts/nav' %>
             </nav>
           <%- end %>
