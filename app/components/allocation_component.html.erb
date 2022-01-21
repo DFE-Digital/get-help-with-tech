@@ -12,7 +12,7 @@
   </div>
 
   <div id="current_tranche">
-    <%= render GovukComponent::WarningTextComponent.new(text: "If a trust or local authority order on your behalf, or if ordering has temporarily closed, your total allocation may not equal the number of devices ordered plus your remaining allocation." , classes: 'govuk-!-margin-bottom-0') %>
+    <%= render GovukComponent::WarningTextComponent.new(text: "If a trust or local authority orders on your behalf, your total allocation may not equal the number of devices ordered plus your remaining allocation." , classes: 'govuk-!-margin-bottom-0') %>
   </div>
 
   <%= render OrderDevicesComponent.new(organisation: @organisation) %>
