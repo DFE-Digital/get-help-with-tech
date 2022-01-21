@@ -18,7 +18,7 @@ class AllocationComponent < ViewComponent::Base
   end
 
   def total_allocation_and_devices_ordered_sentence
-    "#{organisation.name} has a total allocation of #{devices_allocation} #{'device'.pluralize(devices_allocation)} for academic year 2021/22. You&rsquo;ve ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22".html_safe
+    "#{organisation.name} has a total allocation of #{devices_allocation} #{'device'.pluralize(devices_allocation)} for academic year 2021/22.<br>You&rsquo;ve ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22".html_safe
   end
 
   def render?
