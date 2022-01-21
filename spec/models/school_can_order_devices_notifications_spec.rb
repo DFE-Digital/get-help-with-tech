@@ -290,7 +290,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       end
     end
 
-    context 'when a school can order routers' do
+    context 'when a school can order routers', skip: 'Pause router only emails' do
       let(:school) do
         create(:school,
                :manages_orders,
@@ -318,7 +318,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       end
     end
 
-    context 'when an school in virtual cap can order routers' do
+    context 'when an school in virtual cap can order routers', skip: 'Pause router only emails' do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
       let(:school) do
         create(:school,
@@ -352,7 +352,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       end
     end
 
-    context 'when an FESchool can order routers' do
+    context 'when an FESchool can order routers', skip: 'Pause router only emails' do
       let(:school) do
         create(:fe_school,
                :manages_orders,
