@@ -3,12 +3,20 @@
     <%= total_allocation_sentence %>
   </h2>
 
+  <h2 id="available_allocation_sentence" class="govuk-heading-l">
+    <%= available_allocation_sentence %>
+  </h2>
+
   <h2 id="ordered_sentence">
     <%= ordered_sentence %>
   </h2>
 
   <div id="current_tranche">
     <%= render GovukComponent::WarningTextComponent.new(text: 'These allocations are for the current winter 2021 Get help with tech programme. Devices ordered before 30 September 2021 are not included here.', classes: 'govuk-!-margin-bottom-0') %>
+  </div>
+
+  <div id="current_tranche">
+    <%= render GovukComponent::WarningTextComponent.new(text: "The &lsquo;Devices ordered&rsquo; and &lsquo;remaining devices&rsquo; may not add up to the &lsquo;Total allocation&rsquo; shown if you are a managed school or there are other temporary restrictions on ordering." , classes: 'govuk-!-margin-bottom-0') %>
   </div>
 
   <%= render OrderDevicesComponent.new(organisation: @organisation) %>

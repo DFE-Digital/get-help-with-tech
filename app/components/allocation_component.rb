@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class AllocationComponent < ViewComponent::Base
-  def initialize(organisation:, devices_ordered:, routers_ordered:, devices_allocation:)
+  attr_reader :organisation, :devices_available, :devices_ordered, :routers_ordered, :devices_allocation, :sane
+
+  def initialize(organisation:, devices_available:, devices_ordered:, routers_ordered:, devices_allocation:)
     @organisation = organisation
+    @devices_available = devices_available
     @devices_ordered = devices_ordered
     @routers_ordered = routers_ordered
     @devices_allocation = devices_allocation
@@ -10,30 +13,34 @@ class AllocationComponent < ViewComponent::Base
     sanity_check
   end
 
-  def render?
-    @sane
-  end
-
-  def total_allocation_sentence
-    "#{@organisation.name} has a total allocation of #{@devices_allocation} #{'device'.pluralize(@devices_allocation)} for academic year 2021/22"
+  def available_allocation_sentence
+    "Your remaining device allocation is currently #{devices_available} #{'device'.pluralize(devices_available)}"
   end
 
   def ordered_sentence
-    "You&rsquo;ve ordered #{@devices_ordered} #{'device'.pluralize(@devices_ordered)} and #{@routers_ordered} #{'router'.pluralize(@routers_ordered)} in academic year 2021/22".html_safe
+    "You&rsquo;ve ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22".html_safe
+  end
+
+  def render?
+    sane
+  end
+
+  def total_allocation_sentence
+    "#{organisation.name} has a total allocation of #{devices_allocation} #{'device'.pluralize(devices_allocation)} for academic year 2021/22"
   end
 
 private
 
   def sanity_check
     @sane = true
-    flag_error_to_sentry('Contains negative number') if [@devices_ordered, @routers_ordered, @devices_allocation].any?(&:negative?)
+    flag_error_to_sentry('Contains negative number') if [devices_available, devices_ordered, routers_ordered, devices_allocation].any?(&:negative?)
   end
 
   def flag_error_to_sentry(message)
     @sane = false
 
     Sentry.with_scope do |scope|
-      scope.set_context('AllocationComponent.new', { organisation_id: @organisation&.id })
+      scope.set_context('AllocationComponent.new', { organisation_id: organisation&.id })
       Sentry.capture_message(message)
     end
   end

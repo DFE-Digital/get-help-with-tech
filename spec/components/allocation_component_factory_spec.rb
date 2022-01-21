@@ -6,6 +6,7 @@ RSpec.describe AllocationComponentFactory do
 
     before { described_class.create_component(organisation) }
 
+    specify { expect(organisation).to have_received(:devices_available_to_order).with(:laptop) }
     specify { expect(organisation).to have_received(:devices_ordered).with(:laptop) }
     specify { expect(organisation).to have_received(:devices_ordered).with(:router) }
     specify { expect(organisation).to have_received(:allocation).with(:laptop) }
