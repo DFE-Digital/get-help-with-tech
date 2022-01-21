@@ -43,6 +43,7 @@ private
     return :user_can_order_but_action_needed if status?('needs_info', 'school_contacted') && org_user?(user)
     return :nudge_user_to_read_privacy_policy if status?('rb_can_order', 'school_can_order') && nudgeable_user?(user)
     return unless ordering_user?(user)
+    return if routers_only? # 'Pause router only emails'
     return message_for_vcap if status?('rb_can_order') && school.responsible_body.vcap?
     return unless status?('ready', 'school_ready', 'rb_can_order', 'school_can_order')
 
