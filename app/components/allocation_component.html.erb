@@ -1,14 +1,10 @@
 <div id="allocation" class="app-card govuk-!-margin-bottom-4">
-  <h2 id="total_allocation_sentence" class="govuk-heading-l">
-    <%= total_allocation_sentence %>
-  </h2>
-
   <h2 id="available_allocation_sentence" class="govuk-heading-l">
     <%= available_allocation_sentence %>
   </h2>
 
-  <h2 id="ordered_sentence">
-    <%= ordered_sentence %>
+  <h2 id="total_allocation_and_devices_ordered_sentence">
+    <%= total_allocation_and_devices_ordered_sentence %>
   </h2>
 
   <div id="current_tranche">
@@ -16,7 +12,7 @@
   </div>
 
   <div id="current_tranche">
-    <%= render GovukComponent::WarningTextComponent.new(text: "The &lsquo;Devices ordered&rsquo; and &lsquo;remaining devices&rsquo; may not add up to the &lsquo;Total allocation&rsquo; shown if you are a managed school or there are other temporary restrictions on ordering." , classes: 'govuk-!-margin-bottom-0') %>
+    <%= render GovukComponent::WarningTextComponent.new(text: "If a trust or local authority order on your behalf, or if ordering has temporarily closed, your total allocation may not equal the number of devices ordered plus your remaining allocation." , classes: 'govuk-!-margin-bottom-0') %>
   </div>
 
   <%= render OrderDevicesComponent.new(organisation: @organisation) %>

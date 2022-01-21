@@ -14,19 +14,19 @@ class AllocationComponent < ViewComponent::Base
   end
 
   def available_allocation_sentence
-    "Your remaining device allocation is currently #{devices_available} #{'device'.pluralize(devices_available)}"
+    "Your remaining allocation is currently #{devices_available} #{'device'.pluralize(devices_available)}".html_safe
   end
 
-  def ordered_sentence
-    "You&rsquo;ve ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22".html_safe
+  def total_allocation_and_devices_ordered_sentence
+    "#{organisation.name} has a total allocation of #{devices_allocation} #{'device'.pluralize(devices_allocation)} for academic year 2021/22. You&rsquo;ve ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22".html_safe
   end
 
   def render?
     sane
   end
 
-  def total_allocation_sentence
-    "#{organisation.name} has a total allocation of #{devices_allocation} #{'device'.pluralize(devices_allocation)} for academic year 2021/22"
+  def allocation_and_devices_ordered_sentence
+    "#{organisation.name} has a total allocation of #{devices_allocation} #{'device'.pluralize(devices_allocation)} for academic year 2021/22. You&rsquo;ve ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22"
   end
 
 private
