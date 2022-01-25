@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine
+FROM ruby:3.1.0-alpine
 
 ARG APPNAME=get-help-with-tech
 
@@ -21,7 +21,7 @@ WORKDIR $RAILS_ROOT
 RUN addgroup deploy && adduser -S -u 1001 -s bash -D -G deploy deploy
 RUN chown deploy:deploy /var/www/${APPNAME}
 
-ENV BUNDLER_VERSION 2.2.15
+ENV BUNDLER_VERSION 2.2.32
 RUN gem install bundler
 RUN chown -R deploy:deploy /usr/local/bundle/
 USER 1001
