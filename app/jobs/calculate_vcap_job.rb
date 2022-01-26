@@ -14,7 +14,7 @@ class CalculateVcapJob < ApplicationJob
 private
 
   def allocation_batch_jobs
-    vcap_school_ids = Array(responsible_body.vcap_schools.pluck(:urn, :ukprn)).flatten.uniq
+    vcap_school_ids = Array(responsible_body.vcap_schools.pluck(:urn, :ukprn)).flatten.uniq.compact
     AllocationBatchJob.distinct.where(batch_id: batch_id, urn: vcap_school_ids)
                       .or(AllocationBatchJob.distinct.where(batch_id: batch_id, ukprn: vcap_school_ids))
   end
