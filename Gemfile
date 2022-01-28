@@ -26,6 +26,7 @@ gem 'http'
 gem 'mail-notify'
 
 # Required from Ruby 3.0 to 3.1 upgrade
+gem 'net-pop', require: false
 gem 'net-smtp', require: false
 
 gem 'nokogiri'
