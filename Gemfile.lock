@@ -294,6 +294,10 @@ GEM
     minitest (5.15.0)
     msgpack (1.4.3)
     multipart-post (2.1.1)
+    net-pop (0.1.1)
+      digest
+      net-protocol
+      timeout
     net-protocol (0.1.2)
       io-wait
       timeout
@@ -592,6 +596,7 @@ DEPENDENCIES
   logstash-logger (~> 0.26.1)
   mail-notify
   memory_profiler
+  net-pop
   net-smtp
   nokogiri
   notifications-ruby-client
