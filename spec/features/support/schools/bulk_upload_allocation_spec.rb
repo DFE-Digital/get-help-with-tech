@@ -8,8 +8,10 @@ RSpec.feature 'Bulk allocation upload' do
   let(:unknown_schools_file) { Rails.root.join('spec/fixtures/files/allocation_upload_with_unknown_schools.csv') }
   let(:bulk_upload_allocation_page) { PageObjects::Support::Schools::BulkUploadAllocationPage.new }
   let(:allocation_batch_job_page) { PageObjects::Support::AllocationBatchJobs::ShowPage.new }
-  let!(:school_a) { create(:school, urn: '123456') }
-  let!(:school_b) { create(:school, ukprn: '12345678') }
+  let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }
+  let(:rb) { create(:trust, :vcap, :manages_centrally) }
+  let!(:school_a) { create(:school, :centrally_managed, responsible_body: rb, urn: '123456', name: 'SchoolA') }
+  let!(:school_b) { create(:school, ukprn: '12345678', name: 'SchoolB') }
 
   before do
     stub_computacenter_outgoing_api_calls
@@ -37,6 +39,8 @@ RSpec.feature 'Bulk allocation upload' do
 
     expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order false false true', highlighted: false)
     expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 2 can_order false false true', highlighted: false)
+    expect_new_allocation_for_school(identifier: '123456', name: 'SchoolA', allocation: '1 device')
+    expect_new_allocation_for_school(identifier: '12345678', name: 'SchoolB', allocation: '2 devices')
   end
 
   scenario 'ignore unknown schools' do
@@ -53,6 +57,7 @@ RSpec.feature 'Bulk allocation upload' do
                               aggregate_allocation_change: 1)
 
     expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order false false true', highlighted: false)
+    expect_new_allocation_for_school(identifier: '123456', name: 'SchoolA', allocation: '1 device')
   end
 
   scenario 'school rows with deltas that cannot be set exactly as they are provided, are highlighted' do
@@ -70,6 +75,8 @@ RSpec.feature 'Bulk allocation upload' do
 
     expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order false false true', highlighted: false)
     expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 -2 0 can_order false false true', highlighted: true)
+    expect_new_allocation_for_school(identifier: '123456', name: 'SchoolA', allocation: '1 device')
+    expect_new_allocation_for_school(identifier: '12345678', name: 'SchoolB', allocation: '0 devices')
   end
 
   scenario 'process all schools and notify' do
@@ -87,6 +94,8 @@ RSpec.feature 'Bulk allocation upload' do
 
     expect_row_for_school(urn: school_a.urn, text: '123456 1 1 can_order true true true', highlighted: false)
     expect_row_for_school(ukprn: school_b.ukprn, text: '12345678 2 2 can_order true true true', highlighted: false)
+    expect_new_allocation_for_school(identifier: '123456', name: 'SchoolA', allocation: '1 device')
+    expect_new_allocation_for_school(identifier: '12345678', name: 'SchoolB', allocation: '2 devices')
   end
 
 private
@@ -108,6 +117,12 @@ private
     school_row = school_row(**opts)
     expect(school_row.text).to eq(text)
     expect(school_row.to_capybara_node['class'].include?('govuk-tag--yellow')).to eq(highlighted)
+  end
+
+  def expect_new_allocation_for_school(allocation:, identifier:, name:)
+    school_page.load(urn: identifier)
+    expect(school_page).to have_text(name)
+    expect(school_page.school_details['Device allocation'].value).to eq(allocation)
   end
 
   def goto_bulk_upload_allocations(file)
