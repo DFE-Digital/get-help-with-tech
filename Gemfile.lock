@@ -294,7 +294,7 @@ GEM
     minitest (5.15.0)
     msgpack (1.4.3)
     multipart-post (2.1.1)
-    net-imap (0.2.2)
+    net-imap (0.2.3)
       digest
       net-protocol
       strscan
