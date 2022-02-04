@@ -14,8 +14,8 @@ class SchoolSetWhoManagesOrdersService
   def call
     school.orders_managed_by!(who, clear_preorder_information: clear_preorder_information)
     recalculate_vcaps! if recalculate_vcaps
-    notify_other_agents if notify
     school.refresh_preorder_status!
+    notify_other_agents if notify
     true
   rescue StandardError => e
     failed(e)

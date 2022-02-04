@@ -24,6 +24,7 @@ class SchoolUpdateService
 
     add_school_links(staged_school, school)
     set_who_manages_orders(school)
+    inherit_order_state(school, staged_school) unless school.vcap?
 
     school
   end
@@ -56,6 +57,11 @@ private
   def find_predecessor(staged_school)
     last_link = staged_school.school_links.any_predecessor.order(created_at: :asc).last
     School.find_by(urn: last_link.link_urn) if last_link
+  end
+
+  def inherit_order_state(school, staged_school)
+    predecessor = find_predecessor(staged_school)
+    UpdateSchoolDevicesService.new(school: school, order_state: predecessor.order_state).call if predecessor
   end
 
   def set_who_manages_orders(school)
