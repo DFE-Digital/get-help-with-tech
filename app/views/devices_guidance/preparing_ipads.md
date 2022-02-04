@@ -42,7 +42,7 @@ iPads in ASM to manage them.
 1. Select &lsquo;Device Management Settings&rsquo;.
 1. In the &lsquo;Customer Numbers&rsquo; section in the right-hand pane select &lsquo;Edit&rsquo;.
 1. Select &lsquo;Reseller Number&rsquo; from the drop down box.
-1. Enter the Reseller ID. You&rsquo;ll find this in the &lsquo;Description&rsquo; section of the delivery note you.
+1. Enter the Reseller ID. You&rsquo;ll find this in the &lsquo;Description&rsquo; section of the delivery note you 
 received with your Apple iPads. It will look like this: COK:DFE8:APPLE IPAD 10.2 XXXXXXX (the last 7 digits are your Reseller ID). If you have any problems locating the
 Reseller ID, contact us and we&rsquo;ll confirm it.
 1. Once the number has been verified select &lsquo;Done&rsquo;.
