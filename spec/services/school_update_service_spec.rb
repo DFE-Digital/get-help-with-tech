@@ -158,6 +158,28 @@ RSpec.describe SchoolUpdateService, type: :model do
         expect(old_school.school_links.count).to be(1)
       end
 
+      context 'when the new school is in vcap' do
+        before do
+          local_authority.update!(vcap: true, default_who_will_order_devices_for_schools: 'responsible_body')
+        end
+
+        it 'disable orders' do
+          school = service.create_school!(staged_school)
+          expect(school).to be_cannot_order
+        end
+      end
+
+      context 'when the new school is not in vcap' do
+        before do
+          old_school.can_order!
+        end
+
+        it 'inherit order state from its predecessor' do
+          school = service.create_school!(staged_school)
+          expect(school).to be_can_order
+        end
+      end
+
       context 'when the predecessor is in a virtual cap pool' do
         let(:response) { OpenStruct.new(body: '<xml>test-response</xml>') }
 
