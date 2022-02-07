@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "@rails/webpacker": ">=5.4.3",
-    "accessible-autocomplete": "^2.0.3",
+    "accessible-autocomplete": "^2.0.4",
     "core-js": ">=3",
     "govuk-frontend": ">=4.0.0",
     "serialize-javascript": ">=6.0.0",
