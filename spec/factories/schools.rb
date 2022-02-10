@@ -47,7 +47,7 @@ FactoryBot.define do
     raw_router_allocation { routers[0].to_i }
     circumstances_routers { routers.size == 4 ? routers[1].to_i : 0 }
     over_order_reclaimed_routers { routers.size == 4 ? routers[2].to_i : routers[1].to_i - raw_router_allocation }
-    raw_routers_ordered { routers[2].to_i }
+    raw_routers_ordered { routers.size == 4 ? routers[3].to_i : routers[2].to_i }
 
     trait :does_not_need_chromebooks do
       will_need_chromebooks { 'no' }

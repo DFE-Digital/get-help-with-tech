@@ -309,4 +309,236 @@ RSpec.describe Support::ServicePerformance, type: :model do
       end
     end
   end
+
+  describe 'totals' do
+    let(:rb) { create(:local_authority, :vcap, :manages_centrally) }
+
+    context 'cannot_order school centrally managed with allocation matching cap' do
+      before do
+        create(:school, :centrally_managed, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1], responsible_body: rb)
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(1)
+        expect(stats.total_devices_over_ordered).to eq(0)
+        expect(stats.total_devices_cap).to eq(1)
+        expect(stats.total_devices_ordered).to eq(1)
+        expect(stats.total_devices_allocation_liability).to eq(0)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(1)
+        expect(stats.total_routers_over_ordered).to eq(0)
+        expect(stats.total_routers_cap).to eq(1)
+        expect(stats.total_routers_ordered).to eq(1)
+        expect(stats.total_routers_allocation_liability).to eq(0)
+      end
+    end
+
+    context 'in-lockdown school centrally managed with allocation matching cap' do
+      before do
+        create(:school, :centrally_managed, :in_lockdown, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1], responsible_body: rb)
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(10)
+        expect(stats.total_devices_over_ordered).to eq(0)
+        expect(stats.total_devices_cap).to eq(10)
+        expect(stats.total_devices_ordered).to eq(1)
+        expect(stats.total_devices_allocation_liability).to eq(9)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(10)
+        expect(stats.total_routers_over_ordered).to eq(0)
+        expect(stats.total_routers_cap).to eq(10)
+        expect(stats.total_routers_ordered).to eq(1)
+        expect(stats.total_routers_allocation_liability).to eq(9)
+      end
+    end
+
+    context 'in-lockdown school centrally managed with over ordered lent devices' do
+      before do
+        create(:school, :centrally_managed, :in_lockdown, laptops: [10, 0, -9, 1], routers: [10, 0, -9, 1], responsible_body: rb)
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(10)
+        expect(stats.total_devices_over_ordered).to eq(-9)
+        expect(stats.total_devices_cap).to eq(1)
+        expect(stats.total_devices_ordered).to eq(1)
+        expect(stats.total_devices_allocation_liability).to eq(0)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(10)
+        expect(stats.total_routers_over_ordered).to eq(-9)
+        expect(stats.total_routers_cap).to eq(1)
+        expect(stats.total_routers_ordered).to eq(1)
+        expect(stats.total_routers_allocation_liability).to eq(0)
+      end
+    end
+
+    context 'in-lockdown school centrally managed with over ordered borrowed devices' do
+      before do
+        create(:school, :centrally_managed, :in_lockdown, laptops: [10, 0, 9, 19], routers: [10, 0, 9, 19], responsible_body: rb)
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(10)
+        expect(stats.total_devices_over_ordered).to eq(9)
+        expect(stats.total_devices_cap).to eq(19)
+        expect(stats.total_devices_ordered).to eq(19)
+        expect(stats.total_devices_allocation_liability).to eq(0)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(10)
+        expect(stats.total_routers_over_ordered).to eq(9)
+        expect(stats.total_routers_cap).to eq(19)
+        expect(stats.total_routers_ordered).to eq(19)
+        expect(stats.total_routers_allocation_liability).to eq(0)
+      end
+    end
+
+    context 'can_order_for_specific_circumstances school centrally managed' do
+      before do
+        create(:school, :centrally_managed, :can_order_for_specific_circumstances, laptops: [10, -3, 0, 3], routers: [10, -3, 0, 3], responsible_body: rb)
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(7)
+        expect(stats.total_devices_over_ordered).to eq(0)
+        expect(stats.total_devices_cap).to eq(7)
+        expect(stats.total_devices_ordered).to eq(3)
+        expect(stats.total_devices_allocation_liability).to eq(4)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(7)
+        expect(stats.total_routers_over_ordered).to eq(0)
+        expect(stats.total_routers_cap).to eq(7)
+        expect(stats.total_routers_ordered).to eq(3)
+        expect(stats.total_routers_allocation_liability).to eq(4)
+      end
+    end
+
+    context 'can_order_for_specific_circumstances school not centrally managed' do
+      before do
+        create(:school, :manages_orders, :can_order_for_specific_circumstances, laptops: [10, -3, 0, 3], routers: [10, -3, 0, 3], responsible_body: rb)
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(7)
+        expect(stats.total_devices_over_ordered).to eq(0)
+        expect(stats.total_devices_cap).to eq(7)
+        expect(stats.total_devices_ordered).to eq(3)
+        expect(stats.total_devices_allocation_liability).to eq(4)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(7)
+        expect(stats.total_routers_over_ordered).to eq(0)
+        expect(stats.total_routers_cap).to eq(7)
+        expect(stats.total_routers_ordered).to eq(3)
+        expect(stats.total_routers_allocation_liability).to eq(4)
+      end
+    end
+
+    context 'cannot_order school not centrally managed with allocation matching cap' do
+      before do
+        create(:school, :manages_orders, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1])
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(1)
+        expect(stats.total_devices_over_ordered).to eq(0)
+        expect(stats.total_devices_cap).to eq(1)
+        expect(stats.total_devices_ordered).to eq(1)
+        expect(stats.total_devices_allocation_liability).to eq(0)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(1)
+        expect(stats.total_routers_over_ordered).to eq(0)
+        expect(stats.total_routers_cap).to eq(1)
+        expect(stats.total_routers_ordered).to eq(1)
+        expect(stats.total_routers_allocation_liability).to eq(0)
+      end
+    end
+
+    context 'in-lockdown school not centrally managed with allocation matching cap' do
+      before do
+        create(:school, :manages_orders, :in_lockdown, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1])
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(10)
+        expect(stats.total_devices_over_ordered).to eq(0)
+        expect(stats.total_devices_cap).to eq(10)
+        expect(stats.total_devices_ordered).to eq(1)
+        expect(stats.total_devices_allocation_liability).to eq(9)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(10)
+        expect(stats.total_routers_over_ordered).to eq(0)
+        expect(stats.total_routers_cap).to eq(10)
+        expect(stats.total_routers_ordered).to eq(1)
+        expect(stats.total_routers_allocation_liability).to eq(9)
+      end
+    end
+
+    context 'in-lockdown school not centrally managed with over ordered borrowed devices' do
+      before do
+        create(:school, :manages_orders, :in_lockdown, laptops: [10, 0, 4, 14], routers: [10, 0, 4, 14])
+      end
+
+      it 'compute the right total amounts of laptops' do
+        expect(stats.total_devices_allocated).to eq(10)
+        expect(stats.total_devices_over_ordered).to eq(4)
+        expect(stats.total_devices_cap).to eq(14)
+        expect(stats.total_devices_ordered).to eq(14)
+        expect(stats.total_devices_allocation_liability).to eq(0)
+      end
+
+      it 'compute the right total amounts of routers' do
+        expect(stats.total_routers_allocated).to eq(10)
+        expect(stats.total_routers_over_ordered).to eq(4)
+        expect(stats.total_routers_cap).to eq(14)
+        expect(stats.total_routers_ordered).to eq(14)
+        expect(stats.total_routers_allocation_liability).to eq(0)
+      end
+    end
+
+    context 'with all types of schools' do
+      before do
+        create(:school, :centrally_managed, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1], responsible_body: rb)
+        create(:school, :centrally_managed, :in_lockdown, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1], responsible_body: rb)
+        create(:school, :centrally_managed, :in_lockdown, laptops: [10, 0, -9, 1], routers: [10, 0, -9, 1], responsible_body: rb)
+        create(:school, :centrally_managed, :in_lockdown, laptops: [10, 0, 9, 19], routers: [10, 0, 9, 19], responsible_body: rb)
+        create(:school, :centrally_managed, :in_lockdown, :can_order_for_specific_circumstances, laptops: [10, -3, 0, 3], routers: [10, -3, 0, 3], responsible_body: rb)
+        create(:school, :manages_orders, :can_order_for_specific_circumstances, laptops: [10, -3, 0, 3], routers: [10, -3, 0, 3], responsible_body: rb)
+        create(:school, :manages_orders, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1])
+        create(:school, :manages_orders, :in_lockdown, laptops: [10, 0, 0, 1], routers: [10, 0, 0, 1])
+        create(:school, :manages_orders, :in_lockdown, laptops: [10, 0, 4, 14], routers: [10, 0, 4, 14])
+      end
+
+      it 'compute the right total amounts for devices' do
+        expect(stats.total_devices_allocated).to eq(66)
+        expect(stats.total_devices_over_ordered).to eq(4)
+        expect(stats.total_devices_cap).to eq(70)
+        expect(stats.total_devices_ordered).to eq(44)
+        expect(stats.total_devices_allocation_liability).to eq(26)
+      end
+
+      it 'compute the right total amounts for routers' do
+        expect(stats.total_routers_allocated).to eq(66)
+        expect(stats.total_routers_over_ordered).to eq(4)
+        expect(stats.total_routers_cap).to eq(70)
+        expect(stats.total_routers_ordered).to eq(44)
+        expect(stats.total_routers_allocation_liability).to eq(26)
+      end
+    end
+  end
 end

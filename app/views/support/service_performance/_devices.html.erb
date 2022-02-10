@@ -1,11 +1,19 @@
 <h2 class="govuk-heading-l">Devices</h2>
 <%- i18n_scope = 'support.devices_performance' %>
 
-<div class="govuk-!-margin-bottom-4">
-  <%= render Support::TileComponent.new(
-               count: humanized_number(@stats.total_devices_available),
-               label: t(:total_devices_available, scope: i18n_scope),
-               colour: :blue) %>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: humanized_number(@stats.total_devices_allocated),
+                 label: t(:total_devices_allocated, scope: i18n_scope),
+                 colour: :blue) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+                 count: humanized_number(@stats.total_devices_over_ordered),
+                 label: t(:total_devices_over_ordered, scope: i18n_scope),
+                 colour: :blue) %>
+  </div>
 </div>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
@@ -17,8 +25,8 @@
   </div>
   <div class="govuk-grid-column-one-half">
     <%= render Support::TileComponent.new(
-                 count: humanized_number(@stats.total_devices_remaining),
-                 label: t(:total_devices_remaining, scope: i18n_scope),
+                 count: humanized_number(@stats.total_devices_allocation_liability),
+                 label: t(:total_devices_allocation_liability, scope: i18n_scope),
                  colour: :orange) %>
   </div>
 </div>
