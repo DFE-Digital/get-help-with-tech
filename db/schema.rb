@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_153735) do
+ActiveRecord::Schema.define(version: 2022_02_08_122126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,52 @@ ActiveRecord::Schema.define(version: 2022_01_14_153735) do
     t.index ["ship_to"], name: "index_computacenter_devices_ordered_updates_on_ship_to"
   end
 
+  create_table "computacenter_orders", force: :cascade do |t|
+    t.string "raw_customer_order_number"
+    t.string "raw_delivery_date"
+    t.string "raw_despatch_date"
+    t.string "raw_is_return"
+    t.string "raw_manufacturer_name"
+    t.string "raw_material_description"
+    t.string "raw_material_number"
+    t.string "raw_order_completed"
+    t.string "raw_order_date"
+    t.string "raw_order_days_to_delivery"
+    t.string "raw_order_days_to_despatch"
+    t.string "raw_persona"
+    t.string "raw_persona_description"
+    t.string "raw_quantity_completed"
+    t.string "raw_quantity_ordered"
+    t.string "raw_quantity_outstanding"
+    t.string "raw_sales_order_number"
+    t.string "raw_school_urn"
+    t.string "raw_ship_to_account_no"
+    t.string "raw_ship_to_customer"
+    t.string "raw_sold_to_account_no"
+    t.string "raw_sold_to_customer"
+    t.string "raw_urn_cc"
+    t.string "raw_school_urn_flag"
+    t.date "delivery_date"
+    t.date "despatch_date"
+    t.date "order_date"
+    t.boolean "is_return"
+    t.boolean "order_completed"
+    t.integer "school_urn"
+    t.integer "order_days_to_delivery"
+    t.integer "order_days_to_despatch"
+    t.integer "quantity_completed"
+    t.integer "quantity_ordered"
+    t.integer "quantity_outstanding"
+    t.string "provision_urn"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provision_urn"], name: "index_computacenter_orders_on_provision_urn"
+    t.index ["raw_school_urn_flag"], name: "index_computacenter_orders_on_raw_school_urn_flag"
+    t.index ["raw_ship_to_account_no"], name: "index_computacenter_orders_on_raw_ship_to_account_no"
+    t.index ["raw_sold_to_account_no"], name: "index_computacenter_orders_on_raw_sold_to_account_no"
+    t.index ["school_urn"], name: "index_computacenter_orders_on_school_urn"
+  end
+
   create_table "computacenter_user_changes", force: :cascade do |t|
     t.integer "user_id"
     t.text "first_name"
@@ -260,16 +306,16 @@ ActiveRecord::Schema.define(version: 2022_01_14_153735) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
+    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
     t.datetime "school_contacted_at"
-    t.bigint "school_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"
