@@ -1,11 +1,20 @@
 <h2 class="govuk-heading-l">Routers</h2>
 <%- i18n_scope = 'support.routers_performance' %>
 
-<div class="govuk-!-margin-bottom-4">
-  <%= render Support::TileComponent.new(
-               count: humanized_number(@stats.total_routers_available),
-               label: t(:total_routers_available, scope: i18n_scope),
-               colour: :blue) %>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+      count: humanized_number(@stats.total_routers_allocated),
+      label: t(:total_routers_allocated, scope: i18n_scope),
+      colour: :blue) %>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render Support::TileComponent.new(
+      count: humanized_number(@stats.total_routers_over_ordered),
+      label: t(:total_routers_over_ordered, scope: i18n_scope),
+      colour: :blue) %>
+  </div>
 </div>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-4">
@@ -17,8 +26,8 @@
   </div>
   <div class="govuk-grid-column-one-half">
     <%= render Support::TileComponent.new(
-                 count: humanized_number(@stats.total_routers_remaining),
-                 label: t(:total_routers_remaining, scope: i18n_scope),
+                 count: humanized_number(@stats.total_routers_allocation_liability),
+                 label: t(:total_routers_allocation_liability, scope: i18n_scope),
                  colour: :orange) %>
   </div>
 </div>

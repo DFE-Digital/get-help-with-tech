@@ -226,9 +226,10 @@ RSpec.feature 'Viewing service performance', type: :feature do
   def then_i_see_stats_about_devices
     within('#devices') do
       expect(page).to have_selector('h2', text: 'Devices')
-      expect(page).to have_text('300 total devices available')
-      expect(page).to have_text('130 devices shipped')
-      expect(page).to have_text('170 remaining')
+      expect(page).to have_text('300 total devices allocated')
+      expect(page).to have_text('0 plus currently in over order')
+      expect(page).to have_text('130 devices ordered')
+      expect(page).to have_text('170 allocation liability')
     end
   end
 
@@ -274,9 +275,10 @@ RSpec.feature 'Viewing service performance', type: :feature do
   def then_i_see_stats_about_routers
     within('#routers') do
       expect(page).to have_selector('h2', text: 'Routers')
-      expect(page).to have_text('300 total routers available')
-      expect(page).to have_text('130 routers shipped')
-      expect(page).to have_text('170 routers remaining')
+      expect(page).to have_text('300 total routers allocated')
+      expect(page).to have_text('0 plus currently in over order')
+      expect(page).to have_text('130 routers ordered')
+      expect(page).to have_text('170 allocation liability')
     end
   end
 
