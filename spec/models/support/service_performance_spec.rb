@@ -193,46 +193,46 @@ RSpec.describe Support::ServicePerformance, type: :model do
           rb: rb_devolved_1,
           devolved: true,
           schools: [
-            { open: true, cap: 2, devices_ordered: 0 },
-            { open: true, cap: 2, devices_ordered: 1 },
-            { open: true, cap: 2, devices_ordered: 2 },
-            { open: false, cap: 2, devices_ordered: 0 },
-            { open: false, cap: 2, devices_ordered: 3 },
+            { open: true,  laptops: [2, 0, 0, 0] },
+            { open: true,  laptops: [2, 0, -1, 1] },
+            { open: true,  laptops: [2, -1, 0, 1] },
+            { open: false, laptops: [2, 0, 0, 0] },
+            { open: false, laptops: [2, 0, 1, 3] },
           ],
         },
         {
           rb: rb_devolved_2,
           devolved: true,
           schools: [
-            { open: true, cap: 2, devices_ordered: 0 },
-            { open: true, cap: 2, devices_ordered: 1 },
-            { open: true, cap: 2, devices_ordered: 3 },
-            { open: false, cap: 2, devices_ordered: 0 },
-            { open: false, cap: 2, devices_ordered: 1 },
-            { open: false, cap: 2, devices_ordered: 3 },
+            { open: true,  laptops: [2, 0, 0, 0] },
+            { open: true,  laptops: [2, 0, 0, 1] },
+            { open: true,  laptops: [2, 0, 1, 3] },
+            { open: false, laptops: [2, 0, 0, 0] },
+            { open: false, laptops: [2, 0, 0, 1] },
+            { open: false, laptops: [2, 0, 1, 3] },
           ],
         },
         {
           rb: rb_centrally_managed_1,
           devolved: false,
           schools: [
-            { open: true, cap: 2, devices_ordered: 0 },
-            { open: true, cap: 2, devices_ordered: 1 },
-            { open: true, cap: 2, devices_ordered: 3 },
-            { open: true, cap: 2, devices_ordered: 4 },
-            { open: false, cap: 2, devices_ordered: 0 },
+            { open: true,  laptops: [2, 0, 0, 0] },
+            { open: true,  laptops: [2, 0, 0, 1] },
+            { open: true,  laptops: [2, 0, 1, 3] },
+            { open: true,  laptops: [2, 0, 2, 4] },
+            { open: false, laptops: [2, 0, 0, 0] },
           ],
         },
         {
           rb: rb_centrally_managed_2,
           devolved: false,
           schools: [
-            { open: true, cap: 2, devices_ordered: 0 },
-            { open: true, cap: 2, devices_ordered: 1 },
-            { open: true, cap: 2, devices_ordered: 0 },
-            { open: false, cap: 2, devices_ordered: 0 },
-            { open: false, cap: 2, devices_ordered: 5 },
-            { open: false, cap: 2, devices_ordered: 3 },
+            { open: true,  laptops: [2, 0, 0, 0] },
+            { open: true,  laptops: [2, 0, 0, 1] },
+            { open: true,  laptops: [2, -2, 0, 0] },
+            { open: false, laptops: [2, 0, 0, 0] },
+            { open: false, laptops: [2, 0, 3, 5] },
+            { open: false, laptops: [2, 0, 1, 3] },
           ],
         },
       ]
@@ -242,30 +242,30 @@ RSpec.describe Support::ServicePerformance, type: :model do
       [
         {
           key: :open_and_devolved_schools,
-          available: 12,
-          ordered: 7,
-          remaining_excl_over_ordered: 6,
-          over_ordered: 1,
+          allocated: 11,
+          ordered: 6,
+          allocation_liability: 5,
+          over_ordered: 0,
         },
         {
           key: :closed_and_devolved_schools,
-          available: 10,
+          allocated: 10,
           ordered: 7,
-          remaining_excl_over_ordered: 5,
+          allocation_liability: 5,
           over_ordered: 2,
         },
         {
           key: :open_and_centrally_managed_schools,
-          available: 14,
+          allocated: 12,
           ordered: 9,
-          remaining_excl_over_ordered: 8,
+          allocation_liability: 6,
           over_ordered: 3,
         },
         {
           key: :closed_and_centrally_managed_schools,
-          available: 8,
+          allocated: 8,
           ordered: 8,
-          remaining_excl_over_ordered: 4,
+          allocation_liability: 4,
           over_ordered: 4,
         },
       ]
@@ -277,9 +277,10 @@ RSpec.describe Support::ServicePerformance, type: :model do
         entry[:schools].each do |school_data|
           school_record = create(
             :school,
+            :in_lockdown,
             responsible_body: entry[:rb],
             status: school_data[:open] ? 'open' : 'closed',
-            laptops: school_data.values_at(:cap, :cap, :devices_ordered),
+            laptops: school_data[:laptops],
           )
 
           if entry[:devolved]
@@ -299,9 +300,9 @@ RSpec.describe Support::ServicePerformance, type: :model do
       expected_result.each_with_index do |expected_result_segment, ix|
         result_segment = {
           key: result[ix].key,
-          available: result[ix].available,
+          allocated: result[ix].allocated,
           ordered: result[ix].ordered,
-          remaining_excl_over_ordered: result[ix].remaining_excl_over_ordered,
+          allocation_liability: result[ix].allocation_liability,
           over_ordered: result[ix].over_ordered,
         }
 

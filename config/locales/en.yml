@@ -403,14 +403,12 @@ en:
         one: responsible body has given all the information needed for at least one school
         other: responsible bodies have given all the information needed for at least one school
     devices_performance:
+      allocation_liability: allocation liability
+      devices_ordered: devices ordered
+      over_ordered: over-ordered
       total_devices_allocated: total devices allocated
-      total_devices_ordered: devices ordered
       total_devices_over_ordered: plus currently in over order
-      total_devices_allocation_liability: allocation liability
-      devices_available: devices available
-      devices_ordered: devices shipped
-      devices_remaining_excl_over_ordered: remaining (excl. over-ordered)
-      devices_over_ordered: over-ordered
+      devices_allocated: devices allocated
       open_and_devolved_schools: For open and devolved schools
       closed_and_devolved_schools: For closed and devolved schools
       open_and_centrally_managed_schools: For open and centrally managed schools
@@ -426,10 +424,10 @@ en:
       devolved_schools_extra_mobile_requests_html: devolved schools <br/>(out of %{total})
       responsible_bodies_extra_mobile_requests_html: responsible bodies managing orders centrally <br/>(out of %{total}, and on behalf of %{school_count} schools)
     routers_performance:
+      allocation_liability: allocation liability
+      routers_ordered: routers ordered
       total_routers_allocated: total routers allocated
-      total_routers_ordered: routers ordered
       total_routers_over_ordered: plus currently in over order
-      total_routers_allocation_liability: allocation liability
       devolved_schools: schools that have a router allocation
       devolved_schools_that_have_fully_ordered_routers_html: ordered their full allocation <br/>(%{amount} out of %{total})
       devolved_schools_that_have_partially_ordered_routers_html: ordered but have routers left <br/>(%{amount} out of %{total})

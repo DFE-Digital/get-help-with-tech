@@ -20,43 +20,46 @@
   <div class="govuk-grid-column-one-half">
     <%= render Support::TileComponent.new(
                  count: humanized_number(@stats.total_devices_ordered),
-                 label: t(:total_devices_ordered, scope: i18n_scope),
+                 label: t(:devices_ordered, scope: i18n_scope),
                  colour: :green) %>
   </div>
   <div class="govuk-grid-column-one-half">
     <%= render Support::TileComponent.new(
                  count: humanized_number(@stats.total_devices_allocation_liability),
-                 label: t(:total_devices_allocation_liability, scope: i18n_scope),
+                 label: t(:allocation_liability, scope: i18n_scope),
                  colour: :orange) %>
   </div>
 </div>
 
 <% @stats.segmented_device_counts.each do |s| %>
   <%= render GovukComponent::DetailsComponent.new(summary_text: t(s.key, scope: i18n_scope), classes: ['govuk-!-margin-bottom-4']) do %>
-    <div class="govuk-!-margin-bottom-4">
-      <%= render Support::TileComponent.new(
-                   count: humanized_number(s.available),
-                   label: t(:devices_available, scope: i18n_scope),
-                   colour: :blue) %>
-    </div>
     <div class="govuk-grid-row govuk-!-margin-bottom-4">
-      <div class="govuk-grid-column-one-third">
+      <div class="govuk-grid-column-one-half">
+        <%= render Support::TileComponent.new(
+                     count: humanized_number(s.allocated),
+                     label: t(:devices_allocated, scope: i18n_scope),
+                     colour: :blue) %>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <%= render Support::TileComponent.new(
+          count: humanized_number(s.over_ordered),
+          label: t(:over_ordered, scope: i18n_scope),
+          colour: :red) %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-bottom-4">
+      <div class="govuk-grid-column-one-half">
         <%= render Support::TileComponent.new(
                      count: humanized_number(s.ordered),
                      label: t(:devices_ordered, scope: i18n_scope),
                      colour: :green) %>
       </div>
-      <div class="govuk-grid-column-one-third">
+      <div class="govuk-grid-column-one-half">
         <%= render Support::TileComponent.new(
-                     count: humanized_number(s.remaining_excl_over_ordered),
-                     label: t(:devices_remaining_excl_over_ordered, scope: i18n_scope),
+                     count: humanized_number(s.allocation_liability),
+                     label: t(:allocation_liability, scope: i18n_scope),
                      colour: :orange) %>
-      </div>
-      <div class="govuk-grid-column-one-third">
-        <%= render Support::TileComponent.new(
-                     count: humanized_number(s.over_ordered),
-                     label: t(:devices_over_ordered, scope: i18n_scope),
-                     colour: :red) %>
       </div>
     </div>
   <%- end -%>
