@@ -52,6 +52,7 @@ class CreateComputacenterOrders < ActiveRecord::Migration[6.1]
     end
 
     # things we are likely to query with
+    add_index :computacenter_orders, :raw_customer_order_number
     add_index :computacenter_orders, :raw_ship_to_account_no
     add_index :computacenter_orders, :raw_sold_to_account_no
     add_index :computacenter_orders, :raw_school_urn_flag
