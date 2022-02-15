@@ -21,13 +21,13 @@
   <div class="govuk-grid-column-one-half">
     <%= render Support::TileComponent.new(
                  count: humanized_number(@stats.total_routers_ordered),
-                 label: t(:total_routers_ordered, scope: i18n_scope),
+                 label: t(:routers_ordered, scope: i18n_scope),
                  colour: :green) %>
   </div>
   <div class="govuk-grid-column-one-half">
     <%= render Support::TileComponent.new(
                  count: humanized_number(@stats.total_routers_allocation_liability),
-                 label: t(:total_routers_allocation_liability, scope: i18n_scope),
+                 label: t(:allocation_liability, scope: i18n_scope),
                  colour: :orange) %>
   </div>
 </div>
