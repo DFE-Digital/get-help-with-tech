@@ -47,10 +47,7 @@ class Support::ServicePerformance
   end
 
   def total_devices_over_ordered
-    @total_devices_over_ordered ||= sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order'
-                                                                        THEN 0
-                                                                        ELSE over_order_reclaimed_laptops
-                                                                    END"))
+    @total_devices_over_ordered ||= sum_allocation(Arel.sql('over_order_reclaimed_laptops'))
   end
 
   def total_devices_ordered
@@ -75,10 +72,7 @@ class Support::ServicePerformance
   end
 
   def total_routers_over_ordered
-    @total_routers_over_ordered ||= sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order'
-                                                                        THEN 0
-                                                                        ELSE over_order_reclaimed_routers
-                                                                    END"))
+    @total_routers_over_ordered ||= sum_allocation(Arel.sql('over_order_reclaimed_routers'))
   end
 
   def total_routers_ordered
@@ -90,7 +84,7 @@ class Support::ServicePerformance
   end
 
   def sum_allocation(sum_expression)
-    devolved = School.gias_status_open.school_will_order_devices.sum(sum_expression)
+    devolved = School.school_will_order_devices.sum(sum_expression)
     managed = School.responsible_body_will_order_devices.sum(sum_expression)
     devolved + managed
   end
