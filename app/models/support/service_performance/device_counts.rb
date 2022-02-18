@@ -25,10 +25,7 @@ class Support::ServicePerformance::DeviceCounts
   end
 
   def over_ordered
-    @over_ordered ||= sum_allocation(Arel.sql("CASE order_state WHEN 'cannot_order'
-                                                          THEN 0
-                                                          ELSE over_order_reclaimed_laptops
-                                                      END"))
+    @over_ordered ||= sum_allocation(Arel.sql('over_order_reclaimed_laptops'))
   end
 
   def ordered
