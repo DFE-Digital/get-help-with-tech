@@ -53,7 +53,11 @@ private
   end
 
   def title_for_default
-    i18n_key = user.is_school_user? || (user.responsible_body_user? && !user.single_school_user?) ? :related_organisation : :standard
-    I18n.t(i18n_key, scope: %i[page_titles click_to_sign_in], organisation: user.organisation_name)
+    i18n_key = :related_organisation if user.is_school_user?
+    i18n_key ||= :related_organisation if user.responsible_body_user? && !user.single_school_user?
+    organisation_name = user.organisation_name if i18n_key == :related_organisation
+    i18n_key = :standard unless organisation_name
+
+    I18n.t(i18n_key, scope: %i[page_titles click_to_sign_in], organisation: organisation_name)
   end
 end
