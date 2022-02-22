@@ -10,10 +10,10 @@ RSpec.describe ChromebookInformationForm do
                     la_funded_provision?: false)
   end
   let(:form) do
-    described_class.new(school: school,
-                        will_need_chromebooks: will_need_chromebooks,
-                        recovery_email_address: recovery_email_address,
-                        school_or_rb_domain: school_or_rb_domain)
+    described_class.new(school:,
+                        will_need_chromebooks:,
+                        recovery_email_address:,
+                        school_or_rb_domain:)
   end
 
   let!(:request) do
@@ -65,8 +65,8 @@ RSpec.describe ChromebookInformationForm do
     let(:school) { create(:iss_provision) }
 
     let(:form) do
-      described_class.new(school: school,
-                          will_need_chromebooks: will_need_chromebooks,
+      described_class.new(school:,
+                          will_need_chromebooks:,
                           will_need_chromebooks_message: 'Tell us if pupils will need Chromebooks')
     end
 

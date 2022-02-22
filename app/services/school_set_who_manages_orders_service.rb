@@ -12,7 +12,7 @@ class SchoolSetWhoManagesOrdersService
   end
 
   def call
-    school.orders_managed_by!(who, clear_preorder_information: clear_preorder_information)
+    school.orders_managed_by!(who, clear_preorder_information:)
     recalculate_vcaps! if recalculate_vcaps
     school.refresh_preorder_status!
     notify_other_agents if notify
@@ -40,7 +40,7 @@ private
     end
 
     CapUpdateNotificationsService.new(school,
-                                      device_types: device_types,
+                                      device_types:,
                                       notify_computacenter: false,
                                       notify_school: false).call
   end

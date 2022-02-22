@@ -18,13 +18,13 @@ class Computacenter::SchoolChangesController < Computacenter::BaseController
 
   def edit
     authorize school, :update_computacenter_reference?
-    @form = Computacenter::ShipToForm.new(school: school,
+    @form = Computacenter::ShipToForm.new(school:,
                                           ship_to: school.computacenter_reference)
   end
 
   def update
     authorize school, :update_computacenter_reference?
-    @form = Computacenter::ShipToForm.new(ship_to_params.merge(school: school))
+    @form = Computacenter::ShipToForm.new(ship_to_params.merge(school:))
 
     if form.save
       flash[:success] = t(:success, scope: %i[computacenter ship_to update],

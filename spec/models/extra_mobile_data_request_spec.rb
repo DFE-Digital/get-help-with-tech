@@ -44,7 +44,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
     let(:rb) { create(:trust) }
 
     context 'when rb and school present' do
-      subject(:model) { described_class.new(responsible_body: rb, school: school) }
+      subject(:model) { described_class.new(responsible_body: rb, school:) }
 
       it 'is valid' do
         model.valid?
@@ -115,7 +115,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
     context 'when school present' do
       let(:existing_request) do
-        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school:)
       end
 
       subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, responsible_body: nil) }
@@ -140,7 +140,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
     context 'when the device_phone_number is not normalised' do
       let(:existing_request) do
-        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school:)
       end
 
       subject(:model) { build(:extra_mobile_data_request, school: existing_request.school, mobile_network_id: existing_request.mobile_network_id, account_holder_name: existing_request.account_holder_name, responsible_body: nil, device_phone_number: '07123 456 780') }
@@ -161,7 +161,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
 
     context 'when the account_holder_name is different but the normalised name exists' do
       let(:existing_request) do
-        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school: school)
+        create(:extra_mobile_data_request, account_holder_name: 'Person 2', device_phone_number: '07123456780', school:)
       end
 
       subject(:model) { existing_request.dup }
@@ -223,7 +223,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   def mno_request_for_number(device_phone_number)
-    FactoryBot.create(:extra_mobile_data_request, device_phone_number: device_phone_number)
+    FactoryBot.create(:extra_mobile_data_request, device_phone_number:)
   end
 
   it 'normalises phone numbers to the national format without spaces' do
@@ -237,7 +237,7 @@ RSpec.describe ExtraMobileDataRequest, type: :model do
   end
 
   describe 'normalising account_holder_name' do
-    subject(:request) { described_class.new(account_holder_name: account_holder_name) }
+    subject(:request) { described_class.new(account_holder_name:) }
 
     before do
       request.normalise_name

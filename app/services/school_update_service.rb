@@ -61,7 +61,7 @@ private
 
   def inherit_order_state(school, staged_school)
     predecessor = find_predecessor(staged_school)
-    UpdateSchoolDevicesService.new(school: school, order_state: predecessor.order_state).call if predecessor
+    UpdateSchoolDevicesService.new(school:, order_state: predecessor.order_state).call if predecessor
   end
 
   def set_who_manages_orders(school)
@@ -79,7 +79,7 @@ private
         next unless spare_allocation.positive?
 
         School.transaction do
-          UpdateSchoolDevicesService.new(school: school,
+          UpdateSchoolDevicesService.new(school:,
                                          "#{device_type}_allocation".to_sym => spare_allocation,
                                          "#{device_type}_cap".to_sym => spare_allocation,
                                          recalculate_vcaps: false,

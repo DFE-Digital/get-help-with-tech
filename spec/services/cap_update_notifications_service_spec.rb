@@ -28,8 +28,8 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
     subject(:service) do
       described_class.new(school,
                           device_types: %i[laptop router],
-                          notify_computacenter: notify_computacenter,
-                          notify_school: notify_school)
+                          notify_computacenter:,
+                          notify_school:)
     end
 
     context 'when there are no schools with complete computacenter references' do
@@ -98,13 +98,13 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
       it 'notify Computacenter of laptops cap change by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                .with(params: { school: school, new_cap_value: 0 }, args: []).once
+                .with(params: { school:, new_cap_value: 0 }, args: []).once
       end
 
       it 'notify Computacenter of routers cap change by email' do
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                .with(params: { school: school, new_cap_value: 0 }, args: []).once
+                .with(params: { school:, new_cap_value: 0 }, args: []).once
       end
 
       it "notify the school's organizational users" do
@@ -113,7 +113,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
         expect { service.call }
           .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
-                .with(params: { school: school, user: user }, args: []).once
+                .with(params: { school:, user: }, args: []).once
       end
 
       it "notify support if no school's organizational users" do
@@ -121,7 +121,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
         expect { service.call }
           .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-                .with(params: { school: school }, args: []).once
+                .with(params: { school: }, args: []).once
       end
 
       it 'notify Computacenter of school can order by email' do
@@ -129,7 +129,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
         expect { service.call }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                .with(params: { school: school, new_cap_value: 1 }, args: []).once
+                .with(params: { school:, new_cap_value: 1 }, args: []).once
       end
 
       context 'when :notify_computacenter falsey' do
@@ -145,7 +145,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
           expect { service.call }
             .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
-                  .with(params: { school: school, user: user }, args: []).once
+                  .with(params: { school:, user: }, args: []).once
         end
 
         it "notify support if no school's organizational users" do
@@ -153,7 +153,7 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
 
           expect { service.call }
             .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-                  .with(params: { school: school }, args: []).once
+                  .with(params: { school: }, args: []).once
         end
       end
 
@@ -165,13 +165,13 @@ RSpec.describe CapUpdateNotificationsService, type: :model do
         it 'notify Computacenter of laptops cap change by email' do
           expect { service.call }
             .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                  .with(params: { school: school, new_cap_value: 1 }, args: []).once
+                  .with(params: { school:, new_cap_value: 1 }, args: []).once
         end
 
         it 'notify Computacenter of routers cap change by email' do
           expect { service.call }
             .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                  .with(params: { school: school, new_cap_value: 1 }, args: []).once
+                  .with(params: { school:, new_cap_value: 1 }, args: []).once
         end
 
         it 'do not notify Computacenter of school can order by email' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ExtraMobileDataRequestStatusComponent, type: :component do
-  subject(:component) { described_class.new(status: status) }
+  subject(:component) { described_class.new(status:) }
 
   let(:html) { render_inline(component).to_html }
 

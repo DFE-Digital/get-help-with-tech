@@ -53,11 +53,11 @@ module ViewHelper
 
   def breadcrumbs(items)
     breadcrumbs = items.map { |k, _v| k.is_a?(Hash) ? k : { k => '' } }.inject(:merge)
-    render GovukComponent::BreadcrumbsComponent.new(breadcrumbs: breadcrumbs)
+    render GovukComponent::BreadcrumbsComponent.new(breadcrumbs:)
   end
 
   def school_breadcrumbs(items:, user:, school:)
-    render School::SchoolBreadcrumbsComponent.new(items: items, user: user, school: school)
+    render School::SchoolBreadcrumbsComponent.new(items:, user:, school:)
   end
 
   def sortable_extra_mobile_data_requests_table_header(title, value = title, opts = params)
@@ -71,9 +71,9 @@ module ViewHelper
         suffix = '▼'
         dir = 'd'
       end
-      safe_join([govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, dir: dir, phone_numbers: phone_numbers)), suffix], ' ')
+      safe_join([govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, dir:, phone_numbers:)), suffix], ' ')
     else
-      govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, phone_numbers: phone_numbers))
+      govuk_link_to(title, mno_extra_mobile_data_requests_path(sort: value, phone_numbers:))
     end
   end
 
@@ -105,11 +105,11 @@ module ViewHelper
     [
       OpenStruct.new(
         id: 'school',
-        label: t('school', scope: scope),
+        label: t('school', scope:),
       ),
       OpenStruct.new(
         id: 'responsible_body',
-        label: t('responsible_body', scope: scope),
+        label: t('responsible_body', scope:),
       ),
     ]
   end
@@ -119,11 +119,11 @@ module ViewHelper
     [
       OpenStruct.new(
         value: '1',
-        label: t('can_order_devices', scope: scope),
+        label: t('can_order_devices', scope:),
       ),
       OpenStruct.new(
         value: '0',
-        label: t('cannot_order_devices', scope: scope),
+        label: t('cannot_order_devices', scope:),
       ),
     ]
   end

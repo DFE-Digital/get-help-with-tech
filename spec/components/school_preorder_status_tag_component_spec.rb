@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SchoolPreorderStatusTagComponent do
-  subject(:component) { described_class.new(school: school, viewer: viewer) }
+  subject(:component) { described_class.new(school:, viewer:) }
 
   let(:school) { instance_double('School', preorder_status: 'rb_can_order', orders_managed_by_school?: false) }
   let(:viewer) { nil }

@@ -31,7 +31,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
     let(:trust_name) { 'THE NEW TRUST' }
 
     it 'creates a Trust with the specified name and no companies house number' do
-      expect { converter.convert_to_sat(trust_name: trust_name) }.to change { Trust.count }.by(1)
+      expect { converter.convert_to_sat(trust_name:) }.to change { Trust.count }.by(1)
       trust = Trust.last
       expect(trust.name).to eq(trust_name)
       expect(trust.companies_house_number).to be_blank
@@ -49,8 +49,8 @@ RSpec.describe SchoolToSatConverter, type: :model do
 
     it 'creates a Trust with the specified name and companies house number' do
       expect {
-        converter.convert_to_sat(trust_name: trust_name,
-                                 companies_house_number: companies_house_number)
+        converter.convert_to_sat(trust_name:,
+                                 companies_house_number:)
       }.to change { Trust.count }.by(1)
 
       trust = Trust.last
@@ -66,7 +66,7 @@ RSpec.describe SchoolToSatConverter, type: :model do
 
   context 'when the school has a device allocation' do
     it 'does not alter the allocation' do
-      UpdateSchoolDevicesService.new(school: school, laptop_allocation: 20).call
+      UpdateSchoolDevicesService.new(school:, laptop_allocation: 20).call
 
       converter.convert_to_sat
       expect(school.raw_allocation(:laptop)).to eq(20)

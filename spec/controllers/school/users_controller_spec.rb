@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe School::UsersController, type: :controller do
   let(:school_user) { create(:school_user) }
   let(:school) { school_user.school }
-  let(:new_user) { build(:school_user, school: school) }
+  let(:new_user) { build(:school_user, school:) }
   let(:request_data) do
     { urn: school.urn, user: { full_name: new_user.full_name, email_address: new_user.email_address, orders_devices: false } }
   end

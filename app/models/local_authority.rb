@@ -24,44 +24,44 @@ class LocalAuthority < ResponsibleBody
     create_provision!(urn: "ISS#{gias_id}",
                       name: 'State-funded pupils in independent special schools and alternative provision',
                       provision_type: :iss,
-                      device_allocation: device_allocation,
-                      router_allocation: router_allocation,
-                      extra_args: extra_args)
+                      device_allocation:,
+                      router_allocation:,
+                      extra_args:)
   end
 
   def create_scl_provision!(device_allocation: 0, router_allocation: 0, extra_args: {})
     create_provision!(urn: "SCL#{gias_id}",
                       name: 'Care leavers',
                       provision_type: :scl,
-                      device_allocation: device_allocation,
-                      router_allocation: router_allocation,
-                      extra_args: extra_args)
+                      device_allocation:,
+                      router_allocation:,
+                      extra_args:)
   end
 
 private
 
   def create_provision!(urn:, name:, provision_type:, device_allocation: 0, router_allocation: 0, extra_args: {})
-    existing_provision = la_funded_provisions.find_by(provision_type: provision_type)
+    existing_provision = la_funded_provisions.find_by(provision_type:)
     return existing_provision unless existing_provision.nil?
 
     attrs = {
       responsible_body: self,
       provision_urn: urn,
-      name: name,
-      provision_type: provision_type,
+      name:,
+      provision_type:,
       establishment_type: 'la_funded_place',
-      address_1: address_1,
-      address_2: address_2,
-      address_3: address_3,
-      town: town,
-      county: county,
-      postcode: postcode,
+      address_1:,
+      address_2:,
+      address_3:,
+      town:,
+      county:,
+      postcode:,
     }.merge(extra_args)
 
     provision = LaFundedPlace.create!(attrs)
     UpdateSchoolDevicesService.new(school: provision,
                                    laptop_allocation: device_allocation,
-                                   router_allocation: router_allocation).call
+                                   router_allocation:).call
     add_rb_users_to_provision(provision)
     SchoolSetWhoManagesOrdersService.new(provision, :school).call
     provision

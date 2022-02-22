@@ -10,7 +10,7 @@ RSpec.describe Support::UserSearchResultComponent do
   let(:unassociated_user) { create(:user, responsible_body: nil, schools: [], email_address: 'fran@free.com', full_name: 'Fran Free') }
   let(:support_user) { create(:support_user) }
 
-  subject { described_class.new(user: user, current_user: support_user) }
+  subject { described_class.new(user:, current_user: support_user) }
 
   it 'renders a link to the user’s support page' do
     expect(rendered_result_html).to include(support_user_path(user))

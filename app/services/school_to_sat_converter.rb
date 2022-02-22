@@ -17,8 +17,8 @@ class SchoolToSatConverter
 private
 
   def create_sat_trust(name, companies_house_number)
-    Trust.create!(name: name,
-                  companies_house_number: companies_house_number,
+    Trust.create!(name:,
+                  companies_house_number:,
                   organisation_type: 'single_academy_trust',
                   default_who_will_order_devices_for_schools: 'school',
                   address_1: school.address_1,

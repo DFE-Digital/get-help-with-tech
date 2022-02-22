@@ -8,7 +8,7 @@ module Computacenter
 
     belongs_to :cap_usage_update_payload, class_name: 'Computacenter::API::CapUsageUpdatePayload', optional: true
 
-    scope :before, ->(date) { where('created_at < :date', date: date) }
+    scope :before, ->(date) { where('created_at < :date', date:) }
     scope :laptop, -> { where(cap_type: 'DfE_RemainThresholdQty|Std_Device') }
     scope :router, -> { where(cap_type: 'DfE_RemainThresholdQty|Coms_Device') }
   end

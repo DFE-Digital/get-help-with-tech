@@ -26,7 +26,7 @@ RSpec.describe Support::BulkAllocationForm, type: :model do
       expect {
         form.save
       }.to have_enqueued_job(BulkAllocationJob)
-             .with(hash_including(filename: filename, batch_id: form.batch_id, send_notification: false))
+             .with(hash_including(filename:, batch_id: form.batch_id, send_notification: false))
              .once
     end
   end

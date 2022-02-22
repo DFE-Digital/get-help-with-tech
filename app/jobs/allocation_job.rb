@@ -36,19 +36,19 @@ private
   end
 
   def record_batch_job_processed_and_notify
-    processing_params = { processed: true, applied_allocation_delta: applied_allocation_delta }
+    processing_params = { processed: true, applied_allocation_delta: }
     processing_params.merge!(sent_notification: true) if notify_school
     allocation_batch_job.update!(processing_params)
   end
 
   def update_school_laptop_allocation
     UpdateSchoolDevicesService.new(
-      school: school,
-      order_state: order_state,
+      school:,
+      order_state:,
       laptop_allocation: new_raw_laptop_allocation,
-      notify_computacenter: notify_computacenter,
-      notify_school: notify_school,
-      recalculate_vcaps: recalculate_vcaps,
+      notify_computacenter:,
+      notify_school:,
+      recalculate_vcaps:,
       cap_change_category: :allocation_job,
     ).call
   end

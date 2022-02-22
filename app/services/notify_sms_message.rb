@@ -11,9 +11,9 @@ class NotifySmsMessage
 
   def deliver!
     sms_client.send_sms(
-      phone_number: phone_number,
-      template_id: template_id,
-      personalisation: personalisation,
+      phone_number:,
+      template_id:,
+      personalisation:,
     )
   rescue Notifications::Client::RequestError => e
     Rails.logger.error(e.message)

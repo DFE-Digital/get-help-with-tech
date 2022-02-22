@@ -83,7 +83,7 @@ class ExtraMobileDataRequest < ApplicationRecord
   end
 
   def self.on_mobile_network(mobile_network_id)
-    where(mobile_network_id: mobile_network_id)
+    where(mobile_network_id:)
   end
 
   def notify_account_holder_now
@@ -99,10 +99,10 @@ class ExtraMobileDataRequest < ApplicationRecord
   def has_already_been_made?(extra_conditions = {})
     self.class.exists?(
       {
-        normalised_name: normalised_name,
-        device_phone_number: device_phone_number,
-        mobile_network_id: mobile_network_id,
-        contract_type: contract_type,
+        normalised_name:,
+        device_phone_number:,
+        mobile_network_id:,
+        contract_type:,
       }.merge(extra_conditions),
     )
   end
@@ -149,7 +149,7 @@ private
   end
 
   def validate_request_uniqueness
-    scope = school_id.present? ? { school_id: school_id } : { responsible_body_id: responsible_body_id }
+    scope = school_id.present? ? { school_id: } : { responsible_body_id: }
     errors.add(:device_phone_number, :duplicate) if has_already_been_made?(scope)
   end
 

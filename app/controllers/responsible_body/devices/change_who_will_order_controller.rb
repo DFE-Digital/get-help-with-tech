@@ -2,7 +2,7 @@ class ResponsibleBody::Devices::ChangeWhoWillOrderController < ResponsibleBody::
   before_action :check_school_can_change_who_will_order
 
   def edit
-    @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order: who_will_order)
+    @form = ResponsibleBody::Devices::WhoWillOrderForm.new(who_will_order:)
   end
 
   def update

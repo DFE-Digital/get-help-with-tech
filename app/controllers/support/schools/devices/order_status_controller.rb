@@ -49,7 +49,7 @@ private
   end
 
   def set_enable_orders_form(updates = enable_orders_form_params)
-    @form = Support::EnableOrdersForm.new(school: school, **updates)
+    @form = Support::EnableOrdersForm.new(school:, **updates)
   end
 
   def set_school
@@ -87,7 +87,7 @@ private
   end
 
   def update_error!(payload_id)
-    flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id: payload_id)
+    flash[:warning] = t(:cap_update_request_error, scope: %i[support order_status update], payload_id:)
     render :edit, status: :unprocessable_entity
   end
 

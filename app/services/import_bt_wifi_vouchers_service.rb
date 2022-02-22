@@ -15,7 +15,7 @@ class ImportBTWifiVouchersService
         BTWifiVoucher.create!(
           username: row['Username'].strip,
           password: row['Password'].strip,
-          responsible_body: responsible_body,
+          responsible_body:,
         )
       end
     end
@@ -24,7 +24,7 @@ class ImportBTWifiVouchersService
 private
 
   def find_responsible_body!(name)
-    ResponsibleBody.find_by!(name: name) if name.present?
+    ResponsibleBody.find_by!(name:) if name.present?
   rescue ActiveRecord::RecordNotFound
     raise ArgumentError, "could not find responsible body with name '#{name}'"
   end

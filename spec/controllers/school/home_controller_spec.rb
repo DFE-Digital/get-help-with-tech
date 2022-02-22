@@ -11,7 +11,7 @@ RSpec.describe School::HomeController do
       let(:urn) { user.schools.first.urn }
 
       it 'shows the school home page' do
-        get :show, params: { urn: urn }
+        get :show, params: { urn: }
         expect(controller).to render_template(:show)
         expect(response).to have_http_status(:ok)
       end

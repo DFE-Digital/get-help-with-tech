@@ -20,9 +20,9 @@ class SchoolContact < ApplicationRecord
 
   def to_user
     User.new(
-      school: school,
-      full_name: full_name,
-      email_address: email_address,
+      school:,
+      full_name:,
+      email_address:,
       telephone: phone_number,
       orders_devices: true,
     )

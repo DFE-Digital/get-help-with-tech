@@ -12,12 +12,12 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
   end
 
   let(:responsible_body) { create(:trust, :single_academy_trust) }
-  let(:school) { create(:school, responsible_body: responsible_body) }
+  let(:school) { create(:school, responsible_body:) }
 
   context 'cases when the service does not apply' do
     it 'returns without creating any new users if the responsible body has multiple schools' do
-      create(:school, responsible_body: responsible_body) # another school in the RB
-      create(:school_contact, :headteacher, school: school)
+      create(:school, responsible_body:) # another school in the RB
+      create(:school_contact, :headteacher, school:)
 
       expect { described_class.new(urn: school.urn).call }
         .not_to change { User.count }.from(0)
@@ -37,7 +37,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
 
   context 'when the responsible body has users' do
     before do
-      create_list(:trust_user, 4, responsible_body: responsible_body, orders_devices: true)
+      create_list(:trust_user, 4, responsible_body:, orders_devices: true)
       described_class.new(urn: school.urn).call
       responsible_body.reload
       school.reload
@@ -85,12 +85,12 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
 
   context 'when the headteacher is already one of the responsible body users' do
     before do
-      @headteacher = create(:school_contact, :headteacher, school: school)
+      @headteacher = create(:school_contact, :headteacher, school:)
 
       create(:trust_user,
              email_address: @headteacher.email_address,
              full_name: @headteacher.full_name,
-             responsible_body: responsible_body,
+             responsible_body:,
              orders_devices: true)
 
       described_class.new(urn: school.urn).call
@@ -112,7 +112,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
 
   context 'when the responsible body has no users but the school has a headteacher contact' do
     before do
-      @headteacher = create(:school_contact, :headteacher, school: school)
+      @headteacher = create(:school_contact, :headteacher, school:)
 
       described_class.new(urn: school.urn).call
       responsible_body.reload
@@ -146,7 +146,7 @@ RSpec.describe OnboardSingleSchoolResponsibleBodyService, type: :model do
   context 'when the headteacher email address has upper-case letters' do
     before do
       @headteacher = create(:school_contact, :headteacher,
-                            school: school,
+                            school:,
                             email_address: 'JSmith@school.sch.uk')
 
       described_class.new(urn: school.urn).call

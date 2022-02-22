@@ -15,7 +15,7 @@ class BatchJob
       yield record
       success!(record)
     rescue StandardError => e
-      failure!(record: record, error: e)
+      failure!(record:, error: e)
     end
     stats
   end
@@ -25,7 +25,7 @@ class BatchJob
   end
 
   def self.stats(run_id:)
-    BatchJobLogEntry.status(run_id: run_id).merge(BatchJobLogEntry.speed_stats(run_id: run_id))
+    BatchJobLogEntry.status(run_id:).merge(BatchJobLogEntry.speed_stats(run_id:))
   end
 
 private
@@ -41,13 +41,13 @@ private
   end
 
   def success!(record)
-    entry = find_or_create_job_log_entry!(record: record, status: 'success')
+    entry = find_or_create_job_log_entry!(record:, status: 'success')
     entry.record = record
     @successes << entry
   end
 
   def failure!(record:, error:)
-    entry = find_or_create_job_log_entry!(record: record, status: 'failure', error: error)
+    entry = find_or_create_job_log_entry!(record:, status: 'failure', error:)
     entry.record = record
     @failures << entry
   end
@@ -60,7 +60,7 @@ private
       record_class: record.class.name,
     )
     entry.update!(
-      status: status,
+      status:,
       error: error&.message,
     )
     entry

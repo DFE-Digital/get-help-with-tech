@@ -52,8 +52,8 @@ private
 
   def upload_scheduled?
     BulkAllocationJob.perform_later(filename: s3 ? filename : upload.path,
-                                    batch_id: batch_id,
-                                    send_notification: send_notification)
+                                    batch_id:,
+                                    send_notification:)
     true
   rescue StandardError
     false

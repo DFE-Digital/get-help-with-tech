@@ -53,7 +53,7 @@ RSpec.feature 'Updating school headteacher details', skip: true do
 
   scenario 'set existing contact as headteacher' do
     school = create(:school)
-    contact = create(:school_contact, :contact, school: school)
+    contact = create(:school_contact, :contact, school:)
     new_email = 'headteacher@example.com'
 
     sign_in_as support_third_line_user
@@ -130,7 +130,7 @@ private
 
   def expect_school_page_with_banner(type, text)
     expect(school_page).to be_displayed
-    expect(page).to have_selector(".app-banner--#{type}", text: text)
+    expect(page).to have_selector(".app-banner--#{type}", text:)
   end
 
   def go_to_edit_headteacher(school_name)

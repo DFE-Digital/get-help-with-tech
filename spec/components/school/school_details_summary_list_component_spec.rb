@@ -9,7 +9,7 @@ describe School::SchoolDetailsSummaryListComponent do
            phone_number: '12345')
   end
 
-  subject(:result) { render_inline(described_class.new(school: school)) }
+  subject(:result) { render_inline(described_class.new(school:)) }
 
   context 'when the school will place device orders' do
     let(:school) do

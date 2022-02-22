@@ -10,7 +10,7 @@ class AllocationOverOrderRevertingService
   def call
     ResponsibleBody.transaction do
       failed_to_give_back = reclaimed_caps_in_the_vcap_pool.inject(returned) do |quantity, member|
-        quantity -= give_cap_back_to_vcap_pool_member(member, quantity: quantity)
+        quantity -= give_cap_back_to_vcap_pool_member(member, quantity:)
         quantity.negative? ? quantity : break
       end
       alert_pool_cap_give_back_failed(failed_to_give_back) if failed_to_give_back
@@ -23,8 +23,8 @@ private
     Sentry.with_scope do |scope|
       scope.set_context('AllocationOverOrderRevertingService#give_cap_back_across_virtual_cap_pool',
                         { responsible_body_id: responsible_body.id,
-                          device_type: device_type,
-                          remaining_over_ordered_quantity: remaining_over_ordered_quantity })
+                          device_type:,
+                          remaining_over_ordered_quantity: })
 
       Sentry.capture_message('Unable to give back enough cap in the school to revert the over-order')
     end

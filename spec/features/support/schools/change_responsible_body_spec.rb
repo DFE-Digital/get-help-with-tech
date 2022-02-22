@@ -73,7 +73,7 @@ private
 
   def expect_school_page_with_banner(type, text)
     expect(school_page).to be_displayed
-    expect(page).to have_selector(".app-banner--#{type}", text: text)
+    expect(page).to have_selector(".app-banner--#{type}", text:)
   end
 
   def go_to_edit_responsible_body(school)

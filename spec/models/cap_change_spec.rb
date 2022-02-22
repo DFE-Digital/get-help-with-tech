@@ -9,7 +9,7 @@ RSpec.describe CapChange, type: :model do
 
       it 'does not record an over order' do
         expect {
-          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 2).call
+          UpdateSchoolDevicesService.new(school:, laptops_ordered: 2).call
         }.to change(described_class, :count).by(0)
       end
     end
@@ -19,7 +19,7 @@ RSpec.describe CapChange, type: :model do
 
       it 'records the allocation change' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
+          UpdateSchoolDevicesService.new(school:,
                                          laptops_ordered: 0,
                                          cap_change_category: :service_closure).call
         }.to change(described_class, :count).by(1)
@@ -27,7 +27,7 @@ RSpec.describe CapChange, type: :model do
 
       it 'records the allocation change with the correct category' do
         expect {
-          UpdateSchoolDevicesService.new(school: school,
+          UpdateSchoolDevicesService.new(school:,
                                          laptops_ordered: 0,
                                          cap_change_category: :service_closure).call
         }.to change(described_class.service_closure, :count).by(1)
@@ -44,7 +44,7 @@ RSpec.describe CapChange, type: :model do
     context 'when fewer devices than the allocation are ordered' do
       it 'does not record an over order' do
         expect {
-          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 2).call
+          UpdateSchoolDevicesService.new(school:, laptops_ordered: 2).call
         }.to change(described_class, :count).by(0)
       end
 
@@ -75,23 +75,23 @@ RSpec.describe CapChange, type: :model do
 
       it 'records the over order' do
         expect {
-          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
+          UpdateSchoolDevicesService.new(school:, laptops_ordered: 3).call
         }.to change(described_class, :count).by(2)
       end
 
       it 'records the over order with the correct category' do
         expect {
-          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
+          UpdateSchoolDevicesService.new(school:, laptops_ordered: 3).call
         }.to change(described_class.over_order_pool_reclaim, :count).by(1)
       end
 
       it 'increases the cap to match devices ordered' do
-        UpdateSchoolDevicesService.new(school: school, laptops_ordered: 3).call
+        UpdateSchoolDevicesService.new(school:, laptops_ordered: 3).call
         expect(school.raw_cap(:laptop)).to eq(school.raw_devices_ordered(:laptop))
       end
 
       it 'informs Sentry if ordered above pool cap' do
-        UpdateSchoolDevicesService.new(school: school, laptops_ordered: 5).call
+        UpdateSchoolDevicesService.new(school:, laptops_ordered: 5).call
         expect(Sentry).to have_received(:capture_message).with(alert)
         expect(sentry_scope).to have_received(:set_context).with(sentry_context_key, sentry_context_value)
       end

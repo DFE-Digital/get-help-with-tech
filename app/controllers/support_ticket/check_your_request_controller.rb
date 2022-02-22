@@ -2,13 +2,13 @@ class SupportTicket::CheckYourRequestController < SupportTicket::BaseController
   before_action :require_support_ticket_data!, only: :new
 
   def new
-    @form ||= SupportTicket::CheckYourRequestForm.new(support_ticket: support_ticket)
+    @form ||= SupportTicket::CheckYourRequestForm.new(support_ticket:)
     @school_details_path = school_details_path
     render 'support_tickets/check_your_request'
   end
 
   def save
-    @form ||= SupportTicket::CheckYourRequestForm.new(support_ticket: support_ticket)
+    @form ||= SupportTicket::CheckYourRequestForm.new(support_ticket:)
 
     if @form.valid? && support_ticket.submit_to_zendesk
       # TODO: flash message should be enough here???

@@ -16,7 +16,7 @@ RSpec.describe CalculateVcapJob do
     let!(:batch_jobs) do
       schools.map do |school|
         create(:allocation_batch_job,
-               batch_id: batch_id,
+               batch_id:,
                urn: school.urn,
                allocation_delta: 3,
                order_state: :can_order,
@@ -27,7 +27,7 @@ RSpec.describe CalculateVcapJob do
     it 'processes all related batch jobs' do
       batch_jobs.each { |batch_job| expect(batch_job.reload).not_to be_processed }
 
-      described_class.perform_now(responsible_body_id: rb.id, batch_id: batch_id)
+      described_class.perform_now(responsible_body_id: rb.id, batch_id:)
 
       batch_jobs.each { |batch_job| expect(batch_job.reload).to be_processed }
     end
@@ -36,7 +36,7 @@ RSpec.describe CalculateVcapJob do
       expect(rb.laptops).to eq([0, 0, 0])
       expect(rb.routers).to eq([0, 0, 0])
 
-      described_class.perform_now(responsible_body_id: rb.id, batch_id: batch_id)
+      described_class.perform_now(responsible_body_id: rb.id, batch_id:)
       rb.reload
 
       expect(rb.laptops).to eq([10, 10, 2])

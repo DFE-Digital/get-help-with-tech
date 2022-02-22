@@ -8,7 +8,7 @@ describe SummaryListComponent do
       action: 'Name',
       change_path: '/some/url',
     ]
-    result = render_inline(SummaryListComponent.new(rows: rows))
+    result = render_inline(SummaryListComponent.new(rows:))
 
     expect(result.css('.govuk-summary-list__key').text).to include('Name:')
     expect(result.css('.govuk-summary-list__value').text).to include('Lando Calrissian')
@@ -23,7 +23,7 @@ describe SummaryListComponent do
       action: 'Name',
       change_path: '/some/url',
     ]
-    result = render_inline(SummaryListComponent.new(rows: rows))
+    result = render_inline(SummaryListComponent.new(rows:))
 
     expect(result.css('.govuk-summary-list__value').to_html).to include('Whoa Drive<br>Wewvile<br>London')
   end
@@ -35,7 +35,7 @@ describe SummaryListComponent do
       action: 'Enter cat sounds',
       action_path: '/cat/sounds',
     ]
-    result = render_inline(SummaryListComponent.new(rows: rows))
+    result = render_inline(SummaryListComponent.new(rows:))
 
     expect(result.css('.govuk-summary-list__key').text).to include('Please enter the sound a cat makes')
     expect(result.css('.govuk-summary-list__value').text).to include('Meow')
@@ -49,7 +49,7 @@ describe SummaryListComponent do
       value: '<span class="safe-html">This is safe</span>'.html_safe,
     ]
 
-    result = render_inline(SummaryListComponent.new(rows: rows))
+    result = render_inline(SummaryListComponent.new(rows:))
     expect(result.css('.govuk-summary-list__value > .safe-html').text).to include('This is safe')
   end
 
@@ -59,7 +59,7 @@ describe SummaryListComponent do
       value: '<span class="unsafe-html"><script>Unsafe</script></span>',
     ]
 
-    result = render_inline(SummaryListComponent.new(rows: rows))
+    result = render_inline(SummaryListComponent.new(rows:))
     expect(result.css('.govuk-summary-list__value p').to_html).to eq('<p class="govuk-body">Unsafe</p>')
   end
 
@@ -74,7 +74,7 @@ describe SummaryListComponent do
               { key: 'Dates',
                 value: 'May 2003 - November 2019' }]
 
-      result = render_inline(SummaryListComponent.new(rows: rows))
+      result = render_inline(SummaryListComponent.new(rows:))
 
       expect(result.to_html).not_to include('govuk-summary-list__row--no-actions')
     end
@@ -93,7 +93,7 @@ describe SummaryListComponent do
                 action: 'dates for Teacher, Clearcourt High',
                 action_path: '/some/url' }]
 
-      result = render_inline(SummaryListComponent.new(rows: rows))
+      result = render_inline(SummaryListComponent.new(rows:))
 
       expect(result.to_html).to include('govuk-summary-list__row--no-actions').at_least(3).times
     end
@@ -109,7 +109,7 @@ describe SummaryListComponent do
                 value: 'May 2003 - November 2019',
                 change_path: '/some/url' }]
 
-      result = render_inline(SummaryListComponent.new(rows: rows))
+      result = render_inline(SummaryListComponent.new(rows:))
 
       expect(result.to_html).to include('govuk-summary-list__row--no-actions').at_least(3).times
     end

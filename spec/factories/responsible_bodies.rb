@@ -34,7 +34,7 @@ FactoryBot.define do
       end
 
       after(:create) do |responsible_body, evaluator|
-        create_list(:school, evaluator.schools_count, responsible_body: responsible_body)
+        create_list(:school, evaluator.schools_count, responsible_body:)
         responsible_body.reload
       end
     end
@@ -45,7 +45,7 @@ FactoryBot.define do
       end
 
       after(:create) do |responsible_body, evaluator|
-        create_list(:school, evaluator.schools_count, :centrally_managed, laptops: [2, 2, 1], responsible_body: responsible_body)
+        create_list(:school, evaluator.schools_count, :centrally_managed, laptops: [2, 2, 1], responsible_body:)
         responsible_body.reload
       end
     end
@@ -56,7 +56,7 @@ FactoryBot.define do
       end
 
       after(:create) do |responsible_body, evaluator|
-        create_list(:school, evaluator.schools_count, :centrally_managed, laptops: [2, 2, 2], responsible_body: responsible_body)
+        create_list(:school, evaluator.schools_count, :centrally_managed, laptops: [2, 2, 2], responsible_body:)
         responsible_body.reload
       end
     end
@@ -67,7 +67,7 @@ FactoryBot.define do
       end
 
       after(:create) do |responsible_body, evaluator|
-        create_list(:extra_mobile_data_request, evaluator.extra_mobile_data_requests_count, status: 'complete', responsible_body: responsible_body)
+        create_list(:extra_mobile_data_request, evaluator.extra_mobile_data_requests_count, status: 'complete', responsible_body:)
         responsible_body.reload
       end
     end

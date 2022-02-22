@@ -17,7 +17,7 @@ private
 
   def email_computacenter_about_new_laptop_cap
     ComputacenterMailer
-      .with(school: school, new_cap_value: new_laptop_cap_value)
+      .with(school:, new_cap_value: new_laptop_cap_value)
       .notify_of_school_can_order
       .deliver_later
   end
@@ -60,7 +60,7 @@ private
 
   def notify_support
     CanOrderDevicesMailer
-      .with(school: school)
+      .with(school:)
       .send(:notify_support_school_can_order_but_no_one_contacted)
       .deliver_later
   end
@@ -73,8 +73,8 @@ private
     message_type = message_for(user) unless school.opted_out?
     return if message_type.blank?
 
-    CanOrderDevicesMailer.with(user: user, school: school).send(message_type).deliver_later
-    EventNotificationsService.broadcast(UserCanOrderEvent.new(user: user, school: school, type: message_type))
+    CanOrderDevicesMailer.with(user:, school:).send(message_type).deliver_later
+    EventNotificationsService.broadcast(UserCanOrderEvent.new(user:, school:, type: message_type))
   end
 
   def nudgeable_user?(user)

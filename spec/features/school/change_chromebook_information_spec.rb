@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Change school Chromebook information' do
   let(:school) { create(:school, :la_maintained) }
-  let(:school_user) { create(:school_user, full_name: 'AAA Smith', school: school) }
+  let(:school_user) { create(:school_user, full_name: 'AAA Smith', school:) }
 
   before do
     school.update!(who_will_order_devices: 'school',

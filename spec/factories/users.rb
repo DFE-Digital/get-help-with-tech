@@ -43,13 +43,13 @@ FactoryBot.define do
 
     factory :single_academy_trust_user do
       association :responsible_body, factory: %i[trust single_academy_trust]
-      schools { build_list(:school, 1, :academy, responsible_body: responsible_body) }
+      schools { build_list(:school, 1, :academy, responsible_body:) }
       orders_devices { true }
     end
 
     factory :fe_college_user do
       association :responsible_body, factory: %i[further_education_college]
-      school { build(:fe_school, :manages_orders, responsible_body: responsible_body) }
+      school { build(:fe_school, :manages_orders, responsible_body:) }
       orders_devices { true }
     end
 
@@ -76,14 +76,14 @@ FactoryBot.define do
 
       trait :has_completed_wizard do
         after(:create) do |user|
-          user.school_welcome_wizards << create(:school_welcome_wizard, :completed, user: user, school: user.school)
+          user.school_welcome_wizards << create(:school_welcome_wizard, :completed, user:, school: user.school)
         end
       end
 
       trait :has_partially_completed_wizard do
         after(:create) do |user|
           user.school_welcome_wizards&.destroy_all
-          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school, step: 'allocation')
+          user.school_welcome_wizards << create(:school_welcome_wizard, user:, school: user.school, step: 'allocation')
         end
       end
     end

@@ -110,7 +110,7 @@ RSpec.describe SchoolUpdateService, type: :model do
       end
 
       let(:old_school_link) { create(:staged_school_link, staged_school: old_staged_school, link_urn: staged_school.urn) }
-      let(:school_link) { create(:staged_school_link, :predecessor, staged_school: staged_school, link_urn: old_staged_school.urn) }
+      let(:school_link) { create(:staged_school_link, :predecessor, staged_school:, link_urn: old_staged_school.urn) }
       let!(:users) { create_list(:school_user, 2, school: old_school) }
 
       before do

@@ -14,7 +14,7 @@ RSpec.describe ApplicationMailer do
       expect {
         mailer.template_mail('some_template_id',
                              to: 'user1@example.com',
-                             personalisation: personalisation).deliver
+                             personalisation:).deliver
       }.to change(ActionMailer::Base.deliveries, :size).by(1)
     end
 
@@ -25,11 +25,11 @@ RSpec.describe ApplicationMailer do
         expect {
           mailer.template_mail('some_template_id',
                                to: user.email_address,
-                               personalisation: personalisation).deliver
+                               personalisation:).deliver
 
           mailer.template_mail('some_template_id',
                                to: user.email_address,
-                               personalisation: personalisation).deliver_now
+                               personalisation:).deliver_now
         }.not_to change(ActionMailer::Base.deliveries, :size)
       end
     end

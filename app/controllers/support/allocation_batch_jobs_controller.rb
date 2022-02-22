@@ -9,7 +9,7 @@ class Support::AllocationBatchJobsController < Support::BaseController
 
   def show
     @batch_id = params[:id]
-    query = AllocationBatchJob.where(batch_id: batch_id)
+    query = AllocationBatchJob.where(batch_id:)
     @pagination, @jobs = pagy(query.select('ABS(allocation_delta::INTEGER - applied_allocation_delta::INTEGER) delta_mismatch, *')
                                   .order('delta_mismatch desc, urn, ukprn'))
     @aggregate_allocation_change = query.sum(:applied_allocation_delta)
