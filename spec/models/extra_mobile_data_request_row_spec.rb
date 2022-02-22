@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ExtraMobileDataRequestRow, type: :model do
   before do
     ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'Three'].each do |brand|
-      create(:mobile_network, brand: brand)
+      create(:mobile_network, brand:)
     end
   end
 

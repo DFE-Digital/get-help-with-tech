@@ -18,7 +18,7 @@ class Computacenter::API::CapUsageUpdate
     cap_usage_change = cap_used - school.raw_devices_ordered(device_type)
     begin
       unless cap_usage_change.zero?
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        devices_ordered_field(device_type) => cap_used,
                                        notify_computacenter: false,
                                        notify_school: false,
@@ -85,11 +85,11 @@ private
 
   def log_to_devices_ordered_updates(cap_usage_update_payload_id)
     Computacenter::DevicesOrderedUpdate.create!(
-      cap_type: cap_type,
-      ship_to: ship_to,
-      cap_amount: cap_amount,
-      cap_used: cap_used,
-      cap_usage_update_payload_id: cap_usage_update_payload_id,
+      cap_type:,
+      ship_to:,
+      cap_amount:,
+      cap_used:,
+      cap_usage_update_payload_id:,
     )
   end
 

@@ -149,7 +149,7 @@ RSpec.describe School, type: :model do
         create(:school_contact,
                email_address: 'jsmith@school.sch.gov.uk',
                full_name: 'Jane Smith',
-               school: school)
+               school:)
       end
 
       subject(:school) { create(:school, :manages_orders) }
@@ -226,14 +226,14 @@ RSpec.describe School, type: :model do
 
   describe '#active_responsible_users' do
     let!(:local_authority) { create(:local_authority) }
-    let!(:school_user_who_has_signed_in) { create(:school_user, :signed_in_before, school: school) }
+    let!(:school_user_who_has_signed_in) { create(:school_user, :signed_in_before, school:) }
     let!(:responsible_body_user_who_has_signed_in) { create(:local_authority_user, :signed_in_before, responsible_body: local_authority) }
 
     context 'when the school will order their own devices' do
       subject(:school) { create(:school, :la_maintained, :manages_orders, responsible_body: local_authority) }
 
       before do
-        create(:school_user, :never_signed_in, school: school)
+        create(:school_user, :never_signed_in, school:)
       end
 
       it 'returns the school users who have signed in' do
@@ -262,7 +262,7 @@ RSpec.describe School, type: :model do
                   2,
                   :manages_orders,
                   :in_lockdown,
-                  responsible_body: responsible_body,
+                  responsible_body:,
                   laptops: [1, 0, 0],
                   routers: [1, 0, 0])
     end
@@ -417,7 +417,7 @@ RSpec.describe School, type: :model do
         create(:devices_ordered_update,
                :laptop,
                created_at: programme_dates.last + 1.day,
-               cap_used: cap_used,
+               cap_used:,
                ship_to: school.ship_to)
       end
 
@@ -431,7 +431,7 @@ RSpec.describe School, type: :model do
         create(:devices_ordered_update,
                :laptop,
                created_at: programme_dates.first - 1.day,
-               cap_used: cap_used,
+               cap_used:,
                ship_to: school.ship_to)
       end
 
@@ -445,12 +445,12 @@ RSpec.describe School, type: :model do
         create(:devices_ordered_update,
                :laptop,
                created_at: programme_dates.first,
-               cap_used: cap_used,
+               cap_used:,
                ship_to: school.ship_to)
         create(:devices_ordered_update,
                :laptop,
                created_at: programme_dates.first - 1.day,
-               cap_used: cap_used,
+               cap_used:,
                ship_to: school.ship_to)
       end
 
@@ -469,12 +469,12 @@ RSpec.describe School, type: :model do
         create(:devices_ordered_update,
                :laptop,
                created_at: programme_dates.first + 1.day,
-               cap_used: cap_used,
+               cap_used:,
                ship_to: school.ship_to)
         create(:devices_ordered_update,
                :laptop,
                created_at: programme_dates.first - 1.day,
-               cap_used: cap_used,
+               cap_used:,
                ship_to: school.ship_to)
       end
 

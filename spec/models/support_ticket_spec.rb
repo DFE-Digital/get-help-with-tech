@@ -17,13 +17,13 @@ RSpec.describe SupportTicket do
   describe '#requires_school?' do
     it 'returns true for applicable user types' do
       %w[school_or_single_academy_trust multi_academy_trust local_authority college].each do |user_type|
-        expect(described_class.new(user_type: user_type).requires_school?).to eq true
+        expect(described_class.new(user_type:).requires_school?).to eq true
       end
     end
 
     it 'returns false for types that do not require school details' do
       %w[other_type_of_user parent_or_guardian_or_carer_or_pupil_or_care_leaver].each do |user_type|
-        expect(described_class.new(user_type: user_type).requires_school?).to eq false
+        expect(described_class.new(user_type:).requires_school?).to eq false
       end
     end
   end

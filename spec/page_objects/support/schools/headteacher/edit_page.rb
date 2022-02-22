@@ -3,7 +3,7 @@ module PageObjects
     module School
       module Headteacher
         class EditPage < PageObjects::BasePage
-          set_url_matcher /\/support\/schools\/\d+\/headteacher(\/edit)?/
+          set_url_matcher(/\/support\/schools\/\d+\/headteacher(\/edit)?/)
 
           element :error_summary, '.govuk-error-summary'
 

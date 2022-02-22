@@ -5,12 +5,10 @@ describe Support::UserSummaryListComponent do
 
   let(:responsible_body) { create(:local_authority) }
   let(:school) { create(:school, :manages_orders) }
-  let(:user) do
-    create(:school_user, telephone: '12345', responsible_body: responsible_body, school: school)
-  end
+  let(:user) { create(:school_user, telephone: '12345', responsible_body:, school:) }
   let(:viewer) { build(:support_user) }
 
-  subject(:result) { render_inline(described_class.new(user: user, viewer: viewer)) }
+  subject(:result) { render_inline(described_class.new(user:, viewer:)) }
 
   it 'displays the email address' do
     expect(value_for_row(result, 'Email address').text).to include(user.email_address)

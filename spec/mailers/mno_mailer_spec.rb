@@ -4,7 +4,7 @@ RSpec.describe MnoMailer, type: :mailer do
   let(:user) { build(:mno_user) }
 
   describe '#notify_new_requests' do
-    subject(:mail) { MnoMailer.notify_new_requests(user: user, number_of_new_requests: 3) }
+    subject(:mail) { MnoMailer.notify_new_requests(user:, number_of_new_requests: 3) }
 
     it 'sends to user with correct personalisation' do
       expect(mail.to).to eq([user.email_address])

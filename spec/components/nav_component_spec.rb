@@ -6,7 +6,7 @@ RSpec.describe NavComponent do
   let(:test_context) { ActionView::LookupContext.new(ActionController::Base.view_paths) }
   let(:test_view) { ActionView::Base.new(test_context, {}, ActionController::Base.new) }
 
-  subject(:nav) { NavComponent.new(current_path: current_path, user: user) }
+  subject(:nav) { NavComponent.new(current_path:, user:) }
 
   describe '#class_name' do
     it 'includes govuk-header__navigation-item' do

@@ -6,7 +6,7 @@ class AddAdditionalSchoolToExistingUserMailer < ApplicationMailer
     template_mail(
       additional_school_template_id,
       to: @user.email_address,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 

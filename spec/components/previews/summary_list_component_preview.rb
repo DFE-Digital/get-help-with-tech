@@ -7,7 +7,7 @@ class SummaryListComponentPreview < ViewComponent::Preview
       change_path: '/some/url',
     ]
 
-    render(SummaryListComponent.new(rows: rows))
+    render(SummaryListComponent.new(rows:))
   end
 
   def multiple_rows
@@ -27,6 +27,6 @@ class SummaryListComponentPreview < ViewComponent::Preview
       change_path: '/some/url',
     }
 
-    render(SummaryListComponent.new(rows: rows))
+    render(SummaryListComponent.new(rows:))
   end
 end

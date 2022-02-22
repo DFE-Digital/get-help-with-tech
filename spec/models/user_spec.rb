@@ -66,8 +66,8 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     end
 
     context 'when the user has a responsible_body and one school' do
-      let(:school) { create(:school, :academy, responsible_body: responsible_body) }
-      let(:user) { create(:trust_user, schools: [school], responsible_body: responsible_body, orders_devices: true) }
+      let(:school) { create(:school, :academy, responsible_body:) }
+      let(:user) { create(:trust_user, schools: [school], responsible_body:, orders_devices: true) }
 
       context 'and the responsible_body is a single academy trust' do
         let(:responsible_body) { create(:trust, :single_academy_trust) }
@@ -155,10 +155,10 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
   describe 'orders devices validation' do
     context 'for a school user' do
       let(:school) { create(:school) }
-      let(:user) { build(:school_user, :orders_devices, school: school) }
+      let(:user) { build(:school_user, :orders_devices, school:) }
 
       before do
-        create_list(:school_user, 3, :orders_devices, school: school)
+        create_list(:school_user, 3, :orders_devices, school:)
       end
 
       it 'validates that only 3 users can order devices for a school' do
@@ -449,8 +449,8 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
         school = create(:school)
         responsible_body = create(:trust, :single_academy_trust, schools: [school])
         create(:school_user,
-               responsible_body: responsible_body,
-               school: school,
+               responsible_body:,
+               school:,
                orders_devices: true)
 
         user_change = Computacenter::UserChange.last
@@ -462,7 +462,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       context 'when an FE school user' do
         it 'persists correct data' do
           school = create(:fe_school, :manages_orders)
-          user = create(:user, school: school, orders_devices: true)
+          user = create(:user, school:, orders_devices: true)
           user_change = Computacenter::UserChange.last
 
           expect(user_change.user_id).to eql(user.id)
@@ -725,7 +725,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
           let!(:user) { create(:trust_user, :relevant_to_computacenter, responsible_body: nil) }
 
           def perform_change!
-            user.update(responsible_body: responsible_body)
+            user.update(responsible_body:)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -761,7 +761,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
           let!(:user) { create(:user, :relevant_to_computacenter, school: nil) }
 
           def perform_change!
-            user.update!(school: school)
+            user.update!(school:)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -796,7 +796,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
           let!(:rb) { create(:trust) }
           let!(:other_rb) { create(:trust) }
           let(:user_change) { Computacenter::UserChange.last }
-          let(:perform_change!) { user.update!(school: school) }
+          let(:perform_change!) { user.update!(school:) }
           let!(:school) { create(:school, responsible_body: rb) }
           let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil, responsible_body: other_rb) }
 
@@ -822,7 +822,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       context 'when a user has a second school association added' do
         let(:school) { create(:school) }
         let!(:other_school) { create(:school, :manages_orders) }
-        let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+        let(:user) { create(:school_user, :relevant_to_computacenter, school:) }
 
         before do
           ActiveJob::Base.queue_adapter.enqueued_jobs.clear

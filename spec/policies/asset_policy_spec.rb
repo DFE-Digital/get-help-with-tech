@@ -9,7 +9,7 @@ RSpec.describe AssetPolicy, type: :policy do
   subject(:policy) { described_class }
 
   describe 'Scope' do
-    specify { expect { Pundit.policy_scope!(nil, Asset) }.to raise_error /must be logged in/ }
+    specify { expect { Pundit.policy_scope!(nil, Asset) }.to raise_error(/must be logged in/) }
     specify { expect(Pundit.policy_scope!(cc_user, Asset)).to eq(Asset.none) }
     specify { expect(Pundit.policy_scope!(school_user, Asset)).to eq(Asset.all) }
     specify { expect(Pundit.policy_scope!(rb_user, Asset)).to eq(Asset.all) }

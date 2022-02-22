@@ -13,7 +13,7 @@ class ImportBTWifiVoucherAllocationsService
         responsible_body_name = row['Responsible body name']&.strip
         responsible_body = find_responsible_body!(responsible_body_name)
         BTWifiVoucherAllocation.create!(
-          responsible_body: responsible_body,
+          responsible_body:,
           amount: row['Allocation'].strip,
         )
       end
@@ -23,7 +23,7 @@ class ImportBTWifiVoucherAllocationsService
 private
 
   def find_responsible_body!(name)
-    ResponsibleBody.find_by!(name: name)
+    ResponsibleBody.find_by!(name:)
   rescue ActiveRecord::RecordNotFound
     raise ArgumentError, "could not find responsible body with name '#{name}'"
   end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Support::UserPreviewSummaryListComponent do
-  subject(:result) { render_inline(described_class.new(user: user)) }
+  subject(:result) { render_inline(described_class.new(user:)) }
 
   let(:school) { create(:school, :manages_orders) }
   let(:user) do

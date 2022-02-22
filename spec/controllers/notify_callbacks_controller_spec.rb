@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe NotifyCallbacksController do
   let(:user) { create(:user) }
-  let(:audit) { create(:email_audit, user: user, govuk_notify_id: SecureRandom.uuid) }
+  let(:audit) { create(:email_audit, user:, govuk_notify_id: SecureRandom.uuid) }
 
   let(:payload) do
     {

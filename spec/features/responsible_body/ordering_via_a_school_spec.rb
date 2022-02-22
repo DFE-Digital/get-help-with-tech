@@ -36,7 +36,7 @@ RSpec.feature 'Ordering via a school' do
     context 'when school has devices to order' do
       before do
         stub_computacenter_outgoing_api_calls
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        order_state: :can_order,
                                        laptop_allocation: 12,
                                        laptops_ordered: 3).call
@@ -68,7 +68,7 @@ RSpec.feature 'Ordering via a school' do
     context 'when the school can order devices and has an allocation' do
       before do
         stub_computacenter_outgoing_api_calls
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        order_state: 'can_order',
                                        laptop_allocation: 12,
                                        laptops_ordered: 3).call

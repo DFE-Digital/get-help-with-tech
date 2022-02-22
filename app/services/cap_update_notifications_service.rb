@@ -26,7 +26,7 @@ private
   end
 
   def cap_update(school, device_type)
-    OpenStruct.new(school: school, device_type: device_type)
+    OpenStruct.new(school:, device_type:)
   end
 
   def computacenter_accepts_updates?
@@ -57,15 +57,15 @@ private
 
   def notify_computacenter_by_email(school, device_type)
     notification = device_type.to_sym == :laptop ? :notify_of_devices_cap_change : :notify_of_comms_cap_change
-    ComputacenterMailer.with(school: school, new_cap_value: school.cap(device_type)).send(notification).deliver_later
+    ComputacenterMailer.with(school:, new_cap_value: school.cap(device_type)).send(notification).deliver_later
   end
 
   def notify_school_by_email(school)
-    SchoolCanOrderDevicesNotifications.new(school, notify_computacenter: notify_computacenter).call
+    SchoolCanOrderDevicesNotifications.new(school, notify_computacenter:).call
   end
 
   def record_request!(school, device_type)
-    school.cap_update_calls.create!(device_type: device_type,
+    school.cap_update_calls.create!(device_type:,
                                     request_body: request.body,
                                     response_body: request.response&.body,
                                     failure: !request.success?)

@@ -24,7 +24,7 @@ RSpec.describe NotifyComputacenterOfLatestChangeForUserJob do
 
     it 'creates a new Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest with the latest user change for the given user_id' do
       job.perform(user.id)
-      expect(Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest).to have_received(:new).with(user_change: user_change)
+      expect(Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest).to have_received(:new).with(user_change:)
     end
 
     it 'posts the request' do

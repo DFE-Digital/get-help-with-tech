@@ -4,7 +4,7 @@ RSpec.describe Support::School::ChangeHeadteacherForm, type: :model do
   describe '#headteacher?' do
     let(:school) { build_stubbed(:school) }
 
-    subject(:form) { described_class.new(school: school, role: role) }
+    subject(:form) { described_class.new(school:, role:) }
 
     context 'when the role of the form contact is :headteacher' do
       let(:role) { 'headteacher' }
@@ -30,7 +30,7 @@ RSpec.describe Support::School::ChangeHeadteacherForm, type: :model do
     context 'when the new headteacher details cannot be set' do
       let(:new_email_address) { 'invalid_email_address' }
 
-      subject(:form) { described_class.new(school: school, id: headteacher_id, email_address: new_email_address) }
+      subject(:form) { described_class.new(school:, id: headteacher_id, email_address: new_email_address) }
 
       it 'return false' do
         expect(form.save).to be_falsey
@@ -49,7 +49,7 @@ RSpec.describe Support::School::ChangeHeadteacherForm, type: :model do
     context 'when the new headteacher details can be set' do
       let(:new_email_address) { Faker::Internet.email }
 
-      subject(:form) { described_class.new(school: school, id: headteacher_id, email_address: new_email_address) }
+      subject(:form) { described_class.new(school:, id: headteacher_id, email_address: new_email_address) }
 
       it 'return true' do
         expect(form.save).to be_truthy

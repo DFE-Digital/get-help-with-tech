@@ -124,9 +124,9 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
                     name: 'Alpha School',
                     urn: '123321',
                     responsible_body: local_authority)
-    create(:school_user, school: school, full_name: 'James P. Sullivan', email_address: 'sully@alpha.sch.uk')
-    create(:school_user, school: school, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk', privacy_notice_seen_at: nil)
-    create(:school_user, :deleted, school: school, full_name: 'John Doe', email_address: 'john.doe@alpha.sch.uk')
+    create(:school_user, school:, full_name: 'James P. Sullivan', email_address: 'sully@alpha.sch.uk')
+    create(:school_user, school:, full_name: 'Mike Wazowski', email_address: 'mike@alpha.sch.uk', privacy_notice_seen_at: nil)
+    create(:school_user, :deleted, school:, full_name: 'John Doe', email_address: 'john.doe@alpha.sch.uk')
   end
 
   def and_the_school_is_closed

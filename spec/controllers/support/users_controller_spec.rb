@@ -21,7 +21,7 @@ RSpec.describe Support::UsersController do
            email_address: 'deleted@example.com',
            full_name: 'July Smith')
   end
-  let(:existing_user) { create(:local_authority_user, responsible_body: responsible_body) }
+  let(:existing_user) { create(:local_authority_user, responsible_body:) }
   let(:responsible_body) { create(:local_authority) }
   let(:school) { create(:school) }
 

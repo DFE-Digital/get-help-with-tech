@@ -43,8 +43,8 @@ class SchoolSearchForm
     elsif search_type == 'multiple'
       school_records = school_records.where('urn IN (?) OR ukprn in (?) OR provision_urn in (?)', urn_or_ukprn_identifiers, urn_or_ukprn_identifiers, provision_urn_identifiers) if array_of_identifiers.present?
     elsif search_type == 'responsible_body_or_order_state'
-      school_records = school_records.where(responsible_body_id: responsible_body_id) if responsible_body_id.present?
-      school_records = school_records.where(order_state: order_state) if order_state.present?
+      school_records = school_records.where(responsible_body_id:) if responsible_body_id.present?
+      school_records = school_records.where(order_state:) if order_state.present?
     else
       raise "Unexpected search type: #{search_type}"
     end
@@ -58,7 +58,7 @@ class SchoolSearchForm
 
   def select_responsible_body_options
     ResponsibleBody.order(:name).pluck(:id, :name).map { |id, name|
-      OpenStruct.new(id: id, name: name)
+      OpenStruct.new(id:, name:)
     }.prepend(OpenStruct.new(id: nil, name: '(all)'))
   end
 

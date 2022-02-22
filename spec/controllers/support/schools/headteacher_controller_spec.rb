@@ -37,7 +37,7 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
       end
 
       context 'when the school has a non-headteacher contact' do
-        let!(:contact) { create(:school_contact, :contact, school: school) }
+        let!(:contact) { create(:school_contact, :contact, school:) }
 
         before { get :edit, params: { school_urn: school.urn } }
 
@@ -55,7 +55,7 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
       end
 
       context 'when the school has a headteacher contact' do
-        let!(:headteacher) { create(:school_contact, :headteacher, school: school) }
+        let!(:headteacher) { create(:school_contact, :headteacher, school:) }
 
         before { get :edit, params: { school_urn: school.urn } }
 
@@ -84,11 +84,11 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
       {
         school_urn: school.urn,
         support_school_change_headteacher_form: {
-          email_address: email_address,
-          full_name: full_name,
-          id: id,
-          phone_number: phone_number,
-          title: title,
+          email_address:,
+          full_name:,
+          id:,
+          phone_number:,
+          title:,
         },
       }
     end
@@ -97,14 +97,14 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
       before { sign_in_as non_support_third_line_user }
 
       specify do
-        expect { patch :update, params: params }.to be_forbidden_for(non_support_third_line_user)
+        expect { patch(:update, params:) }.to be_forbidden_for(non_support_third_line_user)
       end
     end
 
     context 'support third line users' do
       before do
         sign_in_as support_third_line_user
-        patch :update, params: params
+        patch(:update, params:)
       end
 
       context 'when the headteacher can be updated' do

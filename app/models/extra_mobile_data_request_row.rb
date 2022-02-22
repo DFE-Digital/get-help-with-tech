@@ -11,11 +11,11 @@ private
 
   def fetch_request_attrs
     attrs = {
-      account_holder_name: account_holder_name,
+      account_holder_name:,
       device_phone_number: mobile_phone_number,
-      mobile_network_id: mobile_network_id,
-      contract_type: contract_type,
-      agrees_with_privacy_statement: agrees_with_privacy_statement,
+      mobile_network_id:,
+      contract_type:,
+      agrees_with_privacy_statement:,
     }
     attrs unless attrs.values.all?(&:nil?)
   end

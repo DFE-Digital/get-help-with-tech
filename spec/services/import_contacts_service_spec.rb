@@ -60,7 +60,7 @@ RSpec.describe ImportContactsService, type: :model do
     end
 
     context 'when a contact already exists' do
-      let!(:contact) { create(:school_contact, school: school, email_address: 'head@myschool.gov.uk') }
+      let!(:contact) { create(:school_contact, school:, email_address: 'head@myschool.gov.uk') }
 
       let(:attrs) do
         {

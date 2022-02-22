@@ -18,7 +18,7 @@ class Computacenter::ResponsibleBodyChangesController < Computacenter::BaseContr
 
   def edit
     authorize responsible_body, :update_computacenter_reference?
-    @form = Computacenter::SoldToForm.new(responsible_body: responsible_body,
+    @form = Computacenter::SoldToForm.new(responsible_body:,
                                           sold_to: responsible_body.computacenter_reference)
   end
 

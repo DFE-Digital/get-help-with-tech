@@ -141,7 +141,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
     it 'responds successfully with each view' do
       %w[school std_device coms_device caps ordered].each do |view|
-        get :history, params: { school_urn: school.urn, view: view }
+        get :history, params: { school_urn: school.urn, view: }
         expect(response).to have_http_status(:forbidden)
       end
     end

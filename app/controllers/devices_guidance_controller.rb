@@ -24,7 +24,7 @@ private
   def guide_pages_metadata
     I18n.t!('devices_guidance').map do |page_id, page_metadata|
       {
-        page_id: page_id,
+        page_id:,
         path: devices_guidance_subpage_path(subpage_slug: page_id.to_s.dasherize),
         title: page_metadata[:title],
         description: page_metadata[:description],

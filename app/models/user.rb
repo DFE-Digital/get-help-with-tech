@@ -248,9 +248,9 @@ class User < ApplicationRecord
     return wizard if wizard
 
     if school.la_funded_provision?
-      school_welcome_wizards.create!(school: school, step: 'complete')
+      school_welcome_wizards.create!(school:, step: 'complete')
     else
-      school_welcome_wizards.create!(school: school)
+      school_welcome_wizards.create!(school:)
     end
   end
 

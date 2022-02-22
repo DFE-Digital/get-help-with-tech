@@ -12,7 +12,7 @@ class Support::PrivilegedUserForm
   validate :validate_acceptable_privileges
 
   def create_user!
-    User.create!(full_name: full_name, email_address: email_address, is_support: is_support?, is_computacenter: is_computacenter?)
+    User.create!(full_name:, email_address:, is_support: is_support?, is_computacenter: is_computacenter?)
   end
 
 private

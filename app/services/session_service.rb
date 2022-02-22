@@ -13,7 +13,7 @@ class SessionService
     if (user = find_user_by_lowercase_email(email_address))
       user.generate_token!
       logger.debug "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
-      SignInTokenMailer.with(user: user).sign_in_token_email.deliver_later
+      SignInTokenMailer.with(user:).sign_in_token_email.deliver_later
       user.sign_in_token
     else
       # silently ignore an incorrect email, to avoid inadvertently
@@ -27,9 +27,9 @@ class SessionService
     user = User.find_by(sign_in_token: token)
     raise TokenNotRecognised if user.blank?
 
-    if user.token_is_valid?(token: token, identifier: identifier)
+    if user.token_is_valid?(token:, identifier:)
       user
-    elsif user.token_is_valid_but_expired?(token: token, identifier: identifier)
+    elsif user.token_is_valid_but_expired?(token:, identifier:)
       raise TokenValidButExpired
     else
       raise InvalidTokenAndIdentifierCombination

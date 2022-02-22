@@ -28,7 +28,7 @@ class Computacenter::ResponsibleBodyUsersDataFile < CsvDataFile
       full_name: record[:full_name],
       telephone: record[:telephone],
       email_address: record[:email_address],
-      responsible_body: responsible_body,
+      responsible_body:,
     )
   end
 end

@@ -4,7 +4,7 @@ RSpec.describe SchoolContact, type: :model do
   describe 'associations' do
     let(:school) { create(:school) }
 
-    subject { build(:school_contact, school: school) }
+    subject { build(:school_contact, school:) }
 
     it { is_expected.to belong_to(:school) }
   end
@@ -22,7 +22,7 @@ RSpec.describe SchoolContact, type: :model do
   describe '#current_school_contact?' do
     let(:school) { build(:school) }
 
-    subject(:contact) { build(:school_contact, school: school) }
+    subject(:contact) { build(:school_contact, school:) }
 
     context 'when current school contact' do
       before do

@@ -36,7 +36,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
         id: rb.id,
         computacenter_sold_to_form: {
           sold_to: '1200',
-          change_sold_to: change_sold_to,
+          change_sold_to:,
         },
       }
     end
@@ -60,13 +60,13 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
     end
 
     it 'redirects' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(response).to redirect_to(computacenter_responsible_body_changes_path)
     end
 
     it 'sets the given computacenter reference to the rb' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(flash[:success]).to eq('Sold To reference for RBName is 1200')
     end
@@ -85,7 +85,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       end
 
       it 'update caps on Computacenter' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect_to_have_sent_caps_to_computacenter(requests)
       end
@@ -107,19 +107,19 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       before { rb.calculate_vcaps! }
 
       it 'update caps on Computacenter' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
       end
     end
 
     it 'do not notify Computacenter by email' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .not_to have_enqueued_mail(ComputacenterMailer)
     end
 
     it 'do not notify the school' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .not_to have_enqueued_mail(CanOrderDevicesMailer)
     end
 
@@ -127,7 +127,7 @@ RSpec.describe Computacenter::ResponsibleBodyChangesController do
       let(:change_sold_to) { '--' }
 
       it 'display the edit view' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect(flash[:success]).to be_blank
         expect(response).to render_template(:edit)

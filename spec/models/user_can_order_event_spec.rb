@@ -5,7 +5,7 @@ RSpec.describe UserCanOrderEvent do
 
   subject(:event) do
     described_class.new(type: 'nudge_user_to_read_privacy_policy',
-                        school: school)
+                        school:)
   end
 
   describe '#message' do

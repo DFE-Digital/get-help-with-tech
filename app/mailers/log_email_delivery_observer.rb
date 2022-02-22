@@ -19,7 +19,7 @@ class LogEmailDeliveryObserver
       audit = EmailAudit.find_by(id: audit_id)
 
       if audit
-        audit.update!(govuk_notify_id: govuk_notify_id)
+        audit.update!(govuk_notify_id:)
       end
     end
   rescue StandardError => e

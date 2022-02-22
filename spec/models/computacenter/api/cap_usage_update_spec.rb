@@ -89,17 +89,17 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
 
     context 'if the devices_ordered update triggers a cap update' do
       let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
-      let!(:school) { create(:school, :in_lockdown, :manages_orders, computacenter_reference: '123456', responsible_body: responsible_body) }
+      let!(:school) { create(:school, :in_lockdown, :manages_orders, computacenter_reference: '123456', responsible_body:) }
 
       let(:mock_request) { instance_double(Computacenter::OutgoingAPI::CapUpdateRequest) }
       let(:exception) { Computacenter::OutgoingAPI::Error.new(cap_update_request: OpenStruct.new(body: 'body')) }
 
       before do
         stub_computacenter_outgoing_api_calls
-        UpdateSchoolDevicesService.new(school: school, laptop_allocation: 103).call
+        UpdateSchoolDevicesService.new(school:, laptop_allocation: 103).call
         WebMock.allow_net_connect!
         SchoolSetWhoManagesOrdersService.new(school, :responsible_body).call
-        UpdateSchoolDevicesService.new(school: school, order_state: :can_order).call
+        UpdateSchoolDevicesService.new(school:, order_state: :can_order).call
         allow(Computacenter::OutgoingAPI::CapUpdateRequest).to receive(:new).and_return(mock_request)
         allow(mock_request).to receive(:post).and_raise(exception)
       end
@@ -132,7 +132,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       it 'sends a notification to order if they can order' do
         expect {
           cap_usage_update.apply!
-        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user: user, school: school }, args: [])
+        }.to have_enqueued_job.on_queue('mailers').with('CanOrderDevicesMailer', 'user_can_order', 'deliver_now', params: { user:, school: }, args: [])
       end
 
       it 'sends no notifications when notify_decreases is false' do
@@ -157,7 +157,7 @@ RSpec.describe Computacenter::API::CapUsageUpdate do
       it 'does not send notification to order' do
         expect {
           cap_usage_update.apply!
-        }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
+        }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user:, school: }, args: [])
       end
     end
   end

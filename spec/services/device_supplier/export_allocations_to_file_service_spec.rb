@@ -14,7 +14,7 @@ RSpec.describe DeviceSupplier::ExportAllocationsToFileService, type: :model do
       remove_file(filename)
     end
 
-    subject(:service) { described_class.new(filename, school_ids: school_ids) }
+    subject(:service) { described_class.new(filename, school_ids:) }
 
     before { stub_computacenter_outgoing_api_calls }
 

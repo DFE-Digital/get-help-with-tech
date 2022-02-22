@@ -24,7 +24,7 @@ class SchoolWelcomeWizard < ApplicationRecord
 
   def chromebook_information
     @chromebook_information ||= ChromebookInformationForm.new(
-      school: school,
+      school:,
       will_need_chromebooks: school.will_need_chromebooks,
       school_or_rb_domain: school.school_or_rb_domain,
       recovery_email_address: school.recovery_email_address,

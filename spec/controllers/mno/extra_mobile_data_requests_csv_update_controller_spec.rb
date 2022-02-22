@@ -19,28 +19,28 @@ describe Mno::ExtraMobileDataRequestsCsvUpdateController, type: :controller do
     it 'accepts the standard content-type for csv' do
       upload = Rack::Test::UploadedFile.new(filename, 'text/csv')
 
-      post :create, params: { mno_csv_status_update_form: { upload: upload } }
+      post :create, params: { mno_csv_status_update_form: { upload: } }
       expect(response).to render_template(:summary)
     end
 
     it 'accepts Microsofts content-type for csv' do
       upload = Rack::Test::UploadedFile.new(filename, 'application/vnd.ms-excel')
 
-      post :create, params: { mno_csv_status_update_form: { upload: upload } }
+      post :create, params: { mno_csv_status_update_form: { upload: } }
       expect(response).to render_template(:summary)
     end
 
     it 'accepts a valid CSV file in UTF8 character encoding' do
       upload = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/extra-mobile-data-request-utf8.csv'), 'text/csv')
 
-      post :create, params: { mno_csv_status_update_form: { upload: upload } }
+      post :create, params: { mno_csv_status_update_form: { upload: } }
       expect(response).to render_template(:summary)
     end
 
     it 'accepts a valid CSV file in Windows-1252 character encoding' do
       upload = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/extra-mobile-data-request-windows-1252.csv'), 'application/vnd.ms-excel')
 
-      post :create, params: { mno_csv_status_update_form: { upload: upload } }
+      post :create, params: { mno_csv_status_update_form: { upload: } }
       expect(response).to render_template(:summary)
     end
   end

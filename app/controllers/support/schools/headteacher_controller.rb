@@ -4,11 +4,11 @@ class Support::Schools::HeadteacherController < Support::BaseController
   attr_reader :form, :school
 
   def edit
-    @form = Support::School::ChangeHeadteacherForm.new(school: school, **contact_details)
+    @form = Support::School::ChangeHeadteacherForm.new(school:, **contact_details)
   end
 
   def update
-    @form = Support::School::ChangeHeadteacherForm.new(school: school, **headteacher_params)
+    @form = Support::School::ChangeHeadteacherForm.new(school:, **headteacher_params)
     if form.save
       flash[:success] = success_message
       redirect_to support_school_path(school)

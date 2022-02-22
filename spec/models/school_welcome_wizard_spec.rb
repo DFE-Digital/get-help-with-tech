@@ -7,7 +7,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
 
   describe '#update_step!' do
     let(:school) { create(:school, :with_preorder_information, :manages_orders) }
-    let(:school_user) { create(:school_user, :new_visitor, school: school) }
+    let(:school_user) { create(:school_user, :new_visitor, school:) }
 
     subject(:wizard) { school_user.welcome_wizard_for(school) }
 
@@ -25,7 +25,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         let(:school) { create(:school, :with_preorder_information, :manages_orders, laptops: [2, 1, 0]) }
 
         context 'user orders devices' do
-          let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }
+          let(:school_user) { create(:school_user, :new_visitor, school:, orders_devices: true) }
 
           it 'moves to the completed step' do
             wizard.update_step!
@@ -34,7 +34,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
         end
 
         context 'user does not order devices' do
-          let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: false) }
+          let(:school_user) { create(:school_user, :new_visitor, school:, orders_devices: false) }
 
           it 'moves to the completed step' do
             wizard.update_step!
@@ -45,7 +45,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
     end
 
     context 'when the step is allocation and user orders devices' do
-      let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }
+      let(:school_user) { create(:school_user, :new_visitor, school:, orders_devices: true) }
 
       before do
         wizard.allocation!

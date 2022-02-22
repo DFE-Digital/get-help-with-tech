@@ -6,18 +6,18 @@ RSpec.feature 'Setting up the devices ordering' do
 
   context 'as a local authority user' do
     let(:responsible_body) { create(:local_authority) }
-    let(:local_authority_user) { create(:local_authority_user, responsible_body: responsible_body) }
-    let(:school_with_no_headteacher) { create(:school, :la_maintained, :secondary, responsible_body: responsible_body, name: 'School with no headteacher') }
+    let(:local_authority_user) { create(:local_authority_user, responsible_body:) }
+    let(:school_with_no_headteacher) { create(:school, :la_maintained, :secondary, responsible_body:, name: 'School with no headteacher') }
 
     before do
       stub_computacenter_outgoing_api_calls
 
       @zebra_school = create(:school, :la_maintained, :secondary,
-                             responsible_body: responsible_body,
+                             responsible_body:,
                              urn: '123321',
                              name: 'Zebra Secondary School')
       @aardvark_school = create(:school, :la_maintained, :primary,
-                                responsible_body: responsible_body,
+                                responsible_body:,
                                 urn: '456654',
                                 name: 'Aardvark Primary School',
                                 laptops: [42, 42, 42])
@@ -73,17 +73,17 @@ RSpec.feature 'Setting up the devices ordering' do
 
   context 'as a trust user' do
     let(:responsible_body) { create(:trust, :multi_academy_trust) }
-    let(:trust_user) { create(:trust_user, responsible_body: responsible_body) }
+    let(:trust_user) { create(:trust_user, responsible_body:) }
 
     before do
       stub_computacenter_outgoing_api_calls
 
       @koala_academy = create(:school, :academy, :secondary,
-                              responsible_body: responsible_body,
+                              responsible_body:,
                               name: 'Koala Academy')
 
       @pangolin_academy = create(:school, :academy, :primary,
-                                 responsible_body: responsible_body,
+                                 responsible_body:,
                                  name: 'Pangolin Primary Academy')
 
       sign_in_as trust_user

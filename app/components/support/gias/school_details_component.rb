@@ -35,8 +35,8 @@ private
 
   def link_row(link)
     urn = link.link_urn
-    school = School.find_by(urn: urn)
-    awaiting = DataStage::School.gias_status_open.find_by(urn: urn)
+    school = School.find_by(urn:)
+    awaiting = DataStage::School.gias_status_open.find_by(urn:)
 
     row = {
       key: link.link_type.humanize,
@@ -53,12 +53,12 @@ private
     if school
       row.merge!({
         action: 'View',
-        action_path: support_school_path(urn: urn),
+        action_path: support_school_path(urn:),
       })
     elsif awaiting
       row.merge!({
         action: 'View',
-        action_path: support_gias_schools_to_add_path(urn: urn),
+        action_path: support_gias_schools_to_add_path(urn:),
       })
     end
 

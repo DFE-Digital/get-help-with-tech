@@ -9,7 +9,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
   let(:token) { user.generate_token! }
   let(:identifier) { user.sign_in_identifier(token) }
-  let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
+  let(:validate_token_url) { validate_sign_in_token_url(token:, identifier:) }
 
   before do
     # disable computacenter user import API calls
@@ -123,7 +123,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
   context 'as a school user who has completed the welcome wizard but not decided on chromebooks' do
     let(:school) { create(:school, :manages_orders) }
-    let(:user) { create(:school_user, school: school) }
+    let(:user) { create(:school_user, school:) }
 
     scenario 'it redirects to the before you can order page' do
       sign_in_as user

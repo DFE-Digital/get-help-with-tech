@@ -16,7 +16,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -24,14 +24,14 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies the user' do
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user:, school: }, args: [])
         end
       end
 
       context 'user can order devices but not read privacy policy' do
         let!(:user) do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: nil,
                  privacy_notice_seen_at: nil,
                  orders_devices: true)
@@ -40,14 +40,14 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies the user' do
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :nudge_user_to_read_privacy_policy).with(params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :nudge_user_to_read_privacy_policy).with(params: { user:, school: }, args: [])
         end
       end
 
       context 'user can order devices but yet to have techsource account' do
         before do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: nil,
                  orders_devices: true)
         end
@@ -61,7 +61,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       context 'user can not order devices' do
         before do
-          create(:school_user, school: school, orders_devices: false)
+          create(:school_user, school:, orders_devices: false)
         end
 
         it 'does not notify the user' do
@@ -74,7 +74,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'school has opted out but would have received notification' do
         let!(:user) do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -86,7 +86,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
+          }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user:, school: }, args: [])
         end
       end
     end
@@ -96,14 +96,14 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let(:school) do
         create(:school,
                :centrally_managed,
-               order_state: order_state,
-               responsible_body: responsible_body,
+               order_state:,
+               responsible_body:,
                laptops: [1, 0, 0])
       end
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        order_state: :can_order,
                                        over_order_reclaimed_laptops: 0).call
       end
@@ -111,8 +111,8 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
-                 school: school,
-                 responsible_body: responsible_body,
+                 school:,
+                 responsible_body:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -121,7 +121,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           expect(school.preorder_status).to eq('rb_can_order')
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_in_virtual_cap).with(params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_in_virtual_cap).with(params: { user:, school: }, args: [])
         end
       end
     end
@@ -131,14 +131,14 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let(:school) do
         create(:fe_school,
                :centrally_managed,
-               order_state: order_state,
-               responsible_body: responsible_body,
+               order_state:,
+               responsible_body:,
                laptops: [1, 0, 0])
       end
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        order_state: :can_order,
                                        over_order_reclaimed_laptops: 0).call
       end
@@ -146,8 +146,8 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
-                 school: school,
-                 responsible_body: responsible_body,
+                 school:,
+                 responsible_body:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -156,7 +156,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           expect(school.preorder_status).to eq('rb_can_order')
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_in_fe_college).with(params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_in_fe_college).with(params: { user:, school: }, args: [])
         end
       end
     end
@@ -173,7 +173,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         before do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -196,7 +196,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         before do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -222,13 +222,13 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
         expect {
           service.call
-        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed).with(params: { user: user, school: school }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed).with(params: { user:, school: }, args: [])
       end
     end
 
     context 'when a school that is not ready changes status from specfic circumstances to lockdown' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order_for_specific_circumstances') }
-      let(:user) { create(:school_user, school: school) }
+      let(:user) { create(:school_user, school:) }
 
       before do
         school.can_order!
@@ -244,7 +244,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
     context 'when status change from can_order to cannot_order' do
       let(:school) { create(:school, :with_preorder_information, order_state: 'can_order') }
-      let(:user) { create(:school_user, school: school) }
+      let(:user) { create(:school_user, school:) }
 
       before do
         school.cannot_order!
@@ -264,7 +264,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       let!(:user) { create(:user, responsible_body: rb) }
 
       before do
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        order_state: :can_order,
                                        laptop_allocation: 10,
                                        over_order_reclaimed_laptops: 0,
@@ -274,7 +274,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'nudges RB that school needs a contact' do
         expect {
           service.call
-        }.to have_enqueued_mail(CanOrderDevicesMailer, :nudge_rb_to_add_school_contact).with(params: { user: user, school: school }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :nudge_rb_to_add_school_contact).with(params: { user:, school: }, args: [])
       end
     end
 
@@ -286,7 +286,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       it 'notifies support that school is missing out' do
         expect {
           service.call
-        }.to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted).with(params: { school: school }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted).with(params: { school: }, args: [])
       end
     end
 
@@ -302,19 +302,19 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       let!(:user) do
         create(:school_user,
-               school: school,
+               school:,
                techsource_account_confirmed_at: 1.second.ago,
                orders_devices: true)
       end
 
       before do
-        UpdateSchoolDevicesService.new(school: school, over_order_reclaimed_routers: 0).call
+        UpdateSchoolDevicesService.new(school:, over_order_reclaimed_routers: 0).call
       end
 
       it 'sends notification they can order routers' do
         expect {
           service.call
-        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers).with(params: { school: school, user: user }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers).with(params: { school:, user: }, args: [])
       end
     end
 
@@ -324,21 +324,21 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         create(:school,
                :centrally_managed,
                order_state: 'can_order',
-               responsible_body: responsible_body,
+               responsible_body:,
                laptops: [1, 0, 0],
                routers: [1, 0, 0])
       end
 
       before do
         school.update_chromebook_information_and_status!(will_need_chromebooks: 'no')
-        UpdateSchoolDevicesService.new(school: school, over_order_reclaimed_routers: 0).call
+        UpdateSchoolDevicesService.new(school:, over_order_reclaimed_routers: 0).call
       end
 
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
-                 school: school,
-                 responsible_body: responsible_body,
+                 school:,
+                 responsible_body:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -347,7 +347,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
           expect {
             service.call
           }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_virtual_cap)
-                 .with(params: { user: user, school: school }, args: [])
+                 .with(params: { user:, school: }, args: [])
         end
       end
     end
@@ -364,26 +364,26 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
       let!(:user) do
         create(:school_user,
-               school: school,
+               school:,
                techsource_account_confirmed_at: 1.second.ago,
                orders_devices: true)
       end
 
       before do
         school.responsible_body.update!(new_fe_wave: true)
-        UpdateSchoolDevicesService.new(school: school, over_order_reclaimed_routers: 0).call
+        UpdateSchoolDevicesService.new(school:, over_order_reclaimed_routers: 0).call
       end
 
       it 'sends notification they can order routers' do
         expect {
           service.call
-        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_fe_college).with(params: { school: school, user: user }, args: [])
+        }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_routers_in_fe_college).with(params: { school:, user: }, args: [])
       end
     end
 
     context 'when school has no devices available (of any type) to order' do
       before do
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        laptops_ordered: school.allocation(:laptop),
                                        routers_ordered: school.allocation(:router)).call
       end
@@ -397,7 +397,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -405,7 +405,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'does not notify the user' do
           expect {
             service.call
-          }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
+          }.not_to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user:, school: }, args: [])
         end
       end
 
@@ -430,7 +430,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
 
     context 'when school has devices available of one type but not the other' do
       before do
-        UpdateSchoolDevicesService.new(school: school, routers_ordered: school.allocation(:router)).call
+        UpdateSchoolDevicesService.new(school:, routers_ordered: school.allocation(:router)).call
         school.reload
       end
 
@@ -448,7 +448,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
       context 'user has confirmed techsource account' do
         let!(:user) do
           create(:school_user,
-                 school: school,
+                 school:,
                  techsource_account_confirmed_at: 1.second.ago,
                  orders_devices: true)
         end
@@ -456,7 +456,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies the user' do
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user: user, school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order).with(params: { user:, school: }, args: [])
         end
       end
 
@@ -468,7 +468,7 @@ RSpec.describe SchoolCanOrderDevicesNotifications do
         it 'notifies support that school is missing out' do
           expect {
             service.call
-          }.to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted).with(params: { school: school }, args: [])
+          }.to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted).with(params: { school: }, args: [])
         end
       end
 

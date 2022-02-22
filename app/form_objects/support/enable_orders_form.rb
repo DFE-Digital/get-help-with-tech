@@ -71,7 +71,7 @@ private
   def orders_enabled?
     opts = { cap_change_category: :enable_orders }
     opts.merge!(circumstances_props) if cap_required?
-    UpdateSchoolDevicesService.new(school: school, order_state: order_state, **opts).call
+    UpdateSchoolDevicesService.new(school:, order_state:, **opts).call
   end
 
   def validate_circumstances_devices
@@ -87,7 +87,7 @@ private
       devices_ordered = raw_devices_ordered(device_type)
       next if cap_assigned(device_type) >= devices_ordered
 
-      errors.add(cap_assigned_field(device_type), :gte_devices_ordered, devices_ordered: devices_ordered)
+      errors.add(cap_assigned_field(device_type), :gte_devices_ordered, devices_ordered:)
     end
   end
 end

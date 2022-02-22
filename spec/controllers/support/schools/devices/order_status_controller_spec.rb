@@ -27,7 +27,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       }
     end
 
-    before { get :edit, params: params }
+    before { get(:edit, params:) }
 
     it 'responds successfully' do
       expect(response).to be_successful
@@ -74,12 +74,12 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
     let(:params) do
       {
-        confirm: confirm,
+        confirm:,
         school_urn: school.urn,
         support_enable_orders_form: {
-          order_state: order_state,
-          laptop_cap: laptop_cap,
-          router_cap: router_cap,
+          order_state:,
+          laptop_cap:,
+          router_cap:,
         },
       }
     end
@@ -97,7 +97,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       let(:laptop_cap) { '5000' }
 
       it 'display the edit view' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect(flash[:success]).to be_blank
         expect(response).to render_template(:edit)
@@ -109,49 +109,49 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       let(:confirm) { nil }
 
       it 'redirects' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect(response).to redirect_to(support_school_confirm_enable_orders_path(urn: school.urn,
-                                                                                  order_state: order_state,
-                                                                                  laptop_cap: laptop_cap,
-                                                                                  router_cap: router_cap))
+                                                                                  order_state:,
+                                                                                  laptop_cap:,
+                                                                                  router_cap:))
       end
     end
 
     it 'redirects to the school view' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(response).to redirect_to(support_school_path(school.urn))
     end
 
     it 'sets the given order_state to the school' do
       expect {
-        patch :update, params: params
+        patch(:update, params:)
       }.to change { School.find(school.id).order_state }.from('cannot_order').to(order_state)
     end
 
     it 'sets the given laptop cap to the school' do
       expect {
-        patch :update, params: params
+        patch(:update, params:)
       }.to change { school.reload.raw_cap(:laptop) }.from(1).to(3)
     end
 
     it 'update the laptop cap of the school' do
       expect {
-        patch :update, params: params
+        patch(:update, params:)
       }.to change { school.reload.cap(:laptop) }.from(1).to(3)
     end
 
     it 'sets the given raw router cap to the school' do
       expect {
-        patch :update, params: params
+        patch(:update, params:)
       }.to change { school.reload.raw_cap(:router) }.from(1).to(2)
     end
 
     it 'update the router cap of the school' do
       expect(school.cap(:router)).to eq(1)
       expect {
-        patch :update, params: params
+        patch(:update, params:)
       }.to change { school.reload.cap(:router) }.from(1).to(2)
     end
 
@@ -167,41 +167,41 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       end
 
       it 'update school caps on Computacenter' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect_to_have_sent_caps_to_computacenter(requests)
       end
 
       it 'notify Computacenter of laptops cap change by email' do
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                .with(params: { school:, new_cap_value: 3 }, args: []).once
       end
 
       it 'notify Computacenter of routers cap change by email' do
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_comms_cap_change)
-                .with(params: { school: school, new_cap_value: 2 }, args: []).once
+                .with(params: { school:, new_cap_value: 2 }, args: []).once
       end
 
       it "notify the school's organizational users" do
-        user = create(:user, :relevant_to_computacenter, school: school)
+        user = create(:user, :relevant_to_computacenter, school:)
 
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
-                .with(params: { school: school, user: user }, args: []).once
+                .with(params: { school:, user: }, args: []).once
       end
 
       it "notify support if no school's organizational users" do
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-                .with(params: { school: school }, args: []).once
+                .with(params: { school: }, args: []).once
       end
 
       it 'notify Computacenter of school can order by email' do
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                .with(params: { school:, new_cap_value: 3 }, args: []).once
       end
     end
 
@@ -219,21 +219,21 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       before { rb.calculate_vcaps! }
 
       it 'update school caps on Computacenter' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
       end
 
       it 'notify Computacenter of laptops cap change by email' do
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                .with(params: { school: school, new_cap_value: 4 }, args: []).once
+                .with(params: { school:, new_cap_value: 4 }, args: []).once
       end
 
       it "notify support if no school's organizational users" do
-        expect { patch :update, params: params }
+        expect { patch(:update, params:) }
           .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-                .with(params: { school: school }, args: []).once
+                .with(params: { school: }, args: []).once
       end
     end
   end
@@ -251,7 +251,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
     let(:params) { edition_values.merge(school_urn: school.urn) }
 
-    before { get :confirm, params: params }
+    before { get(:confirm, params:) }
 
     it 'responds successfully' do
       expect(response).to be_successful
@@ -320,7 +320,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     context 'when the user is not support' do
       let(:user) { create(:user) }
 
-      before { put :allow_ordering_for_many_schools, params: params }
+      before { put(:allow_ordering_for_many_schools, params:) }
 
       it 'forbid' do
         expect(response).to have_http_status(:forbidden)
@@ -329,12 +329,12 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
 
     xit 'enqueue a BulkAllocationJob to process the given file' do
       expect {
-        put :allow_ordering_for_many_schools, params: params
+        put(:allow_ordering_for_many_schools, params:)
       }.to have_enqueued_job(BulkAllocationJob).once
     end
 
     xit 'redirects to the bulk job page' do
-      put :allow_ordering_for_many_schools, params: params
+      put :allow_ordering_for_many_schools, params:
 
       expect(response).to redirect_to(support_allocation_batch_job_path(assigns[:form].batch_id))
     end

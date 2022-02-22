@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BatchJob do
   let(:records) { create_list(:local_authority, 3) }
-  let(:job) { BatchJob.new(records: records, job_name: 'my job') }
+  let(:job) { BatchJob.new(records:, job_name: 'my job') }
 
   describe '#process!' do
     context 'given a block' do

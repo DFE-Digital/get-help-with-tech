@@ -54,7 +54,7 @@ private
     if real_to_anonymised_map.key?(normalised_real_value)
       real_to_anonymised_map.fetch(normalised_real_value)
     else
-      real_to_anonymised_map[normalised_real_value] = value_which_is_not_a_real_value(all_real_values: all_real_values, generator_method_symbol: generator_method_symbol)
+      real_to_anonymised_map[normalised_real_value] = value_which_is_not_a_real_value(all_real_values:, generator_method_symbol:)
     end
   end
 

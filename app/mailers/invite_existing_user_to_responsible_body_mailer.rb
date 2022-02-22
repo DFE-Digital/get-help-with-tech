@@ -6,7 +6,7 @@ class InviteExistingUserToResponsibleBodyMailer < ApplicationMailer
     template_mail(
       invite_existing_user_to_responsible_body_template_id,
       to: @user.email_address,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 
