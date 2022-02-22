@@ -57,4 +57,4 @@ jobs:
           cf api https://api.london.cloud.service.gov.uk
           cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
           cf target -o dfe -s get-help-with-tech-dev
-          cf push get-help-with-tech-preview --docker-image dfedigital/get-help-with-tech-dev:preview --docker-username ${CF_DOCKER_USERNAME} --strategy rolling
+          cf push -f config/manifests/preview-manifest.yml --docker-image dfedigital/get-help-with-tech-dev:preview --docker-username ${CF_DOCKER_USERNAME} --strategy rolling
