@@ -14,14 +14,6 @@ RSpec.feature 'Huawei router password', type: :feature do
     stub_computacenter_outgoing_api_calls
   end
 
-  scenario 'logged out' do
-    visit root_path
-    click_on 'Internet access'
-    click_on 'reset them and replace the SIM cards'
-    click_on 'Sign in to see your Huawei router login password'
-    expect_login_screen
-  end
-
   scenario 'logged in but no router allocation' do
     sign_in_as user_for_organisation_without_router_allocation
 

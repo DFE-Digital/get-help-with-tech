@@ -13,9 +13,9 @@
                     { t('landing_pages.guides_parents_carers_students.title') => guides_for_parents_carers_and_students_path },
                     @page.title,
                    ]) %>
-  <% elsif @page.guidance_section == 'internet_access' %>
+  <% elsif @page.guidance_section == 'finding_out_about_internet_access_needs' %>
     <% breadcrumbs([{ "Home" => root_path },
-                    { t('page_titles.internet_access') => connectivity_home_path },
+                    { t('page_titles.finding_out_about_internet_access_needs') => finding_out_about_internet_access_needs_path },
                     @page.title,
                    ]) %>
   <% else %>
