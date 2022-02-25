@@ -13,13 +13,15 @@ class PagesController < ApplicationController
 
   def dfe_windows_privacy_notice; end
 
-  def general_privacy_notice; end
+  def finding_out_about_internet_access_needs; end
 
-  def request_a_change; end
+  def general_privacy_notice; end
 
   def internet_access
     redirect_to root_path
   end
 
-  def finding_out_about_internet_access_needs; end
+  def managing_your_4g_wireless_routers; end
+
+  def request_a_change; end
 end
