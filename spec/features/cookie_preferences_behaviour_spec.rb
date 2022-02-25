@@ -52,7 +52,7 @@ RSpec.feature 'Cookie preferences', type: :feature do
       end
 
       describe 'clicking on the Accept cookies button' do
-        let(:initial_page) { connectivity_home_path }
+        let(:initial_page) { finding_out_about_internet_access_needs_path }
 
         before do
           visit initial_page
