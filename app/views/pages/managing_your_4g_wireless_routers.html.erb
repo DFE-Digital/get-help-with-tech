@@ -1,0 +1,163 @@
+<% content_for :title, t('page_titles.managing_your_4g_wireless_routers') %>
+<%- content_for :before_content do %>
+  <% breadcrumbs([{ "Home" => root_path },
+                  t('page_titles.managing_your_4g_wireless_routers'),
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('page_titles.managing_your_4g_wireless_routers') %>
+    </h1>
+
+    <p class="govuk-body-l">
+      This information is to help schools, colleges, LAs and trusts manage routers they received from DfE.
+    </p>
+
+    <h2 class="govuk-heading-s">Contents</h2>
+
+    <div class="app-table-of-contents"><ul>
+      <li>
+        <a href="#providing-routers-to-families">Providing routers to families</a>
+      </li>
+      <li>
+        <a href="#data-allowance">Data allowance</a>
+      </li>
+      <li>
+        <a href="#resetting-routers">Resetting routers</a>
+      </li>
+      <li>
+        <a href="#fixing-router-faults">Fixing router faults</a>
+      </li>
+    </ul>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+    <h2 id="providing-routers-to-families" class="govuk-heading-l">Providing routers to families</h2>
+
+    <p class="govuk-body-m">
+      You should keep records of the types of routers you’ve received, who you’ve loaned them to and the IMEI
+      number for each device. This information is essential for responding to any Regulation of
+      Investigatory Powers Act (RIPA) requests you may get.
+    </p>
+
+    <p class="govuk-body-m">
+      Our guidance on <a href="/devices/device-distribution-and-ownership" class="govuk-link">device ownership and distribution</a> includes examples of loan agreements and suggestions for insurance.
+    </p>
+
+    <h2 id="data-allowance" class="govuk-heading-l">Data allowance</h2>
+
+    <p class="govuk-body-m">
+      Routers ordered from 1 October 2021 onwards do not come with SIM cards.
+      You’ll need to supply your own SIM card (with a data allowance) for each router.
+      You may be able to get government-funded support to help disadvantaged pupils in years 3 to 13
+      to access the internet where face-to-face education is disrupted.
+    </p>
+
+    <p class="govuk-body-m">
+      Previously, 4G routers were provided with SIM cards.
+      These have now expired – to continue using your routers, you’ll need to reset them and replace the SIM cards.
+    </p>
+
+    <h2 id="resetting-routers" class="govuk-heading-l">Resetting routers</h2>
+
+    <p class="govuk-body-m">
+      The process to reset your router depends on the type of router you have.
+    </p>
+
+    <div class="govuk-inset-text">
+      <p>
+        Please note: Replacing the SIM card in your router will remove the content filters.
+        Read our <a href="/devices/safeguarding-for-device-users">safeguarding guidance</a> and information for parents and carers on <a href="https://www.gov.uk/government/publications/coronavirus-covid-19-keeping-children-safe-online/coronavirus-covid-19-support-for-parents-and-carers-to-keep-children-safe-online">keeping children safe online</a>.
+      </p>
+    </div>
+
+    <h3 id="if-you-have-a-huawei-router" class="govuk-heading-m">If you have a Huawei router</h3>
+
+    <p class="govuk-body-m">
+      To reset your Huawei router, you’ll need to use another internet connection to download a firmware update onto the router.
+    </p>
+
+    <p class="govuk-body-m">
+      It takes around 10 minutes to reset your router. You’ll need:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>your Huawei router, the router’s network name ('SSID') and wifi key – you can find these on a label under the back cover of your router</li>
+      <li>a laptop, tablet or mobile phone</li>
+      <li>another internet source, such as your work or home wifi, and the password</li>
+    </ul>
+
+    <p class="govuk-body-m">
+      You should read all the steps before you begin.
+    </p>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Remove the back cover and battery from the router and take out the expired SIM card (the one provided with your router).</li>
+      <li>Replace the battery and back cover and turn the router on.</li>
+      <li>Connect your laptop or tablet to the router through the wireless network or the USB cable.</li>
+      <li>Open a web browser and enter <a href="http://192.168.8.1" class="govuk-link">http://192.168.8.1</a> in the address bar.</li>
+      <li><p class="govuk-body-m">Enter the Huawei router login password, you'll need to sign in to see this.</p>
+        <p class="govuk-body-m"><a href="/huawei-router-password" class="govuk-link app-emphasis-link">
+          Sign in to see your Huawei router login password
+        </a></p>
+        <p class="govuk-body-m">Select ‘Log in’.</p>
+        <p class="govuk-body-m"><img src="/devices/huawei-router-log-in.png" alt="Screenshot of Huawei ‘Welcome to Mobile WiFi’ log in screen. The screen asks for you to enter your password and has a button to log in."></p>
+        <p class="govuk-body-m">If you cannot log in, check you're using the protected password and not the password 'admin'.</p></li>
+      <li><p class="govuk-body-m">Once connected, you’ll be asked to read and accept the privacy notice and user agreement.</p></li>
+      <li><p class="govuk-body-m">Choose whether you want overnight updates, we recommend you select ‘Enable and continue’.</p></li>
+      <li><p class="govuk-body-m">If prompted to insert a SIM card, select ‘Continue’ next to ‘Insert a SIM card later’.</p></li>
+      <li><p class="govuk-body-m">You’ll be asked if you want to change your wifi name and password, we recommend you keep the ones you have.</p></li>
+      <li><p class="govuk-body-m">Choose a new Huawei router login password, this should be at least 8 characters and different from your wifi password. You must make a note of this password as you may need it later. Select ‘Finish’.</p>
+        <p class="govuk-body-m">If your new password is accepted, you’ll be redirected to the router settings homepage.</p></li>
+      <li><p class="govuk-body-m">Select ‘Network settings’ at the top of the screen. On the left-hand menu, expand the ‘wifi Extender’ list and select ‘wifi Extender Settings’.</p></li>
+      <li><p class="govuk-body-m">Enable ‘wifi Extender Settings’ and select your work or home wifi from the list of available networks. Enter the password for your wifi (not the password for the router).</p></li>
+      <li><p class="govuk-body-m">Once the router has connected to your work or home wifi, you should get an alert about a software update. Check your router is plugged into an electrical outlet and select ‘Update’.</p>
+        <p class="govuk-body-m"><img src="/devices/huawei-update-version.png" alt="Screenshot of new version reminder. Heading ‘New version reminder’. Your current version (for example 10.0.2.1). The new version you can use (for example 11.0.1.2. ). Warning text ‘During this update, the device may disconnect from the internet. The device must remain connected to a power source in order to prevent any damage. Begin update?’. A button labelled ‘Update’."></p></li>
+      <li><p class="govuk-body-m">When the update has downloaded, it will begin to install automatically. This should take around 5 minutes. Router lights may turn on and off during this time. You’ll get a notification once the installation is finished.</p>
+        <p class="govuk-body-m">After you have downloaded and installed the software update, you may be redirected to the Huawei login screen. If you need to access this screen manually, open a web browser and enter <a href="http://192.168.8.1" class="govuk-link">http://192.168.8.1</a> in the address bar.</p></li>
+      <li><p class="govuk-body-m">Enter the new device login password that you chose and click ‘Log in’.</p></li>
+      <li><p class="govuk-body-m">Select ‘Network settings’ at the top of the screen. On the left-hand menu, expand the ‘wifi Extender’ list and select ‘wifi Extender Settings’.</p></li>
+      <li><p class="govuk-body-m">Disable ‘wifi Extender Settings’ to disconnect the router from your work or home wifi. If you also want to remove your wifi details from the router’s memory, go to ‘wifi Extension Connection’ and click the bin icon next to the name of your work or home wifi.</p></li>
+      <li><p class="govuk-body-m">Turn off the router and remove the battery.</p></li>
+      <li><p class="govuk-body-m">Insert a replacement SIM card, then replace the battery and back cover.</p></li>
+      <li><p class="govuk-body-m">Use the power button to turn the router on again – it should connect to the internet using data from the new SIM card.</p></li>
+    </ol>
+
+    <h3 id="if-you-have-a-tp-link-or-d-link-router" class="govuk-heading-m">
+      If you have a TP-Link or D-Link router
+    </h3>
+
+    <p class="govuk-body-m">
+      You can reset your router and insert another SIM card at any time. This process will take around 5 minutes. You should make sure the router is turned on and fully charged before you begin.
+    </p>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Remove the back cover from the router.</li>
+      <li>Locate the ‘Reset’ button next to the battery and insert a sharp object (such as a pin or paperclip).</li>
+      <li>Hold down the ‘Reset’ button for 5 seconds to erase the router’s current settings.</li>
+      <li>Remove the battery and take out the expired SIM card (the one provided with your router).</li>
+      <li>Insert a different SIM card, then replace the battery and back cover.</li>
+      <li>To activate the new SIM card, use the power button to turn the router off and on again.</li>
+    </ol>
+
+    <h2 id="fixing-router-faults" class="govuk-heading-l">Fixing router faults</h2>
+
+    <p class="govuk-body-m">
+      If a router powers up but will not connect to the internet, check if:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the router has been reset and a new SIM card inserted - SIM cards originally included with routers expired on 31 August 2021</li>
+      <li>another device (such as a smartphone) has a connection, to see if there are connectivity issues in the local area</li>
+      <li>the laptop or tablet can connect to the internet another way, for example by using free wifi or tethering it to a mobile phone</li>
+      <li>clearing the cache on the web browser allows you to connect</li>
+    </ul>
+
+    <p class="govuk-body-m">
+      <a href="/get-support" class="govuk-link">Contact us</a> if you require further support.
+    </p>
+  </div>
+</div>
