@@ -6,6 +6,10 @@ class AssetsController < ApplicationController
 
   BIOS_UNLOCKER_FILE = Rails.root.join('private/BIOS_Unlocker.exe')
 
+  # A high number may cause timeouts by the reverse proxy
+  # due to decryption of passwords speeds
+  MAX_ASSET_COUNT_EMAIL_CSV_DOWNLOAD = 50
+
   # GET /assets
   def index
     asset_service = AssetsService.new(user: current_user)
@@ -25,7 +29,13 @@ class AssetsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do
-        send_data asset_service.assets_csv, filename: 'devices.csv'
+        if @assets.size <= MAX_ASSET_COUNT_EMAIL_CSV_DOWNLOAD
+          send_data asset_service.assets_csv, filename: "devices--#{Time.zone.now.strftime('%y-%m-%d-%H%M%S')}.csv"
+        else
+          flash[:info] = 'You’ll shortly receive an email when your export is ready to download.'
+          asset_service.assets_csv_via_email
+          redirect_to assets_path
+        end
       end
     end
   end
@@ -37,6 +47,19 @@ class AssetsController < ApplicationController
 
   def bios_unlocker
     send_file(BIOS_UNLOCKER_FILE)
+  end
+
+  def download
+    @download = current_user.downloads.find_by_uuid(params[:uuid])
+    not_found and return unless @download
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        @download.downloaded!
+        send_data @download.content, filename: @download.filename
+      end
+    end
   end
 
 private
