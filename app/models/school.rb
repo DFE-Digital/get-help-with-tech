@@ -361,11 +361,7 @@ class School < ApplicationRecord
   end
 
   def order_users_with_active_techsource_accounts
-    device_ordering_organisation
-      .users
-      .not_deleted
-      .who_can_order_devices
-      .with_techsource_account_confirmed
+    organisation_users.who_can_order_devices.with_techsource_account_confirmed
   end
 
   def organisation_users

@@ -15,7 +15,7 @@ RSpec.describe School::DevicesController do
   describe '#order' do
     context 'when school state is can_order' do
       context 'when has devices left to order' do
-        let(:school) { create(:school, :can_order, laptops: [10, 10]) }
+        let(:school) { create(:school, :manages_orders, :can_order, laptops: [10, 10]) }
 
         it 'renders can_order' do
           get :order, params: { urn: school.urn }
@@ -41,7 +41,7 @@ RSpec.describe School::DevicesController do
       end
 
       context 'when has devices left to order' do
-        let(:school) { create(:school, :can_order_for_specific_circumstances, laptops: [10, 10]) }
+        let(:school) { create(:school, :manages_orders, :can_order_for_specific_circumstances, laptops: [10, 10]) }
 
         it 'renders can_order_for_specific_circumstances' do
           get :order, params: { urn: school.urn }

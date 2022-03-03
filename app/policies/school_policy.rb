@@ -9,6 +9,10 @@ class SchoolPolicy < SupportPolicy
     end
   end
 
+  def devices_orderable?
+    responsible_body_user? || devolved_management_school_user?
+  end
+
   def support_third_line_editable?
     user.is_support? && user.third_line_role?
   end
@@ -25,5 +29,15 @@ class SchoolPolicy < SupportPolicy
 
   def update_computacenter_reference?
     user.is_computacenter?
+  end
+
+private
+
+  def devolved_management_school_user?
+    record.orders_managed_by_school? && user.school_ids.include?(record.id)
+  end
+
+  def responsible_body_user?
+    user.responsible_body_id.present? && user.responsible_body_id == record.responsible_body_id
   end
 end

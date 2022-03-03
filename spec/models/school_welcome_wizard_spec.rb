@@ -6,7 +6,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
   end
 
   describe '#update_step!' do
-    let(:school) { create(:school, :with_preorder_information) }
+    let(:school) { create(:school, :with_preorder_information, :manages_orders) }
     let(:school_user) { create(:school_user, :new_visitor, school: school) }
 
     subject(:wizard) { school_user.welcome_wizard_for(school) }
@@ -22,7 +22,7 @@ RSpec.describe SchoolWelcomeWizard, type: :model do
       end
 
       context 'has devices available to order' do
-        let(:school) { create(:school, :with_preorder_information, laptops: [2, 1, 0]) }
+        let(:school) { create(:school, :with_preorder_information, :manages_orders, laptops: [2, 1, 0]) }
 
         context 'user orders devices' do
           let(:school_user) { create(:school_user, :new_visitor, school: school, orders_devices: true) }

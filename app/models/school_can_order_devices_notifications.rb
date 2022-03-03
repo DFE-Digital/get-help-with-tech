@@ -78,7 +78,7 @@ private
   end
 
   def nudgeable_user?(user)
-    user.orders_devices? && !user.seen_privacy_notice?
+    user.order_devices_for_school?(school) && !user.seen_privacy_notice?
   end
 
   def ordering_user?(user)

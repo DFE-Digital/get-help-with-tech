@@ -22,7 +22,7 @@ private
         .relevant_to_device_supplier
         .includes(:schools, :responsible_body, :last_user_change, schools: :responsible_body)
         .find_each do |user|
-      csv << csv_row(user)
+      csv << csv_row(user) if user.relevant_to_computacenter?
     end
   end
 

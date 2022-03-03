@@ -19,7 +19,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
   end
 
   context 'when school is updated and affects a user' do
-    let(:school) { create(:school, computacenter_reference: nil) }
+    let(:school) { create(:school, :manages_orders, computacenter_reference: nil) }
 
     before do
       create(:school_user, :relevant_to_computacenter, school: school)
@@ -36,7 +36,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
   end
 
   context 'when CC api settings are setup' do
-    let(:school) { create(:school, computacenter_reference: nil) }
+    let(:school) { create(:school, :manages_orders, computacenter_reference: nil) }
 
     before do
       allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return('http://example.com')
@@ -65,7 +65,8 @@ RSpec.describe Computacenter::UserChangeGenerator do
     subject(:generator) { described_class.new(user) }
 
     context 'when the user is relevant_to_computacenter' do
-      let(:user) { create(:school_user, :relevant_to_computacenter) }
+      let(:school) { create(:school, :manages_orders) }
+      let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
 
       context 'and the user has not been soft_deleted' do
         before do
