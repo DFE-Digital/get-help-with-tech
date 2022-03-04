@@ -1,7 +1,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Download your file
+    </h1>
+
     <p class="govuk-body">
-      <%= link_to "Download", assets_download_path(format: 'csv', uuid: @download.uuid), class: 'govuk-button govuk-button--secondary' %>
+      Your serial number export file is ready to download.
+    </p>
+    <p class="govuk-body">
+      When you’ve downloaded your file, store it securely for your records.
+    </p>
+    <p class="govuk-body">
+      <%= link_to 'Download this file to your device', assets_download_path(format: 'csv', uuid: @download.uuid) %>
+    </p>
+    <p class="govuk-body">
+      Please note that this download file will only be available for 7 days. After that you’ll need to export the file again.
+    </p>
+    <p class="govuk-body">
+      If you have any questions, email <%= govuk_mail_to 'COVID.TECHNOLOGY@education.gov.uk', 'COVID.TECHNOLOGY@education.gov.uk' %>.
     </p>
   </div>
 </div>

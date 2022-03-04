@@ -51,7 +51,7 @@ class AssetsController < ApplicationController
 
   def download
     @download = current_user.downloads.find_by_uuid(params[:uuid])
-    not_found and return unless @download
+    render :download_expired and return unless @download
 
     respond_to do |format|
       format.html

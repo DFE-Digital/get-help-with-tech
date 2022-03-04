@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Your download link has expired
+    </h1>
+
+    <p class="govuk-body">
+      You can generate a new device export file by visiting the device details page linked below, and using the ‘export’ button.
+    </p>
+    <p class="govuk-body">
+      <%= link_to assets_url, assets_path %>
+    </p>
+    <p class="govuk-body">
+      If you have any questions, email <%= govuk_mail_to 'COVID.TECHNOLOGY@education.gov.uk', 'COVID.TECHNOLOGY@education.gov.uk' %>.
+    </p>
+  </div>
+</div>
