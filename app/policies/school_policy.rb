@@ -34,7 +34,7 @@ class SchoolPolicy < SupportPolicy
 private
 
   def devolved_management_school_user?
-    record.orders_managed_by_school? && user.school_ids.include?(record.id)
+    record.orders_managed_by_school? && record.users.include?(user)
   end
 
   def responsible_body_user?
