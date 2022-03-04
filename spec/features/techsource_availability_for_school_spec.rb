@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'TechSource availability for school' do
-  let(:school) { create(:school, laptops: [1, 1, 0]) }
+  let(:school) { create(:school, :manages_orders, laptops: [1, 1, 0]) }
   let(:school_user) do
     create(:school_user,
            school: school,

@@ -49,7 +49,7 @@ FactoryBot.define do
 
     factory :fe_college_user do
       association :responsible_body, factory: %i[further_education_college]
-      school { build(:fe_school, responsible_body: responsible_body) }
+      school { build(:fe_school, :manages_orders, responsible_body: responsible_body) }
       orders_devices { true }
     end
 

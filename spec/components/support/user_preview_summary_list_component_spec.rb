@@ -3,8 +3,9 @@ require 'rails_helper'
 describe Support::UserPreviewSummaryListComponent do
   subject(:result) { render_inline(described_class.new(user: user)) }
 
+  let(:school) { create(:school, :manages_orders) }
   let(:user) do
-    build(:school_user, :has_seen_privacy_notice, telephone: '12345')
+    create(:school_user, :has_seen_privacy_notice, telephone: '12345', school: school)
   end
 
   it 'displays the email address' do
@@ -45,7 +46,7 @@ describe Support::UserPreviewSummaryListComponent do
 
   context 'for a user who orders devices but has not seen the privacy notice' do
     let(:user) do
-      build(:school_user, telephone: '12345', orders_devices: true, privacy_notice_seen_at: nil)
+      create(:school_user, telephone: '12345', orders_devices: true, privacy_notice_seen_at: nil, school: school)
     end
 
     it 'displays the user as able to order devices once they sign in' do
@@ -55,11 +56,12 @@ describe Support::UserPreviewSummaryListComponent do
 
   context 'for a user who orders devices, has seen the privacy notice but has no TechSource account yet' do
     let(:user) do
-      build(:school_user,
-            telephone: '12345',
-            orders_devices: true,
-            privacy_notice_seen_at: 5.days.ago,
-            techsource_account_confirmed_at: nil)
+      create(:school_user,
+             telephone: '12345',
+             orders_devices: true,
+             privacy_notice_seen_at: 5.days.ago,
+             techsource_account_confirmed_at: nil,
+             school: school)
     end
 
     it "displays the user as able to order devices once it's confirmed that they have a TechSource account" do
@@ -69,11 +71,12 @@ describe Support::UserPreviewSummaryListComponent do
 
   context 'for a user who orders devices, has seen the privacy notice and has a TechSource account yet' do
     let(:user) do
-      build(:school_user,
-            telephone: '12345',
-            orders_devices: true,
-            privacy_notice_seen_at: 5.days.ago,
-            techsource_account_confirmed_at: 4.days.ago)
+      create(:school_user,
+             telephone: '12345',
+             orders_devices: true,
+             privacy_notice_seen_at: 5.days.ago,
+             techsource_account_confirmed_at: 4.days.ago,
+             school: school)
     end
 
     it 'displays the user as able to order devices' do

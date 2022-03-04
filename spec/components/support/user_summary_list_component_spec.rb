@@ -4,8 +4,9 @@ describe Support::UserSummaryListComponent do
   include Rails.application.routes.url_helpers
 
   let(:responsible_body) { create(:local_authority) }
+  let(:school) { create(:school, :manages_orders) }
   let(:user) do
-    create(:school_user, telephone: '12345', responsible_body: responsible_body)
+    create(:school_user, telephone: '12345', responsible_body: responsible_body, school: school)
   end
   let(:viewer) { build(:support_user) }
 
@@ -43,7 +44,7 @@ describe Support::UserSummaryListComponent do
 
   context 'for a user who orders devices but has not seen the privacy notice' do
     let(:user) do
-      create(:school_user, telephone: '12345', orders_devices: true, privacy_notice_seen_at: nil)
+      create(:school_user, telephone: '12345', orders_devices: true, privacy_notice_seen_at: nil, school: school)
     end
 
     it 'displays the user as able to order devices once they sign in' do
@@ -57,7 +58,8 @@ describe Support::UserSummaryListComponent do
              telephone: '12345',
              orders_devices: true,
              privacy_notice_seen_at: 5.days.ago,
-             techsource_account_confirmed_at: nil)
+             techsource_account_confirmed_at: nil,
+             school: school)
     end
 
     it "displays the user as able to order devices once it's confirmed that they have a TechSource account" do
@@ -71,7 +73,8 @@ describe Support::UserSummaryListComponent do
              telephone: '12345',
              orders_devices: true,
              privacy_notice_seen_at: 5.days.ago,
-             techsource_account_confirmed_at: 4.days.ago)
+             techsource_account_confirmed_at: 4.days.ago,
+             school: school)
     end
 
     it 'displays the user as able to order devices' do

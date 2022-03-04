@@ -58,7 +58,7 @@ RSpec.feature 'View school details' do
     end
 
     context 'has ordered' do
-      let(:school) { create(:school, laptops: [2, 2, 1]) }
+      let(:school) { create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [2, 2, 1]) }
 
       it 'does NOT show this section' do
         expect(page).not_to have_content('Order history')

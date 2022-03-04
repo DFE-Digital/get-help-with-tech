@@ -65,6 +65,6 @@
       <li>set which accounts can use TechSource to order.</li>
     </ul>
 
-    <%= render partial: 'summary_order_history' if @has_ordered && (@current_user.orders_devices? || @has_ordered_routers) %>
+    <%= render partial: 'summary_order_history' if @has_ordered && (@current_user.order_devices_for_school?(@school) || @has_ordered_routers) %>
   </div>
 </div>
