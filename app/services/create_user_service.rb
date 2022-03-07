@@ -32,7 +32,8 @@ class CreateUserService
   end
 
   def self.create_new_school_user!(user_params)
-    user = User.new(user_params)
+    orders_devices = user_params[:orders_devices].presence || false
+    user = User.new(user_params.merge(orders_devices: orders_devices))
     if user.save
       InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
       user.school.refresh_preorder_status!

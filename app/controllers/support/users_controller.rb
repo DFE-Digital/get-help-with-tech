@@ -8,8 +8,9 @@ class Support::UsersController < Support::BaseController
 
   def new
     @form = Support::NewUserForm.new(school: @school, responsible_body: @responsible_body)
-    @user = User.new
+    @user = @school ? @school.users.new : User.new
     authorize @user
+    @change_order_devices = user_eligible_to_order_devices?
   end
 
   def create
@@ -157,5 +158,9 @@ private
       @responsible_body = ResponsibleBody.gias_status_open.find(params[:responsible_body_id])
       authorize @responsible_body, :show?
     end
+  end
+
+  def user_eligible_to_order_devices?(_user = @user)
+    SchoolPolicy.new(@user, @school).devices_orderable? if @school
   end
 end
