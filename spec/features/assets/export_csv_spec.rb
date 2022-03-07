@@ -51,14 +51,17 @@ RSpec.feature 'Export CSV' do
       click_on 'Download this file to your device'
       csv = CSV.parse(page.body, headers: true)
       expect(csv.headers).to match_array(['Serial/IMEI', 'Model', 'Local Authority/Academy Trust', 'School/College', 'BIOS Password', 'Admin Password', 'Hardware Hash'])
-      assets.each_with_index do |asset, i|
-        expect(csv[i]['Serial/IMEI']).to eq(asset.serial_number)
-        expect(csv[i]['Model']).to eq(asset.model)
-        expect(csv[i]['Local Authority/Academy Trust']).to eq(asset.department)
-        expect(csv[i]['School/College']).to eq(asset.location)
-        expect(csv[i]['BIOS Password']).to eq(asset.bios_password)
-        expect(csv[i]['Admin Password']).to eq(asset.admin_password)
-        expect(csv[i]['Hardware Hash']).to eq(asset.hardware_hash)
+
+      csv.each do |row|
+        asset = assets.find { |a| a.serial_number == row['Serial/IMEI'] }
+
+        expect(row['Serial/IMEI']).to eq(asset.serial_number)
+        expect(row['Model']).to eq(asset.model)
+        expect(row['Local Authority/Academy Trust']).to eq(asset.department)
+        expect(row['School/College']).to eq(asset.location)
+        expect(row['BIOS Password']).to eq(asset.bios_password)
+        expect(row['Admin Password']).to eq(asset.admin_password)
+        expect(row['Hardware Hash']).to eq(asset.hardware_hash)
 
         expect(asset.reload.first_viewed_at).to be_present
       end
