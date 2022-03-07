@@ -1,52 +1,25 @@
 ## Introduction
-Since the start of the pandemic, the government has distributed over 1.35 million 
+Since the start of the pandemic, the government has distributed over 1.9 million 
 laptops and tablets to schools, trusts, local authorities and further education
 providers for disadvantaged children and young people.
 
 It was announced on 22 October that the Get help with technology (GHwT) service 
-will provide an additional 500,000 laptops and tablets for children and young people 
+would provide an additional 500,000 laptops and tablets for children and young people 
 throughout autumn and winter 2021/22 to support their education and help keep
-them connected. Up to 6,000 of these laptops will be available for children entering
-the UK from Afghanistan under Operation Warm Welcome. Schools and colleges will
-be able to order devices for these children until February 2022.
-
-These laptops and tablets are owned by schools, trusts, local authorities or further 
-education providers who can lend them to eligible children and young people.
+them connected. Up to 6,000 of these laptops were available for children entering
+the UK from Afghanistan under Operation Warm Welcome. Schools and colleges could 
+order devices for these children until March 2022.
 
 ## Eligibility
-All children in years 3&ndash;13 or 16 to 19 education who have arrived in the UK under
-Operation Warm Welcome and joined your school this academic year are eligible. A 
-school or college can order one device for each eligible child.
-
-## Ordering
-To order, sign in to your account at 
-[Get help with technology](/), 
-then select &lsquo;Order 
-devices and routers&rsquo;. There&rsquo;s a link to the order form under the heading &lsquo;Operation 
-Warm Welcome&rsquo;.
-
-The form will request information, including device numbers required, device type,
-and age of pupils. Schools or colleges should order devices for children they expect
-to be staying in their school for at least the remainder of the term.
-
-During the ordering process, schools will be asked to fill out a declaration confirming that:
-
-* these devices will be provided only to eligible children
-* the school will undertake safeguarding duties, and record the arrangements 
-  they have with families.
-
-This information will then be verified. Schools may later be asked to provide 
-evidence of how they&rsquo;ve distributed devices consistent with our agreement.
-
-Schools may also be able to find support through other organisations that work with 
-children and young people from Afghanistan, such as the 
-[Barnardo&rsquo;s device and connectivity initiative](https://www.barnardos.org.uk/news/vodafone-and-barnardos-issue-new-appeal-devices-help-afghan-refugees).
+All children in years 3&ndash;13 or 16 to 19 education who arrived in the UK under
+Operation Warm Welcome and joined schools this academic year were eligible. A 
+school or college could order one device for each eligible child.
 
 ## Who owns the devices?
 
-Ownership of laptops and tablets is transferred from the
+Ownership of laptops and tablets was transferred from the
 Department for Education (DfE) to the academy trusts, schools, colleges and further 
-education institutions that have received them.
+education institutions that received them.
 
 Device owners are able to choose how and when to temporarily lend, or permanently 
 give, devices to children and young people in need, or to other organisations.
