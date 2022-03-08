@@ -81,7 +81,7 @@ class CreateUserService
 
   def self.devolve_ordering_if_needed!(user_params)
     school = School.find_by(id: user_params[:school_id])
-    SchoolSetWhoManagesOrdersService.new(school, :school).call if school
+    SchoolSetWhoManagesOrdersService.new(school, :school).call if school && school.who_will_order_devices.blank?
   end
 
   private_class_method :devolve_ordering_if_needed!
