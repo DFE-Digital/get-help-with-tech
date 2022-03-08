@@ -177,7 +177,7 @@ RSpec.describe AssetsController do
         it 'a message to wait for an email when download is ready' do
           get :index, format: :csv
 
-          expect(flash[:info]).to eq('You’ll shortly receive an email when your export is ready to download.')
+          expect(flash[:info]).to eq('Your export is in progress. Please note, large files can take up to 1 hour to generate. You’ll receive an email when your export is ready to download.')
         end
       end
     end
