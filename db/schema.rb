@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_153735) do
+ActiveRecord::Schema.define(version: 2022_03_02_140343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,6 +205,18 @@ ActiveRecord::Schema.define(version: 2022_01_14_153735) do
     t.index ["user_id"], name: "index_donated_device_requests_on_user_id"
   end
 
+  create_table "downloads", force: :cascade do |t|
+    t.string "uuid"
+    t.integer "user_id"
+    t.string "tag"
+    t.string "filetype"
+    t.string "filename"
+    t.string "encrypted_content"
+    t.datetime "last_downloaded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "email_audits", force: :cascade do |t|
     t.string "message_type", null: false
     t.string "template"
@@ -260,16 +272,16 @@ ActiveRecord::Schema.define(version: 2022_01_14_153735) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
+    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
     t.datetime "school_contacted_at"
-    t.bigint "school_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

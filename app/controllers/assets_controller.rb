@@ -6,26 +6,35 @@ class AssetsController < ApplicationController
 
   BIOS_UNLOCKER_FILE = Rails.root.join('private/BIOS_Unlocker.exe')
 
+  # A high number may cause timeouts by the reverse proxy
+  # due to decryption of passwords speeds
+  MAX_ASSET_COUNT_EMAIL_CSV_DOWNLOAD = 50
+
   # GET /assets
   def index
+    asset_service = AssetsService.new(user: current_user)
+
     if params[:serial_number].blank?
       @title = 'View your device details'
-      @assets = policy_scope(Asset).owned_by(setting)
+      asset_service.setting = setting
     else
       @current_serial_number_search = params[:serial_number]
       @title = 'Search results'
-      @assets = policy_scope(Asset).search_by_serial_numbers(serial_numbers_for_user_role)
+      asset_service.serial_numbers = serial_numbers_for_user_role
     end
 
+    @assets = asset_service.assets
     @multiple_serial_number_search = allow_multiple_serial_number_search?
 
     respond_to do |format|
       format.html
       format.csv do
-        Asset.transaction do
-          send_data support_user? ? @assets.to_support_csv : @assets.to_non_support_csv, filename: 'devices.csv'
-          assets_requiring_updated_viewed_at = @assets.select { |asset| should_update_first_viewed_at?(asset) }
-          policy_scope(Asset).where(id: assets_requiring_updated_viewed_at.pluck(:id)).update_all(first_viewed_at: Time.zone.now)
+        if @assets.size <= MAX_ASSET_COUNT_EMAIL_CSV_DOWNLOAD
+          send_data asset_service.assets_csv, filename: "devices--#{Time.zone.now.strftime('%y-%m-%d-%H%M%S')}.csv"
+        else
+          flash[:info] = 'You’ll shortly receive an email when your export is ready to download.'
+          asset_service.assets_csv_via_email
+          redirect_to assets_path
         end
       end
     end
@@ -38,6 +47,19 @@ class AssetsController < ApplicationController
 
   def bios_unlocker
     send_file(BIOS_UNLOCKER_FILE)
+  end
+
+  def download
+    @download = current_user.downloads.find_by_uuid(params[:uuid])
+    render :download_expired and return unless @download
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        @download.downloaded!
+        send_data @download.content, filename: @download.filename
+      end
+    end
   end
 
 private

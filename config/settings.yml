@@ -61,6 +61,7 @@ govuk_notify:
       nudge_rb_to_add_school_contact: '867df323-b377-4906-8386-79db71e9c428'
       nudge_user_to_read_privacy_policy: '0ae8dc73-121b-4d24-8346-a80bbbcc5cea'
       notify_support_school_can_order_but_no_one_contacted: 'b673e290-47d3-4744-84fb-a1be7002d201' # sent to Support
+      asset_download_ready: '8db49c76-760c-4277-a37a-40bc3368198a'
     computacenter:
       # All sent to CC
       device_cap_change: '6e00f2bf-d373-436d-a2c0-2910f20ef521'

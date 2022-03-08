@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
   post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
 
+  get '/assets/download/:uuid', to: 'assets#download', as: :assets_download
+
   resources :assets, only: %i[show index], param: :uid do
     member do
       get 'bios_unlocker'
