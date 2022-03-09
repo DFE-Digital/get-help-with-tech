@@ -48,13 +48,8 @@ RSpec.feature 'Ordering via a school' do
 
         when_i_view_a_school(school)
         then_i_see_status_of('You can order')
-        and_i_see 'allocation of 12 devices'
         and_i_see 'Devices ordered'
         and_i_see '3 devices'
-
-        when_i_choose_to_order_devices
-        then_i_see_the_school_order_devices_page
-        and_i_see_the_techsource_button
       end
     end
   end

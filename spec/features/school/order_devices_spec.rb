@@ -11,7 +11,7 @@ RSpec.feature 'Order devices' do
     given_i_am_signed_in_as_a_school_user
 
     when_i_visit_the_order_devices_page
-    then_i_see_the_allocation_of_devices
+    then_i_see_ordering_is_closed
     and_i_see_a_link_to_techsource
   end
 
@@ -104,8 +104,8 @@ RSpec.feature 'Order devices' do
     expect(page).to have_http_status(:ok)
   end
 
-  def then_i_see_the_allocation_of_devices
-    expect(page).to have_text('allocation of 100 devices')
+  def then_i_see_ordering_is_closed
+    expect(page).to have_text('Ordering is now closed')
   end
 
   def and_i_see_a_link_to_techsource
