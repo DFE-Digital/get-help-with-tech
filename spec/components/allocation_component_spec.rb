@@ -18,19 +18,19 @@ RSpec.describe AllocationComponent, type: :component do
     context 'zero devices' do
       subject { described_class.new(organisation: rb_with_name, devices_available: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0) }
 
-      it { is_expected.to have_attributes(devices_ordered_sentence: 'Trent Trust ordered 0 devices and 0 routers in academic year 2021/22') }
+      it { is_expected.to have_attributes(devices_ordered_sentence: 'Trent Trust ordered 0 devices and 0 routers in academic year 2021/22.') }
     end
 
     context 'one device' do
       subject { described_class.new(organisation: rb_with_name, devices_available: 0, devices_ordered: 0, routers_ordered: 1, devices_allocation: 1) }
 
-      it { is_expected.to have_attributes(devices_ordered_sentence: 'Trent Trust ordered 0 devices and 1 router in academic year 2021/22') }
+      it { is_expected.to have_attributes(devices_ordered_sentence: 'Trent Trust ordered 0 devices and 1 router in academic year 2021/22.') }
     end
 
     context 'more than one' do
       subject { described_class.new(organisation: rb_with_name, devices_available: 0, devices_ordered: 1, routers_ordered: 0, devices_allocation: 2) }
 
-      it { is_expected.to have_attributes(devices_ordered_sentence: 'Trent Trust ordered 1 device and 0 routers in academic year 2021/22') }
+      it { is_expected.to have_attributes(devices_ordered_sentence: 'Trent Trust ordered 1 device and 0 routers in academic year 2021/22.') }
     end
   end
 

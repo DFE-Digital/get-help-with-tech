@@ -16,6 +16,6 @@ class AllocationComponent < ViewComponent::Base
   end
 
   def devices_ordered_sentence
-    "#{organisation.name} ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22".html_safe
+    "#{organisation.name} ordered #{devices_ordered} #{'device'.pluralize(devices_ordered)} and #{routers_ordered} #{'router'.pluralize(routers_ordered)} in academic year 2021/22.".html_safe
   end
 end
