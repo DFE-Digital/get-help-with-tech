@@ -21,7 +21,7 @@
         <%= f.govuk_radio_button :invite_user,
                                  'yes',
                                  label: { text: t(:yes_label, scope: scope) } do %>
-        <%= render partial: 'shared/school_user_form', locals: { form: f, nested: true } %>
+        <%= render partial: 'shared/school_user_form', locals: { form: f, nested: true, change_order_devices: true } %>
       <%- end %>
       <%= f.govuk_radio_button :invite_user,
                                'no',

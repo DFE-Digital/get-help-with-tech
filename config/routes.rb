@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   get '/internet-access', to: 'pages#internet_access', as: :connectivity_home
   get '/finding-out-about-internet-access-needs', to: 'pages#finding_out_about_internet_access_needs', as: :finding_out_about_internet_access_needs
+  get '/managing_your_4g_wireless_routers', to: 'pages#managing_your_4g_wireless_routers', as: :managing_your_4g_wireless_routers
 
   get '/devices/guide-to-resetting-windows-laptops-and-tablets', to: 'guide_to_resetting_windows_laptops_and_tablets#index'
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/get-local-admin-and-bios-passwords', to: 'guide_to_resetting_windows_laptops_and_tablets#get_local_admin_and_bios_passwords'
@@ -45,6 +46,8 @@ Rails.application.routes.draw do
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
   post '/cookie-preferences', to: 'cookie_preferences#create', as: 'create_cookie_preferences'
+
+  get '/assets/download/:uuid', to: 'assets#download', as: :assets_download
 
   resources :assets, only: %i[show index], param: :uid do
     member do

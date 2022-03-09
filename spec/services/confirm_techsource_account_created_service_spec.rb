@@ -85,9 +85,8 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
     end
 
     context 'when user email has changed' do
-      let!(:user) do
-        create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com')
-      end
+      let(:school) { create(:school, :manages_orders) }
+      let(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com', school: school) }
 
       before do
         user.update(email_address: 'new@example.com')
@@ -103,7 +102,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
     end
 
     context 'when user has been destroyed' do
-      let(:school) { create(:school, computacenter_reference: '123456') }
+      let(:school) { create(:school, :manages_orders, computacenter_reference: '123456') }
       let!(:user) do
         create(:school_user, :relevant_to_computacenter, school: school)
       end

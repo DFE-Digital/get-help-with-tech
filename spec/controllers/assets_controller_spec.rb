@@ -162,6 +162,24 @@ RSpec.describe AssetsController do
           expect(other_asset).not_to be_viewed
         end
       end
+
+      context 'over 50 assets to export' do
+        before do
+          create_list(:asset, 49, :never_viewed, location_cc_ship_to_account: school.computacenter_reference)
+        end
+
+        it 'redirects back to the assets page' do
+          get :index, format: :csv
+
+          expect(response).to redirect_to(assets_path)
+        end
+
+        it 'a message to wait for an email when download is ready' do
+          get :index, format: :csv
+
+          expect(flash[:info]).to eq('Your export is in progress. Please note, large files can take up to 1 hour to generate. You’ll receive an email when your export is ready to download.')
+        end
+      end
     end
 
     context 'user who does not count as viewer impersonating user who does' do

@@ -32,7 +32,8 @@ class CreateUserService
   end
 
   def self.create_new_school_user!(user_params)
-    user = User.new(user_params)
+    orders_devices = user_params[:orders_devices].presence || false
+    user = User.new(user_params.merge(orders_devices: orders_devices))
     if user.save
       InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
       user.school.refresh_preorder_status!
@@ -80,7 +81,7 @@ class CreateUserService
 
   def self.devolve_ordering_if_needed!(user_params)
     school = School.find_by(id: user_params[:school_id])
-    SchoolSetWhoManagesOrdersService.new(school, :school).call if school
+    SchoolSetWhoManagesOrdersService.new(school, :school).call if school && school.who_will_order_devices.blank?
   end
 
   private_class_method :devolve_ordering_if_needed!

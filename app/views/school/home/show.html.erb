@@ -27,9 +27,6 @@
     <ul class="govuk-list govuk-list--bullet">
       <li>order laptops</li>
       <li>access the TechSource website to order devices</li>
-      <% unless @school.social_care_leaver? %>
-        <li>order devices for children arriving under Operation Warm Welcome.</li>
-      <% end %>
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
@@ -65,6 +62,6 @@
       <li>set which accounts can use TechSource to order.</li>
     </ul>
 
-    <%= render partial: 'summary_order_history' if @has_ordered && (@current_user.orders_devices? || @has_ordered_routers) %>
+    <%= render partial: 'summary_order_history' if @has_ordered && (@current_user.order_devices_for_school?(@school) || @has_ordered_routers) %>
   </div>
 </div>

@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :invited_to_school_welcome_wizards, class_name: 'SchoolWelcomeWizard', foreign_key: 'invited_user_id', dependent: :nullify
   has_many :key_contact_for_responsible_bodies, class_name: 'ResponsibleBody', foreign_key: 'key_contact_id', dependent: :nullify
   has_many :email_audits, dependent: :destroy
+  has_many :downloads, dependent: :destroy
   has_one :last_user_change, -> { order('created_at DESC').limit(1) }, class_name: 'Computacenter::UserChange'
 
   belongs_to :mobile_network, optional: true
@@ -55,7 +56,10 @@ class User < ApplicationRecord
   scope :manages_school, ->(school_ids) { left_joins(:user_schools).where(user_schools: { school_id: school_ids }) }
 
   def self.relevant_to_device_supplier
-    where(is_computacenter: false, is_support: false).who_have_seen_privacy_notice.who_can_order_devices.not_deleted
+    where(is_computacenter: false, is_support: false)
+      .who_have_seen_privacy_notice
+      .who_can_order_devices
+      .not_deleted
   end
 
   validates :full_name,
@@ -179,8 +183,16 @@ class User < ApplicationRecord
     user_schools.map { |us| us.school&.responsible_body }.prepend(responsible_body).compact.uniq
   end
 
+  def order_devices_for_any_school?
+    schools_i_order_for.any?
+  end
+
+  def order_devices_for_school?(school)
+    orders_devices? && SchoolPolicy.new(self, school).devices_orderable?
+  end
+
   def relevant_to_computacenter?
-    seen_privacy_notice? && orders_devices?
+    seen_privacy_notice? && orders_devices? && (responsible_body_user? || order_devices_for_any_school?)
   end
 
   def techsource_account_confirmed?
@@ -188,11 +200,11 @@ class User < ApplicationRecord
   end
 
   def awaiting_techsource_account?
-    orders_devices? && !techsource_account_confirmed?
+    order_devices_for_any_school? && !techsource_account_confirmed?
   end
 
   def has_an_active_techsource_account?
-    orders_devices? && techsource_account_confirmed?
+    order_devices_for_any_school? && techsource_account_confirmed?
   end
 
   def single_school_user?
@@ -200,7 +212,7 @@ class User < ApplicationRecord
   end
 
   def schools_sold_tos
-    schools.map(&:responsible_body).uniq.map(&:computacenter_reference).compact
+    schools.select(&:orders_managed_by_school?).map(&:responsible_body).uniq.map(&:computacenter_reference).compact
   end
 
   def sold_tos
@@ -208,7 +220,7 @@ class User < ApplicationRecord
   end
 
   def ship_tos
-    schools.pluck(:computacenter_reference).compact
+    schools.select(&:orders_managed_by_school?).pluck(:computacenter_reference).compact
   end
 
   # Wrapper methods to ease the transition from 'user belongs_to school',

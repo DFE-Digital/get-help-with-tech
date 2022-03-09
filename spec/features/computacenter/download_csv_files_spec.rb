@@ -37,7 +37,7 @@ RSpec.feature 'Download CSV files' do
 
     describe 'clicking Download TechSource users' do
       let!(:user_1) { create(:local_authority_user, :relevant_to_computacenter) }
-      let!(:user_2) { create(:school_user, :relevant_to_computacenter) }
+      let!(:user_2) { create(:school_user, :relevant_to_computacenter, school: create(:school, :manages_orders)) }
       let!(:user_3) { create(:fe_college_user, :relevant_to_computacenter) }
 
       let(:csv) { CSV.parse(page.body, headers: true) }
@@ -50,7 +50,6 @@ RSpec.feature 'Download CSV files' do
 
       it 'includes all Users' do
         create(:school_user, :not_relevant_to_computacenter)
-
         click_on 'Download TechSource users'
         expect(csv.size).to eq(relevant_users_count)
       end

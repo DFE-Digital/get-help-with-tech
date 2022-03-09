@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Navigate school welcome wizard' do
-  let(:school_with_unavailable_allocation) { create(:school, :with_preorder_information, laptops: [1, 0, 0]) }
-  let(:school_with_available_allocation) { create(:school, :with_preorder_information, laptops: [100, 50]) }
+  let(:school_with_unavailable_allocation) { create(:school, :with_preorder_information, :manages_orders, laptops: [1, 0, 0]) }
+  let(:school_with_available_allocation) { create(:school, :with_preorder_information, :manages_orders, laptops: [100, 50]) }
   let(:school) { @school }
 
   before do

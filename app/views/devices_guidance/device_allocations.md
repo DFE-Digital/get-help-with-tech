@@ -13,4 +13,8 @@ Devices are available in AY21/22 to support care leavers and children with suppo
 * are aged between 16 and 25 years old
 * do not have access to a laptop or tablet from their LA, or any other source.
 
+## Device availability
+
+After 1 March 2022, allocations do not guarantee that devices are available. You can only order devices while stocks last.
+
 If you need to query your allocation, [contact us](/get-support).

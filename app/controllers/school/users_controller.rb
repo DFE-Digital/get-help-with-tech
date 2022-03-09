@@ -5,6 +5,7 @@ class School::UsersController < School::BaseController
 
   def new
     @user = @school.users.build
+    @change_order_devices = user_eligible_to_order_devices?
   end
 
   def create
@@ -22,6 +23,7 @@ class School::UsersController < School::BaseController
 
   def edit
     @user = present(@school.users.not_deleted.find(params[:id]))
+    @change_order_devices = user_eligible_to_order_devices?
   end
 
   def update
@@ -29,7 +31,7 @@ class School::UsersController < School::BaseController
 
     authorize @user, policy_class: School::BasePolicy
 
-    if @user.update(user_params)
+    if @user.update(user_eligible_to_order_devices? ? user_params.except('orders_devices') : user_params)
       flash[:success] = t(:success, scope: %w[school users])
       redirect_to school_users_path(@school)
     else
@@ -39,6 +41,10 @@ class School::UsersController < School::BaseController
   end
 
 private
+
+  def user_eligible_to_order_devices?
+    SchoolPolicy.new(@user, @school).devices_orderable?
+  end
 
   def present(user)
     SchoolUserPresenter.new(user)

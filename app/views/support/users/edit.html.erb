@@ -10,7 +10,7 @@
 
     <%= form_for @user, url: support_user_path(@user) do |f| %>
       <%= f.govuk_error_summary %>
-      <%= render partial: 'shared/school_user_form', locals: { form: f } %>
+      <%= render partial: 'shared/school_user_form', locals: { form: f, change_order_devices: true } %>
       <%= f.govuk_submit 'Save changes' %>
     <%- end %>
   </div>

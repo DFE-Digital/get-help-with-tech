@@ -125,7 +125,7 @@ private
   end
 
   def user_orders_devices?
-    user.orders_devices?
+    user.order_devices_for_school?(school)
   end
 
   def show_chromebooks_form?

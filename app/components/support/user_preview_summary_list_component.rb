@@ -44,7 +44,7 @@ private
       "Yes, TechSource account confirmed at #{l(@user.techsource_account_confirmed_at, format: :short)}"
     elsif @user.relevant_to_computacenter?
       'No, waiting for TechSource account'
-    elsif @user.orders_devices? && !@user.seen_privacy_notice?
+    elsif @user.order_devices_for_any_school? && !@user.seen_privacy_notice?
       'No, will get a TechSource account once they sign in'
     else
       'No'

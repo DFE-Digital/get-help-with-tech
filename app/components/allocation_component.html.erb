@@ -1,19 +1,9 @@
 <div id="allocation" class="app-card govuk-!-margin-bottom-4">
-  <h2 id="available_allocation_sentence" class="govuk-heading-l">
-    <%= available_allocation_sentence %>
+  <h2 id="ordering_closed_sentence" class="govuk-heading-l">
+    <%= ordering_closed_sentence %>
   </h2>
 
-  <h2 id="total_allocation_and_devices_ordered_sentence">
-    <%= total_allocation_and_devices_ordered_sentence %>
+  <h2 id="devices_ordered_sentence">
+    <%= devices_ordered_sentence %>
   </h2>
-
-  <div id="current_tranche">
-    <%= render GovukComponent::WarningTextComponent.new(text: 'These allocations are for the current winter 2021 Get help with tech programme. Devices ordered before 30 September 2021 are not included here.', classes: 'govuk-!-margin-bottom-0') %>
-  </div>
-
-  <div id="current_tranche">
-    <%= render GovukComponent::WarningTextComponent.new(text: "If a trust or local authority orders on your behalf, your total allocation may not equal the number of devices ordered plus your remaining allocation." , classes: 'govuk-!-margin-bottom-0') %>
-  </div>
-
-  <%= render OrderDevicesComponent.new(organisation: @organisation) %>
 </div>
