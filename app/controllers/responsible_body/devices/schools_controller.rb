@@ -14,10 +14,6 @@ class ResponsibleBody::Devices::SchoolsController < ResponsibleBody::BaseControl
     end
   end
 
-  def order_devices
-    @school = @responsible_body.schools.where_urn_or_ukprn_or_provision_urn(params[:urn]).first!
-  end
-
 private
 
   def load_schools_by_order_status

@@ -27,7 +27,7 @@
       </li>
     </ul>
 
-    <%= render GovukComponent::InsetTextComponent.new(text: "Do not add school or college contacts here. #{govuk_link_to 'Use the schools and colleges list instead', responsible_body_devices_path}.".html_safe) %>
+    <%= render GovukComponent::InsetTextComponent.new(text: "Do not add school or college contacts here. #{govuk_link_to 'Use the schools and colleges list instead', responsible_body_devices_schools_path}.".html_safe) %>
 
     <%= govuk_button_link_to 'Invite a new user', new_responsible_body_user_path %>
 
