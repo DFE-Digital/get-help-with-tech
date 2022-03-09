@@ -33,7 +33,7 @@ RSpec.feature 'Export CSV' do
       expect(Download.count).to be(0)
 
       click_on 'Export to CSV'
-      expect(page).to have_content('You’ll shortly receive an email when your export is ready to download.')
+      expect(page).to have_content('Your export is in progress. Please note, large files can take up to 1 hour to generate. You’ll receive an email when your export is ready to download.')
       expect(Download.count).to be(1)
 
       d = Download.first

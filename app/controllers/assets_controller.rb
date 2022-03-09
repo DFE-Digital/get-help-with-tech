@@ -32,7 +32,7 @@ class AssetsController < ApplicationController
         if @assets.size <= MAX_ASSET_COUNT_EMAIL_CSV_DOWNLOAD
           send_data asset_service.assets_csv, filename: "devices--#{Time.zone.now.strftime('%y-%m-%d-%H%M%S')}.csv"
         else
-          flash[:info] = 'You’ll shortly receive an email when your export is ready to download.'
+          flash[:info] = 'Your export is in progress. Please note, large files can take up to 1 hour to generate. You’ll receive an email when your export is ready to download.'
           asset_service.assets_csv_via_email
           redirect_to assets_path
         end
