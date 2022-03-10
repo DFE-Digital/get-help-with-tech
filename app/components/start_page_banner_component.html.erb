@@ -4,13 +4,12 @@
       Get help with technology
     </h1>
     <p class="govuk-body">
-      DfE provides laptops and tablets for disadvantaged children and
-      young people to help with remote education.
+      The Get help with technology programme (GHwT) provided laptops and tablets to help disadvantaged children and young people access remote education and social care services.
     </p>
 
     <% unless SessionService.is_signed_in?(session) %>
       <div id="sign_in">
-        <%= render GovukComponent::InsetTextComponent.new(text: 'Sign in to order devices, view your order history or give a colleague access to the service.') %>
+        <%= render GovukComponent::InsetTextComponent.new(text: 'Ordering is now closed, but you can still sign in to view your order history and access admin and BIOS passwords for DfE-restricted devices.') %>
         <%=
           render GovukComponent::StartButtonComponent.new(
             text: 'Sign in',
