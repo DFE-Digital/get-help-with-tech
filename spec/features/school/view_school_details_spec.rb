@@ -52,33 +52,29 @@ RSpec.feature 'View school details' do
     before { sign_in_as user }
 
     context 'has NOT ordered anything' do
-      it 'does not show the order history section' do
-        expect(page).not_to have_content('Order history')
+      it 'does show the order history section' do
+        expect(page).to have_content('Order history')
       end
     end
 
     context 'has ordered' do
       let(:school) { create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [2, 2, 1]) }
 
-      it 'does NOT show this section' do
-        expect(page).not_to have_content('Order history')
+      it 'does show this section' do
+        expect(page).to have_content('Order history')
       end
 
       context 'user can order devices' do
         let(:user) { create(:school_user, :orders_devices, full_name: 'AAA Smith', school: school) }
 
-        it 'shows the title' do
-          expect(page).to have_content('Order history')
-        end
-
         it 'shows the link to the TechSource order history' do
-          expect(page).to have_link('See your order history on TechSource')
+          expect(page).to have_link('Order history')
         end
       end
 
       context 'has NOT ordered routers' do
-        it 'does NOT show this section' do
-          expect(page).not_to have_content('Order history')
+        it 'does show this section' do
+          expect(page).to have_content('Order history')
         end
 
         it 'does NOT show the link to the extra mobile data requests page' do

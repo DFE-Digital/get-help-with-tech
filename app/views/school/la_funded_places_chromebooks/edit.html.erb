@@ -4,7 +4,9 @@
 %>
 <%- content_for :title, title %>
 <%- content_for :before_content do %>
-  <%- school_breadcrumbs items: [ { t('page_titles.iss.order_devices') => order_devices_school_path(@school)}, title], school: @school, user: impersonated_or_current_user %>
+  <%- school_breadcrumbs items: [ { t('page_titles.iss.order_devices') => order_devices_school_path(@school)}, title],
+                         school: @school,
+                         user: impersonated_or_current_user %>
 <%- end %>
 
 <div class="govuk-grid-row">

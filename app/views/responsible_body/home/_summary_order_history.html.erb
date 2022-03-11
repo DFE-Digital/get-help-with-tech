@@ -1,9 +1,5 @@
 <h2 class="govuk-heading-m  govuk-!-margin-top-6">Order history</h2>
 
 <ul class="app-card govuk-list govuk-list--spaced">
-  <% if @current_user.orders_devices? %>
-    <li><%= govuk_link_to 'See your order history on TechSource', techsource_start_path -%></li>
-  <% end %>
-
   <li><%= govuk_link_to 'View your schools and colleges', responsible_body_devices_schools_path -%></li>
 </ul>

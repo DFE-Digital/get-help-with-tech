@@ -109,7 +109,6 @@ Rails.application.routes.draw do
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
-      get 'order-devices', to: 'orders#show', as: :order_devices
 
       resources :schools, only: %i[index show update], param: :urn do
         get '/who-to-contact', to: 'who_to_contact#new'
@@ -146,7 +145,6 @@ Rails.application.routes.draw do
       get '/', to: 'school/home#show', as: :home
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
-      get '/order-devices', to: 'school/devices#order'
       get '/details', to: 'school/details#show', as: :details
       get '/chromebooks/edit', to: 'school/chromebooks#edit'
       patch '/chromebooks', to: 'school/chromebooks#update'
@@ -165,7 +163,7 @@ Rails.application.routes.draw do
       get '/funded-pupils-chromebooks/edit', to: 'school/la_funded_places_chromebooks#edit', as: :funded_chromebooks
       patch '/funded-pupils-chromebooks', to: 'school/la_funded_places_chromebooks#update', as: :update_funded_chromebooks
       get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types
-      resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
+      resources :users, as: 'school_users', only: %i[index edit update], module: 'school'
 
       scope module: :school do
         namespace :internet do
