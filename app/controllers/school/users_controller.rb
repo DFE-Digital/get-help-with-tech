@@ -3,24 +3,6 @@ class School::UsersController < School::BaseController
     @users = @school.users.not_deleted.order(:full_name)
   end
 
-  def new
-    @user = @school.users.build
-    @change_order_devices = user_eligible_to_order_devices?
-  end
-
-  def create
-    authorize User, policy_class: School::BasePolicy
-
-    @user = CreateUserService.invite_school_user(user_params.merge(school_id: @school.id, orders_devices: true))
-
-    if @user.persisted?
-      redirect_to school_users_path(@school)
-    else
-      @user = present(@user)
-      render :new, status: :unprocessable_entity
-    end
-  end
-
   def edit
     @user = present(@school.users.not_deleted.find(params[:id]))
     @change_order_devices = user_eligible_to_order_devices?

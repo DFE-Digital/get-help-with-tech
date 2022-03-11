@@ -105,10 +105,6 @@ RSpec.feature ResponsibleBody do
           expect(page).to have_content('Order history')
         end
 
-        it 'shows link to view your schools and colleges' do
-          expect(page).to have_link('View your schools and colleges')
-        end
-
         context 'user can see their order history' do
           let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
 
