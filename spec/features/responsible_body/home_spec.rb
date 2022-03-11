@@ -87,7 +87,7 @@ RSpec.feature ResponsibleBody do
       context 'has NOT ordered anything' do
         before { sign_in_as rb_user }
 
-        it 'does not show the order history section' do
+        xit 'does not show the order history section' do
           expect(page).not_to have_content('Order history')
         end
       end
@@ -109,11 +109,11 @@ RSpec.feature ResponsibleBody do
           expect(page).to have_link('View your schools and colleges')
         end
 
-        context 'user can order devices' do
+        context 'user can see their order history' do
           let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
 
           it 'shows the link to the TechSource order history' do
-            expect(page).to have_link('See your order history on TechSource')
+            expect(page).to have_link('Order history')
           end
         end
 

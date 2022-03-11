@@ -22,16 +22,5 @@
       <li>tell us if the school or colleges will place their own orders</li>
       <li>give contacts and technical information for each school or college.</li>
     </ul>
-
-    <% if @responsible_body.is_ordering_for_schools? %>
-      <h2 class="govuk-heading-l govuk-!-font-size-27">
-        <%= govuk_link_to t('page_titles.order_devices.title'), responsible_body_devices_order_devices_path %>
-      </h2>
-
-      <p class="govuk-body">
-        Use this section to access the TechSource
-        website to order laptops and tablets.
-      </p>
-    <%- end %>
   </div>
 </div>
