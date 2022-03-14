@@ -15,8 +15,6 @@ Each iPad bundle contains:
 * a lightly padded neoprene sleeve (sleeves are packaged separately and may arrive
 on a different day to the iPads).
 
-See the [full device specification](/devices/device-specification).
-
 Although the sleeves offer some protection, it&rsquo;s a good idea to purchase rigid  cases for the
 iPads to protect the devices and reduce the risk of accidental damage.
 
