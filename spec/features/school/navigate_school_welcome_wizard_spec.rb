@@ -31,8 +31,8 @@ RSpec.feature 'Navigate school welcome wizard' do
     when_i_click_continue
     then_i_see_the_allocation_for_my_school
 
-    when_i_click_continue
-    then_i_see_the_techsource_account_page
+    when_i_click_continue_to_homepage
+    then_i_see_the_school_home_page
   end
 
   scenario 'step through the wizard as the first user for a school' do
@@ -48,97 +48,6 @@ RSpec.feature 'Navigate school welcome wizard' do
     then_i_see_the_allocation_for_my_school
 
     when_i_click_continue
-    then_i_see_the_techsource_account_page
-
-    when_i_click_continue
-    then_i_see_the_will_other_order_page
-
-    when_i_choose_yes_and_submit_the_form
-    then_i_see_information_about_devices_i_can_order
-
-    when_i_click_continue
-    then_im_asked_whether_my_school_will_order_chromebooks
-
-    when_i_choose_yes_and_submit_the_chromebooks_form
-    then_i_see_information_about_what_happens_next
-
-    when_i_click_to_finish_and_go_to_homepage
-    then_i_see_the_school_home_page
-  end
-
-  scenario 'step through wizard as subsequent user when the chromebooks question has been answered yes/no' do
-    given_my_school_has_an_unavailable_allocation
-    as_a_subsequent_school_user
-    when_the_chromebooks_question_has_already_been_answered
-    when_i_sign_in_for_the_first_time
-    then_i_see_a_welcome_page_for_my_school
-
-    when_i_click_continue
-    then_i_see_a_privacy_notice
-
-    when_i_click_continue
-    then_i_see_the_allocation_for_my_school
-
-    when_i_click_continue
-    then_i_see_information_about_devices_i_can_order
-
-    when_i_click_continue
-    then_i_see_information_about_what_happens_next
-
-    when_i_click_to_finish_and_go_to_homepage
-    then_i_see_the_school_home_page
-  end
-
-  scenario 'step through wizard as subsequent user when the chromebooks question has not been answered yes/no' do
-    given_my_school_has_an_unavailable_allocation
-    as_a_subsequent_school_user
-    when_i_sign_in_for_the_first_time
-    then_i_see_a_welcome_page_for_my_school
-
-    when_i_click_continue
-    then_i_see_a_privacy_notice
-
-    when_i_click_continue
-    then_i_see_the_allocation_for_my_school
-
-    when_i_click_continue
-    then_i_see_information_about_devices_i_can_order
-
-    when_i_click_continue
-    then_im_asked_whether_my_school_will_order_chromebooks
-
-    when_i_choose_no_and_submit_the_chromebooks_form
-    then_i_see_information_about_what_happens_next
-
-    when_i_click_to_finish_and_go_to_homepage
-    then_i_see_the_school_home_page
-  end
-
-  scenario 'filling in invalid chromebook information' do
-    given_my_school_has_an_unavailable_allocation
-    as_a_subsequent_school_user
-    when_i_sign_in_for_the_first_time
-    then_i_see_a_welcome_page_for_my_school
-
-    when_i_click_continue
-    then_i_see_a_privacy_notice
-
-    when_i_click_continue
-    then_i_see_the_allocation_for_my_school
-
-    when_i_click_continue
-    then_i_see_information_about_devices_i_can_order
-
-    when_i_click_continue
-    then_im_asked_whether_my_school_will_order_chromebooks
-
-    when_i_choose_yes_and_submit_invalid_chromebooks_information
-    then_i_see_appropriate_error_messages
-
-    when_i_provide_valid_chromebooks_information
-    then_i_see_information_about_what_happens_next
-
-    when_i_click_to_finish_and_go_to_homepage
     then_i_see_the_school_home_page
   end
 
@@ -203,6 +112,10 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def when_i_click_continue
     click_on 'Continue'
+  end
+
+  def when_i_click_continue_to_homepage
+    click_on 'Continue to homepage'
   end
 
   def when_i_click_to_finish_and_go_to_homepage
