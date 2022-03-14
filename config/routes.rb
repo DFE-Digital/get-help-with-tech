@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   # redirects for moved guidance pages
   get '/start', to: redirect('/')
+  get '/devices/how-to-order', to: redirect('/')
 
   get '/huawei-router-password', to: 'huawei_router_passwords#new', as: 'huawei_router_password'
 
@@ -41,7 +42,6 @@ Rails.application.routes.draw do
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/additional-support', to: 'guide_to_resetting_windows_laptops_and_tablets#additional_support'
 
   get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
-  get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
