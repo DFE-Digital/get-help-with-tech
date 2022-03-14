@@ -6,11 +6,6 @@ class SchoolWelcomeWizard < ApplicationRecord
 
   enum step: {
     allocation: 'allocation',
-    techsource_account: 'techsource_account',
-    will_other_order: 'will_other_order',
-    devices_you_can_order: 'devices_you_can_order',
-    chromebooks: 'chromebooks',
-    what_happens_next: 'what_happens_next',
     complete: 'complete',
   }
 
@@ -18,48 +13,14 @@ class SchoolWelcomeWizard < ApplicationRecord
   delegate :will_need_chromebooks, :school_or_rb_domain, :recovery_email_address, to: :chromebook_information
   attr_accessor :invite_user
 
-  def update_step!(params = {}, current_step = step)
+  def update_step!(_params = {}, current_step = step)
     force_current_step(current_step)
 
     return true if complete?
 
     case step
     when 'allocation'
-      if school&.devices_available_to_order?(:laptop)
-        if user_orders_devices?
-          techsource_account!
-        else
-          devices_you_can_order!
-        end
-      elsif user_orders_devices?
-        techsource_account!
-      else
-        devices_you_can_order!
-      end
-    when 'techsource_account'
-      if less_than_can_order_limit?
-        will_other_order!
-      else
-        devices_you_can_order!
-      end
-    when 'will_other_order'
-      if update_will_other_order(params)
-        devices_you_can_order!
-      else
-        false
-      end
-    when 'devices_you_can_order'
-      if show_chromebooks_form?
-        chromebooks!
-      else
-        what_happens_next!
-      end
-    when 'chromebooks'
-      if update_chromebooks(params)
-        what_happens_next!
-      else
-        false
-      end
+      complete!
     when 'what_happens_next'
       complete!
     else

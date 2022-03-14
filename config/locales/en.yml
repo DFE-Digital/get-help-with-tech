@@ -246,7 +246,7 @@ en:
       privacy:
         title: Privacy notice
       allocation:
-        title: "You’ve been allocated %{allocation} laptops"
+        title: "Ordering is now closed"
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:
