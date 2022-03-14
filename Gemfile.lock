@@ -6,15 +6,6 @@ GIT
     canonical-rails (0.2.12)
       rails (>= 4.1, < 6.2)
 
-GIT
-  remote: https://github.com/paper-trail-gem/paper_trail.git
-  revision: ee1b0002ea8c427947181d0be7ab0f6b1186d8ea
-  ref: ee1b0002ea8c427947181d0be7ab0f6b1186d8ea
-  specs:
-    paper_trail (12.2.0)
-      activerecord (>= 5.2)
-      request_store (~> 1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -317,6 +308,9 @@ GEM
       jwt (>= 1.5, < 3)
     pagy (5.10.1)
       activesupport
+    paper_trail (12.3.0)
+      activerecord (>= 5.2)
+      request_store (~> 1.1)
     parallel (1.21.0)
     parallel_tests (3.7.3)
       parallel
@@ -607,7 +601,7 @@ DEPENDENCIES
   nokogiri
   notifications-ruby-client
   pagy
-  paper_trail!
+  paper_trail
   parallel_tests
   pg (>= 0.18, < 2.0)
   pg_search
