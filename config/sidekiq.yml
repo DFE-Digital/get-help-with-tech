@@ -29,3 +29,7 @@
     cron: '0 * * * * Europe/London' # on the hour, every hour
     queue: scheduler
     description: Delete old sessions
+  DeleteExpiredDownloadsJob:
+    cron: '15 * * * * Europe/London' # every 15 past the hour
+    queue: scheduler
+    description: Delete old downloads
