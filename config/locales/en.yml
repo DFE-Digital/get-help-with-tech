@@ -145,7 +145,7 @@ en:
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
-    school_can_order_devices: Your school can order devices
+    school_can_order_devices: Ordering is now closed
     school_cannot_order_devices:
       title: Your school cannot order devices yet
     school_user_cannot_order_devices:
@@ -489,8 +489,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: You can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: School has ordered
           default:
             needs_contact: Needs a contact
@@ -499,8 +499,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: Responsible body can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: School has ordered
         responsible_body:
           responsible_body:
@@ -510,8 +510,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: You can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: You have ordered
           default:
             needs_contact: Needs a contact
@@ -520,8 +520,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: Responsible body can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: Responsible body has ordered
     timeline:
       field:
@@ -830,9 +830,9 @@ en:
           success: We’ve saved your choice
       schools:
         index:
-          ordering_schools_heading: Schools and colleges that can order
+          ordering_schools_heading: Schools and colleges that could order
           specific_circumstances_heading: Schools and colleges with approved requests for specific circumstances
-          cannot_order_yet_schools_heading: Schools and colleges that cannot order yet
+          cannot_order_yet_schools_heading: Schools and colleges that could not order yet
           cannot_order_yet_schools_text: Ordering will be opened for these schools and colleges as soon as possible.
         who_to_contact:
           create:

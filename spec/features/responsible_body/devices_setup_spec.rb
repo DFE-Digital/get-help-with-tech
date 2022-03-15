@@ -399,11 +399,11 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_i_see_a_link_to_change_who_orders_devices
-    expect(page).to have_link('Change who will order')
+    expect(page).to have_link('Change who ordered')
   end
 
   def when_i_follow_the_change_who_will_order_link
-    click_on 'Change who will order'
+    click_on 'Change who ordered'
   end
 
   def then_i_am_prompted_to_choose_who_orders_devices_for_the_school

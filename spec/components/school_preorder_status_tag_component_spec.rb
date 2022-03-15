@@ -9,7 +9,7 @@ RSpec.describe SchoolPreorderStatusTagComponent do
   describe '#text' do
     context 'when RB can order' do
       it 'returns RB can order' do
-        expect(component.text).to eql('Responsible body can order')
+        expect(component.text).to eql('Ordering is now closed')
       end
 
       context 'when viewer is an RB' do
@@ -17,7 +17,7 @@ RSpec.describe SchoolPreorderStatusTagComponent do
         let(:viewer) { LocalAuthority.new }
 
         it 'returns You can order' do
-          expect(component.text).to eql('You can order')
+          expect(component.text).to eql('Ordering is now closed')
         end
       end
     end

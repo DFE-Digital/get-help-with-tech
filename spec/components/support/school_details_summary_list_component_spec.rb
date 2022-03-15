@@ -63,7 +63,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
+      expect(value_for_row(result, 'Who ordered?').text).to include('The school or college orders devices')
     end
 
     it 'renders the school allocation' do
@@ -143,7 +143,7 @@ describe Support::SchoolDetailsSummaryListComponent do
   context 'when the responsible body has not made a decision about who will order' do
     it 'confirms that fact' do
       expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Decide who will order')
+      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Set who ordered')
     end
 
     it 'displays the headteacher details if the headteacher is present' do

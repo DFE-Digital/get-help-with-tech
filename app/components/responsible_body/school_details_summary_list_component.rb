@@ -42,9 +42,9 @@ private
 
     if who.present?
       detail = {
-        key: 'Who will order?',
+        key: 'Who ordered?',
         value: "The #{who.downcase} orders devices",
-        action: 'who will order',
+        action: 'who ordered',
       }
 
       if @school.can_change_who_manages_orders?
@@ -55,10 +55,10 @@ private
       detail
     else
       {
-        key: 'Who will order?',
+        key: 'Who ordered?',
         value: "#{@school.responsible_body_name} hasn’t decided this yet",
         action_path: responsible_body_devices_who_will_order_edit_path,
-        action: 'Decide who will order',
+        action: 'Set who ordered',
       }
     end
   end
