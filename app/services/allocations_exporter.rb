@@ -31,7 +31,7 @@ class AllocationsExporter
       'Responsible body name',
       'Responsible body Computacenter reference',
       'Order state',
-      'Who will order devices',
+      'Who ordered devices',
       'Devices allocation',
       'Devices cap',
       'Devices ordered',

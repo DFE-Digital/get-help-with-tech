@@ -118,7 +118,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'confirms that fact' do
-      expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
+      expect(value_for_row(result, 'Who ordered?').text).to include('The trust orders devices')
     end
 
     it 'shows the chromebook details with links to change it' do
@@ -145,8 +145,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
 
         it 'confirms that fact and allow changes' do
-          expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
-          expect(action_for_row(result, 'Who will order?').text).to include('Change')
+          expect(value_for_row(result, 'Who ordered?').text).to include('The school or college orders devices')
+          expect(action_for_row(result, 'Who ordered?').text).to include('Change')
         end
       end
 
@@ -154,8 +154,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
         it 'confirms that fact but does not allow changes' do
-          expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
-          expect(action_for_row(result, 'Who will order?')).to be_nil
+          expect(value_for_row(result, 'Who ordered?').text).to include('The trust orders devices')
+          expect(action_for_row(result, 'Who ordered?')).to be_nil
         end
       end
     end
@@ -163,9 +163,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
   context 'when the responsible body has not made a decision about who will order' do
     it 'confirms that fact and provides a link to make the decision' do
-      expect(value_for_row(result, 'Who will order?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(action_for_row(result, 'Who will order?').text).to include('Decide who will order')
-      expect(action_for_row(result, 'Who will order?').css('a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
+      expect(value_for_row(result, 'Who ordered?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
+      expect(action_for_row(result, 'Who ordered?').text).to include('Set who ordered')
+      expect(action_for_row(result, 'Who ordered?').css('a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
     end
   end
 
