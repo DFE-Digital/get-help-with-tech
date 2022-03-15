@@ -129,13 +129,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       )
 
       expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
-      expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
 
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
-      expect(action_for_row(result, 'Domain').text).to include('Change')
 
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
-      expect(action_for_row(result, 'Recovery email').text).to include('Change')
     end
 
     it 'does not show the school contact even if the school contact is set' do

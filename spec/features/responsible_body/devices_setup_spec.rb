@@ -151,9 +151,6 @@ RSpec.feature 'Setting up the devices ordering' do
       when_i_select_orders_will_be_placed_centrally
       then_i_see_guidance_about_why_there_is_no_allocation
       and_in_the_allocation_guidance_we_ask_for_information
-
-      when_i_choose_no_they_will_not_need_chromebooks
-      then_i_see_the_allocation_guidance_without_the_we_need_information_section
     end
   end
 
@@ -442,10 +439,5 @@ RSpec.feature 'Setting up the devices ordering' do
   def then_i_see_the_allocation_guidance_without_the_we_need_information_section
     expect(responsible_body_school_page).to have_content('This school has no allocation')
     expect(responsible_body_school_page).not_to have_content('We still need some information')
-  end
-
-  def when_i_choose_no_they_will_not_need_chromebooks
-    choose 'We do not need Chromebooks'
-    click_on 'Save'
   end
 end
