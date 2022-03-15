@@ -298,9 +298,6 @@ en:
       title: Who owns the devices
       description: Guidance on who owns devices, asset management and loan agreements.
       guidance_section: before_you_order_pages
-    operation_warm_welcome:
-      title: Devices for children arriving under Operation Warm Welcome
-      guidance_section: before_you_order_pages
 
     replace_a_faulty_device:
       title: Replace faulty devices
@@ -334,6 +331,9 @@ en:
     safeguarding_for_device_users:
       title: Safeguarding devices
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
+      guidance_section: manage_devices_pages
+    managing_your_4g_wireless_routers:
+      title: Resetting 4G routers
       guidance_section: manage_devices_pages
   guide_to_collecting_mobile_information:
     privacy: Explaining our privacy policy
