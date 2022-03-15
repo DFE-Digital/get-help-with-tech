@@ -15,17 +15,7 @@ class SchoolWelcomeWizard < ApplicationRecord
 
   def update_step!(_params = {}, current_step = step)
     force_current_step(current_step)
-
-    return true if complete?
-
-    case step
-    when 'allocation'
-      complete!
-    when 'what_happens_next'
-      complete!
-    else
-      raise "Unknown step: #{step}"
-    end
+    complete? || complete!
   end
 
   def invited_user
