@@ -164,14 +164,6 @@ private
       value: detail_value,
     }
 
-    if @school.orders_managed_centrally?
-      change_path = responsible_body_devices_school_chromebooks_edit_path(school_urn: @school.urn)
-      detail.merge!({
-        change_path: change_path,
-        action: 'whether Chromebooks are needed',
-      })
-    end
-
     rows = [detail]
 
     if @school.will_need_chromebooks?
@@ -184,16 +176,6 @@ private
         value: @school.recovery_email_address,
       }
 
-      if @school.orders_managed_centrally?
-        domain.merge!({
-          change_path: change_path,
-          action: 'domain',
-        })
-        recovery.merge!({
-          change_path: change_path,
-          action: 'recovery email',
-        })
-      end
       rows += [domain, recovery]
     end
     rows

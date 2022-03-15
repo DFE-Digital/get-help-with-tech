@@ -141,22 +141,12 @@ private
     ].reject(&:blank?)
   end
 
-  def chromebook_rows_if_needed
-    super.map do |row|
-      row
-        .except(:change_path, :action, :action_path)
-        .merge(
-          change_path: support_school_devices_chromebooks_edit_path(school_urn: @school.urn),
-        )
-    end
-  end
-
   def display_router_allocation_row?
     true
   end
 
   def remove_change_links_if_read_only(row)
-    if row.in?(chromebook_rows_if_needed) && Pundit.policy(viewer, :chromebook).edit?
+    if Pundit.policy(viewer, :chromebook).edit?
       row
     elsif Pundit.policy(viewer, @school).edit?
       row

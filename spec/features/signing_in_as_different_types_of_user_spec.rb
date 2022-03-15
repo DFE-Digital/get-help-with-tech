@@ -127,10 +127,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it redirects to the before you can order page' do
       sign_in_as user
-      expect(page).to have_current_path(before_you_can_order_school_path(school))
-      expect(page).to have_text 'Before you can order'
-      choose 'Not sure'
-      click_on 'Save'
       expect(page).to have_text user.school.name
     end
   end
