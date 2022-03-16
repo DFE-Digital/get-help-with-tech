@@ -103,11 +103,11 @@ RSpec.feature 'Changing who will order devices for a school' do
   end
 
   def then_the_who_will_order_details_show_that_the_school_orders_in_the_support_console
-    expect(school_details_page.school_details['Who ordered?'].value).to eq('The school or college orders devices')
+    expect(school_details_page.school_details['Who ordered?'].value).to eq('The school or college ordered devices')
   end
 
   def then_the_who_will_order_details_show_that_the_responsible_body_orders_in_the_support_console
-    expect(school_details_page.school_details['Who ordered?'].value).to eq('The local authority orders devices')
+    expect(school_details_page.school_details['Who ordered?'].value).to eq('The local authority ordered devices')
   end
 
   def then_i_cannot_see_the_change_link_for_who_will_order

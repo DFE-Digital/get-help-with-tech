@@ -109,7 +109,7 @@ RSpec.feature 'Viewing your schools' do
 
   def then_i_dont_see_change_links_for_who_will_order
     result = find_all(:css, '.school-details-summary-list .govuk-summary-list__row')[1]
-    expect(result).to have_text('The trust orders devices')
+    expect(result).to have_text('The trust ordered devices')
     expect(result).not_to have_link('Change')
   end
 

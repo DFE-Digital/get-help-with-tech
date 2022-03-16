@@ -260,8 +260,8 @@ en:
         title: You can order different types of laptops
       chromebooks:
         title: Are you ordering Chromebooks?
-        'yes': We need Chromebooks
-        'no': We do not need Chromebooks
+        'yes': 'Yes'
+        'no': 'No'
         i_dont_know: Not sure
         errors:
           choice: Tell us whether you'll need Chromebooks
@@ -757,8 +757,8 @@ en:
           school_will_be_contacted: School will be contacted
           school_ready: School ready
         will_need_chromebooks:
-          'yes': We need Chromebooks
-          'no': We do not need Chromebooks
+          'yes': 'Yes'
+          'no': 'No'
           i_dont_know: Not sure
       school_device_allocation:
         device_type:
