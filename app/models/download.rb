@@ -1,7 +1,13 @@
 require 'encryption_service'
 
 class Download < ApplicationRecord
+  DOWNLOAD_EXPIRY_TTL = 7.days
+
   belongs_to :user, optional: true
+
+  def self.delete_expired_downloads!
+    where('created_at <= ?', DOWNLOAD_EXPIRY_TTL.ago).delete_all
+  end
 
   # copied from asset.rb - could be more DRY
   def self.secure_attr_accessor(*attributes)
