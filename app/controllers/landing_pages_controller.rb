@@ -5,9 +5,4 @@ class LandingPagesController < ApplicationController
     @title = I18n.t!('landing_pages.digital_platforms.title')
     render
   end
-
-  def edtech_demonstrator_programme
-    @title = I18n.t!('landing_pages.edtech_demonstrator_programme.title')
-    render
-  end
 end
