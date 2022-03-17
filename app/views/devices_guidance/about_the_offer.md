@@ -1,28 +1,28 @@
 ## Devices for schools, colleges, academy trusts and local authorities
 
-From October 2021, DfE is providing support to help disadvantaged children and young people who are otherwise unable to access remote education. DfE also followed a similar policy from September 2020 to June 2021.
+From October 2021 until March 2022, DfE provided support to help disadvantaged children and young people who were otherwise unable to access remote education. DfE also followed a similar policy from September 2020 to June 2021.
 
 Examples of this include disadvantaged children:
 
 * with no digital devices in their household
-* whose only available device is a smartphone
+* whose only available device was a smartphone
 * with a single device in their household shared with more than one other family member
-* who do not have access to the internet at home
+* who did not have access to the internet at home
 
-This offer applies to maintained schools, pupil referral units, academy trusts and hospital schools, as well as sixth-form colleges and further education institutions that have enrolled 14 to 16-year-olds.
+This offer applied to maintained schools, pupil referral units, academy trusts and hospital schools, as well as sixth-form colleges and further education institutions that had enrolled 14 to 16-year-olds.
 
 They were also able to request internet access for disadvantaged children through increased mobile phone data allowances or [4G wireless routers](/internet-access).
 
-## Devices are available for disadvantaged pupils and students
+## Devices were available for disadvantaged pupils and students
 
-* in years 3 to 13 who do not have access to a device and whose face-to-face education is disrupted
-* aged 16 to 19 who receive free meals in further education
+* in years 3 to 13 who did not have access to a device and whose face-to-face education was disrupted
+* aged 16 to 19 who receivd free meals in further education
 * over the age of 19 with an education, health and care plan (EHCP) who also receive free meals
 * in any year group who were [advised to shield](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19) during the COVID-19 pandemic because they (or someone they live with) was [clinically extremely vulnerable](https://www.gov.uk/government/publications/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19/guidance-on-shielding-and-protecting-extremely-vulnerable-persons-from-covid-19#cev)
 * in any year group, including those in 16 to 19 education, who attend a hospital school
-* in years 3 to 13 with state-funded places in independent special schools or alternative provision, who are eligible for free school meals
+* in years 3 to 13 with state-funded places in independent special schools or alternative provision, who were eligible for free school meals
 
-Laptops are also available for care leavers aged 16 to 25.
+Laptops were also available for care leavers aged 16 to 25.
 
 [Find out how we calculated how many devices could be ordered](/devices/device-allocations).
 
