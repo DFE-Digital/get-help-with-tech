@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
   resource :notify_callbacks, only: [:create]
 
-  get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
   get '/accessibility', to: 'pages#accessibility'
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
@@ -22,6 +21,7 @@ Rails.application.routes.draw do
   # redirects for moved guidance pages
   get '/start', to: redirect('/')
   get '/devices/how-to-order', to: redirect('/')
+  get '/digital-platforms', to: redirect('/')
   get '/EdTech-demonstrator-programme', to: redirect('https://www.gov.uk/government/publications/edtech-demonstrator-schools-and-colleges-successful-applicants/about-the-programme')
 
   get '/huawei-router-password', to: 'huawei_router_passwords#new', as: 'huawei_router_password'
