@@ -8,7 +8,7 @@ have received in the previous year.
 
 ## How devices were allocated for care leavers and children supported by a social worker in 21/22
 
-Devices were available in AY21/22 to support care leavers and children with supported by a social worker who:
+Devices were available in AY21/22 to support care leavers and children supported by a social worker who:
 
 * were aged between 16 and 25 years old
 * did not have access to a laptop or tablet from their LA, or any other source.
