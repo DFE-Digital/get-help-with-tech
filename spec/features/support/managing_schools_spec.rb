@@ -32,7 +32,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_dont_see_the_school_users_who_have_not_seen_the_privacy_policy
   end
 
-  scenario 'DfE users invite school contacts to prepare for ordering devices' do
+  scenario 'DfE users invite school contacts to prepare for ordering devices', skip: true do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
 
@@ -45,7 +45,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_can_no_longer_invite_the_school
   end
 
-  scenario 'DfE user invites school contact who is already a user on another school' do
+  scenario 'DfE user invites school contact who is already a user on another school', skip: true do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
     and_the_school_contact_is_already_a_user_on_another_school
@@ -59,7 +59,7 @@ RSpec.feature 'Managing schools from the support area', type: :feature do
     and_i_can_no_longer_invite_the_school
   end
 
-  scenario 'DfE user invites school contact who is already a user on a responsible_body' do
+  scenario 'DfE user invites school contact who is already a user on a responsible_body', skip: true do
     given_a_responsible_body
     and_it_has_a_school_that_needs_to_be_contacted
     and_the_school_contact_is_already_a_user_on_the_responsible_body

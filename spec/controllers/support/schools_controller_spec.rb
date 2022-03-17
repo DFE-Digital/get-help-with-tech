@@ -124,8 +124,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
       it 'redirects back to the school page with an error' do
         get :confirm_invitation, params: { school_urn: school.urn }
 
-        expect(response).to redirect_to(support_school_path(school))
-        expect(request.flash[:warning]).to eq('Could not invite Alpha School because the school does not have a contact')
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
@@ -137,13 +136,13 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
     it 'responds successfully' do
       get :history, params: { school_urn: school.urn }
-      expect(response).to be_successful
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'responds successfully with each view' do
       %w[school std_device coms_device caps ordered].each do |view|
         get :history, params: { school_urn: school.urn, view: view }
-        expect(response).to be_successful
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
@@ -158,7 +157,7 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
       it 'is accessible' do
         get :edit, params: { urn: school.urn }
-        expect(response).to be_successful
+        expect(response).to be_forbidden
       end
     end
 
@@ -182,8 +181,9 @@ RSpec.describe Support::SchoolsController, type: :controller do
 
       it 'update school name and redirects to school' do
         patch :update, params: { urn: school.urn, school: { name: 'new name' } }
-        expect(school.reload.name).to eql('new name')
-        expect(response).to redirect_to(support_school_path(school))
+        expect(school.reload.name).not_to eql('new name')
+        expect(response).to be_forbidden
+        expect(response).not_to redirect_to(support_school_path(school))
       end
     end
 

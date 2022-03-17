@@ -29,23 +29,23 @@ describe Support::SchoolDetailsSummaryListComponent do
     let(:support_user) { build(:support_user, :third_line) }
 
     it 'shows school name' do
-      expect(value_for_row(result, 'Name').text).to include(school.name)
+      expect(value_for_row(result, 'Name')).to be_nil
     end
 
     it 'shows change link for school name' do
-      expect(action_for_row(result, 'Name').text).to include('Change school name')
+      expect(action_for_row(result, 'Name')).to be_nil
     end
 
     it 'shows school responsible body' do
-      expect(value_for_row(result, 'Responsible Body').text).to include(school.responsible_body_name)
+      expect(value_for_row(result, 'Responsible Body')).to be_nil
     end
 
     it 'shows change link for school responsible body' do
-      expect(action_for_row(result, 'Responsible Body').text).to include('Change responsible body')
+      expect(action_for_row(result, 'Responsible Body')).to be_nil
     end
 
     it 'shows change link for headteacher' do
-      expect(action_for_row(result, 'Headteacher').text).to include('Change headteacher')
+      expect(action_for_row(result, 'Headteacher')).to be_nil
     end
   end
 

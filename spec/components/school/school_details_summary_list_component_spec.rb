@@ -62,9 +62,9 @@ describe School::SchoolDetailsSummaryListComponent do
         it 'shows links to edit the school details' do
           school.set_school_contact!(school.headteacher)
 
-          expect(action_for_row(result, 'Chromebooks needed?').text).to include('Change')
-          expect(action_for_row(result, 'Domain').text).to include('Change')
-          expect(action_for_row(result, 'Recovery email').text).to include('Change')
+          expect(action_for_row(result, 'Chromebooks needed?')).to be_nil
+          expect(action_for_row(result, 'Domain')).to be_nil
+          expect(action_for_row(result, 'Recovery email')).to be_nil
         end
       end
     end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Updating school responsible body' do
+RSpec.feature 'Updating school responsible body', skip: true do
   let(:non_support_third_line_user) { create(:support_user) }
   let(:support_third_line_user) { create(:support_user, :third_line) }
   let(:school) { create(:school) }

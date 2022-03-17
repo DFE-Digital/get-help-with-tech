@@ -51,6 +51,7 @@ RSpec.feature 'Setting up the devices ordering' do
       when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
       and_that_the_local_authority_orders_devices
+      and_i_dont_see_a_link_to_change_who_orders_devices
     end
 
     scenario 'submitting the form without choosing an option shows an error' do
@@ -313,6 +314,10 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(responsible_body_school_page.school_details).to have_content('Bob Leigh')
     expect(responsible_body_school_page.school_details).to have_content('bob.leigh@sharedservices.co.uk')
     expect(responsible_body_school_page.school_details).to have_content('020 123456')
+  end
+
+  def and_i_dont_see_a_link_to_change_who_orders_devices
+    expect(page).not_to have_link('Change who ordered')
   end
 
   def and_i_see_a_link_to_change_who_orders_devices

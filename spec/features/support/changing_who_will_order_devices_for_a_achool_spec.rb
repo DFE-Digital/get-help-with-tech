@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Changing who will order devices for a school' do
+RSpec.feature 'Changing who will order devices for a school', skip: true do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
 
   before do

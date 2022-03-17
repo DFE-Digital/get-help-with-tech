@@ -22,9 +22,9 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
       context 'when the school has no contacts at all' do
         before { get :edit, params: { school_urn: school.urn } }
 
-        specify { expect(response).to be_successful }
+        specify { expect(response).to be_forbidden }
 
-        it 'exposes a blank form to create the headteacher contact of the school' do
+        xit 'exposes a blank form to create the headteacher contact of the school' do
           expect(assigns(:form)).to be_a(Support::School::ChangeHeadteacherForm)
           expect(assigns(:form).school).to eq(school)
           expect(assigns(:form).email_address).to be_nil
@@ -41,9 +41,9 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
 
         before { get :edit, params: { school_urn: school.urn } }
 
-        specify { expect(response).to be_successful }
+        specify { expect(response).to be_forbidden }
 
-        it 'exposes a form initialized to set the contact as the headteacher of the school' do
+        xit 'exposes a form initialized to set the contact as the headteacher of the school' do
           expect(assigns(:form).school).to eq(school)
           expect(assigns(:form).email_address).to eq(contact.email_address)
           expect(assigns(:form).full_name).to eq(contact.full_name)
@@ -59,9 +59,9 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
 
         before { get :edit, params: { school_urn: school.urn } }
 
-        specify { expect(response).to be_successful }
+        specify { expect(response).to be_forbidden }
 
-        it 'exposes a form initialized to update the details of the headteacher of the school' do
+        xit 'exposes a form initialized to update the details of the headteacher of the school' do
           expect(assigns(:form).school).to eq(school)
           expect(assigns(:form).email_address).to eq(headteacher.email_address)
           expect(assigns(:form).full_name).to eq(headteacher.full_name)
@@ -109,15 +109,16 @@ RSpec.describe Support::Schools::HeadteacherController, type: :controller do
 
       context 'when the headteacher can be updated' do
         it 'redirects back to school' do
-          expect(response).to redirect_to(support_school_path(school))
+          expect(response).to be_forbidden
+          expect(response).not_to redirect_to(support_school_path(school))
         end
 
-        it 'shows a successful change message to the user' do
+        xit 'shows a successful change message to the user' do
           expect(flash[:success]).to eq("#{school.name}'s headteacher details updated")
         end
       end
 
-      context 'when the headteacher cannot be updated for some reason' do
+      context 'when the headteacher cannot be updated for some reason', skip: true do
         let(:email_address) {}
 
         it 'display again the form with some errors' do

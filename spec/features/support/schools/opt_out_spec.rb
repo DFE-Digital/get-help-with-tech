@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Updating addresses' do
+RSpec.feature 'Updating addresses', skip: true do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school) }
   let(:school_page) { PageObjects::Support::SchoolDetailsPage.new }

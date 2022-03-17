@@ -48,7 +48,6 @@ private
       detail = {
         key: 'Who ordered?',
         value: "The #{who.downcase} ordered devices",
-        action: 'who ordered',
       }
 
       if school.can_change_who_manages_orders?
@@ -77,7 +76,7 @@ private
   def router_allocation_row
     {
       key: 'Router allocation',
-      value: school.raw_allocation(:router).positive? ? 'routers are available to order' : 'no routers are available to order',
+      value: school.raw_allocation(:router).positive? ? 'routers were available to order' : 'no routers were available to order',
     }
   end
 

@@ -18,8 +18,8 @@ private
   end
 
   def require_completed_welcome_wizard!
-    unless impersonated_or_current_user.welcome_wizard_for(@school)&.complete? || params[:controller] == 'school/welcome_wizard'
-      redirect_to welcome_wizard_allocation_school_path(@school)
+    unless impersonated_or_current_user.welcome_wizard_for(school)&.complete? || params[:controller] == 'school/welcome_wizard'
+      redirect_to welcome_wizard_allocation_school_path(school)
     end
   end
 end

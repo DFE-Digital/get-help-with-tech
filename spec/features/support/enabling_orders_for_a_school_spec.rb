@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Enabling orders for a school from the support area' do
+RSpec.feature 'Enabling orders for a school from the support area', skip: true do
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
   let(:enable_orders_page) { PageObjects::Support::Schools::Devices::EnableOrdersPage.new }
   let(:enable_orders_confirm_page) { PageObjects::Support::Schools::Devices::EnableOrdersConfirmPage.new }

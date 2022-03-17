@@ -14,12 +14,16 @@ describe SchoolPolicy do
   let(:other_school_user) { build_stubbed(:school_user) }
 
   permissions :invite?, :confirm_invitation? do
-    it 'grants access to support users' do
+    xit 'grants access to support users' do
       expect(policy).to permit(support_user, school)
     end
 
     it 'blocks access to Computacenter users' do
       expect(policy).not_to permit(computacenter_user, school)
+    end
+
+    it 'blocks access to support users' do
+      expect(policy).not_to permit(support_user, school)
     end
   end
 
@@ -52,8 +56,12 @@ describe SchoolPolicy do
       expect(policy).not_to permit(support_user, school)
     end
 
-    it 'grants access to support third line users' do
+    xit 'grants access to support third line users' do
       expect(policy).to permit(third_line_user, school)
+    end
+
+    xit 'blocks access to support third line users' do
+      expect(policy).not_to permit(third_line_user, school)
     end
   end
 
