@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   # redirects for moved guidance pages
   get '/start', to: redirect('/')
   get '/devices/how-to-order', to: redirect('/')
+  get '/devices/operation-warm-welcome', to: redirect('/')
   get '/digital-platforms', to: redirect('/')
   get '/EdTech-demonstrator-programme', to: redirect('https://www.gov.uk/government/publications/edtech-demonstrator-schools-and-colleges-successful-applicants/about-the-programme')
 
