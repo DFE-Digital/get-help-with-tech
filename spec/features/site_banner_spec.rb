@@ -6,11 +6,6 @@ RSpec.feature 'Site Banner', type: :feature do
       visit root_path
       expect(page).to have_no_css('#site-banner-app-card')
     end
-
-    scenario 'User cannot see the site banner on the device guidance page' do
-      visit devices_guidance_index_path
-      expect(page).to have_no_css('#site-banner-app-card')
-    end
   end
 
   context 'Site banner message text present' do
@@ -20,11 +15,6 @@ RSpec.feature 'Site Banner', type: :feature do
 
     scenario 'User can see the site banner on the home page' do
       visit root_path
-      expect(page).to have_css('#site-banner-app-card')
-    end
-
-    scenario 'User can see the site banner on the device guidance page' do
-      visit devices_guidance_index_path
       expect(page).to have_css('#site-banner-app-card')
     end
   end

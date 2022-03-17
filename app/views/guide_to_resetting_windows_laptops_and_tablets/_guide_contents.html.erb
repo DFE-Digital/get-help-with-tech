@@ -1,10 +1,7 @@
 <% content_for :browser_title, "#{@title} – #{t('page_titles.guide_to_resetting_windows_laptops_and_tablets')}" %>
 
 <%- content_for :before_content do %>
-  <% breadcrumbs([{ "Home" => root_path },
-                  { t('landing_pages.get_support_guides.title') => devices_guidance_index_path },
-                    t('page_titles.guide_to_resetting_windows_laptops_and_tablets'),
-                   ]) %>
+  <% breadcrumbs([{ "Home" => root_path }, t('page_titles.guide_to_resetting_windows_laptops_and_tablets')]) %>
 <% end %>
 
 <h1 class="govuk-heading-xl">
