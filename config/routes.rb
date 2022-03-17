@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   # redirects for moved guidance pages
   get '/start', to: redirect('/')
+  get '/devices', to: redirect('/')
   get '/devices/how-to-order', to: redirect('/')
   get '/devices/operation-warm-welcome', to: redirect('/')
   get '/digital-platforms', to: redirect('/')
@@ -41,7 +42,6 @@ Rails.application.routes.draw do
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/apply-your-own-settings', to: 'guide_to_resetting_windows_laptops_and_tablets#apply_your_own_settings'
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/additional-support', to: 'guide_to_resetting_windows_laptops_and_tablets#additional_support'
 
-  get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
   get '/devices/managing-your-4g-wireless-routers', to: redirect('/managing_your_4g_wireless_routers')
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
