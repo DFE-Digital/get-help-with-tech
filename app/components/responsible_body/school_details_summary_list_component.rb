@@ -41,24 +41,14 @@ private
     who = @school.who_manages_orders_label
 
     if who.present?
-      detail = {
+      {
         key: 'Who will order?',
         value: "The #{who.downcase} orders devices",
-        action: 'who will order',
       }
-
-      if @school.can_change_who_manages_orders?
-        detail.merge!(
-          change_path: responsible_body_devices_school_change_who_will_order_path(school_urn: @school.urn),
-        )
-      end
-      detail
     else
       {
         key: 'Who will order?',
         value: "#{@school.responsible_body_name} hasn’t decided this yet",
-        action_path: responsible_body_devices_who_will_order_edit_path,
-        action: 'Decide who will order',
       }
     end
   end
@@ -144,8 +134,6 @@ private
     {
       key: 'School contact',
       value: contact_lines.map { |line| h(line) }.join('<br>').html_safe,
-      change_path: responsible_body_devices_school_who_to_contact_edit_path(school_urn: @school.urn),
-      action: 'Change',
     }
   end
 

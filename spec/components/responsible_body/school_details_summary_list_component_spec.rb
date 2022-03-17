@@ -147,9 +147,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       context 'when the school manages orders' do
         let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
 
-        it 'confirms that fact and allow changes' do
+        it 'confirms that fact' do
           expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
-          expect(action_for_row(result, 'Who will order?').text).to include('Change')
         end
       end
 
@@ -165,10 +164,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body has not made a decision about who will order' do
-    it 'confirms that fact and provides a link to make the decision' do
+    it 'confirms that fact' do
       expect(value_for_row(result, 'Who will order?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(action_for_row(result, 'Who will order?').text).to include('Decide who will order')
-      expect(action_for_row(result, 'Who will order?').css('a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
     end
   end
 
