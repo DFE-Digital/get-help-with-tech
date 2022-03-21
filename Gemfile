@@ -36,9 +36,7 @@ gem 'nokogiri'
 gem 'pagy'
 
 # auditing of activerecord models
-#   - remove explicit github url after they release > 12.2.0 and following bugfix merged in
-#   - https://github.com/paper-trail-gem/paper_trail/issues/1364
-gem 'paper_trail', github: 'paper-trail-gem/paper_trail', ref: 'ee1b0002ea8c427947181d0be7ab0f6b1186d8ea'
+gem 'paper_trail'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
