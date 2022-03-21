@@ -41,7 +41,11 @@
 </div>
 
 <div class="govuk-!-padding-top-0 govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-  <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(school: @school, viewer: @responsible_body) %>
+  <%= render ResponsibleBody::SchoolDetailsSummaryListComponent.new(
+    school: @school,
+    user: impersonated_or_current_user,
+    viewer: @responsible_body
+  ) %>
 </div>
 
 <p class="govuk-body">

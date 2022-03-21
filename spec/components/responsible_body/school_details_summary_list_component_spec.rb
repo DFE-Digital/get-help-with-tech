@@ -117,25 +117,54 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     let(:rb) { create(:trust, :manages_centrally, :vcap) }
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
-    it 'confirms that fact' do
-      expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
-    end
-
-    it 'shows the chromebook details with links to change it' do
+    before do
       school.update_chromebook_information_and_status!(
         school_or_rb_domain: 'school.domain.org',
         recovery_email_address: 'admin@recovery.org',
         will_need_chromebooks: 'yes',
       )
+    end
 
+    it 'confirms that fact' do
+      expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
+    end
+
+    context 'when the user has permissions to edit the school' do
+      let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
+      let(:user) { create(:support_user) }
+
+      subject(:result) { render_inline(described_class.new(school: school, user: user)) }
+
+      context 'when the school is centrally managed' do
+        let(:school) { create(:school, :primary, :academy, :centrally_managed, :with_headteacher, responsible_body: rb) }
+
+        it 'shows links to edit the school details' do
+          expect(action_for_row(result, 'Who will order?')).to be_nil
+          expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
+          expect(action_for_row(result, 'Domain').text).to include('Change')
+          expect(action_for_row(result, 'Recovery email').text).to include('Change')
+        end
+      end
+
+      context 'when the school manages orders' do
+        let(:school) { create(:school, :primary, :academy, :manages_orders, :with_headteacher, responsible_body: rb) }
+
+        it 'shows links to edit the school details' do
+          school.set_school_contact!(school.headteacher)
+
+          expect(action_for_row(result, 'Who will order?').text).to include('Change')
+          expect(action_for_row(result, 'School contact').text).to include('Change')
+          expect(action_for_row(result, 'Ordering Chromebooks?')).to be_nil
+          expect(action_for_row(result, 'Domain')).to be_nil
+          expect(action_for_row(result, 'Recovery email')).to be_nil
+        end
+      end
+    end
+
+    it 'shows the chromebook details with links to change it' do
       expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
-      expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
-
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
-      expect(action_for_row(result, 'Domain').text).to include('Change')
-
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
-      expect(action_for_row(result, 'Recovery email').text).to include('Change')
     end
 
     it 'does not show the school contact even if the school contact is set' do
@@ -147,9 +176,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       context 'when the school manages orders' do
         let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
 
-        it 'confirms that fact and allow changes' do
+        it 'confirms that fact' do
           expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
-          expect(action_for_row(result, 'Who will order?').text).to include('Change')
         end
       end
 
@@ -165,10 +193,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body has not made a decision about who will order' do
-    it 'confirms that fact and provides a link to make the decision' do
+    it 'confirms that fact ' do
       expect(value_for_row(result, 'Who will order?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(action_for_row(result, 'Who will order?').text).to include('Decide who will order')
-      expect(action_for_row(result, 'Who will order?').css('a').attr('href').value).to eq(responsible_body_devices_who_will_order_edit_path)
     end
   end
 
