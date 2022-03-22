@@ -134,7 +134,10 @@ Rails.application.routes.draw do
     end
     resources :users
     namespace :devices do
-      resources :schools, only: %i[index show], param: :urn
+      resources :schools, only: %i[index show], param: :urn do
+        get '/chromebooks/edit', to: 'chromebook_information#edit'
+        patch '/chromebooks', to: 'chromebook_information#update'
+      end
     end
   end
 
@@ -144,6 +147,8 @@ Rails.application.routes.draw do
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
       get '/details', to: 'school/details#show', as: :details
+      get '/chromebooks/edit', to: 'school/chromebooks#edit'
+      patch '/chromebooks', to: 'school/chromebooks#update'
       get '/welcome', to: 'school/welcome_wizard#welcome', as: :welcome_wizard_welcome
       get '/privacy', to: 'school/welcome_wizard#privacy', as: :welcome_wizard_privacy
       get '/allocation', to: 'school/welcome_wizard#allocation', as: :welcome_wizard_allocation
