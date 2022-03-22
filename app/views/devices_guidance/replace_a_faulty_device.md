@@ -1,30 +1,5 @@
 ## Laptop and tablet faults
 
-### As soon as you receive your order
-
-On receipt of your devices, check for any external damage. If you notice any damage to
-the packaging, ensure that the courier captures this on the &lsquo;proof of delivery&rsquo; (POD) note,
-before you sign. It may affect a future claim if damage is not recorded on the POD note.
-
-Keep each device&rsquo;s box and packaging until it has been checked and powered on by your
-organisation &ndash; you&rsquo;ll need it if you return any faulty devices.
-
-### If your device will not start within 10 working days of receiving it
-
-You have a maximum of 10 working days from the delivery date recorded on your POD
-note to report to us that a device is dead on arrival (DOA). This is a strict deadline and
-after this time you&rsquo;ll need to follow the manufacturer&rsquo;s warranty guidelines. This deadline
-also applies to local authorities and trusts that have received devices on behalf of schools.
-
-If a device will not start, please check it&rsquo;s fully charged and plugged into the mains. If you
-still cannot start the device, please notify us as soon as possible at
-[https://get-help-with-tech.education.gov.uk/get-support](https://get-help-with-tech.education.gov.uk/get-support).
-
-On the page that asks &lsquo;How can we help you?&rsquo;, let us know that your device will not start,
-and provide your order number (this will begin &lsquo;HYB&rsquo;) and the device&rsquo;s serial number.
-
-### If your device is not working and you&rsquo;ve had it for longer than 10 working days
-
 All devices supplied by the Get help with technology programme come with a minimum
 12-month manufacturer&rsquo;s warranty.
 
