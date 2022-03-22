@@ -1,38 +1,28 @@
-The person placing the Chromebook order will receive an email from
-<span class="app-no-wrap">deal-fulfillment@google.com</span>, which includes important information about device setup. 
+The person who placed the Chromebook order received an email from
+<span class="app-no-wrap">deal-fulfillment@google.com</span>, including important information about device setup.
 
-We suggest you forward this email to the technical contact responsible for preparing 
+At the time we suggested they forward this email to the technical contact responsible for preparing
 Chromebooks.
 
-This guidance is for Chromebooks provided through the Get help with technology 
+This guidance is for Chromebooks provided through the Get help with technology
 programme, as well as new or refurbished devices a school or college receives through
-donations. Further information on 
-[erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices) 
-is available from the 
+donations. Further information on
+[erasing data from donated devices](https://www.ncsc.gov.uk/blog-post/erasing-data-from-donated-devices)
+is available from the
 National Cyber Security Centre.
-
-## Getting a Google domain
-
-If you do not have a Google domain, we recommend you set one up before placing your
-order for Chromebooks.
-
-For Chromebooks linked to schools, local authorities should use the school&rsquo;s domain so 
-that children can access their remote education as well as social care. If the Chromebook
-is for a young person who&rsquo;s not linked to a school, local authorities can 
-[set up a Google domain for care leavers and families with children that have a social worker](/devices/google-domain-for-care-leavers-and-children-with-social-worker).
 
 ## How to enrol Chromebooks
 
-When you order your Google Chromebooks you&rsquo;re asked to provide your Google domain,
+When you ordered your Google Chromebooks we asked you to provide your Google domain,
 which we use to link to your licences for the Google Admin console.
 
 You need to enrol your Chromebooks so you can manage them remotely.
 
-Before you enrol your devices, ensure that you have the correct number of Chrome 
-licences available in your domain by going to <span class="app-no-wrap">&lsquo;Devices&rsquo; > &lsquo;Chrome devices&rsquo;</span> and selecting 
-the &lsquo;Upgrades&rsquo; button in the top right. 
+Before you enrol your devices, ensure that you have the correct number of Chrome
+licences available in your domain by going to <span class="app-no-wrap">&lsquo;Devices&rsquo; > &lsquo;Chrome devices&rsquo;</span> and selecting
+the &lsquo;Upgrades&rsquo; button in the top right.
 
-First, create an organisational unit called &lsquo;DfE Devices&rsquo; in your Google Admin Console, 
+First, create an organisational unit called &lsquo;DfE Devices&rsquo; in your Google Admin Console,
 then follow these instructions to enrol your devices:
 
 1. Unbox multiple devices and turn on.
@@ -56,7 +46,7 @@ then follow these instructions to enrol your devices:
 Chromebooks provided before October 2021 through the Get help with technology
 programme came with the option of Cisco Umbrella content filtering. Licences for Cisco
 Umbrella that were provided by DfE are not intended to be a permanent solution. You
-should 
+should
 [remove Cisco Umbrella from Chromebooks](/devices/remove-dfe-provided-cisco-umbrella-from-chromebooks)
 and enable alternative security settings
 as soon as possible. It&rsquo;s your responsibility to ensure the online safety of the children and
@@ -70,8 +60,8 @@ Chromebooks come with Chrome OS. This manages:
 * anti-malware
 * anti-virus
 
-Chromebooks have the H1 Secure Microcontroller, which is Google&rsquo;s version of TPM 
-(Microsoft&rsquo;s encrypted processor). This allows patching and OS updates to be installed 
+Chromebooks have the H1 Secure Microcontroller, which is Google&rsquo;s version of TPM
+(Microsoft&rsquo;s encrypted processor). This allows patching and OS updates to be installed
 more quickly, so it&rsquo;s easier to keep devices up to date.
 
 Children and young people can also use:
