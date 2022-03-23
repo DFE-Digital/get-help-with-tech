@@ -7,7 +7,7 @@ the National Cyber Security Centre.
 
 ## About iPad bundles
 
-Each iPad bundle contains:
+Each iPad bundle contained:
 
 * 10 inch iPad with 32GB storage and a headphone port
 * USB charging cable
@@ -15,14 +15,12 @@ Each iPad bundle contains:
 * a lightly padded neoprene sleeve (sleeves are packaged separately and may arrive
 on a different day to the iPads).
 
-See the [full device specification](/devices/device-specification).
-
 Although the sleeves offer some protection, it&rsquo;s a good idea to purchase rigid  cases for the
 iPads to protect the devices and reduce the risk of accidental damage.
 
 ## Finding your Apple School Manager (ASM) Organisation ID
 
-When you order iPads we ask for your Apple School Manager (ASM). If you need to find
+When you ordered iPads, we asked for your Apple School Manager (ASM). If you need to find
 this, you can follow these steps:
 
 1. Log in to Apple School Manager.
@@ -42,7 +40,7 @@ iPads in ASM to manage them.
 1. Select &lsquo;Device Management Settings&rsquo;.
 1. In the &lsquo;Customer Numbers&rsquo; section in the right-hand pane select &lsquo;Edit&rsquo;.
 1. Select &lsquo;Reseller Number&rsquo; from the drop down box.
-1. Enter the Reseller ID. You&rsquo;ll find this in the &lsquo;Description&rsquo; section of the delivery note you 
+1. Enter the Reseller ID. You&rsquo;ll find this in the &lsquo;Description&rsquo; section of the delivery note you
 received with your Apple iPads. It will look like this: COK:DFE8:APPLE IPAD 10.2 XXXXXXX (the last 7 digits are your Reseller ID). If you have any problems locating the
 Reseller ID, contact us and we&rsquo;ll confirm it.
 1. Once the number has been verified select &lsquo;Done&rsquo;.

@@ -52,7 +52,7 @@ describe School::SchoolDetailsSummaryListComponent do
         end
 
         it 'shows links to edit the school details' do
-          expect(action_for_row(result, 'Will you need to order Chromebooks?')).to be_nil
+          expect(action_for_row(result, 'Chromebooks needed?')).to be_nil
           expect(action_for_row(result, 'Domain')).to be_nil
           expect(action_for_row(result, 'Recovery email')).to be_nil
         end
@@ -62,7 +62,7 @@ describe School::SchoolDetailsSummaryListComponent do
         it 'shows links to edit the school details' do
           school.set_school_contact!(school.headteacher)
 
-          expect(action_for_row(result, 'Will you need to order Chromebooks?').text).to include('Change')
+          expect(action_for_row(result, 'Chromebooks needed?').text).to include('Change')
           expect(action_for_row(result, 'Domain').text).to include('Change')
           expect(action_for_row(result, 'Recovery email').text).to include('Change')
         end
@@ -70,7 +70,7 @@ describe School::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('We need Chromebooks')
+      expect(value_for_row(result, 'Chromebooks needed?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -83,23 +83,6 @@ describe School::SchoolDetailsSummaryListComponent do
     it 'does not show the school contact even if the school contact is set' do
       school.set_school_contact!(headteacher)
       expect(result.css('dl').text).not_to include('School contact')
-    end
-
-    it 'shows the chromebook details without links to change it' do
-      school.update_chromebook_information_and_status!(
-        school_or_rb_domain: 'school.domain.org',
-        recovery_email_address: 'admin@recovery.org',
-        will_need_chromebooks: 'yes',
-      )
-
-      expect(value_for_row(result, 'Will you need to order Chromebooks?').text).to include('We need Chromebooks')
-      expect(action_for_row(result, 'Will you need to order Chromebooks?')).not_to be_present
-
-      expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
-      expect(action_for_row(result, 'Domain')).not_to be_present
-
-      expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
-      expect(action_for_row(result, 'Recovery email')).not_to be_present
     end
   end
 end

@@ -46,9 +46,9 @@ private
 
     if who.present?
       detail = {
-        key: 'Who will order?',
-        value: "The #{who.downcase} orders devices",
-        action: 'who will order',
+        key: 'Who ordered?',
+        value: "The #{who.downcase} ordered devices",
+        action: 'who ordered',
       }
 
       if school.can_change_who_manages_orders?
@@ -59,10 +59,10 @@ private
       detail
     else
       {
-        key: 'Who will order?',
+        key: 'Who ordered?',
         value: "#{school.responsible_body_name} hasn’t decided this yet",
         action_path: responsible_body_devices_who_will_order_edit_path,
-        action: 'Decide who will order',
+        action: 'Set who ordered',
       }
     end
   end
@@ -110,18 +110,18 @@ private
   def order_status_row
     if school.can_order?
       {
-        key: 'Can place orders?',
-        value: 'Yes, a closure or group of self-isolating children has been reported',
+        key: 'Could place orders?',
+        value: 'Yes, a closure or group of self-isolating children was reported',
       }
     elsif school.can_order_for_specific_circumstances?
       {
-        key: 'Can place orders?',
+        key: 'Could place orders?',
         value: 'Yes, for specific circumstances',
       }
     else
       {
-        key: 'Can place orders?',
-        value: 'Cannot order yet',
+        key: 'Could place orders?',
+        value: 'No',
       }
     end
   end
@@ -162,9 +162,9 @@ private
   end
 
   def chromebook_rows_if_needed
-    detail_value = school.chromebook_info_still_needed? ? 'Not yet known' : t(school.will_need_chromebooks, scope: %i[activerecord attributes school will_need_chromebooks])
+    detail_value = school.chromebook_info_still_needed? ? 'Not known' : t(school.will_need_chromebooks, scope: %i[activerecord attributes school will_need_chromebooks])
     detail = {
-      key: 'Ordering Chromebooks?',
+      key: 'Ordered Chromebooks?',
       value: detail_value,
     }
 

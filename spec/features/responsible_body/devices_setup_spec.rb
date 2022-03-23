@@ -249,12 +249,12 @@ RSpec.feature 'Setting up the devices ordering' do
 
   def and_that_the_school_orders_devices
     expect(responsible_body_school_page.school_details).to have_content('Needs a contact')
-    expect(responsible_body_school_page.school_details).to have_content('The school or college orders devices')
+    expect(responsible_body_school_page.school_details).to have_content('The school or college ordered devices')
   end
 
   def and_that_the_local_authority_orders_devices
     expect(responsible_body_school_page.school_details).to have_content('Needs information')
-    expect(responsible_body_school_page.school_details).to have_content('The local authority orders devices')
+    expect(responsible_body_school_page.school_details).to have_content('The local authority ordered devices')
   end
 
   def and_that_i_am_prompted_to_choose_who_to_contact_at_the_school
@@ -316,11 +316,11 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_i_see_a_link_to_change_who_orders_devices
-    expect(page).to have_link('Change who will order')
+    expect(page).to have_link('Change who ordered')
   end
 
   def when_i_follow_the_change_who_will_order_link
-    click_on 'Change who will order'
+    click_on 'Change who ordered'
   end
 
   def then_i_am_prompted_to_choose_who_orders_devices_for_the_school
@@ -356,10 +356,5 @@ RSpec.feature 'Setting up the devices ordering' do
   def then_i_see_the_allocation_guidance_without_the_we_need_information_section
     expect(responsible_body_school_page).to have_content('This school has no allocation')
     expect(responsible_body_school_page).not_to have_content('We still need some information')
-  end
-
-  def when_i_choose_no_they_will_not_need_chromebooks
-    choose 'We do not need Chromebooks'
-    click_on 'Save'
   end
 end

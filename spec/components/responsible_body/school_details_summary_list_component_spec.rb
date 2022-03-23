@@ -32,7 +32,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('The school or college orders devices')
+      expect(result.css('.govuk-summary-list__row')[1].text).to include('The school or college ordered devices')
     end
 
     it 'renders the school allocation' do
@@ -53,7 +53,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
+      expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -64,7 +64,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'cannot place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Cannot order yet')
+        expect(value_for_row(result, 'Could place orders?').text).to include('No')
       end
     end
 
@@ -74,7 +74,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'can place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Yes, a closure or group of self-isolating children has been reported')
+        expect(value_for_row(result, 'Could place orders?').text).to include('Yes, a closure or group of self-isolating children was reported')
       end
     end
 
@@ -84,7 +84,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
 
       it 'can place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Yes, for specific circumstances')
+        expect(value_for_row(result, 'Could place orders?').text).to include('Yes, for specific circumstances')
       end
     end
 
@@ -126,7 +126,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
+      expect(value_for_row(result, 'Who ordered?').text).to include('The trust ordered devices')
     end
 
     context 'when the user has permissions to edit the school' do
@@ -139,8 +139,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :academy, :centrally_managed, :with_headteacher, responsible_body: rb) }
 
         it 'shows links to edit the school details' do
-          expect(action_for_row(result, 'Who will order?')).to be_nil
-          expect(action_for_row(result, 'Ordering Chromebooks?').text).to include('Change')
+          expect(action_for_row(result, 'Who ordered?')).to be_nil
+          expect(action_for_row(result, 'Ordered Chromebooks?').text).to include('Change')
           expect(action_for_row(result, 'Domain').text).to include('Change')
           expect(action_for_row(result, 'Recovery email').text).to include('Change')
         end
@@ -152,9 +152,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         it 'shows links to edit the school details' do
           school.set_school_contact!(school.headteacher)
 
-          expect(action_for_row(result, 'Who will order?').text).to include('Change')
+          expect(action_for_row(result, 'Who ordered?').text).to include('Change')
           expect(action_for_row(result, 'School contact').text).to include('Change')
-          expect(action_for_row(result, 'Ordering Chromebooks?')).to be_nil
+          expect(action_for_row(result, 'Ordered Chromebooks?')).to be_nil
           expect(action_for_row(result, 'Domain')).to be_nil
           expect(action_for_row(result, 'Recovery email')).to be_nil
         end
@@ -162,7 +162,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details with links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
+      expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -177,7 +177,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
 
         it 'confirms that fact' do
-          expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
+          expect(value_for_row(result, 'Who ordered?').text).to include('The school or college ordered devices')
         end
       end
 
@@ -185,8 +185,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
         it 'confirms that fact but does not allow changes' do
-          expect(value_for_row(result, 'Who will order?').text).to include('The trust orders devices')
-          expect(action_for_row(result, 'Who will order?')).to be_nil
+          expect(value_for_row(result, 'Who ordered?').text).to include('The trust ordered devices')
+          expect(action_for_row(result, 'Who ordered?')).to be_nil
         end
       end
     end
@@ -194,7 +194,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
   context 'when the responsible body has not made a decision about who will order' do
     it 'confirms that fact ' do
-      expect(value_for_row(result, 'Who will order?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
+      expect(value_for_row(result, 'Who ordered?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
     end
   end
 

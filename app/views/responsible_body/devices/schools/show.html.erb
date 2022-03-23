@@ -15,26 +15,11 @@
       <%= @school.name %>
     </h1>
 
-    <%- if @responsible_body.vcap? %>
-      <%- if @school.can_order? || @school.can_order_for_specific_circumstances? %>
-        <p class="govuk-body"><%= govuk_link_to 'Order devices now', responsible_body_devices_order_devices_path %></p>
-      <%- end %>
-    <%- else %>
+    <%- if !@responsible_body.vcap? %>
       <%- if @school.has_allocation?(:laptop) %>
         <%= render AllocationComponentFactory.create_component(@school) %>
       <% else %>
         <%= render partial: 'shared/school_without_allocation' %>
-      <%- end %>
-
-      <%- if @school.orders_managed_centrally? %>
-        <%- unless @school.chromebook_information_complete? %>
-          <h2 class="govuk-heading-l">Before you can order, we need more information</h2>
-          <%= render partial: 'shared/chromebook_information_intro' %>
-          <%= render partial: 'shared/chromebook_information_form', locals: {
-            legend_text: 'Will your order include Chromebooks?',
-            url: responsible_body_devices_school_chromebooks_path(@school.urn),
-            form_object: @chromebook_information_form } %>
-        <%- end %>
       <%- end %>
     <%- end %>
   </div>

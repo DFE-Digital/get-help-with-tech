@@ -145,7 +145,7 @@ en:
       responsible_body: Orders will be placed centrally
     privacy_notice: Privacy notice
     school_home: Get devices for your school
-    school_can_order_devices: Your school can order devices
+    school_can_order_devices: Ordering is now closed
     school_cannot_order_devices:
       title: Your school cannot order devices yet
     school_user_cannot_order_devices:
@@ -162,6 +162,7 @@ en:
     school_details: Check your organisation’s details
     school_edit_chromebooks: Set your Chromebook preferences
     school_users: Manage users
+    view_users: View users
     school_before_can_order: Before you can order, we need more information
     donated_devices:
       title: Opt in to the Daily Mail’s donated devices scheme
@@ -245,7 +246,7 @@ en:
       privacy:
         title: Privacy notice
       allocation:
-        title: "You’ve been allocated %{allocation} laptops"
+        title: "Ordering is now closed"
       techsource_account:
         title: Use the TechSource website to place orders
       will_other_order:
@@ -259,8 +260,8 @@ en:
         title: You can order different types of laptops
       chromebooks:
         title: Are you ordering Chromebooks?
-        'yes': We need Chromebooks
-        'no': We do not need Chromebooks
+        'yes': 'Yes'
+        'no': 'No'
         i_dont_know: Not sure
         errors:
           choice: Tell us whether you'll need Chromebooks
@@ -277,8 +278,6 @@ en:
       title: Laptops and tablets
     digital_platforms:
       title: Digital education platforms
-    edtech_demonstrator_programme:
-      title: Training and support for remote and face-to-face education
     guides_parents_carers_students:
       title: Guides for parents, guardians, pupils and students
       details: Get help guides to share with the children, young people and carers using the laptops, tablets and 4G wireless routers provided by DfE.
@@ -286,23 +285,16 @@ en:
     success: Your cookie preferences have been saved
   devices_guidance:
     about_the_offer:
-      title: Who can get laptops and tablets, and why DfE provides them
-      description: Find out who can order devices and why.
+      title: Who could get laptops and tablets, and why DfE provided them
+      description: Find out who could order devices and why.
       guidance_section: before_you_order_pages
     device_allocations:
-      title: How laptops and tablets are allocated
+      title: How laptops and tablets were allocated
       description: Find out how the Department for Education estimated requirements for disadvantaged children and young people.
-      guidance_section: before_you_order_pages
-    device_specification:
-      title: Device types and IT settings
-      description: Get the technical specifications of the laptops and tablets provided by the Get help with technology programme.
       guidance_section: before_you_order_pages
     device_distribution_and_ownership:
       title: Who owns the devices
       description: Guidance on who owns devices, asset management and loan agreements.
-      guidance_section: before_you_order_pages
-    operation_warm_welcome:
-      title: Devices for children arriving under Operation Warm Welcome
       guidance_section: before_you_order_pages
 
     replace_a_faulty_device:
@@ -337,6 +329,9 @@ en:
     safeguarding_for_device_users:
       title: Safeguarding devices
       description: Information on content filtering and mobile device management to ensure devices are safe to use by young people and families.
+      guidance_section: manage_devices_pages
+    managing_your_4g_wireless_routers:
+      title: Resetting 4G routers
       guidance_section: manage_devices_pages
   guide_to_collecting_mobile_information:
     privacy: Explaining our privacy policy
@@ -492,8 +487,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: You can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: School has ordered
           default:
             needs_contact: Needs a contact
@@ -502,8 +497,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: Responsible body can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: School has ordered
         responsible_body:
           responsible_body:
@@ -513,8 +508,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: You can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: You have ordered
           default:
             needs_contact: Needs a contact
@@ -523,8 +518,8 @@ en:
             school_contacted: School contacted
             school_will_be_contacted: School will be contacted
             school_ready: School ready
-            rb_can_order: Responsible body can order
-            school_can_order: School can order
+            rb_can_order: Ordering is now closed
+            school_can_order: Ordering is now closed
             ordered: Responsible body has ordered
     timeline:
       field:
@@ -760,8 +755,8 @@ en:
           school_will_be_contacted: School will be contacted
           school_ready: School ready
         will_need_chromebooks:
-          'yes': We need Chromebooks
-          'no': We do not need Chromebooks
+          'yes': 'Yes'
+          'no': 'No'
           i_dont_know: Not sure
       school_device_allocation:
         device_type:
@@ -833,9 +828,9 @@ en:
           success: We’ve saved your choice
       schools:
         index:
-          ordering_schools_heading: Schools and colleges that can order
+          ordering_schools_heading: Schools and colleges that could order
           specific_circumstances_heading: Schools and colleges with approved requests for specific circumstances
-          cannot_order_yet_schools_heading: Schools and colleges that cannot order yet
+          cannot_order_yet_schools_heading: Schools and colleges that could not order yet
           cannot_order_yet_schools_text: Ordering will be opened for these schools and colleges as soon as possible.
         who_to_contact:
           create:

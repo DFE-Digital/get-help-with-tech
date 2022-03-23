@@ -10,9 +10,6 @@ Rails.application.routes.draw do
 
   resource :notify_callbacks, only: [:create]
 
-  get '/digital-platforms', to: 'landing_pages#digital_platforms', as: :digital_platforms_landing_page
-  get '/EdTech-demonstrator-programme', to: 'landing_pages#edtech_demonstrator_programme', as: :edtech_demonstrator_programme_landing_page
-
   get '/accessibility', to: 'pages#accessibility'
   get '/privacy', to: 'pages#privacy'
   get '/privacy/dfe-windows-privacy-notice', to: 'pages#dfe_windows_privacy_notice'
@@ -23,6 +20,11 @@ Rails.application.routes.draw do
 
   # redirects for moved guidance pages
   get '/start', to: redirect('/')
+  get '/devices', to: redirect('/')
+  get '/devices/how-to-order', to: redirect('/')
+  get '/devices/operation-warm-welcome', to: redirect('/')
+  get '/digital-platforms', to: redirect('/')
+  get '/EdTech-demonstrator-programme', to: redirect('https://www.gov.uk/government/publications/edtech-demonstrator-schools-and-colleges-successful-applicants/about-the-programme')
 
   get '/huawei-router-password', to: 'huawei_router_passwords#new', as: 'huawei_router_password'
 
@@ -40,8 +42,7 @@ Rails.application.routes.draw do
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/apply-your-own-settings', to: 'guide_to_resetting_windows_laptops_and_tablets#apply_your_own_settings'
   get '/devices/guide-to-resetting-windows-laptops-and-tablets/additional-support', to: 'guide_to_resetting_windows_laptops_and_tablets#additional_support'
 
-  get '/devices', to: 'devices_guidance#index', as: :devices_guidance_index
-  get '/devices/how-to-order', to: 'devices_guidance#how_to_order'
+  get '/devices/managing-your-4g-wireless-routers', to: redirect('/managing_your_4g_wireless_routers')
   get '/devices/:subpage_slug', to: 'devices_guidance#subpage', as: :devices_guidance_subpage
 
   get '/cookie-preferences', to: 'cookie_preferences#new', as: 'cookie_preferences'
@@ -109,7 +110,6 @@ Rails.application.routes.draw do
       get '/who-will-order', to: 'who_will_order#show'
       get '/who-will-order/edit', to: 'who_will_order#edit'
       patch '/who-will-order', to: 'who_will_order#update'
-      get 'order-devices', to: 'orders#show', as: :order_devices
 
       resources :schools, only: %i[index show update], param: :urn do
         get '/who-to-contact', to: 'who_to_contact#new'
@@ -146,7 +146,6 @@ Rails.application.routes.draw do
       get '/', to: 'school/home#show', as: :home
       get '/before-you-can-order', to: 'school/before_can_order#edit'
       patch '/before-you-can-order', to: 'school/before_can_order#update'
-      get '/order-devices', to: 'school/devices#order'
       get '/details', to: 'school/details#show', as: :details
       get '/chromebooks/edit', to: 'school/chromebooks#edit'
       patch '/chromebooks', to: 'school/chromebooks#update'
@@ -165,7 +164,7 @@ Rails.application.routes.draw do
       get '/funded-pupils-chromebooks/edit', to: 'school/la_funded_places_chromebooks#edit', as: :funded_chromebooks
       patch '/funded-pupils-chromebooks', to: 'school/la_funded_places_chromebooks#update', as: :update_funded_chromebooks
       get '/laptop-types', to: 'school/la_funded_places#laptop_types', as: :laptop_types
-      resources :users, as: 'school_users', only: %i[index new create edit update], module: 'school'
+      resources :users, as: 'school_users', only: %i[index edit update], module: 'school'
 
       scope module: :school do
         namespace :internet do

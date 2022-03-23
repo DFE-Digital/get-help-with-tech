@@ -80,7 +80,7 @@ RSpec.feature 'Changing who will order devices for a school' do
 
   def and_i_click_the_change_link_for_who_will_order
     school_details_page
-      .school_details['Who will order?']
+      .school_details['Who ordered?']
       .follow_action_link
   end
 
@@ -103,15 +103,15 @@ RSpec.feature 'Changing who will order devices for a school' do
   end
 
   def then_the_who_will_order_details_show_that_the_school_orders_in_the_support_console
-    expect(school_details_page.school_details['Who will order?'].value).to eq('The school or college orders devices')
+    expect(school_details_page.school_details['Who ordered?'].value).to eq('The school or college ordered devices')
   end
 
   def then_the_who_will_order_details_show_that_the_responsible_body_orders_in_the_support_console
-    expect(school_details_page.school_details['Who will order?'].value).to eq('The local authority orders devices')
+    expect(school_details_page.school_details['Who ordered?'].value).to eq('The local authority ordered devices')
   end
 
   def then_i_cannot_see_the_change_link_for_who_will_order
-    expect(school_details_page.school_details['Who will order?']).not_to have_link('Change')
+    expect(school_details_page.school_details['Who ordered?']).not_to have_link('Change')
   end
 
   alias_method :and_i_cannot_see_the_change_link_for_who_will_order, :then_i_cannot_see_the_change_link_for_who_will_order

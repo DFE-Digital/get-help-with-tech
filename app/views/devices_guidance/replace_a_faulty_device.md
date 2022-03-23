@@ -3,7 +3,7 @@
 All devices supplied by the Get help with technology programme come with a minimum
 12-month manufacturer&rsquo;s warranty.
 
-If you&rsquo;ve ordered [&lsquo;Pre-issued&rsquo; devices](/devices/device-specification#pre-issued-devices) the warranty period may have already expired.
+If you&rsquo;ve ordered Pre-issued devices the warranty period may have already expired.
 
 If you encounter a fault, refer to the manual supplied with the device or the manufacturer&rsquo;s
 website for information on how to make a claim.

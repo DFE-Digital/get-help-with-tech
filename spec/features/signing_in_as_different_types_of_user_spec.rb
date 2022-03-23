@@ -127,10 +127,6 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     scenario 'it redirects to the before you can order page' do
       sign_in_as user
-      expect(page).to have_current_path(before_you_can_order_school_path(school))
-      expect(page).to have_text 'Before you can order'
-      choose 'Not sure'
-      click_on 'Save'
       expect(page).to have_text user.school.name
     end
   end
@@ -190,7 +186,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
     scenario 'clicking on Sign in takes them to their next step' do
       visit validate_token_url_for(user)
       click_on 'Continue'
-      expect(page).to have_text 'You’ll need to place orders on a website called TechSource'
+      expect(page).to have_text 'Ordering is now closed'
     end
   end
 
@@ -203,7 +199,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       click_on 'Continue'
       expect(page).to have_text('Before you continue, please read the privacy notice.')
       click_on 'Continue'
-      expect(page).to have_text('You’ve been allocated 0 laptops')
+      expect(page).to have_text('Ordering is now closed')
     end
   end
 
@@ -216,7 +212,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
       click_on 'Continue'
       expect(page).to have_text('Before you continue, please read the privacy notice.')
       click_on 'Continue'
-      expect(page).to have_text('You’ve been allocated 0 laptops')
+      expect(page).to have_text('Ordering is now closed')
     end
   end
 

@@ -83,7 +83,7 @@ FactoryBot.define do
       trait :has_partially_completed_wizard do
         after(:create) do |user|
           user.school_welcome_wizards&.destroy_all
-          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school, step: 'techsource_account')
+          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school, step: 'allocation')
         end
       end
     end

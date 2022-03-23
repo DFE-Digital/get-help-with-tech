@@ -4,7 +4,7 @@ This applies where laptops and tablets are provided through the Department for E
 
 ## Devices ordered from October 2021 onwards
 
-Laptops and tablets ordered from October 2021 onwards are delivered with factory settings and do not have any DfE-managed software installed. Owners of devices are responsible for ensuring appropriate content filters and device management systems are in place.
+Laptops and tablets ordered from October 2021 onwards were delivered with factory settings and do not have any DfE-managed software installed. Owners of devices are responsible for ensuring appropriate content filters and device management systems are in place.
 
 ## Devices ordered before October 2021
 
@@ -21,7 +21,7 @@ You’re still required to take control of the devices as soon as possible by re
 
 New and refurbished laptops and tablets that have been purchased or donated can help supplement the allocation of laptops and tablets from DfE.
 
-If you receive devices for your school or college through donations, you’re responsible for ensuring they’re prepared so they’re appropriate for use.
+If you received devices for your school or college through donations, you’re responsible for ensuring they’re prepared so they’re appropriate for use.
 
 Information we’ve produced on content filtering, privacy policies and mobile device management is also relevant to any new and pre-owned devices. We recommend you follow our guidance on [preparing a Windows device](/devices/preparing-a-standard-windows-device), [Chromebook](/devices/preparing-chromebooks) or [iPad](/devices/preparing-ipads) before lending a device to a child or young person.
 

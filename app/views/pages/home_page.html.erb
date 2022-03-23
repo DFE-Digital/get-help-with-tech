@@ -5,72 +5,52 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-grid-column-full">
-    <h2 class="govuk-heading-l">Guidance</h2>
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to 'How to order devices', devices_how_to_order_path %>
-    </h2>
-    <p class="govuk-body">
-      Find out how to order laptops and tablets for your school or organisation.
-    </p>
-
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to t('landing_pages.get_support_guides.title'), devices_guidance_index_path %>
+    <h2 class="govuk-heading-m">
+      How to set up laptops and tablets
     </h2>
 
-    <p class="govuk-body">
-      Find out how to set up and manage devices. Read guidance on ownership and safeguarding.
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li><%= govuk_link_to 'Microsoft Windows laptops and tablets setup guide', '/devices/preparing-a-standard-windows-device' %></li>
+      <li><%= govuk_link_to 'Google Chromebooks', '/devices/preparing-chromebooks' %></li>
+      <li><%= govuk_link_to 'Apple iPads setup guide', '/devices/preparing-ipads' %></li>
+      <li><%= govuk_link_to 'How to set up a Google domain for care leavers', '/devices/google-domain-for-care-leavers-and-children-with-social-worker' %></li>
+    </ul>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to t('page_titles.managing_your_4g_wireless_routers'), managing_your_4g_wireless_routers_path %>
+    <h2 class="govuk-heading-m">
+      Replacing faulty devices
     </h2>
 
-    <p class="govuk-body">
-      If you were given 4G wireless routers by DfE before 31 August 2021,
-      you’ll need to reset them and replace the SIM cards. Find out how to continue using them.
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li><%= govuk_link_to 'Replace faulty devices', '/devices/replace-a-faulty-device' %></li>
+    </ul>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to t('page_titles.finding_out_about_internet_access_needs'), finding_out_about_internet_access_needs_path %>
+    <h2 class="govuk-heading-m">
+      Resetting and safeguarding devices
     </h2>
 
-    <p class="govuk-body">
-      How to understand the internet access needs of pupils and students.
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li><%= govuk_link_to 'Guide to resetting windows laptops and tablets', '/devices/guide-to-resetting-windows-laptops-and-tablets' %></li>
+      <li><%= govuk_link_to 'Remove DfE-provided Cisco Umbrella from Chromebooks', '/devices/remove-dfe-provided-cisco-umbrella-from-chromebooks' %></li>
+      <li><%= govuk_link_to 'Safeguarding devices', '/devices/safeguarding-for-device-users' %></li>
+      <li><%= govuk_link_to 'Resetting 4G routers', '/managing_your_4g_wireless_routers' %></li>
+    </ul>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to 'Operation Warm Welcome', '/devices/operation-warm-welcome' %>
+    <h2 class="govuk-heading-m">
+      About the devices provided by GHwT
     </h2>
 
-    <p class="govuk-body">
-      Operation Warm Welcome is now closed. You can still read about the programme and what it offered.
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li><%= govuk_link_to 'Who could get laptops and tablets, and why DfE provided them', '/devices/about-the-offer' %></li>
+      <li><%= govuk_link_to 'How laptops and tablets were allocated', '/devices/device-allocations' %></li>
+      <li><%= govuk_link_to 'Who owns the devices', '/devices/device-distribution-and-ownership' %></li>
+    </ul>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-service-section="digital-platforms">
-      <%= govuk_link_to t('landing_pages.digital_platforms.title'), digital_platforms_landing_page_path %>
+    <h2 class="govuk-heading-m">
+      About internet access
     </h2>
 
-    <p class="govuk-body">
-      Apply for funded support to access and use <span class="app-no-wrap">Google Workspace for Education Fundamentals</span>, or <span class="app-no-wrap">Microsoft 365 Education.</span>
-    </p>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-7">
+      <li><%= govuk_link_to 'Finding out about internet access needs', '/finding-out-about-internet-access-needs' %></li>
+    </ul>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-service-section="edtech">
-      <%= govuk_link_to t('landing_pages.edtech_demonstrator_programme.title') ,
-                        edtech_demonstrator_programme_landing_page_path %>
-    </h2>
-
-    <p class="govuk-body">
-      Access funded advice, guidance and training from a network of schools and
-      colleges expert in their use of technology.
-    </p>
-  </div>
-
-  <div class="govuk-grid-column-one-third-from-desktop govuk-grid-column-full">
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-      <%= govuk_link_to "Contact us", support_ticket_path %>
-    </h2>
-    <p class="govuk-body">
-      We aim to respond within <span class="app-no-wrap">3 working days</span>.
-    </p>
-  </div>
 </div>

@@ -47,7 +47,7 @@ RSpec.feature 'Ordering via a school' do
         given_i_am_signed_in_as_rb_user
 
         when_i_view_a_school(school)
-        then_i_see_status_of('You can order')
+        then_i_see_status_of('Ordering is now closed')
         and_i_see 'Devices ordered'
         and_i_see '3 devices'
       end
@@ -84,7 +84,6 @@ RSpec.feature 'Ordering via a school' do
         then_i_do_not_see 'You’ve ordered 3 of 10 devices'
         and_i_do_not_see 'Devices ordered'
         and_i_do_not_see '3 devices'
-        and_i_see_an_order_devices_now_link
       end
     end
   end
@@ -133,9 +132,5 @@ RSpec.feature 'Ordering via a school' do
 
   def and_i_see_the_no_allocation_message
     expect(page).to have_content 'This school has no allocation'
-  end
-
-  def and_i_see_an_order_devices_now_link
-    expect(page).to have_link('Order devices now')
   end
 end

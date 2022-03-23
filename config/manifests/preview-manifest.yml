@@ -17,10 +17,11 @@ applications:
     - get-help-with-tech-preview-db
     - get-help-with-tech-preview-redis
     - get-help-with-tech-preview-aws-s3-bucket
+  docker:
+    image: dfedigital/get-help-with-tech-dev:preview
   env:
-    DOCKER_IMAGE_ID: ((docker_image_id))
     ENV: $HOME/.profile
     RAILS_LOG_TO_STDOUT: true
     GHWT__HOSTNAME_FOR_URLS: get-help-with-tech-preview.london.cloudapps.digital
-    GHWT__SERVICE_NAME_SUFFIX: (preview)
+    GHWT__SERVICE_NAME_SUFFIX: preview
     SERVICE_ENV: preview

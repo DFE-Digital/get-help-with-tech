@@ -51,14 +51,14 @@ private
   def chromebook_rows_if_needed
     detail_value = school.chromebook_info_still_needed? ? 'Not yet known' : t(school.will_need_chromebooks, scope: %i[activerecord attributes school will_need_chromebooks])
     detail = {
-      key: 'Will you need to order Chromebooks?',
+      key: 'Chromebooks needed?',
       value: detail_value,
     }
 
     unless school.orders_managed_centrally?
       detail.merge!({
         change_path: chromebooks_edit_school_path(school),
-        action: 'whether Chromebooks are needed',
+        action: 'whether Chromebooks were needed',
       })
     end
 

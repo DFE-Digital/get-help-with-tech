@@ -19,10 +19,7 @@
                     @page.title,
                    ]) %>
   <% else %>
-    <% breadcrumbs([{ "Home" => root_path },
-                    { t('landing_pages.get_support_guides.title') => devices_guidance_index_path },
-                    @page.title,
-                   ]) %>
+    <% breadcrumbs([{ "Home" => root_path }, @page.title]) %>
   <% end %>
 <% end %>
 

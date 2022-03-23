@@ -19,14 +19,13 @@
     <%= render partial: 'shared/summary_reset_devices' if @has_ordered %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_order_devices'), order_devices_school_path(@school) %>
+      <%= govuk_link_to 'Order history', techsource_start_path %>
     </h2>
 
-    <p class="govuk-body">Use this section to:</p>
-
+    <p class="govuk-body">Sign in to TechSource to:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>order laptops</li>
-      <li>access the TechSource website to order devices</li>
+      <li>view your past orders</li>
+      <li>view the serial numbers of your devices.</li>
     </ul>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
@@ -53,15 +52,12 @@
     <% end %>
 
     <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to t('page_titles.school_users'), school_users_path(@school) %>
+      <%= govuk_link_to t('page_titles.view_users'), school_users_path(@school) %>
     </h2>
 
     <p class="govuk-body">Use this section to:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>give other people access to this service</li>
-      <li>set which accounts can use TechSource to order.</li>
+      <li>see your setting's users.</li>
     </ul>
-
-    <%= render partial: 'summary_order_history' if @has_ordered && (@current_user.order_devices_for_school?(@school) || @has_ordered_routers) %>
   </div>
 </div>

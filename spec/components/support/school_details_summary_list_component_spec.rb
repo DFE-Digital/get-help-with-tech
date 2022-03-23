@@ -63,7 +63,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'confirms that fact' do
-      expect(value_for_row(result, 'Who will order?').text).to include('The school or college orders devices')
+      expect(value_for_row(result, 'Who ordered?').text).to include('The school or college ordered devices')
     end
 
     it 'renders the school allocation' do
@@ -79,14 +79,14 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details without links to change it' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
+      expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
 
     context "when the school isn't under lockdown restrictions or has any shielding children" do
       it 'cannot place orders' do
-        expect(value_for_row(result, 'Can place orders?').text).to include('Cannot order yet')
+        expect(value_for_row(result, 'Could place orders?').text).to include('No')
       end
     end
 
@@ -102,7 +102,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'confirms that fact' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust orders devices')
+      expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust ordered devices')
     end
 
     it 'shows the chromebook details and allows them to be edited' do
@@ -112,13 +112,9 @@ describe Support::SchoolDetailsSummaryListComponent do
         will_need_chromebooks: 'yes',
       )
 
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
+      expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
-
-      expect(action_for_row(result, 'Ordering Chromebooks?')).to be_present
-      expect(action_for_row(result, 'Domain')).to be_present
-      expect(action_for_row(result, 'Recovery email')).to be_present
     end
 
     it 'does not show the school contact even if the school contact is set' do
@@ -138,7 +134,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     end
 
     it 'shows the chromebook details and allows them to be edited' do
-      expect(value_for_row(result, 'Ordering Chromebooks?').text).to include('We need Chromebooks')
+      expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
     end
@@ -147,7 +143,7 @@ describe Support::SchoolDetailsSummaryListComponent do
   context 'when the responsible body has not made a decision about who will order' do
     it 'confirms that fact' do
       expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Decide who will order')
+      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Set who ordered')
     end
 
     it 'displays the headteacher details if the headteacher is present' do
