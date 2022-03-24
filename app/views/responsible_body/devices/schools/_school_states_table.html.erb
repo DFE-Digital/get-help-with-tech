@@ -17,7 +17,6 @@
         <th class="govuk-table__header app-schools-table__column-20">Devices Ordered</th>
         <th class="govuk-table__header app-schools-table__column-20">Who ordered?</th>
       <% end %>
-      <th class="govuk-table__header app-schools-table__column-20"><span class="govuk-visually-hidden">Status</span></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -38,9 +37,6 @@
         <% end %>
         <td class="govuk-table__cell">
           <%= school.who_manages_orders_label %>
-        </td>
-        <td class="govuk-table__cell govuk-table__cell--nowrap">
-          <%= render ConditionalSchoolPreorderStatusTagComponent.new(school: school, viewer: @responsible_body) %>
         </td>
       </tr>
     <% end %>

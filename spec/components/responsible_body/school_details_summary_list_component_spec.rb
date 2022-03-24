@@ -31,12 +31,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       end
     end
 
-    it 'confirms that fact' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('The school or college ordered devices')
-    end
-
     it 'renders the school allocation' do
-      expect(result.css('.govuk-summary-list__row')[2].text).to include('100 devices')
+      expect(result.css('.govuk-summary-list__row')[1].text).to include('100 devices')
     end
 
     it 'renders the number of devices ordered in the past' do
@@ -48,44 +44,10 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       expect(value_for_row(result, 'Setting').text).to include('Primary school')
     end
 
-    it 'renders the school details' do
-      expect(value_for_row(result, 'Status').text).to include('School will be contacted')
-    end
-
     it 'shows the chromebook details without links to change it' do
       expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
-    end
-
-    context "when the school isn't under lockdown restrictions or has any shielding children" do
-      before do
-        school.cannot_order!
-      end
-
-      it 'cannot place orders' do
-        expect(value_for_row(result, 'Could place orders?').text).to include('No')
-      end
-    end
-
-    context 'when the school is under lockdown restrictions' do
-      before do
-        school.can_order!
-      end
-
-      it 'can place orders' do
-        expect(value_for_row(result, 'Could place orders?').text).to include('Yes, a closure or group of self-isolating children was reported')
-      end
-    end
-
-    context 'when the school can order devices for specific circumstances' do
-      before do
-        school.can_order_for_specific_circumstances!
-      end
-
-      it 'can place orders' do
-        expect(value_for_row(result, 'Could place orders?').text).to include('Yes, for specific circumstances')
-      end
     end
 
     context 'and the headteacher has been set as the school contact' do

@@ -12,13 +12,11 @@ class ResponsibleBody::SchoolDetailsSummaryListComponent < ViewComponent::Base
 
   def rows
     array = []
-    array << preorder_status_row
     array << who_will_order_row
     array << device_allocation_row
     array << devices_ordered_row if display_devices_ordered_row?
     array << router_allocation_row if display_router_allocation_row?
     array << routers_ordered_row if display_routers_ordered_row?
-    array << order_status_row
     array << previously_ordered_devices_row
     array << school_type_row
     array += school_contact_row_if_contact_present
@@ -106,6 +104,7 @@ private
     false
   end
 
+  # Removed from showing
   def order_status_row
     if school.can_order?
       {
