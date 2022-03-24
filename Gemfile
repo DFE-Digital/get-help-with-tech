@@ -8,7 +8,7 @@ gem 'aws-sdk-s3', '~> 1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-# Canonical meta tag
+# Canonical meta tag.
 gem 'canonical-rails', github: 'jumph4x/canonical-rails', ref: '33caa6354d04b16946246546092d1492aa195d1e'
 gem 'chronic'
 gem 'dotenv-rails'
@@ -130,7 +130,7 @@ group :development, :test do
 end
 
 group :development do
-  # log failed I18n lookups
+  # log failed I18n lookups.
   gem 'i18n-debug'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '>= 3.0.5', '< 3.8'

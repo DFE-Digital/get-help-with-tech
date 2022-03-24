@@ -41,7 +41,7 @@ private
 
   # Filters
   def authorize_school_edition
-    authorize School, :edit?
+    authorize School, :editable?
   end
 
   def check_confirmation
