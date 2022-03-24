@@ -18,6 +18,7 @@ private
   end
 
   def support_ticket
+    session[:init] = true if session.id.blank?
     @support_ticket ||= SupportTicket.find_or_create_by!(session_id: session.id.to_s)
   end
 end
