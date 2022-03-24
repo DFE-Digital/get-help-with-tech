@@ -6,20 +6,10 @@ class InterstitialPicker
   end
 
   def call
-    @call ||= if rb_user_with_la_funded_place_with_available_devices? || user_with_multiple_la_funded_places_with_available_devices?
+    @call ||= if user.responsible_body_user?
                 OpenStruct.new(
-                  title: 'Laptops and internet access are available for more children and young people',
-                  partial: 'interstitials/la_funded_user',
-                )
-              elsif iss_provision_user_with_available_devices?
-                OpenStruct.new(
-                  title: 'Get laptops and internet access',
-                  partial: 'interstitials/iss_provision_user',
-                )
-              elsif scl_provision_user_with_available_devices?
-                OpenStruct.new(
-                  title: 'Get laptops and internet access',
-                  partial: 'interstitials/scl_provision_user',
+                  title: title_for_default,
+                  partial: 'interstitials/responsible_body_user',
                 )
               elsif user.is_school_user?
                 OpenStruct.new(
@@ -35,22 +25,6 @@ class InterstitialPicker
   end
 
 private
-
-  def rb_user_with_la_funded_place_with_available_devices?
-    user.la_funded_user? && user.responsible_body_user? && user.responsible_body.schools.la_funded_provision.any?(&:has_not_fully_ordered_laptops_now?)
-  end
-
-  def user_with_multiple_la_funded_places_with_available_devices?
-    user.schools.la_funded_provision.count > 1 && user.schools.la_funded_provision.any?(&:has_not_fully_ordered_laptops_now?)
-  end
-
-  def iss_provision_user_with_available_devices?
-    user.iss_provision_user? && user.schools.iss_provision.first&.has_not_fully_ordered_laptops_now?
-  end
-
-  def scl_provision_user_with_available_devices?
-    user.scl_provision_user? && user.schools.scl_provision.first&.has_not_fully_ordered_laptops_now?
-  end
 
   def title_for_default
     i18n_key = :related_organisation if user.is_school_user?
