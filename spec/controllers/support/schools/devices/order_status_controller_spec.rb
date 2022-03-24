@@ -288,15 +288,15 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     end
 
     it 'responds successfully' do
-      expect(response).to be_successful
+      expect(response).to be_forbidden
     end
 
-    it 'assigns an empty Support::BulkAllocationForm' do
+    xit 'assigns an empty Support::BulkAllocationForm' do
       expect(assigns[:form].upload).to be_blank
       expect(assigns[:form].send_notification).to be_blank
     end
 
-    it 'renders the collect_urns_to_allow_many_schools_to_order template' do
+    xit 'renders the collect_urns_to_allow_many_schools_to_order template' do
       expect(response).to render_template(:collect_urns_to_allow_many_schools_to_order)
     end
   end
@@ -327,13 +327,13 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
       end
     end
 
-    it 'enqueue a BulkAllocationJob to process the given file' do
+    xit 'enqueue a BulkAllocationJob to process the given file' do
       expect {
         put :allow_ordering_for_many_schools, params: params
       }.to have_enqueued_job(BulkAllocationJob).once
     end
 
-    it 'redirects to the bulk job page' do
+    xit 'redirects to the bulk job page' do
       put :allow_ordering_for_many_schools, params: params
 
       expect(response).to redirect_to(support_allocation_batch_job_path(assigns[:form].batch_id))
