@@ -13,8 +13,12 @@ class SchoolPolicy < SupportPolicy
     responsible_body_user? || devolved_management_school_user?
   end
 
+  def editable?
+    false
+  end
+
   def support_third_line_editable?
-    user.is_support? && user.third_line_role?
+    false
   end
 
   alias_method :search?, :readable?

@@ -5,12 +5,12 @@ module SummaryListHelper
 
   def value_for_row(doc, key)
     row = row_for_key(doc, key)
-    row.css('dd')[0]
+    row.css('dd')[0] if row
   end
 
   def action_for_row(doc, key)
     row = row_for_key(doc, key)
-    row.css('dd')[1]
+    row.css('dd')[1] if row
   end
 end
 

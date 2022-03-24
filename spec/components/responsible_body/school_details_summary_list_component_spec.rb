@@ -140,9 +140,9 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
 
         it 'shows links to edit the school details' do
           expect(action_for_row(result, 'Who ordered?')).to be_nil
-          expect(action_for_row(result, 'Ordered Chromebooks?').text).to include('Change')
-          expect(action_for_row(result, 'Domain').text).to include('Change')
-          expect(action_for_row(result, 'Recovery email').text).to include('Change')
+          expect(action_for_row(result, 'Ordered Chromebooks?')).to be_nil
+          expect(action_for_row(result, 'Domain')).to be_nil
+          expect(action_for_row(result, 'Recovery email')).to be_nil
         end
       end
 
@@ -152,8 +152,8 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
         it 'shows links to edit the school details' do
           school.set_school_contact!(school.headteacher)
 
-          expect(action_for_row(result, 'Who ordered?').text).to include('Change')
-          expect(action_for_row(result, 'School contact').text).to include('Change')
+          expect(action_for_row(result, 'Who ordered?')).to be_nil
+          expect(action_for_row(result, 'School contact')).to be_nil
           expect(action_for_row(result, 'Ordered Chromebooks?')).to be_nil
           expect(action_for_row(result, 'Domain')).to be_nil
           expect(action_for_row(result, 'Recovery email')).to be_nil
@@ -193,7 +193,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
   end
 
   context 'when the responsible body has not made a decision about who will order' do
-    it 'confirms that fact ' do
+    it 'confirms that fact' do
       expect(value_for_row(result, 'Who ordered?').text).to include("#{school.responsible_body.name} hasn’t decided this yet")
     end
   end

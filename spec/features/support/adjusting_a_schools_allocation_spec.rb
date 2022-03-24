@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Adjusting a schools allocation' do
+RSpec.feature 'Adjusting a schools allocation', skip: true do
   let(:support_user) { create(:support_user) }
   let(:school) { create(:school, order_state: :cannot_order, laptops: [50, 50, 10]) }
   let(:school_details_page) { PageObjects::Support::SchoolDetailsPage.new }
