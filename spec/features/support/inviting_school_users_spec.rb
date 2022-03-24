@@ -20,7 +20,6 @@ RSpec.feature 'Inviting school users' do
     and_i_submit_invite_school_user_form
     and_i_click_through_to_the_school_page
     then_i_see_the_user_on_the_school_page
-    and_the_school_is_shown_as_contacted
   end
 
   scenario 'support invites user to a school who already exists on another school' do
@@ -34,7 +33,6 @@ RSpec.feature 'Inviting school users' do
     and_i_submit_invite_school_user_form
     and_i_click_through_to_the_school_page
     then_i_see_the_existing_user_on_the_school_page
-    and_the_school_is_shown_as_contacted
   end
 
   def given_i_am_signed_in_as_a_support_user
@@ -89,9 +87,5 @@ RSpec.feature 'Inviting school users' do
     expect(page).to have_content(existing_user.full_name)
     expect(page).to have_content('existinguser@example.com')
     expect(page).to have_content(existing_user.telephone)
-  end
-
-  def and_the_school_is_shown_as_contacted
-    expect(page).to have_content('School contacted')
   end
 end

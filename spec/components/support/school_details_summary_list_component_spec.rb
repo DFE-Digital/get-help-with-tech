@@ -74,20 +74,10 @@ describe Support::SchoolDetailsSummaryListComponent do
       expect(value_for_row(result, 'Setting').text).to include('Primary school')
     end
 
-    it 'renders the school details' do
-      expect(value_for_row(result, 'Status').text).to include('Needs a contact')
-    end
-
     it 'shows the chromebook details without links to change it' do
       expect(value_for_row(result, 'Ordered Chromebooks?').text).to include('Yes')
       expect(value_for_row(result, 'Domain').text).to include('school.domain.org')
       expect(value_for_row(result, 'Recovery email').text).to include('admin@recovery.org')
-    end
-
-    context "when the school isn't under lockdown restrictions or has any shielding children" do
-      it 'cannot place orders' do
-        expect(value_for_row(result, 'Could place orders?').text).to include('No')
-      end
     end
 
     it 'displays the headteacher details' do
@@ -102,7 +92,7 @@ describe Support::SchoolDetailsSummaryListComponent do
     let(:school) { create(:school, :primary, :academy, :centrally_managed, responsible_body: rb) }
 
     it 'confirms that fact' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include('The trust ordered devices')
+      expect(result.css('.govuk-summary-list__row')[0].text).to include('The trust ordered devices')
     end
 
     it 'shows the chromebook details and allows them to be edited' do
@@ -142,8 +132,8 @@ describe Support::SchoolDetailsSummaryListComponent do
 
   context 'when the responsible body has not made a decision about who will order' do
     it 'confirms that fact' do
-      expect(result.css('.govuk-summary-list__row')[1].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
-      expect(result.css('.govuk-summary-list__row')[1].text).not_to include('Set who ordered')
+      expect(result.css('.govuk-summary-list__row')[0].text).to include("#{school.responsible_body.name} hasn’t decided this yet")
+      expect(result.css('.govuk-summary-list__row')[0].text).not_to include('Set who ordered')
     end
 
     it 'displays the headteacher details if the headteacher is present' do

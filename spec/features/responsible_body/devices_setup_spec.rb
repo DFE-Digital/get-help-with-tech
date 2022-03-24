@@ -46,7 +46,6 @@ RSpec.feature 'Setting up the devices ordering' do
       then_i_see_a_list_of_the_schools_i_am_responsible_for
       and_each_school_shows_the_devices_ordered_or_zero_if_no_orders
       and_the_list_shows_that_the_responsible_body_will_place_all_orders
-      and_each_school_needs_information
 
       when_i_visit_the_first_school
       then_i_see_the_details_of_the_first_school
@@ -182,11 +181,6 @@ RSpec.feature 'Setting up the devices ordering' do
     expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].text).to have_content('Needs a contact')
   end
 
-  def and_each_school_needs_information
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[0].text).to have_content('Needs information')
-    expect(responsible_body_schools_page.cannot_order_yet_school_rows[1].text).to have_content('Needs information')
-  end
-
   def given_the_responsible_body_has_decided_to_order_centrally
     responsible_body.update!(default_who_will_order_devices_for_schools: 'school')
     responsible_body.schools.each { |school| SchoolSetWhoManagesOrdersService.new(school, :school).call }
@@ -254,7 +248,6 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def and_that_the_local_authority_orders_devices
-    expect(responsible_body_school_page.school_details).to have_content('Needs information')
     expect(responsible_body_school_page.school_details).to have_content('The local authority ordered devices')
   end
 
@@ -351,7 +344,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def then_i_see_guidance_about_why_there_is_no_allocation
-    expect(responsible_body_school_page).to have_content('This school has no allocation')
+    expect(responsible_body_school_page).to have_content('This school had no allocation')
   end
 
   def and_in_the_allocation_guidance_we_ask_for_information
@@ -359,7 +352,7 @@ RSpec.feature 'Setting up the devices ordering' do
   end
 
   def then_i_see_the_allocation_guidance_without_the_we_need_information_section
-    expect(responsible_body_school_page).to have_content('This school has no allocation')
+    expect(responsible_body_school_page).to have_content('This school had no allocation')
     expect(responsible_body_school_page).not_to have_content('We still need some information')
   end
 end

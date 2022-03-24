@@ -1,20 +1,8 @@
-<h2 class="govuk-heading-l">This <%= @school.institution_type %> has no allocation</h2>
+<h2 class="govuk-heading-l">This <%= @school.institution_type %> had no allocation</h2>
 
-<p class="govuk-body">They can still request devices for specific circumstances.</p>
-
-<p class="govuk-body">Reasons for a 0 allocation include:</p>
+<p class="govuk-body">Reasons for a 0 allocation included:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>this <%= @school.institution_type %> has no one in the eligible year groups</li>
-  <li>there are very few pupils or students on free meals according to the most recent census data</li>
+  <li>this <%= @school.institution_type %> had no one in the eligible year groups</li>
+  <li>there were very few pupils or students on free meals according to the most recent census data</li>
   <li>there was not enough data to calculate an allocation – for example, it’s a new <%= @school.institution_type %>.</li>
 </ul>
-
-<%- if @school.needs_contact? || (@school.orders_managed_centrally? && !@school.chromebook_information_complete?) %>
-  <h3 class="govuk-heading-m">We still need some information</h3>
-
-  <p class="govuk-body">If this <%= @school.institution_type %> will order its own devices, we need to know who to contact.</p>
-<%- end %>
-
-<h3 class="govuk-heading-m">Tell us if this <%= @school.institution_type %> needs an allocation</h3>
-
-<p class="govuk-body">Send details to: <%= ghwt_contact_mailto(subject: "A school (#{@school.name} #{@school.urn}) needs an allocation") %></p>

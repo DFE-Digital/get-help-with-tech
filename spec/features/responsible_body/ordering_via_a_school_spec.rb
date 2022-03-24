@@ -29,7 +29,6 @@ RSpec.feature 'Ordering via a school' do
         given_i_am_signed_in_as_rb_user
 
         when_i_view_a_school(school)
-        then_i_see_status_of('Ready')
         and_i_see_the_no_allocation_message
       end
     end
@@ -47,7 +46,6 @@ RSpec.feature 'Ordering via a school' do
         given_i_am_signed_in_as_rb_user
 
         when_i_view_a_school(school)
-        then_i_see_status_of('Ordering is now closed')
         and_i_see 'Devices ordered'
         and_i_see '3 devices'
       end
@@ -62,8 +60,7 @@ RSpec.feature 'Ordering via a school' do
         given_i_am_signed_in_as_rb_user
 
         when_i_view_a_school(school)
-        then_i_see_status_of('Ready')
-        and_i_do_not_see 'This school has no allocation'
+        and_i_do_not_see 'This school had no allocation'
         and_i_do_not_see 'Order devices now'
       end
     end
@@ -94,10 +91,6 @@ RSpec.feature 'Ordering via a school' do
 
   def when_i_view_a_school(school)
     school_page.load(urn: school.urn)
-  end
-
-  def then_i_see_status_of(status)
-    expect(school_page.school_details).to have_content(status)
   end
 
   def when_i_choose_to_order_devices
@@ -131,6 +124,6 @@ RSpec.feature 'Ordering via a school' do
   end
 
   def and_i_see_the_no_allocation_message
-    expect(page).to have_content 'This school has no allocation'
+    expect(page).to have_content 'This school had no allocation'
   end
 end
