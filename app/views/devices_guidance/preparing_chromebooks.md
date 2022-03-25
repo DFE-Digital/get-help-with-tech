@@ -37,7 +37,7 @@ then follow these instructions to enrol your devices:
 
 <div class="govuk-inset-text">
   <p>
-    Google Chromebooks provided by Get help with technology from October 2021 do not
+    Google Chromebooks provided by Get help with technology from October 2021 did not
     come with web filtering software. You should arrange your own security settings to ensure
     the devices are safe for children and young people to use.
   </p>
