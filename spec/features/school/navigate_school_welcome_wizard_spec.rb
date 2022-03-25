@@ -12,7 +12,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   scenario 'step through wizard as LA Funded Place' do
     as_a_new_la_funded_user
     when_i_sign_in_for_the_first_time
-    then_i_see_the_state_funded_interstitial
+    then_i_see_the_school_user_interstitial
     when_i_click_continue
     then_i_see_privacy_policy
     when_i_click_continue
@@ -94,8 +94,8 @@ RSpec.feature 'Navigate school welcome wizard' do
     visit validate_token_url_for(@user)
   end
 
-  def then_i_see_the_state_funded_interstitial
-    expect(page).to have_text('funds to attend independent special schools or independent alternative provision')
+  def then_i_see_the_school_user_interstitial
+    expect(page).to have_text('manage your users')
   end
 
   def then_i_see_privacy_policy
