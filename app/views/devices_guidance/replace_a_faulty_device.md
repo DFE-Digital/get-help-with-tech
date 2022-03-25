@@ -1,9 +1,9 @@
 ## Laptop and tablet faults
 
-All devices supplied by the Get help with technology programme come with a minimum
+All devices supplied by the Get help with technology programme came with a minimum
 12-month manufacturer&rsquo;s warranty.
 
-If you&rsquo;ve ordered Pre-issued devices the warranty period may have already expired.
+If you ordered Pre-issued devices the warranty period may have already expired.
 
 If you encounter a fault, refer to the manual supplied with the device or the manufacturer&rsquo;s
 website for information on how to make a claim.
@@ -49,8 +49,3 @@ ASM.
 
 Before returning an iPad, you must unassign your iPad from your ASM by following this
 guidance: [Assign, reassign or unassign devices in Apple School Manager](https://support.apple.com/en-gb/guide/apple-school-manager/asmf500c0851/web).
-
-## 4G wireless router faults
-
-Separate guidance is available explaining
-[what to do if you have technical issues with a 4G wireless router](/devices/managing-your-4g-wireless-routers).
