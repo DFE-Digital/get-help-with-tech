@@ -19,17 +19,19 @@
 
     <p class="govuk-body">Use this section to find one or more school, college or FE institution by URN or UKPRN.</p>
 
-    <% if policy(School).editable? %>
+    <% if policy(School).edit? %>
       <div class="govuk-!-margin-top-9">
-        <h2 class="govuk-heading-xl">Bulk actions</h2>
+        <% if policy(School).editable? %>
+          <h2 class="govuk-heading-xl">Bulk actions</h2>
 
-        <p class="govuk-body">Use this section to update or export allocations for schools, colleges and FE institutions.</p>
+          <p class="govuk-body">Use this section to update or export allocations for schools, colleges and FE institutions.</p>
 
-        <h2 class="govuk-heading-l govuk-!-font-size-27">
-          <%= govuk_link_to 'Bulk upload allocation updates', devices_enable_orders_for_many_schools_support_schools_path %>
-        </h2>
+          <h2 class="govuk-heading-l govuk-!-font-size-27">
+            <%= govuk_link_to 'Bulk upload allocation updates', devices_enable_orders_for_many_schools_support_schools_path %>
+          </h2>
 
-        <p class="govuk-body">Follow this link to use the bulk allocation updater.</p>
+          <p class="govuk-body">Follow this link to use the bulk allocation updater.</p>
+        <% end %>
 
         <h2 class="govuk-heading-l govuk-!-font-size-27">Export all allocations</h2>
 
