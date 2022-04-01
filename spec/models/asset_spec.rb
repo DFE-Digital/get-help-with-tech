@@ -139,15 +139,39 @@ RSpec.describe Asset, type: :model do
     context 'RB' do
       let(:rb) { create(:local_authority) }
       let(:other_rb) { create(:local_authority) }
-      let(:rb_asset_1) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
-      let(:rb_asset_2) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
-      let(:other_rb_asset) { create(:asset, department_sold_to_id: other_rb.computacenter_reference) }
-      let(:rb_self_managed_school) { build(:school, :manages_orders) }
-      let(:rb_school_asset) { create(:asset, location_cc_ship_to_account: rb_self_managed_school.computacenter_reference) }
+      let(:rb_self_managed_school) { create(:school, :manages_orders, responsible_body_id: rb.id) }
+      let(:rb_centrally_managed_school) { create(:school, :centrally_managed, responsible_body_id: rb.id) }
 
-      before { rb.schools << rb_self_managed_school }
+      context 'when the asset sold to matches the rb sold to' do
+        let!(:rb_asset_1) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
+        let!(:rb_asset_2) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
 
-      specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_asset_1, rb_asset_2, rb_school_asset) }
+        before do
+          create(:asset, department_sold_to_id: other_rb.computacenter_reference)
+        end
+
+        specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_asset_1, rb_asset_2) }
+      end
+
+      context "when the asset ship to matches the one of the rb self-managed schools' ship to" do
+        let!(:rb_school_asset) { create(:asset, location_cc_ship_to_account: rb_self_managed_school.computacenter_reference) }
+
+        before do
+          create(:asset, location_cc_ship_to_account: rb_centrally_managed_school.computacenter_reference)
+        end
+
+        specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_school_asset) }
+      end
+
+      context 'when a SCL asset department_id points to the rb gias_id' do
+        let!(:rb_sc_asset) { create(:asset, department_id: "SC#{rb.gias_id}") }
+
+        before do
+          create(:asset, department_id: "SD#{rb.gias_id}")
+        end
+
+        specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_sc_asset) }
+      end
     end
 
     context 'neither RB nor school' do
