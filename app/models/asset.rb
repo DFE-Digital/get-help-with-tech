@@ -89,7 +89,10 @@ class Asset < ApplicationRecord
       .or(where(department_id: "SC#{rb.gias_id}"))
   }
 
-  scope :owned_by_school, ->(school) { where(location_cc_ship_to_account: school.ship_to) }
+  scope :owned_by_school, lambda { |school|
+    where(location_cc_ship_to_account: school.ship_to)
+      .or(where(department: school.name))
+  }
 
   scope :search_by_serial_numbers, ->(serial_numbers) { where('serial_number ILIKE ANY (ARRAY[?])', serial_numbers) }
 
