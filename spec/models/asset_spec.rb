@@ -129,11 +129,20 @@ RSpec.describe Asset, type: :model do
     context 'school' do
       let(:school_a) { create(:school) }
       let(:school_b) { create(:school) }
-      let(:school_a_asset_1) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-      let(:school_a_asset_2) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-      let(:school_b_asset_1) { create(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
 
-      specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_a_asset_1, school_a_asset_2) }
+      context 'when the asset ship to matches the school computacenter reference' do
+        let(:school_a_asset_1) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
+        let(:school_a_asset_2) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
+        let(:school_b_asset_1) { create(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
+
+        specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_a_asset_1, school_a_asset_2) }
+      end
+
+      context 'when a SCL asset department matches a school name' do
+        let(:school_asset_1) { create(:asset, department: school_a.name) }
+
+        specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_asset_1) }
+      end
     end
 
     context 'RB' do
