@@ -17,7 +17,7 @@
             <%= f.govuk_radio_button :user_type, option.value, label: { text: option.label } do %>
               <% if option.suggestions.present? %>
                 <h2 class="govuk-heading-m">Do these articles answer your question?</h2>
-                The following links open in a new tab.
+                <p class="govuk-body">The following links open in a new tab.</p>
                 <%= content_tag :ul, class: 'govuk-list govuk-list--bullet' do %>
                   <% option.suggestions.each do |suggestion| %>
                     <%= content_tag :li do %>
