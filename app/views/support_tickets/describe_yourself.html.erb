@@ -12,14 +12,26 @@
     <%= form_for @form, url: support_ticket_describe_yourself_path do |f| %>
       <%= f.govuk_error_summary "There’s a problem" %>
 
-      <%= f.govuk_collection_radio_buttons  :user_type,
-          @form.describe_yourself_options,
-                                            :value,
-                                            :label,
-                                            legend: {size: 'xl', text: t('landing_pages.get_support.describe_yourself')}
-      %>
-
-
+      <%= f.govuk_radio_buttons_fieldset(:user_type, legend: { size: 'xl', text: t('landing_pages.get_support.describe_yourself') }) do %>
+          <% @form.describe_yourself_options.each do |option| %>
+            <%= f.govuk_radio_button :user_type, option.value, label: { text: option.label } do %>
+              <% if option.suggestions.present? %>
+                <h2 class="govuk-heading-m">Do these articles answer your question?</h2>
+                The following links open in a new tab.
+                <%= content_tag :ul, class: 'govuk-list govuk-list--bullet' do %>
+                  <% option.suggestions.each do |suggestion| %>
+                    <%= content_tag :li do %>
+                      <%= govuk_link_to suggestion.title,
+                                        suggestion_resource_to_path(suggestion.resource),
+                                        target: :blank,
+                                        rel: 'noreferrer noopener' %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
 
       <%= f.govuk_submit 'Continue' %>
     <% end %>
