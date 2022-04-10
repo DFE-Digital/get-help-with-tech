@@ -86,7 +86,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
     context 'when user email has changed' do
       let(:school) { create(:school, :manages_orders) }
-      let(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com', school: school) }
+      let(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com', school:) }
 
       before do
         user.update(email_address: 'new@example.com')

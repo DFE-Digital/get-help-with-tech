@@ -95,7 +95,7 @@ describe ResponsibleBody::SchoolDetailsSummaryListComponent do
       let(:school) { create(:school, :primary, :academy, :manages_orders, responsible_body: rb) }
       let(:user) { create(:support_user) }
 
-      subject(:result) { render_inline(described_class.new(school: school, user: user)) }
+      subject(:result) { render_inline(described_class.new(school:, user:)) }
 
       context 'when the school is centrally managed' do
         let(:school) { create(:school, :primary, :academy, :centrally_managed, :with_headteacher, responsible_body: rb) }

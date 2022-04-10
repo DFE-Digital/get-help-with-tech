@@ -10,7 +10,7 @@ describe SchoolPolicy do
   let(:third_line_user) { build_stubbed(:support_user, :third_line) }
   let(:other_rb_user) { build_stubbed(:local_authority_user) }
   let(:rb_user) { build_stubbed(:user, responsible_body: school.rb) }
-  let(:school_user) { create(:school_user, school: school) }
+  let(:school_user) { create(:school_user, school:) }
   let(:other_school_user) { build_stubbed(:school_user) }
 
   permissions :invite?, :confirm_invitation? do

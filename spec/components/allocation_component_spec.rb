@@ -39,7 +39,7 @@ RSpec.describe AllocationComponent, type: :component do
       let(:organisation) { school }
       let(:sentry_scope) { double }
 
-      let(:component) { described_class.new(organisation: organisation, devices_available: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0) }
+      let(:component) { described_class.new(organisation:, devices_available: 0, devices_ordered: 0, routers_ordered: 0, devices_allocation: 0) }
 
       before do
         allow(sentry_scope).to receive(:set_context)

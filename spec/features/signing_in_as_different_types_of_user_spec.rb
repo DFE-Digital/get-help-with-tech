@@ -149,7 +149,7 @@ RSpec.feature 'Signing-in as different types of user', type: :feature do
 
     context 'when the user orders_devices' do
       let(:school) { create(:school, :manages_orders) }
-      let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice, orders_devices: true, school: school) }
+      let(:user) { create(:school_user, :new_visitor, :has_not_seen_privacy_notice, orders_devices: true, school:) }
 
       describe 'continuing after the privacy notice' do
         before do

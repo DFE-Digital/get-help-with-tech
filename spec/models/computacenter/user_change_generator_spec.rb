@@ -66,7 +66,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
 
     context 'when the user is relevant_to_computacenter' do
       let(:school) { create(:school, :manages_orders) }
-      let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+      let(:user) { create(:school_user, :relevant_to_computacenter, school:) }
 
       context 'and the user has not been soft_deleted' do
         before do

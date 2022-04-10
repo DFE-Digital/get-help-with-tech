@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotifyComputacenterOfLatestChangeForUserJob do
   describe '#perform' do
     let(:school) { create(:school, :manages_orders) }
-    let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+    let(:user) { create(:school_user, :relevant_to_computacenter, school:) }
     let(:request_succeeded) { true }
     let(:mock_request) do
       instance_double(

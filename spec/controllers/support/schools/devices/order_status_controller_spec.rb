@@ -334,7 +334,7 @@ RSpec.describe Support::Schools::Devices::OrderStatusController do
     end
 
     xit 'redirects to the bulk job page' do
-      put :allow_ordering_for_many_schools, params:
+      put(:allow_ordering_for_many_schools, params:)
 
       expect(response).to redirect_to(support_allocation_batch_job_path(assigns[:form].batch_id))
     end

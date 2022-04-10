@@ -35,7 +35,7 @@ describe School::SchoolDetailsSummaryListComponent do
     context 'when the user has permissions to edit the school' do
       let(:user) { create(:support_user) }
 
-      subject(:result) { render_inline(described_class.new(school: school, user: user)) }
+      subject(:result) { render_inline(described_class.new(school:, user:)) }
 
       context 'when the school is centrally managed' do
         let(:school) do
