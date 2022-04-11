@@ -1,0 +1,3 @@
+<%= f.send option_type, field_name, option.value, id: "#{option.value}_option", label: { text: option.label } do %>
+  <%= render partial: 'support_tickets/suggestions', locals: { suggestions: option.suggestions, option: option.value, heading_text: heading_text } if option.suggestions.present? %>
+<% end %>

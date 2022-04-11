@@ -35,6 +35,7 @@ end
 require Rails.root.join('spec/page_objects/base_page.rb')
 Dir[Rails.root.join('spec/page_objects/**/*_section.rb')].sort.each { |f| require f }
 Dir[Rails.root.join('spec/page_objects/**/*_page.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/page_objects/**/app.rb')].sort.each { |f| require f }
 
 require 'paper_trail/frameworks/rspec'
 

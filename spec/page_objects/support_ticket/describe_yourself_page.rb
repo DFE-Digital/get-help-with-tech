@@ -3,6 +3,7 @@ module PageObjects
     class DescribeYourselfPage < PageObjects::BasePage
       set_url '/get-support/describe-yourself'
 
+      element :heading, '.govuk-fieldset__legend--xl'
       element :school_radio_button, '#support-ticket-describe-yourself-form-user-type-school-or-single-academy-trust-field'
       element :school_suggestions, '#support-ticket-describe-yourself-form-user-type-multi-academy-trust-conditional'
       element :mat_radio_button, '#support-ticket-describe-yourself-form-user-type-multi-academy-trust-field'
@@ -16,6 +17,12 @@ module PageObjects
       element :none_above_radio_button, '#support-ticket-describe-yourself-form-user-type-other-type-of-user-field'
       element :none_above_suggestions, '#support-ticket-describe-yourself-form-user-type-other-type-of-user-conditional'
       element :continue_button, :button, text: 'Continue'
+
+      def load_then_select_anything_and_continue
+        load
+        school_radio_button.click
+        continue_button.click
+      end
     end
   end
 end

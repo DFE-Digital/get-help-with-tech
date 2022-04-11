@@ -12,14 +12,16 @@
     <%= form_for @form, url: support_ticket_support_needs_path do |f| %>
       <%= f.govuk_error_summary "There’s a problem" %>
 
-      <%= f.govuk_collection_check_boxes :support_topics,
-          @form.support_needs_options,
-                                            :value,
-                                            :label,
-                                            legend: { text: "What do you need help with?", size: "xl" },
-                                            hint: { text: "Select all of the options that apply", size: 'l' }
-      %>
-
+      <%= f.govuk_check_boxes_fieldset :support_topics,
+                                       legend: { text: 'What do you need help with?', size: "xl" },
+                                       hint: { text: "Select all of the options that apply", size: 'l' } do %>
+        <%= render partial: 'support_tickets/option',
+                  collection: @form.support_needs_options,
+                  locals: { f: f,
+                            option_type: 'govuk_check_box',
+                            field_name: :support_topics,
+                            heading_text: 'Do these articles answer your question?' } %>
+      <%- end %>
 
 
       <%= f.govuk_submit 'Continue' %>
