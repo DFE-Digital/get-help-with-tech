@@ -19,7 +19,7 @@ class SupportTicket::DescribeYourselfForm
 
   def to_params
     {
-      user_type:,
+      user_type: user_type,
     }
   end
 end
