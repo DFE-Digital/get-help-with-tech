@@ -351,7 +351,7 @@ private
 
     CapUpdateNotificationsService.new(*schools,
                                       device_types: [device_type],
-                                      notify_computacenter: notify_computacenter,
-                                      notify_school: notify_school).call
+                                      notify_computacenter:,
+                                      notify_school:).call
   end
 end

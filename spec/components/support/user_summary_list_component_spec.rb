@@ -5,12 +5,10 @@ describe Support::UserSummaryListComponent do
 
   let(:responsible_body) { create(:local_authority) }
   let(:school) { create(:school, :manages_orders) }
-  let(:user) do
-    create(:school_user, telephone: '12345', responsible_body: responsible_body, school: school)
-  end
+  let(:user) { create(:school_user, telephone: '12345', responsible_body:, school:) }
   let(:viewer) { build(:support_user) }
 
-  subject(:result) { render_inline(described_class.new(user: user, viewer: viewer)) }
+  subject(:result) { render_inline(described_class.new(user:, viewer:)) }
 
   it 'displays the email address' do
     expect(value_for_row(result, 'Email address').text).to include(user.email_address)
@@ -44,7 +42,7 @@ describe Support::UserSummaryListComponent do
 
   context 'for a user who orders devices but has not seen the privacy notice' do
     let(:user) do
-      create(:school_user, telephone: '12345', orders_devices: true, privacy_notice_seen_at: nil, school: school)
+      create(:school_user, telephone: '12345', orders_devices: true, privacy_notice_seen_at: nil, school:)
     end
 
     it 'displays the user as able to order devices once they sign in' do
@@ -59,7 +57,7 @@ describe Support::UserSummaryListComponent do
              orders_devices: true,
              privacy_notice_seen_at: 5.days.ago,
              techsource_account_confirmed_at: nil,
-             school: school)
+             school:)
     end
 
     it "displays the user as able to order devices once it's confirmed that they have a TechSource account" do
@@ -74,7 +72,7 @@ describe Support::UserSummaryListComponent do
              orders_devices: true,
              privacy_notice_seen_at: 5.days.ago,
              techsource_account_confirmed_at: 4.days.ago,
-             school: school)
+             school:)
     end
 
     it 'displays the user as able to order devices' do

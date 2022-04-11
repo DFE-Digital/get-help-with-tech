@@ -9,7 +9,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
     let(:responsible_body_id) { school.responsible_body_id.next }
 
     context 'when a new responsible_body_id is given at initialization time' do
-      subject(:form) { described_class.new(school: school, responsible_body_id: responsible_body_id) }
+      subject(:form) { described_class.new(school:, responsible_body_id:) }
 
       it 'return the new responsible_body_id' do
         expect(form.responsible_body_id).to eq(responsible_body_id)
@@ -17,7 +17,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
     end
 
     context 'when a new responsible_body_id is not given at initialization time' do
-      subject(:form) { described_class.new(school: school) }
+      subject(:form) { described_class.new(school:) }
 
       it 'return the given school responsible_body_id' do
         expect(form.responsible_body_id).to eq(school.responsible_body_id)
@@ -31,7 +31,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
     context 'when a new responsible_body_id is given at initialization time' do
       let(:new_responsible_body) { create(:trust) }
 
-      subject(:form) { described_class.new(school: school, responsible_body_id: new_responsible_body.id) }
+      subject(:form) { described_class.new(school:, responsible_body_id: new_responsible_body.id) }
 
       it 'return the new responsible_body' do
         expect(form.responsible_body).to eq(new_responsible_body)
@@ -39,7 +39,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
     end
 
     context 'when a new responsible_body_id is not given at initialization time' do
-      subject(:form) { described_class.new(school: school) }
+      subject(:form) { described_class.new(school:) }
 
       it 'return the given school responsible_body' do
         expect(form.responsible_body).to eq(school.responsible_body)
@@ -69,7 +69,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
       let(:school) { create(:school) }
       let(:responsible_body_id) { school.responsible_body_id }
 
-      subject(:form) { described_class.new(school: school, responsible_body_id: responsible_body_id.next) }
+      subject(:form) { described_class.new(school:, responsible_body_id: responsible_body_id.next) }
 
       it 'return false' do
         expect(form.save).to be_falsey
@@ -86,7 +86,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
 
       let!(:initial_rb_id) { school.responsible_body_id }
 
-      subject(:form) { described_class.new(school: school, responsible_body_id: new_rb.id) }
+      subject(:form) { described_class.new(school:, responsible_body_id: new_rb.id) }
 
       before { stub_computacenter_outgoing_api_calls }
 
@@ -166,7 +166,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -237,7 +237,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -309,7 +309,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -381,7 +381,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 1,
                                   centrally_managed: false,
                                   manages_orders: true,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -453,7 +453,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 1,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -531,7 +531,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -606,7 +606,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
       end
     end
 
@@ -680,7 +680,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 1,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
 
         expect_vcap_to_be(rb_id: rb_a.id,
                           laptop_allocation: 5,
@@ -775,7 +775,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
 
         expect_vcap_to_be(rb_id: rb_a.id,
                           laptop_allocation: 5,
@@ -860,7 +860,7 @@ RSpec.describe Support::School::ChangeResponsibleBodyForm, type: :model do
                                   routers_ordered: 2,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
 
         expect_vcap_to_be(rb_id: rb_a.id,
                           laptop_allocation: 5,

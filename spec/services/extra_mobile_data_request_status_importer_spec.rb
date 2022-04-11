@@ -17,7 +17,7 @@ RSpec.describe ExtraMobileDataRequestStatusImporter, type: :model do
 
   let(:filename) { Rails.root.join('tmp/extra-mobile-data-request-update.csv') }
   let(:datasource) { ExtraMobileDataRequestStatusFile.new(filename) }
-  let(:importer) { described_class.new(mobile_network: mno, datasource: datasource) }
+  let(:importer) { described_class.new(mobile_network: mno, datasource:) }
 
   before do
     create_extra_mobile_data_request_update_csv_file(filename, attrs)

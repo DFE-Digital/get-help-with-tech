@@ -5,7 +5,7 @@ RSpec.describe OrganisationVcapTagComponent do
 
   describe '#text' do
     context 'when the organisation is an RB' do
-      let(:organisation) { create(:local_authority, vcap: vcap) }
+      let(:organisation) { create(:local_authority, vcap:) }
 
       context 'when the RB sets a vcap' do
         let(:vcap) { true }
@@ -48,7 +48,7 @@ RSpec.describe OrganisationVcapTagComponent do
 
   describe '#color' do
     context 'when the organisation is an RB' do
-      let(:organisation) { create(:local_authority, vcap: vcap) }
+      let(:organisation) { create(:local_authority, vcap:) }
 
       context 'when the RB sets a vcap' do
         let(:vcap) { true }

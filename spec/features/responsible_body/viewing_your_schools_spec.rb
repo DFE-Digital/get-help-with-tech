@@ -4,8 +4,8 @@ RSpec.feature 'Viewing your schools' do
   include ActionView::Helpers::TextHelper
 
   let(:responsible_body) { create(:trust, :manages_centrally) }
-  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, laptops: [1, 1, 0], routers: [1, 1, 0], responsible_body: responsible_body) }
-  let!(:user) { create(:local_authority_user, responsible_body: responsible_body) }
+  let(:schools) { create_list(:school, 3, :manages_orders, :with_headteacher, laptops: [1, 1, 0], routers: [1, 1, 0], responsible_body:) }
+  let!(:user) { create(:local_authority_user, responsible_body:) }
 
   let(:your_schools_page) { PageObjects::ResponsibleBody::SchoolsPage.new }
 

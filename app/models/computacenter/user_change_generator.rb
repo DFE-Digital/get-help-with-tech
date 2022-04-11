@@ -35,7 +35,7 @@ private
   def consolidated_attributes
     computacenter_attributes\
       .merge(meta_attributes)
-      .merge(type_of_update: type_of_update)
+      .merge(type_of_update:)
   end
 
   def change_needed?

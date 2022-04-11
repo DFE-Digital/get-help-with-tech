@@ -37,7 +37,7 @@ private
   def create_allocation_batch_job(school, props)
     allocation = props.delete(:allocation)
     props[:allocation_delta] = allocation.to_i - school.raw_allocation(:laptop) if allocation.present?
-    job_attrs = props.merge(batch_id: batch_id, send_notification: send_notification)
+    job_attrs = props.merge(batch_id:, send_notification:)
     AllocationBatchJob.create!(job_attrs)
   end
 
@@ -51,8 +51,8 @@ private
 
   def post_process_vcaps
     vcaps_for_post_processing.each_key do |responsible_body_id|
-      CalculateVcapJob.perform_later(responsible_body_id: responsible_body_id,
-                                     batch_id: batch_id,
+      CalculateVcapJob.perform_later(responsible_body_id:,
+                                     batch_id:,
                                      notify_school: send_notification)
     end
   end

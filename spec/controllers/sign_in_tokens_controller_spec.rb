@@ -61,7 +61,7 @@ RSpec.describe SignInTokensController, type: :controller do
                :who_has_requested_a_magic_link,
                orders_devices: true,
                responsible_body: trust,
-               school: school)
+               school:)
       end
 
       it 'redirects them to the school journey' do
@@ -75,7 +75,7 @@ RSpec.describe SignInTokensController, type: :controller do
                  :who_has_requested_a_magic_link,
                  orders_devices: true,
                  privacy_notice_seen_at: nil,
-                 school: school)
+                 school:)
         end
 
         it 'redirects them to the privacy policy' do
@@ -93,7 +93,7 @@ RSpec.describe SignInTokensController, type: :controller do
                :who_has_requested_a_magic_link,
                orders_devices: true,
                responsible_body: trust,
-               school: school)
+               school:)
       end
 
       it 'redirects them to the school journey' do
@@ -107,7 +107,7 @@ RSpec.describe SignInTokensController, type: :controller do
                  :who_has_requested_a_magic_link,
                  orders_devices: true,
                  privacy_notice_seen_at: nil,
-                 school: school)
+                 school:)
         end
 
         it 'redirects them to the privacy policy' do
@@ -123,7 +123,7 @@ RSpec.describe SignInTokensController, type: :controller do
       let(:params) { { token: user.sign_in_token, identifier: user.sign_in_identifier(user.sign_in_token) } }
 
       it 'does not save the user to session' do
-        get :validate, params: params
+        get(:validate, params:)
         expect(controller).not_to have_received(:save_user_to_session!)
       end
     end

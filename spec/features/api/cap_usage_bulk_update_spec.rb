@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Bulk cap usage update with XML', type: :request do
   let(:user) { create(:computacenter_user) }
-  let(:api_token) { create(:api_token, status: :active, user: user) }
+  let(:api_token) { create(:api_token, status: :active, user:) }
   let(:headers) { { 'Authorization' => "Bearer #{api_token.token}" } }
   let(:payload_id) { '45520C4CEEEF4CACAB2603847F08EFA2' }
   let(:cap_usage_update_packet) do
@@ -26,7 +26,7 @@ RSpec.feature 'Bulk cap usage update with XML', type: :request do
     end
 
     it 'returns ok and expected XML' do
-      post computacenter_api_cap_usage_bulk_update_path(format: :xml), params: cap_usage_update_packet, headers: headers
+      post(computacenter_api_cap_usage_bulk_update_path(format: :xml), params: cap_usage_update_packet, headers:)
       parsed_xml = Hash.from_xml(response.body)
 
       expect(response.status).to eq(200)
@@ -38,7 +38,7 @@ RSpec.feature 'Bulk cap usage update with XML', type: :request do
 
   context 'none of the shipTos exists on the platform' do
     it 'returns unprocessable_entity and all failed records in the XML' do
-      post computacenter_api_cap_usage_bulk_update_path(format: :xml), params: cap_usage_update_packet, headers: headers
+      post(computacenter_api_cap_usage_bulk_update_path(format: :xml), params: cap_usage_update_packet, headers:)
       parsed_xml = Hash.from_xml(response.body)
 
       expect(response.status).to eq(422)
@@ -54,7 +54,7 @@ RSpec.feature 'Bulk cap usage update with XML', type: :request do
     end
 
     it 'returns multi_status and the failed records in the XML' do
-      post computacenter_api_cap_usage_bulk_update_path(format: :xml), params: cap_usage_update_packet, headers: headers
+      post(computacenter_api_cap_usage_bulk_update_path(format: :xml), params: cap_usage_update_packet, headers:)
       parsed_xml = Hash.from_xml(response.body)
 
       expect(response.status).to eq(207)

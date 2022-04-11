@@ -56,15 +56,15 @@ private
     # we can't have more than 3 school users who order devices!
     user.update!(orders_devices: false) if school.users.count >= 3
     school.users << user
-    InviteSchoolUserMailer.with(user: user).nominated_contact_email.deliver_later
+    InviteSchoolUserMailer.with(user:).nominated_contact_email.deliver_later
   end
 
   def add_school_headteacher_to_responsible_body
     # User email addresses are all downcased before being added
     # however a school contact email address can still contain capitals
     email_address = school.headteacher_email_address.downcase
-    headteacher_user = school.users.find_by!(email_address: email_address)
-    headteacher_user.update!(responsible_body: responsible_body)
+    headteacher_user = school.users.find_by!(email_address:)
+    headteacher_user.update!(responsible_body:)
   end
 
   def invite_school_headteacher

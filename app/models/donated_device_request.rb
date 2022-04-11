@@ -36,7 +36,7 @@ class DonatedDeviceRequest < ApplicationRecord
   end
 
   def self.for_responsible_body(responsible_body)
-    where(responsible_body: responsible_body)
+    where(responsible_body:)
   end
 
   def mark_as_complete!

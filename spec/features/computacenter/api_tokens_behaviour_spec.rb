@@ -39,8 +39,8 @@ RSpec.feature 'Managing API tokens' do
     end
 
     context 'when I have existing API tokens' do
-      let!(:api_token_1) { create(:api_token, user: user, status: 'active') }
-      let!(:api_token_2) { create(:api_token, user: user) }
+      let!(:api_token_1) { create(:api_token, user:, status: 'active') }
+      let!(:api_token_2) { create(:api_token, user:) }
       let!(:other_user_api_token) { create(:api_token, user: other_user) }
 
       scenario 'clicking on the API tokens nav link shows me a list of my API tokens' do

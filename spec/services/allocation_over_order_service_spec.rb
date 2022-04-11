@@ -38,7 +38,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
           ],
         ]
 
-        UpdateSchoolDevicesService.new(school: school, laptops_ordered: 9).call
+        UpdateSchoolDevicesService.new(school:, laptops_ordered: 9).call
 
         expect(school).to have_received(:refresh_preorder_status!)
         expect_school_to_be_in_rb(school_id: school.id,
@@ -52,7 +52,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
                                   routers_ordered: 0,
                                   centrally_managed: true,
                                   manages_orders: false,
-                                  requests: requests)
+                                  requests:)
         sibling_schools.each do |school|
           expect_school_to_be_in_rb(school_id: school.id,
                                     rb_id: rb.id,
@@ -65,7 +65,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
                                     routers_ordered: 0,
                                     centrally_managed: true,
                                     manages_orders: false,
-                                    requests: requests)
+                                    requests:)
         end
       end
 
@@ -97,7 +97,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
             ],
           ]
 
-          UpdateSchoolDevicesService.new(school: school, laptops_ordered: 18).call
+          UpdateSchoolDevicesService.new(school:, laptops_ordered: 18).call
 
           expect(school).to have_received(:refresh_preorder_status!)
           expect_school_to_be_in_rb(school_id: school.id,
@@ -111,7 +111,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
                                     routers_ordered: 0,
                                     centrally_managed: true,
                                     manages_orders: false,
-                                    requests: requests)
+                                    requests:)
           sibling_schools.each do |school|
             expect_school_to_be_in_rb(school_id: school.id,
                                       rb_id: rb.id,
@@ -124,7 +124,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
                                       routers_ordered: 0,
                                       centrally_managed: true,
                                       manages_orders: false,
-                                      requests: requests)
+                                      requests:)
           end
           expect(Sentry).to have_received(:capture_message).with(alert)
           expect(sentry_scope).to have_received(:set_context).with(sentry_context_key, sentry_context_value)
@@ -143,7 +143,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
           ],
         ]
 
-        UpdateSchoolDevicesService.new(school: school, laptops_ordered: 9).call
+        UpdateSchoolDevicesService.new(school:, laptops_ordered: 9).call
 
         expect(school).to have_received(:refresh_preorder_status!)
         expect_school_to_be_in_rb(school_id: school.id,
@@ -157,7 +157,7 @@ RSpec.describe AllocationOverOrderService, type: :model do
                                   routers_ordered: 0,
                                   centrally_managed: false,
                                   manages_orders: true,
-                                  requests: requests)
+                                  requests:)
       end
     end
   end

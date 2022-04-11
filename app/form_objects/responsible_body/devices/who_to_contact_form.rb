@@ -36,7 +36,7 @@ class ResponsibleBody::Devices::WhoToContactForm
     if headteacher_chosen?
       headteacher
     elsif someone_else_chosen?
-      contact = school.contacts.find_by(email_address: email_address)
+      contact = school.contacts.find_by(email_address:)
       contact ||= school.contacts.contact.first
       contact ||= school.contacts.build(role: :contact)
 

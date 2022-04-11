@@ -18,13 +18,13 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
     end
   when 'school_will_be_contacted'
     schools.each do |school|
-      school_contact = create(:school_contact, school: school)
-      school.update!(who_will_order_devices: :school, school_contact: school_contact)
+      school_contact = create(:school_contact, school:)
+      school.update!(who_will_order_devices: :school, school_contact:)
     end
   when 'school_contacted'
     schools.each do |school|
       school.update!(who_will_order_devices: :school)
-      create(:school_user, school: school)
+      create(:school_user, school:)
     end
   when 'school_can_order'
     schools.each do |school|
@@ -36,7 +36,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      raw_router_allocation: 1,
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
-      create(:school_user, school: school)
+      create(:school_user, school:)
       school.can_order!
     end
   when 'ordered'
@@ -49,7 +49,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      raw_router_allocation: 1,
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
-      create(:school_user, school: school)
+      create(:school_user, school:)
     end
   when 'school_ready'
     schools.each do |school|
@@ -61,7 +61,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      raw_router_allocation: 1,
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
-      create(:school_user, school: school)
+      create(:school_user, school:)
     end
   when 'rb_can_order'
     schools.each do |school|
@@ -73,7 +73,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      raw_router_allocation: 1,
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
-      create(:school_user, school: school)
+      create(:school_user, school:)
       school.responsible_body.update!(default_who_will_order_devices_for_schools: 'responsible_body')
       school.can_order!
     end
@@ -87,7 +87,7 @@ def create_schools_at_status(preorder_status:, count: 1, responsible_body: nil)
                      raw_router_allocation: 1,
                      over_order_reclaimed_routers: -1,
                      raw_routers_ordered: 0)
-      create(:school_user, school: school)
+      create(:school_user, school:)
       school.responsible_body.update!(default_who_will_order_devices_for_schools: 'responsible_body')
     end
   else

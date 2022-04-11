@@ -13,7 +13,7 @@ private
 
   def notify_user_about_all_schools_they_can_order_for
     user.schools_i_order_for.select(&:can_order_devices_right_now?).each do |school|
-      notify_user(school: school)
+      notify_user(school:)
     end
   end
 
@@ -22,11 +22,11 @@ private
     return unless message_type
 
     CanOrderDevicesMailer
-      .with(user: user, school: school)
+      .with(user:, school:)
       .send(message_type)
       .deliver_later
     EventNotificationsService.broadcast(
-      UserCanOrderEvent.new(user: user, school: school, type: message_type),
+      UserCanOrderEvent.new(user:, school:, type: message_type),
     )
   end
 

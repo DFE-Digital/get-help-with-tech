@@ -5,7 +5,7 @@ class ComputacenterMailer < ApplicationMailer
     template_mail(
       devices_cap_change_template_id,
       to: recipient,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 
@@ -15,7 +15,7 @@ class ComputacenterMailer < ApplicationMailer
     template_mail(
       comms_cap_change_template_id,
       to: recipient,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 
@@ -25,7 +25,7 @@ class ComputacenterMailer < ApplicationMailer
     template_mail(
       school_can_order_template_id,
       to: recipient,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.shared_examples 'a user change request' do |feature_flags|
   let(:user_change) { create(:user_change, :school_user) }
-  let(:request) { described_class.new(user_change: user_change) }
+  let(:request) { described_class.new(user_change:) }
 
   let(:response_body) do
     <<~JSON

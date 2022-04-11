@@ -33,7 +33,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
       {
         school_urn: school.urn,
         support_school_change_responsible_body_form: {
-          responsible_body_id: responsible_body_id,
+          responsible_body_id:,
         },
       }
     end
@@ -46,7 +46,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
       before { sign_in_as non_support_third_line_user }
 
       specify do
-        expect { patch :update, params: params }.to be_forbidden_for(non_support_third_line_user)
+        expect { patch(:update, params:) }.to be_forbidden_for(non_support_third_line_user)
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
 
         before do
           sign_in_as support_third_line_user
-          patch :update, params: params
+          patch(:update, params:)
         end
 
         xit 'redirects back to school' do
@@ -77,7 +77,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
           allow(Support::School::ChangeResponsibleBodyForm).to receive(:new).and_return(
             instance_double('Support::School::ChangeResponsibleBodyForm', save: false),
           )
-          patch :update, params: params
+          patch(:update, params:)
         end
 
         xit 'redirects back to school' do
@@ -96,7 +96,7 @@ RSpec.describe Support::Schools::ResponsibleBodyController, type: :controller do
         before do
           school.refresh_preorder_status!
           sign_in_as support_third_line_user
-          patch :update, params: params
+          patch(:update, params:)
         end
 
         xit 'redirects back to school' do

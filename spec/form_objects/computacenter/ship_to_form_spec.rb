@@ -21,7 +21,7 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
     before { stub_computacenter_outgoing_api_calls }
 
     context 'when the form is not valid' do
-      subject(:save) { described_class.new(school: school).save }
+      subject(:save) { described_class.new(school:).save }
 
       it { is_expected.to be_falsey }
 
@@ -41,7 +41,7 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
 
       before { school.name = nil }
 
-      subject(:save) { described_class.new(school: school, ship_to: '1', change_ship_to: 'yes').save }
+      subject(:save) { described_class.new(school:, ship_to: '1', change_ship_to: 'yes').save }
 
       it { is_expected.to be_falsey }
 
@@ -59,7 +59,7 @@ RSpec.describe Computacenter::ShipToForm, type: :model do
     context 'when everything ok' do
       let(:school) { create(:school, laptops: [2, 2, 1], routers: [2, 2, 1], computacenter_reference: '11') }
 
-      subject(:save) { described_class.new(school: school, ship_to: '100', change_ship_to: 'yes').save }
+      subject(:save) { described_class.new(school:, ship_to: '100', change_ship_to: 'yes').save }
 
       it { is_expected.to be_truthy }
 

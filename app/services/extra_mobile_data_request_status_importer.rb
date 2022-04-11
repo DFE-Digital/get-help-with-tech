@@ -30,7 +30,7 @@ private
       summary.add_error_record(request)
     elsif status.in?(ExtraMobileDataRequest.statuses_that_mno_users_can_use_in_csv_uploads)
       if record.status != status
-        record.update!(status: status)
+        record.update!(status:)
         summary.add_updated_record(record)
       else
         summary.add_unchanged_record(record)

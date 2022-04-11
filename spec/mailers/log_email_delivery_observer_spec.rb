@@ -10,7 +10,7 @@ RSpec.describe LogEmailDeliveryObserver do
     end
   end
 
-  let(:delivery_method) { OpenStruct.new(response: response) }
+  let(:delivery_method) { OpenStruct.new(response:) }
   let(:response) { OpenStruct.new(reference: audit.id, id: '456') }
   let(:audit) { create(:email_audit) }
 

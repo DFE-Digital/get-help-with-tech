@@ -10,7 +10,7 @@ class AllocationOverOrderService
   def call
     ResponsibleBody.transaction do
       failed_to_reclaim = available_caps_in_the_vcap_pool.inject(over_order) do |quantity, member|
-        quantity -= reclaim_cap_from_vcap_pool_member(member, quantity: quantity)
+        quantity -= reclaim_cap_from_vcap_pool_member(member, quantity:)
         quantity.positive? ? quantity : break
       end
       alert_pool_cap_reclaim_failed(failed_to_reclaim) if failed_to_reclaim
@@ -21,7 +21,7 @@ private
 
   def alert_pool_cap_reclaim_failed(remaining_over_ordered_quantity)
     Sentry.with_scope do |scope|
-      scope.set_context('AllocationOverOrderService#reclaim_cap_across_virtual_cap_pool', { responsible_body_id: responsible_body.id, device_type: device_type, remaining_over_ordered_quantity: remaining_over_ordered_quantity })
+      scope.set_context('AllocationOverOrderService#reclaim_cap_across_virtual_cap_pool', { responsible_body_id: responsible_body.id, device_type:, remaining_over_ordered_quantity: })
 
       Sentry.capture_message('Unable to reclaim all of the cap in the vcap to cover the over-order')
     end

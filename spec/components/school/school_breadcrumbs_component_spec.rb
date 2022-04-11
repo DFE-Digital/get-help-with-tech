@@ -9,7 +9,7 @@ RSpec.describe School::SchoolBreadcrumbsComponent do
   let(:academy) { create(:school, :academy, responsible_body: single_academy_trust) }
   let(:items) { 'a title' }
 
-  subject(:result) { render_inline(described_class.new(school: school, user: user, items: items)) }
+  subject(:result) { render_inline(described_class.new(school:, user:, items:)) }
 
   def has_link_to?(doc:, text:)
     doc.css('a').map(&:text).include?(text)

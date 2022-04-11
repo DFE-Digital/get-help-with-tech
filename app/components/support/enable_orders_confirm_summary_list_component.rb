@@ -10,7 +10,7 @@ class Support::EnableOrdersConfirmSummaryListComponent < SummaryListComponent
     @laptop_allocation = laptop_allocation
     @router_allocation = router_allocation
     @change_path = change_path
-    super(rows: rows)
+    super(rows:)
   end
 
 private
@@ -40,14 +40,14 @@ private
       {
         key: 'How many devices?',
         value: "Their full allocation of #{laptop_allocation}",
-        change_path: change_path,
+        change_path:,
         action: 'how many devices',
       }
     when :can_order_for_specific_circumstances
       {
         key: 'How many devices?',
         value: "Up to #{laptop_cap} from an allocation of #{laptop_allocation}",
-        change_path: change_path,
+        change_path:,
         action: 'how many devices',
       }
     end
@@ -61,14 +61,14 @@ private
       {
         key: 'How many routers?',
         value: "Their full allocation of #{router_allocation}",
-        change_path: change_path,
+        change_path:,
         action: 'how many routers',
       }
     when :can_order_for_specific_circumstances
       {
         key: 'How many routers?',
         value: "Up to #{router_cap} from an allocation of #{router_allocation}",
-        change_path: change_path,
+        change_path:,
         action: 'how many routers',
       }
     end

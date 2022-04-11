@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotifyComputacenterOfLatestChangeForUserJob do
   describe '#perform' do
     let(:school) { create(:school, :manages_orders) }
-    let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+    let(:user) { create(:school_user, :relevant_to_computacenter, school:) }
     let(:request_succeeded) { true }
     let(:mock_request) do
       instance_double(
@@ -24,7 +24,7 @@ RSpec.describe NotifyComputacenterOfLatestChangeForUserJob do
 
     it 'creates a new Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest with the latest user change for the given user_id' do
       job.perform(user.id)
-      expect(Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest).to have_received(:new).with(user_change: user_change)
+      expect(Computacenter::ServiceNowUserImportAPI::ImportUserChangeRequest).to have_received(:new).with(user_change:)
     end
 
     it 'posts the request' do

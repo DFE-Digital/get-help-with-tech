@@ -2,8 +2,8 @@ class RemainingDevicesCalculator
   def current_unclaimed_totals
     RemainingDeviceCount.new(
       date_of_count: Time.zone.now,
-      remaining_from_devolved_schools: remaining_from_devolved_schools,
-      remaining_from_managed_schools: remaining_from_managed_schools,
+      remaining_from_devolved_schools:,
+      remaining_from_managed_schools:,
     ).tap(&:valid?)
   end
 

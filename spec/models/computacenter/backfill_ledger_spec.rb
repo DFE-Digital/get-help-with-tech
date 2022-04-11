@@ -92,9 +92,9 @@ RSpec.describe Computacenter::BackfillLedger do
     subject(:service) { described_class.new(users: given_users) }
 
     before do
-      create_list(:user, 3, responsible_body: responsible_body)
+      create_list(:user, 3, responsible_body:)
       school = create(:school)
-      create_list(:user, 2, school: school, orders_devices: true)
+      create_list(:user, 2, school:, orders_devices: true)
       other_responsible_body = create(:local_authority)
       create_list(:user, 5, :has_seen_privacy_notice, orders_devices: true, responsible_body: other_responsible_body)
       Computacenter::UserChange.delete_all

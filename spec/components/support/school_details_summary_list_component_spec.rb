@@ -11,7 +11,7 @@ describe Support::SchoolDetailsSummaryListComponent do
 
   let(:support_user) { build(:support_user) }
 
-  subject(:result) { render_inline(described_class.new(school: school, viewer: support_user)) }
+  subject(:result) { render_inline(described_class.new(school:, viewer: support_user)) }
 
   it 'does not show school name' do
     expect(row_for_key(result, 'Name')).to be_nil
@@ -114,7 +114,7 @@ describe Support::SchoolDetailsSummaryListComponent do
   end
 
   context 'when a computacenter user is the viewer' do
-    subject(:result) { render_inline(described_class.new(school: school, viewer: build(:computacenter_user))) }
+    subject(:result) { render_inline(described_class.new(school:, viewer: build(:computacenter_user))) }
 
     before do
       school.update!(who_will_order_devices: :responsible_body,

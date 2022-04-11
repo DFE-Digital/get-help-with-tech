@@ -27,7 +27,7 @@ RSpec.describe Computacenter::SchoolChangesController do
         id: school.urn,
         computacenter_ship_to_form: {
           ship_to: '12',
-          change_ship_to: change_ship_to,
+          change_ship_to:,
         },
       }
     end
@@ -46,13 +46,13 @@ RSpec.describe Computacenter::SchoolChangesController do
     end
 
     it 'redirects' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(response).to redirect_to(computacenter_school_changes_path)
     end
 
     it 'sets the given computacenter reference to the school' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(flash[:success]).to eq('Ship To reference for SchoolName is 12')
     end
@@ -65,18 +65,18 @@ RSpec.describe Computacenter::SchoolChangesController do
         ],
       ]
 
-      patch :update, params: params
+      patch(:update, params:)
 
       expect_to_have_sent_caps_to_computacenter(requests)
     end
 
     it 'do not notify Computacenter by email' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .not_to have_enqueued_mail(ComputacenterMailer)
     end
 
     it 'do not notify the school' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .not_to have_enqueued_mail(CanOrderDevicesMailer)
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Computacenter::SchoolChangesController do
       let(:change_ship_to) { '--' }
 
       it 'display the edit view' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect(flash[:success]).to be_blank
         expect(response).to render_template(:edit)

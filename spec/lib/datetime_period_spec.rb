@@ -34,7 +34,7 @@ RSpec.describe DatetimePeriod, type: :model do
   describe '#to_s' do
     let(:start_at_string) { '1 Jan 2021 09:00' }
     let(:end_at_string) { '2 Jan 2021 10:00' }
-    let(:period) { described_class.new(start_at_string: start_at_string, end_at_string: end_at_string) }
+    let(:period) { described_class.new(start_at_string:, end_at_string:) }
 
     specify { expect(period.to_s).to eq('2021-01-01T09:00--2021-01-02T10:00') }
   end

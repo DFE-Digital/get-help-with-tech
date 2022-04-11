@@ -10,7 +10,7 @@ class ImportDeviceAllocationsService
       school = School.find_by(urn: allocation[:urn])
 
       if school
-        UpdateSchoolDevicesService.new(school: school,
+        UpdateSchoolDevicesService.new(school:,
                                        laptop_allocation: allocation[:y3_10],
                                        cap_change_category: :import_device_allocations).call
       else

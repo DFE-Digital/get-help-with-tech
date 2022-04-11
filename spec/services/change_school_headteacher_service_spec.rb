@@ -34,7 +34,7 @@ RSpec.describe ChangeSchoolHeadteacherService, type: :model do
 
     context 'when the school have a non-headteacher contact' do
       let(:school) { create(:school) }
-      let(:headteacher_id) { create(:school_contact, :contact, school: school).id }
+      let(:headteacher_id) { create(:school_contact, :contact, school:).id }
 
       let!(:result) { service.call }
 

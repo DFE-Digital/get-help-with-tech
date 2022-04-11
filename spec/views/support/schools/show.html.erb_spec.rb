@@ -8,7 +8,7 @@ RSpec.describe 'support/schools/show.html.erb' do
     enable_pundit(view, support_user)
     assign(:school, school)
     assign(:current_user, support_user)
-    assign(:timeline, Timeline::School.new(school: school))
+    assign(:timeline, Timeline::School.new(school:))
   end
 
   describe 'when school#can_invite_users? is true' do
@@ -40,7 +40,7 @@ RSpec.describe 'support/schools/show.html.erb' do
 
   context 'when there is a related school' do
     before do
-      SchoolLink.create!(school: school, urn: '123456', link_type: 'predecessor')
+      SchoolLink.create!(school:, urn: '123456', link_type: 'predecessor')
     end
 
     it 'shows tab with related school' do

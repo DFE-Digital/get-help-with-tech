@@ -20,7 +20,7 @@ class Computacenter::API::CapUsageUpdateBatch
   end
 
   def apply_update_and_catch_errors(update)
-    update.apply!(notify_decreases: notify_decreases, cap_usage_update_payload_id: @cap_usage_update_payload_id)
+    update.apply!(notify_decreases:, cap_usage_update_payload_id: @cap_usage_update_payload_id)
   rescue ActiveRecord::RecordNotFound => e
     update.fail! e.message
   end

@@ -10,8 +10,8 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
   end
 
   context 'when the user has already submitted requests' do
-    let(:another_user_from_the_same_school) { create(:school_user, school: school) }
-    let(:requests) { create_list(:extra_mobile_data_request, 5, status: 'new', created_by_user: user, school: school) }
+    let(:another_user_from_the_same_school) { create(:school_user, school:) }
+    let(:requests) { create_list(:extra_mobile_data_request, 5, status: 'new', created_by_user: user, school:) }
 
     before do
       requests.last.unavailable_status!
@@ -76,7 +76,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       let(:mno_without_view_template) { MobileNetwork.find_or_create_by(brand: 'Some Unknown Mobile', participation_in_pilot: 'participating') }
       let(:mno_with_view_template) { MobileNetwork.find_or_create_by(brand: 'BT Mobile', participation_in_pilot: 'participating') }
       let(:status) { 'new' }
-      let!(:request) { create(:extra_mobile_data_request, status: status, created_by_user: user, school: school, mobile_network: mno_with_view_template, device_phone_number: '07123 123456') }
+      let!(:request) { create(:extra_mobile_data_request, status:, created_by_user: user, school:, mobile_network: mno_with_view_template, device_phone_number: '07123 123456') }
 
       before do
         visit extra_data_requests_internet_mobile_school_path(school)
@@ -104,7 +104,7 @@ RSpec.feature 'Accessing the extra mobile data requests area as a school user', 
       end
 
       context 'when the request is for a mobile network which does not have an offer details partial template' do
-        let(:request) { create(:extra_mobile_data_request, status: 'new', created_by_user: user, school: school, mobile_network: mno_without_view_template) }
+        let(:request) { create(:extra_mobile_data_request, status: 'new', created_by_user: user, school:, mobile_network: mno_without_view_template) }
 
         it 'does not show offer details' do
           expect(page).not_to have_content "#{request.mobile_network.brand} offer"

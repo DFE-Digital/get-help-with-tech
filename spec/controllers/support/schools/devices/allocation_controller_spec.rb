@@ -19,7 +19,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
              routers: [5, 4, 1])
     end
 
-    before { get :edit, params: { school_urn: school.urn, device_type: device_type } }
+    before { get :edit, params: { school_urn: school.urn, device_type: } }
 
     context 'when the user is not support' do
       let(:user) { create(:user) }
@@ -81,7 +81,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
         device_type: 'laptop',
         school_urn: school.urn,
         support_allocation_form: {
-          allocation: allocation,
+          allocation:,
         },
       }
     end
@@ -91,7 +91,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     context 'when the user is not support' do
       let(:user) { create(:user) }
 
-      before { patch :update, params: params }
+      before { patch(:update, params:) }
 
       it 'forbid' do
         expect(response).to have_http_status(:forbidden)
@@ -102,7 +102,7 @@ RSpec.describe Support::Schools::Devices::AllocationController do
       let(:allocation) { '0' }
 
       it 'display the edit view' do
-        patch :update, params: params
+        patch(:update, params:)
 
         expect(flash[:success]).to be_blank
         expect(response).to render_template(:edit)
@@ -111,58 +111,58 @@ RSpec.describe Support::Schools::Devices::AllocationController do
     end
 
     it 'redirects to the school view' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(response).to redirect_to(support_school_path(school.urn))
     end
 
     it 'displays successful message' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(flash[:success]).to eq('We’ve saved the new allocation')
     end
 
     it 'sets the given allocation to the school' do
       expect {
-        patch :update, params: params
+        patch(:update, params:)
       }.to change { school.reload.allocation(:laptop) }.from(5).to(3)
     end
 
     it 'adjust school laptop cap based on school order state' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .to change { school.reload.cap(:laptop) }.from(4).to(2)
     end
 
     it 'update school devices cap on Computacenter' do
-      patch :update, params: params
+      patch(:update, params:)
 
       expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false)
     end
 
     it 'notify Computacenter of laptops cap change by email' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-              .with(params: { school: school, new_cap_value: 2 }, args: []).once
+              .with(params: { school:, new_cap_value: 2 }, args: []).once
     end
 
     it "notify the school's organizational users" do
       user = create(:user, :relevant_to_computacenter, responsible_body: rb)
 
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .to have_enqueued_mail(CanOrderDevicesMailer, :nudge_rb_to_add_school_contact)
-              .with(params: { school: school, user: user }, args: []).once
+              .with(params: { school:, user: }, args: []).once
     end
 
     it "notify support if no school's organizational users" do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-              .with(params: { school: school }, args: []).once
+              .with(params: { school: }, args: []).once
     end
 
     it 'notify Computacenter of school can order by email' do
-      expect { patch :update, params: params }
+      expect { patch(:update, params:) }
         .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-              .with(params: { school: school, new_cap_value: 2 }, args: []).once
+              .with(params: { school:, new_cap_value: 2 }, args: []).once
     end
   end
 end

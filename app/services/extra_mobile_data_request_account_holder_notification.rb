@@ -17,9 +17,9 @@ private
 
   def build_message
     @message ||= NotifySmsMessage.new(
-      phone_number: phone_number,
-      template_id: template_id,
-      personalisation: personalisation,
+      phone_number:,
+      template_id:,
+      personalisation:,
     )
   end
 

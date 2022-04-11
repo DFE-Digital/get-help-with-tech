@@ -7,14 +7,14 @@ class SignInTokenMailer < ApplicationMailer
 
     personalisation = {
       to: @user.email_address,
-      token_url: url(:validate_sign_in_token_url, token: @user.sign_in_token, identifier: identifier),
+      token_url: url(:validate_sign_in_token_url, token: @user.sign_in_token, identifier:),
       sign_in_link: url(:sign_in_url),
     }
 
     template_mail(
       notify_template_id,
       to: @user.email_address,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 

@@ -4,7 +4,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
   describe '#call' do
     context 'with one email' do
       let(:school) { create_schools_at_status(preorder_status: 'school_can_order') }
-      let(:user) { create(:school_user, orders_devices: true, school: school) }
+      let(:user) { create(:school_user, orders_devices: true, school:) }
       let(:now) { Time.zone.now }
 
       subject(:service) { described_class.new(emails: [user.email_address]) }
@@ -46,7 +46,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
       context 'if there are no devices orderable' do
         before do
           stub_computacenter_outgoing_api_calls
-          UpdateSchoolDevicesService.new(school: school,
+          UpdateSchoolDevicesService.new(school:,
                                          laptop_allocation: 10,
                                          over_order_reclaimed_laptops: 0,
                                          laptops_ordered: 10).call
@@ -86,7 +86,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
 
     context 'when user email has changed' do
       let(:school) { create(:school, :manages_orders) }
-      let(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com', school: school) }
+      let(:user) { create(:school_user, :relevant_to_computacenter, email_address: 'old@example.com', school:) }
 
       before do
         user.update(email_address: 'new@example.com')
@@ -104,7 +104,7 @@ RSpec.describe ConfirmTechsourceAccountCreatedService do
     context 'when user has been destroyed' do
       let(:school) { create(:school, :manages_orders, computacenter_reference: '123456') }
       let!(:user) do
-        create(:school_user, :relevant_to_computacenter, school: school)
+        create(:school_user, :relevant_to_computacenter, school:)
       end
 
       before do

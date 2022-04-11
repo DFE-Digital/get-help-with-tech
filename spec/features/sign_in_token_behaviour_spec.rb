@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.feature 'Sign-in token behaviour', type: :feature do
   let(:user) { create(:local_authority_user, :never_signed_in) }
   let(:ttl) { nil }
-  let(:token) { user.generate_token!(ttl: ttl) }
+  let(:token) { user.generate_token!(ttl:) }
   let(:identifier) { user.sign_in_identifier(token) }
 
   context 'with a valid sign_in_token link that has not expired' do
     let(:ttl) { 3600 }
-    let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
+    let(:validate_token_url) { validate_sign_in_token_url(token:, identifier:) }
 
     describe 'Visiting a valid sign_in_token link' do
       it 'does not sign the user in' do
@@ -62,7 +62,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
 
   context 'with a valid sign_in_token link that has expired' do
     let(:ttl) { -1 }
-    let(:validate_token_url) { validate_sign_in_token_url(token: token, identifier: identifier) }
+    let(:validate_token_url) { validate_sign_in_token_url(token:, identifier:) }
 
     it 'does not sign the user in' do
       visit validate_token_url
@@ -78,7 +78,7 @@ RSpec.feature 'Sign-in token behaviour', type: :feature do
   end
 
   context 'with an invalid sign_in_token link' do
-    let(:broken_token_url) { validate_sign_in_token_url(token: token, identifier: 'abac124') }
+    let(:broken_token_url) { validate_sign_in_token_url(token:, identifier: 'abac124') }
 
     scenario 'Visiting an invalid token link does not sign the user in' do
       visit broken_token_url

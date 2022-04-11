@@ -6,7 +6,7 @@ class MnoMailer < ApplicationMailer
       personalisation: personalisation(user, number_of_new_requests),
     )
 
-    audit_email(user: user)
+    audit_email(user:)
   end
 
 private
@@ -15,7 +15,7 @@ private
     EmailAudit.create!(message_type: 'notify_new_requests',
                        template: notify_new_requests_template_id,
                        email_address: user.email_address,
-                       user: user)
+                       user:)
   end
 
   def personalisation(user, number_of_new_requests)

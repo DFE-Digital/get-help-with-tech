@@ -139,7 +139,7 @@ RSpec.describe CreateUserService do
       let(:result) { CreateUserService.invite_school_user(params) }
 
       context 'user already a user on this school and belongs to a responsible body' do
-        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school: school, responsible_body_id: school.responsible_body_id) }
+        let!(:existing_user) { create(:school_user, email_address: 'existing@user.com', school:, responsible_body_id: school.responsible_body_id) }
 
         it 'does not create a user with the given params' do
           expect { result }.not_to change(User, :count)
@@ -156,7 +156,7 @@ RSpec.describe CreateUserService do
       end
 
       context 'on the given school' do
-        before { create(:school_user, email_address: 'existing@user.com', school: school) }
+        before { create(:school_user, email_address: 'existing@user.com', school:) }
 
         it 'does not create a user with the given params' do
           expect { result }.not_to change(User, :count)

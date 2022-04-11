@@ -92,7 +92,7 @@ class PreorderInformation < ApplicationRecord
           email_address: school_contact.email_address,
           full_name: school_contact.full_name,
           telephone: school_contact.phone_number,
-          school_id: school_id,
+          school_id:,
           orders_devices: true,
         )
         reload.update!(school_contacted_at: Time.zone.now, status: infer_status) if user.errors.blank?

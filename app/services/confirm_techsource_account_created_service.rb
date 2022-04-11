@@ -40,7 +40,7 @@ private
     # Guard against multiple updates
     return if user.previous_changes.dig('techsource_account_confirmed_at', 0).present?
 
-    UserCanOrderDevicesNotifications.new(user: user).call
+    UserCanOrderDevicesNotifications.new(user:).call
   end
 
   def email_no_longer_computacenter_relevant(email)

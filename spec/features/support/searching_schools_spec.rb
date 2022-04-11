@@ -8,7 +8,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   let(:schools) { create_list(:school, 2) }
   let(:responsible_body) { create(:trust) }
   let(:bad_urn) { '12492903' }
-  let(:schools_who_can_order) { create_list(:school, 2, responsible_body: responsible_body, order_state: 'can_order') }
+  let(:schools_who_can_order) { create_list(:school, 2, responsible_body:, order_state: 'can_order') }
 
   scenario 'support agent searches for a single school by name' do
     given_i_am_signed_in_as_a_support_user
@@ -74,7 +74,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
   context 'export of users scoped to schools' do
     let(:school_user1) { create(:school_user, email_address: 'user@can-order-school.sch.uk', school: schools_who_can_order.first) }
     let(:school_user2) { create(:school_user, email_address: 'user@another-can-order-school.sch.uk', school: schools_who_can_order.last) }
-    let(:trust_user) { create(:trust_user, email_address: 'user@trust.gov.uk', responsible_body: responsible_body) }
+    let(:trust_user) { create(:trust_user, email_address: 'user@trust.gov.uk', responsible_body:) }
     let(:out_of_scope_school_user) { create(:school_user) }
 
     before do
@@ -105,7 +105,7 @@ RSpec.feature 'Searching for schools by URNs and other criteria' do
 
   def and_multiple_schools_from_the_same_responsible_body_in_different_order_states
     schools_who_can_order
-    create_list(:school, 2, responsible_body: responsible_body, order_state: 'cannot_order')
+    create_list(:school, 2, responsible_body:, order_state: 'cannot_order')
   end
 
   def and_there_are_school_and_responsible_body_users
