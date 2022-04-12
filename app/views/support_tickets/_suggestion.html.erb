@@ -1,0 +1,8 @@
+<%= content_tag :li do %>
+  <%= content_tag :div, id: "#{suggestion.resource}_suggestion" do %>
+    <%= govuk_link_to suggestion.title,
+                      suggestion_resource_to_path(suggestion.resource),
+                      target: :blank,
+                      rel: 'noreferrer noopener' %>
+  <% end %>
+<% end %>

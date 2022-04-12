@@ -8,15 +8,18 @@ RSpec.describe SupportTicket::SupportNeedsForm, type: :model do
   end
 
   describe '#support_needs_options' do
-    it 'returns an array of label & value pairs' do
-      stub_const('SupportTicket::SupportNeedsForm::OPTIONS', { support_1: 'Support option 1' })
-      expect(form.support_needs_options).to match_array([OpenStruct.new(value: :support_1, label: 'Support option 1')])
+    it 'returns an array of SupportTicket::Options' do
+      allow(Rails.configuration.support_tickets).to receive(:[]).with(:support_needs_options).and_return([{ value: :type_of_user_value, label: 'Type of user label' }])
+      expect(form.support_needs_options).to be_an(Array)
+      expect(form.support_needs_options.first).to be_a(SupportTicket::Option)
+      expect(form.support_needs_options.first.value).to eq(:type_of_user_value)
+      expect(form.support_needs_options.first.label).to eq('Type of user label')
     end
   end
 
   describe '#selected_option_label' do
     it 'returns label for the selected option' do
-      stub_const('SupportTicket::SupportNeedsForm::OPTIONS', { option_1: 'Hello world' })
+      allow(Rails.configuration.support_tickets).to receive(:[]).with(:support_needs_options).and_return([{ value: :option_1, label: 'Hello world' }])
       expect(form.selected_option_label(:option_1)).to eq('Hello world')
     end
   end

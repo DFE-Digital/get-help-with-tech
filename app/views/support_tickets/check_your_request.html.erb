@@ -15,30 +15,34 @@
     </h1>
 
     <%= render GovukComponent::SummaryListComponent.new do |component| %>
-      <% component.row(classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-")) do |row|
-        row.key(text: "Which of these best describes you?")
+      <% description_row_title = "Which of these best describes you?" %>
+      <% component.row(classes: html_class_name(description_row_title)) do |row|
+        row.key(text: description_row_title)
         row.value(text: SupportTicket::DescribeYourselfForm.new.selected_option_label(@support_ticket.user_type))
         row.action(href: support_ticket_describe_yourself_path)
       end %>
 
       <% if @support_ticket.requires_school? %>
-        <% component.row(classes: "Which of these best describes you".to_s.downcase.gsub(/ /, "-")) do |row|
-          row.key(text: "Which school do you work for?")
+        <% school_row_title = "Which school are you in?" %>
+        <% component.row(classes: html_class_name(school_row_title)) do |row|
+          row.key(text: school_row_title)
           row.value(text: "#{@support_ticket.school_name} (URN: #{ @support_ticket.school_unique_id})")
           row.action(href: @school_details_path)
         end %>
       <% end %>
 
       <% if current_user.id.nil? %>
-        <% component.row(classes: "Name".to_s.downcase.gsub(/ /, "-")) do |row|
-          row.key(text: "How can we contact you?")
+        <% contact_row_title = "How can we contact you?" %>
+        <% component.row(classes: html_class_name(contact_row_title)) do |row|
+          row.key(text: contact_row_title)
           row.value(text: "#{ @support_ticket.full_name}<br>#{ @support_ticket.email_address}<br>#{ @support_ticket.telephone_number}".html_safe)
           row.action(href: support_ticket_contact_details_path)
         end %>
       <% end %>
 
-      <% component.row(classes: "Name".to_s.downcase.gsub(/ /, "-")) do |row|
-        row.key(text: "What do you need help with?")
+      <% needs_row_title = "What do you need help with?" %>
+      <% component.row(classes: html_class_name(needs_row_title)) do |row|
+        row.key(text: needs_row_title)
         row.value(text: content_tag(:ul, :class => 'govuk-list govuk-list--bullet') do
           @support_ticket.support_topics.collect do |topic|
             content_tag(:li, SupportTicket::SupportNeedsForm.new.selected_option_label(topic))
@@ -47,8 +51,9 @@
         row.action(href: support_ticket_support_needs_path)
       end %>
 
-      <% component.row(classes: "Name".to_s.downcase.gsub(/ /, "-")) do |row|
-        row.key(text: "How can we help you?")
+      <% message_row_title = "How can we help you?" %>
+      <% component.row(classes: html_class_name(message_row_title)) do |row|
+        row.key(text: message_row_title)
         row.value(text: @support_ticket.message)
         row.action(href: support_ticket_support_details_path)
       end %>

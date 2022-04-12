@@ -204,6 +204,18 @@ module ViewHelper
     MobileNetwork.where(participation_in_pilot: 'participating').order(:brand)
   end
 
+  def suggestion_resource_to_path(resource)
+    return public_send("#{resource}_path") if resource.is_a?(Symbol)
+
+    return resource if resource.is_a?(String) && resource.starts_with?('/')
+
+    '/'
+  end
+
+  def html_class_name(string)
+    string.to_s.parameterize.underscore
+  end
+
 private
 
   def bios_unlocker_link(asset)

@@ -25,7 +25,7 @@ private
 
   def existing_params
     {
-      support_topics: support_ticket.support_topics,
+      support_topics: support_ticket.support_topics.map(&:to_sym),
     }
   end
 

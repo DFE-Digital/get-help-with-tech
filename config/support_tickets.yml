@@ -1,0 +1,60 @@
+describe_yourself_options:
+- value: :school_or_single_academy_trust
+  label: I work for a school or single-academy trust
+  suggestions: &1
+  - title: How to access the Get help with technology service
+    resource: :how_to_access_the_get_help_with_technology_service
+  - title: Who could get laptops and tablets, and why DfE provided them
+    resource: :what_to_do_if_you_cannot_get_laptops_tablets_or_internet_access_from_dfe
+  - title: How laptops and tablets were allocated
+    resource: "/devices/device-allocations"
+  - title: Who owns the devices
+    resource: "/devices/device-distribution-and-ownership"
+- value: :multi_academy_trust
+  label: I work for a multi-academy trust
+  suggestions: *1
+- value: :local_authority
+  label: I work for a local authority
+  suggestions: *1
+- value: :college
+  label: I work for a college
+  suggestions: *1
+- value: :parent_or_guardian_or_carer_or_pupil_or_care_leaver
+  label: I’m a parent, guardian, pupil or care leaver
+  suggestions: &2
+  - title: How laptops and tablets were allocated
+    resource: "/devices/device-allocations"
+  - title: Who owns the devices
+    resource: "/devices/device-distribution-and-ownership"
+- value: :other_type_of_user
+  label: I’m none of the above
+  suggestions: *2
+support_needs_options:
+- value: :laptops_and_tablets
+  label: Laptops and tablets
+  suggestions:
+  - title: Microsoft Windows laptops and tablets setup guide
+    resource: "/devices/preparing-a-standard-windows-device"
+  - title: Guide to resetting windows laptops and tablets
+    resource: "/devices/guide-to-resetting-windows-laptops-and-tablets"
+  - title: Safeguarding devices
+    resource: "/devices/safeguarding-for-device-users"
+  - title: Google Chromebooks
+    resource: "/devices/preparing-chromebooks"
+  - title: Apple iPads setup guide
+    resource: "/devices/preparing-ipads"
+  - title: Faulty devices
+    resource: "/devices/replace-a-faulty-device"
+- value: :4g_wireless_routers_and_internet_access
+  label: 4G wireless routers and internet access
+  suggestions:
+  - title: Resetting 4G routers
+    resource: "/managing_your_4g_wireless_routers"
+  - title: Finding out about internet access needs
+    resource: "/finding-out-about-internet-access-needs"
+- value: :digital_education_platforms
+  label: Digital education platforms (Google Workspace for Education Fundamentals or Microsoft 365 Education)
+- value: :technology_training_and_support
+  label: Technology training and support for schools and colleges
+- value: :something_else
+  label: Something else

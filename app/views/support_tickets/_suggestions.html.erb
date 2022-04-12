@@ -1,0 +1,5 @@
+<h2 class="govuk-heading-m"><%= heading_text %></h2>
+<p class="govuk-body">The following links open in a new tab.</p>
+<%= content_tag :ul, class: 'govuk-list govuk-list--bullet', id: "#{option}_suggestions" do %>
+  <%= render partial: 'support_tickets/suggestion', collection: suggestions %>
+<% end %>

@@ -188,4 +188,30 @@ RSpec.describe ViewHelper do
       end
     end
   end
+
+  describe '#suggestion_resource_to_path' do
+    context 'when the resource is a symbol' do
+      it 'returns the correct path' do
+        expect(helper.suggestion_resource_to_path(:privacy_general_privacy_notice)).to eq('/privacy/general-privacy-notice')
+      end
+    end
+
+    context 'when the resource is a String starting with "/"' do
+      it 'returns the correct path' do
+        expect(helper.suggestion_resource_to_path('/privacy/general-privacy-notice')).to eq('/privacy/general-privacy-notice')
+      end
+    end
+
+    context 'when the resource is not a Symbol or a String not starting with "/"' do
+      it 'returns the root path' do
+        expect(helper.suggestion_resource_to_path('privacy/general-privacy-notice')).to eq('/')
+      end
+    end
+  end
+
+  describe '#html_class_name' do
+    it 'returns a valid class name' do
+      expect(helper.html_class_name('Foo bar?')).to eq('foo_bar')
+    end
+  end
 end

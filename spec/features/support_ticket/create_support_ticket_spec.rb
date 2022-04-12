@@ -6,40 +6,48 @@ RSpec.feature 'Create support ticket' do
   let(:contact_details_email) { 'john.doe@example.com' }
   let(:contact_details_telephone_number) { '0123456789' }
   let(:support_details_message) { 'This is a test message' }
-  let(:get_support_page) { PageObjects::SupportTicket::GetSupportPage.new }
-  let(:describe_yourself_page) { PageObjects::SupportTicket::DescribeYourselfPage.new }
-  let(:school_details_page) { PageObjects::SupportTicket::SchoolDetailsPage.new }
-  let(:contact_details_page) { PageObjects::SupportTicket::ContactDetailsPage.new }
-  let(:support_needs_page) { PageObjects::SupportTicket::SupportNeedsPage.new }
-  let(:support_details_page) { PageObjects::SupportTicket::SupportDetailsPage.new }
-  let(:check_your_request_page) { PageObjects::SupportTicket::CheckYourRequestPage.new }
-  let(:thank_you_page) { PageObjects::SupportTicket::ThankYouPage.new }
+  let(:app) { PageObjects::SupportTicket::App.new }
+  let(:get_support_page) { app.get_support }
+  let(:describe_yourself_page) { app.describe_yourself }
+  let(:school_details_page) { app.school_details }
+  let(:contact_details_page) { app.contact_details }
+  let(:support_needs_page) { app.support_needs }
+  let(:support_details_page) { app.support_details }
+  let(:check_your_request_page) { app.check_your_request }
+  let(:thank_you_page) { app.thank_you }
+  let(:start_the_form_journey_result) { app.load_school_details_page }
 
-  scenario 'not signed in school user can create a support ticket' do
-    given_there_is_a_school
+  context 'not signed in' do
+    scenario 'school user can create a support ticket' do
+      given_there_is_a_school
 
-    when_i_visit_the_get_support_page
-    and_i_click_the_start_now_button
-    then_the_describe_yourself_page_is_displayed
-    then_on_the_describe_yourself_page_i_select_that_i_work_for_a_school_or_trust
-    and_on_the_describe_yourself_page_i_click_the_continue_button
-    then_the_school_details_page_is_displayed
-    then_on_the_school_details_page_i_enter_the_school_name_and_urn
-    and_on_the_school_details_page_i_click_the_continue_button
-    then_the_contact_details_page_is_displayed
-    then_on_the_contact_details_page_i_enter_the_contact_details
-    and_on_the_contact_details_page_i_click_the_continue_button
-    then_the_support_needs_page_is_displayed
-    then_on_the_support_needs_page_i_select_laptops
-    and_on_the_support_needs_page_i_click_the_continue_button
-    then_the_support_details_page_is_displayed
-    then_on_the_support_details_page_i_enter_the_support_details
-    and_on_the_support_details_page_i_click_the_continue_button
-    then_the_check_your_request_page_is_displayed
-    and_the_check_your_request_page_has_the_correct_details
-    and_on_the_check_your_request_page_i_click_the_continue_button
-    then_the_thank_you_page_is_displayed
-    and_the_thank_you_page_has_the_confirmation_message
+      when_i_visit_the_get_support_page
+      and_i_click_the_start_now_button
+      the_describe_yourself_page_is_displayed
+      then_on_the_describe_yourself_page_i_select_that_i_work_for_a_school_or_trust
+      and_on_the_describe_yourself_page_i_click_the_continue_button
+      the_school_details_page_is_displayed
+      then_on_the_school_details_page_i_enter_the_school_name_and_urn
+      and_on_the_school_details_page_i_click_the_continue_button
+      the_contact_details_page_is_displayed
+      then_on_the_contact_details_page_i_enter_the_contact_details
+      and_on_the_contact_details_page_i_click_the_continue_button
+      the_support_needs_page_is_displayed
+      then_on_the_support_needs_page_i_select_laptops
+      and_on_the_support_needs_page_i_click_the_continue_button
+      the_support_details_page_is_displayed
+      then_on_the_support_details_page_i_enter_the_support_details
+      and_on_the_support_details_page_i_click_the_continue_button
+      the_check_your_request_page_is_displayed
+      and_the_check_your_request_page_has_the_correct_details
+      and_on_the_check_your_request_page_i_click_the_continue_button
+      the_thank_you_page_is_displayed
+      and_the_thank_you_page_has_the_confirmation_message
+    end
+
+    it 'creates a new SupportTicket record upon starting the journey' do
+      expect { start_the_form_journey_result }.to change { SupportTicket.count }.by(1)
+    end
   end
 
   def and_i_click_the_start_now_button
@@ -86,6 +94,34 @@ RSpec.feature 'Create support ticket' do
     expect(thank_you_page).to have_text 'Support request sent'
   end
 
+  def the_check_your_request_page_is_displayed
+    expect(check_your_request_page).to be_displayed
+  end
+
+  def the_contact_details_page_is_displayed
+    expect(contact_details_page).to be_displayed
+  end
+
+  def the_describe_yourself_page_is_displayed
+    expect(describe_yourself_page).to be_displayed
+  end
+
+  def the_school_details_page_is_displayed
+    expect(school_details_page).to be_displayed
+  end
+
+  def the_support_details_page_is_displayed
+    expect(support_details_page).to be_displayed
+  end
+
+  def the_support_needs_page_is_displayed
+    expect(support_needs_page).to be_displayed
+  end
+
+  def the_thank_you_page_is_displayed
+    expect(thank_you_page).to be_displayed
+  end
+
   def then_on_the_contact_details_page_i_enter_the_contact_details
     contact_details_page.your_full_name_field.set contact_details_name
     contact_details_page.your_email_address_field.set contact_details_email
@@ -109,32 +145,12 @@ RSpec.feature 'Create support ticket' do
     support_needs_page.laptops_checkbox_option.click
   end
 
-  def then_the_check_your_request_page_is_displayed
-    expect(check_your_request_page).to be_displayed
+  def when_i_complete_the_support_ticket_form
+    app.load_check_your_request_page
   end
 
-  def then_the_contact_details_page_is_displayed
-    expect(contact_details_page).to be_displayed
-  end
-
-  def then_the_describe_yourself_page_is_displayed
-    expect(describe_yourself_page).to be_displayed
-  end
-
-  def then_the_school_details_page_is_displayed
-    expect(school_details_page).to be_displayed
-  end
-
-  def then_the_support_details_page_is_displayed
-    expect(support_details_page).to be_displayed
-  end
-
-  def then_the_support_needs_page_is_displayed
-    expect(support_needs_page).to be_displayed
-  end
-
-  def then_the_thank_you_page_is_displayed
-    expect(thank_you_page).to be_displayed
+  def when_i_visit_the_describe_yourself_page
+    describe_yourself_page.load
   end
 
   def when_i_visit_the_get_support_page
