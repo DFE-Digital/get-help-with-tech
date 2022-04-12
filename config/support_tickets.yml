@@ -45,7 +45,7 @@ support_needs_options:
     resource: "/devices/preparing-ipads"
   - title: Faulty devices
     resource: "/devices/replace-a-faulty-device"
-- value: 4g_wireless_routers_and_internet_access
+- value: :4g_wireless_routers_and_internet_access
   label: 4G wireless routers and internet access
   suggestions:
   - title: Resetting 4G routers

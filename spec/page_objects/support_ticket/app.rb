@@ -5,12 +5,20 @@ module PageObjects
         PageObjects::SupportTicket::CheckYourRequestPage.new
       end
 
+      def complete_the_form
+        load_check_your_request_page.continue_button.click
+      end
+
       def contact_details
         PageObjects::SupportTicket::ContactDetailsPage.new
       end
 
       def describe_yourself
         PageObjects::SupportTicket::DescribeYourselfPage.new
+      end
+
+      def get_support
+        PageObjects::SupportTicket::GetSupportPage.new
       end
 
       def load_check_your_request_page

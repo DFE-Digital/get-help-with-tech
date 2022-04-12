@@ -208,4 +208,10 @@ RSpec.describe ViewHelper do
       end
     end
   end
+
+  describe '#html_class_name' do
+    it 'returns a valid class name' do
+      expect(helper.html_class_name('Foo bar?')).to eq('foo_bar')
+    end
+  end
 end

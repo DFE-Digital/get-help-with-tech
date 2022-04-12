@@ -212,6 +212,10 @@ module ViewHelper
     '/'
   end
 
+  def html_class_name(string)
+    string.to_s.parameterize.underscore
+  end
+
 private
 
   def bios_unlocker_link(asset)

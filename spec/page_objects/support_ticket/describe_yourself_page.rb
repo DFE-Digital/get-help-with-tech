@@ -19,8 +19,12 @@ module PageObjects
       element :continue_button, :button, text: 'Continue'
 
       def load_then_select_anything_and_continue
+        load_select_option_and_continue
+      end
+
+      def load_select_option_and_continue(describe_option: :school)
         load
-        school_radio_button.click
+        send("#{describe_option}_radio_button").click
         continue_button.click
       end
     end
