@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe DeviceSupplier::ExportUsersToFileService, type: :model do
   describe '#call' do
     let(:school) { create(:school, :manages_orders) }
-    let(:user) { create(:school_user, :relevant_to_computacenter, :with_a_confirmed_techsource_account, school: school) }
+    let(:user) { create(:school_user, :relevant_to_computacenter, :with_a_confirmed_techsource_account, school:) }
     let(:filename) { Rails.root.join('tmp/device_supplier_export_users_test_data.csv') }
     let(:csv) { CSV.read(filename, headers: true) }
     let(:expected_headers) { DeviceSupplier::UserReport.headers }
@@ -17,7 +17,7 @@ RSpec.describe DeviceSupplier::ExportUsersToFileService, type: :model do
       remove_file(filename)
     end
 
-    subject(:service) { described_class.new(filename, user_ids: user_ids) }
+    subject(:service) { described_class.new(filename, user_ids:) }
 
     before do |test|
       user

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :school_welcome_wizard do
     association :school
-    user { create(:school_user, school: school) }
+    user { create(:school_user, school:) }
     step { 'allocation' }
 
     trait :completed do

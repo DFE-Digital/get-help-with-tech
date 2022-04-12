@@ -18,7 +18,7 @@ class SchoolPreorderStatusTagComponentPreview < ViewComponent::Preview
       VIEWER.each do |viewer|
         define_method("#{who_order}_orders_#{status}_#{viewer.class.to_s.underscore}_viewing") do
           school = OpenStruct.new(preorder_status: status, who_will_order_devices: who_order)
-          render(SchoolPreorderStatusTagComponent.new(school: school, viewer: viewer))
+          render(SchoolPreorderStatusTagComponent.new(school:, viewer:))
         end
       end
     end

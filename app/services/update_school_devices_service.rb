@@ -64,7 +64,7 @@ private
 
   def notify_other_agents
     device_types = DEVICE_TYPES.select { |device_type| notify_device?(device_type) }
-    CapUpdateNotificationsService.new(school, device_types: device_types, notify_school: notify_school).call
+    CapUpdateNotificationsService.new(school, device_types:, notify_school:).call
   end
 
   def ordering?(device_type)
@@ -81,7 +81,7 @@ private
 
   def record_cap_change_meta_data!(device_type)
     if initial_raw_cap(device_type) != school.raw_cap(device_type)
-      CapChange.create!(device_type: device_type,
+      CapChange.create!(device_type:,
                         school_id: school.id,
                         new_cap: school.raw_cap(device_type),
                         prev_cap: initial_raw_cap(device_type),
@@ -119,7 +119,7 @@ private
   end
 
   def update_state!
-    school.update!(order_state: order_state) if update_state?
+    school.update!(order_state:) if update_state?
   end
 
   def update_state?

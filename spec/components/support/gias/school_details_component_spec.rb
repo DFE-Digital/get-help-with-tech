@@ -19,7 +19,7 @@ describe Support::Gias::SchoolDetailsComponent do
   context 'when the staged school needs to be opened' do
     context 'when there is a predecessor school' do
       let(:staged_school_to_close) { create(:staged_school, :primary) }
-      let(:school_link) { create(:staged_school_link, :predecessor, staged_school: staged_school, link_urn: staged_school_to_close.urn) }
+      let(:school_link) { create(:staged_school_link, :predecessor, staged_school:, link_urn: staged_school_to_close.urn) }
       let(:school) { create(:school, urn: staged_school_to_close.urn) }
 
       before do
@@ -40,7 +40,7 @@ describe Support::Gias::SchoolDetailsComponent do
 
     context 'when there is a successor school to be added' do
       let(:staged_school_to_open) { create(:staged_school, :primary) }
-      let(:school_link) { create(:staged_school_link, :successor, staged_school: staged_school, link_urn: staged_school_to_open.urn) }
+      let(:school_link) { create(:staged_school_link, :successor, staged_school:, link_urn: staged_school_to_open.urn) }
 
       before do
         school_link
@@ -55,7 +55,7 @@ describe Support::Gias::SchoolDetailsComponent do
 
     context 'when there is a successor school that has already been added' do
       let(:staged_school_to_open) { create(:staged_school, :primary) }
-      let(:school_link) { create(:staged_school_link, :successor, staged_school: staged_school, link_urn: staged_school_to_open.urn) }
+      let(:school_link) { create(:staged_school_link, :successor, staged_school:, link_urn: staged_school_to_open.urn) }
       let(:school) { create(:school, urn: staged_school_to_open.urn, name: staged_school_to_open.name) }
 
       before do

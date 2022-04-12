@@ -11,7 +11,7 @@ RSpec.describe Support::AllocationForm, type: :model do
     let!(:school) do
       create(:school,
              :centrally_managed,
-             order_state: order_state,
+             order_state:,
              computacenter_reference: '11',
              responsible_body: rb,
              laptops: [5, 0, 0, 1],
@@ -34,7 +34,7 @@ RSpec.describe Support::AllocationForm, type: :model do
       let(:rb) { create(:local_authority, :manages_centrally, :vcap, computacenter_reference: '1000') }
 
       subject(:form) do
-        described_class.new(allocation: allocation, device_type: device_type, school: school)
+        described_class.new(allocation:, device_type:, school:)
       end
 
       before { rb.calculate_vcaps! }
@@ -171,7 +171,7 @@ RSpec.describe Support::AllocationForm, type: :model do
       end
 
       subject(:form) do
-        described_class.new(allocation: allocation, device_type: device_type, school: school)
+        described_class.new(allocation:, device_type:, school:)
       end
 
       context 'when allocation decreases below devices ordered' do
@@ -261,7 +261,7 @@ RSpec.describe Support::AllocationForm, type: :model do
           it 'notify Computacenter of device cap change by email' do
             expect { form.save }
               .to have_enqueued_mail(ComputacenterMailer, :notify_of_devices_cap_change)
-                    .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                    .with(params: { school:, new_cap_value: 3 }, args: []).once
           end
 
           it "notify the school's organizational users" do
@@ -269,19 +269,19 @@ RSpec.describe Support::AllocationForm, type: :model do
 
             expect { form.save }
               .to have_enqueued_mail(CanOrderDevicesMailer, :user_can_order_but_action_needed)
-                    .with(params: { school: school, user: user }, args: []).once
+                    .with(params: { school:, user: }, args: []).once
           end
 
           it "notify support if no school's organizational users" do
             expect { form.save }
               .to have_enqueued_mail(CanOrderDevicesMailer, :notify_support_school_can_order_but_no_one_contacted)
-                    .with(params: { school: school }, args: []).once
+                    .with(params: { school: }, args: []).once
           end
 
           it 'notify Computacenter of school can order by email' do
             expect { form.save }
               .to have_enqueued_mail(ComputacenterMailer, :notify_of_school_can_order)
-                    .with(params: { school: school, new_cap_value: 3 }, args: []).once
+                    .with(params: { school:, new_cap_value: 3 }, args: []).once
           end
         end
       end

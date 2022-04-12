@@ -18,7 +18,7 @@ RSpec.describe AllocationJob do
         described_class.perform_now(batch_job)
 
         expect(UpdateSchoolDevicesService).to have_received(:new).with(
-          school: school,
+          school:,
           order_state: batch_job.order_state,
           laptop_allocation: batch_job.allocation_delta,
           notify_computacenter: true,
@@ -47,7 +47,7 @@ RSpec.describe AllocationJob do
         described_class.perform_now(batch_job)
 
         expect(UpdateSchoolDevicesService).to have_received(:new).with(
-          school: school,
+          school:,
           order_state: batch_job.order_state,
           laptop_allocation: batch_job.allocation_delta,
           notify_computacenter: true,

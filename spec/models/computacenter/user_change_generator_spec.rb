@@ -22,7 +22,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
     let(:school) { create(:school, :manages_orders, computacenter_reference: nil) }
 
     before do
-      create(:school_user, :relevant_to_computacenter, school: school)
+      create(:school_user, :relevant_to_computacenter, school:)
     end
 
     it 'generates a user change' do
@@ -41,7 +41,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
     before do
       allow(Settings.computacenter.service_now_user_import_api).to receive(:endpoint).and_return('http://example.com')
       stub_computacenter_outgoing_api_calls
-      create(:school_user, :relevant_to_computacenter, school: school)
+      create(:school_user, :relevant_to_computacenter, school:)
     end
 
     context 'when CC api calls are disabled?', with_feature_flags: { notify_cc_about_user_changes: 'inactive' } do
@@ -66,7 +66,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
 
     context 'when the user is relevant_to_computacenter' do
       let(:school) { create(:school, :manages_orders) }
-      let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+      let(:user) { create(:school_user, :relevant_to_computacenter, school:) }
 
       context 'and the user has not been soft_deleted' do
         before do
@@ -85,7 +85,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
 
         context 'and there is an existing UserChange for the user of type Remove' do
           before do
-            Computacenter::UserChange.create(user: user, type_of_update: 'Remove')
+            Computacenter::UserChange.create(user:, type_of_update: 'Remove')
           end
 
           it 'returns true' do
@@ -101,7 +101,7 @@ RSpec.describe Computacenter::UserChangeGenerator do
 
         context 'and there is an existing UserChange for the user of type Remove' do
           before do
-            Computacenter::UserChange.create(user: user, type_of_update: 'Remove')
+            Computacenter::UserChange.create(user:, type_of_update: 'Remove')
           end
 
           it 'returns false' do

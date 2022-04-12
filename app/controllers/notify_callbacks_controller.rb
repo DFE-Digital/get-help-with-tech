@@ -10,7 +10,7 @@ class NotifyCallbacksController < ActionController::Base
       existing_audit.update!(govuk_notify_status: callback_params[:status])
     else
       EmailAudit.create!(
-        user: user,
+        user:,
         email_address: callback_params[:to],
         govuk_notify_id: callback_params[:id],
         govuk_notify_status: callback_params[:status],

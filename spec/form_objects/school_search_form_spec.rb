@@ -151,7 +151,7 @@ RSpec.describe SchoolSearchForm, type: :model do
     let(:urns) { nil }
     let(:responsible_body_id) { nil }
     let(:order_state) { nil }
-    let(:form) { SchoolSearchForm.new(identifiers: urns, responsible_body_id: responsible_body_id, order_state: order_state, search_type: 'multiple') }
+    let(:form) { SchoolSearchForm.new(identifiers: urns, responsible_body_id:, order_state:, search_type: 'multiple') }
     let(:expected_timestamp) { Time.zone.now.utc.iso8601 }
 
     before do

@@ -7,16 +7,16 @@ class CalculateVcapJob < ApplicationJob
     @responsible_body = ResponsibleBody.find(responsible_body_id)
     @batch_id = batch_id
     process_allocation_batch_jobs
-    responsible_body.calculate_vcap(:laptop, notify_computacenter: true, notify_school: notify_school)
-    responsible_body.calculate_vcap(:router, notify_computacenter: true, notify_school: notify_school)
+    responsible_body.calculate_vcap(:laptop, notify_computacenter: true, notify_school:)
+    responsible_body.calculate_vcap(:router, notify_computacenter: true, notify_school:)
   end
 
 private
 
   def allocation_batch_jobs
     vcap_school_ids = Array(responsible_body.vcap_schools.pluck(:urn, :ukprn)).flatten.uniq.compact
-    AllocationBatchJob.distinct.where(batch_id: batch_id, urn: vcap_school_ids)
-                      .or(AllocationBatchJob.distinct.where(batch_id: batch_id, ukprn: vcap_school_ids))
+    AllocationBatchJob.distinct.where(batch_id:, urn: vcap_school_ids)
+                      .or(AllocationBatchJob.distinct.where(batch_id:, ukprn: vcap_school_ids))
   end
 
   def process_allocation_batch_jobs

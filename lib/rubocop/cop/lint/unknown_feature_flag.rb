@@ -41,7 +41,7 @@ module RuboCop
       private
 
         def error_message(flag)
-          sprintf(MSG, flag: flag)
+          sprintf(MSG, flag:)
         end
       end
     end

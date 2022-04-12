@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'View school details' do
   let(:school) { create(:school, :manages_orders, :does_not_need_chromebooks, laptops: [1, 1, 0]) }
-  let(:user) { create(:school_user, full_name: 'AAA Smith', school: school) }
+  let(:user) { create(:school_user, full_name: 'AAA Smith', school:) }
 
   describe 'top of the page' do
     let(:school_with_valid_allocation) do
@@ -65,7 +65,7 @@ RSpec.feature 'View school details' do
       end
 
       context 'user can order devices' do
-        let(:user) { create(:school_user, :orders_devices, full_name: 'AAA Smith', school: school) }
+        let(:user) { create(:school_user, :orders_devices, full_name: 'AAA Smith', school:) }
 
         it 'shows the link to the TechSource order history' do
           expect(page).to have_link('Order history')

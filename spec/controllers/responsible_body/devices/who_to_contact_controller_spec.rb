@@ -136,7 +136,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactController do
 
   describe '#update' do
     context 'when 2 contacts exist' do
-      let!(:second_contact) { create(:school_contact, :contact, school: school) }
+      let!(:second_contact) { create(:school_contact, :contact, school:) }
 
       def perform_update!
         stub_computacenter_outgoing_api_calls

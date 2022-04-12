@@ -4,19 +4,19 @@ RSpec.describe Timeline::School, versioning: true do
   let(:school) { create(:school) }
 
   describe '#changesets' do
-    subject(:timeline) { described_class.new(school: school) }
+    subject(:timeline) { described_class.new(school:) }
 
     context 'when there are no relevant changes' do
       it 'add no changes to the result' do
         expect { school.update!(address_1: 'new address line 1') }
-          .not_to(change { described_class.new(school: school).changesets.map(&:changes) })
+          .not_to(change { described_class.new(school:).changesets.map(&:changes) })
       end
     end
 
     context 'when there are relevant changes' do
       it 'add a new changeset to the resulting collection' do
         expect { school.update!(status: 'closed') }
-          .to(change { described_class.new(school: school).changesets.size }.from(1).to(2))
+          .to(change { described_class.new(school:).changesets.size }.from(1).to(2))
       end
 
       it 'returns Changeset populated correctly' do

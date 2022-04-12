@@ -24,7 +24,7 @@ RSpec.describe SessionService do
     let(:session_id) { SecureRandom.hex }
 
     it 'sets expires_at' do
-      described_class.create_session!(session_id: session_id, user: user)
+      described_class.create_session!(session_id:, user:)
       session = Session.find(session_id)
       expect(session.expires_at.utc).to be_within(10.seconds).of(Time.zone.now.utc + 2.hours)
     end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Computacenter::API::CapUsageController do
   let(:user) { create(:computacenter_user) }
-  let(:api_token) { create(:api_token, status: :active, user: user) }
+  let(:api_token) { create(:api_token, status: :active, user:) }
   let(:cap_usage_update_packet) do
     <<~XML
       <CapUsage payloadID="45520C4CEEEF4CACAB2603847F08EFA2" dateTime="2020-06-18T09:20:45Z" >
@@ -40,7 +40,7 @@ RSpec.describe Computacenter::API::CapUsageController do
     end
 
     context 'expired api token' do
-      let(:api_token) { create(:api_token, status: :active, user: user, created_at: (APIToken::DEFAULT_TTL_DAYS + 1).days.ago) }
+      let(:api_token) { create(:api_token, status: :active, user:, created_at: (APIToken::DEFAULT_TTL_DAYS + 1).days.ago) }
 
       before do
         request.headers['Authorization'] = "Bearer #{api_token.token}"

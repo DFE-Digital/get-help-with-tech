@@ -3,7 +3,7 @@ require 'rails_helper'
 describe UserSummaryListComponent do
   let(:user) { create(:school_user, email_address: 'davy.jones@school.sch.uk', telephone: '12345') }
 
-  subject(:result) { render_inline(described_class.new(user: user)) }
+  subject(:result) { render_inline(described_class.new(user:)) }
 
   it 'displays the user email address' do
     expect(result.css('dd')[0].text).to include('davy.jones@school.sch.uk')

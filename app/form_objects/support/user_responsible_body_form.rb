@@ -19,7 +19,7 @@ class Support::UserResponsibleBodyForm
 
   def select_responsible_body_options
     @possible_responsible_bodies.pluck(:id, :name).map do |id, name|
-      OpenStruct.new(id: id, name: name)
+      OpenStruct.new(id:, name:)
     end
   end
 end

@@ -16,7 +16,7 @@ RSpec.describe Support::ExportUsersToFileService, type: :model do
       remove_file(filename)
     end
 
-    subject(:service) { described_class.new(filename, user_ids: user_ids) }
+    subject(:service) { described_class.new(filename, user_ids:) }
 
     before do
       user

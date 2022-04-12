@@ -5,7 +5,7 @@ class InviteSchoolUserMailer < ApplicationMailer
     template_mail(
       invite_user_template_id,
       to: @user.email_address,
-      personalisation: personalisation,
+      personalisation:,
     )
   end
 

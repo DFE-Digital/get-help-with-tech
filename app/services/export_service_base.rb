@@ -8,7 +8,7 @@ class ExportServiceBase < ApplicationService
   end
 
   def call
-    CsvReportService.call(report_class, scope_ids: scope_ids)
+    CsvReportService.call(report_class, scope_ids:)
   end
 
 private

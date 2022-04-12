@@ -5,7 +5,7 @@ RSpec.feature ResponsibleBody do
   let(:responsible_body_home_page) { PageObjects::ResponsibleBody::HomePage.new }
 
   let(:responsible_body) { create(:local_authority) }
-  let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body) }
+  let(:rb_user) { create(:local_authority_user, responsible_body:) }
   let(:mno_user) { create(:mno_user) }
 
   context 'not signed-in' do
@@ -65,7 +65,7 @@ RSpec.feature ResponsibleBody do
       end
 
       context 'has ordered' do
-        let(:school) { create(:school, laptops: [2, 2, 1], responsible_body: responsible_body) }
+        let(:school) { create(:school, laptops: [2, 2, 1], responsible_body:) }
 
         before do
           school.reload
@@ -93,7 +93,7 @@ RSpec.feature ResponsibleBody do
       end
 
       context 'has ordered' do
-        let(:school) { create(:school, laptops: [2, 2, 1], responsible_body: responsible_body) }
+        let(:school) { create(:school, laptops: [2, 2, 1], responsible_body:) }
 
         before do
           school.reload
@@ -106,7 +106,7 @@ RSpec.feature ResponsibleBody do
         end
 
         context 'user can see their order history' do
-          let(:rb_user) { create(:local_authority_user, responsible_body: responsible_body, orders_devices: true) }
+          let(:rb_user) { create(:local_authority_user, responsible_body:, orders_devices: true) }
 
           it 'shows the link to the TechSource order history' do
             expect(page).to have_link('Order history')

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
   let(:school) { build(:school) }
 
-  subject(:form) { described_class.new(school: school) }
+  subject(:form) { described_class.new(school:) }
 
   describe '#populate_details_from_second_contact' do
     context 'when there is no second contact' do
@@ -19,7 +19,7 @@ RSpec.describe ResponsibleBody::Devices::WhoToContactForm do
     end
 
     context 'when there is a second contact' do
-      let(:contact) { create(:school_contact, :contact, school: school) }
+      let(:contact) { create(:school_contact, :contact, school:) }
       let(:school) { create(:school, :manages_orders) }
 
       before { school.set_school_contact!(contact) }

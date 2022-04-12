@@ -52,7 +52,7 @@ RSpec.describe SupplierOutage, type: :model do
         subject(:outage) { build(:supplier_outage, :in_the_future) }
 
         context 'moving into past' do
-          specify { expect { outage.update!(start_at: 2.hours.ago, end_at: 1.hour.ago) }.to raise_error /can't be in the past/ }
+          specify { expect { outage.update!(start_at: 2.hours.ago, end_at: 1.hour.ago) }.to raise_error(/can't be in the past/) }
         end
       end
 

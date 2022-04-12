@@ -37,10 +37,10 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
   end
 
   let!(:network_call) do
-    stub_computacenter_outgoing_api_calls(response_body: response_body, response_status: response_status)
+    stub_computacenter_outgoing_api_calls(response_body:, response_status:)
   end
 
-  subject(:request) { described_class.new(cap_data: cap_data) }
+  subject(:request) { described_class.new(cap_data:) }
 
   describe '#post' do
     it 'generates a new payload_id' do
@@ -73,7 +73,7 @@ RSpec.describe Computacenter::OutgoingAPI::CapUpdateRequest do
     end
 
     context 'when the responsible_body is managing multiple chromebook domains' do
-      subject(:request) { described_class.new(cap_data: cap_data) }
+      subject(:request) { described_class.new(cap_data:) }
 
       let(:laptops_ordered) { 2 }
       let(:routers_ordered) { 3 }

@@ -20,7 +20,7 @@ class Support::School::ChangeResponsibleBodyForm
 
   def responsible_body_options
     @responsible_body_options ||= responsible_bodies.map do |id, name|
-      OpenStruct.new(id: id, name: name)
+      OpenStruct.new(id:, name:)
     end
   end
 
@@ -39,7 +39,7 @@ private
   def notify_other_agents
     device_types = DEVICE_TYPES.reject { |device_type| pool_notified_agents?(device_type) }
     CapUpdateNotificationsService.new(school,
-                                      device_types: device_types,
+                                      device_types:,
                                       notify_computacenter: false,
                                       notify_school: false).call
   end
@@ -78,6 +78,6 @@ private
   end
 
   def set_school_new_rb!
-    school.update!(responsible_body_id: responsible_body_id, computacenter_change: COMPUTACENTER_CHANGE_STATUS)
+    school.update!(responsible_body_id:, computacenter_change: COMPUTACENTER_CHANGE_STATUS)
   end
 end

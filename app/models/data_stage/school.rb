@@ -46,6 +46,6 @@ class DataStage::School < ApplicationRecord
 
     attributes
       .except('id', 'responsible_body_name', 'created_at', 'updated_at')
-      .merge(responsible_body: responsible_body)
+      .merge(responsible_body:)
   end
 end

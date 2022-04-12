@@ -6,11 +6,11 @@ class Support::Schools::ResponsibleBodyController < Support::BaseController
 
   def edit
     @responsible_body = @school.responsible_body
-    @form = Support::School::ChangeResponsibleBodyForm.new(school: school)
+    @form = Support::School::ChangeResponsibleBodyForm.new(school:)
   end
 
   def update
-    if Support::School::ChangeResponsibleBodyForm.new(school: school, responsible_body_id: new_responsible_body_id).save
+    if Support::School::ChangeResponsibleBodyForm.new(school:, responsible_body_id: new_responsible_body_id).save
       flash[:success] = success_message
     else
       flash[:warning] = error_message

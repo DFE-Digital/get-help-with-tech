@@ -27,7 +27,7 @@ class Support::ExtraMobileDataRequestSearchForm
 
   def select_responsible_body_options
     ResponsibleBody.order(:name).pluck(:id, :name).map { |id, name|
-      OpenStruct.new(id: id, name: name)
+      OpenStruct.new(id:, name:)
     }.prepend(OpenStruct.new(id: nil, name: '(all)'))
   end
 

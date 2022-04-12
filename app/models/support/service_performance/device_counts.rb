@@ -35,6 +35,6 @@ class Support::ServicePerformance::DeviceCounts
 private
 
   def sum_allocation(sum_expression)
-    school_scope.where(who_will_order_devices: who_will_order_devices).sum(sum_expression)
+    school_scope.where(who_will_order_devices:).sum(sum_expression)
   end
 end

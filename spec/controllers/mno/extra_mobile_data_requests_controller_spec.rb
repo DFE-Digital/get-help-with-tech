@@ -44,7 +44,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
 
     context 'for a request from an approved user' do
       it 'updates the status' do
-        patch :update, params: params
+        patch(:update, params:)
         expect(extra_mobile_data_request_1_for_mno.reload.status).to eq('problem_no_match_for_number')
       end
 
@@ -53,7 +53,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
 
         it 'records a ReportableEvent with the right attributes' do
           expect {
-            patch :update, params: params
+            patch(:update, params:)
           }.to change { ReportableEvent.where(event_name: 'completion', record_type: 'ExtraMobileDataRequest', record_id: params[:id]).count }.by(1)
         end
       end
@@ -83,7 +83,7 @@ describe Mno::ExtraMobileDataRequestsController, type: :controller do
 
       it 'does not throw an error' do
         expect {
-          put :bulk_update, params: params
+          put(:bulk_update, params:)
         }.not_to raise_error
       end
     end

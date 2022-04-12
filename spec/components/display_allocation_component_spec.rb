@@ -5,11 +5,11 @@ RSpec.describe DisplayAllocationComponent, type: :component do
   let(:school) { create(:school, :manages_orders, responsible_body: trust, laptops: [1, 0, 0], routers: [1, 0, 0]) }
   let(:another_school) { create(:school, :manages_orders, responsible_body: trust, laptops: [1, 0, 0], routers: [1, 0, 0]) }
 
-  subject(:component) { described_class.new(school: school) }
+  subject(:component) { described_class.new(school:) }
 
   before do
     stub_computacenter_outgoing_api_calls
-    UpdateSchoolDevicesService.new(school: school, laptop_allocation: 24, router_allocation: 33).call
+    UpdateSchoolDevicesService.new(school:, laptop_allocation: 24, router_allocation: 33).call
     SchoolSetWhoManagesOrdersService.new(another_school, :responsible_body).call
   end
 

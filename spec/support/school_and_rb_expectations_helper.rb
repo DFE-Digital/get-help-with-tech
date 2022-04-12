@@ -22,25 +22,25 @@ module SchoolAndRbExpectationsHelper
       expect(school).to be_vcap
 
       expect_vcap_to_be(rb_id: responsible_body.id,
-                        laptop_allocation: laptop_allocation,
-                        laptop_cap: laptop_cap,
-                        laptops_ordered: laptops_ordered,
-                        router_allocation: router_allocation,
-                        router_cap: router_cap,
-                        routers_ordered: routers_ordered)
+                        laptop_allocation:,
+                        laptop_cap:,
+                        laptops_ordered:,
+                        router_allocation:,
+                        router_cap:,
+                        routers_ordered:)
     else
       expect(school).not_to be_vcap
     end
 
     expect_school_to_be(school_id: school.id,
-                        laptop_allocation: laptop_allocation,
-                        laptop_cap: laptop_cap,
-                        laptops_ordered: laptops_ordered,
-                        router_allocation: router_allocation,
-                        router_cap: router_cap,
-                        routers_ordered: routers_ordered,
-                        centrally_managed: centrally_managed,
-                        manages_orders: manages_orders)
+                        laptop_allocation:,
+                        laptop_cap:,
+                        laptops_ordered:,
+                        router_allocation:,
+                        router_cap:,
+                        routers_ordered:,
+                        centrally_managed:,
+                        manages_orders:)
 
     expect_to_have_sent_caps_to_computacenter(requests, check_number_of_calls: false) if requests
   end

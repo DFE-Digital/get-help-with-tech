@@ -54,7 +54,7 @@ private
     # prevent duplicate key errors if they're already signed_in
     SessionService.destroy_session!(session[:session_id]) if session[:session_id]
     session[:user_id] = user.id
-    SessionService.create_session!(session_id: session[:session_id], user: user)
+    SessionService.create_session!(session_id: session[:session_id], user:)
   end
 
   def require_sign_in!

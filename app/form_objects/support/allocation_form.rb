@@ -25,7 +25,7 @@
 private
 
   def allocation_updated?
-    UpdateSchoolDevicesService.new(school: school,
+    UpdateSchoolDevicesService.new(school:,
                                    "#{device_type}_allocation".to_sym => allocation,
                                    cap_change_category: :allocation_change).call
   end

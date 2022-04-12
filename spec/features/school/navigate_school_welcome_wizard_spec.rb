@@ -74,7 +74,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_school_user
-    @user = create(:school_user, :new_visitor, :has_not_seen_privacy_notice, school: school, orders_devices: true)
+    @user = create(:school_user, :new_visitor, :has_not_seen_privacy_notice, school:, orders_devices: true)
   end
 
   def as_a_new_la_funded_user
@@ -83,7 +83,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_subsequent_school_user
-    @user = create_list(:school_user, 2, :new_visitor, :has_not_seen_privacy_notice, school: school).last
+    @user = create_list(:school_user, 2, :new_visitor, :has_not_seen_privacy_notice, school:).last
   end
 
   def when_the_chromebooks_question_has_already_been_answered

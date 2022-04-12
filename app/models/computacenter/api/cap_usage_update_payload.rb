@@ -12,9 +12,9 @@ class Computacenter::API::CapUsageUpdatePayload < ApplicationRecord
   def completed!(status:, succeeded_count:, failed_count:)
     update!(
       completed_at: Time.zone.now,
-      status: status,
-      succeeded_count: succeeded_count,
-      failed_count: failed_count,
+      status:,
+      succeeded_count:,
+      failed_count:,
     )
   end
 end

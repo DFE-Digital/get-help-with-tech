@@ -80,7 +80,7 @@ FactoryBot.define do
 
     trait :with_headteacher do
       after :create do |school|
-        school.contacts << create(:school_contact, :headteacher, school: school)
+        school.contacts << create(:school_contact, :headteacher, school:)
       end
     end
 
@@ -116,7 +116,7 @@ FactoryBot.define do
       end
 
       after(:create) do |school, evaluator|
-        create_list(:extra_mobile_data_request, evaluator.extra_mobile_data_requests_count, status: 'complete', school: school)
+        create_list(:extra_mobile_data_request, evaluator.extra_mobile_data_requests_count, status: 'complete', school:)
         school.reload
       end
     end

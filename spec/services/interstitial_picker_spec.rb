@@ -4,7 +4,7 @@ RSpec.describe InterstitialPicker do
   describe '#call' do
     context 'rb user' do
       let(:user) { create :user, schools: [school], responsible_body: la }
-      let(:service) { described_class.new(user: user) }
+      let(:service) { described_class.new(user:) }
       let(:la) { school.responsible_body }
       let(:school) { create :iss_provision, :in_lockdown, laptops: [2, 1, 0] }
 
@@ -15,7 +15,7 @@ RSpec.describe InterstitialPicker do
 
     context 'school user' do
       let(:user) { create :user, schools: [iss_provision] }
-      let(:service) { described_class.new(user: user) }
+      let(:service) { described_class.new(user:) }
       let(:la) { school.responsible_body }
       let(:iss_provision) { create :iss_provision, :in_lockdown, laptops: [2, 1, 0] }
 
@@ -26,7 +26,7 @@ RSpec.describe InterstitialPicker do
 
     context 'no rb or school for user' do
       let(:user) { create :user }
-      let(:service) { described_class.new(user: user) }
+      let(:service) { described_class.new(user:) }
 
       it 'uses partial interstitials/default' do
         expect(service.call.partial).to eq 'interstitials/default'

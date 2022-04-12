@@ -11,7 +11,7 @@ RSpec.describe ComputacenterMailer do
       let(:rb) { build(:trust, computacenter_reference: nil) }
 
       before do
-        allow(mailer).to receive(:params).and_return({ school: school })
+        allow(mailer).to receive(:params).and_return({ school: })
       end
 
       it 'displays Not set' do
@@ -28,7 +28,7 @@ RSpec.describe ComputacenterMailer do
       let(:rb) { build(:trust, computacenter_reference: nil) }
 
       before do
-        allow(mailer).to receive(:params).and_return({ school: school })
+        allow(mailer).to receive(:params).and_return({ school: })
       end
 
       it 'displays Not set' do
@@ -45,7 +45,7 @@ RSpec.describe ComputacenterMailer do
       let(:rb) { build(:trust, computacenter_reference: nil) }
 
       before do
-        allow(mailer).to receive(:params).and_return({ school: school })
+        allow(mailer).to receive(:params).and_return({ school: })
       end
 
       it 'displays Not set' do

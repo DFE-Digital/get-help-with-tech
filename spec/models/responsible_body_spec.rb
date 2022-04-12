@@ -8,9 +8,9 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#active_schools' do
-    let!(:schools) { create(:school, responsible_body: responsible_body) }
-    let(:closed_schools) { create(:school, status: 'closed', responsible_body: responsible_body) }
-    let(:la_funded_place) { create(:iss_provision, responsible_body: responsible_body) }
+    let!(:schools) { create(:school, responsible_body:) }
+    let(:closed_schools) { create(:school, status: 'closed', responsible_body:) }
+    let(:la_funded_place) { create(:iss_provision, responsible_body:) }
 
     before do
       closed_schools
@@ -24,19 +24,19 @@ RSpec.describe ResponsibleBody, type: :model do
 
   describe '#next_school_sorted_ascending_by_name' do
     it 'allows navigating down a list of alphabetically-sorted schools' do
-      zebra = create(:school, name: 'Zebra', responsible_body: responsible_body)
-      aardvark = create(:school, name: 'Aardvark', responsible_body: responsible_body)
-      tiger = create(:school, name: 'Tiger', responsible_body: responsible_body)
+      zebra = create(:school, name: 'Zebra', responsible_body:)
+      aardvark = create(:school, name: 'Aardvark', responsible_body:)
+      tiger = create(:school, name: 'Tiger', responsible_body:)
 
       expect(responsible_body.next_school_sorted_ascending_by_name(aardvark)).to eq(tiger)
       expect(responsible_body.next_school_sorted_ascending_by_name(tiger)).to eq(zebra)
     end
 
     it 'does not include LaFundedPlaces' do
-      zebra = create(:school, name: 'Zebra', responsible_body: responsible_body)
-      aardvark = create(:school, name: 'Aardvark', responsible_body: responsible_body)
-      tiger = create(:school, name: 'Tiger', responsible_body: responsible_body)
-      create(:iss_provision, responsible_body: responsible_body, name: 'Snake')
+      zebra = create(:school, name: 'Zebra', responsible_body:)
+      aardvark = create(:school, name: 'Aardvark', responsible_body:)
+      tiger = create(:school, name: 'Tiger', responsible_body:)
+      create(:iss_provision, responsible_body:, name: 'Snake')
 
       expect(responsible_body.next_school_sorted_ascending_by_name(aardvark)).to eq(tiger)
       expect(responsible_body.next_school_sorted_ascending_by_name(tiger)).to eq(zebra)
@@ -99,7 +99,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#is_ordering_for_schools?' do
-    let(:schools) { create_list(:school, 3, :centrally_managed, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:schools) { create_list(:school, 3, :centrally_managed, responsible_body:, laptops: [1, 0, 0]) }
 
     context 'when some schools are centrally managed' do
       before do
@@ -126,7 +126,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_centrally_managed_schools_that_can_order_now?' do
-    let(:schools) { create_list(:school, 4, :with_preorder_information, laptops: [1, 0, 0], responsible_body: responsible_body) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, laptops: [1, 0, 0], responsible_body:) }
 
     context 'when some schools are centrally managed' do
       before do
@@ -161,7 +161,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       context 'when LA funded places are present' do
-        let(:la_funded_place) { create(:iss_provision, :centrally_managed, laptops: [1, 0, 0], responsible_body: responsible_body) }
+        let(:la_funded_place) { create(:iss_provision, :centrally_managed, laptops: [1, 0, 0], responsible_body:) }
 
         before do
           schools.each(&:cannot_order!)
@@ -209,7 +209,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       context 'when LA funded places are present' do
-        let(:la_funded_place) { create(:iss_provision, :manages_orders, laptops: [1, 0, 0], responsible_body: responsible_body) }
+        let(:la_funded_place) { create(:iss_provision, :manages_orders, laptops: [1, 0, 0], responsible_body:) }
 
         before do
           schools.each(&:cannot_order!)
@@ -226,7 +226,7 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_centrally_managed_schools?' do
     subject(:responsible_body) { create(:trust) }
 
-    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body:, laptops: [1, 0, 0]) }
 
     context 'when some schools are centrally managed' do
       before do
@@ -256,7 +256,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_schools_that_can_order_devices_now?' do
-    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body:, laptops: [1, 0, 0]) }
 
     context 'when some schools that will order are able to order devices' do
       before do
@@ -289,7 +289,7 @@ RSpec.describe ResponsibleBody, type: :model do
       end
 
       context 'when LA funded places are present' do
-        let(:la_funded_place) { create(:iss_provision, :manages_orders, laptops: [1, 0, 0], responsible_body: responsible_body) }
+        let(:la_funded_place) { create(:iss_provision, :manages_orders, laptops: [1, 0, 0], responsible_body:) }
 
         before do
           la_funded_place.can_order!
@@ -303,7 +303,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '#has_any_schools_that_can_order_now?' do
-    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:schools) { create_list(:school, 4, :with_preorder_information, responsible_body:, laptops: [1, 0, 0]) }
 
     context 'when some centrally managed schools are able to order devices' do
       before do
@@ -354,7 +354,7 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when LA funded places are present' do
-      let(:la_funded_place) { create(:iss_provision, :manages_orders, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+      let(:la_funded_place) { create(:iss_provision, :manages_orders, responsible_body:, laptops: [1, 0, 0]) }
 
       before do
         schools.each(&:cannot_order!)
@@ -614,7 +614,7 @@ RSpec.describe ResponsibleBody, type: :model do
                   :in_lockdown,
                   laptops: [1, 1, 0],
                   routers: [1, 1, 0],
-                  responsible_body: responsible_body)
+                  responsible_body:)
     end
 
     before do
@@ -652,7 +652,7 @@ RSpec.describe ResponsibleBody, type: :model do
                   2,
                   :centrally_managed,
                   :in_lockdown,
-                  responsible_body: responsible_body,
+                  responsible_body:,
                   laptops: [1, 0, 0],
                   routers: [1, 0, 0])
     end
@@ -675,7 +675,7 @@ RSpec.describe ResponsibleBody, type: :model do
                   2,
                   :centrally_managed,
                   :in_lockdown,
-                  responsible_body: responsible_body,
+                  responsible_body:,
                   laptops: [1, 1, 0],
                   routers: [1, 1, 0])
     end
@@ -733,7 +733,7 @@ RSpec.describe ResponsibleBody, type: :model do
       create_list(:school,
                   4,
                   :centrally_managed,
-                  responsible_body: responsible_body,
+                  responsible_body:,
                   laptops: [1, 0, 0])
     end
 
@@ -800,7 +800,7 @@ RSpec.describe ResponsibleBody, type: :model do
     let(:second_rb) { create(:trust, :manages_centrally) }
     let(:third_rb) { create(:trust, :devolves_management) }
 
-    let(:schools) { create_list(:school, 2, :centrally_managed, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:schools) { create_list(:school, 2, :centrally_managed, responsible_body:, laptops: [1, 0, 0]) }
     let(:second_schools) { create_list(:school, 2, :centrally_managed, responsible_body: second_rb, laptops: [1, 0, 0]) }
     let(:third_schools) { create_list(:school, 2, :centrally_managed, responsible_body: third_rb, laptops: [1, 0, 0]) }
 
@@ -870,7 +870,7 @@ RSpec.describe ResponsibleBody, type: :model do
   describe '#has_multiple_chromebook_domains_in_managed_schools?' do
     subject(:responsible_body) { create(:trust, :manages_centrally) }
 
-    let(:schools) { create_list(:school, 2, :centrally_managed, responsible_body: responsible_body, laptops: [1, 0, 0]) }
+    let(:schools) { create_list(:school, 2, :centrally_managed, responsible_body:, laptops: [1, 0, 0]) }
 
     context 'when centrally managed schools have different chromebook domains' do
       before do
@@ -916,9 +916,9 @@ RSpec.describe ResponsibleBody, type: :model do
 
   describe '#vcap_schools' do
     let(:responsible_body) { create(:trust, :manages_centrally, :vcap) }
-    let(:centrally_managed_school) { create(:school, :centrally_managed, responsible_body: responsible_body) }
-    let(:management_not_set_school) { create(:school, responsible_body: responsible_body, who_will_order_devices: nil) }
-    let(:la_funded_place) { create(:iss_provision, responsible_body: responsible_body) }
+    let(:centrally_managed_school) { create(:school, :centrally_managed, responsible_body:) }
+    let(:management_not_set_school) { create(:school, responsible_body:, who_will_order_devices: nil) }
+    let(:la_funded_place) { create(:iss_provision, responsible_body:) }
 
     before do
       centrally_managed_school

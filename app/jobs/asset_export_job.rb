@@ -13,7 +13,7 @@ class AssetExportJob < ApplicationJob
     uuid = SecureRandom.uuid
 
     download = Download.create!(
-      uuid: uuid,
+      uuid:,
       user: @user,
       tag: 'asset_csv_export',
       filetype: 'csv',
@@ -21,6 +21,6 @@ class AssetExportJob < ApplicationJob
       content: csv_data,
     )
 
-    DownloadsMailer.with(download: download).notify_asset_download_ready.deliver_later
+    DownloadsMailer.with(download:).notify_asset_download_ready.deliver_later
   end
 end

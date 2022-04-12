@@ -66,8 +66,8 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     end
 
     context 'when the user has a responsible_body and one school' do
-      let(:school) { create(:school, :academy, responsible_body: responsible_body) }
-      let(:user) { create(:trust_user, schools: [school], responsible_body: responsible_body, orders_devices: true) }
+      let(:school) { create(:school, :academy, responsible_body:) }
+      let(:user) { create(:trust_user, schools: [school], responsible_body:, orders_devices: true) }
 
       context 'and the responsible_body is a single academy trust' do
         let(:responsible_body) { create(:trust, :single_academy_trust) }
@@ -155,10 +155,10 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
   describe 'orders devices validation' do
     context 'for a school user' do
       let(:school) { create(:school) }
-      let(:user) { build(:school_user, :orders_devices, school: school) }
+      let(:user) { build(:school_user, :orders_devices, school:) }
 
       before do
-        create_list(:school_user, 3, :orders_devices, school: school)
+        create_list(:school_user, 3, :orders_devices, school:)
       end
 
       it 'validates that only 3 users can order devices for a school' do
@@ -344,11 +344,11 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
         let(:expected_time) { 2.seconds.ago }
 
         it 'creates a Computacenter::UserChange of type new' do
-          expect { create(:user, :relevant_to_computacenter, school: school) }.to change(Computacenter::UserChange, :count).by(1)
+          expect { create(:user, :relevant_to_computacenter, school:) }.to change(Computacenter::UserChange, :count).by(1)
         end
 
         it 'schedules a NotifyComputacenterOfLatestChangeForUserJob for the user' do
-          user = create(:user, :has_seen_privacy_notice, orders_devices: true, school: school)
+          user = create(:user, :has_seen_privacy_notice, orders_devices: true, school:)
           expect(NotifyComputacenterOfLatestChangeForUserJob).to have_been_enqueued.with(user.id)
         end
 
@@ -385,7 +385,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
 
         it 'persists correct data for school user' do
           Timecop.travel(expected_time)
-          user = create(:school_user, orders_devices: true, school: school)
+          user = create(:school_user, orders_devices: true, school:)
           Timecop.return
 
           user_change = Computacenter::UserChange.last
@@ -449,8 +449,8 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
         school = create(:school)
         responsible_body = create(:trust, :single_academy_trust, schools: [school])
         create(:school_user,
-               responsible_body: responsible_body,
-               school: school,
+               responsible_body:,
+               school:,
                orders_devices: true)
 
         user_change = Computacenter::UserChange.last
@@ -462,7 +462,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       context 'when an FE school user' do
         it 'persists correct data' do
           school = create(:fe_school, :manages_orders)
-          user = create(:user, school: school, orders_devices: true)
+          user = create(:user, school:, orders_devices: true)
           user_change = Computacenter::UserChange.last
 
           expect(user_change.user_id).to eql(user.id)
@@ -507,7 +507,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       let(:school) { create(:school, :manages_orders) }
 
       context 'now computacenter relevant' do
-        let!(:user) { create(:user, :not_relevant_to_computacenter, school: school) }
+        let!(:user) { create(:user, :not_relevant_to_computacenter, school:) }
 
         before do
           ActiveJob::Base.queue_adapter.enqueued_jobs.clear
@@ -545,7 +545,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       end
 
       context 'already computacenter relevant' do
-        let!(:user) { create(:trust_user, :relevant_to_computacenter, full_name: 'Jane Smith', school: school) }
+        let!(:user) { create(:trust_user, :relevant_to_computacenter, full_name: 'Jane Smith', school:) }
 
         before do
           ActiveJob::Base.queue_adapter.enqueued_jobs.clear
@@ -725,7 +725,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
           let!(:user) { create(:trust_user, :relevant_to_computacenter, responsible_body: nil) }
 
           def perform_change!
-            user.update(responsible_body: responsible_body)
+            user.update(responsible_body:)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -761,7 +761,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
           let!(:user) { create(:user, :relevant_to_computacenter, school: nil) }
 
           def perform_change!
-            user.update!(school: school)
+            user.update!(school:)
           end
 
           it 'creates a Computacenter::UserChange' do
@@ -796,7 +796,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
           let!(:rb) { create(:trust) }
           let!(:other_rb) { create(:trust) }
           let(:user_change) { Computacenter::UserChange.last }
-          let(:perform_change!) { user.update!(school: school) }
+          let(:perform_change!) { user.update!(school:) }
           let!(:school) { create(:school, responsible_body: rb) }
           let!(:user) { create(:trust_user, :relevant_to_computacenter, school: nil, responsible_body: other_rb) }
 
@@ -822,7 +822,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       context 'when a user has a second school association added' do
         let(:school) { create(:school) }
         let!(:other_school) { create(:school, :manages_orders) }
-        let(:user) { create(:school_user, :relevant_to_computacenter, school: school) }
+        let(:user) { create(:school_user, :relevant_to_computacenter, school:) }
 
         before do
           ActiveJob::Base.queue_adapter.enqueued_jobs.clear
@@ -905,7 +905,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
 
       context 'BUG #815 - when the user already has a UserChange of type Remove' do
         let(:school) { create(:school, :manages_orders) }
-        let(:user) { create(:user, :relevant_to_computacenter, school: school) }
+        let(:user) { create(:user, :relevant_to_computacenter, school:) }
 
         before do
           # this will generate a UserChange of type Remove
@@ -951,7 +951,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     context 'deleting user' do
       context 'computacenter relevant' do
         let(:school) { create(:school, :manages_orders) }
-        let(:user) { create(:user, :relevant_to_computacenter, school: school) }
+        let(:user) { create(:user, :relevant_to_computacenter, school:) }
         let!(:original_user) { user }
 
         before do
@@ -1017,7 +1017,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       let(:school) { create(:school, :manages_orders) }
 
       context 'computacenter relevant' do
-        let(:user) { create(:user, :relevant_to_computacenter, school: school) }
+        let(:user) { create(:user, :relevant_to_computacenter, school:) }
         let!(:original_user) { user }
 
         before do
@@ -1045,7 +1045,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       end
 
       context 'not computacenter relevant' do
-        let!(:user) { create(:user, :not_relevant_to_computacenter, school: school) }
+        let!(:user) { create(:user, :not_relevant_to_computacenter, school:) }
 
         it 'does not create a Computacenter::UserChange' do
           expect { user.update!(deleted_at: 1.second.ago) }.not_to change(Computacenter::UserChange, :count)
@@ -1063,7 +1063,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     let!(:school) { create(:school, :manages_orders) }
 
     context 'user orders devices and techsource account not confirmed' do
-      let(:user) { create(:user, orders_devices: true, techsource_account_confirmed_at: nil, school: school) }
+      let(:user) { create(:user, orders_devices: true, techsource_account_confirmed_at: nil, school:) }
 
       it 'returns true' do
         expect(user.awaiting_techsource_account?).to be_truthy
@@ -1071,7 +1071,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     end
 
     context 'user orders devices and techsource account confirmed' do
-      let(:user) { create(:user, orders_devices: true, techsource_account_confirmed_at: 1.second.ago, school: school) }
+      let(:user) { create(:user, orders_devices: true, techsource_account_confirmed_at: 1.second.ago, school:) }
 
       it 'returns false' do
         expect(user.awaiting_techsource_account?).to be_falsey
@@ -1166,7 +1166,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     let(:school) { create(:school, :manages_orders) }
 
     it 'includes the sold_to of schools the user can order devices for' do
-      user = create(:school_user, school: school)
+      user = create(:school_user, school:)
 
       expect(user.schools_sold_tos.size).to eq(1)
       expect(user.schools_sold_tos).to include(*user.schools.map(&:sold_to).uniq)
@@ -1175,7 +1175,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
 
   describe '#sold_tos' do
     let(:school) { create(:school, :manages_orders) }
-    let(:user) { create(:school_user, school: school) }
+    let(:user) { create(:school_user, school:) }
     let(:rb) { create(:local_authority) }
 
     before do
@@ -1194,7 +1194,7 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
     let(:school) { create(:school, :manages_orders) }
 
     it 'includes the computacenter_reference of school the user belongs to' do
-      user = create(:school_user, school: school)
+      user = create(:school_user, school:)
 
       expect(user.ship_tos.size).to eq(1)
       expect(user.ship_tos).to include(*user.schools.pluck(:computacenter_reference))

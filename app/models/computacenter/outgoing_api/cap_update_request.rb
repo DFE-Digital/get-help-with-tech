@@ -19,7 +19,7 @@ class Computacenter::OutgoingAPI::CapUpdateRequest
     @payload_id ||= SecureRandom.uuid
     @body = construct_body
     Rails.logger.info("POSTing to Computacenter, payload_id: #{payload_id}, body: \n#{body}")
-    @response = HTTP.basic_auth(user: username, pass: password).post(endpoint, body: body)
+    @response = HTTP.basic_auth(user: username, pass: password).post(endpoint, body:)
     Rails.logger.info("Response from Computacenter: \n#{response.body}")
     self
   end
@@ -32,8 +32,8 @@ private
 
   def construct_body
     renderer.render(:cap_update_request, format: :xml, assigns: { allocations: cap_data,
-                                                                  payload_id: payload_id,
-                                                                  timestamp: timestamp })
+                                                                  payload_id:,
+                                                                  timestamp: })
   end
 
   def renderer

@@ -9,7 +9,7 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
 
   before do
     ['EE', 'O2', 'Tesco Mobile', 'Virgin Mobile', 'SMARTY', 'Three'].each do |brand|
-      create(:mobile_network, brand: brand)
+      create(:mobile_network, brand:)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
 
   context 'when school.hide_mno is true' do
     let(:school) { create(:school, hide_mno: true) }
-    let(:spreadsheet) { OpenStruct.new(requests: requests) }
+    let(:spreadsheet) { OpenStruct.new(requests:) }
 
     let(:requests) do
       [
@@ -75,7 +75,7 @@ RSpec.describe ExtraDataRequestSpreadsheetImporter, type: :model do
     end
 
     it 'errors on excluded FE networks' do
-      importer.import!(extra_fields: { school: school })
+      importer.import!(extra_fields: { school: })
       expect(importer.summary.successful.size).to be(1)
       expect(importer.summary.errors.size).to be(1)
     end
