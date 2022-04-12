@@ -22,8 +22,8 @@ RSpec.describe SupportTicket::Options do
 
       expect(options.to_h).to be_a(Hash)
       expect(options.to_h).to eq({
-        'school' => 'School',
-        'trust' => 'Trust',
+        school: 'School',
+        trust: 'Trust',
       })
     end
   end

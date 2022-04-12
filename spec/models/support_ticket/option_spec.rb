@@ -5,7 +5,7 @@ RSpec.describe SupportTicket::Option do
     it 'sets the value' do
       option = SupportTicket::Option.new('school', 'School')
 
-      expect(option.value).to eq('school')
+      expect(option.value).to eq(:school)
     end
 
     it 'sets the label' do
