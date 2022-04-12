@@ -6,7 +6,7 @@ class SupportTicket::Options
   end
 
   def find_label(value)
-    @options.find { |option| option.value == value }&.label
+    @options.find { |option| option.value == value.to_sym }&.label
   end
 
   def to_a
