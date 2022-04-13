@@ -21,4 +21,11 @@ RSpec.describe ErrorsController, type: :controller do
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
+
+  describe 'GET #forbidden' do
+    before { get :forbidden }
+
+    specify { expect(response).to have_http_status(:forbidden) }
+    specify { expect(response).to render_template(:forbidden) }
+  end
 end
