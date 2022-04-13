@@ -24,8 +24,10 @@ class ErrorsController < ApplicationController
   end
 
   def forbidden
-    format.html { render status: :not_authorized }
-    format.json { render json: { error: 'Not Authorized' }, status: :not_authorized }
-    format.all { render status: :not_authorized, body: nil }
+    respond_to do |format|
+      format.html { render status: :forbidden }
+      format.json { render json: { error: 'Forbidden' }, status: :forbidden }
+      format.all { render status: :forbidden, body: nil }
+    end
   end
 end
