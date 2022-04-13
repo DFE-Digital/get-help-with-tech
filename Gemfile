@@ -30,7 +30,7 @@ gem 'net-imap', require: false
 gem 'net-pop', require: false
 gem 'net-smtp', require: false
 
-gem 'nokogiri'
+gem 'nokogiri', '>= 1.13.4'
 
 # pagination
 gem 'pagy'

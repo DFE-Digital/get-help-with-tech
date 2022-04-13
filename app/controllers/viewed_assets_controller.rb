@@ -9,7 +9,7 @@ class ViewedAssetsController < ApplicationController
   end
 
   def index
-    @datetime_period = DatetimePeriod.new(params[:datetime_period])
+    @datetime_period = DatetimePeriod.new(datetime_period_params)
 
     if @datetime_period.valid?
       @filename = filename(@datetime_period)
@@ -25,5 +25,9 @@ private
 
   def filename(period)
     "assets_first_viewed_during_#{period}.csv"
+  end
+
+  def datetime_period_params
+    params.require(:datetime_period).permit(:start_at_string, :end_at_string)
   end
 end
