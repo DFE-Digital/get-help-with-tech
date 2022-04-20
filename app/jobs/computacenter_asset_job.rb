@@ -3,7 +3,8 @@ require 'csv'
 class ComputacenterAssetJob < ApplicationJob
   queue_as :default
 
-  IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS = { headers: true, encoding: 'ISO-8859-1' }.freeze
+  # IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS = { headers: true, encoding: 'ISO-8859-1' }.freeze
+  IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS = { headers: true, encoding: 'UTF-8', col_sep: ';' }.freeze
 
   # Active Job expects a `perform` method
   def perform(path_to_csv, action_symbol)
@@ -41,7 +42,7 @@ private
     csv_asset_read_count = 0
     estimated_asset_count = estimate_assets_lines_in_file(path_to_csv)
 
-    log_start(path_to_csv, action)
+    log_start(path_to_csv:, action:, estimated_asset_count:)
 
     CSV.foreach(path_to_csv, **IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
       import_csv_row(row)
@@ -49,7 +50,7 @@ private
       log_progress(csv_asset_read_count, estimated_asset_count) if (csv_asset_read_count % progress_interval).zero?
     end
 
-    log_finish(path_to_csv, action, csv_asset_read_count)
+    log_finish(path_to_csv:, action:, csv_asset_read_count:)
     Rails.logger.info("#{csv_asset_read_count} asset(s) added to the database")
     Rails.logger.info("There are now #{Asset.count} total asset(s) in the database")
   end
@@ -70,21 +71,35 @@ private
     console_output.to_i
   end
 
-  def log_start(path_to_csv, action_symbol)
-    Rails.logger.info("Started #{self.class} (#{path_to_csv}, :#{action_symbol}) ~#{estimate_assets_lines_in_file(path_to_csv)} asset(s)")
+  def log_start(path_to_csv:, action:, estimated_asset_count:)
+    Rails.logger.info("Started #{self.class} (#{path_to_csv}, :#{action}) ~#{estimated_asset_count} asset(s)")
   end
 
   def import_csv_row(row)
     Asset.create!(attributes_hash(row))
   end
 
+  # def attributes_hash(row)
+  #   # we don't store row[0] (`sys_id`) nor row[14] (`sys_updated_at`)
+  #   { tag: row[1], serial_number: row[2], model: row[3], department: row[4], department_id: row[5], department_sold_to_id: row[6], location: row[7], location_id: row[8], location_cc_ship_to_account: row[9], bios_password: row[10], admin_password: row[11], hardware_hash: row[12], sys_created_at: row[13] }
+  # end
+
   def attributes_hash(row)
-    # we don't store row[0] (`sys_id`) nor row[14] (`sys_updated_at`)
-    { tag: row[1], serial_number: row[2], model: row[3], department: row[4], department_id: row[5], department_sold_to_id: row[6], location: row[7], location_id: row[8], location_cc_ship_to_account: row[9], bios_password: row[10], admin_password: row[11], hardware_hash: row[12], sys_created_at: row[13] }
+    {
+      tag: row['OrderNumber'],
+      serial_number: row['SerialNumber'],
+      model: row['MaterialDescription'],
+      department: row['SoldToCustomer'],
+      department_id: row['URN'],
+      department_sold_to_id: row['SoldToAccountNo'],
+      location: row['ShipToCustomer'],
+      location_id: row['SchoolURN'],
+      location_cc_ship_to_account: row['ShipToAccountNo'],
+    }
   end
 
-  def log_finish(path_to_csv, action_symbol, csv_asset_read_count)
-    Rails.logger.info("Finished #{self.class} (#{path_to_csv}, :#{action_symbol}) with #{csv_asset_read_count} asset(s) from CSV file")
+  def log_finish(path_to_csv:, action:, csv_asset_read_count:)
+    Rails.logger.info("Finished #{self.class} (#{path_to_csv}, :#{action}) with #{csv_asset_read_count} asset(s) from CSV file")
   end
 
   def update_assets(path_to_csv)
@@ -95,7 +110,7 @@ private
     csv_asset_read_count = 0
     estimated_asset_count = estimate_assets_lines_in_file(path_to_csv)
 
-    log_start(path_to_csv, action)
+    log_start(path_to_csv:, action:, estimated_asset_count:)
 
     CSV.foreach(path_to_csv, **IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS) do |row|
       case update_asset(row)
@@ -110,7 +125,7 @@ private
       log_progress(csv_asset_read_count, estimated_asset_count) if (csv_asset_read_count % progress_interval).zero?
     end
 
-    log_finish(path_to_csv, action, csv_asset_read_count)
+    log_finish(path_to_csv:, action:, csv_asset_read_count:)
     Rails.logger.info("#{updated_asset_count} asset(s) updated in the database")
     Rails.logger.info("#{created_asset_count} missing/conflicting/overwriting asset(s) added to the database")
   end
