@@ -3,7 +3,6 @@ require 'csv'
 class ComputacenterAssetJob < ApplicationJob
   queue_as :default
 
-  # IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS = { headers: true, encoding: 'ISO-8859-1' }.freeze
   IGNORE_HEADER_ROW_AND_FIX_INVALID_CHARACTER_ERRORS = { headers: true, encoding: 'UTF-8', col_sep: ';' }.freeze
 
   # Active Job expects a `perform` method
@@ -78,11 +77,6 @@ private
   def import_csv_row(row)
     Asset.create!(attributes_hash(row))
   end
-
-  # def attributes_hash(row)
-  #   # we don't store row[0] (`sys_id`) nor row[14] (`sys_updated_at`)
-  #   { tag: row[1], serial_number: row[2], model: row[3], department: row[4], department_id: row[5], department_sold_to_id: row[6], location: row[7], location_id: row[8], location_cc_ship_to_account: row[9], bios_password: row[10], admin_password: row[11], hardware_hash: row[12], sys_created_at: row[13] }
-  # end
 
   def attributes_hash(row)
     {
