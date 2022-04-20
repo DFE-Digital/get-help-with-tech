@@ -1,39 +1,61 @@
 require 'rails_helper'
 
 RSpec.describe ComputacenterAssetJob, type: :job do
-  let(:sys_id_1) { '62c7' }
-  let(:asset_tag_1) { '30000000' }
+  let(:urn_1) { 't9000000' }
+  let(:sold_to_account_no_1) { '81000000' }
+  let(:sold_to_customer_1) { 'X ACADEMY TRUST' }
+  let(:school_urn_1) { 'L1' }
+  let(:ship_to_account_no_1) { '81000000' }
+  let(:ship_to_customer_1) { 'X Academy' }
+  let(:ship_to_address_1) { 'Borodin Avenue' }
+  let(:ship_to_town_1) { 'Town End Farm' }
+  let(:ship_to_postcode_1) { 'SR5 4NX' }
+  let(:customer_order_number_1) { 'HYB-80448803' }
+  let(:delivery_number_1) { '2013719960' }
+  let(:order_number_1) { '5009131919' }
+  let(:order_position_1) { '20' }
+  let(:persona_1) { 'C' }
+  let(:persona_description_1) { 'Chromebook' }
+  let(:material_number_1) { '4282197' }
+  let(:material_description_1) { 'Lenovo 100e Chromebook (G2)' }
+  let(:manufacturer_part_number_1) { '81MA000UUK' }
+  let(:manufacturer_name_1) { 'Buy and Store' }
+  let(:part_classification_desc_1) { 'Laptops' }
   let(:serial_number_1) { '1FFFFFF' }
-  let(:model_name_1) { 'Acme Laptop 1000' }
-  let(:department_name_1) { 'X ACADEMY TRUST' }
-  let(:department_id_1) { 't9000000' }
-  let(:sold_to_1) { '81000000' }
-  let(:location_name_1) { 'X Academy' }
-  let(:location_id_1) { 'L1' }
-  let(:ship_to_1) { '81000000' }
-  let(:bios_password_1) { 'secretbiospassword1' }
-  let(:admin_password_1) { 'secretadminpassword1' }
-  let(:hardware_hash_1) { 'secrethardwarehash1' }
-  let(:sys_created_on_1) { '2020-11-23 14:03:04' }
+  let(:customer_order_date_1) { '10/29/21' }
+  let(:order_date_1) { '10/29/21' }
+  let(:despatch_date_1) { '10/29/21' }
+  let(:report_quantity_1) { '1,00' }
 
-  let(:sys_id_2) { '7bd4' }
-  let(:asset_tag_2) { '30000001' }
+  let(:urn_2) { 't9000001' }
+  let(:sold_to_account_no_2) { '81000001' }
+  let(:sold_to_customer_2) { 'Y ACADEMY TRUST' }
+  let(:school_urn_2) { 'L2' }
+  let(:ship_to_account_no_2) { '81000001' }
+  let(:ship_to_customer_2) { 'Y Academy' }
+  let(:ship_to_address_2) { 'School Road' }
+  let(:ship_to_town_2) { 'Leeds' }
+  let(:ship_to_postcode_2) { 'LS9 7PY' }
+  let(:customer_order_number_2) { 'HYB-80448227' }
+  let(:delivery_number_2) { '2013719240' }
+  let(:order_number_2) { '5009131359' }
+  let(:order_position_2) { '20' }
+  let(:persona_2) { 'C' }
+  let(:persona_description_2) { 'Chromebook' }
+  let(:material_number_2) { '4282197' }
+  let(:material_description_2) { 'Lenovo 100e Chromebook (G2)' }
+  let(:manufacturer_part_number_2) { '81MA000UUK' }
+  let(:manufacturer_name_2) { 'Buy and Store' }
+  let(:part_classification_desc_2) { 'Laptops' }
   let(:serial_number_2) { '1FFFFF1' }
-  let(:model_name_2) { 'Acme Laptop 2000' }
-  let(:department_name_2) { 'Y ACADEMY TRUST' }
-  let(:department_id_2) { 't9000001' }
-  let(:sold_to_2) { '81000001' }
-  let(:location_name_2) { 'Y Academy' }
-  let(:location_id_2) { 'L2' }
-  let(:ship_to_2) { '81000001' }
-  let(:bios_password_2) { 'secretbiospassword2' }
-  let(:admin_password_2) { 'secretadminpassword2' }
-  let(:hardware_hash_2) { 'secrethardwarehash2' }
-  let(:sys_created_on_2) { '2020-12-24 18:03:04' }
+  let(:customer_order_date_2) { '10/29/21' }
+  let(:order_date_2) { '10/29/21' }
+  let(:despatch_date_2) { '10/29/21' }
+  let(:report_quantity_2) { '1,00' }
 
-  let(:header_row) { %w[sys_id asset_tag serial_number model.display_name department.name department.id department.u_sold_to_id location.name location.name.u_location_id location.u_cc_ship_to_account u_bios_password u_admin_password u_hardware_hash sys_created_on] }
-  let(:row_1) { [sys_id_1, asset_tag_1, serial_number_1, model_name_1, department_name_1, department_id_1, sold_to_1, location_name_1, location_id_1, ship_to_1, bios_password_1, admin_password_1, hardware_hash_1, sys_created_on_1] }
-  let(:row_2) { [sys_id_2, asset_tag_2, serial_number_2, model_name_2, department_name_2, department_id_2, sold_to_2, location_name_2, location_id_2, ship_to_2, bios_password_2, admin_password_2, hardware_hash_2, sys_created_on_2] }
+  let(:header_row) { %w[URN SoldToAccountNo SoldToCustomer SchoolURN ShipToAccountNo ShipToCustomer ShipToAddress ShipToTown ShipToPostCode CustomerOrderNumber DeliveryNumber OrderNumber OrderPosition Persona PersonaDescription MaterialNumber MaterialDescription ManufacturerPartNumber ManufacturerName PartClassificationDesc SerialNumber CustomerOrderDate OrderDate DespatchDate ReportQuantity] }
+  let(:row_1) { [urn_1, sold_to_account_no_1, sold_to_customer_1, school_urn_1, ship_to_account_no_1, ship_to_customer_1, ship_to_address_1, ship_to_town_1, ship_to_postcode_1, customer_order_number_1, delivery_number_1, order_number_1, order_position_1, persona_1, persona_description_1, material_number_1, material_description_1, manufacturer_part_number_1, manufacturer_name_1, part_classification_desc_1, serial_number_1, customer_order_date_1, order_date_1, despatch_date_1, report_quantity_1] }
+  let(:row_2) { [urn_2, sold_to_account_no_2, sold_to_customer_2, school_urn_2, ship_to_account_no_2, ship_to_customer_2, ship_to_address_2, ship_to_town_2, ship_to_postcode_2, customer_order_number_2, delivery_number_2, order_number_2, order_position_2, persona_2, persona_description_2, material_number_2, material_description_2, manufacturer_part_number_2, manufacturer_name_2, part_classification_desc_2, serial_number_2, customer_order_date_2, order_date_2, despatch_date_2, report_quantity_2] }
 
   let(:asset_csv_file_path) { 'assets.csv' }
 
@@ -47,7 +69,7 @@ RSpec.describe ComputacenterAssetJob, type: :job do
 
     before do
       # behaves as CSV does when CSV options say file contains a header row
-      allow(CSV).to receive(:foreach).and_yield(row_1).and_yield(row_2)
+      allow(CSV).to receive(:foreach).and_yield(CSV::Row.new(header_row, row_1)).and_yield(CSV::Row.new(header_row, row_2))
       allow(job).to receive(:unix_word_count_output).and_return("      3 #{asset_csv_file_path}\n")
     end
 
@@ -57,8 +79,8 @@ RSpec.describe ComputacenterAssetJob, type: :job do
       describe 'record creation' do
         it 'creates two records' do
           expect { job.perform_on_csv_file_path(asset_csv_file_path, action) }.to change { Asset.count }.from(0).to(2)
-          expect(Asset.first).to have_attributes(tag: asset_tag_1, serial_number: serial_number_1, model: model_name_1, department: department_name_1, department_id: department_id_1, department_sold_to_id: sold_to_1, location: location_name_1, location_id: location_id_1, location_cc_ship_to_account: ship_to_1, bios_password: bios_password_1, admin_password: admin_password_1, hardware_hash: hardware_hash_1, sys_created_at: Time.zone.parse(sys_created_on_1))
-          expect(Asset.second).to have_attributes(tag: asset_tag_2, serial_number: serial_number_2, model: model_name_2, department: department_name_2, department_id: department_id_2, department_sold_to_id: sold_to_2, location: location_name_2, location_id: location_id_2, location_cc_ship_to_account: ship_to_2, bios_password: bios_password_2, admin_password: admin_password_2, hardware_hash: hardware_hash_2, sys_created_at: Time.zone.parse(sys_created_on_2))
+          expect(Asset.first).to have_attributes(tag: order_number_1, serial_number: serial_number_1, model: material_description_1, department: sold_to_customer_1, department_id: urn_1, department_sold_to_id: sold_to_account_no_1, location: ship_to_customer_1, location_id: school_urn_1, location_cc_ship_to_account: ship_to_account_no_1)
+          expect(Asset.second).to have_attributes(tag: order_number_2, serial_number: serial_number_2, model: material_description_2, department: sold_to_customer_2, department_id: urn_2, department_sold_to_id: sold_to_account_no_2, location: ship_to_customer_2, location_id: school_urn_2, location_cc_ship_to_account: ship_to_account_no_2)
         end
       end
 
@@ -78,8 +100,8 @@ RSpec.describe ComputacenterAssetJob, type: :job do
       let(:action) { :update }
 
       before do
-        create(:asset, tag: asset_tag_1, serial_number: serial_number_1)
-        create(:asset, tag: asset_tag_2)
+        create(:asset, tag: order_number_1, serial_number: serial_number_1)
+        create(:asset, tag: order_number_2)
         job.perform_on_csv_file_path(asset_csv_file_path, action)
       end
 
