@@ -36,6 +36,6 @@ private
   end
 
   def form_params
-    { device_type: device_type, school: school }
+    { device_type:, school: }
   end
 end

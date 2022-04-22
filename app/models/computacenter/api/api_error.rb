@@ -9,9 +9,9 @@ class Computacenter::API::APIError < StandardError
 
   def to_h
     {
-      status: status,
-      message: message,
-      detail: detail,
+      status:,
+      message:,
+      detail:,
     }
   end
 

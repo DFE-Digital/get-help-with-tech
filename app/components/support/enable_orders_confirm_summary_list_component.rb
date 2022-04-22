@@ -27,7 +27,7 @@ private
     {
       key: 'Can they order devices?',
       value: School.translate_enum_value(:order_state, order_state),
-      change_path: change_path,
+      change_path:,
       action: 'whether they can place orders',
     }
   end

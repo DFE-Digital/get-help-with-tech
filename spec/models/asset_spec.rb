@@ -8,7 +8,7 @@ RSpec.describe Asset, type: :model do
     let(:admin_password) { 'secretadminpassword' }
     let(:hardware_hash) { 'secrethardwarehash' }
     let(:required_attributes) { { serial_number: '30040000', department_id: 'LEA800', department_sold_to_id: '8106000', location_id: '114000', location_cc_ship_to_account: '81065000' } }
-    let(:secure_attributes) { { bios_password: bios_password, admin_password: admin_password, hardware_hash: hardware_hash } }
+    let(:secure_attributes) { { bios_password:, admin_password:, hardware_hash: } }
     let(:encryptor) { class_spy('EncryptionService') }
 
     before { stub_const('EncryptionService', encryptor) }

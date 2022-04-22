@@ -6,8 +6,8 @@ RSpec.describe ChangeSchoolHeadteacherService, type: :model do
   let(:full_name) { Faker::Name.name }
   let(:details) do
     {
-      email_address: email_address,
-      full_name: full_name,
+      email_address:,
+      full_name:,
       id: headteacher_id,
     }
   end

@@ -132,7 +132,7 @@ private
     show_link = SchoolPolicy.new(viewer, school).update_headteacher?
     action_path = edit_support_school_headteacher_path(school) if show_link
     action = 'Change <span class="govuk-visually-hidden">headteacher</span>'.html_safe if show_link
-    { key: 'Headteacher', value: details, action_path: action_path, action: action }.compact
+    { key: 'Headteacher', value: details, action_path:, action: }.compact
   end
 
   def headteacher_lines
