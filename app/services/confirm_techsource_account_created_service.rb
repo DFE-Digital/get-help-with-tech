@@ -15,14 +15,14 @@ class ConfirmTechsourceAccountCreatedService
         if user.update(techsource_account_confirmed_at: Time.zone.now)
           notify_user_can_order(user)
 
-          processed << { email: email }
+          processed << { email: }
         else
-          unprocessed << { email: email, message: 'User could not be updated' }
+          unprocessed << { email:, message: 'User could not be updated' }
         end
       elsif email_no_longer_computacenter_relevant(email)
-        processed << { email: email }
+        processed << { email: }
       else
-        unprocessed << { email: email, message: 'No user with this email found' }
+        unprocessed << { email:, message: 'No user with this email found' }
       end
     end
   end

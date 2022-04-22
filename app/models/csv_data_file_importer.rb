@@ -17,7 +17,7 @@ class CsvDataFileImporter
       @successes << record
     rescue StandardError => e
       log(e.message)
-      @failures << { record: record, error: e }
+      @failures << { record:, error: e }
     end
 
     log "Processed #{index} rows, of which #{failures.size} failed"

@@ -19,8 +19,8 @@ private
 
   def headteacher_details
     {
-      email_address: email_address,
-      full_name: full_name,
+      email_address:,
+      full_name:,
       id: id.presence,
       phone_number: phone_number.presence,
       title: title.presence,
