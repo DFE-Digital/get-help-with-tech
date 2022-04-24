@@ -7,7 +7,6 @@ RSpec.feature 'Display asset properties' do
   let(:asset_page) { PageObjects::Assets::ShowPage.new }
   let(:asset_detail_labels) do
     [
-      'Asset tag',
       'Serial/IMEI',
     ]
   end
@@ -70,7 +69,7 @@ private
     expect(asset_page.asset_hardware_labels.map(&:text)).to eq(asset_hardware_labels)
 
     # values for each table
-    expect(asset_page.asset_detail_values.map(&:text)).to eq([asset.tag, asset.serial_number])
+    expect(asset_page.asset_detail_values.map(&:text)).to eq([asset.serial_number])
     expect(asset_page.asset_secrets_values.map(&:text)).to eq([
       bios_password_value(asset, download_bios_unlocker) || '-',
       asset.admin_password || '-',
