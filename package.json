@@ -11,7 +11,7 @@
     "set-value": ">=4.0.1"
   },
   "devDependencies": {
-    "jest": "^27.5.1",
+    "jest": "^28.0.0",
     "webpack-dev-server": ">=4.8.1"
   },
   "jest": {
