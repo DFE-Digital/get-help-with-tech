@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Computacenter::API::CapUsageController do
+RSpec.describe Computacenter::API::CapUsageController, skip: true do
   let(:user) { create(:computacenter_user) }
   let(:api_token) { create(:api_token, status: :active, user:) }
   let(:cap_usage_update_packet) do
