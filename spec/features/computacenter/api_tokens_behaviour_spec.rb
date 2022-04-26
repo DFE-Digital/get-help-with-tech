@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Managing API tokens' do
+RSpec.feature 'Managing API tokens', skip: true do
   describe 'signed in as a Computacenter user' do
     let(:user) { create(:computacenter_user) }
     let(:other_user) { create(:computacenter_user) }

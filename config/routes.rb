@@ -275,9 +275,9 @@ Rails.application.routes.draw do
     post '/techsource', to: 'techsource#create'
     get '/multi-domain-chromebooks', to: 'multi_domain_chromebooks#index', as: :multi_domain_chromebooks
     get '/multi-domain-chromebooks-iss-scl', to: 'multi_domain_chromebooks_iss_scl#index', as: :multi_domain_chromebooks_iss_scl
-    resources :api_tokens, path: '/api-tokens'
+    # resources :api_tokens, path: '/api-tokens'
     namespace :api do
-      post '/cap-usage/bulk-update', to: 'cap_usage#bulk_update'
+      # post '/cap-usage/bulk-update', to: 'cap_usage#bulk_update'
     end
   end
 

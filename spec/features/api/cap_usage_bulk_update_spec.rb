@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Bulk cap usage update with XML', type: :request do
+RSpec.feature 'Bulk cap usage update with XML', type: :request, skip: true do
   let(:user) { create(:computacenter_user) }
   let(:api_token) { create(:api_token, status: :active, user:) }
   let(:headers) { { 'Authorization' => "Bearer #{api_token.token}" } }

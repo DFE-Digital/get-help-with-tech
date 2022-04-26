@@ -50,10 +50,11 @@ private
     ]
   end
 
+  # Add NavLinkComponent.new(title: 'API tokens', url: computacenter_api_tokens_path) entry to allow
+  # Computacenter users to self-manage api tokens to our API to update cap usage.
   def computacenter_links
     [
       NavLinkComponent.new(title: 'Home', url: computacenter_home_path),
-      NavLinkComponent.new(title: 'API tokens', url: computacenter_api_tokens_path),
     ]
   end
 
