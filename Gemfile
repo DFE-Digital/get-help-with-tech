@@ -58,7 +58,7 @@ gem 'pundit'
 gem 'rack-throttle'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 6.1.4.7', '< 6.2'
+gem 'rails', '>= 6.1.5.1', '< 6.2'
 
 # Used for markdown rendering of guidance pages
 gem 'redcarpet'
@@ -113,7 +113,7 @@ group :development, :test do
   gem 'pry-byebug'
 
   # Testing framework
-  gem 'rspec-rails', '~> 5.1.1'
+  gem 'rspec-rails', '~> 5.1.2'
 
   # Stubbing web requests
   gem 'webmock'
