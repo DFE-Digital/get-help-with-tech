@@ -179,7 +179,6 @@ GEM
       dry-core (~> 0.5, >= 0.5)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.9, >= 1.9.1)
-    e2mmap (0.1.0)
     erubi (1.10.0)
     et-orbi (1.2.7)
       tzinfo
@@ -481,12 +480,10 @@ GEM
       redis (>= 4.2.0)
     sidekiq-failures (1.0.1)
       sidekiq (>= 4.0.0)
-    sidekiq-scheduler (3.2.1)
-      e2mmap
-      redis (>= 3, < 5)
+    sidekiq-scheduler (4.0.0)
+      redis (>= 4.2.0)
       rufus-scheduler (~> 3.2)
-      sidekiq (>= 3)
-      thwait
+      sidekiq (>= 4)
       tilt (>= 1.4.0)
     simplecov (0.21.2)
       docile (~> 1.1)
@@ -513,8 +510,6 @@ GEM
     stackprof (0.2.19)
     strscan (3.0.1)
     thor (1.2.1)
-    thwait (0.2.0)
-      e2mmap
     tilt (2.0.10)
     timecop (0.9.5)
     timeout (0.2.0)
