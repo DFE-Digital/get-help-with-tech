@@ -60,5 +60,10 @@ RSpec.describe SupportTicket::DescribeYourselfController, type: :controller do
       post :save, params: { support_ticket_describe_yourself_form: { user_type: 'other_type_of_user' } }
       expect(response).to redirect_to(support_ticket_contact_details_path)
     end
+
+    it 'redirects back to the form for invalid type of user' do
+      post :save, params: { support_ticket_describe_yourself_form: { user_type: 'wrong' } }
+      expect(response).to render_template('support_tickets/describe_yourself')
+    end
   end
 end

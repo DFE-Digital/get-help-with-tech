@@ -5,6 +5,17 @@ RSpec.describe SupportTicket::DescribeYourselfForm, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:user_type).with_message('Tell us which of these best describes you') }
+
+    it {
+      expect(form).to validate_inclusion_of(:user_type)
+                        .in_array(%w[college
+                                     local_authority
+                                     multi_academy_trust
+                                     other_type_of_user
+                                     parent_or_guardian_or_carer_or_pupil_or_care_leaver
+                                     school_or_single_academy_trust])
+                        .with_message('Wrong user type')
+    }
   end
 
   describe '#descibe_yourself_options' do
