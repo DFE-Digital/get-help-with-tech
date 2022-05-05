@@ -3,7 +3,7 @@ class Computacenter::RawOrderMap
 
   def initialize(raw_order:)
     @raw_order = raw_order
-    @order = Computacenter::Order.first_or_initialize(raw_order_id: raw_order.id)
+    @order = Computacenter::Order.find_or_initialize_by(raw_order_id: raw_order.id)
   end
 
   delegate :valid?, to: :order
@@ -34,10 +34,9 @@ private
       quantity_completed: raw_order.quantity_completed.to_i,
       order_date: raw_order.converted_order_date,
       despatch_date: raw_order.converted_despatch_date,
-      order_completed: raw_order.order_completed.upcase == 'TRUE',
-      is_return: raw_order.is_return.upcase == 'TRUE',
+      order_completed: raw_order.order_completed&.upcase == 'TRUE',
+      is_return: raw_order.is_return&.upcase == 'TRUE',
       customer_order_number: raw_order.customer_order_number,
-      raw_order:,
     }
   end
 end
