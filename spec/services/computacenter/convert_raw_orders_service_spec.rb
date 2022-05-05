@@ -12,8 +12,8 @@ RSpec.describe Computacenter::ConvertRawOrdersService do
       end
 
       it 'creates the corresponding Order' do
-        result = service.call
-        expect(result.first).to have_attributes(
+        service.call
+        expect(raw_order.order).to have_attributes(
           source: raw_order.source,
           sold_to: raw_order.sold_to_account_no.to_i,
           ship_to: raw_order.ship_to_account_no.to_i,

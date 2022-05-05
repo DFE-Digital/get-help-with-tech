@@ -1,21 +1,25 @@
 class Computacenter::RawOrderMap
+  attr_reader :order, :raw_order
+
   def initialize(raw_order:)
     @raw_order = raw_order
+    @order = Computacenter::Order.first_or_initialize(raw_order_id: raw_order.id)
   end
 
-  def to_order
-    Computacenter::Order.new(**map_to_hash)
-  end
+  delegate :valid?, to: :order
 
-  def to_order_attributes
-    map_to_hash
+  def persist!
+    return unless valid?
+
+    order.transaction do
+      order.update!(**order_attributes)
+      raw_order.mark_as_processed!
+    end
   end
 
 private
 
-  attr_reader :raw_order
-
-  def map_to_hash
+  def order_attributes
     {
       source: raw_order.source,
       sold_to: raw_order.sold_to_account_no.to_i,

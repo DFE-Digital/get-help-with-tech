@@ -1,16 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Computacenter::RawOrderMap, type: :model do
-  let(:raw_order) { build_stubbed(:computacenter_raw_order) }
+  let(:raw_order) { create(:computacenter_raw_order) }
   let(:raw_order_map) { build(:computacenter_raw_order_map, raw_order:) }
 
-  describe '#to_order' do
+  describe '#order' do
     it 'returns an Order' do
-      expect(raw_order_map.to_order).to be_a(Computacenter::Order)
+      expect(raw_order_map.order).to be_a(Computacenter::Order)
     end
 
     it 'returns an Order with the correct attributes' do
-      expect(raw_order_map.to_order).to have_attributes(
+      raw_order_map.persist!
+      expect(raw_order_map.order).to have_attributes(
         source: raw_order.source,
         sold_to: raw_order.sold_to_account_no.to_i,
         ship_to: raw_order.ship_to_account_no.to_i,
@@ -32,13 +33,14 @@ RSpec.describe Computacenter::RawOrderMap, type: :model do
     end
   end
 
-  describe '#to_order_attributes' do
-    it 'returns an attributes Hash' do
-      expect(raw_order_map.to_order_attributes).to be_a(Hash)
+  describe '#persist!' do
+    it 'creates an Order' do
+      expect { raw_order_map.persist! }.to change(Computacenter::Order, :count)
     end
 
-    it 'returns an Order with the correct attributes' do
-      expect(raw_order_map.to_order_attributes).to include(
+    it 'creates the corresponding Order' do
+      raw_order_map.persist!
+      expect(raw_order_map.order).to have_attributes(
         source: raw_order.source,
         sold_to: raw_order.sold_to_account_no.to_i,
         ship_to: raw_order.ship_to_account_no.to_i,
@@ -57,6 +59,11 @@ RSpec.describe Computacenter::RawOrderMap, type: :model do
         customer_order_number: raw_order.customer_order_number,
         raw_order:,
       )
+    end
+
+    it 'does not create a new Order if the RawOrder is already mapped' do
+      raw_order_map.persist!
+      expect { raw_order_map.persist! }.not_to change(Computacenter::Order, :count)
     end
   end
 end

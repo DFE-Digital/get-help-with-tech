@@ -20,6 +20,8 @@ class Computacenter::RawOrder < ApplicationRecord
 private
 
   def convert_date(date)
+    return nil if date.blank?
+
     Date.strptime(date, '%m/%d/%Y')
   end
 end
