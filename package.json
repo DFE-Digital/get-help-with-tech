@@ -11,9 +11,9 @@
     "set-value": ">=4.0.1"
   },
   "devDependencies": {
-    "jest": "^28.0.2",
+    "jest": "^28.0.3",
     "jest-environment-jsdom": "^28.0.2",
-    "webpack-dev-server": ">=4.8.1"
+    "webpack-dev-server": ">=4.9.0"
   },
   "jest": {
     "testEnvironment": "jsdom",
