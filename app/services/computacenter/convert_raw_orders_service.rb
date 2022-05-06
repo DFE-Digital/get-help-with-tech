@@ -6,7 +6,7 @@ class Computacenter::ConvertRawOrdersService < ApplicationService
   end
 
   def call
-    scope.map do |raw_order|
+    scope.find_each do |raw_order|
       persist!(raw_order)
     end
   end
