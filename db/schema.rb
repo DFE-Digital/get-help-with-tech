@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_140343) do
+ActiveRecord::Schema.define(version: 2022_04_27_141759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,59 @@ ActiveRecord::Schema.define(version: 2022_03_02_140343) do
     t.integer "cap_usage_update_payload_id"
     t.index ["cap_usage_update_payload_id"], name: "index_devices_ordered_updates_on_cap_usage_update_payload_id"
     t.index ["ship_to"], name: "index_computacenter_devices_ordered_updates_on_ship_to"
+  end
+
+  create_table "computacenter_orders", force: :cascade do |t|
+    t.string "source"
+    t.integer "sold_to"
+    t.integer "ship_to"
+    t.bigint "sales_order_number"
+    t.string "persona"
+    t.integer "material_number"
+    t.string "material_description"
+    t.string "manufacturer"
+    t.integer "quantity_ordered"
+    t.integer "quantity_outstanding"
+    t.integer "quantity_completed"
+    t.date "order_date"
+    t.date "despatch_date"
+    t.boolean "order_completed"
+    t.boolean "is_return"
+    t.string "customer_order_number"
+    t.bigint "raw_order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["raw_order_id"], name: "index_computacenter_orders_on_raw_order_id"
+    t.index ["ship_to"], name: "index_computacenter_orders_on_ship_to"
+    t.index ["sold_to"], name: "index_computacenter_orders_on_sold_to"
+  end
+
+  create_table "computacenter_raw_orders", force: :cascade do |t|
+    t.string "source"
+    t.string "responsible_body"
+    t.string "urn_cc"
+    t.string "category"
+    t.string "sold_to_account_no"
+    t.string "sold_to_customer"
+    t.string "ship_to_urn"
+    t.string "ship_to_account_no"
+    t.string "ship_to_customer"
+    t.string "sales_order_number"
+    t.string "persona_cleaned"
+    t.string "material_number"
+    t.string "material_description"
+    t.string "manufacturer_cleaned"
+    t.string "quantity_ordered"
+    t.string "quantity_outstanding"
+    t.string "quantity_completed"
+    t.string "order_date"
+    t.string "despatch_date"
+    t.string "order_completed"
+    t.string "is_return"
+    t.string "customer_order_number"
+    t.datetime "processed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "computacenter_user_changes", force: :cascade do |t|
@@ -580,6 +633,7 @@ ActiveRecord::Schema.define(version: 2022_03_02_140343) do
   add_foreign_key "bt_wifi_voucher_allocations", "responsible_bodies"
   add_foreign_key "bt_wifi_vouchers", "responsible_bodies"
   add_foreign_key "computacenter_devices_ordered_updates", "computacenter_cap_usage_update_payloads", column: "cap_usage_update_payload_id"
+  add_foreign_key "computacenter_orders", "computacenter_raw_orders", column: "raw_order_id"
   add_foreign_key "extra_mobile_data_requests", "responsible_bodies"
   add_foreign_key "extra_mobile_data_requests", "schools"
   add_foreign_key "preorder_information", "school_contacts"
