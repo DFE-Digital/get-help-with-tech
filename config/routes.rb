@@ -56,6 +56,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :orders, only: %i[index]
+
   resources :viewed_assets, only: %i[new index]
 
   resources :sessions, only: %i[create destroy]

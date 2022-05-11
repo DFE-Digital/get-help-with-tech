@@ -22,8 +22,8 @@ private
   def order_attributes
     {
       source: raw_order.source,
-      sold_to: raw_order.sold_to_account_no.to_i,
-      ship_to: raw_order.ship_to_account_no.to_i,
+      sold_to: raw_order.sold_to_account_no,
+      ship_to: raw_order.ship_to_account_no,
       sales_order_number: raw_order.sales_order_number.to_i,
       persona: raw_order.persona_cleaned,
       material_number: raw_order.material_number.to_i,
