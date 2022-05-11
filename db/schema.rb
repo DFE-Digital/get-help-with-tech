@@ -326,7 +326,10 @@ ActiveRecord::Schema.define(version: 2022_05_10_115957) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
+    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
