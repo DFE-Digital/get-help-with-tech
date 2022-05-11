@@ -58,6 +58,7 @@ class School < ApplicationRecord
                                      foreign_key: :ship_to
   has_many :cap_changes, dependent: :destroy, inverse_of: :school
   has_many :cap_update_calls, dependent: :destroy, inverse_of: :school
+  has_many :orders, class_name: 'Computacenter::Order', primary_key: :computacenter_reference, foreign_key: :ship_to
 
   # Validations
   validates :name, presence: true

@@ -7,6 +7,30 @@ RSpec.describe ResponsibleBody, type: :model do
     stub_computacenter_outgoing_api_calls
   end
 
+  describe '#orders' do
+    it 'returns an empty array if the responsible body has no orders' do
+      responsible_body = create(:local_authority)
+      expect(responsible_body.orders).to eq([])
+    end
+
+    it 'returns the orders for the responsible body' do
+      responsible_body = create(:local_authority, :with_orders, orders_count: 2)
+      expect(responsible_body.orders.count).to eq(2)
+    end
+
+    it 'returns the orders for the responsible body\'s schools' do
+      responsible_body = create(:local_authority)
+      create(:school, :with_orders, orders_count: 2, responsible_body:)
+      expect(responsible_body.orders.count).to eq(2)
+    end
+
+    it 'returns the orders for the responsible body and the responsible body\'s schools' do
+      responsible_body = create(:local_authority, :with_orders, orders_count: 2)
+      create(:school, :with_orders, orders_count: 2, responsible_body:)
+      expect(responsible_body.orders.count).to eq(4)
+    end
+  end
+
   describe '#active_schools' do
     let!(:schools) { create(:school, responsible_body:) }
     let(:closed_schools) { create(:school, status: 'closed', responsible_body:) }

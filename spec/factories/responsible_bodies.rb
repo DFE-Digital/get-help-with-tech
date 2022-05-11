@@ -71,6 +71,17 @@ FactoryBot.define do
         responsible_body.reload
       end
     end
+
+    trait :with_orders do
+      transient do
+        orders_count { 3 }
+      end
+
+      after(:create) do |trust, evaluator|
+        create_list(:computacenter_order, evaluator.orders_count, sold_to: trust.computacenter_reference)
+        trust.reload
+      end
+    end
   end
 
   factory :local_authority, parent: :responsible_body, class: 'LocalAuthority' do

@@ -1,0 +1,83 @@
+<% content_for :title, @title %>
+<% content_for :browser_title, @title %>
+
+<% content_for :before_content do %>
+  <% breadcrumbs([{ 'Home' => root_path },
+                  { 'View your device details' => orders_path },
+                  @title,
+                 ]) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <%= @title %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      View and download the order history for organisations that you manage.
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="app-card">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-2">
+        Download order history
+      </h2>
+      <p class="govuk-body">
+        Download the order history in a single CSV file.
+      </p>
+      <%= link_to "Export to CSV", orders_path(format: 'csv'), class: 'govuk-button govuk-button govuk-!-margin-bottom-0' %>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l govuk-!-margin-top-5">
+      View order history
+    </h2>
+  </div>
+</div>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header app-schools-table__column-30">Order number</th>
+    <th class="govuk-table__header app-schools-table__column-20">Order date</th>
+    <th class="govuk-table__header app-schools-table__column-20">Devices ordered</th>
+    <th class="govuk-table__header app-schools-table__column-30">Device type</th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @orders.each do |order| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= order.customer_order_number %></td>
+      <td class="govuk-table__cell"><%= order.order_date %></td>
+      <td class="govuk-table__cell"><%= order.quantity_ordered %></td>
+      <td class="govuk-table__cell"><%= order.persona %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      My order does not appear in the list
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    Check you&rsquo;re signed in to the correct user account for the organisation connected to your order.
+    If you&rsquo;re still unable to find your order details visit
+    <%= govuk_link_to 'Get support', support_ticket_path %>.
+  </div>
+</details>
+
+<%= render partial: 'shared/pagination', locals: { pagination: @pagination } %>

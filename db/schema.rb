@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_27_141759) do
+ActiveRecord::Schema.define(version: 2022_05_10_115957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_141759) do
 
   create_table "computacenter_orders", force: :cascade do |t|
     t.string "source"
-    t.integer "sold_to"
-    t.integer "ship_to"
+    t.string "sold_to"
+    t.string "ship_to"
     t.bigint "sales_order_number"
     t.string "persona"
     t.integer "material_number"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2022_04_27_141759) do
     t.bigint "raw_order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_date"], name: "index_computacenter_orders_on_order_date"
     t.index ["raw_order_id"], name: "index_computacenter_orders_on_raw_order_id"
     t.index ["ship_to"], name: "index_computacenter_orders_on_ship_to"
     t.index ["sold_to"], name: "index_computacenter_orders_on_sold_to"
