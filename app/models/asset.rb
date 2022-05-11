@@ -3,9 +3,11 @@ require 'encryption_service'
 class Asset < ApplicationRecord
   UNLOCKABLE_MODEL_PATTERN = /\ADynabook R50/
 
+  belongs_to :setting, polymorphic: true, optional: true
   validates :serial_number, :department_sold_to_id, presence: true
 
   default_scope { order(:location) }
+  scope :with_no_setting, -> { where(setting_id: nil) }
 
   include ExportableAsCsv
 
