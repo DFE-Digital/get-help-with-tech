@@ -3,12 +3,13 @@ class OrdersController < ApplicationController
 
   def index
     @title = 'Order history'
-    @pagination, @orders = pagy(policy_scope(Computacenter::Order).order(order_date: :desc))
+    all_orders = policy_scope(Computacenter::Order).order(order_date: :desc)
+    @pagination, @orders = pagy(all_orders)
 
     respond_to do |format|
       format.html
       format.csv do
-        send_data Computacenter::ExportOrdersService.call(@orders.pluck(:id)), filename: "#{Time.zone.now.iso8601}_order_history_export.csv"
+        send_data Computacenter::ExportOrdersService.call(all_orders.pluck(:id)), filename: "#{Time.zone.now.iso8601}_order_history_export.csv"
       end
     end
   end
