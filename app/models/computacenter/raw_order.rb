@@ -1,5 +1,8 @@
 class Computacenter::RawOrder < ApplicationRecord
-  has_one :order, class_name: 'Computacenter::Order', inverse_of: :raw_order
+  has_one :order,
+          class_name: 'Computacenter::Order',
+          inverse_of: :raw_order,
+          dependent: :destroy
 
   scope :processed, -> { where.not(processed_at: nil) }
   scope :unprocessed, -> { where(processed_at: nil) }

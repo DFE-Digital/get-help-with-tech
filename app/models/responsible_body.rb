@@ -23,10 +23,23 @@ class ResponsibleBody < ApplicationRecord
   # Associations
   has_one :bt_wifi_voucher_allocation
   belongs_to :key_contact, class_name: 'User', optional: true
+
   has_many :bt_wifi_vouchers
   has_many :users
   has_many :extra_mobile_data_requests
   has_many :schools, inverse_of: :responsible_body
+  has_many :assets, as: :setting, dependent: :destroy
+  has_many :rb_orders,
+           class_name: 'Computacenter::Order',
+           primary_key: :computacenter_reference,
+           foreign_key: :sold_to,
+           inverse_of: :responsible_body,
+           dependent: :destroy
+  has_many :schools_orders, through: :schools, source: :orders
+
+  def orders
+    (rb_orders.to_a + schools_orders.to_a.flatten).uniq
+  end
 
   # no longer used - data retained for historical purposes
   has_many :donated_device_requests, dependent: :destroy

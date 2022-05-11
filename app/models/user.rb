@@ -17,6 +17,16 @@ class User < ApplicationRecord
   has_many :downloads, dependent: :destroy
   has_one :last_user_change, -> { order('created_at DESC').limit(1) }, class_name: 'Computacenter::UserChange'
 
+  delegate :orders, to: :responsible_body, prefix: true, allow_nil: true
+
+  def orders
+    @orders ||= ((responsible_body_orders || []) + schools_orders).uniq
+  end
+
+  def schools_orders
+    @schools_orders ||= schools.map(&:orders).flatten
+  end
+
   belongs_to :mobile_network, optional: true
   belongs_to :responsible_body, optional: true
 

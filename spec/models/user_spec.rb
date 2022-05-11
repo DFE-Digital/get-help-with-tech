@@ -65,6 +65,60 @@ RSpec.describe User, type: :model, with_feature_flags: { notify_cc_about_user_ch
       end
     end
 
+    describe '#orders' do
+      it 'returns an empty array if the user has no schools or responsible body' do
+        user = build(:user, school: nil, responsible_body: nil)
+        expect(user.orders).to eq([])
+      end
+
+      it 'returns an empty array if the user has no schools that have orders' do
+        user = create(:user, schools: [create(:school)])
+        expect(user.orders).to eq([])
+      end
+
+      it 'returns the orders for the user\'s schools' do
+        user = create(:user, schools: [create(:school, :with_orders), create(:school, :with_orders)])
+        expect(user.orders).to eq(user.schools.map(&:orders).flatten)
+      end
+
+      it 'returns the orders for the user\'s responsible body' do
+        user = create(:user, responsible_body: create(:trust, :with_orders))
+        expect(user.orders).to eq(user.responsible_body.orders)
+      end
+
+      it 'returns an empty array if the responsible body has no orders' do
+        user = create(:user, responsible_body: create(:trust))
+        expect(user.orders).to eq([])
+      end
+
+      it 'returns the orders for the user\'s schools and the orders for the user\'s responsible_body' do
+        user = create(:user, schools: [create(:school, :with_orders)], responsible_body: create(:trust, :with_orders))
+        expect(user.orders.count).to eq(user.schools.map(&:orders).flatten.count + user.responsible_body.orders.count)
+      end
+    end
+
+    describe '#schools_orders' do
+      it 'returns an empty array if the user has no schools' do
+        user = build(:user, school: nil)
+        expect(user.schools_orders).to eq([])
+      end
+
+      it 'returns an empty array if the user has no schools that have orders' do
+        user = create(:user, schools: [create(:school)])
+        expect(user.schools_orders).to eq([])
+      end
+
+      it 'returns the orders for the user\'s schools' do
+        user = create(:user, schools: [create(:school, :with_orders), create(:school, :with_orders)])
+        expect(user.schools_orders).to eq(user.schools.map(&:orders).flatten)
+      end
+
+      it 'returns the orders for the user\'s school, but not the orders from the user\'s responsible body' do
+        user = create(:user, school: create(:school, :with_orders), responsible_body: create(:trust, :with_orders))
+        expect(user.schools_orders).to eq(user.school.orders)
+      end
+    end
+
     context 'when the user has a responsible_body and one school' do
       let(:school) { create(:school, :academy, responsible_body:) }
       let(:user) { create(:trust_user, schools: [school], responsible_body:, orders_devices: true) }

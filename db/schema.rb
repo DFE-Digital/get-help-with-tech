@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_27_141759) do
+ActiveRecord::Schema.define(version: 2022_05_10_215126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,9 +60,12 @@ ActiveRecord::Schema.define(version: 2022_04_27_141759) do
     t.datetime "first_viewed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "setting_id"
+    t.string "setting_type"
     t.index ["department_sold_to_id"], name: "index_assets_on_department_sold_to_id"
     t.index ["location_cc_ship_to_account"], name: "index_assets_on_location_cc_ship_to_account"
     t.index ["serial_number"], name: "index_assets_on_serial_number"
+    t.index ["setting_type", "setting_id"], name: "index_assets_on_setting_type_and_setting_id"
   end
 
   create_table "batch_job_log_entries", force: :cascade do |t|
@@ -146,8 +149,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_141759) do
 
   create_table "computacenter_orders", force: :cascade do |t|
     t.string "source"
-    t.integer "sold_to"
-    t.integer "ship_to"
+    t.string "sold_to"
+    t.string "ship_to"
     t.bigint "sales_order_number"
     t.string "persona"
     t.integer "material_number"
@@ -164,6 +167,7 @@ ActiveRecord::Schema.define(version: 2022_04_27_141759) do
     t.bigint "raw_order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_date"], name: "index_computacenter_orders_on_order_date"
     t.index ["raw_order_id"], name: "index_computacenter_orders_on_raw_order_id"
     t.index ["ship_to"], name: "index_computacenter_orders_on_ship_to"
     t.index ["sold_to"], name: "index_computacenter_orders_on_sold_to"
@@ -325,16 +329,16 @@ ActiveRecord::Schema.define(version: 2022_04_27_141759) do
   end
 
   create_table "preorder_information", force: :cascade do |t|
-    t.bigint "school_id", null: false
     t.string "who_will_order_devices", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "status", null: false
     t.bigint "school_contact_id"
     t.string "will_need_chromebooks"
     t.string "school_or_rb_domain"
     t.string "recovery_email_address"
     t.datetime "school_contacted_at"
+    t.bigint "school_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["school_contact_id"], name: "index_preorder_information_on_school_contact_id"
     t.index ["school_id"], name: "index_preorder_information_on_school_id"
     t.index ["status"], name: "index_preorder_information_on_status"

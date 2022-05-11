@@ -120,5 +120,16 @@ FactoryBot.define do
         school.reload
       end
     end
+
+    trait :with_orders do
+      transient do
+        orders_count { 2 }
+      end
+
+      after(:create) do |school, evaluator|
+        create_list(:computacenter_order, evaluator.orders_count, ship_to: school.computacenter_reference)
+        school.reload
+      end
+    end
   end
 end
