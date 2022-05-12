@@ -52,6 +52,15 @@ RSpec.describe OrdersController do
         expect(assigns(:orders)).to contain_exactly(*orders)
         expect(response).to render_template(:index)
       end
+
+      context 'valid orders' do
+        let!(:return_orders) { create_list(:computacenter_order, 2, is_return: true) }
+
+        it 'does not show returns' do
+          get :index
+          expect(assigns(:orders)).not_to include(*return_orders)
+        end
+      end
     end
 
     context 'computacenter user' do
