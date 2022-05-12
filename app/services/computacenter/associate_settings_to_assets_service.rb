@@ -10,18 +10,37 @@ class Computacenter::AssociateSettingsToAssetsService < ApplicationService
 private
 
   def rb(asset)
-    sold_to = asset.department_sold_to_id.presence
+    rb_from_department_sold_to_id(asset.department_sold_to_id) ||
+      rb_from_department_id(asset.department_id)
+  end
 
-    responsible_body = ResponsibleBody.find_by_computacenter_reference(sold_to) if sold_to
-    responsible_body ||= ResponsibleBody.find_by_gias_id(asset.department_id[2..]) if asset.department_id&.starts_with?('SC')
-    responsible_body
+  def rb_from_department_id(department_id)
+    ResponsibleBody.find_by_gias_id(department_id[2..]) if department_id&.starts_with?('SC')
+  end
+
+  def rb_from_department_sold_to_id(department_sold_to_id)
+    ResponsibleBody.find_by_computacenter_reference(department_sold_to_id) if department_sold_to_id.present?
   end
 
   def school(asset)
-    ship_to = asset.location_cc_ship_to_account.presence
-    name = asset.department.presence
-    school = School.find_by_computacenter_reference(ship_to) if ship_to
-    school || (name && School.find_by_name(asset.department))
+    school_from_location_cc_ship_to_account(asset.location_cc_ship_to_account) ||
+      school_from_department_id(asset.department_id) ||
+      school_from_department(asset.department)
+  end
+
+  def school_from_department(name)
+    School.find_by_name(name) if name.present?
+  end
+
+  def school_from_department_id(department_id)
+    return if department_id.blank?
+
+    urn = (department_id[2..]).to_i if department_id&.starts_with?('SC')
+    School.where('urn = :urn OR ukprn = :urn OR provision_urn = :p_urn', urn:, p_urn: "SCL#{urn}").first if urn
+  end
+
+  def school_from_location_cc_ship_to_account(ship_to)
+    School.find_by_computacenter_reference(ship_to) if ship_to.present?
   end
 
   def school_rb?(school, sold_to)

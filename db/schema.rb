@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_10_215126) do
+ActiveRecord::Schema.define(version: 2022_05_12_185917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -489,6 +489,7 @@ ActiveRecord::Schema.define(version: 2022_05_10_215126) do
     t.integer "over_order_reclaimed_laptops", default: 0, null: false
     t.integer "over_order_reclaimed_routers", default: 0, null: false
     t.index ["computacenter_change"], name: "index_schools_on_computacenter_change"
+    t.index ["computacenter_reference"], name: "index_schools_on_computacenter_reference"
     t.index ["name"], name: "index_schools_on_name"
     t.index ["provision_urn"], name: "index_schools_on_provision_urn", unique: true
     t.index ["responsible_body_id"], name: "index_schools_on_responsible_body_id"
