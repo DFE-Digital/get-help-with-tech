@@ -14,4 +14,7 @@ class Computacenter::Order < ApplicationRecord
              foreign_key: :sold_to,
              inverse_of: :rb_orders,
              optional: true
+
+  scope :is_return, -> { where(is_return: true) }
+  scope :is_not_return, -> { where(is_return: false) }
 end

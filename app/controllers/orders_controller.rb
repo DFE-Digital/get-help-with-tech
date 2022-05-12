@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   def index
     @title = 'Order history'
-    all_orders = policy_scope(Computacenter::Order).order(order_date: :desc)
+    all_orders = policy_scope(Computacenter::Order).is_not_return.order(order_date: :desc)
     @pagination, @orders = pagy(all_orders)
 
     respond_to do |format|
