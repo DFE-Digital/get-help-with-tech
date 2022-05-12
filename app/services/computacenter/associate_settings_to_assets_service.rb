@@ -33,15 +33,22 @@ private
   def set_rb_setting(asset, school)
     if school_rb?(school, asset.department_sold_to_id)
       asset.setting = school.responsible_body
+      asset.save!
     else
       rb = rb(asset)
-      asset.setting = rb if rb
+      if rb
+        asset.setting = rb
+        asset.save!
+      end
     end
   end
 
   def set_school_setting(asset, school)
     return unless school
 
-    asset.setting = school unless school.orders_managed_centrally?
+    unless school.orders_managed_centrally?
+      asset.setting = school
+      asset.save!
+    end
   end
 end
