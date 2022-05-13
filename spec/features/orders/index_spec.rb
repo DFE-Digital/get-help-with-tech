@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'List orders' do
-  let(:user) { create(:trust_user) }
+  let(:user) { create(:local_authority_user, rb_level_access: true) }
   let!(:order) { create(:computacenter_order, sold_to: user.responsible_body.computacenter_reference) }
 
   scenario 'non logged-in users required sign in' do

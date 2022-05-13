@@ -33,7 +33,7 @@ describe Computacenter::OrderPolicy do
       let(:current_user) { local_authority_user }
       let(:local_authority) { local_authority_user.rb }
       let!(:local_authority_order) { create(:computacenter_order, sold_to: local_authority.computacenter_reference) }
-      let(:local_authority_user) { create(:local_authority_user) }
+      let(:local_authority_user) { create(:local_authority_user, rb_level_access: true) }
 
       it 'returns only the local authority orders' do
         expect(scope).to match_array(local_authority_order)
