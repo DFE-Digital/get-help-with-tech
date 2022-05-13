@@ -27,7 +27,7 @@ RSpec.describe OrdersController do
 
     context 'RB A' do
       let(:rb_a) { create(:local_authority, :with_orders) }
-      let(:rb_a_user) { create(:local_authority_user, responsible_body: rb_a) }
+      let(:rb_a_user) { create(:local_authority_user, responsible_body: rb_a, rb_level_access: true) }
 
       before { sign_in_as rb_a_user }
 
