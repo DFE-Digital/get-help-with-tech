@@ -55,7 +55,7 @@
   <tr class="govuk-table__row">
     <th class="govuk-table__header app-schools-table__column-30">Order number</th>
     <th class="govuk-table__header app-schools-table__column-20">Order date</th>
-    <th class="govuk-table__header app-schools-table__column-20">Devices ordered</th>
+    <th class="govuk-table__header app-schools-table__column-20">Devices delivered</th>
     <th class="govuk-table__header app-schools-table__column-30">Device type</th>
   </tr>
   </thead>
@@ -64,7 +64,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell"><%= order.customer_order_number %></td>
       <td class="govuk-table__cell"><%= order.order_date %></td>
-      <td class="govuk-table__cell"><%= order.quantity_ordered %></td>
+      <td class="govuk-table__cell"><%= order.quantity_completed %></td>
       <td class="govuk-table__cell"><%= order.persona %></td>
     </tr>
   <% end %>

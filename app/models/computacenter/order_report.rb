@@ -2,7 +2,7 @@ class Computacenter::OrderReport < TemplateClassCsv
   def self.headers
     %w[order_number
        order_date
-       quantity
+       quantity_completed
        device_type]
   end
 
@@ -25,7 +25,7 @@ private
   def csv_row(order)
     [order.customer_order_number,
      order.order_date,
-     order.quantity_ordered,
+     order.quantity_completed,
      order.persona]
   end
 end
