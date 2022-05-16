@@ -50,7 +50,7 @@ RSpec.describe Computacenter::ExportOrdersToFileService do
       end
 
       it 'has a quantity value equal to the order quantity_ordered' do
-        expect(order_csv_row['quantity']).to eq(order.quantity_ordered.to_s)
+        expect(order_csv_row['quantity_completed']).to eq(order.quantity_completed.to_s)
       end
 
       it 'has a device_type value equal to the order persona' do
