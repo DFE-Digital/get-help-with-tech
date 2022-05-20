@@ -9,11 +9,12 @@ RSpec.describe RestrictedDevicePasswordEmailingForSettingJob do
   let!(:school_a_user_1) { create(:school_user, school: school_a) }
   let!(:school_b) { create(:school) }
 
-  let(:data) { StringIO.new(setting.assets.to_closure_notification_csv) }
+  let(:data) { StringIO.new(setting.assets.restricted.order(:serial_number).to_closure_notification_csv) }
   let(:link_to_file) { Notifications.prepare_upload(data, true) }
 
   before do
     create(:asset, setting: rb_a)
+    create(:asset, :lacks_admin_password, setting: rb_a)
     create(:asset, setting: rb_b)
     create(:trust_user, responsible_body: rb_a, restricted_devices_comms_opt_out: true)
     create(:trust_user, responsible_body: rb_b)

@@ -11,7 +11,7 @@ private
   attr_reader :setting
 
   def data
-    @data ||= StringIO.new(setting.assets.to_closure_notification_csv)
+    @data ||= StringIO.new(setting.assets.restricted.order(:serial_number).to_closure_notification_csv)
   end
 
   def link_to_file
