@@ -29,6 +29,7 @@ class ResponsibleBody < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :schools, inverse_of: :responsible_body
   has_many :assets, as: :setting, dependent: :destroy
+  has_many :school_assets, through: :schools, source: :assets
   has_many :rb_orders,
            class_name: 'Computacenter::Order',
            primary_key: :computacenter_reference,

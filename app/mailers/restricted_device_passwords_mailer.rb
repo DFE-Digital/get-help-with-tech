@@ -18,7 +18,7 @@ private
     audit = EmailAudit.create!(message_type:,
                                template: template_id,
                                email_address: user.email_address,
-                               user: user)
+                               user:)
 
     template_mail(template_id, mail_params.merge(reference: audit.id))
   end

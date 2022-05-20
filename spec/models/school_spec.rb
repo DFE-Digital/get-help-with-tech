@@ -16,12 +16,11 @@ RSpec.describe School, type: :model do
     it { is_expected.to validate_presence_of(:name).with_message('Enter the name of the establishment') }
   end
 
-
   describe '.with_restricted_devices_and_users' do
     let!(:school) { create(:school) }
 
     context 'when the school has no restricted devices' do
-      before { create(:school_user, school: school) }
+      before { create(:school_user, school:) }
 
       specify { expect(School.with_restricted_devices_and_users).to be_blank }
     end
@@ -33,15 +32,19 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school has restricted devices and users associated but opting-out for restricted devices comms' do
-      before { create(:asset, setting: school) }
-      before { create(:school_user, school: school, restricted_devices_comms_opt_out: true) }
+      before do
+        create(:asset, setting: school)
+        create(:school_user, school:, restricted_devices_comms_opt_out: true)
+      end
 
       specify { expect(School.with_restricted_devices_and_users).to be_blank }
     end
 
     context 'when the school has restricted devices and users associated not opting-out for restricted devices comms' do
-      before { create(:asset, setting: school) }
-      before { create(:school_user, school: school) }
+      before do
+        create(:asset, setting: school)
+        create(:school_user, school:)
+      end
 
       specify { expect(School.with_restricted_devices_and_users).to include(school) }
     end

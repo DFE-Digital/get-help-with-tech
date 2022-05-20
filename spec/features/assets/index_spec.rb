@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'List assets' do
   let(:user) { create(:trust_user) }
-  let!(:asset) { create(:asset, department_sold_to_id: user.responsible_body.computacenter_reference) }
+  let!(:asset) { create(:asset, setting: user.responsible_body) }
 
   scenario 'non logged-in users required sign in' do
     visit assets_path

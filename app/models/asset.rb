@@ -24,7 +24,7 @@ class Asset < ApplicationRecord
   }.freeze
 
   NON_SUPPORT_ATTRIBUTES = SUPPORT_ATTRIBUTES.except(:department_sold_to_id, :location_cc_ship_to_account).freeze
-  CLOSURE_EMAILING_ATTRIBUTES = {
+  CLOSURE_NOTIFICATION_ATTRIBUTES = {
     serial_number: 'Serial/IMEI',
     model: 'Model',
     bios_password: 'BIOS Password',
@@ -56,10 +56,10 @@ class Asset < ApplicationRecord
     to_csv
   end
 
-  def self.to_closure_emailing_csv
+  def self.to_closure_notification_csv
     class << self
       def exportable_attributes # rubocop:disable Lint/DuplicateMethods
-        CLOSURE_EMAILING_ATTRIBUTES
+        CLOSURE_NOTIFICATION_ATTRIBUTES
       end
     end
 
@@ -101,7 +101,7 @@ class Asset < ApplicationRecord
     Asset.none
   }
 
-  scope :owned_by_rb, ->(rb) { rb.assets | rb.schools.includes(:assets).map(&:assets).flatten }
+  scope :owned_by_rb, ->(rb) { where(id: rb.asset_ids | rb.school_asset_ids) }
   scope :owned_by_school, ->(school) { school.assets }
   scope :restricted, -> { where.not(encrypted_bios_password: nil).where.not(encrypted_admin_password: nil) }
   scope :search_by_serial_numbers, ->(serial_numbers) { where('serial_number ILIKE ANY (ARRAY[?])', serial_numbers) }

@@ -6,12 +6,12 @@ class RestrictedDevicePasswordEmailingForSettingJob < ApplicationJob
     email_users
   end
 
-  private
+private
 
   attr_reader :setting
 
   def data
-    @data ||= StringIO.new(setting.assets.to_closure_emailing_csv)
+    @data ||= StringIO.new(setting.assets.to_closure_notification_csv)
   end
 
   def link_to_file

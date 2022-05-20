@@ -13,8 +13,8 @@ RSpec.describe AssetsController do
       let(:school_a) { create(:school) }
       let(:school_b) { create(:school) }
       let(:school_a_user) { create(:school_user, schools: [school_a]) }
-      let!(:school_a_asset) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-      let!(:school_b_asset) { create(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
+      let!(:school_a_asset) { create(:asset, setting: school_a) }
+      let!(:school_b_asset) { create(:asset, setting: school_b) }
 
       before { sign_in_as school_a_user }
 
@@ -30,8 +30,8 @@ RSpec.describe AssetsController do
     context 'RB A' do
       let(:rb_a) { create(:local_authority) }
       let(:rb_b) { create(:local_authority) }
-      let!(:rb_a_asset) { create(:asset, department_sold_to_id: rb_a.computacenter_reference) }
-      let!(:rb_b_asset) { create(:asset, department_sold_to_id: rb_b.computacenter_reference) }
+      let!(:rb_a_asset) { create(:asset, setting: rb_a) }
+      let!(:rb_b_asset) { create(:asset, setting: rb_b) }
       let(:rb_a_user) { create(:local_authority_user) }
 
       before do
@@ -52,7 +52,7 @@ RSpec.describe AssetsController do
       let(:school) { create(:school) }
       let(:school_user) { create(:school_user, schools: [school]) }
       let(:support_user) { create(:support_user) }
-      let!(:school_asset) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
+      let!(:school_asset) { create(:asset, setting: school) }
 
       before { sign_in_as support_user }
 
@@ -133,8 +133,8 @@ RSpec.describe AssetsController do
     let!(:school) { create(:school) }
     let!(:school_user) { create(:school_user, schools: [school]) }
     let!(:support_user) { create(:support_user) }
-    let!(:asset_1) { create(:asset, :never_viewed, location_cc_ship_to_account: school.computacenter_reference) }
-    let!(:asset_2) { create(:asset, :never_viewed, location_cc_ship_to_account: school.computacenter_reference) }
+    let!(:asset_1) { create(:asset, :never_viewed, setting: school) }
+    let!(:asset_2) { create(:asset, :never_viewed, setting: school) }
     let!(:other_asset) { create(:asset, :never_viewed) }
 
     context 'user counts as viewer' do
@@ -165,7 +165,7 @@ RSpec.describe AssetsController do
 
       context 'over 50 assets to export' do
         before do
-          create_list(:asset, 49, :never_viewed, location_cc_ship_to_account: school.computacenter_reference)
+          create_list(:asset, 49, :never_viewed, setting: school)
         end
 
         it 'redirects back to the assets page' do

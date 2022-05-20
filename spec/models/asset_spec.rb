@@ -130,7 +130,7 @@ RSpec.describe Asset, type: :model do
       let(:school_a) { create(:school) }
 
       context 'when an asset is not associated to the school' do
-        let!(:asset) { create(:asset) }
+        before { create(:asset) }
 
         specify { expect(Asset.owned_by(school_a)).to be_blank }
       end
@@ -147,7 +147,7 @@ RSpec.describe Asset, type: :model do
       let(:school_a) { create(:school, responsible_body: rb_a) }
 
       context 'when an asset is not associated to the rb or any of their schools' do
-        let!(:asset) { create(:asset) }
+        before { create(:asset) }
 
         specify { expect(Asset.owned_by(rb_a)).to be_blank }
       end
@@ -161,7 +161,8 @@ RSpec.describe Asset, type: :model do
       context 'when an asset is associated to one of the schools of the rb' do
         let!(:rb_asset) { create(:asset, setting: rb_a) }
         let!(:school_a_asset) { create(:asset, setting: school_a) }
-        let!(:asset) { create(:asset) }
+
+        before { create(:asset) }
 
         specify { expect(Asset.owned_by(rb_a)).to contain_exactly(rb_asset, school_a_asset) }
       end
@@ -187,7 +188,8 @@ RSpec.describe Asset, type: :model do
 
     context 'when an asset has bios_password and admin_password set' do
       let!(:restricted_asset) { create(:asset, admin_password: 'admin', bios_password: 'bios') }
-      let!(:asset) { create(:asset, admin_password: nil, bios_password: 'bios') }
+
+      before { create(:asset, admin_password: nil, bios_password: 'bios') }
 
       specify { expect(Asset.restricted).to contain_exactly(restricted_asset) }
     end
@@ -346,11 +348,11 @@ RSpec.describe Asset, type: :model do
     specify { expect(csv).to include("#{asset.serial_number},#{asset.model},#{asset.department},#{asset.location},#{asset.department_sold_to_id},#{asset.location_cc_ship_to_account},#{asset.bios_password},#{asset.admin_password},#{asset.hardware_hash}") }
   end
 
-  describe '#to_closure_emailing_csv' do
+  describe '#to_closure_notification_csv' do
     let!(:school) { create(:school) }
     let!(:asset) { create(:asset, setting: school) }
 
-    let(:csv) { Asset.owned_by(school).to_closure_emailing_csv }
+    let(:csv) { Asset.owned_by(school).to_closure_notification_csv }
 
     specify { expect(csv.split("\n").size).to eq(2) }
     specify { expect(csv).to start_with('Serial/IMEI,Model,BIOS Password,Admin Password') }

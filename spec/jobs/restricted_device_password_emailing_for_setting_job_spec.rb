@@ -2,23 +2,27 @@ require 'rails_helper'
 
 RSpec.describe RestrictedDevicePasswordEmailingForSettingJob do
   let!(:rb_a) { create(:trust) }
-  let!(:rb_a_asset) { create(:asset, setting: rb_a) }
   let!(:rb_a_user_1) { create(:trust_user, responsible_body: rb_a) }
-  let!(:rb_a_user_2) { create(:trust_user, responsible_body: rb_a, restricted_devices_comms_opt_out: true) }
   let!(:rb_b) { create(:trust) }
-  let!(:rb_b_asset) { create(:asset, setting: rb_b) }
-  let!(:rb_b_user) { create(:trust_user, responsible_body: rb_b) }
 
   let!(:school_a) { create(:school) }
-  let!(:school_a_asset) { create(:asset, setting: school_a) }
   let!(:school_a_user_1) { create(:school_user, school: school_a) }
-  let!(:school_a_user_2) { create(:school_user, school: school_a, restricted_devices_comms_opt_out: true) }
   let!(:school_b) { create(:school) }
-  let!(:school_b_asset) { create(:asset, setting: school_b) }
-  let!(:school_b_user) { create(:school_user, school: school_b) }
 
-  let(:data) { StringIO.new(setting.assets.to_closure_emailing_csv) }
+  let(:data) { StringIO.new(setting.assets.to_closure_notification_csv) }
   let(:link_to_file) { Notifications.prepare_upload(data, true) }
+
+  before do
+    create(:asset, setting: rb_a)
+    create(:asset, setting: rb_b)
+    create(:trust_user, responsible_body: rb_a, restricted_devices_comms_opt_out: true)
+    create(:trust_user, responsible_body: rb_b)
+
+    create(:asset, setting: school_a)
+    create(:asset, setting: school_b)
+    create(:school_user, school: school_a, restricted_devices_comms_opt_out: true)
+    create(:school_user, school: school_b)
+  end
 
   describe '#perform' do
     context 'when the setting is an RB' do

@@ -120,15 +120,19 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when the rb has restricted devices and users associated but opting-out for restricted devices comms' do
-      before { create(:asset, setting: rb) }
-      before { create(:trust_user, responsible_body: rb, restricted_devices_comms_opt_out: true) }
+      before do
+        create(:asset, setting: rb)
+        create(:trust_user, responsible_body: rb, restricted_devices_comms_opt_out: true)
+      end
 
       specify { expect(ResponsibleBody.with_restricted_devices_and_users).to be_blank }
     end
 
     context 'when the rb has restricted devices and users associated not opting-out for restricted devices comms' do
-      before { create(:asset, setting: rb) }
-      before { create(:trust_user, responsible_body: rb) }
+      before do
+        create(:asset, setting: rb)
+        create(:trust_user, responsible_body: rb)
+      end
 
       specify { expect(ResponsibleBody.with_restricted_devices_and_users).to include(rb) }
     end

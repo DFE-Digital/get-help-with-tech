@@ -3,44 +3,46 @@ class BulkRestrictedDevicePasswordEmailingJob < ApplicationJob
 
   ALL_SETTINGS = :all
 
-  def perform(rb_limit: ALL_SETTINGS, school_limit: ALL_SETTINGS)
-    @rb_limit = rb_limit
-    @school_limit = school_limit
+  def perform(number_of_rbs: ALL_SETTINGS, number_of_schools: ALL_SETTINGS)
+    @number_of_rbs = number_of_rbs
+    @number_of_schools = number_of_schools
     schedule_settings(rbs)
     schedule_settings(schools)
   end
 
 private
 
-  attr_reader :rb_limit, :rbs, :school_limit, :schools
+  attr_reader :number_of_rbs, :number_of_schools
 
-  def rb_limit?
-    rb_limit != ALL_SETTINGS
+  def all_rbs?
+    number_of_rbs == ALL_SETTINGS
   end
 
-  def school_limit?
-    school_limit != ALL_SETTINGS
+  def all_schools?
+    number_of_schools == ALL_SETTINGS
   end
 
   def rbs
-    return @rbs if instance_variable_defined?(:@rbs)
+    @rbs ||= all_rbs? ? rb_users : rb_users.limit(number_of_rbs)
+  end
 
-    query = ResponsibleBody.with_restricted_devices_and_users
-    @rbs = rb_limit? ? query.limit(rb_limit) : query
+  def rb_users
+    ResponsibleBody.with_restricted_devices_and_users
   end
 
   def schools
-    return @schools if instance_variable_defined?(:@schools)
+    @schools ||= all_schools? ? school_users : school_users.limit(number_of_schools)
+  end
 
-    query = School.with_restricted_devices_and_users
-    @schools = school_limit? ? query.limit(school_limit) : query
+  def school_users
+    School.with_restricted_devices_and_users
   end
 
   def schedule_settings(settings)
     settings.find_each do |setting|
       RestrictedDevicePasswordEmailingForSettingJob.perform_later(
         setting_id: setting.id,
-        setting_classname: setting.class.name
+        setting_classname: setting.class.name,
       )
     end
   end

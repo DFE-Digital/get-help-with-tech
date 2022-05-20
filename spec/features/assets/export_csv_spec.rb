@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Export CSV' do
   context 'request time download' do
     let(:user) { create(:trust_user) }
-    let!(:asset) { create(:asset, department_sold_to_id: user.responsible_body.computacenter_reference) }
+    let!(:asset) { create(:asset, setting: user.responsible_body) }
 
     scenario 'CSV generated and downloaded' do
       sign_in_as user
@@ -24,7 +24,7 @@ RSpec.feature 'Export CSV' do
 
   context 'async email csv' do
     let(:user) { create(:trust_user) }
-    let!(:assets) { create_list(:asset, 51, department_sold_to_id: user.responsible_body.computacenter_reference) }
+    let!(:assets) { create_list(:asset, 51, setting: user.responsible_body) }
     let!(:other_assets) { create_list(:asset, 10, department_sold_to_id: '8123456789') }
 
     scenario 'generate CSV in backgroud job, email with a download link' do
