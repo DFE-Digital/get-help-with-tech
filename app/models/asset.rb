@@ -24,6 +24,12 @@ class Asset < ApplicationRecord
   }.freeze
 
   NON_SUPPORT_ATTRIBUTES = SUPPORT_ATTRIBUTES.except(:department_sold_to_id, :location_cc_ship_to_account).freeze
+  CLOSURE_NOTIFICATION_ATTRIBUTES = {
+    serial_number: 'Serial/IMEI',
+    model: 'Model',
+    bios_password: 'BIOS Password',
+    admin_password: 'Admin Password',
+  }.freeze
 
   # Calls to .to_csv will return non-support attributes
   def self.exportable_attributes
@@ -44,6 +50,16 @@ class Asset < ApplicationRecord
     class << self
       def exportable_attributes # rubocop:disable Lint/DuplicateMethods
         NON_SUPPORT_ATTRIBUTES
+      end
+    end
+
+    to_csv
+  end
+
+  def self.to_closure_notification_csv
+    class << self
+      def exportable_attributes # rubocop:disable Lint/DuplicateMethods
+        CLOSURE_NOTIFICATION_ATTRIBUTES
       end
     end
 
@@ -85,17 +101,9 @@ class Asset < ApplicationRecord
     Asset.none
   }
 
-  scope :owned_by_rb, lambda { |rb|
-    where(department_sold_to_id: rb.sold_to)
-      .or(where(location_cc_ship_to_account: rb.schools.select(&:orders_managed_by_school?).map(&:ship_to)))
-      .or(where(department_id: "SC#{rb.gias_id}"))
-  }
-
-  scope :owned_by_school, lambda { |school|
-    where(location_cc_ship_to_account: school.ship_to)
-      .or(where(department: school.name))
-  }
-
+  scope :owned_by_rb, ->(rb) { where(id: rb.asset_ids | rb.school_asset_ids) }
+  scope :owned_by_school, ->(school) { school.assets }
+  scope :restricted, -> { where.not(encrypted_bios_password: nil).where.not(encrypted_admin_password: nil) }
   scope :search_by_serial_numbers, ->(serial_numbers) { where('serial_number ILIKE ANY (ARRAY[?])', serial_numbers) }
 
   scope :first_viewed_during_period, ->(period) { where(first_viewed_at: period) }

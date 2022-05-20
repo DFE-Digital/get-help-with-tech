@@ -98,6 +98,16 @@ class School < ApplicationRecord
   scope :where_urn_or_ukprn, ->(identifier) { where('urn = ? OR ukprn = ?', identifier, identifier) }
   scope :where_urn_or_ukprn_or_provision_urn, ->(identifier) { where('urn = ? OR ukprn = ? OR provision_urn = ?', identifier.to_i, identifier.to_i, identifier.to_s) }
 
+  def self.with_restricted_devices_and_users
+    joins(:assets, :users)
+      .gias_status_open
+      .where.not(assets: { encrypted_admin_password: nil })
+      .where.not(assets: { encrypted_bios_password: nil })
+      .where.not(users: { restricted_devices_comms_opt_out: true })
+      .order(:created_at)
+      .distinct
+  end
+
   def self.laptop?(device_type)
     device_type.to_sym == :laptop
   end

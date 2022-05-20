@@ -46,6 +46,7 @@ class User < ApplicationRecord
 
   alias_method :rb, :responsible_body
 
+  scope :accepting_restricted_devices_comms, -> { where.not(restricted_devices_comms_opt_out: true) }
   scope :signed_in_at_least_once, -> { where('sign_in_count > 0') }
   scope :responsible_body_users, -> { where.not(responsible_body: nil) }
   scope :from_responsible_body_or_schools, -> { left_joins(:user_schools).where('responsible_body_id IS NOT NULL or user_schools.id IS NOT NULL') }

@@ -29,6 +29,7 @@ class ResponsibleBody < ApplicationRecord
   has_many :extra_mobile_data_requests
   has_many :schools, inverse_of: :responsible_body
   has_many :assets, as: :setting, dependent: :destroy
+  has_many :school_assets, through: :schools, source: :assets
   has_many :rb_orders,
            class_name: 'Computacenter::Order',
            primary_key: :computacenter_reference,
@@ -124,6 +125,16 @@ class ResponsibleBody < ApplicationRecord
       AS user_count
     SQL
     select(sql)
+  end
+
+  def self.with_restricted_devices_and_users
+    joins(:assets, :users)
+      .gias_status_open
+      .where.not(assets: { encrypted_admin_password: nil })
+      .where.not(assets: { encrypted_bios_password: nil })
+      .where.not(users: { restricted_devices_comms_opt_out: true })
+      .order(:created_at)
+      .distinct
   end
 
   def active_schools

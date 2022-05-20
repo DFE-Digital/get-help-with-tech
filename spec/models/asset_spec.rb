@@ -128,63 +128,70 @@ RSpec.describe Asset, type: :model do
   describe '.owned_by' do
     context 'school' do
       let(:school_a) { create(:school) }
-      let(:school_b) { create(:school) }
 
-      context 'when the asset ship to matches the school computacenter reference' do
-        let(:school_a_asset_1) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-        let(:school_a_asset_2) { create(:asset, location_cc_ship_to_account: school_a.computacenter_reference) }
-        let(:school_b_asset_1) { create(:asset, location_cc_ship_to_account: school_b.computacenter_reference) }
+      context 'when an asset is not associated to the school' do
+        before { create(:asset) }
 
-        specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_a_asset_1, school_a_asset_2) }
+        specify { expect(Asset.owned_by(school_a)).to be_blank }
       end
 
-      context 'when a SCL asset department matches a school name' do
-        let(:school_asset_1) { create(:asset, department: school_a.name) }
+      context 'when an asset is associated to the school' do
+        let!(:asset) { create(:asset, setting: school_a) }
 
-        specify { expect(Asset.owned_by(school_a)).to contain_exactly(school_asset_1) }
+        specify { expect(Asset.owned_by(school_a)).to contain_exactly(asset) }
       end
     end
 
-    context 'RB' do
-      let(:rb) { create(:local_authority) }
-      let(:other_rb) { create(:local_authority) }
-      let(:rb_self_managed_school) { create(:school, :manages_orders, responsible_body_id: rb.id) }
-      let(:rb_centrally_managed_school) { create(:school, :centrally_managed, responsible_body_id: rb.id) }
+    context 'rb' do
+      let(:rb_a) { create(:trust) }
+      let(:school_a) { create(:school, responsible_body: rb_a) }
 
-      context 'when the asset sold to matches the rb sold to' do
-        let!(:rb_asset_1) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
-        let!(:rb_asset_2) { create(:asset, department_sold_to_id: rb.computacenter_reference) }
+      context 'when an asset is not associated to the rb or any of their schools' do
+        before { create(:asset) }
 
-        before do
-          create(:asset, department_sold_to_id: other_rb.computacenter_reference)
-        end
-
-        specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_asset_1, rb_asset_2) }
+        specify { expect(Asset.owned_by(rb_a)).to be_blank }
       end
 
-      context "when the asset ship to matches the one of the rb self-managed schools' ship to" do
-        let!(:rb_school_asset) { create(:asset, location_cc_ship_to_account: rb_self_managed_school.computacenter_reference) }
+      context 'when an asset is associated to the rb' do
+        let!(:asset) { create(:asset, setting: rb_a) }
 
-        before do
-          create(:asset, location_cc_ship_to_account: rb_centrally_managed_school.computacenter_reference)
-        end
-
-        specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_school_asset) }
+        specify { expect(Asset.owned_by(rb_a)).to contain_exactly(asset) }
       end
 
-      context 'when a SCL asset department_id points to the rb gias_id' do
-        let!(:rb_sc_asset) { create(:asset, department_id: "SC#{rb.gias_id}") }
+      context 'when an asset is associated to one of the schools of the rb' do
+        let!(:rb_asset) { create(:asset, setting: rb_a) }
+        let!(:school_a_asset) { create(:asset, setting: school_a) }
 
-        before do
-          create(:asset, department_id: "SD#{rb.gias_id}")
-        end
+        before { create(:asset) }
 
-        specify { expect(Asset.owned_by(rb)).to contain_exactly(rb_sc_asset) }
+        specify { expect(Asset.owned_by(rb_a)).to contain_exactly(rb_asset, school_a_asset) }
       end
     end
+  end
 
-    context 'neither RB nor school' do
-      specify { expect(Asset.owned_by(nil)).to eq(Asset.none) }
+  describe '.restricted' do
+    context 'when an asset has no bios_password set' do
+      before do
+        create(:asset, bios_password: nil)
+      end
+
+      specify { expect(Asset.restricted).to be_blank }
+    end
+
+    context 'when an asset has no admin_password set' do
+      before do
+        create(:asset, admin_password: nil)
+      end
+
+      specify { expect(Asset.restricted).to be_blank }
+    end
+
+    context 'when an asset has bios_password and admin_password set' do
+      let!(:restricted_asset) { create(:asset, admin_password: 'admin', bios_password: 'bios') }
+
+      before { create(:asset, admin_password: nil, bios_password: 'bios') }
+
+      specify { expect(Asset.restricted).to contain_exactly(restricted_asset) }
     end
   end
 
@@ -331,7 +338,7 @@ RSpec.describe Asset, type: :model do
 
   describe '#to_support_csv' do
     let!(:school) { create(:school) }
-    let!(:asset) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
+    let!(:asset) { create(:asset, setting: school) }
 
     let(:csv) { Asset.owned_by(school).to_support_csv }
 
@@ -341,12 +348,23 @@ RSpec.describe Asset, type: :model do
     specify { expect(csv).to include("#{asset.serial_number},#{asset.model},#{asset.department},#{asset.location},#{asset.department_sold_to_id},#{asset.location_cc_ship_to_account},#{asset.bios_password},#{asset.admin_password},#{asset.hardware_hash}") }
   end
 
+  describe '#to_closure_notification_csv' do
+    let!(:school) { create(:school) }
+    let!(:asset) { create(:asset, setting: school) }
+
+    let(:csv) { Asset.owned_by(school).to_closure_notification_csv }
+
+    specify { expect(csv.split("\n").size).to eq(2) }
+    specify { expect(csv).to start_with('Serial/IMEI,Model,BIOS Password,Admin Password') }
+    specify { expect(csv).to include("#{asset.serial_number},#{asset.model},#{asset.bios_password},#{asset.admin_password}") }
+  end
+
   describe '#to_non_support_csv' do
     context 'normal export' do
       context 'default index' do
         let!(:school) { create(:school) }
-        let!(:asset_1) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
-        let!(:asset_2) { create(:asset, location_cc_ship_to_account: school.computacenter_reference) }
+        let!(:asset_1) { create(:asset, setting: school) }
+        let!(:asset_2) { create(:asset, setting: school) }
         let!(:other_asset) { create(:asset) }
 
         let(:csv) { Asset.owned_by(school).to_non_support_csv }
@@ -367,7 +385,7 @@ RSpec.describe Asset, type: :model do
       let(:escaped_output_1) { %q("'=1+1") }
 
       let!(:school) { create(:school) }
-      let!(:asset_1) { create(:asset, model: bad_input_1, location_cc_ship_to_account: school.computacenter_reference) }
+      let!(:asset_1) { create(:asset, model: bad_input_1, setting: school) }
 
       let(:csv) { Asset.owned_by(school).to_non_support_csv }
 

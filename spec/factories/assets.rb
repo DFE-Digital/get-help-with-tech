@@ -35,6 +35,14 @@ FactoryBot.define do
     never_viewed
   end
 
+  trait :school do
+    association :school, factory: %i[school]
+  end
+
+  trait :responsible_body do
+    association :responsible_body, factory: %i[trust]
+  end
+
   trait :never_viewed do
     first_viewed_at { nil }
   end
