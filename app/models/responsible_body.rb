@@ -126,6 +126,16 @@ class ResponsibleBody < ApplicationRecord
     select(sql)
   end
 
+  def self.with_restricted_devices_and_users
+    joins(:assets, :users)
+      .gias_status_open
+      .where.not(assets: { encrypted_admin_password: nil })
+      .where.not(assets: { encrypted_bios_password: nil })
+      .where.not(users: { restricted_devices_comms_opt_out: true })
+      .order(:created_at)
+      .distinct
+  end
+
   def active_schools
     schools.gias_status_open.excluding_la_funded_provisions
   end

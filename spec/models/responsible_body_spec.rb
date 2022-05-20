@@ -104,6 +104,36 @@ RSpec.describe ResponsibleBody, type: :model do
     end
   end
 
+  describe '.with_restricted_devices_and_users' do
+    let!(:rb) { create(:trust) }
+
+    context 'when the rb has no restricted devices' do
+      before { create(:trust_user, responsible_body: rb) }
+
+      specify { expect(ResponsibleBody.with_restricted_devices_and_users).to be_blank }
+    end
+
+    context 'when the rb has no users associated' do
+      before { create(:asset, setting: rb) }
+
+      specify { expect(ResponsibleBody.with_restricted_devices_and_users).to be_blank }
+    end
+
+    context 'when the rb has restricted devices and users associated but opting-out for restricted devices comms' do
+      before { create(:asset, setting: rb) }
+      before { create(:trust_user, responsible_body: rb, restricted_devices_comms_opt_out: true) }
+
+      specify { expect(ResponsibleBody.with_restricted_devices_and_users).to be_blank }
+    end
+
+    context 'when the rb has restricted devices and users associated not opting-out for restricted devices comms' do
+      before { create(:asset, setting: rb) }
+      before { create(:trust_user, responsible_body: rb) }
+
+      specify { expect(ResponsibleBody.with_restricted_devices_and_users).to include(rb) }
+    end
+  end
+
   describe '#computacenter_identifier' do
     context 'when local authority' do
       subject(:responsible_body) { build(:local_authority) }
