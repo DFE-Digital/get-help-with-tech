@@ -17,7 +17,7 @@ RSpec.describe School, type: :model do
   end
 
   describe '.with_restricted_devices_and_users' do
-    let!(:school) { create(:school) }
+    let!(:school) { create(:school, name: 'School S') }
 
     context 'when the school has no restricted devices' do
       before { create(:school_user, school:) }
@@ -41,12 +41,19 @@ RSpec.describe School, type: :model do
     end
 
     context 'when the school has restricted devices and users associated not opting-out for restricted devices comms' do
+      let!(:school_b) { create(:school, name: 'School B') }
+      let!(:school_a) { create(:school, name: 'School A') }
+
       before do
+        create(:asset, setting: school_b)
+        create(:asset, setting: school_a)
         create(:asset, setting: school)
+        create(:school_user, school: school_b)
+        create(:school_user, school: school_a)
         create(:school_user, school:)
       end
 
-      specify { expect(School.with_restricted_devices_and_users).to include(school) }
+      specify { expect(School.with_restricted_devices_and_users).to eq([school_a, school_b, school]) }
     end
   end
 

@@ -105,7 +105,7 @@ RSpec.describe ResponsibleBody, type: :model do
   end
 
   describe '.with_restricted_devices_and_users' do
-    let!(:rb) { create(:trust) }
+    let!(:rb) { create(:trust, name: 'Trust T') }
 
     context 'when the rb has no restricted devices' do
       before { create(:trust_user, responsible_body: rb) }
@@ -129,12 +129,19 @@ RSpec.describe ResponsibleBody, type: :model do
     end
 
     context 'when the rb has restricted devices and users associated not opting-out for restricted devices comms' do
+      let!(:rb_b) { create(:trust, name: 'Trust B') }
+      let!(:rb_a) { create(:trust, name: 'Trust A') }
+
       before do
+        create(:asset, setting: rb_b)
+        create(:asset, setting: rb_a)
         create(:asset, setting: rb)
+        create(:trust_user, responsible_body: rb_b)
+        create(:trust_user, responsible_body: rb_a)
         create(:trust_user, responsible_body: rb)
       end
 
-      specify { expect(ResponsibleBody.with_restricted_devices_and_users).to include(rb) }
+      specify { expect(ResponsibleBody.with_restricted_devices_and_users).to eq([rb_a, rb_b, rb]) }
     end
   end
 
