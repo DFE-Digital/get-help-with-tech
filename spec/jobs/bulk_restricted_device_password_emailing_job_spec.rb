@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe BulkRestrictedDevicePasswordEmailingJob do
-  let!(:rb_a) { create(:trust) }
-  let!(:rb_b) { create(:trust) }
-  let!(:rb_c) { create(:trust) }
+  let!(:rb_b) { create(:trust, name: 'Trust B') }
+  let!(:rb_a) { create(:trust, name: 'Trust A') }
+  let!(:rb_c) { create(:trust, name: 'Trust C') }
 
-  let!(:school_a) { create(:school) }
-  let!(:school_b) { create(:school) }
-  let!(:school_c) { create(:school) }
+  let!(:school_c) { create(:school, name: 'School C') }
+  let!(:school_a) { create(:school, name: 'School A') }
+  let!(:school_b) { create(:school, name: 'School B') }
 
   before do
     create(:asset, setting: rb_a)
@@ -52,7 +52,7 @@ RSpec.describe BulkRestrictedDevicePasswordEmailingJob do
              .once
     end
 
-    it 'enqueue a limited number of rb jobs' do
+    it 'enqueue the first limited number of jobs' do
       expect { described_class.perform_now(number_of_rbs: 1, number_of_schools: 1) }
         .to have_enqueued_job(RestrictedDevicePasswordEmailingForSettingJob).twice
       expect {
@@ -64,6 +64,21 @@ RSpec.describe BulkRestrictedDevicePasswordEmailingJob do
         described_class.perform_now
       }.to have_enqueued_job(RestrictedDevicePasswordEmailingForSettingJob)
              .with(hash_including(setting_id: school_a.id, setting_classname: 'CompulsorySchool'))
+             .once
+    end
+
+    it 'enqueue an offset of limited number of jobs' do
+      expect { described_class.perform_now(rb_offset: 1, school_offset: 1) }
+        .to have_enqueued_job(RestrictedDevicePasswordEmailingForSettingJob).twice
+      expect {
+        described_class.perform_now
+      }.to have_enqueued_job(RestrictedDevicePasswordEmailingForSettingJob)
+             .with(hash_including(setting_id: rb_b.id, setting_classname: 'Trust'))
+             .once
+      expect {
+        described_class.perform_now
+      }.to have_enqueued_job(RestrictedDevicePasswordEmailingForSettingJob)
+             .with(hash_including(setting_id: school_b.id, setting_classname: 'CompulsorySchool'))
              .once
     end
   end

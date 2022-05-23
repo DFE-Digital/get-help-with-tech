@@ -133,7 +133,7 @@ class ResponsibleBody < ApplicationRecord
       .where.not(assets: { encrypted_admin_password: nil })
       .where.not(assets: { encrypted_bios_password: nil })
       .where.not(users: { restricted_devices_comms_opt_out: true })
-      .order(:created_at)
+      .order(:name)
       .distinct
   end
 

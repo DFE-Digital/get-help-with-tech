@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_19_092557) do
+ActiveRecord::Schema.define(version: 2022_05_23_064229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -400,6 +400,7 @@ ActiveRecord::Schema.define(version: 2022_05_19_092557) do
     t.index ["gias_group_uid"], name: "index_responsible_bodies_on_gias_group_uid", unique: true
     t.index ["gias_id"], name: "index_responsible_bodies_on_gias_id", unique: true
     t.index ["key_contact_id"], name: "index_responsible_bodies_on_key_contact_id"
+    t.index ["name"], name: "index_responsible_bodies_on_name"
   end
 
   create_table "school_contacts", force: :cascade do |t|
