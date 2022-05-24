@@ -226,7 +226,9 @@ GHWT__DATABASE_FIELD_ENCRYPTION__KEY              | Secret key for the encrytion
 GHWT__DATABASE_FIELD_ENCRYPTION__SALT             | Salt for the encryption field in the assets table                                                                                          | REQUIRED
 GHWT__SLUG_CHECKSUM_SECRET                        | A secret for hashing a checksum for IDs in the URL                                                                                         | REQUIRED
 GHWT__API_TOKEN_TTL                               | TTL in days after which API Tokens CC use will expire from creation date                                                                   | 90
-GHWT__SITE_BANNER_MESSAGE                         | Banner message text to appear at the top of all pages of the site                                                                          | (nil)
+GHWT__SITE_BANNER_MESSAGE                         | Banner message text to appear at the top of all pages of the site (has higher precence than the long form banner feature flag)             | (nil)
+GHWT__LONG_FORM_SITE_BANNER_MESSAGE_FLAG          | Boolean value, when true, displays the long form banner message text to appear at the top of all pages of the site from somefile.md        | false
+GHWT__LONG_FORM_SITE_BANNER_MESSAGE_PARTIAL       | Path to the markdown partial file containing the long form site banner message. Default resolves to site_banner/_long_form.md              | site_banner/long_form
 
 See the [settings.yaml file](config/settings.yml) for full details on configurable options.
 

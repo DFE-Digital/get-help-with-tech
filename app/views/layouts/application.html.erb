@@ -82,6 +82,15 @@
           </div>
         </div>
       <% end %>
+      <% if Site.long_form_banner_message_flag? %>
+        <div class="govuk-width-container">
+          <div class="govuk-grid-row" id="site-banner-info">
+            <div class="govuk-grid-column-full">
+              <%= render(SiteBannerInfoComponent.new) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
       <%= yield :start_page_banner %>
       <div class="govuk-width-container">
         <% if impersonated_user %>
