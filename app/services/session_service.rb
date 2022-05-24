@@ -13,7 +13,7 @@ class SessionService
     if (user = find_user_by_lowercase_email(email_address))
       user.generate_token!
       logger.debug "found user #{user.id} - #{user.email_address}, granted token #{user.sign_in_token}"
-      SignInTokenMailer.with(user:).sign_in_token_email.deliver_later
+      SignInTokenMailer.with(user:).sign_in_token_email.deliver_later(queue: :login)
       user.sign_in_token
     else
       # silently ignore an incorrect email, to avoid inadvertently

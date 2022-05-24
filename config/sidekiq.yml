@@ -1,8 +1,9 @@
 :concurrency: 2
 :logfile: ./log/sidekiq.log
 :queues:
+  - login
   - [default, 50]
-  - [mailers, 250]
+  - [mailers, 500]
   - [scheduler, 1]
 :schedule:
   UpdateRemainingDevicesJob:
