@@ -17,4 +17,6 @@ class Computacenter::Order < ApplicationRecord
 
   scope :is_return, -> { where(is_return: true) }
   scope :is_not_return, -> { where(is_return: false) }
+
+  delegate :name, to: :school, prefix: true, allow_nil: true
 end

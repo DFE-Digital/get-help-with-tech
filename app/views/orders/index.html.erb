@@ -53,10 +53,11 @@
 <table class="govuk-table">
   <thead class="govuk-table__head">
   <tr class="govuk-table__row">
-    <th class="govuk-table__header app-schools-table__column-30">Order number</th>
-    <th class="govuk-table__header app-schools-table__column-20">Order date</th>
-    <th class="govuk-table__header app-schools-table__column-20">Devices delivered</th>
-    <th class="govuk-table__header app-schools-table__column-30">Device type</th>
+    <th class="govuk-table__header">Order number</th>
+    <th class="govuk-table__header">Order date</th>
+    <th class="govuk-table__header">Devices delivered</th>
+    <th class="govuk-table__header govuk-!-width-one-quarter">Device type</th>
+    <th class="govuk-table__header govuk-!-width-one-third">School name</th>
   </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -66,6 +67,7 @@
       <td class="govuk-table__cell"><%= order.order_date %></td>
       <td class="govuk-table__cell"><%= order.quantity_completed %></td>
       <td class="govuk-table__cell"><%= order.persona %></td>
+      <td class="govuk-table__cell"><%= order.school_name %></td>
     </tr>
   <% end %>
   </tbody>
