@@ -3,7 +3,8 @@ class Computacenter::OrderReport < TemplateClassCsv
     %w[order_number
        order_date
        quantity_completed
-       device_type]
+       device_type
+       school_name]
   end
 
 private
@@ -26,6 +27,7 @@ private
     [order.customer_order_number,
      order.order_date,
      order.quantity_completed,
-     order.persona]
+     order.persona,
+     order.school_name]
   end
 end

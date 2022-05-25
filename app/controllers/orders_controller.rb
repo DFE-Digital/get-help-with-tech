@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   def index
     @title = 'Order history'
     policy_scope = Computacenter::OrderPolicy::Scope.new(impersonated_or_current_user, Computacenter::Order).resolve
-    all_orders = policy_scope.is_not_return.order(order_date: :desc)
+    all_orders = policy_scope.is_not_return.order(order_date: :desc).includes(:school)
     @pagination, @orders = pagy(all_orders)
 
     respond_to do |format|

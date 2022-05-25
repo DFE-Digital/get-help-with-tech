@@ -56,6 +56,10 @@ RSpec.describe Computacenter::ExportOrdersToFileService do
       it 'has a device_type value equal to the order persona' do
         expect(order_csv_row['device_type']).to eq(order.persona)
       end
+
+      it 'has a school_name value equal to the order school_name' do
+        expect(order_csv_row['school_name']).to eq(order.school_name)
+      end
     end
   end
 end
