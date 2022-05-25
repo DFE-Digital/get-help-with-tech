@@ -1,7 +1,7 @@
 :concurrency: 2
 :logfile: ./log/sidekiq.log
 :queues:
-  - login
+  - [login, 10000]
   - [default, 50]
   - [mailers, 500]
   - [scheduler, 1]
