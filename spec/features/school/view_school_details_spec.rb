@@ -67,7 +67,7 @@ RSpec.feature 'View school details' do
       context 'user can order devices' do
         let(:user) { create(:school_user, :orders_devices, full_name: 'AAA Smith', school:) }
 
-        it 'shows the link to the TechSource order history' do
+        it 'shows the link to the order history' do
           expect(page).to have_link('Order history')
         end
       end

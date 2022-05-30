@@ -18,15 +18,7 @@
     <%= render AllocationComponentFactory.create_component(@responsible_body) %>
     <%= render partial: 'shared/summary_reset_devices' if @has_ordered %>
 
-    <h2 class="govuk-heading-l govuk-!-font-size-27">
-      <%= govuk_link_to 'Order history', techsource_start_path %>
-    </h2>
-
-    <p class="govuk-body">Sign in to TechSource to:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>view your past orders</li>
-      <li>view the serial numbers of your devices.</li>
-    </ul>
+    <%= render partial: 'shared/home/order_history' %>
 
     <%- if @responsible_body.has_connectivity_feature_flags? %>
       <h2 class="govuk-heading-l govuk-!-font-size-27">
