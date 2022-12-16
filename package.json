@@ -6,7 +6,7 @@
     "@rails/webpacker": ">=5.4.3",
     "accessible-autocomplete": "^2.0.4",
     "core-js": ">=3",
-    "govuk-frontend": ">=4.1.0",
+    "govuk-frontend": ">=4.4.1",
     "serialize-javascript": ">=6.0.0",
     "set-value": ">=4.0.1"
   },
