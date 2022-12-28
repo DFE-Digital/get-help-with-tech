@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-alpine
+FROM ruby:3.2.0-alpine
 
 ARG APPNAME=get-help-with-tech
 
